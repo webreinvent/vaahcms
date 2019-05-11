@@ -1,0 +1,18 @@
+{
+  "name": "webreinvent/vaahcmscore",
+  "description": "Laravel Based Rapid Development CMS Famework",
+  "keywords": ["laravel"],
+  "homepage": "https://www.webreinvent.com",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "WebReinvent",
+      "email": "we@webreinvent.com"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "WebReinvent\\VaahCmsCore\\": "src/"
+    }
+  }
+}
