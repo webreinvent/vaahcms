@@ -78,12 +78,11 @@ function vh_get_plugin_extended_views($view_file)
 
     foreach ($plugins as $plugin)
     {
+
+        //TODO::order by settings
+
         $settings = vh_get_plugin_settings_from_path($plugin);
 
-        echo "<pre>";
-        print_r($settings);
-        echo "</pre>";
-        die("<hr/>line number=123");
 
         $alias = vh_get_plugin_setting_value($settings, 'alias');
 
@@ -93,8 +92,8 @@ function vh_get_plugin_extended_views($view_file)
             try {
                 $view = \View::make($full_view_name);
                 echo $view;
-            } catch (Exception $e) {
-                dd(json_encode($e->getMessage()));
+            } catch (\Exception $e) {
+                echo json_encode($e->getMessage());
             }
         }
 
