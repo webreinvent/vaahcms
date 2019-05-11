@@ -38,6 +38,11 @@ class VaahCmsServiceProvider extends ServiceProvider {
     public function register() {
 
         $this->app->register(PluginManagerServiceProvider::class);
+
+        foreach (glob(__DIR__.'/Helpers/*.php') as $filename){
+            require_once($filename);
+        }
+
         //$this->app->register(BlogServiceProvider::class);
 
     }
@@ -57,7 +62,7 @@ class VaahCmsServiceProvider extends ServiceProvider {
 
         $this->publishes([$configPath => config_path('vaahcms.php')], 'config');
 
-        $this->mergeConfigFrom($configPath, 'VaahCms');
+        $this->mergeConfigFrom($configPath, 'vaahcms');
     }
 
     //--------------------------------------------------------------

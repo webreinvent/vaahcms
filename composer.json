@@ -17,15 +17,5 @@
     "files": [
       "src/helpers.php"
     ]
-  },
-  "extra": {
-    "laravel": {
-      "providers": [
-        "WebReinvent\\VaahCms\\Providers\\BootstrapServiceProvider"
-      ],
-      "aliases": {
-        "VaahCms": "WebReinvent\\VaahCms"
-      }
-    }
   }
 }

@@ -13,6 +13,8 @@ class PluginManagerServiceProvider extends ServiceProvider
     public function boot()
     {
 
+
+
     }
 
     /**
@@ -28,9 +30,13 @@ class PluginManagerServiceProvider extends ServiceProvider
 
         $pluginManager = $this->app->make('PluginLoader');
 
+
+
         // Register other plugin Service Providers in a loop here?
         foreach ($pluginManager->findPlugins() as $plugin)
         {
+
+
             if(!isset($plugin['active']) || $plugin['active'] != 1 )
             {
                 continue;
@@ -43,4 +49,11 @@ class PluginManagerServiceProvider extends ServiceProvider
         }
 
     }
+
+    //----------------------------------------------------
+
+    //----------------------------------------------------
+    //----------------------------------------------------
+    //----------------------------------------------------
+    //----------------------------------------------------
 }

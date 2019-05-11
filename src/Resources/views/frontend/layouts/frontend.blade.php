@@ -5,6 +5,20 @@
 
 	<body>
 
+	<?php
+
+	$test = vh_get_plugin_extended_views('menu');
+
+
+	echo "<pre>";
+	print_r($test);
+	echo "</pre>";
+	die("<hr/>line number=123");
+
+	//findPluginExtendedViews('menu');
+
+	?>
+
     @include("vaahcms::frontend.partials.alerts")
     @include("vaahcms::frontend.partials.flash")
 

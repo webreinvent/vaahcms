@@ -73,9 +73,6 @@ class PluginLoader {
      */
     public function findPlugins()
     {
-
-
-
         foreach ($this->files->directories($this->getPath()) as $plugin)
         {
 
@@ -85,6 +82,20 @@ class PluginLoader {
             }
 
             $this->foundPlugins[] = $class;
+        }
+
+        return $this->foundPlugins;
+    }
+
+
+    /**
+     * @return array
+     */
+    public function findPluginExtendedViews($plugin, $view_file)
+    {
+        foreach ($this->files->directories($this->getPath()) as $plugin)
+        {
+
         }
 
         return $this->foundPlugins;
@@ -180,42 +191,19 @@ class PluginLoader {
     protected function initPlugin($directory)
     {
 
-        $plugin_config_path = $directory."\plugin.json";
+        $plugin_settings_path = $directory."\settings.json";
 
-        if (!\File::exists($plugin_config_path)) {
+        if (!\File::exists($plugin_settings_path)) {
             return null;
         }
 
-        $file = \File::get($plugin_config_path);
-        $plugin_config = json_decode($file);
-        $config = (array)$plugin_config;
+        $file = \File::get($plugin_settings_path);
+        $plugin_settings_path = json_decode($file);
+        $settings = (array)$plugin_settings_path;
 
-        return $config;
+        return $settings;
     }
 
-    /**
-     * @return mixed
-     */
-    protected function loadActivated()
-    {
-        $activated = Plugin::get();
-
-        foreach ($activated as $model)
-        {
-            if (
-                $this->files->isDirectory($model->path)
-                and
-                !is_null($pluginContainer = $this->initPlugin($model->path))
-            )
-            {
-                $this->activated[get_class($pluginContainer)] = $pluginContainer;
-                ModulesLoader::registerModule($pluginContainer);
-
-                $pluginContainer->checkActivation();
-                $pluginContainer->setSettings($model->settings);
-            }
-        }
-    }
 
     /**
      * @param string $key
