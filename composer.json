@@ -1,6 +1,6 @@
 {
   "name": "webreinvent/vaahcms",
-  "description": "Laravel Based Rapid Development CMS Famework",
+  "description": "Laravel Based Rapid Development CMS Framework",
   "keywords": ["laravel"],
   "homepage": "https://www.webreinvent.com",
   "license": "MIT",
@@ -13,6 +13,19 @@
   "autoload": {
     "psr-4": {
       "WebReinvent\\VaahCms\\": "src/"
+    },
+    "files": [
+      "src/helpers.php"
+    ]
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "WebReinvent\\VaahCms\\Providers\\BootstrapServiceProvider"
+      ],
+      "aliases": {
+        "VaahCms": "WebReinvent\\VaahCms"
+      }
     }
   }
 }
