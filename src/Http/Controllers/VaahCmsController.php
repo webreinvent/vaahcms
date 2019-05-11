@@ -1,12 +1,12 @@
 <?php
 
-namespace WebReinvent\VaahCmsCore\Controllers;
+namespace WebReinvent\VaahCms\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 
-class VaahCmsCoreController extends Controller
+class VaahCmsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +14,7 @@ class VaahCmsCoreController extends Controller
      */
     public function index()
     {
-        return view('vaahcmscore::index');
+        return view('vaahcms::index');
     }
 
     /**
@@ -23,7 +23,7 @@ class VaahCmsCoreController extends Controller
      */
     public function create()
     {
-        return view('vaahcmscore::create');
+        return view('vaahcms::create');
     }
 
     /**
@@ -41,7 +41,7 @@ class VaahCmsCoreController extends Controller
      */
     public function show()
     {
-        return view('vaahcmscore::show');
+        return view('vaahcms::show');
     }
 
     /**
@@ -50,7 +50,7 @@ class VaahCmsCoreController extends Controller
      */
     public function edit()
     {
-        return view('vaahcmscore::edit');
+        return view('vaahcms::edit');
     }
 
     /**

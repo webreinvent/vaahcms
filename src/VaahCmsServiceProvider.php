@@ -1,8 +1,8 @@
-<?php namespace WebReinvent\VaahCmsCore;
+<?php namespace WebReinvent\VaahCms;
 
 use Illuminate\Support\ServiceProvider;
 
-class VaahCmsCoreServiceProvider extends ServiceProvider {
+class VaahCmsServiceProvider extends ServiceProvider {
 
     /**
      * Indicates if loading of the provider is deferred.
@@ -48,23 +48,23 @@ class VaahCmsCoreServiceProvider extends ServiceProvider {
 
     private function handleConfigs() {
 
-        $configPath = __DIR__ . '/Config/vaahcmscore.php';
+        $configPath = __DIR__ . '/Config/vaahcms.php';
 
-        $this->publishes([$configPath => config_path('vaahcmscore.php')], 'config');
+        $this->publishes([$configPath => config_path('vaahcms.php')], 'config');
 
-        $this->mergeConfigFrom($configPath, 'VaahCmsCore');
+        $this->mergeConfigFrom($configPath, 'VaahCms');
     }
 
     private function handleTranslations() {
 
-        $this->loadTranslationsFrom(__DIR__.'/Resources/lang', 'vaahcmscore');
+        $this->loadTranslationsFrom(__DIR__.'/Resources/lang', 'vaahcms');
     }
 
     private function handleViews() {
 
-        $this->loadViewsFrom(__DIR__.'/Resources/views', 'vaahcmscore');
+        $this->loadViewsFrom(__DIR__.'/Resources/views', 'vaahcms');
 
-        $this->publishes([__DIR__.'/Resources/views' => base_path('resources/views/vendor/vaahcmscore')], 'views');
+        $this->publishes([__DIR__.'/Resources/views' => base_path('resources/views/vendor/vaahcms')], 'views');
     }
 
     private function handleMigrations() {

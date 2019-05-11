@@ -1,9 +1,9 @@
 <?php
-namespace WebReinvent\VaahCmsCore;
+namespace WebReinvent\VaahCms;
 use Illuminate\Support\Facades\Facade;
 
 
-class VaahCmsCoreFacade extends Facade
+class VaahCmsFacade extends Facade
 {
     /**
      * Get the registered name of the component.
@@ -12,6 +12,6 @@ class VaahCmsCoreFacade extends Facade
      */
     protected static function getFacadeAccessor()
     {
-        return 'vaahcmscore';
+        return 'vaahcms';
     }
 }

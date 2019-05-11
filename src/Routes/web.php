@@ -11,6 +11,6 @@
 |
 */
 
-Route::prefix('vaahcmscore')->group(function() {
-    Route::get('/', 'VaahCmsCoreController@index');
+Route::prefix('vaahcms')->group(function() {
+    Route::get('/', 'VaahCmsController@index');
 });

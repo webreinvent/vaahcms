@@ -1,11 +1,11 @@
 <?php
-namespace WebReinvent\VaahCmsCore;
+namespace WebReinvent\VaahCms;
 
 
 /**
- * Class VaahCmsCore.
+ * Class VaahCms.
  */
-class VaahCmsCore{
+class VaahCms{
 
     /**
      * Create new instance
