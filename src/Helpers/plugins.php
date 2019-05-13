@@ -67,7 +67,7 @@ function vh_get_plugin_setting_value($settings, $key)
 }
 //-----------------------------------------------------------------------------------
 //-----------------------------------------------------------------------------------
-function vh_get_plugin_extended_views($view_file)
+function vh_get_plugins_extended_views($view_file)
 {
     $plugins = vh_get_plugins_paths();
 
@@ -76,12 +76,19 @@ function vh_get_plugin_extended_views($view_file)
         return null;
     }
 
+    $list = [];
+
     foreach ($plugins as $plugin)
     {
 
         //TODO::order by settings
 
         $settings = vh_get_plugin_settings_from_path($plugin);
+
+        /*if(isset($settings['extend']->menu->order))
+        {
+            $list[$settings['extend']->menu->order] =
+        }*/
 
 
         $alias = vh_get_plugin_setting_value($settings, 'alias');

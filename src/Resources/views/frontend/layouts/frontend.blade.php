@@ -7,7 +7,7 @@
 
 	<?php
 
-	$test = vh_get_plugin_extended_views('menu1');
+	$test = vh_get_plugins_extended_views('menu1');
 
 
 	echo "<pre>";
