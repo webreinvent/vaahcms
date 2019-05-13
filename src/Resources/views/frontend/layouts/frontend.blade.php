@@ -7,15 +7,8 @@
 
 	<?php
 
-	$test = vh_get_plugins_extended_views('menu1');
+	vh_get_modules_extended_views('menu');
 
-
-	echo "<pre>";
-	print_r($test);
-	echo "</pre>";
-	die("<hr/>line number=123");
-
-	//findPluginExtendedViews('menu');
 
 	?>
 

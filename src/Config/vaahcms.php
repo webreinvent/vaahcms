@@ -5,9 +5,8 @@
  */
 
 return [
-    'default' => [
-        'version' => '0.0.1',
-        'plugins_path' => 'Plugins',
-        'per_page' => 20,
-    ]
+    'version' => '0.0.1',
+    'modules_path' => 'vaahcms/Modules',
+    'plugins_path' => 'vaahcms/Plugins',
+    'per_page' => 20,
 ];

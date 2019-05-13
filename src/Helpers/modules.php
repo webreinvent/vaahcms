@@ -2,61 +2,61 @@
 
 
 //-----------------------------------------------------------------------------------
-function vh_get_plugin_root_path()
+function vh_get_modules_root_path()
 {
-    return base_path('Plugins');
+    return config('vaahcms.modules_path');
 }
 //-----------------------------------------------------------------------------------
-function vh_get_plugin_path($plugin_name)
+function vh_get_module_path($plugin_name)
 {
-    return vh_get_plugin_root_path()."\/".$plugin_name;
+    return vh_get_modules_root_path()."\/".$plugin_name;
 }
 //-----------------------------------------------------------------------------------
-function vh_get_plugins_paths()
+function vh_get_all_modules_paths()
 {
-    $found_plugins = [];
-    foreach (\File::directories(vh_get_plugin_root_path()) as $plugin)
+    $found_modules = [];
+    foreach (\File::directories(vh_get_modules_root_path()) as $module)
     {
-        $found_plugins[] = $plugin;
+        $found_modules[] = $module;
     }
 
-    return $found_plugins;
+    return $found_modules;
 
 }
 //-----------------------------------------------------------------------------------
-function vh_get_plugin_settings_from_path($plugin_path)
+function vh_get_module_settings_from_path($plugin_path)
 {
     $path_settings = $plugin_path.'\settings.json';
 
     if(\File::exists($path_settings))
     {
         $file = File::get($path_settings);
-        $plugin_settings = json_decode($file);
-        $plugin_settings = (array)$plugin_settings;
-        return $plugin_settings;
+        $settings = json_decode($file);
+        $settings = (array)$settings;
+        return $settings;
     }
 
     return null;
 }
 //-----------------------------------------------------------------------------------
-function vh_get_plugin_settings_from_name($plugin_name)
+function vh_get_module_settings_from_name($plugin_name)
 {
-    $path = vh_get_plugin_path($plugin_name);
+    $path = vh_get_module_path($plugin_name);
 
     $path_settings = $path.'\settings.json';
 
     if(\File::exists($path_settings))
     {
         $file = File::get($path_settings);
-        $plugin_settings = json_decode($file);
-        $plugin_settings = (array)$plugin_settings;
-        return $plugin_settings;
+        $settings = json_decode($file);
+        $settings = (array)$settings;
+        return $settings;
     }
 
     return null;
 }
 //-----------------------------------------------------------------------------------
-function vh_get_plugin_setting_value($settings, $key)
+function vh_get_module_setting_value($settings, $key)
 {
     if(!isset($settings[$key]))
     {
@@ -67,33 +67,44 @@ function vh_get_plugin_setting_value($settings, $key)
 }
 //-----------------------------------------------------------------------------------
 //-----------------------------------------------------------------------------------
-function vh_get_plugins_extended_views($view_file)
+function vh_get_modules_extended_views($view_file)
 {
-    $plugins = vh_get_plugins_paths();
+    $modules = vh_get_all_modules_paths();
 
-    if(count($plugins) < 1)
+    if(count($modules) < 1)
     {
         return null;
     }
 
     $list = [];
 
-    foreach ($plugins as $plugin)
+    foreach ($modules as $module)
     {
 
         //TODO::order by settings
 
-        $settings = vh_get_plugin_settings_from_path($plugin);
+        $settings = vh_get_module_settings_from_path($module);
 
-        /*if(isset($settings['extend']->menu->order))
+        if(isset($settings['extend']->menu->order))
         {
-            $list[$settings['extend']->menu->order] =
-        }*/
+            $list[$settings['extend']->menu->order] = $settings;
+        } else
+        {
+            $list[$settings['order']] = $settings;
+        }
 
 
-        $alias = vh_get_plugin_setting_value($settings, 'alias');
 
-        $full_view_name = "plugin#".$alias.'::backend.extend.' . $view_file;
+    }
+
+    ksort($list);
+
+
+    foreach ($list as $module_settings)
+    {
+        $alias = vh_get_module_setting_value($module_settings, 'alias');
+
+        $full_view_name = $alias.'::backend.extend.' . $view_file;
 
         if (\View::exists($full_view_name)) {
             try {
@@ -103,9 +114,7 @@ function vh_get_plugins_extended_views($view_file)
                 echo json_encode($e->getMessage());
             }
         }
-
     }
-
 
 }
 //-----------------------------------------------------------------------------------

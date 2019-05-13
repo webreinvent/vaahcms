@@ -3,9 +3,10 @@
 namespace WebReinvent\VaahCms\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use WebReinvent\VaahCms\Plugins\PluginLoader;
+use WebReinvent\VaahCms\Modules\ModulesLoader;
 
-class PluginManagerServiceProvider extends ServiceProvider
+
+class ModulesServiceProvider extends ServiceProvider
 {
     /**
      * Booting the package.
@@ -23,26 +24,22 @@ class PluginManagerServiceProvider extends ServiceProvider
     public function register()
     {
 
-        $this->app->singleton('PluginLoader', function($app)
+        $this->app->singleton('ModulesLoader', function($app)
         {
-            return new PluginLoader($app['files'], base_path('Plugins'));
+            return new ModulesLoader($app['files'], config('vaahcms.modules_path'));
         });
 
-        $pluginManager = $this->app->make('PluginLoader');
+        $module_manager = $this->app->make('ModulesLoader');
 
-
-
-        // Register other plugin Service Providers in a loop here?
-        foreach ($pluginManager->findPlugins() as $plugin)
+        // Register Service Providers of all the active modules in a loop
+        foreach ($module_manager->findModules() as $module)
         {
-
-
-            if(!isset($plugin['active']) || $plugin['active'] != 1 )
+            if(!isset($module['active']) || $module['active'] != 1 )
             {
                 continue;
             }
 
-            foreach ($plugin['providers'] as $provider)
+            foreach ($module['providers'] as $provider)
             {
                 $this->app->register($provider);
             }

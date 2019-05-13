@@ -1,7 +1,7 @@
 <?php namespace WebReinvent\VaahCms;
 
 use Illuminate\Support\ServiceProvider;
-use WebReinvent\VaahCms\Providers\PluginManagerServiceProvider;
+use WebReinvent\VaahCms\Providers\ModulesServiceProvider;
 
 class VaahCmsServiceProvider extends ServiceProvider {
 
@@ -19,7 +19,7 @@ class VaahCmsServiceProvider extends ServiceProvider {
      */
     public function boot() {
 
-        $this->handleConfigs();
+
         $this->handleMigrations();
         $this->handleViews();
         $this->handleTranslations();
@@ -37,13 +37,15 @@ class VaahCmsServiceProvider extends ServiceProvider {
 
     public function register() {
 
-        $this->app->register(PluginManagerServiceProvider::class);
+        $this->handleConfigs();
 
+        //register module service provider
+        $this->app->register(ModulesServiceProvider::class);
+
+        //load all the helpers
         foreach (glob(__DIR__.'/Helpers/*.php') as $filename){
             require_once($filename);
         }
-
-        //$this->app->register(BlogServiceProvider::class);
 
     }
 
@@ -58,11 +60,13 @@ class VaahCmsServiceProvider extends ServiceProvider {
 
     private function handleConfigs() {
 
+
         $configPath = __DIR__ . '/Config/vaahcms.php';
 
         $this->publishes([$configPath => config_path('vaahcms.php')], 'config');
 
         $this->mergeConfigFrom($configPath, 'vaahcms');
+
     }
 
     //--------------------------------------------------------------
