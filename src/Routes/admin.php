@@ -11,16 +11,18 @@
 |
 */
 
+
+
 Route::group(
     [
-        'prefix'     => 'vaah',
-        'namespace'  => 'WebReinvent\VaahCms\Http\Controllers'
+        'prefix'     => 'admin',
+        'namespace'  => 'WebReinvent\VaahCms\Http\Controllers\Admin'
     ],
     function () {
         //------------------------------------------------
         //------------------------------------------------
-        Route::get( '/login', 'PublicController@login' )
-            ->name( 'vh.login' );
+        Route::get( '/', 'PublicController@login' )
+            ->name( 'vh.admin.login' );
         //------------------------------------------------
         //------------------------------------------------
         //------------------------------------------------

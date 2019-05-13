@@ -81,7 +81,6 @@ class VaahCmsServiceProvider extends ServiceProvider {
     private function handleViews() {
 
         $this->loadViewsFrom(__DIR__.'/Resources/views', 'vaahcms');
-
         $this->publishes([__DIR__.'/Resources/views' => base_path('resources/views/vendor/vaahcms')], 'views');
     }
 
@@ -96,7 +95,8 @@ class VaahCmsServiceProvider extends ServiceProvider {
 
     private function handleRoutes() {
 
-        include __DIR__.'/Routes/web.php';
+        include __DIR__.'/Routes/admin.php';
+        include __DIR__.'/Routes/public.php';
         include __DIR__.'/Routes/api.php';
 
     }
