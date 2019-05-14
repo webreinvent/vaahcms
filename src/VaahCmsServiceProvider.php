@@ -19,7 +19,7 @@ class VaahCmsServiceProvider extends ServiceProvider {
      */
     public function boot() {
 
-
+        $this->handleConfigs();
         $this->handleMigrations();
         $this->handleViews();
         $this->handleTranslations();
@@ -73,7 +73,11 @@ class VaahCmsServiceProvider extends ServiceProvider {
 
     private function handleTranslations() {
 
-        $this->loadTranslationsFrom(__DIR__.'/Resources/lang', 'vaahcms');
+        $path = __DIR__.'/Resources/lang';
+
+        $this->loadTranslationsFrom($path, 'vaahcms');
+
+        $this->publishes([$path => base_path('resources/views/vendor/vaahcms/lang')], 'lang');
     }
 
     //--------------------------------------------------------------
@@ -82,6 +86,7 @@ class VaahCmsServiceProvider extends ServiceProvider {
 
         $this->loadViewsFrom(__DIR__.'/Resources/views', 'vaahcms');
         $this->publishes([__DIR__.'/Resources/views' => base_path('resources/views/vendor/vaahcms')], 'views');
+
     }
 
     //--------------------------------------------------------------

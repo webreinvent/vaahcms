@@ -11,4 +11,5 @@ return [
     'modules_path' => 'vaahcms/Modules',
     'plugins_path' => 'vaahcms/Plugins',
     'per_page' => 20,
+    'minified' => 0,
 ];
