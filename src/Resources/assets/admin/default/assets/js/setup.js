@@ -6,6 +6,7 @@ const app = new VueCommon({
         urls: [],
         list: {},
         active_step: 'database',
+        active_el: null,
         app_info: {
             app_name: null,
             db_host: null,
