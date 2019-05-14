@@ -19,8 +19,7 @@
     @yield('content')
 
     @include("vaahcms::admin.default.layouts.partials.scripts")
-
-	@yield('vaahcms_extend_admin_js')
+@yield('vaahcms_extend_admin_js')
 
 	</body>
 </html>

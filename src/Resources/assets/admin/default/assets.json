@@ -2,6 +2,8 @@
   "css": [
     "resources/assets/vendor/vaahcms/admin/default/lib/fortawesome/fontawesome-free/css/all.min.css",
     "resources/assets/vendor/vaahcms/admin/default/lib/ionicons/css/ionicons.min.css",
+    "resources/assets/vendor/vaahcms/admin/default/lib/alertify/alertify.min.css",
+    "resources/assets/vendor/vaahcms/admin/default/lib/nprogress/nprogress.css",
     "resources/assets/vendor/vaahcms/admin/default/assets/css/dashforge-fonts.css",
     "resources/assets/vendor/vaahcms/admin/default/assets/css/dashforge.css"
   ],
@@ -11,6 +13,8 @@
     "resources/assets/vendor/vaahcms/admin/default/lib/moment/moment.min.js",
     "resources/assets/vendor/vaahcms/admin/default/lib/vue/vue.min.js",
     "resources/assets/vendor/vaahcms/admin/default/lib/vue/vue-resource.min.js",
+    "resources/assets/vendor/vaahcms/admin/default/lib/alertify/alertify.min.js",
+    "resources/assets/vendor/vaahcms/admin/default/lib/nprogress/nprogress.js",
     "resources/assets/vendor/vaahcms/admin/default/lib/feather-icons/feather.min.js",
     "resources/assets/vendor/vaahcms/admin/default/lib/perfect-scrollbar/perfect-scrollbar.min.js",
     "resources/assets/vendor/vaahcms/admin/default/lib/jquery.flot/jquery.flot.js",
