@@ -41,7 +41,14 @@ let VueCommon = Vue.extend({
                     }
                 }, (response) => {
                     console.log(response);
-                    this.errors([response.statusText]);
+
+                    if(response.body.message)
+                    {
+                        this.errors([response.body.message]);
+                    } else
+                    {
+                        this.errors([response.statusText]);
+                    }
                     NProgress.done();
                 });
         },
@@ -494,7 +501,7 @@ let VueCommon = Vue.extend({
 
                         //data.context = $(upload_form_selector+' .upload_button').find('span').text('Uploading...');
 
-                        console.log('-->', data);
+                        this.consoleLog(data, '-->');
 
                         let uploadResponse = data.submit()
                             .error(function (uploadResponse, textStatus, errorThrown) {
@@ -568,7 +575,9 @@ let VueCommon = Vue.extend({
         //---------------------------------------------------------------------
         activateSummernoteEditor: function (editor_id, data) {
 
-            console.log('-->summer', editor_id);
+
+
+            this.consoleLog(editor_id, '-->');
 
             let self = this;
             $(editor_id).summernote({
@@ -588,8 +597,11 @@ let VueCommon = Vue.extend({
                     },
                     onImageUpload: function(files)
                     {
-                        console.log('files-->', files) ;
+
+                        this.consoleLog(files, '-->');
+
                         self.uploadSummernoteImage(files[0], editor_id);
+
                     }
                 },
 
@@ -737,8 +749,21 @@ let VueCommon = Vue.extend({
             });
 
 
-        }
+        },
         //---------------------------------------------------------------------
+        consoleLog: function (data, label) {
+
+            if(show_console_logs == 1)
+            {
+                if(label)
+                {
+                    console.log(label, data);
+                } else
+                {
+                    console.log(data);
+                }
+            }
+        }
         //---------------------------------------------------------------------
     }
 

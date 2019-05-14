@@ -21,6 +21,7 @@ $settings =  [
     'plugins_path' => 'vaahcms/Plugins',
     'per_page' => 20,
     'minified' => 0,
+    'show_console_logs' => 1,
 ];
 
 $config = array_merge($config, $settings);

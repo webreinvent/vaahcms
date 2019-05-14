@@ -39,7 +39,7 @@ const app = new VueCommon({
             var url = this.urls.current+"/store/app/info";
             var params = this.app_info;
 
-            console.log(params);
+            this.consoleLog(params, 'test');
 
             this.processHttpRequest(url, params, this.storeAppInfoAfter);
         },

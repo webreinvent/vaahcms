@@ -44,14 +44,16 @@ class SetupController extends Controller
             return response()->json($response);
         }
 
-        $data['inputs'] = $request->all();
+        $inputs = $request->all();
 
-        $response['status'] = 'failed';
-        $response['errors'][] = 'error';
+        $env_data = \View::make($this->theme.'.setup.partials.setup-env-sample')
+            ->with('data', (object)$inputs)->render();
+
+        \Storage::put("../../.env-test", $env_data);
 
         $response['status'] = 'success';
         $response['messages'][] = 'Saved';
-        $response['data'] = $data;
+        $response['data']['env'] = $env_data;
 
         return response()->json($response);
 
