@@ -12,7 +12,6 @@ if (File::exists($path)) {
     $config = json_decode($file);
     $config = (array)$config;
 }
-
 $settings =  [
     'admin_theme' => 'default',
     'public_theme' => 'default',
