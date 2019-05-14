@@ -49,7 +49,7 @@ class SetupController extends Controller
         $env_data = \View::make($this->theme.'.setup.partials.setup-env-sample')
             ->with('data', (object)$inputs)->render();
 
-        \Storage::put("../../.env-test", $env_data);
+        \File::put(base_path(".env-test"), $env_data);
 
         $response['status'] = 'success';
         $response['messages'][] = 'Saved';
