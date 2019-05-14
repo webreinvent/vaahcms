@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateVhPermissionsTable extends Migration
+class CreateVhUserAuthorizationsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,19 +13,15 @@ class CreateVhPermissionsTable extends Migration
      */
     public function up()
     {
-        Schema::create('vh_permissions', function (Blueprint $table) {
+        Schema::create('vh_user_authorizations', function (Blueprint $table) {
             $table->increments('id');
 
-            $table->string('uid')->nullable();
-            $table->string('module')->nullable();
-            $table->string('section')->nullable();
+            $table->integer('vh_user_id')->nullable();
             $table->string('name')->nullable();
-            $table->string('label')->nullable();
-            $table->string('details')->nullable();
-            $table->integer('count_users')->nullable();
-            $table->integer('count_roles')->nullable();
-            $table->boolean('is_active')->nullable();
-            $table->dateTime('synced_at')->nullable();
+            $table->string('slug')->nullable();
+            $table->string('authorization_id')->nullable();
+            $table->dateTime('last_authorization_at')->nullable();
+            $table->text('meta')->nullable();
 
             $table->integer('created_by')->nullable();
             $table->integer('updated_by')->nullable();
@@ -42,6 +38,6 @@ class CreateVhPermissionsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('vh_permissions');
+        Schema::dropIfExists('vh_user_authorizations');
     }
 }

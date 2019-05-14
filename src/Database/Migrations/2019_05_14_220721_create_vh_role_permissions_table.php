@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateVhRolesTable extends Migration
+class CreateVhRolePermissionsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,16 +13,10 @@ class CreateVhRolesTable extends Migration
      */
     public function up()
     {
-        Schema::create('vh_roles', function (Blueprint $table) {
+        Schema::create('vh_role_permissions', function (Blueprint $table) {
             $table->increments('id');
-
-            $table->string('name')->nullable();
-            $table->string('slug')->nullable();
-            $table->string('details')->nullable();
-            $table->integer('count_users')->nullable();
-            $table->integer('count_permissions')->nullable();
-            $table->boolean('is_active')->nullable();
-
+            $table->integer('vh_role_id');
+            $table->integer('vh_permission_id');
             $table->integer('created_by')->nullable();
             $table->integer('updated_by')->nullable();
             $table->integer('deleted_by')->nullable();
@@ -38,6 +32,6 @@ class CreateVhRolesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('vh_roles');
+        Schema::dropIfExists('vh_role_permissions');
     }
 }
