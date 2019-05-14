@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+  
+<!-- Mirrored from themepixels.me/dashforge/template/classic-plus/app-calendar.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 13 May 2019 20:12:30 GMT -->
+<head>
+
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Twitter -->
+    <meta name="twitter:site" content="@themepixels">
+    <meta name="twitter:creator" content="@themepixels">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="DashForge">
+    <meta name="twitter:description" content="Responsive Bootstrap 4 Dashboard Template">
+    <meta name="twitter:image" content="../../img/dashforge-social.html">
+
+    <!-- Facebook -->
+    <meta property="og:url" content="http://themepixels.me/dashforge">
+    <meta property="og:title" content="DashForge">
+    <meta property="og:description" content="Responsive Bootstrap 4 Dashboard Template">
+
+    <meta property="og:image" content="../../img/dashforge-social.html">
+    <meta property="og:image:secure_url" content="../../img/dashforge-social.html">
+    <meta property="og:image:type" content="image/png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="600">
+
+    <!-- Meta -->
+    <meta name="description" content="Responsive Bootstrap 4 Dashboard Template">
+    <meta name="author" content="ThemePixels">
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" type="image/x-icon" href="../../assets/img/favicon.png">
+
+    <title>DashForge Responsive Bootstrap 4 Dashboard Template</title>
+
+    <!-- vendor css -->
+    <link href="../../lib/%40fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">
+    <link href="../../lib/ionicons/css/ionicons.min.css" rel="stylesheet">
+    <link href="../../lib/fullcalendar/fullcalendar.min.css" rel="stylesheet">
+    <link href="../../lib/select2/css/select2.min.css" rel="stylesheet">
+
+    <!-- DashForge CSS -->
+    <link rel="stylesheet" href="../../assets/css/dashforge.css">
+    <link rel="stylesheet" href="../../assets/css/dashforge.calendar.css">
+  </head>
+  <body>
+
+    <aside class="aside aside-fixed">
+      <div class="aside-header">
+        <a href="http://themepixels.me/dashforge/index.html" class="aside-logo">dash<span>forge</span></a>
+        <a href="#" class="aside-menu-link">
+          <i data-feather="menu"></i>
+          <i data-feather="x"></i>
+        </a>
+      </div>
+      <div class="aside-body">
+        <div class="aside-loggedin">
+          <div class="d-flex align-items-center justify-content-start">
+            <a href="#" class="avatar"><img src="../../assets/img/img1.png" class="rounded-circle" alt=""></a>
+            <div class="aside-alert-link">
+              <a href="#" class="new" data-toggle="tooltip" title="You have 2 unread messages"><i data-feather="message-square"></i></a>
+              <a href="#" class="new" data-toggle="tooltip" title="You have 4 new notifications"><i data-feather="bell"></i></a>
+              <a href="#" data-toggle="tooltip" title="Sign out"><i data-feather="log-out"></i></a>
+            </div>
+          </div>
+          <div class="aside-loggedin-user">
+            <a href="#loggedinMenu" class="d-flex align-items-center justify-content-between mg-b-2" data-toggle="collapse">
+              <h6 class="tx-semibold mg-b-0">Katherine Pechon</h6>
+              <i data-feather="chevron-down"></i>
+            </a>
+            <p class="tx-color-03 tx-12 mg-b-0">Administrator</p>
+          </div>
+          <div class="collapse" id="loggedinMenu">
+            <ul class="nav nav-aside mg-b-0">
+              <li class="nav-item"><a href="#" class="nav-link"><i data-feather="edit"></i> <span>Edit Profile</span></a></li>
+              <li class="nav-item"><a href="#" class="nav-link"><i data-feather="user"></i> <span>View Profile</span></a></li>
+              <li class="nav-item"><a href="#" class="nav-link"><i data-feather="settings"></i> <span>Account Settings</span></a></li>
+              <li class="nav-item"><a href="#" class="nav-link"><i data-feather="help-circle"></i> <span>Help Center</span></a></li>
+              <li class="nav-item"><a href="#" class="nav-link"><i data-feather="log-out"></i> <span>Sign Out</span></a></li>
+            </ul>
+          </div>
+        </div><!-- aside-loggedin -->
+        <ul class="nav nav-aside">
+          <li class="nav-label">Dashboard</li>
+          <li class="nav-item"><a href="dashboard-one.html" class="nav-link"><i data-feather="shopping-bag"></i> <span>Sales Monitoring</span></a></li>
+          <li class="nav-item"><a href="dashboard-two.html" class="nav-link"><i data-feather="globe"></i> <span>Website Analytics</span></a></li>
+          <li class="nav-item"><a href="dashboard-three.html" class="nav-link"><i data-feather="pie-chart"></i> <span>Cryptocurrency</span></a></li>
+          <li class="nav-item"><a href="dashboard-four.html" class="nav-link"><i data-feather="life-buoy"></i> <span>Helpdesk Management</span></a></li>
+          <li class="nav-label mg-t-25">Web Apps</li>
+          <li class="nav-item active"><a href="app-calendar.html" class="nav-link"><i data-feather="calendar"></i> <span>Calendar</span></a></li>
+          <li class="nav-item"><a href="app-chat.html" class="nav-link"><i data-feather="message-square"></i> <span>Chat</span></a></li>
+          <li class="nav-item"><a href="app-contacts.html" class="nav-link"><i data-feather="users"></i> <span>Contacts</span></a></li>
+          <li class="nav-item"><a href="app-file-manager.html" class="nav-link"><i data-feather="file-text"></i> <span>File Manager</span></a></li>
+          <li class="nav-item"><a href="app-mail.html" class="nav-link"><i data-feather="mail"></i> <span>Mail</span></a></li>
+
+          <li class="nav-label mg-t-25">Pages</li>
+          <li class="nav-item with-sub">
+            <a href="#" class="nav-link"><i data-feather="user"></i> <span>User Pages</span></a>
+            <ul>
+              <li><a href="page-profile-view.html">View Profile</a></li>
+              <li><a href="page-connections.html">Connections</a></li>
+              <li><a href="page-groups.html">Groups</a></li>
+              <li><a href="page-events.html">Events</a></li>
+            </ul>
+          </li>
+          <li class="nav-item with-sub">
+            <a href="#" class="nav-link"><i data-feather="file"></i> <span>Other Pages</span></a>
+            <ul>
+              <li><a href="page-timeline.html">Timeline</a></li>
+            </ul>
+          </li>
+          <li class="nav-label mg-t-25">User Interface</li>
+          <li class="nav-item"><a href="http://themepixels.me/dashforge/components" class="nav-link"><i data-feather="layers"></i> <span>Components</span></a></li>
+          <li class="nav-item"><a href="http://themepixels.me/dashforge/collections" class="nav-link"><i data-feather="box"></i> <span>Collections</span></a></li>
+        </ul>
+      </div>
+    </aside>
+
+    <div class="content ht-100v pd-0">
+      <div class="content-header">
+        <div class="content-search">
+          <i data-feather="search"></i>
+          <input type="search" class="form-control" placeholder="Search calendar">
+        </div>
+        <nav class="nav">
+          <a href="#" class="nav-link"><i data-feather="help-circle"></i></a>
+          <a href="#" class="nav-link"><i data-feather="grid"></i></a>
+          <a href="#" class="nav-link"><i data-feather="align-left"></i></a>
+        </nav>
+      </div><!-- content-header -->
+
+      <div class="content-body pd-0">
+        <div id="calendar" class="calendar-content-body"></div>
+      </div>
+    </div><!-- content -->
+
+    <div class="modal calendar-modal-create fade effect-scale" id="modalCreateEvent" role="dialog" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-body pd-20 pd-sm-30">
+            <button type="button" class="close pos-absolute t-20 r-20" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true"><i data-feather="x"></i></span>
+            </button>
+
+            <h5 class="tx-18 tx-sm-20 mg-b-20 mg-sm-b-30">Create New Event</h5>
+
+            <form id="formCalendar" method="post" action="http://themepixels.me/dashforge/template/classic-plus/app-calendar.html">
+              <div class="form-group">
+                <input type="text" class="form-control" placeholder="Add title">
+              </div><!-- form-group -->
+              <div class="form-group d-flex align-items-center">
+                <div class="custom-control custom-radio">
+                  <input type="radio" id="customRadio1" name="customRadio" class="custom-control-input" checked>
+                  <label class="custom-control-label" for="customRadio1">Event</label>
+                </div>
+                <div class="custom-control custom-radio mg-l-20">
+                  <input type="radio" id="customRadio2" name="customRadio" class="custom-control-input" checked>
+                  <label class="custom-control-label" for="customRadio2">Reminder</label>
+                </div>
+              </div><!-- form-group -->
+              <div class="form-group mg-t-30">
+                <label class="tx-uppercase tx-sans tx-11 tx-medium tx-spacing-1 tx-color-03">Start Date</label>
+                <div class="row row-xs">
+                  <div class="col-7">
+                    <input id="eventStartDate" type="text" value="" class="form-control" placeholder="Select date">
+                  </div><!-- col-7 -->
+                  <div class="col-5">
+                    <select class="custom-select">
+                      <option selected>Select Time</option>
+                    </select>
+                  </div><!-- col-5 -->
+                </div><!-- row -->
+              </div><!-- form-group -->
+              <div class="form-group">
+                <label class="tx-uppercase tx-sans tx-11 tx-medium tx-spacing-1 tx-color-03">End Date</label>
+                <div class="row row-xs">
+                  <div class="col-7">
+                    <input id="eventEndDate" type="text" value="" class="form-control" placeholder="Select date">
+                  </div><!-- col-7 -->
+                  <div class="col-5">
+                    <select class="custom-select">
+                      <option selected>Select Time</option>
+                    </select>
+                  </div><!-- col-5 -->
+                </div><!-- row -->
+              </div><!-- form-group -->
+              <div class="form-group">
+                <textarea class="form-control" rows="2" placeholder="Write some description (optional)"></textarea>
+              </div><!-- form-group -->
+            </form>
+          </div><!-- modal-body -->
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-primary mg-r-5">Add Event</button>
+            <a href="#" class="btn btn-secondary" data-dismiss="modal">Discard</a>
+          </div><!-- modal-footer -->
+        </div><!-- modal-content -->
+      </div><!-- modal-dialog -->
+    </div><!-- modal -->
+
+    <div class="modal calendar-modal-event fade effect-scale" id="modalCalendarEvent" role="dialog" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h6 class="event-title"></h6>
+            <nav class="nav nav-modal-event">
+              <a href="#" class="nav-link"><i data-feather="external-link"></i></a>
+              <a href="#" class="nav-link"><i data-feather="trash-2"></i></a>
+              <a href="#" class="nav-link" data-dismiss="modal"><i data-feather="x"></i></a>
+            </nav>
+          </div><!-- modal-header -->
+          <div class="modal-body">
+            <div class="row row-sm">
+              <div class="col-sm-6">
+                <label class="tx-uppercase tx-sans tx-11 tx-medium tx-spacing-1 tx-color-03">Start Date</label>
+                <p class="event-start-date"></p>
+              </div>
+              <div class="col-sm-6">
+                <label class="tx-uppercase tx-sans tx-11 tx-medium tx-spacing-1 tx-color-03">End Date</label>
+                <p class="event-end-date"></p>
+              </div><!-- col-6 -->
+            </div><!-- row -->
+
+            <label class="tx-uppercase tx-sans tx-11 tx-medium tx-spacing-1 tx-color-03">Description</label>
+            <p class="event-desc tx-gray-900 mg-b-40"></p>
+
+            <a href="#" class="btn btn-secondary pd-x-20" data-dismiss="modal">Close</a>
+          </div><!-- modal-body -->
+        </div><!-- modal-content -->
+      </div><!-- modal-dialog -->
+    </div><!-- modal -->
+
+    <script src="../../lib/jquery/jquery.min.js"></script>
+    <script src="../../lib/jqueryui/jquery-ui.min.js"></script>
+    <script src="../../lib/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="../../lib/feather-icons/feather.min.js"></script>
+    <script src="../../lib/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+    <script src="../../lib/moment/min/moment.min.js"></script>
+    <script src="../../lib/fullcalendar/fullcalendar.min.js"></script>
+    <script src="../../lib/select2/js/select2.full.min.js"></script>
+
+    <script src="../../assets/js/dashforge.js"></script>
+    <script src="../../assets/js/dashforge.aside.js"></script>
+    <script src="../../assets/js/calendar-events.js"></script>
+    <script src="../../assets/js/dashforge.calendar.js"></script>
+
+    <!-- append theme customizer -->
+    <script src="../../lib/js-cookie/js.cookie.js"></script>
+    <script src="../../assets/js/dashforge.settings.js"></script>
+
+    <script>
+      $(function(){
+        'use strict'
+
+        $('#calendarSidebarShow').on('click', function(e){
+          e.preventDefault()
+          $('body').toggleClass('calendar-sidebar-show');
+
+          $(this).addClass('d-none');
+          $('#mainMenuOpen').removeClass('d-none');
+        })
+
+        $(document).on('click touchstart', function(e){
+          e.stopPropagation();
+
+          // closing of sidebar menu when clicking outside of it
+          if(!$(e.target).closest('.burger-menu').length) {
+            var sb = $(e.target).closest('.calendar-sidebar').length;
+            if(!sb) {
+              $('body').removeClass('calendar-sidebar-show');
+
+              $('#mainMenuOpen').addClass('d-none');
+              $('#calendarSidebarShow').removeClass('d-none');
+            }
+          }
+        });
+
+      })
+    </script>
+
+
+  </body>
+
+<!-- Mirrored from themepixels.me/dashforge/template/classic-plus/app-calendar.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 13 May 2019 20:12:37 GMT -->
+</html>

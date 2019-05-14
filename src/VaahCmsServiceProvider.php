@@ -3,6 +3,10 @@
 use Illuminate\Support\ServiceProvider;
 use WebReinvent\VaahCms\Providers\ModulesServiceProvider;
 
+/**
+ * Class VaahCmsServiceProvider
+ * @package WebReinvent\VaahCms
+ */
 class VaahCmsServiceProvider extends ServiceProvider {
 
     /**
@@ -19,26 +23,22 @@ class VaahCmsServiceProvider extends ServiceProvider {
      */
     public function boot() {
 
-        $this->handleConfigs();
-        $this->handleMigrations();
-        $this->handleViews();
-        $this->handleAssets();
-        $this->handleTranslations();
-        $this->handleRoutes();
-
+        $this->registerConfigs();
+        $this->registerMigrations();
+        $this->registerViews();
+        $this->registerAssets();
+        $this->registerTranslations();
+        $this->registerRoutes();
 
     }
 
-    //--------------------------------------------------------------
 
-
-
-    //--------------------------------------------------------------
-
-
+    /**
+     *
+     */
     public function register() {
 
-        $this->handleConfigs();
+        $this->registerConfigs();
 
         //register module service provider
         $this->app->register(ModulesServiceProvider::class);
@@ -50,16 +50,20 @@ class VaahCmsServiceProvider extends ServiceProvider {
 
     }
 
-    //--------------------------------------------------------------
 
+    /**
+     * @return array
+     */
     public function provides() {
 
         return [];
     }
 
-    //--------------------------------------------------------------
 
-    private function handleConfigs() {
+    /**
+     *
+     */
+    private function registerConfigs() {
 
 
         $configPath = __DIR__ . '/Config/vaahcms.php';
@@ -70,9 +74,10 @@ class VaahCmsServiceProvider extends ServiceProvider {
 
     }
 
-    //--------------------------------------------------------------
-
-    private function handleTranslations() {
+    /**
+     *
+     */
+    private function registerTranslations() {
 
         $path = __DIR__.'/Resources/lang';
 
@@ -81,31 +86,38 @@ class VaahCmsServiceProvider extends ServiceProvider {
         $this->publishes([$path => base_path('resources/lang/vendor/vaahcms')], 'lang');
     }
 
-    //--------------------------------------------------------------
-
-    private function handleViews() {
+    /**
+     *
+     */
+    private function registerViews() {
 
         $this->loadViewsFrom(__DIR__.'/Resources/views', 'vaahcms');
         $this->publishes([__DIR__.'/Resources/views' => base_path('resources/views/vendor/vaahcms')], 'views');
 
     }
 
-    //--------------------------------------------------------------
-    private function handleAssets() {
+    /**
+     *
+     */
+    private function registerAssets() {
 
         $this->publishes([__DIR__.'/Resources/assets' => base_path('resources/assets/vendor/vaahcms')], 'assets');
 
     }
-    //--------------------------------------------------------------
 
-    private function handleMigrations() {
+    /**
+     *
+     */
+    private function registerMigrations() {
 
         $this->publishes([__DIR__ . '/Database/Migrations' => database_path('migrations')], 'migrations');
     }
 
-    //--------------------------------------------------------------
 
-    private function handleRoutes() {
+    /**
+     *
+     */
+    private function registerRoutes() {
 
         include __DIR__.'/Routes/admin.php';
         include __DIR__.'/Routes/public.php';
@@ -113,8 +125,5 @@ class VaahCmsServiceProvider extends ServiceProvider {
 
     }
 
-    //--------------------------------------------------------------
 
-    //--------------------------------------------------------------
-    //--------------------------------------------------------------
 }

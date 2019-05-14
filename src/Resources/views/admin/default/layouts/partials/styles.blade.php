@@ -5,6 +5,10 @@
 
 @else
 
-    <link href="{{vh_get_admin_css('dashforge.css')}}" rel="stylesheet" media="screen">
+    {{vh_load_admin_css()}}
+
+    <link href="{{vh_get_admin_assets('lib/fortawesome/fontawesome-free/css/all.min.css')}}" rel="stylesheet" media="screen">
+    <link href="{{vh_get_admin_assets('lib/ionicons/css/ionicons.min.css')}}" rel="stylesheet" media="screen">
+    <link href="{{vh_get_admin_css('style.css')}}" rel="stylesheet" media="screen">
 
 @endif
