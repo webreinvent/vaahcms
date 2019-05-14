@@ -16,7 +16,6 @@
       "WebReinvent\\VaahCms\\": "src/"
     },
     "files": [
-      "src/helpers.php"
     ]
   }
 }

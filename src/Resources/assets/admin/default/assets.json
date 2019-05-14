@@ -2,6 +2,7 @@
   "css": [
     "resources/assets/vendor/vaahcms/admin/default/lib/fortawesome/fontawesome-free/css/all.min.css",
     "resources/assets/vendor/vaahcms/admin/default/lib/ionicons/css/ionicons.min.css",
+    "resources/assets/vendor/vaahcms/admin/default/assets/css/dashforge-fonts.css",
     "resources/assets/vendor/vaahcms/admin/default/assets/css/dashforge.css"
   ],
   "js": [

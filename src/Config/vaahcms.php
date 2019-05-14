@@ -13,6 +13,8 @@ if (File::exists($path)) {
     $config = (array)$config;
 }
 $settings =  [
+    'app_name' => 'VaahCMS',
+    'app_slug' => 'vaahcms',
     'admin_theme' => 'default',
     'public_theme' => 'default',
     'modules_path' => 'vaahcms/Modules',
