@@ -8,6 +8,9 @@
   "js": [
     "resources/assets/vendor/vaahcms/admin/default/lib/jquery/jquery.min.js",
     "resources/assets/vendor/vaahcms/admin/default/lib/bootstrap/js/bootstrap.bundle.min.js",
+    "resources/assets/vendor/vaahcms/admin/default/lib/moment/moment.min.js",
+    "resources/assets/vendor/vaahcms/admin/default/lib/vue/vue.min.js",
+    "resources/assets/vendor/vaahcms/admin/default/lib/vue/vue-resource.min.js",
     "resources/assets/vendor/vaahcms/admin/default/lib/feather-icons/feather.min.js",
     "resources/assets/vendor/vaahcms/admin/default/lib/perfect-scrollbar/perfect-scrollbar.min.js",
     "resources/assets/vendor/vaahcms/admin/default/lib/jquery.flot/jquery.flot.js",
@@ -15,6 +18,8 @@
     "resources/assets/vendor/vaahcms/admin/default/lib/jquery.flot/jquery.flot.resize.js",
     "resources/assets/vendor/vaahcms/admin/default/lib/chart.js/Chart.bundle.min.js",
     "resources/assets/vendor/vaahcms/admin/default/lib/jqvmap/jquery.vmap.min.js",
-    "resources/assets/vendor/vaahcms/admin/default/assets/js/dashforge.js"
+    "resources/assets/vendor/vaahcms/admin/default/assets/js/dashforge.js",
+    "resources/assets/vendor/vaahcms/admin/default/assets/js/VuePagination.js",
+    "resources/assets/vendor/vaahcms/admin/default/assets/js/VueCommon.js"
   ]
 }
