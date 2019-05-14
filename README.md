@@ -1,7 +1,7 @@
 # vaahcms
 Laravel Based Rapid Development CMS
 
-# Publish Assets
+### Publish Assets
 
 ```bash
 php artisan vendor:publish --provider="WebReinvent\VaahCms\VaahCmsServiceProvider"
@@ -27,12 +27,12 @@ php artisan vendor:publish --provider="WebReinvent\VaahCms\VaahCmsServiceProvide
 php artisan vendor:publish --provider="WebReinvent\VaahCms\VaahCmsServiceProvider" --tag=assets
 ```
 
-# Step 1) Publish Assets
+### Step 1) Publish Assets
 ```bash
 php artisan vendor:publish --provider="WebReinvent\VaahCms\VaahCmsServiceProvider" --tag=assets
 ```
 
-# Step 2) Minify Assets with Laravel Mix
+### Step 2) Minify Assets with Laravel Mix
 
 Install following package
 ```bash

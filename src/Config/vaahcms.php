@@ -19,7 +19,7 @@ $settings =  [
     'modules_path' => 'vaahcms/Modules',
     'plugins_path' => 'vaahcms/Plugins',
     'per_page' => 20,
-    'minified' => 1,
+    'minified' => 0,
 ];
 
 $config = array_merge($config, $settings);
