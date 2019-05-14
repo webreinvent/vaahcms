@@ -6,7 +6,7 @@ const app = new VueCommon({
         urls: [],
         list: {},
         active_step: 'database',
-        app: {
+        app_info: {
             app_name: null,
             db_host: null,
             db_port: null,
@@ -29,8 +29,24 @@ const app = new VueCommon({
     },
     methods:{
         //---------------------------------------------------------------------
+        storeAppInfo: function (e) {
+            if(e)
+            {
+                e.preventDefault();
+            }
 
-        //--------------------------------------------
+            var url = this.urls.current+"/store/app/info";
+            var params = this.app_info;
+
+            console.log(params);
+
+            this.processHttpRequest(url, params, this.storeAppInfoAfter);
+        },
+        //---------------------------------------------------------------------
+        storeAppInfoAfter: function (data) {
+
+            this.stopNprogress();
+        },
 
         //---------------------------------------------------------------------
         //---------------------------------------------------------------------

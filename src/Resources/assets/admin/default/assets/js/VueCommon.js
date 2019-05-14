@@ -39,6 +39,10 @@ let VueCommon = Vue.extend({
                             NProgress.done();
                         }
                     }
+                }, (response) => {
+                    console.log(response);
+                    this.errors([response.statusText]);
+                    NProgress.done();
                 });
         },
         //---------------------------------------------------------------------
