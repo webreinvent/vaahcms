@@ -22,3 +22,7 @@ php artisan vendor:publish --provider="WebReinvent\VaahCms\VaahCmsServiceProvide
 ```bash
 php artisan vendor:publish --provider="WebReinvent\VaahCms\VaahCmsServiceProvider" --tag=migrations
 ```
+
+```bash
+php artisan vendor:publish --provider="WebReinvent\VaahCms\VaahCmsServiceProvider" --tag=assets
+```
