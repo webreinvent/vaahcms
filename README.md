@@ -1,30 +1,41 @@
 # vaahcms
 Laravel Based Rapid Development CMS
 
-### Publish Assets
+### Commands
 
+#### Publish All Assets
 ```bash
 php artisan vendor:publish --provider="WebReinvent\VaahCms\VaahCmsServiceProvider"
 ```
 
+#### Publish All Configuration
 ```bash
 php artisan vendor:publish --provider="WebReinvent\VaahCms\VaahCmsServiceProvider" --tag=config
 ```
 
+#### Publish Languages
 ```bash
 php artisan vendor:publish --provider="WebReinvent\VaahCms\VaahCmsServiceProvider" --tag=lang
 ```
 
+#### Publish Views
 ```bash
 php artisan vendor:publish --provider="WebReinvent\VaahCms\VaahCmsServiceProvider" --tag=views
 ```
 
+#### Publish Migrations
 ```bash
 php artisan vendor:publish --provider="WebReinvent\VaahCms\VaahCmsServiceProvider" --tag=migrations
 ```
 
+#### Publish Assets
 ```bash
 php artisan vendor:publish --provider="WebReinvent\VaahCms\VaahCmsServiceProvider" --tag=assets
+```
+
+#### Create migrations
+```bash
+php artisan make:migration create_vh_users_table --path=/packages/vaahcms/src/Database/Migrations
 ```
 
 ### Step 1) Publish Assets
