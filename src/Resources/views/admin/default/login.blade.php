@@ -45,7 +45,7 @@
                         <div class="divider-text">or</div>
                         <button class="btn btn-outline-facebook btn-block">Sign In With Facebook</button>
                         <button class="btn btn-outline-twitter btn-block">Sign In With Twitter</button>
-                        <div class="tx-13 mg-t-20 tx-center">Don't have an account? <a href="page-signup.html">Create an Account</a></div>
+                        <div class="tx-13 mg-t-20 tx-center">Don't have an account? <a href="#">Create an Account</a></div>
                     </div>
                 </div><!-- sign-wrapper -->
             </div><!-- media -->

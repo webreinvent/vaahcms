@@ -23,7 +23,16 @@ class ModulesServiceProvider extends ServiceProvider
      */
     public function register()
     {
+        if(\File::exists(config('vaahcms.modules_path')))
+        {
+            $this->registerModuleServiceProviders();
+        }
 
+    }
+
+    //----------------------------------------------------
+    public function registerModuleServiceProviders()
+    {
         $this->app->singleton('ModulesLoader', function($app)
         {
             return new ModulesLoader($app['files'], config('vaahcms.modules_path'));
@@ -44,9 +53,7 @@ class ModulesServiceProvider extends ServiceProvider
                 $this->app->register($provider);
             }
         }
-
     }
-
     //----------------------------------------------------
 
     //----------------------------------------------------

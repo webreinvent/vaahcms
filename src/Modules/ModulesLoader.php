@@ -68,6 +68,7 @@ class ModulesLoader {
      */
     public function findModules()
     {
+
         foreach ($this->files->directories($this->getPath()) as $module)
         {
 
