@@ -45,6 +45,8 @@ Route::group(
         Route::post( '/store/app/info', 'SetupController@storeAppInfo' )
             ->name( 'vh.setup.store.app.info' );
         //------------------------------------------------
+        Route::post( '/run/migrations', 'SetupController@runMigrations' )
+            ->name( 'vh.setup.run/migrations' );
         //------------------------------------------------
         //------------------------------------------------
         //------------------------------------------------

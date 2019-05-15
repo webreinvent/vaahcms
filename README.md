@@ -28,14 +28,28 @@ php artisan vendor:publish --provider="WebReinvent\VaahCms\VaahCmsServiceProvide
 php artisan vendor:publish --provider="WebReinvent\VaahCms\VaahCmsServiceProvider" --tag=migrations
 ```
 
+#### Publish Seeds
+```bash
+php artisan vendor:publish --provider="WebReinvent\VaahCms\VaahCmsServiceProvider" --tag=seeds
+```
+
 #### Publish Assets
 ```bash
 php artisan vendor:publish --provider="WebReinvent\VaahCms\VaahCmsServiceProvider" --tag=assets
 ```
 
+
+
 #### Create migrations
 ```bash
 php artisan make:migration create_vh_users_table --path=/packages/vaahcms/src/Database/Migrations
+```
+
+#### Create seeds
+```bash
+php artisan make:seeder PermissionsTableSeeder --path=/packages/vaahcms/src/Database/Seeders
+php artisan make:seeder RolesTableSeeder --path=/packages/vaahcms/src/Database/Seeders
+php artisan make:command HealthcheckCommand --path=/packages/vaahcms/src/Database/Seeders
 ```
 
 ### Step 1) Publish Assets

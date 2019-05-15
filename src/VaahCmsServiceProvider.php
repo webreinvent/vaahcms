@@ -25,6 +25,7 @@ class VaahCmsServiceProvider extends ServiceProvider {
 
         $this->registerConfigs();
         $this->registerMigrations();
+        $this->registerSeeders();
         $this->registerViews();
         $this->registerAssets();
         $this->registerTranslations();
@@ -113,6 +114,13 @@ class VaahCmsServiceProvider extends ServiceProvider {
         $this->publishes([__DIR__ . '/Database/Migrations' => database_path('migrations')], 'migrations');
     }
 
+    /**
+     *
+     */
+    private function registerSeeders() {
+
+        $this->publishes([__DIR__ . '/Database/Seeders' => database_path('seeds')], 'seeds');
+    }
 
     /**
      *

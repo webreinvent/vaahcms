@@ -2,7 +2,7 @@
 <form v-if="active_step == 'database'">
 
     <div class="form-group row">
-        <label for="name" class="col-sm-3 col-form-label">Website Name</label>
+        <label for="name" class="col-sm-3 col-form-label">App/Web Name</label>
         <div class="col-sm-9">
             <input type="text" class="form-control" v-model="app_info.app_name" id="name" placeholder="">
             <ul class="parsley-errors-list filled" id="parsley-id-5">

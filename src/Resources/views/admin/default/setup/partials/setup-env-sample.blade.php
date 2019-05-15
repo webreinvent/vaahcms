@@ -1,17 +1,17 @@
 APP_NAME={{$data->app_name}}
 APP_ENV=local
-APP_KEY=base64:us9L/zM+t0C3XQLf6y7erKOgJ7udS7fETXm+GtLlduc=
+APP_KEY=base64:{{$data->app_key}}
 APP_DEBUG=true
-APP_URL=http://localhost/packages
+APP_URL={{$data->app_url}}
 
 LOG_CHANNEL=stack
 
 DB_CONNECTION=mysql
-DB_HOST=127.0.0.1
-DB_PORT=3306
-DB_DATABASE=packages
-DB_USERNAME=root
-DB_PASSWORD=
+DB_HOST={{$data->db_host}}
+DB_PORT={{$data->db_port}}
+DB_DATABASE={{$data->db_database}}
+DB_USERNAME={{$data->db_username}}
+DB_PASSWORD={{$data->db_password}}
 
 BROADCAST_DRIVER=log
 CACHE_DRIVER=file

@@ -28,7 +28,7 @@
                             <span class="step-title">App & Database Details</span>
                         </a>
                     </li>
-                    <li class="step-item">
+                    <li class="step-item" v-bind:class="{'active': active_step == 'run_migrations'}">
                         <a href="" class="step-link">
                             <span class="step-number">2</span>
                             <span class="step-title">Run Migrations</span>
@@ -52,6 +52,7 @@
                 <div class="col-6 offset-3">
 
                     @include("vaahcms::admin.default.setup.partials.setup-db-details")
+                    @include("vaahcms::admin.default.setup.partials.setup-run-migrations")
 
                 </div>
 
