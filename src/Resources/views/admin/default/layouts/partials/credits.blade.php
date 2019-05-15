@@ -1,0 +1,1 @@
+VaahCMS is developed by <a href="https://www.webreinvent.com" target="_blank">WebReinvent</a>

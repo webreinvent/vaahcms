@@ -80,12 +80,6 @@ function vh_get_admin_asset_url($asset_url)
     return $asset_url."?v=".config('vaahcms.version');
 }
 //-----------------------------------------------------------------------------------
-
-//-----------------------------------------------------------------------------------
-function vh_get_admin_img($file_path)
-{
-    return vh_get_admin_theme_url()."/img/".$file_path;
-}
 //-----------------------------------------------------------------------------------
 function vh_get_admin_file($file_path)
 {

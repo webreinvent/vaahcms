@@ -19,7 +19,7 @@
     "resources/assets/vendor/vaahcms/admin/default/lib/nprogress/nprogress.js",
     "resources/assets/vendor/vaahcms/admin/default/lib/feather-icons/feather.min.js",
     "resources/assets/vendor/vaahcms/admin/default/lib/perfect-scrollbar/perfect-scrollbar.min.js",
-    "resources/assets/vendor/vaahcms/admin/default/assets/js/dashforge.js",
+    "resources/assets/vendor/vaahcms/admin/default/lib/js-cookie/js.cookie.js",
     "resources/assets/vendor/vaahcms/admin/default/assets/js/VuePagination.js",
     "resources/assets/vendor/vaahcms/admin/default/assets/js/VueCommon.js"
   ]
