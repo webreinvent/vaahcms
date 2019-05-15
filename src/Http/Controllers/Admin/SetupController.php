@@ -33,13 +33,31 @@ class SetupController extends Controller
     //----------------------------------------------------------
     public function checkSetupStatus()
     {
+
+        //check database connection
+        try {
+            \DB::connection()->getPdo();
+        } catch (\Exception $e) {
+            $response['status'] = 'success';
+            $response['data']['active_step'] = 'database';
+            return response()->json($response);
+        }
+
+        //check users table
+        if(!\Schema::hasTable('vh_users'))
+        {
+            $response['status'] = 'success';
+            $response['data']['active_step'] = 'database';
+            return response()->json($response);
+        }
+
         $any_admin_exist = User::countAdmins();
 
         if($any_admin_exist > 0)
         {
             $response['status'] = 'success';
-            $response['messages'][] = trans("vh.setup_completed");
-            $response['data']['flash_message'] = trans("vh.setup_completed");
+            $response['messages'][] = trans("vaahcms::messages.setup_completed");
+            $response['data']['flash_message'] = trans("vaahcms::messages.setup_completed");
             $response['data']['active_step'] = 'completed';
             return response()->json($response);
         }
@@ -102,11 +120,20 @@ class SetupController extends Controller
         try
         {
 
+            //reset migration
+            $command = 'migrate:fresh';
+            $params = [
+                '--force' => true
+            ];
+            \Artisan::call($command, $params);
+
+
             //publish all migrations of vaahcms package
             $command = 'vendor:publish';
             $params = [
                 '--provider' => "WebReinvent\VaahCms\VaahCmsServiceProvider",
                 '--tag' => "migrations",
+                '--force' => true
             ];
             \Artisan::call($command, $params);
 
@@ -179,12 +206,14 @@ class SetupController extends Controller
         if($any_admin_exist > 0)
         {
             $response['status'] = 'failed';
-            $response['errors'][] = trans("vh.permission_denied");
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
             return response()->json($response);
         }
 
         $user = new User();
         $user->fill($request->all());
+        $user->uid = uniqid();
+        $user->password = \Hash::make($request->password);
         $user->is_active = 1;
         $user->created_ip = \Request::ip();
         $user->save();
@@ -194,14 +223,16 @@ class SetupController extends Controller
         if(!$role)
         {
             $response['status'] = 'failed';
-            $response['errors'][] = \Lang::get('vh.not_exist', ['key' => 'role slug', 'value' => 'admin']);;
+            $response['errors'][] = \Lang::get('vaahcms::messages.not_exist', ['key' => 'role slug', 'value' => 'admin']);;
             return response()->json($response);
         }
         $user->roles()->attach($role->id);
 
-        $response['messages'][] = trans("vh.setup_completed");
-        $response['data']['flash_message'] = trans("vh.setup_completed");
+        $response['status'] = 'success';
+        $response['messages'][] = trans("vaahcms::messages.setup_completed");
+        $response['data']['flash_message'] =  trans("vaahcms::messages.setup_completed");
         $response['data']['active_step'] = 'completed';
+        $response['data']['redirect_url'] = \URL::route('vh.admin.login');
 
         return response()->json($response);
 

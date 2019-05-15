@@ -40,19 +40,31 @@ function vh_search_country($array, $key_name, $value)
     return false;
 }
 //---------------------------------------------------
-function vh_get_country_list_select_options()
+function vh_get_country_list_select_options($show='country_name')
 {
     $html = "";
     $list = vh_get_country_list();
 
+    $html .= '<option value="">Select</option>';
+
     foreach ($list as $item)
     {
-        $html .= '<option value="'.$item['calling_code'].'">'.$item['name'].'</option>';
+        if($show == 'country_name')
+        {
+            $html .= '<option value="'.$item['code'].'">'.$item['name'].'</option>';
+        } else if($show == 'country_code')
+        {
+            $html .= '<option value="'.$item['code'].'">'.$item['code'].'</option>';
+        }else if($show == 'calling_code')
+        {
+            $html .= '<option value="'.$item['calling_code'].'">'.$item['calling_code'].'</option>';
+        }
     }
 
     return $html;
 }
 //---------------------------------------------------
+
 //---------------------------------------------------
 //---------------------------------------------------
 //---------------------------------------------------

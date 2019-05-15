@@ -18,6 +18,7 @@ class CreateVhUsersTable extends Migration
             $table->string('uid')->nullable();
             $table->string('email')->nullable();
             $table->string('username')->nullable();
+            $table->string('password')->nullable();
             $table->string('display_name')->nullable();
             $table->string('title', 5)->nullable();
             $table->string('first_name')->nullable();

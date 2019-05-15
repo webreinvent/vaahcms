@@ -1,5 +1,5 @@
 
-<form v-if="active_step == 'create_admin_account'">
+<form v-if="active_step == 'create_admin_account'" >
 
 
     <div class="form-group row">
@@ -29,7 +29,7 @@
         <div class="col-sm-4">
             <select class="form-control" v-model="admin_info.country_calling_code">
 
-                {!! vh_get_country_list_select_options() !!}
+                {!! vh_get_country_list_select_options('calling_code') !!}
 
             </select>
 

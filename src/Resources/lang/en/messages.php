@@ -13,9 +13,9 @@ return [
     |
     */
 
-    'vh.permission_denied' => 'Permission denied',
-    'vh.setup_completed' => 'Setup already completed',
-    'vh.not_exist' => 'No record with :key :value',
+    'permission_denied' => 'Permission denied',
+    'setup_completed' => 'Setup already completed',
+    'not_exist' => 'No record with :key :value',
 
 
     /*

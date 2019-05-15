@@ -43,9 +43,8 @@
                 </ul>
 
                 <div v-else>
-                    <div class="alert alert-success">
-
-
+                    <div class="alert alert-success" v-if="flash_message">
+                        <p v-html="flash_message"></p>
                     </div>
                 </div>
 
@@ -56,7 +55,7 @@
             <!--form-->
             <div class="row">
 
-                <div class="col-6 offset-3">
+                <div class="col-sm-12 col-md-6 offset-md-3">
 
                     @include("vaahcms::admin.default.setup.partials.setup-db-details")
                     @include("vaahcms::admin.default.setup.partials.setup-run-migrations")
