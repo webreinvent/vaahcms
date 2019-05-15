@@ -46,8 +46,10 @@ Route::group(
             ->name( 'vh.setup.store.app.info' );
         //------------------------------------------------
         Route::post( '/run/migrations', 'SetupController@runMigrations' )
-            ->name( 'vh.setup.run/migrations' );
+            ->name( 'vh.setup.run.migrations' );
         //------------------------------------------------
+        Route::post( '/store/admin', 'SetupController@storeAdmin' )
+            ->name( 'vh.setup.store.admin' );
         //------------------------------------------------
         //------------------------------------------------
     });

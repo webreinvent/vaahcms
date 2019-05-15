@@ -35,7 +35,7 @@
                         </a>
                     </li>
                     <li class="step-item">
-                        <a href="" class="step-link">
+                        <a href="" class="step-link" v-bind:class="{'active': active_step == 'create_admin_account'}">
                             <span class="step-number">3</span>
                             <span class="step-title">Setup Admin Account</span>
                         </a>
@@ -53,6 +53,7 @@
 
                     @include("vaahcms::admin.default.setup.partials.setup-db-details")
                     @include("vaahcms::admin.default.setup.partials.setup-run-migrations")
+                    @include("vaahcms::admin.default.setup.partials.setup-create-admin")
 
                 </div>
 

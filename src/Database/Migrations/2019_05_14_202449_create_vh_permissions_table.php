@@ -17,6 +17,7 @@ class CreateVhPermissionsTable extends Migration
             $table->increments('id');
 
             $table->string('uid')->nullable();
+            $table->string('slug')->nullable();
             $table->string('module')->nullable();
             $table->string('section')->nullable();
             $table->string('name')->nullable();
