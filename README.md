@@ -52,12 +52,66 @@ php artisan make:seeder RolesTableSeeder --path=/packages/vaahcms/src/Database/S
 php artisan make:command HealthcheckCommand --path=/packages/vaahcms/src/Database/Seeders
 ```
 
-### Step 1) Publish Assets
+## Steps to Setup
+
+### Step 1) Install Package
 ```bash
-php artisan vendor:publish --provider="WebReinvent\VaahCms\VaahCmsServiceProvider" --tag=assets
+composer require webreinvent/vaahcms
 ```
 
-### Step 2) Minify Assets with Laravel Mix
+### Step 2) Publish Assets
+```bash
+php artisan vendor:publish --provider="WebReinvent\VaahCms\VaahCmsServiceProvider" --tag=assets
+php artisan vendor:publish --provider="WebReinvent\VaahCms\VaahCmsServiceProvider" --tag=migrations
+php artisan vendor:publish --provider="WebReinvent\VaahCms\VaahCmsServiceProvider" --tag=seeds
+```
+
+### Step 3) Register Service Provider
+
+Add following service provider in `config/app.php`
+
+```php
+/*
+ * Package Service Providers...
+ */
+WebReinvent\VaahCms\VaahCmsServiceProvider::class,
+```
+
+### Step 4) Update composer.json file
+
+Create following folder in your laravel root folder
+
+```
+vaahcms/Modules
+vaahcms/Plugins
+```
+
+Add following two lines in `psr-4` in `composer.json`
+```json
+...
+"autoload": {
+    "files": [],
+    "psr-4": {
+        "App\\": "app/",
+        ...
+        "VaahCms\\Modules\\": "vaahcms/Modules/",
+        "VaahCms\\Plugins\\": "vaahcms/Plugins/"
+        ...
+    },
+    "classmap": [
+        "database/seeds",
+        "database/factories"
+    ]
+},
+...
+```
+
+Then run following command
+```bash
+composer dump-autoload
+```
+
+## Minify Assets of Admin with Laravel Mix
 
 Install following package
 ```bash
