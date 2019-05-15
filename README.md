@@ -77,7 +77,19 @@ Add following service provider in `config/app.php`
 WebReinvent\VaahCms\VaahCmsServiceProvider::class,
 ```
 
-### Step 4) Update composer.json file
+### Step 4) 
+```php
+'guards' => [
+        //...
+        'users' => [
+            'driver' => 'eloquent',
+            'model' => \WebReinvent\VaahCms\Entities\User::class,
+        ],
+        //...
+    ],
+```
+
+### Step 5) Update composer.json file
 
 Create following folder in your laravel root folder
 
