@@ -50,6 +50,9 @@ Route::group(
         //------------------------------------------------
         //------------------------------------------------
         Route::get( '/', 'PublicController@login' )
+            ->name( 'vh.admin' );
+        //------------------------------------------------
+        Route::get( '/login', 'PublicController@redirectToLogin' )
             ->name( 'vh.admin.login' );
         //------------------------------------------------
         Route::post( '/post', 'PublicController@postLogin' )

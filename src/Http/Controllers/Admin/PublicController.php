@@ -26,6 +26,11 @@ class PublicController extends Controller
     }
 
     //----------------------------------------------------------
+    public function redirectToLogin()
+    {
+        return redirect()->route('vh.admin');
+    }
+    //----------------------------------------------------------
     public function postLogin(Request $request)
     {
 
