@@ -7,7 +7,8 @@
     "resources/assets/vendor/vaahcms/admin/default/lib/alertify/css/themes/alertify.css",
     "resources/assets/vendor/vaahcms/admin/default/lib/nprogress/nprogress.css",
     "resources/assets/vendor/vaahcms/admin/default/assets/css/dashforge-fonts.css",
-    "resources/assets/vendor/vaahcms/admin/default/assets/css/dashforge.css"
+    "resources/assets/vendor/vaahcms/admin/default/assets/css/dashforge.css",
+    "resources/assets/vendor/vaahcms/admin/default/assets/css/dashforge.extended.css"
   ],
   "js": [
     "resources/assets/vendor/vaahcms/admin/default/lib/jquery/jquery.min.js",

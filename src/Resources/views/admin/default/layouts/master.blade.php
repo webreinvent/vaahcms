@@ -11,8 +11,15 @@
 	</head>
 	<body class="@if(isset($data->body_class)){{$data->body_class}}@endif">
 
-    @include("vaahcms::admin.default.layouts.partials.errors")
-    @include("vaahcms::admin.default.layouts.partials.flash")
+	<div class="container">
+		<div class="row">
+			<div class="col-12">
+				@include("vaahcms::admin.default.layouts.partials.errors")
+				@include("vaahcms::admin.default.layouts.partials.flash")
+			</div>
+		</div>
+
+	</div>
 
 	@include("vaahcms::admin.default.extend.menu")
 
