@@ -21,7 +21,7 @@
                     </a>
                 </div>
 
-                <ul class="steps mg-t-50 mg-b-50">
+                <ul v-if="active_step != 'completed'" class="steps mg-t-50 mg-b-50">
                     <li class="step-item" v-bind:class="{'active': active_step == 'database'}">
                         <a href="" class="step-link">
                             <span class="step-number">1</span>
@@ -41,6 +41,13 @@
                         </a>
                     </li>
                 </ul>
+
+                <div v-else>
+                    <div class="alert alert-success">
+
+
+                    </div>
+                </div>
 
 
             </div>

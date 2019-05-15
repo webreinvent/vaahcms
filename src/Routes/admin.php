@@ -42,6 +42,9 @@ Route::group(
         Route::get( '/', 'SetupController@index' )
             ->name( 'vh.setup.index' );
         //------------------------------------------------
+        Route::post( '/check/status', 'SetupController@checkSetupStatus' )
+            ->name( 'vh.setup.check.status' );
+        //------------------------------------------------
         Route::post( '/store/app/info', 'SetupController@storeAppInfo' )
             ->name( 'vh.setup.store.app.info' );
         //------------------------------------------------

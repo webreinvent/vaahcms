@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Str;
+use WebReinvent\VaahCms\Entities\Role;
+use WebReinvent\VaahCms\Entities\User;
 
 
 class SetupController extends Controller
@@ -24,9 +26,30 @@ class SetupController extends Controller
     //----------------------------------------------------------
     public function index()
     {
+
         return view($this->theme.'.setup.welcome');
     }
 
+    //----------------------------------------------------------
+    public function checkSetupStatus()
+    {
+        $any_admin_exist = User::countAdmins();
+
+        if($any_admin_exist > 0)
+        {
+            $response['status'] = 'success';
+            $response['messages'][] = trans("vh.setup_completed");
+            $response['data']['flash_message'] = trans("vh.setup_completed");
+            $response['data']['active_step'] = 'completed';
+            return response()->json($response);
+        }
+
+
+        $response['status'] = 'success';
+        $response['data']['active_step'] = 'database';
+
+        return response()->json($response);
+    }
     //----------------------------------------------------------
     public function storeAppInfo(Request $request)
     {
@@ -151,14 +174,34 @@ class SetupController extends Controller
 
         $data = [];
 
-        //$any_admin_exist =
+        $any_admin_exist = User::countAdmins();
 
-        $response['status'] = 'failed';
-        $response['errors'][] = 'error';
+        if($any_admin_exist > 0)
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = trans("vh.permission_denied");
+            return response()->json($response);
+        }
 
-        $response['status'] = 'success';
-        $response['messages'][] = 'Saved';
-        $response['data'] = $data;
+        $user = new User();
+        $user->fill($request->all());
+        $user->is_active = 1;
+        $user->created_ip = \Request::ip();
+        $user->save();
+
+        $role = Role::where('slug', 'admin')->first();
+
+        if(!$role)
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = \Lang::get('vh.not_exist', ['key' => 'role slug', 'value' => 'admin']);;
+            return response()->json($response);
+        }
+        $user->roles()->attach($role->id);
+
+        $response['messages'][] = trans("vh.setup_completed");
+        $response['data']['flash_message'] = trans("vh.setup_completed");
+        $response['data']['active_step'] = 'completed';
 
         return response()->json($response);
 

@@ -1,12 +1,13 @@
 <?php namespace WebReinvent\VaahCms\Entities;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Role extends Model {
 
     use SoftDeletes;
     //-------------------------------------------------
-    protected $table = 'vh_permissions';
+    protected $table = 'vh_roles';
     //-------------------------------------------------
     protected $dates = [
         'created_at',
@@ -42,6 +43,10 @@ class Role extends Model {
         return $query->where( 'is_active', 0 );
     }
 
+    //-------------------------------------------------
+    public function scopeSlug( $query, $slug ) {
+        return $query->where( 'slug', $slug );
+    }
     //-------------------------------------------------
     public function scopeCreatedBy( $query, $user_id ) {
         return $query->where( 'created_by', $user_id );

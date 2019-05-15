@@ -13,8 +13,10 @@ return [
     |
     */
 
-    //'permission_denied' => 'Permission denied.',
-    
+    'vh.permission_denied' => 'Permission denied',
+    'vh.setup_completed' => 'Setup already completed',
+    'vh.not_exist' => 'No record with :key :value',
+
 
     /*
     |--------------------------------------------------------------------------
