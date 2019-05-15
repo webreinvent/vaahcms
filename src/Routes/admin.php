@@ -33,7 +33,7 @@ Route::group(
 
 Route::group(
     [
-        'prefix'     => 'admin/setup',
+        'prefix'     => 'vaahcms/setup',
         'namespace'  => 'WebReinvent\VaahCms\Http\Controllers\Admin'
     ],
     function () {
