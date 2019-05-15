@@ -27,11 +27,11 @@ class VaahCmsTableSeeder extends Seeder
     {
         $list = [
             [
-                'uid' => 'vaahcms#admin#login',
+                'uid' => 'vaahcms#admin#access',
                 'module' => 'vaahcms',
                 'section' => 'admin',
-                'name' => 'login',
-                'label' => 'Admin Login',
+                'name' => 'access',
+                'label' => 'Allow Admin Access',
                 'details' => 'This will allow user to access admin control panel',
                 'is_active' => 1,
             ],

@@ -16,6 +16,9 @@ return [
     'permission_denied' => 'Permission denied',
     'setup_completed' => 'Setup already completed',
     'not_exist' => 'No record with :key :value',
+    'inactive_account' => 'The account is not active',
+    'invalid_credentials' => 'Invalid credentials',
+    'login_required' => 'Login to access the page',
 
 
     /*

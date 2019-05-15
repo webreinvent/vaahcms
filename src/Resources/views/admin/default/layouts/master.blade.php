@@ -11,7 +11,7 @@
 	</head>
 	<body class="@if(isset($data->body_class)){{$data->body_class}}@endif">
 
-    @include("vaahcms::admin.default.layouts.partials.alerts")
+    @include("vaahcms::admin.default.layouts.partials.errors")
     @include("vaahcms::admin.default.layouts.partials.flash")
 
 	@include("vaahcms::admin.default.extend.menu")

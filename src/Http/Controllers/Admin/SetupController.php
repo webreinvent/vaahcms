@@ -27,6 +27,8 @@ class SetupController extends Controller
     public function index()
     {
 
+
+
         return view($this->theme.'.setup.welcome');
     }
 
@@ -89,7 +91,6 @@ class SetupController extends Controller
         }
 
         $inputs = $request->all();
-        $inputs['app_key'] = Str::random(44);
         $inputs['app_url'] = url("/");
 
         if(!isset($inputs['db_password']))
@@ -105,9 +106,7 @@ class SetupController extends Controller
         $response['status'] = 'success';
         $response['messages'][] = 'Details Saved';
         $response['data']['env'] = $env_data;
-
         return response()->json($response);
-
     }
     //----------------------------------------------------------
     public function runMigrations(Request $request)
@@ -119,6 +118,14 @@ class SetupController extends Controller
 
         try
         {
+
+
+            //Set APP_KEY
+            $command = 'key:generate';
+            $params = [
+                '--force' => true
+            ];
+            \Artisan::call($command, $params);
 
             //reset migration
             $command = 'migrate:fresh';

@@ -79,7 +79,7 @@ WebReinvent\VaahCms\VaahCmsServiceProvider::class,
 
 ### Step 4) 
 ```php
-'guards' => [
+'providers' => [
         //...
         'users' => [
             'driver' => 'eloquent',

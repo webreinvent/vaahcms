@@ -1,7 +1,7 @@
 @extends("vaahcms::admin.default.layouts.master")
 
 @section('vaahcms_extend_admin_js')
-    <script src="{{vh_get_admin_assets('assets/js/setup.js')}}"></script>
+    <script src="{{vh_get_admin_assets('assets/js/page-setup.js')}}"></script>
 @endsection
 
 @section('content')
@@ -15,11 +15,7 @@
             <!--header-->
             <div class="d-flex flex-column align-items-center justify-content-center">
 
-                <div class="navbar-brand">
-                    <a href="{{url("/")}}" class="df-logo tx-40">Vaah<span>CMS</span>
-                        <small class="tx-10 mg-l-5 mg-t-15" style="letter-spacing:1px;">v{{config('vaahcms.version')}}</small>
-                    </a>
-                </div>
+                @include('vaahcms::admin.default.layouts.partials.brand')
 
                 <ul v-if="active_step != 'completed'" class="steps mg-t-50 mg-b-50">
                     <li class="step-item" v-bind:class="{'active': active_step == 'database'}">

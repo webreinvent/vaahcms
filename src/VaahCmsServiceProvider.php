@@ -1,5 +1,6 @@
 <?php namespace WebReinvent\VaahCms;
 
+use Illuminate\Routing\Router;
 use Illuminate\Support\ServiceProvider;
 use WebReinvent\VaahCms\Providers\ModulesServiceProvider;
 
@@ -21,7 +22,12 @@ class VaahCmsServiceProvider extends ServiceProvider {
      *
      * @return void
      */
-    public function boot() {
+    public function boot(Router $router) {
+
+        //register middleware
+        $router->aliasMiddleware(
+            'has.admin.access', \WebReinvent\VaahCms\Http\Middleware\HasAdminAccess::class
+        );
 
         $this->registerConfigs();
         $this->registerMigrations();

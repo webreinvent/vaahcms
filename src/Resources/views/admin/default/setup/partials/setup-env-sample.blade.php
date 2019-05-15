@@ -1,6 +1,6 @@
 APP_NAME={{$data->app_name}}
 APP_ENV=local
-APP_KEY=base64:{{$data->app_key}}
+APP_KEY=
 APP_DEBUG=true
 APP_URL={{$data->app_url}}
 
@@ -14,7 +14,7 @@ DB_USERNAME={{$data->db_username}}
 DB_PASSWORD={{$data->db_password}}
 
 BROADCAST_DRIVER=log
-CACHE_DRIVER=file
+CACHE_DRIVER=array
 QUEUE_CONNECTION=sync
 SESSION_DRIVER=file
 SESSION_LIFETIME=120

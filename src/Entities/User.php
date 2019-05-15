@@ -317,18 +317,16 @@ class User extends Authenticatable
         }
 
         $rules = array(
-            'email' => 'required',
+            'email' => 'required|email',
         );
         $validator = \Validator::make($request->all(), $rules);
 
         if ($validator->fails())
         {
-            $errors = $validator->errors();
             $response['status'] = 'failed';
-            $response['errors'] = $errors;
+            $response['errors'] = errorsToArray($validator->errors());
             return $response;
         }
-
 
         $inputs = $request->all();
         $inputs['email'] = trim($inputs['email']);
@@ -341,7 +339,7 @@ class User extends Authenticatable
 
         if ($validator->fails())
         {
-            $errors = $validator->errors();
+            $errors = errorsToArray($validator->errors());
             $response['status'] = 'failed';
             $response['errors'] = $errors;
             return $response;
@@ -360,25 +358,19 @@ class User extends Authenticatable
             $user = Auth::user();
 
             //check user is active
-            if($user->is_active == 0)
+            if($user->is_active != 1)
             {
                 $response['status'] = 'failed';
-                $response['errors'][] = getConstant('account.disabled');
+                $response['errors'][] = trans('vaahcms::messages.inactive_account');
                 return $response;
             }
-
             $user->last_login_at = \Carbon::now();
             $user->save();
 
-
             $response['status'] = 'success';
-            $response['data'] = Auth::user();
-            $redirect = $request->input('redirect_url', \URL::route('vh.admin.dashboard'));
-            $response['redirect_url'] = $redirect;
-
         } else {
             $response['status'] = 'failed';
-            $response['errors'][] = getConstant('credentials.invalid');
+            $response['errors'][] = trans('vaahcms::messages.invalid_credentials');
         }
 
         return $response;
@@ -426,11 +418,10 @@ class User extends Authenticatable
         }
 
         if ($this->isAdmin()) {
-
             return true;
         }
 
-        if ($permission->is_active == 0) {
+        if ($permission->is_active != 1) {
             return false;
         }
 
@@ -441,6 +432,7 @@ class User extends Authenticatable
                 return true;
             }
         }
+
         return false;
     }
 
