@@ -155,3 +155,20 @@ mix.combine(admin_assets_json['css'], 'public/css/vaahcms-admin.css')
     .version();
 
 ```
+
+
+## Tutorials
+### Update Packagist with GitHub Webhooks
+
+- As the PayLoad URL type in:
+Visit: `https://packagist.org/profile/` and get the `API Token` and 
+```
+https://packagist.org/api/github?username=PACKAGIST_USERNAME
+```
+
+- Go to your GitHub repository and select  Settings -> WebHooks -> Add Webhook
+- In `Payload URL` enter the packagist url
+- In `Content type` choose `application/json`
+- In `Secrete` add `API Token`
+- Choose `Let me select individual events.` and select `Pushes`
+- Click on `Save`
