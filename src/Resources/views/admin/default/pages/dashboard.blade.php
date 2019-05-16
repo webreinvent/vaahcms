@@ -13,7 +13,7 @@
 
     <div id="app">
 
-        @{{ test }}
+        @{{ url }}
 
         <h1>Testing</h1>
 

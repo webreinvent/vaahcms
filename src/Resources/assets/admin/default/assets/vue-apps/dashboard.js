@@ -44,6 +44,7 @@ const app = new Vue({
     },
     router,
     data: {
+        url: "testing url"
     },
     mounted() {
 

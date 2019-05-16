@@ -71279,7 +71279,9 @@ var app = new Vue({
     'top-menu': _vue_comp_TopMenu__WEBPACK_IMPORTED_MODULE_3__["default"]
   },
   router: router,
-  data: {},
+  data: {
+    url: "testing url"
+  },
   mounted: function mounted() {},
   methods: {//-----------------------------------------------------------
     //-----------------------------------------------------------
