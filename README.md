@@ -135,6 +135,7 @@ Replace the content of `webpack.mix.fs`
 const mix = require('laravel-mix');
 var fs = require('fs');
 
+
 /*
  |--------------------------------------------------------------------------
  | Mix Asset Management
@@ -145,14 +146,28 @@ var fs = require('fs');
  | file for the application as well as bundling up all the JS files.
  |
  */
+mix.setPublicPath('resources/assets/vendor/vaahcms/admin/default/assets/vue-builds/');
 
 var admin_assets_json = JSON.parse(fs.readFileSync('resources/assets/vendor/vaahcms/admin/default/assets.json'));
 
-console.log(admin_assets_json);
+var vue_source_path = "./resources/assets/vendor/vaahcms/admin/default/assets/vue-apps/";
 
-mix.combine(admin_assets_json['css'], 'public/css/vaahcms-admin.css')
-    .combine(admin_assets_json['js'], 'public/js/vaahcms-admin.js')
+var admin_assets_source_path = './resources/assets/vendor/vaahcms/admin/';
+var admin_assets_des_path = './packages/vaahcms/src/Resources/assets/admin';
+
+var admin_assets_dest = "./resources/assets/vendor/vaahcms/admin/default/assets/vue-builds/";
+
+
+
+//console.log(admin_assets_json);
+
+
+mix.combine(admin_assets_json['css'], admin_assets_dest+'vaahcms.css')
+    .combine(admin_assets_json['js'], admin_assets_dest+'vaahcms.js')
+    .js(vue_source_path+'dashboard.js',  './')
+    .copyDirectory(admin_assets_source_path, admin_assets_des_path, false)
     .version();
+
 
 ```
 
