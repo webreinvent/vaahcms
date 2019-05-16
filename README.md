@@ -176,3 +176,7 @@ https://packagist.org/api/github?username=PACKAGIST_USERNAME
 - In `Secrete` add `API Token`
 - Choose `Let me select individual events.` and select `Pushes`
 - Click on `Save`
+
+### New Release
+
+- composer.json version should match with your release via github then only it will be updated on `packagist` 
