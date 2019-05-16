@@ -83,6 +83,8 @@ $(function(){
   ////////// SIDEBAR //////////
 
   // Initialize PerfectScrollbar for sidebar menu
+
+
   if($('#sidebarMenu').length) {
     const psSidebar = new PerfectScrollbar('#sidebarMenu', {
       suppressScrollX: true

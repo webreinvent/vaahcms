@@ -22,7 +22,7 @@ class PublicController extends Controller
     public function login()
     {
 
-        return view($this->theme.'.login');
+        return view($this->theme.'.pages.login');
     }
 
     //----------------------------------------------------------

@@ -1,0 +1,1 @@
+<a href="{{url()->route('vh.admin.dashboard')}}" class="aside-logo">Vaah<span>CMS</span> <small class="tx-10 mg-l-5 mg-t-15" style="letter-spacing:0.5px;">v{{config('vaahcms.version')}}</small></a>

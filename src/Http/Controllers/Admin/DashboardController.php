@@ -19,9 +19,9 @@ class DashboardController extends Controller
     }
 
     //----------------------------------------------------------
-    public function login()
+    public function index()
     {
-        return view($this->theme.'.login');
+        return view($this->theme.'.pages.dashboard');
     }
     //----------------------------------------------------------
     //----------------------------------------------------------
