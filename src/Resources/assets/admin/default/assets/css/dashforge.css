@@ -9498,7 +9498,6 @@ textarea.parsley-success:focus {
       flex-direction: row;
       padding: 0;
       width: 100%;
-      max-width: 780px;
       margin-top: -3px; } }
   .navbar-menu .nav-item + .nav-item {
     margin-top: 10px; }

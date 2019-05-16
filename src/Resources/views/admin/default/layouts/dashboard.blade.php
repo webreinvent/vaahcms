@@ -82,19 +82,14 @@
 	<div class="content ht-100v pd-0">
 
 		<header class="navbar navbar-header">
-			<button class="navbar-toggler mg-l-20" type="button" data-toggle="collapse" data-target="#class" >
-				<span class="navbar-toggler-icon"></span>
-			</button>
 
-			<a href="" id="mainMenuOpen" class="burger-menu"><i data-feather="menu"></i></a>
+
+			<a href="" id="mainMenuOpen" class="burger-menu mg-l-70-f"><i data-feather="menu"></i></a>
 
 			<div id="navbarMenu" class="navbar-menu-wrapper">
-				<div class="navbar-menu-header">
-					<a href="../../index.html" class="df-logo">dash<span>forge</span></a>
-					<a id="mainMenuClose" href=""><i data-feather="x"></i></a>
-				</div><!-- navbar-menu-header -->
+
 				<ul class="nav navbar-menu">
-					<li class="nav-label pd-l-20 pd-lg-l-25 d-lg-none">Main Navigation</li>
+					<li class="nav-label pd-l-20 pd-lg-l-25 d-lg-none">Top Menu</li>
 					<li class="nav-item with-sub active">
 						<a href="" class="nav-link"><i data-feather="pie-chart"></i> Dashboard</a>
 						<ul class="navbar-menu-sub">
@@ -104,49 +99,7 @@
 							<li class="nav-sub-item"><a href="dashboard-four.html" class="nav-sub-link"><i data-feather="bar-chart-2"></i>Helpdesk Management</a></li>
 						</ul>
 					</li>
-					<li class="nav-item with-sub">
-						<a href="" class="nav-link"><i data-feather="package"></i> Apps</a>
-						<ul class="navbar-menu-sub">
-							<li class="nav-sub-item"><a href="app-calendar.html" class="nav-sub-link"><i data-feather="calendar"></i>Calendar</a></li>
-							<li class="nav-sub-item"><a href="app-chat.html" class="nav-sub-link"><i data-feather="message-square"></i>Chat</a></li>
-							<li class="nav-sub-item"><a href="app-contacts.html" class="nav-sub-link"><i data-feather="users"></i>Contacts</a></li>
-							<li class="nav-sub-item"><a href="app-file-manager.html" class="nav-sub-link"><i data-feather="file-text"></i>File Manager</a></li>
-							<li class="nav-sub-item"><a href="app-mail.html" class="nav-sub-link"><i data-feather="mail"></i>Mail</a></li>
-						</ul>
-					</li>
-					<li class="nav-item with-sub">
-						<a href="" class="nav-link"><i data-feather="layers"></i> Pages</a>
-						<div class="navbar-menu-sub">
-							<div class="d-lg-flex">
-								<ul>
-									<li class="nav-label">Authentication</li>
-									<li class="nav-sub-item"><a href="page-signin.html" class="nav-sub-link"><i data-feather="log-in"></i> Sign In</a></li>
-									<li class="nav-sub-item"><a href="page-signup.html" class="nav-sub-link"><i data-feather="user-plus"></i> Sign Up</a></li>
-									<li class="nav-sub-item"><a href="page-verify.html" class="nav-sub-link"><i data-feather="user-check"></i> Verify Account</a></li>
-									<li class="nav-sub-item"><a href="page-forgot.html" class="nav-sub-link"><i data-feather="shield-off"></i> Forgot Password</a></li>
-									<li class="nav-label mg-t-20">User Pages</li>
-									<li class="nav-sub-item"><a href="page-profile-view.html" class="nav-sub-link"><i data-feather="user"></i> View Profile</a></li>
-									<li class="nav-sub-item"><a href="page-connections.html" class="nav-sub-link"><i data-feather="users"></i> Connections</a></li>
-									<li class="nav-sub-item"><a href="page-groups.html" class="nav-sub-link"><i data-feather="users"></i> Groups</a></li>
-									<li class="nav-sub-item"><a href="page-events.html" class="nav-sub-link"><i data-feather="calendar"></i> Events</a></li>
-								</ul>
-								<ul>
-									<li class="nav-label">Error Pages</li>
-									<li class="nav-sub-item"><a href="page-404.html" class="nav-sub-link"><i data-feather="file"></i> 404 Page Not Found</a></li>
-									<li class="nav-sub-item"><a href="page-500.html" class="nav-sub-link"><i data-feather="file"></i> 500 Internal Server</a></li>
-									<li class="nav-sub-item"><a href="page-503.html" class="nav-sub-link"><i data-feather="file"></i> 503 Service Unavailable</a></li>
-									<li class="nav-sub-item"><a href="page-505.html" class="nav-sub-link"><i data-feather="file"></i> 505 Forbidden</a></li>
-									<li class="nav-label mg-t-20">Other Pages</li>
-									<li class="nav-sub-item"><a href="page-timeline.html" class="nav-sub-link"><i data-feather="file-text"></i> Timeline</a></li>
-									<li class="nav-sub-item"><a href="page-pricing.html" class="nav-sub-link"><i data-feather="file-text"></i> Pricing</a></li>
-									<li class="nav-sub-item"><a href="page-help-center.html" class="nav-sub-link"><i data-feather="file-text"></i> Help Center</a></li>
-									<li class="nav-sub-item"><a href="page-invoice.html" class="nav-sub-link"><i data-feather="file-text"></i> Invoice</a></li>
-								</ul>
-							</div>
-						</div><!-- nav-sub -->
-					</li>
-					<li class="nav-item"><a href="../../components/" class="nav-link"><i data-feather="box"></i> Components</a></li>
-					<li class="nav-item"><a href="../../collections/" class="nav-link"><i data-feather="archive"></i> Collections</a></li>
+
 				</ul>
 			</div><!-- navbar-menu-wrapper -->
 			<div class="navbar-right">
@@ -160,7 +113,7 @@
 						<div class="dropdown-header">New Messages</div>
 						<a href="" class="dropdown-item">
 							<div class="media">
-								<div class="avatar avatar-sm avatar-online"><img src="../../assets/img/img6.jpg" class="rounded-circle" alt=""></div>
+								<div class="avatar avatar-sm avatar-online"><img src="{{vh_get_admin_file("assets/img/img6.jpg")}}" class="rounded-circle" alt=""></div>
 								<div class="media-body mg-l-15">
 									<strong>Socrates Itumay</strong>
 									<p>nam libero tempore cum so...</p>
@@ -168,36 +121,7 @@
 								</div><!-- media-body -->
 							</div><!-- media -->
 						</a>
-						<a href="" class="dropdown-item">
-							<div class="media">
-								<div class="avatar avatar-sm avatar-online"><img src="../../assets/img/img8.jpg" class="rounded-circle" alt=""></div>
-								<div class="media-body mg-l-15">
-									<strong>Joyce Chua</strong>
-									<p>on the other hand we denounce...</p>
-									<span>Mar 13 04:16am</span>
-								</div><!-- media-body -->
-							</div><!-- media -->
-						</a>
-						<a href="" class="dropdown-item">
-							<div class="media">
-								<div class="avatar avatar-sm avatar-online"><img src="../../assets/img/img7.jpg" class="rounded-circle" alt=""></div>
-								<div class="media-body mg-l-15">
-									<strong>Althea Cabardo</strong>
-									<p>is there anyone who loves...</p>
-									<span>Mar 13 02:56am</span>
-								</div><!-- media-body -->
-							</div><!-- media -->
-						</a>
-						<a href="" class="dropdown-item">
-							<div class="media">
-								<div class="avatar avatar-sm avatar-online"><img src="../../assets/img/img9.jpg" class="rounded-circle" alt=""></div>
-								<div class="media-body mg-l-15">
-									<strong>Adrian Monino</strong>
-									<p>duis aute irure dolor in repre...</p>
-									<span>Mar 12 10:40pm</span>
-								</div><!-- media-body -->
-							</div><!-- media -->
-						</a>
+
 						<div class="dropdown-footer"><a href="">View all Messages</a></div>
 					</div><!-- dropdown-menu -->
 				</div><!-- dropdown -->
@@ -217,33 +141,6 @@
 								</div><!-- media-body -->
 							</div><!-- media -->
 						</a>
-						<a href="" class="dropdown-item">
-							<div class="media">
-								<div class="avatar avatar-sm avatar-online"><img src="../../assets/img/img8.jpg" class="rounded-circle" alt=""></div>
-								<div class="media-body mg-l-15">
-									<p><strong>Joyce Chua</strong> just created a new blog post</p>
-									<span>Mar 13 04:16am</span>
-								</div><!-- media-body -->
-							</div><!-- media -->
-						</a>
-						<a href="" class="dropdown-item">
-							<div class="media">
-								<div class="avatar avatar-sm avatar-online"><img src="../../assets/img/img7.jpg" class="rounded-circle" alt=""></div>
-								<div class="media-body mg-l-15">
-									<p><strong>Althea Cabardo</strong> just created a new blog post</p>
-									<span>Mar 13 02:56am</span>
-								</div><!-- media-body -->
-							</div><!-- media -->
-						</a>
-						<a href="" class="dropdown-item">
-							<div class="media">
-								<div class="avatar avatar-sm avatar-online"><img src="../../assets/img/img9.jpg" class="rounded-circle" alt=""></div>
-								<div class="media-body mg-l-15">
-									<p><strong>Adrian Monino</strong> added new comment on your photo</p>
-									<span>Mar 12 10:40pm</span>
-								</div><!-- media-body -->
-							</div><!-- media -->
-						</a>
 						<div class="dropdown-footer"><a href="">View all Notifications</a></div>
 					</div><!-- dropdown-menu -->
 				</div><!-- dropdown -->
@@ -259,14 +156,12 @@
 						<a href="" class="dropdown-item"><i data-feather="edit-3"></i> Edit Profile</a>
 						<a href="page-profile-view.html" class="dropdown-item"><i data-feather="user"></i> View Profile</a>
 						<div class="dropdown-divider"></div>
-						<a href="page-help-center.html" class="dropdown-item"><i data-feather="help-circle"></i> Help Center</a>
-						<a href="" class="dropdown-item"><i data-feather="life-buoy"></i> Forum</a>
 						<a href="" class="dropdown-item"><i data-feather="settings"></i>Account Settings</a>
-						<a href="" class="dropdown-item"><i data-feather="settings"></i>Privacy Settings</a>
 						<a href="page-signin.html" class="dropdown-item"><i data-feather="log-out"></i>Sign Out</a>
 					</div><!-- dropdown-menu -->
 				</div><!-- dropdown -->
-			</div><!-- navbar-right -->
+			</div>
+            <!-- navbar-right -->
 			<div class="navbar-search">
 				<div class="navbar-search-header">
 					<input type="search" class="form-control" placeholder="Type and hit enter to search...">
@@ -293,23 +188,13 @@
 						<li><a href="../../components/el-avatar.html">contact app</a></li>
 					</ul>
 				</div><!-- navbar-search-body -->
-			</div><!-- navbar-search -->
-		</header><!-- navbar -->
-
-
-		<div class="content-header">
-			<div class="content-search">
-				<i data-feather="search"></i>
-				<input type="search" class="form-control" placeholder="Search files">
 			</div>
-			<nav class="nav">
-				<a href="#" class="nav-link"><i data-feather="help-circle"></i></a>
-				<a href="#" class="nav-link"><i data-feather="grid"></i></a>
-				<a href="#" class="nav-link"><i data-feather="align-left"></i></a>
-			</nav>
-		</div><!-- content-header -->
+            <!-- navbar-search -->
 
-		<div class="content-body pd-0">
+		</header>
+        <!-- navbar -->
+
+		<div class="content-body pd-30">
 			@yield('content')
 		</div>
 	</div>
