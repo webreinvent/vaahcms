@@ -72,6 +72,9 @@ class VaahCmsServiceProvider extends ServiceProvider {
      */
     private function registerConfigs() {
 
+        $configPath = __DIR__ . '/Config/vaahcms-composer.php';
+
+        $this->mergeConfigFrom($configPath, 'vaahcms');
 
         $configPath = __DIR__ . '/Config/vaahcms.php';
 
