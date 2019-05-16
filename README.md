@@ -169,6 +169,26 @@ mix.combine(admin_assets_json['css'], admin_assets_dest+'vaahcms.css')
     .version();
 
 
+mix.webpackConfig({
+    watchOptions: {
+        aggregateTimeout: 2000,
+        poll: 20,
+        ignored: [
+            '/node_modules/',
+            '/public/',
+            '/storage/',
+            '/vendor/',
+            '/bootstrap/',
+            '/config/',
+            '/database/',
+            '/resources/',
+            '/routes/',
+            '/tests/',
+            '/app/'
+        ]
+    }
+});
+
 ```
 
 
