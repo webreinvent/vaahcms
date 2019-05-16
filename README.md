@@ -157,6 +157,10 @@ mix.combine(admin_assets_json['css'], 'public/css/vaahcms-admin.css')
 ```
 
 
+## Tools
+
+- https://www.mkdocs.org - for docs 
+
 ## Tutorials
 ### Update Packagist with GitHub Webhooks
 
