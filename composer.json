@@ -1,7 +1,7 @@
 {
   "name": "webreinvent/vaahcms",
   "description": "Laravel Based Rapid Development CMS Framework",
-  "keywords": ["laravel"],
+  "keywords": ["laravel", "cms"],
   "homepage": "https://www.webreinvent.com",
   "license": "MIT",
   "version": "0.0.5",
