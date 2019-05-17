@@ -1,22 +1,29 @@
-import Vue from './vue.js';
 
+Vue.use(VueRouter);
 
 import {Navbar} from './components/navbar.js'
 
 import {MainTemplate} from './templates/main-template.js'
 
 import { About } from './components/about.js'
+import { Home } from './components/home.js'
 
-Vue.use(VueRouter);
+
 
 
 
 const router = new VueRouter({
-    base: '/admin/dashboard/',
+    mode: 'history',
+    base: '/packages/admin/dashboard/',
     routes: [
+        {
+            path: '/',
+            component: Home
+        },
         {   path: '/about',
             component: About
         },
+        { path: '*', redirect: '/' }
     ]
 });
 
