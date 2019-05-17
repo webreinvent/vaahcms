@@ -6,11 +6,11 @@
     "resources/assets/vendor/vaahcms/admin/default/lib/alertify/css/themes/bootstrap.min.css",
     "resources/assets/vendor/vaahcms/admin/default/lib/alertify/css/themes/alertify.css",
     "resources/assets/vendor/vaahcms/admin/default/lib/nprogress/nprogress.css",
-    "resources/assets/vendor/vaahcms/admin/default/assets/css/dashforge.fonts.css",
-    "resources/assets/vendor/vaahcms/admin/default/assets/css/dashforge.css",
-    "resources/assets/vendor/vaahcms/admin/default/assets/css/dashforge.helpers.css",
-    "resources/assets/vendor/vaahcms/admin/default/assets/css/dashforge.print.css",
-    "resources/assets/vendor/vaahcms/admin/default/assets/css/dashforge.extended.css"
+    "resources/assets/vendor/vaahcms/admin/default/css/dashforge.fonts.css",
+    "resources/assets/vendor/vaahcms/admin/default/css/dashforge.css",
+    "resources/assets/vendor/vaahcms/admin/default/css/dashforge.helpers.css",
+    "resources/assets/vendor/vaahcms/admin/default/css/dashforge.print.css",
+    "resources/assets/vendor/vaahcms/admin/default/css/dashforge.extended.css"
   ],
   "js": [
     "resources/assets/vendor/vaahcms/admin/default/lib/jquery/jquery.min.js",
@@ -23,8 +23,8 @@
     "resources/assets/vendor/vaahcms/admin/default/lib/js-cookie/js.cookie.js",
 
     "resources/assets/vendor/vaahcms/admin/default/lib/js-cookie/js.cookie.js",
-    "resources/assets/vendor/vaahcms/admin/default/assets/js/dashforge.js",
-    "resources/assets/vendor/vaahcms/admin/default/assets/js/dashforge.aside.js"
+    "resources/assets/vendor/vaahcms/admin/default/js/dashforge.js",
+    "resources/assets/vendor/vaahcms/admin/default/js/dashforge.aside.js"
 
 
   ]
