@@ -11,15 +11,16 @@
 
 @section('content')
 
-    <div id="app">
+    <div id="vh-app-dashboard">
 
-
-
-        <h1>Testing</h1>
+        <page-title></page-title>
 
         <router-view></router-view>
 
 
     </div>
+
+    @include("vaahcms::admin.default.extend.dashboard")
+
 
 @endsection

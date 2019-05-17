@@ -4,8 +4,6 @@ window.Vue = require('vue');
 
 
 //---Remark Theme Requirement
-window.$ = window.jQuery = require('jquery');
-window.Popper = require('popper.js').default;
 require('bootstrap');
 require('nprogress');
 //---End Remark Theme Requirement
@@ -27,24 +25,15 @@ Vue.http.headers.common['X-CSRF-TOKEN'] = document.querySelector('meta[name=csrf
 Vue.config.async = false;
 
 
-
-
-
-import List from './components/List';
-import ListView from './components/ListView';
-
+import PageTitle from './components/PageTitle';
+import Dashboard from './components/Dashboard';
 
 const router = new VueRouter({
     base: '/',
     linkActiveClass: "active",
     routes: [
         {   path: '/',
-            //component: Dashboard
-            component: List
-        },
-        {
-            path: '/view',
-            component: ListView,
+            component: Dashboard
         },
         { path: '*', redirect: '/' }
     ]
@@ -57,9 +46,9 @@ console.log('base_url', base_url);
 
 
 const app = new Vue({
-    el: '#app',
+    el: '#vh-app-dashboard',
     components:{
-
+        'page-title': PageTitle
     },
     router,
     data: {
