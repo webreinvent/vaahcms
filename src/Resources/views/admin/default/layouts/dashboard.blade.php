@@ -4,6 +4,7 @@
 
 	<title>@if(isset($data->title)){{$data->title}}@else{{config('vaahcms.app_name')}} v{{config('vaahcms.version')}}@endif</title>
 	@include("vaahcms::admin.default.layouts.partials.head")
+
 	@include('vaahcms::admin.default.layouts.partials.styles')
 
 	@yield('vaahcms_extend_admin_css')

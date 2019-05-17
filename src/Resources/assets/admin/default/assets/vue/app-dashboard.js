@@ -1,10 +1,18 @@
-require('./bootstrap');
+require('./../../lib/vue/bootstrap');
 
 window.Vue = require('vue');
 
+
+//---Remark Theme Requirement
+window.$ = window.jQuery = require('jquery');
+window.Popper = require('popper.js').default;
+require('bootstrap');
+require('nprogress');
+//---End Remark Theme Requirement
+
 import VueRouter from 'vue-router';
 import VueResource from 'vue-resource';
-import moment from 'moment';
+import moment from 'moment'
 
 Vue.prototype.moment = moment;
 
@@ -19,18 +27,29 @@ Vue.http.headers.common['X-CSRF-TOKEN'] = document.querySelector('meta[name=csrf
 Vue.config.async = false;
 
 
-import TopMenu from './../vue-comp/TopMenu';
-import List from './../vue-comp/List';
+
+
+
+import List from './components/List';
+import ListView from './components/ListView';
+
 
 const router = new VueRouter({
-    base: '/apps',
+    base: '/',
+    linkActiveClass: "active",
     routes: [
         {   path: '/',
             //component: Dashboard
             component: List
         },
+        {
+            path: '/view',
+            component: ListView,
+        },
+        { path: '*', redirect: '/' }
     ]
 });
+
 
 var base_url = $('base').attr('href');
 
@@ -40,11 +59,12 @@ console.log('base_url', base_url);
 const app = new Vue({
     el: '#app',
     components:{
-        'top-menu': TopMenu
+
     },
     router,
     data: {
-        url: "testing url"
+        searched: 'searched',
+        base_url: base_url,
     },
     mounted() {
 

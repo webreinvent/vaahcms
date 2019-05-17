@@ -146,48 +146,22 @@ var fs = require('fs');
  | file for the application as well as bundling up all the JS files.
  |
  */
-mix.setPublicPath('resources/assets/vendor/vaahcms/admin/default/assets/vue-builds/');
 
-var admin_assets_json = JSON.parse(fs.readFileSync('resources/assets/vendor/vaahcms/admin/default/assets.json'));
+var admin_path = 'resources/assets/vendor/vaahcms/admin/';
+var admin_default_theme_path = admin_path+'default/';
 
-var vue_source_path = "./resources/assets/vendor/vaahcms/admin/default/assets/vue-apps/";
+mix.setPublicPath(admin_default_theme_path);
 
-var admin_assets_source_path = './resources/assets/vendor/vaahcms/admin/';
-var admin_assets_des_path = './packages/vaahcms/src/Resources/assets/admin';
-
-var admin_assets_dest = "./resources/assets/vendor/vaahcms/admin/default/assets/vue-builds/";
-
-
+var admin_assets_json = JSON.parse(fs.readFileSync(admin_default_theme_path+'assets.json'));
 
 //console.log(admin_assets_json);
 
-
-mix.combine(admin_assets_json['css'], admin_assets_dest+'vaahcms.css')
-    .combine(admin_assets_json['js'], admin_assets_dest+'vaahcms.js')
-    .js(vue_source_path+'dashboard.js',  './')
-    .copyDirectory(admin_assets_source_path, admin_assets_des_path, false)
+mix.combine(admin_assets_json['css'], admin_default_theme_path+'assets/builds/vaahcms.css')
+    .combine(admin_assets_json['js'], admin_default_theme_path+'assets/builds/vaahcms.js')
+    .js(admin_default_theme_path+'assets/vue/app-dashboard.js',  './assets/builds')
+    .copyDirectory(admin_path, './packages/vaahcms/src/Resources/assets/admin', false)
     .version();
 
-
-mix.webpackConfig({
-    watchOptions: {
-        aggregateTimeout: 2000,
-        poll: 20,
-        ignored: [
-            '/node_modules/',
-            '/public/',
-            '/storage/',
-            '/vendor/',
-            '/bootstrap/',
-            '/config/',
-            '/database/',
-            '/resources/',
-            '/routes/',
-            '/tests/',
-            '/app/'
-        ]
-    }
-});
 
 ```
 

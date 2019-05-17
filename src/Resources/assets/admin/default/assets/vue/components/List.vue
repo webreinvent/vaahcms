@@ -1,21 +1,39 @@
 <template>
     <div>
 
-        <h1>List</h1>
+        <router-link class="btn btn-outline btn-sm btn-default"
+                     v-bind:to="{ path: '/'}">
+            List
+        </router-link>
+
+        <router-link class="btn btn-outline btn-sm btn-default"
+                     v-bind:to="{ path: '/view'}">
+            List View
+        </router-link>
+
+        <h1>{{text}}</h1>
+
 
     </div>
 </template>
 <script>
 
-
     export default {
 
         props: [],
         components:{
+
         },
         data()
         {
             let obj = {
+                urls:{
+                    current: window.location.href,
+                    comp: $("base").attr('href')+'/apps/list',
+                },
+                text: "working",
+
+
 
             };
 

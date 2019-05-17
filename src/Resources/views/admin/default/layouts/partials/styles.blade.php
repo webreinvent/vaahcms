@@ -1,7 +1,7 @@
 
 @if(config('vaahcms.minified'))
 
-    <link href="{{vh_get_admin_theme_url()}}/public{{ mix('vaahcms.css') }}" rel="stylesheet" media="screen">
+<link href="{{vh_get_admin_assets("assets/builds/vaahcms.css")}}" rel="stylesheet" media="screen">
 
 @else
 

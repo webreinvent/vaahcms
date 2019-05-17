@@ -6,7 +6,7 @@
 
 
 @section('vaahcms_extend_admin_js')
-    <script type="module" src="{{vh_get_admin_file("assets/vue/main.js")}}" defer></script>
+    <script src="{{vh_get_admin_assets("assets/builds/app-dashboard.js")}}" defer></script>
 @endsection
 
 @section('content')
@@ -17,6 +17,7 @@
 
         <h1>Testing</h1>
 
+        <router-view></router-view>
 
 
     </div>
