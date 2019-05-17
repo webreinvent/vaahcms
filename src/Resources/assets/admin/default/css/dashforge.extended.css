@@ -8,5 +8,9 @@
 }
 
 .aside{
-  background-color: #f2f2f226;
+
+}
+
+.aside .aside-body{
+  background-color: #f2f2f2;
 }

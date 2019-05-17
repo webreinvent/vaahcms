@@ -41415,5 +41415,9 @@ a.bg-twitter:hover, a.bg-twitter:focus, button.bg-twitter:hover, button.bg-twitt
 }
 
 .aside{
-  background-color: #f2f2f226;
+
+}
+
+.aside .aside-body{
+  background-color: #f2f2f2;
 }

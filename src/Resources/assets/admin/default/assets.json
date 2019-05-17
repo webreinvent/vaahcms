@@ -9,6 +9,7 @@
     "resources/assets/vendor/vaahcms/admin/default/css/dashforge.fonts.css",
     "resources/assets/vendor/vaahcms/admin/default/css/dashforge.css",
     "resources/assets/vendor/vaahcms/admin/default/css/dashforge.helpers.css",
+    "resources/assets/vendor/vaahcms/admin/default/css/dashforge.profile.css",
     "resources/assets/vendor/vaahcms/admin/default/css/dashforge.print.css",
     "resources/assets/vendor/vaahcms/admin/default/css/dashforge.extended.css"
   ],
