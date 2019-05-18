@@ -110,6 +110,23 @@ Route::group(
         Route::get( '/', 'ModuleController@index' )
             ->name( 'vh.admin.modules' );
         //------------------------------------------------
+        Route::any( '/download', 'ModuleController@download' )
+            ->name( 'vh.admin.modules.download' );
+        //------------------------------------------------
+        //------------------------------------------------
+    });
+
+
+Route::group(
+    [
+        'prefix'     => 'admin/composer',
+        'middleware' => ['web','has.admin.access'],
+        'namespace'  => 'WebReinvent\VaahCms\Http\Controllers\Admin'
+    ],
+    function () {
+        //------------------------------------------------
+        Route::get( '/install', 'ComposerController@install' )
+            ->name( 'vh.admin.composer.install' );
         //------------------------------------------------
         //------------------------------------------------
     });

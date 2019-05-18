@@ -46,9 +46,10 @@ class VaahCmsServiceProvider extends ServiceProvider {
     public function register() {
 
         $this->registerConfigs();
+        $this->registerProviders();
+        $this->registerAlias();
 
-        //register module service provider
-        $this->app->register(ModulesServiceProvider::class);
+
 
         //load all the helpers
         foreach (glob(__DIR__.'/Helpers/*.php') as $filename){
@@ -66,6 +67,27 @@ class VaahCmsServiceProvider extends ServiceProvider {
         return [];
     }
 
+    /**
+     *
+     */
+    private function registerProviders() {
+
+        //register module service provider
+        $this->app->register(ModulesServiceProvider::class);
+        //$this->app->register(ZanySoft\Zip\ZipServiceProvider::class);
+
+    }
+
+
+    /**
+     *
+     */
+    private function registerAlias() {
+
+        $loader = \Illuminate\Foundation\AliasLoader::getInstance();
+        //$loader->alias('Zip', ZanySoft\Zip\ZipFacade::class);
+
+    }
 
     /**
      *

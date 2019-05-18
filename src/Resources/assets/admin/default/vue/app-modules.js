@@ -25,15 +25,18 @@ Vue.http.headers.common['X-CSRF-TOKEN'] = document.querySelector('meta[name=csrf
 Vue.config.async = false;
 
 
-import PageTitle from './components/PageTitle';
-import Dashboard from './components/Dashboard';
+import ModulesInstalled from './components/ModulesInstalled';
+import ModulesAdd from './components/ModulesAdd';
 
 const router = new VueRouter({
     base: '/',
     linkActiveClass: "active",
     routes: [
         {   path: '/',
-            component: Dashboard
+            component: ModulesInstalled
+        },
+        {   path: '/add',
+            component: ModulesAdd
         },
         { path: '*', redirect: '/' }
     ]
