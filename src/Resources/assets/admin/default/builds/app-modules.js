@@ -81,7 +81,7 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 0);
+/******/ 	return __webpack_require__(__webpack_require__.s = 2);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -71750,10 +71750,10 @@ if (token) {
 
 /***/ }),
 
-/***/ "./resources/assets/vendor/vaahcms/admin/default/vue/app-dashboard.js":
-/*!****************************************************************************!*\
-  !*** ./resources/assets/vendor/vaahcms/admin/default/vue/app-dashboard.js ***!
-  \****************************************************************************/
+/***/ "./resources/assets/vendor/vaahcms/admin/default/vue/app-modules.js":
+/*!**************************************************************************!*\
+  !*** ./resources/assets/vendor/vaahcms/admin/default/vue/app-modules.js ***!
+  \**************************************************************************/
 /*! no exports provided */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -71800,9 +71800,7 @@ var base_url = $('base').attr('href');
 console.log('base_url', base_url);
 var app = new Vue({
   el: '#vh-app-modules',
-  components: {
-    'page-title': _components_PageTitle__WEBPACK_IMPORTED_MODULE_3__["default"]
-  },
+  components: {},
   router: router,
   data: {
     searched: 'searched',
@@ -71955,18 +71953,6 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ 0:
-/*!**********************************************************************************!*\
-  !*** multi ./resources/assets/vendor/vaahcms/admin/default/vue/app-dashboard.js ***!
-  \**********************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__(/*! F:\xampp72\htdocs\packages\resources\assets\vendor\vaahcms\admin\default\vue\app-dashboard.js */"./resources/assets/vendor/vaahcms/admin/default/vue/app-dashboard.js");
-
-
-/***/ }),
-
 /***/ 1:
 /*!*********************!*\
   !*** got (ignored) ***!
@@ -71975,6 +71961,18 @@ module.exports = __webpack_require__(/*! F:\xampp72\htdocs\packages\resources\as
 /***/ (function(module, exports) {
 
 /* (ignored) */
+
+/***/ }),
+
+/***/ 2:
+/*!********************************************************************************!*\
+  !*** multi ./resources/assets/vendor/vaahcms/admin/default/vue/app-modules.js ***!
+  \********************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__(/*! F:\xampp72\htdocs\packages\resources\assets\vendor\vaahcms\admin\default\vue\app-modules.js */"./resources/assets/vendor/vaahcms/admin/default/vue/app-modules.js");
+
 
 /***/ })
 

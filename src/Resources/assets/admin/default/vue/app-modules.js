@@ -48,7 +48,7 @@ console.log('base_url', base_url);
 const app = new Vue({
     el: '#vh-app-modules',
     components:{
-        'page-title': PageTitle
+
     },
     router,
     data: {

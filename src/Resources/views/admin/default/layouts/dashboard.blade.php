@@ -76,7 +76,7 @@
 	</header>
 
 
-	<div class="content-body pd-30">
+	<div class="content-body">
 		@yield('content')
 	</div>
 </div>

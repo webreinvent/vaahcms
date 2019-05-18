@@ -11,6 +11,30 @@
 
 </li>
 
+<li class="nav-item with-sub">
+    <a href="dashboard-one.html" class="nav-link">
+        <i data-feather="package"></i> <span>Extend</span>
+    </a>
+
+    <ul>
+        <li><a href="{{url()->route('vh.admin.modules')}}">Modules</a></li>
+        <li><a href="page-profile-view.html">Themes</a></li>
+    </ul>
+
+</li>
+
+<li class="nav-item with-sub">
+    <a href="#" class="nav-link">
+        <i data-feather="settings"></i> <span>Settings</span>
+    </a>
+
+    <ul>
+        <li><a href="{{url()->route("vh.admin.vaahcms.settings")}}">VaahCMS</a></li>
+        @include("vaahcms::admin.default.extend.settings-menu")
+    </ul>
+
+</li>
+
 <li class="nav-label  mg-t-25">Content</li>
 
 <li class="nav-item"><a href="dashboard-one.html" class="nav-link">

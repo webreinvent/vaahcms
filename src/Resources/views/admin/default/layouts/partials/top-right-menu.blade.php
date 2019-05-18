@@ -1,10 +1,12 @@
         <a id="navbarSearch" href="" class="search-link"><i data-feather="search"></i></a>
+
+        <!--messages-->
         <div class="dropdown dropdown-message">
-            <a href="" class="dropdown-link new-indicator" data-toggle="dropdown">
+            <a href="" class="dropdown-link new-indicator" data-toggle="dropdown" data-target="#mesages">
                 <i data-feather="message-square"></i>
                 <span>5</span>
             </a>
-            <div class="dropdown-menu dropdown-menu-right">
+            <div class="dropdown-menu dropdown-menu-right" id="mesages">
                 <div class="dropdown-header">New Messages</div>
                 <a href="" class="dropdown-item">
                     <div class="media">
@@ -19,13 +21,16 @@
 
                 <div class="dropdown-footer"><a href="">View all Messages</a></div>
             </div><!-- dropdown-menu -->
-        </div><!-- dropdown -->
+        </div>
+        <!--/messages-->
+
+        <!--notifications-->
         <div class="dropdown dropdown-notification">
-            <a href="" class="dropdown-link new-indicator" data-toggle="dropdown">
+            <a href="" class="dropdown-link new-indicator" data-toggle="dropdown" data-target="#notifications">
                 <i data-feather="bell"></i>
                 <span>2</span>
             </a>
-            <div class="dropdown-menu dropdown-menu-right">
+            <div class="dropdown-menu dropdown-menu-right" id="notifications">
                 <div class="dropdown-header">Notifications</div>
                 <a href="" class="dropdown-item">
                     <div class="media">
@@ -38,7 +43,8 @@
                 </a>
                 <div class="dropdown-footer"><a href="">View all Notifications</a></div>
             </div><!-- dropdown-menu -->
-        </div><!-- dropdown -->
+        </div>
+        <!--/notifications-->
 
         @include("vaahcms::admin.default.extend.top-right-menu")
 

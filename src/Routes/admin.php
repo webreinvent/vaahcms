@@ -80,3 +80,36 @@ Route::group(
         //------------------------------------------------
         //------------------------------------------------
     });
+
+
+Route::group(
+    [
+        'prefix'     => 'admin/settings',
+        'middleware' => ['web','has.admin.access'],
+        'namespace'  => 'WebReinvent\VaahCms\Http\Controllers\Admin'
+    ],
+    function () {
+        //------------------------------------------------
+        Route::get( '/vaahcms', 'SettingsController@index' )
+            ->name( 'vh.admin.vaahcms.settings' );
+        //------------------------------------------------
+        //------------------------------------------------
+        //------------------------------------------------
+    });
+
+
+
+Route::group(
+    [
+        'prefix'     => 'admin/modules',
+        'middleware' => ['web','has.admin.access'],
+        'namespace'  => 'WebReinvent\VaahCms\Http\Controllers\Admin'
+    ],
+    function () {
+        //------------------------------------------------
+        Route::get( '/', 'ModuleController@index' )
+            ->name( 'vh.admin.modules' );
+        //------------------------------------------------
+        //------------------------------------------------
+        //------------------------------------------------
+    });

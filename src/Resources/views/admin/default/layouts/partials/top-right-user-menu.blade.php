@@ -1,8 +1,8 @@
 <div class="dropdown dropdown-profile">
-    <a href="" class="dropdown-link" data-toggle="dropdown" data-display="static">
+    <a href="" class="dropdown-link" data-toggle="dropdown" data-target="#user-menu" data-display="static">
         <div class="avatar avatar-sm"><img src="{{vh_get_admin_file('img/img1.png')}}" class="rounded-circle" alt=""></div>
     </a><!-- dropdown-link -->
-    <div class="dropdown-menu dropdown-menu-right tx-13">
+    <div class="dropdown-menu dropdown-menu-right tx-13" id="user-menu">
         <div class="avatar avatar-lg mg-b-15"><img src="{{vh_get_admin_file('img/img1.png')}}" class="rounded-circle" alt=""></div>
         <h6 class="tx-semibold mg-b-5">Katherine Pechon</h6>
         <p class="mg-b-25 tx-12 tx-color-03">Administrator</p>
