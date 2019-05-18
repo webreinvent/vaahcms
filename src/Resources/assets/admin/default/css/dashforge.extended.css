@@ -1,3 +1,6 @@
+body{
+  background-color: #f9f9f9;
+}
 .alert ul{
   margin: 0px 10px;
   padding: 0px;
@@ -12,5 +15,5 @@
 }
 
 .aside .aside-body{
-  background-color: #f2f2f2;
+  background-color: #fff;
 }

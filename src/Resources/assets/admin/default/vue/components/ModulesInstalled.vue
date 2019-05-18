@@ -11,7 +11,7 @@
 
                         <router-link class="btn btn-sm pd-x-15 btn-primary btn-uppercase"
                                      :to="{ path: '/add'}">
-                            <i data-feather="plus"></i> Add New
+                            <i class="fas fa-plus"></i> Add New
                         </router-link>
 
                     </div>
@@ -41,7 +41,7 @@
                         <div class="d-none d-md-block">
                             <div class="search-form">
                                 <input type="search" class="form-control" placeholder="Search">
-                                <button class="btn" type="button"><i data-feather="search"></i></button>
+                                <button class="btn" type="button"><i class="fas fa-search"></i></button>
                             </div>
                         </div>
 

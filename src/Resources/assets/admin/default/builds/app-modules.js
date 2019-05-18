@@ -1870,6 +1870,28 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: [],
   components: {},
@@ -55505,31 +55527,46 @@ var render = function() {
           [
             _vm._m(0),
             _vm._v(" "),
-            _c(
-              "div",
-              { staticClass: "d-none d-md-block" },
-              [
-                _c(
-                  "router-link",
-                  {
-                    staticClass: "btn btn-sm pd-x-15 btn-light btn-uppercase",
-                    attrs: { to: { path: "/" } }
-                  },
-                  [
-                    _vm._v(
-                      "\n                        Back\n                    "
-                    )
-                  ]
-                )
-              ],
-              1
-            )
+            _c("div", { staticClass: "d-flex flex-row-reverse" }, [
+              _c(
+                "div",
+                [
+                  _c(
+                    "router-link",
+                    {
+                      staticClass:
+                        "btn btn-sm pd-x-15 btn-primary btn-uppercase",
+                      attrs: { to: { path: "/" } }
+                    },
+                    [
+                      _c("i", { staticClass: "fas fa-upload" }),
+                      _vm._v(" Upload\n                        ")
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "router-link",
+                    {
+                      staticClass: "btn btn-sm pd-x-15 btn-light btn-uppercase",
+                      attrs: { to: { path: "/" } }
+                    },
+                    [
+                      _c("i", { staticClass: "fas fa-arrow-left" }),
+                      _vm._v(" Back\n                        ")
+                    ]
+                  )
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _vm._m(1)
+            ])
           ]
         )
       ])
     ]),
     _vm._v(" "),
-    _vm._m(1)
+    _vm._m(2)
   ])
 }
 var staticRenderFns = [
@@ -55539,6 +55576,23 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("div", [
       _c("h4", { staticClass: "mg-b-0 tx-spacing--1" }, [_vm._v("Add Modules")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "mg-r-10" }, [
+      _c("div", { staticClass: "search-form input-group-sm" }, [
+        _c("input", {
+          staticClass: "form-control",
+          attrs: { type: "search", placeholder: "Search" }
+        }),
+        _vm._v(" "),
+        _c("button", { staticClass: "btn", attrs: { type: "button" } }, [
+          _c("i", { staticClass: "fas fa-search" })
+        ])
+      ])
     ])
   },
   function() {
@@ -55576,11 +55630,11 @@ var staticRenderFns = [
                       _c(
                         "button",
                         {
-                          staticClass: "btn btn-outline-primary",
+                          staticClass: "btn btn-sm btn-outline-primary",
                           attrs: { type: "button" }
                         },
                         [
-                          _c("i", { attrs: { "data-feather": "download" } }),
+                          _c("i", { staticClass: "fas fa-download" }),
                           _vm._v(
                             " Download\n                                    "
                           )
@@ -55590,11 +55644,11 @@ var staticRenderFns = [
                       _c(
                         "button",
                         {
-                          staticClass: "btn btn-outline-info",
+                          staticClass: "btn btn-sm btn-outline-info",
                           attrs: { type: "button" }
                         },
                         [
-                          _c("i", { attrs: { "data-feather": "refresh-ccw" } }),
+                          _c("i", { staticClass: "fas fa-sync" }),
                           _vm._v(
                             " Update\n                                    "
                           )
@@ -55602,7 +55656,7 @@ var staticRenderFns = [
                       )
                     ]),
                     _vm._v(" "),
-                    _c("p", { staticClass: "pd-b-0" }, [
+                    _c("p", { staticClass: "mg-b-0" }, [
                       _c("a", { attrs: { href: "#" } }, [
                         _vm._v("More Details ")
                       ]),
@@ -55682,7 +55736,7 @@ var render = function() {
                     attrs: { to: { path: "/add" } }
                   },
                   [
-                    _c("i", { attrs: { "data-feather": "plus" } }),
+                    _c("i", { staticClass: "fas fa-plus" }),
                     _vm._v(" Add New\n                    ")
                   ]
                 )
@@ -55758,7 +55812,7 @@ var staticRenderFns = [
                   _c(
                     "button",
                     { staticClass: "btn", attrs: { type: "button" } },
-                    [_c("i", { attrs: { "data-feather": "search" } })]
+                    [_c("i", { staticClass: "fas fa-search" })]
                   )
                 ])
               ])

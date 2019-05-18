@@ -7,15 +7,37 @@
                     <div>
                         <h4 class="mg-b-0 tx-spacing--1">Add Modules</h4>
                     </div>
-                    <div class="d-none d-md-block">
 
-                        <router-link class="btn btn-sm pd-x-15 btn-light btn-uppercase"
-                                     :to="{ path: '/'}">
-                            Back
-                        </router-link>
+                    <div class="d-flex flex-row-reverse">
+
+                        <div >
+
+
+                            <router-link class="btn btn-sm pd-x-15 btn-primary btn-uppercase"
+                                         :to="{ path: '/'}">
+                                <i class="fas fa-upload"></i> Upload
+                            </router-link>
+
+                            <router-link class="btn btn-sm pd-x-15 btn-light btn-uppercase"
+                                         :to="{ path: '/'}">
+                                <i class="fas fa-arrow-left"></i> Back
+                            </router-link>
+
+                        </div>
+
+                        <div class="mg-r-10" >
+
+                            <div class="search-form input-group-sm">
+                                <input type="search" class="form-control" placeholder="Search">
+                                <button class="btn" type="button"><i class="fas fa-search"></i></button>
+                            </div>
+
+
+
+                        </div>
+
 
                     </div>
-
 
                 </div>
 
@@ -51,17 +73,17 @@
 
                                         <p>
 
-                                        <button type="button" class="btn btn-outline-primary">
-                                            <i data-feather="download"></i> Download
+                                        <button type="button" class="btn btn-sm btn-outline-primary">
+                                            <i class="fas fa-download"></i> Download
                                         </button>
-                                        <button type="button" class="btn btn-outline-info">
-                                            <i data-feather="refresh-ccw"></i> Update
+                                        <button type="button" class="btn btn-sm btn-outline-info">
+                                            <i class="fas fa-sync"></i> Update
                                         </button>
 
 
                                         </p>
 
-                                        <p class="pd-b-0">
+                                        <p class="mg-b-0">
                                             <a href="#">More Details </a>
 
                                             | By <a href="#">Pods Framework Team</a>
