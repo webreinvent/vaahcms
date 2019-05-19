@@ -141,11 +141,15 @@ var admin_assets_json = JSON.parse(fs.readFileSync(admin_default_theme_path+'ass
 
 //console.log(admin_assets_json);
 
+var admin_copy_path = './packages/vaahcms/src/Resources/assets/admin';
+
+fs_extra.removeSync(admin_copy_path);
+
 mix.combine(admin_assets_json['css'], admin_default_theme_path+'builds/vaahcms.css')
     .combine(admin_assets_json['js'], admin_default_theme_path+'builds/vaahcms.js')
     .js(admin_default_theme_path+'vue/app-dashboard.js',  './builds')
     .js(admin_default_theme_path+'vue/app-modules.js',  './builds')
-    .copyDirectory(admin_path, './packages/vaahcms/src/Resources/assets/admin', false)
+    .copyDirectory(admin_path, admin_copy_path, false)
     .version();
 
 mix.webpackConfig({
