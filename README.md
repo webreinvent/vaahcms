@@ -132,21 +132,21 @@ npm install --save-dev fs
 
 Replace the content of `webpack.mix.fs`
 ```bash
-var admin_path = 'packages/vaahcms/src/Resources/assets/admin/';
+var admin_path = 'resources/assets/vendor/vaahcms/admin/';
 var admin_default_theme_path = admin_path+'default/';
-var desc_admin_default_theme_path = 'resources/assets/vendor/vaahcms/admin/default/';
+
+mix.setPublicPath(admin_default_theme_path);
 
 var admin_assets_json = JSON.parse(fs.readFileSync(admin_default_theme_path+'assets.json'));
 
-mix.setPublicPath(desc_admin_default_theme_path);
+//console.log(admin_assets_json);
 
-mix.combine(admin_assets_json['css'], desc_admin_default_theme_path+'builds/vaahcms.css')
-    .combine(admin_assets_json['js'], desc_admin_default_theme_path+'builds/vaahcms.js')
+mix.combine(admin_assets_json['css'], admin_default_theme_path+'builds/vaahcms.css')
+    .combine(admin_assets_json['js'], admin_default_theme_path+'builds/vaahcms.js')
     .js(admin_default_theme_path+'vue/app-dashboard.js',  './builds')
     .js(admin_default_theme_path+'vue/app-modules.js',  './builds')
-    .copyDirectory(admin_path, './resources/assets/vendor/vaahcms/admin/', false)
+    .copyDirectory(admin_path, './packages/vaahcms/src/Resources/assets/admin', false)
     .version();
-
 
 mix.webpackConfig({
     watchOptions: {
@@ -169,7 +169,6 @@ mix.webpackConfig({
         ]
     }
 });
-
 
 ```
 
