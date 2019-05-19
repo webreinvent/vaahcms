@@ -110,6 +110,9 @@ Route::group(
         Route::get( '/', 'ModuleController@index' )
             ->name( 'vh.admin.modules' );
         //------------------------------------------------
+        Route::any( '/assets', 'ModuleController@assets' )
+            ->name( 'vh.admin.modules.assets' );
+        //------------------------------------------------
         Route::any( '/download', 'ModuleController@download' )
             ->name( 'vh.admin.modules.download' );
         //------------------------------------------------

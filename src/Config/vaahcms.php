@@ -13,7 +13,8 @@ $settings =  [
     'plugins_path' => 'vaahcms/Plugins',
     'per_page' => 20,
     'minified' => 0,
-    'show_console_logs' => 1,
+    'api_route' => 'https://cms.vaah.dev/api/modules',
+    'debug' => 1,
 ];
 
 return $settings;

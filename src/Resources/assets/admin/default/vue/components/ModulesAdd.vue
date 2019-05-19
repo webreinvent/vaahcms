@@ -73,12 +73,12 @@
 
                                         <p>
 
-                                        <button type="button" class="btn btn-sm btn-outline-primary">
-                                            <i class="fas fa-download"></i> Download
-                                        </button>
-                                        <button type="button" class="btn btn-sm btn-outline-info">
-                                            <i class="fas fa-sync"></i> Update
-                                        </button>
+                                            <button type="button" class="btn btn-sm btn-outline-primary">
+                                                <i class="fas fa-download"></i> Download
+                                            </button>
+                                            <button type="button" class="btn btn-sm btn-outline-info">
+                                                <i class="fas fa-sync"></i> Update
+                                            </button>
 
 
                                         </p>
@@ -127,48 +127,4 @@
         <!--/content body-->
     </div>
 </template>
-<script>
-
-    export default {
-
-        props: [],
-        components:{
-
-        },
-        data()
-        {
-            let obj = {
-                urls:{
-                    current: window.location.href,
-                },
-            };
-
-            return obj;
-        },
-        watch: {
-
-
-
-        },
-        mounted() {
-
-            //---------------------------------------------------------------------
-
-            //---------------------------------------------------------------------
-            //---------------------------------------------------------------------
-            //---------------------------------------------------------------------
-            //---------------------------------------------------------------------
-
-        },
-        methods: {
-            //---------------------------------------------------------------------
-
-
-            //---------------------------------------------------------------------
-
-            //---------------------------------------------------------------------
-            //---------------------------------------------------------------------
-            //---------------------------------------------------------------------
-        }
-    }
-</script>
+<script src="./ModulesAddJs.js"></script>
