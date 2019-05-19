@@ -53,6 +53,7 @@
         <div class="row mg-t-10">
             <div class="col-sm-6">
 
+                {{assets}}
 
                 <div class="card">
 
@@ -125,6 +126,7 @@
         </div>
 
         <!--/content body-->
+
     </div>
 </template>
 <script src="./ModulesAddJs.js"></script>

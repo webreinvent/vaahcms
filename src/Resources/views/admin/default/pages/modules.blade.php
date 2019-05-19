@@ -19,7 +19,7 @@
 
 
 
-        <router-view></router-view>
+        <router-view :assets="assets"></router-view>
 
 
 

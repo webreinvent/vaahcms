@@ -12,7 +12,7 @@ import VueHelpers from './helpers/VueHelpers';
 
 //---------Configs
 Vue.config.delimiters = ['@{{', '}}'];
-//Vue.http.headers.common['X-CSRF-TOKEN'] = $('meta[name=csrf-token]').getAttribute('content');
+//Vue.http.headers.common['X-CSRF-TOKEN'] = $('meta[name=csrf-token]').attr('content');
 Vue.config.async = false;
 //---------Configs
 
@@ -89,8 +89,6 @@ const app = new Vue({
         getAssetsAfter: function (data) {
 
             this.assets = data;
-
-            this.$helpers.console(data);
 
             this.$helpers.stopNprogress();
         },

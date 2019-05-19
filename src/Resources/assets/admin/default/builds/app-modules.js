@@ -1969,14 +1969,15 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: [],
+  props: ['assets'],
   data: function data() {
     var obj = {};
     return obj;
   },
   watch: {},
-  mounted: function mounted() {//---------------------------------------------------------------------
+  mounted: function mounted() {
     //---------------------------------------------------------------------
+    this.$helpers.console(this.assets, 'assest'); //---------------------------------------------------------------------
     //---------------------------------------------------------------------
     //---------------------------------------------------------------------
     //---------------------------------------------------------------------
@@ -55432,7 +55433,12 @@ var render = function() {
       ])
     ]),
     _vm._v(" "),
-    _vm._m(2)
+    _c("div", { staticClass: "row mg-t-10" }, [
+      _c("div", { staticClass: "col-sm-6" }, [
+        _vm._v("\n\n            " + _vm._s(_vm.assets) + "\n\n            "),
+        _vm._m(2)
+      ])
+    ])
   ])
 }
 var staticRenderFns = [
@@ -55465,94 +55471,85 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "row mg-t-10" }, [
-      _c("div", { staticClass: "col-sm-6" }, [
-        _c("div", { staticClass: "card" }, [
-          _c("div", { staticClass: "card-body" }, [
-            _c("div", { staticClass: "media" }, [
-              _c("img", {
-                staticClass: "wd-200  mg-r-20",
-                attrs: {
-                  src:
-                    "http://themepixels.me/dashforge/assets/img/placehold.jpg",
-                  alt: ""
-                }
-              }),
-              _vm._v(" "),
-              _c("div", { staticClass: "media-body" }, [
-                _c("div", { staticClass: "row" }, [
-                  _c("div", { staticClass: "col-sm-12" }, [
-                    _c("h5", { staticClass: "mg-b-15 tx-inverse" }, [
-                      _vm._v("Pods – Custom Content Types and Fields")
-                    ]),
-                    _vm._v(" "),
-                    _c("p", [
+    return _c("div", { staticClass: "card" }, [
+      _c("div", { staticClass: "card-body" }, [
+        _c("div", { staticClass: "media" }, [
+          _c("img", {
+            staticClass: "wd-200  mg-r-20",
+            attrs: {
+              src: "http://themepixels.me/dashforge/assets/img/placehold.jpg",
+              alt: ""
+            }
+          }),
+          _vm._v(" "),
+          _c("div", { staticClass: "media-body" }, [
+            _c("div", { staticClass: "row" }, [
+              _c("div", { staticClass: "col-sm-12" }, [
+                _c("h5", { staticClass: "mg-b-15 tx-inverse" }, [
+                  _vm._v("Pods – Custom Content Types and Fields")
+                ]),
+                _vm._v(" "),
+                _c("p", [
+                  _vm._v(
+                    "Pods is a framework for creating, managing, and deploying customized content types and fields."
+                  )
+                ]),
+                _vm._v(" "),
+                _c("p", [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-sm btn-outline-primary",
+                      attrs: { type: "button" }
+                    },
+                    [
+                      _c("i", { staticClass: "fas fa-download" }),
                       _vm._v(
-                        "Pods is a framework for creating, managing, and deploying customized content types and fields."
+                        " Download\n                                        "
                       )
-                    ]),
-                    _vm._v(" "),
-                    _c("p", [
-                      _c(
-                        "button",
-                        {
-                          staticClass: "btn btn-sm btn-outline-primary",
-                          attrs: { type: "button" }
-                        },
-                        [
-                          _c("i", { staticClass: "fas fa-download" }),
-                          _vm._v(
-                            " Download\n                                        "
-                          )
-                        ]
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "button",
-                        {
-                          staticClass: "btn btn-sm btn-outline-info",
-                          attrs: { type: "button" }
-                        },
-                        [
-                          _c("i", { staticClass: "fas fa-sync" }),
-                          _vm._v(
-                            " Update\n                                        "
-                          )
-                        ]
-                      )
-                    ]),
-                    _vm._v(" "),
-                    _c("p", { staticClass: "mg-b-0" }, [
-                      _c("a", { attrs: { href: "#" } }, [
-                        _vm._v("More Details ")
-                      ]),
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-sm btn-outline-info",
+                      attrs: { type: "button" }
+                    },
+                    [
+                      _c("i", { staticClass: "fas fa-sync" }),
                       _vm._v(
-                        "\n\n                                        | By "
-                      ),
-                      _c("a", { attrs: { href: "#" } }, [
-                        _vm._v("Pods Framework Team")
-                      ])
-                    ])
+                        " Update\n                                        "
+                      )
+                    ]
+                  )
+                ]),
+                _vm._v(" "),
+                _c("p", { staticClass: "mg-b-0" }, [
+                  _c("a", { attrs: { href: "#" } }, [_vm._v("More Details ")]),
+                  _vm._v("\n\n                                        | By "),
+                  _c("a", { attrs: { href: "#" } }, [
+                    _vm._v("Pods Framework Team")
                   ])
                 ])
               ])
             ])
+          ])
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "card-footer" }, [
+        _c("div", { staticClass: "row" }, [
+          _c("div", { staticClass: "col" }, [
+            _vm._v(
+              "\n                            70,000+ Active Installs\n                        "
+            )
           ]),
           _vm._v(" "),
-          _c("div", { staticClass: "card-footer" }, [
-            _c("div", { staticClass: "row" }, [
-              _c("div", { staticClass: "col" }, [
-                _vm._v(
-                  "\n                            70,000+ Active Installs\n                        "
-                )
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "col text-right" }, [
-                _vm._v(
-                  "\n                            Last Updated: 5 months ago\n                        "
-                )
-              ])
-            ])
+          _c("div", { staticClass: "col text-right" }, [
+            _vm._v(
+              "\n                            Last Updated: 5 months ago\n                        "
+            )
           ])
         ])
       ])
@@ -72351,7 +72348,7 @@ window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.
  //---------/Package imports
 //---------Configs
 
-Vue.config.delimiters = ['@{{', '}}']; //Vue.http.headers.common['X-CSRF-TOKEN'] = $('meta[name=csrf-token]').getAttribute('content');
+Vue.config.delimiters = ['@{{', '}}']; //Vue.http.headers.common['X-CSRF-TOKEN'] = $('meta[name=csrf-token]').attr('content');
 
 Vue.config.async = false; //---------Configs
 //---------Helpers
@@ -72416,7 +72413,6 @@ var app = new Vue({
     //---------------------------------------------------------------------
     getAssetsAfter: function getAssetsAfter(data) {
       this.assets = data;
-      this.$helpers.console(data);
       this.$helpers.stopNprogress();
     } //-----------------------------------------------------------
     //-----------------------------------------------------------

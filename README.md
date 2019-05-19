@@ -132,35 +132,43 @@ npm install --save-dev fs
 
 Replace the content of `webpack.mix.fs`
 ```bash
-const mix = require('laravel-mix');
-var fs = require('fs');
-
-
-/*
- |--------------------------------------------------------------------------
- | Mix Asset Management
- |--------------------------------------------------------------------------
- |
- | Mix provides a clean, fluent API for defining some Webpack build steps
- | for your Laravel application. By default, we are compiling the Sass
- | file for the application as well as bundling up all the JS files.
- |
- */
-
-var admin_path = 'resources/assets/vendor/vaahcms/admin/';
+var admin_path = 'packages/vaahcms/src/Resources/assets/admin/';
 var admin_default_theme_path = admin_path+'default/';
-
-mix.setPublicPath(admin_default_theme_path);
+var desc_admin_default_theme_path = 'resources/assets/vendor/vaahcms/admin/default/';
 
 var admin_assets_json = JSON.parse(fs.readFileSync(admin_default_theme_path+'assets.json'));
 
-//console.log(admin_assets_json);
+mix.setPublicPath(desc_admin_default_theme_path);
 
-mix.combine(admin_assets_json['css'], admin_default_theme_path+'assets/builds/vaahcms.css')
-    .combine(admin_assets_json['js'], admin_default_theme_path+'assets/builds/vaahcms.js')
-    .js(admin_default_theme_path+'assets/vue/app-dashboard.js',  './assets/builds')
-    .copyDirectory(admin_path, './packages/vaahcms/src/Resources/assets/admin', false)
+mix.combine(admin_assets_json['css'], desc_admin_default_theme_path+'builds/vaahcms.css')
+    .combine(admin_assets_json['js'], desc_admin_default_theme_path+'builds/vaahcms.js')
+    .js(admin_default_theme_path+'vue/app-dashboard.js',  './builds')
+    .js(admin_default_theme_path+'vue/app-modules.js',  './builds')
+    .copyDirectory(admin_path, './resources/assets/vendor/vaahcms/admin/', false)
     .version();
+
+
+mix.webpackConfig({
+    watchOptions: {
+        aggregateTimeout: 2000,
+        poll: 20,
+        ignored: [
+            '/app/',
+            '/bootstrap/',
+            '/config/',
+            '/database/',
+            '/packages/',
+            '/public/',
+            '/routes/',
+            '/storage/',
+            '/tests/',
+            '/vaahcms/',
+            '/node_modules/',
+            '/vendor/',
+
+        ]
+    }
+});
 
 
 ```

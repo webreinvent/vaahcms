@@ -27,9 +27,6 @@ const VueHelpers = {
             .then(response => {
                 if(response.data.status == 'success')
                 {
-
-
-
                     if(response.data.messages)
                     {
                         this.messages(response.data.messages);
