@@ -46,7 +46,7 @@ console.log('base_url', base_url);
 
 
 const app = new Vue({
-    el: '#vh-app-modules',
+    el: '#vh-app-dashboard',
     components:{
         'page-title': PageTitle
     },

@@ -1,11 +1,50 @@
-//#########################Vue#################################################
-const app = new VueCommon({
-    el: '#app',
-    data: {
+require('./../lib/vue/bootstrap');
 
-        urls: [],
+window.Vue = require('vue');
+
+
+//---------Package imports
+import VueRouter from 'vue-router';
+import VueResource from 'vue-resource';
+import moment from 'moment'
+import VueHelpers from './helpers/VueHelpers';
+//---------/Package imports
+
+//---------Configs
+Vue.config.delimiters = ['@{{', '}}'];
+//Vue.http.headers.common['X-CSRF-TOKEN'] = $('meta[name=csrf-token]').attr('content');
+Vue.config.async = false;
+//---------Configs
+
+//---------Helpers
+Vue.prototype.moment = moment;
+Vue.use(VueResource);
+Vue.use(VueRouter);
+Vue.use(VueHelpers);
+//---------/Helpers
+
+//---------Comp Imports
+import ModulesInstalled from './components/ModulesInstalled';
+import ModulesAdd from './components/ModulesAdd';
+//---------/Comp Imports
+
+
+
+//---------Variables
+var base_url = $('base').attr('href');
+var current_url = $('#current_url').attr('content');
+var debug = $('#debug').attr('content');
+//---------/Variables
+
+const app = new Vue({
+    el: '#vh-app-setup',
+    data: {
+        urls: {
+            base: base_url,
+            current: current_url,
+        },
         list: {},
-        active_step: 'database',
+        active_step: null,
         flash_message: null,
         active_el: null,
         app_info: {
@@ -25,19 +64,20 @@ const app = new VueCommon({
             username: null,
             password: null,
         },
-
-
     },
-    mounted: function () {
-        //---------------------------------------------------------------
-        this.urls.current = window.location.href;
+
+    mounted() {
+
+
         //---------------------------------------------------------------
         this.checkStatus();
         //---------------------------------------------------------------
-        //---------------------------------------------------------------
     },
     methods:{
-        //---------------------------------------------------------------------
+
+        //-----------------------------------------------------------
+
+        //-----------------------------------------------------------
         checkStatus: function (e) {
             if(e)
             {
@@ -46,7 +86,7 @@ const app = new VueCommon({
 
             var url = this.urls.current+"/check/status";
             var params = {};
-            this.processHttpRequest(url, params, this.checkStatusAfter);
+            this.$helpers.ajax(url, params, this.checkStatusAfter);
         },
         //---------------------------------------------------------------------
         checkStatusAfter: function (data) {
@@ -54,7 +94,7 @@ const app = new VueCommon({
             this.active_step = data.active_step;
             this.flash_message = data.flash_message;
 
-            this.stopNprogress();
+            this.$helpers.stopNprogress();
         },
         //---------------------------------------------------------------------
         storeAppInfo: function (e) {
@@ -66,9 +106,7 @@ const app = new VueCommon({
             var url = this.urls.current+"/store/app/info";
             var params = this.app_info;
 
-
-
-            this.processHttpRequest(url, params, this.storeAppInfoAfter);
+            this.$helpers.ajax(url, params, this.storeAppInfoAfter);
         },
         //---------------------------------------------------------------------
         storeAppInfoAfter: function (data) {
@@ -76,7 +114,7 @@ const app = new VueCommon({
             this.active_step = 'run_migrations';
 
 
-            this.stopNprogress();
+            this.$helpers.stopNprogress();
         },
 
         //---------------------------------------------------------------------
@@ -88,7 +126,7 @@ const app = new VueCommon({
 
             var url = this.urls.current+"/run/migrations";
             var params = {};
-            this.processHttpRequest(url, params, this.runMigrationsAfter);
+            this.$helpers.ajax(url, params, this.runMigrationsAfter);
         },
         //---------------------------------------------------------------------
         runMigrationsAfter: function (data) {
@@ -97,7 +135,7 @@ const app = new VueCommon({
 
             this.consoleLog(this.active_step);
 
-            this.stopNprogress();
+            this.$helpers.stopNprogress();
         },
         //---------------------------------------------------------------------
         storeAdminUser: function (e) {
@@ -108,7 +146,7 @@ const app = new VueCommon({
 
             var url = this.urls.current+"/store/admin";
             var params = this.admin_info;
-            this.processHttpRequest(url, params, this.storeAdminUserAfter);
+            this.$helpers.ajax(url, params, this.storeAdminUserAfter);
         },
         //---------------------------------------------------------------------
         storeAdminUserAfter: function (data) {
@@ -116,9 +154,11 @@ const app = new VueCommon({
             this.flash_message = data.flash_message;
             window.location = data.redirect_url;
 
-            this.stopNprogress();
+            this.$helpers.stopNprogress();
         },
-        //---------------------------------------------------------------------
-        //---------------------------------------------------------------------
+        //-----------------------------------------------------------
+
+        //-----------------------------------------------------------
+        //-----------------------------------------------------------
     }
 });

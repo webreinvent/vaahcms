@@ -81,7 +81,7 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 3);
+/******/ 	return __webpack_require__(__webpack_require__.s = 0);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -73852,10 +73852,10 @@ if (token) {
 
 /***/ }),
 
-/***/ "./resources/assets/vendor/vaahcms/admin/default/vue/app-modules.js":
-/*!**************************************************************************!*\
-  !*** ./resources/assets/vendor/vaahcms/admin/default/vue/app-modules.js ***!
-  \**************************************************************************/
+/***/ "./resources/assets/vendor/vaahcms/admin/default/vue/app-setup.js":
+/*!************************************************************************!*\
+  !*** ./resources/assets/vendor/vaahcms/admin/default/vue/app-setup.js ***!
+  \************************************************************************/
 /*! no exports provided */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -73891,25 +73891,6 @@ Vue.use(_helpers_VueHelpers__WEBPACK_IMPORTED_MODULE_3__["default"]); //--------
 
 
  //---------/Comp Imports
-//---------Routes
-
-var router = new vue_router__WEBPACK_IMPORTED_MODULE_0__["default"]({
-  base: '/',
-  linkActiveClass: "active",
-  routes: [{
-    path: '/',
-    props: {
-      assets: true
-    },
-    component: _components_ModulesInstalled__WEBPACK_IMPORTED_MODULE_4__["default"]
-  }, {
-    path: '/add',
-    component: _components_ModulesAdd__WEBPACK_IMPORTED_MODULE_5__["default"]
-  }, {
-    path: '*',
-    redirect: '/'
-  }]
-}); //---------/Routes
 //---------Variables
 
 var base_url = $('base').attr('href');
@@ -73917,22 +73898,106 @@ var current_url = $('#current_url').attr('content');
 var debug = $('#debug').attr('content'); //---------/Variables
 
 var app = new Vue({
-  el: '#vh-app-modules',
-  components: {},
-  router: router,
+  el: '#vh-app-setup',
   data: {
-    assets: null,
-    debug: debug,
     urls: {
       base: base_url,
       current: current_url
+    },
+    list: {},
+    active_step: null,
+    flash_message: null,
+    active_el: null,
+    app_info: {
+      app_name: null,
+      db_host: null,
+      db_port: null,
+      db_database: null,
+      db_username: null,
+      db_password: null
+    },
+    admin_info: {
+      first_name: null,
+      last_name: null,
+      email: null,
+      country_calling_code: "",
+      phone: null,
+      username: null,
+      password: null
     }
   },
-  mounted: function mounted() {},
-  methods: {//-----------------------------------------------------------
+  mounted: function mounted() {
+    //---------------------------------------------------------------
+    this.checkStatus(); //---------------------------------------------------------------
+  },
+  methods: {
     //-----------------------------------------------------------
     //-----------------------------------------------------------
+    checkStatus: function checkStatus(e) {
+      if (e) {
+        e.preventDefault();
+      }
+
+      var url = this.urls.current + "/check/status";
+      var params = {};
+      this.$helpers.ajax(url, params, this.checkStatusAfter);
+    },
+    //---------------------------------------------------------------------
+    checkStatusAfter: function checkStatusAfter(data) {
+      this.active_step = data.active_step;
+      this.flash_message = data.flash_message;
+      this.$helpers.stopNprogress();
+    },
+    //---------------------------------------------------------------------
+    storeAppInfo: function storeAppInfo(e) {
+      if (e) {
+        e.preventDefault();
+      }
+
+      var url = this.urls.current + "/store/app/info";
+      var params = this.app_info;
+      this.$helpers.ajax(url, params, this.storeAppInfoAfter);
+    },
+    //---------------------------------------------------------------------
+    storeAppInfoAfter: function storeAppInfoAfter(data) {
+      this.active_step = 'run_migrations';
+      this.$helpers.stopNprogress();
+    },
+    //---------------------------------------------------------------------
+    runMigrations: function runMigrations(e) {
+      if (e) {
+        e.preventDefault();
+      }
+
+      var url = this.urls.current + "/run/migrations";
+      var params = {};
+      this.$helpers.ajax(url, params, this.runMigrationsAfter);
+    },
+    //---------------------------------------------------------------------
+    runMigrationsAfter: function runMigrationsAfter(data) {
+      this.active_step = 'create_admin_account';
+      this.consoleLog(this.active_step);
+      this.$helpers.stopNprogress();
+    },
+    //---------------------------------------------------------------------
+    storeAdminUser: function storeAdminUser(e) {
+      if (e) {
+        e.preventDefault();
+      }
+
+      var url = this.urls.current + "/store/admin";
+      var params = this.admin_info;
+      this.$helpers.ajax(url, params, this.storeAdminUserAfter);
+    },
+    //---------------------------------------------------------------------
+    storeAdminUserAfter: function storeAdminUserAfter(data) {
+      this.flash_message = data.flash_message;
+      window.location = data.redirect_url;
+      this.$helpers.stopNprogress();
+    } //-----------------------------------------------------------
     //-----------------------------------------------------------
+    //-----------------------------------------------------------
+
   }
 });
 
@@ -74821,6 +74886,18 @@ var VueHelpers = {
 
 /***/ }),
 
+/***/ 0:
+/*!******************************************************************************!*\
+  !*** multi ./resources/assets/vendor/vaahcms/admin/default/vue/app-setup.js ***!
+  \******************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__(/*! F:\xampp72\htdocs\packages\resources\assets\vendor\vaahcms\admin\default\vue\app-setup.js */"./resources/assets/vendor/vaahcms/admin/default/vue/app-setup.js");
+
+
+/***/ }),
+
 /***/ 1:
 /*!*********************!*\
   !*** got (ignored) ***!
@@ -74829,18 +74906,6 @@ var VueHelpers = {
 /***/ (function(module, exports) {
 
 /* (ignored) */
-
-/***/ }),
-
-/***/ 3:
-/*!********************************************************************************!*\
-  !*** multi ./resources/assets/vendor/vaahcms/admin/default/vue/app-modules.js ***!
-  \********************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__(/*! F:\xampp72\htdocs\packages\resources\assets\vendor\vaahcms\admin\default\vue\app-modules.js */"./resources/assets/vendor/vaahcms/admin/default/vue/app-modules.js");
-
 
 /***/ })
 
