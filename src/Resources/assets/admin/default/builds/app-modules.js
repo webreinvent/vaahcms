@@ -1969,24 +1969,56 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['assets'],
+  props: ['urls'],
   data: function data() {
-    var obj = {};
+    var obj = {
+      assets: null
+    };
     return obj;
   },
-  watch: {},
   mounted: function mounted() {
     //---------------------------------------------------------------------
-    this.$helpers.console(this.assets, 'assest'); //---------------------------------------------------------------------
-    //---------------------------------------------------------------------
-    //---------------------------------------------------------------------
+    this.getAssets(); //---------------------------------------------------------------------
     //---------------------------------------------------------------------
   },
-  methods: {//---------------------------------------------------------------------
+  methods: {
+    //---------------------------------------------------------------------
+    getAssets: function getAssets(e) {
+      if (e) {
+        e.preventDefault();
+      }
+
+      console.log(this.urls);
+      var url = this.urls.current + "/assets";
+      var params = {};
+      this.$helpers.ajax(url, params, this.getAssetsAfter);
+    },
+    //---------------------------------------------------------------------
+    getAssetsAfter: function getAssetsAfter(data) {
+      this.assets = data;
+      this.$helpers.console(this.assets, 'from app->');
+      this.getModules();
+    },
+    //---------------------------------------------------------------------
+    getModules: function getModules(e) {
+      if (e) {
+        e.preventDefault();
+      }
+
+      var url = this.assets.vaahcms_api_route;
+      this.$helpers.console(url, 'url');
+      var params = {};
+      this.$helpers.ajax(url, params, this.getModulesAfter);
+    },
+    //---------------------------------------------------------------------
+    getModulesAfter: function getModulesAfter(data) {
+      this.$helpers.console(data);
+      this.$helpers.stopNprogress();
+    } //---------------------------------------------------------------------
     //---------------------------------------------------------------------
     //---------------------------------------------------------------------
     //---------------------------------------------------------------------
-    //---------------------------------------------------------------------
+
   }
 });
 
@@ -72368,6 +72400,9 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_0__["default"]({
   linkActiveClass: "active",
   routes: [{
     path: '/',
+    props: {
+      assets: true
+    },
     component: _components_ModulesInstalled__WEBPACK_IMPORTED_MODULE_4__["default"]
   }, {
     path: '/add',
@@ -72395,29 +72430,11 @@ var app = new Vue({
       current: current_url
     }
   },
-  mounted: function mounted() {
-    this.getAssets();
-  },
-  methods: {
-    //-----------------------------------------------------------
-    getAssets: function getAssets(e) {
-      if (e) {
-        e.preventDefault();
-      }
-
-      console.log(this.urls);
-      var url = this.urls.current + "/assets";
-      var params = {};
-      this.$helpers.ajax(url, params, this.getAssetsAfter);
-    },
-    //---------------------------------------------------------------------
-    getAssetsAfter: function getAssetsAfter(data) {
-      this.assets = data;
-      this.$helpers.stopNprogress();
-    } //-----------------------------------------------------------
+  mounted: function mounted() {},
+  methods: {//-----------------------------------------------------------
     //-----------------------------------------------------------
     //-----------------------------------------------------------
-
+    //-----------------------------------------------------------
   }
 });
 

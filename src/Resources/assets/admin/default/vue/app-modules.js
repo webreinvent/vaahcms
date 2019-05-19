@@ -34,6 +34,7 @@ const router = new VueRouter({
     linkActiveClass: "active",
     routes: [
         {   path: '/',
+            props: {assets: true},
             component: ModulesInstalled
         },
         {   path: '/add',
@@ -64,34 +65,14 @@ const app = new Vue({
             current: current_url,
         }
     },
-    mounted() {
 
-        this.getAssets()
+    mounted() {
 
     },
     methods:{
 
         //-----------------------------------------------------------
-        getAssets: function (e) {
-            if(e)
-            {
-                e.preventDefault();
-            }
 
-
-            console.log(this.urls);
-
-            var url = this.urls.current+"/assets";
-            var params = {};
-            this.$helpers.ajax(url, params, this.getAssetsAfter);
-        },
-        //---------------------------------------------------------------------
-        getAssetsAfter: function (data) {
-
-            this.assets = data;
-
-            this.$helpers.stopNprogress();
-        },
         //-----------------------------------------------------------
 
         //-----------------------------------------------------------
