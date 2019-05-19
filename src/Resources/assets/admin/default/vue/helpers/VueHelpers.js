@@ -51,6 +51,47 @@ const VueHelpers = {
 
     },
     //---------------------------------------------------------------------
+    ajaxGet: function(url, params, callback, nprogress=true)
+    {
+        if(nprogress)
+        {
+            NProgress.start();
+            console.log('start nprogress');
+        }
+
+        window.axios.defaults.headers.common = {
+            'X-Requested-With': 'XMLHttpRequest',
+        };
+
+        console.log('ajax');
+        axios.get(url, params)
+            .then(response => {
+                if(response.data.status == 'success')
+                {
+                    if(response.data.messages)
+                    {
+                        this.messages(response.data.messages);
+                    }
+
+                    if(response.data.warnings)
+                    {
+                        this.warnings(response.data.warnings);
+                    }
+
+                    callback(response.data.data)
+                } else
+                {
+                    console.log(response);
+                    if(response.data.errors)
+                    {
+                        this.errors(response.data.errors);
+                    }
+
+                }
+            });
+
+    },
+    //---------------------------------------------------------------------
     warnings: function (warnings) {
         $.each(warnings, function (index, object) {
             alertify.error(object);

@@ -7,6 +7,7 @@ use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use WebReinvent\VaahCms\Entities\User;
 use ZanySoft\Zip\Zip;
+use ZanySoft\Zip\ZipManager;
 
 class ModuleController extends Controller
 {
@@ -40,19 +41,44 @@ class ModuleController extends Controller
     public function download(Request $request)
     {
 
-        $filename = 'sample.zip';
-        $path = base_path()."/vaahcms/Modules/".$filename;
+        $rules = array(
+            'github_url' => 'required',
+            'name' => 'required',
+        );
+
+        $validator = \Validator::make( $request->toArray(), $rules);
+        if ( $validator->fails() ) {
+
+            $errors             = errorsToArray($validator->errors());
+            $response['status'] = 'failed';
+            $response['errors'] = $errors;
+            return response()->json($response);
+        }
 
 
+        $parsed = parse_url($request->github_url);
 
-        copy('https://github.com/webreinvent/vaahcms-sample-module/archive/master.zip', $path);
 
+        $uri_parts = explode('/', $parsed['path']);
+        $folder_name = end($uri_parts);
+        $folder_name = $folder_name."-master";
+
+
+        $filename = $request->name.'.zip';
+        $folder_path = base_path()."/vaahcms/Modules/";
+        $path = $folder_path.$filename;
+
+        copy($request->github_url.'/archive/master.zip', $path);
 
         try{
             Zip::check($path);
-
             $zip = Zip::open($path);
             $zip->extract(base_path().'/vaahcms/Modules/');
+
+            rename($folder_path."".$folder_name, $folder_path.$request->name);
+
+            //TODO:: Delete zip file
+
             $response['status'] = 'success';
             $response['messages'][] = 'installed';
             return response()->json($response);

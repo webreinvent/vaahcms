@@ -41618,6 +41618,10 @@ body{
   z-index: 1000;
 }
 
+.hide{
+  display: none !important;
+}
+
 .aside{
 
 }

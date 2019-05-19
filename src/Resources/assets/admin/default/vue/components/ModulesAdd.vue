@@ -28,8 +28,12 @@
                         <div class="mg-r-10" >
 
                             <div class="search-form input-group-sm">
-                                <input type="search" class="form-control" placeholder="Search">
-                                <button class="btn" type="button"><i class="fas fa-search"></i></button>
+                                <input type="search" class="form-control" v-model="filters.q"
+                                       v-on:keyup.enter="getModules()"
+                                       placeholder="Search">
+                                <button class="btn" v-on:click="getModules()" type="button">
+                                    <i class="fas fa-search"></i>
+                                </button>
                             </div>
 
 
@@ -50,33 +54,30 @@
         <!--content body-->
 
 
-        <div class="row mg-t-10">
-            <div class="col-sm-6">
-
-                {{assets}}
+        <div class="row mg-t-10 mg-b-10" v-if="list">
+            <div class="col-sm-6" v-for="item in list.data" >
 
                 <div class="card">
-
-
-
                     <div class="card-body">
 
                         <div class="media">
-                            <img src="http://themepixels.me/dashforge/assets/img/placehold.jpg" class="wd-200  mg-r-20" alt="">
+                            <img :src="item.thumbnail" class="wd-200  mg-r-20" alt="">
                             <div class="media-body">
 
                                 <div class="row">
 
                                     <div class="col-sm-12">
-                                        <h5 class="mg-b-15 tx-inverse">Pods – Custom Content Types and Fields</h5>
+                                        <h5 class="mg-b-15 tx-inverse">{{item.title}}</h5>
 
-                                        <p>Pods is a framework for creating, managing, and deploying customized content types and fields.</p>
+                                        <p>{{item.excerpt}}</p>
 
                                         <p>
 
-                                            <button type="button" class="btn btn-sm btn-outline-primary">
+                                            <button type="button" v-on:click="download($event, item)"
+                                                    class="btn btn-sm btn-outline-primary">
                                                 <i class="fas fa-download"></i> Download
                                             </button>
+
                                             <button type="button" class="btn btn-sm btn-outline-info">
                                                 <i class="fas fa-sync"></i> Update
                                             </button>
@@ -87,7 +88,7 @@
                                         <p class="mg-b-0">
                                             <a href="#">More Details </a>
 
-                                            | By <a href="#">Pods Framework Team</a>
+                                            | By <a target="_blank" :href="item.author_website">{{item.author_name}}</a>
                                         </p>
 
                                     </div>
@@ -104,13 +105,18 @@
 
                     <div class="card-footer">
 
+                        <div class="progress mg-b-10 hide">
+                            <div class="progress-bar bg-success progress-bar-striped progress-bar-animated wd-100p"
+                                 role="progressbar"></div>
+                        </div>
+
                         <div class="row">
-                            <div class="col">
-                                70,000+ Active Installs
+                            <div class="col" v-if="item.downloads">
+                                {{item.downloads}}+ Active Installs
                             </div>
 
                             <div class="col text-right">
-                                Last Updated: 5 months ago
+                                Last Updated: {{item.updated_at}}
                             </div>
 
                         </div>
@@ -120,9 +126,15 @@
 
                 </div>
 
-
-
             </div>
+        </div>
+
+        <div class="row">
+
+            <div class="col">
+                <pagination  v-if="list" :limit="6" :data="list" @pagination-change-page="getModules"></pagination>
+            </div>
+
         </div>
 
         <!--/content body-->
