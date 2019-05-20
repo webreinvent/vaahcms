@@ -139,7 +139,7 @@ class ModuleController extends Controller
 
         $module = Module::find($inputs['id']);
 
-        $controller = "\VaahCms\Modules\\{$module->name}\\Http\Controllers\SetupController::";
+        $controller = "\VaahCms\Modules\\{$module->name}\\Http\Controllers\SetupController";
 
         switch($request->action)
         {
@@ -147,25 +147,75 @@ class ModuleController extends Controller
             //---------------------------------------
             case 'activate':
 
-                $controller .= "activate";
+                //run migration
+                $command = 'migrate';
+                $params = [
+                    '--path' => "./vaahcms/Modules/".$module->name."/Database/Migrations",
+                    '--force' => true
+                ];
+
+                echo "<pre>";
+                print_r($params);
+                echo "</pre>";
+
+                \Artisan::call($command, $params);
+
+                //Run seeds
+
+                \Artisan::call('db:seed', [
+                    '--class' => "\VaahCms\Modules\\{$module->name}\\Database\Seeders"
+                ]);
+
+                //run migration
+                //run seeds
+
+                //method to be called
+                $method = "activate";
 
                 break;
             //---------------------------------------
             case 'deactivate':
 
+
+
+
+
                 break;
             //---------------------------------------
+
+            case 'delete':
+
+                //run migration
+                $command = 'migrate:refresh';
+                $params = [
+                    '--path' => "./vaahcms/Modules/".$module->name."/Database/Migrations",
+                    '--force' => true
+                ];
+
+                \Artisan::call($command, $params);
+
+                echo "<pre>";
+                print_r($params);
+                echo "</pre>";
+
+                break;
             //---------------------------------------
             //---------------------------------------
             //---------------------------------------
             //---------------------------------------
         }
 
+
+        $response = null;
+
         try{
 
-            $response = call_user_func($controller);
-
-            $response['data']['controller_method'] = $controller;
+            if (isset($method) && method_exists($controller, $method)
+                && is_callable(array($controller, $method)))
+            {
+                $response = call_user_func($controller."::".$method, $module);
+                $response['data']['controller_method'] = $controller;
+            }
 
         }catch(\Exception $e)
         {
