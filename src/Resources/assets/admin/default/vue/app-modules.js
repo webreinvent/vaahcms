@@ -59,6 +59,7 @@ const app = new Vue({
     router,
     data: {
         assets: null,
+        test: "test",
         debug: debug,
         urls: {
             base: base_url,
