@@ -146,8 +146,6 @@ const VueHelpers = {
 
         var debug = $('#debug').attr('content');
 
-        console.log('debug', debug);
-
         if(debug == 1)
         {
             if(label)
@@ -194,6 +192,7 @@ const VueHelpers = {
         console.log('index', removeIndex);
         return arr.splice(removeIndex, 1);
     },
+
     //---------------------------------------------------------------------
     findInArrayByKey: function (array, key, value) {
 
@@ -832,6 +831,7 @@ const VueHelpers = {
         $(fd).toggleClass('show');
     },
     //---------------------------------------------------------------------
+
 
     //---------------------------------------------------------------------
     //---------------------------------------------------------------------

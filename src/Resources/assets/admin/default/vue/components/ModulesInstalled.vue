@@ -14,6 +14,9 @@
                             <i class="fas fa-plus"></i> Add New
                         </router-link>
 
+
+                        <button class="btn btn-success btn-sm"><i class="fas fa-sync"></i> Check Updates</button>
+
                     </div>
                 </div>
 
@@ -30,19 +33,30 @@
                     <div class="d-sm-flex align-items-center justify-content-between">
                         <div>
                             <nav class="nav">
-                                <a href="" class="nav-link pd-l-0">All (30)</a>
-                                <a href="" class="nav-link active">Active (20)</a>
-                                <a href="" class="nav-link">Inactive (11)</a>
-                                <a href="" class="nav-link">Updates Available (0)</a>
+                                <a href="#" class="nav-link pd-l-0"
+                                   v-bind:class="{'active': active_tab == 'all'}">All (30)</a>
+                                <a href="#" class="nav-link"
+                                   v-bind:class="{'active': active_tab == 'active'}">Active (20)</a>
+                                <a href="#" class="nav-link"
+                                   v-bind:class="{'active': active_tab == 'inactive'}">Inactive (11)</a>
+                                <a href="#" class="nav-link"
+                                   v-bind:class="{'active': active_tab == 'updatable'}">Updates Available (0)</a>
 
                             </nav>
                         </div>
 
                         <div class="d-none d-md-block">
                             <div class="search-form">
-                                <input type="search" class="form-control" placeholder="Search">
-                                <button class="btn" type="button"><i class="fas fa-search"></i></button>
+                                <input type="search" class="form-control" v-model="filters.q"
+                                       v-on:keyup.enter="getList()"
+                                       placeholder="Search">
+                                <button class="btn" v-on:click="getList()" type="button">
+                                    <i class="fas fa-search"></i>
+                                </button>
+
                             </div>
+
+
                         </div>
 
                     </div>
@@ -84,9 +98,9 @@
 
         </div>
 
-        <div class="row mg-t-10">
+        <div class="row mg-t-10 mg-b-10">
             <div class="col-sm">
-                <table class="table">
+                <table class="table" v-if="list">
                     <thead class="thead-light">
                     <tr>
                         <th scope="col">
@@ -96,13 +110,17 @@
                                 <label class="custom-control-label" for="selectAll"></label>
                             </div>
 
+
+
+
+
                         </th>
                         <th scope="col">Module Name</th>
                         <th scope="col">Description</th>
                     </tr>
                     </thead>
                     <tbody>
-                    <tr>
+                    <tr  v-for="item in list.data">
                         <th scope="row">
 
                             <div class="custom-control custom-checkbox">
@@ -112,102 +130,64 @@
 
                         </th>
                         <td>
-                            <strong>.PHP on PAGES</strong><br/>
+                            <strong>{{item.name}}</strong><br/>
 
-                            <a href="#" class="mg-r-5">Deactivate</a>
-                            | <a href="#" class="mg-5">Edit</a>
-                            | <a href="#" class="mg-5">Settings</a>
+                            <a href="#" v-if="item.is_active == 1"
+                               v-on:click="actions($event, 'deactivate', item, null)"
+                               class="mg-r-5">Deactivate</a>
+
+                            <a href="#" v-else
+                               v-on:click="actions($event, 'activate', item, null)"
+                               class="mg-r-5">Activate</a>
+
+                            <span v-if="item.is_sample_data_available">
+                            |
+                            <a href="#"
+                               v-on:click="actions($event, 'import_sample_data', item, null)"
+                               class="mg-r-5 mg-l-5">Import Sample Data</a>
+
+                            </span>
+
+                            <strong v-if="item.is_update_available">
+                            | <a href="#" class="mg-5 text-success">Update</a>
+                            </strong>
+
+                            | <a href="#" class="mg-5 text-danger">Delete</a>
 
                         </td>
                         <td>
-                            Adds .PHP to pages. you can follow us on twitter @wphelpline
-
+                            <strong v-if="item.title">
+                                {{item.title}}<br/>
+                            </strong>
+                            <span v-if="item.excerpt">
+                                {{item.excerpt}}
+                            </span>
                             <br/>
-                            <span class="badge badge-light">Version 1.0.2</span>
-                            | By <a href="#" class="mg-5">WebReinvent</a>
-                            | <a href="#" class="mg-5">View Details</a>
+                            <span class="badge badge-light">Version: {{item.version}}</span>
+                            | By <a :href="item.author_website" target="_blank"
+                                    class="mg-5">{{item.author_name}}</a>
+                            | <a :href="item.github_url" target="_blank" class="mg-5">View Details</a>
                         </td>
 
                     </tr>
 
-                    <tr>
-                        <th scope="row">
 
-                            <div class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input" id="customCheck2">
-                                <label class="custom-control-label" for="customCheck1"></label>
-                            </div>
-
-                        </th>
-                        <td>
-                            <strong>.PHP on PAGES</strong><br/>
-
-                            <a href="#" class="mg-r-5">Deactivate</a>
-                            | <a href="#" class="mg-5">Edit</a>
-                            | <a href="#" class="mg-5">Settings</a>
-
-                        </td>
-                        <td>
-                            Adds .PHP to pages. you can follow us on twitter @wphelpline
-
-                            <br/>
-                            <span class="badge badge-light">Version 1.0.2</span>
-                            | By <a href="#" class="mg-5">WebReinvent</a>
-                            | <a href="#" class="mg-5">View Details</a>
-                        </td>
-
-                    </tr>
 
                     </tbody>
                 </table>
             </div>
         </div>
 
+        <div class="row">
+
+            <div class="col">
+                <pagination  v-if="list" :limit="6" :data="list" @pagination-change-page="getList"></pagination>
+            </div>
+
+        </div>
+
+
         <!--/content body-->
     </div>
 </template>
-<script>
-
-    export default {
-
-        props: [],
-        components:{
-
-        },
-        data()
-        {
-            let obj = {
-                urls:{
-                    current: window.location.href,
-                },
-            };
-
-            return obj;
-        },
-        watch: {
-
-
-
-        },
-        mounted() {
-
-            //---------------------------------------------------------------------
-
-            //---------------------------------------------------------------------
-            //---------------------------------------------------------------------
-            //---------------------------------------------------------------------
-            //---------------------------------------------------------------------
-
-        },
-        methods: {
-            //---------------------------------------------------------------------
-
-
-            //---------------------------------------------------------------------
-
-            //---------------------------------------------------------------------
-            //---------------------------------------------------------------------
-            //---------------------------------------------------------------------
-        }
-    }
-</script>
+<script src="./ModulesInstalledJs.js"></script>

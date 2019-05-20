@@ -12,6 +12,7 @@ export default {
 
             assets: null,
             q: null,
+            page: 1,
             list: null,
             active_item: null,
             active_el: null,

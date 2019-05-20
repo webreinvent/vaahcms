@@ -107,6 +107,7 @@ Route::group(
     ],
     function () {
         //------------------------------------------------
+        //------------------------------------------------
         Route::get( '/', 'ModuleController@index' )
             ->name( 'vh.admin.modules' );
         //------------------------------------------------
@@ -116,6 +117,11 @@ Route::group(
         Route::any( '/download', 'ModuleController@download' )
             ->name( 'vh.admin.modules.download' );
         //------------------------------------------------
+        Route::any( '/list', 'ModuleController@getList' )
+            ->name( 'vh.admin.modules.list' );
+        //------------------------------------------------
+        Route::any( '/actions', 'ModuleController@actions' )
+            ->name( 'vh.admin.modules.actions' );
         //------------------------------------------------
     });
 

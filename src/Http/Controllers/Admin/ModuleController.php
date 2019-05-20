@@ -5,6 +5,7 @@ namespace WebReinvent\VaahCms\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
+use WebReinvent\VaahCms\Entities\Module;
 use WebReinvent\VaahCms\Entities\User;
 use ZanySoft\Zip\Zip;
 use ZanySoft\Zip\ZipManager;
@@ -95,8 +96,33 @@ class ModuleController extends Controller
     //----------------------------------------------------------
     public function getList(Request $request)
     {
+
+        Module::syncAllModules();
+
+        $list = Module::with(['settings'])
+            ->orderBy('created_at', 'DESC');
+
+        if($request->has('q'))
+        {
+            $list->where(function ($s) use ($request) {
+                $s->where('name', 'LIKE', '%'.$request->q.'%')
+                    ->where('title', 'LIKE', '%'.$request->q.'%');
+            });
+        }
+
+        $response['status'] = 'success';
+        $response['data']['list'] = $list->paginate(10);
+
+        return response()->json($response);
+
+    }
+    //----------------------------------------------------------
+    public function actions(Request $request)
+    {
         $rules = array(
-            'name' => 'required',
+            'action' => 'required',
+            'inputs' => 'required',
+            'inputs.id' => 'required',
         );
 
         $validator = \Validator::make( $request->all(), $rules);
@@ -109,17 +135,51 @@ class ModuleController extends Controller
         }
 
         $data = [];
+        $inputs = $request->inputs;
 
-        $response['status'] = 'failed';
-        $response['errors'][] = 'error';
+        $module = Module::find($inputs['id']);
 
-        $response['status'] = 'success';
-        $response['messages'][] = 'Saved';
-        $response['data'] = $data;
+        $controller = "\VaahCms\Modules\\{$module->name}\\Http\Controllers\SetupController::";
+
+        switch($request->action)
+        {
+
+            //---------------------------------------
+            case 'activate':
+
+                $controller .= "activate";
+
+                break;
+            //---------------------------------------
+            case 'deactivate':
+
+                break;
+            //---------------------------------------
+            //---------------------------------------
+            //---------------------------------------
+            //---------------------------------------
+            //---------------------------------------
+        }
+
+        try{
+
+            $response = call_user_func($controller);
+
+            $response['data']['controller_method'] = $controller;
+
+        }catch(\Exception $e)
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = $e->getMessage();
+
+        }
 
         return response()->json($response);
 
     }
+    //----------------------------------------------------------
+    //----------------------------------------------------------
+    //----------------------------------------------------------
     //----------------------------------------------------------
 
 
