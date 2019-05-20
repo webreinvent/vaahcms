@@ -73961,7 +73961,6 @@ var app = new Vue({
   router: router,
   data: {
     assets: null,
-    test: "test",
     debug: debug,
     urls: {
       base: base_url,
