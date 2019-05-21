@@ -80,3 +80,62 @@ Route::group(
         //------------------------------------------------
         //------------------------------------------------
     });
+
+
+Route::group(
+    [
+        'prefix'     => 'admin/settings',
+        'middleware' => ['web','has.admin.access'],
+        'namespace'  => 'WebReinvent\VaahCms\Http\Controllers\Admin'
+    ],
+    function () {
+        //------------------------------------------------
+        Route::get( '/vaahcms', 'SettingsController@index' )
+            ->name( 'vh.admin.vaahcms.settings' );
+        //------------------------------------------------
+        //------------------------------------------------
+        //------------------------------------------------
+    });
+
+
+
+Route::group(
+    [
+        'prefix'     => 'admin/modules',
+        'middleware' => ['web','has.admin.access'],
+        'namespace'  => 'WebReinvent\VaahCms\Http\Controllers\Admin'
+    ],
+    function () {
+        //------------------------------------------------
+        //------------------------------------------------
+        Route::get( '/', 'ModuleController@index' )
+            ->name( 'vh.admin.modules' );
+        //------------------------------------------------
+        Route::any( '/assets', 'ModuleController@assets' )
+            ->name( 'vh.admin.modules.assets' );
+        //------------------------------------------------
+        Route::any( '/download', 'ModuleController@download' )
+            ->name( 'vh.admin.modules.download' );
+        //------------------------------------------------
+        Route::any( '/list', 'ModuleController@getList' )
+            ->name( 'vh.admin.modules.list' );
+        //------------------------------------------------
+        Route::any( '/actions', 'ModuleController@actions' )
+            ->name( 'vh.admin.modules.actions' );
+        //------------------------------------------------
+    });
+
+
+Route::group(
+    [
+        'prefix'     => 'admin/composer',
+        'middleware' => ['web','has.admin.access'],
+        'namespace'  => 'WebReinvent\VaahCms\Http\Controllers\Admin'
+    ],
+    function () {
+        //------------------------------------------------
+        Route::get( '/install', 'ComposerController@install' )
+            ->name( 'vh.admin.composer.install' );
+        //------------------------------------------------
+        //------------------------------------------------
+    });

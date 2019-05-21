@@ -1,5 +1,5 @@
 
-<form v-if="active_step == 'database'">
+<form v-if="active_step && active_step == 'database'">
 
     <div class="form-group row">
         <label for="name" class="col-sm-3 col-form-label">App/Web Name</label>

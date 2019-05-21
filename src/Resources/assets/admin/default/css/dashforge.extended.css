@@ -1,0 +1,27 @@
+body{
+  background-color: #f9f9f9;
+}
+.alert ul{
+  margin: 0px 10px;
+  padding: 0px;
+}
+
+.navbar-search{
+  z-index: 1000;
+}
+
+.hide{
+  display: none !important;
+}
+
+.aside{
+
+}
+
+.aside .aside-body{
+  background-color: #fff;
+}
+
+.bg-success-9{
+  background-color: #e5f9ee;
+}

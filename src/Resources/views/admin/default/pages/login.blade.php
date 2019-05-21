@@ -1,13 +1,17 @@
 @extends("vaahcms::admin.default.layouts.master")
 
 @section('vaahcms_extend_admin_css')
-    <link href="{{vh_get_admin_assets('assets/css/dashforge.auth.css')}}" rel="stylesheet" media="screen">
+    <link href="{{vh_get_admin_assets('css/dashforge.auth.css')}}" rel="stylesheet" media="screen">
 
 @endsection
 
 
 @section('vaahcms_extend_admin_js')
-    <script src="{{vh_get_admin_assets('assets/js/page-login.js')}}"></script>
+    <script src="{{vh_get_admin_assets('lib/vue/vue.js')}}"></script>
+    <script src="{{vh_get_admin_assets('lib/vue/vue-resource.min.js')}}"></script>
+    <script src="{{vh_get_admin_assets('lib/vue/VueCommon.js')}}"></script>
+
+    <script src="{{vh_get_admin_assets('js/page-login.js')}}"></script>
 @endsection
 
 @section('content')
@@ -27,7 +31,7 @@
             <div class="media align-items-stretch justify-content-center ht-100p pos-relative">
                 <div class="media-body align-items-center d-none d-lg-flex">
                     <div class="mx-wd-600">
-                        <img src="{{vh_get_admin_file("assets/img/img15.png")}}" class="img-fluid" alt="">
+                        <img src="{{vh_get_admin_file("img/img15.png")}}" class="img-fluid" alt="">
                     </div>
                     <div class="pos-absolute b-0 l-0 tx-12 tx-center">
 

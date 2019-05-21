@@ -7,9 +7,9 @@ function vh_get_modules_root_path()
     return config('vaahcms.modules_path');
 }
 //-----------------------------------------------------------------------------------
-function vh_get_module_path($plugin_name)
+function vh_get_module_path($module_name)
 {
-    return vh_get_modules_root_path()."\/".$plugin_name;
+    return vh_get_modules_root_path()."\/".$module_name;
 }
 //-----------------------------------------------------------------------------------
 function vh_get_all_modules_paths()

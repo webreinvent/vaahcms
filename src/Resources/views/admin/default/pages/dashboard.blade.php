@@ -2,20 +2,25 @@
 
 @section('vaahcms_extend_admin_css')
 
-
 @endsection
 
 
 @section('vaahcms_extend_admin_js')
-
+    <script src="{{vh_get_admin_assets("builds/app-dashboard.js")}}" defer></script>
 @endsection
 
 @section('content')
 
-    <div id="app">
+    <div id="vh-app-dashboard">
 
-        <h1>Testing</h1>
+        <page-title></page-title>
+
+        <router-view></router-view>
+
 
     </div>
+
+    @include("vaahcms::admin.default.extend.dashboard")
+
 
 @endsection
