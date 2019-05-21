@@ -57215,7 +57215,7 @@ var render = function() {
                               [_vm._v("Activate")]
                             ),
                         _vm._v(" "),
-                        item.is_sample_data_available
+                        item.is_sample_data_available && item.is_active == 1
                           ? _c("span", [
                               _vm._v(
                                 "\n                        |\n                        "

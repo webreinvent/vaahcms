@@ -138,7 +138,7 @@
                                v-on:click="actions($event, 'activate', item, null)"
                                class="mg-r-5">Activate</a>
 
-                            <span v-if="item.is_sample_data_available">
+                            <span v-if="item.is_sample_data_available && item.is_active == 1">
                             |
                             <a href="#"
                                v-on:click="actions($event, 'importSampleData', item, null)"
