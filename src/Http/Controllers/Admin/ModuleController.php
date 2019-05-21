@@ -140,67 +140,41 @@ class ModuleController extends Controller
         $module = Module::find($inputs['id']);
 
         $controller = "\VaahCms\Modules\\{$module->name}\\Http\Controllers\SetupController";
+        $method = $request->action;
 
+        $response = $this->callModuleControllerMethod($module, $controller, $method);
 
-
+        if(isset($response['status']) && $response['status'] == 'failed')
+        {
+            return response()->json($response);
+        }
 
         switch($request->action)
         {
 
             //---------------------------------------
             case 'activate':
-
-                $path = "./vaahcms/Modules/".$module->name."/Database/migrations/";
-                $path_des = "./database/migrations";
-
-                //\copy($path, $path_des);
-
-                \File::copyDirectory($path, $path_des);
-
-                //run migration
-                $command = 'migrate';
-                \Artisan::call($command);
-
-                $command = 'db:seed';
-                $params = [
-                    '--class' => "VaahCms\Modules\\{$module->name}\\Database\Seeds\DatabaseTableSeeder"
-                ];
-
-                echo "<pre>";
-                print_r($params);
-                echo "</pre>";
-
-                \Artisan::call($command, $params);
-
-
-                //method to be called
-                $method = "activate";
-
+                $this->activate($module);
+                $module->is_active = 1;
+                $module->save();
                 break;
             //---------------------------------------
             case 'deactivate':
-
-
-
-
-
+                $this->deactivate($module);
+                $module->is_active = null;
+                $module->save();
                 break;
             //---------------------------------------
+            case 'importSampleData':
+                $this->importSampleData($module);
+                $response['status'] = 'success';
+                $response['messages'][] = 'Sample Data Successfully Imported';
+                return response()->json($response);
+                break;
+            //---------------------------------------
+            case 'uninstall':
 
-            case 'delete':
-
-                //run migration
-                $command = 'migrate:refresh';
-                $params = [
-                    '--path' => "./vaahcms/Modules/".$module->name."/Database/Migrations",
-                    '--force' => true
-                ];
-
-                \Artisan::call($command, $params);
-
-                echo "<pre>";
-                print_r($params);
-                echo "</pre>";
+                $this->uninstall($module);
 
                 break;
             //---------------------------------------
@@ -209,28 +183,73 @@ class ModuleController extends Controller
             //---------------------------------------
         }
 
-
-        $response = null;
-
-        try{
-
-            if (isset($method) && method_exists($controller, $method)
-                && is_callable(array($controller, $method)))
-            {
-                $response = call_user_func($controller."::".$method, $module);
-                $response['data']['controller_method'] = $controller;
-            }
-
-        }catch(\Exception $e)
-        {
-            $response['status'] = 'failed';
-            $response['errors'][] = $e->getMessage();
-
-        }
-
+        $response['status'] = 'success';
         return response()->json($response);
+    }
+    //----------------------------------------------------------
+    public function activate($module)
+    {
+
+        $path = "./vaahcms/Modules/".$module->name."/Database/migrations/";
+        $path_des = "./database/migrations";
+
+        //\copy($path, $path_des);
+
+        \File::copyDirectory($path, $path_des);
+
+        //run migration
+        $command = 'migrate';
+        \Artisan::call($command);
+
+        $command = 'db:seed';
+        $params = [
+            '--class' => "VaahCms\Modules\\{$module->name}\\Database\Seeds\DatabaseTableSeeder"
+        ];
+
+        \Artisan::call($command, $params);
 
     }
+    //----------------------------------------------------------
+    public function importSampleData($module)
+    {
+
+        $command = 'db:seed';
+        $params = [
+            '--class' => "VaahCms\Modules\\{$module->name}\\Database\Seeds\SampleDataTableSeeder"
+        ];
+
+        \Artisan::call($command, $params);
+
+    }
+    //----------------------------------------------------------
+    public function deactivate($module)
+    {
+
+    }
+    //----------------------------------------------------------
+    public function callModuleControllerMethod($module, $controller, $method)
+    {
+
+        if (isset($method) && method_exists($controller, $method)
+            && is_callable(array($controller, $method)))
+        {
+            $response = call_user_func($controller."::".$method, $module);
+            $response['data']['controller_method'] = $controller;
+
+            return $response;
+        }
+
+    }
+    //----------------------------------------------------------
+    public function uninstall($module)
+    {
+        //delete all database table
+
+
+        //delete module folder
+
+    }
+    //----------------------------------------------------------
     //----------------------------------------------------------
     //----------------------------------------------------------
     //----------------------------------------------------------

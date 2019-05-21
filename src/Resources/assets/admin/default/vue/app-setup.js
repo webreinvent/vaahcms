@@ -131,9 +131,11 @@ const app = new Vue({
         //---------------------------------------------------------------------
         runMigrationsAfter: function (data) {
 
+            this.active_step = null;
+
             this.active_step = 'create_admin_account';
 
-            this.consoleLog(this.active_step);
+            this.$helpers.console(this.active_step);
 
             this.$helpers.stopNprogress();
         },

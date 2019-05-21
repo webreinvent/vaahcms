@@ -1945,7 +1945,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     //---------------------------------------------------------------------
     actionsAfter: function actionsAfter(data) {
-      this.$helpers.stopNprogress();
+      this.getList();
     },
     //---------------------------------------------------------------------
     getSettingValue: function getSettingValue(settings, key, value) {
@@ -57158,153 +57158,163 @@ var render = function() {
     _c("div", { staticClass: "row mg-t-10 mg-b-10" }, [
       _c("div", { staticClass: "col-sm" }, [
         _vm.list
-          ? _c("table", { staticClass: "table" }, [
+          ? _c("table", { staticClass: "table bg-white" }, [
               _vm._m(3),
               _vm._v(" "),
               _c(
                 "tbody",
                 _vm._l(_vm.list.data, function(item) {
-                  return _c("tr", [
-                    _vm._m(4, true),
-                    _vm._v(" "),
-                    _c("td", [
-                      _c("strong", [_vm._v(_vm._s(item.name))]),
-                      _c("br"),
+                  return _c(
+                    "tr",
+                    {
+                      staticClass: "bd-l bd-3",
+                      class: { "bd-success bg-success-9": item.is_active == 1 }
+                    },
+                    [
+                      _vm._m(4, true),
                       _vm._v(" "),
-                      item.is_active == 1
-                        ? _c(
-                            "a",
-                            {
-                              staticClass: "mg-r-5",
-                              attrs: { href: "#" },
-                              on: {
-                                click: function($event) {
-                                  return _vm.actions(
-                                    $event,
-                                    "deactivate",
-                                    item,
-                                    null
-                                  )
-                                }
-                              }
-                            },
-                            [_vm._v("Deactivate")]
-                          )
-                        : _c(
-                            "a",
-                            {
-                              staticClass: "mg-r-5",
-                              attrs: { href: "#" },
-                              on: {
-                                click: function($event) {
-                                  return _vm.actions(
-                                    $event,
-                                    "activate",
-                                    item,
-                                    null
-                                  )
-                                }
-                              }
-                            },
-                            [_vm._v("Activate")]
-                          ),
-                      _vm._v(" "),
-                      item.is_sample_data_available
-                        ? _c("span", [
-                            _vm._v(
-                              "\n                        |\n                        "
-                            ),
-                            _c(
+                      _c("td", [
+                        _c("strong", [_vm._v(_vm._s(item.name))]),
+                        _c("br"),
+                        _vm._v(" "),
+                        item.is_active == 1
+                          ? _c(
                               "a",
                               {
-                                staticClass: "mg-r-5 mg-l-5",
+                                staticClass: "mg-r-5",
                                 attrs: { href: "#" },
                                 on: {
                                   click: function($event) {
                                     return _vm.actions(
                                       $event,
-                                      "import_sample_data",
+                                      "deactivate",
                                       item,
                                       null
                                     )
                                   }
                                 }
                               },
-                              [_vm._v("Import Sample Data")]
+                              [_vm._v("Deactivate")]
                             )
-                          ])
-                        : _vm._e(),
-                      _vm._v(" "),
-                      item.is_update_available
-                        ? _c("strong", [
-                            _vm._v("\n                        | "),
-                            _c(
+                          : _c(
                               "a",
                               {
-                                staticClass: "mg-5 text-success",
-                                attrs: { href: "#" }
+                                staticClass: "mg-r-5",
+                                attrs: { href: "#" },
+                                on: {
+                                  click: function($event) {
+                                    return _vm.actions(
+                                      $event,
+                                      "activate",
+                                      item,
+                                      null
+                                    )
+                                  }
+                                }
                               },
-                              [_vm._v("Update")]
-                            )
-                          ])
-                        : _vm._e(),
-                      _vm._v("\n\n                        | "),
-                      _c(
-                        "a",
-                        {
-                          staticClass: "mg-5 text-danger",
-                          attrs: { href: "#" }
-                        },
-                        [_vm._v("Delete")]
-                      )
-                    ]),
-                    _vm._v(" "),
-                    _c("td", [
-                      item.title
-                        ? _c("strong", [
-                            _vm._v(
-                              "\n                            " +
-                                _vm._s(item.title)
+                              [_vm._v("Activate")]
                             ),
-                            _c("br")
-                          ])
-                        : _vm._e(),
-                      _vm._v(" "),
-                      item.excerpt
-                        ? _c("span", [
-                            _vm._v(
-                              "\n                            " +
-                                _vm._s(item.excerpt) +
-                                "\n                        "
-                            )
-                          ])
-                        : _vm._e(),
-                      _vm._v(" "),
-                      _c("br"),
-                      _vm._v(" "),
-                      _c("span", { staticClass: "badge badge-light" }, [
-                        _vm._v("Version: " + _vm._s(item.version))
+                        _vm._v(" "),
+                        item.is_sample_data_available
+                          ? _c("span", [
+                              _vm._v(
+                                "\n                        |\n                        "
+                              ),
+                              _c(
+                                "a",
+                                {
+                                  staticClass: "mg-r-5 mg-l-5",
+                                  attrs: { href: "#" },
+                                  on: {
+                                    click: function($event) {
+                                      return _vm.actions(
+                                        $event,
+                                        "importSampleData",
+                                        item,
+                                        null
+                                      )
+                                    }
+                                  }
+                                },
+                                [_vm._v("Import Sample Data")]
+                              )
+                            ])
+                          : _vm._e(),
+                        _vm._v(" "),
+                        item.is_update_available
+                          ? _c("strong", [
+                              _vm._v("\n                        | "),
+                              _c(
+                                "a",
+                                {
+                                  staticClass: "mg-5 text-success",
+                                  attrs: { href: "#" }
+                                },
+                                [_vm._v("Update")]
+                              )
+                            ])
+                          : _vm._e(),
+                        _vm._v("\n\n                        | "),
+                        _c(
+                          "a",
+                          {
+                            staticClass: "mg-5 text-danger",
+                            attrs: { href: "#" }
+                          },
+                          [_vm._v("Delete")]
+                        )
                       ]),
-                      _vm._v("\n                        | By "),
-                      _c(
-                        "a",
-                        {
-                          staticClass: "mg-5",
-                          attrs: { href: item.author_website, target: "_blank" }
-                        },
-                        [_vm._v(_vm._s(item.author_name))]
-                      ),
-                      _vm._v("\n                        | "),
-                      _c(
-                        "a",
-                        {
-                          staticClass: "mg-5",
-                          attrs: { href: item.github_url, target: "_blank" }
-                        },
-                        [_vm._v("View Details")]
-                      )
-                    ])
-                  ])
+                      _vm._v(" "),
+                      _c("td", [
+                        item.title
+                          ? _c("strong", [
+                              _vm._v(
+                                "\n                            " +
+                                  _vm._s(item.title)
+                              ),
+                              _c("br")
+                            ])
+                          : _vm._e(),
+                        _vm._v(" "),
+                        item.excerpt
+                          ? _c("span", [
+                              _vm._v(
+                                "\n                            " +
+                                  _vm._s(item.excerpt) +
+                                  "\n                        "
+                              )
+                            ])
+                          : _vm._e(),
+                        _vm._v(" "),
+                        _c("br"),
+                        _vm._v(" "),
+                        _c("span", { staticClass: "badge badge-light" }, [
+                          _vm._v("Version: " + _vm._s(item.version))
+                        ]),
+                        _vm._v("\n                        | By "),
+                        _c(
+                          "a",
+                          {
+                            staticClass: "mg-5",
+                            attrs: {
+                              href: item.author_website,
+                              target: "_blank"
+                            }
+                          },
+                          [_vm._v(_vm._s(item.author_name))]
+                        ),
+                        _vm._v("\n                        | "),
+                        _c(
+                          "a",
+                          {
+                            staticClass: "mg-5",
+                            attrs: { href: item.github_url, target: "_blank" }
+                          },
+                          [_vm._v("View Details")]
+                        )
+                      ])
+                    ]
+                  )
                 }),
                 0
               )
@@ -57395,7 +57405,7 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("thead", { staticClass: "thead-light" }, [
-      _c("tr", [
+      _c("tr", { staticClass: "bd-l bd-3" }, [
         _c("th", { attrs: { scope: "col" } }, [
           _c("div", { staticClass: "custom-control custom-checkbox" }, [
             _c("input", {
@@ -74014,8 +74024,9 @@ var app = new Vue({
     },
     //---------------------------------------------------------------------
     runMigrationsAfter: function runMigrationsAfter(data) {
+      this.active_step = null;
       this.active_step = 'create_admin_account';
-      this.consoleLog(this.active_step);
+      this.$helpers.console(this.active_step);
       this.$helpers.stopNprogress();
     },
     //---------------------------------------------------------------------

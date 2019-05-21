@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Str;
+use WebReinvent\VaahCms\Entities\ModuleMigration;
 use WebReinvent\VaahCms\Entities\Role;
 use WebReinvent\VaahCms\Entities\User;
 
@@ -144,12 +145,15 @@ class SetupController extends Controller
             ];
             \Artisan::call($command, $params);
 
+            ModuleMigration::syncMigrations();
             //run migration
             $command = 'migrate';
             $params = [
                 '--force' => true
             ];
             \Artisan::call($command, $params);
+
+            ModuleMigration::syncMigrations(null, 'vaahcms');
 
             //publish vaahcms seeds
             $command = 'vendor:publish';

@@ -95,10 +95,8 @@ import pagination from 'laravel-vue-pagination';
             },
             //---------------------------------------------------------------------
             actionsAfter: function (data) {
-
-                this.$helpers.stopNprogress();
+                this.getList();
             },
-
             //---------------------------------------------------------------------
             getSettingValue: function (settings, key, value) {
 

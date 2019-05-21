@@ -100,9 +100,9 @@
 
         <div class="row mg-t-10 mg-b-10">
             <div class="col-sm">
-                <table class="table" v-if="list">
+                <table class="table bg-white" v-if="list">
                     <thead class="thead-light">
-                    <tr>
+                    <tr class="bd-l bd-3" >
                         <th scope="col">
 
                             <div class="custom-control custom-checkbox">
@@ -110,17 +110,15 @@
                                 <label class="custom-control-label" for="selectAll"></label>
                             </div>
 
-
-
-
-
                         </th>
                         <th scope="col">Module Name</th>
                         <th scope="col">Description</th>
                     </tr>
                     </thead>
                     <tbody>
-                    <tr  v-for="item in list.data">
+                    <tr  v-for="item in list.data"
+                         class="bd-l bd-3"
+                         v-bind:class="{'bd-success bg-success-9': item.is_active == 1}">
                         <th scope="row">
 
                             <div class="custom-control custom-checkbox">
@@ -143,7 +141,7 @@
                             <span v-if="item.is_sample_data_available">
                             |
                             <a href="#"
-                               v-on:click="actions($event, 'import_sample_data', item, null)"
+                               v-on:click="actions($event, 'importSampleData', item, null)"
                                class="mg-r-5 mg-l-5">Import Sample Data</a>
 
                             </span>
