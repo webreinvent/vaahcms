@@ -1885,11 +1885,13 @@ __webpack_require__.r(__webpack_exports__);
       q: null,
       page: 1,
       list: null,
+      stats: null,
       active_tab: 'all',
       active_item: null,
       active_el: null,
       filters: {
-        q: null
+        q: null,
+        status: 'all'
       }
     };
     return obj;
@@ -1915,6 +1917,8 @@ __webpack_require__.r(__webpack_exports__);
         url = url + "?page=" + page;
       }
 
+      url = url + "&status=" + this.filters.status;
+
       if (this.filters.q) {
         url = url + "&q=" + this.filters.q;
       }
@@ -1925,6 +1929,7 @@ __webpack_require__.r(__webpack_exports__);
     //---------------------------------------------------------------------
     getListAfter: function getListAfter(data) {
       this.list = data.list;
+      this.stats = data.stats;
       this.page = data.list.current_page;
       this.$helpers.console(this.list);
       this.$helpers.stopNprogress();
@@ -1954,8 +1959,16 @@ __webpack_require__.r(__webpack_exports__);
       this.$helpers.console(value, 'value');
       var item = this.$helpers.findInArrayByKey(settings, key, value);
       return item;
-    } //---------------------------------------------------------------------
+    },
     //---------------------------------------------------------------------
+    setFilter: function setFilter(e, status) {
+      if (e) {
+        e.preventDefault();
+      }
+
+      this.filters.status = status;
+      this.getList();
+    } //---------------------------------------------------------------------
 
   }
 });
@@ -57050,47 +57063,81 @@ var render = function() {
             },
             [
               _c("div", [
-                _c("nav", { staticClass: "nav" }, [
-                  _c(
-                    "a",
-                    {
-                      staticClass: "nav-link pd-l-0",
-                      class: { active: _vm.active_tab == "all" },
-                      attrs: { href: "#" }
-                    },
-                    [_vm._v("All (30)")]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "a",
-                    {
-                      staticClass: "nav-link",
-                      class: { active: _vm.active_tab == "active" },
-                      attrs: { href: "#" }
-                    },
-                    [_vm._v("Active (20)")]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "a",
-                    {
-                      staticClass: "nav-link",
-                      class: { active: _vm.active_tab == "inactive" },
-                      attrs: { href: "#" }
-                    },
-                    [_vm._v("Inactive (11)")]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "a",
-                    {
-                      staticClass: "nav-link",
-                      class: { active: _vm.active_tab == "updatable" },
-                      attrs: { href: "#" }
-                    },
-                    [_vm._v("Updates Available (0)")]
-                  )
-                ])
+                _vm.stats
+                  ? _c("nav", { staticClass: "nav" }, [
+                      _c(
+                        "a",
+                        {
+                          staticClass: "nav-link pd-l-0",
+                          class: { active: _vm.filters.status == "all" },
+                          attrs: { href: "#" },
+                          on: {
+                            click: function($event) {
+                              return _vm.setFilter($event, "all")
+                            }
+                          }
+                        },
+                        [_vm._v("All (" + _vm._s(_vm.stats.all) + ")")]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "a",
+                        {
+                          staticClass: "nav-link",
+                          class: { active: _vm.filters.status == "active" },
+                          attrs: { href: "#" },
+                          on: {
+                            click: function($event) {
+                              return _vm.setFilter($event, "active")
+                            }
+                          }
+                        },
+                        [_vm._v("Active (" + _vm._s(_vm.stats.active) + ")")]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "a",
+                        {
+                          staticClass: "nav-link",
+                          class: { active: _vm.filters.status == "inactive" },
+                          attrs: { href: "#" },
+                          on: {
+                            click: function($event) {
+                              return _vm.setFilter($event, "inactive")
+                            }
+                          }
+                        },
+                        [
+                          _vm._v(
+                            "Inactive (" + _vm._s(_vm.stats.inactive) + ")"
+                          )
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "a",
+                        {
+                          staticClass: "nav-link",
+                          class: {
+                            active: _vm.filters.status == "update_available"
+                          },
+                          attrs: { href: "#" },
+                          on: {
+                            click: function($event) {
+                              return _vm.setFilter($event, "update_available")
+                            }
+                          }
+                        },
+                        [
+                          _vm._v(
+                            "Updates Available (" +
+                              _vm._s(_vm.stats.update_available) +
+                              ")"
+                          )
+                        ]
+                      )
+                    ])
+                  : _vm._e()
               ]),
               _vm._v(" "),
               _c("div", { staticClass: "d-none d-md-block" }, [

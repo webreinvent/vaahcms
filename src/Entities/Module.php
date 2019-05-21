@@ -46,9 +46,13 @@ class Module extends Model {
 
     //-------------------------------------------------
     public function scopeInactive( $query ) {
-        return $query->where( 'is_active', 0 );
+        return $query->whereNull( 'is_active');
     }
 
+    //-------------------------------------------------
+    public function scopeUpdateAvailable( $query ) {
+        return $query->where( 'is_update_available', 1 );
+    }
     //-------------------------------------------------
     public function scopeSlug( $query, $slug ) {
         return $query->where( 'slug', $slug );

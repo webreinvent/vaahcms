@@ -113,8 +113,31 @@ class ModuleController extends Controller
             });
         }
 
+        if($request->has('status') && $request->get('status') != 'all')
+        {
+            switch ($request->status)
+            {
+                case 'active':
+                    $list->active();
+                    break;
+                case 'inactive':
+                    $list->inactive();
+                    break;
+                case 'update_available':
+                    $list->updateavailable();
+                    break;
+            }
+        }
+
+        $stats['all'] = Module::count();
+        $stats['active'] = Module::active()->count();
+        $stats['inactive'] = Module::inactive()->count();
+        $stats['update_available'] = Module::updateAvailable()->count();
+
+
         $response['status'] = 'success';
         $response['data']['list'] = $list->paginate(10);
+        $response['data']['stats'] = $stats;
 
         return response()->json($response);
 

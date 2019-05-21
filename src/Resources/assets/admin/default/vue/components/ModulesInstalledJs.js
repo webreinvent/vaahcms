@@ -13,11 +13,13 @@ import pagination from 'laravel-vue-pagination';
                 q: null,
                 page: 1,
                 list: null,
+                stats: null,
                 active_tab: 'all',
                 active_item: null,
                 active_el: null,
                 filters: {
-                    q: null
+                    q: null,
+                    status: 'all',
                 }
             };
 
@@ -56,6 +58,8 @@ import pagination from 'laravel-vue-pagination';
                     url = url+"?page="+page;
                 }
 
+                url = url+"&status="+this.filters.status;
+
                 if(this.filters.q)
                 {
                     url = url+"&q="+this.filters.q;
@@ -69,6 +73,7 @@ import pagination from 'laravel-vue-pagination';
             getListAfter: function (data) {
 
                 this.list = data.list;
+                this.stats = data.stats;
                 this.page = data.list.current_page;
 
                 this.$helpers.console(this.list);
@@ -107,8 +112,19 @@ import pagination from 'laravel-vue-pagination';
                 var item = this.$helpers.findInArrayByKey(settings, key, value);
 
                 return item;
-            }
+            },
             //---------------------------------------------------------------------
+            setFilter: function (e, status) {
+                if(e)
+                {
+                    e.preventDefault();
+                }
+
+                this.filters.status = status;
+
+                this.getList();
+            },
+
             //---------------------------------------------------------------------
         }
     }

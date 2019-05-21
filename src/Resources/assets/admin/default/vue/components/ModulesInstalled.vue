@@ -32,15 +32,19 @@
                 <div class="bd-b bd-1 pd-b-10">
                     <div class="d-sm-flex align-items-center justify-content-between">
                         <div>
-                            <nav class="nav">
+                            <nav class="nav" v-if="stats">
                                 <a href="#" class="nav-link pd-l-0"
-                                   v-bind:class="{'active': active_tab == 'all'}">All (30)</a>
+                                   v-on:click="setFilter($event, 'all')"
+                                   v-bind:class="{'active': filters.status == 'all'}">All ({{stats.all}})</a>
                                 <a href="#" class="nav-link"
-                                   v-bind:class="{'active': active_tab == 'active'}">Active (20)</a>
+                                   v-on:click="setFilter($event, 'active')"
+                                   v-bind:class="{'active': filters.status == 'active'}">Active ({{stats.active}})</a>
                                 <a href="#" class="nav-link"
-                                   v-bind:class="{'active': active_tab == 'inactive'}">Inactive (11)</a>
+                                   v-on:click="setFilter($event, 'inactive')"
+                                   v-bind:class="{'active': filters.status == 'inactive'}">Inactive ({{stats.inactive}})</a>
                                 <a href="#" class="nav-link"
-                                   v-bind:class="{'active': active_tab == 'updatable'}">Updates Available (0)</a>
+                                   v-on:click="setFilter($event, 'update_available')"
+                                   v-bind:class="{'active': filters.status == 'update_available'}">Updates Available ({{stats.update_available}})</a>
 
                             </nav>
                         </div>
