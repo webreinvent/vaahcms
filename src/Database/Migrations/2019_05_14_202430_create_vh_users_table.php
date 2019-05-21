@@ -26,7 +26,7 @@ class CreateVhUsersTable extends Migration
             $table->string('last_name')->nullable();
             $table->string('gender', 15)->nullable();
             $table->integer('country_calling_code')->nullable();
-            $table->integer('phone')->nullable();
+            $table->bigInteger('phone')->nullable();
             $table->string('timezone')->nullable();
             $table->string('alternate_email')->nullable();
             $table->string('avatar_url')->nullable();

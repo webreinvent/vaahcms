@@ -11,6 +11,10 @@
       "email": "we@webreinvent.com"
     }
   ],
+  "require": {
+    "php": "^7.0",
+    "zanysoft/laravel-zip": "*"
+  },
   "autoload": {
     "psr-4": {
       "WebReinvent\\VaahCms\\": "src/"

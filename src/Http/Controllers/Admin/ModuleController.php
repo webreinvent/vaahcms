@@ -77,10 +77,11 @@ class ModuleController extends Controller
             Zip::check($path);
             $zip = Zip::open($path);
             $zip->extract(base_path().'/vaahcms/Modules/');
+            $zip->close();
 
             rename($folder_path."".$folder_name, $folder_path.$request->name);
 
-            //TODO:: Delete zip file
+            vh_delete_folder($path);
 
             $response['status'] = 'success';
             $response['messages'][] = 'installed';
@@ -276,7 +277,6 @@ class ModuleController extends Controller
 
         //delete all database migrations
         $module_migrations = ModuleMigration::where('module_slug', $module->slug)
-            ->groupBy('batch')
             ->orderBy('batch', 'DESC')
             ->get()->pluck('migration_id')->toArray();
 

@@ -4,6 +4,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Support\Facades\Password;
@@ -364,7 +365,7 @@ class User extends Authenticatable
                 $response['errors'][] = trans('vaahcms::messages.inactive_account');
                 return $response;
             }
-            $user->last_login_at = \Carbon::now();
+            $user->last_login_at = Carbon::now();
             $user->save();
 
             $response['status'] = 'success';

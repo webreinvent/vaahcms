@@ -54,6 +54,14 @@ php artisan make:command HealthcheckCommand --path=/packages/vaahcms/src/Databas
 
 ## Steps to Setup
 
+### Step 0) Fix `Numeric value out of range` error by add following code in `App\Providers\AppServiceProvider.php`
+```php
+public function boot()
+{
+    Schema::defaultStringLength(191);
+}
+```
+
 ### Step 1) Install Package
 ```bash
 composer require webreinvent/vaahcms
@@ -77,7 +85,7 @@ Add following service provider in `config/app.php`
 WebReinvent\VaahCms\VaahCmsServiceProvider::class,
 ```
 
-### Step 4) 
+### Step 4) Add following in `config/auth.php`
 ```php
 'providers' => [
         //...

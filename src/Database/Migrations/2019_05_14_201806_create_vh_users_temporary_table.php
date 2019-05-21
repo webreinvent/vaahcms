@@ -23,7 +23,7 @@ class CreateVhUsersTemporaryTable extends Migration
             $table->string('last_name')->nullable();
             $table->string('username')->nullable();
             $table->string('password')->nullable();
-            $table->integer('phone')->nullable();
+            $table->bigInteger('phone')->nullable();
             $table->string('country')->nullable();
             $table->integer('country_code')->nullable();
             $table->integer('country_calling_code')->nullable();
