@@ -163,7 +163,7 @@ class ModuleController extends Controller
 
                 $command = 'db:seed';
                 $params = [
-                    '--class' => "VaahCms\Modules\\{$module->name}\\Database\Seeds\BlogTableSeeder"
+                    '--class' => "VaahCms\Modules\\{$module->name}\\Database\Seeds\DatabaseTableSeeder"
                 ];
 
                 echo "<pre>";
