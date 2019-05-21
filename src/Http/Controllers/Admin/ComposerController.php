@@ -27,7 +27,7 @@ class ComposerController extends Controller
     }
 
     //----------------------------------------------------------
-    public function install()
+    public function commands($command)
     {
 
         header('Content-Type: text/html; charset=utf-8');

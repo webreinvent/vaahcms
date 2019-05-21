@@ -141,17 +141,29 @@ class ModuleController extends Controller
 
         $controller = "\VaahCms\Modules\\{$module->name}\\Http\Controllers\SetupController";
 
+
+
+
         switch($request->action)
         {
 
             //---------------------------------------
             case 'activate':
 
+                $path = "./vaahcms/Modules/".$module->name."/Database/migrations/";
+                $path_des = "./database/migrations";
+
+                //\copy($path, $path_des);
+
+                \File::copyDirectory($path, $path_des);
+
                 //run migration
                 $command = 'migrate';
+                \Artisan::call($command);
+
+                $command = 'db:seed';
                 $params = [
-                    '--path' => "./vaahcms/Modules/".$module->name."/Database/Migrations",
-                    '--force' => true
+                    '--class' => "VaahCms\Modules\\{$module->name}\\Database\Seeds\BlogTableSeeder"
                 ];
 
                 echo "<pre>";
@@ -160,14 +172,6 @@ class ModuleController extends Controller
 
                 \Artisan::call($command, $params);
 
-                //Run seeds
-
-                \Artisan::call('db:seed', [
-                    '--class' => "\VaahCms\Modules\\{$module->name}\\Database\Seeders"
-                ]);
-
-                //run migration
-                //run seeds
 
                 //method to be called
                 $method = "activate";
