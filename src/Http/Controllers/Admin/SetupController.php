@@ -115,11 +115,11 @@ class SetupController extends Controller
 
         $data = [];
 
+        $this->deleteExistingMigration();
 
 
         try
         {
-
 
             //Set APP_KEY
             $command = 'key:generate';
@@ -134,7 +134,6 @@ class SetupController extends Controller
                 '--force' => true
             ];
             \Artisan::call($command, $params);
-
 
             //publish all migrations of vaahcms package
             $command = 'vendor:publish';
@@ -249,6 +248,26 @@ class SetupController extends Controller
 
     }
     //----------------------------------------------------------
+    public function deleteExistingMigration()
+    {
+
+        $path = base_path("database/migrations");
+
+        $migrations = vh_get_all_files($path);
+
+        if(count($migrations) < 1)
+        {
+            return false;
+        }
+
+        foreach ($migrations as $migration)
+        {
+            $m_path = $path."/".$migration;
+            vh_delete_file($m_path);
+        }
+
+        return true;
+    }
     //----------------------------------------------------------
 
 

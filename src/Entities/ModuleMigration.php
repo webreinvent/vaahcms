@@ -43,12 +43,18 @@ class ModuleMigration extends Model {
 
         foreach ($migrations as $migration)
         {
-            $module_migration = ModuleMigration::firstOrCreate(['migration_id' => $migration->id]);
-            $module_migration->migration_id = $migration->id;
-            $module_migration->module_id = $module_id;
-            $module_migration->module_slug = $module_slug;
-            $module_migration->batch = $migration->batch;
-            $module_migration->save();
+            $module_migration = ModuleMigration::where('migration_id', $migration->id)->first();
+
+            if(!$module_migration)
+            {
+                $module_migration = new ModuleMigration();
+                $module_migration->migration_id = $migration->id;
+                $module_migration->module_id = $module_id;
+                $module_migration->module_slug = $module_slug;
+                $module_migration->batch = $migration->batch;
+                $module_migration->save();
+            }
+
         }
 
 

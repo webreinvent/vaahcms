@@ -28,6 +28,7 @@ class Module extends Model {
         'author_website',
         'version',
         'version_number',
+        'db_table_prefix',
         'is_active',
         'is_sample_data_available',
         'is_update_available',

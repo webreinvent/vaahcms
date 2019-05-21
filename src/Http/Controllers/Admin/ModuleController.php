@@ -2,10 +2,12 @@
 
 namespace WebReinvent\VaahCms\Http\Controllers\Admin;
 
+use Illuminate\Container\Container;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use WebReinvent\VaahCms\Entities\Module;
+use WebReinvent\VaahCms\Entities\ModuleMigration;
 use WebReinvent\VaahCms\Entities\User;
 use ZanySoft\Zip\Zip;
 use ZanySoft\Zip\ZipManager;
@@ -172,9 +174,9 @@ class ModuleController extends Controller
                 return response()->json($response);
                 break;
             //---------------------------------------
-            case 'uninstall':
+            case 'delete':
 
-                $this->uninstall($module);
+                $this->delete($module);
 
                 break;
             //---------------------------------------
@@ -197,9 +199,11 @@ class ModuleController extends Controller
 
         \File::copyDirectory($path, $path_des);
 
+        ModuleMigration::syncMigrations();
         //run migration
         $command = 'migrate';
         \Artisan::call($command);
+        ModuleMigration::syncMigrations($module->id, $module->slug);
 
         $command = 'db:seed';
         $params = [
@@ -241,15 +245,113 @@ class ModuleController extends Controller
 
     }
     //----------------------------------------------------------
-    public function uninstall($module)
+    public function delete($module)
     {
-        //delete all database table
+
+        //Delete module entry
+        Module::where('slug', $module->slug)->forceDelete();
+
+        //Delete all migrations
+        $path =  base_path() . "/vaahcms/Modules/Blog/Database/migrations/";
+
+        $migrations = vh_get_all_files($path);
+
+        if(count($migrations) > 0)
+        {
+            foreach($migrations as $migration)
+            {
+                $migration_path = $path.$migration;
+                include_once ($migration_path);
+                $migration_class = $this->get_class_from_file($migration_path);
+
+                if($migration_class)
+                {
+                    $migration_obj = new $migration_class;
+                    $migration_obj->down();
+                }
+            }
+        }
+
+        //delete all database migrations
+        $module_migrations = ModuleMigration::where('module_slug', $module->slug)
+            ->groupBy('batch')
+            ->orderBy('batch', 'DESC')
+            ->get()->pluck('migration_id')->toArray();
+
+        if($module_migrations)
+        {
+            \DB::table('migrations')->whereIn('id', $module_migrations)->delete();
+            ModuleMigration::whereIn('migration_id', $module_migrations)->delete();
+        }
+
+        //\Artisan::call($command, $params);
 
 
         //delete module folder
 
     }
     //----------------------------------------------------------
+    public function get_class_from_file($path_to_file)
+    {
+        //Grab the contents of the file
+        $contents = file_get_contents($path_to_file);
+
+        //Start with a blank namespace and class
+        $namespace = $class = "";
+
+        //Set helper values to know that we have found the namespace/class token and need to collect the string values after them
+        $getting_namespace = $getting_class = false;
+
+        //Go through each token and evaluate it as necessary
+        foreach (token_get_all($contents) as $token) {
+
+            //If this token is the namespace declaring, then flag that the next tokens will be the namespace name
+            if (is_array($token) && $token[0] == T_NAMESPACE) {
+                $getting_namespace = true;
+            }
+
+            //If this token is the class declaring, then flag that the next tokens will be the class name
+            if (is_array($token) && $token[0] == T_CLASS) {
+                $getting_class = true;
+            }
+
+            //While we're grabbing the namespace name...
+            if ($getting_namespace === true) {
+
+                //If the token is a string or the namespace separator...
+                if(is_array($token) && in_array($token[0], [T_STRING, T_NS_SEPARATOR])) {
+
+                    //Append the token's value to the name of the namespace
+                    $namespace .= $token[1];
+
+                }
+                else if ($token === ';') {
+
+                    //If the token is the semicolon, then we're done with the namespace declaration
+                    $getting_namespace = false;
+
+                }
+            }
+
+            //While we're grabbing the class name...
+            if ($getting_class === true) {
+
+                //If the token is a string, it's the name of the class
+                if(is_array($token) && $token[0] == T_STRING) {
+
+                    //Store the token's value as the class name
+                    $class = $token[1];
+
+                    //Got what we need, stope here
+                    break;
+                }
+            }
+        }
+
+        //Build the fully-qualified class name and return it
+        return $namespace ? $namespace . '\\' . $class : $class;
+
+    }
     //----------------------------------------------------------
     //----------------------------------------------------------
     //----------------------------------------------------------

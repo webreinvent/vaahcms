@@ -132,7 +132,7 @@
 
                             <a href="#" v-if="item.is_active == 1"
                                v-on:click="actions($event, 'deactivate', item, null)"
-                               class="mg-r-5">Deactivate</a>
+                               class="mg-r-5 text-warning">Deactivate</a>
 
                             <a href="#" v-else
                                v-on:click="actions($event, 'activate', item, null)"
@@ -150,7 +150,11 @@
                             | <a href="#" class="mg-5 text-success">Update</a>
                             </strong>
 
-                            | <a href="#" class="mg-5 text-danger">Delete</a>
+                            <span v-if="!item.is_active">
+                            | <a href="#"
+                                 v-on:click="actions($event, 'delete', item, null)"
+                                 class="mg-5 text-danger">Delete</a>
+                            </span>
 
                         </td>
                         <td>

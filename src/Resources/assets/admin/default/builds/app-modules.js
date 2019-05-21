@@ -57181,7 +57181,7 @@ var render = function() {
                           ? _c(
                               "a",
                               {
-                                staticClass: "mg-r-5",
+                                staticClass: "mg-r-5 text-warning",
                                 attrs: { href: "#" },
                                 on: {
                                   click: function($event) {
@@ -57254,15 +57254,30 @@ var render = function() {
                               )
                             ])
                           : _vm._e(),
-                        _vm._v("\n\n                        | "),
-                        _c(
-                          "a",
-                          {
-                            staticClass: "mg-5 text-danger",
-                            attrs: { href: "#" }
-                          },
-                          [_vm._v("Delete")]
-                        )
+                        _vm._v(" "),
+                        !item.is_active
+                          ? _c("span", [
+                              _vm._v("\n                        | "),
+                              _c(
+                                "a",
+                                {
+                                  staticClass: "mg-5 text-danger",
+                                  attrs: { href: "#" },
+                                  on: {
+                                    click: function($event) {
+                                      return _vm.actions(
+                                        $event,
+                                        "delete",
+                                        item,
+                                        null
+                                      )
+                                    }
+                                  }
+                                },
+                                [_vm._v("Delete")]
+                              )
+                            ])
+                          : _vm._e()
                       ]),
                       _vm._v(" "),
                       _c("td", [
