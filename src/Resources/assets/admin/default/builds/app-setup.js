@@ -74262,6 +74262,27 @@ var VueHelpers = {
           _this.errors(response.data.errors);
         }
       }
+    })["catch"](function (error) {
+      if (error.response) {
+        _this.errors([error.response.data]); // Request made and server responded
+
+
+        _this.$helpers.console(error.response.data);
+
+        _this.$helpers.console(error.response.status);
+
+        _this.$helpers.console(error.response.headers);
+      } else if (error.request) {
+        // The request was made but no response was received
+        _this.$helpers.console(error.request);
+
+        _this.errors(['Server not responding']);
+      } else {
+        // Something happened in setting up the request that triggered an Error
+        _this.$helpers.console(error.message);
+
+        _this.errors([error.message]);
+      }
     });
   },
   //---------------------------------------------------------------------

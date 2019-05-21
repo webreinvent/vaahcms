@@ -251,8 +251,10 @@ class ModuleController extends Controller
         //Delete module entry
         Module::where('slug', $module->slug)->forceDelete();
 
+        $module_path = base_path() . "/vaahcms/Modules/Blog";
+
         //Delete all migrations
-        $path =  base_path() . "/vaahcms/Modules/Blog/Database/migrations/";
+        $path =  $module_path . "/Database/migrations/";
 
         $migrations = vh_get_all_files($path);
 
@@ -284,10 +286,8 @@ class ModuleController extends Controller
             ModuleMigration::whereIn('migration_id', $module_migrations)->delete();
         }
 
-        //\Artisan::call($command, $params);
-
-
         //delete module folder
+        vh_delete_folder($module_path);
 
     }
     //----------------------------------------------------------

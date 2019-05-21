@@ -33,15 +33,29 @@ function vh_delete_file($path){
     if(is_file($path))unlink($path);
 }
 //-----------------------------------------------------------------------------------
+
+//-----------------------------------------------------------------------------------
 function vh_delete_folder($path) {
-    foreach (glob($path) as $file) {
-        if (is_dir($file)) {
-            rmrf("$file/*");
-            rmdir($file);
-        } else {
-            unlink($file);
-        }
+    if (!file_exists($path)) {
+        return true;
     }
+
+    if (!is_dir($path)) {
+        return unlink($path);
+    }
+
+    foreach (scandir($path) as $item) {
+        if ($item == '.' || $item == '..') {
+            continue;
+        }
+
+        if (!vh_delete_folder($path . DIRECTORY_SEPARATOR . $item)) {
+            return false;
+        }
+
+    }
+
+    return rmdir($path);
 }
 //-----------------------------------------------------------------------------------
 
