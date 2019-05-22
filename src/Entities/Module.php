@@ -10,6 +10,7 @@ class Module extends Model {
     protected $table = 'vh_modules';
     //-------------------------------------------------
     protected $dates = [
+        'update_checked_at',
         'created_at',
         'updated_at',
         'deleted_at'

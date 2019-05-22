@@ -1810,7 +1810,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     //---------------------------------------------------------------------
     getModules: function getModules(page) {
-      var url = this.assets.vaahcms_api_route;
+      var url = this.assets.vaahcms_api_route + "/modules";
 
       if (!page) {
         page = this.page;
@@ -1899,12 +1899,29 @@ __webpack_require__.r(__webpack_exports__);
   watch: {},
   mounted: function mounted() {
     //---------------------------------------------------------------------
-    this.getList(); //---------------------------------------------------------------------
+    this.getAssets(); //---------------------------------------------------------------------
     //---------------------------------------------------------------------
     //---------------------------------------------------------------------
     //---------------------------------------------------------------------
   },
   methods: {
+    //---------------------------------------------------------------------
+    getAssets: function getAssets(e) {
+      if (e) {
+        e.preventDefault();
+      }
+
+      console.log(this.urls);
+      var url = this.urls.current + "/assets";
+      var params = {};
+      this.$helpers.ajax(url, params, this.getAssetsAfter);
+    },
+    //---------------------------------------------------------------------
+    getAssetsAfter: function getAssetsAfter(data) {
+      this.assets = data;
+      this.$helpers.console(this.assets, 'from app->');
+      this.getList();
+    },
     //---------------------------------------------------------------------
     getList: function getList(page) {
       var url = this.urls.current + "/list";
@@ -1968,7 +1985,65 @@ __webpack_require__.r(__webpack_exports__);
 
       this.filters.status = status;
       this.getList();
+    },
+    //---------------------------------------------------------------------
+    getModulesSlugs: function getModulesSlugs(e) {
+      if (e) {
+        e.preventDefault();
+      }
+
+      var url = this.urls.current + "/get/slugs";
+      var params = {};
+      this.$helpers.ajax(url, params, this.getModulesSlugsAfter);
+    },
+    //---------------------------------------------------------------------
+    getModulesSlugsAfter: function getModulesSlugsAfter(data) {
+      this.getModulesUpdates(data);
+    },
+    //---------------------------------------------------------------------
+    getModulesUpdates: function getModulesUpdates(comma_separated_slug) {
+      var url = this.assets.vaahcms_api_route + "/module/updates";
+      this.$helpers.console(url);
+      var params = {
+        slugs: comma_separated_slug
+      };
+      this.$helpers.ajax(url, params, this.getModulesUpdatesAfter);
+    },
+    //---------------------------------------------------------------------
+    getModulesUpdatesAfter: function getModulesUpdatesAfter(data) {
+      this.updateModuleVersion(data);
+    },
+    //---------------------------------------------------------------------
+    //---------------------------------------------------------------------
+    updateModuleVersion: function updateModuleVersion(data) {
+      var url = this.urls.current + "/update/versions";
+      var params = {
+        modules: data
+      };
+      this.$helpers.ajax(url, params, this.updateModuleVersionAfter);
+    },
+    //---------------------------------------------------------------------
+    updateModuleVersionAfter: function updateModuleVersionAfter(data) {
+      this.getList();
+    },
+    //---------------------------------------------------------------------
+    installUpdates: function installUpdates(e, slug) {
+      if (e) {
+        e.preventDefault();
+      }
+
+      var url = this.urls.current + "/install/updates";
+      var params = {
+        slug: slug
+      };
+      this.$helpers.ajax(url, params, this.installUpdatesAfter);
+    },
+    //---------------------------------------------------------------------
+    installUpdatesAfter: function installUpdatesAfter(data) {
+      this.getList();
     } //---------------------------------------------------------------------
+    //---------------------------------------------------------------------
+    //---------------------------------------------------------------------
 
   }
 });
@@ -57043,7 +57118,21 @@ var render = function() {
                   ]
                 ),
                 _vm._v(" "),
-                _vm._m(1)
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-success btn-sm",
+                    on: {
+                      click: function($event) {
+                        return _vm.getModulesSlugs($event)
+                      }
+                    }
+                  },
+                  [
+                    _c("i", { staticClass: "fas fa-sync" }),
+                    _vm._v(" Check Updates\n                    ")
+                  ]
+                )
               ],
               1
             )
@@ -57200,13 +57289,13 @@ var render = function() {
       ])
     ]),
     _vm._v(" "),
-    _vm._m(2),
+    _vm._m(1),
     _vm._v(" "),
     _c("div", { staticClass: "row mg-t-10 mg-b-10" }, [
       _c("div", { staticClass: "col-sm" }, [
         _vm.list
           ? _c("table", { staticClass: "table bg-white" }, [
-              _vm._m(3),
+              _vm._m(2),
               _vm._v(" "),
               _c(
                 "tbody",
@@ -57218,7 +57307,7 @@ var render = function() {
                       class: { "bd-success bg-success-9": item.is_active == 1 }
                     },
                     [
-                      _vm._m(4, true),
+                      _vm._m(3, true),
                       _vm._v(" "),
                       _c("td", [
                         _c("strong", [_vm._v(_vm._s(item.name))]),
@@ -57295,7 +57384,15 @@ var render = function() {
                                 "a",
                                 {
                                   staticClass: "mg-5 text-success",
-                                  attrs: { href: "#" }
+                                  attrs: { href: "#" },
+                                  on: {
+                                    click: function($event) {
+                                      return _vm.installUpdates(
+                                        $event,
+                                        item.slug
+                                      )
+                                    }
+                                  }
                                 },
                                 [_vm._v("Update")]
                               )
@@ -57409,15 +57506,6 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("div", [
       _c("h4", { staticClass: "mg-b-0 tx-spacing--1" }, [_vm._v("Modules")])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("button", { staticClass: "btn btn-success btn-sm" }, [
-      _c("i", { staticClass: "fas fa-sync" }),
-      _vm._v(" Check Updates")
     ])
   },
   function() {

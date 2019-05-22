@@ -123,6 +123,17 @@ Route::group(
         Route::any( '/actions', 'ModuleController@actions' )
             ->name( 'vh.admin.modules.actions' );
         //------------------------------------------------
+        Route::any( '/get/slugs', 'ModuleController@getModulesSlugs' )
+            ->name( 'vh.admin.modules.get.slugs' );
+        //------------------------------------------------
+        Route::any( '/update/versions', 'ModuleController@updateModuleVersions' )
+            ->name( 'vh.admin.modules.update.version' );
+        //------------------------------------------------
+        Route::any( '/install/updates', 'ModuleController@installUpdates' )
+            ->name( 'vh.admin.modules.install.updates' );
+        //------------------------------------------------
+        //------------------------------------------------
+        //------------------------------------------------
     });
 
 

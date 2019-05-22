@@ -2,6 +2,7 @@
 
 namespace WebReinvent\VaahCms\Http\Controllers\Admin;
 
+use Carbon\Carbon;
 use Illuminate\Container\Container;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -288,7 +289,7 @@ class ModuleController extends Controller
             {
                 $migration_path = $path.$migration;
                 include_once ($migration_path);
-                $migration_class = $this->get_class_from_file($migration_path);
+                $migration_class = vh_get_class_from_file($migration_path);
 
                 if($migration_class)
                 {
@@ -314,69 +315,110 @@ class ModuleController extends Controller
 
     }
     //----------------------------------------------------------
-    public function get_class_from_file($path_to_file)
+    public function getModulesSlugs(Request $request)
     {
-        //Grab the contents of the file
-        $contents = file_get_contents($path_to_file);
 
-        //Start with a blank namespace and class
-        $namespace = $class = "";
+        $module_slugs = Module::all()->pluck('slug')->toArray();
 
-        //Set helper values to know that we have found the namespace/class token and need to collect the string values after them
-        $getting_namespace = $getting_class = false;
+        $module_slugs = implode($module_slugs,",");
 
-        //Go through each token and evaluate it as necessary
-        foreach (token_get_all($contents) as $token) {
-
-            //If this token is the namespace declaring, then flag that the next tokens will be the namespace name
-            if (is_array($token) && $token[0] == T_NAMESPACE) {
-                $getting_namespace = true;
-            }
-
-            //If this token is the class declaring, then flag that the next tokens will be the class name
-            if (is_array($token) && $token[0] == T_CLASS) {
-                $getting_class = true;
-            }
-
-            //While we're grabbing the namespace name...
-            if ($getting_namespace === true) {
-
-                //If the token is a string or the namespace separator...
-                if(is_array($token) && in_array($token[0], [T_STRING, T_NS_SEPARATOR])) {
-
-                    //Append the token's value to the name of the namespace
-                    $namespace .= $token[1];
-
-                }
-                else if ($token === ';') {
-
-                    //If the token is the semicolon, then we're done with the namespace declaration
-                    $getting_namespace = false;
-
-                }
-            }
-
-            //While we're grabbing the class name...
-            if ($getting_class === true) {
-
-                //If the token is a string, it's the name of the class
-                if(is_array($token) && $token[0] == T_STRING) {
-
-                    //Store the token's value as the class name
-                    $class = $token[1];
-
-                    //Got what we need, stope here
-                    break;
-                }
-            }
-        }
-
-        //Build the fully-qualified class name and return it
-        return $namespace ? $namespace . '\\' . $class : $class;
+        $response['status'] = 'success';
+        $response['data'] = $module_slugs;
+        return response()->json($response);
 
     }
+
     //----------------------------------------------------------
+    public function updateModuleVersions(Request $request)
+    {
+        if(!$request->has('modules'))
+        {
+            $response['status'] = 'success';
+            return response()->json($response);
+        }
+
+        foreach($request->get('modules') as $module)
+        {
+            $installed_module = Module::where('slug', $module['slug'])->first();
+
+            if($installed_module->version_number < $module['version_number'])
+            {
+                $installed_module->is_update_available = 1;
+                $installed_module->update_checked_at = Carbon::now();
+                $installed_module->save();
+            }
+
+        }
+
+        $response['status'] = 'success';
+        return response()->json($response);
+
+    }
+
     //----------------------------------------------------------
+    public function installUpdates(Request $request)
+    {
+        $rules = array(
+            'slug' => 'required',
+        );
+
+        $validator = \Validator::make( $request->toArray(), $rules);
+        if ( $validator->fails() ) {
+
+            $errors             = errorsToArray($validator->errors());
+            $response['status'] = 'failed';
+            $response['errors'] = $errors;
+            return response()->json($response);
+        }
+
+        $module = Module::where('slug', $request->slug)->first();
+
+        if(!$module)
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = trans("vaahcms::messages.not_exist", ['key' => 'slug', 'value' => $request->slug]);
+            return response()->json($response);
+
+        }
+
+
+        $parsed = parse_url($module->github_url);
+
+
+        $uri_parts = explode('/', $parsed['path']);
+        $folder_name = end($uri_parts);
+        $folder_name = $folder_name."-master";
+
+
+        $filename = $module->name.'.zip';
+        $folder_path = base_path()."/vaahcms/Modules/";
+        $path = $folder_path.$filename;
+
+        copy($module->github_url.'/archive/master.zip', $path);
+
+        try{
+            Zip::check($path);
+            $zip = Zip::open($path);
+            $zip->extract(base_path().'/vaahcms/Modules/');
+            $zip->close();
+
+            rename($folder_path."".$folder_name, $folder_path.$module->name);
+
+            vh_delete_folder($path);
+
+            $response['status'] = 'success';
+            $response['messages'][] = 'Module Updated';
+            return response()->json($response);
+
+        }catch(\Exception $e)
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = $e->getMessage();
+            return response()->json($response);
+        }
+
+
+    }
     //----------------------------------------------------------
     //----------------------------------------------------------
 

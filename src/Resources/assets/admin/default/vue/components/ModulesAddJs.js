@@ -61,7 +61,7 @@ export default {
         getModules: function (page) {
 
 
-            var url = this.assets.vaahcms_api_route;
+            var url = this.assets.vaahcms_api_route+"/modules";
 
             if(!page)
             {

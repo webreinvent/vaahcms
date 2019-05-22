@@ -15,7 +15,9 @@
                         </router-link>
 
 
-                        <button class="btn btn-success btn-sm"><i class="fas fa-sync"></i> Check Updates</button>
+                        <button class="btn btn-success btn-sm" v-on:click="getModulesSlugs($event)">
+                            <i class="fas fa-sync"></i> Check Updates
+                        </button>
 
                     </div>
                 </div>
@@ -151,7 +153,7 @@
                             </span>
 
                             <strong v-if="item.is_update_available">
-                            | <a href="#" class="mg-5 text-success">Update</a>
+                            | <a href="#" v-on:click="installUpdates($event, item.slug)" class="mg-5 text-success">Update</a>
                             </strong>
 
                             <span v-if="!item.is_active">
