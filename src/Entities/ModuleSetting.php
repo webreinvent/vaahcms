@@ -27,6 +27,10 @@ class ModuleSetting extends Model {
     ];
 
     //-------------------------------------------------
+    public function scopeKey( $query, $key ) {
+        return $query->where( 'key', $key );
+    }
+    //-------------------------------------------------
     public function module() {
         return $this->belongsTo( 'WebReinvent\VaahCms\Entities\Module',
             'module_id', 'id'

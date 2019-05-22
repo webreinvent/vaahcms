@@ -9,6 +9,7 @@ use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use WebReinvent\VaahCms\Entities\Module;
 use WebReinvent\VaahCms\Entities\ModuleMigration;
+use WebReinvent\VaahCms\Entities\ModuleSetting;
 use WebReinvent\VaahCms\Entities\User;
 use ZanySoft\Zip\Zip;
 use ZanySoft\Zip\ZipManager;
@@ -274,6 +275,10 @@ class ModuleController extends Controller
 
         //Delete module entry
         Module::where('slug', $module->slug)->forceDelete();
+
+        //Delete module settings too
+        ModuleSetting::where('module_id', $module->id)->forceDelete();
+
 
         $module_path = base_path() . "/vaahcms/Modules/Blog";
 

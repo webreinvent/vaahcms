@@ -1,6 +1,21 @@
 <template>
     <div>
 
+
+        <div class="row">
+            <div class="col-sm">
+
+                <div class="alert alert-warning" v-if="page_reload_required">
+
+                    Page reload is required
+                    <a :href="urls.current" class="btn btn-xs btn-warning mg-l-10" >Click Here To Reload</a>
+
+                </div>
+
+            </div>
+
+        </div>
+
         <div class="row">
             <div class="col-sm">
                 <div class="d-sm-flex align-items-center justify-content-between">

@@ -66,10 +66,15 @@ function vh_get_module_setting_value($settings, $key)
     return $settings[$key];
 }
 //-----------------------------------------------------------------------------------
+
+
+
 //-----------------------------------------------------------------------------------
 function vh_get_modules_extended_views($view_file)
 {
+
     $modules = vh_get_all_modules_paths();
+
 
     if(count($modules) < 1)
     {
@@ -81,34 +86,28 @@ function vh_get_modules_extended_views($view_file)
     foreach ($modules as $module)
     {
 
-        //TODO::order by settings
-
         $settings = vh_get_module_settings_from_path($module);
 
         if(isset($settings['extend']->menu->order))
         {
             $list[$settings['extend']->menu->order] = $settings;
-        } else
-        {
-            $list[$settings['order']] = $settings;
         }
-
-
 
     }
 
     ksort($list);
 
-
     foreach ($list as $module_settings)
     {
-        $alias = vh_get_module_setting_value($module_settings, 'alias');
+        $slug = vh_get_module_setting_value($module_settings, 'slug');
 
-        $full_view_name = $alias.'::backend.extend.' . $view_file;
+        $full_view_name = $slug.'::admin.extend.' . $view_file;
 
         if (\View::exists($full_view_name)) {
+
             try {
                 $view = \View::make($full_view_name);
+
                 echo $view;
             } catch (\Exception $e) {
                 echo json_encode($e->getMessage());

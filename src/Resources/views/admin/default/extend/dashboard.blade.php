@@ -1,1 +1,1 @@
-{{vh_get_modules_extended_views('dashboard')}}
+@include('vaahcms::admin.default.layouts.partials.extendable', ['view_file'=>'dashboard'])

@@ -1885,6 +1885,7 @@ __webpack_require__.r(__webpack_exports__);
       q: null,
       page: 1,
       list: null,
+      page_reload_required: null,
       stats: null,
       active_tab: 'all',
       active_item: null,
@@ -1968,6 +1969,7 @@ __webpack_require__.r(__webpack_exports__);
     //---------------------------------------------------------------------
     actionsAfter: function actionsAfter(data) {
       this.getList();
+      this.page_reload_required = 1;
     },
     //---------------------------------------------------------------------
     getSettingValue: function getSettingValue(settings, key, value) {
@@ -57092,6 +57094,26 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
+    _c("div", { staticClass: "row" }, [
+      _c("div", { staticClass: "col-sm" }, [
+        _vm.page_reload_required
+          ? _c("div", { staticClass: "alert alert-warning" }, [
+              _vm._v(
+                "\n\n                Page reload is required\n                "
+              ),
+              _c(
+                "a",
+                {
+                  staticClass: "btn btn-xs btn-warning mg-l-10",
+                  attrs: { href: _vm.urls.current }
+                },
+                [_vm._v("Click Here To Reload")]
+              )
+            ])
+          : _vm._e()
+      ])
+    ]),
+    _vm._v(" "),
     _c("div", { staticClass: "row" }, [
       _c("div", { staticClass: "col-sm" }, [
         _c(

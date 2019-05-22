@@ -198,6 +198,12 @@ class Module extends Model {
 
     }
     //-------------------------------------------------
+    public static function getInstalledModules()
+    {
+        $list = Model::all();
+        return $list;
+    }
+    //-------------------------------------------------
     //-------------------------------------------------
 
 }

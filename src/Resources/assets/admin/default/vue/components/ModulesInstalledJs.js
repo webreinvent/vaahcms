@@ -13,6 +13,7 @@ import pagination from 'laravel-vue-pagination';
                 q: null,
                 page: 1,
                 list: null,
+                page_reload_required: null,
                 stats: null,
                 active_tab: 'all',
                 active_item: null,
@@ -124,6 +125,7 @@ import pagination from 'laravel-vue-pagination';
             //---------------------------------------------------------------------
             actionsAfter: function (data) {
                 this.getList();
+                this.page_reload_required = 1;
             },
             //---------------------------------------------------------------------
             getSettingValue: function (settings, key, value) {

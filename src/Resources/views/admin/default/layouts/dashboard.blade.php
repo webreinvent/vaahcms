@@ -83,10 +83,6 @@
 
 <!--/content-->
 
-
-
-@include("vaahcms::admin.default.extend.menu")
-
 @include("vaahcms::admin.default.layouts.partials.scripts")
 
 @yield('vaahcms_extend_admin_js')
