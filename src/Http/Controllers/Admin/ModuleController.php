@@ -103,8 +103,7 @@ class ModuleController extends Controller
 
         Module::syncAllModules();
 
-        $list = Module::with(['settings'])
-            ->orderBy('created_at', 'DESC');
+        $list = Module::orderBy('created_at', 'DESC');
 
         if($request->has('q'))
         {
