@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Str;
+use WebReinvent\VaahCms\Entities\Migration;
 use WebReinvent\VaahCms\Entities\ModuleMigration;
 use WebReinvent\VaahCms\Entities\Role;
 use WebReinvent\VaahCms\Entities\User;
@@ -27,9 +28,6 @@ class SetupController extends Controller
     //----------------------------------------------------------
     public function index()
     {
-
-
-
         return view($this->theme.'.setup.welcome');
     }
 
@@ -152,7 +150,7 @@ class SetupController extends Controller
             ];
             \Artisan::call($command, $params);
 
-            ModuleMigration::syncMigrations(null, 'vaahcms');
+            //Migration::syncMigrations(null, 'vaahcms');
 
             //publish vaahcms seeds
             $command = 'vendor:publish';

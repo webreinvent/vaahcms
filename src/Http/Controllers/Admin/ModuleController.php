@@ -7,6 +7,7 @@ use Illuminate\Container\Container;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
+use WebReinvent\VaahCms\Entities\Migration;
 use WebReinvent\VaahCms\Entities\Module;
 use WebReinvent\VaahCms\Entities\ModuleMigration;
 use WebReinvent\VaahCms\Entities\ModuleSetting;
@@ -224,11 +225,10 @@ class ModuleController extends Controller
 
         \File::copyDirectory($path, $path_des);
 
-        ModuleMigration::syncMigrations();
         //run migration
         $command = 'migrate';
         \Artisan::call($command);
-        ModuleMigration::syncMigrations($module->id, $module->slug);
+        Migration::syncMigrations($module->id);
 
         $command = 'db:seed';
         $params = [

@@ -66,54 +66,67 @@ function vh_get_module_setting_value($settings, $key)
     return $settings[$key];
 }
 //-----------------------------------------------------------------------------------
-
-
-
-//-----------------------------------------------------------------------------------
-function vh_get_modules_extended_views($view_file)
+function vh_get_themes_root_path()
 {
+    return config('vaahcms.themes_path');
+}
+//-----------------------------------------------------------------------------------
+function vh_get_theme_path($name)
+{
+    return vh_get_theme_root_path()."\/".$name;
+}
+//-----------------------------------------------------------------------------------
+function vh_get_all_themes_paths()
+{
+    $list = [];
+    foreach (\File::directories(vh_get_themes_root_path()) as $item)
+    {
+        $list[] = $item;
+    }
 
-    $modules = vh_get_all_modules_paths();
+    return $list;
 
+}
+//-----------------------------------------------------------------------------------
+function vh_get_theme_settings_from_path($path)
+{
+    $path_settings = $path.'\settings.json';
 
-    if(count($modules) < 1)
+    if(\File::exists($path_settings))
+    {
+        $file = File::get($path_settings);
+        $settings = json_decode($file);
+        $settings = (array)$settings;
+        return $settings;
+    }
+
+    return null;
+}
+//-----------------------------------------------------------------------------------
+function vh_get_theme_settings_from_name($name)
+{
+    $path = vh_get_theme_path($name);
+
+    $path_settings = $path.'\settings.json';
+
+    if(\File::exists($path_settings))
+    {
+        $file = File::get($path_settings);
+        $settings = json_decode($file);
+        $settings = (array)$settings;
+        return $settings;
+    }
+
+    return null;
+}
+//-----------------------------------------------------------------------------------
+function vh_get_theme_setting_value($settings, $key)
+{
+    if(!isset($settings[$key]))
     {
         return null;
     }
 
-    $list = [];
-
-    foreach ($modules as $module)
-    {
-
-        $settings = vh_get_module_settings_from_path($module);
-
-        if(isset($settings['extend']->menu->order))
-        {
-            $list[$settings['extend']->menu->order] = $settings;
-        }
-
-    }
-
-    ksort($list);
-
-    foreach ($list as $module_settings)
-    {
-        $slug = vh_get_module_setting_value($module_settings, 'slug');
-
-        $full_view_name = $slug.'::admin.extend.' . $view_file;
-
-        if (\View::exists($full_view_name)) {
-
-            try {
-                $view = \View::make($full_view_name);
-
-                echo $view;
-            } catch (\Exception $e) {
-                echo json_encode($e->getMessage());
-            }
-        }
-    }
-
+    return $settings[$key];
 }
 //-----------------------------------------------------------------------------------

@@ -1,24 +1,22 @@
 <?php namespace WebReinvent\VaahCms\Entities;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
-class ModuleSetting extends Model {
+class Setting extends Model {
 
-    use SoftDeletes;
     //-------------------------------------------------
-    protected $table = 'vh_module_settings';
+    protected $table = 'vh_settings';
     //-------------------------------------------------
     protected $dates = [
         'created_at',
         'updated_at',
-        'deleted_at'
     ];
     //-------------------------------------------------
     protected $dateFormat = 'Y-m-d H:i:s';
     //-------------------------------------------------
     protected $fillable = [
-        'module_id',
+        'settingable_id',
+        'settingable_type',
         'label',
         'excerpt',
         'type',
@@ -30,11 +28,11 @@ class ModuleSetting extends Model {
     public function scopeKey( $query, $key ) {
         return $query->where( 'key', $key );
     }
+
     //-------------------------------------------------
-    public function module() {
-        return $this->belongsTo( 'WebReinvent\VaahCms\Entities\Module',
-            'module_id', 'id'
-        );
+    public function settingable()
+    {
+        return $this->morphTo();
     }
     //-------------------------------------------------
 

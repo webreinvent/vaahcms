@@ -3,6 +3,7 @@
 use Illuminate\Routing\Router;
 use Illuminate\Support\ServiceProvider;
 use WebReinvent\VaahCms\Providers\ModulesServiceProvider;
+use WebReinvent\VaahCms\Providers\ThemesServiceProvider;
 
 /**
  * Class VaahCmsServiceProvider
@@ -74,6 +75,7 @@ class VaahCmsServiceProvider extends ServiceProvider {
 
         //register module service provider
         $this->app->register(ModulesServiceProvider::class);
+        $this->app->register(ThemesServiceProvider::class);
         //$this->app->register(ZanySoft\Zip\ZipServiceProvider::class);
 
     }

@@ -1,4 +1,6 @@
 <?php
+
+
 $modules = new \WebReinvent\VaahCms\Entities\Module();
 
 $all = $modules->all();
@@ -8,7 +10,6 @@ if($all->count() > 0)
 {
     foreach($all as $item)
     {
-
         $settings = $item->settings()->key($view_file.'-order')->first();
         if($settings)
         {
@@ -36,5 +37,7 @@ if($all->count() > 0)
     }
 
 }
+
+
 
 ?>

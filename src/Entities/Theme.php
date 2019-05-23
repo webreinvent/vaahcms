@@ -3,11 +3,11 @@
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Module extends Model {
+class Theme extends Model {
 
     use SoftDeletes;
     //-------------------------------------------------
-    protected $table = 'vh_modules';
+    protected $table = 'vh_themes';
     //-------------------------------------------------
     protected $dates = [
         'update_checked_at',
@@ -29,7 +29,6 @@ class Module extends Model {
         'author_website',
         'version',
         'version_number',
-        'db_table_prefix',
         'is_active',
         'is_sample_data_available',
         'is_update_available',
@@ -59,13 +58,9 @@ class Module extends Model {
         return $query->where( 'slug', $slug );
     }
     //-------------------------------------------------
-
-
-    //-------------------------------------------------
     public function scopeCreatedBetween( $query, $from, $to ) {
         return $query->whereBetween( 'created_at', array( $from, $to ) );
     }
-
     //-------------------------------------------------
     public function scopeUpdatedBetween( $query, $from, $to ) {
         return $query->whereBetween( 'updated_at', array( $from, $to ) );
@@ -81,21 +76,16 @@ class Module extends Model {
         return $this->morphMany('WebReinvent\VaahCms\Entities\Setting', 'settingable');
     }
     //-------------------------------------------------
-    public function migrations()
-    {
-        return $this->morphMany('WebReinvent\VaahCms\Entities\Migration', 'migrationable');
-    }
-    //-------------------------------------------------
-    public static function syncModule($module_path)
+    public static function syncModule($path)
     {
 
-        $settings = vh_get_module_settings_from_path($module_path);
+        $settings = vh_get_theme_settings_from_path($path);
 
 
         if(is_null($settings) || !is_array($settings) || count($settings) < 1)
         {
             $response['status'] = 'failed';
-            $response['errors'][] = 'Fatal with '.$module_path.'\settings.json';
+            $response['errors'][] = 'Fatal with '.$path.'\settings.json';
             return $response;
         }
 
@@ -124,7 +114,7 @@ class Module extends Model {
         $settings['version_number'] =  str_replace('v','',$settings['version']);
         $settings['version_number'] =  str_replace('.','',$settings['version_number']);
 
-        $module = Module::firstOrCreate(['slug' => $settings['slug']]);
+        $module = Theme::firstOrCreate(['slug' => $settings['slug']]);
         $module->fill($settings);
         $module->save();
 
@@ -145,34 +135,29 @@ class Module extends Model {
 
         $other_settings = array_diff_key($settings, array_flip($removeKeys));
 
-        foreach ($other_settings as $key => $setting_input)
+        foreach ($other_settings as $key => $setting)
         {
+            $where_con = [
+                'module_id' => $module->id,
+                'key'   => $key
+            ];
 
-            $setting_data = [];
 
-            $setting_data['key'] = $key;
-
-            if(is_array($setting_input) || is_object($setting_input))
+            $module_setting = ModuleSetting::firstOrCreate($where_con);
+            if(is_array($setting) || is_object($setting))
             {
-                $setting_data['type'] = 'json';
-                $setting_data['value'] = json_encode($setting_input);
-
+                $module_setting->type = 'json';
+                $module_setting->value = json_encode($setting);
             } else
             {
-                $setting_data['value'] = $setting_input;
+                $module_setting->value = $setting;
             }
 
-            $setting = new Setting($setting_data);
-
-            $module->settings()->save($setting);
-
+            $module_setting->save();
         }
-
-
         $module = Module::where('slug', $module->slug)->with(['settings'])->first();
 
         return $module;
-
 
     }
     //-------------------------------------------------
@@ -189,7 +174,6 @@ class Module extends Model {
         foreach($list as $module_path)
         {
             Module::syncModule($module_path);
-
         }
 
     }
