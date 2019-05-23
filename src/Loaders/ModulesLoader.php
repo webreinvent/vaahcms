@@ -1,4 +1,4 @@
-<?php namespace WebReinvent\VaahCms\Modules;
+<?php namespace WebReinvent\VaahCms\Loaders;
 
 
 use Illuminate\Filesystem\Filesystem;

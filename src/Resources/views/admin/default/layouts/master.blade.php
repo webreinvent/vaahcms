@@ -21,8 +21,6 @@
 
 	</div>
 
-	@include("vaahcms::admin.default.extend.menu")
-
     @yield('content')
 
     @include("vaahcms::admin.default.layouts.partials.scripts")
