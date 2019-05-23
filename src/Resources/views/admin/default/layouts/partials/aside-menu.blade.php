@@ -20,7 +20,7 @@
         <li><a href="{{url()->route('vh.admin.modules')}}">Modules (3)</a></li>
         <li><a href="page-profile-view.html">Plugins  (4)</a></li>
         <li><a href="page-profile-view.html">Widgets</a></li>
-        <li><a href="page-profile-view.html">Themes</a></li>
+        <li><a href="{{url()->route('vh.admin.themes')}}">Themes</a></li>
     </ul>
 
 </li>

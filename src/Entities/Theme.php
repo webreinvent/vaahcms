@@ -71,12 +71,17 @@ class Theme extends Model {
         return $query->whereBetween( 'deleted_at', array( $from, $to ) );
     }
     //-------------------------------------------------
+    public function migrations()
+    {
+        return $this->morphMany('WebReinvent\VaahCms\Entities\Migration', 'migrationable');
+    }
+    //-------------------------------------------------
     public function settings()
     {
         return $this->morphMany('WebReinvent\VaahCms\Entities\Setting', 'settingable');
     }
     //-------------------------------------------------
-    public static function syncModule($path)
+    public static function syncTheme($path)
     {
 
         $settings = vh_get_theme_settings_from_path($path);
@@ -114,9 +119,9 @@ class Theme extends Model {
         $settings['version_number'] =  str_replace('v','',$settings['version']);
         $settings['version_number'] =  str_replace('.','',$settings['version_number']);
 
-        $module = Theme::firstOrCreate(['slug' => $settings['slug']]);
-        $module->fill($settings);
-        $module->save();
+        $theme = Theme::firstOrCreate(['slug' => $settings['slug']]);
+        $theme->fill($settings);
+        $theme->save();
 
         $removeKeys = [
             'name',
@@ -135,52 +140,54 @@ class Theme extends Model {
 
         $other_settings = array_diff_key($settings, array_flip($removeKeys));
 
-        foreach ($other_settings as $key => $setting)
+        foreach ($other_settings as $key => $setting_input)
         {
-            $where_con = [
-                'module_id' => $module->id,
-                'key'   => $key
-            ];
+            $setting_data = [];
 
+            $setting_data['key'] = $key;
 
-            $module_setting = ModuleSetting::firstOrCreate($where_con);
-            if(is_array($setting) || is_object($setting))
+            if(is_array($setting_input) || is_object($setting_input))
             {
-                $module_setting->type = 'json';
-                $module_setting->value = json_encode($setting);
+                $setting_data['type'] = 'json';
+                $setting_data['value'] = json_encode($setting_input);
+
             } else
             {
-                $module_setting->value = $setting;
+                $setting_data['value'] = $setting_input;
             }
 
-            $module_setting->save();
-        }
-        $module = Module::where('slug', $module->slug)->with(['settings'])->first();
+            $setting = new Setting($setting_data);
 
-        return $module;
+            $theme->settings()->save($setting);
+        }
+
+        $theme = Theme::where('slug', $theme->slug)->with(['settings'])->first();
+
+        return $theme;
 
     }
     //-------------------------------------------------
-    public static function syncAllModules()
+    public static function syncAll()
     {
-        $list = vh_get_all_modules_paths();
+        $list = vh_get_all_themes_paths();
         if(count($list) < 1)
         {
             $response['status'] = 'failed';
-            $response['errors'][] = 'No module installed/downloaded';
+            $response['errors'][] = 'No theme installed/downloaded';
             return $response;
         }
 
-        foreach($list as $module_path)
+        foreach($list as $path)
         {
-            Module::syncModule($module_path);
+            Theme::syncTheme($path);
         }
 
+        return true;
     }
     //-------------------------------------------------
-    public static function getInstalledModules()
+    public static function getInstalledThemes()
     {
-        $list = Model::all();
+        $list = Theme::all();
         return $list;
     }
     //-------------------------------------------------

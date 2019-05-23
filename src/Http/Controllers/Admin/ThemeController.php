@@ -8,9 +8,10 @@ use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use WebReinvent\VaahCms\Entities\Migration;
 use WebReinvent\VaahCms\Entities\Module;
+use WebReinvent\VaahCms\Entities\Theme;
 use ZanySoft\Zip\Zip;
 
-class ModuleController extends Controller
+class ThemeController extends Controller
 {
 
     public $theme;
@@ -24,7 +25,7 @@ class ModuleController extends Controller
     //----------------------------------------------------------
     public function index()
     {
-        return view($this->theme.'.pages.modules');
+        return view($this->theme.'.pages.themes');
     }
     //----------------------------------------------------------
     public function assets(Request $request)
@@ -36,7 +37,6 @@ class ModuleController extends Controller
         $response['data'] = $data;
 
         return response()->json($response);
-
     }
     //----------------------------------------------------------
     public function download(Request $request)
@@ -66,7 +66,7 @@ class ModuleController extends Controller
 
 
         $filename = $request->name.'.zip';
-        $folder_path = base_path()."/vaahcms/Modules/";
+        $folder_path = base_path()."/vaahcms/Themes/";
         $path = $folder_path.$filename;
 
         copy($request->github_url.'/archive/master.zip', $path);
@@ -74,7 +74,7 @@ class ModuleController extends Controller
         try{
             Zip::check($path);
             $zip = Zip::open($path);
-            $zip->extract(base_path().'/vaahcms/Modules/');
+            $zip->extract(base_path().'/vaahcms/Themes/');
             $zip->close();
 
             rename($folder_path."".$folder_name, $folder_path.$request->name);
@@ -98,9 +98,9 @@ class ModuleController extends Controller
     public function getList(Request $request)
     {
 
-        Module::syncAllModules();
+        Theme::syncAll();
 
-        $list = Module::orderBy('created_at', 'DESC');
+        $list = Theme::orderBy('created_at', 'DESC');
 
         if($request->has('q'))
         {
@@ -121,15 +121,15 @@ class ModuleController extends Controller
                     $list->inactive();
                     break;
                 case 'update_available':
-                    $list->updateavailable();
+                    $list->updateAvailable();
                     break;
             }
         }
 
-        $stats['all'] = Module::count();
-        $stats['active'] = Module::active()->count();
-        $stats['inactive'] = Module::inactive()->count();
-        $stats['update_available'] = Module::updateAvailable()->count();
+        $stats['all'] = Theme::count();
+        $stats['active'] = Theme::active()->count();
+        $stats['inactive'] = Theme::inactive()->count();
+        $stats['update_available'] = Theme::updateAvailable()->count();
 
 
         $response['status'] = 'success';

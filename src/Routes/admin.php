@@ -139,6 +139,45 @@ Route::group(
 
 Route::group(
     [
+        'prefix'     => 'admin/themes',
+        'middleware' => ['web','has.admin.access'],
+        'namespace'  => 'WebReinvent\VaahCms\Http\Controllers\Admin'
+    ],
+    function () {
+        //------------------------------------------------
+        //------------------------------------------------
+        Route::get( '/', 'ThemeController@index' )
+            ->name( 'vh.admin.themes' );
+        //------------------------------------------------
+        Route::any( '/assets', 'ThemeController@assets' )
+            ->name( 'vh.admin.themes.assets' );
+        //------------------------------------------------
+        Route::any( '/download', 'ThemeController@download' )
+            ->name( 'vh.admin.themes.download' );
+        //------------------------------------------------
+        Route::any( '/list', 'ThemeController@getList' )
+            ->name( 'vh.admin.themes.list' );
+        //------------------------------------------------
+        Route::any( '/actions', 'ThemeController@actions' )
+            ->name( 'vh.admin.themes.actions' );
+        //------------------------------------------------
+        Route::any( '/get/slugs', 'ThemeController@getModulesSlugs' )
+            ->name( 'vh.admin.themes.get.slugs' );
+        //------------------------------------------------
+        Route::any( '/update/versions', 'ThemeController@updateModuleVersions' )
+            ->name( 'vh.admin.themes.update.version' );
+        //------------------------------------------------
+        Route::any( '/install/updates', 'ThemeController@installUpdates' )
+            ->name( 'vh.admin.themes.install.updates' );
+        //------------------------------------------------
+        //------------------------------------------------
+        //------------------------------------------------
+    });
+
+
+
+Route::group(
+    [
         'prefix'     => 'admin/composer',
         'middleware' => ['web','has.admin.access'],
         'namespace'  => 'WebReinvent\VaahCms\Http\Controllers\Admin'
