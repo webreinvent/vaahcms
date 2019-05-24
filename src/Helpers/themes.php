@@ -1,32 +1,30 @@
 <?php
 
-
-//-----------------------------------------------------------------------------------
-function vh_get_modules_root_path()
+function vh_get_themes_root_path()
 {
-    return config('vaahcms.modules_path');
+    return config('vaahcms.themes_path');
 }
 //-----------------------------------------------------------------------------------
-function vh_get_module_path($module_name)
+function vh_get_theme_path($name)
 {
-    return vh_get_modules_root_path()."\/".$module_name;
+    return vh_get_theme_root_path()."\/".$name;
 }
 //-----------------------------------------------------------------------------------
-function vh_get_all_modules_paths()
+function vh_get_all_themes_paths()
 {
-    $found_modules = [];
-    foreach (\File::directories(vh_get_modules_root_path()) as $module)
+    $list = [];
+    foreach (\File::directories(vh_get_themes_root_path()) as $item)
     {
-        $found_modules[] = $module;
+        $list[] = $item;
     }
 
-    return $found_modules;
+    return $list;
 
 }
 //-----------------------------------------------------------------------------------
-function vh_get_module_settings_from_path($plugin_path)
+function vh_get_theme_settings_from_path($path)
 {
-    $path_settings = $plugin_path.'\settings.json';
+    $path_settings = $path.'\settings.json';
 
     if(\File::exists($path_settings))
     {
@@ -39,9 +37,9 @@ function vh_get_module_settings_from_path($plugin_path)
     return null;
 }
 //-----------------------------------------------------------------------------------
-function vh_get_module_settings_from_name($plugin_name)
+function vh_get_theme_settings_from_name($name)
 {
-    $path = vh_get_module_path($plugin_name);
+    $path = vh_get_theme_path($name);
 
     $path_settings = $path.'\settings.json';
 
@@ -56,7 +54,7 @@ function vh_get_module_settings_from_name($plugin_name)
     return null;
 }
 //-----------------------------------------------------------------------------------
-function vh_get_module_setting_value($settings, $key)
+function vh_get_theme_setting_value($settings, $key)
 {
     if(!isset($settings[$key]))
     {
@@ -64,5 +62,17 @@ function vh_get_module_setting_value($settings, $key)
     }
 
     return $settings[$key];
+}
+//-----------------------------------------------------------------------------------
+function vh_get_active_theme_namespace()
+{
+    $theme = \WebReinvent\VaahCms\Entities\Theme::whereNotNull('is_active')->first();
+    if($theme)
+    {
+        return $theme->slug."::";
+    } else
+    {
+        return 'default::';
+    }
 }
 //-----------------------------------------------------------------------------------
