@@ -223,7 +223,7 @@ class ModuleController extends Controller
         //run migration
         $command = 'migrate';
         \Artisan::call($command);
-        Migration::syncMigrations($module->id);
+        Migration::syncModuleMigrations($module->id);
 
         $command = 'db:seed';
         $params = [

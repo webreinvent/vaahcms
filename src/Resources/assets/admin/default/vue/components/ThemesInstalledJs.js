@@ -124,33 +124,9 @@ import pagination from 'laravel-vue-pagination';
             //---------------------------------------------------------------------
             actionsAfter: function (data) {
                 this.getList();
-                this.page_reload_required = 1;
             },
             //---------------------------------------------------------------------
-            getSettingValue: function (settings, key, value) {
-
-                this.$helpers.console(settings, 'settings');
-                this.$helpers.console(key, 'key');
-                this.$helpers.console(value, 'value');
-
-                var item = this.$helpers.findInArrayByKey(settings, key, value);
-
-                return item;
-            },
-            //---------------------------------------------------------------------
-            setFilter: function (e, status) {
-                if(e)
-                {
-                    e.preventDefault();
-                }
-
-                this.filters.status = status;
-
-                this.getList();
-            },
-
-            //---------------------------------------------------------------------
-            getModulesSlugs: function (e) {
+            getThemesSlugs: function (e) {
                 if(e)
                 {
                     e.preventDefault();
@@ -158,38 +134,38 @@ import pagination from 'laravel-vue-pagination';
 
                 var url = this.urls.current+"/get/slugs";
                 var params = {};
-                this.$helpers.ajax(url, params, this.getModulesSlugsAfter);
+                this.$helpers.ajax(url, params, this.getThemesSlugsAfter);
             },
             //---------------------------------------------------------------------
-            getModulesSlugsAfter: function (data) {
-                this.getModulesUpdates(data);
+            getThemesSlugsAfter: function (data) {
+                this.getThemesUpdates(data);
             },
             //---------------------------------------------------------------------
-            getModulesUpdates: function (comma_separated_slug) {
+            getThemesUpdates: function (comma_separated_slug) {
 
-                var url = this.assets.vaahcms_api_route+"/module/updates";
+                var url = this.assets.vaahcms_api_route+"/theme/updates";
 
                 this.$helpers.console(url);
 
                 var params = {slugs: comma_separated_slug};
-                this.$helpers.ajax(url, params, this.getModulesUpdatesAfter);
+                this.$helpers.ajax(url, params, this.getThemesUpdatesAfter);
             },
             //---------------------------------------------------------------------
-            getModulesUpdatesAfter: function (data) {
+            getThemesUpdatesAfter: function (data) {
 
-                this.updateModuleVersion(data);
+                this.updateThemesVersion(data);
 
             },
             //---------------------------------------------------------------------
             //---------------------------------------------------------------------
-            updateModuleVersion: function (data) {
+            updateThemesVersion: function (data) {
 
                 var url = this.urls.current+"/update/versions";
-                var params = {modules: data};
-                this.$helpers.ajax(url, params, this.updateModuleVersionAfter);
+                var params = {themes: data};
+                this.$helpers.ajax(url, params, this.updateThemesVersionAfter);
             },
             //---------------------------------------------------------------------
-            updateModuleVersionAfter: function (data) {
+            updateThemesVersionAfter: function (data) {
                 this.getList();
             },
             //---------------------------------------------------------------------

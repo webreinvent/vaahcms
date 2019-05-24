@@ -100,7 +100,7 @@ class ThemeController extends Controller
 
         Theme::syncAll();
 
-        $list = Theme::orderBy('created_at', 'DESC');
+        $list = Theme::orderBy('is_active', 'DESC');
 
         if($request->has('q'))
         {
@@ -110,31 +110,9 @@ class ThemeController extends Controller
             });
         }
 
-        if($request->has('status') && $request->get('status') != 'all')
-        {
-            switch ($request->status)
-            {
-                case 'active':
-                    $list->active();
-                    break;
-                case 'inactive':
-                    $list->inactive();
-                    break;
-                case 'update_available':
-                    $list->updateAvailable();
-                    break;
-            }
-        }
-
-        $stats['all'] = Theme::count();
-        $stats['active'] = Theme::active()->count();
-        $stats['inactive'] = Theme::inactive()->count();
-        $stats['update_available'] = Theme::updateAvailable()->count();
-
 
         $response['status'] = 'success';
         $response['data']['list'] = $list->paginate(10);
-        $response['data']['stats'] = $stats;
 
         return response()->json($response);
 
@@ -160,12 +138,12 @@ class ThemeController extends Controller
         $data = [];
         $inputs = $request->inputs;
 
-        $module = Module::find($inputs['id']);
+        $theme = Theme::find($inputs['id']);
 
-        $controller = "\VaahCms\Modules\\{$module->name}\\Http\Controllers\SetupController";
+        $controller = "\VaahCms\Themes\\{$theme->name}\\Http\Controllers\SetupController";
         $method = $request->action;
 
-        $response = $this->callModuleControllerMethod($module, $controller, $method);
+        $response = $this->callControllerMethod($theme, $controller, $method);
 
         if(isset($response['status']) && $response['status'] == 'failed')
         {
@@ -177,19 +155,19 @@ class ThemeController extends Controller
 
             //---------------------------------------
             case 'activate':
-                $this->activate($module);
-                $module->is_active = 1;
-                $module->save();
+                $this->activate($theme);
+                $theme->is_active = 1;
+                $theme->save();
                 break;
             //---------------------------------------
             case 'deactivate':
-                $this->deactivate($module);
-                $module->is_active = null;
-                $module->save();
+                $this->deactivate($theme);
+                $theme->is_active = null;
+                $theme->save();
                 break;
             //---------------------------------------
             case 'importSampleData':
-                $this->importSampleData($module);
+                $this->importSampleData($theme);
                 $response['status'] = 'success';
                 $response['messages'][] = 'Sample Data Successfully Imported';
                 return response()->json($response);
@@ -197,7 +175,7 @@ class ThemeController extends Controller
             //---------------------------------------
             case 'delete':
 
-                $this->delete($module);
+                $this->delete($theme);
 
                 break;
             //---------------------------------------
@@ -210,10 +188,10 @@ class ThemeController extends Controller
         return response()->json($response);
     }
     //----------------------------------------------------------
-    public function activate($module)
+    public function activate($theme)
     {
 
-        $path = "./vaahcms/Modules/".$module->name."/Database/migrations/";
+        $path = "./vaahcms/Themes/".$theme->name."/Database/migrations/";
         $path_des = "./database/migrations";
 
         //\copy($path, $path_des);
@@ -223,23 +201,28 @@ class ThemeController extends Controller
         //run migration
         $command = 'migrate';
         \Artisan::call($command);
-        Migration::syncMigrations($module->id);
 
-        $command = 'db:seed';
-        $params = [
-            '--class' => "VaahCms\Modules\\{$module->name}\\Database\Seeds\DatabaseTableSeeder"
-        ];
+        Migration::syncThemeMigrations($theme->id);
 
-        \Artisan::call($command, $params);
+        $db_seeder_class = "VaahCms\Themes\\{$theme->name}\\Database\Seeds\DatabaseTableSeeder";
+
+        if(class_exists($db_seeder_class)){
+            $command = 'db:seed';
+            $params = [
+                '--class' => "VaahCms\Themes\\{$theme->name}\\Database\Seeds\DatabaseTableSeeder"
+            ];
+
+            \Artisan::call($command, $params);
+        }
 
     }
     //----------------------------------------------------------
-    public function importSampleData($module)
+    public function importSampleData($theme)
     {
 
         $command = 'db:seed';
         $params = [
-            '--class' => "VaahCms\Modules\\{$module->name}\\Database\Seeds\SampleDataTableSeeder"
+            '--class' => "VaahCms\Themes\\{$theme->name}\\Database\Seeds\SampleDataTableSeeder"
         ];
 
         \Artisan::call($command, $params);
@@ -251,13 +234,13 @@ class ThemeController extends Controller
 
     }
     //----------------------------------------------------------
-    public function callModuleControllerMethod($module, $controller, $method)
+    public function callControllerMethod($theme, $controller, $method)
     {
 
         if (isset($method) && method_exists($controller, $method)
             && is_callable(array($controller, $method)))
         {
-            $response = call_user_func($controller."::".$method, $module);
+            $response = call_user_func($controller."::".$method, $theme);
             $response['data']['controller_method'] = $controller;
 
             return $response;
@@ -265,20 +248,20 @@ class ThemeController extends Controller
 
     }
     //----------------------------------------------------------
-    public function delete($module)
+    public function delete($theme)
     {
 
         //Delete module settings too
-        $module->settings()->delete();
+        $theme->settings()->delete();
 
         //Delete module entry
-        Module::where('slug', $module->slug)->forceDelete();
+        Theme::where('slug', $theme->slug)->forceDelete();
 
 
-        $module_path = base_path() . "/vaahcms/Modules/".$module->name;
+        $theme_path = base_path() . "/vaahcms/Themes/".$theme->name;
 
         //Delete all migrations
-        $path =  $module_path . "/Database/migrations/";
+        $path =  $theme_path . "/Database/migrations/";
 
         $migrations = vh_get_all_files($path);
 
@@ -299,7 +282,7 @@ class ThemeController extends Controller
         }
 
         //delete all database migrations
-        $module_migrations = $module->migrations()->get()->pluck('migration_id')->toArray();
+        $module_migrations = $theme->migrations()->get()->pluck('migration_id')->toArray();
 
         if($module_migrations)
         {
@@ -308,19 +291,19 @@ class ThemeController extends Controller
         }
 
         //delete module folder
-        vh_delete_folder($module_path);
+        vh_delete_folder($theme_path);
 
     }
     //----------------------------------------------------------
-    public function getModulesSlugs(Request $request)
+    public function getThemeSlugs(Request $request)
     {
 
-        $module_slugs = Module::all()->pluck('slug')->toArray();
+        $slugs = Theme::all()->pluck('slug')->toArray();
 
-        $module_slugs = implode($module_slugs,",");
+        $slugs = implode($slugs,",");
 
         $response['status'] = 'success';
-        $response['data'] = $module_slugs;
+        $response['data'] = $slugs;
         return response()->json($response);
 
     }
@@ -328,21 +311,21 @@ class ThemeController extends Controller
     //----------------------------------------------------------
     public function updateModuleVersions(Request $request)
     {
-        if(!$request->has('modules'))
+        if(!$request->has('themes'))
         {
             $response['status'] = 'success';
             return response()->json($response);
         }
 
-        foreach($request->get('modules') as $module)
+        foreach($request->get('themes') as $theme)
         {
-            $installed_module = Module::where('slug', $module['slug'])->first();
+            $installed = Theme::where('slug', $theme['slug'])->first();
 
-            if($installed_module->version_number < $module['version_number'])
+            if($installed->version_number < $theme['version_number'])
             {
-                $installed_module->is_update_available = 1;
-                $installed_module->update_checked_at = Carbon::now();
-                $installed_module->save();
+                $installed->is_update_available = 1;
+                $installed->update_checked_at = Carbon::now();
+                $installed->save();
             }
 
         }
@@ -368,9 +351,9 @@ class ThemeController extends Controller
             return response()->json($response);
         }
 
-        $module = Module::where('slug', $request->slug)->first();
+        $theme = Theme::where('slug', $request->slug)->first();
 
-        if(!$module)
+        if(!$theme)
         {
             $response['status'] = 'failed';
             $response['errors'][] = trans("vaahcms::messages.not_exist", ['key' => 'slug', 'value' => $request->slug]);
@@ -379,27 +362,26 @@ class ThemeController extends Controller
         }
 
 
-        $parsed = parse_url($module->github_url);
-
+        $parsed = parse_url($theme->github_url);
 
         $uri_parts = explode('/', $parsed['path']);
         $folder_name = end($uri_parts);
         $folder_name = $folder_name."-master";
 
 
-        $filename = $module->name.'.zip';
-        $folder_path = base_path()."/vaahcms/Modules/";
+        $filename = $theme->name.'.zip';
+        $folder_path = base_path()."/vaahcms/Themes/";
         $path = $folder_path.$filename;
 
-        copy($module->github_url.'/archive/master.zip', $path);
+        copy($theme->github_url.'/archive/master.zip', $path);
 
         try{
             Zip::check($path);
             $zip = Zip::open($path);
-            $zip->extract(base_path().'/vaahcms/Modules/');
+            $zip->extract(base_path().'/vaahcms/Themes/');
             $zip->close();
 
-            rename($folder_path."".$folder_name, $folder_path.$module->name);
+            rename($folder_path."".$folder_name, $folder_path.$theme->name);
 
             vh_delete_folder($path);
 

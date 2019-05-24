@@ -15,7 +15,7 @@
                         </router-link>
 
 
-                        <button class="btn btn-success btn-sm" v-on:click="getModulesSlugs($event)">
+                        <button class="btn btn-success btn-sm" v-on:click="getThemesSlugs($event)">
                             <i class="fas fa-sync"></i> Check Updates
                         </button>
 
@@ -27,89 +27,104 @@
         </div>
 
 
+        <!--content header-->
+        <div class="row mg-b-10 mg-t-10">
+
+            <div class="col-sm  ">
+
+                <div class="bd-b bd-1 pd-b-10">
+                    <div class="d-sm-flex align-items-center justify-content-between">
+                        <div>
+
+                        </div>
+
+                        <div class="d-none d-md-block">
+                            <div class="search-form">
+                                <input type="search" class="form-control" v-model="filters.q"
+                                       v-on:keyup.enter="getList()"
+                                       placeholder="Search">
+                                <button class="btn" v-on:click="getList()" type="button">
+                                    <i class="fas fa-search"></i>
+                                </button>
+
+                            </div>
+
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+
+            </div>
+
+        </div>
+        <!--/content header-->
+
 
         <!--content body-->
 
-        <div class="row mg-t-10 mg-b-10">
-            <div class="col-sm">
-                <table class="table bg-white" v-if="list">
-                    <thead class="thead-light">
-                    <tr class="bd-l bd-3" >
-                        <th scope="col">
+        <div class="row mg-t-10 mg-b-10" v-if="list">
 
-                            <div class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input" id="selectAll">
-                                <label class="custom-control-label" for="selectAll"></label>
+            <div class="col-3 mg-t-10 mg-b-10" v-for="item in list.data" >
+
+                    <div class="card ">
+                        <img v-bind:src="item.thumbnail" class="card-img-top" >
+                        <div class="card-body">
+                            <h6 class="card-title">{{item.title}}</h6>
+                            <p class="card-text">
+                                <span class="badge badge-light">{{item.name}}/{{item.slug}}</span>
+                                <span class="badge badge-light">{{item.version}}</span>
+                            </p>
+                            <p class="card-text">{{item.excerpt}}</p>
+
+
+
+
+                        </div>
+
+                        <div class="card-footer">
+
+                            <div class="">
+
+                                <a href="#" v-if="item.is_active == 1"
+                                   v-on:click="actions($event, 'deactivate', item, null)"
+                                   class="mg-r-5 text-warning">Deactivate</a>
+
+                                <a href="#" v-else
+                                   v-on:click="actions($event, 'activate', item, null)"
+                                   class="mg-r-5">Activate</a>
+
+                                <span v-if="item.is_sample_data_available && item.is_active == 1">
+
+                                <a href="#"
+                                   v-on:click="actions($event, 'importSampleData', item, null)"
+                                   class="mg-r-5 mg-l-5">Import Sample Data</a>
+
+                                </span>
+
+                                <strong v-if="item.is_update_available">
+                                    | <a href="#" v-on:click="installUpdates($event, item.slug)" class="mg-5 text-success">Update</a>
+                                </strong>
+
+                                <span v-if="!item.is_active">
+                                | <a href="#"
+                                     v-on:click="actions($event, 'delete', item, null)"
+                                     class="mg-5 text-danger">Delete</a>
+                                </span>
+
                             </div>
 
-                        </th>
-                        <th scope="col">Module Name</th>
-                        <th scope="col">Description</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr  v-for="item in list.data"
-                         class="bd-l bd-3"
-                         v-bind:class="{'bd-success bg-success-9': item.is_active == 1}">
-                        <th scope="row">
+                        </div>
 
-                            <div class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input" id="customCheck1">
-                                <label class="custom-control-label" for="customCheck1"></label>
-                            </div>
+                    </div>
 
-                        </th>
-                        <td>
-                            <strong>{{item.name}}</strong><br/>
-
-                            <a href="#" v-if="item.is_active == 1"
-                               v-on:click="actions($event, 'deactivate', item, null)"
-                               class="mg-r-5 text-warning">Deactivate</a>
-
-                            <a href="#" v-else
-                               v-on:click="actions($event, 'activate', item, null)"
-                               class="mg-r-5">Activate</a>
-
-                            <span v-if="item.is_sample_data_available && item.is_active == 1">
-                            |
-                            <a href="#"
-                               v-on:click="actions($event, 'importSampleData', item, null)"
-                               class="mg-r-5 mg-l-5">Import Sample Data</a>
-
-                            </span>
-
-                            <strong v-if="item.is_update_available">
-                            | <a href="#" v-on:click="installUpdates($event, item.slug)" class="mg-5 text-success">Update</a>
-                            </strong>
-
-                            <span v-if="!item.is_active">
-                            | <a href="#"
-                                 v-on:click="actions($event, 'delete', item, null)"
-                                 class="mg-5 text-danger">Delete</a>
-                            </span>
-
-                        </td>
-                        <td>
-                            <strong v-if="item.title">
-                                {{item.title}}<br/>
-                            </strong>
-                            <span v-if="item.excerpt">
-                                {{item.excerpt}}
-                            </span>
-                            <br/>
-                            <span class="badge badge-light">Version: {{item.version}}</span>
-                            | By <a :href="item.author_website" target="_blank"
-                                    class="mg-5">{{item.author_name}}</a>
-                            | <a :href="item.github_url" target="_blank" class="mg-5">View Details</a>
-                        </td>
-
-                    </tr>
-
-
-
-                    </tbody>
-                </table>
             </div>
+
+
+
         </div>
 
         <div class="row">
@@ -124,4 +139,4 @@
         <!--/content body-->
     </div>
 </template>
-<script src="./ModulesInstalledJs.js"></script>
+<script src="./ThemesInstalledJs.js"></script>

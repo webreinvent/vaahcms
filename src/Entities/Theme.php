@@ -22,6 +22,7 @@ class Theme extends Model {
         'title',
         'name',
         'slug',
+        'thumbnail',
         'github_url',
         'excerpt',
         'description',
