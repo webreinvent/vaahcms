@@ -1,5 +1,7 @@
 <?php
 
+use \WebReinvent\VaahCms\Entities\Theme as Theme;
+
 function vh_get_themes_root_path()
 {
     return config('vaahcms.themes_path');
@@ -7,7 +9,7 @@ function vh_get_themes_root_path()
 //-----------------------------------------------------------------------------------
 function vh_get_theme_path($name)
 {
-    return vh_get_theme_root_path()."\/".$name;
+    return vh_get_themes_root_path()."\/".$name;
 }
 //-----------------------------------------------------------------------------------
 function vh_get_all_themes_paths()
@@ -75,4 +77,75 @@ function vh_get_active_theme_namespace()
         return 'default::';
     }
 }
+//-----------------------------------------------------------------------------------
+function vh_get_theme_view_path($name)
+{
+    $theme_path = base_path("/").vh_get_theme_path($name)."/Resources/views";
+
+    return $theme_path;
+}
+//-----------------------------------------------------------------------------------
+function vh_get_page_templates_path($theme_slug=null)
+{
+    if(is_null($theme_slug))
+    {
+        $theme = \WebReinvent\VaahCms\Entities\Theme::whereNotNull('is_active')->first();
+    } else{
+        $theme = \WebReinvent\VaahCms\Entities\Theme::where('slug', $theme_slug)->first();
+    }
+
+    $path = vh_get_theme_view_path($theme->name)."/page-templates";
+
+    $list = vh_get_all_files($path);
+
+    $result = [];
+
+    foreach ($list as $item)
+    {
+        $result[] = $path."/".$item;
+    }
+
+
+    return $result;
+
+}
+//-----------------------------------------------------------------------------------
+function vh_get_page_templates($theme_slug=null)
+{
+    if(is_null($theme_slug))
+    {
+        $theme = \WebReinvent\VaahCms\Entities\Theme::whereNotNull('is_active')->first();
+    } else{
+        $theme = \WebReinvent\VaahCms\Entities\Theme::where('slug', $theme_slug)->first();
+    }
+
+    $path = vh_get_theme_view_path($theme->name)."/page-templates";
+
+    $list = vh_get_all_files($path);
+
+    return $list;
+
+}
+//-----------------------------------------------------------------------------------
+/*
+ * Values of inputs can be following
+$inputs = [
+
+
+
+]
+ *
+ */
+function vh_field($inputs=[])
+{
+
+    \VaahCms\Modules\Cms\Entities\VhCmsPage::syncPageFields($inputs);
+
+    $value = [];
+
+    return $value;
+}
+//-----------------------------------------------------------------------------------
+//-----------------------------------------------------------------------------------
+//-----------------------------------------------------------------------------------
 //-----------------------------------------------------------------------------------
