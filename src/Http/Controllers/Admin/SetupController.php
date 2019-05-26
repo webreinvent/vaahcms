@@ -142,7 +142,7 @@ class SetupController extends Controller
             ];
             \Artisan::call($command, $params);
 
-            ModuleMigration::syncMigrations();
+
             //run migration
             $command = 'migrate';
             $params = [
@@ -150,7 +150,7 @@ class SetupController extends Controller
             ];
             \Artisan::call($command, $params);
 
-            //Migration::syncMigrations(null, 'vaahcms');
+
 
             //publish vaahcms seeds
             $command = 'vendor:publish';

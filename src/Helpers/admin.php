@@ -86,3 +86,8 @@ function vh_get_admin_file($file_path)
     return vh_get_admin_theme_url()."/".$file_path;
 }
 //-----------------------------------------------------------------------------------
+function vh_get_module_assets_url($module, $file_path)
+{
+    return url("/")."/vaahcms/Modules/".$module."/Resources/".$file_path."?v=".config('vaahcms.version');
+}
+//-----------------------------------------------------------------------------------
