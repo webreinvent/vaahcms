@@ -10,6 +10,10 @@ body{
   z-index: 1000;
 }
 
+.show{
+  display: block !important;
+}
+
 .hide{
   display: none !important;
 }

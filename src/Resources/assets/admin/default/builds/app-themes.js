@@ -81,7 +81,7 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 0);
+/******/ 	return __webpack_require__(__webpack_require__.s = 4);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -74814,18 +74814,6 @@ var VueHelpers = {
 
 /***/ }),
 
-/***/ 0:
-/*!*******************************************************************************!*\
-  !*** multi ./resources/assets/vendor/vaahcms/admin/default/vue/app-themes.js ***!
-  \*******************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__(/*! F:\xampp72\htdocs\packages\resources\assets\vendor\vaahcms\admin\default\vue\app-themes.js */"./resources/assets/vendor/vaahcms/admin/default/vue/app-themes.js");
-
-
-/***/ }),
-
 /***/ 1:
 /*!*********************!*\
   !*** got (ignored) ***!
@@ -74834,6 +74822,18 @@ module.exports = __webpack_require__(/*! F:\xampp72\htdocs\packages\resources\as
 /***/ (function(module, exports) {
 
 /* (ignored) */
+
+/***/ }),
+
+/***/ 4:
+/*!*******************************************************************************!*\
+  !*** multi ./resources/assets/vendor/vaahcms/admin/default/vue/app-themes.js ***!
+  \*******************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__(/*! F:\xampp72\htdocs\packages\resources\assets\vendor\vaahcms\admin\default\vue\app-themes.js */"./resources/assets/vendor/vaahcms/admin/default/vue/app-themes.js");
+
 
 /***/ })
 
