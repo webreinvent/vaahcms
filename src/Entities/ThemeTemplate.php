@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Eloquent\Model;
 use VaahCms\Modules\Cms\Entities\FormField;
+use VaahCms\Modules\Cms\Entities\FormGroup;
 
 
 class ThemeTemplate extends Model {
@@ -51,15 +52,10 @@ class ThemeTemplate extends Model {
     //-------------------------------------------------
     public function formGroups()
     {
-        return $this->morphMany('VaahCms\Modules\Cms\Entities\FormGroup',
+        return $this->morphMany(FormGroup::class,
             'groupable');
     }
-    //-------------------------------------------------
-    public function formFields()
-    {
-        return $this->morphMany('VaahCms\Modules\Cms\Entities\FormField',
-            'fieldable');
-    }
+
     //-------------------------------------------------
 
     //-------------------------------------------------
@@ -72,21 +68,35 @@ class ThemeTemplate extends Model {
             ->where('vh_theme_id', $theme->id)
             ->first();
 
-/*
-        $max_field_order = $template->formFields()->get()->max('order');
-        $max_field_order = $max_field_order+1;
-        $inputs['order'] = $max_field_order;
-
-        */
 
         $inputs['slug'] = str_slug($inputs['name']);
+        $inputs['group_slug'] = $theme->slug."-".$template->slug."-".str_slug($inputs['name']);
 
         unset($inputs['page_template']);
         unset($inputs['theme_slug']);
 
-        $field = FormField::firstOrCreate($inputs);
 
-        $template->formFields()->save($field);
+
+        $group = FormGroup::firstOrCreate(['slug' => $inputs['group_slug']]);
+        $group->fill($inputs);
+        $group->slug = $inputs['group_slug'];
+        $group->is_auto_generated = true;
+        $group->save();
+
+        $template->formGroups()->save($group);
+
+        $field = FormField::where('vh_cms_form_group_id', $template->id)
+            ->where('slug', $inputs['slug'])->first();
+
+        if(!$field)
+        {
+            $field = new FormField();
+        }
+
+        $field->fill($inputs);
+        $field->vh_cms_form_group_id = $template->id;
+        $field->save();
+
 
 
     }
