@@ -85,7 +85,7 @@ function vh_get_theme_view_path($name)
     return $theme_path;
 }
 //-----------------------------------------------------------------------------------
-function vh_get_page_templates_path($theme_slug=null)
+function vh_get_theme_from_slug($theme_slug=null)
 {
     if(is_null($theme_slug))
     {
@@ -93,6 +93,20 @@ function vh_get_page_templates_path($theme_slug=null)
     } else{
         $theme = \WebReinvent\VaahCms\Entities\Theme::where('slug', $theme_slug)->first();
     }
+
+    return $theme;
+}
+//-----------------------------------------------------------------------------------
+function vh_theme_assets_url($file_path, $theme_slug=null)
+{
+    $theme = vh_get_theme_from_slug($theme_slug);
+    return url("/")."/vaahcms/Themes/".$theme->name."/Resources/assets/".$file_path."?v=".config($theme->slug.'.version');
+}
+//-----------------------------------------------------------------------------------
+function vh_get_page_templates_path($theme_slug=null)
+{
+
+    $theme = vh_get_theme_from_slug($theme_slug);
 
     $path = vh_get_theme_view_path($theme->name)."/page-templates";
 
@@ -138,8 +152,7 @@ $inputs = [
  */
 function vh_field($inputs=[])
 {
-
-    \VaahCms\Modules\Cms\Entities\VhCmsPage::syncPageFields($inputs);
+    \VaahCms\Modules\Cms\Entities\Page::syncPageFields($inputs);
 
     $value = [];
 

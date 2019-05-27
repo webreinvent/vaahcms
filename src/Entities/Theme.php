@@ -82,6 +82,11 @@ class Theme extends Model {
         return $this->morphMany('WebReinvent\VaahCms\Entities\Setting', 'settingable');
     }
     //-------------------------------------------------
+    public function formGroups()
+    {
+        return $this->morphMany('WebReinvent\VaahCms\Entities\Migration', 'migrationable');
+    }
+    //-------------------------------------------------
     public static function syncTheme($path)
     {
 
