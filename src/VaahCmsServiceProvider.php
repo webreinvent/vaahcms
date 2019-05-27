@@ -49,8 +49,15 @@ class VaahCmsServiceProvider extends ServiceProvider {
         $this->registerConfigs();
         $this->registerProviders();
         $this->registerAlias();
+        $this->registerHelpers();
+
+    }
 
 
+    /**
+     *
+     */
+    private function registerHelpers() {
 
         //load all the helpers
         foreach (glob(__DIR__.'/Helpers/*.php') as $filename){
@@ -58,7 +65,6 @@ class VaahCmsServiceProvider extends ServiceProvider {
         }
 
     }
-
 
     /**
      * @return array

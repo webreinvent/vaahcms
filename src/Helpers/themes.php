@@ -1,6 +1,5 @@
 <?php
 
-use \WebReinvent\VaahCms\Entities\Theme as Theme;
 
 function vh_get_themes_root_path()
 {
@@ -97,6 +96,18 @@ function vh_get_theme_from_slug($theme_slug=null)
     return $theme;
 }
 //-----------------------------------------------------------------------------------
+function vh_get_theme_id($theme_slug=null)
+{
+    $theme = vh_get_theme_from_slug($theme_slug);
+    return $theme->id;
+}
+//-----------------------------------------------------------------------------------
+function vh_get_theme_slug($theme_slug=null)
+{
+    $theme = vh_get_theme_from_slug($theme_slug);
+    return $theme->slug;
+}
+//-----------------------------------------------------------------------------------
 function vh_theme_assets_url($file_path, $theme_slug=null)
 {
     $theme = vh_get_theme_from_slug($theme_slug);
@@ -152,7 +163,7 @@ $inputs = [
  */
 function vh_field($inputs=[])
 {
-    \VaahCms\Modules\Cms\Entities\Page::syncPageFields($inputs);
+    \WebReinvent\VaahCms\Entities\ThemeTemplate::syncTemplateFields($inputs);
 
     $value = [];
 
