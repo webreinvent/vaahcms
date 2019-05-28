@@ -163,7 +163,7 @@ $inputs = [
  */
 function vh_field($inputs=[])
 {
-    \WebReinvent\VaahCms\Entities\ThemeTemplate::syncTemplateFields($inputs);
+    \WebReinvent\VaahCms\Entities\ThemeTemplate::syncTemplateFieldsViaViewRendering($inputs);
 
     $value = [];
 

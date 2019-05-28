@@ -25,6 +25,13 @@ class ThemeTemplate extends Model {
     ];
 
     //-------------------------------------------------
+    protected $appends  = [
+
+    ];
+
+    //-------------------------------------------------
+
+    //-------------------------------------------------
     public function setSlugAttribute( $value ) {
         $this->attributes['slug'] = str_slug( $value );
     }
@@ -59,7 +66,7 @@ class ThemeTemplate extends Model {
     //-------------------------------------------------
 
     //-------------------------------------------------
-    public static function syncTemplateFields($inputs)
+    public static function syncTemplateFieldsViaViewRendering($inputs)
     {
 
         $theme = Theme::slug($inputs['theme_slug'])->first();
@@ -75,8 +82,6 @@ class ThemeTemplate extends Model {
         unset($inputs['page_template']);
         unset($inputs['theme_slug']);
 
-
-
         $group = FormGroup::firstOrCreate(['slug' => $inputs['group_slug']]);
         $group->fill($inputs);
         $group->slug = $inputs['group_slug'];
@@ -85,7 +90,7 @@ class ThemeTemplate extends Model {
 
         $template->formGroups()->save($group);
 
-        $field = FormField::where('vh_cms_form_group_id', $template->id)
+        $field = FormField::where('vh_cms_form_group_id', $group->id)
             ->where('slug', $inputs['slug'])->first();
 
         if(!$field)
@@ -94,10 +99,8 @@ class ThemeTemplate extends Model {
         }
 
         $field->fill($inputs);
-        $field->vh_cms_form_group_id = $template->id;
+        $field->vh_cms_form_group_id = $group->id;
         $field->save();
-
-
 
     }
     //-------------------------------------------------
@@ -112,7 +115,7 @@ class ThemeTemplate extends Model {
         {
 
             $result[$i]['label'] = $item->name;
-            $result[$i]['code'] = $item->slug;
+            $result[$i]['code'] = $item->id;
 
             $i++;
         }
@@ -121,7 +124,33 @@ class ThemeTemplate extends Model {
 
     }
     //-------------------------------------------------
+    public static function getDefaultPageTemplate()
+    {
+
+        $item = ThemeTemplate::theme(vh_get_theme_id())
+            ->where('type', 'page')
+            ->where('slug', 'default')
+            ->first();
+
+        $result['label'] = $item->name;
+        $result['code'] = $item->id;
+
+        return $result;
+
+    }
     //-------------------------------------------------
+    public static function syncTemplateCustomFields($template_id)
+    {
+        $template = ThemeTemplate::find($template_id);
+
+
+        //sync all the fields types
+        view(vh_get_theme_slug()."::page-templates.".$template->slug)->render();
+
+        $template = ThemeTemplate::find($template->id);
+
+        return $template;
+    }
     //-------------------------------------------------
 
 }
