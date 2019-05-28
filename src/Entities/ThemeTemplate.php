@@ -114,8 +114,8 @@ class ThemeTemplate extends Model {
         foreach ($list as $item)
         {
 
-            $result[$i]['label'] = $item->name;
-            $result[$i]['code'] = $item->id;
+            $result[$i]['name'] = $item->name;
+            $result[$i]['id'] = $item->id;
 
             $i++;
         }
@@ -132,8 +132,8 @@ class ThemeTemplate extends Model {
             ->where('slug', 'default')
             ->first();
 
-        $result['label'] = $item->name;
-        $result['code'] = $item->id;
+        $result['name'] = $item->name;
+        $result['id'] = $item->id;
 
         return $result;
 
