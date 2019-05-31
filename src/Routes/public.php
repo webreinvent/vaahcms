@@ -13,13 +13,14 @@
 
 Route::group(
     [
-        'prefix'     => '/vaah',
-        'namespace'  => 'WebReinvent\VaahCms\Http\Controllers\Public'
+        'prefix'     => '/',
+        'namespace'  => 'WebReinvent\VaahCms\Http\Controllers'
     ],
     function () {
         //------------------------------------------------
         //------------------------------------------------
-
+        Route::get( '/', 'WelcomeController@index' )
+            ->name( 'vh.public.index' );
         //------------------------------------------------
         //------------------------------------------------
         //------------------------------------------------

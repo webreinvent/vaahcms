@@ -31,7 +31,7 @@
     </a>
 
     <ul>
-        <li><a href="{{url()->route("vh.admin.vaahcms.settings")}}">VaahCMS</a></li>
+        <li><a href="{{url()->route("vh.admin.vaahcms.settings")}}">General</a></li>
         @include("vaahcms::admin.default.extend.settings-menu")
     </ul>
 
