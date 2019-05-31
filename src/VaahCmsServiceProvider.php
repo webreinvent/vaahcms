@@ -82,7 +82,7 @@ class VaahCmsServiceProvider extends ServiceProvider {
         //register module service provider
         $this->app->register(ModulesServiceProvider::class);
         $this->app->register(ThemesServiceProvider::class);
-        //$this->app->register(ZanySoft\Zip\ZipServiceProvider::class);
+        $this->app->register(\ZanySoft\Zip\ZipServiceProvider::class);
 
     }
 
@@ -93,7 +93,7 @@ class VaahCmsServiceProvider extends ServiceProvider {
     private function registerAlias() {
 
         $loader = \Illuminate\Foundation\AliasLoader::getInstance();
-        //$loader->alias('Zip', ZanySoft\Zip\ZipFacade::class);
+        $loader->alias('Zip', \ZanySoft\Zip\ZipFacade::class);
 
     }
 
