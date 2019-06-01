@@ -3,6 +3,8 @@
 use Illuminate\Database\Eloquent\Model;
 use VaahCms\Modules\Cms\Entities\FormField;
 use VaahCms\Modules\Cms\Entities\FormGroup;
+use VaahCms\Modules\Cms\Entities\Menu;
+use VaahCms\Modules\Cms\Entities\MenuItem;
 
 
 class ThemeLocation extends Model {
@@ -87,8 +89,111 @@ class ThemeLocation extends Model {
         return $result;
 
     }
-    //-------------------------------------------------
+    //---------------------------------------------------------------------------
+    public static function getLocationData($slug, $html=false, $type='bootstrap')
+    {
+        $data = [];
 
-    //-------------------------------------------------
+        $location = ThemeLocation::theme(vh_get_theme_id())
+            ->slug($slug)
+            ->first();
+
+        if(!$location)
+        {
+            return false;
+        }
+
+        switch ($location->type)
+        {
+            case 'menu':
+
+                $data = ThemeLocation::getMenuLocation($location, $html, $type);
+
+                break;
+
+            //---------------------------------------
+            case 'sidebar':
+
+                break;
+            //---------------------------------------
+            //---------------------------------------
+            //---------------------------------------
+
+        }
+
+
+        return $data;
+    }
+
+    //---------------------------------------------------------------------------
+    public static function getMenuLocation($location, $html, $type)
+    {
+
+        $menus_count = Menu::where('vh_theme_location_id', $location->id)
+            ->count();
+
+        if($menus_count == 0)
+        {
+            return false;
+        }
+
+        $result = [];
+        $i = 0;
+
+
+        $find_menus = Menu::where('vh_theme_location_id', $location->id)
+            ->get();
+
+        foreach ($find_menus as $menu)
+        {
+            $result[$i] = MenuItem::with(['page'])
+                ->where('vh_menu_id', $menu->id)
+                ->get()->toArray();
+
+
+            if($html == true)
+            {
+                $result[$i] = ThemeLocation::getMenuHtml($result[$i], $type);
+            }
+
+            $i++;
+        }
+
+
+        if(count($result) == 1)
+        {
+            return $result[0];
+        } else
+        {
+            return $result;
+        }
+
+    }
+    //---------------------------------------------------------------------------
+    public static function getMenuHtml($array, $type)
+    {
+
+
+        $html = "";
+        switch($type)
+        {
+            case 'bootstrap':
+                $html = get_bootstrap_menu($array, false);
+                break;
+
+            case 'ulli':
+                $html = get_ulli_menu($array, false);
+                break;
+        }
+
+        return $html;
+    }
+
+    //---------------------------------------------------------------------------
+    //---------------------------------------------------------------------------
+    //---------------------------------------------------------------------------
+    //---------------------------------------------------------------------------
+    //---------------------------------------------------------------------------
+    //---------------------------------------------------------------------------
 
 }
