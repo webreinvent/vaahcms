@@ -25,11 +25,9 @@ class VaahCmsServiceProvider extends ServiceProvider {
      */
     public function boot(Router $router) {
 
-        //register middleware
-        $router->aliasMiddleware(
-            'has.admin.access', \WebReinvent\VaahCms\Http\Middleware\HasAdminAccess::class
-        );
 
+
+        $this->registerMiddleware($router);
         $this->registerConfigs();
         $this->registerMigrations();
         $this->registerSeeders();
@@ -52,6 +50,22 @@ class VaahCmsServiceProvider extends ServiceProvider {
         $this->registerHelpers();
 
     }
+
+
+
+    /**
+     *
+     */
+    private function registerMiddleware($router) {
+
+        //register middleware
+        $router->aliasMiddleware('has.admin.access', \WebReinvent\VaahCms\Http\Middleware\HasAdminAccess::class);
+        $router->aliasMiddleware('set.theme.details', \WebReinvent\VaahCms\Http\Middleware\SetThemeDetails::class);
+        $router->aliasMiddleware('set.template.details', \WebReinvent\VaahCms\Http\Middleware\SetTemplateDetails::class);
+
+
+    }
+
 
 
     /**

@@ -138,6 +138,7 @@ class ThemeLocation extends Model {
         }
 
         $result = [];
+        $menu_html = "";
         $i = 0;
 
 
@@ -153,20 +154,27 @@ class ThemeLocation extends Model {
 
             if($html == true)
             {
-                $result[$i] = ThemeLocation::getMenuHtml($result[$i], $type);
+                $menu_html .= ThemeLocation::getMenuHtml($result[$i], $type);
             }
 
             $i++;
         }
 
-
-        if(count($result) == 1)
+        if($html == true)
         {
-            return $result[0];
+            return $menu_html;
         } else
         {
-            return $result;
+            if(count($result) == 1)
+            {
+                return $result[0];
+            } else
+            {
+                return $result;
+            }
         }
+
+
 
     }
     //---------------------------------------------------------------------------
@@ -178,11 +186,15 @@ class ThemeLocation extends Model {
         switch($type)
         {
             case 'bootstrap':
-                $html = get_bootstrap_menu($array, false);
+                $html = '<ul class="navbar-nav">';
+                $html .= get_bootstrap_menu($array, false);
+                $html .= '</ul>';
                 break;
 
             case 'ulli':
-                $html = get_ulli_menu($array, false);
+                $html = '<ul>';
+                $html .= get_ulli_menu($array, false);
+                $html .= '</ul>';
                 break;
         }
 

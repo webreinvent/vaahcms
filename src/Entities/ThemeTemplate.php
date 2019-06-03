@@ -1,6 +1,7 @@
 <?php namespace WebReinvent\VaahCms\Entities;
 
 use Illuminate\Database\Eloquent\Model;
+use VaahCms\Modules\Cms\Entities\Content;
 use VaahCms\Modules\Cms\Entities\FormField;
 use VaahCms\Modules\Cms\Entities\FormGroup;
 
@@ -69,18 +70,17 @@ class ThemeTemplate extends Model {
     public static function syncTemplateFieldsViaViewRendering($inputs)
     {
 
-        $theme = Theme::slug($inputs['theme_slug'])->first();
+        $theme = session('theme');
 
-        $template = ThemeTemplate::slug($inputs['page_template'])
-            ->where('vh_theme_id', $theme->id)
-            ->first();
+        if(!isset($theme))
+        {
+            $theme = Theme::active()->first();
+        }
 
+        $template = session('template');
 
         $inputs['slug'] = str_slug($inputs['name']);
         $inputs['group_slug'] = $theme->slug."-".$template->slug."-".str_slug($inputs['name']);
-
-        unset($inputs['page_template']);
-        unset($inputs['theme_slug']);
 
         $group = FormGroup::firstOrCreate(['slug' => $inputs['group_slug']]);
         $group->fill($inputs);
@@ -102,10 +102,67 @@ class ThemeTemplate extends Model {
         $field->vh_cms_form_group_id = $group->id;
         $field->save();
 
+        return $field;
+
+    }
+    //-------------------------------------------------
+    public static function getPageFieldContent($field)
+    {
+        $page = session('page')->toArray();
+
+        $content = Content::where('contentable_type', Page::class)
+            ->where('contentable_id', $page['id'])
+            ->where('vh_cms_form_group_id', $field->vh_cms_form_group_id)
+            ->where('vh_cms_form_field_id', $field->id)
+            ->first();
+
+        if ($content)
+        {
+            return $content->content;
+        }
+
+
+        return null;
+
+    }
+    //-------------------------------------------------
+    public static function syncPageTemplates()
+    {
+        $get_page_templates = vh_get_page_templates();
+
+        if(count($get_page_templates) > 0)
+        {
+            foreach ($get_page_templates as $template)
+            {
+                $template = str_replace(".blade.php", "", $template);
+
+                $slug = str_slug($template);
+
+                $template_exist = ThemeTemplate::theme(vh_get_theme_id())
+                    ->slug($slug)
+                    ->first();
+
+                if(!$template_exist)
+                {
+
+                    $new_template = new ThemeTemplate();
+                    $new_template->name = slug_to_str($slug);
+                    $new_template->type = 'page';
+                    $new_template->slug = slug_to_str($slug);
+                    $new_template->vh_theme_id = vh_get_theme_id();
+                    $new_template->save();
+
+                }
+
+            }
+        }
+
     }
     //-------------------------------------------------
     public static function getAssetsList()
     {
+
+        ThemeTemplate::syncPageTemplates();
 
         $list = ThemeTemplate::theme(vh_get_theme_id())->get();
 
@@ -143,6 +200,7 @@ class ThemeTemplate extends Model {
     {
         $template = ThemeTemplate::find($template_id);
 
+        \Session::put('template', $template);
 
         //sync all the fields types
         view(vh_get_theme_slug()."::page-templates.".$template->slug)->render();

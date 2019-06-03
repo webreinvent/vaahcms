@@ -30,9 +30,7 @@ class WelcomeController extends Controller
 
         $data = [];
 
-        $page = Page::where('slug', $slug)
-            ->with(['template'])
-            ->firstOrFail();
+        $page = $request->page;
 
         $template_name = 'default';
 

@@ -161,13 +161,16 @@ $inputs = [
 ]
  *
  */
-function vh_field($inputs=[])
+function vh_field($name, $type, $is_repeatable = false)
 {
-    \WebReinvent\VaahCms\Entities\ThemeTemplate::syncTemplateFieldsViaViewRendering($inputs);
+    $inputs = [
+        'name' => $name,
+        'type' => $type,
+        'is_repeatable' => $is_repeatable
+    ];
 
-    $value = [];
-
-    return $value;
+    $content = \WebReinvent\VaahCms\Entities\ThemeTemplate::syncTemplateFieldsViaViewRendering($inputs);
+    return $content;
 }
 //-----------------------------------------------------------------------------------
 function vh_location($location_slug, $html=false, $type='bootstrap')

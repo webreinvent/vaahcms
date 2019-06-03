@@ -9,6 +9,7 @@ $settings =  [
     'app_slug' => 'vaahcms',
     'admin_theme' => 'default',
     'public_theme' => 'default',
+    'public_theme_template' => 'default',
     'modules_path' => 'vaahcms/Modules',
     'themes_path' => 'vaahcms/Themes',
     'plugins_path' => 'vaahcms/Plugins',
