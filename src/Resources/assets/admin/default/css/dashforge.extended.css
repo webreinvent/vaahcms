@@ -84,10 +84,31 @@ body{
 
 .table-form{
     border-bottom: 1px solid rgba(72, 94, 144, 0.16);
+    line-height: 1.8rem;
 }
+
+.table-form-dashed, .table-form-dashed tr, .table-form-dashed td, .table-form-dashed th{
+
+    border-top: 1px dashed rgba(72, 94, 144, 0.16);
+    border-bottom: 1px dashed rgba(72, 94, 144, 0.16);
+    border-left: 0px;
+    border-right: 0px;
+    border-collapse: collapse;
+}
+
 .table-form tr td{
 
-    padding: 0px;
+    padding: 0px 0px 0px 8px;
+    line-height: 1.8rem;
+
+
+}
+
+.table-form tr td span{
+
+    padding: 0px 0px 0px 8px;
+    line-height: 1.8rem;
+
 
 }
 
@@ -96,7 +117,11 @@ body{
 
     border:none;
     border-radius: 0px;
-    height: 1.8rem;
-    line-height: 1rem;
+    height: 1.7rem;
+    line-height: 0.8rem;
+    padding-left: 8px;
+    font-size: 0.775rem;
 
 }
+
+
