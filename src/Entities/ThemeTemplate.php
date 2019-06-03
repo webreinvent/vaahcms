@@ -4,6 +4,7 @@ use Illuminate\Database\Eloquent\Model;
 use VaahCms\Modules\Cms\Entities\Content;
 use VaahCms\Modules\Cms\Entities\FormField;
 use VaahCms\Modules\Cms\Entities\FormGroup;
+use VaahCms\Modules\Cms\Entities\Page;
 
 
 class ThemeTemplate extends Model {
@@ -102,13 +103,16 @@ class ThemeTemplate extends Model {
         $field->vh_cms_form_group_id = $group->id;
         $field->save();
 
-        return $field;
+        $content  = ThemeTemplate::getPageFieldContent($field);
+
+        return $content;
 
     }
     //-------------------------------------------------
     public static function getPageFieldContent($field)
     {
         $page = session('page')->toArray();
+
 
         $content = Content::where('contentable_type', Page::class)
             ->where('contentable_id', $page['id'])
