@@ -189,3 +189,18 @@ Route::group(
         //------------------------------------------------
         //------------------------------------------------
     });
+
+
+Route::group(
+    [
+        'prefix'     => 'admin/registrations',
+        'middleware' => ['web','has.admin.access'],
+        'namespace'  => 'WebReinvent\VaahCms\Http\Controllers\Admin'
+    ],
+    function () {
+        //------------------------------------------------
+        Route::get( '/', 'RegistrationController@index' )
+            ->name( 'vh.admin.registrations' );
+        //------------------------------------------------
+        //------------------------------------------------
+    });

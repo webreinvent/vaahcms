@@ -4,6 +4,7 @@
     </a>
 
     <ul>
+        <li><a href="{{route('vh.admin.registrations')}}">Registration</a></li>
         <li><a href="page-profile-view.html">Users</a></li>
         <li><a href="page-profile-view.html">Roles</a></li>
         <li><a href="page-connections.html">Permissions</a></li>
@@ -17,10 +18,10 @@
     </a>
 
     <ul>
-        <li><a href="{{url()->route('vh.admin.modules')}}">Modules (3)</a></li>
+        <li><a href="{{route('vh.admin.modules')}}">Modules (3)</a></li>
         <li><a href="page-profile-view.html">Plugins  (4)</a></li>
         <li><a href="page-profile-view.html">Widgets</a></li>
-        <li><a href="{{url()->route('vh.admin.themes')}}">Themes</a></li>
+        <li><a href="{{route('vh.admin.themes')}}">Themes</a></li>
     </ul>
 
 </li>
@@ -31,7 +32,7 @@
     </a>
 
     <ul>
-        <li><a href="{{url()->route("vh.admin.vaahcms.settings")}}">General</a></li>
+        <li><a href="{{route("vh.admin.vaahcms.settings")}}">General</a></li>
         @include("vaahcms::admin.default.extend.settings-menu")
     </ul>
 
