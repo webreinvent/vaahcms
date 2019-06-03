@@ -1,6 +1,7 @@
 {
     "/builds/app-dashboard.js": "/builds/app-dashboard.js",
     "/builds/app-modules.js": "/builds/app-modules.js",
+    "/builds/app-registrations.js": "/builds/app-registrations.js",
     "/builds/app-setup.js": "/builds/app-setup.js",
     "/builds/app-themes.js": "/builds/app-themes.js"
 }

@@ -29,3 +29,74 @@ body{
 .bg-success-9{
   background-color: #e5f9ee;
 }
+
+
+.admin-menus ul, .admin-menus li{
+  list-style: none;
+}
+
+.admin-menus>div>ul{
+    padding: 0px;
+    margin: 0px;
+}
+.admin-menus>div>ul>li>div ul{
+    padding: 0px;
+    margin: 0px 0px 0px 10px;
+}
+
+.table-search .form-control{
+
+    border:none;
+    border-radius: 0px;
+    height: 1.8rem;
+    line-height: 1.8rem;
+
+}
+
+.table-search .btn{
+
+    border:none;
+    border-radius: 0px;
+    height: 1.5rem;
+    line-height: 1.5rem;
+
+}
+
+
+.btn-card{
+
+    padding: 0px 8px 0px 8px;
+    color: #9e9e9e;
+
+}
+
+.btn-card i{
+
+    font-weight: 600;
+    cursor: pointer !important;
+
+
+}
+
+.btn-card:hover{
+    color: #555;
+}
+
+.table-form{
+    border-bottom: 1px solid rgba(72, 94, 144, 0.16);
+}
+.table-form tr td{
+
+    padding: 0px;
+
+}
+
+
+.table-form .form-control, .table-form .custom-select{
+
+    border:none;
+    border-radius: 0px;
+    height: 1.8rem;
+    line-height: 1rem;
+
+}
