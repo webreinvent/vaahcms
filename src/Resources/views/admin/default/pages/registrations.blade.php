@@ -179,6 +179,12 @@
                             <div class="align-self-center tx-15 flex-grow-1"><strong>Pradeep Kumar</strong></div>
                             <div class=" mg-l-auto btn-group btn-group-xs">
 
+
+                                <button class="btn btn-card "
+                                        :to="{ path: '/add'}">
+                                    <i class="fas fa-pencil-alt"></i>
+                                </button>
+
                                 <button class="btn btn-card "
                                         :to="{ path: '/add'}">
                                     <i class="fas fa-ellipsis-h"></i>
@@ -197,17 +203,48 @@
 
                     <div class="card-body">
 
+                        <table class="table table-striped table-sm table-condensed">
 
-                        <ul>
-                            <li>
-                                <label>Test</label>
-                                <div>
+                            <tr>
+                                <th width="150" class="text-right">First Name</th>
+                                <td>Pradeep</td>
+                            </tr>
 
-                                </div>
-                            </li>
-                        </ul>
+                            <tr>
+                                <th class="text-right">Last Name</th>
+                                <td>Pradeep</td>
+                            </tr>
+
+                            <tr>
+                                <th class="text-right">Registered At</th>
+                                <td>25 Dec, 2019</td>
+                            </tr>
+
+                        </table>
+
+                        <table class="table table-striped table-sm table-condensed table-form">
+
+                            <tr>
+                                <th width="150" class="text-right">First Name</th>
+                                <td>
+                                    <input class="form-control" placeholder="First Name" />
+                                </td>
+                            </tr>
 
 
+                            <tr>
+                                <th class="text-right">Registered At</th>
+                                <td>
+
+                                    <select class="custom-select">
+                                        <option>Jan</option>
+                                        <option>Feb</option>
+                                    </select>
+
+                                </td>
+                            </tr>
+
+                        </table>
 
 
                     </div>
