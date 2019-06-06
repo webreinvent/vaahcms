@@ -9,8 +9,9 @@
                     <div class="d-flex">
                         <div class="align-self-center tx-18 flex-grow-1"><strong>Registrations</strong></div>
                         <div class=" mg-l-auto btn-group btn-group-xs">
+
                             <router-link class="btn btn-xs btn-light btn-uppercase"
-                                         :to="{ path: '/view'}">
+                                         :to="{ path: '/add'}">
                                 <i class="fas fa-plus"></i> Add New
                             </router-link>
 

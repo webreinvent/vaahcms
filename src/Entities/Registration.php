@@ -5,19 +5,21 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Carbon;
+use WebReinvent\VaahCms\Traits\CrudObservantTrait;
+use WebReinvent\VaahCms\Traits\UidObservantTrait;
 
 class Registration extends Model
 {
-
     use Notifiable;
-
     use SoftDeletes;
+    use CrudObservantTrait;
+    use UidObservantTrait;
+
     //-------------------------------------------------
     protected $table = 'vh_registrations';
     //-------------------------------------------------
     protected $dates = [
         "activation_code_sent_at",  "invited_at", "user_created_at",
-
         "created_at","updated_at","deleted_at"
     ];
     //-------------------------------------------------
@@ -46,11 +48,117 @@ class Registration extends Model
     ];
 
     //-------------------------------------------------
+    public function getTableColumns() {
+        return $this->getConnection()->getSchemaBuilder()
+            ->getColumnListing($this->getTable());
+    }
+    //-------------------------------------------------
+    public function getFormFillableColumns()
+    {
+        $list = [
+            'email', 'username', 'password', 'display_name',
+            'title', 'first_name', 'middle_name', 'last_name',
+            'gender', 'country_calling_code', 'phone', 'timezone',
+            'alternate_email', 'avatar_url', 'birth', 'country',
+            'status', 'invited_by',
+            'user_id',
+            ];
 
+        return $list;
+    }
+    //-------------------------------------------------
+    public function getFormColumns($auto_fill=false)
+    {
+        $columns = $this->getFormFillableColumns();
+
+        $result = [];
+        $i = 0;
+
+        foreach ($columns as $column)
+        {
+            $result[$i] = $this->getFormElement($column, $auto_fill);
+            $i++;
+        }
+
+        return $result;
+    }
+    //-------------------------------------------------
+    public function getFormElement($column, $auto_fill)
+    {
+
+        $result['name'] = $column;
+        $result['label'] = slug_to_str($column);
+        $result['column_type'] = $this->getConnection()->getSchemaBuilder()
+            ->getColumnType($this->getTable(), $column);
+
+
+        switch($column)
+        {
+            //------------------------------------------------
+            case 'title':
+                $result['type'] = 'select';
+                $result['inputs'] = vh_name_titles();
+                break;
+            //------------------------------------------------
+            case 'gender':
+                $result['type'] = 'select';
+                $result['inputs'] = vh_genders();
+                break;
+            //------------------------------------------------
+            case 'country_calling_code':
+                $result['type'] = 'select';
+                $result['inputs'] = vh_get_countries_calling_codes();
+                break;
+            //------------------------------------------------
+            case 'timezone':
+                $result['type'] = 'select';
+                $result['inputs'] = vh_get_timezones();
+                break;
+            //------------------------------------------------
+            case 'birth':
+                $result['type'] = 'date';
+                $result['label'] = 'Birth Date';
+                break;
+            //------------------------------------------------
+            case 'status':
+                $result['type'] = 'select';
+                $result['inputs'] = vh_registration_statuses();
+                break;
+            //------------------------------------------------
+            case 'country':
+                $result['type'] = 'select';
+                $result['inputs'] = vh_get_country_list_with_slugs();
+                break;
+            //------------------------------------------------
+            case 'invited_by':
+                $result['type'] = 'select_with_ids';
+                $result['inputs'] = User::getUsersForAssets();
+                $result['label'] = "Invited By";
+                break;
+            //------------------------------------------------
+            case 'user_id':
+                $result['type'] = 'select_with_ids';
+                $result['inputs'] = User::getUsersForAssets();
+                $result['label'] = "Registration belongs to:";
+                break;
+            //------------------------------------------------
+            default:
+                $result['type'] = 'text';
+                break;
+            //------------------------------------------------
+        }
+
+        return $result;
+    }
     //-------------------------------------------------
     public function setFirstNameAttribute($value)
     {
         $this->attributes['first_name'] = ucfirst($value);
+    }
+    //-------------------------------------------------
+    public function setMiddleNameAttribute($value)
+    {
+        $this->attributes['middle_name'] = ucfirst($value);
     }
     //-------------------------------------------------
     public function setLastNameAttribute($value)

@@ -113,7 +113,7 @@ body{
 }
 
 
-.table-form .form-control, .table-form .custom-select{
+.table-form .form-control, .table-form .custom-select, .table-form .vdp-datepicker input{
 
     border:none;
     border-radius: 0px;
@@ -124,4 +124,13 @@ body{
 
 }
 
+.table-form .vdp-datepicker .form-control:disabled, .form-control[readonly]
+{
+    background-color: #fff !important;;
+}
 
+.table-form .vdp-datepicker__calendar .cell
+{
+    height: 30px;
+    line-height: 30px;
+}

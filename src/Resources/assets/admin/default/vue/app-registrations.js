@@ -7,6 +7,7 @@ window.Vue = require('vue');
 import VueRouter from 'vue-router';
 import VueResource from 'vue-resource';
 import moment from 'moment'
+
 import VueHelpers from './helpers/VueHelpers';
 //---------/Package imports
 
@@ -25,6 +26,7 @@ Vue.use(VueHelpers);
 
 //---------Comp Imports
 import RegistrationList from './components/RegistrationList';
+import RegistrationAdd from './components/RegistrationAdd';
 import RegistrationViewEdit from './components/RegistrationViewEdit';
 //---------/Comp Imports
 
@@ -33,6 +35,9 @@ const router = new VueRouter({
     base: '/',
     linkActiveClass: "active",
     routes: [
+        {   path: '/add',
+            component: RegistrationAdd
+        },
         {   path: '/view',
             component: RegistrationViewEdit
         },
@@ -49,9 +54,7 @@ var debug = $('#debug').attr('content');
 const app = new Vue({
     el: '#vh-app-registrations',
     components:{
-
         'registrations': RegistrationList
-
     },
     router,
     data: {
@@ -64,11 +67,24 @@ const app = new Vue({
     },
 
     mounted() {
-
+        this.getAssets();
     },
     methods:{
 
         //-----------------------------------------------------------
+        getAssets: function () {
+            var url = this.urls.current+"/assets";
+            var params = {};
+            this.$helpers.ajax(url, params, this.getAssetsAfter);
+        },
+        //---------------------------------------------------------------------
+        getAssetsAfter: function (data) {
+
+            this.assets = data;
+
+            this.$helpers.stopNprogress();
+
+        },
 
         //-----------------------------------------------------------
 

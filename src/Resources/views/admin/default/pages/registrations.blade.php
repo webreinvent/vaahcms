@@ -21,7 +21,7 @@
 
             <registrations></registrations>
 
-            <router-view :urls="urls"></router-view>
+            <router-view :urls="urls" :assets="assets"></router-view>
 
 
         </div>

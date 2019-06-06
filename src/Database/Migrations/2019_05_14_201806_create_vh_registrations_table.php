@@ -35,7 +35,7 @@ class CreateVhRegistrationsTable extends Migration
             $table->string('country')->nullable();
             $table->string('country_code')->nullable();
 
-            $table->integer('status')->nullable();
+            $table->string('status')->nullable();
 
             $table->string('activation_code')->nullable();
             $table->dateTime('activation_code_sent_at')->nullable();

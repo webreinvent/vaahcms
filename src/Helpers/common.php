@@ -35,7 +35,9 @@ function vh_get_user_statuses()
 //-------------------------------------------------------------
 function slug_to_str($slug)
 {
-    $str = ucwords(str_replace('-', ' ', $slug));
+    $slug = str_replace('-', ' ', $slug);
+    $slug = str_replace('_', ' ', $slug);
+    $str = ucwords($slug);
 
     return $str;
 }

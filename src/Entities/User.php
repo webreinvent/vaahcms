@@ -50,7 +50,7 @@ class User extends Authenticatable
 
     //-------------------------------------------------
     protected $appends  = [
-        'thumbnail',
+        'thumbnail', 'name'
     ];
 
     //-------------------------------------------------
@@ -64,6 +64,10 @@ class User extends Authenticatable
         $grav_url = vh_get_avatar_by_email($this->email);
 
         return $grav_url;
+    }
+    //-------------------------------------------------
+    public function getNameAttribute() {
+        return $this->first_name." ".$this->middle_name." ".$this->last_name;
     }
     //-------------------------------------------------
     public function setFirstNameAttribute($value)
@@ -456,6 +460,16 @@ class User extends Authenticatable
         Notification::send($admins, new NotifyAdmin($notification));
     }
     //-------------------------------------------------
+    public static function getUsersForAssets()
+    {
+
+        $list = User::active()
+            ->select('id', 'first_name', 'middle_name', 'last_name')
+            ->get();
+
+        return $list;
+
+    }
     //-------------------------------------------------
     //-------------------------------------------------
     //-------------------------------------------------

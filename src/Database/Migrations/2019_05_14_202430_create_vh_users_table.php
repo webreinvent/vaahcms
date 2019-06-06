@@ -41,7 +41,7 @@ class CreateVhUsersTable extends Migration
             $table->ipAddress('api_token_used_ip')->nullable();
             $table->boolean('is_active')->nullable();
             $table->dateTime('activated_at')->nullable();
-            $table->integer('status')->nullable();
+            $table->string('status')->nullable();
             $table->string('affiliate_code')->nullable();
             $table->dateTime('affiliate_code_used_at')->nullable();
 
