@@ -9,6 +9,7 @@ import TForm from './reusable/TableFormGenerator';
         data()
         {
             let obj = {
+                new_item: null,
             };
 
             return obj;
@@ -29,9 +30,14 @@ import TForm from './reusable/TableFormGenerator';
         },
         methods: {
             //---------------------------------------------------------------------
-            store: function (new_item) {
+            updateNewItem: function (item) {
+                this.new_item = item;
+                this.$helpers.console(this.new_item, 'this.new_item-->updated');
+            },
+            //---------------------------------------------------------------------
+            store: function () {
                 var url = this.urls.current+"/store";
-                var params = new_item;
+                var params = this.new_item;
                 this.$helpers.console(params, '-->');
                 this.$helpers.ajax(url, params, this.storeAfter);
             },

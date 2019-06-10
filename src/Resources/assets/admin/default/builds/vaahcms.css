@@ -41742,3 +41742,11 @@ body{
     height: 30px;
     line-height: 30px;
 }
+
+.table-form .tr__disabled,
+.table-form .tr__disabled input,
+.table-form .tr__disabled select,
+.table-form .tr__disabled textarea
+{
+    background-color: #cdcece !important;
+}

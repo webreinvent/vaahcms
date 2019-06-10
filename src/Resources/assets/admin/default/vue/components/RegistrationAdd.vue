@@ -20,7 +20,22 @@
 
                 </div>
 
-                <t-form :columns="assets.columns" @storeItem="store" ></t-form>
+                <div class="card-body" >
+
+                    <table class="table table-striped table-sm table-condensed table-form table-form-dashed">
+                        <tbody>
+
+                        <t-form :columns="assets.columns" @emittedItem="updateNewItem" ></t-form>
+
+                        </tbody>
+                    </table>
+
+                </div>
+
+                <div class="card-footer">
+                    <button class="btn btn-xs btn-primary" @click="store">Save</button>
+                </div>
+
 
             </div>
 

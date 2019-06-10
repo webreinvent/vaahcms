@@ -19,7 +19,7 @@ class Registration extends Model
     protected $table = 'vh_registrations';
     //-------------------------------------------------
     protected $dates = [
-        "activation_code_sent_at",  "invited_at", "user_created_at",
+        "activation_code_sent_at", "activated_at",  "invited_at", "user_created_at",
         "created_at","updated_at","deleted_at"
     ];
     //-------------------------------------------------
@@ -87,6 +87,8 @@ class Registration extends Model
 
         $result['name'] = $column;
         $result['value'] = $value;
+        $result['tr_class'] = "";
+        $result['disabled'] = false;
         $result['label'] = slug_to_str($column);
         $result['column_type'] = $this->getConnection()->getSchemaBuilder()
             ->getColumnType($this->getTable(), $column);
@@ -94,6 +96,34 @@ class Registration extends Model
 
         switch($column)
         {
+            //------------------------------------------------
+            case 'id':
+            case 'uid':
+                $result['type'] = 'text';
+                $result['disabled'] = true;
+                $result['tr_class'] = 'tr__disabled';
+                break;
+            //------------------------------------------------
+            case 'created_by':
+                $result['type'] = 'select_with_ids';
+                $result['inputs'] = User::getUsersForAssets();
+                break;
+            //------------------------------------------------
+            case 'updated_by':
+            case 'deleted_by':
+            case 'meta':
+            case 'created_ip':
+            case 'activated_ip':
+            case 'activation_code_sent_at':
+            case 'user_created_at':
+            case 'deleted_at':
+            case 'updated_at':
+            case 'created_at':
+            case 'invited_at':
+            case 'activated_at':
+            case 'activation_code':
+                $result['type'] = 'hidden';
+                break;
             //------------------------------------------------
             case 'title':
                 $result['type'] = 'select';
@@ -174,8 +204,6 @@ class Registration extends Model
     {
         $this->attributes['email'] = strtolower($value);
     }
-    //-------------------------------------------------
-
     //-------------------------------------------------
 
     //-------------------------------------------------
@@ -425,12 +453,25 @@ class Registration extends Model
     {
         $record = $this->toArray();
 
-        $result = [];
+        $columns = $this->getFormFillableColumns();
 
-        foreach ($record as $key => $value)
+        $visible = ['id', 'uid'];
+
+        $columns = array_merge($visible, $columns);
+
+        $result = [];
+        $i = 0;
+
+        foreach ($columns as $column)
         {
-            $result[] = $this->getFormElement($key, $value);
+            if(isset($record[$column]))
+            {
+                $result[$i] = $this->getFormElement($column, $record[$column]);
+                $i++;
+            }
+
         }
+
 
         return $result;
     }

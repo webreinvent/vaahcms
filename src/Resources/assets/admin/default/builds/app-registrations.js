@@ -1837,23 +1837,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 //https://www.npmjs.com/package/vuejs-datepicker
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -1880,6 +1863,11 @@ __webpack_require__.r(__webpack_exports__);
   created: function created() {
     this.mapValues();
   },
+  watch: {
+    new_item: function new_item() {
+      this.emitItem();
+    }
+  },
   methods: {
     //---------------------------------------------------------------------
     mapValues: function mapValues() {
@@ -1897,17 +1885,73 @@ __webpack_require__.r(__webpack_exports__);
 
       columns.map(function (item, key) {
         console.log(item);
-        self.new_item[item.name] = item.value;
+
+        if (item.value) {
+          self.new_item[item.name] = item.value;
+        }
       });
     },
     //---------------------------------------------------------------------
-    emitStore: function emitStore() {
-      this.$emit('storeItem', this.new_item);
+    emitItem: function emitItem() {
+      this.$emit('emittedItem', this.new_item);
     } //---------------------------------------------------------------------
     //---------------------------------------------------------------------
     //---------------------------------------------------------------------
     //---------------------------------------------------------------------
 
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/assets/vendor/vaahcms/admin/default/vue/components/reusable/TableViewGenerator.vue?vue&type=script&lang=js&":
+/*!***************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/assets/vendor/vaahcms/admin/default/vue/components/reusable/TableViewGenerator.vue?vue&type=script&lang=js& ***!
+  \***************************************************************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: "TableViewGenerator",
+  props: ['columns'],
+  components: {},
+  data: function data() {
+    var obj = {
+      new_item: {}
+    };
+    return obj;
+  },
+  created: function created() {},
+  watch: {},
+  methods: {//---------------------------------------------------------------------
+    //---------------------------------------------------------------------
+    //---------------------------------------------------------------------
+    //---------------------------------------------------------------------
+    //---------------------------------------------------------------------
   }
 });
 
@@ -1930,7 +1974,9 @@ __webpack_require__.r(__webpack_exports__);
     't-form': _reusable_TableFormGenerator__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
   data: function data() {
-    var obj = {};
+    var obj = {
+      new_item: null
+    };
     return obj;
   },
   watch: {},
@@ -1943,9 +1989,14 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     //---------------------------------------------------------------------
-    store: function store(new_item) {
+    updateNewItem: function updateNewItem(item) {
+      this.new_item = item;
+      this.$helpers.console(this.new_item, 'this.new_item-->updated');
+    },
+    //---------------------------------------------------------------------
+    store: function store() {
       var url = this.urls.current + "/store";
-      var params = new_item;
+      var params = this.new_item;
       this.$helpers.console(params, '-->');
       this.$helpers.ajax(url, params, this.storeAfter);
     },
@@ -2142,17 +2193,21 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _reusable_TableFormGenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./reusable/TableFormGenerator */ "./resources/assets/vendor/vaahcms/admin/default/vue/components/reusable/TableFormGenerator.vue");
+/* harmony import */ var _reusable_TableViewGenerator__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./reusable/TableViewGenerator */ "./resources/assets/vendor/vaahcms/admin/default/vue/components/reusable/TableViewGenerator.vue");
+
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['urls', 'id'],
   components: {
-    't-form': _reusable_TableFormGenerator__WEBPACK_IMPORTED_MODULE_0__["default"]
+    't-form': _reusable_TableFormGenerator__WEBPACK_IMPORTED_MODULE_0__["default"],
+    't-view': _reusable_TableViewGenerator__WEBPACK_IMPORTED_MODULE_1__["default"]
   },
   data: function data() {
     var obj = {
       assets: null,
       columns: null,
-      edit: false
+      edit: false,
+      item: null
     };
     return obj;
   },
@@ -2167,6 +2222,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     //---------------------------------------------------------------------
+    //---------------------------------------------------------------------
     getDetails: function getDetails() {
       var url = this.urls.current + "/view/" + this.$props.id;
       console.log(url, 'url-->');
@@ -2179,9 +2235,21 @@ __webpack_require__.r(__webpack_exports__);
       this.$helpers.stopNprogress();
     },
     //---------------------------------------------------------------------
+    updateItem: function updateItem(item) {
+      this.item = item;
+    },
+    //---------------------------------------------------------------------
+    toggleEdit: function toggleEdit() {
+      if (this.edit === true) {
+        this.edit = false;
+      } else {
+        this.edit = true;
+      }
+    },
+    //---------------------------------------------------------------------
     store: function store() {
       var url = this.urls.current + "/assets";
-      var params = {};
+      var params = this.item;
       this.$helpers.ajax(url, params, this.storeAfter);
     },
     //---------------------------------------------------------------------
@@ -56963,39 +57031,62 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "col-sm" }, [
     _vm.assets
-      ? _c(
-          "div",
-          { staticClass: "card" },
-          [
-            _c("div", { staticClass: "card-header" }, [
-              _c("div", { staticClass: "d-flex" }, [
-                _vm._m(0),
-                _vm._v(" "),
+      ? _c("div", { staticClass: "card" }, [
+          _c("div", { staticClass: "card-header" }, [
+            _c("div", { staticClass: "d-flex" }, [
+              _vm._m(0),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: " mg-l-auto btn-group btn-group-xs" },
+                [
+                  _c(
+                    "router-link",
+                    {
+                      staticClass: "btn btn-card ",
+                      attrs: { to: { path: "/" } }
+                    },
+                    [_c("i", { staticClass: "fas fa-times" })]
+                  )
+                ],
+                1
+              )
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "card-body" }, [
+            _c(
+              "table",
+              {
+                staticClass:
+                  "table table-striped table-sm table-condensed table-form table-form-dashed"
+              },
+              [
                 _c(
-                  "div",
-                  { staticClass: " mg-l-auto btn-group btn-group-xs" },
+                  "tbody",
                   [
-                    _c(
-                      "router-link",
-                      {
-                        staticClass: "btn btn-card ",
-                        attrs: { to: { path: "/" } }
-                      },
-                      [_c("i", { staticClass: "fas fa-times" })]
-                    )
+                    _c("t-form", {
+                      attrs: { columns: _vm.assets.columns },
+                      on: { emittedItem: _vm.updateNewItem }
+                    })
                   ],
                   1
                 )
-              ])
-            ]),
-            _vm._v(" "),
-            _c("t-form", {
-              attrs: { columns: _vm.assets.columns },
-              on: { storeItem: _vm.store }
-            })
-          ],
-          1
-        )
+              ]
+            )
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "card-footer" }, [
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-xs btn-primary",
+                on: { click: _vm.store }
+              },
+              [_vm._v("Save")]
+            )
+          ])
+        ])
       : _vm._e()
   ])
 }
@@ -57274,72 +57365,74 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "col-sm" }, [
-    _c(
-      "div",
-      { staticClass: "card" },
-      [
-        _c("div", { staticClass: "card-header" }, [
-          _c("div", { staticClass: "d-flex" }, [
-            _vm._m(0),
-            _vm._v(" "),
-            _c(
-              "div",
-              { staticClass: " mg-l-auto btn-group btn-group-xs" },
+    _c("div", { staticClass: "card" }, [
+      _c("div", { staticClass: "card-header" }, [
+        _c("div", { staticClass: "d-flex" }, [
+          _vm._m(0),
+          _vm._v(" "),
+          _c(
+            "div",
+            { staticClass: " mg-l-auto btn-group btn-group-xs" },
+            [
+              _c(
+                "button",
+                { staticClass: "btn btn-card ", on: { click: _vm.toggleEdit } },
+                [_c("i", { staticClass: "fas fa-pencil-alt" })]
+              ),
+              _vm._v(" "),
+              _c(
+                "router-link",
+                {
+                  staticClass: "btn btn-card ",
+                  attrs: { to: { path: "/add" } }
+                },
+                [_c("i", { staticClass: "fas fa-ellipsis-h" })]
+              ),
+              _vm._v(" "),
+              _c(
+                "router-link",
+                { staticClass: "btn btn-card ", attrs: { to: { path: "/" } } },
+                [_c("i", { staticClass: "fas fa-times" })]
+              )
+            ],
+            1
+          )
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "card-body" }, [
+        _vm.edit == false
+          ? _c(
+              "table",
+              {
+                staticClass:
+                  "table table-striped table-sm table-condensed table-form"
+              },
               [
-                _vm._m(1),
-                _vm._v(" "),
-                _c(
-                  "router-link",
-                  {
-                    staticClass: "btn btn-card ",
-                    attrs: { to: { path: "/add" } }
-                  },
-                  [_c("i", { staticClass: "fas fa-ellipsis-h" })]
-                ),
-                _vm._v(" "),
-                _c(
-                  "router-link",
-                  {
-                    staticClass: "btn btn-card ",
-                    attrs: { to: { path: "/" } }
-                  },
-                  [_c("i", { staticClass: "fas fa-times" })]
-                )
+                _vm.columns
+                  ? _c("t-view", { attrs: { columns: _vm.columns } })
+                  : _vm._e()
               ],
               1
             )
-          ])
-        ]),
-        _vm._v(" "),
-        _vm.columns
-          ? _c("t-form", {
-              attrs: { columns: _vm.columns },
-              on: { storeItem: _vm.store }
-            })
-          : _vm._e(),
-        _vm._v(" "),
-        _c("div", { staticClass: "card-body" }, [
-          _vm.edit == false
-            ? _c(
-                "table",
-                {
-                  staticClass:
-                    "table table-striped table-sm table-condensed table-form"
-                },
-                [_vm._m(2)]
-              )
-            : _c(
-                "table",
-                {
-                  staticClass:
-                    "table table-striped table-sm table-condensed table-form table-form-dashed"
-                },
-                [_vm._m(3)]
-              )
-        ])
-      ],
-      1
-    )
+          : _c(
+              "table",
+              {
+                staticClass:
+                  "table table-striped table-sm table-condensed table-form table-form-dashed"
+              },
+              [
+                _vm.columns
+                  ? _c("t-form", {
+                      attrs: { columns: _vm.columns },
+                      on: { emittedItem: _vm.updateItem }
+                    })
+                  : _vm._e()
+              ],
+              1
+            )
+      ])
+    ])
   ])
 }
 var staticRenderFns = [
@@ -57349,84 +57442,6 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "align-self-center tx-15 flex-grow-1" }, [
       _c("strong", [_vm._v("Pradeep Kumar")])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("button", { staticClass: "btn btn-card " }, [
-      _c("i", { staticClass: "fas fa-pencil-alt" })
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("tbody", [
-      _c("tr", [
-        _c("th", { staticClass: "text-right", attrs: { width: "150" } }, [
-          _vm._v("First Name")
-        ]),
-        _vm._v(" "),
-        _c("td", [_c("span", [_vm._v("Pradeep")])])
-      ]),
-      _vm._v(" "),
-      _c("tr", [
-        _c("th", { staticClass: "text-right" }, [_vm._v("Last Name")]),
-        _vm._v(" "),
-        _c("td", [_c("span", [_vm._v("Kumar")])])
-      ]),
-      _vm._v(" "),
-      _c("tr", [
-        _c("th", { staticClass: "text-right" }, [_vm._v("Registered At")]),
-        _vm._v(" "),
-        _c("td", [_c("span", [_vm._v("25 Dec, 2019")])])
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("tbody", [
-      _c("tr", [
-        _c("th", { staticClass: "text-right", attrs: { width: "150" } }, [
-          _vm._v("First Name")
-        ]),
-        _vm._v(" "),
-        _c("td", [
-          _c("input", {
-            staticClass: "form-control",
-            attrs: { value: "Pradeep", placeholder: "First Name" }
-          })
-        ])
-      ]),
-      _vm._v(" "),
-      _c("tr", [
-        _c("th", { staticClass: "text-right", attrs: { width: "150" } }, [
-          _vm._v("Last Name")
-        ]),
-        _vm._v(" "),
-        _c("td", [
-          _c("input", {
-            staticClass: "form-control",
-            attrs: { placeholder: "Last Name" }
-          })
-        ])
-      ]),
-      _vm._v(" "),
-      _c("tr", [
-        _c("th", { staticClass: "text-right" }, [_vm._v("Registered At")]),
-        _vm._v(" "),
-        _c("td", [
-          _c("select", { staticClass: "custom-select" }, [
-            _c("option", [_vm._v("Jan")]),
-            _vm._v(" "),
-            _c("option", [_vm._v("Feb")])
-          ])
-        ])
-      ])
     ])
   }
 ]
@@ -57451,266 +57466,281 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [
-    _c("div", { staticClass: "card-body" }, [
-      _c(
-        "table",
-        {
-          staticClass:
-            "table table-striped table-sm table-condensed table-form table-form-dashed"
-        },
-        [
-          _c(
-            "tbody",
-            [
-              _vm._l(_vm.columns, function(column) {
-                return [
-                  column.type == "text"
-                    ? _c("tr", [
-                        _c(
-                          "th",
+  return _c(
+    "tbody",
+    [
+      _vm._l(_vm.columns, function(column) {
+        return column.type != "hidden"
+          ? [
+              column.type == "text"
+                ? _c("tr", { class: column.tr_class }, [
+                    _c(
+                      "th",
+                      { staticClass: "text-right", attrs: { width: "180" } },
+                      [_vm._v(_vm._s(column.label))]
+                    ),
+                    _vm._v(" "),
+                    _c("td", [
+                      _c("input", {
+                        directives: [
                           {
-                            staticClass: "text-right",
-                            attrs: { width: "180" }
-                          },
-                          [_vm._v(_vm._s(column.label))]
-                        ),
-                        _vm._v(" "),
-                        _c("td", [
-                          _c("input", {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.new_item[column.name],
-                                expression: "new_item[column.name]"
-                              }
-                            ],
-                            staticClass: "form-control",
-                            attrs: {
-                              type: "text",
-                              name: column.name,
-                              placeholder: column.label
-                            },
-                            domProps: { value: _vm.new_item[column.name] },
-                            on: {
-                              input: function($event) {
-                                if ($event.target.composing) {
-                                  return
-                                }
-                                _vm.$set(
-                                  _vm.new_item,
-                                  column.name,
-                                  $event.target.value
-                                )
-                              }
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.new_item[column.name],
+                            expression: "new_item[column.name]"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        attrs: {
+                          type: "text",
+                          name: column.name,
+                          disabled: column.disabled,
+                          placeholder: column.label
+                        },
+                        domProps: { value: _vm.new_item[column.name] },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
                             }
-                          })
-                        ])
-                      ])
-                    : column.type == "password"
-                    ? _c("tr", [
-                        _c("th", { staticClass: "text-right" }, [
-                          _vm._v(_vm._s(column.label))
-                        ]),
-                        _vm._v(" "),
-                        _c("td", [
-                          _c("input", {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.new_item[column.name],
-                                expression: "new_item[column.name]"
-                              }
-                            ],
-                            staticClass: "form-control",
-                            attrs: {
-                              type: "password",
-                              name: column.name,
-                              placeholder: column.label
-                            },
-                            domProps: { value: _vm.new_item[column.name] },
-                            on: {
-                              input: function($event) {
-                                if ($event.target.composing) {
-                                  return
-                                }
-                                _vm.$set(
-                                  _vm.new_item,
-                                  column.name,
-                                  $event.target.value
-                                )
-                              }
+                            _vm.$set(
+                              _vm.new_item,
+                              column.name,
+                              $event.target.value
+                            )
+                          }
+                        }
+                      })
+                    ])
+                  ])
+                : column.type == "password"
+                ? _c("tr", { class: column.tr_class }, [
+                    _c("th", { staticClass: "text-right" }, [
+                      _vm._v(_vm._s(column.label))
+                    ]),
+                    _vm._v(" "),
+                    _c("td", [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.new_item[column.name],
+                            expression: "new_item[column.name]"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        attrs: {
+                          type: "password",
+                          name: column.name,
+                          placeholder: column.label
+                        },
+                        domProps: { value: _vm.new_item[column.name] },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
                             }
-                          })
-                        ])
-                      ])
-                    : column.type == "select"
-                    ? _c("tr", [
-                        _c("th", { staticClass: "text-right" }, [
-                          _vm._v(_vm._s(column.label))
-                        ]),
-                        _vm._v(" "),
-                        _c("td", [
-                          _c(
-                            "select",
+                            _vm.$set(
+                              _vm.new_item,
+                              column.name,
+                              $event.target.value
+                            )
+                          }
+                        }
+                      })
+                    ])
+                  ])
+                : column.type == "select"
+                ? _c("tr", { class: column.tr_class }, [
+                    _c("th", { staticClass: "text-right" }, [
+                      _vm._v(_vm._s(column.label))
+                    ]),
+                    _vm._v(" "),
+                    _c("td", [
+                      _c(
+                        "select",
+                        {
+                          directives: [
                             {
-                              directives: [
-                                {
-                                  name: "model",
-                                  rawName: "v-model",
-                                  value: _vm.new_item[column.name],
-                                  expression: "new_item[column.name]"
-                                }
-                              ],
-                              staticClass: "custom-select",
-                              attrs: { placeholder: column.label },
-                              on: {
-                                change: function($event) {
-                                  var $$selectedVal = Array.prototype.filter
-                                    .call($event.target.options, function(o) {
-                                      return o.selected
-                                    })
-                                    .map(function(o) {
-                                      var val =
-                                        "_value" in o ? o._value : o.value
-                                      return val
-                                    })
-                                  _vm.$set(
-                                    _vm.new_item,
-                                    column.name,
-                                    $event.target.multiple
-                                      ? $$selectedVal
-                                      : $$selectedVal[0]
-                                  )
-                                }
-                              }
-                            },
-                            [
-                              _c(
-                                "option",
-                                { attrs: { selected: "", value: "" } },
-                                [_vm._v("Select " + _vm._s(column.label))]
-                              ),
-                              _vm._v(" "),
-                              _vm._l(column.inputs, function(input) {
-                                return _c(
-                                  "option",
-                                  { domProps: { value: input.slug } },
-                                  [_vm._v(_vm._s(input.name))]
-                                )
-                              })
-                            ],
-                            2
-                          )
-                        ])
-                      ])
-                    : column.type == "select_with_ids"
-                    ? _c("tr", [
-                        _c("th", { staticClass: "text-right" }, [
-                          _vm._v(_vm._s(column.label))
-                        ]),
-                        _vm._v(" "),
-                        _c("td", [
-                          _c(
-                            "select",
-                            {
-                              directives: [
-                                {
-                                  name: "model",
-                                  rawName: "v-model",
-                                  value: _vm.new_item[column.name],
-                                  expression: "new_item[column.name]"
-                                }
-                              ],
-                              staticClass: "custom-select",
-                              attrs: { placeholder: column.label },
-                              on: {
-                                change: function($event) {
-                                  var $$selectedVal = Array.prototype.filter
-                                    .call($event.target.options, function(o) {
-                                      return o.selected
-                                    })
-                                    .map(function(o) {
-                                      var val =
-                                        "_value" in o ? o._value : o.value
-                                      return val
-                                    })
-                                  _vm.$set(
-                                    _vm.new_item,
-                                    column.name,
-                                    $event.target.multiple
-                                      ? $$selectedVal
-                                      : $$selectedVal[0]
-                                  )
-                                }
-                              }
-                            },
-                            [
-                              _c(
-                                "option",
-                                { attrs: { selected: "", value: "" } },
-                                [_vm._v("Select " + _vm._s(column.label))]
-                              ),
-                              _vm._v(" "),
-                              _vm._l(column.inputs, function(input) {
-                                return _c(
-                                  "option",
-                                  { domProps: { value: input.id } },
-                                  [_vm._v(_vm._s(input.name))]
-                                )
-                              })
-                            ],
-                            2
-                          )
-                        ])
-                      ])
-                    : column.type == "date"
-                    ? _c("tr", [
-                        _c("th", { staticClass: "text-right" }, [
-                          _vm._v(_vm._s(column.label))
-                        ]),
-                        _vm._v(" "),
-                        _c(
-                          "td",
-                          [
-                            _c("datepicker", {
-                              attrs: {
-                                placeholder: column.label,
-                                format: "yyyy-MM-dd",
-                                "input-class": "form-control"
-                              },
-                              model: {
-                                value: _vm.new_item[column.name],
-                                callback: function($$v) {
-                                  _vm.$set(_vm.new_item, column.name, $$v)
-                                },
-                                expression: "new_item[column.name]"
-                              }
-                            })
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.new_item[column.name],
+                              expression: "new_item[column.name]"
+                            }
                           ],
-                          1
-                        )
-                      ])
-                    : _vm._e()
-                ]
-              })
-            ],
-            2
-          )
+                          staticClass: "custom-select",
+                          attrs: { placeholder: column.label },
+                          on: {
+                            change: function($event) {
+                              var $$selectedVal = Array.prototype.filter
+                                .call($event.target.options, function(o) {
+                                  return o.selected
+                                })
+                                .map(function(o) {
+                                  var val = "_value" in o ? o._value : o.value
+                                  return val
+                                })
+                              _vm.$set(
+                                _vm.new_item,
+                                column.name,
+                                $event.target.multiple
+                                  ? $$selectedVal
+                                  : $$selectedVal[0]
+                              )
+                            }
+                          }
+                        },
+                        [
+                          _c("option", { attrs: { selected: "", value: "" } }, [
+                            _vm._v("Select " + _vm._s(column.label))
+                          ]),
+                          _vm._v(" "),
+                          _vm._l(column.inputs, function(input) {
+                            return _c(
+                              "option",
+                              { domProps: { value: input.slug } },
+                              [_vm._v(_vm._s(input.name))]
+                            )
+                          })
+                        ],
+                        2
+                      )
+                    ])
+                  ])
+                : column.type == "select_with_ids"
+                ? _c("tr", { class: column.tr_class }, [
+                    _c("th", { staticClass: "text-right" }, [
+                      _vm._v(_vm._s(column.label))
+                    ]),
+                    _vm._v(" "),
+                    _c("td", [
+                      _c(
+                        "select",
+                        {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.new_item[column.name],
+                              expression: "new_item[column.name]"
+                            }
+                          ],
+                          staticClass: "custom-select",
+                          attrs: { placeholder: column.label },
+                          on: {
+                            change: function($event) {
+                              var $$selectedVal = Array.prototype.filter
+                                .call($event.target.options, function(o) {
+                                  return o.selected
+                                })
+                                .map(function(o) {
+                                  var val = "_value" in o ? o._value : o.value
+                                  return val
+                                })
+                              _vm.$set(
+                                _vm.new_item,
+                                column.name,
+                                $event.target.multiple
+                                  ? $$selectedVal
+                                  : $$selectedVal[0]
+                              )
+                            }
+                          }
+                        },
+                        [
+                          _c("option", { attrs: { selected: "", value: "" } }, [
+                            _vm._v("Select " + _vm._s(column.label))
+                          ]),
+                          _vm._v(" "),
+                          _vm._l(column.inputs, function(input) {
+                            return _c(
+                              "option",
+                              { domProps: { value: input.id } },
+                              [_vm._v(_vm._s(input.name))]
+                            )
+                          })
+                        ],
+                        2
+                      )
+                    ])
+                  ])
+                : column.type == "date"
+                ? _c("tr", { class: column.tr_class }, [
+                    _c("th", { staticClass: "text-right" }, [
+                      _vm._v(_vm._s(column.label))
+                    ]),
+                    _vm._v(" "),
+                    _c(
+                      "td",
+                      [
+                        _c("datepicker", {
+                          attrs: {
+                            placeholder: column.label,
+                            format: "yyyy-MM-dd",
+                            "input-class": "form-control"
+                          },
+                          model: {
+                            value: _vm.new_item[column.name],
+                            callback: function($$v) {
+                              _vm.$set(_vm.new_item, column.name, $$v)
+                            },
+                            expression: "new_item[column.name]"
+                          }
+                        })
+                      ],
+                      1
+                    )
+                  ])
+                : _vm._e()
+            ]
+          : _vm._e()
+      })
+    ],
+    2
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/assets/vendor/vaahcms/admin/default/vue/components/reusable/TableViewGenerator.vue?vue&type=template&id=ec52ef26&":
+/*!*******************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/assets/vendor/vaahcms/admin/default/vue/components/reusable/TableViewGenerator.vue?vue&type=template&id=ec52ef26& ***!
+  \*******************************************************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "tbody",
+    [
+      _vm._l(_vm.columns, function(column) {
+        return [
+          _c("tr", [
+            _c("th", { staticClass: "text-right", attrs: { width: "180" } }, [
+              _vm._v(_vm._s(column.label))
+            ]),
+            _vm._v(" "),
+            _c("td", [
+              _vm._v("\n            " + _vm._s(column.value) + "\n        ")
+            ])
+          ])
         ]
-      )
-    ]),
-    _vm._v(" "),
-    _c("div", { staticClass: "card-footer" }, [
-      _c(
-        "button",
-        { staticClass: "btn btn-xs btn-primary", on: { click: _vm.emitStore } },
-        [_vm._v("Save")]
-      )
-    ])
-  ])
+      })
+    ],
+    2
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -76034,6 +76064,75 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_TableFormGenerator_vue_vue_type_template_id_f3c33ea4___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_TableFormGenerator_vue_vue_type_template_id_f3c33ea4___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/assets/vendor/vaahcms/admin/default/vue/components/reusable/TableViewGenerator.vue":
+/*!******************************************************************************************************!*\
+  !*** ./resources/assets/vendor/vaahcms/admin/default/vue/components/reusable/TableViewGenerator.vue ***!
+  \******************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _TableViewGenerator_vue_vue_type_template_id_ec52ef26___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./TableViewGenerator.vue?vue&type=template&id=ec52ef26& */ "./resources/assets/vendor/vaahcms/admin/default/vue/components/reusable/TableViewGenerator.vue?vue&type=template&id=ec52ef26&");
+/* harmony import */ var _TableViewGenerator_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./TableViewGenerator.vue?vue&type=script&lang=js& */ "./resources/assets/vendor/vaahcms/admin/default/vue/components/reusable/TableViewGenerator.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _TableViewGenerator_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _TableViewGenerator_vue_vue_type_template_id_ec52ef26___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _TableViewGenerator_vue_vue_type_template_id_ec52ef26___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/assets/vendor/vaahcms/admin/default/vue/components/reusable/TableViewGenerator.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/assets/vendor/vaahcms/admin/default/vue/components/reusable/TableViewGenerator.vue?vue&type=script&lang=js&":
+/*!*******************************************************************************************************************************!*\
+  !*** ./resources/assets/vendor/vaahcms/admin/default/vue/components/reusable/TableViewGenerator.vue?vue&type=script&lang=js& ***!
+  \*******************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_TableViewGenerator_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../../../../../node_modules/vue-loader/lib??vue-loader-options!./TableViewGenerator.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/assets/vendor/vaahcms/admin/default/vue/components/reusable/TableViewGenerator.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_TableViewGenerator_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/assets/vendor/vaahcms/admin/default/vue/components/reusable/TableViewGenerator.vue?vue&type=template&id=ec52ef26&":
+/*!*************************************************************************************************************************************!*\
+  !*** ./resources/assets/vendor/vaahcms/admin/default/vue/components/reusable/TableViewGenerator.vue?vue&type=template&id=ec52ef26& ***!
+  \*************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_TableViewGenerator_vue_vue_type_template_id_ec52ef26___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../../../../../node_modules/vue-loader/lib??vue-loader-options!./TableViewGenerator.vue?vue&type=template&id=ec52ef26& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/assets/vendor/vaahcms/admin/default/vue/components/reusable/TableViewGenerator.vue?vue&type=template&id=ec52ef26&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_TableViewGenerator_vue_vue_type_template_id_ec52ef26___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_TableViewGenerator_vue_vue_type_template_id_ec52ef26___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 

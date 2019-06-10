@@ -12,7 +12,7 @@
 
 
                             <button class="btn btn-card "
-                                    >
+                                    @click="toggleEdit">
                                 <i class="fas fa-pencil-alt"></i>
                             </button>
 
@@ -32,62 +32,17 @@
 
                 </div>
 
-                <t-form v-if="columns" :columns="columns" @storeItem="store" ></t-form>
+
 
                 <div class="card-body">
 
-
-
                     <table v-if="edit == false" class="table table-striped table-sm table-condensed table-form">
-                        <tbody>
-                        <tr>
-                            <th width="150" class="text-right">First Name</th>
-                            <td><span>Pradeep</span></td>
-                        </tr>
-
-                        <tr>
-                            <th class="text-right">Last Name</th>
-                            <td><span>Kumar</span></td>
-                        </tr>
-
-                        <tr>
-                            <th class="text-right">Registered At</th>
-                            <td><span>25 Dec, 2019</span></td>
-                        </tr>
-                        </tbody>
+                        <t-view v-if="columns"  :columns="columns" ></t-view>
                     </table>
 
                     <table v-else class="table table-striped table-sm table-condensed table-form table-form-dashed">
-                        <tbody>
-                        <tr>
-                            <th width="150" class="text-right">First Name</th>
-                            <td>
-                                <input class="form-control" value="Pradeep" placeholder="First Name" />
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <th width="150" class="text-right">Last Name</th>
-                            <td>
-                                <input class="form-control" placeholder="Last Name" />
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <th class="text-right">Registered At</th>
-                            <td>
-
-                                <select class="custom-select">
-                                    <option>Jan</option>
-                                    <option>Feb</option>
-                                </select>
-
-                            </td>
-                        </tr>
-                        </tbody>
-
+                        <t-form v-if="columns"  :columns="columns" @emittedItem="updateItem" ></t-form>
                     </table>
-
 
                 </div>
 

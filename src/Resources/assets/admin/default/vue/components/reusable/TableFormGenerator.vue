@@ -1,90 +1,73 @@
 <template>
 
-    <div>
 
-    <div class="card-body" >
+    <tbody>
 
-        <table class="table table-striped table-sm table-condensed table-form table-form-dashed">
-            <tbody>
+    <template v-for="column in columns" v-if="column.type != 'hidden'">
+        <!--dynamic form creator-->
+        <tr v-if="column.type == 'text'" :class="column.tr_class" >
+            <th width="180" class="text-right">{{column.label}}</th>
+            <td>
+                <input type="text" class="form-control"
+                       v-model="new_item[column.name]"
+                       :name="column.name"
+                       :disabled="column.disabled"
+                       :placeholder="column.label" />
+            </td>
+        </tr>
 
-            <!--dynamic form creator-->
-            <template v-for="column in columns">
+        <tr v-else-if="column.type == 'password'" :class="column.tr_class">
+            <th  class="text-right">{{column.label}}</th>
+            <td>
 
-                <tr v-if="column.type == 'text'" >
-                    <th width="180" class="text-right">{{column.label}}</th>
-                    <td>
-                        <input type="text" class="form-control"
-                               v-model="new_item[column.name]"
-                               :name="column.name"
-                               :placeholder="column.label" />
-                    </td>
-                </tr>
+                <input type="password" class="form-control"
+                       v-model="new_item[column.name]"
+                       :name="column.name"
+                       :placeholder="column.label" />
 
-                <tr v-else-if="column.type == 'password'">
-                    <th  class="text-right">{{column.label}}</th>
-                    <td>
+            </td>
+        </tr>
 
-                        <input type="password" class="form-control"
-                               v-model="new_item[column.name]"
-                               :name="column.name"
-                               :placeholder="column.label" />
+        <tr v-else-if="column.type == 'select'" :class="column.tr_class">
+            <th  class="text-right">{{column.label}}</th>
+            <td>
 
-                    </td>
-                </tr>
+                <select class="custom-select" :placeholder="column.label" v-model="new_item[column.name]">
+                    <option selected value="">Select {{column.label}}</option>
+                    <option v-for="input in column.inputs" v-bind:value="input.slug">{{input.name}}</option>
+                </select>
 
-                <tr v-else-if="column.type == 'select'">
-                    <th  class="text-right">{{column.label}}</th>
-                    <td>
+            </td>
+        </tr>
 
-                        <select class="custom-select" :placeholder="column.label" v-model="new_item[column.name]">
-                            <option selected value="">Select {{column.label}}</option>
-                            <option v-for="input in column.inputs" v-bind:value="input.slug">{{input.name}}</option>
-                        </select>
+        <tr v-else-if="column.type == 'select_with_ids'" :class="column.tr_class">
+            <th  class="text-right">{{column.label}}</th>
+            <td>
 
-                    </td>
-                </tr>
+                <select class="custom-select" :placeholder="column.label"
+                        v-model="new_item[column.name]">
+                    <option selected value="">Select {{column.label}}</option>
+                    <option v-for="input in column.inputs" v-bind:value="input.id">{{input.name}}</option>
+                </select>
 
-                <tr v-else-if="column.type == 'select_with_ids'">
-                    <th  class="text-right">{{column.label}}</th>
-                    <td>
+            </td>
+        </tr>
 
-                        <select class="custom-select" :placeholder="column.label"
-                                v-model="new_item[column.name]">
-                            <option selected value="">Select {{column.label}}</option>
-                            <option v-for="input in column.inputs" v-bind:value="input.id">{{input.name}}</option>
-                        </select>
+        <tr v-else-if="column.type == 'date'" :class="column.tr_class">
+            <th class="text-right">{{column.label}}</th>
+            <td>
 
-                    </td>
-                </tr>
+                <datepicker :placeholder="column.label" format="yyyy-MM-dd"
+                            input-class="form-control"
+                            v-model="new_item[column.name]" ></datepicker>
 
-                <tr v-else-if="column.type == 'date'">
-                    <th class="text-right">{{column.label}}</th>
-                    <td>
+            </td>
+        </tr>
+        <!--/dynamic form creator-->
+    </template>
 
-                        <datepicker :placeholder="column.label" format="yyyy-MM-dd"
-                                    input-class="form-control"
-                                    v-model="new_item[column.name]" ></datepicker>
+    </tbody>
 
-                    </td>
-                </tr>
-
-            </template>
-            <!--/dynamic form creator-->
-
-            </tbody>
-        </table>
-
-    </div>
-
-    <div class="card-footer">
-        <button class="btn btn-xs btn-primary" @click="emitStore">Save</button>
-    </div>
-
-
-
-
-
-    </div>
 
 </template>
 
@@ -120,6 +103,11 @@
         created() {
             this.mapValues();
         },
+        watch: {
+            new_item: function() {
+                this.emitItem();
+            }
+        },
         methods: {
             //---------------------------------------------------------------------
             mapValues: function()
@@ -139,15 +127,18 @@
 
                 columns.map(function(item, key) {
                     console.log(item);
-                    self.new_item[item.name] = item.value;
+                    if(item.value)
+                    {
+                        self.new_item[item.name] = item.value;
+                    }
                 });
 
 
 
             },
             //---------------------------------------------------------------------
-            emitStore: function () {
-                this.$emit('storeItem', this.new_item);
+            emitItem: function () {
+                this.$emit('emittedItem', this.new_item);
             },
             //---------------------------------------------------------------------
 
