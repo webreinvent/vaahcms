@@ -1,19 +1,19 @@
 <?php namespace WebReinvent\VaahCms\Entities;
 
+use Hash;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Carbon;
-use WebReinvent\VaahCms\Traits\CrudObservantTrait;
-use WebReinvent\VaahCms\Traits\UidObservantTrait;
+use WebReinvent\VaahCms\Traits\CrudWithUidObservantTrait;
+
 
 class Registration extends Model
 {
     use Notifiable;
     use SoftDeletes;
-    use CrudObservantTrait;
-    use UidObservantTrait;
+    use CrudWithUidObservantTrait;
 
     //-------------------------------------------------
     protected $table = 'vh_registrations';
@@ -26,14 +26,13 @@ class Registration extends Model
     protected $dateFormat = 'Y-m-d H:i:s';
     //-------------------------------------------------
     protected $fillable = [
-        "uid","email","title","first_name","middle_name","last_name","username","password",
+        "uid","email","username","password","display_name","title","first_name","middle_name","last_name",
         "gender","country_calling_code","phone","timezone","alternate_email",
-        "avatar_url","birth", "country","country_code",
-        "country_calling_code","activation_code", "activation_code_sent_at",
+        "avatar_url","birth", "country","country_code", "status",
+        "activation_code", "activation_code_sent_at",
         "activated_ip","invited_by", "invited_at","user_id",
-        "user_created_at","meta",
-
-        "created_ip","created_by", "updated_by","deleted_by"
+        "user_created_at", "created_ip", "meta",
+        "created_by", "updated_by","deleted_by"
     ];
     //-------------------------------------------------
     protected $hidden = [
@@ -140,6 +139,10 @@ class Registration extends Model
                 $result['type'] = 'select_with_ids';
                 $result['inputs'] = User::getUsersForAssets();
                 $result['label'] = "Registration belongs to:";
+                break;
+            //------------------------------------------------
+            case 'password':
+                $result['type'] = 'password';
                 break;
             //------------------------------------------------
             default:
@@ -283,6 +286,139 @@ class Registration extends Model
     }
 
     //-------------------------------------------------
+    public static function store($request)
+    {
+        $rules = array(
+            'email' => 'required|email',
+            'password' => 'required',
+            'first_name' => 'required',
+            'status' => 'required',
+        );
+
+        $validator = \Validator::make( $request->all(), $rules);
+        if ( $validator->fails() ) {
+
+            $errors             = errorsToArray($validator->errors());
+            $response['status'] = 'failed';
+            $response['errors'] = $errors;
+            return $response;
+        }
+
+        $data = [];
+
+        if($request->has('id'))
+        {
+            $reg = Registration::find($request->id);
+        } else
+        {
+            $validation = static::registrationValidation($request);
+            if(isset($validation['status']) && $validation['status'] == 'failed')
+            {
+                return $validation;
+            } else if(isset($validation['status']) && $validation['status'] == 'registration-exist')
+            {
+                $reg = $validation['data'];
+            } else
+            {
+                $reg = new Registration();
+            }
+        }
+
+        $reg->fill($request->all());
+        $reg->password = Hash::make($request->password);
+
+        if($request->has('invited_by') && !$request->has('invited_at'))
+        {
+            $reg->invited_at = \Carbon::now();
+        }
+
+        if($request->has('user_id') && !$request->has('user_created_at'))
+        {
+            $reg->user_created_at = \Carbon::now();
+            $reg->created_ip = $request->ip();
+        }
+
+        if($request->has('user_id') && !$request->has('user_created_at'))
+        {
+            $reg->user_created_at = \Carbon::now();
+            $reg->created_ip = $request->ip();
+        }
+
+        $reg->activation_code = str_random(40);
+
+        if($request->has('user_id') && !$request->has('activated_at'))
+        {
+            $reg->activated_at = \Carbon::now();
+            $reg->activated_ip = $request->ip();
+        }
+
+        $reg->save();
+
+        $response['status'] = 'success';
+        $response['messages'][] = 'Saved';
+        $response['data'] = $reg;
+
+        return $response;
+
+
+    }
+    //-------------------------------------------------
+    public static function registrationValidation($request)
+    {
+
+        //check if user already exist with the emails
+        $user = User::where('email', $request->email)->first();
+        if($user)
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = 'Email is already registered.';
+            return $response;
+        }
+
+        //check if user already exist with the phone
+        if($request->has('country_calling_code') && $request->has('phone'))
+        {
+            $user = User::where('country_calling_code', $request->country_calling_code)
+                ->where('phone', $request->phone)
+                ->first();
+
+            if($user)
+            {
+                $response['status'] = 'failed';
+                $response['errors'][] = 'Phone number is already registered.';
+                return $response;
+            }
+        }
+
+        //if status is registered then user_id is required
+        if($request->has('status') && $request->status == 'registered' && !$request->has('user_id'))
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = 'The registration status is "registered", hence user id is required';
+            return $response;
+        }
+
+        //check if registration record exist
+        $reg_by_email = Registration::findByEmail($request->email);
+        if($reg_by_email)
+        {
+            $response['status'] = 'registration-exist';
+            $response['data'] = $reg_by_email;
+            return $response;
+        }
+
+        $reg_by_phone = Registration::where('country_calling_code', $request->country_calling_code)
+            ->where('phone', $request->phone)
+            ->first();
+        if($reg_by_phone)
+        {
+            $response['status'] = 'registration-exist';
+            $response['data'] = $reg_by_phone;
+            return $response;
+        }
+
+
+    }
     //-------------------------------------------------
     //-------------------------------------------------
     //-------------------------------------------------

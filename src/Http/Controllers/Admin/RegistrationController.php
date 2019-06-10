@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Hash;
 use WebReinvent\VaahCms\Entities\Registration;
 
 class RegistrationController extends Controller
@@ -46,42 +47,8 @@ class RegistrationController extends Controller
     //----------------------------------------------------------
     public function store(Request $request)
     {
-        $rules = array(
-            'email' => 'required|email',
-            'password' => 'required',
-            'first_name' => 'required',
-            'status' => 'required',
-        );
-
-        $validator = \Validator::make( $request->all(), $rules);
-        if ( $validator->fails() ) {
-
-            $errors             = errorsToArray($validator->errors());
-            $response['status'] = 'failed';
-            $response['errors'] = $errors;
-            return response()->json($response);
-        }
-
-        $data = [];
-
-        if($request->has('id'))
-        {
-            $reg = Registration::find($request->id);
-        } else
-        {
-            $reg = new Registration();
-        }
-
-        $reg->fill($request->all());
-        $reg->save();
-
-
-        $response['status'] = 'success';
-        $response['messages'][] = 'Saved';
-        $response['data'] = $data;
-
+        $response = Registration::store($request);
         return response()->json($response);
-
     }
     //----------------------------------------------------------
     //----------------------------------------------------------

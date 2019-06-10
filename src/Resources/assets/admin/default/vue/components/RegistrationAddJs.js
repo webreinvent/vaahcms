@@ -1,28 +1,14 @@
-import vhSelect from 'vaah-vue-select'
-
-//https://www.npmjs.com/package/vuejs-datepicker
-import Datepicker from 'vuejs-datepicker';
+import TForm from './reusable/TableFormGenerator';
 
     export default {
 
         props: ['urls', 'assets'],
         components:{
-            'datepicker': Datepicker,
-            'vh-select': vhSelect,
+            't-form': TForm,
         },
         data()
         {
             let obj = {
-                new_item: {
-                    title: "",
-                    country: "",
-                    status: "",
-                    gender: "",
-                    timezone: "",
-                    country_calling_code: "",
-                    invited_by: "",
-                    user_id: "",
-                }
             };
 
             return obj;
@@ -43,9 +29,9 @@ import Datepicker from 'vuejs-datepicker';
         },
         methods: {
             //---------------------------------------------------------------------
-            store: function () {
+            store: function (new_item) {
                 var url = this.urls.current+"/store";
-                var params = this.new_item;
+                var params = new_item;
                 this.$helpers.console(params, '-->');
                 this.$helpers.ajax(url, params, this.storeAfter);
             },
