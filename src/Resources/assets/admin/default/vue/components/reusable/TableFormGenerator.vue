@@ -117,7 +117,34 @@
             return obj;
         },
 
+        created() {
+            this.mapValues();
+        },
         methods: {
+            //---------------------------------------------------------------------
+            mapValues: function()
+            {
+                var self = this;
+                var columns = this.columns;
+                /*columns.map(function (item) {
+                    self.new_item[item.name] = item.value;
+                });
+                */
+                this.$helpers.console(columns, 'columns-->');
+
+                /*columns.each(function (item) {
+                    self.$helpers.console(item);
+
+                })*/
+
+                columns.map(function(item, key) {
+                    console.log(item);
+                    self.new_item[item.name] = item.value;
+                });
+
+
+
+            },
             //---------------------------------------------------------------------
             emitStore: function () {
                 this.$emit('storeItem', this.new_item);

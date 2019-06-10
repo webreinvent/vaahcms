@@ -40,7 +40,10 @@ import TForm from './reusable/TableFormGenerator';
 
                 this.$helpers.console(data);
 
-                this.$helpers.stopNprogress();
+                let id = data.id;
+
+                this.$router.push({ path: `/view/${id}`});
+
             },
             //---------------------------------------------------------------------
             //---------------------------------------------------------------------

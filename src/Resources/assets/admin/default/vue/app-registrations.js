@@ -38,8 +38,9 @@ const router = new VueRouter({
         {   path: '/add',
             component: RegistrationAdd
         },
-        {   path: '/view',
-            component: RegistrationViewEdit
+        {   path: '/view/:id',
+            component: RegistrationViewEdit,
+            props: true
         },
     ]
 });

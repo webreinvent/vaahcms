@@ -208,4 +208,7 @@ Route::group(
         Route::any( '/store', 'RegistrationController@store' )
             ->name( 'vh.admin.registrations.store' );
         //------------------------------------------------
+        Route::any( '/view/{id}', 'RegistrationController@getDetails' )
+            ->name( 'vh.admin.registrations.view' );
+        //------------------------------------------------
     });

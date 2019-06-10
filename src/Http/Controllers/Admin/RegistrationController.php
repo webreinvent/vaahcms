@@ -51,6 +51,18 @@ class RegistrationController extends Controller
         return response()->json($response);
     }
     //----------------------------------------------------------
+    public function getDetails(Request $request, $id)
+    {
+
+        $reg = Registration::find($id);
+
+        $response['status'] = 'success';
+        $response['data'] = $reg->recordForFormElement();
+
+        return response()->json($response);
+
+    }
+    //----------------------------------------------------------
     //----------------------------------------------------------
 
 

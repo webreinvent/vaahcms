@@ -86,7 +86,7 @@
                                     </button>
 
                                     <router-link class="btn btn-xs bg-transparent"
-                                                 :to="{ path: '/view'}">
+                                                 :to="{ path: '/view/6'}">
                                         <i class="fas fa-chevron-right"></i>
                                     </router-link>
 

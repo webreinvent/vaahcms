@@ -66,7 +66,7 @@ class Registration extends Model
         return $list;
     }
     //-------------------------------------------------
-    public function getFormColumns($auto_fill=false)
+    public function getFormColumns()
     {
         $columns = $this->getFormFillableColumns();
 
@@ -75,17 +75,18 @@ class Registration extends Model
 
         foreach ($columns as $column)
         {
-            $result[$i] = $this->getFormElement($column, $auto_fill);
+            $result[$i] = $this->getFormElement($column);
             $i++;
         }
 
         return $result;
     }
     //-------------------------------------------------
-    public function getFormElement($column, $auto_fill)
+    public function getFormElement($column, $value=null)
     {
 
         $result['name'] = $column;
+        $result['value'] = $value;
         $result['label'] = slug_to_str($column);
         $result['column_type'] = $this->getConnection()->getSchemaBuilder()
             ->getColumnType($this->getTable(), $column);
@@ -420,6 +421,19 @@ class Registration extends Model
 
     }
     //-------------------------------------------------
+    public function recordForFormElement()
+    {
+        $record = $this->toArray();
+
+        $result = [];
+
+        foreach ($record as $key => $value)
+        {
+            $result[] = $this->getFormElement($key, $value);
+        }
+
+        return $result;
+    }
     //-------------------------------------------------
     //-------------------------------------------------
     //-------------------------------------------------

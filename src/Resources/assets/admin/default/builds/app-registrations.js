@@ -1877,7 +1877,29 @@ __webpack_require__.r(__webpack_exports__);
     };
     return obj;
   },
+  created: function created() {
+    this.mapValues();
+  },
   methods: {
+    //---------------------------------------------------------------------
+    mapValues: function mapValues() {
+      var self = this;
+      var columns = this.columns;
+      /*columns.map(function (item) {
+          self.new_item[item.name] = item.value;
+      });
+      */
+
+      this.$helpers.console(columns, 'columns-->');
+      /*columns.each(function (item) {
+          self.$helpers.console(item);
+       })*/
+
+      columns.map(function (item, key) {
+        console.log(item);
+        self.new_item[item.name] = item.value;
+      });
+    },
     //---------------------------------------------------------------------
     emitStore: function emitStore() {
       this.$emit('storeItem', this.new_item);
@@ -1930,7 +1952,10 @@ __webpack_require__.r(__webpack_exports__);
     //---------------------------------------------------------------------
     storeAfter: function storeAfter(data) {
       this.$helpers.console(data);
-      this.$helpers.stopNprogress();
+      var id = data.id;
+      this.$router.push({
+        path: "/view/".concat(id)
+      });
     } //---------------------------------------------------------------------
     //---------------------------------------------------------------------
     //---------------------------------------------------------------------
@@ -2116,165 +2141,52 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var laravel_vue_pagination__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! laravel-vue-pagination */ "./node_modules/laravel-vue-pagination/dist/laravel-vue-pagination.common.js");
-/* harmony import */ var laravel_vue_pagination__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(laravel_vue_pagination__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _reusable_TableFormGenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./reusable/TableFormGenerator */ "./resources/assets/vendor/vaahcms/admin/default/vue/components/reusable/TableFormGenerator.vue");
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['urls'],
+  props: ['urls', 'id'],
   components: {
-    'pagination': laravel_vue_pagination__WEBPACK_IMPORTED_MODULE_0___default.a
+    't-form': _reusable_TableFormGenerator__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
   data: function data() {
     var obj = {
       assets: null,
-      q: null,
-      page: 1,
-      list: null,
-      edit: false,
-      filters: {
-        q: null,
-        status: 'all'
-      }
+      columns: null,
+      edit: false
     };
     return obj;
   },
   watch: {},
-  mounted: function mounted() {//---------------------------------------------------------------------
-    //this.getAssets();
+  created: function created() {},
+  mounted: function mounted() {
     //---------------------------------------------------------------------
+    this.getDetails(); //---------------------------------------------------------------------
     //---------------------------------------------------------------------
     //---------------------------------------------------------------------
     //---------------------------------------------------------------------
   },
   methods: {
     //---------------------------------------------------------------------
-    getAssets: function getAssets(e) {
-      if (e) {
-        e.preventDefault();
-      }
-
-      console.log(this.urls);
-      var url = this.urls.current + "/assets";
+    getDetails: function getDetails() {
+      var url = this.urls.current + "/view/" + this.$props.id;
+      console.log(url, 'url-->');
       var params = {};
-      this.$helpers.ajax(url, params, this.getAssetsAfter);
+      this.$helpers.ajax(url, params, this.getDetailsAfter);
     },
     //---------------------------------------------------------------------
-    getAssetsAfter: function getAssetsAfter(data) {
-      this.assets = data;
-      this.$helpers.console(this.assets, 'from app->');
-      this.getList();
-    },
-    //---------------------------------------------------------------------
-    toggleEditing: function toggleEditing() {
-      if (this.edit == true) {
-        this.edit = false;
-      } else {
-        this.edit = true;
-      }
-    },
-    //---------------------------------------------------------------------
-    //---------------------------------------------------------------------
-    getList: function getList(page) {
-      var url = this.urls.current + "/list";
-
-      if (!page) {
-        page = this.page;
-      }
-
-      if (this.page) {
-        url = url + "?page=" + page;
-      }
-
-      url = url + "&status=" + this.filters.status;
-
-      if (this.filters.q) {
-        url = url + "&q=" + this.filters.q;
-      }
-
-      var params = {};
-      this.$helpers.ajax(url, params, this.getListAfter);
-    },
-    //---------------------------------------------------------------------
-    getListAfter: function getListAfter(data) {
-      this.list = data.list;
-      this.stats = data.stats;
-      this.page = data.list.current_page;
-      this.$helpers.console(this.list);
+    getDetailsAfter: function getDetailsAfter(data) {
+      this.columns = data;
       this.$helpers.stopNprogress();
     },
     //---------------------------------------------------------------------
-    actions: function actions(e, action, inputs, data) {
-      if (e) {
-        e.preventDefault();
-      }
-
-      var url = this.urls.current + "/actions";
-      var params = {
-        action: action,
-        inputs: inputs,
-        data: data
-      };
-      this.$helpers.ajax(url, params, this.actionsAfter);
-    },
-    //---------------------------------------------------------------------
-    actionsAfter: function actionsAfter(data) {
-      this.getList();
-    },
-    //---------------------------------------------------------------------
-    getThemesSlugs: function getThemesSlugs(e) {
-      if (e) {
-        e.preventDefault();
-      }
-
-      var url = this.urls.current + "/get/slugs";
+    store: function store() {
+      var url = this.urls.current + "/assets";
       var params = {};
-      this.$helpers.ajax(url, params, this.getThemesSlugsAfter);
+      this.$helpers.ajax(url, params, this.storeAfter);
     },
     //---------------------------------------------------------------------
-    getThemesSlugsAfter: function getThemesSlugsAfter(data) {
-      this.getThemesUpdates(data);
-    },
-    //---------------------------------------------------------------------
-    getThemesUpdates: function getThemesUpdates(comma_separated_slug) {
-      var url = this.assets.vaahcms_api_route + "/theme/updates";
-      this.$helpers.console(url);
-      var params = {
-        slugs: comma_separated_slug
-      };
-      this.$helpers.ajax(url, params, this.getThemesUpdatesAfter);
-    },
-    //---------------------------------------------------------------------
-    getThemesUpdatesAfter: function getThemesUpdatesAfter(data) {
-      this.updateThemesVersion(data);
-    },
-    //---------------------------------------------------------------------
-    //---------------------------------------------------------------------
-    updateThemesVersion: function updateThemesVersion(data) {
-      var url = this.urls.current + "/update/versions";
-      var params = {
-        themes: data
-      };
-      this.$helpers.ajax(url, params, this.updateThemesVersionAfter);
-    },
-    //---------------------------------------------------------------------
-    updateThemesVersionAfter: function updateThemesVersionAfter(data) {
-      this.getList();
-    },
-    //---------------------------------------------------------------------
-    installUpdates: function installUpdates(e, slug) {
-      if (e) {
-        e.preventDefault();
-      }
-
-      var url = this.urls.current + "/install/updates";
-      var params = {
-        slug: slug
-      };
-      this.$helpers.ajax(url, params, this.installUpdatesAfter);
-    },
-    //---------------------------------------------------------------------
-    installUpdatesAfter: function installUpdatesAfter(data) {
-      this.getList();
+    storeAfter: function storeAfter(data) {
+      this.$helpers.stopNprogress();
     } //---------------------------------------------------------------------
     //---------------------------------------------------------------------
     //---------------------------------------------------------------------
@@ -57190,7 +57102,7 @@ var render = function() {
                         "router-link",
                         {
                           staticClass: "btn btn-xs bg-transparent",
-                          attrs: { to: { path: "/view" } }
+                          attrs: { to: { path: "/view/6" } }
                         },
                         [_c("i", { staticClass: "fas fa-chevron-right" })]
                       )
@@ -57362,64 +57274,72 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "col-sm" }, [
-    _c("div", { staticClass: "card" }, [
-      _c("div", { staticClass: "card-header" }, [
-        _c("div", { staticClass: "d-flex" }, [
-          _vm._m(0),
-          _vm._v(" "),
-          _c(
-            "div",
-            { staticClass: " mg-l-auto btn-group btn-group-xs" },
-            [
-              _c(
-                "button",
+    _c(
+      "div",
+      { staticClass: "card" },
+      [
+        _c("div", { staticClass: "card-header" }, [
+          _c("div", { staticClass: "d-flex" }, [
+            _vm._m(0),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: " mg-l-auto btn-group btn-group-xs" },
+              [
+                _vm._m(1),
+                _vm._v(" "),
+                _c(
+                  "router-link",
+                  {
+                    staticClass: "btn btn-card ",
+                    attrs: { to: { path: "/add" } }
+                  },
+                  [_c("i", { staticClass: "fas fa-ellipsis-h" })]
+                ),
+                _vm._v(" "),
+                _c(
+                  "router-link",
+                  {
+                    staticClass: "btn btn-card ",
+                    attrs: { to: { path: "/" } }
+                  },
+                  [_c("i", { staticClass: "fas fa-times" })]
+                )
+              ],
+              1
+            )
+          ])
+        ]),
+        _vm._v(" "),
+        _vm.columns
+          ? _c("t-form", {
+              attrs: { columns: _vm.columns },
+              on: { storeItem: _vm.store }
+            })
+          : _vm._e(),
+        _vm._v(" "),
+        _c("div", { staticClass: "card-body" }, [
+          _vm.edit == false
+            ? _c(
+                "table",
                 {
-                  staticClass: "btn btn-card ",
-                  on: { click: _vm.toggleEditing }
+                  staticClass:
+                    "table table-striped table-sm table-condensed table-form"
                 },
-                [_c("i", { staticClass: "fas fa-pencil-alt" })]
-              ),
-              _vm._v(" "),
-              _c(
-                "router-link",
-                {
-                  staticClass: "btn btn-card ",
-                  attrs: { to: { path: "/add" } }
-                },
-                [_c("i", { staticClass: "fas fa-ellipsis-h" })]
-              ),
-              _vm._v(" "),
-              _c(
-                "router-link",
-                { staticClass: "btn btn-card ", attrs: { to: { path: "/" } } },
-                [_c("i", { staticClass: "fas fa-times" })]
+                [_vm._m(2)]
               )
-            ],
-            1
-          )
+            : _c(
+                "table",
+                {
+                  staticClass:
+                    "table table-striped table-sm table-condensed table-form table-form-dashed"
+                },
+                [_vm._m(3)]
+              )
         ])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "card-body" }, [
-        _vm.edit == false
-          ? _c(
-              "table",
-              {
-                staticClass:
-                  "table table-striped table-sm table-condensed table-form"
-              },
-              [_vm._m(1)]
-            )
-          : _c(
-              "table",
-              {
-                staticClass:
-                  "table table-striped table-sm table-condensed table-form table-form-dashed"
-              },
-              [_vm._m(2)]
-            )
-      ])
-    ])
+      ],
+      1
+    )
   ])
 }
 var staticRenderFns = [
@@ -57429,6 +57349,14 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "align-self-center tx-15 flex-grow-1" }, [
       _c("strong", [_vm._v("Pradeep Kumar")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("button", { staticClass: "btn btn-card " }, [
+      _c("i", { staticClass: "fas fa-pencil-alt" })
     ])
   },
   function() {
@@ -75787,8 +75715,9 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_0__["default"]({
     path: '/add',
     component: _components_RegistrationAdd__WEBPACK_IMPORTED_MODULE_5__["default"]
   }, {
-    path: '/view',
-    component: _components_RegistrationViewEdit__WEBPACK_IMPORTED_MODULE_6__["default"]
+    path: '/view/:id',
+    component: _components_RegistrationViewEdit__WEBPACK_IMPORTED_MODULE_6__["default"],
+    props: true
   }]
 }); //---------/Routes
 //---------Variables

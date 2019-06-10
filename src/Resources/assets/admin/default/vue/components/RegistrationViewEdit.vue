@@ -12,7 +12,7 @@
 
 
                             <button class="btn btn-card "
-                                    @click="toggleEditing">
+                                    >
                                 <i class="fas fa-pencil-alt"></i>
                             </button>
 
@@ -32,7 +32,11 @@
 
                 </div>
 
+                <t-form v-if="columns" :columns="columns" @storeItem="store" ></t-form>
+
                 <div class="card-body">
+
+
 
                     <table v-if="edit == false" class="table table-striped table-sm table-condensed table-form">
                         <tbody>
