@@ -1,4 +1,4 @@
-require('./../lib/vue/bootstrap');
+require('./../../lib/vue/bootstrap');
 
 window.Vue = require('vue');
 
@@ -8,7 +8,7 @@ import VueRouter from 'vue-router';
 import VueResource from 'vue-resource';
 import moment from 'moment'
 
-import VueHelpers from './helpers/VueHelpers';
+import VueHelpers from './../helpers/VueHelpers';
 //---------/Package imports
 
 //---------Configs
@@ -25,9 +25,9 @@ Vue.use(VueHelpers);
 //---------/Helpers
 
 //---------Comp Imports
-import RegistrationList from './components/RegistrationList';
-import RegistrationAdd from './components/RegistrationAdd';
-import RegistrationViewEdit from './components/RegistrationViewEdit';
+import List from './List';
+import Create from './Create';
+import ViewEdit from './ViewEdit';
 //---------/Comp Imports
 
 //---------Routes
@@ -35,11 +35,11 @@ const router = new VueRouter({
     base: '/',
     linkActiveClass: "active",
     routes: [
-        {   path: '/add',
-            component: RegistrationAdd
+        {   path: '/create',
+            component: Create
         },
         {   path: '/view/:id',
-            component: RegistrationViewEdit,
+            component: ViewEdit,
             props: true
         },
     ]
@@ -55,7 +55,7 @@ var debug = $('#debug').attr('content');
 const app = new Vue({
     el: '#vh-app-registrations',
     components:{
-        'registrations': RegistrationList
+        'registrations': List
     },
     router,
     data: {

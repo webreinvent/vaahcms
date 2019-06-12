@@ -1,4 +1,4 @@
-import TForm from './reusable/TableFormGenerator';
+import TForm from './../reusable/TableFormGenerator';
 
     export default {
 

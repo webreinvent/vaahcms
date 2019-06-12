@@ -1,5 +1,5 @@
-import TForm from './reusable/TableFormGenerator';
-import TView from './reusable/TableViewGenerator';
+import TForm from './../reusable/TableFormGenerator';
+import TView from './../reusable/TableViewGenerator';
 
     export default {
 
@@ -41,7 +41,7 @@ import TView from './reusable/TableViewGenerator';
             getDetails: function () {
 
 
-                var url = this.urls.current+"/view/"+this.$props.id;
+                var url = this.urls.current+"/view/"+this.id;
 
                 console.log(url, 'url-->');
 
@@ -55,7 +55,10 @@ import TView from './reusable/TableViewGenerator';
             },
             //---------------------------------------------------------------------
             updateItem: function (item) {
-                this.item = item
+                this.item = item;
+
+                this.$helpers.console(this.item, 'this.item');
+
             },
             //---------------------------------------------------------------------
             toggleEdit: function () {
@@ -69,13 +72,17 @@ import TView from './reusable/TableViewGenerator';
             },
             //---------------------------------------------------------------------
             store: function () {
-                var url = this.urls.current+"/assets";
+                var url = this.urls.current+"/store";
                 var params = this.item;
+
+                this.$helpers.console(params, 'params');
+
                 this.$helpers.ajax(url, params, this.storeAfter);
             },
             //---------------------------------------------------------------------
             storeAfter: function (data) {
 
+                this.edit = false;
                 this.$helpers.stopNprogress();
             },
 

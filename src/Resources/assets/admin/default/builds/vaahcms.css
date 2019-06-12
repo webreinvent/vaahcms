@@ -41750,3 +41750,24 @@ body{
 {
     background-color: #cdcece !important;
 }
+
+.table-form-view tbody tr input:disabled, input[readonly],
+.table-form-view tbody tr select:disabled, select[readonly]
+{
+    background-color:#fff !important;
+    color: #1b2e4b;
+}
+
+.table-form-view tbody tr:nth-of-type(2n+1) input:disabled, input[readonly],
+.table-form-view tbody tr:nth-of-type(2n+1) select:disabled, select[readonly]
+{
+    background-color:#f3f4f7 !important;
+    color: #1b2e4b;
+}
+
+.card-header .dropdown-toggle::after
+{
+    display: none !important;
+}
+
+

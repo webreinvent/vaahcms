@@ -5,22 +5,23 @@
 
     <template v-for="column in columns" v-if="column.type != 'hidden'">
         <!--dynamic form creator-->
-        <tr v-if="column.type == 'text'" :class="column.tr_class" >
+        <tr v-if="column.type == 'text'" class="tr__view" >
             <th width="180" class="text-right">{{column.label}}</th>
             <td>
                 <input type="text" class="form-control"
                        v-model="new_item[column.name]"
                        :name="column.name"
-                       :disabled="column.disabled"
+                       disabled
                        :placeholder="column.label" />
             </td>
         </tr>
 
-        <tr v-else-if="column.type == 'password'" :class="column.tr_class">
+        <tr v-else-if="column.type == 'password'" class="tr__view">
             <th  class="text-right">{{column.label}}</th>
             <td>
 
                 <input type="password" class="form-control"
+                       disabled
                        v-model="new_item[column.name]"
                        :name="column.name"
                        :placeholder="column.label" />
@@ -28,11 +29,11 @@
             </td>
         </tr>
 
-        <tr v-else-if="column.type == 'select'" :class="column.tr_class">
+        <tr v-else-if="column.type == 'select'" class="tr__view">
             <th  class="text-right">{{column.label}}</th>
             <td>
 
-                <select class="custom-select" :placeholder="column.label" v-model="new_item[column.name]">
+                <select class="custom-select" disabled :placeholder="column.label" v-model="new_item[column.name]">
                     <option selected value="">Select {{column.label}}</option>
                     <option v-for="input in column.inputs" v-bind:value="input.slug">{{input.name}}</option>
                 </select>
@@ -40,11 +41,11 @@
             </td>
         </tr>
 
-        <tr v-else-if="column.type == 'select_with_ids'" :class="column.tr_class">
+        <tr v-else-if="column.type == 'select_with_ids'" class="tr__view">
             <th  class="text-right">{{column.label}}</th>
             <td>
 
-                <select class="custom-select" :placeholder="column.label"
+                <select class="custom-select" disabled :placeholder="column.label"
                         v-model="new_item[column.name]">
                     <option selected value="">Select {{column.label}}</option>
                     <option v-for="input in column.inputs" v-bind:value="input.id">{{input.name}}</option>
@@ -53,11 +54,11 @@
             </td>
         </tr>
 
-        <tr v-else-if="column.type == 'date'" :class="column.tr_class">
+        <tr v-else-if="column.type == 'date'" class="tr__view">
             <th class="text-right">{{column.label}}</th>
             <td>
 
-                <datepicker :placeholder="column.label" format="yyyy-MM-dd"
+                <datepicker :placeholder="column.label" disabled format="yyyy-MM-dd"
                             input-class="form-control"
                             v-model="new_item[column.name]" ></datepicker>
 
@@ -77,7 +78,7 @@
     import Datepicker from 'vuejs-datepicker';
 
     export default {
-        name: "TableFormGenerator",
+        name: "TableViewGenerator",
         props: ['columns'],
         components:{
             'datepicker': Datepicker,
@@ -86,62 +87,31 @@
         {
             let obj = {
                 new_item: {
-                    title: "",
-                    country: "",
-                    status: "",
-                    gender: "",
-                    timezone: "",
-                    country_calling_code: "",
-                    invited_by: "",
-                    user_id: "",
                 }
             };
 
             return obj;
         },
-
         created() {
             this.mapValues();
         },
         watch: {
-            new_item: function() {
-                this.emitItem();
-            }
         },
         methods: {
+            //---------------------------------------------------------------------
             //---------------------------------------------------------------------
             mapValues: function()
             {
                 var self = this;
                 var columns = this.columns;
-                /*columns.map(function (item) {
-                    self.new_item[item.name] = item.value;
-                });
-                */
-                this.$helpers.console(columns, 'columns-->');
-
-                /*columns.each(function (item) {
-                    self.$helpers.console(item);
-
-                })*/
 
                 columns.map(function(item, key) {
-                    console.log(item);
                     if(item.value)
                     {
                         self.new_item[item.name] = item.value;
                     }
                 });
-
-
-
             },
-            //---------------------------------------------------------------------
-            emitItem: function () {
-                this.$emit('emittedItem', this.new_item);
-            },
-            //---------------------------------------------------------------------
-
             //---------------------------------------------------------------------
             //---------------------------------------------------------------------
             //---------------------------------------------------------------------

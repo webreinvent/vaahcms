@@ -117,4 +117,4 @@
 
 
 </template>
-<script src="./RegistrationListJs.js"></script>
+<script src="./ListJs.js"></script>

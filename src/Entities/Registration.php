@@ -319,10 +319,14 @@ class Registration extends Model
     {
         $rules = array(
             'email' => 'required|email',
-            'password' => 'required',
             'first_name' => 'required',
             'status' => 'required',
         );
+
+        if(!$request->has('id'))
+        {
+            $rules['password'] = 'required';
+        }
 
         $validator = \Validator::make( $request->all(), $rules);
         if ( $validator->fails() ) {

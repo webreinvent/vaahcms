@@ -18,9 +18,23 @@
 
                             <router-link class="btn btn-card "
                                     :to="{ path: '/add'}">
-                                <i class="fas fa-ellipsis-h"></i>
+                                <i class="fas fa-ellipsis-v"></i>
                             </router-link>
 
+                            <div class="dropdown">
+                                <a class="btn btn-card dropdown-toggle"
+                                   href="#" role="button"
+                                   v-on:click="$helpers.btDropDown($event)"
+                                   data-toggle="dropdown">
+                                    <i class="fas fa-ellipsis-v"></i>
+                                </a>
+
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                    <a class="dropdown-item" href="#">Action</a>
+                                    <a class="dropdown-item" href="#">Another action</a>
+                                    <a class="dropdown-item" href="#">Something else here</a>
+                                </div>
+                            </div>
 
                             <router-link class="btn btn-card "
                                     :to="{ path: '/'}">
@@ -36,13 +50,19 @@
 
                 <div class="card-body">
 
-                    <table v-if="edit == false" class="table table-striped table-sm table-condensed table-form">
+                    <table v-if="edit == false" class="table table-striped table-sm table-condensed  table-form table-form-view">
                         <t-view v-if="columns"  :columns="columns" ></t-view>
                     </table>
 
-                    <table v-else class="table table-striped table-sm table-condensed table-form table-form-dashed">
+                    <table v-else class="table table-striped table-sm table-condensed  table-form table-form-dashed">
                         <t-form v-if="columns"  :columns="columns" @emittedItem="updateItem" ></t-form>
                     </table>
+
+                </div>
+
+                <div v-if="edit == true" class="card-footer">
+
+                    <button @click="store" class="btn btn-primary">Save</button>
 
                 </div>
 
@@ -54,4 +74,4 @@
 
 
 </template>
-<script src="./RegistrationViewEditJs.js"></script>
+<script src="./ViewEditJs.js"></script>

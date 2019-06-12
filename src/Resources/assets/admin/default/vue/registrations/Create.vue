@@ -44,4 +44,4 @@
 
 
 </template>
-<script src="./RegistrationAddJs.js"></script>
+<script src="./CreateJs.js"></script>
