@@ -7,7 +7,9 @@
                 <div class="card-header">
 
                     <div class="d-flex">
-                        <div class="align-self-center tx-15 flex-grow-1"><strong>Pradeep Kumar</strong></div>
+                        <div class="align-self-center tx-15 flex-grow-1" >
+                            <strong>ID: {{id}}</strong>
+                        </div>
                         <div class=" mg-l-auto btn-group btn-group-xs">
 
 
@@ -15,11 +17,6 @@
                                     @click="toggleEdit">
                                 <i class="fas fa-pencil-alt"></i>
                             </button>
-
-                            <router-link class="btn btn-card "
-                                    :to="{ path: '/add'}">
-                                <i class="fas fa-ellipsis-v"></i>
-                            </router-link>
 
                             <div class="dropdown">
                                 <a class="btn btn-card dropdown-toggle"
@@ -29,10 +26,9 @@
                                     <i class="fas fa-ellipsis-v"></i>
                                 </a>
 
-                                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                    <a class="dropdown-item" href="#">Action</a>
-                                    <a class="dropdown-item" href="#">Another action</a>
-                                    <a class="dropdown-item" href="#">Something else here</a>
+                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuLink">
+                                    <a class="dropdown-item" href="#">Send Activation Email</a>
+                                    <a class="dropdown-item text-danger" href="#">Delete</a>
                                 </div>
                             </div>
 

@@ -19,7 +19,7 @@
 
         <div class="row">
 
-            <registrations></registrations>
+            <registrations :urls="urls" :assets="assets"></registrations>
 
             <router-view :urls="urls" :assets="assets"></router-view>
 

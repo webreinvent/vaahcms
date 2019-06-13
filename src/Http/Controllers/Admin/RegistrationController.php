@@ -63,6 +63,39 @@ class RegistrationController extends Controller
 
     }
     //----------------------------------------------------------
+    public function getList(Request $request)
+    {
+
+
+        if($request->has("sort_by") && !is_null($request->sort_by))
+        {
+            $list = Registration::orderBy($request->sort_by, $request->sort_type);
+        } else
+        {
+            $list = Registration::orderBy('created_at', 'DESC');
+        }
+
+        if($request->has("q"))
+        {
+            $list->where(function ($q) use ($request){
+                $q->where('first_name', 'LIKE', '%'.$request->q.'%')
+                    ->orWhere('middle_name', 'LIKE', '%'.$request->q.'%')
+                    ->orWhere('email', 'LIKE', '%'.$request->q.'%')
+                    ->orWhere('id', '=', $request->q)
+                    ->orWhere('last_name', 'LIKE', '%'.$request->q.'%');
+            });
+        }
+
+
+
+        $data['list'] = $list->paginate(config('vaahcms.per_page'));
+
+        $response['status'] = 'success';
+        $response['data'] = $data;
+
+        return response()->json($response);
+
+    }
     //----------------------------------------------------------
 
 

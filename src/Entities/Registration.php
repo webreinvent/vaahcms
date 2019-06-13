@@ -43,8 +43,122 @@ class Registration extends Model
 
     //-------------------------------------------------
     protected $appends  = [
-
+        'name'
     ];
+
+    //-------------------------------------------------
+
+    //-------------------------------------------------
+    public function setFirstNameAttribute($value)
+    {
+        $this->attributes['first_name'] = ucfirst($value);
+    }
+    //-------------------------------------------------
+    public function setMiddleNameAttribute($value)
+    {
+        $this->attributes['middle_name'] = ucfirst($value);
+    }
+    //-------------------------------------------------
+    public function setLastNameAttribute($value)
+    {
+        $this->attributes['last_name'] = ucfirst($value);
+    }
+    //-------------------------------------------------
+    public function setEmailAttribute($value)
+    {
+        $this->attributes['email'] = strtolower($value);
+    }
+    //-------------------------------------------------
+    public function getNameAttribute() {
+        return $this->first_name." ".$this->last_name;
+    }
+    //-------------------------------------------------
+
+    //-------------------------------------------------
+    public function scopeStatus($query, $status)
+    {
+        return $query->where('status', $status);
+    }
+    //-------------------------------------------------
+    public function scopeUsername($query, $username)
+    {
+        return $query->where('username', $username);
+    }
+
+    //-------------------------------------------------
+    public function scopeEmail($query, $email)
+    {
+        return $query->where('email', $email);
+    }
+
+    //-------------------------------------------------
+    public function scopeActivatedBetween($query, $from, $to)
+    {
+        return $query->whereBetween('activated_at', array($from, $to));
+    }
+
+    //-------------------------------------------------
+    public function scopeCreatedBy($query, $user_id)
+    {
+        return $query->where('created_by', $user_id);
+    }
+
+    //-------------------------------------------------
+    public function scopeUpdatedBy($query, $user_id)
+    {
+        return $query->where('updated_by', $user_id);
+    }
+
+    //-------------------------------------------------
+    public function scopeDeletedBy($query, $user_id)
+    {
+        return $query->where('deleted_by', $user_id);
+    }
+
+    //-------------------------------------------------
+    public function scopeCreatedBetween($query, $from, $to)
+    {
+        return $query->whereBetween('created_at', array($from, $to));
+    }
+
+    //-------------------------------------------------
+    public function scopeUpdatedBetween($query, $from, $to)
+    {
+        return $query->whereBetween('updated_at', array($from, $to));
+    }
+
+    //-------------------------------------------------
+    public function scopeDeletedBetween($query, $from, $to)
+    {
+        return $query->whereBetween('deleted_at', array($from, $to));
+    }
+
+
+    //-------------------------------------------------
+
+    //-------------------------------------------------
+    public function createdBy()
+    {
+        return $this->belongsTo('WebReinvent\VaahCms\Entities\User',
+            'created_by', 'id'
+        );
+    }
+
+    //-------------------------------------------------
+    public function updatedBy()
+    {
+        return $this->belongsTo('WebReinvent\VaahCms\Entities\User',
+            'updated_by', 'id'
+        );
+    }
+
+    //-------------------------------------------------
+    public function deletedBy()
+    {
+        return $this->belongsTo('WebReinvent\VaahCms\Entities\User',
+            'deleted_by', 'id'
+        );
+    }
 
     //-------------------------------------------------
     public function getTableColumns() {
@@ -61,7 +175,7 @@ class Registration extends Model
             'alternate_email', 'avatar_url', 'birth', 'country',
             'status', 'invited_by',
             'user_id',
-            ];
+        ];
 
         return $list;
     }
@@ -184,114 +298,6 @@ class Registration extends Model
 
         return $result;
     }
-    //-------------------------------------------------
-    public function setFirstNameAttribute($value)
-    {
-        $this->attributes['first_name'] = ucfirst($value);
-    }
-    //-------------------------------------------------
-    public function setMiddleNameAttribute($value)
-    {
-        $this->attributes['middle_name'] = ucfirst($value);
-    }
-    //-------------------------------------------------
-    public function setLastNameAttribute($value)
-    {
-        $this->attributes['last_name'] = ucfirst($value);
-    }
-    //-------------------------------------------------
-    public function setEmailAttribute($value)
-    {
-        $this->attributes['email'] = strtolower($value);
-    }
-    //-------------------------------------------------
-
-    //-------------------------------------------------
-    public function scopeStatus($query, $status)
-    {
-        return $query->where('status', $status);
-    }
-    //-------------------------------------------------
-    public function scopeUsername($query, $username)
-    {
-        return $query->where('username', $username);
-    }
-
-    //-------------------------------------------------
-    public function scopeEmail($query, $email)
-    {
-        return $query->where('email', $email);
-    }
-
-    //-------------------------------------------------
-    public function scopeActivatedBetween($query, $from, $to)
-    {
-        return $query->whereBetween('activated_at', array($from, $to));
-    }
-
-    //-------------------------------------------------
-    public function scopeCreatedBy($query, $user_id)
-    {
-        return $query->where('created_by', $user_id);
-    }
-
-    //-------------------------------------------------
-    public function scopeUpdatedBy($query, $user_id)
-    {
-        return $query->where('updated_by', $user_id);
-    }
-
-    //-------------------------------------------------
-    public function scopeDeletedBy($query, $user_id)
-    {
-        return $query->where('deleted_by', $user_id);
-    }
-
-    //-------------------------------------------------
-    public function scopeCreatedBetween($query, $from, $to)
-    {
-        return $query->whereBetween('created_at', array($from, $to));
-    }
-
-    //-------------------------------------------------
-    public function scopeUpdatedBetween($query, $from, $to)
-    {
-        return $query->whereBetween('updated_at', array($from, $to));
-    }
-
-    //-------------------------------------------------
-    public function scopeDeletedBetween($query, $from, $to)
-    {
-        return $query->whereBetween('deleted_at', array($from, $to));
-    }
-
-
-    //-------------------------------------------------
-
-    //-------------------------------------------------
-    public function createdBy()
-    {
-        return $this->belongsTo('WebReinvent\VaahCms\Entities\User',
-            'created_by', 'id'
-        );
-    }
-
-    //-------------------------------------------------
-    public function updatedBy()
-    {
-        return $this->belongsTo('WebReinvent\VaahCms\Entities\User',
-            'updated_by', 'id'
-        );
-    }
-
-    //-------------------------------------------------
-    public function deletedBy()
-    {
-        return $this->belongsTo('WebReinvent\VaahCms\Entities\User',
-            'deleted_by', 'id'
-        );
-    }
-
     //-------------------------------------------------
     public static function findByUsername($username, $columns = array('*'))
     {

@@ -1,20 +1,26 @@
 import pagination from 'laravel-vue-pagination';
+import {isObject} from "vue-resource/src/util";
+import { ToggleButton } from 'vue-js-toggle-button'
 
     export default {
 
-        props: ['urls'],
+        props: ['urls', 'assets'],
         components:{
             'pagination': pagination,
+            'ToggleButton': ToggleButton,
         },
         data()
         {
             let obj = {
-                assets: null,
                 q: null,
                 page: 1,
                 list: null,
+                show_filters: false,
+                table_collapsed: false,
                 filters: {
                     q: null,
+                    sort_by: null,
+                    sort_type: 'desc',
                     status: 'all',
                 }
             };
@@ -23,13 +29,16 @@ import pagination from 'laravel-vue-pagination';
         },
         watch: {
 
-
+            '$route' (to, from) {
+                this.setTableCollapseStatus();
+            }
 
         },
         mounted() {
 
             //---------------------------------------------------------------------
-            //this.getAssets();
+            this.getList();
+            this.setTableCollapseStatus();
             //---------------------------------------------------------------------
             //---------------------------------------------------------------------
             //---------------------------------------------------------------------
@@ -38,28 +47,7 @@ import pagination from 'laravel-vue-pagination';
         },
         methods: {
             //---------------------------------------------------------------------
-            getAssets: function (e) {
-                if(e)
-                {
-                    e.preventDefault();
-                }
 
-                console.log(this.urls);
-
-                var url = this.urls.current+"/assets";
-                var params = {};
-                this.$helpers.ajax(url, params, this.getAssetsAfter);
-            },
-            //---------------------------------------------------------------------
-            getAssetsAfter: function (data) {
-
-                this.assets = data;
-
-                this.$helpers.console(this.assets, 'from app->');
-
-                this.getList();
-
-            },
             //---------------------------------------------------------------------
 
             getList: function (page) {
@@ -67,24 +55,22 @@ import pagination from 'laravel-vue-pagination';
 
                 var url = this.urls.current+"/list";
 
-                if(!page)
+                if(!page || isObject(page))
                 {
                     page = this.page;
                 }
 
-                if(this.page)
-                {
-                    url = url+"?page="+page;
-                }
+                this.$helpers.console(page, 'page');
 
-                url = url+"&status="+this.filters.status;
+                url = url+"?page="+page;
+
 
                 if(this.filters.q)
                 {
                     url = url+"&q="+this.filters.q;
                 }
 
-                var params = {};
+                var params = this.filters;
                 this.$helpers.ajax(url, params, this.getListAfter);
 
             },
@@ -92,7 +78,6 @@ import pagination from 'laravel-vue-pagination';
             getListAfter: function (data) {
 
                 this.list = data.list;
-                this.stats = data.stats;
                 this.page = data.list.current_page;
 
                 this.$helpers.console(this.list);
@@ -100,6 +85,18 @@ import pagination from 'laravel-vue-pagination';
                 this.$helpers.stopNprogress();
 
             },
+
+            //---------------------------------------------------------------------
+            toggleShowFilters: function () {
+                if(this.show_filters == true)
+                {
+                    this.show_filters = false;
+                } else
+                {
+                    this.show_filters = true;
+                }
+            },
+            //---------------------------------------------------------------------
 
             //---------------------------------------------------------------------
             actions: function (e, action, inputs, data) {
@@ -122,64 +119,43 @@ import pagination from 'laravel-vue-pagination';
                 this.getList();
             },
             //---------------------------------------------------------------------
-            getThemesSlugs: function (e) {
-                if(e)
+            setSorting: function (column_name) {
+
+                if(column_name === this.filters.sort_by)
                 {
-                    e.preventDefault();
+                    if(this.filters.sort_type === 'desc')
+                    {
+                        this.filters.sort_type = 'asc';
+                    } else
+                    {
+                        this.filters.sort_type = 'desc';
+                    }
+                } else
+                {
+                    this.filters.sort_by = column_name;
+                    this.filters.sort_type = 'desc';
                 }
 
-                var url = this.urls.current+"/get/slugs";
-                var params = {};
-                this.$helpers.ajax(url, params, this.getThemesSlugsAfter);
-            },
-            //---------------------------------------------------------------------
-            getThemesSlugsAfter: function (data) {
-                this.getThemesUpdates(data);
-            },
-            //---------------------------------------------------------------------
-            getThemesUpdates: function (comma_separated_slug) {
-
-                var url = this.assets.vaahcms_api_route+"/theme/updates";
-
-                this.$helpers.console(url);
-
-                var params = {slugs: comma_separated_slug};
-                this.$helpers.ajax(url, params, this.getThemesUpdatesAfter);
-            },
-            //---------------------------------------------------------------------
-            getThemesUpdatesAfter: function (data) {
-
-                this.updateThemesVersion(data);
+                this.getList(this.page);
 
             },
             //---------------------------------------------------------------------
-            //---------------------------------------------------------------------
-            updateThemesVersion: function (data) {
+            setTableCollapseStatus: function () {
 
-                var url = this.urls.current+"/update/versions";
-                var params = {themes: data};
-                this.$helpers.ajax(url, params, this.updateThemesVersionAfter);
-            },
-            //---------------------------------------------------------------------
-            updateThemesVersionAfter: function (data) {
-                this.getList();
-            },
-            //---------------------------------------------------------------------
-            installUpdates: function (e, slug) {
-                if(e)
+                this.$helpers.console(this.$route.params);
+
+                if(this.$route.params.id)
                 {
-                    e.preventDefault();
+                    this.table_collapsed = true;
+                } else
+                {
+                    this.table_collapsed = false;
                 }
 
-                var url = this.urls.current+"/install/updates";
-                var params = {slug: slug};
-                this.$helpers.ajax(url, params, this.installUpdatesAfter);
-            },
+
+            }
             //---------------------------------------------------------------------
-            installUpdatesAfter: function (data) {
-                this.getList();
-            },
-            //---------------------------------------------------------------------
+
             //---------------------------------------------------------------------
             //---------------------------------------------------------------------
         }

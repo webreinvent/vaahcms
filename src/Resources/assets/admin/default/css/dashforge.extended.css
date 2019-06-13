@@ -163,3 +163,73 @@ body{
 }
 
 
+.table-sortable > thead > tr > th {
+    background-color: #f3f4f7;
+}
+
+.table-sortable .table-search {
+    background-color: #fff;
+
+}
+
+.table-sortable .table-search .btn{
+    background-color: #fff;
+
+}
+
+.table-sortable > thead > tr > th.sortable {
+    cursor: pointer;
+    position: relative;
+    background-color: #f3f4f7;
+}
+
+.table-sortable > thead > tr > th.sortable:after,
+.table-sortable > thead > tr > th.sortable:after,
+.table-sortable > thead > tr > th.sortable:after {
+    content: ' ';
+    position: absolute;
+    height: 0;
+    width: 0;
+    right: 10px;
+    top: 12px;
+}
+
+/* Default sortable indicator */
+.table-sortable > thead > tr > th.sortable:after {
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 5px solid #ccc;
+    border-bottom: 0px solid transparent;
+}
+/* !Default */
+
+/* Default sortable indicator:hover */
+.table-sortable > thead > tr > th.sortable:hover:after {
+    border-top: 5px solid #888;
+}
+/* !Default:hover */
+
+/* Ascending sortable indicator */
+.table-sortable > thead > tr > th.sortable.asc:after {
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 0px solid transparent;
+    border-bottom: 5px solid #333;
+}
+.table-sortable > thead > tr > th.sortable.asc:hover:after {
+    border-bottom: 5px solid #888;
+}
+/* !Ascending */
+
+/* Descending sortable indicator */
+.table-sortable > thead > tr > th.sortable.desc:after {
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 5px solid #333;
+    border-bottom: 5px solid transparent;
+}
+/* !Descending */
+
+
+
+

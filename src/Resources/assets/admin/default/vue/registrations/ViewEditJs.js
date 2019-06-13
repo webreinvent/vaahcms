@@ -40,7 +40,6 @@ import TView from './../reusable/TableViewGenerator';
             //---------------------------------------------------------------------
             getDetails: function () {
 
-
                 var url = this.urls.current+"/view/"+this.id;
 
                 console.log(url, 'url-->');

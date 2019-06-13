@@ -205,6 +205,9 @@ Route::group(
         Route::any( '/assets', 'RegistrationController@assets' )
             ->name( 'vh.admin.assets' );
         //------------------------------------------------
+        Route::any( '/list', 'RegistrationController@getList' )
+            ->name( 'vh.admin.registrations.list' );
+        //------------------------------------------------
         Route::any( '/store', 'RegistrationController@store' )
             ->name( 'vh.admin.registrations.store' );
         //------------------------------------------------
