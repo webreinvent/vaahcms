@@ -21,6 +21,10 @@ import TView from './../reusable/TableViewGenerator';
         },
         watch: {
 
+            id: function (newVal, oldVal) {
+                this.getDetails();
+            }
+
         },
         created() {
 
@@ -49,6 +53,7 @@ import TView from './../reusable/TableViewGenerator';
             },
             //---------------------------------------------------------------------
             getDetailsAfter: function (data) {
+                this.columns = null;
                 this.columns = data;
                 this.$helpers.stopNprogress();
             },

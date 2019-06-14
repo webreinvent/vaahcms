@@ -69,7 +69,15 @@ class RegistrationController extends Controller
 
         if($request->has("sort_by") && !is_null($request->sort_by))
         {
-            $list = Registration::orderBy($request->sort_by, $request->sort_type);
+
+            if($request->sort_by == 'deleted_at')
+            {
+                $list = Registration::onlyTrashed();
+            } else
+            {
+                $list = Registration::orderBy($request->sort_by, $request->sort_type);
+            }
+
         } else
         {
             $list = Registration::orderBy('created_at', 'DESC');
@@ -96,6 +104,59 @@ class RegistrationController extends Controller
         return response()->json($response);
 
     }
+    //----------------------------------------------------------
+    public function actions(Request $request)
+    {
+        $rules = array(
+            'action' => 'required',
+            'inputs' => 'required',
+        );
+
+        $validator = \Validator::make( $request->all(), $rules);
+        if ( $validator->fails() ) {
+
+            $errors             = errorsToArray($validator->errors());
+            $response['status'] = 'failed';
+            $response['errors'] = $errors;
+            return response()->json($response);
+        }
+
+        $response = [];
+
+        switch ($request->action)
+        {
+
+            //------------------------------------
+            case 'bulk_change_status':
+
+                $response = Registration::bulkStatusChange($request);
+
+                break;
+            //------------------------------------
+            case 'bulk_delete':
+
+                $response = Registration::bulkDelete($request);
+
+                break;
+            //------------------------------------
+            case 'bulk_restore':
+
+                $response = Registration::bulkRestore($request);
+
+                break;
+
+            //------------------------------------
+            //------------------------------------
+
+        }
+
+        return response()->json($response);
+
+    }
+    //----------------------------------------------------------
+
+    //----------------------------------------------------------
+    //----------------------------------------------------------
     //----------------------------------------------------------
 
 

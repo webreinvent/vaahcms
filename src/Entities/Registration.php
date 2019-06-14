@@ -486,7 +486,104 @@ class Registration extends Model
         return $result;
     }
     //-------------------------------------------------
+    public static function bulkStatusChange($request)
+    {
+
+        if(!$request->has('inputs'))
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = 'Select IDs';
+            return $response;
+        }
+
+        if(!$request->has('data'))
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = 'Select Status';
+            return $response;
+        }
+
+        foreach($request->inputs as $id)
+        {
+            $reg = Registration::find($id);
+            $reg->status = $request->data;
+            $reg->save();
+        }
+
+        $response['status'] = 'success';
+        $response['messages'][] = 'Action was successful';
+
+        return $response;
+
+
+    }
     //-------------------------------------------------
+    public static function bulkDelete($request)
+    {
+
+        if(!$request->has('inputs'))
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = 'Select IDs';
+            return $response;
+        }
+
+        if(!$request->has('data'))
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = 'Select Status';
+            return $response;
+        }
+
+        foreach($request->inputs as $id)
+        {
+            $reg = Registration::find($id);
+            if($reg)
+            {
+                $reg->delete();
+            }
+        }
+
+        $response['status'] = 'success';
+        $response['messages'][] = 'Action was successful';
+
+        return $response;
+
+
+    }
     //-------------------------------------------------
+    public static function bulkRestore($request)
+    {
+
+        if(!$request->has('inputs'))
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = 'Select IDs';
+            return $response;
+        }
+
+        if(!$request->has('data'))
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = 'Select Status';
+            return $response;
+        }
+
+        foreach($request->inputs as $id)
+        {
+            $reg = Registration::withTrashed()->where('id', $id)->first();
+            if(isset($reg) && isset($reg->deleted_at))
+            {
+                $reg->restore();
+            }
+        }
+
+        $response['status'] = 'success';
+        $response['messages'][] = 'Action was successful';
+
+        return $response;
+
+
+    }
     //-------------------------------------------------
 }

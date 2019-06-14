@@ -1,5 +1,7 @@
 import pagination from 'laravel-vue-pagination';
 import {isObject} from "vue-resource/src/util";
+
+//https://github.com/euvl/vue-js-toggle-button
 import { ToggleButton } from 'vue-js-toggle-button'
 
     export default {
@@ -17,9 +19,13 @@ import { ToggleButton } from 'vue-js-toggle-button'
                 list: null,
                 show_filters: false,
                 table_collapsed: false,
+                select_all: false,
+                selected_items: [],
+                bulk_action: "",
+                bulk_action_data: "",
                 filters: {
                     q: null,
-                    sort_by: null,
+                    sort_by: "",
                     sort_type: 'desc',
                     status: 'all',
                 }
@@ -119,6 +125,14 @@ import { ToggleButton } from 'vue-js-toggle-button'
                 this.getList();
             },
             //---------------------------------------------------------------------
+            bulkAction: function () {
+
+                var inputs = this.selected_items;
+                var data = this.bulk_action_data;
+                this.actions(false, this.bulk_action, inputs, data)
+
+            },
+            //---------------------------------------------------------------------
             setSorting: function (column_name) {
 
                 if(column_name === this.filters.sort_by)
@@ -153,9 +167,56 @@ import { ToggleButton } from 'vue-js-toggle-button'
                 }
 
 
-            }
+            },
+            //---------------------------------------------------------------------
+            toggleSelectAll: function () {
+
+                var self = this;
+
+                this.$helpers.console("test");
+
+                if(this.select_all ===true)
+                {
+                    this.select_all = false;
+                    this.selected_items = [];
+
+                } else
+                {
+                    this.select_all = true;
+
+                    if(this.list.data)
+                    {
+
+                        this.$helpers.console(this.list.data);
+
+                        this.list.data.map(function (item) {
+
+
+                            self.selected_items.push(item.id);
+
+                        })
+                    }
+
+                }
+            },
+            //---------------------------------------------------------------------
+            toggleSelectedItem: function (id) {
+
+                this.select_all = false;
+
+                if(this.$helpers.existInArray(this.selected_items, id))
+                {
+                    this.$helpers.removeFromArray(this.selected_items, id);
+                } else
+                {
+                    this.selected_items.push(id);
+                }
+            },
+            //---------------------------------------------------------------------
             //---------------------------------------------------------------------
 
+            //---------------------------------------------------------------------
+            //---------------------------------------------------------------------
             //---------------------------------------------------------------------
             //---------------------------------------------------------------------
         }

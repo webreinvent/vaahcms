@@ -2091,6 +2091,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue_js_toggle_button__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vue-js-toggle-button */ "./node_modules/vue-js-toggle-button/dist/index.js");
 /* harmony import */ var vue_js_toggle_button__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(vue_js_toggle_button__WEBPACK_IMPORTED_MODULE_2__);
 
+ //https://github.com/euvl/vue-js-toggle-button
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -2106,9 +2107,13 @@ __webpack_require__.r(__webpack_exports__);
       list: null,
       show_filters: false,
       table_collapsed: false,
+      select_all: false,
+      selected_items: [],
+      bulk_action: "",
+      bulk_action_data: "",
       filters: {
         q: null,
-        sort_by: null,
+        sort_by: "",
         sort_type: 'desc',
         status: 'all'
       }
@@ -2183,6 +2188,12 @@ __webpack_require__.r(__webpack_exports__);
       this.getList();
     },
     //---------------------------------------------------------------------
+    bulkAction: function bulkAction() {
+      var inputs = this.selected_items;
+      var data = this.bulk_action_data;
+      this.actions(false, this.bulk_action, inputs, data);
+    },
+    //---------------------------------------------------------------------
     setSorting: function setSorting(column_name) {
       if (column_name === this.filters.sort_by) {
         if (this.filters.sort_type === 'desc') {
@@ -2206,7 +2217,39 @@ __webpack_require__.r(__webpack_exports__);
       } else {
         this.table_collapsed = false;
       }
+    },
+    //---------------------------------------------------------------------
+    toggleSelectAll: function toggleSelectAll() {
+      var self = this;
+      this.$helpers.console("test");
+
+      if (this.select_all === true) {
+        this.select_all = false;
+        this.selected_items = [];
+      } else {
+        this.select_all = true;
+
+        if (this.list.data) {
+          this.$helpers.console(this.list.data);
+          this.list.data.map(function (item) {
+            self.selected_items.push(item.id);
+          });
+        }
+      }
+    },
+    //---------------------------------------------------------------------
+    toggleSelectedItem: function toggleSelectedItem(id) {
+      this.select_all = false;
+
+      if (this.$helpers.existInArray(this.selected_items, id)) {
+        this.$helpers.removeFromArray(this.selected_items, id);
+      } else {
+        this.selected_items.push(id);
+      }
     } //---------------------------------------------------------------------
+    //---------------------------------------------------------------------
+    //---------------------------------------------------------------------
+    //---------------------------------------------------------------------
     //---------------------------------------------------------------------
     //---------------------------------------------------------------------
 
@@ -2243,7 +2286,11 @@ __webpack_require__.r(__webpack_exports__);
     };
     return obj;
   },
-  watch: {},
+  watch: {
+    id: function id(newVal, oldVal) {
+      this.getDetails();
+    }
+  },
   created: function created() {},
   mounted: function mounted() {
     //---------------------------------------------------------------------
@@ -2263,6 +2310,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     //---------------------------------------------------------------------
     getDetailsAfter: function getDetailsAfter(data) {
+      this.columns = null;
       this.columns = data;
       this.$helpers.stopNprogress();
     },
@@ -58043,26 +58091,33 @@ var render = function() {
                     ],
                     staticClass: "custom-select custom-select-sm",
                     on: {
-                      change: function($event) {
-                        var $$selectedVal = Array.prototype.filter
-                          .call($event.target.options, function(o) {
-                            return o.selected
-                          })
-                          .map(function(o) {
-                            var val = "_value" in o ? o._value : o.value
-                            return val
-                          })
-                        _vm.$set(
-                          _vm.filters,
-                          "sort_by",
-                          $event.target.multiple
-                            ? $$selectedVal
-                            : $$selectedVal[0]
-                        )
-                      }
+                      change: [
+                        function($event) {
+                          var $$selectedVal = Array.prototype.filter
+                            .call($event.target.options, function(o) {
+                              return o.selected
+                            })
+                            .map(function(o) {
+                              var val = "_value" in o ? o._value : o.value
+                              return val
+                            })
+                          _vm.$set(
+                            _vm.filters,
+                            "sort_by",
+                            $event.target.multiple
+                              ? $$selectedVal
+                              : $$selectedVal[0]
+                          )
+                        },
+                        _vm.getList
+                      ]
                     }
                   },
                   [
+                    _c("option", { attrs: { value: "" } }, [
+                      _vm._v("Select Sort By")
+                    ]),
+                    _vm._v(" "),
                     _c("option", { attrs: { value: "first_name" } }, [
                       _vm._v("First Name")
                     ]),
@@ -58075,8 +58130,8 @@ var render = function() {
                       _vm._v("Created At")
                     ]),
                     _vm._v(" "),
-                    _c("option", { attrs: { value: "created_by" } }, [
-                      _vm._v("Deleted At")
+                    _c("option", { attrs: { value: "deleted_at" } }, [
+                      _vm._v("Show Deleted")
                     ])
                   ]
                 )
@@ -58086,16 +58141,156 @@ var render = function() {
         : _vm._e(),
       _vm._v(" "),
       _c("div", { staticClass: "card-body" }, [
+        _c("div", { staticClass: "row mg-b-10" }, [
+          _c("div", { staticClass: "col-sm-12" }, [
+            _c(
+              "div",
+              {
+                staticClass: "input-group input-group-sm",
+                staticStyle: { "max-width": "350px" }
+              },
+              [
+                _c(
+                  "select",
+                  {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.bulk_action,
+                        expression: "bulk_action"
+                      }
+                    ],
+                    staticClass: "custom-select",
+                    staticStyle: { "max-width": "150px" },
+                    on: {
+                      change: function($event) {
+                        var $$selectedVal = Array.prototype.filter
+                          .call($event.target.options, function(o) {
+                            return o.selected
+                          })
+                          .map(function(o) {
+                            var val = "_value" in o ? o._value : o.value
+                            return val
+                          })
+                        _vm.bulk_action = $event.target.multiple
+                          ? $$selectedVal
+                          : $$selectedVal[0]
+                      }
+                    }
+                  },
+                  [
+                    _c("option", { attrs: { value: "" } }, [
+                      _vm._v("Bulk Actions")
+                    ]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "bulk_change_status" } }, [
+                      _vm._v("Change Status")
+                    ]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "bulk_delete" } }, [
+                      _vm._v("Delete")
+                    ]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "bulk_restore" } }, [
+                      _vm._v("Restore")
+                    ])
+                  ]
+                ),
+                _vm._v(" "),
+                _vm.bulk_action && _vm.bulk_action == "bulk_change_status"
+                  ? _c(
+                      "select",
+                      {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.bulk_action_data,
+                            expression: "bulk_action_data"
+                          }
+                        ],
+                        staticClass: "custom-select",
+                        attrs: { width: "max-width: 150px" },
+                        on: {
+                          change: function($event) {
+                            var $$selectedVal = Array.prototype.filter
+                              .call($event.target.options, function(o) {
+                                return o.selected
+                              })
+                              .map(function(o) {
+                                var val = "_value" in o ? o._value : o.value
+                                return val
+                              })
+                            _vm.bulk_action_data = $event.target.multiple
+                              ? $$selectedVal
+                              : $$selectedVal[0]
+                          }
+                        }
+                      },
+                      [
+                        _c("option", { attrs: { value: "" } }, [
+                          _vm._v("Select Status")
+                        ]),
+                        _vm._v(" "),
+                        _c(
+                          "option",
+                          { attrs: { value: "activation_pending" } },
+                          [_vm._v("Activation Pending")]
+                        ),
+                        _vm._v(" "),
+                        _c("option", { attrs: { value: "registered" } }, [
+                          _vm._v("Registered")
+                        ])
+                      ]
+                    )
+                  : _vm._e(),
+                _vm._v(" "),
+                _c("div", { staticClass: "input-group-append" }, [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-outline-secondary",
+                      attrs: { type: "button" },
+                      on: { click: _vm.bulkAction }
+                    },
+                    [_vm._v("Apply")]
+                  )
+                ])
+              ]
+            )
+          ])
+        ]),
+        _vm._v(" "),
         _vm.list
           ? _c(
               "table",
               {
                 staticClass:
-                  "table table-striped table-sm table-condensed table-sortable"
+                  "table table-striped table-sm table-condensed table-sortable mg-b-0"
               },
               [
                 _c("thead", [
                   _c("tr", [
+                    _c("th", { attrs: { width: "20" } }, [
+                      _c(
+                        "div",
+                        { staticClass: "custom-control custom-checkbox" },
+                        [
+                          _c("input", {
+                            staticClass: "custom-control-input",
+                            attrs: { type: "checkbox", id: "checkAll" },
+                            on: { click: _vm.toggleSelectAll }
+                          }),
+                          _vm._v(" "),
+                          _c("label", {
+                            staticClass: "custom-control-label",
+                            attrs: { for: "checkAll" }
+                          })
+                        ]
+                      )
+                    ]),
+                    _vm._v(" "),
                     _c(
                       "th",
                       {
@@ -58108,7 +58303,7 @@ var render = function() {
                             _vm.filters.sort_by === "id" &&
                             _vm.filters.sort_type === "desc"
                         },
-                        attrs: { width: "80" },
+                        attrs: { width: "50" },
                         on: {
                           click: function($event) {
                             return _vm.setSorting("id")
@@ -58207,7 +58402,7 @@ var render = function() {
                     _c("tr", [
                       _c(
                         "td",
-                        { staticClass: "pd-0-f", attrs: { colspan: "6" } },
+                        { staticClass: "pd-0-f", attrs: { colspan: "7" } },
                         [
                           _c(
                             "div",
@@ -58275,6 +58470,38 @@ var render = function() {
                     _vm._v(" "),
                     _vm._l(_vm.list.data, function(item) {
                       return _c("tr", [
+                        _c("td", [
+                          _c(
+                            "div",
+                            { staticClass: "custom-control custom-checkbox" },
+                            [
+                              _c("input", {
+                                staticClass: "custom-control-input",
+                                attrs: {
+                                  type: "checkbox",
+                                  id: "check-" + item.id
+                                },
+                                domProps: {
+                                  checked: _vm.$helpers.existInArray(
+                                    _vm.selected_items,
+                                    item.id
+                                  )
+                                },
+                                on: {
+                                  click: function($event) {
+                                    return _vm.toggleSelectedItem(item.id)
+                                  }
+                                }
+                              }),
+                              _vm._v(" "),
+                              _c("label", {
+                                staticClass: "custom-control-label",
+                                attrs: { for: "check-" + item.id }
+                              })
+                            ]
+                          )
+                        ]),
+                        _vm._v(" "),
                         _c("td", [_vm._v(_vm._s(item.id))]),
                         _vm._v(" "),
                         _c("td", [_vm._v(_vm._s(item.name))]),
@@ -58334,7 +58561,7 @@ var render = function() {
           : _vm._e()
       ]),
       _vm._v(" "),
-      _vm.list
+      _vm.list && _vm.list.last_page > 1
         ? _c(
             "div",
             { staticClass: "card-footer" },
