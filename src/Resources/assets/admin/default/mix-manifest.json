@@ -1,9 +1,8 @@
 {
-    "/builds/app-dashboard.js": "/builds/app-dashboard.js?id=246711ebb00349e53886",
-    "/builds/app-modules.js": "/builds/app-modules.js?id=1f7b876f9626df2278d1",
-    "/builds/app-registrations.js": "/builds/app-registrations.js?id=598bee6ff0c4caf41528",
-    "/builds/app-setup.js": "/builds/app-setup.js?id=1deb6f6cd443beeb4f30",
-    "/builds/app-themes.js": "/builds/app-themes.js?id=23c6eb20d5b2259a2df8",
-    "/builds/vaahcms.css": "/builds/vaahcms.css?id=b6c8c3cd9597a4908315",
-    "/builds/vaahcms.js": "/builds/vaahcms.js?id=c6c9817292a99e7f3530"
+    "/builds/app-dashboard.js": "/builds/app-dashboard.js",
+    "/builds/app-modules.js": "/builds/app-modules.js",
+    "/builds/app-registrations.js": "/builds/app-registrations.js",
+    "/builds/app-setup.js": "/builds/app-setup.js",
+    "/builds/app-themes.js": "/builds/app-themes.js",
+    "/builds/app-users.js": "/builds/app-users.js"
 }

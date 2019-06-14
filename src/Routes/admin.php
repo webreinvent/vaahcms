@@ -203,7 +203,7 @@ Route::group(
             ->name( 'vh.admin.registrations' );
         //------------------------------------------------
         Route::any( '/assets', 'RegistrationController@assets' )
-            ->name( 'vh.admin.assets' );
+            ->name( 'vh.admin.registrations.assets' );
         //------------------------------------------------
         Route::any( '/list', 'RegistrationController@getList' )
             ->name( 'vh.admin.registrations.list' );
@@ -216,5 +216,35 @@ Route::group(
         //------------------------------------------------
         Route::any( '/view/{id}', 'RegistrationController@getDetails' )
             ->name( 'vh.admin.registrations.view' );
+        //------------------------------------------------
+    });
+
+
+
+Route::group(
+    [
+        'prefix'     => 'admin/users',
+        'middleware' => ['web','has.admin.access'],
+        'namespace'  => 'WebReinvent\VaahCms\Http\Controllers\Admin'
+    ],
+    function () {
+        //------------------------------------------------
+        Route::get( '/', 'UserController@index' )
+            ->name( 'vh.admin.users' );
+        //------------------------------------------------
+        Route::any( '/assets', 'UserController@assets' )
+            ->name( 'vh.admin.users.assets' );
+        //------------------------------------------------
+        Route::any( '/list', 'UserController@getList' )
+            ->name( 'vh.admin.users.list' );
+        //------------------------------------------------
+        Route::any( '/actions', 'UserController@actions' )
+            ->name( 'vh.admin.users.actions' );
+        //------------------------------------------------
+        Route::any( '/store', 'UserController@store' )
+            ->name( 'vh.admin.users.store' );
+        //------------------------------------------------
+        Route::any( '/view/{id}', 'UserController@getDetails' )
+            ->name( 'vh.admin.users.view' );
         //------------------------------------------------
     });
