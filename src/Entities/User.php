@@ -9,13 +9,15 @@ use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Support\Facades\Password;
+use WebReinvent\VaahCms\Traits\CrudWithUidObservantTrait;
 
 class User extends Authenticatable
 {
 
     use Notifiable;
-
     use SoftDeletes;
+    use CrudWithUidObservantTrait;
+
     //-------------------------------------------------
     protected $table = 'vh_users';
     //-------------------------------------------------
@@ -216,8 +218,11 @@ class User extends Authenticatable
             'title', 'first_name', 'middle_name', 'last_name',
             'gender', 'country_calling_code', 'phone', 'timezone',
             'alternate_email', 'avatar_url', 'birth', 'country',
-            'status', 'invited_by',
-            'user_id',
+            'last_login_at', 'last_login_ip', 'api_token', 'api_token_used_at',
+            'api_token_used_ip', 'is_active', 'activated_at', 'status',
+            'affiliate_code', 'affiliate_code_used_at', 'created_by', 'updated_by',
+            'deleted_by', 'created_at', 'updated_at',
+            'deleted_at'
         ];
 
         return $list;
@@ -244,6 +249,8 @@ class User extends Authenticatable
 
         $result['name'] = $column;
         $result['value'] = $value;
+        $result['type'] = 'text';
+        $result['editable'] = true;
         $result['tr_class'] = "";
         $result['disabled'] = false;
         $result['label'] = slug_to_str($column);
@@ -262,25 +269,37 @@ class User extends Authenticatable
                 break;
             //------------------------------------------------
             case 'created_by':
-                $result['type'] = 'select_with_ids';
+            case 'updated_by':
+            case 'deleted_by':
+                $result['type'] = 'select';
+                $result['editable'] = false;
                 $result['inputs'] = User::getUsersForAssets();
                 break;
             //------------------------------------------------
-            case 'updated_by':
-            case 'deleted_by':
+            case 'password':
+                $result['type'] = 'hidden';
+                $result['editable'] = false;
+                break;
+            //------------------------------------------------
             case 'meta':
+            case 'last_login_at':
+            case 'last_login_ip':
+            case 'remember_token':
+            case 'api_token':
+            case 'api_token_used_at':
+            case 'api_token_used_ip':
+            case 'activated_at':
+            case 'affiliate_code_used_at':
+            case 'reset_password_code_sent_at':
+            case 'reset_password_code_used_at':
             case 'created_ip':
-            case 'activated_ip':
-            case 'activation_code_sent_at':
-            case 'user_created_at':
+            case 'created_at':
             case 'deleted_at':
             case 'updated_at':
-            case 'created_at':
-            case 'invited_at':
-            case 'activated_at':
-            case 'activation_code':
-                $result['type'] = 'hidden';
+                $result['editable'] = false;
                 break;
+            //------------------------------------------------
+
             //------------------------------------------------
             case 'title':
                 $result['type'] = 'select';
@@ -309,18 +328,12 @@ class User extends Authenticatable
             //------------------------------------------------
             case 'status':
                 $result['type'] = 'select';
-                $result['inputs'] = vh_registration_statuses();
+                $result['inputs'] = vh_user_statuses();
                 break;
             //------------------------------------------------
             case 'country':
                 $result['type'] = 'select';
                 $result['inputs'] = vh_get_country_list_with_slugs();
-                break;
-            //------------------------------------------------
-            case 'invited_by':
-                $result['type'] = 'select_with_ids';
-                $result['inputs'] = User::getUsersForAssets();
-                $result['label'] = "Invited By";
                 break;
             //------------------------------------------------
             case 'user_id':
@@ -329,8 +342,9 @@ class User extends Authenticatable
                 $result['label'] = "Registration belongs to:";
                 break;
             //------------------------------------------------
-            case 'password':
-                $result['type'] = 'password';
+            case 'is_active':
+                $result['type'] = 'select';
+                $result['inputs'] = vh_is_active_options();
                 break;
             //------------------------------------------------
             default:
@@ -459,11 +473,6 @@ class User extends Authenticatable
             'first_name' => 'required',
         );
 
-        if(!$request->has('id'))
-        {
-            $rules['password'] = 'required';
-        }
-
         $validator = \Validator::make( $request->all(), $rules);
         if ( $validator->fails() ) {
 
@@ -475,9 +484,17 @@ class User extends Authenticatable
 
         $data = [];
 
+        $inputs = $request->all();
+
+
+        if($request->has('birth'))
+        {
+            $inputs['birth'] = Carbon::parse($request->birth)->format('Y-m-d');
+        }
+
         if($request->has('id'))
         {
-            $reg = User::find($request->id);
+            $item = User::find($request->id);
         } else
         {
             $validation = static::userValidation($request);
@@ -486,21 +503,29 @@ class User extends Authenticatable
                 return $validation;
             } else if(isset($validation['status']) && $validation['status'] == 'registration-exist')
             {
-                $reg = $validation['data'];
+                $item = $validation['data'];
             } else
             {
-                $reg = new Registration();
+                $item = new User();
+                $item->password = generate_password();
+                $item->is_active = 1;
+                $item->status = 'active';
+                $item->activated_at = date('Y-m-d H:i:s');
+                $item->uid = uniqid();
             }
         }
 
-        $reg->fill($request->all());
-        $reg->password = Hash::make($request->password);
+        $item->fill($inputs);
+        if($request->has('password'))
+        {
+            $item->password = Hash::make($request->password);
+        }
 
-        $reg->save();
+        $item->save();
 
         $response['status'] = 'success';
         $response['messages'][] = 'Saved';
-        $response['data'] = $reg;
+        $response['data'] = $item;
 
         return $response;
 
@@ -525,6 +550,10 @@ class User extends Authenticatable
             if(isset($record[$column]))
             {
                 $result[$i] = $this->getFormElement($column, $record[$column]);
+                $i++;
+            } else
+            {
+                $result[$i] = $this->getFormElement($column, "");
                 $i++;
             }
 

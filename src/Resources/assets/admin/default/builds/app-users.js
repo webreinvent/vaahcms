@@ -2337,6 +2337,8 @@ __webpack_require__.r(__webpack_exports__);
     //---------------------------------------------------------------------
     storeAfter: function storeAfter(data) {
       this.edit = false;
+      this.item = data;
+      this.id = data.id;
       this.$helpers.stopNprogress();
     } //---------------------------------------------------------------------
     //---------------------------------------------------------------------
@@ -57948,7 +57950,7 @@ var render = function() {
     "tbody",
     [
       _vm._l(_vm.columns, function(column) {
-        return column.type != "hidden"
+        return column.editable == true
           ? [
               column.type == "text"
                 ? _c("tr", { class: column.tr_class }, [
@@ -58204,233 +58206,221 @@ var render = function() {
     "tbody",
     [
       _vm._l(_vm.columns, function(column) {
-        return column.type != "hidden"
-          ? [
-              column.type == "text"
-                ? _c("tr", { staticClass: "tr__view" }, [
-                    _c(
-                      "th",
-                      { staticClass: "text-right", attrs: { width: "180" } },
-                      [_vm._v(_vm._s(column.label))]
-                    ),
-                    _vm._v(" "),
-                    _c("td", [
-                      _c("input", {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.new_item[column.name],
-                            expression: "new_item[column.name]"
-                          }
-                        ],
-                        staticClass: "form-control",
-                        attrs: {
-                          type: "text",
-                          name: column.name,
-                          disabled: "",
-                          placeholder: column.label
-                        },
-                        domProps: { value: _vm.new_item[column.name] },
-                        on: {
-                          input: function($event) {
-                            if ($event.target.composing) {
-                              return
-                            }
-                            _vm.$set(
-                              _vm.new_item,
-                              column.name,
-                              $event.target.value
-                            )
-                          }
+        return [
+          column.type == "text"
+            ? _c("tr", { staticClass: "tr__view" }, [
+                _c(
+                  "th",
+                  { staticClass: "text-right", attrs: { width: "180" } },
+                  [_vm._v(_vm._s(column.label))]
+                ),
+                _vm._v(" "),
+                _c("td", [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.new_item[column.name],
+                        expression: "new_item[column.name]"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    attrs: {
+                      type: "text",
+                      name: column.name,
+                      disabled: "",
+                      placeholder: column.label
+                    },
+                    domProps: { value: _vm.new_item[column.name] },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
                         }
-                      })
-                    ])
-                  ])
-                : column.type == "password"
-                ? _c("tr", { staticClass: "tr__view" }, [
-                    _c("th", { staticClass: "text-right" }, [
-                      _vm._v(_vm._s(column.label))
-                    ]),
-                    _vm._v(" "),
-                    _c("td", [
-                      _c("input", {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.new_item[column.name],
-                            expression: "new_item[column.name]"
-                          }
-                        ],
-                        staticClass: "form-control",
-                        attrs: {
-                          type: "password",
-                          disabled: "",
-                          name: column.name,
-                          placeholder: column.label
-                        },
-                        domProps: { value: _vm.new_item[column.name] },
-                        on: {
-                          input: function($event) {
-                            if ($event.target.composing) {
-                              return
-                            }
-                            _vm.$set(
-                              _vm.new_item,
-                              column.name,
-                              $event.target.value
-                            )
-                          }
+                        _vm.$set(_vm.new_item, column.name, $event.target.value)
+                      }
+                    }
+                  })
+                ])
+              ])
+            : column.type == "password"
+            ? _c("tr", { staticClass: "tr__view" }, [
+                _c("th", { staticClass: "text-right" }, [
+                  _vm._v(_vm._s(column.label))
+                ]),
+                _vm._v(" "),
+                _c("td", [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.new_item[column.name],
+                        expression: "new_item[column.name]"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    attrs: {
+                      type: "password",
+                      disabled: "",
+                      name: column.name,
+                      placeholder: column.label
+                    },
+                    domProps: { value: _vm.new_item[column.name] },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
                         }
-                      })
-                    ])
-                  ])
-                : column.type == "select"
-                ? _c("tr", { staticClass: "tr__view" }, [
-                    _c("th", { staticClass: "text-right" }, [
-                      _vm._v(_vm._s(column.label))
-                    ]),
-                    _vm._v(" "),
-                    _c("td", [
-                      _c(
-                        "select",
+                        _vm.$set(_vm.new_item, column.name, $event.target.value)
+                      }
+                    }
+                  })
+                ])
+              ])
+            : column.type == "select"
+            ? _c("tr", { staticClass: "tr__view" }, [
+                _c("th", { staticClass: "text-right" }, [
+                  _vm._v(_vm._s(column.label))
+                ]),
+                _vm._v(" "),
+                _c("td", [
+                  _c(
+                    "select",
+                    {
+                      directives: [
                         {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.new_item[column.name],
-                              expression: "new_item[column.name]"
-                            }
-                          ],
-                          staticClass: "custom-select",
-                          attrs: { disabled: "", placeholder: column.label },
-                          on: {
-                            change: function($event) {
-                              var $$selectedVal = Array.prototype.filter
-                                .call($event.target.options, function(o) {
-                                  return o.selected
-                                })
-                                .map(function(o) {
-                                  var val = "_value" in o ? o._value : o.value
-                                  return val
-                                })
-                              _vm.$set(
-                                _vm.new_item,
-                                column.name,
-                                $event.target.multiple
-                                  ? $$selectedVal
-                                  : $$selectedVal[0]
-                              )
-                            }
-                          }
-                        },
-                        [
-                          _c("option", { attrs: { selected: "", value: "" } }, [
-                            _vm._v("Select " + _vm._s(column.label))
-                          ]),
-                          _vm._v(" "),
-                          _vm._l(column.inputs, function(input) {
-                            return _c(
-                              "option",
-                              { domProps: { value: input.slug } },
-                              [_vm._v(_vm._s(input.name))]
-                            )
-                          })
-                        ],
-                        2
-                      )
-                    ])
-                  ])
-                : column.type == "select_with_ids"
-                ? _c("tr", { staticClass: "tr__view" }, [
-                    _c("th", { staticClass: "text-right" }, [
-                      _vm._v(_vm._s(column.label))
-                    ]),
-                    _vm._v(" "),
-                    _c("td", [
-                      _c(
-                        "select",
-                        {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.new_item[column.name],
-                              expression: "new_item[column.name]"
-                            }
-                          ],
-                          staticClass: "custom-select",
-                          attrs: { disabled: "", placeholder: column.label },
-                          on: {
-                            change: function($event) {
-                              var $$selectedVal = Array.prototype.filter
-                                .call($event.target.options, function(o) {
-                                  return o.selected
-                                })
-                                .map(function(o) {
-                                  var val = "_value" in o ? o._value : o.value
-                                  return val
-                                })
-                              _vm.$set(
-                                _vm.new_item,
-                                column.name,
-                                $event.target.multiple
-                                  ? $$selectedVal
-                                  : $$selectedVal[0]
-                              )
-                            }
-                          }
-                        },
-                        [
-                          _c("option", { attrs: { selected: "", value: "" } }, [
-                            _vm._v("Select " + _vm._s(column.label))
-                          ]),
-                          _vm._v(" "),
-                          _vm._l(column.inputs, function(input) {
-                            return _c(
-                              "option",
-                              { domProps: { value: input.id } },
-                              [_vm._v(_vm._s(input.name))]
-                            )
-                          })
-                        ],
-                        2
-                      )
-                    ])
-                  ])
-                : column.type == "date"
-                ? _c("tr", { staticClass: "tr__view" }, [
-                    _c("th", { staticClass: "text-right" }, [
-                      _vm._v(_vm._s(column.label))
-                    ]),
-                    _vm._v(" "),
-                    _c(
-                      "td",
-                      [
-                        _c("datepicker", {
-                          attrs: {
-                            placeholder: column.label,
-                            disabled: "",
-                            format: "yyyy-MM-dd",
-                            "input-class": "form-control"
-                          },
-                          model: {
-                            value: _vm.new_item[column.name],
-                            callback: function($$v) {
-                              _vm.$set(_vm.new_item, column.name, $$v)
-                            },
-                            expression: "new_item[column.name]"
-                          }
-                        })
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.new_item[column.name],
+                          expression: "new_item[column.name]"
+                        }
                       ],
-                      1
-                    )
-                  ])
-                : _vm._e()
-            ]
-          : _vm._e()
+                      staticClass: "custom-select",
+                      attrs: { disabled: "", placeholder: column.label },
+                      on: {
+                        change: function($event) {
+                          var $$selectedVal = Array.prototype.filter
+                            .call($event.target.options, function(o) {
+                              return o.selected
+                            })
+                            .map(function(o) {
+                              var val = "_value" in o ? o._value : o.value
+                              return val
+                            })
+                          _vm.$set(
+                            _vm.new_item,
+                            column.name,
+                            $event.target.multiple
+                              ? $$selectedVal
+                              : $$selectedVal[0]
+                          )
+                        }
+                      }
+                    },
+                    [
+                      _c("option", { attrs: { selected: "", value: "" } }, [
+                        _vm._v("Select " + _vm._s(column.label))
+                      ]),
+                      _vm._v(" "),
+                      _vm._l(column.inputs, function(input) {
+                        return _c(
+                          "option",
+                          { domProps: { value: input.slug } },
+                          [_vm._v(_vm._s(input.name))]
+                        )
+                      })
+                    ],
+                    2
+                  )
+                ])
+              ])
+            : column.type == "select_with_ids"
+            ? _c("tr", { staticClass: "tr__view" }, [
+                _c("th", { staticClass: "text-right" }, [
+                  _vm._v(_vm._s(column.label))
+                ]),
+                _vm._v(" "),
+                _c("td", [
+                  _c(
+                    "select",
+                    {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.new_item[column.name],
+                          expression: "new_item[column.name]"
+                        }
+                      ],
+                      staticClass: "custom-select",
+                      attrs: { disabled: "", placeholder: column.label },
+                      on: {
+                        change: function($event) {
+                          var $$selectedVal = Array.prototype.filter
+                            .call($event.target.options, function(o) {
+                              return o.selected
+                            })
+                            .map(function(o) {
+                              var val = "_value" in o ? o._value : o.value
+                              return val
+                            })
+                          _vm.$set(
+                            _vm.new_item,
+                            column.name,
+                            $event.target.multiple
+                              ? $$selectedVal
+                              : $$selectedVal[0]
+                          )
+                        }
+                      }
+                    },
+                    [
+                      _c("option", { attrs: { selected: "", value: "" } }, [
+                        _vm._v("Select " + _vm._s(column.label))
+                      ]),
+                      _vm._v(" "),
+                      _vm._l(column.inputs, function(input) {
+                        return _c("option", { domProps: { value: input.id } }, [
+                          _vm._v(_vm._s(input.name))
+                        ])
+                      })
+                    ],
+                    2
+                  )
+                ])
+              ])
+            : column.type == "date"
+            ? _c("tr", { staticClass: "tr__view" }, [
+                _c("th", { staticClass: "text-right" }, [
+                  _vm._v(_vm._s(column.label))
+                ]),
+                _vm._v(" "),
+                _c(
+                  "td",
+                  [
+                    _c("datepicker", {
+                      attrs: {
+                        placeholder: column.label,
+                        disabled: "",
+                        format: "yyyy-MM-dd",
+                        "input-class": "form-control"
+                      },
+                      model: {
+                        value: _vm.new_item[column.name],
+                        callback: function($$v) {
+                          _vm.$set(_vm.new_item, column.name, $$v)
+                        },
+                        expression: "new_item[column.name]"
+                      }
+                    })
+                  ],
+                  1
+                )
+              ])
+            : _vm._e()
+        ]
       })
     ],
     2

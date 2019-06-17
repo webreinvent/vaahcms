@@ -87,6 +87,10 @@ import TView from './../reusable/TableViewGenerator';
             storeAfter: function (data) {
 
                 this.edit = false;
+
+                this.item = data;
+                this.id = data.id;
+
                 this.$helpers.stopNprogress();
             },
 

@@ -54,10 +54,10 @@ class UserController extends Controller
     public function getDetails(Request $request, $id)
     {
 
-        $reg = User::find($id);
+        $item = User::find($id);
 
         $response['status'] = 'success';
-        $response['data'] = $reg->recordForFormElement();
+        $response['data'] = $item->recordForFormElement();
 
         return response()->json($response);
 

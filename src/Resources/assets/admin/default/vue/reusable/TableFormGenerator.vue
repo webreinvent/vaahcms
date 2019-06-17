@@ -3,7 +3,7 @@
 
     <tbody>
 
-    <template v-for="column in columns" v-if="column.type != 'hidden'">
+    <template v-for="column in columns" v-if="column.editable == true">
         <!--dynamic form creator-->
         <tr v-if="column.type == 'text'" :class="column.tr_class" >
             <th width="180" class="text-right">{{column.label}}</th>

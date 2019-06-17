@@ -347,7 +347,7 @@ class Registration extends Model
 
         if($request->has('id'))
         {
-            $reg = Registration::find($request->id);
+            $item = Registration::find($request->id);
         } else
         {
             $validation = static::registrationValidation($request);
@@ -356,46 +356,49 @@ class Registration extends Model
                 return $validation;
             } else if(isset($validation['status']) && $validation['status'] == 'registration-exist')
             {
-                $reg = $validation['data'];
+                $item = $validation['data'];
             } else
             {
-                $reg = new Registration();
+                $item = new Registration();
             }
         }
 
-        $reg->fill($request->all());
-        $reg->password = Hash::make($request->password);
+        $item->fill($request->all());
+        if($request->has('password'))
+        {
+            $item->password = Hash::make($request->password);
+        }
 
         if($request->has('invited_by') && !$request->has('invited_at'))
         {
-            $reg->invited_at = \Carbon::now();
+            $item->invited_at = \Carbon::now();
         }
 
         if($request->has('user_id') && !$request->has('user_created_at'))
         {
-            $reg->user_created_at = \Carbon::now();
-            $reg->created_ip = $request->ip();
+            $item->user_created_at = \Carbon::now();
+            $item->created_ip = $request->ip();
         }
 
         if($request->has('user_id') && !$request->has('user_created_at'))
         {
-            $reg->user_created_at = \Carbon::now();
-            $reg->created_ip = $request->ip();
+            $item->user_created_at = \Carbon::now();
+            $item->created_ip = $request->ip();
         }
 
-        $reg->activation_code = str_random(40);
+        $item->activation_code = str_random(40);
 
         if($request->has('user_id') && !$request->has('activated_at'))
         {
-            $reg->activated_at = \Carbon::now();
-            $reg->activated_ip = $request->ip();
+            $item->activated_at = \Carbon::now();
+            $item->activated_ip = $request->ip();
         }
 
-        $reg->save();
+        $item->save();
 
         $response['status'] = 'success';
         $response['messages'][] = 'Saved';
-        $response['data'] = $reg;
+        $response['data'] = $item;
 
         return $response;
 
