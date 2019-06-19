@@ -223,6 +223,7 @@ class SetupController extends Controller
         $user->uid = uniqid();
         $user->password = \Hash::make($request->password);
         $user->is_active = 1;
+        $user->status = 'active';
         $user->created_ip = \Request::ip();
         $user->save();
 

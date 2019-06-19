@@ -4,6 +4,8 @@ import {isObject} from "vue-resource/src/util";
 //https://github.com/euvl/vue-js-toggle-button
 import { ToggleButton } from 'vue-js-toggle-button'
 
+//https://github.com/voerro/vue-tagsinput
+
     export default {
 
         props: ['urls', 'assets'],
@@ -131,6 +133,22 @@ import { ToggleButton } from 'vue-js-toggle-button'
                 var data = this.bulk_action_data;
                 this.actions(false, this.bulk_action, inputs, data)
 
+            },
+            //---------------------------------------------------------------------
+            changeActiveStatus: function(item)
+            {
+                var inputs = {id: item.id};
+                var data = {};
+
+                if(item.is_active)
+                {
+                    data.is_active = 0;
+                } else
+                {
+                    data.is_active = 1;
+                }
+
+                this.actions(false, 'change_active_status', inputs, data)
             },
             //---------------------------------------------------------------------
             setSorting: function (column_name) {

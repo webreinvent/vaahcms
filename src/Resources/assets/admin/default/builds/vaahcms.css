@@ -41840,4 +41840,11 @@ body{
 
 
 
-
+.btn-tiny{
+    font-size: 10px;
+    font-weight: 500;
+    font-family: -apple-system, BlinkMacSystemFont, "Inter UI", Roboto, sans-serif;
+    padding: 0px 5px;
+    border-radius: 3px;
+    border: 0px;
+}

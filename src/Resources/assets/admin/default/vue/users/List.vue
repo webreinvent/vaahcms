@@ -7,7 +7,13 @@
                 <div class="card-header">
 
                     <div class="d-flex">
-                        <div class="align-self-center tx-18 flex-grow-1"><strong>Registrations</strong></div>
+                        <div class="align-self-center tx-18 flex-grow-1">
+                            <strong>Users
+                                <span v-if="list">
+                                    ({{list.total}})
+                                </span>
+                            </strong>
+                        </div>
                         <div class=" mg-l-auto btn-group btn-group-xs">
 
                             <router-link class="btn btn-xs btn-light btn-uppercase"
@@ -17,6 +23,10 @@
 
                             <button class="btn btn-xs btn-light btn-uppercase" @click="toggleShowFilters">
                                 <i class="fas fa-ellipsis-h"></i>
+                            </button>
+
+                            <button class="btn btn-xs btn-light btn-uppercase" @click="getList">
+                                <i class="fas fa-sync-alt"></i>
                             </button>
 
                         </div>
@@ -113,6 +123,14 @@
 
                                 </th>
                                 <th class="sortable"
+                                    width="80"
+                                    v-bind:class="{
+                                    'asc': filters.sort_by === 'is_active' && filters.sort_type === 'asc',
+                                    'desc': filters.sort_by === 'is_active' && filters.sort_type === 'desc',
+                                     }"
+                                    v-on:click="setSorting('is_active')">Is Active
+                                </th>
+                                <th v-if="!table_collapsed" class="sortable"
                                     width="120"
                                     v-bind:class="{
                                     'asc': filters.sort_by === 'status' && filters.sort_type === 'asc',
@@ -120,7 +138,8 @@
                                      }"
                                     v-on:click="setSorting('status')">Status
                                 </th>
-                                <th v-if="!table_collapsed" width="180" >Created At</th>
+                                <th v-if="!table_collapsed" width="140" >Last Login</th>
+                                <th v-if="!table_collapsed" width="140" >Created At</th>
                                 <th width="80"></th>
 
                             </tr>
@@ -134,7 +153,7 @@
 
 
 
-                            <td colspan="7" class="pd-0-f" >
+                            <td colspan="9" class="pd-0-f" >
 
                                 <div class="search-form table-search">
                                     <input type="search" class="form-control form-control-sm"
@@ -167,8 +186,33 @@
                             <td>{{item.email}}</td>
                             <td>
 
-                                <span class="badge badge-info">{{item.status}}</span>
 
+                                <button v-if="item.is_active == 1"
+                                        @click="changeActiveStatus(item)"
+                                        class="btn btn-tiny btn-success">
+                                    Yes
+                                </button>
+
+                                <button v-else
+                                        @click="changeActiveStatus(item)"
+                                        class="btn btn-tiny btn-danger">
+                                    No
+                                </button>
+
+                            </td>
+                            <td v-if="!table_collapsed">
+
+                                <span v-if="item.status == 'active'" class="badge badge-success">
+                                    {{item.status}}
+                                </span>
+
+                                <span v-else class="badge badge-danger">
+                                    {{item.status}}
+                                </span>
+
+                            </td>
+                            <td v-if="!table_collapsed">
+                                {{$helpers.dateTimeForHumans(item.last_login_at)}}
                             </td>
                             <td v-if="!table_collapsed">
                                 {{$helpers.dateTimeForHumans(item.created_at)}}

@@ -2093,6 +2093,7 @@ __webpack_require__.r(__webpack_exports__);
 
  //https://github.com/euvl/vue-js-toggle-button
 
+ //https://github.com/voerro/vue-tagsinput
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['urls', 'assets'],
@@ -2192,6 +2193,21 @@ __webpack_require__.r(__webpack_exports__);
       var inputs = this.selected_items;
       var data = this.bulk_action_data;
       this.actions(false, this.bulk_action, inputs, data);
+    },
+    //---------------------------------------------------------------------
+    changeActiveStatus: function changeActiveStatus(item) {
+      var inputs = {
+        id: item.id
+      };
+      var data = {};
+
+      if (item.is_active) {
+        data.is_active = 0;
+      } else {
+        data.is_active = 1;
+      }
+
+      this.actions(false, 'change_active_status', inputs, data);
     },
     //---------------------------------------------------------------------
     setSorting: function setSorting(column_name) {
@@ -58544,7 +58560,20 @@ var render = function() {
     _c("div", { staticClass: "card" }, [
       _c("div", { staticClass: "card-header" }, [
         _c("div", { staticClass: "d-flex" }, [
-          _vm._m(0),
+          _c("div", { staticClass: "align-self-center tx-18 flex-grow-1" }, [
+            _c("strong", [
+              _vm._v("Users\n                        "),
+              _vm.list
+                ? _c("span", [
+                    _vm._v(
+                      "\n                            (" +
+                        _vm._s(_vm.list.total) +
+                        ")\n                        "
+                    )
+                  ])
+                : _vm._e()
+            ])
+          ]),
           _vm._v(" "),
           _c(
             "div",
@@ -58569,6 +58598,15 @@ var render = function() {
                   on: { click: _vm.toggleShowFilters }
                 },
                 [_c("i", { staticClass: "fas fa-ellipsis-h" })]
+              ),
+              _vm._v(" "),
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-xs btn-light btn-uppercase",
+                  on: { click: _vm.getList }
+                },
+                [_c("i", { staticClass: "fas fa-sync-alt" })]
               )
             ],
             1
@@ -58874,24 +58912,54 @@ var render = function() {
                         staticClass: "sortable",
                         class: {
                           asc:
-                            _vm.filters.sort_by === "status" &&
+                            _vm.filters.sort_by === "is_active" &&
                             _vm.filters.sort_type === "asc",
                           desc:
-                            _vm.filters.sort_by === "status" &&
+                            _vm.filters.sort_by === "is_active" &&
                             _vm.filters.sort_type === "desc"
                         },
-                        attrs: { width: "120" },
+                        attrs: { width: "80" },
                         on: {
                           click: function($event) {
-                            return _vm.setSorting("status")
+                            return _vm.setSorting("is_active")
                           }
                         }
                       },
-                      [_vm._v("Status\n                        ")]
+                      [_vm._v("Is Active\n                        ")]
                     ),
                     _vm._v(" "),
                     !_vm.table_collapsed
-                      ? _c("th", { attrs: { width: "180" } }, [
+                      ? _c(
+                          "th",
+                          {
+                            staticClass: "sortable",
+                            class: {
+                              asc:
+                                _vm.filters.sort_by === "status" &&
+                                _vm.filters.sort_type === "asc",
+                              desc:
+                                _vm.filters.sort_by === "status" &&
+                                _vm.filters.sort_type === "desc"
+                            },
+                            attrs: { width: "120" },
+                            on: {
+                              click: function($event) {
+                                return _vm.setSorting("status")
+                              }
+                            }
+                          },
+                          [_vm._v("Status\n                        ")]
+                        )
+                      : _vm._e(),
+                    _vm._v(" "),
+                    !_vm.table_collapsed
+                      ? _c("th", { attrs: { width: "140" } }, [
+                          _vm._v("Last Login")
+                        ])
+                      : _vm._e(),
+                    _vm._v(" "),
+                    !_vm.table_collapsed
+                      ? _c("th", { attrs: { width: "140" } }, [
                           _vm._v("Created At")
                         ])
                       : _vm._e(),
@@ -58906,7 +58974,7 @@ var render = function() {
                     _c("tr", [
                       _c(
                         "td",
-                        { staticClass: "pd-0-f", attrs: { colspan: "7" } },
+                        { staticClass: "pd-0-f", attrs: { colspan: "9" } },
                         [
                           _c(
                             "div",
@@ -59013,10 +59081,82 @@ var render = function() {
                         _c("td", [_vm._v(_vm._s(item.email))]),
                         _vm._v(" "),
                         _c("td", [
-                          _c("span", { staticClass: "badge badge-info" }, [
-                            _vm._v(_vm._s(item.status))
-                          ])
+                          item.is_active == 1
+                            ? _c(
+                                "button",
+                                {
+                                  staticClass: "btn btn-tiny btn-success",
+                                  on: {
+                                    click: function($event) {
+                                      return _vm.changeActiveStatus(item)
+                                    }
+                                  }
+                                },
+                                [
+                                  _vm._v(
+                                    "\n                            Yes\n                        "
+                                  )
+                                ]
+                              )
+                            : _c(
+                                "button",
+                                {
+                                  staticClass: "btn btn-tiny btn-danger",
+                                  on: {
+                                    click: function($event) {
+                                      return _vm.changeActiveStatus(item)
+                                    }
+                                  }
+                                },
+                                [
+                                  _vm._v(
+                                    "\n                            No\n                        "
+                                  )
+                                ]
+                              )
                         ]),
+                        _vm._v(" "),
+                        !_vm.table_collapsed
+                          ? _c("td", [
+                              item.status == "active"
+                                ? _c(
+                                    "span",
+                                    { staticClass: "badge badge-success" },
+                                    [
+                                      _vm._v(
+                                        "\n                            " +
+                                          _vm._s(item.status) +
+                                          "\n                        "
+                                      )
+                                    ]
+                                  )
+                                : _c(
+                                    "span",
+                                    { staticClass: "badge badge-danger" },
+                                    [
+                                      _vm._v(
+                                        "\n                            " +
+                                          _vm._s(item.status) +
+                                          "\n                        "
+                                      )
+                                    ]
+                                  )
+                            ])
+                          : _vm._e(),
+                        _vm._v(" "),
+                        !_vm.table_collapsed
+                          ? _c("td", [
+                              _vm._v(
+                                "\n                        " +
+                                  _vm._s(
+                                    _vm.$helpers.dateTimeForHumans(
+                                      item.last_login_at
+                                    )
+                                  ) +
+                                  "\n                    "
+                              )
+                            ])
+                          : _vm._e(),
                         _vm._v(" "),
                         !_vm.table_collapsed
                           ? _c("td", [
@@ -59037,7 +59177,7 @@ var render = function() {
                             "div",
                             { staticClass: "btn-group btn-group-xs" },
                             [
-                              _vm._m(1, true),
+                              _vm._m(0, true),
                               _vm._v(" "),
                               _c(
                                 "router-link",
@@ -59082,14 +59222,6 @@ var render = function() {
   ])
 }
 var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "align-self-center tx-18 flex-grow-1" }, [
-      _c("strong", [_vm._v("Registrations")])
-    ])
-  },
   function() {
     var _vm = this
     var _h = _vm.$createElement
@@ -77753,7 +77885,11 @@ var VueHelpers = {
         }
       }
     })["catch"](function (error) {
-      if (error.response) {
+      if (error.response.status === "419") {
+        _this.$helpers.console(error);
+
+        _this.errors(["Login expired, try to login again."]);
+      } else if (error.response) {
         _this.errors([error.response.data]); // Request made and server responded
 
 

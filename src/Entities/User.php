@@ -69,6 +69,8 @@ class User extends Authenticatable
         return $grav_url;
     }
     //-------------------------------------------------
+
+    //-------------------------------------------------
     public function getNameAttribute() {
         return $this->first_name." ".$this->middle_name." ".$this->last_name;
     }
@@ -254,8 +256,8 @@ class User extends Authenticatable
         $result['tr_class'] = "";
         $result['disabled'] = false;
         $result['label'] = slug_to_str($column);
-        $result['column_type'] = $this->getConnection()->getSchemaBuilder()
-            ->getColumnType($this->getTable(), $column);
+        /*$result['column_type'] = $this->getConnection()->getSchemaBuilder()
+            ->getColumnType($this->getTable(), $column);*/
 
 
         switch($column)
@@ -271,7 +273,7 @@ class User extends Authenticatable
             case 'created_by':
             case 'updated_by':
             case 'deleted_by':
-                $result['type'] = 'select';
+                $result['type'] = 'select_with_ids';
                 $result['editable'] = false;
                 $result['inputs'] = User::getUsersForAssets();
                 break;
@@ -336,11 +338,6 @@ class User extends Authenticatable
                 $result['inputs'] = vh_get_country_list_with_slugs();
                 break;
             //------------------------------------------------
-            case 'user_id':
-                $result['type'] = 'select_with_ids';
-                $result['inputs'] = User::getUsersForAssets();
-                $result['label'] = "Registration belongs to:";
-                break;
             //------------------------------------------------
             case 'is_active':
                 $result['type'] = 'select';
@@ -674,6 +671,10 @@ class User extends Authenticatable
             $item = User::find($id);
             if($item)
             {
+                $item->is_active = 0;
+                $item->status = 'inactive';
+                $item->save();
+
                 $item->delete();
             }
         }
@@ -720,7 +721,34 @@ class User extends Authenticatable
 
     }
     //-------------------------------------------------
+    public static function onlyOneAdminValidation($user_id)
+    {
+        $user = User::where('id', $user_id)->withTrashed()->first();
+
+        if(isset($user->deleted_at))
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = 'Account is deleted, hence you can not perform this action.';
+            return $response;
+
+        }
+
+        $count_admin = User::countAdmins();
+
+        if($user->isAdmin() && $count_admin < 2)
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = "You have only one admin account which can't be deactivated.";
+            return $response;
+        }
+
+        $response['status'] = 'success';
+
+        return $response;
+
+    }
     //-------------------------------------------------
+
     public static function login($request)
     {
 

@@ -121,7 +121,10 @@ class UserController extends Controller
             return response()->json($response);
         }
 
-        $response = [];
+        $response['status'] = 'success';
+        $response['messages'][] = 'Action was successful';
+
+        $inputs = $request->all();
 
         switch ($request->action)
         {
@@ -146,6 +149,29 @@ class UserController extends Controller
                 break;
 
             //------------------------------------
+            case 'change_active_status':
+
+                //only one active can't be deactivated
+                $response = User::onlyOneAdminValidation($inputs['inputs']['id']);
+
+                if($response['status'] == 'success')
+                {
+                    $item = User::find($inputs['inputs']['id']);
+                    $item->is_active = $inputs['data']['is_active'];
+
+                    if($inputs['data']['is_active'] == 0)
+                    {
+                        $item->status = 'inactive';
+                    } else
+                    {
+                        $item->status = 'active';
+                    }
+
+                    $item->save();
+                    $response['messages'] = [];
+                }
+
+                break;
             //------------------------------------
 
         }

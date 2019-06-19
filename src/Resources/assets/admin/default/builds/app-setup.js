@@ -74420,7 +74420,11 @@ var VueHelpers = {
         }
       }
     })["catch"](function (error) {
-      if (error.response) {
+      if (error.response.status === "419") {
+        _this.$helpers.console(error);
+
+        _this.errors(["Login expired, try to login again."]);
+      } else if (error.response) {
         _this.errors([error.response.data]); // Request made and server responded
 
 
