@@ -6,8 +6,6 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
-use Illuminate\Support\Facades\Hash;
-use WebReinvent\VaahCms\Entities\Registration;
 use WebReinvent\VaahCms\Entities\Role;
 
 class RoleController extends Controller
@@ -24,7 +22,7 @@ class RoleController extends Controller
     //----------------------------------------------------------
     public function index()
     {
-        return view($this->theme.'.pages.users');
+        return view($this->theme.'.pages.roles');
     }
     //----------------------------------------------------------
     public function assets(Request $request)

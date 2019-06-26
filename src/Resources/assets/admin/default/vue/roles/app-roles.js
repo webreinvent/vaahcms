@@ -26,7 +26,8 @@ Vue.use(VueHelpers);
 
 //---------Comp Imports
 import List from './List';
-
+import Create from './Create';
+import ViewEdit from './ViewEdit';
 //---------/Comp Imports
 
 //---------Routes
@@ -34,7 +35,13 @@ const router = new VueRouter({
     base: '/',
     linkActiveClass: "active",
     routes: [
-
+        {   path: '/create',
+            component: Create
+        },
+        {   path: '/view/:id',
+            component: ViewEdit,
+            props: true
+        },
     ]
 });
 //---------/Routes
