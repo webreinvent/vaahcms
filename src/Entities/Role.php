@@ -1,5 +1,6 @@
 <?php namespace WebReinvent\VaahCms\Entities;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -76,7 +77,6 @@ class Role extends Model {
     public function scopeDeletedBetween( $query, $from, $to ) {
         return $query->whereBetween( 'deleted_at', array( $from, $to ) );
     }
-
     //-------------------------------------------------
     public function createdBy() {
         return $this->belongsTo( 'WebReinvent\VaahCms\Entities\User',
@@ -96,10 +96,293 @@ class Role extends Model {
         );
     }
     //-------------------------------------------------
+    public function getTableColumns() {
+        return $this->getConnection()->getSchemaBuilder()
+            ->getColumnListing($this->getTable());
+    }
+    //-------------------------------------------------
+    public function getFormFillableColumns()
+    {
+        $list = [
+            'name', 'slug', 'details',
+            'created_by', 'updated_by', 'deleted_by',
+            'created_at', 'updated_at', 'deleted_at'
+        ];
+
+        return $list;
+    }
+    //-------------------------------------------------
+    public function getFormColumns()
+    {
+        $columns = $this->getFormFillableColumns();
+
+        $result = [];
+        $i = 0;
+
+        foreach ($columns as $column)
+        {
+            $result[$i] = $this->getFormElement($column);
+            $i++;
+        }
+
+        return $result;
+    }
+    //-------------------------------------------------
+    public function getFormElement($column, $value=null)
+    {
+
+        $result['name'] = $column;
+        $result['value'] = $value;
+        $result['type'] = 'text';
+        $result['editable'] = true;
+        $result['tr_class'] = "";
+        $result['disabled'] = false;
+        $result['label'] = slug_to_str($column);
+
+        switch($column)
+        {
+            //------------------------------------------------
+            case 'id':
+                $result['type'] = 'text';
+                $result['disabled'] = true;
+                $result['tr_class'] = 'tr__disabled';
+                break;
+            //------------------------------------------------
+            case 'created_by':
+            case 'updated_by':
+            case 'deleted_by':
+                $result['type'] = 'select_with_ids';
+                $result['editable'] = false;
+                $result['inputs'] = User::getUsersForAssets();
+                break;
+            //------------------------------------------------
+            //------------------------------------------------
+            case 'created_at':
+            case 'deleted_at':
+            case 'updated_at':
+                $result['editable'] = false;
+                break;
+            //------------------------------------------------
+
+            //------------------------------------------------
+            case 'details':
+                $result['type'] = 'textarea';
+                break;
+            //------------------------------------------------
+
+            //------------------------------------------------
+            default:
+                $result['type'] = 'text';
+                break;
+            //------------------------------------------------
+        }
+
+        return $result;
+    }
+    //-------------------------------------------------
+    public static function store($request)
+    {
+        $rules = array(
+            'name' => 'required'
+        );
+
+        $validator = \Validator::make( $request->all(), $rules);
+        if ( $validator->fails() ) {
+
+            $errors             = errorsToArray($validator->errors());
+            $response['status'] = 'failed';
+            $response['errors'] = $errors;
+            return $response;
+        }
+
+        $data = [];
+
+        $inputs = $request->all();
+
+        if($request->has('id'))
+        {
+            $item = Role::find($request->id);
+        } else
+        {
+            $validation = static::roleValidation($request);
+            if(isset($validation['status']) && $validation['status'] == 'failed')
+            {
+                return $validation;
+            } else
+            {
+                $item = new Role();
+                $item->is_active = 1;
+            }
+        }
+
+        $item->fill($inputs);
+        $item->save();
+
+        $response['status'] = 'success';
+        $response['messages'][] = 'Saved';
+        $response['data'] = $item;
+
+        return $response;
+
+
+    }
+    //-------------------------------------------------
+    public static function roleValidation($request)
+    {
+
+        //check if user already exist with the emails
+        $role = Role::where('slug', str_slug($request->name))->first();
+        if($role)
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = 'Record already exist.';
+            return $response;
+        }
+
+
+    }
+    //-------------------------------------------------
+    public function recordForFormElement()
+    {
+        $record = $this->toArray();
+
+        $columns = $this->getFormFillableColumns();
+
+        $visible = ['id', 'slug'];
+
+        $columns = array_merge($visible, $columns);
+
+        $result = [];
+        $i = 0;
+
+        foreach ($columns as $column)
+        {
+            if(isset($record[$column]))
+            {
+                $result[$i] = $this->getFormElement($column, $record[$column]);
+                $i++;
+            } else
+            {
+                $result[$i] = $this->getFormElement($column, "");
+                $i++;
+            }
+
+        }
+
+
+        return $result;
+    }
+    //-------------------------------------------------
+    public static function bulkStatusChange($request)
+    {
+
+        if(!$request->has('inputs'))
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = 'Select IDs';
+            return $response;
+        }
+
+        if(!$request->has('data'))
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = 'Select Status';
+            return $response;
+        }
+
+        foreach($request->inputs as $id)
+        {
+            $reg = Role::find($id);
+            $reg->is_active = $request->data;
+            $reg->save();
+        }
+
+        $response['status'] = 'success';
+        $response['messages'][] = 'Action was successful';
+
+        return $response;
+
+
+    }
+    //-------------------------------------------------
+    public static function bulkDelete($request)
+    {
+
+        if(!$request->has('inputs'))
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = 'Select IDs';
+            return $response;
+        }
+
+        if(!$request->has('data'))
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = 'Select Status';
+            return $response;
+        }
+
+        foreach($request->inputs as $id)
+        {
+            $item = Role::find($id);
+            if($item)
+            {
+                $item->is_active = null;
+                $item->save();
+                $item->delete();
+            }
+        }
+
+        $response['status'] = 'success';
+        $response['messages'][] = 'Action was successful';
+
+        return $response;
+
+
+    }
+    //-------------------------------------------------
+    public static function bulkRestore($request)
+    {
+
+        if(!$request->has('inputs'))
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = 'Select IDs';
+            return $response;
+        }
+
+        if(!$request->has('data'))
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = 'Select Status';
+            return $response;
+        }
+
+        foreach($request->inputs as $id)
+        {
+            $item = Role::withTrashed()->where('id', $id)->first();
+            if(isset($item) && isset($item->deleted_at))
+            {
+                $item->restore();
+            }
+        }
+
+        $response['status'] = 'success';
+        $response['messages'][] = 'Action was successful';
+
+        return $response;
+
+    }
+    //-------------------------------------------------
+    //-------------------------------------------------
+    //-------------------------------------------------
     public function roles() {
         return $this->belongsToMany( 'WebReinvent\VaahCms\Entities\Role',
             'vh_role_permissions', 'vh_role_id', 'vh_permission_id'
         );
     }
+    //-------------------------------------------------
+    //-------------------------------------------------
+
 
 }

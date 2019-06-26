@@ -248,3 +248,31 @@ Route::group(
             ->name( 'vh.admin.users.view' );
         //------------------------------------------------
     });
+
+Route::group(
+    [
+        'prefix'     => 'admin/roles',
+        'middleware' => ['web','has.admin.access'],
+        'namespace'  => 'WebReinvent\VaahCms\Http\Controllers\Admin'
+    ],
+    function () {
+        //------------------------------------------------
+        Route::get( '/', 'RoleController@index' )
+            ->name( 'vh.admin.roles' );
+        //------------------------------------------------
+        Route::any( '/assets', 'RoleController@assets' )
+            ->name( 'vh.admin.roles.assets' );
+        //------------------------------------------------
+        Route::any( '/list', 'RoleController@getList' )
+            ->name( 'vh.admin.roles.list' );
+        //------------------------------------------------
+        Route::any( '/actions', 'RoleController@actions' )
+            ->name( 'vh.admin.roles.actions' );
+        //------------------------------------------------
+        Route::any( '/store', 'RoleController@store' )
+            ->name( 'vh.admin.roles.store' );
+        //------------------------------------------------
+        Route::any( '/view/{id}', 'RoleController@getDetails' )
+            ->name( 'vh.admin.roles.view' );
+        //------------------------------------------------
+    });

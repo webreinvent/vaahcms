@@ -8,7 +8,7 @@
 
                     <div class="d-flex">
                         <div class="align-self-center tx-18 flex-grow-1">
-                            <strong>Users
+                            <strong>Roles
                                 <span v-if="list">
                                     ({{list.total}})
                                 </span>
@@ -72,8 +72,8 @@
                                         v-if="bulk_action && bulk_action == 'bulk_change_status'"
                                 v-model="bulk_action_data">
                                     <option value="">Select Status</option>
-                                    <option value="activation_pending">Activation Pending</option>
-                                    <option value="registered">Registered</option>
+                                    <option value="1">Active</option>
+                                    <option value="0">Inactive</option>
                                 </select>
                                 <div class="input-group-append">
                                     <button class="btn btn-outline-secondary" @click="bulkAction" type="button">Apply</button>
@@ -114,14 +114,7 @@
                                     v-on:click="setSorting('first_name')">
                                     Name
                                 </th>
-                                <th class="sortable"
-                                    v-bind:class="{
-                                    'asc': filters.sort_by === 'email' && filters.sort_type === 'asc',
-                                    'desc': filters.sort_by === 'email' && filters.sort_type === 'desc',
-                                     }"
-                                    v-on:click="setSorting('email')">Email
-
-                                </th>
+                                <th>Slug</th>
                                 <th class="sortable"
                                     width="80"
                                     v-bind:class="{
@@ -130,18 +123,8 @@
                                      }"
                                     v-on:click="setSorting('is_active')">Is Active
                                 </th>
-                                <th v-if="!table_collapsed" class="sortable"
-                                    width="120"
-                                    v-bind:class="{
-                                    'asc': filters.sort_by === 'status' && filters.sort_type === 'asc',
-                                    'desc': filters.sort_by === 'status' && filters.sort_type === 'desc',
-                                     }"
-                                    v-on:click="setSorting('status')">Status
-                                </th>
-                                <th v-if="!table_collapsed" width="140" >Last Login</th>
                                 <th v-if="!table_collapsed" width="140" >Created At</th>
                                 <th width="80"></th>
-
                             </tr>
 
                         </thead>
@@ -183,7 +166,7 @@
                             </td>
                             <td>{{item.id}}</td>
                             <td>{{item.name}}</td>
-                            <td>{{item.email}}</td>
+                            <td>{{item.slug}}</td>
                             <td>
 
 
@@ -200,20 +183,7 @@
                                 </button>
 
                             </td>
-                            <td v-if="!table_collapsed">
 
-                                <span v-if="item.status == 'active'" class="badge badge-success">
-                                    {{item.status}}
-                                </span>
-
-                                <span v-else class="badge badge-danger">
-                                    {{item.status}}
-                                </span>
-
-                            </td>
-                            <td v-if="!table_collapsed">
-                                {{$helpers.dateTimeForHumans(item.last_login_at)}}
-                            </td>
                             <td v-if="!table_collapsed">
                                 {{$helpers.dateTimeForHumans(item.created_at)}}
                             </td>
