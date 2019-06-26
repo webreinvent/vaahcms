@@ -54,7 +54,7 @@ class UserController extends Controller
     public function getDetails(Request $request, $id)
     {
 
-        $item = User::find($id);
+        $item = User::where('id', $id)->withTrashed()->first();
 
         $response['status'] = 'success';
         $response['data'] = $item->recordForFormElement();
@@ -148,6 +148,25 @@ class UserController extends Controller
 
                 break;
 
+            //------------------------------------
+            case 'delete':
+
+                //only one active can't be deactivated
+                $response = User::onlyOneAdminValidation($inputs['inputs']['id']);
+
+                if($response['status'] == 'success')
+                {
+                    $item = User::find($inputs['inputs']['id']);
+                    $item->is_active = 0;
+                    $item->status = 'inactive';
+                    $item->save();
+
+                    $item->delete();
+
+                    $response['messages'] = [];
+                }
+
+                break;
             //------------------------------------
             case 'change_active_status':
 

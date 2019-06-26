@@ -58,6 +58,20 @@ import TView from './../reusable/TableViewGenerator';
                 this.$helpers.stopNprogress();
             },
             //---------------------------------------------------------------------
+            getColumnValue: function(column_name)
+            {
+                var item = this.$helpers.findInArrayByKey(this.columns, 'name', column_name);
+
+                if(!item)
+                {
+                    return false;
+                }
+
+                this.$helpers.console(item, 'items');
+
+                return item.value;
+            },
+            //---------------------------------------------------------------------
             updateItem: function (item) {
                 this.item = item;
 
@@ -95,7 +109,35 @@ import TView from './../reusable/TableViewGenerator';
             },
 
             //---------------------------------------------------------------------
+            actions: function (e, action, inputs, data) {
+                if(e)
+                {
+                    e.preventDefault();
+                }
 
+                var url = this.urls.current+"/actions";
+                var params = {
+                    action: action,
+                    inputs: inputs,
+                    data: data,
+                };
+
+                this.$helpers.ajax(url, params, this.actionsAfter);
+            },
+
+            //---------------------------------------------------------------------
+
+            actionsAfter: function (data) {
+                this.getDetails();
+
+                this.emitReloadList();
+
+            },
+
+            //---------------------------------------------------------------------
+            emitReloadList: function () {
+                this.$root.$emit('reloadList');
+            }
             //---------------------------------------------------------------------
             //---------------------------------------------------------------------
         }

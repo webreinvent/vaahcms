@@ -2096,7 +2096,7 @@ __webpack_require__.r(__webpack_exports__);
  //https://github.com/voerro/vue-tagsinput
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['urls', 'assets'],
+  props: ['urls', 'assets', 'reload_counter'],
   components: {
     'pagination': laravel_vue_pagination__WEBPACK_IMPORTED_MODULE_0___default.a,
     'ToggleButton': vue_js_toggle_button__WEBPACK_IMPORTED_MODULE_2__["ToggleButton"]
@@ -2127,10 +2127,15 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   mounted: function mounted() {
+    var _this = this;
+
     //---------------------------------------------------------------------
     this.getList();
     this.setTableCollapseStatus(); //---------------------------------------------------------------------
-    //---------------------------------------------------------------------
+
+    this.$root.$on('reloadList', function () {
+      _this.getList();
+    }); //---------------------------------------------------------------------
     //---------------------------------------------------------------------
     //---------------------------------------------------------------------
   },
@@ -2331,6 +2336,17 @@ __webpack_require__.r(__webpack_exports__);
       this.$helpers.stopNprogress();
     },
     //---------------------------------------------------------------------
+    getColumnValue: function getColumnValue(column_name) {
+      var item = this.$helpers.findInArrayByKey(this.columns, 'name', column_name);
+
+      if (!item) {
+        return false;
+      }
+
+      this.$helpers.console(item, 'items');
+      return item.value;
+    },
+    //---------------------------------------------------------------------
     updateItem: function updateItem(item) {
       this.item = item;
       this.$helpers.console(this.item, 'this.item');
@@ -2356,8 +2372,30 @@ __webpack_require__.r(__webpack_exports__);
       this.item = data;
       this.id = data.id;
       this.$helpers.stopNprogress();
-    } //---------------------------------------------------------------------
+    },
     //---------------------------------------------------------------------
+    actions: function actions(e, action, inputs, data) {
+      if (e) {
+        e.preventDefault();
+      }
+
+      var url = this.urls.current + "/actions";
+      var params = {
+        action: action,
+        inputs: inputs,
+        data: data
+      };
+      this.$helpers.ajax(url, params, this.actionsAfter);
+    },
+    //---------------------------------------------------------------------
+    actionsAfter: function actionsAfter(data) {
+      this.getDetails();
+      this.emitReloadList();
+    },
+    //---------------------------------------------------------------------
+    emitReloadList: function emitReloadList() {
+      this.$root.$emit('reloadList');
+    } //---------------------------------------------------------------------
     //---------------------------------------------------------------------
 
   }
@@ -59289,7 +59327,39 @@ var render = function() {
                   [_c("i", { staticClass: "fas fa-ellipsis-v" })]
                 ),
                 _vm._v(" "),
-                _vm._m(0)
+                _c(
+                  "div",
+                  {
+                    staticClass: "dropdown-menu dropdown-menu-right",
+                    attrs: { "aria-labelledby": "dropdownMenuLink" }
+                  },
+                  [
+                    _c(
+                      "a",
+                      { staticClass: "dropdown-item", attrs: { href: "#" } },
+                      [_vm._v("Send Activation Email")]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "a",
+                      {
+                        staticClass: "dropdown-item text-danger",
+                        attrs: { href: "#" },
+                        on: {
+                          click: function($event) {
+                            return _vm.actions(
+                              $event,
+                              "delete",
+                              { id: _vm.id },
+                              {}
+                            )
+                          }
+                        }
+                      },
+                      [_vm._v("Delete")]
+                    )
+                  ]
+                )
               ]),
               _vm._v(" "),
               _c(
@@ -59303,38 +59373,48 @@ var render = function() {
         ])
       ]),
       _vm._v(" "),
-      _c("div", { staticClass: "card-body" }, [
-        _vm.edit == false
-          ? _c(
-              "table",
-              {
-                staticClass:
-                  "table table-striped table-sm table-condensed  table-form table-form-view"
-              },
-              [
-                _vm.columns
-                  ? _c("t-view", { attrs: { columns: _vm.columns } })
-                  : _vm._e()
-              ],
-              1
-            )
-          : _c(
-              "table",
-              {
-                staticClass:
-                  "table table-striped table-sm table-condensed  table-form table-form-dashed"
-              },
-              [
-                _vm.columns
-                  ? _c("t-form", {
-                      attrs: { columns: _vm.columns },
-                      on: { emittedItem: _vm.updateItem }
-                    })
-                  : _vm._e()
-              ],
-              1
-            )
-      ]),
+      _vm.columns
+        ? _c("div", { staticClass: "card-body" }, [
+            _vm.getColumnValue("deleted_at")
+              ? _c("div", { staticClass: "alert alert-danger" }, [
+                  _vm._v(
+                    "\n                This record is deleted\n            "
+                  )
+                ])
+              : _vm._e(),
+            _vm._v(" "),
+            _vm.edit == false
+              ? _c(
+                  "table",
+                  {
+                    staticClass:
+                      "table table-striped table-sm table-condensed  table-form table-form-view"
+                  },
+                  [
+                    _vm.columns
+                      ? _c("t-view", { attrs: { columns: _vm.columns } })
+                      : _vm._e()
+                  ],
+                  1
+                )
+              : _c(
+                  "table",
+                  {
+                    staticClass:
+                      "table table-striped table-sm table-condensed  table-form table-form-dashed"
+                  },
+                  [
+                    _vm.columns
+                      ? _c("t-form", {
+                          attrs: { columns: _vm.columns },
+                          on: { emittedItem: _vm.updateItem }
+                        })
+                      : _vm._e()
+                  ],
+                  1
+                )
+          ])
+        : _vm._e(),
       _vm._v(" "),
       _vm.edit == true
         ? _c("div", { staticClass: "card-footer" }, [
@@ -59348,31 +59428,7 @@ var render = function() {
     ])
   ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      {
-        staticClass: "dropdown-menu dropdown-menu-right",
-        attrs: { "aria-labelledby": "dropdownMenuLink" }
-      },
-      [
-        _c("a", { staticClass: "dropdown-item", attrs: { href: "#" } }, [
-          _vm._v("Send Activation Email")
-        ]),
-        _vm._v(" "),
-        _c(
-          "a",
-          { staticClass: "dropdown-item text-danger", attrs: { href: "#" } },
-          [_vm._v("Delete")]
-        )
-      ]
-    )
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -79012,6 +79068,7 @@ var app = new Vue({
   data: {
     assets: null,
     debug: debug,
+    reload_counter: 0,
     urls: {
       base: base_url,
       current: current_url
@@ -79032,7 +79089,6 @@ var app = new Vue({
       this.assets = data;
       this.$helpers.stopNprogress();
     } //-----------------------------------------------------------
-    //-----------------------------------------------------------
     //-----------------------------------------------------------
 
   }

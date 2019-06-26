@@ -27,8 +27,8 @@
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuLink">
-                                    <a class="dropdown-item" href="#">Send Activation Email</a>
-                                    <a class="dropdown-item text-danger" href="#">Delete</a>
+                                    <a class="dropdown-item" href="#" >Send Activation Email</a>
+                                    <a class="dropdown-item text-danger" href="#" v-on:click="actions($event, 'delete', {id:id}, {})">Delete</a>
                                 </div>
                             </div>
 
@@ -44,7 +44,11 @@
 
 
 
-                <div class="card-body">
+                <div class="card-body" v-if="columns">
+
+                    <div class="alert alert-danger" v-if="getColumnValue('deleted_at')">
+                        This record is deleted
+                    </div>
 
                     <table v-if="edit == false" class="table table-striped table-sm table-condensed  table-form table-form-view">
                         <t-view v-if="columns"  :columns="columns" ></t-view>

@@ -8,7 +8,7 @@ import { ToggleButton } from 'vue-js-toggle-button'
 
     export default {
 
-        props: ['urls', 'assets'],
+        props: ['urls', 'assets', 'reload_counter'],
         components:{
             'pagination': pagination,
             'ToggleButton': ToggleButton,
@@ -39,7 +39,7 @@ import { ToggleButton } from 'vue-js-toggle-button'
 
             '$route' (to, from) {
                 this.setTableCollapseStatus();
-            }
+            },
 
         },
         mounted() {
@@ -48,6 +48,9 @@ import { ToggleButton } from 'vue-js-toggle-button'
             this.getList();
             this.setTableCollapseStatus();
             //---------------------------------------------------------------------
+            this.$root.$on('reloadList', () => {
+                this.getList();
+            })
             //---------------------------------------------------------------------
             //---------------------------------------------------------------------
             //---------------------------------------------------------------------
@@ -231,6 +234,7 @@ import { ToggleButton } from 'vue-js-toggle-button'
                 }
             },
             //---------------------------------------------------------------------
+
             //---------------------------------------------------------------------
 
             //---------------------------------------------------------------------

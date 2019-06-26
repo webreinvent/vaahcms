@@ -61,6 +61,7 @@ const app = new Vue({
     data: {
         assets: null,
         debug: debug,
+        reload_counter: 0,
         urls: {
             base: base_url,
             current: current_url,
@@ -86,9 +87,6 @@ const app = new Vue({
             this.$helpers.stopNprogress();
 
         },
-
-        //-----------------------------------------------------------
-
         //-----------------------------------------------------------
         //-----------------------------------------------------------
     }
