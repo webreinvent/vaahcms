@@ -86,34 +86,34 @@
 /************************************************************************/
 /******/ ({
 
-/***/ "./node_modules/axios/index.js":
-/*!*************************************!*\
-  !*** ./node_modules/axios/index.js ***!
-  \*************************************/
+/***/ "../../node_modules/axios/index.js":
+/*!**************************************************************!*\
+  !*** F:/xampp72/htdocs/packages/node_modules/axios/index.js ***!
+  \**************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! ./lib/axios */ "./node_modules/axios/lib/axios.js");
+module.exports = __webpack_require__(/*! ./lib/axios */ "../../node_modules/axios/lib/axios.js");
 
 /***/ }),
 
-/***/ "./node_modules/axios/lib/adapters/xhr.js":
-/*!************************************************!*\
-  !*** ./node_modules/axios/lib/adapters/xhr.js ***!
-  \************************************************/
+/***/ "../../node_modules/axios/lib/adapters/xhr.js":
+/*!*************************************************************************!*\
+  !*** F:/xampp72/htdocs/packages/node_modules/axios/lib/adapters/xhr.js ***!
+  \*************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var utils = __webpack_require__(/*! ./../utils */ "./node_modules/axios/lib/utils.js");
-var settle = __webpack_require__(/*! ./../core/settle */ "./node_modules/axios/lib/core/settle.js");
-var buildURL = __webpack_require__(/*! ./../helpers/buildURL */ "./node_modules/axios/lib/helpers/buildURL.js");
-var parseHeaders = __webpack_require__(/*! ./../helpers/parseHeaders */ "./node_modules/axios/lib/helpers/parseHeaders.js");
-var isURLSameOrigin = __webpack_require__(/*! ./../helpers/isURLSameOrigin */ "./node_modules/axios/lib/helpers/isURLSameOrigin.js");
-var createError = __webpack_require__(/*! ../core/createError */ "./node_modules/axios/lib/core/createError.js");
-var btoa = (typeof window !== 'undefined' && window.btoa && window.btoa.bind(window)) || __webpack_require__(/*! ./../helpers/btoa */ "./node_modules/axios/lib/helpers/btoa.js");
+var utils = __webpack_require__(/*! ./../utils */ "../../node_modules/axios/lib/utils.js");
+var settle = __webpack_require__(/*! ./../core/settle */ "../../node_modules/axios/lib/core/settle.js");
+var buildURL = __webpack_require__(/*! ./../helpers/buildURL */ "../../node_modules/axios/lib/helpers/buildURL.js");
+var parseHeaders = __webpack_require__(/*! ./../helpers/parseHeaders */ "../../node_modules/axios/lib/helpers/parseHeaders.js");
+var isURLSameOrigin = __webpack_require__(/*! ./../helpers/isURLSameOrigin */ "../../node_modules/axios/lib/helpers/isURLSameOrigin.js");
+var createError = __webpack_require__(/*! ../core/createError */ "../../node_modules/axios/lib/core/createError.js");
+var btoa = (typeof window !== 'undefined' && window.btoa && window.btoa.bind(window)) || __webpack_require__(/*! ./../helpers/btoa */ "../../node_modules/axios/lib/helpers/btoa.js");
 
 module.exports = function xhrAdapter(config) {
   return new Promise(function dispatchXhrRequest(resolve, reject) {
@@ -210,7 +210,7 @@ module.exports = function xhrAdapter(config) {
     // This is only done if running in a standard browser environment.
     // Specifically not if we're in a web worker, or react-native.
     if (utils.isStandardBrowserEnv()) {
-      var cookies = __webpack_require__(/*! ./../helpers/cookies */ "./node_modules/axios/lib/helpers/cookies.js");
+      var cookies = __webpack_require__(/*! ./../helpers/cookies */ "../../node_modules/axios/lib/helpers/cookies.js");
 
       // Add xsrf header
       var xsrfValue = (config.withCredentials || isURLSameOrigin(config.url)) && config.xsrfCookieName ?
@@ -289,20 +289,20 @@ module.exports = function xhrAdapter(config) {
 
 /***/ }),
 
-/***/ "./node_modules/axios/lib/axios.js":
-/*!*****************************************!*\
-  !*** ./node_modules/axios/lib/axios.js ***!
-  \*****************************************/
+/***/ "../../node_modules/axios/lib/axios.js":
+/*!******************************************************************!*\
+  !*** F:/xampp72/htdocs/packages/node_modules/axios/lib/axios.js ***!
+  \******************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var utils = __webpack_require__(/*! ./utils */ "./node_modules/axios/lib/utils.js");
-var bind = __webpack_require__(/*! ./helpers/bind */ "./node_modules/axios/lib/helpers/bind.js");
-var Axios = __webpack_require__(/*! ./core/Axios */ "./node_modules/axios/lib/core/Axios.js");
-var defaults = __webpack_require__(/*! ./defaults */ "./node_modules/axios/lib/defaults.js");
+var utils = __webpack_require__(/*! ./utils */ "../../node_modules/axios/lib/utils.js");
+var bind = __webpack_require__(/*! ./helpers/bind */ "../../node_modules/axios/lib/helpers/bind.js");
+var Axios = __webpack_require__(/*! ./core/Axios */ "../../node_modules/axios/lib/core/Axios.js");
+var defaults = __webpack_require__(/*! ./defaults */ "../../node_modules/axios/lib/defaults.js");
 
 /**
  * Create an instance of Axios
@@ -335,15 +335,15 @@ axios.create = function create(instanceConfig) {
 };
 
 // Expose Cancel & CancelToken
-axios.Cancel = __webpack_require__(/*! ./cancel/Cancel */ "./node_modules/axios/lib/cancel/Cancel.js");
-axios.CancelToken = __webpack_require__(/*! ./cancel/CancelToken */ "./node_modules/axios/lib/cancel/CancelToken.js");
-axios.isCancel = __webpack_require__(/*! ./cancel/isCancel */ "./node_modules/axios/lib/cancel/isCancel.js");
+axios.Cancel = __webpack_require__(/*! ./cancel/Cancel */ "../../node_modules/axios/lib/cancel/Cancel.js");
+axios.CancelToken = __webpack_require__(/*! ./cancel/CancelToken */ "../../node_modules/axios/lib/cancel/CancelToken.js");
+axios.isCancel = __webpack_require__(/*! ./cancel/isCancel */ "../../node_modules/axios/lib/cancel/isCancel.js");
 
 // Expose all/spread
 axios.all = function all(promises) {
   return Promise.all(promises);
 };
-axios.spread = __webpack_require__(/*! ./helpers/spread */ "./node_modules/axios/lib/helpers/spread.js");
+axios.spread = __webpack_require__(/*! ./helpers/spread */ "../../node_modules/axios/lib/helpers/spread.js");
 
 module.exports = axios;
 
@@ -353,10 +353,10 @@ module.exports.default = axios;
 
 /***/ }),
 
-/***/ "./node_modules/axios/lib/cancel/Cancel.js":
-/*!*************************************************!*\
-  !*** ./node_modules/axios/lib/cancel/Cancel.js ***!
-  \*************************************************/
+/***/ "../../node_modules/axios/lib/cancel/Cancel.js":
+/*!**************************************************************************!*\
+  !*** F:/xampp72/htdocs/packages/node_modules/axios/lib/cancel/Cancel.js ***!
+  \**************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -384,17 +384,17 @@ module.exports = Cancel;
 
 /***/ }),
 
-/***/ "./node_modules/axios/lib/cancel/CancelToken.js":
-/*!******************************************************!*\
-  !*** ./node_modules/axios/lib/cancel/CancelToken.js ***!
-  \******************************************************/
+/***/ "../../node_modules/axios/lib/cancel/CancelToken.js":
+/*!*******************************************************************************!*\
+  !*** F:/xampp72/htdocs/packages/node_modules/axios/lib/cancel/CancelToken.js ***!
+  \*******************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var Cancel = __webpack_require__(/*! ./Cancel */ "./node_modules/axios/lib/cancel/Cancel.js");
+var Cancel = __webpack_require__(/*! ./Cancel */ "../../node_modules/axios/lib/cancel/Cancel.js");
 
 /**
  * A `CancelToken` is an object that can be used to request cancellation of an operation.
@@ -453,10 +453,10 @@ module.exports = CancelToken;
 
 /***/ }),
 
-/***/ "./node_modules/axios/lib/cancel/isCancel.js":
-/*!***************************************************!*\
-  !*** ./node_modules/axios/lib/cancel/isCancel.js ***!
-  \***************************************************/
+/***/ "../../node_modules/axios/lib/cancel/isCancel.js":
+/*!****************************************************************************!*\
+  !*** F:/xampp72/htdocs/packages/node_modules/axios/lib/cancel/isCancel.js ***!
+  \****************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -470,20 +470,20 @@ module.exports = function isCancel(value) {
 
 /***/ }),
 
-/***/ "./node_modules/axios/lib/core/Axios.js":
-/*!**********************************************!*\
-  !*** ./node_modules/axios/lib/core/Axios.js ***!
-  \**********************************************/
+/***/ "../../node_modules/axios/lib/core/Axios.js":
+/*!***********************************************************************!*\
+  !*** F:/xampp72/htdocs/packages/node_modules/axios/lib/core/Axios.js ***!
+  \***********************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var defaults = __webpack_require__(/*! ./../defaults */ "./node_modules/axios/lib/defaults.js");
-var utils = __webpack_require__(/*! ./../utils */ "./node_modules/axios/lib/utils.js");
-var InterceptorManager = __webpack_require__(/*! ./InterceptorManager */ "./node_modules/axios/lib/core/InterceptorManager.js");
-var dispatchRequest = __webpack_require__(/*! ./dispatchRequest */ "./node_modules/axios/lib/core/dispatchRequest.js");
+var defaults = __webpack_require__(/*! ./../defaults */ "../../node_modules/axios/lib/defaults.js");
+var utils = __webpack_require__(/*! ./../utils */ "../../node_modules/axios/lib/utils.js");
+var InterceptorManager = __webpack_require__(/*! ./InterceptorManager */ "../../node_modules/axios/lib/core/InterceptorManager.js");
+var dispatchRequest = __webpack_require__(/*! ./dispatchRequest */ "../../node_modules/axios/lib/core/dispatchRequest.js");
 
 /**
  * Create a new instance of Axios
@@ -561,17 +561,17 @@ module.exports = Axios;
 
 /***/ }),
 
-/***/ "./node_modules/axios/lib/core/InterceptorManager.js":
-/*!***********************************************************!*\
-  !*** ./node_modules/axios/lib/core/InterceptorManager.js ***!
-  \***********************************************************/
+/***/ "../../node_modules/axios/lib/core/InterceptorManager.js":
+/*!************************************************************************************!*\
+  !*** F:/xampp72/htdocs/packages/node_modules/axios/lib/core/InterceptorManager.js ***!
+  \************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var utils = __webpack_require__(/*! ./../utils */ "./node_modules/axios/lib/utils.js");
+var utils = __webpack_require__(/*! ./../utils */ "../../node_modules/axios/lib/utils.js");
 
 function InterceptorManager() {
   this.handlers = [];
@@ -625,17 +625,17 @@ module.exports = InterceptorManager;
 
 /***/ }),
 
-/***/ "./node_modules/axios/lib/core/createError.js":
-/*!****************************************************!*\
-  !*** ./node_modules/axios/lib/core/createError.js ***!
-  \****************************************************/
+/***/ "../../node_modules/axios/lib/core/createError.js":
+/*!*****************************************************************************!*\
+  !*** F:/xampp72/htdocs/packages/node_modules/axios/lib/core/createError.js ***!
+  \*****************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var enhanceError = __webpack_require__(/*! ./enhanceError */ "./node_modules/axios/lib/core/enhanceError.js");
+var enhanceError = __webpack_require__(/*! ./enhanceError */ "../../node_modules/axios/lib/core/enhanceError.js");
 
 /**
  * Create an Error with the specified message, config, error code, request and response.
@@ -655,22 +655,22 @@ module.exports = function createError(message, config, code, request, response) 
 
 /***/ }),
 
-/***/ "./node_modules/axios/lib/core/dispatchRequest.js":
-/*!********************************************************!*\
-  !*** ./node_modules/axios/lib/core/dispatchRequest.js ***!
-  \********************************************************/
+/***/ "../../node_modules/axios/lib/core/dispatchRequest.js":
+/*!*********************************************************************************!*\
+  !*** F:/xampp72/htdocs/packages/node_modules/axios/lib/core/dispatchRequest.js ***!
+  \*********************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var utils = __webpack_require__(/*! ./../utils */ "./node_modules/axios/lib/utils.js");
-var transformData = __webpack_require__(/*! ./transformData */ "./node_modules/axios/lib/core/transformData.js");
-var isCancel = __webpack_require__(/*! ../cancel/isCancel */ "./node_modules/axios/lib/cancel/isCancel.js");
-var defaults = __webpack_require__(/*! ../defaults */ "./node_modules/axios/lib/defaults.js");
-var isAbsoluteURL = __webpack_require__(/*! ./../helpers/isAbsoluteURL */ "./node_modules/axios/lib/helpers/isAbsoluteURL.js");
-var combineURLs = __webpack_require__(/*! ./../helpers/combineURLs */ "./node_modules/axios/lib/helpers/combineURLs.js");
+var utils = __webpack_require__(/*! ./../utils */ "../../node_modules/axios/lib/utils.js");
+var transformData = __webpack_require__(/*! ./transformData */ "../../node_modules/axios/lib/core/transformData.js");
+var isCancel = __webpack_require__(/*! ../cancel/isCancel */ "../../node_modules/axios/lib/cancel/isCancel.js");
+var defaults = __webpack_require__(/*! ../defaults */ "../../node_modules/axios/lib/defaults.js");
+var isAbsoluteURL = __webpack_require__(/*! ./../helpers/isAbsoluteURL */ "../../node_modules/axios/lib/helpers/isAbsoluteURL.js");
+var combineURLs = __webpack_require__(/*! ./../helpers/combineURLs */ "../../node_modules/axios/lib/helpers/combineURLs.js");
 
 /**
  * Throws a `Cancel` if cancellation has been requested.
@@ -753,10 +753,10 @@ module.exports = function dispatchRequest(config) {
 
 /***/ }),
 
-/***/ "./node_modules/axios/lib/core/enhanceError.js":
-/*!*****************************************************!*\
-  !*** ./node_modules/axios/lib/core/enhanceError.js ***!
-  \*****************************************************/
+/***/ "../../node_modules/axios/lib/core/enhanceError.js":
+/*!******************************************************************************!*\
+  !*** F:/xampp72/htdocs/packages/node_modules/axios/lib/core/enhanceError.js ***!
+  \******************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -786,17 +786,17 @@ module.exports = function enhanceError(error, config, code, request, response) {
 
 /***/ }),
 
-/***/ "./node_modules/axios/lib/core/settle.js":
-/*!***********************************************!*\
-  !*** ./node_modules/axios/lib/core/settle.js ***!
-  \***********************************************/
+/***/ "../../node_modules/axios/lib/core/settle.js":
+/*!************************************************************************!*\
+  !*** F:/xampp72/htdocs/packages/node_modules/axios/lib/core/settle.js ***!
+  \************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var createError = __webpack_require__(/*! ./createError */ "./node_modules/axios/lib/core/createError.js");
+var createError = __webpack_require__(/*! ./createError */ "../../node_modules/axios/lib/core/createError.js");
 
 /**
  * Resolve or reject a Promise based on response status.
@@ -824,17 +824,17 @@ module.exports = function settle(resolve, reject, response) {
 
 /***/ }),
 
-/***/ "./node_modules/axios/lib/core/transformData.js":
-/*!******************************************************!*\
-  !*** ./node_modules/axios/lib/core/transformData.js ***!
-  \******************************************************/
+/***/ "../../node_modules/axios/lib/core/transformData.js":
+/*!*******************************************************************************!*\
+  !*** F:/xampp72/htdocs/packages/node_modules/axios/lib/core/transformData.js ***!
+  \*******************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var utils = __webpack_require__(/*! ./../utils */ "./node_modules/axios/lib/utils.js");
+var utils = __webpack_require__(/*! ./../utils */ "../../node_modules/axios/lib/utils.js");
 
 /**
  * Transform the data for a request or a response
@@ -856,18 +856,18 @@ module.exports = function transformData(data, headers, fns) {
 
 /***/ }),
 
-/***/ "./node_modules/axios/lib/defaults.js":
-/*!********************************************!*\
-  !*** ./node_modules/axios/lib/defaults.js ***!
-  \********************************************/
+/***/ "../../node_modules/axios/lib/defaults.js":
+/*!*********************************************************************!*\
+  !*** F:/xampp72/htdocs/packages/node_modules/axios/lib/defaults.js ***!
+  \*********************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 /* WEBPACK VAR INJECTION */(function(process) {
 
-var utils = __webpack_require__(/*! ./utils */ "./node_modules/axios/lib/utils.js");
-var normalizeHeaderName = __webpack_require__(/*! ./helpers/normalizeHeaderName */ "./node_modules/axios/lib/helpers/normalizeHeaderName.js");
+var utils = __webpack_require__(/*! ./utils */ "../../node_modules/axios/lib/utils.js");
+var normalizeHeaderName = __webpack_require__(/*! ./helpers/normalizeHeaderName */ "../../node_modules/axios/lib/helpers/normalizeHeaderName.js");
 
 var DEFAULT_CONTENT_TYPE = {
   'Content-Type': 'application/x-www-form-urlencoded'
@@ -883,10 +883,10 @@ function getDefaultAdapter() {
   var adapter;
   if (typeof XMLHttpRequest !== 'undefined') {
     // For browsers use XHR adapter
-    adapter = __webpack_require__(/*! ./adapters/xhr */ "./node_modules/axios/lib/adapters/xhr.js");
+    adapter = __webpack_require__(/*! ./adapters/xhr */ "../../node_modules/axios/lib/adapters/xhr.js");
   } else if (typeof process !== 'undefined') {
     // For node use HTTP adapter
-    adapter = __webpack_require__(/*! ./adapters/http */ "./node_modules/axios/lib/adapters/xhr.js");
+    adapter = __webpack_require__(/*! ./adapters/http */ "../../node_modules/axios/lib/adapters/xhr.js");
   }
   return adapter;
 }
@@ -961,14 +961,14 @@ utils.forEach(['post', 'put', 'patch'], function forEachMethodWithData(method) {
 
 module.exports = defaults;
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../process/browser.js */ "./node_modules/process/browser.js")))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../../packages/vaahcms/node_modules/process/browser.js */ "./node_modules/process/browser.js")))
 
 /***/ }),
 
-/***/ "./node_modules/axios/lib/helpers/bind.js":
-/*!************************************************!*\
-  !*** ./node_modules/axios/lib/helpers/bind.js ***!
-  \************************************************/
+/***/ "../../node_modules/axios/lib/helpers/bind.js":
+/*!*************************************************************************!*\
+  !*** F:/xampp72/htdocs/packages/node_modules/axios/lib/helpers/bind.js ***!
+  \*************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -988,10 +988,10 @@ module.exports = function bind(fn, thisArg) {
 
 /***/ }),
 
-/***/ "./node_modules/axios/lib/helpers/btoa.js":
-/*!************************************************!*\
-  !*** ./node_modules/axios/lib/helpers/btoa.js ***!
-  \************************************************/
+/***/ "../../node_modules/axios/lib/helpers/btoa.js":
+/*!*************************************************************************!*\
+  !*** F:/xampp72/htdocs/packages/node_modules/axios/lib/helpers/btoa.js ***!
+  \*************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -1036,17 +1036,17 @@ module.exports = btoa;
 
 /***/ }),
 
-/***/ "./node_modules/axios/lib/helpers/buildURL.js":
-/*!****************************************************!*\
-  !*** ./node_modules/axios/lib/helpers/buildURL.js ***!
-  \****************************************************/
+/***/ "../../node_modules/axios/lib/helpers/buildURL.js":
+/*!*****************************************************************************!*\
+  !*** F:/xampp72/htdocs/packages/node_modules/axios/lib/helpers/buildURL.js ***!
+  \*****************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var utils = __webpack_require__(/*! ./../utils */ "./node_modules/axios/lib/utils.js");
+var utils = __webpack_require__(/*! ./../utils */ "../../node_modules/axios/lib/utils.js");
 
 function encode(val) {
   return encodeURIComponent(val).
@@ -1114,10 +1114,10 @@ module.exports = function buildURL(url, params, paramsSerializer) {
 
 /***/ }),
 
-/***/ "./node_modules/axios/lib/helpers/combineURLs.js":
-/*!*******************************************************!*\
-  !*** ./node_modules/axios/lib/helpers/combineURLs.js ***!
-  \*******************************************************/
+/***/ "../../node_modules/axios/lib/helpers/combineURLs.js":
+/*!********************************************************************************!*\
+  !*** F:/xampp72/htdocs/packages/node_modules/axios/lib/helpers/combineURLs.js ***!
+  \********************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -1140,17 +1140,17 @@ module.exports = function combineURLs(baseURL, relativeURL) {
 
 /***/ }),
 
-/***/ "./node_modules/axios/lib/helpers/cookies.js":
-/*!***************************************************!*\
-  !*** ./node_modules/axios/lib/helpers/cookies.js ***!
-  \***************************************************/
+/***/ "../../node_modules/axios/lib/helpers/cookies.js":
+/*!****************************************************************************!*\
+  !*** F:/xampp72/htdocs/packages/node_modules/axios/lib/helpers/cookies.js ***!
+  \****************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var utils = __webpack_require__(/*! ./../utils */ "./node_modules/axios/lib/utils.js");
+var utils = __webpack_require__(/*! ./../utils */ "../../node_modules/axios/lib/utils.js");
 
 module.exports = (
   utils.isStandardBrowserEnv() ?
@@ -1205,10 +1205,10 @@ module.exports = (
 
 /***/ }),
 
-/***/ "./node_modules/axios/lib/helpers/isAbsoluteURL.js":
-/*!*********************************************************!*\
-  !*** ./node_modules/axios/lib/helpers/isAbsoluteURL.js ***!
-  \*********************************************************/
+/***/ "../../node_modules/axios/lib/helpers/isAbsoluteURL.js":
+/*!**********************************************************************************!*\
+  !*** F:/xampp72/htdocs/packages/node_modules/axios/lib/helpers/isAbsoluteURL.js ***!
+  \**********************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -1231,17 +1231,17 @@ module.exports = function isAbsoluteURL(url) {
 
 /***/ }),
 
-/***/ "./node_modules/axios/lib/helpers/isURLSameOrigin.js":
-/*!***********************************************************!*\
-  !*** ./node_modules/axios/lib/helpers/isURLSameOrigin.js ***!
-  \***********************************************************/
+/***/ "../../node_modules/axios/lib/helpers/isURLSameOrigin.js":
+/*!************************************************************************************!*\
+  !*** F:/xampp72/htdocs/packages/node_modules/axios/lib/helpers/isURLSameOrigin.js ***!
+  \************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var utils = __webpack_require__(/*! ./../utils */ "./node_modules/axios/lib/utils.js");
+var utils = __webpack_require__(/*! ./../utils */ "../../node_modules/axios/lib/utils.js");
 
 module.exports = (
   utils.isStandardBrowserEnv() ?
@@ -1311,17 +1311,17 @@ module.exports = (
 
 /***/ }),
 
-/***/ "./node_modules/axios/lib/helpers/normalizeHeaderName.js":
-/*!***************************************************************!*\
-  !*** ./node_modules/axios/lib/helpers/normalizeHeaderName.js ***!
-  \***************************************************************/
+/***/ "../../node_modules/axios/lib/helpers/normalizeHeaderName.js":
+/*!****************************************************************************************!*\
+  !*** F:/xampp72/htdocs/packages/node_modules/axios/lib/helpers/normalizeHeaderName.js ***!
+  \****************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var utils = __webpack_require__(/*! ../utils */ "./node_modules/axios/lib/utils.js");
+var utils = __webpack_require__(/*! ../utils */ "../../node_modules/axios/lib/utils.js");
 
 module.exports = function normalizeHeaderName(headers, normalizedName) {
   utils.forEach(headers, function processHeader(value, name) {
@@ -1335,17 +1335,17 @@ module.exports = function normalizeHeaderName(headers, normalizedName) {
 
 /***/ }),
 
-/***/ "./node_modules/axios/lib/helpers/parseHeaders.js":
-/*!********************************************************!*\
-  !*** ./node_modules/axios/lib/helpers/parseHeaders.js ***!
-  \********************************************************/
+/***/ "../../node_modules/axios/lib/helpers/parseHeaders.js":
+/*!*********************************************************************************!*\
+  !*** F:/xampp72/htdocs/packages/node_modules/axios/lib/helpers/parseHeaders.js ***!
+  \*********************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var utils = __webpack_require__(/*! ./../utils */ "./node_modules/axios/lib/utils.js");
+var utils = __webpack_require__(/*! ./../utils */ "../../node_modules/axios/lib/utils.js");
 
 // Headers whose duplicates are ignored by node
 // c.f. https://nodejs.org/api/http.html#http_message_headers
@@ -1400,10 +1400,10 @@ module.exports = function parseHeaders(headers) {
 
 /***/ }),
 
-/***/ "./node_modules/axios/lib/helpers/spread.js":
-/*!**************************************************!*\
-  !*** ./node_modules/axios/lib/helpers/spread.js ***!
-  \**************************************************/
+/***/ "../../node_modules/axios/lib/helpers/spread.js":
+/*!***************************************************************************!*\
+  !*** F:/xampp72/htdocs/packages/node_modules/axios/lib/helpers/spread.js ***!
+  \***************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -1439,18 +1439,18 @@ module.exports = function spread(callback) {
 
 /***/ }),
 
-/***/ "./node_modules/axios/lib/utils.js":
-/*!*****************************************!*\
-  !*** ./node_modules/axios/lib/utils.js ***!
-  \*****************************************/
+/***/ "../../node_modules/axios/lib/utils.js":
+/*!******************************************************************!*\
+  !*** F:/xampp72/htdocs/packages/node_modules/axios/lib/utils.js ***!
+  \******************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var bind = __webpack_require__(/*! ./helpers/bind */ "./node_modules/axios/lib/helpers/bind.js");
-var isBuffer = __webpack_require__(/*! is-buffer */ "./node_modules/is-buffer/index.js");
+var bind = __webpack_require__(/*! ./helpers/bind */ "../../node_modules/axios/lib/helpers/bind.js");
+var isBuffer = __webpack_require__(/*! is-buffer */ "../../node_modules/is-buffer/index.js");
 
 /*global toString:true*/
 
@@ -1754,605 +1754,10 @@ module.exports = {
 
 /***/ }),
 
-/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/assets/vendor/vaahcms/admin/default/vue/reusable/TableFormGenerator.vue?vue&type=script&lang=js&":
-/*!****************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/assets/vendor/vaahcms/admin/default/vue/reusable/TableFormGenerator.vue?vue&type=script&lang=js& ***!
-  \****************************************************************************************************************************************************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var vuejs_datepicker__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuejs-datepicker */ "./node_modules/vuejs-datepicker/dist/vuejs-datepicker.esm.js");
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//https://www.npmjs.com/package/vuejs-datepicker
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-  name: "TableFormGenerator",
-  props: ['columns'],
-  components: {
-    'datepicker': vuejs_datepicker__WEBPACK_IMPORTED_MODULE_0__["default"]
-  },
-  data: function data() {
-    var obj = {
-      new_item: {
-        title: "",
-        country: "",
-        status: "",
-        gender: "",
-        timezone: "",
-        country_calling_code: "",
-        invited_by: "",
-        user_id: ""
-      }
-    };
-    return obj;
-  },
-  created: function created() {
-    this.mapValues();
-  },
-  watch: {
-    'new_item': {
-      handler: function handler() {
-        this.emitItem();
-      },
-      deep: true
-    }
-  },
-  methods: {
-    //---------------------------------------------------------------------
-    mapValues: function mapValues() {
-      var self = this;
-      var columns = this.columns;
-      columns.map(function (item, key) {
-        if (item.value) {
-          self.new_item[item.name] = item.value;
-        }
-      });
-    },
-    //---------------------------------------------------------------------
-    emitItem: function emitItem() {
-      this.$emit('emittedItem', this.new_item);
-    } //---------------------------------------------------------------------
-    //---------------------------------------------------------------------
-    //---------------------------------------------------------------------
-    //---------------------------------------------------------------------
-
-  }
-});
-
-/***/ }),
-
-/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/assets/vendor/vaahcms/admin/default/vue/reusable/TableViewGenerator.vue?vue&type=script&lang=js&":
-/*!****************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/assets/vendor/vaahcms/admin/default/vue/reusable/TableViewGenerator.vue?vue&type=script&lang=js& ***!
-  \****************************************************************************************************************************************************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var vuejs_datepicker__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuejs-datepicker */ "./node_modules/vuejs-datepicker/dist/vuejs-datepicker.esm.js");
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//https://www.npmjs.com/package/vuejs-datepicker
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-  name: "TableViewGenerator",
-  props: ['columns'],
-  components: {
-    'datepicker': vuejs_datepicker__WEBPACK_IMPORTED_MODULE_0__["default"]
-  },
-  data: function data() {
-    var obj = {
-      new_item: {}
-    };
-    return obj;
-  },
-  created: function created() {
-    this.mapValues();
-  },
-  watch: {},
-  methods: {
-    //---------------------------------------------------------------------
-    //---------------------------------------------------------------------
-    mapValues: function mapValues() {
-      var self = this;
-      var columns = this.columns;
-      columns.map(function (item, key) {
-        if (item.value) {
-          self.new_item[item.name] = item.value;
-        }
-      });
-    } //---------------------------------------------------------------------
-    //---------------------------------------------------------------------
-    //---------------------------------------------------------------------
-
-  }
-});
-
-/***/ }),
-
-/***/ "./node_modules/babel-loader/lib/index.js?!./resources/assets/vendor/vaahcms/admin/default/vue/registrations/CreateJs.js?vue&type=script&lang=js&":
-/*!********************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib??ref--4-0!./resources/assets/vendor/vaahcms/admin/default/vue/registrations/CreateJs.js?vue&type=script&lang=js& ***!
-  \********************************************************************************************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _reusable_TableFormGenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./../reusable/TableFormGenerator */ "./resources/assets/vendor/vaahcms/admin/default/vue/reusable/TableFormGenerator.vue");
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['urls', 'assets'],
-  components: {
-    't-form': _reusable_TableFormGenerator__WEBPACK_IMPORTED_MODULE_0__["default"]
-  },
-  data: function data() {
-    var obj = {
-      new_item: null
-    };
-    return obj;
-  },
-  watch: {},
-  mounted: function mounted() {//---------------------------------------------------------------------
-    //this.getAssets();
-    //---------------------------------------------------------------------
-    //---------------------------------------------------------------------
-    //---------------------------------------------------------------------
-    //---------------------------------------------------------------------
-  },
-  methods: {
-    //---------------------------------------------------------------------
-    updateNewItem: function updateNewItem(item) {
-      this.new_item = item;
-      this.$helpers.console(this.new_item, 'this.new_item-->updated');
-    },
-    //---------------------------------------------------------------------
-    store: function store() {
-      var url = this.urls.current + "/store";
-      var params = this.new_item;
-      this.$helpers.console(params, '-->');
-      this.$helpers.ajax(url, params, this.storeAfter);
-    },
-    //---------------------------------------------------------------------
-    storeAfter: function storeAfter(data) {
-      this.$helpers.console(data);
-      var id = data.id;
-      this.$router.push({
-        path: "/view/".concat(id)
-      });
-    } //---------------------------------------------------------------------
-    //---------------------------------------------------------------------
-    //---------------------------------------------------------------------
-
-  }
-});
-
-/***/ }),
-
-/***/ "./node_modules/babel-loader/lib/index.js?!./resources/assets/vendor/vaahcms/admin/default/vue/registrations/ListJs.js?vue&type=script&lang=js&":
-/*!******************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib??ref--4-0!./resources/assets/vendor/vaahcms/admin/default/vue/registrations/ListJs.js?vue&type=script&lang=js& ***!
-  \******************************************************************************************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var laravel_vue_pagination__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! laravel-vue-pagination */ "./node_modules/laravel-vue-pagination/dist/laravel-vue-pagination.common.js");
-/* harmony import */ var laravel_vue_pagination__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(laravel_vue_pagination__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var vue_resource_src_util__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue-resource/src/util */ "./node_modules/vue-resource/src/util.js");
-/* harmony import */ var vue_js_toggle_button__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vue-js-toggle-button */ "./node_modules/vue-js-toggle-button/dist/index.js");
-/* harmony import */ var vue_js_toggle_button__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(vue_js_toggle_button__WEBPACK_IMPORTED_MODULE_2__);
-
- //https://github.com/euvl/vue-js-toggle-button
-
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['urls', 'assets'],
-  components: {
-    'pagination': laravel_vue_pagination__WEBPACK_IMPORTED_MODULE_0___default.a,
-    'ToggleButton': vue_js_toggle_button__WEBPACK_IMPORTED_MODULE_2__["ToggleButton"]
-  },
-  data: function data() {
-    var obj = {
-      q: null,
-      page: 1,
-      list: null,
-      show_filters: false,
-      table_collapsed: false,
-      select_all: false,
-      selected_items: [],
-      bulk_action: "",
-      bulk_action_data: "",
-      filters: {
-        q: null,
-        sort_by: "",
-        sort_type: 'desc',
-        status: 'all'
-      }
-    };
-    return obj;
-  },
-  watch: {
-    '$route': function $route(to, from) {
-      this.setTableCollapseStatus();
-    }
-  },
-  mounted: function mounted() {
-    //---------------------------------------------------------------------
-    this.getList();
-    this.setTableCollapseStatus(); //---------------------------------------------------------------------
-    //---------------------------------------------------------------------
-    //---------------------------------------------------------------------
-    //---------------------------------------------------------------------
-  },
-  methods: {
-    //---------------------------------------------------------------------
-    //---------------------------------------------------------------------
-    getList: function getList(page) {
-      var url = this.urls.current + "/list";
-
-      if (!page || Object(vue_resource_src_util__WEBPACK_IMPORTED_MODULE_1__["isObject"])(page)) {
-        page = this.page;
-      }
-
-      this.$helpers.console(page, 'page');
-      url = url + "?page=" + page;
-
-      if (this.filters.q) {
-        url = url + "&q=" + this.filters.q;
-      }
-
-      var params = this.filters;
-      this.$helpers.ajax(url, params, this.getListAfter);
-    },
-    //---------------------------------------------------------------------
-    getListAfter: function getListAfter(data) {
-      this.list = data.list;
-      this.page = data.list.current_page;
-      this.$helpers.console(this.list);
-      this.$helpers.stopNprogress();
-    },
-    //---------------------------------------------------------------------
-    toggleShowFilters: function toggleShowFilters() {
-      if (this.show_filters == true) {
-        this.show_filters = false;
-      } else {
-        this.show_filters = true;
-      }
-    },
-    //---------------------------------------------------------------------
-    //---------------------------------------------------------------------
-    actions: function actions(e, action, inputs, data) {
-      if (e) {
-        e.preventDefault();
-      }
-
-      var url = this.urls.current + "/actions";
-      var params = {
-        action: action,
-        inputs: inputs,
-        data: data
-      };
-      this.$helpers.ajax(url, params, this.actionsAfter);
-    },
-    //---------------------------------------------------------------------
-    actionsAfter: function actionsAfter(data) {
-      this.getList();
-    },
-    //---------------------------------------------------------------------
-    bulkAction: function bulkAction() {
-      var inputs = this.selected_items;
-      var data = this.bulk_action_data;
-      this.actions(false, this.bulk_action, inputs, data);
-    },
-    //---------------------------------------------------------------------
-    setSorting: function setSorting(column_name) {
-      if (column_name === this.filters.sort_by) {
-        if (this.filters.sort_type === 'desc') {
-          this.filters.sort_type = 'asc';
-        } else {
-          this.filters.sort_type = 'desc';
-        }
-      } else {
-        this.filters.sort_by = column_name;
-        this.filters.sort_type = 'desc';
-      }
-
-      this.getList(this.page);
-    },
-    //---------------------------------------------------------------------
-    setTableCollapseStatus: function setTableCollapseStatus() {
-      this.$helpers.console(this.$route.params);
-
-      if (this.$route.params.id) {
-        this.table_collapsed = true;
-      } else {
-        this.table_collapsed = false;
-      }
-    },
-    //---------------------------------------------------------------------
-    toggleSelectAll: function toggleSelectAll() {
-      var self = this;
-      this.$helpers.console("test");
-
-      if (this.select_all === true) {
-        this.select_all = false;
-        this.selected_items = [];
-      } else {
-        this.select_all = true;
-
-        if (this.list.data) {
-          this.$helpers.console(this.list.data);
-          this.list.data.map(function (item) {
-            self.selected_items.push(item.id);
-          });
-        }
-      }
-    },
-    //---------------------------------------------------------------------
-    toggleSelectedItem: function toggleSelectedItem(id) {
-      this.select_all = false;
-
-      if (this.$helpers.existInArray(this.selected_items, id)) {
-        this.$helpers.removeFromArray(this.selected_items, id);
-      } else {
-        this.selected_items.push(id);
-      }
-    } //---------------------------------------------------------------------
-    //---------------------------------------------------------------------
-    //---------------------------------------------------------------------
-    //---------------------------------------------------------------------
-    //---------------------------------------------------------------------
-    //---------------------------------------------------------------------
-
-  }
-});
-
-/***/ }),
-
-/***/ "./node_modules/babel-loader/lib/index.js?!./resources/assets/vendor/vaahcms/admin/default/vue/registrations/ViewEditJs.js?vue&type=script&lang=js&":
-/*!**********************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib??ref--4-0!./resources/assets/vendor/vaahcms/admin/default/vue/registrations/ViewEditJs.js?vue&type=script&lang=js& ***!
-  \**********************************************************************************************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _reusable_TableFormGenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./../reusable/TableFormGenerator */ "./resources/assets/vendor/vaahcms/admin/default/vue/reusable/TableFormGenerator.vue");
-/* harmony import */ var _reusable_TableViewGenerator__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./../reusable/TableViewGenerator */ "./resources/assets/vendor/vaahcms/admin/default/vue/reusable/TableViewGenerator.vue");
-
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['urls', 'id'],
-  components: {
-    't-form': _reusable_TableFormGenerator__WEBPACK_IMPORTED_MODULE_0__["default"],
-    't-view': _reusable_TableViewGenerator__WEBPACK_IMPORTED_MODULE_1__["default"]
-  },
-  data: function data() {
-    var obj = {
-      assets: null,
-      columns: null,
-      edit: false,
-      item: null
-    };
-    return obj;
-  },
-  watch: {
-    id: function id(newVal, oldVal) {
-      this.getDetails();
-    }
-  },
-  created: function created() {},
-  mounted: function mounted() {
-    //---------------------------------------------------------------------
-    this.getDetails(); //---------------------------------------------------------------------
-    //---------------------------------------------------------------------
-    //---------------------------------------------------------------------
-    //---------------------------------------------------------------------
-  },
-  methods: {
-    //---------------------------------------------------------------------
-    //---------------------------------------------------------------------
-    getDetails: function getDetails() {
-      var url = this.urls.current + "/view/" + this.id;
-      console.log(url, 'url-->');
-      var params = {};
-      this.$helpers.ajax(url, params, this.getDetailsAfter);
-    },
-    //---------------------------------------------------------------------
-    getDetailsAfter: function getDetailsAfter(data) {
-      this.columns = null;
-      this.columns = data;
-      this.$helpers.stopNprogress();
-    },
-    //---------------------------------------------------------------------
-    updateItem: function updateItem(item) {
-      this.item = item;
-      this.$helpers.console(this.item, 'this.item');
-    },
-    //---------------------------------------------------------------------
-    toggleEdit: function toggleEdit() {
-      if (this.edit === true) {
-        this.edit = false;
-      } else {
-        this.edit = true;
-      }
-    },
-    //---------------------------------------------------------------------
-    store: function store() {
-      var url = this.urls.current + "/store";
-      var params = this.item;
-      this.$helpers.console(params, 'params');
-      this.$helpers.ajax(url, params, this.storeAfter);
-    },
-    //---------------------------------------------------------------------
-    storeAfter: function storeAfter(data) {
-      this.edit = false;
-      this.item = data;
-      this.id = data.id;
-      this.$helpers.stopNprogress();
-    } //---------------------------------------------------------------------
-    //---------------------------------------------------------------------
-    //---------------------------------------------------------------------
-
-  }
-});
-
-/***/ }),
-
-/***/ "./node_modules/bootstrap/dist/js/bootstrap.js":
-/*!*****************************************************!*\
-  !*** ./node_modules/bootstrap/dist/js/bootstrap.js ***!
-  \*****************************************************/
+/***/ "../../node_modules/bootstrap/dist/js/bootstrap.js":
+/*!******************************************************************************!*\
+  !*** F:/xampp72/htdocs/packages/node_modules/bootstrap/dist/js/bootstrap.js ***!
+  \******************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -2362,7 +1767,7 @@ __webpack_require__.r(__webpack_exports__);
   * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
   */
 (function (global, factory) {
-   true ? factory(exports, __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js"), __webpack_require__(/*! popper.js */ "./node_modules/popper.js/dist/esm/popper.js")) :
+   true ? factory(exports, __webpack_require__(/*! jquery */ "../../node_modules/jquery/dist/jquery.js"), __webpack_require__(/*! popper.js */ "../../node_modules/popper.js/dist/esm/popper.js")) :
   undefined;
 }(this, function (exports, $, Popper) { 'use strict';
 
@@ -6794,10 +6199,10 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./node_modules/is-buffer/index.js":
-/*!*****************************************!*\
-  !*** ./node_modules/is-buffer/index.js ***!
-  \*****************************************/
+/***/ "../../node_modules/is-buffer/index.js":
+/*!******************************************************************!*\
+  !*** F:/xampp72/htdocs/packages/node_modules/is-buffer/index.js ***!
+  \******************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -6826,10 +6231,10 @@ function isSlowBuffer (obj) {
 
 /***/ }),
 
-/***/ "./node_modules/jquery/dist/jquery.js":
-/*!********************************************!*\
-  !*** ./node_modules/jquery/dist/jquery.js ***!
-  \********************************************/
+/***/ "../../node_modules/jquery/dist/jquery.js":
+/*!*********************************************************************!*\
+  !*** F:/xampp72/htdocs/packages/node_modules/jquery/dist/jquery.js ***!
+  \*********************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -17436,10 +16841,10 @@ return jQuery;
 
 /***/ }),
 
-/***/ "./node_modules/laravel-vue-pagination/dist/laravel-vue-pagination.common.js":
-/*!***********************************************************************************!*\
-  !*** ./node_modules/laravel-vue-pagination/dist/laravel-vue-pagination.common.js ***!
-  \***********************************************************************************/
+/***/ "../../node_modules/laravel-vue-pagination/dist/laravel-vue-pagination.common.js":
+/*!************************************************************************************************************!*\
+  !*** F:/xampp72/htdocs/packages/node_modules/laravel-vue-pagination/dist/laravel-vue-pagination.common.js ***!
+  \************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -18810,10 +18215,10 @@ module.exports = '\x09\x0A\x0B\x0C\x0D\x20\xA0\u1680\u180E\u2000\u2001\u2002\u20
 
 /***/ }),
 
-/***/ "./node_modules/lodash/lodash.js":
-/*!***************************************!*\
-  !*** ./node_modules/lodash/lodash.js ***!
-  \***************************************/
+/***/ "../../node_modules/lodash/lodash.js":
+/*!****************************************************************!*\
+  !*** F:/xampp72/htdocs/packages/node_modules/lodash/lodash.js ***!
+  \****************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -35917,272 +35322,272 @@ module.exports = '\x09\x0A\x0B\x0C\x0D\x20\xA0\u1680\u180E\u2000\u2001\u2002\u20
   else {}
 }.call(this));
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../webpack/buildin/global.js */ "./node_modules/webpack/buildin/global.js"), __webpack_require__(/*! ./../webpack/buildin/module.js */ "./node_modules/webpack/buildin/module.js")(module)))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../packages/vaahcms/node_modules/webpack/buildin/global.js */ "./node_modules/webpack/buildin/global.js"), __webpack_require__(/*! ./../../packages/vaahcms/node_modules/webpack/buildin/module.js */ "./node_modules/webpack/buildin/module.js")(module)))
 
 /***/ }),
 
-/***/ "./node_modules/moment/locale sync recursive ^\\.\\/.*$":
-/*!**************************************************!*\
-  !*** ./node_modules/moment/locale sync ^\.\/.*$ ***!
-  \**************************************************/
+/***/ "../../node_modules/moment/locale sync recursive ^\\.\\/.*$":
+/*!***************************************************************************!*\
+  !*** F:/xampp72/htdocs/packages/node_modules/moment/locale sync ^\.\/.*$ ***!
+  \***************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 var map = {
-	"./af": "./node_modules/moment/locale/af.js",
-	"./af.js": "./node_modules/moment/locale/af.js",
-	"./ar": "./node_modules/moment/locale/ar.js",
-	"./ar-dz": "./node_modules/moment/locale/ar-dz.js",
-	"./ar-dz.js": "./node_modules/moment/locale/ar-dz.js",
-	"./ar-kw": "./node_modules/moment/locale/ar-kw.js",
-	"./ar-kw.js": "./node_modules/moment/locale/ar-kw.js",
-	"./ar-ly": "./node_modules/moment/locale/ar-ly.js",
-	"./ar-ly.js": "./node_modules/moment/locale/ar-ly.js",
-	"./ar-ma": "./node_modules/moment/locale/ar-ma.js",
-	"./ar-ma.js": "./node_modules/moment/locale/ar-ma.js",
-	"./ar-sa": "./node_modules/moment/locale/ar-sa.js",
-	"./ar-sa.js": "./node_modules/moment/locale/ar-sa.js",
-	"./ar-tn": "./node_modules/moment/locale/ar-tn.js",
-	"./ar-tn.js": "./node_modules/moment/locale/ar-tn.js",
-	"./ar.js": "./node_modules/moment/locale/ar.js",
-	"./az": "./node_modules/moment/locale/az.js",
-	"./az.js": "./node_modules/moment/locale/az.js",
-	"./be": "./node_modules/moment/locale/be.js",
-	"./be.js": "./node_modules/moment/locale/be.js",
-	"./bg": "./node_modules/moment/locale/bg.js",
-	"./bg.js": "./node_modules/moment/locale/bg.js",
-	"./bm": "./node_modules/moment/locale/bm.js",
-	"./bm.js": "./node_modules/moment/locale/bm.js",
-	"./bn": "./node_modules/moment/locale/bn.js",
-	"./bn.js": "./node_modules/moment/locale/bn.js",
-	"./bo": "./node_modules/moment/locale/bo.js",
-	"./bo.js": "./node_modules/moment/locale/bo.js",
-	"./br": "./node_modules/moment/locale/br.js",
-	"./br.js": "./node_modules/moment/locale/br.js",
-	"./bs": "./node_modules/moment/locale/bs.js",
-	"./bs.js": "./node_modules/moment/locale/bs.js",
-	"./ca": "./node_modules/moment/locale/ca.js",
-	"./ca.js": "./node_modules/moment/locale/ca.js",
-	"./cs": "./node_modules/moment/locale/cs.js",
-	"./cs.js": "./node_modules/moment/locale/cs.js",
-	"./cv": "./node_modules/moment/locale/cv.js",
-	"./cv.js": "./node_modules/moment/locale/cv.js",
-	"./cy": "./node_modules/moment/locale/cy.js",
-	"./cy.js": "./node_modules/moment/locale/cy.js",
-	"./da": "./node_modules/moment/locale/da.js",
-	"./da.js": "./node_modules/moment/locale/da.js",
-	"./de": "./node_modules/moment/locale/de.js",
-	"./de-at": "./node_modules/moment/locale/de-at.js",
-	"./de-at.js": "./node_modules/moment/locale/de-at.js",
-	"./de-ch": "./node_modules/moment/locale/de-ch.js",
-	"./de-ch.js": "./node_modules/moment/locale/de-ch.js",
-	"./de.js": "./node_modules/moment/locale/de.js",
-	"./dv": "./node_modules/moment/locale/dv.js",
-	"./dv.js": "./node_modules/moment/locale/dv.js",
-	"./el": "./node_modules/moment/locale/el.js",
-	"./el.js": "./node_modules/moment/locale/el.js",
-	"./en-SG": "./node_modules/moment/locale/en-SG.js",
-	"./en-SG.js": "./node_modules/moment/locale/en-SG.js",
-	"./en-au": "./node_modules/moment/locale/en-au.js",
-	"./en-au.js": "./node_modules/moment/locale/en-au.js",
-	"./en-ca": "./node_modules/moment/locale/en-ca.js",
-	"./en-ca.js": "./node_modules/moment/locale/en-ca.js",
-	"./en-gb": "./node_modules/moment/locale/en-gb.js",
-	"./en-gb.js": "./node_modules/moment/locale/en-gb.js",
-	"./en-ie": "./node_modules/moment/locale/en-ie.js",
-	"./en-ie.js": "./node_modules/moment/locale/en-ie.js",
-	"./en-il": "./node_modules/moment/locale/en-il.js",
-	"./en-il.js": "./node_modules/moment/locale/en-il.js",
-	"./en-nz": "./node_modules/moment/locale/en-nz.js",
-	"./en-nz.js": "./node_modules/moment/locale/en-nz.js",
-	"./eo": "./node_modules/moment/locale/eo.js",
-	"./eo.js": "./node_modules/moment/locale/eo.js",
-	"./es": "./node_modules/moment/locale/es.js",
-	"./es-do": "./node_modules/moment/locale/es-do.js",
-	"./es-do.js": "./node_modules/moment/locale/es-do.js",
-	"./es-us": "./node_modules/moment/locale/es-us.js",
-	"./es-us.js": "./node_modules/moment/locale/es-us.js",
-	"./es.js": "./node_modules/moment/locale/es.js",
-	"./et": "./node_modules/moment/locale/et.js",
-	"./et.js": "./node_modules/moment/locale/et.js",
-	"./eu": "./node_modules/moment/locale/eu.js",
-	"./eu.js": "./node_modules/moment/locale/eu.js",
-	"./fa": "./node_modules/moment/locale/fa.js",
-	"./fa.js": "./node_modules/moment/locale/fa.js",
-	"./fi": "./node_modules/moment/locale/fi.js",
-	"./fi.js": "./node_modules/moment/locale/fi.js",
-	"./fo": "./node_modules/moment/locale/fo.js",
-	"./fo.js": "./node_modules/moment/locale/fo.js",
-	"./fr": "./node_modules/moment/locale/fr.js",
-	"./fr-ca": "./node_modules/moment/locale/fr-ca.js",
-	"./fr-ca.js": "./node_modules/moment/locale/fr-ca.js",
-	"./fr-ch": "./node_modules/moment/locale/fr-ch.js",
-	"./fr-ch.js": "./node_modules/moment/locale/fr-ch.js",
-	"./fr.js": "./node_modules/moment/locale/fr.js",
-	"./fy": "./node_modules/moment/locale/fy.js",
-	"./fy.js": "./node_modules/moment/locale/fy.js",
-	"./ga": "./node_modules/moment/locale/ga.js",
-	"./ga.js": "./node_modules/moment/locale/ga.js",
-	"./gd": "./node_modules/moment/locale/gd.js",
-	"./gd.js": "./node_modules/moment/locale/gd.js",
-	"./gl": "./node_modules/moment/locale/gl.js",
-	"./gl.js": "./node_modules/moment/locale/gl.js",
-	"./gom-latn": "./node_modules/moment/locale/gom-latn.js",
-	"./gom-latn.js": "./node_modules/moment/locale/gom-latn.js",
-	"./gu": "./node_modules/moment/locale/gu.js",
-	"./gu.js": "./node_modules/moment/locale/gu.js",
-	"./he": "./node_modules/moment/locale/he.js",
-	"./he.js": "./node_modules/moment/locale/he.js",
-	"./hi": "./node_modules/moment/locale/hi.js",
-	"./hi.js": "./node_modules/moment/locale/hi.js",
-	"./hr": "./node_modules/moment/locale/hr.js",
-	"./hr.js": "./node_modules/moment/locale/hr.js",
-	"./hu": "./node_modules/moment/locale/hu.js",
-	"./hu.js": "./node_modules/moment/locale/hu.js",
-	"./hy-am": "./node_modules/moment/locale/hy-am.js",
-	"./hy-am.js": "./node_modules/moment/locale/hy-am.js",
-	"./id": "./node_modules/moment/locale/id.js",
-	"./id.js": "./node_modules/moment/locale/id.js",
-	"./is": "./node_modules/moment/locale/is.js",
-	"./is.js": "./node_modules/moment/locale/is.js",
-	"./it": "./node_modules/moment/locale/it.js",
-	"./it-ch": "./node_modules/moment/locale/it-ch.js",
-	"./it-ch.js": "./node_modules/moment/locale/it-ch.js",
-	"./it.js": "./node_modules/moment/locale/it.js",
-	"./ja": "./node_modules/moment/locale/ja.js",
-	"./ja.js": "./node_modules/moment/locale/ja.js",
-	"./jv": "./node_modules/moment/locale/jv.js",
-	"./jv.js": "./node_modules/moment/locale/jv.js",
-	"./ka": "./node_modules/moment/locale/ka.js",
-	"./ka.js": "./node_modules/moment/locale/ka.js",
-	"./kk": "./node_modules/moment/locale/kk.js",
-	"./kk.js": "./node_modules/moment/locale/kk.js",
-	"./km": "./node_modules/moment/locale/km.js",
-	"./km.js": "./node_modules/moment/locale/km.js",
-	"./kn": "./node_modules/moment/locale/kn.js",
-	"./kn.js": "./node_modules/moment/locale/kn.js",
-	"./ko": "./node_modules/moment/locale/ko.js",
-	"./ko.js": "./node_modules/moment/locale/ko.js",
-	"./ku": "./node_modules/moment/locale/ku.js",
-	"./ku.js": "./node_modules/moment/locale/ku.js",
-	"./ky": "./node_modules/moment/locale/ky.js",
-	"./ky.js": "./node_modules/moment/locale/ky.js",
-	"./lb": "./node_modules/moment/locale/lb.js",
-	"./lb.js": "./node_modules/moment/locale/lb.js",
-	"./lo": "./node_modules/moment/locale/lo.js",
-	"./lo.js": "./node_modules/moment/locale/lo.js",
-	"./lt": "./node_modules/moment/locale/lt.js",
-	"./lt.js": "./node_modules/moment/locale/lt.js",
-	"./lv": "./node_modules/moment/locale/lv.js",
-	"./lv.js": "./node_modules/moment/locale/lv.js",
-	"./me": "./node_modules/moment/locale/me.js",
-	"./me.js": "./node_modules/moment/locale/me.js",
-	"./mi": "./node_modules/moment/locale/mi.js",
-	"./mi.js": "./node_modules/moment/locale/mi.js",
-	"./mk": "./node_modules/moment/locale/mk.js",
-	"./mk.js": "./node_modules/moment/locale/mk.js",
-	"./ml": "./node_modules/moment/locale/ml.js",
-	"./ml.js": "./node_modules/moment/locale/ml.js",
-	"./mn": "./node_modules/moment/locale/mn.js",
-	"./mn.js": "./node_modules/moment/locale/mn.js",
-	"./mr": "./node_modules/moment/locale/mr.js",
-	"./mr.js": "./node_modules/moment/locale/mr.js",
-	"./ms": "./node_modules/moment/locale/ms.js",
-	"./ms-my": "./node_modules/moment/locale/ms-my.js",
-	"./ms-my.js": "./node_modules/moment/locale/ms-my.js",
-	"./ms.js": "./node_modules/moment/locale/ms.js",
-	"./mt": "./node_modules/moment/locale/mt.js",
-	"./mt.js": "./node_modules/moment/locale/mt.js",
-	"./my": "./node_modules/moment/locale/my.js",
-	"./my.js": "./node_modules/moment/locale/my.js",
-	"./nb": "./node_modules/moment/locale/nb.js",
-	"./nb.js": "./node_modules/moment/locale/nb.js",
-	"./ne": "./node_modules/moment/locale/ne.js",
-	"./ne.js": "./node_modules/moment/locale/ne.js",
-	"./nl": "./node_modules/moment/locale/nl.js",
-	"./nl-be": "./node_modules/moment/locale/nl-be.js",
-	"./nl-be.js": "./node_modules/moment/locale/nl-be.js",
-	"./nl.js": "./node_modules/moment/locale/nl.js",
-	"./nn": "./node_modules/moment/locale/nn.js",
-	"./nn.js": "./node_modules/moment/locale/nn.js",
-	"./pa-in": "./node_modules/moment/locale/pa-in.js",
-	"./pa-in.js": "./node_modules/moment/locale/pa-in.js",
-	"./pl": "./node_modules/moment/locale/pl.js",
-	"./pl.js": "./node_modules/moment/locale/pl.js",
-	"./pt": "./node_modules/moment/locale/pt.js",
-	"./pt-br": "./node_modules/moment/locale/pt-br.js",
-	"./pt-br.js": "./node_modules/moment/locale/pt-br.js",
-	"./pt.js": "./node_modules/moment/locale/pt.js",
-	"./ro": "./node_modules/moment/locale/ro.js",
-	"./ro.js": "./node_modules/moment/locale/ro.js",
-	"./ru": "./node_modules/moment/locale/ru.js",
-	"./ru.js": "./node_modules/moment/locale/ru.js",
-	"./sd": "./node_modules/moment/locale/sd.js",
-	"./sd.js": "./node_modules/moment/locale/sd.js",
-	"./se": "./node_modules/moment/locale/se.js",
-	"./se.js": "./node_modules/moment/locale/se.js",
-	"./si": "./node_modules/moment/locale/si.js",
-	"./si.js": "./node_modules/moment/locale/si.js",
-	"./sk": "./node_modules/moment/locale/sk.js",
-	"./sk.js": "./node_modules/moment/locale/sk.js",
-	"./sl": "./node_modules/moment/locale/sl.js",
-	"./sl.js": "./node_modules/moment/locale/sl.js",
-	"./sq": "./node_modules/moment/locale/sq.js",
-	"./sq.js": "./node_modules/moment/locale/sq.js",
-	"./sr": "./node_modules/moment/locale/sr.js",
-	"./sr-cyrl": "./node_modules/moment/locale/sr-cyrl.js",
-	"./sr-cyrl.js": "./node_modules/moment/locale/sr-cyrl.js",
-	"./sr.js": "./node_modules/moment/locale/sr.js",
-	"./ss": "./node_modules/moment/locale/ss.js",
-	"./ss.js": "./node_modules/moment/locale/ss.js",
-	"./sv": "./node_modules/moment/locale/sv.js",
-	"./sv.js": "./node_modules/moment/locale/sv.js",
-	"./sw": "./node_modules/moment/locale/sw.js",
-	"./sw.js": "./node_modules/moment/locale/sw.js",
-	"./ta": "./node_modules/moment/locale/ta.js",
-	"./ta.js": "./node_modules/moment/locale/ta.js",
-	"./te": "./node_modules/moment/locale/te.js",
-	"./te.js": "./node_modules/moment/locale/te.js",
-	"./tet": "./node_modules/moment/locale/tet.js",
-	"./tet.js": "./node_modules/moment/locale/tet.js",
-	"./tg": "./node_modules/moment/locale/tg.js",
-	"./tg.js": "./node_modules/moment/locale/tg.js",
-	"./th": "./node_modules/moment/locale/th.js",
-	"./th.js": "./node_modules/moment/locale/th.js",
-	"./tl-ph": "./node_modules/moment/locale/tl-ph.js",
-	"./tl-ph.js": "./node_modules/moment/locale/tl-ph.js",
-	"./tlh": "./node_modules/moment/locale/tlh.js",
-	"./tlh.js": "./node_modules/moment/locale/tlh.js",
-	"./tr": "./node_modules/moment/locale/tr.js",
-	"./tr.js": "./node_modules/moment/locale/tr.js",
-	"./tzl": "./node_modules/moment/locale/tzl.js",
-	"./tzl.js": "./node_modules/moment/locale/tzl.js",
-	"./tzm": "./node_modules/moment/locale/tzm.js",
-	"./tzm-latn": "./node_modules/moment/locale/tzm-latn.js",
-	"./tzm-latn.js": "./node_modules/moment/locale/tzm-latn.js",
-	"./tzm.js": "./node_modules/moment/locale/tzm.js",
-	"./ug-cn": "./node_modules/moment/locale/ug-cn.js",
-	"./ug-cn.js": "./node_modules/moment/locale/ug-cn.js",
-	"./uk": "./node_modules/moment/locale/uk.js",
-	"./uk.js": "./node_modules/moment/locale/uk.js",
-	"./ur": "./node_modules/moment/locale/ur.js",
-	"./ur.js": "./node_modules/moment/locale/ur.js",
-	"./uz": "./node_modules/moment/locale/uz.js",
-	"./uz-latn": "./node_modules/moment/locale/uz-latn.js",
-	"./uz-latn.js": "./node_modules/moment/locale/uz-latn.js",
-	"./uz.js": "./node_modules/moment/locale/uz.js",
-	"./vi": "./node_modules/moment/locale/vi.js",
-	"./vi.js": "./node_modules/moment/locale/vi.js",
-	"./x-pseudo": "./node_modules/moment/locale/x-pseudo.js",
-	"./x-pseudo.js": "./node_modules/moment/locale/x-pseudo.js",
-	"./yo": "./node_modules/moment/locale/yo.js",
-	"./yo.js": "./node_modules/moment/locale/yo.js",
-	"./zh-cn": "./node_modules/moment/locale/zh-cn.js",
-	"./zh-cn.js": "./node_modules/moment/locale/zh-cn.js",
-	"./zh-hk": "./node_modules/moment/locale/zh-hk.js",
-	"./zh-hk.js": "./node_modules/moment/locale/zh-hk.js",
-	"./zh-tw": "./node_modules/moment/locale/zh-tw.js",
-	"./zh-tw.js": "./node_modules/moment/locale/zh-tw.js"
+	"./af": "../../node_modules/moment/locale/af.js",
+	"./af.js": "../../node_modules/moment/locale/af.js",
+	"./ar": "../../node_modules/moment/locale/ar.js",
+	"./ar-dz": "../../node_modules/moment/locale/ar-dz.js",
+	"./ar-dz.js": "../../node_modules/moment/locale/ar-dz.js",
+	"./ar-kw": "../../node_modules/moment/locale/ar-kw.js",
+	"./ar-kw.js": "../../node_modules/moment/locale/ar-kw.js",
+	"./ar-ly": "../../node_modules/moment/locale/ar-ly.js",
+	"./ar-ly.js": "../../node_modules/moment/locale/ar-ly.js",
+	"./ar-ma": "../../node_modules/moment/locale/ar-ma.js",
+	"./ar-ma.js": "../../node_modules/moment/locale/ar-ma.js",
+	"./ar-sa": "../../node_modules/moment/locale/ar-sa.js",
+	"./ar-sa.js": "../../node_modules/moment/locale/ar-sa.js",
+	"./ar-tn": "../../node_modules/moment/locale/ar-tn.js",
+	"./ar-tn.js": "../../node_modules/moment/locale/ar-tn.js",
+	"./ar.js": "../../node_modules/moment/locale/ar.js",
+	"./az": "../../node_modules/moment/locale/az.js",
+	"./az.js": "../../node_modules/moment/locale/az.js",
+	"./be": "../../node_modules/moment/locale/be.js",
+	"./be.js": "../../node_modules/moment/locale/be.js",
+	"./bg": "../../node_modules/moment/locale/bg.js",
+	"./bg.js": "../../node_modules/moment/locale/bg.js",
+	"./bm": "../../node_modules/moment/locale/bm.js",
+	"./bm.js": "../../node_modules/moment/locale/bm.js",
+	"./bn": "../../node_modules/moment/locale/bn.js",
+	"./bn.js": "../../node_modules/moment/locale/bn.js",
+	"./bo": "../../node_modules/moment/locale/bo.js",
+	"./bo.js": "../../node_modules/moment/locale/bo.js",
+	"./br": "../../node_modules/moment/locale/br.js",
+	"./br.js": "../../node_modules/moment/locale/br.js",
+	"./bs": "../../node_modules/moment/locale/bs.js",
+	"./bs.js": "../../node_modules/moment/locale/bs.js",
+	"./ca": "../../node_modules/moment/locale/ca.js",
+	"./ca.js": "../../node_modules/moment/locale/ca.js",
+	"./cs": "../../node_modules/moment/locale/cs.js",
+	"./cs.js": "../../node_modules/moment/locale/cs.js",
+	"./cv": "../../node_modules/moment/locale/cv.js",
+	"./cv.js": "../../node_modules/moment/locale/cv.js",
+	"./cy": "../../node_modules/moment/locale/cy.js",
+	"./cy.js": "../../node_modules/moment/locale/cy.js",
+	"./da": "../../node_modules/moment/locale/da.js",
+	"./da.js": "../../node_modules/moment/locale/da.js",
+	"./de": "../../node_modules/moment/locale/de.js",
+	"./de-at": "../../node_modules/moment/locale/de-at.js",
+	"./de-at.js": "../../node_modules/moment/locale/de-at.js",
+	"./de-ch": "../../node_modules/moment/locale/de-ch.js",
+	"./de-ch.js": "../../node_modules/moment/locale/de-ch.js",
+	"./de.js": "../../node_modules/moment/locale/de.js",
+	"./dv": "../../node_modules/moment/locale/dv.js",
+	"./dv.js": "../../node_modules/moment/locale/dv.js",
+	"./el": "../../node_modules/moment/locale/el.js",
+	"./el.js": "../../node_modules/moment/locale/el.js",
+	"./en-SG": "../../node_modules/moment/locale/en-SG.js",
+	"./en-SG.js": "../../node_modules/moment/locale/en-SG.js",
+	"./en-au": "../../node_modules/moment/locale/en-au.js",
+	"./en-au.js": "../../node_modules/moment/locale/en-au.js",
+	"./en-ca": "../../node_modules/moment/locale/en-ca.js",
+	"./en-ca.js": "../../node_modules/moment/locale/en-ca.js",
+	"./en-gb": "../../node_modules/moment/locale/en-gb.js",
+	"./en-gb.js": "../../node_modules/moment/locale/en-gb.js",
+	"./en-ie": "../../node_modules/moment/locale/en-ie.js",
+	"./en-ie.js": "../../node_modules/moment/locale/en-ie.js",
+	"./en-il": "../../node_modules/moment/locale/en-il.js",
+	"./en-il.js": "../../node_modules/moment/locale/en-il.js",
+	"./en-nz": "../../node_modules/moment/locale/en-nz.js",
+	"./en-nz.js": "../../node_modules/moment/locale/en-nz.js",
+	"./eo": "../../node_modules/moment/locale/eo.js",
+	"./eo.js": "../../node_modules/moment/locale/eo.js",
+	"./es": "../../node_modules/moment/locale/es.js",
+	"./es-do": "../../node_modules/moment/locale/es-do.js",
+	"./es-do.js": "../../node_modules/moment/locale/es-do.js",
+	"./es-us": "../../node_modules/moment/locale/es-us.js",
+	"./es-us.js": "../../node_modules/moment/locale/es-us.js",
+	"./es.js": "../../node_modules/moment/locale/es.js",
+	"./et": "../../node_modules/moment/locale/et.js",
+	"./et.js": "../../node_modules/moment/locale/et.js",
+	"./eu": "../../node_modules/moment/locale/eu.js",
+	"./eu.js": "../../node_modules/moment/locale/eu.js",
+	"./fa": "../../node_modules/moment/locale/fa.js",
+	"./fa.js": "../../node_modules/moment/locale/fa.js",
+	"./fi": "../../node_modules/moment/locale/fi.js",
+	"./fi.js": "../../node_modules/moment/locale/fi.js",
+	"./fo": "../../node_modules/moment/locale/fo.js",
+	"./fo.js": "../../node_modules/moment/locale/fo.js",
+	"./fr": "../../node_modules/moment/locale/fr.js",
+	"./fr-ca": "../../node_modules/moment/locale/fr-ca.js",
+	"./fr-ca.js": "../../node_modules/moment/locale/fr-ca.js",
+	"./fr-ch": "../../node_modules/moment/locale/fr-ch.js",
+	"./fr-ch.js": "../../node_modules/moment/locale/fr-ch.js",
+	"./fr.js": "../../node_modules/moment/locale/fr.js",
+	"./fy": "../../node_modules/moment/locale/fy.js",
+	"./fy.js": "../../node_modules/moment/locale/fy.js",
+	"./ga": "../../node_modules/moment/locale/ga.js",
+	"./ga.js": "../../node_modules/moment/locale/ga.js",
+	"./gd": "../../node_modules/moment/locale/gd.js",
+	"./gd.js": "../../node_modules/moment/locale/gd.js",
+	"./gl": "../../node_modules/moment/locale/gl.js",
+	"./gl.js": "../../node_modules/moment/locale/gl.js",
+	"./gom-latn": "../../node_modules/moment/locale/gom-latn.js",
+	"./gom-latn.js": "../../node_modules/moment/locale/gom-latn.js",
+	"./gu": "../../node_modules/moment/locale/gu.js",
+	"./gu.js": "../../node_modules/moment/locale/gu.js",
+	"./he": "../../node_modules/moment/locale/he.js",
+	"./he.js": "../../node_modules/moment/locale/he.js",
+	"./hi": "../../node_modules/moment/locale/hi.js",
+	"./hi.js": "../../node_modules/moment/locale/hi.js",
+	"./hr": "../../node_modules/moment/locale/hr.js",
+	"./hr.js": "../../node_modules/moment/locale/hr.js",
+	"./hu": "../../node_modules/moment/locale/hu.js",
+	"./hu.js": "../../node_modules/moment/locale/hu.js",
+	"./hy-am": "../../node_modules/moment/locale/hy-am.js",
+	"./hy-am.js": "../../node_modules/moment/locale/hy-am.js",
+	"./id": "../../node_modules/moment/locale/id.js",
+	"./id.js": "../../node_modules/moment/locale/id.js",
+	"./is": "../../node_modules/moment/locale/is.js",
+	"./is.js": "../../node_modules/moment/locale/is.js",
+	"./it": "../../node_modules/moment/locale/it.js",
+	"./it-ch": "../../node_modules/moment/locale/it-ch.js",
+	"./it-ch.js": "../../node_modules/moment/locale/it-ch.js",
+	"./it.js": "../../node_modules/moment/locale/it.js",
+	"./ja": "../../node_modules/moment/locale/ja.js",
+	"./ja.js": "../../node_modules/moment/locale/ja.js",
+	"./jv": "../../node_modules/moment/locale/jv.js",
+	"./jv.js": "../../node_modules/moment/locale/jv.js",
+	"./ka": "../../node_modules/moment/locale/ka.js",
+	"./ka.js": "../../node_modules/moment/locale/ka.js",
+	"./kk": "../../node_modules/moment/locale/kk.js",
+	"./kk.js": "../../node_modules/moment/locale/kk.js",
+	"./km": "../../node_modules/moment/locale/km.js",
+	"./km.js": "../../node_modules/moment/locale/km.js",
+	"./kn": "../../node_modules/moment/locale/kn.js",
+	"./kn.js": "../../node_modules/moment/locale/kn.js",
+	"./ko": "../../node_modules/moment/locale/ko.js",
+	"./ko.js": "../../node_modules/moment/locale/ko.js",
+	"./ku": "../../node_modules/moment/locale/ku.js",
+	"./ku.js": "../../node_modules/moment/locale/ku.js",
+	"./ky": "../../node_modules/moment/locale/ky.js",
+	"./ky.js": "../../node_modules/moment/locale/ky.js",
+	"./lb": "../../node_modules/moment/locale/lb.js",
+	"./lb.js": "../../node_modules/moment/locale/lb.js",
+	"./lo": "../../node_modules/moment/locale/lo.js",
+	"./lo.js": "../../node_modules/moment/locale/lo.js",
+	"./lt": "../../node_modules/moment/locale/lt.js",
+	"./lt.js": "../../node_modules/moment/locale/lt.js",
+	"./lv": "../../node_modules/moment/locale/lv.js",
+	"./lv.js": "../../node_modules/moment/locale/lv.js",
+	"./me": "../../node_modules/moment/locale/me.js",
+	"./me.js": "../../node_modules/moment/locale/me.js",
+	"./mi": "../../node_modules/moment/locale/mi.js",
+	"./mi.js": "../../node_modules/moment/locale/mi.js",
+	"./mk": "../../node_modules/moment/locale/mk.js",
+	"./mk.js": "../../node_modules/moment/locale/mk.js",
+	"./ml": "../../node_modules/moment/locale/ml.js",
+	"./ml.js": "../../node_modules/moment/locale/ml.js",
+	"./mn": "../../node_modules/moment/locale/mn.js",
+	"./mn.js": "../../node_modules/moment/locale/mn.js",
+	"./mr": "../../node_modules/moment/locale/mr.js",
+	"./mr.js": "../../node_modules/moment/locale/mr.js",
+	"./ms": "../../node_modules/moment/locale/ms.js",
+	"./ms-my": "../../node_modules/moment/locale/ms-my.js",
+	"./ms-my.js": "../../node_modules/moment/locale/ms-my.js",
+	"./ms.js": "../../node_modules/moment/locale/ms.js",
+	"./mt": "../../node_modules/moment/locale/mt.js",
+	"./mt.js": "../../node_modules/moment/locale/mt.js",
+	"./my": "../../node_modules/moment/locale/my.js",
+	"./my.js": "../../node_modules/moment/locale/my.js",
+	"./nb": "../../node_modules/moment/locale/nb.js",
+	"./nb.js": "../../node_modules/moment/locale/nb.js",
+	"./ne": "../../node_modules/moment/locale/ne.js",
+	"./ne.js": "../../node_modules/moment/locale/ne.js",
+	"./nl": "../../node_modules/moment/locale/nl.js",
+	"./nl-be": "../../node_modules/moment/locale/nl-be.js",
+	"./nl-be.js": "../../node_modules/moment/locale/nl-be.js",
+	"./nl.js": "../../node_modules/moment/locale/nl.js",
+	"./nn": "../../node_modules/moment/locale/nn.js",
+	"./nn.js": "../../node_modules/moment/locale/nn.js",
+	"./pa-in": "../../node_modules/moment/locale/pa-in.js",
+	"./pa-in.js": "../../node_modules/moment/locale/pa-in.js",
+	"./pl": "../../node_modules/moment/locale/pl.js",
+	"./pl.js": "../../node_modules/moment/locale/pl.js",
+	"./pt": "../../node_modules/moment/locale/pt.js",
+	"./pt-br": "../../node_modules/moment/locale/pt-br.js",
+	"./pt-br.js": "../../node_modules/moment/locale/pt-br.js",
+	"./pt.js": "../../node_modules/moment/locale/pt.js",
+	"./ro": "../../node_modules/moment/locale/ro.js",
+	"./ro.js": "../../node_modules/moment/locale/ro.js",
+	"./ru": "../../node_modules/moment/locale/ru.js",
+	"./ru.js": "../../node_modules/moment/locale/ru.js",
+	"./sd": "../../node_modules/moment/locale/sd.js",
+	"./sd.js": "../../node_modules/moment/locale/sd.js",
+	"./se": "../../node_modules/moment/locale/se.js",
+	"./se.js": "../../node_modules/moment/locale/se.js",
+	"./si": "../../node_modules/moment/locale/si.js",
+	"./si.js": "../../node_modules/moment/locale/si.js",
+	"./sk": "../../node_modules/moment/locale/sk.js",
+	"./sk.js": "../../node_modules/moment/locale/sk.js",
+	"./sl": "../../node_modules/moment/locale/sl.js",
+	"./sl.js": "../../node_modules/moment/locale/sl.js",
+	"./sq": "../../node_modules/moment/locale/sq.js",
+	"./sq.js": "../../node_modules/moment/locale/sq.js",
+	"./sr": "../../node_modules/moment/locale/sr.js",
+	"./sr-cyrl": "../../node_modules/moment/locale/sr-cyrl.js",
+	"./sr-cyrl.js": "../../node_modules/moment/locale/sr-cyrl.js",
+	"./sr.js": "../../node_modules/moment/locale/sr.js",
+	"./ss": "../../node_modules/moment/locale/ss.js",
+	"./ss.js": "../../node_modules/moment/locale/ss.js",
+	"./sv": "../../node_modules/moment/locale/sv.js",
+	"./sv.js": "../../node_modules/moment/locale/sv.js",
+	"./sw": "../../node_modules/moment/locale/sw.js",
+	"./sw.js": "../../node_modules/moment/locale/sw.js",
+	"./ta": "../../node_modules/moment/locale/ta.js",
+	"./ta.js": "../../node_modules/moment/locale/ta.js",
+	"./te": "../../node_modules/moment/locale/te.js",
+	"./te.js": "../../node_modules/moment/locale/te.js",
+	"./tet": "../../node_modules/moment/locale/tet.js",
+	"./tet.js": "../../node_modules/moment/locale/tet.js",
+	"./tg": "../../node_modules/moment/locale/tg.js",
+	"./tg.js": "../../node_modules/moment/locale/tg.js",
+	"./th": "../../node_modules/moment/locale/th.js",
+	"./th.js": "../../node_modules/moment/locale/th.js",
+	"./tl-ph": "../../node_modules/moment/locale/tl-ph.js",
+	"./tl-ph.js": "../../node_modules/moment/locale/tl-ph.js",
+	"./tlh": "../../node_modules/moment/locale/tlh.js",
+	"./tlh.js": "../../node_modules/moment/locale/tlh.js",
+	"./tr": "../../node_modules/moment/locale/tr.js",
+	"./tr.js": "../../node_modules/moment/locale/tr.js",
+	"./tzl": "../../node_modules/moment/locale/tzl.js",
+	"./tzl.js": "../../node_modules/moment/locale/tzl.js",
+	"./tzm": "../../node_modules/moment/locale/tzm.js",
+	"./tzm-latn": "../../node_modules/moment/locale/tzm-latn.js",
+	"./tzm-latn.js": "../../node_modules/moment/locale/tzm-latn.js",
+	"./tzm.js": "../../node_modules/moment/locale/tzm.js",
+	"./ug-cn": "../../node_modules/moment/locale/ug-cn.js",
+	"./ug-cn.js": "../../node_modules/moment/locale/ug-cn.js",
+	"./uk": "../../node_modules/moment/locale/uk.js",
+	"./uk.js": "../../node_modules/moment/locale/uk.js",
+	"./ur": "../../node_modules/moment/locale/ur.js",
+	"./ur.js": "../../node_modules/moment/locale/ur.js",
+	"./uz": "../../node_modules/moment/locale/uz.js",
+	"./uz-latn": "../../node_modules/moment/locale/uz-latn.js",
+	"./uz-latn.js": "../../node_modules/moment/locale/uz-latn.js",
+	"./uz.js": "../../node_modules/moment/locale/uz.js",
+	"./vi": "../../node_modules/moment/locale/vi.js",
+	"./vi.js": "../../node_modules/moment/locale/vi.js",
+	"./x-pseudo": "../../node_modules/moment/locale/x-pseudo.js",
+	"./x-pseudo.js": "../../node_modules/moment/locale/x-pseudo.js",
+	"./yo": "../../node_modules/moment/locale/yo.js",
+	"./yo.js": "../../node_modules/moment/locale/yo.js",
+	"./zh-cn": "../../node_modules/moment/locale/zh-cn.js",
+	"./zh-cn.js": "../../node_modules/moment/locale/zh-cn.js",
+	"./zh-hk": "../../node_modules/moment/locale/zh-hk.js",
+	"./zh-hk.js": "../../node_modules/moment/locale/zh-hk.js",
+	"./zh-tw": "../../node_modules/moment/locale/zh-tw.js",
+	"./zh-tw.js": "../../node_modules/moment/locale/zh-tw.js"
 };
 
 
@@ -36203,21 +35608,21 @@ webpackContext.keys = function webpackContextKeys() {
 };
 webpackContext.resolve = webpackContextResolve;
 module.exports = webpackContext;
-webpackContext.id = "./node_modules/moment/locale sync recursive ^\\.\\/.*$";
+webpackContext.id = "../../node_modules/moment/locale sync recursive ^\\.\\/.*$";
 
 /***/ }),
 
-/***/ "./node_modules/moment/locale/af.js":
-/*!******************************************!*\
-  !*** ./node_modules/moment/locale/af.js ***!
-  \******************************************/
+/***/ "../../node_modules/moment/locale/af.js":
+/*!*******************************************************************!*\
+  !*** F:/xampp72/htdocs/packages/node_modules/moment/locale/af.js ***!
+  \*******************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(/*! ../moment */ "./node_modules/moment/moment.js")) :
+    true ? factory(__webpack_require__(/*! ../moment */ "../../node_modules/moment/moment.js")) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -36288,17 +35693,17 @@ webpackContext.id = "./node_modules/moment/locale sync recursive ^\\.\\/.*$";
 
 /***/ }),
 
-/***/ "./node_modules/moment/locale/ar-dz.js":
-/*!*********************************************!*\
-  !*** ./node_modules/moment/locale/ar-dz.js ***!
-  \*********************************************/
+/***/ "../../node_modules/moment/locale/ar-dz.js":
+/*!**********************************************************************!*\
+  !*** F:/xampp72/htdocs/packages/node_modules/moment/locale/ar-dz.js ***!
+  \**********************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(/*! ../moment */ "./node_modules/moment/moment.js")) :
+    true ? factory(__webpack_require__(/*! ../moment */ "../../node_modules/moment/moment.js")) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -36355,17 +35760,17 @@ webpackContext.id = "./node_modules/moment/locale sync recursive ^\\.\\/.*$";
 
 /***/ }),
 
-/***/ "./node_modules/moment/locale/ar-kw.js":
-/*!*********************************************!*\
-  !*** ./node_modules/moment/locale/ar-kw.js ***!
-  \*********************************************/
+/***/ "../../node_modules/moment/locale/ar-kw.js":
+/*!**********************************************************************!*\
+  !*** F:/xampp72/htdocs/packages/node_modules/moment/locale/ar-kw.js ***!
+  \**********************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(/*! ../moment */ "./node_modules/moment/moment.js")) :
+    true ? factory(__webpack_require__(/*! ../moment */ "../../node_modules/moment/moment.js")) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -36422,17 +35827,17 @@ webpackContext.id = "./node_modules/moment/locale sync recursive ^\\.\\/.*$";
 
 /***/ }),
 
-/***/ "./node_modules/moment/locale/ar-ly.js":
-/*!*********************************************!*\
-  !*** ./node_modules/moment/locale/ar-ly.js ***!
-  \*********************************************/
+/***/ "../../node_modules/moment/locale/ar-ly.js":
+/*!**********************************************************************!*\
+  !*** F:/xampp72/htdocs/packages/node_modules/moment/locale/ar-ly.js ***!
+  \**********************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(/*! ../moment */ "./node_modules/moment/moment.js")) :
+    true ? factory(__webpack_require__(/*! ../moment */ "../../node_modules/moment/moment.js")) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -36552,17 +35957,17 @@ webpackContext.id = "./node_modules/moment/locale sync recursive ^\\.\\/.*$";
 
 /***/ }),
 
-/***/ "./node_modules/moment/locale/ar-ma.js":
-/*!*********************************************!*\
-  !*** ./node_modules/moment/locale/ar-ma.js ***!
-  \*********************************************/
+/***/ "../../node_modules/moment/locale/ar-ma.js":
+/*!**********************************************************************!*\
+  !*** F:/xampp72/htdocs/packages/node_modules/moment/locale/ar-ma.js ***!
+  \**********************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(/*! ../moment */ "./node_modules/moment/moment.js")) :
+    true ? factory(__webpack_require__(/*! ../moment */ "../../node_modules/moment/moment.js")) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -36619,17 +36024,17 @@ webpackContext.id = "./node_modules/moment/locale sync recursive ^\\.\\/.*$";
 
 /***/ }),
 
-/***/ "./node_modules/moment/locale/ar-sa.js":
-/*!*********************************************!*\
-  !*** ./node_modules/moment/locale/ar-sa.js ***!
-  \*********************************************/
+/***/ "../../node_modules/moment/locale/ar-sa.js":
+/*!**********************************************************************!*\
+  !*** F:/xampp72/htdocs/packages/node_modules/moment/locale/ar-sa.js ***!
+  \**********************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(/*! ../moment */ "./node_modules/moment/moment.js")) :
+    true ? factory(__webpack_require__(/*! ../moment */ "../../node_modules/moment/moment.js")) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -36731,17 +36136,17 @@ webpackContext.id = "./node_modules/moment/locale sync recursive ^\\.\\/.*$";
 
 /***/ }),
 
-/***/ "./node_modules/moment/locale/ar-tn.js":
-/*!*********************************************!*\
-  !*** ./node_modules/moment/locale/ar-tn.js ***!
-  \*********************************************/
+/***/ "../../node_modules/moment/locale/ar-tn.js":
+/*!**********************************************************************!*\
+  !*** F:/xampp72/htdocs/packages/node_modules/moment/locale/ar-tn.js ***!
+  \**********************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(/*! ../moment */ "./node_modules/moment/moment.js")) :
+    true ? factory(__webpack_require__(/*! ../moment */ "../../node_modules/moment/moment.js")) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -36798,17 +36203,17 @@ webpackContext.id = "./node_modules/moment/locale sync recursive ^\\.\\/.*$";
 
 /***/ }),
 
-/***/ "./node_modules/moment/locale/ar.js":
-/*!******************************************!*\
-  !*** ./node_modules/moment/locale/ar.js ***!
-  \******************************************/
+/***/ "../../node_modules/moment/locale/ar.js":
+/*!*******************************************************************!*\
+  !*** F:/xampp72/htdocs/packages/node_modules/moment/locale/ar.js ***!
+  \*******************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(/*! ../moment */ "./node_modules/moment/moment.js")) :
+    true ? factory(__webpack_require__(/*! ../moment */ "../../node_modules/moment/moment.js")) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -36941,17 +36346,17 @@ webpackContext.id = "./node_modules/moment/locale sync recursive ^\\.\\/.*$";
 
 /***/ }),
 
-/***/ "./node_modules/moment/locale/az.js":
-/*!******************************************!*\
-  !*** ./node_modules/moment/locale/az.js ***!
-  \******************************************/
+/***/ "../../node_modules/moment/locale/az.js":
+/*!*******************************************************************!*\
+  !*** F:/xampp72/htdocs/packages/node_modules/moment/locale/az.js ***!
+  \*******************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(/*! ../moment */ "./node_modules/moment/moment.js")) :
+    true ? factory(__webpack_require__(/*! ../moment */ "../../node_modules/moment/moment.js")) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -37054,17 +36459,17 @@ webpackContext.id = "./node_modules/moment/locale sync recursive ^\\.\\/.*$";
 
 /***/ }),
 
-/***/ "./node_modules/moment/locale/be.js":
-/*!******************************************!*\
-  !*** ./node_modules/moment/locale/be.js ***!
-  \******************************************/
+/***/ "../../node_modules/moment/locale/be.js":
+/*!*******************************************************************!*\
+  !*** F:/xampp72/htdocs/packages/node_modules/moment/locale/be.js ***!
+  \*******************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(/*! ../moment */ "./node_modules/moment/moment.js")) :
+    true ? factory(__webpack_require__(/*! ../moment */ "../../node_modules/moment/moment.js")) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -37194,17 +36599,17 @@ webpackContext.id = "./node_modules/moment/locale sync recursive ^\\.\\/.*$";
 
 /***/ }),
 
-/***/ "./node_modules/moment/locale/bg.js":
-/*!******************************************!*\
-  !*** ./node_modules/moment/locale/bg.js ***!
-  \******************************************/
+/***/ "../../node_modules/moment/locale/bg.js":
+/*!*******************************************************************!*\
+  !*** F:/xampp72/htdocs/packages/node_modules/moment/locale/bg.js ***!
+  \*******************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(/*! ../moment */ "./node_modules/moment/moment.js")) :
+    true ? factory(__webpack_require__(/*! ../moment */ "../../node_modules/moment/moment.js")) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -37292,17 +36697,17 @@ webpackContext.id = "./node_modules/moment/locale sync recursive ^\\.\\/.*$";
 
 /***/ }),
 
-/***/ "./node_modules/moment/locale/bm.js":
-/*!******************************************!*\
-  !*** ./node_modules/moment/locale/bm.js ***!
-  \******************************************/
+/***/ "../../node_modules/moment/locale/bm.js":
+/*!*******************************************************************!*\
+  !*** F:/xampp72/htdocs/packages/node_modules/moment/locale/bm.js ***!
+  \*******************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(/*! ../moment */ "./node_modules/moment/moment.js")) :
+    true ? factory(__webpack_require__(/*! ../moment */ "../../node_modules/moment/moment.js")) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -37358,17 +36763,17 @@ webpackContext.id = "./node_modules/moment/locale sync recursive ^\\.\\/.*$";
 
 /***/ }),
 
-/***/ "./node_modules/moment/locale/bn.js":
-/*!******************************************!*\
-  !*** ./node_modules/moment/locale/bn.js ***!
-  \******************************************/
+/***/ "../../node_modules/moment/locale/bn.js":
+/*!*******************************************************************!*\
+  !*** F:/xampp72/htdocs/packages/node_modules/moment/locale/bn.js ***!
+  \*******************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(/*! ../moment */ "./node_modules/moment/moment.js")) :
+    true ? factory(__webpack_require__(/*! ../moment */ "../../node_modules/moment/moment.js")) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -37485,17 +36890,17 @@ webpackContext.id = "./node_modules/moment/locale sync recursive ^\\.\\/.*$";
 
 /***/ }),
 
-/***/ "./node_modules/moment/locale/bo.js":
-/*!******************************************!*\
-  !*** ./node_modules/moment/locale/bo.js ***!
-  \******************************************/
+/***/ "../../node_modules/moment/locale/bo.js":
+/*!*******************************************************************!*\
+  !*** F:/xampp72/htdocs/packages/node_modules/moment/locale/bo.js ***!
+  \*******************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(/*! ../moment */ "./node_modules/moment/moment.js")) :
+    true ? factory(__webpack_require__(/*! ../moment */ "../../node_modules/moment/moment.js")) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -37612,17 +37017,17 @@ webpackContext.id = "./node_modules/moment/locale sync recursive ^\\.\\/.*$";
 
 /***/ }),
 
-/***/ "./node_modules/moment/locale/br.js":
-/*!******************************************!*\
-  !*** ./node_modules/moment/locale/br.js ***!
-  \******************************************/
+/***/ "../../node_modules/moment/locale/br.js":
+/*!*******************************************************************!*\
+  !*** F:/xampp72/htdocs/packages/node_modules/moment/locale/br.js ***!
+  \*******************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(/*! ../moment */ "./node_modules/moment/moment.js")) :
+    true ? factory(__webpack_require__(/*! ../moment */ "../../node_modules/moment/moment.js")) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -37728,17 +37133,17 @@ webpackContext.id = "./node_modules/moment/locale sync recursive ^\\.\\/.*$";
 
 /***/ }),
 
-/***/ "./node_modules/moment/locale/bs.js":
-/*!******************************************!*\
-  !*** ./node_modules/moment/locale/bs.js ***!
-  \******************************************/
+/***/ "../../node_modules/moment/locale/bs.js":
+/*!*******************************************************************!*\
+  !*** F:/xampp72/htdocs/packages/node_modules/moment/locale/bs.js ***!
+  \*******************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(/*! ../moment */ "./node_modules/moment/moment.js")) :
+    true ? factory(__webpack_require__(/*! ../moment */ "../../node_modules/moment/moment.js")) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -37887,17 +37292,17 @@ webpackContext.id = "./node_modules/moment/locale sync recursive ^\\.\\/.*$";
 
 /***/ }),
 
-/***/ "./node_modules/moment/locale/ca.js":
-/*!******************************************!*\
-  !*** ./node_modules/moment/locale/ca.js ***!
-  \******************************************/
+/***/ "../../node_modules/moment/locale/ca.js":
+/*!*******************************************************************!*\
+  !*** F:/xampp72/htdocs/packages/node_modules/moment/locale/ca.js ***!
+  \*******************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(/*! ../moment */ "./node_modules/moment/moment.js")) :
+    true ? factory(__webpack_require__(/*! ../moment */ "../../node_modules/moment/moment.js")) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -37983,17 +37388,17 @@ webpackContext.id = "./node_modules/moment/locale sync recursive ^\\.\\/.*$";
 
 /***/ }),
 
-/***/ "./node_modules/moment/locale/cs.js":
-/*!******************************************!*\
-  !*** ./node_modules/moment/locale/cs.js ***!
-  \******************************************/
+/***/ "../../node_modules/moment/locale/cs.js":
+/*!*******************************************************************!*\
+  !*** F:/xampp72/htdocs/packages/node_modules/moment/locale/cs.js ***!
+  \*******************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(/*! ../moment */ "./node_modules/moment/moment.js")) :
+    true ? factory(__webpack_require__(/*! ../moment */ "../../node_modules/moment/moment.js")) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -38163,17 +37568,17 @@ webpackContext.id = "./node_modules/moment/locale sync recursive ^\\.\\/.*$";
 
 /***/ }),
 
-/***/ "./node_modules/moment/locale/cv.js":
-/*!******************************************!*\
-  !*** ./node_modules/moment/locale/cv.js ***!
-  \******************************************/
+/***/ "../../node_modules/moment/locale/cv.js":
+/*!*******************************************************************!*\
+  !*** F:/xampp72/htdocs/packages/node_modules/moment/locale/cv.js ***!
+  \*******************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(/*! ../moment */ "./node_modules/moment/moment.js")) :
+    true ? factory(__webpack_require__(/*! ../moment */ "../../node_modules/moment/moment.js")) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -38234,17 +37639,17 @@ webpackContext.id = "./node_modules/moment/locale sync recursive ^\\.\\/.*$";
 
 /***/ }),
 
-/***/ "./node_modules/moment/locale/cy.js":
-/*!******************************************!*\
-  !*** ./node_modules/moment/locale/cy.js ***!
-  \******************************************/
+/***/ "../../node_modules/moment/locale/cy.js":
+/*!*******************************************************************!*\
+  !*** F:/xampp72/htdocs/packages/node_modules/moment/locale/cy.js ***!
+  \*******************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(/*! ../moment */ "./node_modules/moment/moment.js")) :
+    true ? factory(__webpack_require__(/*! ../moment */ "../../node_modules/moment/moment.js")) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -38322,17 +37727,17 @@ webpackContext.id = "./node_modules/moment/locale sync recursive ^\\.\\/.*$";
 
 /***/ }),
 
-/***/ "./node_modules/moment/locale/da.js":
-/*!******************************************!*\
-  !*** ./node_modules/moment/locale/da.js ***!
-  \******************************************/
+/***/ "../../node_modules/moment/locale/da.js":
+/*!*******************************************************************!*\
+  !*** F:/xampp72/htdocs/packages/node_modules/moment/locale/da.js ***!
+  \*******************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(/*! ../moment */ "./node_modules/moment/moment.js")) :
+    true ? factory(__webpack_require__(/*! ../moment */ "../../node_modules/moment/moment.js")) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -38390,17 +37795,17 @@ webpackContext.id = "./node_modules/moment/locale sync recursive ^\\.\\/.*$";
 
 /***/ }),
 
-/***/ "./node_modules/moment/locale/de-at.js":
-/*!*********************************************!*\
-  !*** ./node_modules/moment/locale/de-at.js ***!
-  \*********************************************/
+/***/ "../../node_modules/moment/locale/de-at.js":
+/*!**********************************************************************!*\
+  !*** F:/xampp72/htdocs/packages/node_modules/moment/locale/de-at.js ***!
+  \**********************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(/*! ../moment */ "./node_modules/moment/moment.js")) :
+    true ? factory(__webpack_require__(/*! ../moment */ "../../node_modules/moment/moment.js")) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -38474,17 +37879,17 @@ webpackContext.id = "./node_modules/moment/locale sync recursive ^\\.\\/.*$";
 
 /***/ }),
 
-/***/ "./node_modules/moment/locale/de-ch.js":
-/*!*********************************************!*\
-  !*** ./node_modules/moment/locale/de-ch.js ***!
-  \*********************************************/
+/***/ "../../node_modules/moment/locale/de-ch.js":
+/*!**********************************************************************!*\
+  !*** F:/xampp72/htdocs/packages/node_modules/moment/locale/de-ch.js ***!
+  \**********************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(/*! ../moment */ "./node_modules/moment/moment.js")) :
+    true ? factory(__webpack_require__(/*! ../moment */ "../../node_modules/moment/moment.js")) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -38558,17 +37963,17 @@ webpackContext.id = "./node_modules/moment/locale sync recursive ^\\.\\/.*$";
 
 /***/ }),
 
-/***/ "./node_modules/moment/locale/de.js":
-/*!******************************************!*\
-  !*** ./node_modules/moment/locale/de.js ***!
-  \******************************************/
+/***/ "../../node_modules/moment/locale/de.js":
+/*!*******************************************************************!*\
+  !*** F:/xampp72/htdocs/packages/node_modules/moment/locale/de.js ***!
+  \*******************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(/*! ../moment */ "./node_modules/moment/moment.js")) :
+    true ? factory(__webpack_require__(/*! ../moment */ "../../node_modules/moment/moment.js")) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -38642,17 +38047,17 @@ webpackContext.id = "./node_modules/moment/locale sync recursive ^\\.\\/.*$";
 
 /***/ }),
 
-/***/ "./node_modules/moment/locale/dv.js":
-/*!******************************************!*\
-  !*** ./node_modules/moment/locale/dv.js ***!
-  \******************************************/
+/***/ "../../node_modules/moment/locale/dv.js":
+/*!*******************************************************************!*\
+  !*** F:/xampp72/htdocs/packages/node_modules/moment/locale/dv.js ***!
+  \*******************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(/*! ../moment */ "./node_modules/moment/moment.js")) :
+    true ? factory(__webpack_require__(/*! ../moment */ "../../node_modules/moment/moment.js")) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -38749,17 +38154,17 @@ webpackContext.id = "./node_modules/moment/locale sync recursive ^\\.\\/.*$";
 
 /***/ }),
 
-/***/ "./node_modules/moment/locale/el.js":
-/*!******************************************!*\
-  !*** ./node_modules/moment/locale/el.js ***!
-  \******************************************/
+/***/ "../../node_modules/moment/locale/el.js":
+/*!*******************************************************************!*\
+  !*** F:/xampp72/htdocs/packages/node_modules/moment/locale/el.js ***!
+  \*******************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(/*! ../moment */ "./node_modules/moment/moment.js")) :
+    true ? factory(__webpack_require__(/*! ../moment */ "../../node_modules/moment/moment.js")) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -38857,17 +38262,17 @@ webpackContext.id = "./node_modules/moment/locale sync recursive ^\\.\\/.*$";
 
 /***/ }),
 
-/***/ "./node_modules/moment/locale/en-SG.js":
-/*!*********************************************!*\
-  !*** ./node_modules/moment/locale/en-SG.js ***!
-  \*********************************************/
+/***/ "../../node_modules/moment/locale/en-SG.js":
+/*!**********************************************************************!*\
+  !*** F:/xampp72/htdocs/packages/node_modules/moment/locale/en-SG.js ***!
+  \**********************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(/*! ../moment */ "./node_modules/moment/moment.js")) :
+    true ? factory(__webpack_require__(/*! ../moment */ "../../node_modules/moment/moment.js")) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -38932,17 +38337,17 @@ webpackContext.id = "./node_modules/moment/locale sync recursive ^\\.\\/.*$";
 
 /***/ }),
 
-/***/ "./node_modules/moment/locale/en-au.js":
-/*!*********************************************!*\
-  !*** ./node_modules/moment/locale/en-au.js ***!
-  \*********************************************/
+/***/ "../../node_modules/moment/locale/en-au.js":
+/*!**********************************************************************!*\
+  !*** F:/xampp72/htdocs/packages/node_modules/moment/locale/en-au.js ***!
+  \**********************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(/*! ../moment */ "./node_modules/moment/moment.js")) :
+    true ? factory(__webpack_require__(/*! ../moment */ "../../node_modules/moment/moment.js")) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -39007,17 +38412,17 @@ webpackContext.id = "./node_modules/moment/locale sync recursive ^\\.\\/.*$";
 
 /***/ }),
 
-/***/ "./node_modules/moment/locale/en-ca.js":
-/*!*********************************************!*\
-  !*** ./node_modules/moment/locale/en-ca.js ***!
-  \*********************************************/
+/***/ "../../node_modules/moment/locale/en-ca.js":
+/*!**********************************************************************!*\
+  !*** F:/xampp72/htdocs/packages/node_modules/moment/locale/en-ca.js ***!
+  \**********************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(/*! ../moment */ "./node_modules/moment/moment.js")) :
+    true ? factory(__webpack_require__(/*! ../moment */ "../../node_modules/moment/moment.js")) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -39078,17 +38483,17 @@ webpackContext.id = "./node_modules/moment/locale sync recursive ^\\.\\/.*$";
 
 /***/ }),
 
-/***/ "./node_modules/moment/locale/en-gb.js":
-/*!*********************************************!*\
-  !*** ./node_modules/moment/locale/en-gb.js ***!
-  \*********************************************/
+/***/ "../../node_modules/moment/locale/en-gb.js":
+/*!**********************************************************************!*\
+  !*** F:/xampp72/htdocs/packages/node_modules/moment/locale/en-gb.js ***!
+  \**********************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(/*! ../moment */ "./node_modules/moment/moment.js")) :
+    true ? factory(__webpack_require__(/*! ../moment */ "../../node_modules/moment/moment.js")) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -39153,17 +38558,17 @@ webpackContext.id = "./node_modules/moment/locale sync recursive ^\\.\\/.*$";
 
 /***/ }),
 
-/***/ "./node_modules/moment/locale/en-ie.js":
-/*!*********************************************!*\
-  !*** ./node_modules/moment/locale/en-ie.js ***!
-  \*********************************************/
+/***/ "../../node_modules/moment/locale/en-ie.js":
+/*!**********************************************************************!*\
+  !*** F:/xampp72/htdocs/packages/node_modules/moment/locale/en-ie.js ***!
+  \**********************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(/*! ../moment */ "./node_modules/moment/moment.js")) :
+    true ? factory(__webpack_require__(/*! ../moment */ "../../node_modules/moment/moment.js")) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -39228,17 +38633,17 @@ webpackContext.id = "./node_modules/moment/locale sync recursive ^\\.\\/.*$";
 
 /***/ }),
 
-/***/ "./node_modules/moment/locale/en-il.js":
-/*!*********************************************!*\
-  !*** ./node_modules/moment/locale/en-il.js ***!
-  \*********************************************/
+/***/ "../../node_modules/moment/locale/en-il.js":
+/*!**********************************************************************!*\
+  !*** F:/xampp72/htdocs/packages/node_modules/moment/locale/en-il.js ***!
+  \**********************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(/*! ../moment */ "./node_modules/moment/moment.js")) :
+    true ? factory(__webpack_require__(/*! ../moment */ "../../node_modules/moment/moment.js")) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -39298,17 +38703,17 @@ webpackContext.id = "./node_modules/moment/locale sync recursive ^\\.\\/.*$";
 
 /***/ }),
 
-/***/ "./node_modules/moment/locale/en-nz.js":
-/*!*********************************************!*\
-  !*** ./node_modules/moment/locale/en-nz.js ***!
-  \*********************************************/
+/***/ "../../node_modules/moment/locale/en-nz.js":
+/*!**********************************************************************!*\
+  !*** F:/xampp72/htdocs/packages/node_modules/moment/locale/en-nz.js ***!
+  \**********************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(/*! ../moment */ "./node_modules/moment/moment.js")) :
+    true ? factory(__webpack_require__(/*! ../moment */ "../../node_modules/moment/moment.js")) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -39373,17 +38778,17 @@ webpackContext.id = "./node_modules/moment/locale sync recursive ^\\.\\/.*$";
 
 /***/ }),
 
-/***/ "./node_modules/moment/locale/eo.js":
-/*!******************************************!*\
-  !*** ./node_modules/moment/locale/eo.js ***!
-  \******************************************/
+/***/ "../../node_modules/moment/locale/eo.js":
+/*!*******************************************************************!*\
+  !*** F:/xampp72/htdocs/packages/node_modules/moment/locale/eo.js ***!
+  \*******************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(/*! ../moment */ "./node_modules/moment/moment.js")) :
+    true ? factory(__webpack_require__(/*! ../moment */ "../../node_modules/moment/moment.js")) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -39452,17 +38857,17 @@ webpackContext.id = "./node_modules/moment/locale sync recursive ^\\.\\/.*$";
 
 /***/ }),
 
-/***/ "./node_modules/moment/locale/es-do.js":
-/*!*********************************************!*\
-  !*** ./node_modules/moment/locale/es-do.js ***!
-  \*********************************************/
+/***/ "../../node_modules/moment/locale/es-do.js":
+/*!**********************************************************************!*\
+  !*** F:/xampp72/htdocs/packages/node_modules/moment/locale/es-do.js ***!
+  \**********************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(/*! ../moment */ "./node_modules/moment/moment.js")) :
+    true ? factory(__webpack_require__(/*! ../moment */ "../../node_modules/moment/moment.js")) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -39552,17 +38957,17 @@ webpackContext.id = "./node_modules/moment/locale sync recursive ^\\.\\/.*$";
 
 /***/ }),
 
-/***/ "./node_modules/moment/locale/es-us.js":
-/*!*********************************************!*\
-  !*** ./node_modules/moment/locale/es-us.js ***!
-  \*********************************************/
+/***/ "../../node_modules/moment/locale/es-us.js":
+/*!**********************************************************************!*\
+  !*** F:/xampp72/htdocs/packages/node_modules/moment/locale/es-us.js ***!
+  \**********************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(/*! ../moment */ "./node_modules/moment/moment.js")) :
+    true ? factory(__webpack_require__(/*! ../moment */ "../../node_modules/moment/moment.js")) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -39652,17 +39057,17 @@ webpackContext.id = "./node_modules/moment/locale sync recursive ^\\.\\/.*$";
 
 /***/ }),
 
-/***/ "./node_modules/moment/locale/es.js":
-/*!******************************************!*\
-  !*** ./node_modules/moment/locale/es.js ***!
-  \******************************************/
+/***/ "../../node_modules/moment/locale/es.js":
+/*!*******************************************************************!*\
+  !*** F:/xampp72/htdocs/packages/node_modules/moment/locale/es.js ***!
+  \*******************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(/*! ../moment */ "./node_modules/moment/moment.js")) :
+    true ? factory(__webpack_require__(/*! ../moment */ "../../node_modules/moment/moment.js")) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -39752,17 +39157,17 @@ webpackContext.id = "./node_modules/moment/locale sync recursive ^\\.\\/.*$";
 
 /***/ }),
 
-/***/ "./node_modules/moment/locale/et.js":
-/*!******************************************!*\
-  !*** ./node_modules/moment/locale/et.js ***!
-  \******************************************/
+/***/ "../../node_modules/moment/locale/et.js":
+/*!*******************************************************************!*\
+  !*** F:/xampp72/htdocs/packages/node_modules/moment/locale/et.js ***!
+  \*******************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(/*! ../moment */ "./node_modules/moment/moment.js")) :
+    true ? factory(__webpack_require__(/*! ../moment */ "../../node_modules/moment/moment.js")) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -39840,17 +39245,17 @@ webpackContext.id = "./node_modules/moment/locale sync recursive ^\\.\\/.*$";
 
 /***/ }),
 
-/***/ "./node_modules/moment/locale/eu.js":
-/*!******************************************!*\
-  !*** ./node_modules/moment/locale/eu.js ***!
-  \******************************************/
+/***/ "../../node_modules/moment/locale/eu.js":
+/*!*******************************************************************!*\
+  !*** F:/xampp72/htdocs/packages/node_modules/moment/locale/eu.js ***!
+  \*******************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(/*! ../moment */ "./node_modules/moment/moment.js")) :
+    true ? factory(__webpack_require__(/*! ../moment */ "../../node_modules/moment/moment.js")) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -39914,17 +39319,17 @@ webpackContext.id = "./node_modules/moment/locale sync recursive ^\\.\\/.*$";
 
 /***/ }),
 
-/***/ "./node_modules/moment/locale/fa.js":
-/*!******************************************!*\
-  !*** ./node_modules/moment/locale/fa.js ***!
-  \******************************************/
+/***/ "../../node_modules/moment/locale/fa.js":
+/*!*******************************************************************!*\
+  !*** F:/xampp72/htdocs/packages/node_modules/moment/locale/fa.js ***!
+  \*******************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(/*! ../moment */ "./node_modules/moment/moment.js")) :
+    true ? factory(__webpack_require__(/*! ../moment */ "../../node_modules/moment/moment.js")) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -40028,17 +39433,17 @@ webpackContext.id = "./node_modules/moment/locale sync recursive ^\\.\\/.*$";
 
 /***/ }),
 
-/***/ "./node_modules/moment/locale/fi.js":
-/*!******************************************!*\
-  !*** ./node_modules/moment/locale/fi.js ***!
-  \******************************************/
+/***/ "../../node_modules/moment/locale/fi.js":
+/*!*******************************************************************!*\
+  !*** F:/xampp72/htdocs/packages/node_modules/moment/locale/fi.js ***!
+  \*******************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(/*! ../moment */ "./node_modules/moment/moment.js")) :
+    true ? factory(__webpack_require__(/*! ../moment */ "../../node_modules/moment/moment.js")) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -40145,17 +39550,17 @@ webpackContext.id = "./node_modules/moment/locale sync recursive ^\\.\\/.*$";
 
 /***/ }),
 
-/***/ "./node_modules/moment/locale/fo.js":
-/*!******************************************!*\
-  !*** ./node_modules/moment/locale/fo.js ***!
-  \******************************************/
+/***/ "../../node_modules/moment/locale/fo.js":
+/*!*******************************************************************!*\
+  !*** F:/xampp72/htdocs/packages/node_modules/moment/locale/fo.js ***!
+  \*******************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(/*! ../moment */ "./node_modules/moment/moment.js")) :
+    true ? factory(__webpack_require__(/*! ../moment */ "../../node_modules/moment/moment.js")) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -40213,17 +39618,17 @@ webpackContext.id = "./node_modules/moment/locale sync recursive ^\\.\\/.*$";
 
 /***/ }),
 
-/***/ "./node_modules/moment/locale/fr-ca.js":
-/*!*********************************************!*\
-  !*** ./node_modules/moment/locale/fr-ca.js ***!
-  \*********************************************/
+/***/ "../../node_modules/moment/locale/fr-ca.js":
+/*!**********************************************************************!*\
+  !*** F:/xampp72/htdocs/packages/node_modules/moment/locale/fr-ca.js ***!
+  \**********************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(/*! ../moment */ "./node_modules/moment/moment.js")) :
+    true ? factory(__webpack_require__(/*! ../moment */ "../../node_modules/moment/moment.js")) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -40295,17 +39700,17 @@ webpackContext.id = "./node_modules/moment/locale sync recursive ^\\.\\/.*$";
 
 /***/ }),
 
-/***/ "./node_modules/moment/locale/fr-ch.js":
-/*!*********************************************!*\
-  !*** ./node_modules/moment/locale/fr-ch.js ***!
-  \*********************************************/
+/***/ "../../node_modules/moment/locale/fr-ch.js":
+/*!**********************************************************************!*\
+  !*** F:/xampp72/htdocs/packages/node_modules/moment/locale/fr-ch.js ***!
+  \**********************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(/*! ../moment */ "./node_modules/moment/moment.js")) :
+    true ? factory(__webpack_require__(/*! ../moment */ "../../node_modules/moment/moment.js")) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -40381,17 +39786,17 @@ webpackContext.id = "./node_modules/moment/locale sync recursive ^\\.\\/.*$";
 
 /***/ }),
 
-/***/ "./node_modules/moment/locale/fr.js":
-/*!******************************************!*\
-  !*** ./node_modules/moment/locale/fr.js ***!
-  \******************************************/
+/***/ "../../node_modules/moment/locale/fr.js":
+/*!*******************************************************************!*\
+  !*** F:/xampp72/htdocs/packages/node_modules/moment/locale/fr.js ***!
+  \*******************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(/*! ../moment */ "./node_modules/moment/moment.js")) :
+    true ? factory(__webpack_require__(/*! ../moment */ "../../node_modules/moment/moment.js")) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -40472,17 +39877,17 @@ webpackContext.id = "./node_modules/moment/locale sync recursive ^\\.\\/.*$";
 
 /***/ }),
 
-/***/ "./node_modules/moment/locale/fy.js":
-/*!******************************************!*\
-  !*** ./node_modules/moment/locale/fy.js ***!
-  \******************************************/
+/***/ "../../node_modules/moment/locale/fy.js":
+/*!*******************************************************************!*\
+  !*** F:/xampp72/htdocs/packages/node_modules/moment/locale/fy.js ***!
+  \*******************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(/*! ../moment */ "./node_modules/moment/moment.js")) :
+    true ? factory(__webpack_require__(/*! ../moment */ "../../node_modules/moment/moment.js")) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -40555,17 +39960,17 @@ webpackContext.id = "./node_modules/moment/locale sync recursive ^\\.\\/.*$";
 
 /***/ }),
 
-/***/ "./node_modules/moment/locale/ga.js":
-/*!******************************************!*\
-  !*** ./node_modules/moment/locale/ga.js ***!
-  \******************************************/
+/***/ "../../node_modules/moment/locale/ga.js":
+/*!*******************************************************************!*\
+  !*** F:/xampp72/htdocs/packages/node_modules/moment/locale/ga.js ***!
+  \*******************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(/*! ../moment */ "./node_modules/moment/moment.js")) :
+    true ? factory(__webpack_require__(/*! ../moment */ "../../node_modules/moment/moment.js")) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -40640,17 +40045,17 @@ webpackContext.id = "./node_modules/moment/locale sync recursive ^\\.\\/.*$";
 
 /***/ }),
 
-/***/ "./node_modules/moment/locale/gd.js":
-/*!******************************************!*\
-  !*** ./node_modules/moment/locale/gd.js ***!
-  \******************************************/
+/***/ "../../node_modules/moment/locale/gd.js":
+/*!*******************************************************************!*\
+  !*** F:/xampp72/htdocs/packages/node_modules/moment/locale/gd.js ***!
+  \*******************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(/*! ../moment */ "./node_modules/moment/moment.js")) :
+    true ? factory(__webpack_require__(/*! ../moment */ "../../node_modules/moment/moment.js")) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -40724,17 +40129,17 @@ webpackContext.id = "./node_modules/moment/locale sync recursive ^\\.\\/.*$";
 
 /***/ }),
 
-/***/ "./node_modules/moment/locale/gl.js":
-/*!******************************************!*\
-  !*** ./node_modules/moment/locale/gl.js ***!
-  \******************************************/
+/***/ "../../node_modules/moment/locale/gl.js":
+/*!*******************************************************************!*\
+  !*** F:/xampp72/htdocs/packages/node_modules/moment/locale/gl.js ***!
+  \*******************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(/*! ../moment */ "./node_modules/moment/moment.js")) :
+    true ? factory(__webpack_require__(/*! ../moment */ "../../node_modules/moment/moment.js")) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -40809,17 +40214,17 @@ webpackContext.id = "./node_modules/moment/locale sync recursive ^\\.\\/.*$";
 
 /***/ }),
 
-/***/ "./node_modules/moment/locale/gom-latn.js":
-/*!************************************************!*\
-  !*** ./node_modules/moment/locale/gom-latn.js ***!
-  \************************************************/
+/***/ "../../node_modules/moment/locale/gom-latn.js":
+/*!*************************************************************************!*\
+  !*** F:/xampp72/htdocs/packages/node_modules/moment/locale/gom-latn.js ***!
+  \*************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(/*! ../moment */ "./node_modules/moment/moment.js")) :
+    true ? factory(__webpack_require__(/*! ../moment */ "../../node_modules/moment/moment.js")) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -40940,17 +40345,17 @@ webpackContext.id = "./node_modules/moment/locale sync recursive ^\\.\\/.*$";
 
 /***/ }),
 
-/***/ "./node_modules/moment/locale/gu.js":
-/*!******************************************!*\
-  !*** ./node_modules/moment/locale/gu.js ***!
-  \******************************************/
+/***/ "../../node_modules/moment/locale/gu.js":
+/*!*******************************************************************!*\
+  !*** F:/xampp72/htdocs/packages/node_modules/moment/locale/gu.js ***!
+  \*******************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(/*! ../moment */ "./node_modules/moment/moment.js")) :
+    true ? factory(__webpack_require__(/*! ../moment */ "../../node_modules/moment/moment.js")) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -41072,17 +40477,17 @@ webpackContext.id = "./node_modules/moment/locale sync recursive ^\\.\\/.*$";
 
 /***/ }),
 
-/***/ "./node_modules/moment/locale/he.js":
-/*!******************************************!*\
-  !*** ./node_modules/moment/locale/he.js ***!
-  \******************************************/
+/***/ "../../node_modules/moment/locale/he.js":
+/*!*******************************************************************!*\
+  !*** F:/xampp72/htdocs/packages/node_modules/moment/locale/he.js ***!
+  \*******************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(/*! ../moment */ "./node_modules/moment/moment.js")) :
+    true ? factory(__webpack_require__(/*! ../moment */ "../../node_modules/moment/moment.js")) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -41177,17 +40582,17 @@ webpackContext.id = "./node_modules/moment/locale sync recursive ^\\.\\/.*$";
 
 /***/ }),
 
-/***/ "./node_modules/moment/locale/hi.js":
-/*!******************************************!*\
-  !*** ./node_modules/moment/locale/hi.js ***!
-  \******************************************/
+/***/ "../../node_modules/moment/locale/hi.js":
+/*!*******************************************************************!*\
+  !*** F:/xampp72/htdocs/packages/node_modules/moment/locale/hi.js ***!
+  \*******************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(/*! ../moment */ "./node_modules/moment/moment.js")) :
+    true ? factory(__webpack_require__(/*! ../moment */ "../../node_modules/moment/moment.js")) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -41309,17 +40714,17 @@ webpackContext.id = "./node_modules/moment/locale sync recursive ^\\.\\/.*$";
 
 /***/ }),
 
-/***/ "./node_modules/moment/locale/hr.js":
-/*!******************************************!*\
-  !*** ./node_modules/moment/locale/hr.js ***!
-  \******************************************/
+/***/ "../../node_modules/moment/locale/hr.js":
+/*!*******************************************************************!*\
+  !*** F:/xampp72/htdocs/packages/node_modules/moment/locale/hr.js ***!
+  \*******************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(/*! ../moment */ "./node_modules/moment/moment.js")) :
+    true ? factory(__webpack_require__(/*! ../moment */ "../../node_modules/moment/moment.js")) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -41471,17 +40876,17 @@ webpackContext.id = "./node_modules/moment/locale sync recursive ^\\.\\/.*$";
 
 /***/ }),
 
-/***/ "./node_modules/moment/locale/hu.js":
-/*!******************************************!*\
-  !*** ./node_modules/moment/locale/hu.js ***!
-  \******************************************/
+/***/ "../../node_modules/moment/locale/hu.js":
+/*!*******************************************************************!*\
+  !*** F:/xampp72/htdocs/packages/node_modules/moment/locale/hu.js ***!
+  \*******************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(/*! ../moment */ "./node_modules/moment/moment.js")) :
+    true ? factory(__webpack_require__(/*! ../moment */ "../../node_modules/moment/moment.js")) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -41589,17 +40994,17 @@ webpackContext.id = "./node_modules/moment/locale sync recursive ^\\.\\/.*$";
 
 /***/ }),
 
-/***/ "./node_modules/moment/locale/hy-am.js":
-/*!*********************************************!*\
-  !*** ./node_modules/moment/locale/hy-am.js ***!
-  \*********************************************/
+/***/ "../../node_modules/moment/locale/hy-am.js":
+/*!**********************************************************************!*\
+  !*** F:/xampp72/htdocs/packages/node_modules/moment/locale/hy-am.js ***!
+  \**********************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(/*! ../moment */ "./node_modules/moment/moment.js")) :
+    true ? factory(__webpack_require__(/*! ../moment */ "../../node_modules/moment/moment.js")) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -41692,17 +41097,17 @@ webpackContext.id = "./node_modules/moment/locale sync recursive ^\\.\\/.*$";
 
 /***/ }),
 
-/***/ "./node_modules/moment/locale/id.js":
-/*!******************************************!*\
-  !*** ./node_modules/moment/locale/id.js ***!
-  \******************************************/
+/***/ "../../node_modules/moment/locale/id.js":
+/*!*******************************************************************!*\
+  !*** F:/xampp72/htdocs/packages/node_modules/moment/locale/id.js ***!
+  \*******************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(/*! ../moment */ "./node_modules/moment/moment.js")) :
+    true ? factory(__webpack_require__(/*! ../moment */ "../../node_modules/moment/moment.js")) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -41782,17 +41187,17 @@ webpackContext.id = "./node_modules/moment/locale sync recursive ^\\.\\/.*$";
 
 /***/ }),
 
-/***/ "./node_modules/moment/locale/is.js":
-/*!******************************************!*\
-  !*** ./node_modules/moment/locale/is.js ***!
-  \******************************************/
+/***/ "../../node_modules/moment/locale/is.js":
+/*!*******************************************************************!*\
+  !*** F:/xampp72/htdocs/packages/node_modules/moment/locale/is.js ***!
+  \*******************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(/*! ../moment */ "./node_modules/moment/moment.js")) :
+    true ? factory(__webpack_require__(/*! ../moment */ "../../node_modules/moment/moment.js")) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -41922,17 +41327,17 @@ webpackContext.id = "./node_modules/moment/locale sync recursive ^\\.\\/.*$";
 
 /***/ }),
 
-/***/ "./node_modules/moment/locale/it-ch.js":
-/*!*********************************************!*\
-  !*** ./node_modules/moment/locale/it-ch.js ***!
-  \*********************************************/
+/***/ "../../node_modules/moment/locale/it-ch.js":
+/*!**********************************************************************!*\
+  !*** F:/xampp72/htdocs/packages/node_modules/moment/locale/it-ch.js ***!
+  \**********************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(/*! ../moment */ "./node_modules/moment/moment.js")) :
+    true ? factory(__webpack_require__(/*! ../moment */ "../../node_modules/moment/moment.js")) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -41999,17 +41404,17 @@ webpackContext.id = "./node_modules/moment/locale sync recursive ^\\.\\/.*$";
 
 /***/ }),
 
-/***/ "./node_modules/moment/locale/it.js":
-/*!******************************************!*\
-  !*** ./node_modules/moment/locale/it.js ***!
-  \******************************************/
+/***/ "../../node_modules/moment/locale/it.js":
+/*!*******************************************************************!*\
+  !*** F:/xampp72/htdocs/packages/node_modules/moment/locale/it.js ***!
+  \*******************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(/*! ../moment */ "./node_modules/moment/moment.js")) :
+    true ? factory(__webpack_require__(/*! ../moment */ "../../node_modules/moment/moment.js")) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -42076,17 +41481,17 @@ webpackContext.id = "./node_modules/moment/locale sync recursive ^\\.\\/.*$";
 
 /***/ }),
 
-/***/ "./node_modules/moment/locale/ja.js":
-/*!******************************************!*\
-  !*** ./node_modules/moment/locale/ja.js ***!
-  \******************************************/
+/***/ "../../node_modules/moment/locale/ja.js":
+/*!*******************************************************************!*\
+  !*** F:/xampp72/htdocs/packages/node_modules/moment/locale/ja.js ***!
+  \*******************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(/*! ../moment */ "./node_modules/moment/moment.js")) :
+    true ? factory(__webpack_require__(/*! ../moment */ "../../node_modules/moment/moment.js")) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -42176,17 +41581,17 @@ webpackContext.id = "./node_modules/moment/locale sync recursive ^\\.\\/.*$";
 
 /***/ }),
 
-/***/ "./node_modules/moment/locale/jv.js":
-/*!******************************************!*\
-  !*** ./node_modules/moment/locale/jv.js ***!
-  \******************************************/
+/***/ "../../node_modules/moment/locale/jv.js":
+/*!*******************************************************************!*\
+  !*** F:/xampp72/htdocs/packages/node_modules/moment/locale/jv.js ***!
+  \*******************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(/*! ../moment */ "./node_modules/moment/moment.js")) :
+    true ? factory(__webpack_require__(/*! ../moment */ "../../node_modules/moment/moment.js")) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -42266,17 +41671,17 @@ webpackContext.id = "./node_modules/moment/locale sync recursive ^\\.\\/.*$";
 
 /***/ }),
 
-/***/ "./node_modules/moment/locale/ka.js":
-/*!******************************************!*\
-  !*** ./node_modules/moment/locale/ka.js ***!
-  \******************************************/
+/***/ "../../node_modules/moment/locale/ka.js":
+/*!*******************************************************************!*\
+  !*** F:/xampp72/htdocs/packages/node_modules/moment/locale/ka.js ***!
+  \*******************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(/*! ../moment */ "./node_modules/moment/moment.js")) :
+    true ? factory(__webpack_require__(/*! ../moment */ "../../node_modules/moment/moment.js")) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -42363,17 +41768,17 @@ webpackContext.id = "./node_modules/moment/locale sync recursive ^\\.\\/.*$";
 
 /***/ }),
 
-/***/ "./node_modules/moment/locale/kk.js":
-/*!******************************************!*\
-  !*** ./node_modules/moment/locale/kk.js ***!
-  \******************************************/
+/***/ "../../node_modules/moment/locale/kk.js":
+/*!*******************************************************************!*\
+  !*** F:/xampp72/htdocs/packages/node_modules/moment/locale/kk.js ***!
+  \*******************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(/*! ../moment */ "./node_modules/moment/moment.js")) :
+    true ? factory(__webpack_require__(/*! ../moment */ "../../node_modules/moment/moment.js")) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -42458,17 +41863,17 @@ webpackContext.id = "./node_modules/moment/locale sync recursive ^\\.\\/.*$";
 
 /***/ }),
 
-/***/ "./node_modules/moment/locale/km.js":
-/*!******************************************!*\
-  !*** ./node_modules/moment/locale/km.js ***!
-  \******************************************/
+/***/ "../../node_modules/moment/locale/km.js":
+/*!*******************************************************************!*\
+  !*** F:/xampp72/htdocs/packages/node_modules/moment/locale/km.js ***!
+  \*******************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(/*! ../moment */ "./node_modules/moment/moment.js")) :
+    true ? factory(__webpack_require__(/*! ../moment */ "../../node_modules/moment/moment.js")) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -42576,17 +41981,17 @@ webpackContext.id = "./node_modules/moment/locale sync recursive ^\\.\\/.*$";
 
 /***/ }),
 
-/***/ "./node_modules/moment/locale/kn.js":
-/*!******************************************!*\
-  !*** ./node_modules/moment/locale/kn.js ***!
-  \******************************************/
+/***/ "../../node_modules/moment/locale/kn.js":
+/*!*******************************************************************!*\
+  !*** F:/xampp72/htdocs/packages/node_modules/moment/locale/kn.js ***!
+  \*******************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(/*! ../moment */ "./node_modules/moment/moment.js")) :
+    true ? factory(__webpack_require__(/*! ../moment */ "../../node_modules/moment/moment.js")) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -42710,17 +42115,17 @@ webpackContext.id = "./node_modules/moment/locale sync recursive ^\\.\\/.*$";
 
 /***/ }),
 
-/***/ "./node_modules/moment/locale/ko.js":
-/*!******************************************!*\
-  !*** ./node_modules/moment/locale/ko.js ***!
-  \******************************************/
+/***/ "../../node_modules/moment/locale/ko.js":
+/*!*******************************************************************!*\
+  !*** F:/xampp72/htdocs/packages/node_modules/moment/locale/ko.js ***!
+  \*******************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(/*! ../moment */ "./node_modules/moment/moment.js")) :
+    true ? factory(__webpack_require__(/*! ../moment */ "../../node_modules/moment/moment.js")) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -42799,17 +42204,17 @@ webpackContext.id = "./node_modules/moment/locale sync recursive ^\\.\\/.*$";
 
 /***/ }),
 
-/***/ "./node_modules/moment/locale/ku.js":
-/*!******************************************!*\
-  !*** ./node_modules/moment/locale/ku.js ***!
-  \******************************************/
+/***/ "../../node_modules/moment/locale/ku.js":
+/*!*******************************************************************!*\
+  !*** F:/xampp72/htdocs/packages/node_modules/moment/locale/ku.js ***!
+  \*******************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(/*! ../moment */ "./node_modules/moment/moment.js")) :
+    true ? factory(__webpack_require__(/*! ../moment */ "../../node_modules/moment/moment.js")) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -42926,17 +42331,17 @@ webpackContext.id = "./node_modules/moment/locale sync recursive ^\\.\\/.*$";
 
 /***/ }),
 
-/***/ "./node_modules/moment/locale/ky.js":
-/*!******************************************!*\
-  !*** ./node_modules/moment/locale/ky.js ***!
-  \******************************************/
+/***/ "../../node_modules/moment/locale/ky.js":
+/*!*******************************************************************!*\
+  !*** F:/xampp72/htdocs/packages/node_modules/moment/locale/ky.js ***!
+  \*******************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(/*! ../moment */ "./node_modules/moment/moment.js")) :
+    true ? factory(__webpack_require__(/*! ../moment */ "../../node_modules/moment/moment.js")) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -43021,17 +42426,17 @@ webpackContext.id = "./node_modules/moment/locale sync recursive ^\\.\\/.*$";
 
 /***/ }),
 
-/***/ "./node_modules/moment/locale/lb.js":
-/*!******************************************!*\
-  !*** ./node_modules/moment/locale/lb.js ***!
-  \******************************************/
+/***/ "../../node_modules/moment/locale/lb.js":
+/*!*******************************************************************!*\
+  !*** F:/xampp72/htdocs/packages/node_modules/moment/locale/lb.js ***!
+  \*******************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(/*! ../moment */ "./node_modules/moment/moment.js")) :
+    true ? factory(__webpack_require__(/*! ../moment */ "../../node_modules/moment/moment.js")) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -43165,17 +42570,17 @@ webpackContext.id = "./node_modules/moment/locale sync recursive ^\\.\\/.*$";
 
 /***/ }),
 
-/***/ "./node_modules/moment/locale/lo.js":
-/*!******************************************!*\
-  !*** ./node_modules/moment/locale/lo.js ***!
-  \******************************************/
+/***/ "../../node_modules/moment/locale/lo.js":
+/*!*******************************************************************!*\
+  !*** F:/xampp72/htdocs/packages/node_modules/moment/locale/lo.js ***!
+  \*******************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(/*! ../moment */ "./node_modules/moment/moment.js")) :
+    true ? factory(__webpack_require__(/*! ../moment */ "../../node_modules/moment/moment.js")) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -43243,17 +42648,17 @@ webpackContext.id = "./node_modules/moment/locale sync recursive ^\\.\\/.*$";
 
 /***/ }),
 
-/***/ "./node_modules/moment/locale/lt.js":
-/*!******************************************!*\
-  !*** ./node_modules/moment/locale/lt.js ***!
-  \******************************************/
+/***/ "../../node_modules/moment/locale/lt.js":
+/*!*******************************************************************!*\
+  !*** F:/xampp72/htdocs/packages/node_modules/moment/locale/lt.js ***!
+  \*******************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(/*! ../moment */ "./node_modules/moment/moment.js")) :
+    true ? factory(__webpack_require__(/*! ../moment */ "../../node_modules/moment/moment.js")) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -43369,17 +42774,17 @@ webpackContext.id = "./node_modules/moment/locale sync recursive ^\\.\\/.*$";
 
 /***/ }),
 
-/***/ "./node_modules/moment/locale/lv.js":
-/*!******************************************!*\
-  !*** ./node_modules/moment/locale/lv.js ***!
-  \******************************************/
+/***/ "../../node_modules/moment/locale/lv.js":
+/*!*******************************************************************!*\
+  !*** F:/xampp72/htdocs/packages/node_modules/moment/locale/lv.js ***!
+  \*******************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(/*! ../moment */ "./node_modules/moment/moment.js")) :
+    true ? factory(__webpack_require__(/*! ../moment */ "../../node_modules/moment/moment.js")) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -43474,17 +42879,17 @@ webpackContext.id = "./node_modules/moment/locale sync recursive ^\\.\\/.*$";
 
 /***/ }),
 
-/***/ "./node_modules/moment/locale/me.js":
-/*!******************************************!*\
-  !*** ./node_modules/moment/locale/me.js ***!
-  \******************************************/
+/***/ "../../node_modules/moment/locale/me.js":
+/*!*******************************************************************!*\
+  !*** F:/xampp72/htdocs/packages/node_modules/moment/locale/me.js ***!
+  \*******************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(/*! ../moment */ "./node_modules/moment/moment.js")) :
+    true ? factory(__webpack_require__(/*! ../moment */ "../../node_modules/moment/moment.js")) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -43594,17 +42999,17 @@ webpackContext.id = "./node_modules/moment/locale sync recursive ^\\.\\/.*$";
 
 /***/ }),
 
-/***/ "./node_modules/moment/locale/mi.js":
-/*!******************************************!*\
-  !*** ./node_modules/moment/locale/mi.js ***!
-  \******************************************/
+/***/ "../../node_modules/moment/locale/mi.js":
+/*!*******************************************************************!*\
+  !*** F:/xampp72/htdocs/packages/node_modules/moment/locale/mi.js ***!
+  \*******************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(/*! ../moment */ "./node_modules/moment/moment.js")) :
+    true ? factory(__webpack_require__(/*! ../moment */ "../../node_modules/moment/moment.js")) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -43666,17 +43071,17 @@ webpackContext.id = "./node_modules/moment/locale sync recursive ^\\.\\/.*$";
 
 /***/ }),
 
-/***/ "./node_modules/moment/locale/mk.js":
-/*!******************************************!*\
-  !*** ./node_modules/moment/locale/mk.js ***!
-  \******************************************/
+/***/ "../../node_modules/moment/locale/mk.js":
+/*!*******************************************************************!*\
+  !*** F:/xampp72/htdocs/packages/node_modules/moment/locale/mk.js ***!
+  \*******************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(/*! ../moment */ "./node_modules/moment/moment.js")) :
+    true ? factory(__webpack_require__(/*! ../moment */ "../../node_modules/moment/moment.js")) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -43764,17 +43169,17 @@ webpackContext.id = "./node_modules/moment/locale sync recursive ^\\.\\/.*$";
 
 /***/ }),
 
-/***/ "./node_modules/moment/locale/ml.js":
-/*!******************************************!*\
-  !*** ./node_modules/moment/locale/ml.js ***!
-  \******************************************/
+/***/ "../../node_modules/moment/locale/ml.js":
+/*!*******************************************************************!*\
+  !*** F:/xampp72/htdocs/packages/node_modules/moment/locale/ml.js ***!
+  \*******************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(/*! ../moment */ "./node_modules/moment/moment.js")) :
+    true ? factory(__webpack_require__(/*! ../moment */ "../../node_modules/moment/moment.js")) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -43853,17 +43258,17 @@ webpackContext.id = "./node_modules/moment/locale sync recursive ^\\.\\/.*$";
 
 /***/ }),
 
-/***/ "./node_modules/moment/locale/mn.js":
-/*!******************************************!*\
-  !*** ./node_modules/moment/locale/mn.js ***!
-  \******************************************/
+/***/ "../../node_modules/moment/locale/mn.js":
+/*!*******************************************************************!*\
+  !*** F:/xampp72/htdocs/packages/node_modules/moment/locale/mn.js ***!
+  \*******************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(/*! ../moment */ "./node_modules/moment/moment.js")) :
+    true ? factory(__webpack_require__(/*! ../moment */ "../../node_modules/moment/moment.js")) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -43965,17 +43370,17 @@ webpackContext.id = "./node_modules/moment/locale sync recursive ^\\.\\/.*$";
 
 /***/ }),
 
-/***/ "./node_modules/moment/locale/mr.js":
-/*!******************************************!*\
-  !*** ./node_modules/moment/locale/mr.js ***!
-  \******************************************/
+/***/ "../../node_modules/moment/locale/mr.js":
+/*!*******************************************************************!*\
+  !*** F:/xampp72/htdocs/packages/node_modules/moment/locale/mr.js ***!
+  \*******************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(/*! ../moment */ "./node_modules/moment/moment.js")) :
+    true ? factory(__webpack_require__(/*! ../moment */ "../../node_modules/moment/moment.js")) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -44133,17 +43538,17 @@ webpackContext.id = "./node_modules/moment/locale sync recursive ^\\.\\/.*$";
 
 /***/ }),
 
-/***/ "./node_modules/moment/locale/ms-my.js":
-/*!*********************************************!*\
-  !*** ./node_modules/moment/locale/ms-my.js ***!
-  \*********************************************/
+/***/ "../../node_modules/moment/locale/ms-my.js":
+/*!**********************************************************************!*\
+  !*** F:/xampp72/htdocs/packages/node_modules/moment/locale/ms-my.js ***!
+  \**********************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(/*! ../moment */ "./node_modules/moment/moment.js")) :
+    true ? factory(__webpack_require__(/*! ../moment */ "../../node_modules/moment/moment.js")) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -44223,17 +43628,17 @@ webpackContext.id = "./node_modules/moment/locale sync recursive ^\\.\\/.*$";
 
 /***/ }),
 
-/***/ "./node_modules/moment/locale/ms.js":
-/*!******************************************!*\
-  !*** ./node_modules/moment/locale/ms.js ***!
-  \******************************************/
+/***/ "../../node_modules/moment/locale/ms.js":
+/*!*******************************************************************!*\
+  !*** F:/xampp72/htdocs/packages/node_modules/moment/locale/ms.js ***!
+  \*******************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(/*! ../moment */ "./node_modules/moment/moment.js")) :
+    true ? factory(__webpack_require__(/*! ../moment */ "../../node_modules/moment/moment.js")) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -44313,17 +43718,17 @@ webpackContext.id = "./node_modules/moment/locale sync recursive ^\\.\\/.*$";
 
 /***/ }),
 
-/***/ "./node_modules/moment/locale/mt.js":
-/*!******************************************!*\
-  !*** ./node_modules/moment/locale/mt.js ***!
-  \******************************************/
+/***/ "../../node_modules/moment/locale/mt.js":
+/*!*******************************************************************!*\
+  !*** F:/xampp72/htdocs/packages/node_modules/moment/locale/mt.js ***!
+  \*******************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(/*! ../moment */ "./node_modules/moment/moment.js")) :
+    true ? factory(__webpack_require__(/*! ../moment */ "../../node_modules/moment/moment.js")) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -44381,17 +43786,17 @@ webpackContext.id = "./node_modules/moment/locale sync recursive ^\\.\\/.*$";
 
 /***/ }),
 
-/***/ "./node_modules/moment/locale/my.js":
-/*!******************************************!*\
-  !*** ./node_modules/moment/locale/my.js ***!
-  \******************************************/
+/***/ "../../node_modules/moment/locale/my.js":
+/*!*******************************************************************!*\
+  !*** F:/xampp72/htdocs/packages/node_modules/moment/locale/my.js ***!
+  \*******************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(/*! ../moment */ "./node_modules/moment/moment.js")) :
+    true ? factory(__webpack_require__(/*! ../moment */ "../../node_modules/moment/moment.js")) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -44482,17 +43887,17 @@ webpackContext.id = "./node_modules/moment/locale sync recursive ^\\.\\/.*$";
 
 /***/ }),
 
-/***/ "./node_modules/moment/locale/nb.js":
-/*!******************************************!*\
-  !*** ./node_modules/moment/locale/nb.js ***!
-  \******************************************/
+/***/ "../../node_modules/moment/locale/nb.js":
+/*!*******************************************************************!*\
+  !*** F:/xampp72/htdocs/packages/node_modules/moment/locale/nb.js ***!
+  \*******************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(/*! ../moment */ "./node_modules/moment/moment.js")) :
+    true ? factory(__webpack_require__(/*! ../moment */ "../../node_modules/moment/moment.js")) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -44552,17 +43957,17 @@ webpackContext.id = "./node_modules/moment/locale sync recursive ^\\.\\/.*$";
 
 /***/ }),
 
-/***/ "./node_modules/moment/locale/ne.js":
-/*!******************************************!*\
-  !*** ./node_modules/moment/locale/ne.js ***!
-  \******************************************/
+/***/ "../../node_modules/moment/locale/ne.js":
+/*!*******************************************************************!*\
+  !*** F:/xampp72/htdocs/packages/node_modules/moment/locale/ne.js ***!
+  \*******************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(/*! ../moment */ "./node_modules/moment/moment.js")) :
+    true ? factory(__webpack_require__(/*! ../moment */ "../../node_modules/moment/moment.js")) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -44683,17 +44088,17 @@ webpackContext.id = "./node_modules/moment/locale sync recursive ^\\.\\/.*$";
 
 /***/ }),
 
-/***/ "./node_modules/moment/locale/nl-be.js":
-/*!*********************************************!*\
-  !*** ./node_modules/moment/locale/nl-be.js ***!
-  \*********************************************/
+/***/ "../../node_modules/moment/locale/nl-be.js":
+/*!**********************************************************************!*\
+  !*** F:/xampp72/htdocs/packages/node_modules/moment/locale/nl-be.js ***!
+  \**********************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(/*! ../moment */ "./node_modules/moment/moment.js")) :
+    true ? factory(__webpack_require__(/*! ../moment */ "../../node_modules/moment/moment.js")) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -44778,17 +44183,17 @@ webpackContext.id = "./node_modules/moment/locale sync recursive ^\\.\\/.*$";
 
 /***/ }),
 
-/***/ "./node_modules/moment/locale/nl.js":
-/*!******************************************!*\
-  !*** ./node_modules/moment/locale/nl.js ***!
-  \******************************************/
+/***/ "../../node_modules/moment/locale/nl.js":
+/*!*******************************************************************!*\
+  !*** F:/xampp72/htdocs/packages/node_modules/moment/locale/nl.js ***!
+  \*******************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(/*! ../moment */ "./node_modules/moment/moment.js")) :
+    true ? factory(__webpack_require__(/*! ../moment */ "../../node_modules/moment/moment.js")) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -44873,17 +44278,17 @@ webpackContext.id = "./node_modules/moment/locale sync recursive ^\\.\\/.*$";
 
 /***/ }),
 
-/***/ "./node_modules/moment/locale/nn.js":
-/*!******************************************!*\
-  !*** ./node_modules/moment/locale/nn.js ***!
-  \******************************************/
+/***/ "../../node_modules/moment/locale/nn.js":
+/*!*******************************************************************!*\
+  !*** F:/xampp72/htdocs/packages/node_modules/moment/locale/nn.js ***!
+  \*******************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(/*! ../moment */ "./node_modules/moment/moment.js")) :
+    true ? factory(__webpack_require__(/*! ../moment */ "../../node_modules/moment/moment.js")) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -44941,17 +44346,17 @@ webpackContext.id = "./node_modules/moment/locale sync recursive ^\\.\\/.*$";
 
 /***/ }),
 
-/***/ "./node_modules/moment/locale/pa-in.js":
-/*!*********************************************!*\
-  !*** ./node_modules/moment/locale/pa-in.js ***!
-  \*********************************************/
+/***/ "../../node_modules/moment/locale/pa-in.js":
+/*!**********************************************************************!*\
+  !*** F:/xampp72/htdocs/packages/node_modules/moment/locale/pa-in.js ***!
+  \**********************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(/*! ../moment */ "./node_modules/moment/moment.js")) :
+    true ? factory(__webpack_require__(/*! ../moment */ "../../node_modules/moment/moment.js")) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -45073,17 +44478,17 @@ webpackContext.id = "./node_modules/moment/locale sync recursive ^\\.\\/.*$";
 
 /***/ }),
 
-/***/ "./node_modules/moment/locale/pl.js":
-/*!******************************************!*\
-  !*** ./node_modules/moment/locale/pl.js ***!
-  \******************************************/
+/***/ "../../node_modules/moment/locale/pl.js":
+/*!*******************************************************************!*\
+  !*** F:/xampp72/htdocs/packages/node_modules/moment/locale/pl.js ***!
+  \*******************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(/*! ../moment */ "./node_modules/moment/moment.js")) :
+    true ? factory(__webpack_require__(/*! ../moment */ "../../node_modules/moment/moment.js")) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -45207,17 +44612,17 @@ webpackContext.id = "./node_modules/moment/locale sync recursive ^\\.\\/.*$";
 
 /***/ }),
 
-/***/ "./node_modules/moment/locale/pt-br.js":
-/*!*********************************************!*\
-  !*** ./node_modules/moment/locale/pt-br.js ***!
-  \*********************************************/
+/***/ "../../node_modules/moment/locale/pt-br.js":
+/*!**********************************************************************!*\
+  !*** F:/xampp72/htdocs/packages/node_modules/moment/locale/pt-br.js ***!
+  \**********************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(/*! ../moment */ "./node_modules/moment/moment.js")) :
+    true ? factory(__webpack_require__(/*! ../moment */ "../../node_modules/moment/moment.js")) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -45276,17 +44681,17 @@ webpackContext.id = "./node_modules/moment/locale sync recursive ^\\.\\/.*$";
 
 /***/ }),
 
-/***/ "./node_modules/moment/locale/pt.js":
-/*!******************************************!*\
-  !*** ./node_modules/moment/locale/pt.js ***!
-  \******************************************/
+/***/ "../../node_modules/moment/locale/pt.js":
+/*!*******************************************************************!*\
+  !*** F:/xampp72/htdocs/packages/node_modules/moment/locale/pt.js ***!
+  \*******************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(/*! ../moment */ "./node_modules/moment/moment.js")) :
+    true ? factory(__webpack_require__(/*! ../moment */ "../../node_modules/moment/moment.js")) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -45349,17 +44754,17 @@ webpackContext.id = "./node_modules/moment/locale sync recursive ^\\.\\/.*$";
 
 /***/ }),
 
-/***/ "./node_modules/moment/locale/ro.js":
-/*!******************************************!*\
-  !*** ./node_modules/moment/locale/ro.js ***!
-  \******************************************/
+/***/ "../../node_modules/moment/locale/ro.js":
+/*!*******************************************************************!*\
+  !*** F:/xampp72/htdocs/packages/node_modules/moment/locale/ro.js ***!
+  \*******************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(/*! ../moment */ "./node_modules/moment/moment.js")) :
+    true ? factory(__webpack_require__(/*! ../moment */ "../../node_modules/moment/moment.js")) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -45432,17 +44837,17 @@ webpackContext.id = "./node_modules/moment/locale sync recursive ^\\.\\/.*$";
 
 /***/ }),
 
-/***/ "./node_modules/moment/locale/ru.js":
-/*!******************************************!*\
-  !*** ./node_modules/moment/locale/ru.js ***!
-  \******************************************/
+/***/ "../../node_modules/moment/locale/ru.js":
+/*!*******************************************************************!*\
+  !*** F:/xampp72/htdocs/packages/node_modules/moment/locale/ru.js ***!
+  \*******************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(/*! ../moment */ "./node_modules/moment/moment.js")) :
+    true ? factory(__webpack_require__(/*! ../moment */ "../../node_modules/moment/moment.js")) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -45622,17 +45027,17 @@ webpackContext.id = "./node_modules/moment/locale sync recursive ^\\.\\/.*$";
 
 /***/ }),
 
-/***/ "./node_modules/moment/locale/sd.js":
-/*!******************************************!*\
-  !*** ./node_modules/moment/locale/sd.js ***!
-  \******************************************/
+/***/ "../../node_modules/moment/locale/sd.js":
+/*!*******************************************************************!*\
+  !*** F:/xampp72/htdocs/packages/node_modules/moment/locale/sd.js ***!
+  \*******************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(/*! ../moment */ "./node_modules/moment/moment.js")) :
+    true ? factory(__webpack_require__(/*! ../moment */ "../../node_modules/moment/moment.js")) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -45728,17 +45133,17 @@ webpackContext.id = "./node_modules/moment/locale sync recursive ^\\.\\/.*$";
 
 /***/ }),
 
-/***/ "./node_modules/moment/locale/se.js":
-/*!******************************************!*\
-  !*** ./node_modules/moment/locale/se.js ***!
-  \******************************************/
+/***/ "../../node_modules/moment/locale/se.js":
+/*!*******************************************************************!*\
+  !*** F:/xampp72/htdocs/packages/node_modules/moment/locale/se.js ***!
+  \*******************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(/*! ../moment */ "./node_modules/moment/moment.js")) :
+    true ? factory(__webpack_require__(/*! ../moment */ "../../node_modules/moment/moment.js")) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -45796,17 +45201,17 @@ webpackContext.id = "./node_modules/moment/locale sync recursive ^\\.\\/.*$";
 
 /***/ }),
 
-/***/ "./node_modules/moment/locale/si.js":
-/*!******************************************!*\
-  !*** ./node_modules/moment/locale/si.js ***!
-  \******************************************/
+/***/ "../../node_modules/moment/locale/si.js":
+/*!*******************************************************************!*\
+  !*** F:/xampp72/htdocs/packages/node_modules/moment/locale/si.js ***!
+  \*******************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(/*! ../moment */ "./node_modules/moment/moment.js")) :
+    true ? factory(__webpack_require__(/*! ../moment */ "../../node_modules/moment/moment.js")) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -45875,17 +45280,17 @@ webpackContext.id = "./node_modules/moment/locale sync recursive ^\\.\\/.*$";
 
 /***/ }),
 
-/***/ "./node_modules/moment/locale/sk.js":
-/*!******************************************!*\
-  !*** ./node_modules/moment/locale/sk.js ***!
-  \******************************************/
+/***/ "../../node_modules/moment/locale/sk.js":
+/*!*******************************************************************!*\
+  !*** F:/xampp72/htdocs/packages/node_modules/moment/locale/sk.js ***!
+  \*******************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(/*! ../moment */ "./node_modules/moment/moment.js")) :
+    true ? factory(__webpack_require__(/*! ../moment */ "../../node_modules/moment/moment.js")) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -46039,17 +45444,17 @@ webpackContext.id = "./node_modules/moment/locale sync recursive ^\\.\\/.*$";
 
 /***/ }),
 
-/***/ "./node_modules/moment/locale/sl.js":
-/*!******************************************!*\
-  !*** ./node_modules/moment/locale/sl.js ***!
-  \******************************************/
+/***/ "../../node_modules/moment/locale/sl.js":
+/*!*******************************************************************!*\
+  !*** F:/xampp72/htdocs/packages/node_modules/moment/locale/sl.js ***!
+  \*******************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(/*! ../moment */ "./node_modules/moment/moment.js")) :
+    true ? factory(__webpack_require__(/*! ../moment */ "../../node_modules/moment/moment.js")) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -46220,17 +45625,17 @@ webpackContext.id = "./node_modules/moment/locale sync recursive ^\\.\\/.*$";
 
 /***/ }),
 
-/***/ "./node_modules/moment/locale/sq.js":
-/*!******************************************!*\
-  !*** ./node_modules/moment/locale/sq.js ***!
-  \******************************************/
+/***/ "../../node_modules/moment/locale/sq.js":
+/*!*******************************************************************!*\
+  !*** F:/xampp72/htdocs/packages/node_modules/moment/locale/sq.js ***!
+  \*******************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(/*! ../moment */ "./node_modules/moment/moment.js")) :
+    true ? factory(__webpack_require__(/*! ../moment */ "../../node_modules/moment/moment.js")) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -46296,17 +45701,17 @@ webpackContext.id = "./node_modules/moment/locale sync recursive ^\\.\\/.*$";
 
 /***/ }),
 
-/***/ "./node_modules/moment/locale/sr-cyrl.js":
-/*!***********************************************!*\
-  !*** ./node_modules/moment/locale/sr-cyrl.js ***!
-  \***********************************************/
+/***/ "../../node_modules/moment/locale/sr-cyrl.js":
+/*!************************************************************************!*\
+  !*** F:/xampp72/htdocs/packages/node_modules/moment/locale/sr-cyrl.js ***!
+  \************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(/*! ../moment */ "./node_modules/moment/moment.js")) :
+    true ? factory(__webpack_require__(/*! ../moment */ "../../node_modules/moment/moment.js")) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -46415,17 +45820,17 @@ webpackContext.id = "./node_modules/moment/locale sync recursive ^\\.\\/.*$";
 
 /***/ }),
 
-/***/ "./node_modules/moment/locale/sr.js":
-/*!******************************************!*\
-  !*** ./node_modules/moment/locale/sr.js ***!
-  \******************************************/
+/***/ "../../node_modules/moment/locale/sr.js":
+/*!*******************************************************************!*\
+  !*** F:/xampp72/htdocs/packages/node_modules/moment/locale/sr.js ***!
+  \*******************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(/*! ../moment */ "./node_modules/moment/moment.js")) :
+    true ? factory(__webpack_require__(/*! ../moment */ "../../node_modules/moment/moment.js")) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -46534,17 +45939,17 @@ webpackContext.id = "./node_modules/moment/locale sync recursive ^\\.\\/.*$";
 
 /***/ }),
 
-/***/ "./node_modules/moment/locale/ss.js":
-/*!******************************************!*\
-  !*** ./node_modules/moment/locale/ss.js ***!
-  \******************************************/
+/***/ "../../node_modules/moment/locale/ss.js":
+/*!*******************************************************************!*\
+  !*** F:/xampp72/htdocs/packages/node_modules/moment/locale/ss.js ***!
+  \*******************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(/*! ../moment */ "./node_modules/moment/moment.js")) :
+    true ? factory(__webpack_require__(/*! ../moment */ "../../node_modules/moment/moment.js")) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -46630,17 +46035,17 @@ webpackContext.id = "./node_modules/moment/locale sync recursive ^\\.\\/.*$";
 
 /***/ }),
 
-/***/ "./node_modules/moment/locale/sv.js":
-/*!******************************************!*\
-  !*** ./node_modules/moment/locale/sv.js ***!
-  \******************************************/
+/***/ "../../node_modules/moment/locale/sv.js":
+/*!*******************************************************************!*\
+  !*** F:/xampp72/htdocs/packages/node_modules/moment/locale/sv.js ***!
+  \*******************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(/*! ../moment */ "./node_modules/moment/moment.js")) :
+    true ? factory(__webpack_require__(/*! ../moment */ "../../node_modules/moment/moment.js")) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -46707,17 +46112,17 @@ webpackContext.id = "./node_modules/moment/locale sync recursive ^\\.\\/.*$";
 
 /***/ }),
 
-/***/ "./node_modules/moment/locale/sw.js":
-/*!******************************************!*\
-  !*** ./node_modules/moment/locale/sw.js ***!
-  \******************************************/
+/***/ "../../node_modules/moment/locale/sw.js":
+/*!*******************************************************************!*\
+  !*** F:/xampp72/htdocs/packages/node_modules/moment/locale/sw.js ***!
+  \*******************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(/*! ../moment */ "./node_modules/moment/moment.js")) :
+    true ? factory(__webpack_require__(/*! ../moment */ "../../node_modules/moment/moment.js")) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -46774,17 +46179,17 @@ webpackContext.id = "./node_modules/moment/locale sync recursive ^\\.\\/.*$";
 
 /***/ }),
 
-/***/ "./node_modules/moment/locale/ta.js":
-/*!******************************************!*\
-  !*** ./node_modules/moment/locale/ta.js ***!
-  \******************************************/
+/***/ "../../node_modules/moment/locale/ta.js":
+/*!*******************************************************************!*\
+  !*** F:/xampp72/htdocs/packages/node_modules/moment/locale/ta.js ***!
+  \*******************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(/*! ../moment */ "./node_modules/moment/moment.js")) :
+    true ? factory(__webpack_require__(/*! ../moment */ "../../node_modules/moment/moment.js")) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -46911,17 +46316,17 @@ webpackContext.id = "./node_modules/moment/locale sync recursive ^\\.\\/.*$";
 
 /***/ }),
 
-/***/ "./node_modules/moment/locale/te.js":
-/*!******************************************!*\
-  !*** ./node_modules/moment/locale/te.js ***!
-  \******************************************/
+/***/ "../../node_modules/moment/locale/te.js":
+/*!*******************************************************************!*\
+  !*** F:/xampp72/htdocs/packages/node_modules/moment/locale/te.js ***!
+  \*******************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(/*! ../moment */ "./node_modules/moment/moment.js")) :
+    true ? factory(__webpack_require__(/*! ../moment */ "../../node_modules/moment/moment.js")) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -47008,17 +46413,17 @@ webpackContext.id = "./node_modules/moment/locale sync recursive ^\\.\\/.*$";
 
 /***/ }),
 
-/***/ "./node_modules/moment/locale/tet.js":
-/*!*******************************************!*\
-  !*** ./node_modules/moment/locale/tet.js ***!
-  \*******************************************/
+/***/ "../../node_modules/moment/locale/tet.js":
+/*!********************************************************************!*\
+  !*** F:/xampp72/htdocs/packages/node_modules/moment/locale/tet.js ***!
+  \********************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(/*! ../moment */ "./node_modules/moment/moment.js")) :
+    true ? factory(__webpack_require__(/*! ../moment */ "../../node_modules/moment/moment.js")) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -47083,17 +46488,17 @@ webpackContext.id = "./node_modules/moment/locale sync recursive ^\\.\\/.*$";
 
 /***/ }),
 
-/***/ "./node_modules/moment/locale/tg.js":
-/*!******************************************!*\
-  !*** ./node_modules/moment/locale/tg.js ***!
-  \******************************************/
+/***/ "../../node_modules/moment/locale/tg.js":
+/*!*******************************************************************!*\
+  !*** F:/xampp72/htdocs/packages/node_modules/moment/locale/tg.js ***!
+  \*******************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(/*! ../moment */ "./node_modules/moment/moment.js")) :
+    true ? factory(__webpack_require__(/*! ../moment */ "../../node_modules/moment/moment.js")) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -47207,17 +46612,17 @@ webpackContext.id = "./node_modules/moment/locale sync recursive ^\\.\\/.*$";
 
 /***/ }),
 
-/***/ "./node_modules/moment/locale/th.js":
-/*!******************************************!*\
-  !*** ./node_modules/moment/locale/th.js ***!
-  \******************************************/
+/***/ "../../node_modules/moment/locale/th.js":
+/*!*******************************************************************!*\
+  !*** F:/xampp72/htdocs/packages/node_modules/moment/locale/th.js ***!
+  \*******************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(/*! ../moment */ "./node_modules/moment/moment.js")) :
+    true ? factory(__webpack_require__(/*! ../moment */ "../../node_modules/moment/moment.js")) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -47282,17 +46687,17 @@ webpackContext.id = "./node_modules/moment/locale sync recursive ^\\.\\/.*$";
 
 /***/ }),
 
-/***/ "./node_modules/moment/locale/tl-ph.js":
-/*!*********************************************!*\
-  !*** ./node_modules/moment/locale/tl-ph.js ***!
-  \*********************************************/
+/***/ "../../node_modules/moment/locale/tl-ph.js":
+/*!**********************************************************************!*\
+  !*** F:/xampp72/htdocs/packages/node_modules/moment/locale/tl-ph.js ***!
+  \**********************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(/*! ../moment */ "./node_modules/moment/moment.js")) :
+    true ? factory(__webpack_require__(/*! ../moment */ "../../node_modules/moment/moment.js")) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -47352,17 +46757,17 @@ webpackContext.id = "./node_modules/moment/locale sync recursive ^\\.\\/.*$";
 
 /***/ }),
 
-/***/ "./node_modules/moment/locale/tlh.js":
-/*!*******************************************!*\
-  !*** ./node_modules/moment/locale/tlh.js ***!
-  \*******************************************/
+/***/ "../../node_modules/moment/locale/tlh.js":
+/*!********************************************************************!*\
+  !*** F:/xampp72/htdocs/packages/node_modules/moment/locale/tlh.js ***!
+  \********************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(/*! ../moment */ "./node_modules/moment/moment.js")) :
+    true ? factory(__webpack_require__(/*! ../moment */ "../../node_modules/moment/moment.js")) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -47482,16 +46887,16 @@ webpackContext.id = "./node_modules/moment/locale sync recursive ^\\.\\/.*$";
 
 /***/ }),
 
-/***/ "./node_modules/moment/locale/tr.js":
-/*!******************************************!*\
-  !*** ./node_modules/moment/locale/tr.js ***!
-  \******************************************/
+/***/ "../../node_modules/moment/locale/tr.js":
+/*!*******************************************************************!*\
+  !*** F:/xampp72/htdocs/packages/node_modules/moment/locale/tr.js ***!
+  \*******************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(/*! ../moment */ "./node_modules/moment/moment.js")) :
+    true ? factory(__webpack_require__(/*! ../moment */ "../../node_modules/moment/moment.js")) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -47584,17 +46989,17 @@ webpackContext.id = "./node_modules/moment/locale sync recursive ^\\.\\/.*$";
 
 /***/ }),
 
-/***/ "./node_modules/moment/locale/tzl.js":
-/*!*******************************************!*\
-  !*** ./node_modules/moment/locale/tzl.js ***!
-  \*******************************************/
+/***/ "../../node_modules/moment/locale/tzl.js":
+/*!********************************************************************!*\
+  !*** F:/xampp72/htdocs/packages/node_modules/moment/locale/tzl.js ***!
+  \********************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(/*! ../moment */ "./node_modules/moment/moment.js")) :
+    true ? factory(__webpack_require__(/*! ../moment */ "../../node_modules/moment/moment.js")) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -47683,17 +47088,17 @@ webpackContext.id = "./node_modules/moment/locale sync recursive ^\\.\\/.*$";
 
 /***/ }),
 
-/***/ "./node_modules/moment/locale/tzm-latn.js":
-/*!************************************************!*\
-  !*** ./node_modules/moment/locale/tzm-latn.js ***!
-  \************************************************/
+/***/ "../../node_modules/moment/locale/tzm-latn.js":
+/*!*************************************************************************!*\
+  !*** F:/xampp72/htdocs/packages/node_modules/moment/locale/tzm-latn.js ***!
+  \*************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(/*! ../moment */ "./node_modules/moment/moment.js")) :
+    true ? factory(__webpack_require__(/*! ../moment */ "../../node_modules/moment/moment.js")) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -47749,17 +47154,17 @@ webpackContext.id = "./node_modules/moment/locale sync recursive ^\\.\\/.*$";
 
 /***/ }),
 
-/***/ "./node_modules/moment/locale/tzm.js":
-/*!*******************************************!*\
-  !*** ./node_modules/moment/locale/tzm.js ***!
-  \*******************************************/
+/***/ "../../node_modules/moment/locale/tzm.js":
+/*!********************************************************************!*\
+  !*** F:/xampp72/htdocs/packages/node_modules/moment/locale/tzm.js ***!
+  \********************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(/*! ../moment */ "./node_modules/moment/moment.js")) :
+    true ? factory(__webpack_require__(/*! ../moment */ "../../node_modules/moment/moment.js")) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -47815,17 +47220,17 @@ webpackContext.id = "./node_modules/moment/locale sync recursive ^\\.\\/.*$";
 
 /***/ }),
 
-/***/ "./node_modules/moment/locale/ug-cn.js":
-/*!*********************************************!*\
-  !*** ./node_modules/moment/locale/ug-cn.js ***!
-  \*********************************************/
+/***/ "../../node_modules/moment/locale/ug-cn.js":
+/*!**********************************************************************!*\
+  !*** F:/xampp72/htdocs/packages/node_modules/moment/locale/ug-cn.js ***!
+  \**********************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js language configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(/*! ../moment */ "./node_modules/moment/moment.js")) :
+    true ? factory(__webpack_require__(/*! ../moment */ "../../node_modules/moment/moment.js")) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -47942,17 +47347,17 @@ webpackContext.id = "./node_modules/moment/locale sync recursive ^\\.\\/.*$";
 
 /***/ }),
 
-/***/ "./node_modules/moment/locale/uk.js":
-/*!******************************************!*\
-  !*** ./node_modules/moment/locale/uk.js ***!
-  \******************************************/
+/***/ "../../node_modules/moment/locale/uk.js":
+/*!*******************************************************************!*\
+  !*** F:/xampp72/htdocs/packages/node_modules/moment/locale/uk.js ***!
+  \*******************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(/*! ../moment */ "./node_modules/moment/moment.js")) :
+    true ? factory(__webpack_require__(/*! ../moment */ "../../node_modules/moment/moment.js")) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -48104,17 +47509,17 @@ webpackContext.id = "./node_modules/moment/locale sync recursive ^\\.\\/.*$";
 
 /***/ }),
 
-/***/ "./node_modules/moment/locale/ur.js":
-/*!******************************************!*\
-  !*** ./node_modules/moment/locale/ur.js ***!
-  \******************************************/
+/***/ "../../node_modules/moment/locale/ur.js":
+/*!*******************************************************************!*\
+  !*** F:/xampp72/htdocs/packages/node_modules/moment/locale/ur.js ***!
+  \*******************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(/*! ../moment */ "./node_modules/moment/moment.js")) :
+    true ? factory(__webpack_require__(/*! ../moment */ "../../node_modules/moment/moment.js")) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -48210,17 +47615,17 @@ webpackContext.id = "./node_modules/moment/locale sync recursive ^\\.\\/.*$";
 
 /***/ }),
 
-/***/ "./node_modules/moment/locale/uz-latn.js":
-/*!***********************************************!*\
-  !*** ./node_modules/moment/locale/uz-latn.js ***!
-  \***********************************************/
+/***/ "../../node_modules/moment/locale/uz-latn.js":
+/*!************************************************************************!*\
+  !*** F:/xampp72/htdocs/packages/node_modules/moment/locale/uz-latn.js ***!
+  \************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(/*! ../moment */ "./node_modules/moment/moment.js")) :
+    true ? factory(__webpack_require__(/*! ../moment */ "../../node_modules/moment/moment.js")) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -48276,17 +47681,17 @@ webpackContext.id = "./node_modules/moment/locale sync recursive ^\\.\\/.*$";
 
 /***/ }),
 
-/***/ "./node_modules/moment/locale/uz.js":
-/*!******************************************!*\
-  !*** ./node_modules/moment/locale/uz.js ***!
-  \******************************************/
+/***/ "../../node_modules/moment/locale/uz.js":
+/*!*******************************************************************!*\
+  !*** F:/xampp72/htdocs/packages/node_modules/moment/locale/uz.js ***!
+  \*******************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(/*! ../moment */ "./node_modules/moment/moment.js")) :
+    true ? factory(__webpack_require__(/*! ../moment */ "../../node_modules/moment/moment.js")) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -48342,17 +47747,17 @@ webpackContext.id = "./node_modules/moment/locale sync recursive ^\\.\\/.*$";
 
 /***/ }),
 
-/***/ "./node_modules/moment/locale/vi.js":
-/*!******************************************!*\
-  !*** ./node_modules/moment/locale/vi.js ***!
-  \******************************************/
+/***/ "../../node_modules/moment/locale/vi.js":
+/*!*******************************************************************!*\
+  !*** F:/xampp72/htdocs/packages/node_modules/moment/locale/vi.js ***!
+  \*******************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(/*! ../moment */ "./node_modules/moment/moment.js")) :
+    true ? factory(__webpack_require__(/*! ../moment */ "../../node_modules/moment/moment.js")) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -48429,17 +47834,17 @@ webpackContext.id = "./node_modules/moment/locale sync recursive ^\\.\\/.*$";
 
 /***/ }),
 
-/***/ "./node_modules/moment/locale/x-pseudo.js":
-/*!************************************************!*\
-  !*** ./node_modules/moment/locale/x-pseudo.js ***!
-  \************************************************/
+/***/ "../../node_modules/moment/locale/x-pseudo.js":
+/*!*************************************************************************!*\
+  !*** F:/xampp72/htdocs/packages/node_modules/moment/locale/x-pseudo.js ***!
+  \*************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(/*! ../moment */ "./node_modules/moment/moment.js")) :
+    true ? factory(__webpack_require__(/*! ../moment */ "../../node_modules/moment/moment.js")) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -48505,17 +47910,17 @@ webpackContext.id = "./node_modules/moment/locale sync recursive ^\\.\\/.*$";
 
 /***/ }),
 
-/***/ "./node_modules/moment/locale/yo.js":
-/*!******************************************!*\
-  !*** ./node_modules/moment/locale/yo.js ***!
-  \******************************************/
+/***/ "../../node_modules/moment/locale/yo.js":
+/*!*******************************************************************!*\
+  !*** F:/xampp72/htdocs/packages/node_modules/moment/locale/yo.js ***!
+  \*******************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(/*! ../moment */ "./node_modules/moment/moment.js")) :
+    true ? factory(__webpack_require__(/*! ../moment */ "../../node_modules/moment/moment.js")) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -48573,17 +47978,17 @@ webpackContext.id = "./node_modules/moment/locale sync recursive ^\\.\\/.*$";
 
 /***/ }),
 
-/***/ "./node_modules/moment/locale/zh-cn.js":
-/*!*********************************************!*\
-  !*** ./node_modules/moment/locale/zh-cn.js ***!
-  \*********************************************/
+/***/ "../../node_modules/moment/locale/zh-cn.js":
+/*!**********************************************************************!*\
+  !*** F:/xampp72/htdocs/packages/node_modules/moment/locale/zh-cn.js ***!
+  \**********************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(/*! ../moment */ "./node_modules/moment/moment.js")) :
+    true ? factory(__webpack_require__(/*! ../moment */ "../../node_modules/moment/moment.js")) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -48691,17 +48096,17 @@ webpackContext.id = "./node_modules/moment/locale sync recursive ^\\.\\/.*$";
 
 /***/ }),
 
-/***/ "./node_modules/moment/locale/zh-hk.js":
-/*!*********************************************!*\
-  !*** ./node_modules/moment/locale/zh-hk.js ***!
-  \*********************************************/
+/***/ "../../node_modules/moment/locale/zh-hk.js":
+/*!**********************************************************************!*\
+  !*** F:/xampp72/htdocs/packages/node_modules/moment/locale/zh-hk.js ***!
+  \**********************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(/*! ../moment */ "./node_modules/moment/moment.js")) :
+    true ? factory(__webpack_require__(/*! ../moment */ "../../node_modules/moment/moment.js")) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -48802,17 +48207,17 @@ webpackContext.id = "./node_modules/moment/locale sync recursive ^\\.\\/.*$";
 
 /***/ }),
 
-/***/ "./node_modules/moment/locale/zh-tw.js":
-/*!*********************************************!*\
-  !*** ./node_modules/moment/locale/zh-tw.js ***!
-  \*********************************************/
+/***/ "../../node_modules/moment/locale/zh-tw.js":
+/*!**********************************************************************!*\
+  !*** F:/xampp72/htdocs/packages/node_modules/moment/locale/zh-tw.js ***!
+  \**********************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(/*! ../moment */ "./node_modules/moment/moment.js")) :
+    true ? factory(__webpack_require__(/*! ../moment */ "../../node_modules/moment/moment.js")) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -48913,10 +48318,10 @@ webpackContext.id = "./node_modules/moment/locale sync recursive ^\\.\\/.*$";
 
 /***/ }),
 
-/***/ "./node_modules/moment/moment.js":
-/*!***************************************!*\
-  !*** ./node_modules/moment/moment.js ***!
-  \***************************************/
+/***/ "../../node_modules/moment/moment.js":
+/*!****************************************************************!*\
+  !*** F:/xampp72/htdocs/packages/node_modules/moment/moment.js ***!
+  \****************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -50771,7 +50176,7 @@ webpackContext.id = "./node_modules/moment/locale sync recursive ^\\.\\/.*$";
             try {
                 oldLocale = globalLocale._abbr;
                 var aliasedRequire = require;
-                __webpack_require__("./node_modules/moment/locale sync recursive ^\\.\\/.*$")("./" + name);
+                __webpack_require__("../../node_modules/moment/locale sync recursive ^\\.\\/.*$")("./" + name);
                 getSetGlobalLocale(oldLocale);
             } catch (e) {}
         }
@@ -53522,14 +52927,14 @@ webpackContext.id = "./node_modules/moment/locale sync recursive ^\\.\\/.*$";
 
 })));
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../webpack/buildin/module.js */ "./node_modules/webpack/buildin/module.js")(module)))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../packages/vaahcms/node_modules/webpack/buildin/module.js */ "./node_modules/webpack/buildin/module.js")(module)))
 
 /***/ }),
 
-/***/ "./node_modules/nprogress/nprogress.js":
-/*!*********************************************!*\
-  !*** ./node_modules/nprogress/nprogress.js ***!
-  \*********************************************/
+/***/ "../../node_modules/nprogress/nprogress.js":
+/*!**********************************************************************!*\
+  !*** F:/xampp72/htdocs/packages/node_modules/nprogress/nprogress.js ***!
+  \**********************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -54013,10 +53418,10 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/* NProgress, 
 
 /***/ }),
 
-/***/ "./node_modules/popper.js/dist/esm/popper.js":
-/*!***************************************************!*\
-  !*** ./node_modules/popper.js/dist/esm/popper.js ***!
-  \***************************************************/
+/***/ "../../node_modules/popper.js/dist/esm/popper.js":
+/*!****************************************************************************!*\
+  !*** F:/xampp72/htdocs/packages/node_modules/popper.js/dist/esm/popper.js ***!
+  \****************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -56627,482 +56032,14 @@ Popper.Defaults = Defaults;
 /* harmony default export */ __webpack_exports__["default"] = (Popper);
 //# sourceMappingURL=popper.js.map
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../../webpack/buildin/global.js */ "./node_modules/webpack/buildin/global.js")))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../../../packages/vaahcms/node_modules/webpack/buildin/global.js */ "./node_modules/webpack/buildin/global.js")))
 
 /***/ }),
 
-/***/ "./node_modules/process/browser.js":
-/*!*****************************************!*\
-  !*** ./node_modules/process/browser.js ***!
-  \*****************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-// shim for using process in browser
-var process = module.exports = {};
-
-// cached from whatever global is present so that test runners that stub it
-// don't break things.  But we need to wrap it in a try catch in case it is
-// wrapped in strict mode code which doesn't define any globals.  It's inside a
-// function because try/catches deoptimize in certain engines.
-
-var cachedSetTimeout;
-var cachedClearTimeout;
-
-function defaultSetTimout() {
-    throw new Error('setTimeout has not been defined');
-}
-function defaultClearTimeout () {
-    throw new Error('clearTimeout has not been defined');
-}
-(function () {
-    try {
-        if (typeof setTimeout === 'function') {
-            cachedSetTimeout = setTimeout;
-        } else {
-            cachedSetTimeout = defaultSetTimout;
-        }
-    } catch (e) {
-        cachedSetTimeout = defaultSetTimout;
-    }
-    try {
-        if (typeof clearTimeout === 'function') {
-            cachedClearTimeout = clearTimeout;
-        } else {
-            cachedClearTimeout = defaultClearTimeout;
-        }
-    } catch (e) {
-        cachedClearTimeout = defaultClearTimeout;
-    }
-} ())
-function runTimeout(fun) {
-    if (cachedSetTimeout === setTimeout) {
-        //normal enviroments in sane situations
-        return setTimeout(fun, 0);
-    }
-    // if setTimeout wasn't available but was latter defined
-    if ((cachedSetTimeout === defaultSetTimout || !cachedSetTimeout) && setTimeout) {
-        cachedSetTimeout = setTimeout;
-        return setTimeout(fun, 0);
-    }
-    try {
-        // when when somebody has screwed with setTimeout but no I.E. maddness
-        return cachedSetTimeout(fun, 0);
-    } catch(e){
-        try {
-            // When we are in I.E. but the script has been evaled so I.E. doesn't trust the global object when called normally
-            return cachedSetTimeout.call(null, fun, 0);
-        } catch(e){
-            // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global error
-            return cachedSetTimeout.call(this, fun, 0);
-        }
-    }
-
-
-}
-function runClearTimeout(marker) {
-    if (cachedClearTimeout === clearTimeout) {
-        //normal enviroments in sane situations
-        return clearTimeout(marker);
-    }
-    // if clearTimeout wasn't available but was latter defined
-    if ((cachedClearTimeout === defaultClearTimeout || !cachedClearTimeout) && clearTimeout) {
-        cachedClearTimeout = clearTimeout;
-        return clearTimeout(marker);
-    }
-    try {
-        // when when somebody has screwed with setTimeout but no I.E. maddness
-        return cachedClearTimeout(marker);
-    } catch (e){
-        try {
-            // When we are in I.E. but the script has been evaled so I.E. doesn't  trust the global object when called normally
-            return cachedClearTimeout.call(null, marker);
-        } catch (e){
-            // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global error.
-            // Some versions of I.E. have different rules for clearTimeout vs setTimeout
-            return cachedClearTimeout.call(this, marker);
-        }
-    }
-
-
-
-}
-var queue = [];
-var draining = false;
-var currentQueue;
-var queueIndex = -1;
-
-function cleanUpNextTick() {
-    if (!draining || !currentQueue) {
-        return;
-    }
-    draining = false;
-    if (currentQueue.length) {
-        queue = currentQueue.concat(queue);
-    } else {
-        queueIndex = -1;
-    }
-    if (queue.length) {
-        drainQueue();
-    }
-}
-
-function drainQueue() {
-    if (draining) {
-        return;
-    }
-    var timeout = runTimeout(cleanUpNextTick);
-    draining = true;
-
-    var len = queue.length;
-    while(len) {
-        currentQueue = queue;
-        queue = [];
-        while (++queueIndex < len) {
-            if (currentQueue) {
-                currentQueue[queueIndex].run();
-            }
-        }
-        queueIndex = -1;
-        len = queue.length;
-    }
-    currentQueue = null;
-    draining = false;
-    runClearTimeout(timeout);
-}
-
-process.nextTick = function (fun) {
-    var args = new Array(arguments.length - 1);
-    if (arguments.length > 1) {
-        for (var i = 1; i < arguments.length; i++) {
-            args[i - 1] = arguments[i];
-        }
-    }
-    queue.push(new Item(fun, args));
-    if (queue.length === 1 && !draining) {
-        runTimeout(drainQueue);
-    }
-};
-
-// v8 likes predictible objects
-function Item(fun, array) {
-    this.fun = fun;
-    this.array = array;
-}
-Item.prototype.run = function () {
-    this.fun.apply(null, this.array);
-};
-process.title = 'browser';
-process.browser = true;
-process.env = {};
-process.argv = [];
-process.version = ''; // empty string to avoid regexp issues
-process.versions = {};
-
-function noop() {}
-
-process.on = noop;
-process.addListener = noop;
-process.once = noop;
-process.off = noop;
-process.removeListener = noop;
-process.removeAllListeners = noop;
-process.emit = noop;
-process.prependListener = noop;
-process.prependOnceListener = noop;
-
-process.listeners = function (name) { return [] }
-
-process.binding = function (name) {
-    throw new Error('process.binding is not supported');
-};
-
-process.cwd = function () { return '/' };
-process.chdir = function (dir) {
-    throw new Error('process.chdir is not supported');
-};
-process.umask = function() { return 0; };
-
-
-/***/ }),
-
-/***/ "./node_modules/setimmediate/setImmediate.js":
-/*!***************************************************!*\
-  !*** ./node_modules/setimmediate/setImmediate.js ***!
-  \***************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-/* WEBPACK VAR INJECTION */(function(global, process) {(function (global, undefined) {
-    "use strict";
-
-    if (global.setImmediate) {
-        return;
-    }
-
-    var nextHandle = 1; // Spec says greater than zero
-    var tasksByHandle = {};
-    var currentlyRunningATask = false;
-    var doc = global.document;
-    var registerImmediate;
-
-    function setImmediate(callback) {
-      // Callback can either be a function or a string
-      if (typeof callback !== "function") {
-        callback = new Function("" + callback);
-      }
-      // Copy function arguments
-      var args = new Array(arguments.length - 1);
-      for (var i = 0; i < args.length; i++) {
-          args[i] = arguments[i + 1];
-      }
-      // Store and register the task
-      var task = { callback: callback, args: args };
-      tasksByHandle[nextHandle] = task;
-      registerImmediate(nextHandle);
-      return nextHandle++;
-    }
-
-    function clearImmediate(handle) {
-        delete tasksByHandle[handle];
-    }
-
-    function run(task) {
-        var callback = task.callback;
-        var args = task.args;
-        switch (args.length) {
-        case 0:
-            callback();
-            break;
-        case 1:
-            callback(args[0]);
-            break;
-        case 2:
-            callback(args[0], args[1]);
-            break;
-        case 3:
-            callback(args[0], args[1], args[2]);
-            break;
-        default:
-            callback.apply(undefined, args);
-            break;
-        }
-    }
-
-    function runIfPresent(handle) {
-        // From the spec: "Wait until any invocations of this algorithm started before this one have completed."
-        // So if we're currently running a task, we'll need to delay this invocation.
-        if (currentlyRunningATask) {
-            // Delay by doing a setTimeout. setImmediate was tried instead, but in Firefox 7 it generated a
-            // "too much recursion" error.
-            setTimeout(runIfPresent, 0, handle);
-        } else {
-            var task = tasksByHandle[handle];
-            if (task) {
-                currentlyRunningATask = true;
-                try {
-                    run(task);
-                } finally {
-                    clearImmediate(handle);
-                    currentlyRunningATask = false;
-                }
-            }
-        }
-    }
-
-    function installNextTickImplementation() {
-        registerImmediate = function(handle) {
-            process.nextTick(function () { runIfPresent(handle); });
-        };
-    }
-
-    function canUsePostMessage() {
-        // The test against `importScripts` prevents this implementation from being installed inside a web worker,
-        // where `global.postMessage` means something completely different and can't be used for this purpose.
-        if (global.postMessage && !global.importScripts) {
-            var postMessageIsAsynchronous = true;
-            var oldOnMessage = global.onmessage;
-            global.onmessage = function() {
-                postMessageIsAsynchronous = false;
-            };
-            global.postMessage("", "*");
-            global.onmessage = oldOnMessage;
-            return postMessageIsAsynchronous;
-        }
-    }
-
-    function installPostMessageImplementation() {
-        // Installs an event handler on `global` for the `message` event: see
-        // * https://developer.mozilla.org/en/DOM/window.postMessage
-        // * http://www.whatwg.org/specs/web-apps/current-work/multipage/comms.html#crossDocumentMessages
-
-        var messagePrefix = "setImmediate$" + Math.random() + "$";
-        var onGlobalMessage = function(event) {
-            if (event.source === global &&
-                typeof event.data === "string" &&
-                event.data.indexOf(messagePrefix) === 0) {
-                runIfPresent(+event.data.slice(messagePrefix.length));
-            }
-        };
-
-        if (global.addEventListener) {
-            global.addEventListener("message", onGlobalMessage, false);
-        } else {
-            global.attachEvent("onmessage", onGlobalMessage);
-        }
-
-        registerImmediate = function(handle) {
-            global.postMessage(messagePrefix + handle, "*");
-        };
-    }
-
-    function installMessageChannelImplementation() {
-        var channel = new MessageChannel();
-        channel.port1.onmessage = function(event) {
-            var handle = event.data;
-            runIfPresent(handle);
-        };
-
-        registerImmediate = function(handle) {
-            channel.port2.postMessage(handle);
-        };
-    }
-
-    function installReadyStateChangeImplementation() {
-        var html = doc.documentElement;
-        registerImmediate = function(handle) {
-            // Create a <script> element; its readystatechange event will be fired asynchronously once it is inserted
-            // into the document. Do so, thus queuing up the task. Remember to clean up once it's been called.
-            var script = doc.createElement("script");
-            script.onreadystatechange = function () {
-                runIfPresent(handle);
-                script.onreadystatechange = null;
-                html.removeChild(script);
-                script = null;
-            };
-            html.appendChild(script);
-        };
-    }
-
-    function installSetTimeoutImplementation() {
-        registerImmediate = function(handle) {
-            setTimeout(runIfPresent, 0, handle);
-        };
-    }
-
-    // If supported, we should attach to the prototype of global, since that is where setTimeout et al. live.
-    var attachTo = Object.getPrototypeOf && Object.getPrototypeOf(global);
-    attachTo = attachTo && attachTo.setTimeout ? attachTo : global;
-
-    // Don't get fooled by e.g. browserify environments.
-    if ({}.toString.call(global.process) === "[object process]") {
-        // For Node.js before 0.9
-        installNextTickImplementation();
-
-    } else if (canUsePostMessage()) {
-        // For non-IE10 modern browsers
-        installPostMessageImplementation();
-
-    } else if (global.MessageChannel) {
-        // For web workers, where supported
-        installMessageChannelImplementation();
-
-    } else if (doc && "onreadystatechange" in doc.createElement("script")) {
-        // For IE 6–8
-        installReadyStateChangeImplementation();
-
-    } else {
-        // For older browsers
-        installSetTimeoutImplementation();
-    }
-
-    attachTo.setImmediate = setImmediate;
-    attachTo.clearImmediate = clearImmediate;
-}(typeof self === "undefined" ? typeof global === "undefined" ? this : global : self));
-
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../webpack/buildin/global.js */ "./node_modules/webpack/buildin/global.js"), __webpack_require__(/*! ./../process/browser.js */ "./node_modules/process/browser.js")))
-
-/***/ }),
-
-/***/ "./node_modules/timers-browserify/main.js":
-/*!************************************************!*\
-  !*** ./node_modules/timers-browserify/main.js ***!
-  \************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-/* WEBPACK VAR INJECTION */(function(global) {var scope = (typeof global !== "undefined" && global) ||
-            (typeof self !== "undefined" && self) ||
-            window;
-var apply = Function.prototype.apply;
-
-// DOM APIs, for completeness
-
-exports.setTimeout = function() {
-  return new Timeout(apply.call(setTimeout, scope, arguments), clearTimeout);
-};
-exports.setInterval = function() {
-  return new Timeout(apply.call(setInterval, scope, arguments), clearInterval);
-};
-exports.clearTimeout =
-exports.clearInterval = function(timeout) {
-  if (timeout) {
-    timeout.close();
-  }
-};
-
-function Timeout(id, clearFn) {
-  this._id = id;
-  this._clearFn = clearFn;
-}
-Timeout.prototype.unref = Timeout.prototype.ref = function() {};
-Timeout.prototype.close = function() {
-  this._clearFn.call(scope, this._id);
-};
-
-// Does not start the time, just sets up the members needed.
-exports.enroll = function(item, msecs) {
-  clearTimeout(item._idleTimeoutId);
-  item._idleTimeout = msecs;
-};
-
-exports.unenroll = function(item) {
-  clearTimeout(item._idleTimeoutId);
-  item._idleTimeout = -1;
-};
-
-exports._unrefActive = exports.active = function(item) {
-  clearTimeout(item._idleTimeoutId);
-
-  var msecs = item._idleTimeout;
-  if (msecs >= 0) {
-    item._idleTimeoutId = setTimeout(function onTimeout() {
-      if (item._onTimeout)
-        item._onTimeout();
-    }, msecs);
-  }
-};
-
-// setimmediate attaches itself to the global object
-__webpack_require__(/*! setimmediate */ "./node_modules/setimmediate/setImmediate.js");
-// On some exotic environments, it's not clear which object `setimmediate` was
-// able to install onto.  Search each possibility in the same order as the
-// `setimmediate` library.
-exports.setImmediate = (typeof self !== "undefined" && self.setImmediate) ||
-                       (typeof global !== "undefined" && global.setImmediate) ||
-                       (this && this.setImmediate);
-exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
-                         (typeof global !== "undefined" && global.clearImmediate) ||
-                         (this && this.clearImmediate);
-
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../webpack/buildin/global.js */ "./node_modules/webpack/buildin/global.js")))
-
-/***/ }),
-
-/***/ "./node_modules/vue-js-toggle-button/dist/index.js":
-/*!*********************************************************!*\
-  !*** ./node_modules/vue-js-toggle-button/dist/index.js ***!
-  \*********************************************************/
+/***/ "../../node_modules/vue-js-toggle-button/dist/index.js":
+/*!**********************************************************************************!*\
+  !*** F:/xampp72/htdocs/packages/node_modules/vue-js-toggle-button/dist/index.js ***!
+  \**********************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -57931,1433 +56868,10 @@ module.exports = function listToStyles (parentId, list) {
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/assets/vendor/vaahcms/admin/default/vue/registrations/Create.vue?vue&type=template&id=5fb2f513&":
-/*!*************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/assets/vendor/vaahcms/admin/default/vue/registrations/Create.vue?vue&type=template&id=5fb2f513& ***!
-  \*************************************************************************************************************************************************************************************************************************************************/
-/*! exports provided: render, staticRenderFns */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "col-sm" }, [
-    _vm.assets
-      ? _c("div", { staticClass: "card" }, [
-          _c("div", { staticClass: "card-header" }, [
-            _c("div", { staticClass: "d-flex" }, [
-              _vm._m(0),
-              _vm._v(" "),
-              _c(
-                "div",
-                { staticClass: " mg-l-auto btn-group btn-group-xs" },
-                [
-                  _c(
-                    "router-link",
-                    {
-                      staticClass: "btn btn-card ",
-                      attrs: { to: { path: "/" } }
-                    },
-                    [_c("i", { staticClass: "fas fa-times" })]
-                  )
-                ],
-                1
-              )
-            ])
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "card-body" }, [
-            _c(
-              "table",
-              {
-                staticClass:
-                  "table table-striped table-sm table-condensed table-form table-form-dashed"
-              },
-              [
-                _c(
-                  "tbody",
-                  [
-                    _c("t-form", {
-                      attrs: { columns: _vm.assets.columns },
-                      on: { emittedItem: _vm.updateNewItem }
-                    })
-                  ],
-                  1
-                )
-              ]
-            )
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "card-footer" }, [
-            _c(
-              "button",
-              {
-                staticClass: "btn btn-xs btn-primary",
-                on: { click: _vm.store }
-              },
-              [_vm._v("Save")]
-            )
-          ])
-        ])
-      : _vm._e()
-  ])
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "align-self-center tx-15 flex-grow-1" }, [
-      _c("strong", [_vm._v("Add New Registration")])
-    ])
-  }
-]
-render._withStripped = true
-
-
-
-/***/ }),
-
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/assets/vendor/vaahcms/admin/default/vue/registrations/List.vue?vue&type=template&id=66599116&":
-/*!***********************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/assets/vendor/vaahcms/admin/default/vue/registrations/List.vue?vue&type=template&id=66599116& ***!
-  \***********************************************************************************************************************************************************************************************************************************************/
-/*! exports provided: render, staticRenderFns */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "col-sm" }, [
-    _c("div", { staticClass: "card" }, [
-      _c("div", { staticClass: "card-header" }, [
-        _c("div", { staticClass: "d-flex" }, [
-          _vm._m(0),
-          _vm._v(" "),
-          _c(
-            "div",
-            { staticClass: " mg-l-auto btn-group btn-group-xs" },
-            [
-              _c(
-                "router-link",
-                {
-                  staticClass: "btn btn-xs btn-light btn-uppercase",
-                  attrs: { to: { path: "/create" } }
-                },
-                [
-                  _c("i", { staticClass: "fas fa-plus" }),
-                  _vm._v(" Add New\n                    ")
-                ]
-              ),
-              _vm._v(" "),
-              _c(
-                "button",
-                {
-                  staticClass: "btn btn-xs btn-light btn-uppercase",
-                  on: { click: _vm.toggleShowFilters }
-                },
-                [_c("i", { staticClass: "fas fa-ellipsis-h" })]
-              )
-            ],
-            1
-          )
-        ])
-      ]),
-      _vm._v(" "),
-      _vm.show_filters
-        ? _c("div", { staticClass: "card-body pd-b-0 " }, [
-            _c("div", { staticClass: "form-row" }, [
-              _c("div", { staticClass: "form-group mg-b-0 col-md-4" }, [
-                _c("label", [_vm._v("Filter By")]),
-                _vm._v(" "),
-                _c(
-                  "select",
-                  {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.filters.sort_by,
-                        expression: "filters.sort_by"
-                      }
-                    ],
-                    staticClass: "custom-select custom-select-sm",
-                    on: {
-                      change: [
-                        function($event) {
-                          var $$selectedVal = Array.prototype.filter
-                            .call($event.target.options, function(o) {
-                              return o.selected
-                            })
-                            .map(function(o) {
-                              var val = "_value" in o ? o._value : o.value
-                              return val
-                            })
-                          _vm.$set(
-                            _vm.filters,
-                            "sort_by",
-                            $event.target.multiple
-                              ? $$selectedVal
-                              : $$selectedVal[0]
-                          )
-                        },
-                        _vm.getList
-                      ]
-                    }
-                  },
-                  [
-                    _c("option", { attrs: { value: "" } }, [
-                      _vm._v("Select Sort By")
-                    ]),
-                    _vm._v(" "),
-                    _c("option", { attrs: { value: "first_name" } }, [
-                      _vm._v("First Name")
-                    ]),
-                    _vm._v(" "),
-                    _c("option", { attrs: { value: "status" } }, [
-                      _vm._v("Status")
-                    ]),
-                    _vm._v(" "),
-                    _c("option", { attrs: { value: "created_at" } }, [
-                      _vm._v("Created At")
-                    ]),
-                    _vm._v(" "),
-                    _c("option", { attrs: { value: "deleted_at" } }, [
-                      _vm._v("Show Deleted")
-                    ])
-                  ]
-                )
-              ])
-            ])
-          ])
-        : _vm._e(),
-      _vm._v(" "),
-      _c("div", { staticClass: "card-body" }, [
-        _c("div", { staticClass: "row mg-b-10" }, [
-          _c("div", { staticClass: "col-sm-12" }, [
-            _c(
-              "div",
-              {
-                staticClass: "input-group input-group-sm",
-                staticStyle: { "max-width": "350px" }
-              },
-              [
-                _c(
-                  "select",
-                  {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.bulk_action,
-                        expression: "bulk_action"
-                      }
-                    ],
-                    staticClass: "custom-select",
-                    staticStyle: { "max-width": "150px" },
-                    on: {
-                      change: function($event) {
-                        var $$selectedVal = Array.prototype.filter
-                          .call($event.target.options, function(o) {
-                            return o.selected
-                          })
-                          .map(function(o) {
-                            var val = "_value" in o ? o._value : o.value
-                            return val
-                          })
-                        _vm.bulk_action = $event.target.multiple
-                          ? $$selectedVal
-                          : $$selectedVal[0]
-                      }
-                    }
-                  },
-                  [
-                    _c("option", { attrs: { value: "" } }, [
-                      _vm._v("Bulk Actions")
-                    ]),
-                    _vm._v(" "),
-                    _c("option", { attrs: { value: "bulk_change_status" } }, [
-                      _vm._v("Change Status")
-                    ]),
-                    _vm._v(" "),
-                    _c("option", { attrs: { value: "bulk_delete" } }, [
-                      _vm._v("Delete")
-                    ]),
-                    _vm._v(" "),
-                    _c("option", { attrs: { value: "bulk_restore" } }, [
-                      _vm._v("Restore")
-                    ])
-                  ]
-                ),
-                _vm._v(" "),
-                _vm.bulk_action && _vm.bulk_action == "bulk_change_status"
-                  ? _c(
-                      "select",
-                      {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.bulk_action_data,
-                            expression: "bulk_action_data"
-                          }
-                        ],
-                        staticClass: "custom-select",
-                        attrs: { width: "max-width: 150px" },
-                        on: {
-                          change: function($event) {
-                            var $$selectedVal = Array.prototype.filter
-                              .call($event.target.options, function(o) {
-                                return o.selected
-                              })
-                              .map(function(o) {
-                                var val = "_value" in o ? o._value : o.value
-                                return val
-                              })
-                            _vm.bulk_action_data = $event.target.multiple
-                              ? $$selectedVal
-                              : $$selectedVal[0]
-                          }
-                        }
-                      },
-                      [
-                        _c("option", { attrs: { value: "" } }, [
-                          _vm._v("Select Status")
-                        ]),
-                        _vm._v(" "),
-                        _c(
-                          "option",
-                          { attrs: { value: "activation_pending" } },
-                          [_vm._v("Activation Pending")]
-                        ),
-                        _vm._v(" "),
-                        _c("option", { attrs: { value: "registered" } }, [
-                          _vm._v("Registered")
-                        ])
-                      ]
-                    )
-                  : _vm._e(),
-                _vm._v(" "),
-                _c("div", { staticClass: "input-group-append" }, [
-                  _c(
-                    "button",
-                    {
-                      staticClass: "btn btn-outline-secondary",
-                      attrs: { type: "button" },
-                      on: { click: _vm.bulkAction }
-                    },
-                    [_vm._v("Apply")]
-                  )
-                ])
-              ]
-            )
-          ])
-        ]),
-        _vm._v(" "),
-        _vm.list
-          ? _c(
-              "table",
-              {
-                staticClass:
-                  "table table-striped table-sm table-condensed table-sortable mg-b-0"
-              },
-              [
-                _c("thead", [
-                  _c("tr", [
-                    _c("th", { attrs: { width: "20" } }, [
-                      _c(
-                        "div",
-                        { staticClass: "custom-control custom-checkbox" },
-                        [
-                          _c("input", {
-                            staticClass: "custom-control-input",
-                            attrs: { type: "checkbox", id: "checkAll" },
-                            on: { click: _vm.toggleSelectAll }
-                          }),
-                          _vm._v(" "),
-                          _c("label", {
-                            staticClass: "custom-control-label",
-                            attrs: { for: "checkAll" }
-                          })
-                        ]
-                      )
-                    ]),
-                    _vm._v(" "),
-                    _c(
-                      "th",
-                      {
-                        staticClass: "sortable",
-                        class: {
-                          asc:
-                            _vm.filters.sort_by === "id" &&
-                            _vm.filters.sort_type === "asc",
-                          desc:
-                            _vm.filters.sort_by === "id" &&
-                            _vm.filters.sort_type === "desc"
-                        },
-                        attrs: { width: "50" },
-                        on: {
-                          click: function($event) {
-                            return _vm.setSorting("id")
-                          }
-                        }
-                      },
-                      [
-                        _vm._v(
-                          "\n                            ID\n                        "
-                        )
-                      ]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "th",
-                      {
-                        staticClass: "sortable",
-                        class: {
-                          asc:
-                            _vm.filters.sort_by === "first_name" &&
-                            _vm.filters.sort_type === "asc",
-                          desc:
-                            _vm.filters.sort_by === "first_name" &&
-                            _vm.filters.sort_type === "desc"
-                        },
-                        attrs: { width: "150" },
-                        on: {
-                          click: function($event) {
-                            return _vm.setSorting("first_name")
-                          }
-                        }
-                      },
-                      [
-                        _vm._v(
-                          "\n                            Name\n                        "
-                        )
-                      ]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "th",
-                      {
-                        staticClass: "sortable",
-                        class: {
-                          asc:
-                            _vm.filters.sort_by === "email" &&
-                            _vm.filters.sort_type === "asc",
-                          desc:
-                            _vm.filters.sort_by === "email" &&
-                            _vm.filters.sort_type === "desc"
-                        },
-                        on: {
-                          click: function($event) {
-                            return _vm.setSorting("email")
-                          }
-                        }
-                      },
-                      [_vm._v("Email\n\n                        ")]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "th",
-                      {
-                        staticClass: "sortable",
-                        class: {
-                          asc:
-                            _vm.filters.sort_by === "status" &&
-                            _vm.filters.sort_type === "asc",
-                          desc:
-                            _vm.filters.sort_by === "status" &&
-                            _vm.filters.sort_type === "desc"
-                        },
-                        attrs: { width: "120" },
-                        on: {
-                          click: function($event) {
-                            return _vm.setSorting("status")
-                          }
-                        }
-                      },
-                      [_vm._v("Status\n                        ")]
-                    ),
-                    _vm._v(" "),
-                    !_vm.table_collapsed
-                      ? _c("th", { attrs: { width: "180" } }, [
-                          _vm._v("Created At")
-                        ])
-                      : _vm._e(),
-                    _vm._v(" "),
-                    _c("th", { attrs: { width: "80" } })
-                  ])
-                ]),
-                _vm._v(" "),
-                _c(
-                  "tbody",
-                  [
-                    _c("tr", [
-                      _c(
-                        "td",
-                        { staticClass: "pd-0-f", attrs: { colspan: "7" } },
-                        [
-                          _c(
-                            "div",
-                            { staticClass: "search-form table-search" },
-                            [
-                              _c("input", {
-                                directives: [
-                                  {
-                                    name: "model",
-                                    rawName: "v-model",
-                                    value: _vm.filters.q,
-                                    expression: "filters.q"
-                                  }
-                                ],
-                                staticClass: "form-control form-control-sm",
-                                attrs: {
-                                  type: "search",
-                                  placeholder:
-                                    "search by id, name, username, email..."
-                                },
-                                domProps: { value: _vm.filters.q },
-                                on: {
-                                  keyup: function($event) {
-                                    if (
-                                      !$event.type.indexOf("key") &&
-                                      _vm._k(
-                                        $event.keyCode,
-                                        "enter",
-                                        13,
-                                        $event.key,
-                                        "Enter"
-                                      )
-                                    ) {
-                                      return null
-                                    }
-                                    return _vm.getList($event)
-                                  },
-                                  input: function($event) {
-                                    if ($event.target.composing) {
-                                      return
-                                    }
-                                    _vm.$set(
-                                      _vm.filters,
-                                      "q",
-                                      $event.target.value
-                                    )
-                                  }
-                                }
-                              }),
-                              _vm._v(" "),
-                              _c(
-                                "button",
-                                {
-                                  staticClass: "btn ",
-                                  attrs: { type: "button" },
-                                  on: { click: _vm.getList }
-                                },
-                                [_c("i", { staticClass: "fas fa-search" })]
-                              )
-                            ]
-                          )
-                        ]
-                      )
-                    ]),
-                    _vm._v(" "),
-                    _vm._l(_vm.list.data, function(item) {
-                      return _c("tr", [
-                        _c("td", [
-                          _c(
-                            "div",
-                            { staticClass: "custom-control custom-checkbox" },
-                            [
-                              _c("input", {
-                                staticClass: "custom-control-input",
-                                attrs: {
-                                  type: "checkbox",
-                                  id: "check-" + item.id
-                                },
-                                domProps: {
-                                  checked: _vm.$helpers.existInArray(
-                                    _vm.selected_items,
-                                    item.id
-                                  )
-                                },
-                                on: {
-                                  click: function($event) {
-                                    return _vm.toggleSelectedItem(item.id)
-                                  }
-                                }
-                              }),
-                              _vm._v(" "),
-                              _c("label", {
-                                staticClass: "custom-control-label",
-                                attrs: { for: "check-" + item.id }
-                              })
-                            ]
-                          )
-                        ]),
-                        _vm._v(" "),
-                        _c("td", [_vm._v(_vm._s(item.id))]),
-                        _vm._v(" "),
-                        _c("td", [_vm._v(_vm._s(item.name))]),
-                        _vm._v(" "),
-                        _c("td", [_vm._v(_vm._s(item.email))]),
-                        _vm._v(" "),
-                        _c("td", [
-                          _c("span", { staticClass: "badge badge-info" }, [
-                            _vm._v(_vm._s(item.status))
-                          ])
-                        ]),
-                        _vm._v(" "),
-                        !_vm.table_collapsed
-                          ? _c("td", [
-                              _vm._v(
-                                "\n                        " +
-                                  _vm._s(
-                                    _vm.$helpers.dateTimeForHumans(
-                                      item.created_at
-                                    )
-                                  ) +
-                                  "\n                    "
-                              )
-                            ])
-                          : _vm._e(),
-                        _vm._v(" "),
-                        _c("td", { staticClass: "pd-0-f" }, [
-                          _c(
-                            "div",
-                            { staticClass: "btn-group btn-group-xs" },
-                            [
-                              _vm._m(1, true),
-                              _vm._v(" "),
-                              _c(
-                                "router-link",
-                                {
-                                  staticClass: "btn btn-xs bg-transparent",
-                                  attrs: { to: { path: "/view/" + item.id } }
-                                },
-                                [
-                                  _c("i", {
-                                    staticClass: "fas fa-chevron-right"
-                                  })
-                                ]
-                              )
-                            ],
-                            1
-                          )
-                        ])
-                      ])
-                    })
-                  ],
-                  2
-                )
-              ]
-            )
-          : _vm._e()
-      ]),
-      _vm._v(" "),
-      _vm.list && _vm.list.last_page > 1
-        ? _c(
-            "div",
-            { staticClass: "card-footer" },
-            [
-              _c("pagination", {
-                attrs: { limit: 6, data: _vm.list },
-                on: { "pagination-change-page": _vm.getList }
-              })
-            ],
-            1
-          )
-        : _vm._e()
-    ])
-  ])
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "align-self-center tx-18 flex-grow-1" }, [
-      _c("strong", [_vm._v("Registrations")])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("button", { staticClass: "btn btn-xs bg-transparent" }, [
-      _c("i", { staticClass: "fas fa-ellipsis-h" })
-    ])
-  }
-]
-render._withStripped = true
-
-
-
-/***/ }),
-
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/assets/vendor/vaahcms/admin/default/vue/registrations/ViewEdit.vue?vue&type=template&id=7004d126&":
-/*!***************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/assets/vendor/vaahcms/admin/default/vue/registrations/ViewEdit.vue?vue&type=template&id=7004d126& ***!
-  \***************************************************************************************************************************************************************************************************************************************************/
-/*! exports provided: render, staticRenderFns */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "col-sm" }, [
-    _c("div", { staticClass: "card" }, [
-      _c("div", { staticClass: "card-header" }, [
-        _c("div", { staticClass: "d-flex" }, [
-          _c("div", { staticClass: "align-self-center tx-15 flex-grow-1" }, [
-            _c("strong", [_vm._v("ID: " + _vm._s(_vm.id))])
-          ]),
-          _vm._v(" "),
-          _c(
-            "div",
-            { staticClass: " mg-l-auto btn-group btn-group-xs" },
-            [
-              _c(
-                "button",
-                { staticClass: "btn btn-card ", on: { click: _vm.toggleEdit } },
-                [_c("i", { staticClass: "fas fa-pencil-alt" })]
-              ),
-              _vm._v(" "),
-              _c("div", { staticClass: "dropdown" }, [
-                _c(
-                  "a",
-                  {
-                    staticClass: "btn btn-card dropdown-toggle",
-                    attrs: {
-                      href: "#",
-                      role: "button",
-                      "data-toggle": "dropdown"
-                    },
-                    on: {
-                      click: function($event) {
-                        return _vm.$helpers.btDropDown($event)
-                      }
-                    }
-                  },
-                  [_c("i", { staticClass: "fas fa-ellipsis-v" })]
-                ),
-                _vm._v(" "),
-                _vm._m(0)
-              ]),
-              _vm._v(" "),
-              _c(
-                "router-link",
-                { staticClass: "btn btn-card ", attrs: { to: { path: "/" } } },
-                [_c("i", { staticClass: "fas fa-times" })]
-              )
-            ],
-            1
-          )
-        ])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "card-body" }, [
-        _vm.edit == false
-          ? _c(
-              "table",
-              {
-                staticClass:
-                  "table table-striped table-sm table-condensed  table-form table-form-view"
-              },
-              [
-                _vm.columns
-                  ? _c("t-view", { attrs: { columns: _vm.columns } })
-                  : _vm._e()
-              ],
-              1
-            )
-          : _c(
-              "table",
-              {
-                staticClass:
-                  "table table-striped table-sm table-condensed  table-form table-form-dashed"
-              },
-              [
-                _vm.columns
-                  ? _c("t-form", {
-                      attrs: { columns: _vm.columns },
-                      on: { emittedItem: _vm.updateItem }
-                    })
-                  : _vm._e()
-              ],
-              1
-            )
-      ]),
-      _vm._v(" "),
-      _vm.edit == true
-        ? _c("div", { staticClass: "card-footer" }, [
-            _c(
-              "button",
-              { staticClass: "btn btn-primary", on: { click: _vm.store } },
-              [_vm._v("Save")]
-            )
-          ])
-        : _vm._e()
-    ])
-  ])
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      {
-        staticClass: "dropdown-menu dropdown-menu-right",
-        attrs: { "aria-labelledby": "dropdownMenuLink" }
-      },
-      [
-        _c("a", { staticClass: "dropdown-item", attrs: { href: "#" } }, [
-          _vm._v("Send Activation Email")
-        ]),
-        _vm._v(" "),
-        _c(
-          "a",
-          { staticClass: "dropdown-item text-danger", attrs: { href: "#" } },
-          [_vm._v("Delete")]
-        )
-      ]
-    )
-  }
-]
-render._withStripped = true
-
-
-
-/***/ }),
-
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/assets/vendor/vaahcms/admin/default/vue/reusable/TableFormGenerator.vue?vue&type=template&id=a84e9e5a&":
-/*!********************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/assets/vendor/vaahcms/admin/default/vue/reusable/TableFormGenerator.vue?vue&type=template&id=a84e9e5a& ***!
-  \********************************************************************************************************************************************************************************************************************************************************/
-/*! exports provided: render, staticRenderFns */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c(
-    "tbody",
-    [
-      _vm._l(_vm.columns, function(column) {
-        return column.editable == true
-          ? [
-              column.type == "text"
-                ? _c("tr", { class: column.tr_class }, [
-                    _c(
-                      "th",
-                      { staticClass: "text-right", attrs: { width: "180" } },
-                      [_vm._v(_vm._s(column.label))]
-                    ),
-                    _vm._v(" "),
-                    _c("td", [
-                      _c("input", {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.new_item[column.name],
-                            expression: "new_item[column.name]"
-                          }
-                        ],
-                        staticClass: "form-control",
-                        attrs: {
-                          type: "text",
-                          name: column.name,
-                          disabled: column.disabled,
-                          placeholder: column.label
-                        },
-                        domProps: { value: _vm.new_item[column.name] },
-                        on: {
-                          input: function($event) {
-                            if ($event.target.composing) {
-                              return
-                            }
-                            _vm.$set(
-                              _vm.new_item,
-                              column.name,
-                              $event.target.value
-                            )
-                          }
-                        }
-                      })
-                    ])
-                  ])
-                : column.type == "password"
-                ? _c("tr", { class: column.tr_class }, [
-                    _c("th", { staticClass: "text-right" }, [
-                      _vm._v(_vm._s(column.label))
-                    ]),
-                    _vm._v(" "),
-                    _c("td", [
-                      _c("input", {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.new_item[column.name],
-                            expression: "new_item[column.name]"
-                          }
-                        ],
-                        staticClass: "form-control",
-                        attrs: {
-                          type: "password",
-                          name: column.name,
-                          placeholder: column.label
-                        },
-                        domProps: { value: _vm.new_item[column.name] },
-                        on: {
-                          input: function($event) {
-                            if ($event.target.composing) {
-                              return
-                            }
-                            _vm.$set(
-                              _vm.new_item,
-                              column.name,
-                              $event.target.value
-                            )
-                          }
-                        }
-                      })
-                    ])
-                  ])
-                : column.type == "select"
-                ? _c("tr", { class: column.tr_class }, [
-                    _c("th", { staticClass: "text-right" }, [
-                      _vm._v(_vm._s(column.label))
-                    ]),
-                    _vm._v(" "),
-                    _c("td", [
-                      _c(
-                        "select",
-                        {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.new_item[column.name],
-                              expression: "new_item[column.name]"
-                            }
-                          ],
-                          staticClass: "custom-select",
-                          attrs: { placeholder: column.label },
-                          on: {
-                            change: function($event) {
-                              var $$selectedVal = Array.prototype.filter
-                                .call($event.target.options, function(o) {
-                                  return o.selected
-                                })
-                                .map(function(o) {
-                                  var val = "_value" in o ? o._value : o.value
-                                  return val
-                                })
-                              _vm.$set(
-                                _vm.new_item,
-                                column.name,
-                                $event.target.multiple
-                                  ? $$selectedVal
-                                  : $$selectedVal[0]
-                              )
-                            }
-                          }
-                        },
-                        [
-                          _c("option", { attrs: { selected: "", value: "" } }, [
-                            _vm._v("Select " + _vm._s(column.label))
-                          ]),
-                          _vm._v(" "),
-                          _vm._l(column.inputs, function(input) {
-                            return _c(
-                              "option",
-                              { domProps: { value: input.slug } },
-                              [_vm._v(_vm._s(input.name))]
-                            )
-                          })
-                        ],
-                        2
-                      )
-                    ])
-                  ])
-                : column.type == "select_with_ids"
-                ? _c("tr", { class: column.tr_class }, [
-                    _c("th", { staticClass: "text-right" }, [
-                      _vm._v(_vm._s(column.label))
-                    ]),
-                    _vm._v(" "),
-                    _c("td", [
-                      _c(
-                        "select",
-                        {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.new_item[column.name],
-                              expression: "new_item[column.name]"
-                            }
-                          ],
-                          staticClass: "custom-select",
-                          attrs: { placeholder: column.label },
-                          on: {
-                            change: function($event) {
-                              var $$selectedVal = Array.prototype.filter
-                                .call($event.target.options, function(o) {
-                                  return o.selected
-                                })
-                                .map(function(o) {
-                                  var val = "_value" in o ? o._value : o.value
-                                  return val
-                                })
-                              _vm.$set(
-                                _vm.new_item,
-                                column.name,
-                                $event.target.multiple
-                                  ? $$selectedVal
-                                  : $$selectedVal[0]
-                              )
-                            }
-                          }
-                        },
-                        [
-                          _c("option", { attrs: { selected: "", value: "" } }, [
-                            _vm._v("Select " + _vm._s(column.label))
-                          ]),
-                          _vm._v(" "),
-                          _vm._l(column.inputs, function(input) {
-                            return _c(
-                              "option",
-                              { domProps: { value: input.id } },
-                              [_vm._v(_vm._s(input.name))]
-                            )
-                          })
-                        ],
-                        2
-                      )
-                    ])
-                  ])
-                : column.type == "date"
-                ? _c("tr", { class: column.tr_class }, [
-                    _c("th", { staticClass: "text-right" }, [
-                      _vm._v(_vm._s(column.label))
-                    ]),
-                    _vm._v(" "),
-                    _c(
-                      "td",
-                      [
-                        _c("datepicker", {
-                          attrs: {
-                            placeholder: column.label,
-                            format: "yyyy-MM-dd",
-                            "input-class": "form-control"
-                          },
-                          model: {
-                            value: _vm.new_item[column.name],
-                            callback: function($$v) {
-                              _vm.$set(_vm.new_item, column.name, $$v)
-                            },
-                            expression: "new_item[column.name]"
-                          }
-                        })
-                      ],
-                      1
-                    )
-                  ])
-                : _vm._e()
-            ]
-          : _vm._e()
-      })
-    ],
-    2
-  )
-}
-var staticRenderFns = []
-render._withStripped = true
-
-
-
-/***/ }),
-
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/assets/vendor/vaahcms/admin/default/vue/reusable/TableViewGenerator.vue?vue&type=template&id=a0de4edc&":
-/*!********************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/assets/vendor/vaahcms/admin/default/vue/reusable/TableViewGenerator.vue?vue&type=template&id=a0de4edc& ***!
-  \********************************************************************************************************************************************************************************************************************************************************/
-/*! exports provided: render, staticRenderFns */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c(
-    "tbody",
-    [
-      _vm._l(_vm.columns, function(column) {
-        return [
-          column.type == "text"
-            ? _c("tr", { staticClass: "tr__view" }, [
-                _c(
-                  "th",
-                  { staticClass: "text-right", attrs: { width: "180" } },
-                  [_vm._v(_vm._s(column.label))]
-                ),
-                _vm._v(" "),
-                _c("td", [
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.new_item[column.name],
-                        expression: "new_item[column.name]"
-                      }
-                    ],
-                    staticClass: "form-control",
-                    attrs: {
-                      type: "text",
-                      name: column.name,
-                      disabled: "",
-                      placeholder: column.label
-                    },
-                    domProps: { value: _vm.new_item[column.name] },
-                    on: {
-                      input: function($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.$set(_vm.new_item, column.name, $event.target.value)
-                      }
-                    }
-                  })
-                ])
-              ])
-            : column.type == "password"
-            ? _c("tr", { staticClass: "tr__view" }, [
-                _c("th", { staticClass: "text-right" }, [
-                  _vm._v(_vm._s(column.label))
-                ]),
-                _vm._v(" "),
-                _c("td", [
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.new_item[column.name],
-                        expression: "new_item[column.name]"
-                      }
-                    ],
-                    staticClass: "form-control",
-                    attrs: {
-                      type: "password",
-                      disabled: "",
-                      name: column.name,
-                      placeholder: column.label
-                    },
-                    domProps: { value: _vm.new_item[column.name] },
-                    on: {
-                      input: function($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.$set(_vm.new_item, column.name, $event.target.value)
-                      }
-                    }
-                  })
-                ])
-              ])
-            : column.type == "select"
-            ? _c("tr", { staticClass: "tr__view" }, [
-                _c("th", { staticClass: "text-right" }, [
-                  _vm._v(_vm._s(column.label))
-                ]),
-                _vm._v(" "),
-                _c("td", [
-                  _c(
-                    "select",
-                    {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.new_item[column.name],
-                          expression: "new_item[column.name]"
-                        }
-                      ],
-                      staticClass: "custom-select",
-                      attrs: { disabled: "", placeholder: column.label },
-                      on: {
-                        change: function($event) {
-                          var $$selectedVal = Array.prototype.filter
-                            .call($event.target.options, function(o) {
-                              return o.selected
-                            })
-                            .map(function(o) {
-                              var val = "_value" in o ? o._value : o.value
-                              return val
-                            })
-                          _vm.$set(
-                            _vm.new_item,
-                            column.name,
-                            $event.target.multiple
-                              ? $$selectedVal
-                              : $$selectedVal[0]
-                          )
-                        }
-                      }
-                    },
-                    [
-                      _c("option", { attrs: { selected: "", value: "" } }, [
-                        _vm._v("Select " + _vm._s(column.label))
-                      ]),
-                      _vm._v(" "),
-                      _vm._l(column.inputs, function(input) {
-                        return _c(
-                          "option",
-                          { domProps: { value: input.slug } },
-                          [_vm._v(_vm._s(input.name))]
-                        )
-                      })
-                    ],
-                    2
-                  )
-                ])
-              ])
-            : column.type == "select_with_ids"
-            ? _c("tr", { staticClass: "tr__view" }, [
-                _c("th", { staticClass: "text-right" }, [
-                  _vm._v(_vm._s(column.label))
-                ]),
-                _vm._v(" "),
-                _c("td", [
-                  _c(
-                    "select",
-                    {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.new_item[column.name],
-                          expression: "new_item[column.name]"
-                        }
-                      ],
-                      staticClass: "custom-select",
-                      attrs: { disabled: "", placeholder: column.label },
-                      on: {
-                        change: function($event) {
-                          var $$selectedVal = Array.prototype.filter
-                            .call($event.target.options, function(o) {
-                              return o.selected
-                            })
-                            .map(function(o) {
-                              var val = "_value" in o ? o._value : o.value
-                              return val
-                            })
-                          _vm.$set(
-                            _vm.new_item,
-                            column.name,
-                            $event.target.multiple
-                              ? $$selectedVal
-                              : $$selectedVal[0]
-                          )
-                        }
-                      }
-                    },
-                    [
-                      _c("option", { attrs: { selected: "", value: "" } }, [
-                        _vm._v("Select " + _vm._s(column.label))
-                      ]),
-                      _vm._v(" "),
-                      _vm._l(column.inputs, function(input) {
-                        return _c("option", { domProps: { value: input.id } }, [
-                          _vm._v(_vm._s(input.name))
-                        ])
-                      })
-                    ],
-                    2
-                  )
-                ])
-              ])
-            : column.type == "date"
-            ? _c("tr", { staticClass: "tr__view" }, [
-                _c("th", { staticClass: "text-right" }, [
-                  _vm._v(_vm._s(column.label))
-                ]),
-                _vm._v(" "),
-                _c(
-                  "td",
-                  [
-                    _c("datepicker", {
-                      attrs: {
-                        placeholder: column.label,
-                        disabled: "",
-                        format: "yyyy-MM-dd",
-                        "input-class": "form-control"
-                      },
-                      model: {
-                        value: _vm.new_item[column.name],
-                        callback: function($$v) {
-                          _vm.$set(_vm.new_item, column.name, $$v)
-                        },
-                        expression: "new_item[column.name]"
-                      }
-                    })
-                  ],
-                  1
-                )
-              ])
-            : _vm._e()
-        ]
-      })
-    ],
-    2
-  )
-}
-var staticRenderFns = []
-render._withStripped = true
-
-
-
-/***/ }),
-
-/***/ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js":
-/*!********************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/runtime/componentNormalizer.js ***!
-  \********************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return normalizeComponent; });
-/* globals __VUE_SSR_CONTEXT__ */
-
-// IMPORTANT: Do NOT use ES2015 features in this file (except for modules).
-// This module is a runtime utility for cleaner component module output and will
-// be included in the final webpack user bundle.
-
-function normalizeComponent (
-  scriptExports,
-  render,
-  staticRenderFns,
-  functionalTemplate,
-  injectStyles,
-  scopeId,
-  moduleIdentifier, /* server only */
-  shadowMode /* vue-cli only */
-) {
-  // Vue.extend constructor export interop
-  var options = typeof scriptExports === 'function'
-    ? scriptExports.options
-    : scriptExports
-
-  // render functions
-  if (render) {
-    options.render = render
-    options.staticRenderFns = staticRenderFns
-    options._compiled = true
-  }
-
-  // functional template
-  if (functionalTemplate) {
-    options.functional = true
-  }
-
-  // scopedId
-  if (scopeId) {
-    options._scopeId = 'data-v-' + scopeId
-  }
-
-  var hook
-  if (moduleIdentifier) { // server build
-    hook = function (context) {
-      // 2.3 injection
-      context =
-        context || // cached call
-        (this.$vnode && this.$vnode.ssrContext) || // stateful
-        (this.parent && this.parent.$vnode && this.parent.$vnode.ssrContext) // functional
-      // 2.2 with runInNewContext: true
-      if (!context && typeof __VUE_SSR_CONTEXT__ !== 'undefined') {
-        context = __VUE_SSR_CONTEXT__
-      }
-      // inject component styles
-      if (injectStyles) {
-        injectStyles.call(this, context)
-      }
-      // register component module identifier for async chunk inferrence
-      if (context && context._registeredComponents) {
-        context._registeredComponents.add(moduleIdentifier)
-      }
-    }
-    // used by ssr in case component is cached and beforeCreate
-    // never gets called
-    options._ssrRegister = hook
-  } else if (injectStyles) {
-    hook = shadowMode
-      ? function () { injectStyles.call(this, this.$root.$options.shadowRoot) }
-      : injectStyles
-  }
-
-  if (hook) {
-    if (options.functional) {
-      // for template-only hot-reload because in that case the render fn doesn't
-      // go through the normalizer
-      options._injectStyles = hook
-      // register for functioal component in vue file
-      var originalRender = options.render
-      options.render = function renderWithStyleInjection (h, context) {
-        hook.call(context)
-        return originalRender(h, context)
-      }
-    } else {
-      // inject component registration as beforeCreate hook
-      var existing = options.beforeCreate
-      options.beforeCreate = existing
-        ? [].concat(existing, hook)
-        : [hook]
-    }
-  }
-
-  return {
-    exports: scriptExports,
-    options: options
-  }
-}
-
-
-/***/ }),
-
-/***/ "./node_modules/vue-resource/dist/vue-resource.esm.js":
-/*!************************************************************!*\
-  !*** ./node_modules/vue-resource/dist/vue-resource.esm.js ***!
-  \************************************************************/
+/***/ "../../node_modules/vue-resource/dist/vue-resource.esm.js":
+/*!*************************************************************************************!*\
+  !*** F:/xampp72/htdocs/packages/node_modules/vue-resource/dist/vue-resource.esm.js ***!
+  \*************************************************************************************/
 /*! exports provided: default, Url, Http, Resource */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -60926,17 +58440,17 @@ if (typeof window !== 'undefined' && window.Vue) {
 
 /***/ }),
 
-/***/ "./node_modules/vue-resource/src/lib/promise.js":
-/*!******************************************************!*\
-  !*** ./node_modules/vue-resource/src/lib/promise.js ***!
-  \******************************************************/
+/***/ "../../node_modules/vue-resource/src/lib/promise.js":
+/*!*******************************************************************************!*\
+  !*** F:/xampp72/htdocs/packages/node_modules/vue-resource/src/lib/promise.js ***!
+  \*******************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Promise; });
-/* harmony import */ var _util__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../util */ "./node_modules/vue-resource/src/util.js");
+/* harmony import */ var _util__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../util */ "../../node_modules/vue-resource/src/util.js");
 /**
  * Promises/A+ polyfill v1.1.4 (https://github.com/bramstein/promis)
  */
@@ -61118,17 +58632,17 @@ p.catch = function (onRejected) {
 
 /***/ }),
 
-/***/ "./node_modules/vue-resource/src/promise.js":
-/*!**************************************************!*\
-  !*** ./node_modules/vue-resource/src/promise.js ***!
-  \**************************************************/
+/***/ "../../node_modules/vue-resource/src/promise.js":
+/*!***************************************************************************!*\
+  !*** F:/xampp72/htdocs/packages/node_modules/vue-resource/src/promise.js ***!
+  \***************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return PromiseObj; });
-/* harmony import */ var _lib_promise__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./lib/promise */ "./node_modules/vue-resource/src/lib/promise.js");
+/* harmony import */ var _lib_promise__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./lib/promise */ "../../node_modules/vue-resource/src/lib/promise.js");
 /**
  * Promise adapter.
  */
@@ -61210,10 +58724,10 @@ p.finally = function (callback) {
 
 /***/ }),
 
-/***/ "./node_modules/vue-resource/src/util.js":
-/*!***********************************************!*\
-  !*** ./node_modules/vue-resource/src/util.js ***!
-  \***********************************************/
+/***/ "../../node_modules/vue-resource/src/util.js":
+/*!************************************************************************!*\
+  !*** F:/xampp72/htdocs/packages/node_modules/vue-resource/src/util.js ***!
+  \************************************************************************/
 /*! exports provided: inBrowser, default, warn, error, nextTick, trim, trimEnd, toLower, toUpper, isArray, isString, isBoolean, isFunction, isObject, isPlainObject, isBlob, isFormData, when, options, each, assign, merge, defaults */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -61241,7 +58755,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "assign", function() { return assign; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "merge", function() { return merge; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "defaults", function() { return defaults; });
-/* harmony import */ var _promise__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./promise */ "./node_modules/vue-resource/src/promise.js");
+/* harmony import */ var _promise__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./promise */ "../../node_modules/vue-resource/src/promise.js");
 /**
  * Utility functions.
  */
@@ -61429,10 +58943,10 @@ function _merge(target, source, deep) {
 
 /***/ }),
 
-/***/ "./node_modules/vue-router/dist/vue-router.esm.js":
-/*!********************************************************!*\
-  !*** ./node_modules/vue-router/dist/vue-router.esm.js ***!
-  \********************************************************/
+/***/ "../../node_modules/vue-router/dist/vue-router.esm.js":
+/*!*********************************************************************************!*\
+  !*** F:/xampp72/htdocs/packages/node_modules/vue-router/dist/vue-router.esm.js ***!
+  \*********************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -64113,10 +61627,10 @@ if (inBrowser && window.Vue) {
 
 /***/ }),
 
-/***/ "./node_modules/vue/dist/vue.common.dev.js":
-/*!*************************************************!*\
-  !*** ./node_modules/vue/dist/vue.common.dev.js ***!
-  \*************************************************/
+/***/ "../../node_modules/vue/dist/vue.common.dev.js":
+/*!**************************************************************************!*\
+  !*** F:/xampp72/htdocs/packages/node_modules/vue/dist/vue.common.dev.js ***!
+  \**************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -76060,28 +73574,28 @@ Vue.compile = compileToFunctions;
 
 module.exports = Vue;
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../webpack/buildin/global.js */ "./node_modules/webpack/buildin/global.js"), __webpack_require__(/*! ./../../timers-browserify/main.js */ "./node_modules/timers-browserify/main.js").setImmediate))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../../packages/vaahcms/node_modules/webpack/buildin/global.js */ "./node_modules/webpack/buildin/global.js"), __webpack_require__(/*! ./../../../packages/vaahcms/node_modules/timers-browserify/main.js */ "./node_modules/timers-browserify/main.js").setImmediate))
 
 /***/ }),
 
-/***/ "./node_modules/vue/dist/vue.common.js":
-/*!*********************************************!*\
-  !*** ./node_modules/vue/dist/vue.common.js ***!
-  \*********************************************/
+/***/ "../../node_modules/vue/dist/vue.common.js":
+/*!**********************************************************************!*\
+  !*** F:/xampp72/htdocs/packages/node_modules/vue/dist/vue.common.js ***!
+  \**********************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 if (false) {} else {
-  module.exports = __webpack_require__(/*! ./vue.common.dev.js */ "./node_modules/vue/dist/vue.common.dev.js")
+  module.exports = __webpack_require__(/*! ./vue.common.dev.js */ "../../node_modules/vue/dist/vue.common.dev.js")
 }
 
 
 /***/ }),
 
-/***/ "./node_modules/vuejs-datepicker/dist/vuejs-datepicker.esm.js":
-/*!********************************************************************!*\
-  !*** ./node_modules/vuejs-datepicker/dist/vuejs-datepicker.esm.js ***!
-  \********************************************************************/
+/***/ "../../node_modules/vuejs-datepicker/dist/vuejs-datepicker.esm.js":
+/*!*********************************************************************************************!*\
+  !*** F:/xampp72/htdocs/packages/node_modules/vuejs-datepicker/dist/vuejs-datepicker.esm.js ***!
+  \*********************************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -77574,78 +75088,14 @@ var Datepicker = {render: function(){var _vm=this;var _h=_vm.$createElement;var 
 
 /***/ }),
 
-/***/ "./node_modules/webpack/buildin/global.js":
-/*!***********************************!*\
-  !*** (webpack)/buildin/global.js ***!
-  \***********************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-var g;
-
-// This works in non-strict mode
-g = (function() {
-	return this;
-})();
-
-try {
-	// This works if eval is allowed (see CSP)
-	g = g || new Function("return this")();
-} catch (e) {
-	// This works if the window reference is available
-	if (typeof window === "object") g = window;
-}
-
-// g can still be undefined, but nothing to do about it...
-// We return undefined, instead of nothing here, so it's
-// easier to handle this case. if(!global) { ...}
-
-module.exports = g;
-
-
-/***/ }),
-
-/***/ "./node_modules/webpack/buildin/module.js":
-/*!***********************************!*\
-  !*** (webpack)/buildin/module.js ***!
-  \***********************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = function(module) {
-	if (!module.webpackPolyfill) {
-		module.deprecate = function() {};
-		module.paths = [];
-		// module.parent = undefined by default
-		if (!module.children) module.children = [];
-		Object.defineProperty(module, "loaded", {
-			enumerable: true,
-			get: function() {
-				return module.l;
-			}
-		});
-		Object.defineProperty(module, "id", {
-			enumerable: true,
-			get: function() {
-				return module.i;
-			}
-		});
-		module.webpackPolyfill = 1;
-	}
-	return module;
-};
-
-
-/***/ }),
-
-/***/ "./resources/assets/vendor/vaahcms/admin/default/lib/vue/bootstrap.js":
-/*!****************************************************************************!*\
-  !*** ./resources/assets/vendor/vaahcms/admin/default/lib/vue/bootstrap.js ***!
-  \****************************************************************************/
+/***/ "../../resources/assets/vendor/vaahcms/admin/default/lib/vue/bootstrap.js":
+/*!*****************************************************************************************************!*\
+  !*** F:/xampp72/htdocs/packages/resources/assets/vendor/vaahcms/admin/default/lib/vue/bootstrap.js ***!
+  \*****************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-window._ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
+window._ = __webpack_require__(/*! lodash */ "../../node_modules/lodash/lodash.js");
 /**
  * We'll load jQuery and the Bootstrap jQuery plugin which provides support
  * for JavaScript based Bootstrap features such as modals and tabs. This
@@ -77653,10 +75103,10 @@ window._ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
  */
 
 try {
-  window.Popper = __webpack_require__(/*! popper.js */ "./node_modules/popper.js/dist/esm/popper.js")["default"];
-  window.$ = window.jQuery = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
+  window.Popper = __webpack_require__(/*! popper.js */ "../../node_modules/popper.js/dist/esm/popper.js")["default"];
+  window.$ = window.jQuery = __webpack_require__(/*! jquery */ "../../node_modules/jquery/dist/jquery.js");
 
-  __webpack_require__(/*! bootstrap */ "./node_modules/bootstrap/dist/js/bootstrap.js");
+  __webpack_require__(/*! bootstrap */ "../../node_modules/bootstrap/dist/js/bootstrap.js");
 } catch (e) {}
 /**
  * We'll load the axios HTTP library which allows us to easily issue requests
@@ -77665,7 +75115,7 @@ try {
  */
 
 
-window.axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+window.axios = __webpack_require__(/*! axios */ "../../node_modules/axios/index.js");
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 /**
  * Next we will register the CSRF Token as a common header with Axios so that
@@ -77696,20 +75146,20 @@ if (token) {
 
 /***/ }),
 
-/***/ "./resources/assets/vendor/vaahcms/admin/default/vue/helpers/VueHelpers.js":
-/*!*********************************************************************************!*\
-  !*** ./resources/assets/vendor/vaahcms/admin/default/vue/helpers/VueHelpers.js ***!
-  \*********************************************************************************/
+/***/ "../../resources/assets/vendor/vaahcms/admin/default/vue/helpers/VueHelpers.js":
+/*!**********************************************************************************************************!*\
+  !*** F:/xampp72/htdocs/packages/resources/assets/vendor/vaahcms/admin/default/vue/helpers/VueHelpers.js ***!
+  \**********************************************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "../../node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
+/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! moment */ "../../node_modules/moment/moment.js");
 /* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var nprogress__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! nprogress */ "./node_modules/nprogress/nprogress.js");
+/* harmony import */ var nprogress__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! nprogress */ "../../node_modules/nprogress/nprogress.js");
 /* harmony import */ var nprogress__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(nprogress__WEBPACK_IMPORTED_MODULE_2__);
 
 
@@ -78465,18 +75915,18 @@ var VueHelpers = {
 
 /***/ }),
 
-/***/ "./resources/assets/vendor/vaahcms/admin/default/vue/registrations/Create.vue":
-/*!************************************************************************************!*\
-  !*** ./resources/assets/vendor/vaahcms/admin/default/vue/registrations/Create.vue ***!
-  \************************************************************************************/
+/***/ "../../resources/assets/vendor/vaahcms/admin/default/vue/registrations/Create.vue":
+/*!*************************************************************************************************************!*\
+  !*** F:/xampp72/htdocs/packages/resources/assets/vendor/vaahcms/admin/default/vue/registrations/Create.vue ***!
+  \*************************************************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _Create_vue_vue_type_template_id_5fb2f513___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Create.vue?vue&type=template&id=5fb2f513& */ "./resources/assets/vendor/vaahcms/admin/default/vue/registrations/Create.vue?vue&type=template&id=5fb2f513&");
-/* harmony import */ var _CreateJs_js_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./CreateJs.js?vue&type=script&lang=js& */ "./resources/assets/vendor/vaahcms/admin/default/vue/registrations/CreateJs.js?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+/* harmony import */ var _Create_vue_vue_type_template_id_5fb2f513___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Create.vue?vue&type=template&id=5fb2f513& */ "../../resources/assets/vendor/vaahcms/admin/default/vue/registrations/Create.vue?vue&type=template&id=5fb2f513&");
+/* harmony import */ var _CreateJs_js_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./CreateJs.js?vue&type=script&lang=js& */ "../../resources/assets/vendor/vaahcms/admin/default/vue/registrations/CreateJs.js?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _packages_vaahcms_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../../../../packages/vaahcms/node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
 
@@ -78484,7 +75934,7 @@ __webpack_require__.r(__webpack_exports__);
 
 /* normalize component */
 
-var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+var component = Object(_packages_vaahcms_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
   _CreateJs_js_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
   _Create_vue_vue_type_template_id_5fb2f513___WEBPACK_IMPORTED_MODULE_0__["render"],
   _Create_vue_vue_type_template_id_5fb2f513___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
@@ -78502,50 +75952,50 @@ component.options.__file = "resources/assets/vendor/vaahcms/admin/default/vue/re
 
 /***/ }),
 
-/***/ "./resources/assets/vendor/vaahcms/admin/default/vue/registrations/Create.vue?vue&type=template&id=5fb2f513&":
-/*!*******************************************************************************************************************!*\
-  !*** ./resources/assets/vendor/vaahcms/admin/default/vue/registrations/Create.vue?vue&type=template&id=5fb2f513& ***!
-  \*******************************************************************************************************************/
+/***/ "../../resources/assets/vendor/vaahcms/admin/default/vue/registrations/Create.vue?vue&type=template&id=5fb2f513&":
+/*!********************************************************************************************************************************************!*\
+  !*** F:/xampp72/htdocs/packages/resources/assets/vendor/vaahcms/admin/default/vue/registrations/Create.vue?vue&type=template&id=5fb2f513& ***!
+  \********************************************************************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Create_vue_vue_type_template_id_5fb2f513___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../../../../node_modules/vue-loader/lib??vue-loader-options!./Create.vue?vue&type=template&id=5fb2f513& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/assets/vendor/vaahcms/admin/default/vue/registrations/Create.vue?vue&type=template&id=5fb2f513&");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Create_vue_vue_type_template_id_5fb2f513___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+/* harmony import */ var _packages_vaahcms_node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_packages_vaahcms_node_modules_vue_loader_lib_index_js_vue_loader_options_Create_vue_vue_type_template_id_5fb2f513___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../../../packages/vaahcms/node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../../../../packages/vaahcms/node_modules/vue-loader/lib??vue-loader-options!./Create.vue?vue&type=template&id=5fb2f513& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!../../resources/assets/vendor/vaahcms/admin/default/vue/registrations/Create.vue?vue&type=template&id=5fb2f513&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _packages_vaahcms_node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_packages_vaahcms_node_modules_vue_loader_lib_index_js_vue_loader_options_Create_vue_vue_type_template_id_5fb2f513___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Create_vue_vue_type_template_id_5fb2f513___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _packages_vaahcms_node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_packages_vaahcms_node_modules_vue_loader_lib_index_js_vue_loader_options_Create_vue_vue_type_template_id_5fb2f513___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 
 /***/ }),
 
-/***/ "./resources/assets/vendor/vaahcms/admin/default/vue/registrations/CreateJs.js?vue&type=script&lang=js&":
-/*!**************************************************************************************************************!*\
-  !*** ./resources/assets/vendor/vaahcms/admin/default/vue/registrations/CreateJs.js?vue&type=script&lang=js& ***!
-  \**************************************************************************************************************/
+/***/ "../../resources/assets/vendor/vaahcms/admin/default/vue/registrations/CreateJs.js?vue&type=script&lang=js&":
+/*!***************************************************************************************************************************************!*\
+  !*** F:/xampp72/htdocs/packages/resources/assets/vendor/vaahcms/admin/default/vue/registrations/CreateJs.js?vue&type=script&lang=js& ***!
+  \***************************************************************************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_CreateJs_js_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../../../node_modules/babel-loader/lib??ref--4-0!./CreateJs.js?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./resources/assets/vendor/vaahcms/admin/default/vue/registrations/CreateJs.js?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_CreateJs_js_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+/* harmony import */ var _packages_vaahcms_node_modules_babel_loader_lib_index_js_ref_4_0_CreateJs_js_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../../../packages/vaahcms/node_modules/babel-loader/lib??ref--4-0!./CreateJs.js?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!../../resources/assets/vendor/vaahcms/admin/default/vue/registrations/CreateJs.js?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_packages_vaahcms_node_modules_babel_loader_lib_index_js_ref_4_0_CreateJs_js_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
 
 /***/ }),
 
-/***/ "./resources/assets/vendor/vaahcms/admin/default/vue/registrations/List.vue":
-/*!**********************************************************************************!*\
-  !*** ./resources/assets/vendor/vaahcms/admin/default/vue/registrations/List.vue ***!
-  \**********************************************************************************/
+/***/ "../../resources/assets/vendor/vaahcms/admin/default/vue/registrations/List.vue":
+/*!***********************************************************************************************************!*\
+  !*** F:/xampp72/htdocs/packages/resources/assets/vendor/vaahcms/admin/default/vue/registrations/List.vue ***!
+  \***********************************************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _List_vue_vue_type_template_id_66599116___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./List.vue?vue&type=template&id=66599116& */ "./resources/assets/vendor/vaahcms/admin/default/vue/registrations/List.vue?vue&type=template&id=66599116&");
-/* harmony import */ var _ListJs_js_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ListJs.js?vue&type=script&lang=js& */ "./resources/assets/vendor/vaahcms/admin/default/vue/registrations/ListJs.js?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+/* harmony import */ var _List_vue_vue_type_template_id_66599116___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./List.vue?vue&type=template&id=66599116& */ "../../resources/assets/vendor/vaahcms/admin/default/vue/registrations/List.vue?vue&type=template&id=66599116&");
+/* harmony import */ var _ListJs_js_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ListJs.js?vue&type=script&lang=js& */ "../../resources/assets/vendor/vaahcms/admin/default/vue/registrations/ListJs.js?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _packages_vaahcms_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../../../../packages/vaahcms/node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
 
@@ -78553,7 +76003,7 @@ __webpack_require__.r(__webpack_exports__);
 
 /* normalize component */
 
-var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+var component = Object(_packages_vaahcms_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
   _ListJs_js_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
   _List_vue_vue_type_template_id_66599116___WEBPACK_IMPORTED_MODULE_0__["render"],
   _List_vue_vue_type_template_id_66599116___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
@@ -78571,50 +76021,50 @@ component.options.__file = "resources/assets/vendor/vaahcms/admin/default/vue/re
 
 /***/ }),
 
-/***/ "./resources/assets/vendor/vaahcms/admin/default/vue/registrations/List.vue?vue&type=template&id=66599116&":
-/*!*****************************************************************************************************************!*\
-  !*** ./resources/assets/vendor/vaahcms/admin/default/vue/registrations/List.vue?vue&type=template&id=66599116& ***!
-  \*****************************************************************************************************************/
+/***/ "../../resources/assets/vendor/vaahcms/admin/default/vue/registrations/List.vue?vue&type=template&id=66599116&":
+/*!******************************************************************************************************************************************!*\
+  !*** F:/xampp72/htdocs/packages/resources/assets/vendor/vaahcms/admin/default/vue/registrations/List.vue?vue&type=template&id=66599116& ***!
+  \******************************************************************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_List_vue_vue_type_template_id_66599116___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../../../../node_modules/vue-loader/lib??vue-loader-options!./List.vue?vue&type=template&id=66599116& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/assets/vendor/vaahcms/admin/default/vue/registrations/List.vue?vue&type=template&id=66599116&");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_List_vue_vue_type_template_id_66599116___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+/* harmony import */ var _packages_vaahcms_node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_packages_vaahcms_node_modules_vue_loader_lib_index_js_vue_loader_options_List_vue_vue_type_template_id_66599116___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../../../packages/vaahcms/node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../../../../packages/vaahcms/node_modules/vue-loader/lib??vue-loader-options!./List.vue?vue&type=template&id=66599116& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!../../resources/assets/vendor/vaahcms/admin/default/vue/registrations/List.vue?vue&type=template&id=66599116&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _packages_vaahcms_node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_packages_vaahcms_node_modules_vue_loader_lib_index_js_vue_loader_options_List_vue_vue_type_template_id_66599116___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_List_vue_vue_type_template_id_66599116___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _packages_vaahcms_node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_packages_vaahcms_node_modules_vue_loader_lib_index_js_vue_loader_options_List_vue_vue_type_template_id_66599116___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 
 /***/ }),
 
-/***/ "./resources/assets/vendor/vaahcms/admin/default/vue/registrations/ListJs.js?vue&type=script&lang=js&":
-/*!************************************************************************************************************!*\
-  !*** ./resources/assets/vendor/vaahcms/admin/default/vue/registrations/ListJs.js?vue&type=script&lang=js& ***!
-  \************************************************************************************************************/
+/***/ "../../resources/assets/vendor/vaahcms/admin/default/vue/registrations/ListJs.js?vue&type=script&lang=js&":
+/*!*************************************************************************************************************************************!*\
+  !*** F:/xampp72/htdocs/packages/resources/assets/vendor/vaahcms/admin/default/vue/registrations/ListJs.js?vue&type=script&lang=js& ***!
+  \*************************************************************************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_ListJs_js_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../../../node_modules/babel-loader/lib??ref--4-0!./ListJs.js?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./resources/assets/vendor/vaahcms/admin/default/vue/registrations/ListJs.js?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_ListJs_js_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+/* harmony import */ var _packages_vaahcms_node_modules_babel_loader_lib_index_js_ref_4_0_ListJs_js_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../../../packages/vaahcms/node_modules/babel-loader/lib??ref--4-0!./ListJs.js?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!../../resources/assets/vendor/vaahcms/admin/default/vue/registrations/ListJs.js?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_packages_vaahcms_node_modules_babel_loader_lib_index_js_ref_4_0_ListJs_js_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
 
 /***/ }),
 
-/***/ "./resources/assets/vendor/vaahcms/admin/default/vue/registrations/ViewEdit.vue":
-/*!**************************************************************************************!*\
-  !*** ./resources/assets/vendor/vaahcms/admin/default/vue/registrations/ViewEdit.vue ***!
-  \**************************************************************************************/
+/***/ "../../resources/assets/vendor/vaahcms/admin/default/vue/registrations/ViewEdit.vue":
+/*!***************************************************************************************************************!*\
+  !*** F:/xampp72/htdocs/packages/resources/assets/vendor/vaahcms/admin/default/vue/registrations/ViewEdit.vue ***!
+  \***************************************************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _ViewEdit_vue_vue_type_template_id_7004d126___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ViewEdit.vue?vue&type=template&id=7004d126& */ "./resources/assets/vendor/vaahcms/admin/default/vue/registrations/ViewEdit.vue?vue&type=template&id=7004d126&");
-/* harmony import */ var _ViewEditJs_js_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ViewEditJs.js?vue&type=script&lang=js& */ "./resources/assets/vendor/vaahcms/admin/default/vue/registrations/ViewEditJs.js?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+/* harmony import */ var _ViewEdit_vue_vue_type_template_id_7004d126___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ViewEdit.vue?vue&type=template&id=7004d126& */ "../../resources/assets/vendor/vaahcms/admin/default/vue/registrations/ViewEdit.vue?vue&type=template&id=7004d126&");
+/* harmony import */ var _ViewEditJs_js_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ViewEditJs.js?vue&type=script&lang=js& */ "../../resources/assets/vendor/vaahcms/admin/default/vue/registrations/ViewEditJs.js?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _packages_vaahcms_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../../../../packages/vaahcms/node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
 
@@ -78622,7 +76072,7 @@ __webpack_require__.r(__webpack_exports__);
 
 /* normalize component */
 
-var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+var component = Object(_packages_vaahcms_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
   _ViewEditJs_js_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
   _ViewEdit_vue_vue_type_template_id_7004d126___WEBPACK_IMPORTED_MODULE_0__["render"],
   _ViewEdit_vue_vue_type_template_id_7004d126___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
@@ -78640,58 +76090,58 @@ component.options.__file = "resources/assets/vendor/vaahcms/admin/default/vue/re
 
 /***/ }),
 
-/***/ "./resources/assets/vendor/vaahcms/admin/default/vue/registrations/ViewEdit.vue?vue&type=template&id=7004d126&":
-/*!*********************************************************************************************************************!*\
-  !*** ./resources/assets/vendor/vaahcms/admin/default/vue/registrations/ViewEdit.vue?vue&type=template&id=7004d126& ***!
-  \*********************************************************************************************************************/
+/***/ "../../resources/assets/vendor/vaahcms/admin/default/vue/registrations/ViewEdit.vue?vue&type=template&id=7004d126&":
+/*!**********************************************************************************************************************************************!*\
+  !*** F:/xampp72/htdocs/packages/resources/assets/vendor/vaahcms/admin/default/vue/registrations/ViewEdit.vue?vue&type=template&id=7004d126& ***!
+  \**********************************************************************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ViewEdit_vue_vue_type_template_id_7004d126___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../../../../node_modules/vue-loader/lib??vue-loader-options!./ViewEdit.vue?vue&type=template&id=7004d126& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/assets/vendor/vaahcms/admin/default/vue/registrations/ViewEdit.vue?vue&type=template&id=7004d126&");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ViewEdit_vue_vue_type_template_id_7004d126___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+/* harmony import */ var _packages_vaahcms_node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_packages_vaahcms_node_modules_vue_loader_lib_index_js_vue_loader_options_ViewEdit_vue_vue_type_template_id_7004d126___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../../../packages/vaahcms/node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../../../../packages/vaahcms/node_modules/vue-loader/lib??vue-loader-options!./ViewEdit.vue?vue&type=template&id=7004d126& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!../../resources/assets/vendor/vaahcms/admin/default/vue/registrations/ViewEdit.vue?vue&type=template&id=7004d126&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _packages_vaahcms_node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_packages_vaahcms_node_modules_vue_loader_lib_index_js_vue_loader_options_ViewEdit_vue_vue_type_template_id_7004d126___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ViewEdit_vue_vue_type_template_id_7004d126___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _packages_vaahcms_node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_packages_vaahcms_node_modules_vue_loader_lib_index_js_vue_loader_options_ViewEdit_vue_vue_type_template_id_7004d126___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 
 /***/ }),
 
-/***/ "./resources/assets/vendor/vaahcms/admin/default/vue/registrations/ViewEditJs.js?vue&type=script&lang=js&":
-/*!****************************************************************************************************************!*\
-  !*** ./resources/assets/vendor/vaahcms/admin/default/vue/registrations/ViewEditJs.js?vue&type=script&lang=js& ***!
-  \****************************************************************************************************************/
+/***/ "../../resources/assets/vendor/vaahcms/admin/default/vue/registrations/ViewEditJs.js?vue&type=script&lang=js&":
+/*!*****************************************************************************************************************************************!*\
+  !*** F:/xampp72/htdocs/packages/resources/assets/vendor/vaahcms/admin/default/vue/registrations/ViewEditJs.js?vue&type=script&lang=js& ***!
+  \*****************************************************************************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_ViewEditJs_js_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../../../node_modules/babel-loader/lib??ref--4-0!./ViewEditJs.js?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./resources/assets/vendor/vaahcms/admin/default/vue/registrations/ViewEditJs.js?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_ViewEditJs_js_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+/* harmony import */ var _packages_vaahcms_node_modules_babel_loader_lib_index_js_ref_4_0_ViewEditJs_js_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../../../packages/vaahcms/node_modules/babel-loader/lib??ref--4-0!./ViewEditJs.js?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!../../resources/assets/vendor/vaahcms/admin/default/vue/registrations/ViewEditJs.js?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_packages_vaahcms_node_modules_babel_loader_lib_index_js_ref_4_0_ViewEditJs_js_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
 
 /***/ }),
 
-/***/ "./resources/assets/vendor/vaahcms/admin/default/vue/registrations/app-registrations.js":
-/*!**********************************************************************************************!*\
-  !*** ./resources/assets/vendor/vaahcms/admin/default/vue/registrations/app-registrations.js ***!
-  \**********************************************************************************************/
+/***/ "../../resources/assets/vendor/vaahcms/admin/default/vue/registrations/app-registrations.js":
+/*!***********************************************************************************************************************!*\
+  !*** F:/xampp72/htdocs/packages/resources/assets/vendor/vaahcms/admin/default/vue/registrations/app-registrations.js ***!
+  \***********************************************************************************************************************/
 /*! no exports provided */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var vue_router__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue-router */ "./node_modules/vue-router/dist/vue-router.esm.js");
-/* harmony import */ var vue_resource__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue-resource */ "./node_modules/vue-resource/dist/vue-resource.esm.js");
-/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
+/* harmony import */ var vue_router__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue-router */ "../../node_modules/vue-router/dist/vue-router.esm.js");
+/* harmony import */ var vue_resource__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue-resource */ "../../node_modules/vue-resource/dist/vue-resource.esm.js");
+/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! moment */ "../../node_modules/moment/moment.js");
 /* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _helpers_VueHelpers__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./../helpers/VueHelpers */ "./resources/assets/vendor/vaahcms/admin/default/vue/helpers/VueHelpers.js");
-/* harmony import */ var _List__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./List */ "./resources/assets/vendor/vaahcms/admin/default/vue/registrations/List.vue");
-/* harmony import */ var _Create__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Create */ "./resources/assets/vendor/vaahcms/admin/default/vue/registrations/Create.vue");
-/* harmony import */ var _ViewEdit__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./ViewEdit */ "./resources/assets/vendor/vaahcms/admin/default/vue/registrations/ViewEdit.vue");
-__webpack_require__(/*! ./../../lib/vue/bootstrap */ "./resources/assets/vendor/vaahcms/admin/default/lib/vue/bootstrap.js");
+/* harmony import */ var _helpers_VueHelpers__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./../helpers/VueHelpers */ "../../resources/assets/vendor/vaahcms/admin/default/vue/helpers/VueHelpers.js");
+/* harmony import */ var _List__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./List */ "../../resources/assets/vendor/vaahcms/admin/default/vue/registrations/List.vue");
+/* harmony import */ var _Create__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Create */ "../../resources/assets/vendor/vaahcms/admin/default/vue/registrations/Create.vue");
+/* harmony import */ var _ViewEdit__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./ViewEdit */ "../../resources/assets/vendor/vaahcms/admin/default/vue/registrations/ViewEdit.vue");
+__webpack_require__(/*! ./../../lib/vue/bootstrap */ "../../resources/assets/vendor/vaahcms/admin/default/lib/vue/bootstrap.js");
 
-window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js"); //---------Package imports
+window.Vue = __webpack_require__(/*! vue */ "../../node_modules/vue/dist/vue.common.js"); //---------Package imports
 
 
 
@@ -78770,18 +76220,18 @@ var app = new Vue({
 
 /***/ }),
 
-/***/ "./resources/assets/vendor/vaahcms/admin/default/vue/reusable/TableFormGenerator.vue":
-/*!*******************************************************************************************!*\
-  !*** ./resources/assets/vendor/vaahcms/admin/default/vue/reusable/TableFormGenerator.vue ***!
-  \*******************************************************************************************/
+/***/ "../../resources/assets/vendor/vaahcms/admin/default/vue/reusable/TableFormGenerator.vue":
+/*!********************************************************************************************************************!*\
+  !*** F:/xampp72/htdocs/packages/resources/assets/vendor/vaahcms/admin/default/vue/reusable/TableFormGenerator.vue ***!
+  \********************************************************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _TableFormGenerator_vue_vue_type_template_id_a84e9e5a___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./TableFormGenerator.vue?vue&type=template&id=a84e9e5a& */ "./resources/assets/vendor/vaahcms/admin/default/vue/reusable/TableFormGenerator.vue?vue&type=template&id=a84e9e5a&");
-/* harmony import */ var _TableFormGenerator_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./TableFormGenerator.vue?vue&type=script&lang=js& */ "./resources/assets/vendor/vaahcms/admin/default/vue/reusable/TableFormGenerator.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+/* harmony import */ var _TableFormGenerator_vue_vue_type_template_id_a84e9e5a___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./TableFormGenerator.vue?vue&type=template&id=a84e9e5a& */ "../../resources/assets/vendor/vaahcms/admin/default/vue/reusable/TableFormGenerator.vue?vue&type=template&id=a84e9e5a&");
+/* harmony import */ var _TableFormGenerator_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./TableFormGenerator.vue?vue&type=script&lang=js& */ "../../resources/assets/vendor/vaahcms/admin/default/vue/reusable/TableFormGenerator.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _packages_vaahcms_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../../../../packages/vaahcms/node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
 
@@ -78789,7 +76239,7 @@ __webpack_require__.r(__webpack_exports__);
 
 /* normalize component */
 
-var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+var component = Object(_packages_vaahcms_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
   _TableFormGenerator_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
   _TableFormGenerator_vue_vue_type_template_id_a84e9e5a___WEBPACK_IMPORTED_MODULE_0__["render"],
   _TableFormGenerator_vue_vue_type_template_id_a84e9e5a___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
@@ -78807,50 +76257,50 @@ component.options.__file = "resources/assets/vendor/vaahcms/admin/default/vue/re
 
 /***/ }),
 
-/***/ "./resources/assets/vendor/vaahcms/admin/default/vue/reusable/TableFormGenerator.vue?vue&type=script&lang=js&":
+/***/ "../../resources/assets/vendor/vaahcms/admin/default/vue/reusable/TableFormGenerator.vue?vue&type=script&lang=js&":
+/*!*********************************************************************************************************************************************!*\
+  !*** F:/xampp72/htdocs/packages/resources/assets/vendor/vaahcms/admin/default/vue/reusable/TableFormGenerator.vue?vue&type=script&lang=js& ***!
+  \*********************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _packages_vaahcms_node_modules_babel_loader_lib_index_js_ref_4_0_packages_vaahcms_node_modules_vue_loader_lib_index_js_vue_loader_options_TableFormGenerator_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../../../packages/vaahcms/node_modules/babel-loader/lib??ref--4-0!../../../../../../../../packages/vaahcms/node_modules/vue-loader/lib??vue-loader-options!./TableFormGenerator.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!../../resources/assets/vendor/vaahcms/admin/default/vue/reusable/TableFormGenerator.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_packages_vaahcms_node_modules_babel_loader_lib_index_js_ref_4_0_packages_vaahcms_node_modules_vue_loader_lib_index_js_vue_loader_options_TableFormGenerator_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "../../resources/assets/vendor/vaahcms/admin/default/vue/reusable/TableFormGenerator.vue?vue&type=template&id=a84e9e5a&":
+/*!***************************************************************************************************************************************************!*\
+  !*** F:/xampp72/htdocs/packages/resources/assets/vendor/vaahcms/admin/default/vue/reusable/TableFormGenerator.vue?vue&type=template&id=a84e9e5a& ***!
+  \***************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _packages_vaahcms_node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_packages_vaahcms_node_modules_vue_loader_lib_index_js_vue_loader_options_TableFormGenerator_vue_vue_type_template_id_a84e9e5a___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../../../packages/vaahcms/node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../../../../packages/vaahcms/node_modules/vue-loader/lib??vue-loader-options!./TableFormGenerator.vue?vue&type=template&id=a84e9e5a& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!../../resources/assets/vendor/vaahcms/admin/default/vue/reusable/TableFormGenerator.vue?vue&type=template&id=a84e9e5a&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _packages_vaahcms_node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_packages_vaahcms_node_modules_vue_loader_lib_index_js_vue_loader_options_TableFormGenerator_vue_vue_type_template_id_a84e9e5a___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _packages_vaahcms_node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_packages_vaahcms_node_modules_vue_loader_lib_index_js_vue_loader_options_TableFormGenerator_vue_vue_type_template_id_a84e9e5a___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "../../resources/assets/vendor/vaahcms/admin/default/vue/reusable/TableViewGenerator.vue":
 /*!********************************************************************************************************************!*\
-  !*** ./resources/assets/vendor/vaahcms/admin/default/vue/reusable/TableFormGenerator.vue?vue&type=script&lang=js& ***!
+  !*** F:/xampp72/htdocs/packages/resources/assets/vendor/vaahcms/admin/default/vue/reusable/TableViewGenerator.vue ***!
   \********************************************************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_TableFormGenerator_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../../../../node_modules/vue-loader/lib??vue-loader-options!./TableFormGenerator.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/assets/vendor/vaahcms/admin/default/vue/reusable/TableFormGenerator.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_TableFormGenerator_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
-
-/***/ }),
-
-/***/ "./resources/assets/vendor/vaahcms/admin/default/vue/reusable/TableFormGenerator.vue?vue&type=template&id=a84e9e5a&":
-/*!**************************************************************************************************************************!*\
-  !*** ./resources/assets/vendor/vaahcms/admin/default/vue/reusable/TableFormGenerator.vue?vue&type=template&id=a84e9e5a& ***!
-  \**************************************************************************************************************************/
-/*! exports provided: render, staticRenderFns */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_TableFormGenerator_vue_vue_type_template_id_a84e9e5a___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../../../../node_modules/vue-loader/lib??vue-loader-options!./TableFormGenerator.vue?vue&type=template&id=a84e9e5a& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/assets/vendor/vaahcms/admin/default/vue/reusable/TableFormGenerator.vue?vue&type=template&id=a84e9e5a&");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_TableFormGenerator_vue_vue_type_template_id_a84e9e5a___WEBPACK_IMPORTED_MODULE_0__["render"]; });
-
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_TableFormGenerator_vue_vue_type_template_id_a84e9e5a___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
-
-
-
-/***/ }),
-
-/***/ "./resources/assets/vendor/vaahcms/admin/default/vue/reusable/TableViewGenerator.vue":
-/*!*******************************************************************************************!*\
-  !*** ./resources/assets/vendor/vaahcms/admin/default/vue/reusable/TableViewGenerator.vue ***!
-  \*******************************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _TableViewGenerator_vue_vue_type_template_id_a0de4edc___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./TableViewGenerator.vue?vue&type=template&id=a0de4edc& */ "./resources/assets/vendor/vaahcms/admin/default/vue/reusable/TableViewGenerator.vue?vue&type=template&id=a0de4edc&");
-/* harmony import */ var _TableViewGenerator_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./TableViewGenerator.vue?vue&type=script&lang=js& */ "./resources/assets/vendor/vaahcms/admin/default/vue/reusable/TableViewGenerator.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+/* harmony import */ var _TableViewGenerator_vue_vue_type_template_id_a0de4edc___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./TableViewGenerator.vue?vue&type=template&id=a0de4edc& */ "../../resources/assets/vendor/vaahcms/admin/default/vue/reusable/TableViewGenerator.vue?vue&type=template&id=a0de4edc&");
+/* harmony import */ var _TableViewGenerator_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./TableViewGenerator.vue?vue&type=script&lang=js& */ "../../resources/assets/vendor/vaahcms/admin/default/vue/reusable/TableViewGenerator.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _packages_vaahcms_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../../../../packages/vaahcms/node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
 
@@ -78858,7 +76308,7 @@ __webpack_require__.r(__webpack_exports__);
 
 /* normalize component */
 
-var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+var component = Object(_packages_vaahcms_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
   _TableViewGenerator_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
   _TableViewGenerator_vue_vue_type_template_id_a0de4edc___WEBPACK_IMPORTED_MODULE_0__["render"],
   _TableViewGenerator_vue_vue_type_template_id_a0de4edc___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
@@ -78876,34 +76326,2584 @@ component.options.__file = "resources/assets/vendor/vaahcms/admin/default/vue/re
 
 /***/ }),
 
-/***/ "./resources/assets/vendor/vaahcms/admin/default/vue/reusable/TableViewGenerator.vue?vue&type=script&lang=js&":
-/*!********************************************************************************************************************!*\
-  !*** ./resources/assets/vendor/vaahcms/admin/default/vue/reusable/TableViewGenerator.vue?vue&type=script&lang=js& ***!
-  \********************************************************************************************************************/
+/***/ "../../resources/assets/vendor/vaahcms/admin/default/vue/reusable/TableViewGenerator.vue?vue&type=script&lang=js&":
+/*!*********************************************************************************************************************************************!*\
+  !*** F:/xampp72/htdocs/packages/resources/assets/vendor/vaahcms/admin/default/vue/reusable/TableViewGenerator.vue?vue&type=script&lang=js& ***!
+  \*********************************************************************************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_TableViewGenerator_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../../../../node_modules/vue-loader/lib??vue-loader-options!./TableViewGenerator.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/assets/vendor/vaahcms/admin/default/vue/reusable/TableViewGenerator.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_TableViewGenerator_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+/* harmony import */ var _packages_vaahcms_node_modules_babel_loader_lib_index_js_ref_4_0_packages_vaahcms_node_modules_vue_loader_lib_index_js_vue_loader_options_TableViewGenerator_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../../../packages/vaahcms/node_modules/babel-loader/lib??ref--4-0!../../../../../../../../packages/vaahcms/node_modules/vue-loader/lib??vue-loader-options!./TableViewGenerator.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!../../resources/assets/vendor/vaahcms/admin/default/vue/reusable/TableViewGenerator.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_packages_vaahcms_node_modules_babel_loader_lib_index_js_ref_4_0_packages_vaahcms_node_modules_vue_loader_lib_index_js_vue_loader_options_TableViewGenerator_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
 
 /***/ }),
 
-/***/ "./resources/assets/vendor/vaahcms/admin/default/vue/reusable/TableViewGenerator.vue?vue&type=template&id=a0de4edc&":
-/*!**************************************************************************************************************************!*\
-  !*** ./resources/assets/vendor/vaahcms/admin/default/vue/reusable/TableViewGenerator.vue?vue&type=template&id=a0de4edc& ***!
-  \**************************************************************************************************************************/
+/***/ "../../resources/assets/vendor/vaahcms/admin/default/vue/reusable/TableViewGenerator.vue?vue&type=template&id=a0de4edc&":
+/*!***************************************************************************************************************************************************!*\
+  !*** F:/xampp72/htdocs/packages/resources/assets/vendor/vaahcms/admin/default/vue/reusable/TableViewGenerator.vue?vue&type=template&id=a0de4edc& ***!
+  \***************************************************************************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_TableViewGenerator_vue_vue_type_template_id_a0de4edc___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../../../../node_modules/vue-loader/lib??vue-loader-options!./TableViewGenerator.vue?vue&type=template&id=a0de4edc& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/assets/vendor/vaahcms/admin/default/vue/reusable/TableViewGenerator.vue?vue&type=template&id=a0de4edc&");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_TableViewGenerator_vue_vue_type_template_id_a0de4edc___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+/* harmony import */ var _packages_vaahcms_node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_packages_vaahcms_node_modules_vue_loader_lib_index_js_vue_loader_options_TableViewGenerator_vue_vue_type_template_id_a0de4edc___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../../../packages/vaahcms/node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../../../../packages/vaahcms/node_modules/vue-loader/lib??vue-loader-options!./TableViewGenerator.vue?vue&type=template&id=a0de4edc& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!../../resources/assets/vendor/vaahcms/admin/default/vue/reusable/TableViewGenerator.vue?vue&type=template&id=a0de4edc&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _packages_vaahcms_node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_packages_vaahcms_node_modules_vue_loader_lib_index_js_vue_loader_options_TableViewGenerator_vue_vue_type_template_id_a0de4edc___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_TableViewGenerator_vue_vue_type_template_id_a0de4edc___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _packages_vaahcms_node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_packages_vaahcms_node_modules_vue_loader_lib_index_js_vue_loader_options_TableViewGenerator_vue_vue_type_template_id_a0de4edc___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
+
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!../../resources/assets/vendor/vaahcms/admin/default/vue/registrations/CreateJs.js?vue&type=script&lang=js&":
+/*!*********************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!F:/xampp72/htdocs/packages/resources/assets/vendor/vaahcms/admin/default/vue/registrations/CreateJs.js?vue&type=script&lang=js& ***!
+  \*********************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _reusable_TableFormGenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./../reusable/TableFormGenerator */ "../../resources/assets/vendor/vaahcms/admin/default/vue/reusable/TableFormGenerator.vue");
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: ['urls', 'assets'],
+  components: {
+    't-form': _reusable_TableFormGenerator__WEBPACK_IMPORTED_MODULE_0__["default"]
+  },
+  data: function data() {
+    var obj = {
+      new_item: null
+    };
+    return obj;
+  },
+  watch: {},
+  mounted: function mounted() {//---------------------------------------------------------------------
+    //this.getAssets();
+    //---------------------------------------------------------------------
+    //---------------------------------------------------------------------
+    //---------------------------------------------------------------------
+    //---------------------------------------------------------------------
+  },
+  methods: {
+    //---------------------------------------------------------------------
+    updateNewItem: function updateNewItem(item) {
+      this.new_item = item;
+      this.$helpers.console(this.new_item, 'this.new_item-->updated');
+    },
+    //---------------------------------------------------------------------
+    store: function store() {
+      var url = this.urls.current + "/store";
+      var params = this.new_item;
+      this.$helpers.console(params, '-->');
+      this.$helpers.ajax(url, params, this.storeAfter);
+    },
+    //---------------------------------------------------------------------
+    storeAfter: function storeAfter(data) {
+      this.$helpers.console(data);
+      var id = data.id;
+      this.$router.push({
+        path: "/view/".concat(id)
+      });
+    } //---------------------------------------------------------------------
+    //---------------------------------------------------------------------
+    //---------------------------------------------------------------------
+
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!../../resources/assets/vendor/vaahcms/admin/default/vue/registrations/ListJs.js?vue&type=script&lang=js&":
+/*!*******************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!F:/xampp72/htdocs/packages/resources/assets/vendor/vaahcms/admin/default/vue/registrations/ListJs.js?vue&type=script&lang=js& ***!
+  \*******************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var laravel_vue_pagination__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! laravel-vue-pagination */ "../../node_modules/laravel-vue-pagination/dist/laravel-vue-pagination.common.js");
+/* harmony import */ var laravel_vue_pagination__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(laravel_vue_pagination__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var vue_resource_src_util__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue-resource/src/util */ "../../node_modules/vue-resource/src/util.js");
+/* harmony import */ var vue_js_toggle_button__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vue-js-toggle-button */ "../../node_modules/vue-js-toggle-button/dist/index.js");
+/* harmony import */ var vue_js_toggle_button__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(vue_js_toggle_button__WEBPACK_IMPORTED_MODULE_2__);
+
+ //https://github.com/euvl/vue-js-toggle-button
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: ['urls', 'assets'],
+  components: {
+    'pagination': laravel_vue_pagination__WEBPACK_IMPORTED_MODULE_0___default.a,
+    'ToggleButton': vue_js_toggle_button__WEBPACK_IMPORTED_MODULE_2__["ToggleButton"]
+  },
+  data: function data() {
+    var obj = {
+      q: null,
+      page: 1,
+      list: null,
+      show_filters: false,
+      table_collapsed: false,
+      select_all: false,
+      selected_items: [],
+      bulk_action: "",
+      bulk_action_data: "",
+      filters: {
+        q: null,
+        sort_by: "",
+        sort_type: 'desc',
+        status: 'all'
+      }
+    };
+    return obj;
+  },
+  watch: {
+    '$route': function $route(to, from) {
+      this.setTableCollapseStatus();
+    }
+  },
+  mounted: function mounted() {
+    //---------------------------------------------------------------------
+    this.getList();
+    this.setTableCollapseStatus(); //---------------------------------------------------------------------
+    //---------------------------------------------------------------------
+    //---------------------------------------------------------------------
+    //---------------------------------------------------------------------
+  },
+  methods: {
+    //---------------------------------------------------------------------
+    //---------------------------------------------------------------------
+    getList: function getList(page) {
+      var url = this.urls.current + "/list";
+
+      if (!page || Object(vue_resource_src_util__WEBPACK_IMPORTED_MODULE_1__["isObject"])(page)) {
+        page = this.page;
+      }
+
+      this.$helpers.console(page, 'page');
+      url = url + "?page=" + page;
+
+      if (this.filters.q) {
+        url = url + "&q=" + this.filters.q;
+      }
+
+      var params = this.filters;
+      this.$helpers.ajax(url, params, this.getListAfter);
+    },
+    //---------------------------------------------------------------------
+    getListAfter: function getListAfter(data) {
+      this.list = data.list;
+      this.page = data.list.current_page;
+      this.$helpers.console(this.list);
+      this.$helpers.stopNprogress();
+    },
+    //---------------------------------------------------------------------
+    toggleShowFilters: function toggleShowFilters() {
+      if (this.show_filters == true) {
+        this.show_filters = false;
+      } else {
+        this.show_filters = true;
+      }
+    },
+    //---------------------------------------------------------------------
+    //---------------------------------------------------------------------
+    actions: function actions(e, action, inputs, data) {
+      if (e) {
+        e.preventDefault();
+      }
+
+      var url = this.urls.current + "/actions";
+      var params = {
+        action: action,
+        inputs: inputs,
+        data: data
+      };
+      this.$helpers.ajax(url, params, this.actionsAfter);
+    },
+    //---------------------------------------------------------------------
+    actionsAfter: function actionsAfter(data) {
+      this.getList();
+    },
+    //---------------------------------------------------------------------
+    bulkAction: function bulkAction() {
+      var inputs = this.selected_items;
+      var data = this.bulk_action_data;
+      this.actions(false, this.bulk_action, inputs, data);
+    },
+    //---------------------------------------------------------------------
+    setSorting: function setSorting(column_name) {
+      if (column_name === this.filters.sort_by) {
+        if (this.filters.sort_type === 'desc') {
+          this.filters.sort_type = 'asc';
+        } else {
+          this.filters.sort_type = 'desc';
+        }
+      } else {
+        this.filters.sort_by = column_name;
+        this.filters.sort_type = 'desc';
+      }
+
+      this.getList(this.page);
+    },
+    //---------------------------------------------------------------------
+    setTableCollapseStatus: function setTableCollapseStatus() {
+      this.$helpers.console(this.$route.params);
+
+      if (this.$route.params.id) {
+        this.table_collapsed = true;
+      } else {
+        this.table_collapsed = false;
+      }
+    },
+    //---------------------------------------------------------------------
+    toggleSelectAll: function toggleSelectAll() {
+      var self = this;
+      this.$helpers.console("test");
+
+      if (this.select_all === true) {
+        this.select_all = false;
+        this.selected_items = [];
+      } else {
+        this.select_all = true;
+
+        if (this.list.data) {
+          this.$helpers.console(this.list.data);
+          this.list.data.map(function (item) {
+            self.selected_items.push(item.id);
+          });
+        }
+      }
+    },
+    //---------------------------------------------------------------------
+    toggleSelectedItem: function toggleSelectedItem(id) {
+      this.select_all = false;
+
+      if (this.$helpers.existInArray(this.selected_items, id)) {
+        this.$helpers.removeFromArray(this.selected_items, id);
+      } else {
+        this.selected_items.push(id);
+      }
+    } //---------------------------------------------------------------------
+    //---------------------------------------------------------------------
+    //---------------------------------------------------------------------
+    //---------------------------------------------------------------------
+    //---------------------------------------------------------------------
+    //---------------------------------------------------------------------
+
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!../../resources/assets/vendor/vaahcms/admin/default/vue/registrations/ViewEditJs.js?vue&type=script&lang=js&":
+/*!***********************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!F:/xampp72/htdocs/packages/resources/assets/vendor/vaahcms/admin/default/vue/registrations/ViewEditJs.js?vue&type=script&lang=js& ***!
+  \***********************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _reusable_TableFormGenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./../reusable/TableFormGenerator */ "../../resources/assets/vendor/vaahcms/admin/default/vue/reusable/TableFormGenerator.vue");
+/* harmony import */ var _reusable_TableViewGenerator__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./../reusable/TableViewGenerator */ "../../resources/assets/vendor/vaahcms/admin/default/vue/reusable/TableViewGenerator.vue");
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: ['urls', 'id'],
+  components: {
+    't-form': _reusable_TableFormGenerator__WEBPACK_IMPORTED_MODULE_0__["default"],
+    't-view': _reusable_TableViewGenerator__WEBPACK_IMPORTED_MODULE_1__["default"]
+  },
+  data: function data() {
+    var obj = {
+      assets: null,
+      columns: null,
+      edit: false,
+      item: null
+    };
+    return obj;
+  },
+  watch: {
+    id: function id(newVal, oldVal) {
+      this.getDetails();
+    }
+  },
+  created: function created() {},
+  mounted: function mounted() {
+    //---------------------------------------------------------------------
+    this.getDetails(); //---------------------------------------------------------------------
+    //---------------------------------------------------------------------
+    //---------------------------------------------------------------------
+    //---------------------------------------------------------------------
+  },
+  methods: {
+    //---------------------------------------------------------------------
+    //---------------------------------------------------------------------
+    getDetails: function getDetails() {
+      var url = this.urls.current + "/view/" + this.id;
+      console.log(url, 'url-->');
+      var params = {};
+      this.$helpers.ajax(url, params, this.getDetailsAfter);
+    },
+    //---------------------------------------------------------------------
+    getDetailsAfter: function getDetailsAfter(data) {
+      this.columns = null;
+      this.columns = data;
+      this.$helpers.stopNprogress();
+    },
+    //---------------------------------------------------------------------
+    updateItem: function updateItem(item) {
+      this.item = item;
+      this.$helpers.console(this.item, 'this.item');
+    },
+    //---------------------------------------------------------------------
+    toggleEdit: function toggleEdit() {
+      if (this.edit === true) {
+        this.edit = false;
+      } else {
+        this.edit = true;
+      }
+    },
+    //---------------------------------------------------------------------
+    store: function store() {
+      var url = this.urls.current + "/store";
+      var params = this.item;
+      this.$helpers.console(params, 'params');
+      this.$helpers.ajax(url, params, this.storeAfter);
+    },
+    //---------------------------------------------------------------------
+    storeAfter: function storeAfter(data) {
+      this.edit = false;
+      this.item = data;
+      this.id = data.id;
+      this.$helpers.stopNprogress();
+    } //---------------------------------------------------------------------
+    //---------------------------------------------------------------------
+    //---------------------------------------------------------------------
+
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!../../resources/assets/vendor/vaahcms/admin/default/vue/reusable/TableFormGenerator.vue?vue&type=script&lang=js&":
+/*!*****************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!F:/xampp72/htdocs/packages/resources/assets/vendor/vaahcms/admin/default/vue/reusable/TableFormGenerator.vue?vue&type=script&lang=js& ***!
+  \*****************************************************************************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var vuejs_datepicker__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuejs-datepicker */ "../../node_modules/vuejs-datepicker/dist/vuejs-datepicker.esm.js");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//https://www.npmjs.com/package/vuejs-datepicker
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: "TableFormGenerator",
+  props: ['columns'],
+  components: {
+    'datepicker': vuejs_datepicker__WEBPACK_IMPORTED_MODULE_0__["default"]
+  },
+  data: function data() {
+    var obj = {
+      new_item: {
+        title: "",
+        country: "",
+        status: "",
+        gender: "",
+        timezone: "",
+        country_calling_code: "",
+        invited_by: "",
+        user_id: ""
+      }
+    };
+    return obj;
+  },
+  created: function created() {
+    this.mapValues();
+  },
+  watch: {
+    'new_item': {
+      handler: function handler() {
+        this.emitItem();
+      },
+      deep: true
+    }
+  },
+  methods: {
+    //---------------------------------------------------------------------
+    mapValues: function mapValues() {
+      var self = this;
+      var columns = this.columns;
+      columns.map(function (item, key) {
+        if (item.value) {
+          self.new_item[item.name] = item.value;
+        }
+      });
+    },
+    //---------------------------------------------------------------------
+    emitItem: function emitItem() {
+      this.$emit('emittedItem', this.new_item);
+    } //---------------------------------------------------------------------
+    //---------------------------------------------------------------------
+    //---------------------------------------------------------------------
+    //---------------------------------------------------------------------
+
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!../../resources/assets/vendor/vaahcms/admin/default/vue/reusable/TableViewGenerator.vue?vue&type=script&lang=js&":
+/*!*****************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!F:/xampp72/htdocs/packages/resources/assets/vendor/vaahcms/admin/default/vue/reusable/TableViewGenerator.vue?vue&type=script&lang=js& ***!
+  \*****************************************************************************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var vuejs_datepicker__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuejs-datepicker */ "../../node_modules/vuejs-datepicker/dist/vuejs-datepicker.esm.js");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//https://www.npmjs.com/package/vuejs-datepicker
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: "TableViewGenerator",
+  props: ['columns'],
+  components: {
+    'datepicker': vuejs_datepicker__WEBPACK_IMPORTED_MODULE_0__["default"]
+  },
+  data: function data() {
+    var obj = {
+      new_item: {}
+    };
+    return obj;
+  },
+  created: function created() {
+    this.mapValues();
+  },
+  watch: {},
+  methods: {
+    //---------------------------------------------------------------------
+    //---------------------------------------------------------------------
+    mapValues: function mapValues() {
+      var self = this;
+      var columns = this.columns;
+      columns.map(function (item, key) {
+        if (item.value) {
+          self.new_item[item.name] = item.value;
+        }
+      });
+    } //---------------------------------------------------------------------
+    //---------------------------------------------------------------------
+    //---------------------------------------------------------------------
+
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/process/browser.js":
+/*!*****************************************!*\
+  !*** ./node_modules/process/browser.js ***!
+  \*****************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+// shim for using process in browser
+var process = module.exports = {};
+
+// cached from whatever global is present so that test runners that stub it
+// don't break things.  But we need to wrap it in a try catch in case it is
+// wrapped in strict mode code which doesn't define any globals.  It's inside a
+// function because try/catches deoptimize in certain engines.
+
+var cachedSetTimeout;
+var cachedClearTimeout;
+
+function defaultSetTimout() {
+    throw new Error('setTimeout has not been defined');
+}
+function defaultClearTimeout () {
+    throw new Error('clearTimeout has not been defined');
+}
+(function () {
+    try {
+        if (typeof setTimeout === 'function') {
+            cachedSetTimeout = setTimeout;
+        } else {
+            cachedSetTimeout = defaultSetTimout;
+        }
+    } catch (e) {
+        cachedSetTimeout = defaultSetTimout;
+    }
+    try {
+        if (typeof clearTimeout === 'function') {
+            cachedClearTimeout = clearTimeout;
+        } else {
+            cachedClearTimeout = defaultClearTimeout;
+        }
+    } catch (e) {
+        cachedClearTimeout = defaultClearTimeout;
+    }
+} ())
+function runTimeout(fun) {
+    if (cachedSetTimeout === setTimeout) {
+        //normal enviroments in sane situations
+        return setTimeout(fun, 0);
+    }
+    // if setTimeout wasn't available but was latter defined
+    if ((cachedSetTimeout === defaultSetTimout || !cachedSetTimeout) && setTimeout) {
+        cachedSetTimeout = setTimeout;
+        return setTimeout(fun, 0);
+    }
+    try {
+        // when when somebody has screwed with setTimeout but no I.E. maddness
+        return cachedSetTimeout(fun, 0);
+    } catch(e){
+        try {
+            // When we are in I.E. but the script has been evaled so I.E. doesn't trust the global object when called normally
+            return cachedSetTimeout.call(null, fun, 0);
+        } catch(e){
+            // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global error
+            return cachedSetTimeout.call(this, fun, 0);
+        }
+    }
+
+
+}
+function runClearTimeout(marker) {
+    if (cachedClearTimeout === clearTimeout) {
+        //normal enviroments in sane situations
+        return clearTimeout(marker);
+    }
+    // if clearTimeout wasn't available but was latter defined
+    if ((cachedClearTimeout === defaultClearTimeout || !cachedClearTimeout) && clearTimeout) {
+        cachedClearTimeout = clearTimeout;
+        return clearTimeout(marker);
+    }
+    try {
+        // when when somebody has screwed with setTimeout but no I.E. maddness
+        return cachedClearTimeout(marker);
+    } catch (e){
+        try {
+            // When we are in I.E. but the script has been evaled so I.E. doesn't  trust the global object when called normally
+            return cachedClearTimeout.call(null, marker);
+        } catch (e){
+            // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global error.
+            // Some versions of I.E. have different rules for clearTimeout vs setTimeout
+            return cachedClearTimeout.call(this, marker);
+        }
+    }
+
+
+
+}
+var queue = [];
+var draining = false;
+var currentQueue;
+var queueIndex = -1;
+
+function cleanUpNextTick() {
+    if (!draining || !currentQueue) {
+        return;
+    }
+    draining = false;
+    if (currentQueue.length) {
+        queue = currentQueue.concat(queue);
+    } else {
+        queueIndex = -1;
+    }
+    if (queue.length) {
+        drainQueue();
+    }
+}
+
+function drainQueue() {
+    if (draining) {
+        return;
+    }
+    var timeout = runTimeout(cleanUpNextTick);
+    draining = true;
+
+    var len = queue.length;
+    while(len) {
+        currentQueue = queue;
+        queue = [];
+        while (++queueIndex < len) {
+            if (currentQueue) {
+                currentQueue[queueIndex].run();
+            }
+        }
+        queueIndex = -1;
+        len = queue.length;
+    }
+    currentQueue = null;
+    draining = false;
+    runClearTimeout(timeout);
+}
+
+process.nextTick = function (fun) {
+    var args = new Array(arguments.length - 1);
+    if (arguments.length > 1) {
+        for (var i = 1; i < arguments.length; i++) {
+            args[i - 1] = arguments[i];
+        }
+    }
+    queue.push(new Item(fun, args));
+    if (queue.length === 1 && !draining) {
+        runTimeout(drainQueue);
+    }
+};
+
+// v8 likes predictible objects
+function Item(fun, array) {
+    this.fun = fun;
+    this.array = array;
+}
+Item.prototype.run = function () {
+    this.fun.apply(null, this.array);
+};
+process.title = 'browser';
+process.browser = true;
+process.env = {};
+process.argv = [];
+process.version = ''; // empty string to avoid regexp issues
+process.versions = {};
+
+function noop() {}
+
+process.on = noop;
+process.addListener = noop;
+process.once = noop;
+process.off = noop;
+process.removeListener = noop;
+process.removeAllListeners = noop;
+process.emit = noop;
+process.prependListener = noop;
+process.prependOnceListener = noop;
+
+process.listeners = function (name) { return [] }
+
+process.binding = function (name) {
+    throw new Error('process.binding is not supported');
+};
+
+process.cwd = function () { return '/' };
+process.chdir = function (dir) {
+    throw new Error('process.chdir is not supported');
+};
+process.umask = function() { return 0; };
+
+
+/***/ }),
+
+/***/ "./node_modules/setimmediate/setImmediate.js":
+/*!***************************************************!*\
+  !*** ./node_modules/setimmediate/setImmediate.js ***!
+  \***************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+/* WEBPACK VAR INJECTION */(function(global, process) {(function (global, undefined) {
+    "use strict";
+
+    if (global.setImmediate) {
+        return;
+    }
+
+    var nextHandle = 1; // Spec says greater than zero
+    var tasksByHandle = {};
+    var currentlyRunningATask = false;
+    var doc = global.document;
+    var registerImmediate;
+
+    function setImmediate(callback) {
+      // Callback can either be a function or a string
+      if (typeof callback !== "function") {
+        callback = new Function("" + callback);
+      }
+      // Copy function arguments
+      var args = new Array(arguments.length - 1);
+      for (var i = 0; i < args.length; i++) {
+          args[i] = arguments[i + 1];
+      }
+      // Store and register the task
+      var task = { callback: callback, args: args };
+      tasksByHandle[nextHandle] = task;
+      registerImmediate(nextHandle);
+      return nextHandle++;
+    }
+
+    function clearImmediate(handle) {
+        delete tasksByHandle[handle];
+    }
+
+    function run(task) {
+        var callback = task.callback;
+        var args = task.args;
+        switch (args.length) {
+        case 0:
+            callback();
+            break;
+        case 1:
+            callback(args[0]);
+            break;
+        case 2:
+            callback(args[0], args[1]);
+            break;
+        case 3:
+            callback(args[0], args[1], args[2]);
+            break;
+        default:
+            callback.apply(undefined, args);
+            break;
+        }
+    }
+
+    function runIfPresent(handle) {
+        // From the spec: "Wait until any invocations of this algorithm started before this one have completed."
+        // So if we're currently running a task, we'll need to delay this invocation.
+        if (currentlyRunningATask) {
+            // Delay by doing a setTimeout. setImmediate was tried instead, but in Firefox 7 it generated a
+            // "too much recursion" error.
+            setTimeout(runIfPresent, 0, handle);
+        } else {
+            var task = tasksByHandle[handle];
+            if (task) {
+                currentlyRunningATask = true;
+                try {
+                    run(task);
+                } finally {
+                    clearImmediate(handle);
+                    currentlyRunningATask = false;
+                }
+            }
+        }
+    }
+
+    function installNextTickImplementation() {
+        registerImmediate = function(handle) {
+            process.nextTick(function () { runIfPresent(handle); });
+        };
+    }
+
+    function canUsePostMessage() {
+        // The test against `importScripts` prevents this implementation from being installed inside a web worker,
+        // where `global.postMessage` means something completely different and can't be used for this purpose.
+        if (global.postMessage && !global.importScripts) {
+            var postMessageIsAsynchronous = true;
+            var oldOnMessage = global.onmessage;
+            global.onmessage = function() {
+                postMessageIsAsynchronous = false;
+            };
+            global.postMessage("", "*");
+            global.onmessage = oldOnMessage;
+            return postMessageIsAsynchronous;
+        }
+    }
+
+    function installPostMessageImplementation() {
+        // Installs an event handler on `global` for the `message` event: see
+        // * https://developer.mozilla.org/en/DOM/window.postMessage
+        // * http://www.whatwg.org/specs/web-apps/current-work/multipage/comms.html#crossDocumentMessages
+
+        var messagePrefix = "setImmediate$" + Math.random() + "$";
+        var onGlobalMessage = function(event) {
+            if (event.source === global &&
+                typeof event.data === "string" &&
+                event.data.indexOf(messagePrefix) === 0) {
+                runIfPresent(+event.data.slice(messagePrefix.length));
+            }
+        };
+
+        if (global.addEventListener) {
+            global.addEventListener("message", onGlobalMessage, false);
+        } else {
+            global.attachEvent("onmessage", onGlobalMessage);
+        }
+
+        registerImmediate = function(handle) {
+            global.postMessage(messagePrefix + handle, "*");
+        };
+    }
+
+    function installMessageChannelImplementation() {
+        var channel = new MessageChannel();
+        channel.port1.onmessage = function(event) {
+            var handle = event.data;
+            runIfPresent(handle);
+        };
+
+        registerImmediate = function(handle) {
+            channel.port2.postMessage(handle);
+        };
+    }
+
+    function installReadyStateChangeImplementation() {
+        var html = doc.documentElement;
+        registerImmediate = function(handle) {
+            // Create a <script> element; its readystatechange event will be fired asynchronously once it is inserted
+            // into the document. Do so, thus queuing up the task. Remember to clean up once it's been called.
+            var script = doc.createElement("script");
+            script.onreadystatechange = function () {
+                runIfPresent(handle);
+                script.onreadystatechange = null;
+                html.removeChild(script);
+                script = null;
+            };
+            html.appendChild(script);
+        };
+    }
+
+    function installSetTimeoutImplementation() {
+        registerImmediate = function(handle) {
+            setTimeout(runIfPresent, 0, handle);
+        };
+    }
+
+    // If supported, we should attach to the prototype of global, since that is where setTimeout et al. live.
+    var attachTo = Object.getPrototypeOf && Object.getPrototypeOf(global);
+    attachTo = attachTo && attachTo.setTimeout ? attachTo : global;
+
+    // Don't get fooled by e.g. browserify environments.
+    if ({}.toString.call(global.process) === "[object process]") {
+        // For Node.js before 0.9
+        installNextTickImplementation();
+
+    } else if (canUsePostMessage()) {
+        // For non-IE10 modern browsers
+        installPostMessageImplementation();
+
+    } else if (global.MessageChannel) {
+        // For web workers, where supported
+        installMessageChannelImplementation();
+
+    } else if (doc && "onreadystatechange" in doc.createElement("script")) {
+        // For IE 6–8
+        installReadyStateChangeImplementation();
+
+    } else {
+        // For older browsers
+        installSetTimeoutImplementation();
+    }
+
+    attachTo.setImmediate = setImmediate;
+    attachTo.clearImmediate = clearImmediate;
+}(typeof self === "undefined" ? typeof global === "undefined" ? this : global : self));
+
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../webpack/buildin/global.js */ "./node_modules/webpack/buildin/global.js"), __webpack_require__(/*! ./../process/browser.js */ "./node_modules/process/browser.js")))
+
+/***/ }),
+
+/***/ "./node_modules/timers-browserify/main.js":
+/*!************************************************!*\
+  !*** ./node_modules/timers-browserify/main.js ***!
+  \************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+/* WEBPACK VAR INJECTION */(function(global) {var scope = (typeof global !== "undefined" && global) ||
+            (typeof self !== "undefined" && self) ||
+            window;
+var apply = Function.prototype.apply;
+
+// DOM APIs, for completeness
+
+exports.setTimeout = function() {
+  return new Timeout(apply.call(setTimeout, scope, arguments), clearTimeout);
+};
+exports.setInterval = function() {
+  return new Timeout(apply.call(setInterval, scope, arguments), clearInterval);
+};
+exports.clearTimeout =
+exports.clearInterval = function(timeout) {
+  if (timeout) {
+    timeout.close();
+  }
+};
+
+function Timeout(id, clearFn) {
+  this._id = id;
+  this._clearFn = clearFn;
+}
+Timeout.prototype.unref = Timeout.prototype.ref = function() {};
+Timeout.prototype.close = function() {
+  this._clearFn.call(scope, this._id);
+};
+
+// Does not start the time, just sets up the members needed.
+exports.enroll = function(item, msecs) {
+  clearTimeout(item._idleTimeoutId);
+  item._idleTimeout = msecs;
+};
+
+exports.unenroll = function(item) {
+  clearTimeout(item._idleTimeoutId);
+  item._idleTimeout = -1;
+};
+
+exports._unrefActive = exports.active = function(item) {
+  clearTimeout(item._idleTimeoutId);
+
+  var msecs = item._idleTimeout;
+  if (msecs >= 0) {
+    item._idleTimeoutId = setTimeout(function onTimeout() {
+      if (item._onTimeout)
+        item._onTimeout();
+    }, msecs);
+  }
+};
+
+// setimmediate attaches itself to the global object
+__webpack_require__(/*! setimmediate */ "./node_modules/setimmediate/setImmediate.js");
+// On some exotic environments, it's not clear which object `setimmediate` was
+// able to install onto.  Search each possibility in the same order as the
+// `setimmediate` library.
+exports.setImmediate = (typeof self !== "undefined" && self.setImmediate) ||
+                       (typeof global !== "undefined" && global.setImmediate) ||
+                       (this && this.setImmediate);
+exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
+                         (typeof global !== "undefined" && global.clearImmediate) ||
+                         (this && this.clearImmediate);
+
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../webpack/buildin/global.js */ "./node_modules/webpack/buildin/global.js")))
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!../../resources/assets/vendor/vaahcms/admin/default/vue/registrations/Create.vue?vue&type=template&id=5fb2f513&":
+/*!**************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!F:/xampp72/htdocs/packages/resources/assets/vendor/vaahcms/admin/default/vue/registrations/Create.vue?vue&type=template&id=5fb2f513& ***!
+  \**************************************************************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "col-sm" }, [
+    _vm.assets
+      ? _c("div", { staticClass: "card" }, [
+          _c("div", { staticClass: "card-header" }, [
+            _c("div", { staticClass: "d-flex" }, [
+              _vm._m(0),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: " mg-l-auto btn-group btn-group-xs" },
+                [
+                  _c(
+                    "router-link",
+                    {
+                      staticClass: "btn btn-card ",
+                      attrs: { to: { path: "/" } }
+                    },
+                    [_c("i", { staticClass: "fas fa-times" })]
+                  )
+                ],
+                1
+              )
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "card-body" }, [
+            _c(
+              "table",
+              {
+                staticClass:
+                  "table table-striped table-sm table-condensed table-form table-form-dashed"
+              },
+              [
+                _c(
+                  "tbody",
+                  [
+                    _c("t-form", {
+                      attrs: { columns: _vm.assets.columns },
+                      on: { emittedItem: _vm.updateNewItem }
+                    })
+                  ],
+                  1
+                )
+              ]
+            )
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "card-footer" }, [
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-xs btn-primary",
+                on: { click: _vm.store }
+              },
+              [_vm._v("Save")]
+            )
+          ])
+        ])
+      : _vm._e()
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "align-self-center tx-15 flex-grow-1" }, [
+      _c("strong", [_vm._v("Add New Registration")])
+    ])
+  }
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!../../resources/assets/vendor/vaahcms/admin/default/vue/registrations/List.vue?vue&type=template&id=66599116&":
+/*!************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!F:/xampp72/htdocs/packages/resources/assets/vendor/vaahcms/admin/default/vue/registrations/List.vue?vue&type=template&id=66599116& ***!
+  \************************************************************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "col-sm" }, [
+    _c("div", { staticClass: "card" }, [
+      _c("div", { staticClass: "card-header" }, [
+        _c("div", { staticClass: "d-flex" }, [
+          _vm._m(0),
+          _vm._v(" "),
+          _c(
+            "div",
+            { staticClass: " mg-l-auto btn-group btn-group-xs" },
+            [
+              _c(
+                "router-link",
+                {
+                  staticClass: "btn btn-xs btn-light btn-uppercase",
+                  attrs: { to: { path: "/create" } }
+                },
+                [
+                  _c("i", { staticClass: "fas fa-plus" }),
+                  _vm._v(" Add New\n                    ")
+                ]
+              ),
+              _vm._v(" "),
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-xs btn-light btn-uppercase",
+                  on: { click: _vm.toggleShowFilters }
+                },
+                [_c("i", { staticClass: "fas fa-ellipsis-h" })]
+              )
+            ],
+            1
+          )
+        ])
+      ]),
+      _vm._v(" "),
+      _vm.show_filters
+        ? _c("div", { staticClass: "card-body pd-b-0 " }, [
+            _c("div", { staticClass: "form-row" }, [
+              _c("div", { staticClass: "form-group mg-b-0 col-md-4" }, [
+                _c("label", [_vm._v("Filter By")]),
+                _vm._v(" "),
+                _c(
+                  "select",
+                  {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.filters.sort_by,
+                        expression: "filters.sort_by"
+                      }
+                    ],
+                    staticClass: "custom-select custom-select-sm",
+                    on: {
+                      change: [
+                        function($event) {
+                          var $$selectedVal = Array.prototype.filter
+                            .call($event.target.options, function(o) {
+                              return o.selected
+                            })
+                            .map(function(o) {
+                              var val = "_value" in o ? o._value : o.value
+                              return val
+                            })
+                          _vm.$set(
+                            _vm.filters,
+                            "sort_by",
+                            $event.target.multiple
+                              ? $$selectedVal
+                              : $$selectedVal[0]
+                          )
+                        },
+                        _vm.getList
+                      ]
+                    }
+                  },
+                  [
+                    _c("option", { attrs: { value: "" } }, [
+                      _vm._v("Select Sort By")
+                    ]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "first_name" } }, [
+                      _vm._v("First Name")
+                    ]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "status" } }, [
+                      _vm._v("Status")
+                    ]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "created_at" } }, [
+                      _vm._v("Created At")
+                    ]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "deleted_at" } }, [
+                      _vm._v("Show Deleted")
+                    ])
+                  ]
+                )
+              ])
+            ])
+          ])
+        : _vm._e(),
+      _vm._v(" "),
+      _c("div", { staticClass: "card-body" }, [
+        _c("div", { staticClass: "row mg-b-10" }, [
+          _c("div", { staticClass: "col-sm-12" }, [
+            _c(
+              "div",
+              {
+                staticClass: "input-group input-group-sm",
+                staticStyle: { "max-width": "350px" }
+              },
+              [
+                _c(
+                  "select",
+                  {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.bulk_action,
+                        expression: "bulk_action"
+                      }
+                    ],
+                    staticClass: "custom-select",
+                    staticStyle: { "max-width": "150px" },
+                    on: {
+                      change: function($event) {
+                        var $$selectedVal = Array.prototype.filter
+                          .call($event.target.options, function(o) {
+                            return o.selected
+                          })
+                          .map(function(o) {
+                            var val = "_value" in o ? o._value : o.value
+                            return val
+                          })
+                        _vm.bulk_action = $event.target.multiple
+                          ? $$selectedVal
+                          : $$selectedVal[0]
+                      }
+                    }
+                  },
+                  [
+                    _c("option", { attrs: { value: "" } }, [
+                      _vm._v("Bulk Actions")
+                    ]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "bulk_change_status" } }, [
+                      _vm._v("Change Status")
+                    ]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "bulk_delete" } }, [
+                      _vm._v("Delete")
+                    ]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "bulk_restore" } }, [
+                      _vm._v("Restore")
+                    ])
+                  ]
+                ),
+                _vm._v(" "),
+                _vm.bulk_action && _vm.bulk_action == "bulk_change_status"
+                  ? _c(
+                      "select",
+                      {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.bulk_action_data,
+                            expression: "bulk_action_data"
+                          }
+                        ],
+                        staticClass: "custom-select",
+                        attrs: { width: "max-width: 150px" },
+                        on: {
+                          change: function($event) {
+                            var $$selectedVal = Array.prototype.filter
+                              .call($event.target.options, function(o) {
+                                return o.selected
+                              })
+                              .map(function(o) {
+                                var val = "_value" in o ? o._value : o.value
+                                return val
+                              })
+                            _vm.bulk_action_data = $event.target.multiple
+                              ? $$selectedVal
+                              : $$selectedVal[0]
+                          }
+                        }
+                      },
+                      [
+                        _c("option", { attrs: { value: "" } }, [
+                          _vm._v("Select Status")
+                        ]),
+                        _vm._v(" "),
+                        _c(
+                          "option",
+                          { attrs: { value: "activation_pending" } },
+                          [_vm._v("Activation Pending")]
+                        ),
+                        _vm._v(" "),
+                        _c("option", { attrs: { value: "registered" } }, [
+                          _vm._v("Registered")
+                        ])
+                      ]
+                    )
+                  : _vm._e(),
+                _vm._v(" "),
+                _c("div", { staticClass: "input-group-append" }, [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-outline-secondary",
+                      attrs: { type: "button" },
+                      on: { click: _vm.bulkAction }
+                    },
+                    [_vm._v("Apply")]
+                  )
+                ])
+              ]
+            )
+          ])
+        ]),
+        _vm._v(" "),
+        _vm.list
+          ? _c(
+              "table",
+              {
+                staticClass:
+                  "table table-striped table-sm table-condensed table-sortable mg-b-0"
+              },
+              [
+                _c("thead", [
+                  _c("tr", [
+                    _c("th", { attrs: { width: "20" } }, [
+                      _c(
+                        "div",
+                        { staticClass: "custom-control custom-checkbox" },
+                        [
+                          _c("input", {
+                            staticClass: "custom-control-input",
+                            attrs: { type: "checkbox", id: "checkAll" },
+                            on: { click: _vm.toggleSelectAll }
+                          }),
+                          _vm._v(" "),
+                          _c("label", {
+                            staticClass: "custom-control-label",
+                            attrs: { for: "checkAll" }
+                          })
+                        ]
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c(
+                      "th",
+                      {
+                        staticClass: "sortable",
+                        class: {
+                          asc:
+                            _vm.filters.sort_by === "id" &&
+                            _vm.filters.sort_type === "asc",
+                          desc:
+                            _vm.filters.sort_by === "id" &&
+                            _vm.filters.sort_type === "desc"
+                        },
+                        attrs: { width: "50" },
+                        on: {
+                          click: function($event) {
+                            return _vm.setSorting("id")
+                          }
+                        }
+                      },
+                      [
+                        _vm._v(
+                          "\n                            ID\n                        "
+                        )
+                      ]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "th",
+                      {
+                        staticClass: "sortable",
+                        class: {
+                          asc:
+                            _vm.filters.sort_by === "first_name" &&
+                            _vm.filters.sort_type === "asc",
+                          desc:
+                            _vm.filters.sort_by === "first_name" &&
+                            _vm.filters.sort_type === "desc"
+                        },
+                        attrs: { width: "150" },
+                        on: {
+                          click: function($event) {
+                            return _vm.setSorting("first_name")
+                          }
+                        }
+                      },
+                      [
+                        _vm._v(
+                          "\n                            Name\n                        "
+                        )
+                      ]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "th",
+                      {
+                        staticClass: "sortable",
+                        class: {
+                          asc:
+                            _vm.filters.sort_by === "email" &&
+                            _vm.filters.sort_type === "asc",
+                          desc:
+                            _vm.filters.sort_by === "email" &&
+                            _vm.filters.sort_type === "desc"
+                        },
+                        on: {
+                          click: function($event) {
+                            return _vm.setSorting("email")
+                          }
+                        }
+                      },
+                      [_vm._v("Email\n\n                        ")]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "th",
+                      {
+                        staticClass: "sortable",
+                        class: {
+                          asc:
+                            _vm.filters.sort_by === "status" &&
+                            _vm.filters.sort_type === "asc",
+                          desc:
+                            _vm.filters.sort_by === "status" &&
+                            _vm.filters.sort_type === "desc"
+                        },
+                        attrs: { width: "120" },
+                        on: {
+                          click: function($event) {
+                            return _vm.setSorting("status")
+                          }
+                        }
+                      },
+                      [_vm._v("Status\n                        ")]
+                    ),
+                    _vm._v(" "),
+                    !_vm.table_collapsed
+                      ? _c("th", { attrs: { width: "180" } }, [
+                          _vm._v("Created At")
+                        ])
+                      : _vm._e(),
+                    _vm._v(" "),
+                    _c("th", { attrs: { width: "80" } })
+                  ])
+                ]),
+                _vm._v(" "),
+                _c(
+                  "tbody",
+                  [
+                    _c("tr", [
+                      _c(
+                        "td",
+                        { staticClass: "pd-0-f", attrs: { colspan: "7" } },
+                        [
+                          _c(
+                            "div",
+                            { staticClass: "search-form table-search" },
+                            [
+                              _c("input", {
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value: _vm.filters.q,
+                                    expression: "filters.q"
+                                  }
+                                ],
+                                staticClass: "form-control form-control-sm",
+                                attrs: {
+                                  type: "search",
+                                  placeholder:
+                                    "search by id, name, username, email..."
+                                },
+                                domProps: { value: _vm.filters.q },
+                                on: {
+                                  keyup: function($event) {
+                                    if (
+                                      !$event.type.indexOf("key") &&
+                                      _vm._k(
+                                        $event.keyCode,
+                                        "enter",
+                                        13,
+                                        $event.key,
+                                        "Enter"
+                                      )
+                                    ) {
+                                      return null
+                                    }
+                                    return _vm.getList($event)
+                                  },
+                                  input: function($event) {
+                                    if ($event.target.composing) {
+                                      return
+                                    }
+                                    _vm.$set(
+                                      _vm.filters,
+                                      "q",
+                                      $event.target.value
+                                    )
+                                  }
+                                }
+                              }),
+                              _vm._v(" "),
+                              _c(
+                                "button",
+                                {
+                                  staticClass: "btn ",
+                                  attrs: { type: "button" },
+                                  on: { click: _vm.getList }
+                                },
+                                [_c("i", { staticClass: "fas fa-search" })]
+                              )
+                            ]
+                          )
+                        ]
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _vm._l(_vm.list.data, function(item) {
+                      return _c("tr", [
+                        _c("td", [
+                          _c(
+                            "div",
+                            { staticClass: "custom-control custom-checkbox" },
+                            [
+                              _c("input", {
+                                staticClass: "custom-control-input",
+                                attrs: {
+                                  type: "checkbox",
+                                  id: "check-" + item.id
+                                },
+                                domProps: {
+                                  checked: _vm.$helpers.existInArray(
+                                    _vm.selected_items,
+                                    item.id
+                                  )
+                                },
+                                on: {
+                                  click: function($event) {
+                                    return _vm.toggleSelectedItem(item.id)
+                                  }
+                                }
+                              }),
+                              _vm._v(" "),
+                              _c("label", {
+                                staticClass: "custom-control-label",
+                                attrs: { for: "check-" + item.id }
+                              })
+                            ]
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v(_vm._s(item.id))]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v(_vm._s(item.name))]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v(_vm._s(item.email))]),
+                        _vm._v(" "),
+                        _c("td", [
+                          _c("span", { staticClass: "badge badge-info" }, [
+                            _vm._v(_vm._s(item.status))
+                          ])
+                        ]),
+                        _vm._v(" "),
+                        !_vm.table_collapsed
+                          ? _c("td", [
+                              _vm._v(
+                                "\n                        " +
+                                  _vm._s(
+                                    _vm.$helpers.dateTimeForHumans(
+                                      item.created_at
+                                    )
+                                  ) +
+                                  "\n                    "
+                              )
+                            ])
+                          : _vm._e(),
+                        _vm._v(" "),
+                        _c("td", { staticClass: "pd-0-f" }, [
+                          _c(
+                            "div",
+                            { staticClass: "btn-group btn-group-xs" },
+                            [
+                              _vm._m(1, true),
+                              _vm._v(" "),
+                              _c(
+                                "router-link",
+                                {
+                                  staticClass: "btn btn-xs bg-transparent",
+                                  attrs: { to: { path: "/view/" + item.id } }
+                                },
+                                [
+                                  _c("i", {
+                                    staticClass: "fas fa-chevron-right"
+                                  })
+                                ]
+                              )
+                            ],
+                            1
+                          )
+                        ])
+                      ])
+                    })
+                  ],
+                  2
+                )
+              ]
+            )
+          : _vm._e()
+      ]),
+      _vm._v(" "),
+      _vm.list && _vm.list.last_page > 1
+        ? _c(
+            "div",
+            { staticClass: "card-footer" },
+            [
+              _c("pagination", {
+                attrs: { limit: 6, data: _vm.list },
+                on: { "pagination-change-page": _vm.getList }
+              })
+            ],
+            1
+          )
+        : _vm._e()
+    ])
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "align-self-center tx-18 flex-grow-1" }, [
+      _c("strong", [_vm._v("Registrations")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("button", { staticClass: "btn btn-xs bg-transparent" }, [
+      _c("i", { staticClass: "fas fa-ellipsis-h" })
+    ])
+  }
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!../../resources/assets/vendor/vaahcms/admin/default/vue/registrations/ViewEdit.vue?vue&type=template&id=7004d126&":
+/*!****************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!F:/xampp72/htdocs/packages/resources/assets/vendor/vaahcms/admin/default/vue/registrations/ViewEdit.vue?vue&type=template&id=7004d126& ***!
+  \****************************************************************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "col-sm" }, [
+    _c("div", { staticClass: "card" }, [
+      _c("div", { staticClass: "card-header" }, [
+        _c("div", { staticClass: "d-flex" }, [
+          _c("div", { staticClass: "align-self-center tx-15 flex-grow-1" }, [
+            _c("strong", [_vm._v("ID: " + _vm._s(_vm.id))])
+          ]),
+          _vm._v(" "),
+          _c(
+            "div",
+            { staticClass: " mg-l-auto btn-group btn-group-xs" },
+            [
+              _c(
+                "button",
+                { staticClass: "btn btn-card ", on: { click: _vm.toggleEdit } },
+                [_c("i", { staticClass: "fas fa-pencil-alt" })]
+              ),
+              _vm._v(" "),
+              _c("div", { staticClass: "dropdown" }, [
+                _c(
+                  "a",
+                  {
+                    staticClass: "btn btn-card dropdown-toggle",
+                    attrs: {
+                      href: "#",
+                      role: "button",
+                      "data-toggle": "dropdown"
+                    },
+                    on: {
+                      click: function($event) {
+                        return _vm.$helpers.btDropDown($event)
+                      }
+                    }
+                  },
+                  [_c("i", { staticClass: "fas fa-ellipsis-v" })]
+                ),
+                _vm._v(" "),
+                _vm._m(0)
+              ]),
+              _vm._v(" "),
+              _c(
+                "router-link",
+                { staticClass: "btn btn-card ", attrs: { to: { path: "/" } } },
+                [_c("i", { staticClass: "fas fa-times" })]
+              )
+            ],
+            1
+          )
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "card-body" }, [
+        _vm.edit == false
+          ? _c(
+              "table",
+              {
+                staticClass:
+                  "table table-striped table-sm table-condensed  table-form table-form-view"
+              },
+              [
+                _vm.columns
+                  ? _c("t-view", { attrs: { columns: _vm.columns } })
+                  : _vm._e()
+              ],
+              1
+            )
+          : _c(
+              "table",
+              {
+                staticClass:
+                  "table table-striped table-sm table-condensed  table-form table-form-dashed"
+              },
+              [
+                _vm.columns
+                  ? _c("t-form", {
+                      attrs: { columns: _vm.columns },
+                      on: { emittedItem: _vm.updateItem }
+                    })
+                  : _vm._e()
+              ],
+              1
+            )
+      ]),
+      _vm._v(" "),
+      _vm.edit == true
+        ? _c("div", { staticClass: "card-footer" }, [
+            _c(
+              "button",
+              { staticClass: "btn btn-primary", on: { click: _vm.store } },
+              [_vm._v("Save")]
+            )
+          ])
+        : _vm._e()
+    ])
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      {
+        staticClass: "dropdown-menu dropdown-menu-right",
+        attrs: { "aria-labelledby": "dropdownMenuLink" }
+      },
+      [
+        _c("a", { staticClass: "dropdown-item", attrs: { href: "#" } }, [
+          _vm._v("Send Activation Email")
+        ]),
+        _vm._v(" "),
+        _c(
+          "a",
+          { staticClass: "dropdown-item text-danger", attrs: { href: "#" } },
+          [_vm._v("Delete")]
+        )
+      ]
+    )
+  }
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!../../resources/assets/vendor/vaahcms/admin/default/vue/reusable/TableFormGenerator.vue?vue&type=template&id=a84e9e5a&":
+/*!*********************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!F:/xampp72/htdocs/packages/resources/assets/vendor/vaahcms/admin/default/vue/reusable/TableFormGenerator.vue?vue&type=template&id=a84e9e5a& ***!
+  \*********************************************************************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "tbody",
+    [
+      _vm._l(_vm.columns, function(column) {
+        return column.editable == true
+          ? [
+              column.type == "text"
+                ? _c("tr", { class: column.tr_class }, [
+                    _c(
+                      "th",
+                      { staticClass: "text-right", attrs: { width: "180" } },
+                      [_vm._v(_vm._s(column.label))]
+                    ),
+                    _vm._v(" "),
+                    _c("td", [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.new_item[column.name],
+                            expression: "new_item[column.name]"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        attrs: {
+                          type: "text",
+                          name: column.name,
+                          disabled: column.disabled,
+                          placeholder: column.label
+                        },
+                        domProps: { value: _vm.new_item[column.name] },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(
+                              _vm.new_item,
+                              column.name,
+                              $event.target.value
+                            )
+                          }
+                        }
+                      })
+                    ])
+                  ])
+                : column.type == "password"
+                ? _c("tr", { class: column.tr_class }, [
+                    _c("th", { staticClass: "text-right" }, [
+                      _vm._v(_vm._s(column.label))
+                    ]),
+                    _vm._v(" "),
+                    _c("td", [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.new_item[column.name],
+                            expression: "new_item[column.name]"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        attrs: {
+                          type: "password",
+                          name: column.name,
+                          placeholder: column.label
+                        },
+                        domProps: { value: _vm.new_item[column.name] },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(
+                              _vm.new_item,
+                              column.name,
+                              $event.target.value
+                            )
+                          }
+                        }
+                      })
+                    ])
+                  ])
+                : column.type == "select"
+                ? _c("tr", { class: column.tr_class }, [
+                    _c("th", { staticClass: "text-right" }, [
+                      _vm._v(_vm._s(column.label))
+                    ]),
+                    _vm._v(" "),
+                    _c("td", [
+                      _c(
+                        "select",
+                        {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.new_item[column.name],
+                              expression: "new_item[column.name]"
+                            }
+                          ],
+                          staticClass: "custom-select",
+                          attrs: { placeholder: column.label },
+                          on: {
+                            change: function($event) {
+                              var $$selectedVal = Array.prototype.filter
+                                .call($event.target.options, function(o) {
+                                  return o.selected
+                                })
+                                .map(function(o) {
+                                  var val = "_value" in o ? o._value : o.value
+                                  return val
+                                })
+                              _vm.$set(
+                                _vm.new_item,
+                                column.name,
+                                $event.target.multiple
+                                  ? $$selectedVal
+                                  : $$selectedVal[0]
+                              )
+                            }
+                          }
+                        },
+                        [
+                          _c("option", { attrs: { selected: "", value: "" } }, [
+                            _vm._v("Select " + _vm._s(column.label))
+                          ]),
+                          _vm._v(" "),
+                          _vm._l(column.inputs, function(input) {
+                            return _c(
+                              "option",
+                              { domProps: { value: input.slug } },
+                              [_vm._v(_vm._s(input.name))]
+                            )
+                          })
+                        ],
+                        2
+                      )
+                    ])
+                  ])
+                : column.type == "select_with_ids"
+                ? _c("tr", { class: column.tr_class }, [
+                    _c("th", { staticClass: "text-right" }, [
+                      _vm._v(_vm._s(column.label))
+                    ]),
+                    _vm._v(" "),
+                    _c("td", [
+                      _c(
+                        "select",
+                        {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.new_item[column.name],
+                              expression: "new_item[column.name]"
+                            }
+                          ],
+                          staticClass: "custom-select",
+                          attrs: { placeholder: column.label },
+                          on: {
+                            change: function($event) {
+                              var $$selectedVal = Array.prototype.filter
+                                .call($event.target.options, function(o) {
+                                  return o.selected
+                                })
+                                .map(function(o) {
+                                  var val = "_value" in o ? o._value : o.value
+                                  return val
+                                })
+                              _vm.$set(
+                                _vm.new_item,
+                                column.name,
+                                $event.target.multiple
+                                  ? $$selectedVal
+                                  : $$selectedVal[0]
+                              )
+                            }
+                          }
+                        },
+                        [
+                          _c("option", { attrs: { selected: "", value: "" } }, [
+                            _vm._v("Select " + _vm._s(column.label))
+                          ]),
+                          _vm._v(" "),
+                          _vm._l(column.inputs, function(input) {
+                            return _c(
+                              "option",
+                              { domProps: { value: input.id } },
+                              [_vm._v(_vm._s(input.name))]
+                            )
+                          })
+                        ],
+                        2
+                      )
+                    ])
+                  ])
+                : column.type == "date"
+                ? _c("tr", { class: column.tr_class }, [
+                    _c("th", { staticClass: "text-right" }, [
+                      _vm._v(_vm._s(column.label))
+                    ]),
+                    _vm._v(" "),
+                    _c(
+                      "td",
+                      [
+                        _c("datepicker", {
+                          attrs: {
+                            placeholder: column.label,
+                            format: "yyyy-MM-dd",
+                            "input-class": "form-control"
+                          },
+                          model: {
+                            value: _vm.new_item[column.name],
+                            callback: function($$v) {
+                              _vm.$set(_vm.new_item, column.name, $$v)
+                            },
+                            expression: "new_item[column.name]"
+                          }
+                        })
+                      ],
+                      1
+                    )
+                  ])
+                : _vm._e()
+            ]
+          : _vm._e()
+      })
+    ],
+    2
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!../../resources/assets/vendor/vaahcms/admin/default/vue/reusable/TableViewGenerator.vue?vue&type=template&id=a0de4edc&":
+/*!*********************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!F:/xampp72/htdocs/packages/resources/assets/vendor/vaahcms/admin/default/vue/reusable/TableViewGenerator.vue?vue&type=template&id=a0de4edc& ***!
+  \*********************************************************************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "tbody",
+    [
+      _vm._l(_vm.columns, function(column) {
+        return [
+          column.type == "text"
+            ? _c("tr", { staticClass: "tr__view" }, [
+                _c(
+                  "th",
+                  { staticClass: "text-right", attrs: { width: "180" } },
+                  [_vm._v(_vm._s(column.label))]
+                ),
+                _vm._v(" "),
+                _c("td", [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.new_item[column.name],
+                        expression: "new_item[column.name]"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    attrs: {
+                      type: "text",
+                      name: column.name,
+                      disabled: "",
+                      placeholder: column.label
+                    },
+                    domProps: { value: _vm.new_item[column.name] },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(_vm.new_item, column.name, $event.target.value)
+                      }
+                    }
+                  })
+                ])
+              ])
+            : column.type == "password"
+            ? _c("tr", { staticClass: "tr__view" }, [
+                _c("th", { staticClass: "text-right" }, [
+                  _vm._v(_vm._s(column.label))
+                ]),
+                _vm._v(" "),
+                _c("td", [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.new_item[column.name],
+                        expression: "new_item[column.name]"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    attrs: {
+                      type: "password",
+                      disabled: "",
+                      name: column.name,
+                      placeholder: column.label
+                    },
+                    domProps: { value: _vm.new_item[column.name] },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(_vm.new_item, column.name, $event.target.value)
+                      }
+                    }
+                  })
+                ])
+              ])
+            : column.type == "select"
+            ? _c("tr", { staticClass: "tr__view" }, [
+                _c("th", { staticClass: "text-right" }, [
+                  _vm._v(_vm._s(column.label))
+                ]),
+                _vm._v(" "),
+                _c("td", [
+                  _c(
+                    "select",
+                    {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.new_item[column.name],
+                          expression: "new_item[column.name]"
+                        }
+                      ],
+                      staticClass: "custom-select",
+                      attrs: { disabled: "", placeholder: column.label },
+                      on: {
+                        change: function($event) {
+                          var $$selectedVal = Array.prototype.filter
+                            .call($event.target.options, function(o) {
+                              return o.selected
+                            })
+                            .map(function(o) {
+                              var val = "_value" in o ? o._value : o.value
+                              return val
+                            })
+                          _vm.$set(
+                            _vm.new_item,
+                            column.name,
+                            $event.target.multiple
+                              ? $$selectedVal
+                              : $$selectedVal[0]
+                          )
+                        }
+                      }
+                    },
+                    [
+                      _c("option", { attrs: { selected: "", value: "" } }, [
+                        _vm._v("Select " + _vm._s(column.label))
+                      ]),
+                      _vm._v(" "),
+                      _vm._l(column.inputs, function(input) {
+                        return _c(
+                          "option",
+                          { domProps: { value: input.slug } },
+                          [_vm._v(_vm._s(input.name))]
+                        )
+                      })
+                    ],
+                    2
+                  )
+                ])
+              ])
+            : column.type == "select_with_ids"
+            ? _c("tr", { staticClass: "tr__view" }, [
+                _c("th", { staticClass: "text-right" }, [
+                  _vm._v(_vm._s(column.label))
+                ]),
+                _vm._v(" "),
+                _c("td", [
+                  _c(
+                    "select",
+                    {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.new_item[column.name],
+                          expression: "new_item[column.name]"
+                        }
+                      ],
+                      staticClass: "custom-select",
+                      attrs: { disabled: "", placeholder: column.label },
+                      on: {
+                        change: function($event) {
+                          var $$selectedVal = Array.prototype.filter
+                            .call($event.target.options, function(o) {
+                              return o.selected
+                            })
+                            .map(function(o) {
+                              var val = "_value" in o ? o._value : o.value
+                              return val
+                            })
+                          _vm.$set(
+                            _vm.new_item,
+                            column.name,
+                            $event.target.multiple
+                              ? $$selectedVal
+                              : $$selectedVal[0]
+                          )
+                        }
+                      }
+                    },
+                    [
+                      _c("option", { attrs: { selected: "", value: "" } }, [
+                        _vm._v("Select " + _vm._s(column.label))
+                      ]),
+                      _vm._v(" "),
+                      _vm._l(column.inputs, function(input) {
+                        return _c("option", { domProps: { value: input.id } }, [
+                          _vm._v(_vm._s(input.name))
+                        ])
+                      })
+                    ],
+                    2
+                  )
+                ])
+              ])
+            : column.type == "date"
+            ? _c("tr", { staticClass: "tr__view" }, [
+                _c("th", { staticClass: "text-right" }, [
+                  _vm._v(_vm._s(column.label))
+                ]),
+                _vm._v(" "),
+                _c(
+                  "td",
+                  [
+                    _c("datepicker", {
+                      attrs: {
+                        placeholder: column.label,
+                        disabled: "",
+                        format: "yyyy-MM-dd",
+                        "input-class": "form-control"
+                      },
+                      model: {
+                        value: _vm.new_item[column.name],
+                        callback: function($$v) {
+                          _vm.$set(_vm.new_item, column.name, $$v)
+                        },
+                        expression: "new_item[column.name]"
+                      }
+                    })
+                  ],
+                  1
+                )
+              ])
+            : _vm._e()
+        ]
+      })
+    ],
+    2
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js":
+/*!********************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/runtime/componentNormalizer.js ***!
+  \********************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return normalizeComponent; });
+/* globals __VUE_SSR_CONTEXT__ */
+
+// IMPORTANT: Do NOT use ES2015 features in this file (except for modules).
+// This module is a runtime utility for cleaner component module output and will
+// be included in the final webpack user bundle.
+
+function normalizeComponent (
+  scriptExports,
+  render,
+  staticRenderFns,
+  functionalTemplate,
+  injectStyles,
+  scopeId,
+  moduleIdentifier, /* server only */
+  shadowMode /* vue-cli only */
+) {
+  // Vue.extend constructor export interop
+  var options = typeof scriptExports === 'function'
+    ? scriptExports.options
+    : scriptExports
+
+  // render functions
+  if (render) {
+    options.render = render
+    options.staticRenderFns = staticRenderFns
+    options._compiled = true
+  }
+
+  // functional template
+  if (functionalTemplate) {
+    options.functional = true
+  }
+
+  // scopedId
+  if (scopeId) {
+    options._scopeId = 'data-v-' + scopeId
+  }
+
+  var hook
+  if (moduleIdentifier) { // server build
+    hook = function (context) {
+      // 2.3 injection
+      context =
+        context || // cached call
+        (this.$vnode && this.$vnode.ssrContext) || // stateful
+        (this.parent && this.parent.$vnode && this.parent.$vnode.ssrContext) // functional
+      // 2.2 with runInNewContext: true
+      if (!context && typeof __VUE_SSR_CONTEXT__ !== 'undefined') {
+        context = __VUE_SSR_CONTEXT__
+      }
+      // inject component styles
+      if (injectStyles) {
+        injectStyles.call(this, context)
+      }
+      // register component module identifier for async chunk inferrence
+      if (context && context._registeredComponents) {
+        context._registeredComponents.add(moduleIdentifier)
+      }
+    }
+    // used by ssr in case component is cached and beforeCreate
+    // never gets called
+    options._ssrRegister = hook
+  } else if (injectStyles) {
+    hook = shadowMode
+      ? function () { injectStyles.call(this, this.$root.$options.shadowRoot) }
+      : injectStyles
+  }
+
+  if (hook) {
+    if (options.functional) {
+      // for template-only hot-reload because in that case the render fn doesn't
+      // go through the normalizer
+      options._injectStyles = hook
+      // register for functioal component in vue file
+      var originalRender = options.render
+      options.render = function renderWithStyleInjection (h, context) {
+        hook.call(context)
+        return originalRender(h, context)
+      }
+    } else {
+      // inject component registration as beforeCreate hook
+      var existing = options.beforeCreate
+      options.beforeCreate = existing
+        ? [].concat(existing, hook)
+        : [hook]
+    }
+  }
+
+  return {
+    exports: scriptExports,
+    options: options
+  }
+}
+
+
+/***/ }),
+
+/***/ "./node_modules/webpack/buildin/global.js":
+/*!***********************************!*\
+  !*** (webpack)/buildin/global.js ***!
+  \***********************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+var g;
+
+// This works in non-strict mode
+g = (function() {
+	return this;
+})();
+
+try {
+	// This works if eval is allowed (see CSP)
+	g = g || new Function("return this")();
+} catch (e) {
+	// This works if the window reference is available
+	if (typeof window === "object") g = window;
+}
+
+// g can still be undefined, but nothing to do about it...
+// We return undefined, instead of nothing here, so it's
+// easier to handle this case. if(!global) { ...}
+
+module.exports = g;
+
+
+/***/ }),
+
+/***/ "./node_modules/webpack/buildin/module.js":
+/*!***********************************!*\
+  !*** (webpack)/buildin/module.js ***!
+  \***********************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = function(module) {
+	if (!module.webpackPolyfill) {
+		module.deprecate = function() {};
+		module.paths = [];
+		// module.parent = undefined by default
+		if (!module.children) module.children = [];
+		Object.defineProperty(module, "loaded", {
+			enumerable: true,
+			get: function() {
+				return module.l;
+			}
+		});
+		Object.defineProperty(module, "id", {
+			enumerable: true,
+			get: function() {
+				return module.i;
+			}
+		});
+		module.webpackPolyfill = 1;
+	}
+	return module;
+};
 
 
 /***/ }),
@@ -78920,13 +78920,13 @@ __webpack_require__.r(__webpack_exports__);
 /***/ }),
 
 /***/ 5:
-/*!****************************************************************************************************!*\
-  !*** multi ./resources/assets/vendor/vaahcms/admin/default/vue/registrations/app-registrations.js ***!
-  \****************************************************************************************************/
+/*!*****************************************************************************************************************************!*\
+  !*** multi F:/xampp72/htdocs/packages/resources/assets/vendor/vaahcms/admin/default/vue/registrations/app-registrations.js ***!
+  \*****************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! F:\xampp72\htdocs\packages\resources\assets\vendor\vaahcms\admin\default\vue\registrations\app-registrations.js */"./resources/assets/vendor/vaahcms/admin/default/vue/registrations/app-registrations.js");
+module.exports = __webpack_require__(/*! F:\xampp72\htdocs\packages\resources\assets\vendor\vaahcms\admin\default\vue\registrations\app-registrations.js */"../../resources/assets/vendor/vaahcms/admin/default/vue/registrations/app-registrations.js");
 
 
 /***/ })
