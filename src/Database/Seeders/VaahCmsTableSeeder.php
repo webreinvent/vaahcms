@@ -27,11 +27,10 @@ class VaahCmsTableSeeder extends Seeder
     {
         $list = [
             [
-                'uid' => 'can_access_admin_section',
+                'name' => 'Can Access Admin Section',
+                'slug' => 'can_access_admin_section',
                 'module' => 'vaahcms',
                 'section' => 'admin',
-                'name' => 'access section',
-                'label' => 'Allow Admin Access',
                 'details' => 'This will allow user to access admin control panel',
                 'is_active' => 1,
             ],
@@ -41,7 +40,7 @@ class VaahCmsTableSeeder extends Seeder
         foreach($list as $item)
         {
             $exist = \DB::table( 'vh_permissions' )
-                ->where( 'uid', $item['uid'] )
+                ->where( 'slug', $item['slug'] )
                 ->first();
 
             if (!$exist){

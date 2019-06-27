@@ -48,6 +48,7 @@ mix.combine(admin_assets_json['css'], admin_default_theme_path+'builds/vaahcms.c
     .js(admin_default_theme_path+'vue/registrations/app-registrations.js',  './builds')
     .js(admin_default_theme_path+'vue/users/app-users.js',  './builds')
     .js(admin_default_theme_path+'vue/roles/app-roles.js',  './builds')
+    .js(admin_default_theme_path+'vue/permissions/app-permissions.js',  './builds')
     .copyDirectory(admin_copy_path, admin_copy_path_des, false)
     .version();
 

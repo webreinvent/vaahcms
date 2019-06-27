@@ -105,6 +105,7 @@ class Role extends Model {
     {
         $list = [
             'name', 'slug', 'details',
+            'count_users', 'count_permissions',
             'created_by', 'updated_by', 'deleted_by',
             'created_at', 'updated_at', 'deleted_at'
         ];
@@ -160,10 +161,15 @@ class Role extends Model {
             case 'created_at':
             case 'deleted_at':
             case 'updated_at':
+            case 'count_users':
+            case 'count_permissions':
                 $result['editable'] = false;
                 break;
             //------------------------------------------------
-
+            case 'is_active':
+                $result['type'] = 'select';
+                $result['inputs'] = vh_is_active_options();
+                break;
             //------------------------------------------------
             case 'details':
                 $result['type'] = 'textarea';
@@ -248,7 +254,7 @@ class Role extends Model {
 
         $columns = $this->getFormFillableColumns();
 
-        $visible = ['id', 'slug'];
+        $visible = ['id'];
 
         $columns = array_merge($visible, $columns);
 

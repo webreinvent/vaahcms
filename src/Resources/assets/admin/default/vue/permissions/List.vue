@@ -8,7 +8,7 @@
 
                     <div class="d-flex">
                         <div class="align-self-center tx-18 flex-grow-1">
-                            <strong>Roles
+                            <strong>Permissions
                                 <span v-if="list">
                                     ({{list.total}})
                                 </span>
@@ -16,10 +16,10 @@
                         </div>
                         <div class=" mg-l-auto btn-group btn-group-xs">
 
-                            <router-link class="btn btn-xs btn-light btn-uppercase"
+                            <!--<router-link class="btn btn-xs btn-light btn-uppercase"
                                          :to="{ path: '/create'}">
                                 <i class="fas fa-plus"></i> Add New
-                            </router-link>
+                            </router-link>-->
 
                             <button class="btn btn-xs btn-light btn-uppercase" @click="toggleShowFilters">
                                 <i class="fas fa-ellipsis-h"></i>
@@ -90,7 +90,7 @@
                         <thead>
 
                             <tr>
-                                <th width="20">
+                                <th width="60">
                                     <div class="custom-control custom-checkbox">
                                         <input type="checkbox" class="custom-control-input" v-on:click="toggleSelectAll" id="checkAll">
                                         <label class="custom-control-label" for="checkAll"></label>
@@ -124,7 +124,7 @@
                                     v-on:click="setSorting('is_active')">Is Active
                                 </th>
                                 <th v-if="!table_collapsed" width="80" >Users</th>
-                                <th v-if="!table_collapsed" width="80" >Permissions</th>
+                                <th v-if="!table_collapsed" width="80" >Roles</th>
                                 <th v-if="!table_collapsed" width="140" >Created At</th>
                                 <th width="80"></th>
                             </tr>
@@ -134,7 +134,7 @@
                         <tbody>
 
 
-                        <tr>
+                        <tr >
 
 
 
@@ -187,7 +187,7 @@
                             </td>
 
                             <td v-if="!table_collapsed">{{item.count_users}}</td>
-                            <td v-if="!table_collapsed">{{item.count_permissions}}</td>
+                            <td v-if="!table_collapsed">{{item.count_roles}}</td>
 
                             <td v-if="!table_collapsed">
                                 {{$helpers.dateTimeForHumans(item.created_at)}}

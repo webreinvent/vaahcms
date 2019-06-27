@@ -276,3 +276,31 @@ Route::group(
             ->name( 'vh.admin.roles.view' );
         //------------------------------------------------
     });
+
+Route::group(
+    [
+        'prefix'     => 'admin/permissions',
+        'middleware' => ['web','has.admin.access'],
+        'namespace'  => 'WebReinvent\VaahCms\Http\Controllers\Admin'
+    ],
+    function () {
+        //------------------------------------------------
+        Route::get( '/', 'PermissionController@index' )
+            ->name( 'vh.admin.permissions' );
+        //------------------------------------------------
+        Route::any( '/assets', 'PermissionController@assets' )
+            ->name( 'vh.admin.permissions.assets' );
+        //------------------------------------------------
+        Route::any( '/list', 'PermissionController@getList' )
+            ->name( 'vh.admin.permissions.list' );
+        //------------------------------------------------
+        Route::any( '/actions', 'PermissionController@actions' )
+            ->name( 'vh.admin.permissions.actions' );
+        //------------------------------------------------
+        Route::any( '/store', 'PermissionController@store' )
+            ->name( 'vh.admin.permissions.store' );
+        //------------------------------------------------
+        Route::any( '/view/{id}', 'PermissionController@getDetails' )
+            ->name( 'vh.admin.permissions.view' );
+        //------------------------------------------------
+    });

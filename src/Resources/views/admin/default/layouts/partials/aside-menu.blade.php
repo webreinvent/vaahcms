@@ -7,7 +7,7 @@
         <li><a href="{{route('vh.admin.registrations')}}">Registration</a></li>
         <li><a href="{{route('vh.admin.users')}}">Users</a></li>
         <li><a href="{{route('vh.admin.roles')}}">Roles</a></li>
-        <li><a href="page-connections.html">Permissions</a></li>
+        <li><a href="{{route('vh.admin.permissions')}}">Permissions</a></li>
     </ul>
 
 </li>

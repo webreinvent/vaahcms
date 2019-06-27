@@ -845,17 +845,17 @@ class User extends Authenticatable
     }
 
     //-------------------------------------------------
-    public function hasPermission($permission_uid)
+    public function hasPermission($permission_slug)
     {
 
         //check if permission exist or not
-        $permission = Permission::where('uid', $permission_uid)
+        $permission = Permission::where('slug', $permission_slug)
             ->first();
 
         if (!$permission)
         {
             $response['status'] = 'failed';
-            $response['errors'][] = 'No Permission exist with UID: '.$permission_uid;
+            $response['errors'][] = 'No Permission exist with slug: '.$permission_slug;
             return response()->json($response);
         }
 
@@ -869,7 +869,7 @@ class User extends Authenticatable
 
         foreach ($this->permissions() as $permission)
         {
-            if ($permission['uid'] == $permission_uid && $permission['is_active'] == 1)
+            if ($permission['slug'] == $permission_slug && $permission['is_active'] == 1)
             {
                 return true;
             }
