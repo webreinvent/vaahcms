@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use WebReinvent\VaahCms\Entities\Permission;
+use WebReinvent\VaahCms\Entities\Role;
 
 class PermissionController extends Controller
 {
@@ -58,6 +59,12 @@ class PermissionController extends Controller
     //----------------------------------------------------------
     public function getList(Request $request)
     {
+
+        if($request->has('recount') && $request->get('recount') == true)
+        {
+            Permission::syncPermissionsWithRoles();
+            Permission::recountRelations();
+        }
 
         if($request->has("sort_by") && !is_null($request->sort_by))
         {
@@ -171,6 +178,31 @@ class PermissionController extends Controller
 
     }
     //----------------------------------------------------------
+
+    public function getRoles(Request $request, $id)
+    {
+        $item = Permission::find($id);
+        $response['data']['permission'] = $item;
+
+
+        if($request->has("q"))
+        {
+            $list = $item->roles()->where(function ($q) use ($request){
+                $q->where('name', 'LIKE', '%'.$request->q.'%')
+                    ->orWhere('slug', 'LIKE', '%'.$request->q.'%');
+            });
+        } else
+        {
+            $list = $item->roles();
+        }
+        $list = $list->paginate(1);
+
+        $response['data']['list'] = $list;
+
+        $response['status'] = 'success';
+
+        return response()->json($response);
+    }
 
     //----------------------------------------------------------
     //----------------------------------------------------------

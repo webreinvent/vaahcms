@@ -30,6 +30,7 @@ import { ToggleButton } from 'vue-js-toggle-button'
                     sort_by: "",
                     sort_type: 'desc',
                     status: 'all',
+                    recount: false,
                 }
             };
 
@@ -58,6 +59,12 @@ import { ToggleButton } from 'vue-js-toggle-button'
         },
         methods: {
             //---------------------------------------------------------------------
+
+            reloadList: function()
+            {
+                this.filters.recount = true;
+                this.getList();
+            },
 
             //---------------------------------------------------------------------
 

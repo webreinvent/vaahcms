@@ -35,6 +35,10 @@ class Permission extends Model {
     ];
 
     //-------------------------------------------------
+    protected $appends  = [
+
+    ];
+    //-------------------------------------------------
     public function setUidAttribute( $value ) {
         $this->attributes['uid'] = strtolower( $value );
     }
@@ -104,7 +108,7 @@ class Permission extends Model {
     public function roles() {
         return $this->belongsToMany( 'WebReinvent\VaahCms\Entities\Role',
             'vh_role_permissions', 'vh_permission_id', 'vh_role_id'
-        );
+        )->withPivot('is_active');
     }
     //-------------------------------------------------
     public function getTableColumns() {
@@ -393,5 +397,80 @@ class Permission extends Model {
 
     }
     //-------------------------------------------------
+    public static function getPermissionRoles($id)
+    {
+        $item = Permission::withTrashed()->where('id', $id)->first();
+
+        if(!$item)
+        {
+            return false;
+        }
+
+        return $item->roles()->wherePivot('is_active', 1)->get();
+    }
+    //-------------------------------------------------
+    public static function getPermissionRoleIds($id)
+    {
+        $roles = static::getPermissionRoles($id);
+        return $roles->pluck('id')->toArray();
+    }
+    //-------------------------------------------------
+    public static function countUsers($id)
+    {
+        $roles_ids = Permission::getPermissionRoleIds($id);
+
+        if(!$roles_ids || !is_array($roles_ids))
+        {
+            return false;
+        }
+
+        $users = User::whereHas('roles', function ($q) use ($roles_ids){
+            $q->whereIn('vh_roles.id', $roles_ids);
+        })->count();
+
+        return $users;
+    }
+    //-------------------------------------------------
+    public static function syncPermissionsWithRoles()
+    {
+
+        $permissions = Permission::all()->pluck('id')->toArray();
+
+        $roles = Role::all();
+
+        if($roles)
+        {
+            foreach ($roles as $role)
+            {
+                if($role->id == 1)
+                {
+                    $pivotData = array_fill(0, count($permissions), ['is_active' => 1]);
+                    $syncData  = array_combine($permissions, $pivotData);
+                    $role->permissions()->syncWithoutDetaching($syncData);
+                } else
+                {
+                    $role->permissions()->syncWithoutDetaching($permissions);
+                }
+            }
+        }
+
+    }
+    //-------------------------------------------------
+    public static function recountRelations()
+    {
+        $list = Permission::withTrashed()->select('id')->get();
+
+        if($list)
+        {
+            foreach ($list as $item)
+            {
+                $roles_ids = Permission::getPermissionRoleIds($item->id);
+                $item->count_roles = count($roles_ids);
+                $item->count_users = Permission::countUsers($item->id);
+                $item->save();
+            }
+        }
+
+    }
     //-------------------------------------------------
 }

@@ -31,6 +31,9 @@ class Role extends Model {
     ];
 
     //-------------------------------------------------
+    protected $appends  = [
+    ];
+    //-------------------------------------------------
     public function setSlugAttribute( $value ) {
         $this->attributes['slug'] = str_slug( $value );
     }
@@ -382,10 +385,10 @@ class Role extends Model {
     //-------------------------------------------------
     //-------------------------------------------------
     //-------------------------------------------------
-    public function roles() {
-        return $this->belongsToMany( 'WebReinvent\VaahCms\Entities\Role',
+    public function permissions() {
+        return $this->belongsToMany( 'WebReinvent\VaahCms\Entities\Permission',
             'vh_role_permissions', 'vh_role_id', 'vh_permission_id'
-        );
+        )->withPivot('is_active');
     }
     //-------------------------------------------------
     //-------------------------------------------------

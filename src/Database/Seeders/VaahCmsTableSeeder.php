@@ -25,16 +25,23 @@ class VaahCmsTableSeeder extends Seeder
      */
     function seedPermissions()
     {
-        $list = [
-            [
-                'name' => 'Can Access Admin Section',
-                'slug' => 'can_access_admin_section',
+        $permissions = [
+            'Can Access Admin Section',
+            'Can Manage Users',
+        ];
+
+        $list = [];
+        foreach ($permissions as $permission)
+        {
+            $list[] = [
+                'name' => $permission,
+                'slug' => str_slug($permission),
                 'module' => 'vaahcms',
                 'section' => 'admin',
                 'details' => 'This will allow user to access admin control panel',
                 'is_active' => 1,
-            ],
-        ];
+            ];
+        }
 
 
         foreach($list as $item)

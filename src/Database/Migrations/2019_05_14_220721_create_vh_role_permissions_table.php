@@ -17,6 +17,7 @@ class CreateVhRolePermissionsTable extends Migration
             $table->increments('id');
             $table->integer('vh_role_id');
             $table->integer('vh_permission_id');
+            $table->boolean('is_active');
             $table->integer('created_by')->nullable();
             $table->integer('updated_by')->nullable();
             $table->integer('deleted_by')->nullable();

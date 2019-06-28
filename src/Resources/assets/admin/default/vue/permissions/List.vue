@@ -1,7 +1,7 @@
 <template>
 
 
-        <div class="col-sm">
+        <div class="col-sm" v-if="list">
 
             <div class="card">
                 <div class="card-header">
@@ -9,7 +9,7 @@
                     <div class="d-flex">
                         <div class="align-self-center tx-18 flex-grow-1">
                             <strong>Permissions
-                                <span v-if="list">
+                                <span>
                                     ({{list.total}})
                                 </span>
                             </strong>
@@ -25,7 +25,7 @@
                                 <i class="fas fa-ellipsis-h"></i>
                             </button>
 
-                            <button class="btn btn-xs btn-light btn-uppercase" @click="getList">
+                            <button class="btn btn-xs btn-light btn-uppercase" @click="reloadList">
                                 <i class="fas fa-sync-alt"></i>
                             </button>
 
@@ -123,8 +123,8 @@
                                      }"
                                     v-on:click="setSorting('is_active')">Is Active
                                 </th>
+                                <th width="80" >Roles</th>
                                 <th v-if="!table_collapsed" width="80" >Users</th>
-                                <th v-if="!table_collapsed" width="80" >Roles</th>
                                 <th v-if="!table_collapsed" width="140" >Created At</th>
                                 <th width="80"></th>
                             </tr>
@@ -186,8 +186,17 @@
 
                             </td>
 
+                            <td>
+
+                                <router-link class="btn btn-tiny btn-primary"
+                                             :to="{ path: '/roles/'+item.id}">
+                                    {{item.count_roles}}
+                                </router-link>
+
+                            </td>
+
                             <td v-if="!table_collapsed">{{item.count_users}}</td>
-                            <td v-if="!table_collapsed">{{item.count_roles}}</td>
+
 
                             <td v-if="!table_collapsed">
                                 {{$helpers.dateTimeForHumans(item.created_at)}}

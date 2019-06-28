@@ -303,4 +303,9 @@ Route::group(
         Route::any( '/view/{id}', 'PermissionController@getDetails' )
             ->name( 'vh.admin.permissions.view' );
         //------------------------------------------------
+        Route::any( '/roles/{id}', 'PermissionController@getRoles' )
+            ->name( 'vh.admin.permissions.roles' );
+        //------------------------------------------------
+        //------------------------------------------------
+        //------------------------------------------------
     });
