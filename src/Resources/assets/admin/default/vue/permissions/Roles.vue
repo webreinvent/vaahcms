@@ -27,7 +27,7 @@
 
                     <div class="form-group">
                         <input type="text" class="form-control" v-model="filters.q"
-                               v-on:keyup.enter="getList"
+                               v-on:keyup.enter="getList(1)"
                                placeholder="Search Roles">
                     </div>
 
@@ -42,14 +42,14 @@
                             <td>{{item.name}}</td>
                             <td>
 
-                                <button v-if="item.is_active == 1"
-                                        @click="changeActiveStatus(item)"
+                                <button v-if="item.pivot.is_active == 1"
+                                        @click="toggleActiveStatus(item)"
                                         class="btn btn-tiny btn-success">
                                     Yes
                                 </button>
 
                                 <button v-else
-                                        @click="changeActiveStatus(item)"
+                                        @click="toggleActiveStatus(item)"
                                         class="btn btn-tiny btn-danger">
                                     No
                                 </button>

@@ -1,8 +1,8 @@
 import pagination from 'laravel-vue-pagination';
+import VaahVueClickToCopy from 'vaah-vue-clicktocopy'
 import {isObject} from "vue-resource/src/util";
 
-//https://github.com/euvl/vue-js-toggle-button
-import { ToggleButton } from 'vue-js-toggle-button'
+
 
 //https://github.com/voerro/vue-tagsinput
 
@@ -11,7 +11,7 @@ import { ToggleButton } from 'vue-js-toggle-button'
         props: ['urls', 'assets', 'reload_counter'],
         components:{
             'pagination': pagination,
-            'ToggleButton': ToggleButton,
+            'vh-copy': VaahVueClickToCopy
         },
         data()
         {
@@ -241,7 +241,11 @@ import { ToggleButton } from 'vue-js-toggle-button'
                 }
             },
             //---------------------------------------------------------------------
+            copiedData: function (data) {
 
+                this.$helpers.console(data, 'copied data');
+
+            }
             //---------------------------------------------------------------------
 
             //---------------------------------------------------------------------

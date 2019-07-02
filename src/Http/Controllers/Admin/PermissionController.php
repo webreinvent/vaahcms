@@ -171,6 +171,18 @@ class PermissionController extends Controller
 
                 break;
             //------------------------------------
+            case 'toggle_role_active_status':
+
+                if($response['status'] == 'success')
+                {
+                    $item = Permission::find($inputs['inputs']['id']);
+                    $item->roles()->updateExistingPivot($inputs['inputs']['role_id'], array('is_active' => $inputs['data']['is_active']));
+                    Permission::recountRelations();
+                    $response['messages'] = [];
+                }
+
+                break;
+            //------------------------------------
 
         }
 

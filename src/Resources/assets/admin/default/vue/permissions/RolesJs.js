@@ -64,11 +64,53 @@ import {isObject} from "vue-resource/src/util";
                 this.$helpers.console(data);
 
                 this.list = data.list;
+                this.page = data.list.current_page;
                 this.permission = data.permission;
 
                 this.$helpers.stopNprogress();
             },
 
+            //---------------------------------------------------------------------
+            actions: function (e, action, inputs, data) {
+                if(e)
+                {
+                    e.preventDefault();
+                }
+
+                var url = this.urls.current+"/actions";
+                var params = {
+                    action: action,
+                    inputs: inputs,
+                    data: data,
+                };
+
+                this.$helpers.ajax(url, params, this.actionsAfter);
+            },
+            //---------------------------------------------------------------------
+            actionsAfter: function (data) {
+                this.getList(this.page);
+                this.emitReloadList();
+            },
+            //---------------------------------------------------------------------
+            toggleActiveStatus: function (item) {
+                var inputs = {id: this.id, role_id: item.id};
+                var data = {};
+
+                if(item.pivot.is_active)
+                {
+                    data.is_active = 0;
+                } else
+                {
+                    data.is_active = 1;
+                }
+
+                this.actions(false, 'toggle_role_active_status', inputs, data)
+
+            },
+            //---------------------------------------------------------------------
+            emitReloadList: function () {
+                this.$root.$emit('reloadList');
+            }
             //---------------------------------------------------------------------
             //---------------------------------------------------------------------
             //---------------------------------------------------------------------

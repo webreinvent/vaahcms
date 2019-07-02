@@ -60,6 +60,9 @@
 
                         <div class="col-sm-12">
 
+                            <vh-copy class="btn btn-primary" :data="'Data Copied'" :text="'Click to Copy'"
+                            @copied="copiedData"
+                            ></vh-copy>
 
                             <div class="input-group input-group-sm" style="max-width: 350px;">
                                 <select class="custom-select" v-model="bulk_action" style="max-width: 150px" >
