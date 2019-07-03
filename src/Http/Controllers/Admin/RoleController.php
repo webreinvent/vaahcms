@@ -172,6 +172,40 @@ class RoleController extends Controller
 
                 break;
             //------------------------------------
+            case 'toggle_permission_active_status':
+
+                if($response['status'] == 'success')
+                {
+                    $item = Role::find($inputs['inputs']['id']);
+
+                    if($item->id == 1)
+                    {
+                        $response['status'] = 'failed';
+                        $response['errors'][] = 'Admin permission can not be changed';
+                        return response()->json($response);
+
+                    }
+
+                    $item->permissions()->updateExistingPivot($inputs['inputs']['permission_id'], array('is_active' => $inputs['data']['is_active']));
+                    Role::recountRelations();
+                    $response['messages'] = [];
+                }
+
+                break;
+            //------------------------------------
+            case 'toggle_user_active_status':
+
+                if($response['status'] == 'success')
+                {
+                    $item = Role::find($inputs['inputs']['id']);
+                    $item->users()->updateExistingPivot($inputs['inputs']['user_id'], array('is_active' => $inputs['data']['is_active']));
+                    Role::recountRelations();
+                    $response['messages'] = [];
+                }
+
+                break;
+            //------------------------------------
+            //------------------------------------
 
         }
 
@@ -182,7 +216,7 @@ class RoleController extends Controller
     public function getPermissions(Request $request, $id)
     {
         $item = Role::withTrashed()->where('id', $id)->first();
-        $response['data']['role'] = $item;
+        $response['data']['item'] = $item;
 
         if($request->has("q"))
         {
@@ -194,6 +228,9 @@ class RoleController extends Controller
         {
             $list = $item->permissions();
         }
+
+        $list->orderBy('pivot_is_active', 'desc');
+
         $list = $list->paginate(config('vaahcms.per_page'));
 
         $response['data']['list'] = $list;
@@ -206,7 +243,7 @@ class RoleController extends Controller
     public function getUsers(Request $request, $id)
     {
         $item = Role::withTrashed()->where('id', $id)->first();
-        $response['data']['role'] = $item;
+        $response['data']['item'] = $item;
 
         if($request->has("q"))
         {
@@ -218,6 +255,9 @@ class RoleController extends Controller
         {
             $list = $item->users();
         }
+
+        $list->orderBy('pivot_is_active', 'desc');
+
         $list = $list->paginate(config('vaahcms.per_page'));
 
         $response['data']['list'] = $list;

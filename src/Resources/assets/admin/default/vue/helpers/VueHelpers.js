@@ -49,7 +49,7 @@ const VueHelpers = {
                 }
             }).catch(error => {
 
-                if(error.response.status === "419")
+                if(error.response && error.response && error.response.status === "419")
                 {
                     this.$helpers.console(error);
                     this.errors(["Login expired, try to login again."]);
@@ -72,8 +72,8 @@ const VueHelpers = {
 
                 } else {
                     // Something happened in setting up the request that triggered an Error
-                    this.$helpers.console(error.message);
-                    this.errors([error.message]);
+                    console.error(error);
+                    this.errors(["Error: check console"]);
                 }
 
         });

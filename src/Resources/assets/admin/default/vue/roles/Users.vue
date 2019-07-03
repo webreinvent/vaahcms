@@ -4,11 +4,11 @@
         <div class="col-sm">
 
             <div class="card" >
-                <div class="card-header" v-if="permission && list">
+                <div class="card-header" v-if="item">
 
                     <div class="d-flex">
                         <div class="align-self-center tx-15 flex-grow-1">
-                            <strong>{{permission.name}} > Roles ({{list.total}})
+                            <strong>{{item.name}} > Users
                             </strong>
                         </div>
                         <div class=" mg-l-auto btn-group btn-group-xs">
@@ -28,18 +28,20 @@
                     <div class="form-group">
                         <input type="text" class="form-control" v-model="filters.q"
                                v-on:keyup.enter="getList(1)"
-                               placeholder="Search Roles">
+                               placeholder="Search Users">
                     </div>
 
                     <table class="table table-striped table-sm table-condensed  table-form table-form-view">
 
                         <thead>
-                        <th>Role</th>
-                        <th width="120">Has Permission</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th width="120">Has Role</th>
                         </thead>
                         <tbody>
                         <tr v-for="item in list.data">
                             <td>{{item.name}}</td>
+                            <td>{{item.email}}</td>
                             <td>
 
                                 <button v-if="item.pivot.is_active == 1"

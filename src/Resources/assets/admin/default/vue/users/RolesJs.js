@@ -1,4 +1,5 @@
 import pagination from 'laravel-vue-pagination';
+import {isObject} from "vue-resource/src/util";
 
     export default {
 
@@ -10,11 +11,11 @@ import pagination from 'laravel-vue-pagination';
         {
             let obj = {
                 list: null,
-                item: null,
                 page: 1,
                 filters: {
                     q: null,
                 },
+                permission: null,
             };
             return obj;
         },
@@ -38,9 +39,9 @@ import pagination from 'laravel-vue-pagination';
         methods: {
             //---------------------------------------------------------------------
             getList: function (page) {
-                var url = this.urls.current+"/users/"+this.id;
+                var url = this.urls.current+"/roles/"+this.id;
 
-                if(!page)
+                if(!page || isObject(page))
                 {
                     page = this.page;
                 }
@@ -64,7 +65,7 @@ import pagination from 'laravel-vue-pagination';
 
                 this.list = data.list;
                 this.page = data.list.current_page;
-                this.item = data.item;
+                this.permission = data.permission;
 
                 this.$helpers.stopNprogress();
             },
@@ -92,7 +93,7 @@ import pagination from 'laravel-vue-pagination';
             },
             //---------------------------------------------------------------------
             toggleActiveStatus: function (item) {
-                var inputs = {id: this.id, user_id: item.id};
+                var inputs = {id: this.id, role_id: item.id};
                 var data = {};
 
                 if(item.pivot.is_active)
@@ -103,7 +104,7 @@ import pagination from 'laravel-vue-pagination';
                     data.is_active = 1;
                 }
 
-                this.actions(false, 'toggle_user_active_status', inputs, data)
+                this.actions(false, 'toggle_role_active_status', inputs, data)
 
             },
             //---------------------------------------------------------------------

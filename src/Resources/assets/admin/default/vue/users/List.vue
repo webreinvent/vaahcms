@@ -122,6 +122,7 @@
                                     v-on:click="setSorting('email')">Email
 
                                 </th>
+
                                 <th class="sortable"
                                     width="80"
                                     v-bind:class="{
@@ -130,6 +131,7 @@
                                      }"
                                     v-on:click="setSorting('is_active')">Is Active
                                 </th>
+                                <th>Roles</th>
                                 <th v-if="!table_collapsed" class="sortable"
                                     width="120"
                                     v-bind:class="{
@@ -153,7 +155,7 @@
 
 
 
-                            <td colspan="9" class="pd-0-f" >
+                            <td colspan="10" class="pd-0-f" >
 
                                 <div class="search-form table-search">
                                     <input type="search" class="form-control form-control-sm"
@@ -200,6 +202,14 @@
                                 </button>
 
                             </td>
+
+                            <td>
+                                <router-link class="btn btn-tiny btn-primary"
+                                             :to="{ path: '/roles/'+item.id}">
+                                    {{item.active_roles_count}}
+                                </router-link>
+                            </td>
+
                             <td v-if="!table_collapsed">
 
                                 <span v-if="item.status == 'active'" class="badge badge-success">

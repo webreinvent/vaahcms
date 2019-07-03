@@ -95,6 +95,7 @@ class UserController extends Controller
         }
 
 
+        $list->withCount(['activeRoles']);
 
         $data['list'] = $list->paginate(config('vaahcms.per_page'));
 
@@ -199,7 +200,34 @@ class UserController extends Controller
 
     }
     //----------------------------------------------------------
+    public function getRoles(Request $request, $id)
+    {
+        $item = User::withTrashed()->where('id', $id)->first();
 
+        $response['data']['permission'] = $item;
+
+
+        if($request->has("q"))
+        {
+            $list = $item->roles()->where(function ($q) use ($request){
+                $q->where('name', 'LIKE', '%'.$request->q.'%')
+                    ->orWhere('slug', 'LIKE', '%'.$request->q.'%');
+            });
+        } else
+        {
+            $list = $item->roles();
+        }
+
+        $list->orderBy('pivot_is_active', 'desc');
+
+        $list = $list->paginate(config('vaahcms.per_page'));
+
+        $response['data']['list'] = $list;
+
+        $response['status'] = 'success';
+
+        return response()->json($response);
+    }
     //----------------------------------------------------------
     //----------------------------------------------------------
     //----------------------------------------------------------

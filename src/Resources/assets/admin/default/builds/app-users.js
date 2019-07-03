@@ -75203,7 +75203,7 @@ var VueHelpers = {
         }
       }
     })["catch"](function (error) {
-      if (error.response.status === "419") {
+      if (error.response && error.response && error.response.status === "419") {
         _this.$helpers.console(error);
 
         _this.errors(["Login expired, try to login again."]);
@@ -75223,9 +75223,9 @@ var VueHelpers = {
         _this.errors(['Server not responding']);
       } else {
         // Something happened in setting up the request that triggered an Error
-        _this.$helpers.console(error.message);
+        console.error(error);
 
-        _this.errors([error.message]);
+        _this.errors(["Error: check console"]);
       }
     });
   },
@@ -78456,6 +78456,8 @@ var render = function() {
                       [_vm._v("Is Active\n                        ")]
                     ),
                     _vm._v(" "),
+                    _c("th", [_vm._v("Roles")]),
+                    _vm._v(" "),
                     !_vm.table_collapsed
                       ? _c(
                           "th",
@@ -78502,7 +78504,7 @@ var render = function() {
                     _c("tr", [
                       _c(
                         "td",
-                        { staticClass: "pd-0-f", attrs: { colspan: "9" } },
+                        { staticClass: "pd-0-f", attrs: { colspan: "10" } },
                         [
                           _c(
                             "div",
@@ -78643,6 +78645,27 @@ var render = function() {
                                 ]
                               )
                         ]),
+                        _vm._v(" "),
+                        _c(
+                          "td",
+                          [
+                            _c(
+                              "router-link",
+                              {
+                                staticClass: "btn btn-tiny btn-primary",
+                                attrs: { to: { path: "/roles/" + item.id } }
+                              },
+                              [
+                                _vm._v(
+                                  "\n                            " +
+                                    _vm._s(item.active_roles_count) +
+                                    "\n                        "
+                                )
+                              ]
+                            )
+                          ],
+                          1
+                        ),
                         _vm._v(" "),
                         !_vm.table_collapsed
                           ? _c("td", [

@@ -11,6 +11,7 @@ import {isObject} from "vue-resource/src/util";
         {
             let obj = {
                 list: null,
+                item: null,
                 page: 1,
                 filters: {
                     q: null,
@@ -39,7 +40,7 @@ import {isObject} from "vue-resource/src/util";
         methods: {
             //---------------------------------------------------------------------
             getList: function (page) {
-                var url = this.urls.current+"/roles/"+this.id;
+                var url = this.urls.current+"/permissions/"+this.id;
 
                 if(!page || isObject(page))
                 {
@@ -63,9 +64,11 @@ import {isObject} from "vue-resource/src/util";
 
                 this.$helpers.console(data);
 
+                this.list = {};
+
                 this.list = data.list;
                 this.page = data.list.current_page;
-                this.permission = data.permission;
+                this.item = data.item;
 
                 this.$helpers.stopNprogress();
             },
@@ -93,7 +96,7 @@ import {isObject} from "vue-resource/src/util";
             },
             //---------------------------------------------------------------------
             toggleActiveStatus: function (item) {
-                var inputs = {id: this.id, role_id: item.id};
+                var inputs = {id: this.id, permission_id: item.id};
                 var data = {};
 
                 if(item.pivot.is_active)
@@ -104,7 +107,7 @@ import {isObject} from "vue-resource/src/util";
                     data.is_active = 1;
                 }
 
-                this.actions(false, 'toggle_role_active_status', inputs, data)
+                this.actions(false, 'toggle_permission_active_status', inputs, data)
 
             },
             //---------------------------------------------------------------------

@@ -247,6 +247,9 @@ Route::group(
         Route::any( '/view/{id}', 'UserController@getDetails' )
             ->name( 'vh.admin.users.view' );
         //------------------------------------------------
+        Route::any( '/roles/{id}', 'UserController@getRoles' )
+            ->name( 'vh.admin.users.roles' );
+        //------------------------------------------------
     });
 
 Route::group(

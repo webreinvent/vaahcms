@@ -4,11 +4,11 @@
         <div class="col-sm">
 
             <div class="card" >
-                <div class="card-header" >
+                <div class="card-header" v-if="permission && list">
 
-                    <div class="d-flex" v-if="item">
+                    <div class="d-flex">
                         <div class="align-self-center tx-15 flex-grow-1">
-                            <strong>{{item.name}} > Permissions
+                            <strong>{{permission.name}} > Roles ({{list.total}})
                             </strong>
                         </div>
                         <div class=" mg-l-auto btn-group btn-group-xs">
@@ -40,7 +40,7 @@
                         <tbody>
                         <tr v-for="item in list.data">
                             <td>{{item.name}}</td>
-                            <td v-if="id != 1">
+                            <td>
 
                                 <button v-if="item.pivot.is_active == 1"
                                         @click="toggleActiveStatus(item)"
@@ -56,13 +56,6 @@
 
 
                             </td>
-
-                            <td v-else>
-                                <button class="btn btn-tiny btn-secondary">
-                                    Yes
-                                </button>
-                            </td>
-
                         </tr>
                         </tbody>
 
@@ -83,4 +76,4 @@
 
 
 </template>
-<script src="./PermissionsJs.js"></script>
+<script src="./RolesJs.js"></script>

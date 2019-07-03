@@ -75203,7 +75203,7 @@ var VueHelpers = {
         }
       }
     })["catch"](function (error) {
-      if (error.response.status === "419") {
+      if (error.response && error.response && error.response.status === "419") {
         _this.$helpers.console(error);
 
         _this.errors(["Login expired, try to login again."]);
@@ -75223,9 +75223,9 @@ var VueHelpers = {
         _this.errors(['Server not responding']);
       } else {
         // Something happened in setting up the request that triggered an Error
-        _this.$helpers.console(error.message);
+        console.error(error);
 
-        _this.errors([error.message]);
+        _this.errors(["Error: check console"]);
       }
     });
   },
@@ -76797,6 +76797,7 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     var obj = {
       list: null,
+      item: null,
       page: 1,
       filters: {
         q: null
@@ -76820,7 +76821,7 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     //---------------------------------------------------------------------
     getList: function getList(page) {
-      var url = this.urls.current + "/roles/" + this.id;
+      var url = this.urls.current + "/permissions/" + this.id;
 
       if (!page || Object(vue_resource_src_util__WEBPACK_IMPORTED_MODULE_1__["isObject"])(page)) {
         page = this.page;
@@ -76839,9 +76840,10 @@ __webpack_require__.r(__webpack_exports__);
     //---------------------------------------------------------------------
     getListAfter: function getListAfter(data) {
       this.$helpers.console(data);
+      this.list = {};
       this.list = data.list;
       this.page = data.list.current_page;
-      this.permission = data.permission;
+      this.item = data.item;
       this.$helpers.stopNprogress();
     },
     //---------------------------------------------------------------------
@@ -76867,7 +76869,7 @@ __webpack_require__.r(__webpack_exports__);
     toggleActiveStatus: function toggleActiveStatus(item) {
       var inputs = {
         id: this.id,
-        role_id: item.id
+        permission_id: item.id
       };
       var data = {};
 
@@ -76877,7 +76879,7 @@ __webpack_require__.r(__webpack_exports__);
         data.is_active = 1;
       }
 
-      this.actions(false, 'toggle_role_active_status', inputs, data);
+      this.actions(false, 'toggle_permission_active_status', inputs, data);
     },
     //---------------------------------------------------------------------
     emitReloadList: function emitReloadList() {
@@ -76902,8 +76904,6 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var laravel_vue_pagination__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! laravel-vue-pagination */ "../../node_modules/laravel-vue-pagination/dist/laravel-vue-pagination.common.js");
 /* harmony import */ var laravel_vue_pagination__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(laravel_vue_pagination__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var vue_resource_src_util__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue-resource/src/util */ "../../node_modules/vue-resource/src/util.js");
-
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['urls', 'id'],
@@ -76913,11 +76913,11 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     var obj = {
       list: null,
+      item: null,
       page: 1,
       filters: {
         q: null
-      },
-      permission: null
+      }
     };
     return obj;
   },
@@ -76936,9 +76936,9 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     //---------------------------------------------------------------------
     getList: function getList(page) {
-      var url = this.urls.current + "/roles/" + this.id;
+      var url = this.urls.current + "/users/" + this.id;
 
-      if (!page || Object(vue_resource_src_util__WEBPACK_IMPORTED_MODULE_1__["isObject"])(page)) {
+      if (!page) {
         page = this.page;
       }
 
@@ -76957,7 +76957,7 @@ __webpack_require__.r(__webpack_exports__);
       this.$helpers.console(data);
       this.list = data.list;
       this.page = data.list.current_page;
-      this.permission = data.permission;
+      this.item = data.item;
       this.$helpers.stopNprogress();
     },
     //---------------------------------------------------------------------
@@ -76983,7 +76983,7 @@ __webpack_require__.r(__webpack_exports__);
     toggleActiveStatus: function toggleActiveStatus(item) {
       var inputs = {
         id: this.id,
-        role_id: item.id
+        user_id: item.id
       };
       var data = {};
 
@@ -76993,7 +76993,7 @@ __webpack_require__.r(__webpack_exports__);
         data.is_active = 1;
       }
 
-      this.actions(false, 'toggle_role_active_status', inputs, data);
+      this.actions(false, 'toggle_user_active_status', inputs, data);
     },
     //---------------------------------------------------------------------
     emitReloadList: function emitReloadList() {
@@ -78471,7 +78471,7 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "col-sm" }, [
+  return _c("div", { staticClass: "col-sm mg-b-10" }, [
     _c("div", { staticClass: "card" }, [
       _c("div", { staticClass: "card-header" }, [
         _c("div", { staticClass: "d-flex" }, [
@@ -79125,19 +79125,17 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "col-sm" }, [
     _c("div", { staticClass: "card" }, [
-      _vm.permission && _vm.list
-        ? _c("div", { staticClass: "card-header" }, [
-            _c("div", { staticClass: "d-flex" }, [
+      _c("div", { staticClass: "card-header" }, [
+        _vm.item
+          ? _c("div", { staticClass: "d-flex" }, [
               _c(
                 "div",
                 { staticClass: "align-self-center tx-15 flex-grow-1" },
                 [
                   _c("strong", [
                     _vm._v(
-                      _vm._s(_vm.permission.name) +
-                        " > Roles (" +
-                        _vm._s(_vm.list.total) +
-                        ")\n                    "
+                      _vm._s(_vm.item.name) +
+                        " > Permissions\n                    "
                     )
                   ])
                 ]
@@ -79159,8 +79157,8 @@ var render = function() {
                 1
               )
             ])
-          ])
-        : _vm._e(),
+          : _vm._e()
+      ]),
       _vm._v(" "),
       _vm.list
         ? _c("div", { staticClass: "card-body" }, [
@@ -79212,41 +79210,53 @@ var render = function() {
                     return _c("tr", [
                       _c("td", [_vm._v(_vm._s(item.name))]),
                       _vm._v(" "),
-                      _c("td", [
-                        item.pivot.is_active == 1
-                          ? _c(
+                      _vm.id != 1
+                        ? _c("td", [
+                            item.pivot.is_active == 1
+                              ? _c(
+                                  "button",
+                                  {
+                                    staticClass: "btn btn-tiny btn-success",
+                                    on: {
+                                      click: function($event) {
+                                        return _vm.toggleActiveStatus(item)
+                                      }
+                                    }
+                                  },
+                                  [
+                                    _vm._v(
+                                      "\n                            Yes\n                        "
+                                    )
+                                  ]
+                                )
+                              : _c(
+                                  "button",
+                                  {
+                                    staticClass: "btn btn-tiny btn-danger",
+                                    on: {
+                                      click: function($event) {
+                                        return _vm.toggleActiveStatus(item)
+                                      }
+                                    }
+                                  },
+                                  [
+                                    _vm._v(
+                                      "\n                            No\n                        "
+                                    )
+                                  ]
+                                )
+                          ])
+                        : _c("td", [
+                            _c(
                               "button",
-                              {
-                                staticClass: "btn btn-tiny btn-success",
-                                on: {
-                                  click: function($event) {
-                                    return _vm.toggleActiveStatus(item)
-                                  }
-                                }
-                              },
+                              { staticClass: "btn btn-tiny btn-secondary" },
                               [
                                 _vm._v(
                                   "\n                            Yes\n                        "
                                 )
                               ]
                             )
-                          : _c(
-                              "button",
-                              {
-                                staticClass: "btn btn-tiny btn-danger",
-                                on: {
-                                  click: function($event) {
-                                    return _vm.toggleActiveStatus(item)
-                                  }
-                                }
-                              },
-                              [
-                                _vm._v(
-                                  "\n                            No\n                        "
-                                )
-                              ]
-                            )
-                      ])
+                          ])
                     ])
                   }),
                   0
@@ -79307,7 +79317,7 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "col-sm" }, [
     _c("div", { staticClass: "card" }, [
-      _vm.permission && _vm.list
+      _vm.item
         ? _c("div", { staticClass: "card-header" }, [
             _c("div", { staticClass: "d-flex" }, [
               _c(
@@ -79316,10 +79326,7 @@ var render = function() {
                 [
                   _c("strong", [
                     _vm._v(
-                      _vm._s(_vm.permission.name) +
-                        " > Roles (" +
-                        _vm._s(_vm.list.total) +
-                        ")\n                    "
+                      _vm._s(_vm.item.name) + " > Users\n                    "
                     )
                   ])
                 ]
@@ -79357,7 +79364,7 @@ var render = function() {
                   }
                 ],
                 staticClass: "form-control",
-                attrs: { type: "text", placeholder: "Search Roles" },
+                attrs: { type: "text", placeholder: "Search Users" },
                 domProps: { value: _vm.filters.q },
                 on: {
                   keyup: function($event) {
@@ -79393,6 +79400,8 @@ var render = function() {
                   _vm._l(_vm.list.data, function(item) {
                     return _c("tr", [
                       _c("td", [_vm._v(_vm._s(item.name))]),
+                      _vm._v(" "),
+                      _c("td", [_vm._v(_vm._s(item.email))]),
                       _vm._v(" "),
                       _c("td", [
                         item.pivot.is_active == 1
@@ -79460,9 +79469,11 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("thead", [
-      _c("th", [_vm._v("Role")]),
+      _c("th", [_vm._v("Name")]),
       _vm._v(" "),
-      _c("th", { attrs: { width: "120" } }, [_vm._v("Has Permission")])
+      _c("th", [_vm._v("Email")]),
+      _vm._v(" "),
+      _c("th", { attrs: { width: "120" } }, [_vm._v("Has Role")])
     ])
   }
 ]

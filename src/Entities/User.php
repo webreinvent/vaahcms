@@ -382,9 +382,14 @@ class User extends Authenticatable
     {
         return $this->belongsToMany('WebReinvent\VaahCms\Entities\Role',
             'vh_user_roles', 'vh_user_id', 'vh_role_id'
-        );
+        )->withPivot('is_active');
     }
 
+    //-------------------------------------------------
+    public function activeRoles()
+    {
+        return $this->roles()->wherePivot('is_active', 1);
+    }
     //-------------------------------------------------
     public static function countAdmins()
     {

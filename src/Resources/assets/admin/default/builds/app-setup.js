@@ -72662,7 +72662,7 @@ var VueHelpers = {
         }
       }
     })["catch"](function (error) {
-      if (error.response.status === "419") {
+      if (error.response && error.response && error.response.status === "419") {
         _this.$helpers.console(error);
 
         _this.errors(["Login expired, try to login again."]);
@@ -72682,9 +72682,9 @@ var VueHelpers = {
         _this.errors(['Server not responding']);
       } else {
         // Something happened in setting up the request that triggered an Error
-        _this.$helpers.console(error.message);
+        console.error(error);
 
-        _this.errors([error.message]);
+        _this.errors(["Error: check console"]);
       }
     });
   },
