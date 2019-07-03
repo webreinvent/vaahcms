@@ -240,3 +240,24 @@ body{
     border-radius: 3px;
     border: 0px;
 }
+
+.text-copyable{
+    padding: 2px 4px;
+    display: inline-block;
+}
+
+
+.text-copyable i{
+    text-align: right;
+    opacity: 0;
+    display: inline-block;
+}
+
+.text-copyable:hover{
+
+}
+
+.text-copyable:hover i{
+
+    opacity: 1;
+}

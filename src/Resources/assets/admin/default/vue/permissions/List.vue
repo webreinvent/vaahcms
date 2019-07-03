@@ -60,9 +60,9 @@
 
                         <div class="col-sm-12">
 
-                            <vh-copy class="btn btn-primary" :data="'Data Copied'" :text="'Click to Copy'"
-                            @copied="copiedData"
-                            ></vh-copy>
+
+
+
 
                             <div class="input-group input-group-sm" style="max-width: 350px;">
                                 <select class="custom-select" v-model="bulk_action" style="max-width: 150px" >
@@ -109,12 +109,11 @@
                                     ID
                                 </th>
                                 <th class="sortable"
-                                    width="150"
                                     v-bind:class="{
-                                    'asc': filters.sort_by === 'first_name' && filters.sort_type === 'asc',
-                                    'desc': filters.sort_by === 'first_name' && filters.sort_type === 'desc',
+                                    'asc': filters.sort_by === 'name' && filters.sort_type === 'asc',
+                                    'desc': filters.sort_by === 'name' && filters.sort_type === 'desc',
                                      }"
-                                    v-on:click="setSorting('first_name')">
+                                    v-on:click="setSorting('name')">
                                     Name
                                 </th>
                                 <th>Slug</th>
@@ -171,7 +170,15 @@
                             </td>
                             <td>{{item.id}}</td>
                             <td>{{item.name}}</td>
-                            <td>{{item.slug}}</td>
+                            <td>
+                                <vh-copy class="text-copyable"
+                                         :data="item.slug"
+                                         :text="item.slug"
+                                         :iconClass="'fas fa-copy'"
+                                         @copied="copiedData"
+                                ></vh-copy>
+
+                            </td>
                             <td>
 
 

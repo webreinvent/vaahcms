@@ -207,7 +207,7 @@ class PermissionController extends Controller
         {
             $list = $item->roles();
         }
-        $list = $list->paginate(1);
+        $list = $list->paginate(config('vaahcms.per_page'));
 
         $response['data']['list'] = $list;
 

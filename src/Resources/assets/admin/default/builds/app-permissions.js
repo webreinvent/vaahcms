@@ -56203,7 +56203,7 @@ module.exports = function () {
 __webpack_require__.r(__webpack_exports__);
 /* WEBPACK VAR INJECTION */(function(global) {/* harmony import */ var copy_to_clipboard__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! copy-to-clipboard */ "../../node_modules/copy-to-clipboard/index.js");
 /* harmony import */ var copy_to_clipboard__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(copy_to_clipboard__WEBPACK_IMPORTED_MODULE_0__);
-var e=function(t,e,n,o,a,i,r,s,d,c){"boolean"!=typeof r&&(d=s,s=r,r=!1);var l,u="function"==typeof n?n.options:n;if(t&&t.render&&(u.render=t.render,u.staticRenderFns=t.staticRenderFns,u._compiled=!0,a&&(u.functional=!0)),o&&(u._scopeId=o),i?(l=function(t){(t=t||this.$vnode&&this.$vnode.ssrContext||this.parent&&this.parent.$vnode&&this.parent.$vnode.ssrContext)||"undefined"==typeof __VUE_SSR_CONTEXT__||(t=__VUE_SSR_CONTEXT__),e&&e.call(this,d(t)),t&&t._registeredComponents&&t._registeredComponents.add(i)},u._ssrRegister=l):e&&(l=r?function(){e.call(this,c(this.$root.$options.shadowRoot))}:function(t){e.call(this,s(t))}),l)if(u.functional){var f=u.render;u.render=function(t,e){return l.call(e),f(t,e)}}else{var p=u.beforeCreate;u.beforeCreate=p?[].concat(p,l):[l]}return n}({render:function(){var t=this,e=t.$createElement;return(t._self._c||e)("span",{staticClass:"vaah-vue-clicktocopy",on:{click:function(e){return t.copyData()}}},[t._v("\n    "+t._s(t.vh_text)+"\n")])},staticRenderFns:[]},void 0,{name:"VaahVueClickToCopy",props:{data:{type:String,default:null},text:{type:String,default:null}},data:function(){return{vh_data:this.data,vh_text:this.data}},methods:{copyData:function(){copy_to_clipboard__WEBPACK_IMPORTED_MODULE_0___default()(this.vh_data),this.$emit("copied",this.vh_data)}}},"data-v-1792eeb1",!1,void 0,void 0,void 0);function n(t){n.installed||(n.installed=!0,t.component("vaah-vue-clicktocopy",e))}var o={install:n},a=null;"undefined"!=typeof window?a=window.Vue:"undefined"!=typeof global&&(a=global.Vue),a&&a.use(o),e.install=n;/* harmony default export */ __webpack_exports__["default"] = (e);
+var t={name:"VaahVueClickToCopy",props:{data:{type:String,default:null},text:{type:String,default:null},iconClass:{type:String,default:null}},data:function(){return{vh_data:this.data,vh_text:this.data,vh_iconClass:this.iconClass}},methods:{copyData:function(){copy_to_clipboard__WEBPACK_IMPORTED_MODULE_0___default()(this.vh_data),this.$emit("copied",this.vh_data)}}};var n,a=function(e,t,n,a,o,i,s,d,r,l){"boolean"!=typeof s&&(r=d,d=s,s=!1);var c,u="function"==typeof n?n.options:n;if(e&&e.render&&(u.render=e.render,u.staticRenderFns=e.staticRenderFns,u._compiled=!0,o&&(u.functional=!0)),a&&(u._scopeId=a),i?(c=function(e){(e=e||this.$vnode&&this.$vnode.ssrContext||this.parent&&this.parent.$vnode&&this.parent.$vnode.ssrContext)||"undefined"==typeof __VUE_SSR_CONTEXT__||(e=__VUE_SSR_CONTEXT__),t&&t.call(this,r(e)),e&&e._registeredComponents&&e._registeredComponents.add(i)},u._ssrRegister=c):t&&(c=s?function(){t.call(this,l(this.$root.$options.shadowRoot))}:function(e){t.call(this,d(e))}),c)if(u.functional){var p=u.render;u.render=function(e,t){return c.call(t),p(e,t)}}else{var f=u.beforeCreate;u.beforeCreate=f?[].concat(f,c):[c]}return n},o="undefined"!=typeof navigator&&/msie [6-9]\\b/.test(navigator.userAgent.toLowerCase());var i={};var s=a({render:function(){var e=this,t=e.$createElement,n=e._self._c||t;return n("span",{staticClass:"vaah-vue-clicktocopy",on:{click:function(t){return e.copyData()}}},[e._v("\n    "+e._s(e.vh_text)+"\n    "),e.vh_iconClass?n("i",{class:e.vh_iconClass}):e._e()])},staticRenderFns:[]},function(e){e&&e("data-v-537aed0d_0",{source:".vaah-vue-clicktocopy[data-v-537aed0d]{cursor:pointer}",map:void 0,media:void 0})},t,"data-v-537aed0d",!1,void 0,function(e){return function(e,t){return function(e,t){var a=o?t.media||"default":e,s=i[a]||(i[a]={ids:new Set,styles:[]});if(!s.ids.has(e)){s.ids.add(e);var d=t.source;if(t.map&&(d+="\n/*# sourceURL="+t.map.sources[0]+" */",d+="\n/*# sourceMappingURL=data:application/json;base64,"+btoa(unescape(encodeURIComponent(JSON.stringify(t.map))))+" */"),s.element||(s.element=document.createElement("style"),s.element.type="text/css",t.media&&s.element.setAttribute("media",t.media),void 0===n&&(n=document.head||document.getElementsByTagName("head")[0]),n.appendChild(s.element)),"styleSheet"in s.element)s.styles.push(d),s.element.styleSheet.cssText=s.styles.filter(Boolean).join("\n");else{var r=s.ids.size-1,l=document.createTextNode(d),c=s.element.childNodes;c[r]&&s.element.removeChild(c[r]),c.length?s.element.insertBefore(l,c[r]):s.element.appendChild(l)}}}(e,t)}},void 0);function d(e){d.installed||(d.installed=!0,e.component("vaah-vue-clicktocopy",s))}var r={install:d},l=null;"undefined"!=typeof window?l=window.Vue:"undefined"!=typeof global&&(l=global.Vue),l&&l.use(r),s.install=d;/* harmony default export */ __webpack_exports__["default"] = (s);
 
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../../packages/vaahcms/node_modules/webpack/buildin/global.js */ "./node_modules/webpack/buildin/global.js")))
 
@@ -76030,6 +76030,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     //---------------------------------------------------------------------
     copiedData: function copiedData(data) {
+      alertify.success('copied');
       this.$helpers.console(data, 'copied data');
     } //---------------------------------------------------------------------
     //---------------------------------------------------------------------
@@ -77234,136 +77235,124 @@ var render = function() {
           _vm._v(" "),
           _c("div", { staticClass: "card-body" }, [
             _c("div", { staticClass: "row mg-b-10" }, [
-              _c(
-                "div",
-                { staticClass: "col-sm-12" },
-                [
-                  _c("vh-copy", {
-                    staticClass: "btn btn-primary",
-                    attrs: { data: "Data Copied", text: "Click to Copy" },
-                    on: { copied: _vm.copiedData }
-                  }),
-                  _vm._v(" "),
-                  _c(
-                    "div",
-                    {
-                      staticClass: "input-group input-group-sm",
-                      staticStyle: { "max-width": "350px" }
-                    },
-                    [
-                      _c(
-                        "select",
-                        {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.bulk_action,
-                              expression: "bulk_action"
-                            }
-                          ],
-                          staticClass: "custom-select",
-                          staticStyle: { "max-width": "150px" },
-                          on: {
-                            change: function($event) {
-                              var $$selectedVal = Array.prototype.filter
-                                .call($event.target.options, function(o) {
-                                  return o.selected
-                                })
-                                .map(function(o) {
-                                  var val = "_value" in o ? o._value : o.value
-                                  return val
-                                })
-                              _vm.bulk_action = $event.target.multiple
-                                ? $$selectedVal
-                                : $$selectedVal[0]
-                            }
-                          }
-                        },
-                        [
-                          _c("option", { attrs: { value: "" } }, [
-                            _vm._v("Bulk Actions")
-                          ]),
-                          _vm._v(" "),
-                          _c(
-                            "option",
-                            { attrs: { value: "bulk_change_status" } },
-                            [_vm._v("Change Status")]
-                          ),
-                          _vm._v(" "),
-                          _c("option", { attrs: { value: "bulk_delete" } }, [
-                            _vm._v("Delete")
-                          ]),
-                          _vm._v(" "),
-                          _c("option", { attrs: { value: "bulk_restore" } }, [
-                            _vm._v("Restore")
-                          ])
-                        ]
-                      ),
-                      _vm._v(" "),
-                      _vm.bulk_action && _vm.bulk_action == "bulk_change_status"
-                        ? _c(
-                            "select",
-                            {
-                              directives: [
-                                {
-                                  name: "model",
-                                  rawName: "v-model",
-                                  value: _vm.bulk_action_data,
-                                  expression: "bulk_action_data"
-                                }
-                              ],
-                              staticClass: "custom-select",
-                              attrs: { width: "max-width: 150px" },
-                              on: {
-                                change: function($event) {
-                                  var $$selectedVal = Array.prototype.filter
-                                    .call($event.target.options, function(o) {
-                                      return o.selected
-                                    })
-                                    .map(function(o) {
-                                      var val =
-                                        "_value" in o ? o._value : o.value
-                                      return val
-                                    })
-                                  _vm.bulk_action_data = $event.target.multiple
-                                    ? $$selectedVal
-                                    : $$selectedVal[0]
-                                }
-                              }
-                            },
-                            [
-                              _c("option", { attrs: { value: "" } }, [
-                                _vm._v("Select Status")
-                              ]),
-                              _vm._v(" "),
-                              _c("option", { attrs: { value: "1" } }, [
-                                _vm._v("Active")
-                              ]),
-                              _vm._v(" "),
-                              _c("option", { attrs: { value: "0" } }, [
-                                _vm._v("Inactive")
-                              ])
-                            ]
-                          )
-                        : _vm._e(),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "input-group-append" }, [
-                        _c(
-                          "button",
+              _c("div", { staticClass: "col-sm-12" }, [
+                _c(
+                  "div",
+                  {
+                    staticClass: "input-group input-group-sm",
+                    staticStyle: { "max-width": "350px" }
+                  },
+                  [
+                    _c(
+                      "select",
+                      {
+                        directives: [
                           {
-                            staticClass: "btn btn-outline-secondary",
-                            attrs: { type: "button" },
-                            on: { click: _vm.bulkAction }
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.bulk_action,
+                            expression: "bulk_action"
+                          }
+                        ],
+                        staticClass: "custom-select",
+                        staticStyle: { "max-width": "150px" },
+                        on: {
+                          change: function($event) {
+                            var $$selectedVal = Array.prototype.filter
+                              .call($event.target.options, function(o) {
+                                return o.selected
+                              })
+                              .map(function(o) {
+                                var val = "_value" in o ? o._value : o.value
+                                return val
+                              })
+                            _vm.bulk_action = $event.target.multiple
+                              ? $$selectedVal
+                              : $$selectedVal[0]
+                          }
+                        }
+                      },
+                      [
+                        _c("option", { attrs: { value: "" } }, [
+                          _vm._v("Bulk Actions")
+                        ]),
+                        _vm._v(" "),
+                        _c(
+                          "option",
+                          { attrs: { value: "bulk_change_status" } },
+                          [_vm._v("Change Status")]
+                        ),
+                        _vm._v(" "),
+                        _c("option", { attrs: { value: "bulk_delete" } }, [
+                          _vm._v("Delete")
+                        ]),
+                        _vm._v(" "),
+                        _c("option", { attrs: { value: "bulk_restore" } }, [
+                          _vm._v("Restore")
+                        ])
+                      ]
+                    ),
+                    _vm._v(" "),
+                    _vm.bulk_action && _vm.bulk_action == "bulk_change_status"
+                      ? _c(
+                          "select",
+                          {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.bulk_action_data,
+                                expression: "bulk_action_data"
+                              }
+                            ],
+                            staticClass: "custom-select",
+                            attrs: { width: "max-width: 150px" },
+                            on: {
+                              change: function($event) {
+                                var $$selectedVal = Array.prototype.filter
+                                  .call($event.target.options, function(o) {
+                                    return o.selected
+                                  })
+                                  .map(function(o) {
+                                    var val = "_value" in o ? o._value : o.value
+                                    return val
+                                  })
+                                _vm.bulk_action_data = $event.target.multiple
+                                  ? $$selectedVal
+                                  : $$selectedVal[0]
+                              }
+                            }
                           },
-                          [_vm._v("Apply")]
+                          [
+                            _c("option", { attrs: { value: "" } }, [
+                              _vm._v("Select Status")
+                            ]),
+                            _vm._v(" "),
+                            _c("option", { attrs: { value: "1" } }, [
+                              _vm._v("Active")
+                            ]),
+                            _vm._v(" "),
+                            _c("option", { attrs: { value: "0" } }, [
+                              _vm._v("Inactive")
+                            ])
+                          ]
                         )
-                      ])
-                    ]
-                  )
-                ],
-                1
-              )
+                      : _vm._e(),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "input-group-append" }, [
+                      _c(
+                        "button",
+                        {
+                          staticClass: "btn btn-outline-secondary",
+                          attrs: { type: "button" },
+                          on: { click: _vm.bulkAction }
+                        },
+                        [_vm._v("Apply")]
+                      )
+                    ])
+                  ]
+                )
+              ])
             ]),
             _vm._v(" "),
             _vm.list
@@ -77427,16 +77416,15 @@ var render = function() {
                             staticClass: "sortable",
                             class: {
                               asc:
-                                _vm.filters.sort_by === "first_name" &&
+                                _vm.filters.sort_by === "name" &&
                                 _vm.filters.sort_type === "asc",
                               desc:
-                                _vm.filters.sort_by === "first_name" &&
+                                _vm.filters.sort_by === "name" &&
                                 _vm.filters.sort_type === "desc"
                             },
-                            attrs: { width: "150" },
                             on: {
                               click: function($event) {
-                                return _vm.setSorting("first_name")
+                                return _vm.setSorting("name")
                               }
                             }
                           },
@@ -77600,7 +77588,21 @@ var render = function() {
                             _vm._v(" "),
                             _c("td", [_vm._v(_vm._s(item.name))]),
                             _vm._v(" "),
-                            _c("td", [_vm._v(_vm._s(item.slug))]),
+                            _c(
+                              "td",
+                              [
+                                _c("vh-copy", {
+                                  staticClass: "text-copyable",
+                                  attrs: {
+                                    data: item.slug,
+                                    text: item.slug,
+                                    iconClass: "fas fa-copy"
+                                  },
+                                  on: { copied: _vm.copiedData }
+                                })
+                              ],
+                              1
+                            ),
                             _vm._v(" "),
                             _c("td", [
                               item.is_active == 1

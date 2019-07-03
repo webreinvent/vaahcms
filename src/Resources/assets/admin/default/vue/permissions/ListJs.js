@@ -243,6 +243,8 @@ import {isObject} from "vue-resource/src/util";
             //---------------------------------------------------------------------
             copiedData: function (data) {
 
+                alertify.success('copied');
+
                 this.$helpers.console(data, 'copied data');
 
             }
