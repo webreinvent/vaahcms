@@ -28,6 +28,8 @@ Vue.use(VueHelpers);
 import List from './List';
 import Create from './Create';
 import ViewEdit from './ViewEdit';
+import Users from './Users';
+import Permissions from './Permissions';
 //---------/Comp Imports
 
 //---------Routes
@@ -40,6 +42,14 @@ const router = new VueRouter({
         },
         {   path: '/view/:id',
             component: ViewEdit,
+            props: true
+        },
+        {   path: '/users/:id',
+            component: Users,
+            props: true
+        },
+        {   path: '/permissions/:id',
+            component: Permissions,
             props: true
         },
     ]

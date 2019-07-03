@@ -391,6 +391,77 @@ class Role extends Model {
         )->withPivot('is_active');
     }
     //-------------------------------------------------
+    public function users() {
+        return $this->belongsToMany( 'WebReinvent\VaahCms\Entities\User',
+            'vh_user_roles', 'vh_role_id', 'vh_user_id'
+        )->withPivot('is_active');
+    }
+    //-------------------------------------------------
+    public static function countUsers($id)
+    {
+
+        $role = Role::withTrashed()->where('id', $id)->first();
+
+        if(!$role)
+        {
+            return 0;
+        }
+
+        return $role->users()->wherePivot('is_active', 1)->count();
+    }
+    //-------------------------------------------------
+    public static function countPermissions($id)
+    {
+
+        $role = Role::withTrashed()->where('id', $id)->first();
+
+        if(!$role)
+        {
+            return 0;
+        }
+
+        return $role->permissions()->wherePivot('is_active', 1)->count();
+    }
+    //-------------------------------------------------
+    //-------------------------------------------------
+    public static function recountRelations()
+    {
+        $list = Role::withTrashed()->select('id')->get();
+
+        if($list)
+        {
+            foreach ($list as $item)
+            {
+                $item->count_users = static::countUsers($item->id);
+                $item->count_permissions = static::countPermissions($item->id);
+                $item->save();
+            }
+        }
+
+    }
+    //-------------------------------------------------
+    public static function syncRolesWithUsers()
+    {
+        $all_users = User::select('id')->get()->pluck('id')->toArray();
+        $all_roles = Role::select('id')->get();
+
+        if(!$all_roles)
+        {
+            return false;
+        }
+
+        foreach ($all_roles as $role)
+        {
+            $pivotData = array_fill(0, count($all_users), ['is_active' => 0]);
+            $syncData  = array_combine($all_users, $pivotData);
+            $role->users()->syncWithoutDetaching($syncData);
+        }
+
+        return true;
+
+    }
+    //-------------------------------------------------
+    //-------------------------------------------------
     //-------------------------------------------------
 
 

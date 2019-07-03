@@ -275,6 +275,13 @@ Route::group(
         Route::any( '/view/{id}', 'RoleController@getDetails' )
             ->name( 'vh.admin.roles.view' );
         //------------------------------------------------
+        Route::any( '/permissions/{id}', 'RoleController@getPermissions' )
+            ->name( 'vh.admin.roles.permissions' );
+        //------------------------------------------------
+        Route::any( '/users/{id}', 'RoleController@getUsers' )
+            ->name( 'vh.admin.roles.users' );
+        //------------------------------------------------
+        //------------------------------------------------
     });
 
 Route::group(

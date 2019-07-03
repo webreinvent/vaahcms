@@ -25,7 +25,7 @@
                                 <i class="fas fa-ellipsis-h"></i>
                             </button>
 
-                            <button class="btn btn-xs btn-light btn-uppercase" @click="getList">
+                            <button class="btn btn-xs btn-light btn-uppercase" @click="reloadList">
                                 <i class="fas fa-sync-alt"></i>
                             </button>
 
@@ -123,8 +123,8 @@
                                      }"
                                     v-on:click="setSorting('is_active')">Is Active
                                 </th>
-                                <th v-if="!table_collapsed" width="80" >Users</th>
-                                <th v-if="!table_collapsed" width="80" >Permissions</th>
+                                <th width="80" >Users</th>
+                                <th width="80" >Permissions</th>
                                 <th v-if="!table_collapsed" width="140" >Created At</th>
                                 <th width="80"></th>
                             </tr>
@@ -186,8 +186,21 @@
 
                             </td>
 
-                            <td v-if="!table_collapsed">{{item.count_users}}</td>
-                            <td v-if="!table_collapsed">{{item.count_permissions}}</td>
+                            <td >
+
+                                <router-link class="btn btn-tiny btn-primary"
+                                             :to="{ path: '/users/'+item.id}">
+                                    {{item.count_users}}
+                                </router-link>
+
+                            </td>
+                            <td >
+                                <router-link class="btn btn-tiny btn-primary"
+                                             :to="{ path: '/permissions/'+item.id}">
+                                    {{item.count_permissions}}
+                                </router-link>
+
+                            </td>
 
                             <td v-if="!table_collapsed">
                                 {{$helpers.dateTimeForHumans(item.created_at)}}

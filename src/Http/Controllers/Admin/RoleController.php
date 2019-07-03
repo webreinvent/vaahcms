@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
+use WebReinvent\VaahCms\Entities\Permission;
 use WebReinvent\VaahCms\Entities\Role;
 
 class RoleController extends Controller
@@ -58,6 +59,13 @@ class RoleController extends Controller
     //----------------------------------------------------------
     public function getList(Request $request)
     {
+
+        if($request->has('recount') && $request->get('recount') == true)
+        {
+            Permission::syncPermissionsWithRoles();
+            Role::syncRolesWithUsers();
+            Role::recountRelations();
+        }
 
         if($request->has("sort_by") && !is_null($request->sort_by))
         {
@@ -171,8 +179,52 @@ class RoleController extends Controller
 
     }
     //----------------------------------------------------------
+    public function getPermissions(Request $request, $id)
+    {
+        $item = Role::withTrashed()->where('id', $id)->first();
+        $response['data']['role'] = $item;
 
+        if($request->has("q"))
+        {
+            $list = $item->permissions()->where(function ($q) use ($request){
+                $q->where('name', 'LIKE', '%'.$request->q.'%')
+                    ->orWhere('slug', 'LIKE', '%'.$request->q.'%');
+            });
+        } else
+        {
+            $list = $item->permissions();
+        }
+        $list = $list->paginate(config('vaahcms.per_page'));
+
+        $response['data']['list'] = $list;
+
+        $response['status'] = 'success';
+
+        return response()->json($response);
+    }
     //----------------------------------------------------------
+    public function getUsers(Request $request, $id)
+    {
+        $item = Role::withTrashed()->where('id', $id)->first();
+        $response['data']['role'] = $item;
+
+        if($request->has("q"))
+        {
+            $list = $item->users()->where(function ($q) use ($request){
+                $q->where('name', 'LIKE', '%'.$request->q.'%')
+                    ->orWhere('email', 'LIKE', '%'.$request->q.'%');
+            });
+        } else
+        {
+            $list = $item->users();
+        }
+        $list = $list->paginate(config('vaahcms.per_page'));
+
+        $response['data']['list'] = $list;
+        $response['status'] = 'success';
+
+        return response()->json($response);
+    }
     //----------------------------------------------------------
     //----------------------------------------------------------
 
