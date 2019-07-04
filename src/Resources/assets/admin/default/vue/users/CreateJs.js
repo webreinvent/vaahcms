@@ -49,6 +49,7 @@ import TForm from './../reusable/TableFormGenerator';
                 let id = data.id;
 
                 this.$router.push({ path: `/view/${id}`});
+                this.$root.$emit('reloadList');
 
             },
             //---------------------------------------------------------------------

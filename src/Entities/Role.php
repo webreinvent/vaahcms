@@ -468,9 +468,7 @@ class Role extends Model {
 
         foreach ($all_roles as $role)
         {
-            $pivotData = array_fill(0, count($all_users), ['is_active' => 0]);
-            $syncData  = array_combine($all_users, $pivotData);
-            $role->users()->syncWithoutDetaching($syncData);
+            $role->users()->syncWithoutDetaching($all_users);
         }
 
         return true;

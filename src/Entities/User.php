@@ -525,6 +525,12 @@ class User extends Authenticatable
 
         $item->save();
 
+        if(!$request->has('id'))
+        {
+            Role::syncRolesWithUsers();
+        }
+
+
         $response['status'] = 'success';
         $response['messages'][] = 'Saved';
         $response['data'] = $item;

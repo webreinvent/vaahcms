@@ -76483,6 +76483,7 @@ __webpack_require__.r(__webpack_exports__);
       this.$router.push({
         path: "/view/".concat(id)
       });
+      this.$root.$emit('reloadList');
     } //---------------------------------------------------------------------
     //---------------------------------------------------------------------
     //---------------------------------------------------------------------
@@ -76532,7 +76533,8 @@ __webpack_require__.r(__webpack_exports__);
         q: null,
         sort_by: "",
         sort_type: 'desc',
-        status: 'all'
+        status: 'all',
+        recount: false
       }
     };
     return obj;
@@ -76557,6 +76559,10 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     //---------------------------------------------------------------------
+    reloadList: function reloadList() {
+      this.filters.recount = true;
+      this.getList();
+    },
     //---------------------------------------------------------------------
     getList: function getList(page) {
       var url = this.urls.current + "/list";
@@ -78326,7 +78332,7 @@ var render = function() {
                 "button",
                 {
                   staticClass: "btn btn-xs btn-light btn-uppercase",
-                  on: { click: _vm.getList }
+                  on: { click: _vm.reloadList }
                 },
                 [_c("i", { staticClass: "fas fa-sync-alt" })]
               )

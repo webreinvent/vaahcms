@@ -25,7 +25,7 @@
                                 <i class="fas fa-ellipsis-h"></i>
                             </button>
 
-                            <button class="btn btn-xs btn-light btn-uppercase" @click="getList">
+                            <button class="btn btn-xs btn-light btn-uppercase" @click="reloadList">
                                 <i class="fas fa-sync-alt"></i>
                             </button>
 

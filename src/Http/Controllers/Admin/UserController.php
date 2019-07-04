@@ -68,6 +68,11 @@ class UserController extends Controller
     {
 
 
+        if($request->has('recount') && $request->get('recount') == true)
+        {
+            Role::syncRolesWithUsers();
+        }
+
         if($request->has("sort_by") && !is_null($request->sort_by))
         {
 
