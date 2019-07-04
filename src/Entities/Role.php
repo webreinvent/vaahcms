@@ -3,10 +3,13 @@
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use WebReinvent\VaahCms\Traits\CrudObservantTrait;
 
 class Role extends Model {
 
     use SoftDeletes;
+    use CrudObservantTrait;
+
     //-------------------------------------------------
     protected $table = 'vh_roles';
     //-------------------------------------------------
@@ -36,6 +39,10 @@ class Role extends Model {
     //-------------------------------------------------
     public function setSlugAttribute( $value ) {
         $this->attributes['slug'] = str_slug( $value );
+    }
+    //-------------------------------------------------
+    public function getNameAttribute($value) {
+        return ucwords($value);
     }
     //-------------------------------------------------
     public function scopeActive( $query ) {
@@ -226,6 +233,15 @@ class Role extends Model {
 
         $item->fill($inputs);
         $item->save();
+
+        //if new user is created
+        if(!$request->has('id'))
+        {
+            Role::syncRolesWithUsers();
+            Permission::syncPermissionsWithRoles();
+            Role::recountRelations();
+        }
+
 
         $response['status'] = 'success';
         $response['messages'][] = 'Saved';

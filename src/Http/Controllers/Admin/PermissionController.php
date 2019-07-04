@@ -178,6 +178,7 @@ class PermissionController extends Controller
                     $item = Permission::find($inputs['inputs']['id']);
                     $item->roles()->updateExistingPivot($inputs['inputs']['role_id'], array('is_active' => $inputs['data']['is_active']));
                     Permission::recountRelations();
+                    Role::recountRelations();
                     $response['messages'] = [];
                 }
 

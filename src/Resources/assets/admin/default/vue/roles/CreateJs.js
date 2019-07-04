@@ -50,6 +50,8 @@ import TForm from './../reusable/TableFormGenerator';
 
                 this.$router.push({ path: `/view/${id}`});
 
+                this.$root.$emit('reloadList');
+
             },
             //---------------------------------------------------------------------
             //---------------------------------------------------------------------

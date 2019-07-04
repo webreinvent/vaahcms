@@ -76503,7 +76503,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     //---------------------------------------------------------------------
     toggleShowFilters: function toggleShowFilters() {
-      if (this.show_filters == true) {
+      if (this.$route.params.id || this.$route.path == '/create') {
         this.show_filters = false;
       } else {
         this.show_filters = true;

@@ -75993,7 +75993,7 @@ __webpack_require__.r(__webpack_exports__);
     setTableCollapseStatus: function setTableCollapseStatus() {
       this.$helpers.console(this.$route.params);
 
-      if (this.$route.params.id) {
+      if (this.$route.params.id || this.$route.path == '/create') {
         this.table_collapsed = true;
       } else {
         this.table_collapsed = false;

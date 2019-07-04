@@ -1,7 +1,7 @@
 <template>
 
 
-        <div class="col-sm">
+        <div class="col-sm mg-b-10">
 
             <div class="card">
                 <div class="card-header">

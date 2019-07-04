@@ -28,6 +28,7 @@ Vue.use(VueHelpers);
 import List from './List';
 import Create from './Create';
 import ViewEdit from './ViewEdit';
+import Roles from './Roles';
 //---------/Comp Imports
 
 //---------Routes
@@ -40,6 +41,10 @@ const router = new VueRouter({
         },
         {   path: '/view/:id',
             component: ViewEdit,
+            props: true
+        },
+        {   path: '/roles/:id',
+            component: Roles,
             props: true
         },
     ]

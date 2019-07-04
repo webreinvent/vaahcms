@@ -76191,6 +76191,75 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "../../resources/assets/vendor/vaahcms/admin/default/vue/users/Roles.vue":
+/*!****************************************************************************************************!*\
+  !*** F:/xampp72/htdocs/packages/resources/assets/vendor/vaahcms/admin/default/vue/users/Roles.vue ***!
+  \****************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _Roles_vue_vue_type_template_id_7e3f8324___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Roles.vue?vue&type=template&id=7e3f8324& */ "../../resources/assets/vendor/vaahcms/admin/default/vue/users/Roles.vue?vue&type=template&id=7e3f8324&");
+/* harmony import */ var _RolesJs_js_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./RolesJs.js?vue&type=script&lang=js& */ "../../resources/assets/vendor/vaahcms/admin/default/vue/users/RolesJs.js?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _packages_vaahcms_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../../../../packages/vaahcms/node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_packages_vaahcms_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _RolesJs_js_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _Roles_vue_vue_type_template_id_7e3f8324___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _Roles_vue_vue_type_template_id_7e3f8324___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/assets/vendor/vaahcms/admin/default/vue/users/Roles.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "../../resources/assets/vendor/vaahcms/admin/default/vue/users/Roles.vue?vue&type=template&id=7e3f8324&":
+/*!***********************************************************************************************************************************!*\
+  !*** F:/xampp72/htdocs/packages/resources/assets/vendor/vaahcms/admin/default/vue/users/Roles.vue?vue&type=template&id=7e3f8324& ***!
+  \***********************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _packages_vaahcms_node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_packages_vaahcms_node_modules_vue_loader_lib_index_js_vue_loader_options_Roles_vue_vue_type_template_id_7e3f8324___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../../../packages/vaahcms/node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../../../../packages/vaahcms/node_modules/vue-loader/lib??vue-loader-options!./Roles.vue?vue&type=template&id=7e3f8324& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!../../resources/assets/vendor/vaahcms/admin/default/vue/users/Roles.vue?vue&type=template&id=7e3f8324&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _packages_vaahcms_node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_packages_vaahcms_node_modules_vue_loader_lib_index_js_vue_loader_options_Roles_vue_vue_type_template_id_7e3f8324___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _packages_vaahcms_node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_packages_vaahcms_node_modules_vue_loader_lib_index_js_vue_loader_options_Roles_vue_vue_type_template_id_7e3f8324___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "../../resources/assets/vendor/vaahcms/admin/default/vue/users/RolesJs.js?vue&type=script&lang=js&":
+/*!******************************************************************************************************************************!*\
+  !*** F:/xampp72/htdocs/packages/resources/assets/vendor/vaahcms/admin/default/vue/users/RolesJs.js?vue&type=script&lang=js& ***!
+  \******************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _packages_vaahcms_node_modules_babel_loader_lib_index_js_ref_4_0_RolesJs_js_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../../../packages/vaahcms/node_modules/babel-loader/lib??ref--4-0!./RolesJs.js?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!../../resources/assets/vendor/vaahcms/admin/default/vue/users/RolesJs.js?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_packages_vaahcms_node_modules_babel_loader_lib_index_js_ref_4_0_RolesJs_js_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
 /***/ "../../resources/assets/vendor/vaahcms/admin/default/vue/users/ViewEdit.vue":
 /*!*******************************************************************************************************!*\
   !*** F:/xampp72/htdocs/packages/resources/assets/vendor/vaahcms/admin/default/vue/users/ViewEdit.vue ***!
@@ -76277,6 +76346,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _List__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./List */ "../../resources/assets/vendor/vaahcms/admin/default/vue/users/List.vue");
 /* harmony import */ var _Create__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Create */ "../../resources/assets/vendor/vaahcms/admin/default/vue/users/Create.vue");
 /* harmony import */ var _ViewEdit__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./ViewEdit */ "../../resources/assets/vendor/vaahcms/admin/default/vue/users/ViewEdit.vue");
+/* harmony import */ var _Roles__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./Roles */ "../../resources/assets/vendor/vaahcms/admin/default/vue/users/Roles.vue");
 __webpack_require__(/*! ./../../lib/vue/bootstrap */ "../../resources/assets/vendor/vaahcms/admin/default/lib/vue/bootstrap.js");
 
 window.Vue = __webpack_require__(/*! vue */ "../../node_modules/vue/dist/vue.common.js"); //---------Package imports
@@ -76300,6 +76370,7 @@ Vue.use(_helpers_VueHelpers__WEBPACK_IMPORTED_MODULE_3__["default"]); //--------
 
 
 
+
  //---------/Comp Imports
 //---------Routes
 
@@ -76312,6 +76383,10 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_0__["default"]({
   }, {
     path: '/view/:id',
     component: _ViewEdit__WEBPACK_IMPORTED_MODULE_6__["default"],
+    props: true
+  }, {
+    path: '/roles/:id',
+    component: _Roles__WEBPACK_IMPORTED_MODULE_7__["default"],
     props: true
   }]
 }); //---------/Routes
@@ -76572,13 +76647,15 @@ __webpack_require__.r(__webpack_exports__);
     },
     //---------------------------------------------------------------------
     setTableCollapseStatus: function setTableCollapseStatus() {
-      this.$helpers.console(this.$route.params);
+      this.$helpers.console(this.$route.path);
 
-      if (this.$route.params.id) {
+      if (this.$route.params.id || this.$route.path == '/create') {
         this.table_collapsed = true;
       } else {
         this.table_collapsed = false;
       }
+
+      this.$helpers.console(this.table_collapsed);
     },
     //---------------------------------------------------------------------
     toggleSelectAll: function toggleSelectAll() {
@@ -76612,6 +76689,123 @@ __webpack_require__.r(__webpack_exports__);
     //---------------------------------------------------------------------
     //---------------------------------------------------------------------
     //---------------------------------------------------------------------
+    //---------------------------------------------------------------------
+    //---------------------------------------------------------------------
+
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!../../resources/assets/vendor/vaahcms/admin/default/vue/users/RolesJs.js?vue&type=script&lang=js&":
+/*!************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!F:/xampp72/htdocs/packages/resources/assets/vendor/vaahcms/admin/default/vue/users/RolesJs.js?vue&type=script&lang=js& ***!
+  \************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var laravel_vue_pagination__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! laravel-vue-pagination */ "../../node_modules/laravel-vue-pagination/dist/laravel-vue-pagination.common.js");
+/* harmony import */ var laravel_vue_pagination__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(laravel_vue_pagination__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var vue_resource_src_util__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue-resource/src/util */ "../../node_modules/vue-resource/src/util.js");
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: ['urls', 'id'],
+  components: {
+    'pagination': laravel_vue_pagination__WEBPACK_IMPORTED_MODULE_0___default.a
+  },
+  data: function data() {
+    var obj = {
+      list: null,
+      item: null,
+      page: 1,
+      filters: {
+        q: null
+      },
+      permission: null
+    };
+    return obj;
+  },
+  watch: {
+    id: function id(newVal, oldVal) {
+      this.getList();
+    }
+  },
+  mounted: function mounted() {
+    //---------------------------------------------------------------------
+    this.getList(); //---------------------------------------------------------------------
+    //---------------------------------------------------------------------
+    //---------------------------------------------------------------------
+    //---------------------------------------------------------------------
+  },
+  methods: {
+    //---------------------------------------------------------------------
+    getList: function getList(page) {
+      var url = this.urls.current + "/roles/" + this.id;
+
+      if (!page || Object(vue_resource_src_util__WEBPACK_IMPORTED_MODULE_1__["isObject"])(page)) {
+        page = this.page;
+      }
+
+      this.$helpers.console(page, 'page');
+      url = url + "?page=" + page;
+
+      if (this.filters.q) {
+        url = url + "&q=" + this.filters.q;
+      }
+
+      var params = {};
+      this.$helpers.ajax(url, params, this.getListAfter);
+    },
+    //---------------------------------------------------------------------
+    getListAfter: function getListAfter(data) {
+      this.$helpers.console(data);
+      this.list = data.list;
+      this.page = data.list.current_page;
+      this.item = data.item;
+      this.$helpers.stopNprogress();
+    },
+    //---------------------------------------------------------------------
+    actions: function actions(e, action, inputs, data) {
+      if (e) {
+        e.preventDefault();
+      }
+
+      var url = this.urls.current + "/actions";
+      var params = {
+        action: action,
+        inputs: inputs,
+        data: data
+      };
+      this.$helpers.ajax(url, params, this.actionsAfter);
+    },
+    //---------------------------------------------------------------------
+    actionsAfter: function actionsAfter(data) {
+      this.getList(this.page);
+      this.emitReloadList();
+    },
+    //---------------------------------------------------------------------
+    toggleActiveStatus: function toggleActiveStatus(item) {
+      var inputs = {
+        id: this.id,
+        user_id: item.id
+      };
+      var data = {};
+
+      if (item.pivot.is_active) {
+        data.is_active = 0;
+      } else {
+        data.is_active = 1;
+      }
+
+      this.actions(false, 'toggle_role_active_status', inputs, data);
+    },
+    //---------------------------------------------------------------------
+    emitReloadList: function emitReloadList() {
+      this.$root.$emit('reloadList');
+    } //---------------------------------------------------------------------
     //---------------------------------------------------------------------
     //---------------------------------------------------------------------
 
@@ -78084,7 +78278,7 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "col-sm" }, [
+  return _c("div", { staticClass: "col-sm mg-b-10" }, [
     _c("div", { staticClass: "card" }, [
       _c("div", { staticClass: "card-header" }, [
         _c("div", { staticClass: "d-flex" }, [
@@ -78779,6 +78973,197 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("button", { staticClass: "btn btn-xs bg-transparent" }, [
       _c("i", { staticClass: "fas fa-ellipsis-h" })
+    ])
+  }
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!../../resources/assets/vendor/vaahcms/admin/default/vue/users/Roles.vue?vue&type=template&id=7e3f8324&":
+/*!*****************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!F:/xampp72/htdocs/packages/resources/assets/vendor/vaahcms/admin/default/vue/users/Roles.vue?vue&type=template&id=7e3f8324& ***!
+  \*****************************************************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "col-sm" }, [
+    _c("div", { staticClass: "card" }, [
+      _vm.item
+        ? _c("div", { staticClass: "card-header" }, [
+            _c("div", { staticClass: "d-flex" }, [
+              _c(
+                "div",
+                { staticClass: "align-self-center tx-15 flex-grow-1" },
+                [
+                  _c("strong", [
+                    _vm._v(
+                      _vm._s(_vm.item.name) + " > Roles\n                    "
+                    )
+                  ])
+                ]
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: " mg-l-auto btn-group btn-group-xs" },
+                [
+                  _c(
+                    "router-link",
+                    {
+                      staticClass: "btn btn-card ",
+                      attrs: { to: { path: "/" } }
+                    },
+                    [_c("i", { staticClass: "fas fa-times" })]
+                  )
+                ],
+                1
+              )
+            ])
+          ])
+        : _vm._e(),
+      _vm._v(" "),
+      _vm.list
+        ? _c("div", { staticClass: "card-body" }, [
+            _c("div", { staticClass: "form-group" }, [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.filters.q,
+                    expression: "filters.q"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: { type: "text", placeholder: "Search Roles" },
+                domProps: { value: _vm.filters.q },
+                on: {
+                  keyup: function($event) {
+                    if (
+                      !$event.type.indexOf("key") &&
+                      _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
+                    ) {
+                      return null
+                    }
+                    return _vm.getList(1)
+                  },
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.filters, "q", $event.target.value)
+                  }
+                }
+              })
+            ]),
+            _vm._v(" "),
+            _c(
+              "table",
+              {
+                staticClass:
+                  "table table-striped table-sm table-condensed  table-form table-form-view"
+              },
+              [
+                _vm._m(0),
+                _vm._v(" "),
+                _c(
+                  "tbody",
+                  _vm._l(_vm.list.data, function(item) {
+                    return _c("tr", [
+                      _c("td", [_vm._v(_vm._s(item.name))]),
+                      _vm._v(" "),
+                      _vm.id == 1 && item.id == 1
+                        ? _c("td", [
+                            _c(
+                              "button",
+                              { staticClass: "btn btn-tiny btn-secondary" },
+                              [
+                                _vm._v(
+                                  "\n                            Yes\n                        "
+                                )
+                              ]
+                            )
+                          ])
+                        : _c("td", [
+                            item.pivot.is_active == 1
+                              ? _c(
+                                  "button",
+                                  {
+                                    staticClass: "btn btn-tiny btn-success",
+                                    on: {
+                                      click: function($event) {
+                                        return _vm.toggleActiveStatus(item)
+                                      }
+                                    }
+                                  },
+                                  [
+                                    _vm._v(
+                                      "\n                            Yes\n                        "
+                                    )
+                                  ]
+                                )
+                              : _c(
+                                  "button",
+                                  {
+                                    staticClass: "btn btn-tiny btn-danger",
+                                    on: {
+                                      click: function($event) {
+                                        return _vm.toggleActiveStatus(item)
+                                      }
+                                    }
+                                  },
+                                  [
+                                    _vm._v(
+                                      "\n                            No\n                        "
+                                    )
+                                  ]
+                                )
+                          ])
+                    ])
+                  }),
+                  0
+                )
+              ]
+            )
+          ])
+        : _vm._e(),
+      _vm._v(" "),
+      _vm.list && _vm.list.last_page > 1
+        ? _c(
+            "div",
+            { staticClass: "card-footer" },
+            [
+              _c("pagination", {
+                attrs: { limit: 6, data: _vm.list },
+                on: { "pagination-change-page": _vm.getList }
+              })
+            ],
+            1
+          )
+        : _vm._e()
+    ])
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", [
+      _c("th", [_vm._v("Role")]),
+      _vm._v(" "),
+      _c("th", { attrs: { width: "120" } }, [_vm._v("Has Permission")])
     ])
   }
 ]

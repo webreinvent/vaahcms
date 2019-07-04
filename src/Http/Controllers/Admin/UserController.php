@@ -8,6 +8,7 @@ use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Hash;
 use WebReinvent\VaahCms\Entities\Registration;
+use WebReinvent\VaahCms\Entities\Role;
 use WebReinvent\VaahCms\Entities\User;
 
 class UserController extends Controller
@@ -193,6 +194,25 @@ class UserController extends Controller
 
                 break;
             //------------------------------------
+            case 'toggle_role_active_status':
+
+                if($response['status'] == 'success')
+                {
+                    if($inputs['inputs']['id'] == 1 && $inputs['inputs']['user_id'] == 1)
+                    {
+                        $response['status'] = 'failed';
+                        $response['errors'][] = 'First user will always be an admin';
+                        return response()->json($response);
+                    }
+
+                    $item = User::find($inputs['inputs']['id']);
+                    $item->roles()->updateExistingPivot($inputs['inputs']['user_id'], array('is_active' => $inputs['data']['is_active']));
+                    Role::recountRelations();
+                    $response['messages'] = [];
+                }
+
+                break;
+            //------------------------------------
 
         }
 
@@ -204,7 +224,7 @@ class UserController extends Controller
     {
         $item = User::withTrashed()->where('id', $id)->first();
 
-        $response['data']['permission'] = $item;
+        $response['data']['item'] = $item;
 
 
         if($request->has("q"))

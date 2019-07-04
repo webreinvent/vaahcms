@@ -94,7 +94,7 @@ import { ToggleButton } from 'vue-js-toggle-button'
 
             //---------------------------------------------------------------------
             toggleShowFilters: function () {
-                if(this.show_filters == true)
+                if(this.$route.params.id || this.$route.path == '/create' )
                 {
                     this.show_filters = false;
                 } else

@@ -11,6 +11,7 @@ import {isObject} from "vue-resource/src/util";
         {
             let obj = {
                 list: null,
+                item: null,
                 page: 1,
                 filters: {
                     q: null,
@@ -65,7 +66,7 @@ import {isObject} from "vue-resource/src/util";
 
                 this.list = data.list;
                 this.page = data.list.current_page;
-                this.permission = data.permission;
+                this.item = data.item;
 
                 this.$helpers.stopNprogress();
             },
@@ -93,7 +94,7 @@ import {isObject} from "vue-resource/src/util";
             },
             //---------------------------------------------------------------------
             toggleActiveStatus: function (item) {
-                var inputs = {id: this.id, role_id: item.id};
+                var inputs = {id: this.id, user_id: item.id};
                 var data = {};
 
                 if(item.pivot.is_active)
