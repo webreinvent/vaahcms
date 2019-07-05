@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use ZanySoft\Zip\Zip;
 
 class Module extends Model {
 
@@ -256,8 +257,64 @@ class Module extends Model {
     public static function download($slug)
     {
 
+        $api = config('vaahcms.api_route')."/module/by/slug/".$slug;
+
+        $api_response = @file_get_contents($api);
+        $api_response = json_decode($api_response);
+
+        if($api_response->status != 'success')
+        {
+            return $api_response;
+        }
+
+        $parsed = parse_url($api_response->data->github_url);
+
+
+        $uri_parts = explode('/', $parsed['path']);
+        $folder_name = end($uri_parts);
+        $folder_name = $folder_name."-master";
+
+
+        $filename = $api_response->data->name.'.zip';
+        $folder_path = base_path()."/vaahcms/Modules/";
+        $path = $folder_path.$filename;
+
+        copy($api_response->data->github_url.'/archive/master.zip', $path);
+
+        try{
+            Zip::check($path);
+            $zip = Zip::open($path);
+            $zip->extract(base_path().'/vaahcms/Modules/');
+            $zip->close();
+
+            rename($folder_path."".$folder_name, $folder_path.$api_response->data->name);
+
+            vh_delete_folder($path);
+
+            $response['status'] = 'success';
+            $response['messages'][] = 'installed';
+            return $response;
+
+        }catch(\Exception $e)
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = $e->getMessage();
+            return $response;
+        }
+
     }
     //-------------------------------------------------
+    public static function importSampleData($slug)
+    {
+        $module = Module::slug($slug)->first();
+
+        $command = 'db:seed';
+        $params = [
+            '--class' => "VaahCms\Modules\\{$module->name}\\Database\Seeds\SampleDataTableSeeder"
+        ];
+
+        \Artisan::call($command, $params);
+    }
     //-------------------------------------------------
     //-------------------------------------------------
     //-------------------------------------------------

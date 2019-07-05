@@ -43,8 +43,7 @@ class ModuleController extends Controller
     {
 
         $rules = array(
-            'github_url' => 'required',
-            'name' => 'required',
+            'slug' => 'required',
         );
 
         $validator = \Validator::make( $request->toArray(), $rules);
@@ -56,42 +55,9 @@ class ModuleController extends Controller
             return response()->json($response);
         }
 
+        $response = Module::download($request->slug);
 
-        $parsed = parse_url($request->github_url);
-
-
-        $uri_parts = explode('/', $parsed['path']);
-        $folder_name = end($uri_parts);
-        $folder_name = $folder_name."-master";
-
-
-        $filename = $request->name.'.zip';
-        $folder_path = base_path()."/vaahcms/Modules/";
-        $path = $folder_path.$filename;
-
-        copy($request->github_url.'/archive/master.zip', $path);
-
-        try{
-            Zip::check($path);
-            $zip = Zip::open($path);
-            $zip->extract(base_path().'/vaahcms/Modules/');
-            $zip->close();
-
-            rename($folder_path."".$folder_name, $folder_path.$request->name);
-
-            vh_delete_folder($path);
-
-            $response['status'] = 'success';
-            $response['messages'][] = 'installed';
-            return response()->json($response);
-
-        }catch(\Exception $e)
-        {
-            $response['status'] = 'failed';
-            $response['errors'][] = $e->getMessage();
-            return response()->json($response);
-        }
-
+        return response()->json($response);
 
     }
     //----------------------------------------------------------
@@ -208,7 +174,7 @@ class ModuleController extends Controller
                 break;
             //---------------------------------------
             case 'importSampleData':
-                $this->importSampleData($module);
+                $this->importSampleData($module->slug);
                 $response['status'] = 'success';
                 $response['messages'][] = 'Sample Data Successfully Imported';
                 return response()->json($response);
@@ -255,14 +221,7 @@ class ModuleController extends Controller
     //----------------------------------------------------------
     public function importSampleData($module)
     {
-
-        $command = 'db:seed';
-        $params = [
-            '--class' => "VaahCms\Modules\\{$module->name}\\Database\Seeds\SampleDataTableSeeder"
-        ];
-
-        \Artisan::call($command, $params);
-
+        Module::importSampleData($module->name);
     }
     //----------------------------------------------------------
     public function deactivate($module)

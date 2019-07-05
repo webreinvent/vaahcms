@@ -239,12 +239,7 @@ class ThemeController extends Controller
     public function importSampleData($theme)
     {
 
-        $command = 'db:seed';
-        $params = [
-            '--class' => "VaahCms\Themes\\{$theme->name}\\Database\Seeds\SampleDataTableSeeder"
-        ];
-
-        \Artisan::call($command, $params);
+        Theme::importSampleData($theme->slug);
 
     }
     //----------------------------------------------------------
