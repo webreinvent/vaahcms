@@ -207,9 +207,7 @@ class SetupController extends Controller
         $response['status'] = 'failed';
         $response['errors'][] = 'error';
 
-        $response['status'] = 'success';
-        $response['messages'][] = 'Saved';
-        $response['data'] = $data;
+
 
         return response()->json($response);
 

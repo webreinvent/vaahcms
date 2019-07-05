@@ -24,25 +24,25 @@
 
                     <ul v-if="active_step != 'completed'" class="steps mg-t-50 mg-b-50">
                         <li class="step-item" v-bind:class="{'active': active_step == 'database'}">
-                            <a href="" class="step-link">
+                            <a href="javascript:void(0)" class="step-link">
                                 <span class="step-number">1</span>
                                 <span class="step-title">App & Database Details</span>
                             </a>
                         </li>
                         <li class="step-item" v-bind:class="{'active': active_step == 'run_migrations'}">
-                            <a href="" class="step-link">
+                            <a href="javascript:void(0)" class="step-link">
                                 <span class="step-number">2</span>
                                 <span class="step-title">Run Migrations</span>
                             </a>
                         </li>
-                        <li class="step-item">
-                            <a href="" class="step-link" v-bind:class="{'active': active_step == 'cms_setup'}">
+                        <li class="step-item" v-bind:class="{'active': active_step == 'cms_setup'}">
+                            <a href="javascript:void(0)" class="step-link" >
                                 <span class="step-number">3</span>
                                 <span class="step-title">CMS Setup</span>
                             </a>
                         </li>
-                        <li class="step-item">
-                            <a href="" class="step-link" v-bind:class="{'active': active_step == 'create_admin_account'}">
+                        <li class="step-item" v-bind:class="{'active': active_step == 'create_admin_account'}">
+                            <a href="javascript:void(0)" class="step-link" >
                                 <span class="step-number">4</span>
                                 <span class="step-title">Create Admin Account</span>
                             </a>

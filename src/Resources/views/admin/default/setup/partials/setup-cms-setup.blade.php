@@ -16,35 +16,37 @@
                 <div class="custom-control custom-checkbox">
                     <input type="checkbox" class="custom-control-input"
                            v-model="cms_setup.cms.install" disabled="disabled" id="cmsInstall">
-                    <label class="custom-control-label" for="cmsInstall">CMS Module: Download & Install </label>
+                    <label class="custom-control-label" for="cmsInstall"><b>CMS Module</b>: Download & Install </label>
                 </div>
-            </div>
 
-            <div class="form-grou mg-l-10">
-                <div class="custom-control custom-checkbox">
+                <div class="custom-control custom-checkbox mg-t-10 mg-l-10">
                     <input type="checkbox" class="custom-control-input"
                            v-model="cms_setup.cms.sample_data"  id="cmsSampleData">
-                    <label class="custom-control-label" for="cmsSampleData">CMS Module: Import Sample Data</label>
+                    <label class="custom-control-label" for="cmsSampleData">Import Sample Data</label>
                 </div>
+
             </div>
+
+
 
             <div class="form-group">
                 <div class="custom-control custom-checkbox">
                     <input type="checkbox" class="custom-control-input"
                            v-model="cms_setup.theme.install" disabled="disabled" id="themeInstall">
-                    <label class="custom-control-label" for="themeInstall">Default Theme: Download & Install </label>
+                    <label class="custom-control-label" for="themeInstall"><b>Default Theme</b>: Download & Install </label>
                 </div>
-            </div>
 
-            <div class="form-grou mg-l-10">
-                <div class="custom-control custom-checkbox">
+                <div class="custom-control custom-checkbox mg-t-10 mg-l-10">
                     <input type="checkbox" class="custom-control-input"
                            v-model="cms_setup.theme.sample_data" id="themeSampleData">
-                    <label class="custom-control-label" for="themeSampleData">Default Theme: Import Sample Data</label>
+                    <label class="custom-control-label" for="themeSampleData">Import Sample Data</label>
                 </div>
+
             </div>
 
-            <button type="submit" class="btn btn-primary" v-on:click="runMigrations($event)">Run Migrations</button>
+
+
+            <button type="submit" class="btn btn-primary" v-on:click="setupCMS($event)">Download & Install</button>
         </div>
 
     </div>

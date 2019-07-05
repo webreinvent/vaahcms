@@ -72449,12 +72449,16 @@ var app = new Vue({
     //---------------------------------------------------------------------
     runMigrationsAfter: function runMigrationsAfter(data) {
       this.active_step = null;
-      this.active_step = 'create_admin_account';
+      this.active_step = 'cms_setup';
       this.$helpers.console(this.active_step);
       this.$helpers.stopNprogress();
     },
     //---------------------------------------------------------------------
-    setupCMS: function setupCMS() {
+    setupCMS: function setupCMS(e) {
+      if (e) {
+        e.preventDefault();
+      }
+
       var url = this.urls.current + "/setup/cms";
       var params = this.cms_setup;
       this.$helpers.ajax(url, params, this.setupCMSAfter);
