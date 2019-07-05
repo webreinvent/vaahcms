@@ -72387,6 +72387,16 @@ var app = new Vue({
       phone: null,
       username: null,
       password: null
+    },
+    cms_setup: {
+      cms: {
+        install: true,
+        sample_data: false
+      },
+      theme: {
+        install: true,
+        sample_data: false
+      }
     }
   },
   mounted: function mounted() {
@@ -72441,6 +72451,18 @@ var app = new Vue({
       this.active_step = null;
       this.active_step = 'create_admin_account';
       this.$helpers.console(this.active_step);
+      this.$helpers.stopNprogress();
+    },
+    //---------------------------------------------------------------------
+    setupCMS: function setupCMS() {
+      var url = this.urls.current + "/setup/cms";
+      var params = this.cms_setup;
+      this.$helpers.ajax(url, params, this.setupCMSAfter);
+    },
+    //---------------------------------------------------------------------
+    setupCMSAfter: function setupCMSAfter(data) {
+      this.active_step = null;
+      this.active_step = 'create_admin_account';
       this.$helpers.stopNprogress();
     },
     //---------------------------------------------------------------------

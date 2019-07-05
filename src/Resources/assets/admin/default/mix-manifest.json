@@ -1,12 +1,10 @@
 {
-    "/builds/app-dashboard.js": "/builds/app-dashboard.js?id=d6704bd62e831583ffe9",
-    "/builds/app-modules.js": "/builds/app-modules.js?id=18b5f61fff40bd16f3a4",
-    "/builds/app-permissions.js": "/builds/app-permissions.js?id=c71bd83a6c713e8ffcd3",
-    "/builds/app-registrations.js": "/builds/app-registrations.js?id=0eec1192c93f2e642184",
-    "/builds/app-roles.js": "/builds/app-roles.js?id=05fb18180f6a94005b87",
-    "/builds/app-setup.js": "/builds/app-setup.js?id=7d1afa864c87132a91ed",
-    "/builds/app-themes.js": "/builds/app-themes.js?id=9d542e18e1a96c4e1a82",
-    "/builds/app-users.js": "/builds/app-users.js?id=3d269b45ab8dd706ae17",
-    "/builds/vaahcms.css": "/builds/vaahcms.css?id=d41d8cd98f00b204e980",
-    "/builds/vaahcms.js": "/builds/vaahcms.js?id=d41d8cd98f00b204e980"
+    "/builds/app-dashboard.js": "/builds/app-dashboard.js",
+    "/builds/app-modules.js": "/builds/app-modules.js",
+    "/builds/app-permissions.js": "/builds/app-permissions.js",
+    "/builds/app-registrations.js": "/builds/app-registrations.js",
+    "/builds/app-roles.js": "/builds/app-roles.js",
+    "/builds/app-setup.js": "/builds/app-setup.js",
+    "/builds/app-themes.js": "/builds/app-themes.js",
+    "/builds/app-users.js": "/builds/app-users.js"
 }

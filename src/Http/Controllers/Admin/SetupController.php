@@ -186,6 +186,36 @@ class SetupController extends Controller
     }
 
     //----------------------------------------------------------
+
+    public function setupCMS(Request $request)
+    {
+        $rules = array(
+            'name' => 'required',
+        );
+
+        $validator = \Validator::make( $request->all(), $rules);
+        if ( $validator->fails() ) {
+
+            $errors             = errorsToArray($validator->errors());
+            $response['status'] = 'failed';
+            $response['errors'] = $errors;
+            return response()->json($response);
+        }
+
+        $data = [];
+
+        $response['status'] = 'failed';
+        $response['errors'][] = 'error';
+
+        $response['status'] = 'success';
+        $response['messages'][] = 'Saved';
+        $response['data'] = $data;
+
+        return response()->json($response);
+
+    }
+
+    //----------------------------------------------------------
     public function storeAdmin(Request $request)
     {
         $rules = array(

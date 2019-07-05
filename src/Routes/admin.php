@@ -32,6 +32,9 @@ Route::group(
         Route::post( '/run/migrations', 'SetupController@runMigrations' )
             ->name( 'vh.setup.run.migrations' );
         //------------------------------------------------
+        Route::post( '/setup/cms', 'SetupController@setupCMS' )
+            ->name( 'vh.setup.run.migrations' );
+        //------------------------------------------------
         Route::post( '/store/admin', 'SetupController@storeAdmin' )
             ->name( 'vh.setup.store.admin' );
         //------------------------------------------------
