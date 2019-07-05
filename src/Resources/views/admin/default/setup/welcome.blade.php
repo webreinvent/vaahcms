@@ -36,9 +36,15 @@
                             </a>
                         </li>
                         <li class="step-item">
-                            <a href="" class="step-link" v-bind:class="{'active': active_step == 'create_admin_account'}">
+                            <a href="" class="step-link" v-bind:class="{'active': active_step == 'cms_setup'}">
                                 <span class="step-number">3</span>
-                                <span class="step-title">Setup Admin Account</span>
+                                <span class="step-title">CMS Setup</span>
+                            </a>
+                        </li>
+                        <li class="step-item">
+                            <a href="" class="step-link" v-bind:class="{'active': active_step == 'create_admin_account'}">
+                                <span class="step-number">4</span>
+                                <span class="step-title">Create Admin Account</span>
                             </a>
                         </li>
                     </ul>
@@ -64,6 +70,7 @@
 
                             @include("vaahcms::admin.default.setup.partials.setup-db-details")
                             @include("vaahcms::admin.default.setup.partials.setup-run-migrations")
+                            @include("vaahcms::admin.default.setup.partials.setup-cms-setup")
                             @include("vaahcms::admin.default.setup.partials.setup-create-admin")
 
                         </div>

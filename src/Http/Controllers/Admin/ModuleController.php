@@ -172,6 +172,25 @@ class ModuleController extends Controller
             return response()->json($response);
         }
 
+
+        //check dependencies are installed and active
+        if(isset($response['status'])
+            && $response['status'] == 'success'
+            && isset($response['dependencies'])
+            && is_array($response['dependencies'])
+        )
+        {
+
+            $response = Module::validateDependencies($response['dependencies']);
+
+            if(isset($response['status']) && $response['status'] == 'failed')
+            {
+                return response()->json($response);
+            }
+
+        }
+
+
         switch($request->action)
         {
 

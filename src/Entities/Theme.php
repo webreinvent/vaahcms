@@ -197,6 +197,61 @@ class Theme extends Model {
         return $list;
     }
     //-------------------------------------------------
+    public static function validateDependencies($dependencies)
+    {
+
+        $response['status'] = 'success';
+
+
+        foreach ($dependencies as $key => $dependency_list)
+        {
+
+
+            switch($key){
+
+                case 'modules':
+
+
+                    if(is_array($dependency_list))
+                    {
+
+                        foreach ($dependency_list as $dependency_slug)
+                        {
+                            $module = Module::slug($dependency_slug)->first();
+
+                            if(!$module)
+                            {
+
+                                $response['status'] = 'failed';
+                                $response['errors'][] = "Please install and activate '".$dependency_slug."'.";
+                            }
+
+                            if($module && $module->is_active != 1)
+                            {
+                                $response['status'] = 'failed';
+                                $response['errors'][] = $dependency_slug.' module is not active';
+                            }
+                        }
+
+                    }
+
+                    break;
+                //------------------------
+                case 'theme':
+
+                    break;
+                //------------------------
+                //------------------------
+                //------------------------
+                //------------------------
+            }
+
+
+
+        }
+
+        return $response;
+    }
     //-------------------------------------------------
 
 }

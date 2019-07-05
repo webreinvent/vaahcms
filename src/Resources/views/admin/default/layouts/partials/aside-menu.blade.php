@@ -18,9 +18,9 @@
     </a>
 
     <ul>
-        <li><a href="{{route('vh.admin.modules')}}">Modules (3)</a></li>
-        <li><a href="page-profile-view.html">Plugins  (4)</a></li>
-        <li><a href="page-profile-view.html">Widgets</a></li>
+        <li><a href="{{route('vh.admin.modules')}}">Modules</a></li>
+        {{--<li><a href="page-profile-view.html">Plugins  (4)</a></li>
+        <li><a href="page-profile-view.html">Widgets</a></li>--}}
         <li><a href="{{route('vh.admin.themes')}}">Themes</a></li>
     </ul>
 
