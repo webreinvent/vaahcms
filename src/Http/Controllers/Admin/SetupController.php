@@ -202,20 +202,20 @@ class SetupController extends Controller
         }
         Module::syncAllModules();
         Module::slug('cms')->update(['is_active' => 1]);
-        if(isset($inputs['cms']['sample_data']))
+        if(isset($inputs['cms']['sample_data']) && $inputs['cms']['sample_data'] == true)
         {
             Module::importSampleData('cms');
         }
 
         //download theme
         $response = Theme::download('btfourpointthree');
-        if($response['status'] == 'failed')
+        if($response['status'] == 'failed' )
         {
             return response()->json($response);
         }
         Theme::syncAll();
         Theme::slug('cms')->update(['is_active' => 1]);
-        if(isset($inputs['theme']['sample_data']))
+        if(isset($inputs['theme']['sample_data']) && $inputs['cms']['sample_data'] == true)
         {
             Theme::importSampleData('btfourpointthree');
         }

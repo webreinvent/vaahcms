@@ -1,6 +1,101 @@
 # vaahcms
 Laravel Based Rapid Development CMS
 
+
+
+## Steps to Setup
+
+### Step 1) Install Package
+```bash
+composer require webreinvent/vaahcms
+```
+
+### Step 2) Publish Assets
+```bash
+php artisan vendor:publish --provider="WebReinvent\VaahCms\VaahCmsServiceProvider" --tag=assets
+php artisan vendor:publish --provider="WebReinvent\VaahCms\VaahCmsServiceProvider" --tag=migrations
+php artisan vendor:publish --provider="WebReinvent\VaahCms\VaahCmsServiceProvider" --tag=seeds
+```
+
+### Step 3) Register Service Provider
+
+Add following service provider in `config/app.php`
+
+```php
+/*
+ * Package Service Providers...
+ */
+WebReinvent\VaahCms\VaahCmsServiceProvider::class,
+```
+
+### Step 4) Add following in `config/auth.php`
+```php
+'providers' => [
+        //...
+        'users' => [
+            'driver' => 'eloquent',
+            'model' => \WebReinvent\VaahCms\Entities\User::class,
+        ],
+        //...
+    ],
+```
+
+### Step 5) Update composer.json file
+
+Create following folder in your laravel root folder
+
+```
+vaahcms/Modules
+vaahcms/Themes
+```
+
+Add following two lines in `psr-4` in `composer.json`
+```json
+...
+"autoload": {
+    "files": [],
+    "psr-4": {
+        "App\\": "app/",
+        ...
+        "VaahCms\\Modules\\": "vaahcms/Modules/",
+        "VaahCms\\Themes\\": "vaahcms/Themes/"
+        ...
+    },
+    "classmap": [
+        "database/seeds",
+        "database/factories"
+    ]
+},
+...
+```
+
+Then run following command
+```bash
+composer dump-autoload
+```
+
+### Step 6) Move `.htaccess` and `index.php` file from public folder to root folder.
+
+### Step 7) Update path of `index.php` file:
+```php
+...
+require __DIR__.'/vendor/autoload.php';
+...
+$app = require_once __DIR__.'/bootstrap/app.php';
+```
+
+### Step 7) Visit ```<root-url>/vaahcms/setup```:
+
+
+### Step 8) If you get `Numeric value out of range` error then you can fix it by adding  following code in `App\Providers\AppServiceProvider.php`
+```php
+public function boot()
+{
+    Schema::defaultStringLength(191);
+}
+```
+
+
 ### Commands
 
 #### Publish All Assets
@@ -50,85 +145,6 @@ php artisan make:migration create_vh_users_table --path=/packages/vaahcms/src/Da
 php artisan make:seeder PermissionsTableSeeder --path=/packages/vaahcms/src/Database/Seeders
 php artisan make:seeder RolesTableSeeder --path=/packages/vaahcms/src/Database/Seeders
 php artisan make:command HealthcheckCommand --path=/packages/vaahcms/src/Database/Seeders
-```
-
-## Steps to Setup
-
-### Step 0) Fix `Numeric value out of range` error by add following code in `App\Providers\AppServiceProvider.php`
-```php
-public function boot()
-{
-    Schema::defaultStringLength(191);
-}
-```
-
-### Step 1) Install Package
-```bash
-composer require webreinvent/vaahcms
-```
-
-### Step 2) Publish Assets
-```bash
-php artisan vendor:publish --provider="WebReinvent\VaahCms\VaahCmsServiceProvider" --tag=assets
-php artisan vendor:publish --provider="WebReinvent\VaahCms\VaahCmsServiceProvider" --tag=migrations
-php artisan vendor:publish --provider="WebReinvent\VaahCms\VaahCmsServiceProvider" --tag=seeds
-```
-
-### Step 3) Register Service Provider
-
-Add following service provider in `config/app.php`
-
-```php
-/*
- * Package Service Providers...
- */
-WebReinvent\VaahCms\VaahCmsServiceProvider::class,
-```
-
-### Step 4) Add following in `config/auth.php`
-```php
-'providers' => [
-        //...
-        'users' => [
-            'driver' => 'eloquent',
-            'model' => \WebReinvent\VaahCms\Entities\User::class,
-        ],
-        //...
-    ],
-```
-
-### Step 5) Update composer.json file
-
-Create following folder in your laravel root folder
-
-```
-vaahcms/Modules
-vaahcms/Plugins
-```
-
-Add following two lines in `psr-4` in `composer.json`
-```json
-...
-"autoload": {
-    "files": [],
-    "psr-4": {
-        "App\\": "app/",
-        ...
-        "VaahCms\\Modules\\": "vaahcms/Modules/",
-        "VaahCms\\Plugins\\": "vaahcms/Plugins/"
-        ...
-    },
-    "classmap": [
-        "database/seeds",
-        "database/factories"
-    ]
-},
-...
-```
-
-Then run following command
-```bash
-composer dump-autoload
 ```
 
 ## Minify Assets of Admin with Laravel Mix
