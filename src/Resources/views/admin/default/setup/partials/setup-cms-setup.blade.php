@@ -4,7 +4,8 @@
 
     <div class="alert alert-danger" role="alert">
 
-        This is step will download and install required modules and themes!
+        This is step will download and install required modules and themes!<br/>
+        <b>This may take some time.</b>
 
     </div>
 
