@@ -14,7 +14,8 @@
   "require": {
     "php": "^7.0",
     "zanysoft/laravel-zip": "*",
-    "doctrine/dbal": "*"
+    "doctrine/dbal": "*",
+    "atayahmet/laravel-nestable": "*"
   },
   "autoload": {
     "psr-4": {
