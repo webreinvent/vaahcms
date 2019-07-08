@@ -254,6 +254,34 @@ class Module extends Model {
         return $response;
     }
     //-------------------------------------------------
+    public static function activate($slug)
+    {
+        $module = Module::slug($slug)->first();
+
+        $path = "./vaahcms/Modules/".$module->name."/Database/migrations/";
+        $path_des = "./database/migrations";
+
+        //\copy($path, $path_des);
+
+        \File::copyDirectory($path, $path_des);
+
+        //run migration
+        $command = 'migrate';
+        \Artisan::call($command);
+        Migration::syncModuleMigrations($module->id);
+
+        $command = 'db:seed';
+        $params = [
+            '--class' => "VaahCms\Modules\\{$module->name}\\Database\Seeds\DatabaseTableSeeder"
+        ];
+
+        \Artisan::call($command, $params);
+
+        $module->is_active = 1;
+        $module->save();
+
+    }
+    //-------------------------------------------------
     public static function download($slug)
     {
 
@@ -265,6 +293,15 @@ class Module extends Model {
         if($api_response->status != 'success')
         {
             return $api_response;
+        }
+
+        //check if module is already installed
+        $module_path = base_path()."/vaahcms/Modules/".$api_response->data->name;
+        if(is_dir($module_path))
+        {
+            $response['status'] = 'success';
+            $response['messages'][] = $api_response->data->name." module already exist.";
+            return $response;
         }
 
         $parsed = parse_url($api_response->data->github_url);
@@ -315,6 +352,8 @@ class Module extends Model {
 
         \Artisan::call($command, $params);
     }
+    //-------------------------------------------------
+
     //-------------------------------------------------
     //-------------------------------------------------
     //-------------------------------------------------

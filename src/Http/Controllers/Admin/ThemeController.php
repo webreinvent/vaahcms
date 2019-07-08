@@ -174,9 +174,7 @@ class ThemeController extends Controller
 
             //---------------------------------------
             case 'activate':
-                $this->activate($theme);
-                $theme->is_active = 1;
-                $theme->save();
+                Theme::activate($theme->slug);
                 break;
             //---------------------------------------
             case 'deactivate':
@@ -207,34 +205,7 @@ class ThemeController extends Controller
         return response()->json($response);
     }
     //----------------------------------------------------------
-    public function activate($theme)
-    {
 
-        $path = "./vaahcms/Themes/".$theme->name."/Database/migrations/";
-        $path_des = "./database/migrations";
-
-        //\copy($path, $path_des);
-
-        \File::copyDirectory($path, $path_des);
-
-        //run migration
-        $command = 'migrate';
-        \Artisan::call($command);
-
-        Migration::syncThemeMigrations($theme->id);
-
-        $db_seeder_class = "VaahCms\Themes\\{$theme->name}\\Database\Seeds\DatabaseTableSeeder";
-
-        if(class_exists($db_seeder_class)){
-            $command = 'db:seed';
-            $params = [
-                '--class' => "VaahCms\Themes\\{$theme->name}\\Database\Seeds\DatabaseTableSeeder"
-            ];
-
-            \Artisan::call($command, $params);
-        }
-
-    }
     //----------------------------------------------------------
     public function importSampleData($theme)
     {

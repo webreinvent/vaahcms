@@ -162,9 +162,7 @@ class ModuleController extends Controller
 
             //---------------------------------------
             case 'activate':
-                $this->activate($module);
-                $module->is_active = 1;
-                $module->save();
+                Module::activate($module->slug);
                 break;
             //---------------------------------------
             case 'deactivate':
@@ -174,7 +172,7 @@ class ModuleController extends Controller
                 break;
             //---------------------------------------
             case 'importSampleData':
-                $this->importSampleData($module->slug);
+                Module::importSampleData($module->slug);
                 $response['status'] = 'success';
                 $response['messages'][] = 'Sample Data Successfully Imported';
                 return response()->json($response);
@@ -195,34 +193,7 @@ class ModuleController extends Controller
         return response()->json($response);
     }
     //----------------------------------------------------------
-    public function activate($module)
-    {
 
-        $path = "./vaahcms/Modules/".$module->name."/Database/migrations/";
-        $path_des = "./database/migrations";
-
-        //\copy($path, $path_des);
-
-        \File::copyDirectory($path, $path_des);
-
-        //run migration
-        $command = 'migrate';
-        \Artisan::call($command);
-        Migration::syncModuleMigrations($module->id);
-
-        $command = 'db:seed';
-        $params = [
-            '--class' => "VaahCms\Modules\\{$module->name}\\Database\Seeds\DatabaseTableSeeder"
-        ];
-
-        \Artisan::call($command, $params);
-
-    }
-    //----------------------------------------------------------
-    public function importSampleData($module)
-    {
-        Module::importSampleData($module->name);
-    }
     //----------------------------------------------------------
     public function deactivate($module)
     {
