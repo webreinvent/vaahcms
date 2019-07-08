@@ -1,5 +1,7 @@
 # vaahcms
-Laravel Based Rapid Development CMS
+> Laravel Based Rapid Development CMS
+
+Please consider starring the project to show your :heart: and support.
 
 
 
