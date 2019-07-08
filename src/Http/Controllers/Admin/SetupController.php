@@ -11,6 +11,7 @@ use Illuminate\Support\Str;
 use WebReinvent\VaahCms\Entities\Migration;
 use WebReinvent\VaahCms\Entities\Module;
 use WebReinvent\VaahCms\Entities\ModuleMigration;
+use WebReinvent\VaahCms\Entities\Permission;
 use WebReinvent\VaahCms\Entities\Role;
 use WebReinvent\VaahCms\Entities\Theme;
 use WebReinvent\VaahCms\Entities\User;
@@ -280,7 +281,12 @@ class SetupController extends Controller
             $response['errors'][] = \Lang::get('vaahcms::messages.not_exist', ['key' => 'role slug', 'value' => 'admin']);;
             return response()->json($response);
         }
-        $user->roles()->attach($role->id);
+
+        Role::syncRolesWithUsers();
+        Permission::syncPermissionsWithRoles();
+
+        Permission::recountRelations();
+        Role::recountRelations();
 
         $response['status'] = 'success';
         $response['messages'][] = trans("vaahcms::messages.setup_completed");
