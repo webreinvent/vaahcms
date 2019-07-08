@@ -280,7 +280,7 @@ class SetupController extends Controller
             $response['errors'][] = \Lang::get('vaahcms::messages.not_exist', ['key' => 'role slug', 'value' => 'admin']);;
             return response()->json($response);
         }
-        $user->roles()->attach($role->id);
+        $user->roles()->attach($role->id, ['is_active'=>1]);
 
         $response['status'] = 'success';
         $response['messages'][] = trans("vaahcms::messages.setup_completed");
