@@ -5,7 +5,7 @@
             <div class="col-sm">
                 <div class="d-sm-flex align-items-center justify-content-between">
                     <div>
-                        <h4 class="mg-b-0 tx-spacing--1">Add Modules</h4>
+                        <h4 class="mg-b-0 tx-spacing--1">Add Themes</h4>
                     </div>
 
                     <div class="d-flex flex-row-reverse">
@@ -29,9 +29,9 @@
 
                             <div class="search-form input-group-sm">
                                 <input type="search" class="form-control" v-model="filters.q"
-                                       v-on:keyup.enter="getModules()"
+                                       v-on:keyup.enter="getThemes()"
                                        placeholder="Search">
-                                <button class="btn" v-on:click="getModules()" type="button">
+                                <button class="btn" v-on:click="getThemes()" type="button">
                                     <i class="fas fa-search"></i>
                                 </button>
                             </div>
@@ -132,7 +132,7 @@
         <div class="row">
 
             <div class="col">
-                <pagination  v-if="list" :limit="6" :data="list" @pagination-change-page="getModules"></pagination>
+                <pagination  v-if="list" :limit="6" :data="list" @pagination-change-page="getThemes"></pagination>
             </div>
 
         </div>
