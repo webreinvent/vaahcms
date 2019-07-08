@@ -49,26 +49,32 @@ const VueHelpers = {
                 }
             }).catch(error => {
 
-            if (error.response) {
+                if(error.response && error.response && error.response.status === "419")
+                {
+                    this.$helpers.console(error);
+                    this.errors(["Login expired, try to login again."]);
 
-                this.errors([error.response.data]);
+                } else if (error.response)
+                {
 
-                // Request made and server responded
-                this.$helpers.console(error.response.data);
-                this.$helpers.console(error.response.status);
-                this.$helpers.console(error.response.headers);
+                    this.errors([error.response.data]);
 
-            } else if (error.request) {
+                    // Request made and server responded
+                    this.$helpers.console(error.response.data);
+                    this.$helpers.console(error.response.status);
+                    this.$helpers.console(error.response.headers);
 
-                // The request was made but no response was received
-                this.$helpers.console(error.request);
-                this.errors(['Server not responding']);
+                } else if (error.request) {
 
-            } else {
-                // Something happened in setting up the request that triggered an Error
-                this.$helpers.console(error.message);
-                this.errors([error.message]);
-            }
+                    // The request was made but no response was received
+                    this.$helpers.console(error.request);
+                    this.errors(['Server not responding']);
+
+                } else {
+                    // Something happened in setting up the request that triggered an Error
+                    console.error(error);
+                    this.errors(["Error: check console"]);
+                }
 
         });
 

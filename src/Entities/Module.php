@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use ZanySoft\Zip\Zip;
 
 class Module extends Model {
 
@@ -10,6 +11,7 @@ class Module extends Model {
     protected $table = 'vh_modules';
     //-------------------------------------------------
     protected $dates = [
+        'update_checked_at',
         'created_at',
         'updated_at',
         'deleted_at'
@@ -74,13 +76,15 @@ class Module extends Model {
     public function scopeDeletedBetween( $query, $from, $to ) {
         return $query->whereBetween( 'deleted_at', array( $from, $to ) );
     }
-
-
     //-------------------------------------------------
-    public function settings() {
-        return $this->hasMany( 'WebReinvent\VaahCms\Entities\ModuleSetting',
-            'module_id', 'id'
-        );
+    public function settings()
+    {
+        return $this->morphMany('WebReinvent\VaahCms\Entities\Setting', 'settingable');
+    }
+    //-------------------------------------------------
+    public function migrations()
+    {
+        return $this->morphMany('WebReinvent\VaahCms\Entities\Migration', 'migrationable');
     }
     //-------------------------------------------------
     public static function syncModule($module_path)
@@ -94,10 +98,7 @@ class Module extends Model {
             $response['status'] = 'failed';
             $response['errors'][] = 'Fatal with '.$module_path.'\settings.json';
             return $response;
-
         }
-
-
 
         $rules = array(
             'name' => 'required',
@@ -145,29 +146,26 @@ class Module extends Model {
 
         $other_settings = array_diff_key($settings, array_flip($removeKeys));
 
-        foreach ($other_settings as $key => $setting)
+        foreach ($other_settings as $key => $setting_input)
         {
 
+            $setting_data = [];
 
-            $where_con = [
-                'module_id' => $module->id,
-                'key'   => $key
-            ];
+            $setting_data['key'] = $key;
 
-
-            $module_setting = ModuleSetting::firstOrCreate($where_con);
-
-
-            if(is_array($setting) || is_object($setting))
+            if(is_array($setting_input) || is_object($setting_input))
             {
-                $module_setting->type = 'json';
-                $module_setting->value = json_encode($setting);
+                $setting_data['type'] = 'json';
+                $setting_data['value'] = json_encode($setting_input);
+
             } else
             {
-                $module_setting->value = $setting;
+                $setting_data['value'] = $setting_input;
             }
 
-            $module_setting->save();
+            $setting = new Setting($setting_data);
+
+            $module->settings()->save($setting);
 
         }
 
@@ -196,6 +194,129 @@ class Module extends Model {
         }
 
     }
+    //-------------------------------------------------
+    public static function getInstalledModules()
+    {
+        $list = Model::all();
+        return $list;
+    }
+    //-------------------------------------------------
+    public static function validateDependencies($dependencies)
+    {
+
+        $response['status'] = 'success';
+
+
+        foreach ($dependencies as $key => $dependency_list)
+        {
+
+
+            switch($key){
+
+                case 'modules':
+
+                    if(is_array($dependency_list))
+                    {
+                        foreach ($dependency_list as $dependency_slug)
+                        {
+                            $module = Module::slug($dependency_slug)->first();
+
+                            if(!$module)
+                            {
+                                $response['status'] = 'failed';
+                                $response['errors'][] = "Please install and activate '".$dependency_slug."'.";
+                            }
+
+                            if($module && $module->is_active != 1)
+                            {
+                                $response['status'] = 'failed';
+                                $response['errors'][] = $dependency_slug.' module is not active';
+                            }
+                        }
+
+                    }
+
+                    break;
+                //------------------------
+                case 'theme':
+
+                    break;
+                //------------------------
+                //------------------------
+                //------------------------
+                //------------------------
+            }
+
+
+
+        }
+
+        return $response;
+    }
+    //-------------------------------------------------
+    public static function download($slug)
+    {
+
+        $api = config('vaahcms.api_route')."/module/by/slug/".$slug;
+
+        $api_response = @file_get_contents($api);
+        $api_response = json_decode($api_response);
+
+        if($api_response->status != 'success')
+        {
+            return $api_response;
+        }
+
+        $parsed = parse_url($api_response->data->github_url);
+
+
+        $uri_parts = explode('/', $parsed['path']);
+        $folder_name = end($uri_parts);
+        $folder_name = $folder_name."-master";
+
+
+        $filename = $api_response->data->name.'.zip';
+        $folder_path = base_path()."/vaahcms/Modules/";
+        $path = $folder_path.$filename;
+
+        copy($api_response->data->github_url.'/archive/master.zip', $path);
+
+        try{
+            Zip::check($path);
+            $zip = Zip::open($path);
+            $zip->extract(base_path().'/vaahcms/Modules/');
+            $zip->close();
+
+            rename($folder_path."".$folder_name, $folder_path.$api_response->data->name);
+
+            vh_delete_folder($path);
+
+            $response['status'] = 'success';
+            $response['messages'][] = 'installed';
+            return $response;
+
+        }catch(\Exception $e)
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = $e->getMessage();
+            return $response;
+        }
+
+    }
+    //-------------------------------------------------
+    public static function importSampleData($slug)
+    {
+        $module = Module::slug($slug)->first();
+
+        $command = 'db:seed';
+        $params = [
+            '--class' => "VaahCms\Modules\\{$module->name}\\Database\Seeds\SampleDataTableSeeder"
+        ];
+
+        \Artisan::call($command, $params);
+    }
+    //-------------------------------------------------
+    //-------------------------------------------------
     //-------------------------------------------------
     //-------------------------------------------------
 

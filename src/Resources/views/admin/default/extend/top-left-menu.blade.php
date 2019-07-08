@@ -1,1 +1,1 @@
-{{vh_get_modules_extended_views('top-left-menu')}}
+@include('vaahcms::admin.default.layouts.partials.extendable', ['view_file'=>'top-left-menu'])

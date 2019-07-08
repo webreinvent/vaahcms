@@ -33,7 +33,24 @@ function vh_get_user_statuses()
     return $list;
 }
 //-------------------------------------------------------------
+function slug_to_str($slug)
+{
+    $slug = str_replace('-', ' ', $slug);
+    $slug = str_replace('_', ' ', $slug);
+    $str = ucwords($slug);
+
+    return $str;
+}
 //-------------------------------------------------------------
+function generate_random_string($length=8)
+{
+    return str_random($length);
+}
+//-------------------------------------------------------------
+function generate_password()
+{
+    return generate_random_string();
+}
 //-------------------------------------------------------------
 //-------------------------------------------------------------
 //-------------------------------------------------------------

@@ -8,8 +8,11 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Str;
+use WebReinvent\VaahCms\Entities\Migration;
+use WebReinvent\VaahCms\Entities\Module;
 use WebReinvent\VaahCms\Entities\ModuleMigration;
 use WebReinvent\VaahCms\Entities\Role;
+use WebReinvent\VaahCms\Entities\Theme;
 use WebReinvent\VaahCms\Entities\User;
 
 
@@ -27,9 +30,6 @@ class SetupController extends Controller
     //----------------------------------------------------------
     public function index()
     {
-
-
-
         return view($this->theme.'.setup.welcome');
     }
 
@@ -144,7 +144,7 @@ class SetupController extends Controller
             ];
             \Artisan::call($command, $params);
 
-            ModuleMigration::syncMigrations();
+
             //run migration
             $command = 'migrate';
             $params = [
@@ -152,7 +152,7 @@ class SetupController extends Controller
             ];
             \Artisan::call($command, $params);
 
-            ModuleMigration::syncMigrations(null, 'vaahcms');
+
 
             //publish vaahcms seeds
             $command = 'vendor:publish';
@@ -184,6 +184,49 @@ class SetupController extends Controller
             return response()->json($response);
         }
 
+
+    }
+
+    //----------------------------------------------------------
+
+    public function setupCMS(Request $request)
+    {
+
+        $inputs = $request->all();
+
+        //download cms module
+        $response = Module::download('cms');
+        if($response['status'] == 'failed')
+        {
+            return response()->json($response);
+        }
+        Module::syncAllModules();
+        Module::slug('cms')->update(['is_active' => 1]);
+        if(isset($inputs['cms']['sample_data']) && $inputs['cms']['sample_data'] == true)
+        {
+            Module::importSampleData('cms');
+        }
+
+        //download theme
+        $response = Theme::download('btfourpointthree');
+        if($response['status'] == 'failed' )
+        {
+            return response()->json($response);
+        }
+        Theme::syncAll();
+        Theme::slug('cms')->update(['is_active' => 1]);
+        if(isset($inputs['theme']['sample_data']) && $inputs['cms']['sample_data'] == true)
+        {
+            Theme::importSampleData('btfourpointthree');
+        }
+
+
+        $data = [];
+
+        $response['status'] = 'success';
+        $response['messages'][] = 'CMS setup was successful';
+
+        return response()->json($response);
 
     }
 
@@ -225,6 +268,7 @@ class SetupController extends Controller
         $user->uid = uniqid();
         $user->password = \Hash::make($request->password);
         $user->is_active = 1;
+        $user->status = 'active';
         $user->created_ip = \Request::ip();
         $user->save();
 

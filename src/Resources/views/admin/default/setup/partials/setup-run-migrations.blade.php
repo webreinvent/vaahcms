@@ -4,7 +4,7 @@
 
     <div class="alert alert-danger" role="alert">
 
-        This is step will wipe all the data in the database configured!
+        This is step will download required modules and themes.
 
     </div>
 

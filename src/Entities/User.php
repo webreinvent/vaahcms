@@ -1,5 +1,6 @@
 <?php namespace WebReinvent\VaahCms\Entities;
 
+use Hash;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Http\Request;
@@ -8,13 +9,15 @@ use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Support\Facades\Password;
+use WebReinvent\VaahCms\Traits\CrudWithUidObservantTrait;
 
 class User extends Authenticatable
 {
 
     use Notifiable;
-
     use SoftDeletes;
+    use CrudWithUidObservantTrait;
+
     //-------------------------------------------------
     protected $table = 'vh_users';
     //-------------------------------------------------
@@ -50,7 +53,7 @@ class User extends Authenticatable
 
     //-------------------------------------------------
     protected $appends  = [
-        'thumbnail',
+        'thumbnail', 'name'
     ];
 
     //-------------------------------------------------
@@ -64,6 +67,12 @@ class User extends Authenticatable
         $grav_url = vh_get_avatar_by_email($this->email);
 
         return $grav_url;
+    }
+    //-------------------------------------------------
+
+    //-------------------------------------------------
+    public function getNameAttribute() {
+        return $this->first_name." ".$this->middle_name." ".$this->last_name;
     }
     //-------------------------------------------------
     public function setFirstNameAttribute($value)
@@ -199,6 +208,154 @@ class User extends Authenticatable
     }
 
     //-------------------------------------------------
+    public function getTableColumns() {
+        return $this->getConnection()->getSchemaBuilder()
+            ->getColumnListing($this->getTable());
+    }
+    //-------------------------------------------------
+    public function getFormFillableColumns()
+    {
+        $list = [
+            'email', 'username', 'password', 'display_name',
+            'title', 'first_name', 'middle_name', 'last_name',
+            'gender', 'country_calling_code', 'phone', 'timezone',
+            'alternate_email', 'avatar_url', 'birth', 'country',
+            'last_login_at', 'last_login_ip', 'api_token', 'api_token_used_at',
+            'api_token_used_ip', 'is_active', 'activated_at', 'status',
+            'affiliate_code', 'affiliate_code_used_at', 'created_by', 'updated_by',
+            'deleted_by', 'created_at', 'updated_at',
+            'deleted_at'
+        ];
+
+        return $list;
+    }
+    //-------------------------------------------------
+    public function getFormColumns()
+    {
+        $columns = $this->getFormFillableColumns();
+
+        $result = [];
+        $i = 0;
+
+        foreach ($columns as $column)
+        {
+            $result[$i] = $this->getFormElement($column);
+            $i++;
+        }
+
+        return $result;
+    }
+    //-------------------------------------------------
+    public function getFormElement($column, $value=null)
+    {
+
+        $result['name'] = $column;
+        $result['value'] = $value;
+        $result['type'] = 'text';
+        $result['editable'] = true;
+        $result['tr_class'] = "";
+        $result['disabled'] = false;
+        $result['label'] = slug_to_str($column);
+        /*$result['column_type'] = $this->getConnection()->getSchemaBuilder()
+            ->getColumnType($this->getTable(), $column);*/
+
+
+        switch($column)
+        {
+            //------------------------------------------------
+            case 'id':
+            case 'uid':
+                $result['type'] = 'text';
+                $result['disabled'] = true;
+                $result['tr_class'] = 'tr__disabled';
+                break;
+            //------------------------------------------------
+            case 'created_by':
+            case 'updated_by':
+            case 'deleted_by':
+                $result['type'] = 'select_with_ids';
+                $result['editable'] = false;
+                $result['inputs'] = User::getUsersForAssets();
+                break;
+            //------------------------------------------------
+            case 'password':
+                $result['type'] = 'hidden';
+                $result['editable'] = false;
+                break;
+            //------------------------------------------------
+            case 'meta':
+            case 'last_login_at':
+            case 'last_login_ip':
+            case 'remember_token':
+            case 'api_token':
+            case 'api_token_used_at':
+            case 'api_token_used_ip':
+            case 'activated_at':
+            case 'affiliate_code_used_at':
+            case 'reset_password_code_sent_at':
+            case 'reset_password_code_used_at':
+            case 'created_ip':
+            case 'created_at':
+            case 'deleted_at':
+            case 'updated_at':
+                $result['editable'] = false;
+                break;
+            //------------------------------------------------
+
+            //------------------------------------------------
+            case 'title':
+                $result['type'] = 'select';
+                $result['inputs'] = vh_name_titles();
+                break;
+            //------------------------------------------------
+            case 'gender':
+                $result['type'] = 'select';
+                $result['inputs'] = vh_genders();
+                break;
+            //------------------------------------------------
+            case 'country_calling_code':
+                $result['type'] = 'select';
+                $result['inputs'] = vh_get_countries_calling_codes();
+                break;
+            //------------------------------------------------
+            case 'timezone':
+                $result['type'] = 'select';
+                $result['inputs'] = vh_get_timezones();
+                break;
+            //------------------------------------------------
+            case 'birth':
+                $result['type'] = 'date';
+                $result['label'] = 'Birth Date';
+                break;
+            //------------------------------------------------
+            case 'status':
+                $result['type'] = 'select';
+                $result['inputs'] = vh_user_statuses();
+                break;
+            //------------------------------------------------
+            case 'country':
+                $result['type'] = 'select';
+                $result['inputs'] = vh_get_country_list_with_slugs();
+                break;
+            //------------------------------------------------
+            //------------------------------------------------
+            case 'is_active':
+                $result['type'] = 'select';
+                $result['inputs'] = vh_is_active_options();
+                break;
+            //------------------------------------------------
+            default:
+                $result['type'] = 'text';
+                break;
+            //------------------------------------------------
+        }
+
+        return $result;
+    }
+    //-------------------------------------------------
+    //-------------------------------------------------
+    //-------------------------------------------------
+    //-------------------------------------------------
     public static function findByUsername($username, $columns = array('*'))
     {
         if ( ! is_null($user = static::whereUsername($username)->first($columns))) {
@@ -225,9 +382,14 @@ class User extends Authenticatable
     {
         return $this->belongsToMany('WebReinvent\VaahCms\Entities\Role',
             'vh_user_roles', 'vh_user_id', 'vh_role_id'
-        );
+        )->withPivot('is_active');
     }
 
+    //-------------------------------------------------
+    public function activeRoles()
+    {
+        return $this->roles()->wherePivot('is_active', 1);
+    }
     //-------------------------------------------------
     public static function countAdmins()
     {
@@ -306,8 +468,298 @@ class User extends Authenticatable
     }
 
     //-------------------------------------------------
+    public static function store($request)
+    {
+        $rules = array(
+            'email' => 'required|email',
+            'first_name' => 'required',
+        );
 
+        $validator = \Validator::make( $request->all(), $rules);
+        if ( $validator->fails() ) {
+
+            $errors             = errorsToArray($validator->errors());
+            $response['status'] = 'failed';
+            $response['errors'] = $errors;
+            return $response;
+        }
+
+        $data = [];
+
+        $inputs = $request->all();
+
+
+        if($request->has('birth'))
+        {
+            $inputs['birth'] = Carbon::parse($request->birth)->format('Y-m-d');
+        }
+
+        if($request->has('id'))
+        {
+            $item = User::find($request->id);
+        } else
+        {
+            $validation = static::userValidation($request);
+            if(isset($validation['status']) && $validation['status'] == 'failed')
+            {
+                return $validation;
+            } else if(isset($validation['status']) && $validation['status'] == 'registration-exist')
+            {
+                $item = $validation['data'];
+            } else
+            {
+                $item = new User();
+                $item->password = generate_password();
+                $item->is_active = 1;
+                $item->status = 'active';
+                $item->activated_at = date('Y-m-d H:i:s');
+                $item->uid = uniqid();
+            }
+        }
+
+        $item->fill($inputs);
+        if($request->has('password'))
+        {
+            $item->password = Hash::make($request->password);
+        }
+
+        $item->save();
+
+        if(!$request->has('id'))
+        {
+            Role::syncRolesWithUsers();
+        }
+
+
+        $response['status'] = 'success';
+        $response['messages'][] = 'Saved';
+        $response['data'] = $item;
+
+        return $response;
+
+
+    }
     //-------------------------------------------------
+    public function recordForFormElement()
+    {
+        $record = $this->toArray();
+
+        $columns = $this->getFormFillableColumns();
+
+        $visible = ['id', 'uid'];
+
+        $columns = array_merge($visible, $columns);
+
+        $result = [];
+        $i = 0;
+
+        foreach ($columns as $column)
+        {
+            if(isset($record[$column]))
+            {
+                $result[$i] = $this->getFormElement($column, $record[$column]);
+                $i++;
+            } else
+            {
+                $result[$i] = $this->getFormElement($column, "");
+                $i++;
+            }
+
+        }
+
+
+        return $result;
+    }
+    //-------------------------------------------------
+    public static function userValidation($request)
+    {
+
+        //check if user already exist with the emails
+        $user = User::where('email', $request->email)->first();
+        if($user)
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = 'Email is already registered.';
+            return $response;
+        }
+
+        //check if user already exist with the phone
+        if($request->has('country_calling_code') && $request->has('phone'))
+        {
+            $user = User::where('country_calling_code', $request->country_calling_code)
+                ->where('phone', $request->phone)
+                ->first();
+
+            if($user)
+            {
+                $response['status'] = 'failed';
+                $response['errors'][] = 'Phone number is already registered.';
+                return $response;
+            }
+        }
+
+        //if status is registered then user_id is required
+        if($request->has('status') && $request->status == 'registered' && !$request->has('user_id'))
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = 'The registration status is "registered", hence user id is required';
+            return $response;
+        }
+
+        //check if registration record exist
+        $reg_by_email = User::findByEmail($request->email);
+        if($reg_by_email)
+        {
+            $response['status'] = 'registration-exist';
+            $response['data'] = $reg_by_email;
+            return $response;
+        }
+
+        $reg_by_phone = User::where('country_calling_code', $request->country_calling_code)
+            ->where('phone', $request->phone)
+            ->first();
+        if($reg_by_phone)
+        {
+            $response['status'] = 'registration-exist';
+            $response['data'] = $reg_by_phone;
+            return $response;
+        }
+
+
+    }
+    //-------------------------------------------------
+    public static function bulkStatusChange($request)
+    {
+
+        if(!$request->has('inputs'))
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = 'Select IDs';
+            return $response;
+        }
+
+        if(!$request->has('data'))
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = 'Select Status';
+            return $response;
+        }
+
+        foreach($request->inputs as $id)
+        {
+            $reg = User::find($id);
+            $reg->status = $request->data;
+            $reg->save();
+        }
+
+        $response['status'] = 'success';
+        $response['messages'][] = 'Action was successful';
+
+        return $response;
+
+
+    }
+    //-------------------------------------------------
+    public static function bulkDelete($request)
+    {
+
+        if(!$request->has('inputs'))
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = 'Select IDs';
+            return $response;
+        }
+
+        if(!$request->has('data'))
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = 'Select Status';
+            return $response;
+        }
+
+        foreach($request->inputs as $id)
+        {
+            $item = User::find($id);
+            if($item)
+            {
+                $item->is_active = 0;
+                $item->status = 'inactive';
+                $item->save();
+
+                $item->delete();
+            }
+        }
+
+        $response['status'] = 'success';
+        $response['messages'][] = 'Action was successful';
+
+        return $response;
+
+
+    }
+    //-------------------------------------------------
+    public static function bulkRestore($request)
+    {
+
+        if(!$request->has('inputs'))
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = 'Select IDs';
+            return $response;
+        }
+
+        if(!$request->has('data'))
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = 'Select Status';
+            return $response;
+        }
+
+        foreach($request->inputs as $id)
+        {
+            $item = User::withTrashed()->where('id', $id)->first();
+            if(isset($item) && isset($item->deleted_at))
+            {
+                $item->restore();
+            }
+        }
+
+        $response['status'] = 'success';
+        $response['messages'][] = 'Action was successful';
+
+        return $response;
+
+
+    }
+    //-------------------------------------------------
+    public static function onlyOneAdminValidation($user_id)
+    {
+        $user = User::where('id', $user_id)->withTrashed()->first();
+
+        if(isset($user->deleted_at))
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = 'Account is deleted, hence you can not perform this action.';
+            return $response;
+
+        }
+
+        $count_admin = User::countAdmins();
+
+        if($user->isAdmin() && $count_admin < 2)
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = "You have only one admin account which can't be deactivated.";
+            return $response;
+        }
+
+        $response['status'] = 'success';
+
+        return $response;
+
+    }
+    //-------------------------------------------------
+
     public static function login($request)
     {
 
@@ -404,17 +856,17 @@ class User extends Authenticatable
     }
 
     //-------------------------------------------------
-    public function hasPermission($permission_uid)
+    public function hasPermission($permission_slug)
     {
 
         //check if permission exist or not
-        $permission = Permission::where('uid', $permission_uid)
+        $permission = Permission::where('slug', $permission_slug)
             ->first();
 
         if (!$permission)
         {
             $response['status'] = 'failed';
-            $response['errors'][] = 'No Permission exist with UID: '.$permission_uid;
+            $response['errors'][] = 'No Permission exist with slug: '.$permission_slug;
             return response()->json($response);
         }
 
@@ -428,7 +880,7 @@ class User extends Authenticatable
 
         foreach ($this->permissions() as $permission)
         {
-            if ($permission['uid'] == $permission_uid && $permission['is_active'] == 1)
+            if ($permission['slug'] == $permission_slug && $permission['is_active'] == 1)
             {
                 return true;
             }
@@ -456,6 +908,16 @@ class User extends Authenticatable
         Notification::send($admins, new NotifyAdmin($notification));
     }
     //-------------------------------------------------
+    public static function getUsersForAssets()
+    {
+
+        $list = User::active()
+            ->select('id', 'first_name', 'middle_name', 'last_name')
+            ->get();
+
+        return $list;
+
+    }
     //-------------------------------------------------
     //-------------------------------------------------
     //-------------------------------------------------

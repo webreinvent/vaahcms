@@ -13,6 +13,7 @@ return [
     |
     */
 
+    //trans("vaahcms::messages.not_exist", ['key' => 'var1', 'value' => 'var2']);
     'permission_denied' => 'Permission denied',
     'setup_completed' => 'Setup already completed',
     'not_exist' => 'No record with :key :value',

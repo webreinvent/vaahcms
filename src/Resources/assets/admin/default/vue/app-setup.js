@@ -64,6 +64,18 @@ const app = new Vue({
             username: null,
             password: null,
         },
+
+        cms_setup: {
+            cms: {
+                install: true,
+                sample_data: false,
+            },
+            theme: {
+                install: true,
+                sample_data: false,
+            }
+        }
+
     },
 
     mounted() {
@@ -133,10 +145,27 @@ const app = new Vue({
 
             this.active_step = null;
 
-            this.active_step = 'create_admin_account';
+            this.active_step = 'cms_setup';
 
             this.$helpers.console(this.active_step);
 
+            this.$helpers.stopNprogress();
+        },
+        //---------------------------------------------------------------------
+        setupCMS: function (e) {
+            if(e)
+            {
+                e.preventDefault();
+            }
+
+            var url = this.urls.current+"/setup/cms";
+            var params = this.cms_setup;
+            this.$helpers.ajax(url, params, this.setupCMSAfter);
+        },
+        //---------------------------------------------------------------------
+        setupCMSAfter: function (data) {
+            this.active_step = null;
+            this.active_step = 'create_admin_account';
             this.$helpers.stopNprogress();
         },
         //---------------------------------------------------------------------

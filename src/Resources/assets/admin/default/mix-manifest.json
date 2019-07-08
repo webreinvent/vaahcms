@@ -1,5 +1,10 @@
 {
     "/builds/app-dashboard.js": "/builds/app-dashboard.js",
     "/builds/app-modules.js": "/builds/app-modules.js",
-    "/builds/app-setup.js": "/builds/app-setup.js"
+    "/builds/app-permissions.js": "/builds/app-permissions.js",
+    "/builds/app-registrations.js": "/builds/app-registrations.js",
+    "/builds/app-roles.js": "/builds/app-roles.js",
+    "/builds/app-setup.js": "/builds/app-setup.js",
+    "/builds/app-themes.js": "/builds/app-themes.js",
+    "/builds/app-users.js": "/builds/app-users.js"
 }

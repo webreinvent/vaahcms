@@ -1,6 +1,21 @@
 <template>
     <div>
 
+
+        <div class="row">
+            <div class="col-sm">
+
+                <div class="alert alert-warning" v-if="page_reload_required">
+
+                    Page reload is required
+                    <a :href="urls.current" class="btn btn-xs btn-warning mg-l-10" >Click Here To Reload</a>
+
+                </div>
+
+            </div>
+
+        </div>
+
         <div class="row">
             <div class="col-sm">
                 <div class="d-sm-flex align-items-center justify-content-between">
@@ -15,7 +30,9 @@
                         </router-link>
 
 
-                        <button class="btn btn-success btn-sm"><i class="fas fa-sync"></i> Check Updates</button>
+                        <button class="btn btn-success btn-sm" v-on:click="getModulesSlugs($event)">
+                            <i class="fas fa-sync"></i> Check Updates
+                        </button>
 
                     </div>
                 </div>
@@ -151,7 +168,7 @@
                             </span>
 
                             <strong v-if="item.is_update_available">
-                            | <a href="#" class="mg-5 text-success">Update</a>
+                            | <a href="#" v-on:click="installUpdates($event, item.slug)" class="mg-5 text-success">Update</a>
                             </strong>
 
                             <span v-if="!item.is_active">

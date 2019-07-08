@@ -3,6 +3,7 @@
 use Illuminate\Routing\Router;
 use Illuminate\Support\ServiceProvider;
 use WebReinvent\VaahCms\Providers\ModulesServiceProvider;
+use WebReinvent\VaahCms\Providers\ThemesServiceProvider;
 
 /**
  * Class VaahCmsServiceProvider
@@ -24,11 +25,9 @@ class VaahCmsServiceProvider extends ServiceProvider {
      */
     public function boot(Router $router) {
 
-        //register middleware
-        $router->aliasMiddleware(
-            'has.admin.access', \WebReinvent\VaahCms\Http\Middleware\HasAdminAccess::class
-        );
 
+
+        $this->registerMiddleware($router);
         $this->registerConfigs();
         $this->registerMigrations();
         $this->registerSeeders();
@@ -48,8 +47,31 @@ class VaahCmsServiceProvider extends ServiceProvider {
         $this->registerConfigs();
         $this->registerProviders();
         $this->registerAlias();
+        $this->registerHelpers();
+
+    }
 
 
+
+    /**
+     *
+     */
+    private function registerMiddleware($router) {
+
+        //register middleware
+        $router->aliasMiddleware('has.admin.access', \WebReinvent\VaahCms\Http\Middleware\HasAdminAccess::class);
+        $router->aliasMiddleware('set.theme.details', \WebReinvent\VaahCms\Http\Middleware\SetThemeDetails::class);
+        $router->aliasMiddleware('set.template.details', \WebReinvent\VaahCms\Http\Middleware\SetTemplateDetails::class);
+
+
+    }
+
+
+
+    /**
+     *
+     */
+    private function registerHelpers() {
 
         //load all the helpers
         foreach (glob(__DIR__.'/Helpers/*.php') as $filename){
@@ -57,7 +79,6 @@ class VaahCmsServiceProvider extends ServiceProvider {
         }
 
     }
-
 
     /**
      * @return array
@@ -74,7 +95,8 @@ class VaahCmsServiceProvider extends ServiceProvider {
 
         //register module service provider
         $this->app->register(ModulesServiceProvider::class);
-        //$this->app->register(ZanySoft\Zip\ZipServiceProvider::class);
+        $this->app->register(ThemesServiceProvider::class);
+        $this->app->register(\ZanySoft\Zip\ZipServiceProvider::class);
 
     }
 
@@ -85,7 +107,7 @@ class VaahCmsServiceProvider extends ServiceProvider {
     private function registerAlias() {
 
         $loader = \Illuminate\Foundation\AliasLoader::getInstance();
-        //$loader->alias('Zip', ZanySoft\Zip\ZipFacade::class);
+        $loader->alias('Zip', \ZanySoft\Zip\ZipFacade::class);
 
     }
 

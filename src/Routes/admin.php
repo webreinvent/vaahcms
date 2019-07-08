@@ -32,6 +32,9 @@ Route::group(
         Route::post( '/run/migrations', 'SetupController@runMigrations' )
             ->name( 'vh.setup.run.migrations' );
         //------------------------------------------------
+        Route::any( '/setup/cms', 'SetupController@setupCMS' )
+            ->name( 'vh.setup.run.migrations' );
+        //------------------------------------------------
         Route::post( '/store/admin', 'SetupController@storeAdmin' )
             ->name( 'vh.setup.store.admin' );
         //------------------------------------------------
@@ -123,7 +126,57 @@ Route::group(
         Route::any( '/actions', 'ModuleController@actions' )
             ->name( 'vh.admin.modules.actions' );
         //------------------------------------------------
+        Route::any( '/get/slugs', 'ModuleController@getModulesSlugs' )
+            ->name( 'vh.admin.modules.get.slugs' );
+        //------------------------------------------------
+        Route::any( '/update/versions', 'ModuleController@updateModuleVersions' )
+            ->name( 'vh.admin.modules.update.version' );
+        //------------------------------------------------
+        Route::any( '/install/updates', 'ModuleController@installUpdates' )
+            ->name( 'vh.admin.modules.install.updates' );
+        //------------------------------------------------
+        //------------------------------------------------
+        //------------------------------------------------
     });
+
+
+Route::group(
+    [
+        'prefix'     => 'admin/themes',
+        'middleware' => ['web','has.admin.access'],
+        'namespace'  => 'WebReinvent\VaahCms\Http\Controllers\Admin'
+    ],
+    function () {
+        //------------------------------------------------
+        //------------------------------------------------
+        Route::get( '/', 'ThemeController@index' )
+            ->name( 'vh.admin.themes' );
+        //------------------------------------------------
+        Route::any( '/assets', 'ThemeController@assets' )
+            ->name( 'vh.admin.themes.assets' );
+        //------------------------------------------------
+        Route::any( '/download', 'ThemeController@download' )
+            ->name( 'vh.admin.themes.download' );
+        //------------------------------------------------
+        Route::any( '/list', 'ThemeController@getList' )
+            ->name( 'vh.admin.themes.list' );
+        //------------------------------------------------
+        Route::any( '/actions', 'ThemeController@actions' )
+            ->name( 'vh.admin.themes.actions' );
+        //------------------------------------------------
+        Route::any( '/get/slugs', 'ThemeController@getModulesSlugs' )
+            ->name( 'vh.admin.themes.get.slugs' );
+        //------------------------------------------------
+        Route::any( '/update/versions', 'ThemeController@updateModuleVersions' )
+            ->name( 'vh.admin.themes.update.version' );
+        //------------------------------------------------
+        Route::any( '/install/updates', 'ThemeController@installUpdates' )
+            ->name( 'vh.admin.themes.install.updates' );
+        //------------------------------------------------
+        //------------------------------------------------
+        //------------------------------------------------
+    });
+
 
 
 Route::group(
@@ -136,6 +189,136 @@ Route::group(
         //------------------------------------------------
         Route::get( '/install', 'ComposerController@install' )
             ->name( 'vh.admin.composer.install' );
+        //------------------------------------------------
+        //------------------------------------------------
+    });
+
+
+Route::group(
+    [
+        'prefix'     => 'admin/registrations',
+        'middleware' => ['web','has.admin.access'],
+        'namespace'  => 'WebReinvent\VaahCms\Http\Controllers\Admin'
+    ],
+    function () {
+        //------------------------------------------------
+        Route::get( '/', 'RegistrationController@index' )
+            ->name( 'vh.admin.registrations' );
+        //------------------------------------------------
+        Route::any( '/assets', 'RegistrationController@assets' )
+            ->name( 'vh.admin.registrations.assets' );
+        //------------------------------------------------
+        Route::any( '/list', 'RegistrationController@getList' )
+            ->name( 'vh.admin.registrations.list' );
+        //------------------------------------------------
+        Route::any( '/actions', 'RegistrationController@actions' )
+            ->name( 'vh.admin.registrations.actions' );
+        //------------------------------------------------
+        Route::any( '/store', 'RegistrationController@store' )
+            ->name( 'vh.admin.registrations.store' );
+        //------------------------------------------------
+        Route::any( '/view/{id}', 'RegistrationController@getDetails' )
+            ->name( 'vh.admin.registrations.view' );
+        //------------------------------------------------
+    });
+
+
+
+Route::group(
+    [
+        'prefix'     => 'admin/users',
+        'middleware' => ['web','has.admin.access'],
+        'namespace'  => 'WebReinvent\VaahCms\Http\Controllers\Admin'
+    ],
+    function () {
+        //------------------------------------------------
+        Route::get( '/', 'UserController@index' )
+            ->name( 'vh.admin.users' );
+        //------------------------------------------------
+        Route::any( '/assets', 'UserController@assets' )
+            ->name( 'vh.admin.users.assets' );
+        //------------------------------------------------
+        Route::any( '/list', 'UserController@getList' )
+            ->name( 'vh.admin.users.list' );
+        //------------------------------------------------
+        Route::any( '/actions', 'UserController@actions' )
+            ->name( 'vh.admin.users.actions' );
+        //------------------------------------------------
+        Route::any( '/store', 'UserController@store' )
+            ->name( 'vh.admin.users.store' );
+        //------------------------------------------------
+        Route::any( '/view/{id}', 'UserController@getDetails' )
+            ->name( 'vh.admin.users.view' );
+        //------------------------------------------------
+        Route::any( '/roles/{id}', 'UserController@getRoles' )
+            ->name( 'vh.admin.users.roles' );
+        //------------------------------------------------
+    });
+
+Route::group(
+    [
+        'prefix'     => 'admin/roles',
+        'middleware' => ['web','has.admin.access'],
+        'namespace'  => 'WebReinvent\VaahCms\Http\Controllers\Admin'
+    ],
+    function () {
+        //------------------------------------------------
+        Route::get( '/', 'RoleController@index' )
+            ->name( 'vh.admin.roles' );
+        //------------------------------------------------
+        Route::any( '/assets', 'RoleController@assets' )
+            ->name( 'vh.admin.roles.assets' );
+        //------------------------------------------------
+        Route::any( '/list', 'RoleController@getList' )
+            ->name( 'vh.admin.roles.list' );
+        //------------------------------------------------
+        Route::any( '/actions', 'RoleController@actions' )
+            ->name( 'vh.admin.roles.actions' );
+        //------------------------------------------------
+        Route::any( '/store', 'RoleController@store' )
+            ->name( 'vh.admin.roles.store' );
+        //------------------------------------------------
+        Route::any( '/view/{id}', 'RoleController@getDetails' )
+            ->name( 'vh.admin.roles.view' );
+        //------------------------------------------------
+        Route::any( '/permissions/{id}', 'RoleController@getPermissions' )
+            ->name( 'vh.admin.roles.permissions' );
+        //------------------------------------------------
+        Route::any( '/users/{id}', 'RoleController@getUsers' )
+            ->name( 'vh.admin.roles.users' );
+        //------------------------------------------------
+        //------------------------------------------------
+    });
+
+Route::group(
+    [
+        'prefix'     => 'admin/permissions',
+        'middleware' => ['web','has.admin.access'],
+        'namespace'  => 'WebReinvent\VaahCms\Http\Controllers\Admin'
+    ],
+    function () {
+        //------------------------------------------------
+        Route::get( '/', 'PermissionController@index' )
+            ->name( 'vh.admin.permissions' );
+        //------------------------------------------------
+        Route::any( '/assets', 'PermissionController@assets' )
+            ->name( 'vh.admin.permissions.assets' );
+        //------------------------------------------------
+        Route::any( '/list', 'PermissionController@getList' )
+            ->name( 'vh.admin.permissions.list' );
+        //------------------------------------------------
+        Route::any( '/actions', 'PermissionController@actions' )
+            ->name( 'vh.admin.permissions.actions' );
+        //------------------------------------------------
+        Route::any( '/store', 'PermissionController@store' )
+            ->name( 'vh.admin.permissions.store' );
+        //------------------------------------------------
+        Route::any( '/view/{id}', 'PermissionController@getDetails' )
+            ->name( 'vh.admin.permissions.view' );
+        //------------------------------------------------
+        Route::any( '/roles/{id}', 'PermissionController@getRoles' )
+            ->name( 'vh.admin.permissions.roles' );
+        //------------------------------------------------
         //------------------------------------------------
         //------------------------------------------------
     });

@@ -1,1 +1,1 @@
-{{vh_get_modules_extended_views('settings-menu')}}
+@include('vaahcms::admin.default.layouts.partials.extendable', ['view_file'=>'settings-menu'])

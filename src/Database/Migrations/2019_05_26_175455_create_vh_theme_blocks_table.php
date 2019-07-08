@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateVhModulesMigrationsTable extends Migration
+class CreateVhThemeBlocksTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,11 @@ class CreateVhModulesMigrationsTable extends Migration
      */
     public function up()
     {
-        Schema::create('vh_modules_migrations', function (Blueprint $table) {
+        Schema::create('vh_theme_blocks', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('migration_id')->nullable();
-            $table->integer('module_id')->nullable();
-            $table->string('module_slug')->nullable();
-            $table->integer('batch')->nullable();
+            $table->integer('vh_theme_id')->nullable();
+            $table->string('name')->nullable();
+            $table->string('slug')->nullable();
             $table->timestamps();
         });
     }
@@ -30,6 +29,6 @@ class CreateVhModulesMigrationsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('vh_modules_migrations');
+        Schema::dropIfExists('vh_theme_blocks');
     }
 }

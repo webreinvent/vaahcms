@@ -4,9 +4,10 @@
     </a>
 
     <ul>
-        <li><a href="page-profile-view.html">Users</a></li>
-        <li><a href="page-profile-view.html">Roles</a></li>
-        <li><a href="page-connections.html">Permissions</a></li>
+        <li><a href="{{route('vh.admin.registrations')}}">Registration</a></li>
+        <li><a href="{{route('vh.admin.users')}}">Users</a></li>
+        <li><a href="{{route('vh.admin.roles')}}">Roles</a></li>
+        <li><a href="{{route('vh.admin.permissions')}}">Permissions</a></li>
     </ul>
 
 </li>
@@ -17,10 +18,10 @@
     </a>
 
     <ul>
-        <li><a href="{{url()->route('vh.admin.modules')}}">Modules (3)</a></li>
-        <li><a href="page-profile-view.html">Plugins  (4)</a></li>
-        <li><a href="page-profile-view.html">Widgets</a></li>
-        <li><a href="page-profile-view.html">Themes</a></li>
+        <li><a href="{{route('vh.admin.modules')}}">Modules</a></li>
+        {{--<li><a href="page-profile-view.html">Plugins  (4)</a></li>
+        <li><a href="page-profile-view.html">Widgets</a></li>--}}
+        <li><a href="{{route('vh.admin.themes')}}">Themes</a></li>
     </ul>
 
 </li>
@@ -31,38 +32,12 @@
     </a>
 
     <ul>
-        <li><a href="{{url()->route("vh.admin.vaahcms.settings")}}">VaahCMS</a></li>
+        <li><a href="{{route("vh.admin.vaahcms.settings")}}">General</a></li>
         @include("vaahcms::admin.default.extend.settings-menu")
     </ul>
 
 </li>
 
-<li class="nav-label  mg-t-25">Content</li>
-
-<li class="nav-item"><a href="dashboard-one.html" class="nav-link">
-        <i data-feather="edit-2"></i> <span>Posts</span>
-    </a>
-</li>
-
-<li class="nav-item"><a href="dashboard-one.html" class="nav-link">
-        <i data-feather="file-text"></i> <span>Pages</span>
-    </a>
-</li>
-
-<li class="nav-item"><a href="dashboard-one.html" class="nav-link">
-        <i data-feather="image"></i> <span>Media</span>
-    </a>
-</li>
-
-<li class="nav-item"><a href="dashboard-one.html" class="nav-link">
-        <i data-feather="message-square"></i> <span>Comments</span>
-    </a>
-</li>
-
-<li class="nav-item"><a href="dashboard-one.html" class="nav-link">
-        <i data-feather="tag"></i> <span>Tags</span>
-    </a>
-</li>
 
 
 @include("vaahcms::admin.default.extend.aside-menu")

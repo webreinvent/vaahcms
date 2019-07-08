@@ -4,7 +4,7 @@
   "keywords": ["laravel", "cms"],
   "homepage": "https://www.webreinvent.com",
   "license": "MIT",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "authors": [
     {
       "name": "Pradeep",
@@ -13,7 +13,9 @@
   ],
   "require": {
     "php": "^7.0",
-    "zanysoft/laravel-zip": "*"
+    "zanysoft/laravel-zip": "*",
+    "doctrine/dbal": "*",
+    "atayahmet/laravel-nestable": "*"
   },
   "autoload": {
     "psr-4": {

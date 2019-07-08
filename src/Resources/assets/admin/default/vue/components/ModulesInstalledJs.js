@@ -13,6 +13,7 @@ import pagination from 'laravel-vue-pagination';
                 q: null,
                 page: 1,
                 list: null,
+                page_reload_required: null,
                 stats: null,
                 active_tab: 'all',
                 active_item: null,
@@ -33,7 +34,7 @@ import pagination from 'laravel-vue-pagination';
         mounted() {
 
             //---------------------------------------------------------------------
-            this.getList();
+            this.getAssets();
             //---------------------------------------------------------------------
             //---------------------------------------------------------------------
             //---------------------------------------------------------------------
@@ -41,6 +42,29 @@ import pagination from 'laravel-vue-pagination';
 
         },
         methods: {
+            //---------------------------------------------------------------------
+            getAssets: function (e) {
+                if(e)
+                {
+                    e.preventDefault();
+                }
+
+                console.log(this.urls);
+
+                var url = this.urls.current+"/assets";
+                var params = {};
+                this.$helpers.ajax(url, params, this.getAssetsAfter);
+            },
+            //---------------------------------------------------------------------
+            getAssetsAfter: function (data) {
+
+                this.assets = data;
+
+                this.$helpers.console(this.assets, 'from app->');
+
+                this.getList();
+
+            },
             //---------------------------------------------------------------------
 
             getList: function (page) {
@@ -101,6 +125,7 @@ import pagination from 'laravel-vue-pagination';
             //---------------------------------------------------------------------
             actionsAfter: function (data) {
                 this.getList();
+                this.page_reload_required = 1;
             },
             //---------------------------------------------------------------------
             getSettingValue: function (settings, key, value) {
@@ -125,6 +150,66 @@ import pagination from 'laravel-vue-pagination';
                 this.getList();
             },
 
+            //---------------------------------------------------------------------
+            getModulesSlugs: function (e) {
+                if(e)
+                {
+                    e.preventDefault();
+                }
+
+                var url = this.urls.current+"/get/slugs";
+                var params = {};
+                this.$helpers.ajax(url, params, this.getModulesSlugsAfter);
+            },
+            //---------------------------------------------------------------------
+            getModulesSlugsAfter: function (data) {
+                this.getModulesUpdates(data);
+            },
+            //---------------------------------------------------------------------
+            getModulesUpdates: function (comma_separated_slug) {
+
+                var url = this.assets.vaahcms_api_route+"/module/updates";
+
+                this.$helpers.console(url);
+
+                var params = {slugs: comma_separated_slug};
+                this.$helpers.ajax(url, params, this.getModulesUpdatesAfter);
+            },
+            //---------------------------------------------------------------------
+            getModulesUpdatesAfter: function (data) {
+
+                this.updateModuleVersion(data);
+
+            },
+            //---------------------------------------------------------------------
+            //---------------------------------------------------------------------
+            updateModuleVersion: function (data) {
+
+                var url = this.urls.current+"/update/versions";
+                var params = {modules: data};
+                this.$helpers.ajax(url, params, this.updateModuleVersionAfter);
+            },
+            //---------------------------------------------------------------------
+            updateModuleVersionAfter: function (data) {
+                this.getList();
+            },
+            //---------------------------------------------------------------------
+            installUpdates: function (e, slug) {
+                if(e)
+                {
+                    e.preventDefault();
+                }
+
+                var url = this.urls.current+"/install/updates";
+                var params = {slug: slug};
+                this.$helpers.ajax(url, params, this.installUpdatesAfter);
+            },
+            //---------------------------------------------------------------------
+            installUpdatesAfter: function (data) {
+                this.getList();
+            },
+            //---------------------------------------------------------------------
+            //---------------------------------------------------------------------
             //---------------------------------------------------------------------
         }
     }

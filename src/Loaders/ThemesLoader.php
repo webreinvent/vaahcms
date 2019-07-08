@@ -1,9 +1,8 @@
-<?php namespace WebReinvent\VaahCms\Modules;
-
+<?php namespace WebReinvent\VaahCms\Loaders;
 
 use Illuminate\Filesystem\Filesystem;
 
-class ModulesLoader {
+class ThemesLoader {
 
     /**
      * The filesystem instance.
@@ -29,7 +28,7 @@ class ModulesLoader {
     /**
      * @var array
      */
-    protected $findModules = [];
+    protected $list = [];
 
     /**
      * @param Filesystem $files
@@ -66,69 +65,43 @@ class ModulesLoader {
     /**
      * @return array
      */
-    public function findModules()
+    public function findList()
     {
 
         foreach ($this->files->directories($this->getPath()) as $module)
         {
 
-            if (is_null($class = $this->initModule($module)))
+            if (is_null($class = $this->initTheme($module)))
             {
                 continue;
             }
 
-            $this->findModules[] = $class;
+            $this->list[] = $class;
         }
 
-        return $this->findModules;
+        return $this->list;
     }
-
-    /**
-     * @param string $name
-     * @return bool
-     */
-    public function isActivated($name)
-    {
-        foreach($this->getActivated() as $module)
-        {
-            if ($module->getName() == $name)
-            {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
 
 
     /**
      * @param string $directory
      * @return BasePluginContainer|null
      */
-    protected function initModule($directory)
+    protected function initTheme($directory)
     {
 
-        $module_settings_path = $directory."\settings.json";
+        $settings_path = $directory."\settings.json";
 
-        if (!\File::exists($module_settings_path)) {
+        if (!\File::exists($settings_path)) {
             return null;
         }
 
-        $file = \File::get($module_settings_path);
-        $module_settings_path = json_decode($file);
-        $settings = (array)$module_settings_path;
+        $file = \File::get($settings_path);
+        $settings_path = json_decode($file);
+        $settings = (array)$settings_path;
 
         return $settings;
     }
 
 
-    /**
-     * @param string $key
-     * @return bool
-     */
-    protected function moduleExists($key)
-    {
-        return $this->files->isDirectory($this->path . DIRECTORY_SEPARATOR . $key);
-    }
 }

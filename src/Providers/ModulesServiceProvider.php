@@ -4,7 +4,7 @@ namespace WebReinvent\VaahCms\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use WebReinvent\VaahCms\Entities\Module;
-use WebReinvent\VaahCms\Modules\ModulesLoader;
+use WebReinvent\VaahCms\Loaders\ModulesLoader;
 
 
 class ModulesServiceProvider extends ServiceProvider
