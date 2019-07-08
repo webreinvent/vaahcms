@@ -15,7 +15,19 @@
     "php": "^7.0",
     "zanysoft/laravel-zip": "*",
     "doctrine/dbal": "*",
-    "atayahmet/laravel-nestable": "*"
+    "atayahmet/laravel-nestable": "*",
+    "barryvdh/laravel-dompdf": "*",
+    "berkayk/onesignal-laravel": "*",
+    "bugsnag/bugsnag-laravel": "*",
+    "composer/composer": "^1.8",
+    "creativeorange/gravatar": "*",
+    "intervention/image": "*",
+    "maatwebsite/excel": "*",
+    "ixudra/curl": "*",
+    "nahid/linkify": "*",
+    "php-imap/php-imap": "*",
+    "stevebauman/purify": "*",
+    "zanysoft/laravel-zip": "*"
   },
   "autoload": {
     "psr-4": {
