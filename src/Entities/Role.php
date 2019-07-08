@@ -471,6 +471,15 @@ class Role extends Model {
             $role->users()->syncWithoutDetaching($all_users);
         }
 
+
+        //enable all roles for admin users
+        $admin_role = Role::slug('admin')->first();
+        $admin_users = $admin_role->users()->get()->pluck('id')->toArray();
+        $pivotData = array_fill(0, count($admin_users), ['is_active' => 1]);
+        $syncData  = array_combine($admin_users, $pivotData);
+        $admin_role->users()->syncWithoutDetaching($syncData);
+
+
         return true;
 
     }
