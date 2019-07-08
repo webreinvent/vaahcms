@@ -53,15 +53,15 @@ export default {
 
             this.$helpers.console(this.assets, 'from app->');
 
-            this.getModules();
+            this.getThemes();
 
         },
         //---------------------------------------------------------------------
 
-        getModules: function (page) {
+        getThemes: function (page) {
 
 
-            var url = this.assets.vaahcms_api_route+"/modules";
+            var url = this.assets.vaahcms_api_route+"/themes";
 
             if(!page)
             {
@@ -83,10 +83,10 @@ export default {
             this.$helpers.console(url, 'url');
             this.$helpers.console(params, 'params');
 
-            this.$helpers.ajax(url, params, this.getModulesAfter);
+            this.$helpers.ajax(url, params, this.getThemesAfter);
         },
         //---------------------------------------------------------------------
-        getModulesAfter: function (data) {
+        getThemesAfter: function (data) {
 
             this.list = data.list;
             this.page = data.list.current_page;
