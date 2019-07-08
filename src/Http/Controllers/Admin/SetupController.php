@@ -284,7 +284,7 @@ class SetupController extends Controller
 
         Role::syncRolesWithUsers();
         Permission::syncPermissionsWithRoles();
-        
+
         Permission::recountRelations();
         Role::recountRelations();
 
