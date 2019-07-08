@@ -196,31 +196,33 @@ class SetupController extends Controller
         $inputs = $request->all();
 
         //download cms module
-        $response = Module::download('cms');
+        $default_module_slug = 'cms';
+        $response = Module::download($default_module_slug);
         if($response['status'] == 'failed')
         {
             return response()->json($response);
         }
         Module::syncAllModules();
-        Module::slug('cms')->update(['is_active' => 1]);
-        if(isset($inputs['cms']['sample_data']) && $inputs['cms']['sample_data'] == true)
+        Module::activate($default_module_slug);
+
+        if(isset($inputs[$default_module_slug]['sample_data']) && $inputs[$default_module_slug]['sample_data'] == true)
         {
-            Module::importSampleData('cms');
+            Module::importSampleData($default_module_slug);
         }
 
         //download theme
-        $response = Theme::download('btfourpointthree');
+        $default_theme_slug = 'btfourpointthree';
+        $response = Theme::download($default_theme_slug);
         if($response['status'] == 'failed' )
         {
             return response()->json($response);
         }
         Theme::syncAll();
-        Theme::slug('cms')->update(['is_active' => 1]);
-        if(isset($inputs['theme']['sample_data']) && $inputs['cms']['sample_data'] == true)
+        Theme::activate($default_theme_slug);
+        if(isset($inputs['theme']['sample_data']) && $inputs['theme']['sample_data'] == true)
         {
-            Theme::importSampleData('btfourpointthree');
+            Theme::importSampleData($default_theme_slug);
         }
-
 
         $data = [];
 

@@ -73360,11 +73360,11 @@ __webpack_require__.r(__webpack_exports__);
     getAssetsAfter: function getAssetsAfter(data) {
       this.assets = data;
       this.$helpers.console(this.assets, 'from app->');
-      this.getModules();
+      this.getThemes();
     },
     //---------------------------------------------------------------------
-    getModules: function getModules(page) {
-      var url = this.assets.vaahcms_api_route + "/modules";
+    getThemes: function getThemes(page) {
+      var url = this.assets.vaahcms_api_route + "/themes";
 
       if (!page) {
         page = this.page;
@@ -73381,10 +73381,10 @@ __webpack_require__.r(__webpack_exports__);
       var params = {};
       this.$helpers.console(url, 'url');
       this.$helpers.console(params, 'params');
-      this.$helpers.ajax(url, params, this.getModulesAfter);
+      this.$helpers.ajax(url, params, this.getThemesAfter);
     },
     //---------------------------------------------------------------------
-    getModulesAfter: function getModulesAfter(data) {
+    getThemesAfter: function getThemesAfter(data) {
       this.list = data.list;
       this.page = data.list.current_page;
       this.$helpers.console(this.list);
@@ -74141,7 +74141,7 @@ var render = function() {
                         ) {
                           return null
                         }
-                        return _vm.getModules()
+                        return _vm.getThemes()
                       },
                       input: function($event) {
                         if ($event.target.composing) {
@@ -74159,7 +74159,7 @@ var render = function() {
                       attrs: { type: "button" },
                       on: {
                         click: function($event) {
-                          return _vm.getModules()
+                          return _vm.getThemes()
                         }
                       }
                     },
@@ -74281,7 +74281,7 @@ var render = function() {
           _vm.list
             ? _c("pagination", {
                 attrs: { limit: 6, data: _vm.list },
-                on: { "pagination-change-page": _vm.getModules }
+                on: { "pagination-change-page": _vm.getThemes }
               })
             : _vm._e()
         ],
@@ -74296,7 +74296,7 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", [
-      _c("h4", { staticClass: "mg-b-0 tx-spacing--1" }, [_vm._v("Add Modules")])
+      _c("h4", { staticClass: "mg-b-0 tx-spacing--1" }, [_vm._v("Add Themes")])
     ])
   },
   function() {

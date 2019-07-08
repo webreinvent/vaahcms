@@ -85,10 +85,30 @@ class Theme extends Model {
     //-------------------------------------------------
     public function formGroups()
     {
-        return $this->morphMany('WebReinvent\VaahCms\Entities\Migration', 'migrationable');
+        return $this->morphMany('WebReinvent\VaahCms\Entities\Migration', 'groupable');
     }
     //-------------------------------------------------
+    public function themeTemplates()
+    {
+        return $this->hasMany('WebReinvent\VaahCms\Entities\ThemeTemplate',
+            'vh_theme_id', 'id');
+    }
+    //-------------------------------------------------
+    public function pageTemplates()
+    {
+        return $this->hasMany('WebReinvent\VaahCms\Entities\ThemeTemplate',
+            'vh_theme_id', 'id')
+            ->where('type', 'page');
+    }
 
+    //-------------------------------------------------
+    public function defaultPageTemplate()
+    {
+        return $this->hasOne('WebReinvent\VaahCms\Entities\ThemeTemplate',
+            'vh_theme_id', 'id')
+            ->where('type', 'page')
+            ->where('slug', 'default');
+    }
     //-------------------------------------------------
     public static function syncTheme($path)
     {
@@ -269,6 +289,15 @@ class Theme extends Model {
             return $api_response;
         }
 
+        //check if module is already installed
+        $theme_path = base_path()."/vaahcms/Themes/".$api_response->data->name;
+        if(is_dir($theme_path))
+        {
+            $response['status'] = 'success';
+            $response['messages'][] = $api_response->data->name." theme already exist.";
+            return $response;
+        }
+
         $parsed = parse_url($api_response->data->github_url);
 
 
@@ -306,6 +335,41 @@ class Theme extends Model {
 
     }
     //-------------------------------------------------
+    public static function activate($slug)
+    {
+        $theme = Theme::slug($slug)->first();
+
+        $path = "./vaahcms/Themes/".$theme->name."/Database/migrations/";
+        $path_des = "./database/migrations";
+
+        //\copy($path, $path_des);
+
+        \File::copyDirectory($path, $path_des);
+
+        //run migration
+        $command = 'migrate';
+        \Artisan::call($command);
+
+        Migration::syncThemeMigrations($theme->id);
+
+        $db_seeder_class = "VaahCms\Themes\\{$theme->name}\\Database\Seeds\DatabaseTableSeeder";
+
+        if(class_exists($db_seeder_class)){
+            $command = 'db:seed';
+            $params = [
+                '--class' => "VaahCms\Themes\\{$theme->name}\\Database\Seeds\DatabaseTableSeeder"
+            ];
+
+            \Artisan::call($command, $params);
+        }
+
+        $theme->is_active = 1;
+        $theme->save();
+
+    }
+    //-------------------------------------------------
+    //-------------------------------------------------
+    //-------------------------------------------------
     public static function importSampleData($slug)
     {
         $item = Theme::slug($slug)->first();
@@ -316,7 +380,14 @@ class Theme extends Model {
         ];
 
         \Artisan::call($command, $params);
+
+
     }
+    //-------------------------------------------------
+    //-------------------------------------------------
+    //-------------------------------------------------
+    //-------------------------------------------------
+    //-------------------------------------------------
     //-------------------------------------------------
 
 }

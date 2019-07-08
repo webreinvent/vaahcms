@@ -43,8 +43,7 @@ class ThemeController extends Controller
     {
 
         $rules = array(
-            'github_url' => 'required',
-            'name' => 'required',
+            'slug' => 'required',
         );
 
         $validator = \Validator::make( $request->toArray(), $rules);
@@ -56,41 +55,9 @@ class ThemeController extends Controller
             return response()->json($response);
         }
 
+        $response = Theme::download($request->slug);
 
-        $parsed = parse_url($request->github_url);
-
-
-        $uri_parts = explode('/', $parsed['path']);
-        $folder_name = end($uri_parts);
-        $folder_name = $folder_name."-master";
-
-
-        $filename = $request->name.'.zip';
-        $folder_path = base_path()."/vaahcms/Themes/";
-        $path = $folder_path.$filename;
-
-        copy($request->github_url.'/archive/master.zip', $path);
-
-        try{
-            Zip::check($path);
-            $zip = Zip::open($path);
-            $zip->extract(base_path().'/vaahcms/Themes/');
-            $zip->close();
-
-            rename($folder_path."".$folder_name, $folder_path.$request->name);
-
-            vh_delete_folder($path);
-
-            $response['status'] = 'success';
-            $response['messages'][] = 'installed';
-            return response()->json($response);
-
-        }catch(\Exception $e)
-        {
-            $response['status'] = 'failed';
-            $response['errors'][] = $e->getMessage();
-            return response()->json($response);
-        }
+        return response()->json($response);
 
 
     }
@@ -174,9 +141,7 @@ class ThemeController extends Controller
 
             //---------------------------------------
             case 'activate':
-                $this->activate($theme);
-                $theme->is_active = 1;
-                $theme->save();
+                Theme::activate($theme->slug);
                 break;
             //---------------------------------------
             case 'deactivate':
@@ -207,34 +172,7 @@ class ThemeController extends Controller
         return response()->json($response);
     }
     //----------------------------------------------------------
-    public function activate($theme)
-    {
 
-        $path = "./vaahcms/Themes/".$theme->name."/Database/migrations/";
-        $path_des = "./database/migrations";
-
-        //\copy($path, $path_des);
-
-        \File::copyDirectory($path, $path_des);
-
-        //run migration
-        $command = 'migrate';
-        \Artisan::call($command);
-
-        Migration::syncThemeMigrations($theme->id);
-
-        $db_seeder_class = "VaahCms\Themes\\{$theme->name}\\Database\Seeds\DatabaseTableSeeder";
-
-        if(class_exists($db_seeder_class)){
-            $command = 'db:seed';
-            $params = [
-                '--class' => "VaahCms\Themes\\{$theme->name}\\Database\Seeds\DatabaseTableSeeder"
-            ];
-
-            \Artisan::call($command, $params);
-        }
-
-    }
     //----------------------------------------------------------
     public function importSampleData($theme)
     {
