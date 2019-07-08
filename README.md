@@ -229,6 +229,16 @@ https://packagist.org/api/github?username=PACKAGIST_USERNAME
 - Choose `Let me select individual events.` and select `Pushes`
 - Click on `Save`
 
-### New Release
+## Support us
 
+[WebReinvent](https://www.webreinvent.com) is a web agency based in Delhi, India. You'll find an overview of all our open source projects [on github](https://github.com/webreinvent).
+
+## License
+
+The MIT License (MIT). Please see [License File](LICENSE) for more information.
+
+
+### Tips
+
+#### New Releases
 - composer.json version should match with your release via github then only it will be updated on `packagist` 
