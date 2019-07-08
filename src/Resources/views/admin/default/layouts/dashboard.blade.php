@@ -12,15 +12,7 @@
 </head>
 <body class="@if(isset($data->body_class)){{$data->body_class}}@endif">
 
-<div class="container">
-	<div class="row">
-		<div class="col-12">
-			@include("vaahcms::admin.default.layouts.partials.errors")
-			@include("vaahcms::admin.default.layouts.partials.flash")
-		</div>
-	</div>
 
-</div>
 
 
 <!--aside-->
@@ -75,6 +67,15 @@
 
 	</header>
 
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-12">
+				@include("vaahcms::admin.default.layouts.partials.errors")
+				@include("vaahcms::admin.default.layouts.partials.flash")
+			</div>
+		</div>
+
+	</div>
 
 	<div class="content-body">
 		@yield('content')
