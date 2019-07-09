@@ -3,12 +3,12 @@
 
 function vh_get_themes_root_path()
 {
-    return base_path()."/".config('vaahcms.themes_path');
+    return config('vaahcms.themes_path');
 }
 //-----------------------------------------------------------------------------------
 function vh_get_theme_path($name)
 {
-    return vh_get_themes_root_path()."\/".$name;
+    return vh_get_themes_root_path()."/".$name;
 }
 //-----------------------------------------------------------------------------------
 function vh_get_all_themes_paths()
@@ -79,7 +79,7 @@ function vh_get_active_theme_namespace()
 //-----------------------------------------------------------------------------------
 function vh_get_theme_view_path($name)
 {
-    $theme_path = base_path("/").vh_get_theme_path($name)."/Resources/views";
+    $theme_path = vh_get_theme_path($name)."/Resources/views";
 
     return $theme_path;
 }
@@ -111,7 +111,7 @@ function vh_get_theme_slug($theme_slug=null)
 function vh_theme_assets_url($file_path, $theme_slug=null)
 {
     $theme = vh_get_theme_from_slug($theme_slug);
-    return url("/")."/vaahcms/Themes/".$theme->name."/Resources/assets/".$file_path."?v=".config($theme->slug.'.version');
+    return url("/")."/VaahCms/Themes/".$theme->name."/Resources/assets/".$file_path."?v=".config($theme->slug.'.version');
 }
 //-----------------------------------------------------------------------------------
 function vh_get_page_templates_path($theme_slug=null)

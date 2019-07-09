@@ -260,7 +260,7 @@ class Module extends Model {
     {
         $module = Module::slug($slug)->first();
 
-        $path = base_path()."/vaahcms/Modules/".$module->name."/Database/migrations/";
+        $path = config('vaahcms.root_folder_path')."/Modules/".$module->name."/Database/migrations/";
         $path_des = base_path()."/database/migrations";
 
         //\copy($path, $path_des);
@@ -274,7 +274,7 @@ class Module extends Model {
 
         $command = 'db:seed';
         $params = [
-            '--class' => "VaahCms\Modules\\{$module->name}\\Database\Seeds\DatabaseTableSeeder"
+            '--class' => config('vaahcms.root_folder')."\Modules\\{$module->name}\\Database\Seeds\DatabaseTableSeeder"
         ];
 
         \Artisan::call($command, $params);
@@ -298,7 +298,7 @@ class Module extends Model {
         }
 
         //check if module is already installed
-        $module_path = base_path()."/vaahcms/Modules/".$api_response->data->name;
+        $module_path = config('vaahcms.modules_path')."/".$api_response->data->name;
         if(is_dir($module_path))
         {
             $response['status'] = 'success';
@@ -315,7 +315,7 @@ class Module extends Model {
 
 
         $filename = $api_response->data->name.'.zip';
-        $folder_path = base_path()."/vaahcms/Modules/";
+        $folder_path = config('vaahcms.modules_path');
         $path = $folder_path.$filename;
 
         copy($api_response->data->github_url.'/archive/master.zip', $path);
@@ -323,7 +323,7 @@ class Module extends Model {
         try{
             Zip::check($path);
             $zip = Zip::open($path);
-            $zip->extract(base_path().'/vaahcms/Modules/');
+            $zip->extract(config('vaahcms.modules_path'));
             $zip->close();
 
             rename($folder_path."".$folder_name, $folder_path.$api_response->data->name);
@@ -349,7 +349,7 @@ class Module extends Model {
 
         $command = 'db:seed';
         $params = [
-            '--class' => "VaahCms\Modules\\{$module->name}\\Database\Seeds\SampleDataTableSeeder"
+            '--class' => config('vaahcms.root_folder')."\Modules\\{$module->name}\\Database\Seeds\SampleDataTableSeeder"
         ];
 
         \Artisan::call($command, $params);

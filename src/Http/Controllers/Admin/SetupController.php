@@ -205,6 +205,8 @@ class SetupController extends Controller
         Module::syncAllModules();
         Module::activate($default_module_slug);
 
+
+
         if(isset($inputs[$default_module_slug]['sample_data']) && $inputs[$default_module_slug]['sample_data'] == true)
         {
             Module::importSampleData($default_module_slug);
@@ -218,8 +220,6 @@ class SetupController extends Controller
             return response()->json($response);
         }
         Theme::syncAll();
-
-
         Theme::activate($default_theme_slug);
         if(isset($inputs['theme']['sample_data']) && $inputs['theme']['sample_data'] == true)
         {

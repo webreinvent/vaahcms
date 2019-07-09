@@ -224,7 +224,7 @@ class ModuleController extends Controller
         Module::where('slug', $module->slug)->forceDelete();
 
 
-        $module_path = base_path() . "/vaahcms/Modules/".$module->name;
+        $module_path = config('vaahcms.modules_path')."/".$module->name;
 
         //Delete all migrations
         $path =  $module_path . "/Database/migrations/";
@@ -337,7 +337,7 @@ class ModuleController extends Controller
 
 
         $filename = $module->name.'.zip';
-        $folder_path = base_path()."/vaahcms/Modules/";
+        $folder_path = config('vaahcms.modules_path');
         $path = $folder_path.$filename;
 
         copy($module->github_url.'/archive/master.zip', $path);
@@ -345,7 +345,7 @@ class ModuleController extends Controller
         try{
             Zip::check($path);
             $zip = Zip::open($path);
-            $zip->extract(base_path().'/vaahcms/Modules/');
+            $zip->extract(config('vaahcms.modules_path'));
             $zip->close();
 
             rename($folder_path."".$folder_name, $folder_path.$module->name);

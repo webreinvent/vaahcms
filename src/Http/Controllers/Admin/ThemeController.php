@@ -210,7 +210,7 @@ class ThemeController extends Controller
         Theme::where('slug', $theme->slug)->forceDelete();
 
 
-        $theme_path = base_path() . "/vaahcms/Themes/".$theme->name;
+        $theme_path = config('vaahcms.themes_path'). "/".$theme->name;
 
         //Delete all migrations
         $path =  $theme_path . "/Database/migrations/";
@@ -322,7 +322,7 @@ class ThemeController extends Controller
 
 
         $filename = $theme->name.'.zip';
-        $folder_path = base_path()."/vaahcms/Themes/";
+        $folder_path = config('vaahcms.themes_path');
         $path = $folder_path.$filename;
 
         copy($theme->github_url.'/archive/master.zip', $path);
@@ -330,7 +330,7 @@ class ThemeController extends Controller
         try{
             Zip::check($path);
             $zip = Zip::open($path);
-            $zip->extract(base_path().'/vaahcms/Themes/');
+            $zip->extract(config('vaahcms.themes_path'));
             $zip->close();
 
             rename($folder_path."".$folder_name, $folder_path.$theme->name);
@@ -338,7 +338,7 @@ class ThemeController extends Controller
             vh_delete_folder($path);
 
             $response['status'] = 'success';
-            $response['messages'][] = 'Module Updated';
+            $response['messages'][] = 'Theme Updated';
             return response()->json($response);
 
         }catch(\Exception $e)

@@ -4,12 +4,12 @@
 //-----------------------------------------------------------------------------------
 function vh_get_modules_root_path()
 {
-    return base_path()."/".config('vaahcms.modules_path');
+    return config('vaahcms.modules_path');
 }
 //-----------------------------------------------------------------------------------
 function vh_get_module_path($module_name)
 {
-    return vh_get_modules_root_path()."\/".$module_name;
+    return vh_get_modules_root_path()."/".$module_name;
 }
 //-----------------------------------------------------------------------------------
 function vh_get_all_modules_paths()
@@ -72,7 +72,7 @@ function vh_get_module_setting_value($settings, $key)
 //-----------------------------------------------------------------------------------
 function vh_module_assets_url($module, $file_path)
 {
-    return url("/")."/vaahcms/Modules/".$module."/Resources/".$file_path."?v=".config('vaahcms.version');
+    return url("/")."/VaahCms/Modules/".$module."/Resources/".$file_path."?v=".config('vaahcms.version');
 }
 //-----------------------------------------------------------------------------------
 //-----------------------------------------------------------------------------------
