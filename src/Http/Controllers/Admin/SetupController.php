@@ -218,6 +218,8 @@ class SetupController extends Controller
             return response()->json($response);
         }
         Theme::syncAll();
+
+
         Theme::activate($default_theme_slug);
         if(isset($inputs['theme']['sample_data']) && $inputs['theme']['sample_data'] == true)
         {
@@ -233,6 +235,8 @@ class SetupController extends Controller
 
     }
 
+    //----------------------------------------------------------
+    
     //----------------------------------------------------------
     public function storeAdmin(Request $request)
     {

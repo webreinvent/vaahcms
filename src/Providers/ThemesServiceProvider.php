@@ -14,7 +14,8 @@ class ThemesServiceProvider extends ServiceProvider
     public function boot()
     {
 
-        if(\File::exists(config('vaahcms.themes_path')))
+        $path = base_path()."/".config('vaahcms.themes_path');
+        if(\File::exists($path))
         {
             $this->registerThemeServiceProviders();
         }
@@ -35,14 +36,13 @@ class ThemesServiceProvider extends ServiceProvider
     {
 
 
-        $this->app->singleton('ThemesLoader', function($app)
+        $path = base_path()."/".config('vaahcms.themes_path');
+        $this->app->singleton('ThemesLoader', function($app) use ($path)
         {
-            return new ThemesLoader($app['files'], config('vaahcms.themes_path'));
+            return new ThemesLoader($app['files'], $path);
         });
 
         $themes_manager = $this->app->make('ThemesLoader');
-
-
 
         // Register Service Providers of all the active modules in a loop
         foreach ($themes_manager->findList() as $theme)

@@ -109,7 +109,7 @@ class ModulesLoader {
     protected function initModule($directory)
     {
 
-        $module_settings_path = $directory."\settings.json";
+        $module_settings_path = $directory."/settings.json";
 
         if (!\File::exists($module_settings_path)) {
             return null;

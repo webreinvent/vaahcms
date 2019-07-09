@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------------
 function vh_get_modules_root_path()
 {
-    return config('vaahcms.modules_path');
+    return base_path()."/".config('vaahcms.modules_path');
 }
 //-----------------------------------------------------------------------------------
 function vh_get_module_path($module_name)
@@ -14,8 +14,12 @@ function vh_get_module_path($module_name)
 //-----------------------------------------------------------------------------------
 function vh_get_all_modules_paths()
 {
+
     $found_modules = [];
-    foreach (\File::directories(vh_get_modules_root_path()) as $module)
+
+    $modules_path = vh_get_modules_root_path();
+
+    foreach (\File::directories($modules_path) as $module)
     {
         $found_modules[] = $module;
     }
@@ -26,7 +30,7 @@ function vh_get_all_modules_paths()
 //-----------------------------------------------------------------------------------
 function vh_get_module_settings_from_path($plugin_path)
 {
-    $path_settings = $plugin_path.'\settings.json';
+    $path_settings = $plugin_path.'/settings.json';
 
     if(\File::exists($path_settings))
     {
@@ -43,7 +47,7 @@ function vh_get_module_settings_from_name($plugin_name)
 {
     $path = vh_get_module_path($plugin_name);
 
-    $path_settings = $path.'\settings.json';
+    $path_settings = $path.'/settings.json';
 
     if(\File::exists($path_settings))
     {

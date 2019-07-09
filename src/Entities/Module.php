@@ -92,7 +92,6 @@ class Module extends Model {
 
         $settings = vh_get_module_settings_from_path($module_path);
 
-
         if(is_null($settings) || !is_array($settings) || count($settings) < 1)
         {
             $response['status'] = 'failed';
@@ -179,13 +178,16 @@ class Module extends Model {
     //-------------------------------------------------
     public static function syncAllModules()
     {
+
         $list = vh_get_all_modules_paths();
+
         if(count($list) < 1)
         {
             $response['status'] = 'failed';
             $response['errors'][] = 'No module installed/downloaded';
             return $response;
         }
+
 
         foreach($list as $module_path)
         {
@@ -258,8 +260,8 @@ class Module extends Model {
     {
         $module = Module::slug($slug)->first();
 
-        $path = "./vaahcms/Modules/".$module->name."/Database/migrations/";
-        $path_des = "./database/migrations";
+        $path = base_path()."/vaahcms/Modules/".$module->name."/Database/migrations/";
+        $path_des = base_path()."/database/migrations";
 
         //\copy($path, $path_des);
 

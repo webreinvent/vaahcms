@@ -3,7 +3,7 @@
 
 function vh_get_themes_root_path()
 {
-    return config('vaahcms.themes_path');
+    return base_path()."/".config('vaahcms.themes_path');
 }
 //-----------------------------------------------------------------------------------
 function vh_get_theme_path($name)
@@ -25,7 +25,7 @@ function vh_get_all_themes_paths()
 //-----------------------------------------------------------------------------------
 function vh_get_theme_settings_from_path($path)
 {
-    $path_settings = $path.'\settings.json';
+    $path_settings = $path.'/settings.json';
 
     if(\File::exists($path_settings))
     {
@@ -42,7 +42,7 @@ function vh_get_theme_settings_from_name($name)
 {
     $path = vh_get_theme_path($name);
 
-    $path_settings = $path.'\settings.json';
+    $path_settings = $path.'/settings.json';
 
     if(\File::exists($path_settings))
     {

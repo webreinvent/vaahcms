@@ -199,6 +199,7 @@ class Theme extends Model {
     public static function syncAll()
     {
         $list = vh_get_all_themes_paths();
+
         if(count($list) < 1)
         {
             $response['status'] = 'failed';
@@ -339,8 +340,8 @@ class Theme extends Model {
     {
         $theme = Theme::slug($slug)->first();
 
-        $path = "./vaahcms/Themes/".$theme->name."/Database/migrations/";
-        $path_des = "./database/migrations";
+        $path = base_path()."/vaahcms/Themes/".$theme->name."/Database/migrations/";
+        $path_des = base_path()."/database/migrations";
 
         //\copy($path, $path_des);
 
