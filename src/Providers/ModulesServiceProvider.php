@@ -14,7 +14,7 @@ class ModulesServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $path = base_path()."/".config('vaahcms.modules_path');
+        $path = config('vaahcms.modules_path');
 
         if(\File::exists($path))
         {
@@ -40,7 +40,7 @@ class ModulesServiceProvider extends ServiceProvider
             return false;
         }
 
-        $path = base_path()."/".config('vaahcms.modules_path');
+        $path = config('vaahcms.modules_path');
 
         $this->app->singleton('ModulesLoader', function($app) use ($path)
         {
