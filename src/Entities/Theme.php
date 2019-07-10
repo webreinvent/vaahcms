@@ -340,7 +340,7 @@ class Theme extends Model {
     {
         $theme = Theme::slug($slug)->first();
 
-        $path = config('vaahcms.themes_path')."/".$theme->name."/Database/migrations/";
+        $path = config('vaahcms.themes_path')."/".$theme->name."/Database/Migrations/";
         $path_des = base_path()."/database/migrations";
 
         //\copy($path, $path_des);
