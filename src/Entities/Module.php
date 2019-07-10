@@ -260,7 +260,7 @@ class Module extends Model {
     {
         $module = Module::slug($slug)->first();
 
-        $path = config('vaahcms.root_folder_path')."/Modules/".$module->name."/Database/migrations/";
+        $path = config('vaahcms.root_folder_path')."/Modules/".$module->name."/Database/Migrations/";
         $path_des = base_path()."/database/migrations";
 
         //\copy($path, $path_des);
@@ -315,7 +315,7 @@ class Module extends Model {
 
 
         $filename = $api_response->data->name.'.zip';
-        $folder_path = config('vaahcms.modules_path');
+        $folder_path = config('vaahcms.modules_path')."/";
         $path = $folder_path.$filename;
 
         copy($api_response->data->github_url.'/archive/master.zip', $path);
@@ -326,7 +326,7 @@ class Module extends Model {
             $zip->extract(config('vaahcms.modules_path'));
             $zip->close();
 
-            rename($folder_path."".$folder_name, $folder_path.$api_response->data->name);
+            rename($folder_path.$folder_name, $folder_path.$api_response->data->name);
 
             vh_delete_folder($path);
 

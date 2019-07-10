@@ -308,7 +308,7 @@ class Theme extends Model {
 
 
         $filename = $api_response->data->name.'.zip';
-        $folder_path = config('vaahcms.themes_path');
+        $folder_path = config('vaahcms.themes_path')."/";
         $path = $folder_path.$filename;
 
         copy($api_response->data->github_url.'/archive/master.zip', $path);
@@ -319,7 +319,7 @@ class Theme extends Model {
             $zip->extract(config('vaahcms.themes_path'));
             $zip->close();
 
-            rename($folder_path."".$folder_name, $folder_path.$api_response->data->name);
+            rename($folder_path.$folder_name, $folder_path.$api_response->data->name);
 
             vh_delete_folder($path);
 

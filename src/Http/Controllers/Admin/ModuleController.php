@@ -217,17 +217,10 @@ class ModuleController extends Controller
     public function delete($module)
     {
 
-        //Delete module settings too
-        $module->settings()->delete();
-
-        //Delete module entry
-        Module::where('slug', $module->slug)->forceDelete();
-
-
         $module_path = config('vaahcms.modules_path')."/".$module->name;
 
         //Delete all migrations
-        $path =  $module_path . "/Database/migrations/";
+        $path =  $module_path . "/Database/Migrations/";
 
         $migrations = vh_get_all_files($path);
 
@@ -258,6 +251,12 @@ class ModuleController extends Controller
 
         //delete module folder
         vh_delete_folder($module_path);
+
+        //Delete module settings too
+        $module->settings()->delete();
+
+        //Delete module entry
+        Module::where('slug', $module->slug)->forceDelete();
 
     }
     //----------------------------------------------------------
@@ -337,7 +336,7 @@ class ModuleController extends Controller
 
 
         $filename = $module->name.'.zip';
-        $folder_path = config('vaahcms.modules_path');
+        $folder_path = config('vaahcms.modules_path')."/";
         $path = $folder_path.$filename;
 
         copy($module->github_url.'/archive/master.zip', $path);
@@ -348,7 +347,7 @@ class ModuleController extends Controller
             $zip->extract(config('vaahcms.modules_path'));
             $zip->close();
 
-            rename($folder_path."".$folder_name, $folder_path.$module->name);
+            rename($folder_path.$folder_name, $folder_path.$module->name);
 
             vh_delete_folder($path);
 

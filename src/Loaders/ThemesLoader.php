@@ -68,10 +68,10 @@ class ThemesLoader {
     public function findList()
     {
 
-        foreach ($this->files->directories($this->getPath()) as $module)
+        foreach ($this->files->directories($this->getPath()) as $item)
         {
 
-            if (is_null($class = $this->initTheme($module)))
+            if (is_null($class = $this->initTheme($item)))
             {
                 continue;
             }

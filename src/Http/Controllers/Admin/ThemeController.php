@@ -213,7 +213,7 @@ class ThemeController extends Controller
         $theme_path = config('vaahcms.themes_path'). "/".$theme->name;
 
         //Delete all migrations
-        $path =  $theme_path . "/Database/migrations/";
+        $path =  $theme_path . "/Database/Migrations/";
 
         $migrations = vh_get_all_files($path);
 
