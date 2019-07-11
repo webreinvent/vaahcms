@@ -2,7 +2,7 @@
 
 @section('vaahcms_extend_admin_css')
     <link href="{{vh_get_admin_assets('css/dashforge.auth.css')}}" rel="stylesheet" media="screen">
-
+    <script src="https://cdn.polyfill.io/v2/polyfill.min.js"></script>
 @endsection
 
 
