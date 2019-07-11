@@ -8,7 +8,7 @@ let VueCommon = Vue.extend({
     methods: {
 
         //---------------------------------------------------------------------
-        processHttpRequest: function (url, params, callback, nprogress=true) {
+        processHttpRequest:function(url, params, callback, nprogress=true) {
 
             if(nprogress)
             {

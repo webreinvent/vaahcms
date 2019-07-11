@@ -42,6 +42,7 @@ fs_extra.removeSync(admin_copy_path_des);
 mix.combine(admin_assets_json['css'], admin_default_theme_path+'builds/vaahcms.css')
     .combine(admin_assets_json['js'], admin_default_theme_path+'builds/vaahcms.js')
     .js(admin_default_theme_path+'vue/app-setup.js',  './builds')
+    .js(admin_default_theme_path+'vue/login/app-login.js',  './builds')
     .js(admin_default_theme_path+'vue/app-dashboard.js',  './builds')
     .js(admin_default_theme_path+'vue/app-modules.js',  './builds')
     .js(admin_default_theme_path+'vue/app-themes.js',  './builds')

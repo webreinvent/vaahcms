@@ -81,7 +81,7 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 3);
+/******/ 	return __webpack_require__(__webpack_require__.s = 4);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -75077,7 +75077,7 @@ module.exports = function(module) {
 
 /***/ }),
 
-/***/ 3:
+/***/ 4:
 /*!*********************************************************************************************************!*\
   !*** multi F:/xampp72/htdocs/packages/resources/assets/vendor/vaahcms/admin/default/vue/app-modules.js ***!
   \*********************************************************************************************************/

@@ -10,7 +10,13 @@ if($all->count() > 0)
 {
     foreach($all as $item)
     {
-        $settings = $item->settings()->key($view_file.'-order')->first();
+
+        $settings_name = $view_file.'-order';
+
+
+
+        $settings = $item->settings()->key($settings_name)->first();
+
         if($settings)
         {
             $module_order[$settings->value] = $item->slug;

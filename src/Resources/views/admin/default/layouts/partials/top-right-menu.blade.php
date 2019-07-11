@@ -1,4 +1,6 @@
-        <a id="navbarSearch" href="" class="search-link"><i data-feather="search"></i></a>
+        <a href="{{url()->to("/")}}" target="_blank" class="search-link"><i data-feather="external-link"></i></a>
+
+        {{--<a id="navbarSearch" href="" class="search-link mg-l-10"><i data-feather="search"></i></a>--}}
 
         <!--messages-->
         <div class="dropdown dropdown-message">

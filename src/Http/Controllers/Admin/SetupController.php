@@ -205,6 +205,8 @@ class SetupController extends Controller
         Module::syncAllModules();
         Module::activate($default_module_slug);
 
+
+
         if(isset($inputs[$default_module_slug]['sample_data']) && $inputs[$default_module_slug]['sample_data'] == true)
         {
             Module::importSampleData($default_module_slug);
@@ -233,6 +235,8 @@ class SetupController extends Controller
 
     }
 
+    //----------------------------------------------------------
+    
     //----------------------------------------------------------
     public function storeAdmin(Request $request)
     {

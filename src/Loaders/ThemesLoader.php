@@ -68,10 +68,10 @@ class ThemesLoader {
     public function findList()
     {
 
-        foreach ($this->files->directories($this->getPath()) as $module)
+        foreach ($this->files->directories($this->getPath()) as $item)
         {
 
-            if (is_null($class = $this->initTheme($module)))
+            if (is_null($class = $this->initTheme($item)))
             {
                 continue;
             }
@@ -90,7 +90,7 @@ class ThemesLoader {
     protected function initTheme($directory)
     {
 
-        $settings_path = $directory."\settings.json";
+        $settings_path = $directory."/settings.json";
 
         if (!\File::exists($settings_path)) {
             return null;

@@ -199,6 +199,7 @@ class Theme extends Model {
     public static function syncAll()
     {
         $list = vh_get_all_themes_paths();
+
         if(count($list) < 1)
         {
             $response['status'] = 'failed';
@@ -290,7 +291,7 @@ class Theme extends Model {
         }
 
         //check if module is already installed
-        $theme_path = base_path()."/vaahcms/Themes/".$api_response->data->name;
+        $theme_path = config('vaahcms.themes_path')."/".$api_response->data->name;
         if(is_dir($theme_path))
         {
             $response['status'] = 'success';
@@ -307,7 +308,7 @@ class Theme extends Model {
 
 
         $filename = $api_response->data->name.'.zip';
-        $folder_path = base_path()."/vaahcms/Themes/";
+        $folder_path = config('vaahcms.themes_path')."/";
         $path = $folder_path.$filename;
 
         copy($api_response->data->github_url.'/archive/master.zip', $path);
@@ -315,10 +316,10 @@ class Theme extends Model {
         try{
             Zip::check($path);
             $zip = Zip::open($path);
-            $zip->extract(base_path().'/vaahcms/Themes/');
+            $zip->extract(config('vaahcms.themes_path'));
             $zip->close();
 
-            rename($folder_path."".$folder_name, $folder_path.$api_response->data->name);
+            rename($folder_path.$folder_name, $folder_path.$api_response->data->name);
 
             vh_delete_folder($path);
 
@@ -339,8 +340,8 @@ class Theme extends Model {
     {
         $theme = Theme::slug($slug)->first();
 
-        $path = "./vaahcms/Themes/".$theme->name."/Database/migrations/";
-        $path_des = "./database/migrations";
+        $path = config('vaahcms.themes_path')."/".$theme->name."/Database/Migrations/";
+        $path_des = base_path()."/database/migrations";
 
         //\copy($path, $path_des);
 
@@ -352,12 +353,12 @@ class Theme extends Model {
 
         Migration::syncThemeMigrations($theme->id);
 
-        $db_seeder_class = "VaahCms\Themes\\{$theme->name}\\Database\Seeds\DatabaseTableSeeder";
+        $db_seeder_class = config('vaahcms.root_folder')."\Themes\\{$theme->name}\\Database\Seeds\DatabaseTableSeeder";
 
         if(class_exists($db_seeder_class)){
             $command = 'db:seed';
             $params = [
-                '--class' => "VaahCms\Themes\\{$theme->name}\\Database\Seeds\DatabaseTableSeeder"
+                '--class' => $db_seeder_class
             ];
 
             \Artisan::call($command, $params);
@@ -376,7 +377,7 @@ class Theme extends Model {
 
         $command = 'db:seed';
         $params = [
-            '--class' => "VaahCms\Themes\\{$item->name}\\Database\Seeds\SampleDataTableSeeder"
+            '--class' => config('vaahcms.root_folder')."\Themes\\{$item->name}\\Database\Seeds\SampleDataTableSeeder"
         ];
 
         \Artisan::call($command, $params);
