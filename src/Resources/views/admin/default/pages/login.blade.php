@@ -2,21 +2,18 @@
 
 @section('vaahcms_extend_admin_css')
     <link href="{{vh_get_admin_assets('css/dashforge.auth.css')}}" rel="stylesheet" media="screen">
-    <script src="https://cdn.polyfill.io/v2/polyfill.min.js"></script>
 @endsection
 
 
 @section('vaahcms_extend_admin_js')
-    <script src="{{vh_get_admin_assets('lib/vue/vue.js')}}"></script>
-    <script src="{{vh_get_admin_assets('lib/vue/vue-resource.min.js')}}"></script>
-    <script src="{{vh_get_admin_assets('lib/vue/VueCommon.js')}}"></script>
 
-    <script src="{{vh_get_admin_assets('js/page-login.js')}}"></script>
+    <script src="{{vh_get_admin_assets("builds/app-login.js")}}" defer></script>
+
 @endsection
 
 @section('content')
 
-    <div id="app">
+    <div id="vh-app-login">
 
 
         <div class="content content-auth">

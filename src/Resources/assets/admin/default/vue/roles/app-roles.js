@@ -37,22 +37,18 @@ const router = new VueRouter({
     base: '/',
     linkActiveClass: "active",
     routes: [
-        {
-            path: '/create',
+        {   path: '/create',
             component: Create
         },
-        {
-            path: '/view/:id',
+        {   path: '/view/:id',
             component: ViewEdit,
             props: true
         },
-        {
-            path: '/users/:id',
+        {   path: '/users/:id',
             component: Users,
             props: true
         },
-        {
-            path: '/permissions/:id',
+        {   path: '/permissions/:id',
             component: Permissions,
             props: true
         },

@@ -8,8 +8,7 @@ import VueRouter from 'vue-router';
 import VueResource from 'vue-resource';
 import moment from 'moment';
 import VaahCms from 'vaahcms-vue-helpers';
-
-import VueHelpers from './../helpers/VueHelpers';
+import vueJquery from 'vue-jquery'
 //---------/Package imports
 
 //---------Configs
@@ -22,30 +21,9 @@ Vue.config.async = false;
 Vue.prototype.moment = moment;
 Vue.use(VueResource);
 Vue.use(VueRouter);
+Vue.use(vueJquery);
 Vue.use(VaahCms);
 //---------/Helpers
-
-//---------Comp Imports
-import List from './List';
-import Create from './Create';
-import ViewEdit from './ViewEdit';
-//---------/Comp Imports
-
-//---------Routes
-const router = new VueRouter({
-    base: '/',
-    linkActiveClass: "active",
-    routes: [
-        {   path: '/create',
-            component: Create
-        },
-        {   path: '/view/:id',
-            component: ViewEdit,
-            props: true
-        },
-    ]
-});
-//---------/Routes
 
 //---------Variables
 var base_url = $('base').attr('href');
@@ -54,40 +32,39 @@ var debug = $('#debug').attr('content');
 //---------/Variables
 
 const app = new Vue({
-    el: '#vh-app-registrations',
-    components:{
-        'registrations': List
-    },
-    router,
+    el: '#vh-app-login',
     data: {
         assets: null,
         debug: debug,
         urls: {
             base: base_url,
             current: current_url,
+        },
+        credentials: {
+            email: null,
+            password: null,
         }
     },
 
     mounted() {
-        this.getAssets();
+
     },
     methods:{
 
         //-----------------------------------------------------------
-        getAssets: function () {
-            var url = this.urls.current+"/assets";
-            var params = {};
-            this.$vaahcms.ajax(url, params, this.getAssetsAfter);
+        postLogin: function (e) {
+            e.preventDefault();
+            var url = this.urls.current+"/post";
+            var params = this.credentials;
+            this.$vaahcms.ajax(url, params, this.postLoginAfter);
         },
         //---------------------------------------------------------------------
-        getAssetsAfter: function (data) {
+        postLoginAfter: function (data) {
 
-            this.assets = data;
-
+            window.location = data.redirect_url;
             this.$vaahcms.stopNprogress();
-
         },
-
+        //-----------------------------------------------------------
         //-----------------------------------------------------------
 
         //-----------------------------------------------------------
