@@ -79,6 +79,8 @@ Route::group(
         Route::get( '/dashboard', 'DashboardController@index' )
             ->name( 'vh.admin.dashboard' );
         //------------------------------------------------
+        Route::get( '/layout/app', 'DashboardController@layoutApp' )
+            ->name( 'vh.admin.layout.app' );
         //------------------------------------------------
         //------------------------------------------------
         //------------------------------------------------
