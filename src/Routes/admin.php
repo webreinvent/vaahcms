@@ -103,10 +103,25 @@ Route::group(
     });
 
 
+Route::group(
+    [
+        'prefix'     => 'admin/vaah',
+        'middleware' => ['web','has.admin.access'],
+        'namespace'  => 'WebReinvent\VaahCms\Http\Controllers\Admin'
+    ],
+    function () {
+        //------------------------------------------------
+        Route::get( '/', 'DashboardController@vaah' )
+            ->name( 'vh.admin.vaah' );
+        //------------------------------------------------
+        //------------------------------------------------
+        //------------------------------------------------
+    });
+
 
 Route::group(
     [
-        'prefix'     => 'admin/modules',
+        'prefix'     => 'admin/vaah/modules',
         'middleware' => ['web','has.admin.access'],
         'namespace'  => 'WebReinvent\VaahCms\Http\Controllers\Admin'
     ],
@@ -144,7 +159,7 @@ Route::group(
 
 Route::group(
     [
-        'prefix'     => 'admin/themes',
+        'prefix'     => 'admin/vaah/themes',
         'middleware' => ['web','has.admin.access'],
         'namespace'  => 'WebReinvent\VaahCms\Http\Controllers\Admin'
     ],
@@ -198,7 +213,7 @@ Route::group(
 
 Route::group(
     [
-        'prefix'     => 'admin/registrations',
+        'prefix'     => 'admin/vaah/registrations',
         'middleware' => ['web','has.admin.access'],
         'namespace'  => 'WebReinvent\VaahCms\Http\Controllers\Admin'
     ],
@@ -228,7 +243,7 @@ Route::group(
 
 Route::group(
     [
-        'prefix'     => 'admin/users',
+        'prefix'     => 'admin/vaah/users',
         'middleware' => ['web','has.admin.access'],
         'namespace'  => 'WebReinvent\VaahCms\Http\Controllers\Admin'
     ],
@@ -259,7 +274,7 @@ Route::group(
 
 Route::group(
     [
-        'prefix'     => 'admin/roles',
+        'prefix'     => 'admin/vaah/roles',
         'middleware' => ['web','has.admin.access'],
         'namespace'  => 'WebReinvent\VaahCms\Http\Controllers\Admin'
     ],
@@ -294,7 +309,7 @@ Route::group(
 
 Route::group(
     [
-        'prefix'     => 'admin/permissions',
+        'prefix'     => 'admin/vaah/permissions',
         'middleware' => ['web','has.admin.access'],
         'namespace'  => 'WebReinvent\VaahCms\Http\Controllers\Admin'
     ],

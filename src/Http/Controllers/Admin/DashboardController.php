@@ -30,6 +30,11 @@ class DashboardController extends Controller
 
     }
     //----------------------------------------------------------
+    public function vaah(Request $request)
+    {
+        return view($this->theme.'.pages.vaah');
+
+    }
     //----------------------------------------------------------
 
 

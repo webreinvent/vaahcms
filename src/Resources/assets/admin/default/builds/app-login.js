@@ -81,7 +81,7 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 2);
+/******/ 	return __webpack_require__(__webpack_require__.s = 0);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -75208,18 +75208,7 @@ module.exports = function(module) {
 
 /***/ }),
 
-/***/ 1:
-/*!*********************!*\
-  !*** got (ignored) ***!
-  \*********************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-/* (ignored) */
-
-/***/ }),
-
-/***/ 2:
+/***/ 0:
 /*!*************************************************************************************************************!*\
   !*** multi F:/xampp72/htdocs/packages/resources/assets/vendor/vaahcms/admin/default/vue/login/app-login.js ***!
   \*************************************************************************************************************/
@@ -75228,6 +75217,17 @@ module.exports = function(module) {
 
 module.exports = __webpack_require__(/*! F:\xampp72\htdocs\packages\resources\assets\vendor\vaahcms\admin\default\vue\login\app-login.js */"../../resources/assets/vendor/vaahcms/admin/default/vue/login/app-login.js");
 
+
+/***/ }),
+
+/***/ 1:
+/*!*********************!*\
+  !*** got (ignored) ***!
+  \*********************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+/* (ignored) */
 
 /***/ })
 
