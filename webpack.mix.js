@@ -1,77 +1,17 @@
-/*
- |--------------------------------------------------------------------------
- |
- | This webpack file is to create the development environment for vaahcms
- | replace root webpack file with this file
- |
- */
-
 const mix = require('laravel-mix');
+require('laravel-mix-merge-manifest');
 var fs = require('fs');
 const fs_extra = require('fs-extra');
 
+let input_path = __dirname+'/src/Resources/assets/admin/default';
+let output_path = '../../resources/assets/vendor/vaahcms/admin/default';
+var admin_assets_json = JSON.parse(fs.readFileSync(input_path+'/assets.json'));
 
-/*
- |--------------------------------------------------------------------------
- | Mix Asset Management
- |--------------------------------------------------------------------------
- |
- | Mix provides a clean, fluent API for defining some Webpack build steps
- | for your Laravel application. By default, we are compiling the Sass
- | file for the application as well as bundling up all the JS files.
- |
- */
+mix.setPublicPath(output_path).mergeManifest();
 
+mix.copyDirectory(input_path+'/css', output_path+'/css/', false)
+    .combine(admin_assets_json['css'], output_path+'/builds/vaahcms.css')
+    .combine(admin_assets_json['js'], output_path+'/builds/vaahcms.js')
+    .js(input_path+'/vue/app-vaah.js', 'builds/')
+    .js(input_path+'/vue/app-login.js', 'builds/');
 
-var root_path = "./../../";
-
-var admin_path = root_path+'resources/assets/vendor/vaahcms/admin/';
-var admin_default_theme_path = admin_path+'default/';
-
-mix.setPublicPath(admin_default_theme_path);
-
-var admin_assets_json = JSON.parse(fs.readFileSync(admin_default_theme_path+'assets.json'));
-
-//console.log(admin_assets_json);
-
-var admin_copy_path = root_path+'resources/assets/vendor/vaahcms/admin/';
-var admin_copy_path_des = root_path+'packages/vaahcms/src/Resources/assets/admin/';
-
-fs_extra.removeSync(admin_copy_path_des);
-
-mix.combine(admin_assets_json['css'], admin_default_theme_path+'builds/vaahcms.css')
-    .combine(admin_assets_json['js'], admin_default_theme_path+'builds/vaahcms.js')
-    /*.js(admin_default_theme_path+'vue/app-setup.js',  './builds')*/
-    .js(admin_default_theme_path+'vue/login/app-login.js',  './builds')
-    .js(admin_default_theme_path+'vue/app-dashboard.js',  './builds')
-    .js(admin_default_theme_path+'vue/app-vaah.js',  './builds')
-/*    .js(admin_default_theme_path+'vue/app-themes.js',  './builds')
-    .js(admin_default_theme_path+'vue/registrations/app-registrations.js',  './builds')
-    .js(admin_default_theme_path+'vue/users/app-users.js',  './builds')
-    .js(admin_default_theme_path+'vue/roles/app-roles.js',  './builds')
-    .js(admin_default_theme_path+'vue/permissions/app-permissions.js',  './builds')*/
-    .copyDirectory(admin_copy_path, admin_copy_path_des, false)
-    .version();
-
-
-mix.webpackConfig({
-    watchOptions: {
-        aggregateTimeout: 2000,
-        poll: 20,
-        ignored: [
-            '/app/',
-            '/bootstrap/',
-            '/config/',
-            '/database/',
-            '/packages/',
-            '/public/',
-            '/routes/',
-            '/storage/',
-            '/tests/',
-            '/vaahcms/',
-            '/node_modules/',
-            '/vendor/',
-
-        ]
-    }
-});

@@ -1,7 +1,3 @@
-import Dashboard from "./dashboard/Dashboard";
-import RegistrationsList from "./registrations/List";
-import RegistrationsCreate from "./registrations/Create";
-
 //---------Variables
 var base_url = $('base').attr('href');
 var current_url = $('#current_url').attr('content');
@@ -13,7 +9,9 @@ let urls = {
     current: current_url,
 };
 
-console.log("urls", urls);
+import Dashboard from "./dashboard/Dashboard";
+import RegistrationsList from "./registrations/List";
+import RegistrationsCreate from "./registrations/Create";
 
 const routes= [
     {   path: '/',

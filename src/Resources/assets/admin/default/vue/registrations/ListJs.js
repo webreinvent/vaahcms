@@ -1,8 +1,4 @@
 import pagination from 'laravel-vue-pagination';
-import {isObject} from "vue-resource/src/util";
-
-//https://github.com/euvl/vue-js-toggle-button
-import { ToggleButton } from 'vue-js-toggle-button'
 
     export default {
 
@@ -13,9 +9,7 @@ import { ToggleButton } from 'vue-js-toggle-button'
         },
         computed:{
             urls(){
-
-                let urls = this.$store.state.urls;
-                urls.request = urls.current+"/registrations";
+                urls.request = this.$store.state.urls.current+"/registrations";
                 return urls;
             }
         },
@@ -110,12 +104,7 @@ import { ToggleButton } from 'vue-js-toggle-button'
             //---------------------------------------------------------------------
             toggleShowFilters: function () {
 
-
-
-                if(this.$route.path == '/registrations/create'
-                    || (this.$route.path == '/registrations/view' && this.$route.params.id )
-                    || (this.$route.path == '/registrations/edit' && this.$route.params.id )
-                )
+                if(this.show_filters == true)
                 {
                     this.show_filters = false;
                 } else
@@ -179,8 +168,10 @@ import { ToggleButton } from 'vue-js-toggle-button'
 
                 this.$vaahcms.console(this.$route.params);
 
-                if(this.$route.params.id)
-                {
+                if(this.$route.path == '/registrations/create'
+                    || (this.$route.path == '/registrations/view' && this.$route.params.id )
+                    || (this.$route.path == '/registrations/edit' && this.$route.params.id )
+                ){
                     this.table_collapsed = true;
                 } else
                 {
