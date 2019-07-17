@@ -295,7 +295,7 @@ body{
     color: #000;
 }
 
-.navbar-app .navbar-nav .nav-link.active{
+.navbar-app .navbar-nav .nav-link.router-link-exact-active{
     color: #000;
     background-color: #f4f5f8 !important;
 

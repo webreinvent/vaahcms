@@ -16,7 +16,7 @@
 
         <top-menu></top-menu>
         <div class="content-body">
-            <router-view :urls="urls" :assets="assets"></router-view>
+            <router-view></router-view>
         </div>
 
 

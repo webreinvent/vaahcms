@@ -11,7 +11,7 @@
                         <div class=" mg-l-auto btn-group btn-group-xs">
 
                             <router-link class="btn btn-xs btn-light btn-uppercase"
-                                         :to="{ path: '/create'}">
+                                         :to="{ path: 'registrations/create'}">
                                 <i class="fas fa-plus"></i> Add New
                             </router-link>
 

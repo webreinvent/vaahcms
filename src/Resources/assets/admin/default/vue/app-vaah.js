@@ -6,6 +6,7 @@ window.Vue = require('vue');
 //---------Package imports
 import VueRouter from 'vue-router';
 import VueResource from 'vue-resource';
+import Vuex from 'vuex'
 import moment from 'moment'
 import VaahCms from 'vaahcms-vue-helpers';
 //---------/Package imports
@@ -20,6 +21,7 @@ Vue.config.async = false;
 Vue.prototype.moment = moment;
 Vue.use(VueResource);
 Vue.use(VueRouter);
+Vue.use(Vuex);
 Vue.use(VaahCms);
 //---------/Helpers
 
@@ -27,36 +29,45 @@ Vue.use(VaahCms);
 import TopMenu from './partials/TopMenu';
 //---------/Import Partials
 
-//---------Routes
-import routes from './app-vaah-routes';
-
-const router = new VueRouter({
-    base: '/',
-    linkActiveClass: "active",
-    routes: routes
-});
-
-//---------/Routes
-
 //---------Variables
 var base_url = $('base').attr('href');
 var current_url = $('#current_url').attr('content');
 var debug = $('#debug').attr('content');
 //---------/Variables
 
+let urls = {
+    base: base_url,
+    current: current_url,
+};
+
+//---------Store
+import {store} from './app-vaah-store';
+//---------/Store
+
+//---------Routes
+import routes from './app-vaah-routes';
+
+const router = new VueRouter({
+    base: '/',
+    linkActiveClass: "",
+    routes: routes
+});
+
+//---------/Routes
+
+
+
 const app = new Vue({
     el: '#vh-app-vaah',
     components:{
         'top-menu': TopMenu
     },
+    store: store,
     router,
     data: {
         assets: null,
         debug: debug,
-        urls: {
-            base: base_url,
-            current: current_url,
-        }
+        urls: urls
     },
 
     mounted() {

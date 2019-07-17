@@ -6,10 +6,18 @@ import { ToggleButton } from 'vue-js-toggle-button'
 
     export default {
 
-        props: ['urls', 'assets'],
+        props: ['assets'],
         components:{
             'pagination': pagination,
             'ToggleButton': ToggleButton,
+        },
+        computed:{
+            urls(){
+
+                let urls = this.$store.state.urls;
+                urls.request = urls.current+"/registrations";
+                return urls;
+            }
         },
         data()
         {
@@ -28,7 +36,8 @@ import { ToggleButton } from 'vue-js-toggle-button'
                     sort_by: "",
                     sort_type: 'desc',
                     status: 'all',
-                }
+                },
+
             };
 
             return obj;
@@ -37,17 +46,18 @@ import { ToggleButton } from 'vue-js-toggle-button'
 
             '$route' (to, from) {
                 this.setTableCollapseStatus();
-            }
+            },
+
 
         },
         mounted() {
 
             //---------------------------------------------------------------------
+            //---------------------------------------------------------------------
+            //---------------------------------------------------------------------
+            //---------------------------------------------------------------------
             this.getList();
             this.setTableCollapseStatus();
-            //---------------------------------------------------------------------
-            this.urls.current = this.urls.current+"/registrations"
-            //---------------------------------------------------------------------
             //---------------------------------------------------------------------
             //---------------------------------------------------------------------
 
@@ -60,9 +70,11 @@ import { ToggleButton } from 'vue-js-toggle-button'
             getList: function (page) {
 
 
-                var url = this.urls.current+"/list";
+                this.$vaahcms.console(this.urls, 'this.urls');
 
-                this.$vaahcms.console(url);
+                var url = this.urls.request+"/list";
+
+                this.$vaahcms.console(url, 'url');
 
                 if(!page || isObject(page))
                 {
@@ -97,7 +109,13 @@ import { ToggleButton } from 'vue-js-toggle-button'
 
             //---------------------------------------------------------------------
             toggleShowFilters: function () {
-                if(this.$route.params.id || this.$route.path == '/create' )
+
+
+
+                if(this.$route.path == '/registrations/create'
+                    || (this.$route.path == '/registrations/view' && this.$route.params.id )
+                    || (this.$route.path == '/registrations/edit' && this.$route.params.id )
+                )
                 {
                     this.show_filters = false;
                 } else
@@ -114,7 +132,7 @@ import { ToggleButton } from 'vue-js-toggle-button'
                     e.preventDefault();
                 }
 
-                var url = this.urls.current+"/actions";
+                var url = this.urls.request+"/actions";
                 var params = {
                     action: action,
                     inputs: inputs,
