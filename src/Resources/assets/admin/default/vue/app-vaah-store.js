@@ -16,6 +16,22 @@ export const store = new Vuex.Store({
         urls: {
             base: base_url,
             current: current_url,
+            registrations: current_url+'/registrations',
+        },
+        registrations: {
+            assets: null,
+            table_collapsed: false,
         }
+    },
+    mutations:{
+        updateRegistrationsAssets: function (state, payload) {
+            state.registrations.assets = payload;
+        }
+    },
+    actions:{
+
+    },
+    getters:{
+
     }
 });

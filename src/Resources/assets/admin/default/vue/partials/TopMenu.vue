@@ -25,7 +25,9 @@
 
                     <li class="nav-item">
 
-                        <router-link class="nav-link" :to="{ path: '/registrations'}">
+                        <router-link class="nav-link"
+                                     :class="{'active': $route.matched[0].path == '/registrations'}"
+                                     :to="{ path: '/registrations'}" exact>
                             Registrations
                         </router-link>
 

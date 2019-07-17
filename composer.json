@@ -27,7 +27,8 @@
     "nahid/linkify": "*",
     "php-imap/php-imap": "*",
     "stevebauman/purify": "*",
-    "zanysoft/laravel-zip": "*"
+    "zanysoft/laravel-zip": "*",
+    "doctrine/dbal": "*"
   },
   "autoload": {
     "psr-4": {

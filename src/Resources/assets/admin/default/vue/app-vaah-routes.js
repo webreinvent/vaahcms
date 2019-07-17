@@ -15,13 +15,18 @@ import RegistrationsCreate from "./registrations/Create";
 
 const routes= [
     {   path: '/',
-        component: Dashboard
+        component: Dashboard,
+        props: true
     },
     {   path: '/registrations',
-        component: RegistrationsList
-    },
-    {   path: '/registrations/create',
-        component: RegistrationsCreate
+        component: RegistrationsList,
+        props: true,
+        children: [{
+            name: 'registrations.create',
+            path: 'create',
+            component: RegistrationsCreate,
+            props: true
+        }]
     },
     { path: '*', redirect: '/' }
 ];

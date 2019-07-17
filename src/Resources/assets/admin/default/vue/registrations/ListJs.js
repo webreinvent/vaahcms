@@ -2,21 +2,20 @@ import pagination from 'laravel-vue-pagination';
 
     export default {
 
-        props: ['assets'],
-        components:{
-            'pagination': pagination,
-            'ToggleButton': ToggleButton,
-        },
         computed:{
-            urls(){
-                urls.request = this.$store.state.urls.current+"/registrations";
-                return urls;
+            ajax_url(){
+                let ajax_url = this.$store.state.urls.registrations;
+                return ajax_url;
             }
+        },
+        components:{
+            'pagination': pagination
         },
         data()
         {
             let obj = {
                 q: null,
+                assets: null,
                 page: 1,
                 list: null,
                 show_filters: false,
@@ -50,6 +49,7 @@ import pagination from 'laravel-vue-pagination';
             //---------------------------------------------------------------------
             //---------------------------------------------------------------------
             //---------------------------------------------------------------------
+            this.getAssets();
             this.getList();
             this.setTableCollapseStatus();
             //---------------------------------------------------------------------
@@ -60,13 +60,31 @@ import pagination from 'laravel-vue-pagination';
             //---------------------------------------------------------------------
 
             //---------------------------------------------------------------------
+            getAssets: function () {
+                let assets = this.$store.state.registrations.assets;
+                if(assets)
+                {
+                    this.assets = assets;
+                }else{
+                    var url = this.ajax_url+"/assets";
+                    var params = {};
+                    this.$vaahcms.ajax(url, params, this.getAssetsAfter);
+                }
+            },
+            //---------------------------------------------------------------------
+            getAssetsAfter: function (data) {
+                this.assets = data;
+                this.$store.commit('updateRegistrationsAssets', data);
+                this.$vaahcms.stopNprogress();
+            },
+            //---------------------------------------------------------------------
 
             getList: function (page) {
 
 
-                this.$vaahcms.console(this.urls, 'this.urls');
+                this.$vaahcms.console(this.ajax_url, 'this.urls');
 
-                var url = this.urls.request+"/list";
+                var url = this.ajax_url+"/list";
 
                 this.$vaahcms.console(url, 'url');
 
@@ -121,7 +139,7 @@ import pagination from 'laravel-vue-pagination';
                     e.preventDefault();
                 }
 
-                var url = this.urls.request+"/actions";
+                var url = this.ajax_url+"/actions";
                 var params = {
                     action: action,
                     inputs: inputs,
@@ -166,12 +184,9 @@ import pagination from 'laravel-vue-pagination';
             //---------------------------------------------------------------------
             setTableCollapseStatus: function () {
 
-                this.$vaahcms.console(this.$route.params);
+                this.$vaahcms.console(this.$route, 'route params-->');
 
-                if(this.$route.path == '/registrations/create'
-                    || (this.$route.path == '/registrations/view' && this.$route.params.id )
-                    || (this.$route.path == '/registrations/edit' && this.$route.params.id )
-                ){
+                if(this.$route.path == '/registrations/create'){
                     this.table_collapsed = true;
                 } else
                 {

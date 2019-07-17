@@ -121,6 +121,36 @@ Route::group(
 
 Route::group(
     [
+        'prefix'     => 'admin/vaah/registrations',
+        'middleware' => ['web','has.admin.access'],
+        'namespace'  => 'WebReinvent\VaahCms\Http\Controllers\Admin'
+    ],
+    function () {
+        //------------------------------------------------
+        Route::get( '/', 'RegistrationController@index' )
+            ->name( 'vh.admin.registrations' );
+        //------------------------------------------------
+        Route::any( '/assets', 'RegistrationController@assets' )
+            ->name( 'vh.admin.registrations.assets' );
+        //------------------------------------------------
+        Route::any( '/list', 'RegistrationController@getList' )
+            ->name( 'vh.admin.registrations.list' );
+        //------------------------------------------------
+        Route::any( '/actions', 'RegistrationController@actions' )
+            ->name( 'vh.admin.registrations.actions' );
+        //------------------------------------------------
+        Route::any( '/store', 'RegistrationController@store' )
+            ->name( 'vh.admin.registrations.store' );
+        //------------------------------------------------
+        Route::any( '/view/{id}', 'RegistrationController@getDetails' )
+            ->name( 'vh.admin.registrations.view' );
+        //------------------------------------------------
+    });
+
+
+
+Route::group(
+    [
         'prefix'     => 'admin/vaah/modules',
         'middleware' => ['web','has.admin.access'],
         'namespace'  => 'WebReinvent\VaahCms\Http\Controllers\Admin'
@@ -210,34 +240,6 @@ Route::group(
         //------------------------------------------------
     });
 
-
-Route::group(
-    [
-        'prefix'     => 'admin/vaah/registrations',
-        'middleware' => ['web','has.admin.access'],
-        'namespace'  => 'WebReinvent\VaahCms\Http\Controllers\Admin'
-    ],
-    function () {
-        //------------------------------------------------
-        Route::get( '/', 'RegistrationController@index' )
-            ->name( 'vh.admin.registrations' );
-        //------------------------------------------------
-        Route::any( '/assets', 'RegistrationController@assets' )
-            ->name( 'vh.admin.registrations.assets' );
-        //------------------------------------------------
-        Route::any( '/list', 'RegistrationController@getList' )
-            ->name( 'vh.admin.registrations.list' );
-        //------------------------------------------------
-        Route::any( '/actions', 'RegistrationController@actions' )
-            ->name( 'vh.admin.registrations.actions' );
-        //------------------------------------------------
-        Route::any( '/store', 'RegistrationController@store' )
-            ->name( 'vh.admin.registrations.store' );
-        //------------------------------------------------
-        Route::any( '/view/{id}', 'RegistrationController@getDetails' )
-            ->name( 'vh.admin.registrations.view' );
-        //------------------------------------------------
-    });
 
 
 

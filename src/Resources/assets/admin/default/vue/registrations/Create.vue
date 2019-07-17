@@ -11,7 +11,7 @@
                         <div class=" mg-l-auto btn-group btn-group-xs">
 
                             <router-link class="btn btn-card "
-                                    :to="{ path: '/'}">
+                                    :to="{ path: '/registrations'}">
                                 <i class="fas fa-times"></i>
                             </router-link>
 
