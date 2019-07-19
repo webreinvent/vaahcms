@@ -8,6 +8,8 @@ import VueRouter from 'vue-router';
 import VueResource from 'vue-resource';
 import Vuex from 'vuex'
 import moment from 'moment'
+import PerfectScrollbar from 'vue2-perfect-scrollbar'
+import 'vue2-perfect-scrollbar/dist/vue2-perfect-scrollbar.css'
 import VaahCms from 'vaahcms-vue-helpers';
 //---------/Package imports
 
@@ -22,6 +24,7 @@ Vue.prototype.moment = moment;
 Vue.use(VueResource);
 Vue.use(VueRouter);
 Vue.use(Vuex);
+Vue.use(PerfectScrollbar);
 Vue.use(VaahCms);
 //---------/Helpers
 

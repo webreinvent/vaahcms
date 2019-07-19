@@ -1,5 +1,5 @@
 import pagination from 'laravel-vue-pagination';
-import {isObject} from "vue-resource/src/util";
+import TableLoader from './../reusable/TableLoader';
 
 //https://github.com/euvl/vue-js-toggle-button
 import { ToggleButton } from 'vue-js-toggle-button'
@@ -16,6 +16,7 @@ import { ToggleButton } from 'vue-js-toggle-button'
             }
         },
         components:{
+            't-loader': TableLoader,
             'pagination': pagination,
             'ToggleButton': ToggleButton,
         },
@@ -53,11 +54,14 @@ import { ToggleButton } from 'vue-js-toggle-button'
         mounted() {
 
             //---------------------------------------------------------------------
+            this.getAssets();
+            //---------------------------------------------------------------------
             this.getList();
+            //---------------------------------------------------------------------
             this.setTableCollapseStatus();
             //---------------------------------------------------------------------
-            this.$root.$on('usersListReload', () => {
-                this.getList();
+            this.$root.$on('eListReload', () => {
+                this.reloadList();
             })
             //---------------------------------------------------------------------
             //---------------------------------------------------------------------
@@ -72,13 +76,32 @@ import { ToggleButton } from 'vue-js-toggle-button'
                 this.getList();
             },
             //---------------------------------------------------------------------
+            getAssets: function () {
+                let assets = this.$store.state.users.assets;
+                if(assets)
+                {
+                    this.assets = assets;
+                }else{
+                    var url = this.ajax_url+"/assets";
+                    var params = {};
+                    this.$vaahcms.ajax(url, params, this.getAssetsAfter);
+                }
+            },
+            //---------------------------------------------------------------------
+            getAssetsAfter: function (data) {
+                data.type = 'users';
+                this.assets = data;
+                this.$store.commit('updateAssets', data);
+                this.$vaahcms.stopNprogress();
+            },
+            //---------------------------------------------------------------------
 
             getList: function (page) {
 
 
                 var url = this.ajax_url+"/list";
 
-                if(!page || isObject(page))
+                if(!page)
                 {
                     page = this.page;
                 }

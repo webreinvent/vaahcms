@@ -66,7 +66,7 @@ const routes_users =     {
             component: UsersViewEdit,
             props: true
         },
-        {   path: '/roles/:id',
+        {   path: 'roles/:id',
             component: UsersRoles,
             props: true
         },

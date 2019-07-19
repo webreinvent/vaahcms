@@ -74,7 +74,7 @@ import TForm from './../reusable/TableFormGenerator';
 
                 this.$router.push({ path: `/registrations/view/${id}`});
 
-                this.$root.$emit('registrationListReload');
+                this.$root.$emit('eListReload');
 
             },
             //---------------------------------------------------------------------

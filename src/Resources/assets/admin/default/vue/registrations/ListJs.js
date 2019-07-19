@@ -54,7 +54,7 @@ import pagination from 'laravel-vue-pagination';
             this.getList();
             this.setTableCollapseStatus();
             //---------------------------------------------------------------------
-            this.$root.$on('registrationListReload', () => {
+            this.$root.$on('eListReload', () => {
                 this.getList();
             });
             //---------------------------------------------------------------------

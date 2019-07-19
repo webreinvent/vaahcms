@@ -2,9 +2,18 @@
 
     <div class="row">
 
+
+
         <div class="col-sm mg-b-10">
 
+
+
             <div class="card">
+
+
+                <t-loader v-if="!list"></t-loader>
+
+
                 <div class="card-header">
 
                     <div class="d-flex">
@@ -85,6 +94,8 @@
                         </div>
 
                     </div>
+
+
 
                     <table v-if="list" class="table table-striped table-sm table-condensed table-sortable mg-b-0">
 

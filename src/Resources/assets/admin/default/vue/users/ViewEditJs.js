@@ -1,5 +1,7 @@
 import TForm from './../reusable/TableFormGenerator';
 import TView from './../reusable/TableViewGenerator';
+import TableLoader from './../reusable/TableLoader';
+
 
     export default {
 
@@ -13,6 +15,7 @@ import TView from './../reusable/TableViewGenerator';
         components:{
             't-form': TForm,
             't-view': TView,
+            't-loader': TableLoader,
         },
         data()
         {
@@ -49,11 +52,8 @@ import TView from './../reusable/TableViewGenerator';
             //---------------------------------------------------------------------
             //---------------------------------------------------------------------
             getDetails: function () {
-
+                this.columns = null;
                 var url = this.ajax_url+"/view/"+this.id;
-
-                console.log(url, 'url-->');
-
                 var params = {};
                 this.$vaahcms.ajax(url, params, this.getDetailsAfter);
             },
@@ -72,17 +72,11 @@ import TView from './../reusable/TableViewGenerator';
                 {
                     return false;
                 }
-
-                this.$vaahcms.console(item, 'items');
-
                 return item.value;
             },
             //---------------------------------------------------------------------
             updateItem: function (item) {
                 this.item = item;
-
-                this.$vaahcms.console(this.item, 'this.item');
-
             },
             //---------------------------------------------------------------------
             toggleEdit: function () {
@@ -98,19 +92,13 @@ import TView from './../reusable/TableViewGenerator';
             store: function () {
                 var url = this.ajax_url+"/store";
                 var params = this.item;
-
-                this.$vaahcms.console(params, 'params');
-
                 this.$vaahcms.ajax(url, params, this.storeAfter);
             },
             //---------------------------------------------------------------------
             storeAfter: function (data) {
-
                 this.edit = false;
-
                 this.item = data;
                 this.id = data.id;
-
                 this.$vaahcms.stopNprogress();
             },
 
@@ -135,14 +123,12 @@ import TView from './../reusable/TableViewGenerator';
 
             actionsAfter: function (data) {
                 this.getDetails();
-
-                this.emitReloadList();
-
+                this.emitListReload();
             },
 
             //---------------------------------------------------------------------
-            emitReloadList: function () {
-                this.$root.$emit('reloadList');
+            emitListReload: function () {
+                this.$root.$emit('eListReload');
             }
             //---------------------------------------------------------------------
             //---------------------------------------------------------------------

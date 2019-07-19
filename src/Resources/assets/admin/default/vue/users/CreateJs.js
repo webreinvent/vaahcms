@@ -39,7 +39,6 @@ import TForm from './../reusable/TableFormGenerator';
             //---------------------------------------------------------------------
             getAssets: function () {
                 let assets = this.$store.state.users.assets;
-
                 if(assets)
                 {
                     this.assets = assets;
@@ -51,7 +50,9 @@ import TForm from './../reusable/TableFormGenerator';
             },
             //---------------------------------------------------------------------
             getAssetsAfter: function (data) {
+                data.type = 'users';
                 this.assets = data;
+                this.$store.commit('updateAssets', data);
                 this.$vaahcms.stopNprogress();
             },
             //---------------------------------------------------------------------
@@ -74,7 +75,7 @@ import TForm from './../reusable/TableFormGenerator';
                 let id = data.id;
 
                 this.$router.push({ path: `/users/view/${id}`});
-                this.$root.$emit('reloadList');
+                this.$root.$emit('eListReload');
 
             },
             //---------------------------------------------------------------------

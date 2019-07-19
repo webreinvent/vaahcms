@@ -3,8 +3,16 @@
 
         <div class="col-sm">
 
+
+
+
+
             <div class="card" >
-                <div class="card-header" v-if="item">
+
+
+                <t-loader v-if="!list"></t-loader>
+
+                <div class="card-header" v-if="list">
 
                     <div class="d-flex">
                         <div class="align-self-center tx-15 flex-grow-1">
@@ -14,7 +22,7 @@
                         <div class=" mg-l-auto btn-group btn-group-xs">
 
                             <router-link class="btn btn-card "
-                                    :to="{ path: '/'}">
+                                    :to="{ path: '/users'}">
                                 <i class="fas fa-times"></i>
                             </router-link>
 

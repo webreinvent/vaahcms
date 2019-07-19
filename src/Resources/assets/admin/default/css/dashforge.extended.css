@@ -300,3 +300,9 @@ body{
     background-color: #f4f5f8 !important;
 
 }
+
+/* vue2-perfect-scrollbar */
+.ps {
+    height: 380px;
+}
+/* end of vue2-perfect-scrollbar */
