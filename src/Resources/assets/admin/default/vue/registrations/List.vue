@@ -20,6 +20,10 @@
                             <i class="fas fa-ellipsis-h"></i>
                         </button>
 
+                        <button class="btn btn-xs btn-light btn-uppercase" @click="reloadList">
+                            <i class="fas fa-sync-alt"></i>
+                        </button>
+
                     </div>
                 </div>
 
@@ -156,7 +160,7 @@
 
                             <div class="custom-control custom-checkbox">
                                 <input type="checkbox" class="custom-control-input"
-                                       :checked="$helpers.existInArray(selected_items, item.id)"
+                                       :checked="$vaahcms.existInArray(selected_items, item.id)"
                                        @click="toggleSelectedItem(item.id)"
                                        :id="'check-'+item.id">
                                 <label class="custom-control-label" :for="'check-'+item.id"></label>
@@ -172,7 +176,7 @@
 
                         </td>
                         <td v-if="!table_collapsed">
-                            {{$helpers.dateTimeForHumans(item.created_at)}}
+                            {{$vaahcms.dateTimeForHumans(item.created_at)}}
                         </td>
                         <td class="pd-0-f">
                             <div class="btn-group btn-group-xs">
@@ -182,9 +186,11 @@
                                 </button>
 
                                 <router-link class="btn btn-xs bg-transparent"
-                                             :to="{ path: '/view/'+item.id}">
+                                             :to="{ path: '/registrations/view/'+item.id}">
                                     <i class="fas fa-chevron-right"></i>
                                 </router-link>
+
+
 
                             </div>
                         </td>

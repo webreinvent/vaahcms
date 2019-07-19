@@ -108,6 +108,7 @@ class VaahCmsServiceProvider extends ServiceProvider {
 
         $loader = \Illuminate\Foundation\AliasLoader::getInstance();
         $loader->alias('Zip', \ZanySoft\Zip\ZipFacade::class);
+        $loader->alias('Carbon', \Carbon\Carbon::class);
 
     }
 

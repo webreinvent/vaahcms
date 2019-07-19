@@ -38,6 +38,7 @@ import TForm from './../reusable/TableFormGenerator';
             //---------------------------------------------------------------------
             getAssets: function () {
                 let assets = this.$store.state.registrations.assets;
+
                 if(assets)
                 {
                     this.assets = assets;
@@ -50,31 +51,30 @@ import TForm from './../reusable/TableFormGenerator';
             //---------------------------------------------------------------------
             getAssetsAfter: function (data) {
                 this.assets = data;
-                this.$store.commit('updateRegistrationsAssets', data);
                 this.$vaahcms.stopNprogress();
             },
             //---------------------------------------------------------------------
             updateNewItem: function (item) {
                 this.new_item = item;
-                this.$helpers.console(this.new_item, 'this.new_item-->updated');
             },
             //---------------------------------------------------------------------
             store: function () {
                 var url = this.ajax_url+"/store";
                 var params = this.new_item;
-                this.$helpers.console(params, '-->');
-                this.$helpers.ajax(url, params, this.storeAfter);
+                this.$vaahcms.ajax(url, params, this.storeAfter);
             },
             //---------------------------------------------------------------------
             storeAfter: function (data) {
 
-                this.$helpers.console(data);
-
                 let id = data.id;
 
-                this.$router.push({ path: `/view/${id}`});
+                this.$router.push({ path: `/registrations/view/${id}`});
+
+                this.$root.$emit('reloadList');
 
             },
+            //---------------------------------------------------------------------
+
             //---------------------------------------------------------------------
             //---------------------------------------------------------------------
             //---------------------------------------------------------------------

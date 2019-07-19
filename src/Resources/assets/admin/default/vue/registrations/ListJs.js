@@ -29,6 +29,7 @@ import pagination from 'laravel-vue-pagination';
                     sort_by: "",
                     sort_type: 'desc',
                     status: 'all',
+                    recount: false
                 },
 
             };
@@ -53,12 +54,19 @@ import pagination from 'laravel-vue-pagination';
             this.getList();
             this.setTableCollapseStatus();
             //---------------------------------------------------------------------
+            this.$root.$on('reloadList', () => {
+                this.getList();
+            })
             //---------------------------------------------------------------------
 
         },
         methods: {
             //---------------------------------------------------------------------
-
+            reloadList: function()
+            {
+                this.filters.recount = true;
+                this.getList();
+            },
             //---------------------------------------------------------------------
             getAssets: function () {
                 let assets = this.$store.state.registrations.assets;
@@ -186,7 +194,7 @@ import pagination from 'laravel-vue-pagination';
 
                 this.$vaahcms.console(this.$route, 'route params-->');
 
-                if(this.$route.path == '/registrations/create'){
+                if(this.$route.path == '/registrations/create' || this.$route.params){
                     this.table_collapsed = true;
                 } else
                 {

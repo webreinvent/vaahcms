@@ -69,6 +69,11 @@ class Registration extends Model
         $this->attributes['email'] = strtolower($value);
     }
     //-------------------------------------------------
+    public function setBirthAttribute($value)
+    {
+        $this->attributes['birth'] = Carbon::parse($value)->format('Y-m-d');
+    }
+    //-------------------------------------------------
     public function getNameAttribute() {
         return $this->first_name." ".$this->last_name;
     }
@@ -202,6 +207,7 @@ class Registration extends Model
         $result['name'] = $column;
         $result['value'] = $value;
         $result['tr_class'] = "";
+        $result['editable'] = true;
         $result['disabled'] = false;
         $result['label'] = slug_to_str($column);
         $result['column_type'] = $this->getConnection()->getSchemaBuilder()

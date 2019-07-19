@@ -10,25 +10,71 @@ let urls = {
 };
 
 import Dashboard from "./dashboard/Dashboard";
-import RegistrationsList from "./registrations/List";
-import RegistrationsCreate from "./registrations/Create";
 
 const routes= [
     {   path: '/',
         component: Dashboard,
         props: true
     },
-    {   path: '/registrations',
-        component: RegistrationsList,
-        props: true,
-        children: [{
-            name: 'registrations.create',
+    { path: '*', redirect: '/' }
+];
+
+
+//----------registrations
+import RegistrationsList from "./registrations/List";
+import RegistrationsCreate from "./registrations/Create";
+import RegistrationsViewEdit from "./registrations/ViewEdit";
+
+const routes_registrations =     {
+    path: '/registrations',
+    component: RegistrationsList,
+    props: true,
+    children: [
+        {
             path: 'create',
             component: RegistrationsCreate,
             props: true
-        }]
-    },
-    { path: '*', redirect: '/' }
-];
+        },
+        {
+            path: 'view/:id',
+            component: RegistrationsViewEdit,
+            props: true
+        }
+    ]
+};
+routes.push(routes_registrations);
+//----------/registrations
+
+//----------users
+import UsersList from "./users/List";
+import UsersCreate from "./users/Create";
+import UsersViewEdit from "./users/ViewEdit";
+import UsersRoles from "./users/Roles";
+
+const routes_users =     {
+    path: '/users',
+    component: UsersList,
+    props: true,
+    children: [
+        {
+            path: 'create',
+            component: UsersCreate,
+            props: true
+        },
+        {
+            path: 'view/:id',
+            component: UsersViewEdit,
+            props: true
+        },
+        {   path: '/roles/:id',
+            component: UsersRoles,
+            props: true
+        },
+    ]
+};
+routes.push(routes_users);
+//----------/users
+
+
 
 export default routes;
