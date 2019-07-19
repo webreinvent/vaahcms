@@ -3,7 +3,7 @@
 
         <div class="col-sm">
 
-            <div class="card" v-if="assets">
+            <div class="card" >
                 <div class="card-header">
 
                     <div class="d-flex">
@@ -20,7 +20,7 @@
 
                 </div>
 
-                <div class="card-body" >
+                <div class="card-body" v-if="assets">
 
                     <table class="table table-striped table-sm table-condensed table-form table-form-dashed">
 

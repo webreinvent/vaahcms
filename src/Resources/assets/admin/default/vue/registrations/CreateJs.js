@@ -27,6 +27,7 @@ import TForm from './../reusable/TableFormGenerator';
         mounted() {
 
             //---------------------------------------------------------------------
+            //---------------------------------------------------------------------
             this.getAssets();
             //---------------------------------------------------------------------
             //---------------------------------------------------------------------
@@ -38,7 +39,6 @@ import TForm from './../reusable/TableFormGenerator';
             //---------------------------------------------------------------------
             getAssets: function () {
                 let assets = this.$store.state.registrations.assets;
-
                 if(assets)
                 {
                     this.assets = assets;
@@ -50,9 +50,13 @@ import TForm from './../reusable/TableFormGenerator';
             },
             //---------------------------------------------------------------------
             getAssetsAfter: function (data) {
+                data.type = 'registrations';
                 this.assets = data;
+                this.$store.commit('updateAssets', data);
                 this.$vaahcms.stopNprogress();
             },
+            //---------------------------------------------------------------------
+
             //---------------------------------------------------------------------
             updateNewItem: function (item) {
                 this.new_item = item;
@@ -70,7 +74,7 @@ import TForm from './../reusable/TableFormGenerator';
 
                 this.$router.push({ path: `/registrations/view/${id}`});
 
-                this.$root.$emit('reloadList');
+                this.$root.$emit('registrationListReload');
 
             },
             //---------------------------------------------------------------------

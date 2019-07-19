@@ -33,7 +33,7 @@ const routes_registrations =     {
         {
             path: 'create',
             component: RegistrationsCreate,
-            props: true
+            props: true,
         },
         {
             path: 'view/:id',

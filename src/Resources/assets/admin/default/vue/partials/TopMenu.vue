@@ -33,7 +33,13 @@
 
                     </li>
                     <li class="nav-item ">
-                        <a class="nav-link" href="#">Users</a>
+
+                        <router-link class="nav-link"
+                                     :class="{'active': $route.matched[0].path == '/users'}"
+                                     :to="{ path: '/users'}" exact>
+                            Users
+                        </router-link>
+
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">Role</a>

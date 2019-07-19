@@ -54,9 +54,11 @@ import pagination from 'laravel-vue-pagination';
             this.getList();
             this.setTableCollapseStatus();
             //---------------------------------------------------------------------
-            this.$root.$on('reloadList', () => {
+            this.$root.$on('registrationListReload', () => {
                 this.getList();
-            })
+            });
+            //---------------------------------------------------------------------
+
             //---------------------------------------------------------------------
 
         },
@@ -81,8 +83,10 @@ import pagination from 'laravel-vue-pagination';
             },
             //---------------------------------------------------------------------
             getAssetsAfter: function (data) {
+                data.type = 'registrations';
+
                 this.assets = data;
-                this.$store.commit('updateRegistrationsAssets', data);
+                this.$store.commit('updateAssets', data);
                 this.$vaahcms.stopNprogress();
             },
             //---------------------------------------------------------------------
@@ -191,8 +195,6 @@ import pagination from 'laravel-vue-pagination';
             },
             //---------------------------------------------------------------------
             setTableCollapseStatus: function () {
-
-                this.$vaahcms.console(this.$route, 'route params-->');
 
                 if(this.$route.path == '/registrations/create' || this.$route.params){
                     this.table_collapsed = true;

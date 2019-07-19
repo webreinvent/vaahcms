@@ -1,5 +1,6 @@
 <template>
 
+    <div class="row">
 
         <div class="col-sm mg-b-10">
 
@@ -17,7 +18,7 @@
                         <div class=" mg-l-auto btn-group btn-group-xs">
 
                             <router-link class="btn btn-xs btn-light btn-uppercase"
-                                         :to="{ path: '/create'}">
+                                         :to="{ path: '/users/create'}">
                                 <i class="fas fa-plus"></i> Add New
                             </router-link>
 
@@ -176,7 +177,7 @@
 
                                 <div class="custom-control custom-checkbox">
                                     <input type="checkbox" class="custom-control-input"
-                                           :checked="$helpers.existInArray(selected_items, item.id)"
+                                           :checked="$vaahcms.existInArray(selected_items, item.id)"
                                            @click="toggleSelectedItem(item.id)"
                                            :id="'check-'+item.id">
                                     <label class="custom-control-label" :for="'check-'+item.id"></label>
@@ -205,7 +206,7 @@
 
                             <td>
                                 <router-link class="btn btn-tiny btn-primary"
-                                             :to="{ path: '/roles/'+item.id}">
+                                             :to="{ path: '/users/roles/'+item.id}">
                                     {{item.active_roles_count}}
                                 </router-link>
                             </td>
@@ -222,10 +223,10 @@
 
                             </td>
                             <td v-if="!table_collapsed">
-                                {{$helpers.dateTimeForHumans(item.last_login_at)}}
+                                {{$vaahcms.dateTimeForHumans(item.last_login_at)}}
                             </td>
                             <td v-if="!table_collapsed">
-                                {{$helpers.dateTimeForHumans(item.created_at)}}
+                                {{$vaahcms.dateTimeForHumans(item.created_at)}}
                             </td>
                             <td class="pd-0-f">
                                 <div class="btn-group btn-group-xs">
@@ -235,7 +236,7 @@
                                     </button>
 
                                     <router-link class="btn btn-xs bg-transparent"
-                                                 :to="{ path: '/view/'+item.id}">
+                                                 :to="{ path: '/users/view/'+item.id}">
                                         <i class="fas fa-chevron-right"></i>
                                     </router-link>
 
@@ -256,6 +257,8 @@
 
         </div>
 
+        <router-view></router-view>
 
+    </div>
 </template>
 <script src="./ListJs.js"></script>

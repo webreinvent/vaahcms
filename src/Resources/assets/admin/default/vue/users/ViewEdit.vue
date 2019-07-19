@@ -21,7 +21,7 @@
                             <div class="dropdown">
                                 <a class="btn btn-card dropdown-toggle"
                                    href="#" role="button"
-                                   v-on:click="$helpers.btDropDown($event)"
+                                   v-on:click="$vaahcms.btDropDown($event)"
                                    data-toggle="dropdown">
                                     <i class="fas fa-ellipsis-v"></i>
                                 </a>
@@ -33,7 +33,7 @@
                             </div>
 
                             <router-link class="btn btn-card "
-                                    :to="{ path: '/'}">
+                                    :to="{ path: '/users'}">
                                 <i class="fas fa-times"></i>
                             </router-link>
 

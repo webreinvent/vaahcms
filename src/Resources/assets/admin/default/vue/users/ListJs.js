@@ -8,7 +8,13 @@ import { ToggleButton } from 'vue-js-toggle-button'
 
     export default {
 
-        props: ['urls', 'assets', 'reload_counter'],
+        props: ['urls', 'reload_counter'],
+        computed:{
+            ajax_url(){
+                let ajax_url = this.$store.state.urls.users;
+                return ajax_url;
+            }
+        },
         components:{
             'pagination': pagination,
             'ToggleButton': ToggleButton,
@@ -17,6 +23,7 @@ import { ToggleButton } from 'vue-js-toggle-button'
         {
             let obj = {
                 q: null,
+                assets: 1,
                 page: 1,
                 list: null,
                 show_filters: false,
@@ -49,7 +56,7 @@ import { ToggleButton } from 'vue-js-toggle-button'
             this.getList();
             this.setTableCollapseStatus();
             //---------------------------------------------------------------------
-            this.$root.$on('reloadList', () => {
+            this.$root.$on('usersListReload', () => {
                 this.getList();
             })
             //---------------------------------------------------------------------
@@ -69,14 +76,14 @@ import { ToggleButton } from 'vue-js-toggle-button'
             getList: function (page) {
 
 
-                var url = this.urls.current+"/list";
+                var url = this.ajax_url+"/list";
 
                 if(!page || isObject(page))
                 {
                     page = this.page;
                 }
 
-                this.$helpers.console(page, 'page');
+                this.$vaahcms.console(page, 'page');
 
                 url = url+"?page="+page;
 
@@ -87,7 +94,7 @@ import { ToggleButton } from 'vue-js-toggle-button'
                 }
 
                 var params = this.filters;
-                this.$helpers.ajax(url, params, this.getListAfter);
+                this.$vaahcms.ajax(url, params, this.getListAfter);
 
             },
             //---------------------------------------------------------------------
@@ -96,9 +103,9 @@ import { ToggleButton } from 'vue-js-toggle-button'
                 this.list = data.list;
                 this.page = data.list.current_page;
 
-                this.$helpers.console(this.list);
+                this.$vaahcms.console(this.list);
 
-                this.$helpers.stopNprogress();
+                this.$vaahcms.stopNprogress();
 
             },
 
@@ -121,14 +128,14 @@ import { ToggleButton } from 'vue-js-toggle-button'
                     e.preventDefault();
                 }
 
-                var url = this.urls.current+"/actions";
+                var url = this.ajax_url+"/actions";
                 var params = {
                     action: action,
                     inputs: inputs,
                     data: data,
                 };
 
-                this.$helpers.ajax(url, params, this.actionsAfter);
+                this.$vaahcms.ajax(url, params, this.actionsAfter);
             },
             //---------------------------------------------------------------------
             actionsAfter: function (data) {
@@ -182,17 +189,14 @@ import { ToggleButton } from 'vue-js-toggle-button'
             //---------------------------------------------------------------------
             setTableCollapseStatus: function () {
 
-                this.$helpers.console(this.$route.path);
 
-                if(this.$route.params.id || this.$route.path == '/create' )
-                {
+
+                if(this.$route.path == '/users/create' || this.$route.params){
                     this.table_collapsed = true;
                 } else
                 {
                     this.table_collapsed = false;
                 }
-
-                this.$helpers.console(this.table_collapsed);
 
             },
             //---------------------------------------------------------------------
@@ -200,7 +204,7 @@ import { ToggleButton } from 'vue-js-toggle-button'
 
                 var self = this;
 
-                this.$helpers.console("test");
+                this.$vaahcms.console("test");
 
                 if(this.select_all ===true)
                 {
@@ -214,7 +218,7 @@ import { ToggleButton } from 'vue-js-toggle-button'
                     if(this.list.data)
                     {
 
-                        this.$helpers.console(this.list.data);
+                        this.$vaahcms.console(this.list.data);
 
                         this.list.data.map(function (item) {
 
@@ -231,9 +235,9 @@ import { ToggleButton } from 'vue-js-toggle-button'
 
                 this.select_all = false;
 
-                if(this.$helpers.existInArray(this.selected_items, id))
+                if(this.$vaahcms.existInArray(this.selected_items, id))
                 {
-                    this.$helpers.removeFromArray(this.selected_items, id);
+                    this.$vaahcms.removeFromArray(this.selected_items, id);
                 } else
                 {
                     this.selected_items.push(id);

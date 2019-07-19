@@ -17,15 +17,20 @@ export const store = new Vuex.Store({
             base: base_url,
             current: current_url,
             registrations: current_url+'/registrations',
+            users: current_url+'/users',
         },
         registrations: {
+            assets: null,
+            table_collapsed: false,
+        },
+        users: {
             assets: null,
             table_collapsed: false,
         }
     },
     mutations:{
-        updateRegistrationsAssets: function (state, payload) {
-            state.registrations.assets = payload;
+        updateAssets: function (state, payload) {
+            state[payload.type].assets = payload;
         }
     },
     actions:{
