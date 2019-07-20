@@ -12,7 +12,7 @@
 
                 <t-loader v-if="!list"></t-loader>
 
-                <div class="card-header" v-if="list">
+                <div class="card-header" v-if="list && item">
 
                     <div class="d-flex">
                         <div class="align-self-center tx-15 flex-grow-1">

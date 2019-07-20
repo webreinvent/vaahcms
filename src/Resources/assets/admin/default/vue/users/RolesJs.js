@@ -32,8 +32,10 @@ import TableLoader from "./../reusable/TableLoader";
 
             id: function (newVal, oldVal) {
                 this.getList();
-            }
-
+            },
+            '$route' (to, from) {
+                this.list = null;
+            },
         },
         mounted() {
 
@@ -48,7 +50,6 @@ import TableLoader from "./../reusable/TableLoader";
         methods: {
             //---------------------------------------------------------------------
             getList: function (page) {
-                this.list = null;
 
                 var url = this.ajax_url+"/roles/"+this.id;
 

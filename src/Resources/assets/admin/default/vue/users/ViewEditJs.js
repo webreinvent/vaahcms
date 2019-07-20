@@ -98,10 +98,8 @@ import TableLoader from './../reusable/TableLoader';
             storeAfter: function (data) {
                 this.edit = false;
                 this.item = data;
-                this.id = data.id;
                 this.$vaahcms.stopNprogress();
             },
-
             //---------------------------------------------------------------------
             actions: function (e, action, inputs, data) {
                 if(e)
