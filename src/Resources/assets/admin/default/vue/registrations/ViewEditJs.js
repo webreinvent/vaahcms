@@ -1,5 +1,6 @@
 import TForm from './../reusable/TableFormGenerator';
 import TView from './../reusable/TableViewGenerator';
+import TableLoader from './../reusable/TableLoader';
 
     export default {
 
@@ -13,6 +14,7 @@ import TView from './../reusable/TableViewGenerator';
         components:{
             't-form': TForm,
             't-view': TView,
+            't-loader': TableLoader,
         },
         data()
         {
@@ -49,6 +51,7 @@ import TView from './../reusable/TableViewGenerator';
             //---------------------------------------------------------------------
             //---------------------------------------------------------------------
             getDetails: function () {
+                this.columns = null;
 
                 var url = this.ajax_url+"/view/"+this.id;
 
@@ -93,14 +96,21 @@ import TView from './../reusable/TableViewGenerator';
             storeAfter: function (data) {
 
                 this.edit = false;
-
                 this.item = data;
-                this.id = data.id;
-
                 this.$root.$emit('eListReload');
             },
 
             //---------------------------------------------------------------------
+            getColumnValue: function(column_name)
+            {
+                var item = this.$vaahcms.findInArrayByKey(this.columns, 'name', column_name);
+
+                if(!item)
+                {
+                    return false;
+                }
+                return item.value;
+            },
             //---------------------------------------------------------------------
             //---------------------------------------------------------------------
         }

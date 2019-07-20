@@ -11,7 +11,7 @@
             <div class="card">
 
 
-                <t-loader v-if="!list"></t-loader>
+
 
 
                 <div class="card-header">
@@ -96,12 +96,12 @@
                     </div>
 
 
-
+                    <t-loader v-if="!list"></t-loader>
                     <table v-if="list" class="table table-striped table-sm table-condensed table-sortable mg-b-0">
 
                         <thead>
 
-                            <tr>
+                            <tr >
                                 <th width="20">
                                     <div class="custom-control custom-checkbox">
                                         <input type="checkbox" class="custom-control-input" v-on:click="toggleSelectAll" id="checkAll">
@@ -183,7 +183,8 @@
 
                         </tr>
 
-                        <tr  v-for="item in list.data">
+                        <template  v-for="item in list.data">
+                        <tr  :class="{'tr-active': item.id == active_item.id}">
                             <td>
 
                                 <div class="custom-control custom-checkbox">
@@ -217,6 +218,7 @@
 
                             <td>
                                 <router-link class="btn btn-tiny btn-primary"
+                                             v-on:click="setActiveItem(item)"
                                              :to="{ path: '/users/roles/'+item.id}">
                                     {{item.active_roles_count}}
                                 </router-link>
@@ -254,6 +256,7 @@
                                 </div>
                             </td>
                         </tr>
+                        </template>
                         </tbody>
 
                     </table>

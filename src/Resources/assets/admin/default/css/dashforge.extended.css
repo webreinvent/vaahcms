@@ -172,6 +172,11 @@ body{
 
 }
 
+.table-sortable .tr-active {
+    background-color: #ffecb8 !important;
+
+}
+
 .table-sortable .table-search .btn{
     background-color: #fff;
 

@@ -27,6 +27,7 @@ import { ToggleButton } from 'vue-js-toggle-button'
                 assets: 1,
                 page: 1,
                 list: null,
+                active_item: {id: null},
                 show_filters: false,
                 table_collapsed: false,
                 select_all: false,
@@ -48,11 +49,14 @@ import { ToggleButton } from 'vue-js-toggle-button'
 
             '$route' (to, from) {
                 this.setTableCollapseStatus();
+                this.checkAndSetActiveItemId();
             },
 
         },
         mounted() {
 
+            //---------------------------------------------------------------------
+            this.checkAndSetActiveItemId();
             //---------------------------------------------------------------------
             this.getAssets();
             //---------------------------------------------------------------------
@@ -267,7 +271,18 @@ import { ToggleButton } from 'vue-js-toggle-button'
                 }
             },
             //---------------------------------------------------------------------
+            checkAndSetActiveItemId: function () {
+                this.$vaahcms.console(this.$route.params, 'params');
 
+                if(this.$route.params.id)
+                {
+                    this.active_item.id = this.$route.params.id;
+                } else {
+                    this.active_item.id = null;
+                }
+
+            }
+            //---------------------------------------------------------------------
             //---------------------------------------------------------------------
 
             //---------------------------------------------------------------------

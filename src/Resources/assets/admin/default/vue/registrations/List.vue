@@ -80,6 +80,7 @@
 
                 </div>
 
+                <t-loader v-if="!list"></t-loader>
                 <table v-if="list" class="table table-striped table-sm table-condensed table-sortable mg-b-0">
 
                     <thead>
@@ -155,7 +156,8 @@
 
                     </tr>
 
-                    <tr  v-for="item in list.data">
+                    <template v-for="item in list.data">
+                        <tr   :class="{'tr-active': item.id == active_item.id}">
                         <td>
 
                             <div class="custom-control custom-checkbox">
@@ -195,6 +197,8 @@
                             </div>
                         </td>
                     </tr>
+                    </template>
+
                     </tbody>
 
                 </table>

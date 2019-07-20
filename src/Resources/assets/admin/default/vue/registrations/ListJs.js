@@ -1,4 +1,5 @@
 import pagination from 'laravel-vue-pagination';
+import TableLoader from './../reusable/TableLoader';
 
     export default {
 
@@ -9,6 +10,7 @@ import pagination from 'laravel-vue-pagination';
             }
         },
         components:{
+            't-loader': TableLoader,
             'pagination': pagination
         },
         data()
@@ -40,6 +42,7 @@ import pagination from 'laravel-vue-pagination';
 
             '$route' (to, from) {
                 this.setTableCollapseStatus();
+                this.checkAndSetActiveItemId();
             },
 
 
@@ -48,6 +51,7 @@ import pagination from 'laravel-vue-pagination';
 
             //---------------------------------------------------------------------
             //---------------------------------------------------------------------
+            this.checkAndSetActiveItemId();
             //---------------------------------------------------------------------
             //---------------------------------------------------------------------
             this.getAssets();
@@ -250,6 +254,17 @@ import pagination from 'laravel-vue-pagination';
                 }
             },
             //---------------------------------------------------------------------
+            checkAndSetActiveItemId: function () {
+                this.$vaahcms.console(this.$route.params, 'params');
+
+                if(this.$route.params.id)
+                {
+                    this.active_item.id = this.$route.params.id;
+                } else {
+                    this.active_item.id = null;
+                }
+
+            }
             //---------------------------------------------------------------------
 
             //---------------------------------------------------------------------
