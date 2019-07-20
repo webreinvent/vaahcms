@@ -20,6 +20,7 @@ import TableLoader from './../reusable/TableLoader';
                 assets: null,
                 page: 1,
                 list: null,
+                active_item: {id: null},
                 show_filters: false,
                 table_collapsed: false,
                 select_all: false,
