@@ -14,12 +14,12 @@
 
 
                             <router-link class="btn btn-sm pd-x-15 btn-primary btn-uppercase"
-                                         :to="{ path: '/'}">
+                                         :to="{ path: '/themes'}">
                                 <i class="fas fa-upload"></i> Upload
                             </router-link>
 
                             <router-link class="btn btn-sm pd-x-15 btn-light btn-uppercase"
-                                         :to="{ path: '/'}">
+                                         :to="{ path: '/themes'}">
                                 <i class="fas fa-arrow-left"></i> Back
                             </router-link>
 
@@ -49,10 +49,16 @@
 
         </div>
 
-
-
         <!--content body-->
+        <div class="row" v-if="!list">
 
+            <div class="col">
+
+                <t-loader></t-loader>
+
+            </div>
+
+        </div>
 
         <div class="row mg-t-10 mg-b-10" v-if="list">
             <div class="col-sm-6" v-for="item in list.data" >
@@ -129,10 +135,10 @@
             </div>
         </div>
 
-        <div class="row">
+        <div class="row" v-if="list">
 
             <div class="col">
-                <pagination  v-if="list" :limit="6" :data="list" @pagination-change-page="getThemes"></pagination>
+                <pagination   :limit="6" :data="list" @pagination-change-page="getThemes"></pagination>
             </div>
 
         </div>

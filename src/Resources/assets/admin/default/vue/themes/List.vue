@@ -10,7 +10,7 @@
                     <div class="d-none d-md-block">
 
                         <router-link class="btn btn-sm pd-x-15 btn-primary btn-uppercase"
-                                     :to="{ path: '/add'}">
+                                     :to="{ path: '/themes/add'}">
                             <i class="fas fa-plus"></i> Add New
                         </router-link>
 
@@ -25,7 +25,6 @@
             </div>
 
         </div>
-
 
         <!--content header-->
         <div class="row mg-b-10 mg-t-10">
@@ -123,18 +122,15 @@
 
             </div>
 
-
-
         </div>
 
-        <div class="row">
+        <div class="row" v-if="list">
 
             <div class="col">
-                <pagination  v-if="list" :limit="6" :data="list" @pagination-change-page="getList"></pagination>
+                <pagination   :limit="6" :data="list" @pagination-change-page="getList"></pagination>
             </div>
 
         </div>
-
 
         <!--/content body-->
     </div>

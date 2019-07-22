@@ -140,14 +140,20 @@ routes.push(routes_permissions);
 //----------/permissions
 
 //----------modules
+import ModulesApp from "./modules/App";
 import ModulesList from "./modules/List";
 import ModulesAdd from "./modules/Add";
 
 const routes_modules =     {
     path: '/modules',
-    component: ModulesList,
+    component: ModulesApp,
     props: true,
     children: [
+        {
+            path: '/',
+            component: ModulesList,
+            props: true
+        },
         {
             path: 'add',
             component: ModulesAdd,
@@ -160,14 +166,20 @@ routes.push(routes_modules);
 
 
 //----------themes
+import ThemessApp from "./themes/App";
 import ThemesList from "./themes/List";
 import ThemesAdd from "./themes/Add";
 
 const routes_themes =     {
     path: '/themes',
-    component: ThemesList,
+    component: ThemessApp,
     props: true,
     children: [
+        {
+            path: '/',
+            component: ThemesList,
+            props: true
+        },
         {
             path: 'add',
             component: ThemesAdd,

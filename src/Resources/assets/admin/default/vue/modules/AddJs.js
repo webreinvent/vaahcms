@@ -1,9 +1,17 @@
 import pagination from 'laravel-vue-pagination';
+import TableLoader from './../reusable/TableLoader';
 
 export default {
 
     props: ['urls'],
+    computed:{
+        ajax_url(){
+            let ajax_url = this.$store.state.urls.modules;
+            return ajax_url;
+        }
+    },
     components:{
+        't-loader': TableLoader,
         'pagination': pagination,
     },
     data()
@@ -42,16 +50,16 @@ export default {
 
             console.log(this.urls);
 
-            var url = this.urls.current+"/assets";
+            var url = this.ajax_url+"/assets";
             var params = {};
-            this.$helpers.ajax(url, params, this.getAssetsAfter);
+            this.$vaahcms.ajax(url, params, this.getAssetsAfter);
         },
         //---------------------------------------------------------------------
         getAssetsAfter: function (data) {
 
             this.assets = data;
 
-            this.$helpers.console(this.assets, 'from app->');
+            this.$vaahcms.console(this.assets, 'from app->');
 
             this.getModules();
 
@@ -80,10 +88,10 @@ export default {
 
             var params = {};
 
-            this.$helpers.console(url, 'url');
-            this.$helpers.console(params, 'params');
+            this.$vaahcms.console(url, 'url');
+            this.$vaahcms.console(params, 'params');
 
-            this.$helpers.ajax(url, params, this.getModulesAfter);
+            this.$vaahcms.ajax(url, params, this.getModulesAfter);
         },
         //---------------------------------------------------------------------
         getModulesAfter: function (data) {
@@ -91,9 +99,9 @@ export default {
             this.list = data.list;
             this.page = data.list.current_page;
 
-            this.$helpers.console(this.list);
+            this.$vaahcms.console(this.list);
 
-            this.$helpers.stopNprogress();
+            this.$vaahcms.stopNprogress();
         },
 
         //---------------------------------------------------------------------
@@ -108,15 +116,15 @@ export default {
             $(this.active_el).closest('.card').find('.progress').removeClass('hide');
 
             this.active_item = item;
-            var url = this.urls.current+"/download";
+            var url = this.ajax_url+"/download";
             var params = this.active_item;
-            this.$helpers.ajax(url, params, this.downloadAfter);
+            this.$vaahcms.ajax(url, params, this.downloadAfter);
         },
         //---------------------------------------------------------------------
         downloadAfter: function (data) {
 
             $(this.active_el).closest('.card').find('.progress').addClass('hide');
-            this.$helpers.stopNprogress();
+            this.$vaahcms.stopNprogress();
 
         },
 
