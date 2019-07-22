@@ -1,30 +1,10 @@
 <li class="nav-label">Manage</li>
-<li class="nav-item with-sub"><a href="dashboard-one.html" class="nav-link">
-        <i data-feather="users"></i> <span>Users & Access</span>
+<li class="nav-item">
+    <a href="{{route('vh.admin.vaah')}}" class="nav-link">
+        <i data-feather="package"></i> <span>Vaah</span>
     </a>
-
-    <ul>
-        <li><a href="{{route('vh.admin.registrations')}}">Registration</a></li>
-        <li><a href="{{route('vh.admin.users')}}">Users</a></li>
-        <li><a href="{{route('vh.admin.roles')}}">Roles</a></li>
-        <li><a href="{{route('vh.admin.permissions')}}">Permissions</a></li>
-    </ul>
-
 </li>
 
-<li class="nav-item with-sub">
-    <a href="dashboard-one.html" class="nav-link">
-        <i data-feather="package"></i> <span>Extend</span>
-    </a>
-
-    <ul>
-        <li><a href="{{route('vh.admin.modules')}}">Modules</a></li>
-        {{--<li><a href="page-profile-view.html">Plugins  (4)</a></li>
-        <li><a href="page-profile-view.html">Widgets</a></li>--}}
-        <li><a href="{{route('vh.admin.themes')}}">Themes</a></li>
-    </ul>
-
-</li>
 
 <li class="nav-item with-sub">
     <a href="#" class="nav-link">
