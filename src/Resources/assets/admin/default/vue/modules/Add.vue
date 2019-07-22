@@ -141,4 +141,4 @@
 
     </div>
 </template>
-<script src="./ModulesAddJs.js"></script>
+<script src="./AddJs.js"></script>

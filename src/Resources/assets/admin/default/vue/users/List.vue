@@ -97,6 +97,7 @@
 
 
                     <t-loader v-if="!list"></t-loader>
+
                     <table v-if="list" class="table table-striped table-sm table-condensed table-sortable mg-b-0">
 
                         <thead>

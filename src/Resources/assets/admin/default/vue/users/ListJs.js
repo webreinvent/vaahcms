@@ -218,7 +218,7 @@ import { ToggleButton } from 'vue-js-toggle-button'
 
 
 
-                if(this.$route.path == '/users/create' || this.$route.params){
+                if(this.$route.path == '/users/create' || this.$route.params.id){
                     this.table_collapsed = true;
                 } else
                 {

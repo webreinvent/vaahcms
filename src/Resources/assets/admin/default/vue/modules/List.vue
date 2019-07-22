@@ -213,4 +213,4 @@
         <!--/content body-->
     </div>
 </template>
-<script src="./ModulesInstalledJs.js"></script>
+<script src="./ListJs.js"></script>

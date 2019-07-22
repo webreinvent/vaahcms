@@ -76,5 +76,101 @@ routes.push(routes_users);
 //----------/users
 
 
+//----------roles
+import RolesList from "./roles/List";
+import RolesCreate from "./roles/Create";
+import RolesViewEdit from "./roles/ViewEdit";
+import RolesPermissions from "./roles/Permissions";
+import RolesUsers from "./roles/Users";
+
+const routes_roles =     {
+    path: '/roles',
+    component: RolesList,
+    props: true,
+    children: [
+        {
+            path: 'create',
+            component: RolesCreate,
+            props: true
+        },
+        {
+            path: 'view/:id',
+            component: RolesViewEdit,
+            props: true
+        },
+        {
+            path: 'permissions/:id',
+            component: RolesPermissions,
+            props: true
+        },
+        {
+            path: 'users/:id',
+            component: RolesUsers,
+            props: true
+        },
+    ]
+};
+routes.push(routes_roles);
+//----------/roles
+
+
+//----------permissions
+import PermissionsList from "./permissions/List";
+import PermissionsViewEdit from "./permissions/ViewEdit";
+
+const routes_permissions =     {
+    path: '/permissions',
+    component: PermissionsList,
+    props: true,
+    children: [
+        {
+            path: 'view/:id',
+            component: PermissionsViewEdit,
+            props: true
+        },
+    ]
+};
+routes.push(routes_permissions);
+//----------/permissions
+
+//----------modules
+import ModulesList from "./modules/List";
+import ModulesAdd from "./modules/Add";
+
+const routes_modules =     {
+    path: '/modules',
+    component: ModulesList,
+    props: true,
+    children: [
+        {
+            path: 'add',
+            component: ModulesAdd,
+            props: true
+        },
+    ]
+};
+routes.push(routes_modules);
+//----------/modules
+
+
+//----------themes
+import ThemesList from "./themes/List";
+import ThemesAdd from "./themes/Add";
+
+const routes_themes =     {
+    path: '/themes',
+    component: ThemesList,
+    props: true,
+    children: [
+        {
+            path: 'add',
+            component: ThemesAdd,
+            props: true
+        },
+    ]
+};
+routes.push(routes_themes);
+//----------/themes
+
 
 export default routes;

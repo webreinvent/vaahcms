@@ -201,7 +201,7 @@ import TableLoader from './../reusable/TableLoader';
             //---------------------------------------------------------------------
             setTableCollapseStatus: function () {
 
-                if(this.$route.path == '/registrations/create' || this.$route.params){
+                if(this.$route.path == '/registrations/create' || this.$route.params.id){
                     this.table_collapsed = true;
                 } else
                 {

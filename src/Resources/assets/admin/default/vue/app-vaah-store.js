@@ -18,12 +18,32 @@ export const store = new Vuex.Store({
             current: current_url,
             registrations: current_url+'/registrations',
             users: current_url+'/users',
+            roles: current_url+'/roles',
+            permissions: current_url+'/permissions',
+            modules: current_url+'/modules',
+            themes: current_url+'/themes',
         },
         registrations: {
             assets: null,
             table_collapsed: false,
         },
         users: {
+            assets: null,
+            table_collapsed: false,
+        },
+        roles: {
+            assets: null,
+            table_collapsed: false,
+        },
+        permissions: {
+            assets: null,
+            table_collapsed: false,
+        },
+        modules: {
+            assets: null,
+            table_collapsed: false,
+        },
+        themes: {
             assets: null,
             table_collapsed: false,
         }

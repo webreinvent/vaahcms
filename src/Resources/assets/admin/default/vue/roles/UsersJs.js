@@ -1,10 +1,18 @@
 import pagination from 'laravel-vue-pagination';
+import TableLoader from './../reusable/TableLoader';
 
     export default {
 
         props: ['urls', 'id'],
+        computed:{
+            ajax_url(){
+                let ajax_url = this.$store.state.urls.roles;
+                return ajax_url;
+            }
+        },
         components:{
             'pagination': pagination,
+            't-loader': TableLoader,
         },
         data()
         {
@@ -38,14 +46,14 @@ import pagination from 'laravel-vue-pagination';
         methods: {
             //---------------------------------------------------------------------
             getList: function (page) {
-                var url = this.urls.current+"/users/"+this.id;
+                var url = this.ajax_url+"/users/"+this.id;
 
                 if(!page)
                 {
                     page = this.page;
                 }
 
-                this.$helpers.console(page, 'page');
+                this.$vaahcms.console(page, 'page');
 
                 url = url+"?page="+page;
 
@@ -55,18 +63,18 @@ import pagination from 'laravel-vue-pagination';
                 }
 
                 var params = {};
-                this.$helpers.ajax(url, params, this.getListAfter);
+                this.$vaahcms.ajax(url, params, this.getListAfter);
             },
             //---------------------------------------------------------------------
             getListAfter: function (data) {
 
-                this.$helpers.console(data);
+                this.$vaahcms.console(data);
 
                 this.list = data.list;
                 this.page = data.list.current_page;
                 this.item = data.item;
 
-                this.$helpers.stopNprogress();
+                this.$vaahcms.stopNprogress();
             },
 
             //---------------------------------------------------------------------
@@ -76,19 +84,19 @@ import pagination from 'laravel-vue-pagination';
                     e.preventDefault();
                 }
 
-                var url = this.urls.current+"/actions";
+                var url = this.ajax_url+"/actions";
                 var params = {
                     action: action,
                     inputs: inputs,
                     data: data,
                 };
 
-                this.$helpers.ajax(url, params, this.actionsAfter);
+                this.$vaahcms.ajax(url, params, this.actionsAfter);
             },
             //---------------------------------------------------------------------
             actionsAfter: function (data) {
                 this.getList(this.page);
-                this.emitReloadList();
+                this.emitListReload();
             },
             //---------------------------------------------------------------------
             toggleActiveStatus: function (item) {
@@ -107,8 +115,8 @@ import pagination from 'laravel-vue-pagination';
 
             },
             //---------------------------------------------------------------------
-            emitReloadList: function () {
-                this.$root.$emit('reloadList');
+            emitListReload: function () {
+                this.$root.$emit('eListReload');
             }
             //---------------------------------------------------------------------
             //---------------------------------------------------------------------

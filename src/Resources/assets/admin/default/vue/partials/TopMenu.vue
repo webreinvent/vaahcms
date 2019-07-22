@@ -42,18 +42,42 @@
 
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Role</a>
+                        <router-link class="nav-link"
+                                     :class="{'active': $route.matched[0].path == '/roles'}"
+                                     :to="{ path: '/roles'}" exact>
+                            Roles
+                        </router-link>
+
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Permissions</a>
+
+                        <router-link class="nav-link"
+                                     :class="{'active': $route.matched[0].path == '/permissions'}"
+                                     :to="{ path: '/permissions'}" exact>
+                            Permissions
+                        </router-link>
+
                     </li>
                     <li class="nav-item nav-separator"></li>
 
                     <li class="nav-item ">
-                        <a class="nav-link" href="#">Permissions</a>
+                        <router-link class="nav-link"
+                                     :class="{'active': $route.matched[0].path == '/modules'}"
+                                     :to="{ path: '/modules'}" exact>
+                            Modules
+                        </router-link>
                     </li>
 
-                    <li class="nav-item dropdown">
+                    <li class="nav-item ">
+                        <router-link class="nav-link"
+                                     :class="{'active': $route.matched[0].path == '/themes'}"
+                                     :to="{ path: '/themes'}" exact>
+                            Themes
+                        </router-link>
+                    </li>
+
+
+                    <!--<li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             Dropdown
                         </a>
@@ -63,7 +87,7 @@
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item" href="#">Something else here</a>
                         </div>
-                    </li>
+                    </li>-->
 
                 </ul>
 

@@ -139,4 +139,4 @@
         <!--/content body-->
     </div>
 </template>
-<script src="./ThemesInstalledJs.js"></script>
+<script src="./ListJs.js"></script>
