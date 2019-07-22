@@ -4,7 +4,7 @@
         <div class="col-sm">
 
             <div class="card" >
-                <div if="!list">
+                <div >
 
                     <t-loader v-if="!list"></t-loader>
 

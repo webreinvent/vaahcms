@@ -1,5 +1,5 @@
 <template>
-
+    <div class="row">
 
         <div class="col-sm" v-if="list">
 
@@ -88,6 +88,8 @@
 
                     </div>
 
+                    <t-loader v-if="!list"></t-loader>
+
                     <table v-if="list" class="table table-striped table-sm table-condensed table-sortable mg-b-0">
 
                         <thead>
@@ -156,12 +158,13 @@
 
                         </tr>
 
-                        <tr  v-for="item in list.data">
+                        <template  v-for="item in list.data">
+                        <tr :class="{'tr-active': item.id == active_item.id}">
                             <td>
 
                                 <div class="custom-control custom-checkbox">
                                     <input type="checkbox" class="custom-control-input"
-                                           :checked="$helpers.existInArray(selected_items, item.id)"
+                                           :checked="$vaahcms.existInArray(selected_items, item.id)"
                                            @click="toggleSelectedItem(item.id)"
                                            :id="'check-'+item.id">
                                     <label class="custom-control-label" :for="'check-'+item.id"></label>
@@ -199,7 +202,7 @@
                             <td>
 
                                 <router-link class="btn btn-tiny btn-primary"
-                                             :to="{ path: '/roles/'+item.id}">
+                                             :to="{ path: '/permissions/roles/'+item.id}">
                                     {{item.count_roles}}
                                 </router-link>
 
@@ -209,7 +212,7 @@
 
 
                             <td v-if="!table_collapsed">
-                                {{$helpers.dateTimeForHumans(item.created_at)}}
+                                {{$vaahcms.dateTimeForHumans(item.created_at)}}
                             </td>
 
 
@@ -221,13 +224,16 @@
                                     </button>
 
                                     <router-link class="btn btn-xs bg-transparent"
-                                                 :to="{ path: '/view/'+item.id}">
+                                                 :to="{ path: '/permissions/view/'+item.id}">
                                         <i class="fas fa-chevron-right"></i>
                                     </router-link>
 
                                 </div>
                             </td>
                         </tr>
+                        </template>
+
+
                         </tbody>
 
                     </table>
@@ -242,6 +248,9 @@
 
         </div>
 
+        <router-view></router-view>
+
+    </div>
 
 </template>
 <script src="./ListJs.js"></script>

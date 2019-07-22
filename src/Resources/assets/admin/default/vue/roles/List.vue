@@ -172,7 +172,17 @@
                             </td>
                             <td>{{item.id}}</td>
                             <td>{{item.name}}</td>
-                            <td>{{item.slug}}</td>
+                            <td>
+
+                                <vh-copy class="text-copyable"
+                                         :data="item.slug"
+                                         :text="item.slug"
+                                         :iconClass="'fas fa-copy'"
+                                         @copied="copiedData"
+                                ></vh-copy>
+
+
+                            </td>
                             <td>
 
 

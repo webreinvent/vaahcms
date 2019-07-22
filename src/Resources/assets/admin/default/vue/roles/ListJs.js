@@ -1,4 +1,5 @@
 import pagination from 'laravel-vue-pagination';
+import VaahVueClickToCopy from 'vaah-vue-clicktocopy'
 import TableLoader from './../reusable/TableLoader';
 
 //https://github.com/euvl/vue-js-toggle-button
@@ -19,6 +20,7 @@ export default {
         't-loader': TableLoader,
         'pagination': pagination,
         'ToggleButton': ToggleButton,
+        'vh-copy': VaahVueClickToCopy
     },
     data()
     {
@@ -280,8 +282,15 @@ export default {
                 this.active_item.id = null;
             }
 
-        }
+        },
         //---------------------------------------------------------------------
+        copiedData: function (data) {
+
+            alertify.success('copied');
+
+            this.$vaahcms.console(data, 'copied data');
+
+        }
         //---------------------------------------------------------------------
 
         //---------------------------------------------------------------------

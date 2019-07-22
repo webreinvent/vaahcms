@@ -131,7 +131,7 @@ import TableLoader from './../reusable/TableLoader';
 
             actionsAfter: function (data) {
                 this.getDetails();
-                this.emitReloadList();
+                this.emitListReload();
             },
 
             //---------------------------------------------------------------------

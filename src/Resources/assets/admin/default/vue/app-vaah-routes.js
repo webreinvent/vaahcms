@@ -117,6 +117,7 @@ routes.push(routes_roles);
 //----------permissions
 import PermissionsList from "./permissions/List";
 import PermissionsViewEdit from "./permissions/ViewEdit";
+import PermissionsRoles from "./permissions/Roles";
 
 const routes_permissions =     {
     path: '/permissions',
@@ -126,6 +127,11 @@ const routes_permissions =     {
         {
             path: 'view/:id',
             component: PermissionsViewEdit,
+            props: true
+        },
+        {
+            path: 'roles/:id',
+            component: PermissionsRoles,
             props: true
         },
     ]
