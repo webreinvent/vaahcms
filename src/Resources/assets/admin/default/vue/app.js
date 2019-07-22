@@ -1,4 +1,3 @@
-require('./../lib/vue/bootstrap');
 
 window.Vue = require('vue');
 
@@ -44,11 +43,11 @@ let urls = {
 };
 
 //---------Store
-import {store} from './app-vaah-store';
+import {store} from './app-store';
 //---------/Store
 
 //---------Routes
-import routes from './app-vaah-routes';
+import routes from './app-routes';
 
 const router = new VueRouter({
     base: '/',

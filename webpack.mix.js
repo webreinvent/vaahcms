@@ -12,6 +12,6 @@ mix.setPublicPath(output_path).mergeManifest();
 mix.copyDirectory(input_path+'/css', output_path+'/css/', false)
     .combine(admin_assets_json['css'], output_path+'/builds/vaahcms.css')
     .combine(admin_assets_json['js'], output_path+'/builds/vaahcms.js')
-    .js(input_path+'/vue/app-vaah.js', 'builds/')
+    .js(input_path+'/vue/app.js', 'builds/')
     .js(input_path+'/vue/app-login.js', 'builds/');
 

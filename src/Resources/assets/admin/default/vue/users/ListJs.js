@@ -24,7 +24,7 @@ import { ToggleButton } from 'vue-js-toggle-button'
         {
             let obj = {
                 q: null,
-                assets: 1,
+                assets: null,
                 page: 1,
                 list: null,
                 active_item: {id: null},

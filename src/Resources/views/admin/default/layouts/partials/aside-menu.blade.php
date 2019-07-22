@@ -6,7 +6,7 @@
 </li>
 
 
-<li class="nav-item with-sub">
+{{--<li class="nav-item with-sub">
     <a href="#" class="nav-link">
         <i data-feather="settings"></i> <span>Settings</span>
     </a>
@@ -16,7 +16,7 @@
         @include("vaahcms::admin.default.extend.settings-menu")
     </ul>
 
-</li>
+</li>--}}
 
 
 
