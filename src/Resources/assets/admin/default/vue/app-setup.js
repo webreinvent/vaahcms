@@ -7,7 +7,7 @@ window.Vue = require('vue');
 import VueRouter from 'vue-router';
 import VueResource from 'vue-resource';
 import moment from 'moment'
-import VueHelpers from './helpers/VueHelpers';
+import VaahCms from 'vaahcms-vue-helpers';
 //---------/Package imports
 
 //---------Configs
@@ -20,14 +20,8 @@ Vue.config.async = false;
 Vue.prototype.moment = moment;
 Vue.use(VueResource);
 Vue.use(VueRouter);
-Vue.use(VueHelpers);
+Vue.use(VaahCms);
 //---------/Helpers
-
-//---------Comp Imports
-import ModulesInstalled from './components/ModulesInstalled';
-import ModulesAdd from './components/ModulesAdd';
-//---------/Comp Imports
-
 
 
 //---------Variables
@@ -98,7 +92,7 @@ const app = new Vue({
 
             var url = this.urls.current+"/check/status";
             var params = {};
-            this.$helpers.ajax(url, params, this.checkStatusAfter);
+            this.$vaahcms.ajax(url, params, this.checkStatusAfter);
         },
         //---------------------------------------------------------------------
         checkStatusAfter: function (data) {
@@ -106,7 +100,7 @@ const app = new Vue({
             this.active_step = data.active_step;
             this.flash_message = data.flash_message;
 
-            this.$helpers.stopNprogress();
+            this.$vaahcms.stopNprogress();
         },
         //---------------------------------------------------------------------
         storeAppInfo: function (e) {
@@ -118,15 +112,12 @@ const app = new Vue({
             var url = this.urls.current+"/store/app/info";
             var params = this.app_info;
 
-            this.$helpers.ajax(url, params, this.storeAppInfoAfter);
+            this.$vaahcms.ajax(url, params, this.storeAppInfoAfter);
         },
         //---------------------------------------------------------------------
         storeAppInfoAfter: function (data) {
-
             this.active_step = 'run_migrations';
-
-
-            this.$helpers.stopNprogress();
+            this.$vaahcms.stopNprogress();
         },
 
         //---------------------------------------------------------------------
@@ -138,7 +129,7 @@ const app = new Vue({
 
             var url = this.urls.current+"/run/migrations";
             var params = {};
-            this.$helpers.ajax(url, params, this.runMigrationsAfter);
+            this.$vaahcms.ajax(url, params, this.runMigrationsAfter);
         },
         //---------------------------------------------------------------------
         runMigrationsAfter: function (data) {
@@ -147,9 +138,10 @@ const app = new Vue({
 
             this.active_step = 'cms_setup';
 
-            this.$helpers.console(this.active_step);
+            this.$vaahcms.console(this.active_step);
 
-            this.$helpers.stopNprogress();
+            this.$vaahcms.stopNprogress();
+
         },
         //---------------------------------------------------------------------
         setupCMS: function (e) {
@@ -160,13 +152,13 @@ const app = new Vue({
 
             var url = this.urls.current+"/setup/cms";
             var params = this.cms_setup;
-            this.$helpers.ajax(url, params, this.setupCMSAfter);
+            this.$vaahcms.ajax(url, params, this.setupCMSAfter);
         },
         //---------------------------------------------------------------------
         setupCMSAfter: function (data) {
             this.active_step = null;
             this.active_step = 'create_admin_account';
-            this.$helpers.stopNprogress();
+            this.$vaahcms.stopNprogress();
         },
         //---------------------------------------------------------------------
         storeAdminUser: function (e) {
@@ -177,15 +169,16 @@ const app = new Vue({
 
             var url = this.urls.current+"/store/admin";
             var params = this.admin_info;
-            this.$helpers.ajax(url, params, this.storeAdminUserAfter);
+            this.$vaahcms.ajax(url, params, this.storeAdminUserAfter);
+
         },
         //---------------------------------------------------------------------
         storeAdminUserAfter: function (data) {
 
             this.flash_message = data.flash_message;
             window.location = data.redirect_url;
+            this.$vaahcms.stopNprogress();
 
-            this.$helpers.stopNprogress();
         },
         //-----------------------------------------------------------
 
