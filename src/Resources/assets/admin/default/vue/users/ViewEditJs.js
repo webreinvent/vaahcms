@@ -1,12 +1,21 @@
 import TForm from './../reusable/TableFormGenerator';
 import TView from './../reusable/TableViewGenerator';
+import TableLoader from './../reusable/TableLoader';
+
 
     export default {
 
         props: ['urls', 'id'],
+        computed:{
+            ajax_url(){
+                let ajax_url = this.$store.state.urls.users;
+                return ajax_url;
+            }
+        },
         components:{
             't-form': TForm,
             't-view': TView,
+            't-loader': TableLoader,
         },
         data()
         {
@@ -34,6 +43,9 @@ import TView from './../reusable/TableViewGenerator';
             //---------------------------------------------------------------------
             this.getDetails();
             //---------------------------------------------------------------------
+            this.$root.$on('eUpdateItem', (item) => {
+                this.updateItem(item);
+            });
             //---------------------------------------------------------------------
             //---------------------------------------------------------------------
             //---------------------------------------------------------------------
@@ -43,40 +55,31 @@ import TView from './../reusable/TableViewGenerator';
             //---------------------------------------------------------------------
             //---------------------------------------------------------------------
             getDetails: function () {
-
-                var url = this.urls.current+"/view/"+this.id;
-
-                console.log(url, 'url-->');
-
+                this.columns = null;
+                var url = this.ajax_url+"/view/"+this.id;
                 var params = {};
-                this.$helpers.ajax(url, params, this.getDetailsAfter);
+                this.$vaahcms.ajax(url, params, this.getDetailsAfter);
             },
             //---------------------------------------------------------------------
             getDetailsAfter: function (data) {
                 this.columns = null;
                 this.columns = data;
-                this.$helpers.stopNprogress();
+                this.$vaahcms.stopNprogress();
             },
             //---------------------------------------------------------------------
             getColumnValue: function(column_name)
             {
-                var item = this.$helpers.findInArrayByKey(this.columns, 'name', column_name);
+                var item = this.$vaahcms.findInArrayByKey(this.columns, 'name', column_name);
 
                 if(!item)
                 {
                     return false;
                 }
-
-                this.$helpers.console(item, 'items');
-
                 return item.value;
             },
             //---------------------------------------------------------------------
             updateItem: function (item) {
                 this.item = item;
-
-                this.$helpers.console(this.item, 'this.item');
-
             },
             //---------------------------------------------------------------------
             toggleEdit: function () {
@@ -90,24 +93,16 @@ import TView from './../reusable/TableViewGenerator';
             },
             //---------------------------------------------------------------------
             store: function () {
-                var url = this.urls.current+"/store";
+                var url = this.ajax_url+"/store";
                 var params = this.item;
-
-                this.$helpers.console(params, 'params');
-
-                this.$helpers.ajax(url, params, this.storeAfter);
+                this.$vaahcms.ajax(url, params, this.storeAfter);
             },
             //---------------------------------------------------------------------
             storeAfter: function (data) {
-
                 this.edit = false;
-
                 this.item = data;
-                this.id = data.id;
-
-                this.$helpers.stopNprogress();
+                this.$vaahcms.stopNprogress();
             },
-
             //---------------------------------------------------------------------
             actions: function (e, action, inputs, data) {
                 if(e)
@@ -115,28 +110,26 @@ import TView from './../reusable/TableViewGenerator';
                     e.preventDefault();
                 }
 
-                var url = this.urls.current+"/actions";
+                var url = this.ajax_url+"/actions";
                 var params = {
                     action: action,
                     inputs: inputs,
                     data: data,
                 };
 
-                this.$helpers.ajax(url, params, this.actionsAfter);
+                this.$vaahcms.ajax(url, params, this.actionsAfter);
             },
 
             //---------------------------------------------------------------------
 
             actionsAfter: function (data) {
                 this.getDetails();
-
-                this.emitReloadList();
-
+                this.emitListReload();
             },
 
             //---------------------------------------------------------------------
-            emitReloadList: function () {
-                this.$root.$emit('reloadList');
+            emitListReload: function () {
+                this.$root.$emit('eListReload');
             }
             //---------------------------------------------------------------------
             //---------------------------------------------------------------------

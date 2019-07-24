@@ -3,8 +3,9 @@
 
     <tbody>
 
+    <!--dynamic form creator-->
     <template v-for="column in columns" v-if="column.editable == true">
-        <!--dynamic form creator-->
+
         <tr v-if="column.type == 'text'" :class="column.tr_class" >
             <th width="180" class="text-right">{{column.label}}</th>
             <td>
@@ -63,11 +64,11 @@
 
             </td>
         </tr>
-        <!--/dynamic form creator-->
+
     </template>
 
     </tbody>
-
+    <!--/dynamic form creator-->
 
 </template>
 
@@ -86,6 +87,7 @@
         {
             let obj = {
                 new_item: {
+                    name: "",
                     title: "",
                     country: "",
                     status: "",
@@ -106,7 +108,11 @@
         watch: {
             'new_item': {
                 handler: function () {
+
+                    //TODO:: watch uninitialized params
+
                     this.emitItem();
+                    this.$vaahcms.console("test");
                 },
                 deep: true
             }
@@ -127,7 +133,8 @@
             },
             //---------------------------------------------------------------------
             emitItem: function () {
-                this.$emit('emittedItem', this.new_item);
+                this.$root.$emit('eUpdateItem', this.new_item);
+                this.$vaahcms.console('emit event');
             },
             //---------------------------------------------------------------------
 

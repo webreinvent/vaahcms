@@ -3,7 +3,7 @@
 
         <div class="col-sm">
 
-            <div class="card" v-if="assets">
+            <div class="card" >
                 <div class="card-header">
 
                     <div class="d-flex">
@@ -11,7 +11,7 @@
                         <div class=" mg-l-auto btn-group btn-group-xs">
 
                             <router-link class="btn btn-card "
-                                    :to="{ path: '/'}">
+                                    :to="{ path: '/registrations'}">
                                 <i class="fas fa-times"></i>
                             </router-link>
 
@@ -20,14 +20,14 @@
 
                 </div>
 
-                <div class="card-body" >
+                <div class="card-body" v-if="assets">
 
                     <table class="table table-striped table-sm table-condensed table-form table-form-dashed">
-                        <tbody>
+
 
                         <t-form :columns="assets.columns" @emittedItem="updateNewItem" ></t-form>
 
-                        </tbody>
+
                     </table>
 
                 </div>

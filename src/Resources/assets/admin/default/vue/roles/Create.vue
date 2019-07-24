@@ -11,7 +11,7 @@
                         <div class=" mg-l-auto btn-group btn-group-xs">
 
                             <router-link class="btn btn-card "
-                                    :to="{ path: '/'}">
+                                    :to="{ path: '/roles'}">
                                 <i class="fas fa-times"></i>
                             </router-link>
 
@@ -21,6 +21,7 @@
                 </div>
 
                 <div class="card-body" >
+
 
                     <table class="table table-striped table-sm table-condensed table-form table-form-dashed">
                         <tbody>

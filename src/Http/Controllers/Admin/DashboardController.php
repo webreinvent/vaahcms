@@ -24,7 +24,17 @@ class DashboardController extends Controller
         return view($this->theme.'.pages.dashboard');
     }
     //----------------------------------------------------------
+    public function layoutApp(Request $request)
+    {
+        return view($this->theme.'.pages.app');
+
+    }
     //----------------------------------------------------------
+    public function vaah(Request $request)
+    {
+        return view($this->theme.'.pages.vaah');
+
+    }
     //----------------------------------------------------------
 
 

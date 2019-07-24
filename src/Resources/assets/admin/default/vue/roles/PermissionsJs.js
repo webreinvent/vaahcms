@@ -1,11 +1,19 @@
 import pagination from 'laravel-vue-pagination';
 import {isObject} from "vue-resource/src/util";
+import TableLoader from './../reusable/TableLoader';
 
     export default {
 
         props: ['urls', 'id'],
+        computed:{
+            ajax_url(){
+                let ajax_url = this.$store.state.urls.roles;
+                return ajax_url;
+            }
+        },
         components:{
             'pagination': pagination,
+            't-loader': TableLoader,
         },
         data()
         {
@@ -40,14 +48,14 @@ import {isObject} from "vue-resource/src/util";
         methods: {
             //---------------------------------------------------------------------
             getList: function (page) {
-                var url = this.urls.current+"/permissions/"+this.id;
+                var url = this.ajax_url+"/permissions/"+this.id;
 
                 if(!page || isObject(page))
                 {
                     page = this.page;
                 }
 
-                this.$helpers.console(page, 'page');
+                this.$vaahcms.console(page, 'page');
 
                 url = url+"?page="+page;
 
@@ -57,12 +65,12 @@ import {isObject} from "vue-resource/src/util";
                 }
 
                 var params = {};
-                this.$helpers.ajax(url, params, this.getListAfter);
+                this.$vaahcms.ajax(url, params, this.getListAfter);
             },
             //---------------------------------------------------------------------
             getListAfter: function (data) {
 
-                this.$helpers.console(data);
+                this.$vaahcms.console(data);
 
                 this.list = {};
 
@@ -70,7 +78,7 @@ import {isObject} from "vue-resource/src/util";
                 this.page = data.list.current_page;
                 this.item = data.item;
 
-                this.$helpers.stopNprogress();
+                this.$vaahcms.stopNprogress();
             },
 
             //---------------------------------------------------------------------
@@ -80,19 +88,19 @@ import {isObject} from "vue-resource/src/util";
                     e.preventDefault();
                 }
 
-                var url = this.urls.current+"/actions";
+                var url = this.ajax_url+"/actions";
                 var params = {
                     action: action,
                     inputs: inputs,
                     data: data,
                 };
 
-                this.$helpers.ajax(url, params, this.actionsAfter);
+                this.$vaahcms.ajax(url, params, this.actionsAfter);
             },
             //---------------------------------------------------------------------
             actionsAfter: function (data) {
                 this.getList(this.page);
-                this.emitReloadList();
+                this.emitListReload();
             },
             //---------------------------------------------------------------------
             toggleActiveStatus: function (item) {
@@ -111,8 +119,9 @@ import {isObject} from "vue-resource/src/util";
 
             },
             //---------------------------------------------------------------------
-            emitReloadList: function () {
-                this.$root.$emit('reloadList');
+            //---------------------------------------------------------------------
+            emitListReload: function () {
+                this.$root.$emit('eListReload');
             }
             //---------------------------------------------------------------------
             //---------------------------------------------------------------------
