@@ -101,6 +101,8 @@ import TableLoader from './../reusable/TableLoader';
             //---------------------------------------------------------------------
             getListAfter: function (data) {
 
+                this.list = {};
+
                 this.list = data.list;
                 this.stats = data.stats;
                 this.page = data.list.current_page;
@@ -214,6 +216,9 @@ import TableLoader from './../reusable/TableLoader';
                 this.getList();
             },
             //---------------------------------------------------------------------
+            reloadPage: function () {
+                window.location.reload()
+            }
             //---------------------------------------------------------------------
             //---------------------------------------------------------------------
         }

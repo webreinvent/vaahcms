@@ -10,7 +10,7 @@
                     <div class="alert alert-warning" v-if="page_reload_required">
 
                         Page reload is required
-                        <a :href="urls.current" class="btn btn-xs btn-warning mg-l-10" >Click Here To Reload</a>
+                        <button v-on:click="reloadPage" class="btn btn-xs btn-warning mg-l-10" >Click Here To Reload</button>
 
                     </div>
 

@@ -6,27 +6,35 @@ $modules = new \WebReinvent\VaahCms\Entities\Module();
 $all = $modules->all();
 
 $module_order = [];
+
+$i = 0;
 if($all->count() > 0)
 {
     foreach($all as $item)
     {
 
-        $settings_name = $view_file.'-order';
-
-
+        if(isset($view_file)){
+            $settings_name = $view_file.'-order';
+        }
 
         $settings = $item->settings()->key($settings_name)->first();
 
-        if($settings)
+        if($settings && !is_null($settings->value) && $settings->value != "")
         {
             $module_order[$settings->value] = $item->slug;
-        } else
+        } else if($settings && !is_null($settings->id))
         {
-            $module_order[] = $item->slug;
+            $module_order[$settings->id] = $item->slug;
+        } else{
+            $module_order[$i] = $item->slug;
         }
+
+        $i++;
     }
 
     ksort($module_order);
+
+
 
     foreach($module_order as $module_slug)
     {

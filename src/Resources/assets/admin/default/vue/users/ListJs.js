@@ -126,7 +126,7 @@ import { ToggleButton } from 'vue-js-toggle-button'
             },
             //---------------------------------------------------------------------
             getListAfter: function (data) {
-
+                this.list = {};
                 this.list = data.list;
                 this.page = data.list.current_page;
 
