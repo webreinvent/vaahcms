@@ -162,12 +162,15 @@ class Module extends Model {
                 $setting_data['value'] = $setting_input;
             }
 
-            $setting = new Setting($setting_data);
+            $setting = $module->settings()->where('key', $key)->first();
 
-            $module->settings()->save($setting);
+            if(!$setting)
+            {
+                $setting = new Setting($setting_data);
+                $module->settings()->save($setting);
+            }
 
         }
-
 
         $module = Module::where('slug', $module->slug)->with(['settings'])->first();
 

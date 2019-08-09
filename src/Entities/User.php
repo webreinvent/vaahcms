@@ -72,22 +72,22 @@ class User extends Authenticatable
 
     //-------------------------------------------------
     public function getNameAttribute() {
-        return $this->first_name." ".$this->middle_name." ".$this->last_name;
+        return trim($this->first_name)." ".trim($this->middle_name)." ".trim($this->last_name);
     }
     //-------------------------------------------------
     public function setFirstNameAttribute($value)
     {
-        $this->attributes['first_name'] = ucfirst($value);
+        $this->attributes['first_name'] = ucfirst(trim($value));
     }
     //-------------------------------------------------
     public function setLastNameAttribute($value)
     {
-        $this->attributes['last_name'] = ucfirst($value);
+        $this->attributes['last_name'] = ucfirst(trim($value));
     }
     //-------------------------------------------------
     public function setEmailAttribute($value)
     {
-        $this->attributes['email'] = strtolower($value);
+        $this->attributes['email'] = trim($value);
     }
     //-------------------------------------------------
 
@@ -474,6 +474,12 @@ class User extends Authenticatable
             'email' => 'required|email',
             'first_name' => 'required',
         );
+
+        if($request->has('phone'))
+        {
+            $rules['phone'] = 'integer';
+        }
+
 
         $validator = \Validator::make( $request->all(), $rules);
         if ( $validator->fails() ) {

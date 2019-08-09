@@ -208,6 +208,44 @@ mix.webpackConfig({
 
 ```
 
+#### How to Setup Laravel Dusk on Windows
+- Step 1) Install `composer require --dev laravel/dusk`
+
+- Step 2) Run `php artisan dusk:install`
+
+- Step 2) To do browser based test, open file `tests/DuskTestCase.php` and comment `static::startChromeDriver();` 
+
+- Step 3) In tests/DuskTestCase.php file comment `'--headless',`:
+```php
+...
+$options = (new ChromeOptions)->addArguments([
+            '--disable-gpu',
+            //'--headless', <-- comment this line
+            '--window-size=1920,1080',
+        ]);
+...
+
+```
+
+- Step 4) Make sure your `APP_URL` in `.env` is as per the the xampp or actual application url
+
+- Step 5) Run `php artisan dusk`, it may show `Warning: TTY mode is not supported on Windows platform.` error
+  you can ignore this error. If it run successfully, it will  will open chrome and run your tests.
+
+If it does works then:
+- Download latest chrome driver from https://sites.google.com/a/chromium.org/chromedriver/downloads
+
+- Unzip and run chromedriver.exe
+
+- Then run `php artisan dusk`
+
+#### Create Tests for VaahCms Modules:
+- Change path of dusk in `phpunit.dusk.xml` to following:
+```xml
+...
+<directory suffix="Test.php">./VaahCms/Modules/<module_name>/Tests/Browser</directory>
+...
+```
 
 ## Tools
 

@@ -308,6 +308,8 @@ body{
 
 /* vue2-perfect-scrollbar */
 .ps {
-    height: 380px;
+    height: calc(100vh - 60px);
+    height: -webkit-calc(100vh - 60px); /* google, safari */
+    height: -moz-calc(100vh - 60px); /* firefox */
 }
 /* end of vue2-perfect-scrollbar */
