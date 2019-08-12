@@ -283,6 +283,27 @@ class Theme extends Model {
         $api = config('vaahcms.api_route')."/theme/by/slug/".$slug;
 
         $api_response = @file_get_contents($api);
+
+        if(!isset($api_response) || empty($api_response))
+        {
+            $response['status'] = 'failed';
+            $response['data']['url'] = $api;
+            $response['errors'][] = 'API Response Error.';
+            return $response;
+        }
+
+        $api_response = json_decode($api_response);
+
+        if(!isset($api_response) || !isset($api_response->status) || $api_response->status != 'success')
+        {
+            $response['status'] = 'failed';
+            $response['data']['url'] = $api;
+            $response['data']['data'] = $api_response;
+            $response['errors'][] = 'API Response Error.';
+            return $response;
+
+        }
+
         $api_response = json_decode($api_response);
 
         if($api_response->status != 'success')
