@@ -308,8 +308,63 @@ body{
 
 /* vue2-perfect-scrollbar */
 .ps {
-    height: calc(100vh - 60px);
-    height: -webkit-calc(100vh - 60px); /* google, safari */
-    height: -moz-calc(100vh - 60px); /* firefox */
+    height: 380px;
 }
 /* end of vue2-perfect-scrollbar */
+
+/* tiptap-editor */
+.tiptap-editor {
+    border: 1px solid #ccc;
+}
+
+.tiptap-editor .menu-toolbar{
+    border-bottom: 1px solid #ccc;
+}
+
+.tiptap-editor .menu-toolbar .btn{
+    border: none !important;
+    font-weight: 900;
+}
+
+.tiptap-editor .menu-toolbar .btn:hover{
+    border: none !important;
+}
+
+.tiptap-editor .tiptap-editor-content .ProseMirror{
+    min-height: 80px;
+    margin: 0px;
+    padding: 5px;
+    color: #000;
+    font-size: 0.8rem;
+    font-weight: normal;
+}
+
+.tiptap-editor .tiptap-editor-content .ProseMirror:focus{
+    outline: none !important;
+}
+
+.tiptap-editor .tiptap-editor-content .ProseMirror p{
+    margin-bottom: 12px;
+    font-size: 0.8rem;
+    font-weight: normal;
+}
+
+.tiptap-editor .tiptap-editor-content .ProseMirror h1{
+    color: #000;
+    font-size: 3rem;
+    font-weight: bold;
+}
+
+.tiptap-editor .tiptap-editor-content .ProseMirror h2{
+    color: #000;
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+.tiptap-editor .tiptap-editor-content .ProseMirror h3{
+    color: #000;
+    font-size: 1rem;
+    font-weight: bold;
+}
+
+/* end of tiptap-editor */

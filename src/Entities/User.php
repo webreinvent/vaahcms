@@ -72,7 +72,20 @@ class User extends Authenticatable
 
     //-------------------------------------------------
     public function getNameAttribute() {
-        return trim($this->first_name)." ".trim($this->middle_name)." ".trim($this->last_name);
+
+        $name = $this->first_name;
+
+        if($this->middle_name)
+        {
+            $name .= " ".$this->middle_name;
+        }
+
+        if($this->last_name)
+        {
+            $name .= " ".$this->last_name;
+        }
+
+        return $name;
     }
     //-------------------------------------------------
     public function setFirstNameAttribute($value)
