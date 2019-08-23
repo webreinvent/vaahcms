@@ -312,6 +312,18 @@ body{
 }
 /* end of vue2-perfect-scrollbar */
 
+
+.form-label-light{
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-family: -apple-system, BlinkMacSystemFont, "Inter UI", Roboto, sans-serif;
+    font-weight: 500;
+    color: #8392a5;
+    display: inline-block;
+    margin-bottom: 0.5rem;
+}
+
 /* tiptap-editor */
 .tiptap-editor {
     border: 1px solid #ccc;
