@@ -243,7 +243,7 @@ body{
     font-family: -apple-system, BlinkMacSystemFont, "Inter UI", Roboto, sans-serif;
     padding: 2px 8px;
     border-radius: 3px;
-    border: 0px;
+
 }
 
 .text-copyable{
@@ -307,7 +307,7 @@ body{
 }
 
 /* vue2-perfect-scrollbar */
-.ps {
+.card .ps {
     height: 380px;
 }
 /* end of vue2-perfect-scrollbar */
@@ -320,7 +320,7 @@ body{
     font-family: -apple-system, BlinkMacSystemFont, "Inter UI", Roboto, sans-serif;
     font-weight: 500;
     color: #8392a5;
-    display: inline-block;
+    display: block;
     margin-bottom: 0.5rem;
 }
 
@@ -380,3 +380,19 @@ body{
 }
 
 /* end of tiptap-editor */
+
+.clickable{
+    cursor: pointer;
+}
+
+
+.btn.btn-icon{
+
+}
+
+.btn.btn-icon i{
+
+
+
+
+}

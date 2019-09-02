@@ -304,7 +304,6 @@ class Theme extends Model {
 
         }
 
-        $api_response = json_decode($api_response);
 
         if($api_response->status != 'success')
         {
