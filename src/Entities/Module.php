@@ -302,6 +302,7 @@ class Module extends Model {
             return $response;
         }
 
+        $api_response = json_decode($api_response);
 
         if(!isset($api_response) || !isset($api_response->status) || $api_response->status != 'success')
         {
@@ -312,8 +313,6 @@ class Module extends Model {
             return $response;
 
         }
-
-        $api_response = json_decode($api_response);
 
         if($api_response->status != 'success')
         {
