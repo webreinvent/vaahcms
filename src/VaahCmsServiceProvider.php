@@ -155,9 +155,7 @@ class VaahCmsServiceProvider extends ServiceProvider {
      *
      */
     private function registerAssets() {
-
-        $this->publishes([__DIR__.'/Resources/assets' => base_path('resources/assets/vendor/vaahcms')], 'assets');
-
+        $this->publishes([__DIR__.'/Resources/assets' => public_path('vendor/vaahcms')], 'assets');
     }
 
     /**

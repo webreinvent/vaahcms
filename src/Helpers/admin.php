@@ -11,17 +11,17 @@ function vh_get_admin_theme()
 //-----------------------------------------------------------------------------------
 function vh_get_admin_assets_url()
 {
-    return asset('/resources/assets/vendor/vaahcms/admin/');
+    return asset('/vendor/vaahcms/admin/');
 }
 //-----------------------------------------------------------------------------------
 function vh_get_admin_theme_url()
 {
-    return asset('/resources/assets/vendor/vaahcms/admin/'.config('vaahcms.admin_theme'));
+    return asset('/vendor/vaahcms/admin/'.config('vaahcms.admin_theme'));
 }
 //-----------------------------------------------------------------------------------
 function vh_get_admin_assets_json_file()
 {
-    $path = base_path("/resources/assets/vendor/vaahcms/admin/".config('vaahcms.admin_theme')."/assets.json");
+    $path = public_path("/vendor/vaahcms/admin/".config('vaahcms.admin_theme')."/assets.json");
 
     return $path;
 
