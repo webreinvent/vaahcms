@@ -634,16 +634,18 @@ class User extends Authenticatable
             return $response;
         }
 
-        $reg_by_phone = User::where('country_calling_code', $request->country_calling_code)
-            ->where('phone', $request->phone)
-            ->first();
-        if($reg_by_phone)
-        {
-            $response['status'] = 'registration-exist';
-            $response['data'] = $reg_by_phone;
-            return $response;
-        }
+        if($request->has('country_calling_code') && $request->has('phone')) {
+            $reg_by_phone = User::where('country_calling_code', $request->country_calling_code)
+                ->where('phone', $request->phone)
+                ->first();
 
+            if($reg_by_phone)
+            {
+                $response['status'] = 'registration-exist';
+                $response['data'] = $reg_by_phone;
+                return $response;
+            }
+        }
 
     }
     //-------------------------------------------------
