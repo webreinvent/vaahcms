@@ -4,7 +4,7 @@
   "keywords": ["laravel", "cms"],
   "homepage": "https://www.webreinvent.com",
   "license": "MIT",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "authors": [
     {
       "name": "WebReinvent",
@@ -15,7 +15,7 @@
     "php": "^7.2",
     "zanysoft/laravel-zip": "*",
     "doctrine/dbal": "*",
-    "atayahmet/laravel-nestable": "*",
+    "webreinvent/laravel-nestable": "*",
     "barryvdh/laravel-dompdf": "*",
     "berkayk/onesignal-laravel": "*",
     "bugsnag/bugsnag-laravel": "*",
