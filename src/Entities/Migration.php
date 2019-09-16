@@ -98,5 +98,70 @@ class Migration extends Model {
         return true;
     }
     //-------------------------------------------------
+    public static function runMigrations($path=null, $force=false)
+    {
+        //run migration
+        $command = 'migrate';
+
+        $params = [];
+        if($path)
+        {
+            $params['--path'] = $path;
+        }
+
+        if($force == true)
+        {
+            $params['--force'] = true;
+        }
+
+        \Artisan::call($command, $params);
+    }
+    //-------------------------------------------------
+    public static function runSeeds($namespace=null)
+    {
+        $command = 'db:seed';
+
+        $params = [];
+        if($namespace)
+        {
+            $params['--class'] = $namespace;
+        }
+        \Artisan::call($command, $params);
+    }
+    //-------------------------------------------------
+    public static function resetMigrations()
+    {
+        $command = 'migrate:fresh';
+        $params = [
+            '--force' => true
+        ];
+        \Artisan::call($command, $params);
+    }
+    //-------------------------------------------------
+    public static function publishMigrations($provider)
+    {
+        $command = 'vendor:publish';
+        $params = [
+            '--provider' => $provider,
+            '--tag' => "migrations",
+            '--force' => true
+        ];
+        \Artisan::call($command, $params);
+    }
+    //-------------------------------------------------
+    public static function publishSeeds($provider)
+    {
+        $command = 'vendor:publish';
+        $params = [
+            '--provider' => $provider,
+            '--tag' => "seeds",
+            '--force' => true
+        ];
+        \Artisan::call($command, $params);
+    }
+    //-------------------------------------------------
+    //-------------------------------------------------
+    //-------------------------------------------------
+    //-------------------------------------------------
 
 }

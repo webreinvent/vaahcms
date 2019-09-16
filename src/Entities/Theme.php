@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Str;
 use ZanySoft\Zip\Zip;
 
 class Theme extends Model {
@@ -39,7 +40,7 @@ class Theme extends Model {
 
     //-------------------------------------------------
     public function setSlugAttribute( $value ) {
-        $this->attributes['slug'] = str_slug( $value );
+        $this->attributes['slug'] = Str::slug( $value );
     }
     //-------------------------------------------------
     public function scopeActive( $query ) {
@@ -361,28 +362,14 @@ class Theme extends Model {
         $theme = Theme::slug($slug)->first();
 
         $path = config('vaahcms.themes_path')."/".$theme->name."/Database/Migrations/";
-        $path_des = base_path()."/database/migrations";
 
-        //\copy($path, $path_des);
-
-        \File::copyDirectory($path, $path_des);
-
-        //run migration
-        $command = 'migrate';
-        \Artisan::call($command);
+        Migration::runMigrations($path);
 
         Migration::syncThemeMigrations($theme->id);
 
-        $db_seeder_class = config('vaahcms.root_folder')."\Themes\\{$theme->name}\\Database\Seeds\DatabaseTableSeeder";
+        $seeds_namespace = config('vaahcms.root_folder')."\Themes\\{$theme->name}\\Database\Seeds\DatabaseTableSeeder";
 
-        if(class_exists($db_seeder_class)){
-            $command = 'db:seed';
-            $params = [
-                '--class' => $db_seeder_class
-            ];
-
-            \Artisan::call($command, $params);
-        }
+        Migration::runSeeds($seeds_namespace);
 
         $theme->is_active = 1;
         $theme->save();
