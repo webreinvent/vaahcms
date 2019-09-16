@@ -76,20 +76,10 @@ Then run following command
 composer dump-autoload
 ```
 
-### Step 6) Move `.htaccess` and `index.php` file from public folder to root folder.
-
-### Step 7) Update path of `index.php` file:
-```php
-...
-require __DIR__.'/vendor/autoload.php';
-...
-$app = require_once __DIR__.'/bootstrap/app.php';
-```
-
-### Step 7) Visit ```<root-url>/vaahcms/setup```:
+### Step 6) Visit ```<base-url>/public/vaahcms/setup```:
 
 
-### Step 8) If you get `Numeric value out of range` error then you can fix it by adding  following code in `App\Providers\AppServiceProvider.php`
+### Step 7) If you get `Numeric value out of range` error then you can fix it by adding  following code in `App\Providers\AppServiceProvider.php`
 ```php
 public function boot()
 {
