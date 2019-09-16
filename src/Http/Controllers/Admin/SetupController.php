@@ -130,46 +130,21 @@ class SetupController extends Controller
             \Artisan::call($command, $params);
 
             //reset migration
-            $command = 'migrate:fresh';
-            $params = [
-                '--force' => true
-            ];
-            \Artisan::call($command, $params);
+            Migration::resetMigrations();
 
             //publish all migrations of vaahcms package
-            $command = 'vendor:publish';
-            $params = [
-                '--provider' => "WebReinvent\VaahCms\VaahCmsServiceProvider",
-                '--tag' => "migrations",
-                '--force' => true
-            ];
-            \Artisan::call($command, $params);
-
+            $provider = "WebReinvent\VaahCms\VaahCmsServiceProvider";
+            Migration::publishMigrations($provider);
 
             //run migration
-            $command = 'migrate';
-            $params = [
-                '--force' => true
-            ];
-            \Artisan::call($command, $params);
-
-
+            Migration::runMigrations(null,true);
 
             //publish vaahcms seeds
-            $command = 'vendor:publish';
-            $params = [
-                '--provider' => "WebReinvent\VaahCms\VaahCmsServiceProvider",
-                '--tag' => "seeds",
-            ];
-            \Artisan::call($command, $params);
+            Migration::publishSeeds($provider);
 
             //run vaahcms seeds
-            $command = 'db:seed';
-            $params = [
-                '--class' => "VaahCmsTableSeeder"
-            ];
-            \Artisan::call($command, $params);
-
+            $namespace = "VaahCmsTableSeeder";
+            Migration::runSeeds($namespace);
 
             $response['status'] = 'success';
             $response['messages'][] = 'Migration were successful';
@@ -236,7 +211,7 @@ class SetupController extends Controller
     }
 
     //----------------------------------------------------------
-    
+
     //----------------------------------------------------------
     public function storeAdmin(Request $request)
     {

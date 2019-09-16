@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Str;
 
 class VaahCmsTableSeeder extends Seeder
 {
@@ -35,7 +36,7 @@ class VaahCmsTableSeeder extends Seeder
         {
             $list[] = [
                 'name' => $permission,
-                'slug' => str_slug($permission),
+                'slug' => Str::slug($permission),
                 'module' => 'vaahcms',
                 'section' => 'admin',
                 'details' => 'This will allow user to access admin control panel',
