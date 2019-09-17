@@ -1,31 +1,31 @@
 {
   "css": [
-    "resources/assets/vendor/vaahcms/admin/default/lib/fortawesome/fontawesome-free/css/all.min.css",
-    "resources/assets/vendor/vaahcms/admin/default/lib/ionicons/css/ionicons.min.css",
-    "resources/assets/vendor/vaahcms/admin/default/lib/alertify/css/alertify.min.css",
-    "resources/assets/vendor/vaahcms/admin/default/lib/alertify/css/themes/bootstrap.min.css",
-    "resources/assets/vendor/vaahcms/admin/default/lib/alertify/css/themes/alertify.css",
-    "resources/assets/vendor/vaahcms/admin/default/lib/nprogress/nprogress.css",
-    "resources/assets/vendor/vaahcms/admin/default/css/dashforge.fonts.css",
-    "resources/assets/vendor/vaahcms/admin/default/css/dashforge.css",
-    "resources/assets/vendor/vaahcms/admin/default/css/dashforge.helpers.css",
-    "resources/assets/vendor/vaahcms/admin/default/css/dashforge.profile.css",
-    "resources/assets/vendor/vaahcms/admin/default/css/dashforge.print.css",
-    "resources/assets/vendor/vaahcms/admin/default/css/dashforge.extended.css"
+    "vendor/vaahcms/admin/default/lib/fortawesome/fontawesome-free/css/all.min.css",
+    "vendor/vaahcms/admin/default/lib/ionicons/css/ionicons.min.css",
+    "vendor/vaahcms/admin/default/lib/alertify/css/alertify.min.css",
+    "vendor/vaahcms/admin/default/lib/alertify/css/themes/bootstrap.min.css",
+    "vendor/vaahcms/admin/default/lib/alertify/css/themes/alertify.css",
+    "vendor/vaahcms/admin/default/lib/nprogress/nprogress.css",
+    "vendor/vaahcms/admin/default/css/dashforge.fonts.css",
+    "vendor/vaahcms/admin/default/css/dashforge.css",
+    "vendor/vaahcms/admin/default/css/dashforge.helpers.css",
+    "vendor/vaahcms/admin/default/css/dashforge.profile.css",
+    "vendor/vaahcms/admin/default/css/dashforge.print.css",
+    "vendor/vaahcms/admin/default/css/dashforge.extended.css"
   ],
   "js": [
-    "resources/assets/vendor/vaahcms/admin/default/lib/jquery/jquery.min.js",
-    "resources/assets/vendor/vaahcms/admin/default/lib/bootstrap/js/bootstrap.bundle.min.js",
-    "resources/assets/vendor/vaahcms/admin/default/lib/moment/moment.min.js",
-    "resources/assets/vendor/vaahcms/admin/default/lib/alertify/alertify.min.js",
-    "resources/assets/vendor/vaahcms/admin/default/lib/nprogress/nprogress.js",
-    "resources/assets/vendor/vaahcms/admin/default/lib/feather-icons/feather.min.js",
-    "resources/assets/vendor/vaahcms/admin/default/lib/perfect-scrollbar/perfect-scrollbar.min.js",
-    "resources/assets/vendor/vaahcms/admin/default/lib/js-cookie/js.cookie.js",
+    "vendor/vaahcms/admin/default/lib/jquery/jquery.min.js",
+    "vendor/vaahcms/admin/default/lib/bootstrap/js/bootstrap.bundle.min.js",
+    "vendor/vaahcms/admin/default/lib/moment/moment.min.js",
+    "vendor/vaahcms/admin/default/lib/alertify/alertify.min.js",
+    "vendor/vaahcms/admin/default/lib/nprogress/nprogress.js",
+    "vendor/vaahcms/admin/default/lib/feather-icons/feather.min.js",
+    "vendor/vaahcms/admin/default/lib/perfect-scrollbar/perfect-scrollbar.min.js",
+    "vendor/vaahcms/admin/default/lib/js-cookie/js.cookie.js",
 
-    "resources/assets/vendor/vaahcms/admin/default/lib/js-cookie/js.cookie.js",
-    "resources/assets/vendor/vaahcms/admin/default/js/dashforge.js",
-    "resources/assets/vendor/vaahcms/admin/default/js/dashforge.aside.js"
+    "vendor/vaahcms/admin/default/lib/js-cookie/js.cookie.js",
+    "vendor/vaahcms/admin/default/js/dashforge.js",
+    "vendor/vaahcms/admin/default/js/dashforge.aside.js"
 
 
   ]
