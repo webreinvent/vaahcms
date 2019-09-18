@@ -44,7 +44,7 @@ function slug_to_str($slug)
 //-------------------------------------------------------------
 function generate_random_string($length=8)
 {
-    return str_random($length);
+    return \Str::random($length);
 }
 //-------------------------------------------------------------
 function generate_password()
