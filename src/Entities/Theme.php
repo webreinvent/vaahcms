@@ -361,7 +361,7 @@ class Theme extends Model {
     {
         $theme = Theme::slug($slug)->first();
 
-        $path = config('vaahcms.themes_path')."/".$theme->name."/Database/Migrations/";
+        $path = "/".config('vaahcms.root_folder')."/".$theme->name."/Database/Migrations/";
 
         Migration::runMigrations($path);
 

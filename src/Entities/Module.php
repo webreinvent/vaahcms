@@ -265,7 +265,7 @@ class Module extends Model {
 
         $module = Module::slug($slug)->first();
 
-        $path = config('vaahcms.root_folder_path')."/Modules/".$module->name."/Database/Migrations/";
+        $path = "/".config('vaahcms.root_folder')."/Modules/".$module->name."/Database/Migrations/";
 
         Migration::runMigrations($path);
 
