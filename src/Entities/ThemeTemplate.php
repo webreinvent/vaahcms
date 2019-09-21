@@ -1,6 +1,7 @@
 <?php namespace WebReinvent\VaahCms\Entities;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 use VaahCms\Modules\Cms\Entities\Content;
 use VaahCms\Modules\Cms\Entities\FormField;
 use VaahCms\Modules\Cms\Entities\FormGroup;
@@ -35,7 +36,7 @@ class ThemeTemplate extends Model {
 
     //-------------------------------------------------
     public function setSlugAttribute( $value ) {
-        $this->attributes['slug'] = str_slug( $value );
+        $this->attributes['slug'] = Str::slug( $value );
     }
     //-------------------------------------------------
     public function scopeSlug( $query, $slug ) {
@@ -80,8 +81,8 @@ class ThemeTemplate extends Model {
 
         $template = session('template');
 
-        $inputs['slug'] = str_slug($inputs['name']);
-        $inputs['group_slug'] = $theme->slug."-".$template->slug."-".str_slug($inputs['name']);
+        $inputs['slug'] = Str::slug($inputs['name']);
+        $inputs['group_slug'] = $theme->slug."-".$template->slug."-".Str::slug($inputs['name']);
 
         $group = FormGroup::firstOrCreate(['slug' => $inputs['group_slug']]);
         $group->fill($inputs);
@@ -140,7 +141,7 @@ class ThemeTemplate extends Model {
             {
                 $template = str_replace(".blade.php", "", $template);
 
-                $slug = str_slug($template);
+                $slug = Str::slug($template);
 
                 $template_exist = ThemeTemplate::theme(vh_get_theme_id())
                     ->slug($slug)

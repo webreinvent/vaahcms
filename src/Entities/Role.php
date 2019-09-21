@@ -3,6 +3,7 @@
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Str;
 use WebReinvent\VaahCms\Traits\CrudObservantTrait;
 
 class Role extends Model {
@@ -38,7 +39,7 @@ class Role extends Model {
     ];
     //-------------------------------------------------
     public function setSlugAttribute( $value ) {
-        $this->attributes['slug'] = str_slug( $value );
+        $this->attributes['slug'] = Str::slug( $value );
     }
     //-------------------------------------------------
     public function getNameAttribute($value) {
@@ -256,7 +257,7 @@ class Role extends Model {
     {
 
         //check if user already exist with the emails
-        $role = Role::where('slug', str_slug($request->name))->first();
+        $role = Role::where('slug', Str::slug($request->name))->first();
         if($role)
         {
             $response['status'] = 'failed';

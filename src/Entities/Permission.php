@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Str;
 
 class Permission extends Model {
 
@@ -44,7 +45,7 @@ class Permission extends Model {
     }
     //-------------------------------------------------
     public function setSlugAttribute( $value ) {
-        $this->attributes['slug'] = str_slug( $value );
+        $this->attributes['slug'] = Str::slug( $value );
     }
     //-------------------------------------------------
     public function scopeActive( $query ) {
@@ -254,7 +255,7 @@ class Permission extends Model {
     {
 
         //check if user already exist with the emails
-        $role = Role::where('slug', str_slug($request->name))->first();
+        $role = Role::where('slug', Str::slug($request->name))->first();
         if($role)
         {
             $response['status'] = 'failed';

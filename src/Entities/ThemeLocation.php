@@ -1,6 +1,7 @@
 <?php namespace WebReinvent\VaahCms\Entities;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 use VaahCms\Modules\Cms\Entities\FormField;
 use VaahCms\Modules\Cms\Entities\FormGroup;
 use VaahCms\Modules\Cms\Entities\Menu;
@@ -35,7 +36,7 @@ class ThemeLocation extends Model {
 
     //-------------------------------------------------
     public function setSlugAttribute( $value ) {
-        $this->attributes['slug'] = str_slug( $value );
+        $this->attributes['slug'] = Str::slug( $value );
     }
     //-------------------------------------------------
     public function scopeSlug( $query, $slug ) {
