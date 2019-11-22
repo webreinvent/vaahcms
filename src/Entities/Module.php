@@ -33,6 +33,7 @@ class Module extends Model {
         'version_number',
         'db_table_prefix',
         'is_active',
+        'is_migratable',
         'is_sample_data_available',
         'is_update_available',
         'update_checked_at',
