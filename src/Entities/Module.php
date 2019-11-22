@@ -265,9 +265,9 @@ class Module extends Model {
 
         $module = Module::slug($slug)->first();
 
-        $run_migration_on_activation = config('vaahcms.run_migration_on_activation');
+        $is_migratable = $module->is_migratable;
 
-        if(!isset($run_migration_on_activation) || (isset($run_migration_on_activation) && $run_migration_on_activation == true))
+        if(!isset($is_migratable) || (isset($is_migratable) && $is_migratable == true))
         {
             $path = "/".config('vaahcms.root_folder')."/Modules/".$module->name."/Database/Migrations/";
 
