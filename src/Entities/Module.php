@@ -265,17 +265,19 @@ class Module extends Model {
 
         $module = Module::slug($slug)->first();
 
-        $path = "/".config('vaahcms.root_folder')."/Modules/".$module->name."/Database/Migrations/";
+        $run_migration_on_activation = config('vaahcms.run_migration_on_activation');
 
-        Migration::runMigrations($path);
+        if(!isset($run_migration_on_activation) || (isset($run_migration_on_activation) && $run_migration_on_activation == true))
+        {
+            $path = "/".config('vaahcms.root_folder')."/Modules/".$module->name."/Database/Migrations/";
 
-        Migration::syncModuleMigrations($module->id);
+            Migration::runMigrations($path);
 
+            Migration::syncModuleMigrations($module->id);
 
-        $seeds_namespace = config('vaahcms.root_folder')."\Modules\\{$module->name}\\Database\Seeds\DatabaseTableSeeder";
-        Migration::runSeeds($seeds_namespace);
-
-
+            $seeds_namespace = config('vaahcms.root_folder')."\Modules\\{$module->name}\\Database\Seeds\DatabaseTableSeeder";
+            Migration::runSeeds($seeds_namespace);
+        }
 
         $module->is_active = 1;
         $module->save();
