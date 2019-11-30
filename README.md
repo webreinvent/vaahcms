@@ -27,7 +27,12 @@ Add following service provider in `config/app.php`
 /*
  * Package Service Providers...
  */
-WebReinvent\VaahCms\VaahCmsServiceProvider::class,
+ 'providers' => [
+         //...
+         WebReinvent\VaahCms\VaahCmsServiceProvider::class,
+         //...
+     ],
+
 ```
 
 ### Step 4) Add following in `config/auth.php`
