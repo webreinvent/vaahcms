@@ -9,19 +9,27 @@ function vh_get_admin_theme()
     return 'vaahcms::admin.'.config('vaahcms.admin_theme');
 }
 //-----------------------------------------------------------------------------------
+function vh_get_assets_base_url()
+{
+    return \URL::asset("/");
+}
+//-----------------------------------------------------------------------------------
 function vh_get_admin_assets_url()
 {
-    return asset('/vendor/vaahcms/admin/');
+    return \URL::asset('/vendor/vaahcms/admin/');
 }
 //-----------------------------------------------------------------------------------
 function vh_get_admin_theme_url()
 {
-    return asset('/vendor/vaahcms/admin/'.config('vaahcms.admin_theme'));
+
+    $path = ('/vendor/vaahcms/admin/'.config('vaahcms.admin_theme'));
+    $url = \URL::asset($path);
+    return $url;
 }
 //-----------------------------------------------------------------------------------
 function vh_get_admin_assets_json_file()
 {
-    $path = public_path("/vendor/vaahcms/admin/".config('vaahcms.admin_theme')."/assets.json");
+    $path = vh_get_admin_theme_url()."/assets.json";
 
     return $path;
 

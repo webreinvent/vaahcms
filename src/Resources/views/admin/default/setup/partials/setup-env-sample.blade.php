@@ -1,5 +1,5 @@
 APP_NAME={{$data->app_name}}
-APP_ENV=local
+APP_ENV={{$data->app_env}}
 APP_KEY=
 APP_DEBUG=true
 APP_URL={{$data->app_url}}

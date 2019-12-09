@@ -100,10 +100,20 @@ class SetupController extends Controller
             $inputs['db_password'] = "";
         }
 
+        $inputs['app_env'] = env('APP_ENV');
+
         $env_data = \View::make($this->theme.'.setup.partials.setup-env-sample')
             ->with('data', (object)$inputs)->render();
 
-        \File::put(base_path(".env"), $env_data);
+        if(app()->environment() == 'local')
+        {
+            $env_file = ".env";
+        } else
+        {
+            $env_file = ".env.".app()->environment();
+        }
+
+        \File::put(base_path($env_file), $env_data);
 
         $response['status'] = 'success';
         $response['messages'][] = 'Details Saved';
