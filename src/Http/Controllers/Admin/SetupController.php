@@ -126,7 +126,7 @@ class SetupController extends Controller
 
         $data = [];
 
-        $this->deleteExistingMigration();
+        //$this->deleteExistingMigration();
 
 
         try
