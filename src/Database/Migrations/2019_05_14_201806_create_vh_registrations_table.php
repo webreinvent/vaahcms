@@ -65,6 +65,6 @@ class CreateVhRegistrationsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('vh_users_temporary');
+        Schema::dropIfExists('vh_registrations');
     }
 }
