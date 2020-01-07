@@ -371,6 +371,11 @@ class Theme extends Model {
 
         Migration::runSeeds($seeds_namespace);
 
+        $provider = "VaahCms\Themes\\".$theme->name."\\Providers\\".$theme->name."ServiceProvider";
+
+        Migration::publishAssets($provider);
+
+
         $theme->is_active = 1;
         $theme->save();
 

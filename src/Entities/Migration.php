@@ -160,6 +160,17 @@ class Migration extends Model {
         \Artisan::call($command, $params);
     }
     //-------------------------------------------------
+    public static function publishAssets($provider)
+    {
+        $command = 'vendor:publish';
+        $params = [
+            '--provider' => $provider,
+            '--tag' => "assets",
+            '--force' => true
+        ];
+        \Artisan::call($command, $params);
+    }
+    //-------------------------------------------------
     //-------------------------------------------------
     //-------------------------------------------------
     //-------------------------------------------------

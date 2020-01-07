@@ -278,6 +278,12 @@ class Module extends Model {
 
             $seeds_namespace = config('vaahcms.root_folder')."\Modules\\{$module->name}\\Database\Seeds\DatabaseTableSeeder";
             Migration::runSeeds($seeds_namespace);
+
+            $provider = "VaahCms\Modules\\".$module->name."\\Providers\\".$module->name."ServiceProvider";
+
+
+            Migration::publishAssets($provider);
+
         }
 
         $module->is_active = 1;

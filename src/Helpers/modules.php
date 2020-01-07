@@ -72,7 +72,10 @@ function vh_get_module_setting_value($settings, $key)
 //-----------------------------------------------------------------------------------
 function vh_module_assets_url($module, $file_path)
 {
-    return url("/")."/VaahCms/Modules/".$module."/Resources/".$file_path."?v=".config('vaahcms.version');
+    $module_slug = \Str::slug($module);
+    $module_version = config($module_slug.'.version');
+    $url = url("modules/".$module_slug."/builds/app.js")."?v=".$module_version;
+    return $url;
 }
 //-----------------------------------------------------------------------------------
 //-----------------------------------------------------------------------------------
