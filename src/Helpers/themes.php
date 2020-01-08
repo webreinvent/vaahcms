@@ -108,10 +108,12 @@ function vh_get_theme_slug($theme_slug=null)
     return $theme->slug;
 }
 //-----------------------------------------------------------------------------------
-function vh_theme_assets_url($file_path, $theme_slug=null)
+function vh_theme_assets_url($name, $file_path)
 {
-    $theme = vh_get_theme_from_slug($theme_slug);
-    return url("/")."/VaahCms/Themes/".$theme->name."/Resources/assets/".$file_path."?v=".config($theme->slug.'.version');
+    $slug = \Str::slug($name);
+    $version = config($slug.'.version');
+    $url = url("vaahcms/themes/".$slug."/assets/".$file_path)."?v=".$version;
+    return $url;
 }
 //-----------------------------------------------------------------------------------
 function vh_get_page_templates_path($theme_slug=null)

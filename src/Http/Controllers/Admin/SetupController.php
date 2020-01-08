@@ -128,7 +128,6 @@ class SetupController extends Controller
 
         //$this->deleteExistingMigration();
 
-
         try
         {
 
@@ -189,8 +188,6 @@ class SetupController extends Controller
         }
         Module::syncAllModules();
         Module::activate($default_module_slug);
-
-
 
         if(isset($inputs[$default_module_slug]['sample_data']) && $inputs[$default_module_slug]['sample_data'] == true)
         {

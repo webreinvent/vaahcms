@@ -371,11 +371,35 @@ class Theme extends Model {
 
         Migration::runSeeds($seeds_namespace);
 
+        $provider = "VaahCms\Themes\\".$theme->name."\\Providers\\".$theme->name."ServiceProvider";
+
+        //copy assets to public folder
+        Theme::copyAssets($theme);
+
         $theme->is_active = 1;
         $theme->save();
 
     }
     //-------------------------------------------------
+    public static function copyAssets($theme)
+    {
+        $path = config('vaahcms.themes_path').'/'.$theme->name;
+        $source = $path."/Resources/assets";
+
+        if(!\File::exists($source)) {
+            return false;
+        }
+
+        $dec = public_path('vaahcms/themes/'.$theme->slug.'/assets');
+
+        if(!\File::exists($dec)) {
+            \File::makeDirectory($dec, 0755, true, true);
+        }
+
+        \File::copyDirectory($source, $dec);
+
+        return true;
+    }
     //-------------------------------------------------
     //-------------------------------------------------
     public static function importSampleData($slug)

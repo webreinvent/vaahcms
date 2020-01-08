@@ -34,6 +34,7 @@ class Module extends Model {
         'db_table_prefix',
         'is_active',
         'is_migratable',
+        'is_assets_published',
         'is_sample_data_available',
         'is_update_available',
         'update_checked_at',
@@ -261,6 +262,8 @@ class Module extends Model {
         return $response;
     }
     //-------------------------------------------------
+
+    //-------------------------------------------------
     public static function activate($slug)
     {
 
@@ -270,6 +273,7 @@ class Module extends Model {
 
         if(!isset($is_migratable) || (isset($is_migratable) && $is_migratable == true))
         {
+            $module_path = config('vaahcms.modules_path').$module->name;
             $path = "/".config('vaahcms.root_folder')."/Modules/".$module->name."/Database/Migrations/";
 
             Migration::runMigrations($path);
@@ -278,11 +282,35 @@ class Module extends Model {
 
             $seeds_namespace = config('vaahcms.root_folder')."\Modules\\{$module->name}\\Database\Seeds\DatabaseTableSeeder";
             Migration::runSeeds($seeds_namespace);
+
+            //copy assets to public folder
+            Module::copyAssets($module);
+
         }
 
         $module->is_active = 1;
+        $module->is_assets_published = 1;
         $module->save();
 
+    }
+    //-------------------------------------------------
+    public static function copyAssets($module)
+    {
+        $module_path = config('vaahcms.modules_path').'/'.$module->name;
+        $source = $module_path."/Resources/assets";
+        $dec = public_path('vaahcms/modules/'.$module->slug.'/assets');
+
+        if(!\File::exists($source)) {
+            return false;
+        }
+
+        if(!\File::exists($dec)) {
+            \File::makeDirectory($dec, 0755, true, true);
+        }
+
+        \File::copyDirectory($source, $dec);
+
+        return true;
     }
     //-------------------------------------------------
     public static function download($slug)

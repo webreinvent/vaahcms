@@ -160,6 +160,34 @@ class Migration extends Model {
         \Artisan::call($command, $params);
     }
     //-------------------------------------------------
+    public static function publishAssets($provider)
+    {
+
+        try{
+
+            $command = 'vendor:publish';
+            $params = [
+                '--provider' => $provider,
+                '--tag' => "assets",
+                '--force' => true
+            ];
+
+            echo "<pre>";
+            print_r($params);
+            echo "</pre>";
+
+            \Artisan::call($command, $params);
+
+        }catch(\Exception $e)
+        {
+            $response['status'] = 'failed';
+            $response['messages'][] = $e->getMessage();
+            return $response;
+        }
+
+
+    }
+    //-------------------------------------------------
     //-------------------------------------------------
     //-------------------------------------------------
     //-------------------------------------------------
