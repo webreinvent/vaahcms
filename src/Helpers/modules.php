@@ -70,13 +70,18 @@ function vh_get_module_setting_value($settings, $key)
     return $settings[$key];
 }
 //-----------------------------------------------------------------------------------
-function vh_module_assets_url($module, $file_path)
+function vh_module_assets_url($name, $file_path)
 {
-    $module_slug = \Str::slug($module);
-    $module_version = config($module_slug.'.version');
-    $url = url("modules/".$module_slug."/builds/app.js")."?v=".$module_version;
+    $slug = \Str::slug($name);
+    $version = config($slug.'.version');
+    $url = url("vaahcms/modules/".$slug."/assets/".$file_path)."?v=".$version;
     return $url;
 }
 //-----------------------------------------------------------------------------------
+function vh_module_service_provider_name($module_name)
+{
+    $provider = "VaahCms\Modules\\".$module_name."\\Providers\\".$module_name."ServiceProvider";
+    return $provider;
+}
 //-----------------------------------------------------------------------------------
 //-----------------------------------------------------------------------------------

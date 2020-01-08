@@ -30,6 +30,7 @@ class CreateVhModulesTable extends Migration
             $table->boolean('is_migratable')->nullable();
             $table->boolean('is_sample_data_available')->nullable();
             $table->boolean('is_update_available')->nullable();
+            $table->boolean('is_assets_published')->nullable();
             $table->dateTime('update_checked_at')->nullable();
 
             $table->boolean('is_active')->nullable();
