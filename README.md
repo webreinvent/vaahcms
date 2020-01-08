@@ -245,6 +245,7 @@ If it does works then:
 ## Tools
 
 - https://www.mkdocs.org - for docs 
+- https://saojs.org - For creating standalone installer
 
 ## Tutorials
 ### Update Packagist with GitHub Webhooks
