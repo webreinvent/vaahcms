@@ -14,7 +14,7 @@
 Route::group(
     [
         'prefix'     => '/',
-        'middleware' => 'set.theme.details',
+        'middleware' => ['web', 'set.theme.details'],
         'namespace'  => 'WebReinvent\VaahCms\Http\Controllers'
     ],
     function () {
@@ -27,7 +27,7 @@ Route::group(
         Route::group(
             [
                 'prefix'     => '/page/{slug?}',
-                'middleware' => 'set.template.details',
+                'middleware' => ['web', 'set.template.details'],
             ],
             function () {
                 //------------------------------------------------
