@@ -88,6 +88,7 @@
             let obj = {
                 new_item: {
                     name: "",
+                    slug: "",
                     title: "",
                     country: "",
                     status: "",
@@ -110,9 +111,8 @@
                 handler: function () {
 
                     //TODO:: watch uninitialized params
-
                     this.emitItem();
-                    this.$vaahcms.console("test");
+                    //this.$vaahcms.console("test");
                 },
                 deep: true
             }
@@ -129,12 +129,13 @@
                     {
                         self.new_item[item.name] = item.value;
                     }
+
                 });
             },
             //---------------------------------------------------------------------
             emitItem: function () {
                 this.$root.$emit('eUpdateItem', this.new_item);
-                this.$vaahcms.console('emit event');
+                //this.$vaahcms.console('emit event', this.new_item);
             },
             //---------------------------------------------------------------------
 

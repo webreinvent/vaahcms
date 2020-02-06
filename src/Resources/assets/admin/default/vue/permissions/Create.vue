@@ -25,7 +25,7 @@
                     <table class="table table-striped table-sm table-condensed table-form table-form-dashed">
                         <tbody>
 
-                        <t-form :columns="assets.columns" @emittedItem="updateNewItem" ></t-form>
+                        <t-form :columns="assets.columns" @eUpdateItem="updateNewItem" ></t-form>
 
                         </tbody>
                     </table>

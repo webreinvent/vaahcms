@@ -4,7 +4,7 @@
   "keywords": ["laravel", "cms"],
   "homepage": "https://www.webreinvent.com",
   "license": "MIT",
-  "version": "0.3.2",
+  "version": "0.3.5",
   "authors": [
     {
       "name": "WebReinvent",
@@ -20,7 +20,7 @@
     "berkayk/onesignal-laravel": "*",
     "bugsnag/bugsnag-laravel": "*",
     "composer/composer": "^1.8",
-    "creativeorange/gravatar": "*",
+    "creativeorange/gravatar": "^1.0",
     "intervention/image": "*",
     "maatwebsite/excel": "*",
     "ixudra/curl": "*",
