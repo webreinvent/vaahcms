@@ -20,7 +20,7 @@
     "berkayk/onesignal-laravel": "*",
     "bugsnag/bugsnag-laravel": "*",
     "composer/composer": "^1.8",
-    "creativeorange/gravatar": "*",
+    "creativeorange/gravatar": "^1.0",
     "intervention/image": "*",
     "maatwebsite/excel": "*",
     "ixudra/curl": "*",

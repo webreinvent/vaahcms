@@ -97,6 +97,7 @@ class VaahCmsServiceProvider extends ServiceProvider {
         $this->app->register(ModulesServiceProvider::class);
         $this->app->register(ThemesServiceProvider::class);
         $this->app->register(\ZanySoft\Zip\ZipServiceProvider::class);
+        $this->app->register(\Creativeorange\Gravatar\GravatarServiceProvider::class);
 
     }
 
@@ -109,6 +110,8 @@ class VaahCmsServiceProvider extends ServiceProvider {
         $loader = \Illuminate\Foundation\AliasLoader::getInstance();
         $loader->alias('Zip', \ZanySoft\Zip\ZipFacade::class);
         $loader->alias('Carbon', \Carbon\Carbon::class);
+        $loader->alias('Gravatar', 'Creativeorange\Gravatar\Facades\Gravatar');
+
 
     }
 
