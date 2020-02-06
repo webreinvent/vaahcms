@@ -30,6 +30,9 @@ import TForm from './../reusable/TableFormGenerator';
             //---------------------------------------------------------------------
             this.getAssets();
             //---------------------------------------------------------------------
+            this.$root.$on('eUpdateItem', (item) => {
+                this.updateItem(item);
+            });
             //---------------------------------------------------------------------
             //---------------------------------------------------------------------
             //---------------------------------------------------------------------
@@ -56,9 +59,9 @@ import TForm from './../reusable/TableFormGenerator';
                 this.$vaahcms.stopNprogress();
             },
             //---------------------------------------------------------------------
-            updateNewItem: function (item) {
+            updateItem: function (item) {
                 this.new_item = item;
-                this.$vaahcms.console(this.new_item, 'this.new_item-->updated');
+                console.log('--->', this.new_item);
             },
             //---------------------------------------------------------------------
             store: function () {

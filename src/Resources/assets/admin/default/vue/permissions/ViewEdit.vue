@@ -67,7 +67,7 @@
                         </table>
 
                         <table v-else class="table table-striped table-sm table-condensed  table-form table-form-dashed">
-                            <t-form v-if="columns"  :columns="columns" @emittedItem="updateItem" ></t-form>
+                            <t-form v-if="columns"  :columns="columns" @eUpdateItem="updateItem" ></t-form>
                         </table>
 
                     </perfect-scrollbar>
