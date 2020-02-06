@@ -3,7 +3,7 @@
         {{--<a id="navbarSearch" href="" class="search-link mg-l-10"><i data-feather="search"></i></a>--}}
 
         <!--messages-->
-        <div class="dropdown dropdown-message">
+        {{--<div class="dropdown dropdown-message">
             <a href="" class="dropdown-link new-indicator" data-toggle="dropdown" data-target="#mesages">
                 <i data-feather="message-square"></i>
                 <span>5</span>
@@ -23,11 +23,11 @@
 
                 <div class="dropdown-footer"><a href="">View all Messages</a></div>
             </div><!-- dropdown-menu -->
-        </div>
+        </div>--}}
         <!--/messages-->
 
         <!--notifications-->
-        <div class="dropdown dropdown-notification">
+        {{--<div class="dropdown dropdown-notification">
             <a href="" class="dropdown-link new-indicator" data-toggle="dropdown" data-target="#notifications">
                 <i data-feather="bell"></i>
                 <span>2</span>
@@ -45,7 +45,7 @@
                 </a>
                 <div class="dropdown-footer"><a href="">View all Notifications</a></div>
             </div><!-- dropdown-menu -->
-        </div>
+        </div>--}}
         <!--/notifications-->
 
         @include("vaahcms::admin.default.extend.top-right-menu")

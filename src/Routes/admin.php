@@ -61,6 +61,8 @@ Route::group(
         Route::post( '/post', 'PublicController@postLogin' )
             ->name( 'vh.admin.login.post' );
         //------------------------------------------------
+        Route::get( '/logout', 'PublicController@logout' )
+            ->name( 'vh.admin.logout' );
         //------------------------------------------------
         //------------------------------------------------
     });
