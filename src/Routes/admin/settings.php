@@ -19,14 +19,16 @@ Route::group(
 
 Route::group(
     [
-        'prefix'     => 'admin/settings/localization',
+        'prefix'     => 'admin/vaah/settings/localization',
         'middleware' => ['web','has.admin.access'],
         'namespace'  => 'WebReinvent\VaahCms\Http\Controllers\Admin\Settings'
     ],
     function () {
         //------------------------------------------------
-        Route::get( '/', 'LocalizationController@index' )
-            ->name( 'vh.admin.settings' );
+        Route::any( '/assets', 'LocalizationController@getAssets' )
+            ->name( 'vh.admin.settings.localization.assets' );
         //------------------------------------------------
+        Route::any( '/list', 'LocalizationController@getList' )
+            ->name( 'vh.admin.settings.localization.list' );
         //------------------------------------------------
     });

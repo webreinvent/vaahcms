@@ -42,7 +42,8 @@ export default {
                 sort_type: 'desc',
                 status: 'all',
                 recount: false,
-            }
+            },
+            icon_copy: "<i class='fas fa-copy'></i>"
         };
 
         return obj;

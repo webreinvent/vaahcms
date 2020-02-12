@@ -176,11 +176,10 @@
                             <td>
                                 <vh-copy class="text-copyable"
                                          :data="item.slug"
-                                         :text="item.slug"
-                                         :iconClass="'fas fa-copy'"
+                                         :label="icon_copy+' '+item.slug"
                                          @copied="copiedData"
-                                ></vh-copy>
-
+                                >
+                                </vh-copy>
                             </td>
                             <td>
 

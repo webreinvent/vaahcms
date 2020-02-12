@@ -1,7 +1,7 @@
-<script src="./LocalizationJs.js"></script>
+<script src="./ListJs.js"></script>
 <template>
 
-    <div class="row">
+    <div class="row" v-if="assets && active_language && active_category">
 
         <div class="col-sm">
 
@@ -30,7 +30,7 @@
                     </div>
 
                 </div>
-                <div class="card-body pd-b-0 " v-if="assets">
+                <div class="card-body pd-b-0 " >
 
                     <div class="form-row">
                         <div class="form-group mg-b-0 col-md-4">
@@ -117,46 +117,44 @@
                         <div class="col-12">
 
                             <div class="media align-items-stretch">
+                                <!--tabs-->
                                 <ul class="nav nav-tabs flex-column"  role="tablist">
-                                    <li class="nav-item">
-                                        <a class="nav-link active"
-                                           data-toggle="tab" href="#tab-lang-en"
-                                           role="tab"
-                                           aria-selected="true">en</a>
-                                    </li>
 
-                                    <li class="nav-item">
-                                        <a class="nav-link"
-                                           data-toggle="tab" href="#tab-lang-es"
-                                           role="tab"
-                                           aria-selected="true">es</a>
+                                    <li class="nav-item" v-for="language in assets.languages.list">
+                                        <a class="nav-link "
+                                           href="#"
+                                           @click="setActiveLanguage($event, language)"
+                                           :class="{'active': language.id == active_language.id}"
+                                           aria-selected="true">{{language.locale_code_iso_639}}</a>
                                     </li>
 
                                 </ul>
+                                <!--/tabs-->
                                 <div class="media-body">
                                     <div class="tab-content bd bd-gray-300 bd-l-0 pd-t-8  pd-r-20  pd-b-20 pd-l-20" >
                                         <div class="tab-pane fade show active" id="tab-lang-en"
                                              role="tabpanel" aria-labelledby="home-tab4">
 
-
-
+                                            <!--body-header-->
                                             <div class="d-flex mg-b-20">
 
-                                                <div class="flex-grow-1 pd-t-5"><h6>English</h6></div>
+                                                <div class="flex-grow-1 pd-t-5">
+                                                    <h6>
+                                                        {{active_language.name}}
+                                                        ({{active_language.locale_code_iso_639}})
+                                                    </h6>
+                                                </div>
                                                 <div class="">
                                                     <div class="input-group input-group-sm" style="max-width: 350px;">
-                                                        <select class="custom-select" v-model="bulk_action" style="max-width: 150px" >
+                                                        <select class="custom-select"
+                                                                v-model="active_category.id"
+                                                                style="max-width: 150px" >
                                                             <option value="">Select Category</option>
-                                                            <option value="bulk_change_status">Change Status</option>
-                                                            <option value="bulk_delete">Delete</option>
-                                                            <option value="bulk_restore">Restore</option>
-                                                        </select>
-                                                        <select class="custom-select" width="max-width: 150px"
-                                                                v-if="bulk_action && bulk_action == 'bulk_change_status'"
-                                                                v-model="bulk_action_data">
-                                                            <option value="">Select Status</option>
-                                                            <option value="activation_pending">Activation Pending</option>
-                                                            <option value="registered">Registered</option>
+                                                            <option v-for="category in assets.categories.list"
+                                                                    :value="category.id"
+                                                            >
+                                                                {{category.name}}
+                                                            </option>
                                                         </select>
                                                         <div class="input-group-append">
                                                             <button class="btn btn-outline-secondary" @click="bulkAction" type="button">Show</button>
@@ -165,49 +163,57 @@
                                                 </div>
 
                                             </div>
+                                            <!--/body-header-->
 
-
-
-
-
+                                            <!--list-->
                                             <table class="table table-striped table-form-merge">
 
-                                                <tr>
+                                                <tr v-if="list" v-for="item in list">
                                                     <td width="20">
-                                                        <button  class="btn btn-xs" style="padding: 0px;">
-                                                            <i class="fas fa-copy"> </i>
-                                                        </button>
+
+                                                        <vh-copy :data="dataToCopy(item)"
+                                                                 :label="icon_copy"
+                                                                 @copied="copiedData"
+                                                        >
+                                                        </vh-copy>
+
+
                                                     </td>
                                                     <td width="150">
 
-                                                        <input type="text" class="form-control-merge" placeholder="Type Slug" value="" />
+                                                        <input type="text" class="form-control-merge"
+                                                               @blur="setItemSlug(item)"
+                                                               placeholder="Type Slug" v-model="item.slug" />
 
                                                     </td>
                                                     <td >
-                                                        <input type="text" class="form-control-merge" placeholder="Type Value" value="" />
+                                                        <input type="text" class="form-control-merge"
+                                                               placeholder="Type Value" v-model="item.content" />
+                                                    </td>
+                                                    <td width="20">
+                                                        <button  class="btn btn-xs" @click="deleteString(item)" style="padding: 0px;">
+                                                            <i class="fas fa-trash"> </i>
+                                                        </button>
                                                     </td>
                                                 </tr>
 
+                                                <tfoot>
 
                                                 <tr>
-                                                    <td width="20">
-                                                        <a href="#" class="btn btn-xs" style="padding: 0px;">
-                                                            <i class="fas fa-copy"> </i>
-                                                        </a>
+                                                    <td colspan="4">
+                                                        <div class="btn-group btn-group-sm">
+                                                        <button class="btn btn-light btn-sm" @click="addString()">Add String</button>
+                                                        <button class="btn btn-primary btn-sm" @click="store()">Save</button>
+                                                        </div>
                                                     </td>
-                                                    <td>slug</td>
-                                                    <td>Text</td>
                                                 </tr>
 
+                                                </tfoot>
+
                                             </table>
+                                            <!--/list-->
 
                                         </div>
-                                        <div class="tab-pane fade" id="tab-lang-es"
-                                             role="tabpanel" aria-labelledby="profile-tab4">
-                                            <h6>ES</h6>
-                                            <p class="mg-b-0">Fugiat veniam incididunt anim aliqua enim pariatur veniam sunt est aute sit dolor anim. Velit non irure adipisicing aliqua ullamco irure incididunt irure non esse consectetur nostrud minim non minim occaecat.</p>
-                                        </div>
-
                                     </div>
                                 </div><!-- media-body -->
                             </div>
@@ -216,13 +222,7 @@
 
                     </div>
 
-                    <table class="table table-striped">
 
-                    </table>
-
-                </div>
-                <div class="card-footer" v-if="list && list.last_page > 1">
-                    <pagination  :limit="6" :data="list" @pagination-change-page="getList"></pagination>
                 </div>
 
             </div>

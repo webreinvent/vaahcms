@@ -19,7 +19,8 @@ class CreateVhLangCategoriesTable extends Migration
 
             $table->string('name')->nullable();
             $table->string('slug')->nullable();
-            $table->integer('count_string')->nullable();
+            $table->integer('count_strings')->nullable()->default(0);
+            $table->integer('count_strings_filled')->nullable()->default(0);
 
             $table->integer('created_by')->nullable();
             $table->integer('updated_by')->nullable();

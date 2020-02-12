@@ -194,7 +194,7 @@ routes.push(routes_themes);
 //----------settings
 import SettingsLayout from "./settings/SettingsLayout";
 import SettingsIndex from "./settings/Index";
-import SettingsLocalization from "./settings/Localization";
+import LocalizationList from "./settings/localization/List";
 
 const routes_settings =     {
     path: '/settings',
@@ -208,7 +208,7 @@ const routes_settings =     {
         },
         {
             path: 'localization',
-            component: SettingsLocalization,
+            component: LocalizationList,
             props: true
         },
     ]
