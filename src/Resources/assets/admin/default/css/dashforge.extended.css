@@ -393,3 +393,17 @@ body{
 .btn.btn-icon i{
 
 }
+
+.table-form-merge .form-control-merge{
+
+    border: none;
+    width: 95%;
+
+}
+
+.table-form-merge .form-control-merge:focus{
+
+    border: none;
+    outline: none;
+
+}

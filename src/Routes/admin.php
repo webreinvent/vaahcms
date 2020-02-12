@@ -11,6 +11,7 @@
 |
 */
 
+include('admin/settings.php');
 
 Route::group(
     [
@@ -89,20 +90,7 @@ Route::group(
     });
 
 
-Route::group(
-    [
-        'prefix'     => 'admin/settings',
-        'middleware' => ['web','has.admin.access'],
-        'namespace'  => 'WebReinvent\VaahCms\Http\Controllers\Admin'
-    ],
-    function () {
-        //------------------------------------------------
-        Route::get( '/vaahcms', 'SettingsController@index' )
-            ->name( 'vh.admin.vaahcms.settings' );
-        //------------------------------------------------
-        //------------------------------------------------
-        //------------------------------------------------
-    });
+
 
 
 Route::group(
