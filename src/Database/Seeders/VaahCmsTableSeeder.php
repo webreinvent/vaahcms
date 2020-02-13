@@ -16,6 +16,8 @@ class VaahCmsTableSeeder extends Seeder
 
         $this->seedPermissions();
         $this->seedRoles();
+        $this->seedLanguages();
+        $this->seedLanguageCategories();
 
     }
 
@@ -95,6 +97,71 @@ class VaahCmsTableSeeder extends Seeder
 
     }
 
+
+    /**
+     * Run the database seeds.
+     *
+     * @return void
+     */
+    function seedLanguages()
+    {
+
+        $list = file_get_contents(__DIR__.'/json/languages.json');
+        $list = json_decode($list, true);
+
+
+        foreach($list as $item)
+        {
+            $exist = \DB::table( 'vh_lang_languages' )
+                ->where( 'locale_code_iso_639', $item['locale_code_iso_639'] )
+                ->first();
+
+            if (!$exist){
+
+                if($item['locale_code_iso_639'] == 'en')
+                {
+                    $item['default'] = 1;
+                }
+
+                \DB::table( 'vh_lang_languages' )->insert( $item );
+            }
+        }
+
+    }
+
+    /**
+     * Run the database seeds.
+     *
+     * @return void
+     */
+    function seedLanguageCategories()
+    {
+        $row_list = [
+            'General',
+        ];
+
+        $list = [];
+        foreach ($row_list as $row_item)
+        {
+            $list[] = [
+                'name' => $row_item,
+                'slug' => Str::slug($row_item),
+            ];
+        }
+
+
+        foreach($list as $item)
+        {
+            $exist = \DB::table( 'vh_lang_categories' )
+                ->where( 'slug', $item['slug'] )
+                ->first();
+
+            if (!$exist){
+                \DB::table( 'vh_lang_categories' )->insert( $item );
+            }
+        }
+
+    }
 
 
 }

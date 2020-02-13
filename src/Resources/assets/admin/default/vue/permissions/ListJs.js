@@ -20,7 +20,8 @@ export default {
         't-loader': TableLoader,
         'pagination': pagination,
         'ToggleButton': ToggleButton,
-        'vh-copy': VaahVueClickToCopy
+        'vh-copy': VaahVueClickToCopy,
+
     },
     data()
     {
@@ -42,7 +43,8 @@ export default {
                 sort_type: 'desc',
                 status: 'all',
                 recount: false,
-            }
+            },
+            icon_copy: "<i class='fas fa-copy'></i>"
         };
 
         return obj;

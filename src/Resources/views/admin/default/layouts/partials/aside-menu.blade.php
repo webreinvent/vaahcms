@@ -28,5 +28,16 @@
 </li>
 
 
+<li class="nav-item with-sub">
+    <a href="{{route('vh.admin.vaah')}}#/settings" class="nav-link">
+        <i data-feather="settings"></i> <span>Settings</span>
+    </a>
+
+    <ul>
+        <li><a href="{{route('vh.admin.vaah')}}#/settings/localization">Localization</a></li>
+    </ul>
+
+</li>
+
 
 @include("vaahcms::admin.default.extend.aside-menu")

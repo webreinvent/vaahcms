@@ -191,4 +191,30 @@ routes.push(routes_themes);
 //----------/themes
 
 
+//----------settings
+import SettingsLayout from "./settings/SettingsLayout";
+import SettingsIndex from "./settings/Index";
+import LocalizationList from "./settings/localization/List";
+
+const routes_settings =     {
+    path: '/settings',
+    component: SettingsLayout,
+    props: true,
+    children: [
+        {
+            path: '/',
+            component: SettingsIndex,
+            props: true
+        },
+        {
+            path: 'localization',
+            component: LocalizationList,
+            props: true
+        },
+    ]
+};
+routes.push(routes_settings);
+//----------/settings
+
+
 export default routes;
