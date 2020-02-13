@@ -31,4 +31,17 @@ Route::group(
         Route::any( '/list', 'LocalizationController@getList' )
             ->name( 'vh.admin.settings.localization.list' );
         //------------------------------------------------
+        Route::any( '/store', 'LocalizationController@store' )
+            ->name( 'vh.admin.settings.localization.store' );
+        //------------------------------------------------
+        Route::any( '/store/language', 'LocalizationController@storeLanguage' )
+            ->name( 'vh.admin.settings.localization.store.language' );
+        //------------------------------------------------
+        Route::any( '/store/category', 'LocalizationController@storeCategory' )
+            ->name( 'vh.admin.settings.localization.store.category' );
+        //------------------------------------------------
+        Route::any( '/sync', 'LocalizationController@sync' )
+            ->name( 'vh.admin.settings.localization.sync' );
+        //------------------------------------------------
+        //------------------------------------------------
     });

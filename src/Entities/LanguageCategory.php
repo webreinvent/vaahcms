@@ -146,6 +146,56 @@ class LanguageCategory extends Model {
         }
     }
     //-------------------------------------------------
+    public static function store($request)
+    {
+        $rules = array(
+            'name' => 'required',
+        );
+
+        $validator = \Validator::make( $request->all(), $rules);
+        if ( $validator->fails() ) {
+
+            $errors             = errorsToArray($validator->errors());
+            $response['status'] = 'failed';
+            $response['errors'] = $errors;
+            return $response;
+        }
+
+        $data = [];
+
+        $inputs = $request->all();
+
+        if($request->has('id'))
+        {
+            $item = static::find($request->id);
+        } else
+        {
+
+            $item = static::where('slug', Str::slug( $inputs['name'] ))->first();
+
+            if($item)
+            {
+                $response['status'] = 'failed';
+                $response['errors'][] = 'Record already exist';
+                return $response;
+            }
+
+            $item = new static();
+        }
+
+        $inputs['slug'] = Str::slug( $inputs['name'] );
+
+        $item->fill($inputs);
+        $item->save();
+
+        $response['status'] = 'success';
+        $response['messages'][] = 'Saved';
+        $response['data'] = $item;
+
+        return $response;
+
+
+    }
     //-------------------------------------------------
     //-------------------------------------------------
 

@@ -27,7 +27,17 @@ export default {
                 status: 'all',
                 recount: false
             },
+            new_language:{
+                name: null,
+                locale_code_iso_639: null,
+            },
+            new_category:{
+                name: null,
+            },
+            show_add_language: false,
+            show_add_category: false,
             active_language: null,
+            active_category_id: null,
             active_category: null,
             list: null,
             icon_copy: "<i class='fas fa-copy'></i>"
@@ -38,6 +48,18 @@ export default {
     },
     watch: {
 
+        active_category_id: function (newVal, oldVal) {
+
+            if(newVal && this.assets && this.assets.categories)
+            {
+                let cat = this.$vaahcms.findInArrayByKey(this.assets.categories.list, 'id', newVal);
+                this.active_category = cat;
+                console.log('--->this.active_category', this.active_category);
+                this.getList();
+            }
+
+
+        }
 
 
     },
@@ -47,6 +69,7 @@ export default {
         //---------------------------------------------------------------------
         this.getAssets();
         //---------------------------------------------------------------------
+
         //---------------------------------------------------------------------
 
     },
@@ -61,8 +84,10 @@ export default {
         getAssetsAfter: function (data) {
             this.assets = data;
             this.active_language = data.languages.default;
+            this.active_category_id = data.categories.default.id;
             this.active_category = data.categories.default;
             this.getList();
+            this.$vaahcms.stopNprogress();
         },
         //---------------------------------------------------------------------
         getList: function () {
@@ -78,9 +103,86 @@ export default {
             this.$vaahcms.stopNprogress();
         },
         //---------------------------------------------------------------------
+        sync: function () {
+
+            let url = this.ajax_url+'/sync';
+            this.filters.vh_lang_language_id = this.active_language.id;
+            this.filters.vh_lang_category_id = this.active_category.id;
+            let params = this.filters;
+            this.$vaahcms.ajax(url, params, this.syncAfter);
+
+        },
+        //---------------------------------------------------------------------
+        syncAfter: function (data) {
+            this.list = data.list;
+            this.$vaahcms.stopNprogress();
+        },
+        //---------------------------------------------------------------------
+        checkDuplicatedSlugs: function()
+        {
+
+            let exist = null;
+            let count = null;
+            let text = "";
+            let self = this;
+
+
+
+
+            if(this.list)
+            {
+
+                this.list.forEach(function (item) {
+
+                    count = 0;
+
+                    self.list.forEach(function (match) {
+
+                        if(item.slug == match.slug)
+                        {
+                            count++;
+                        }
+
+                    });
+
+                    console.log('--->', count);
+
+                    if(count > 1)
+                    {
+                        exist = true;
+                        text += item.slug+", ";
+                        return false;
+                    }
+
+                })
+            }
+
+            if(exist)
+            {
+                alertify.error(text+" are duplicate slugs");
+                return false;
+            } else
+            {
+                return true;
+            }
+
+        },
+        //---------------------------------------------------------------------
         store: function () {
+
+
+            let check = this.checkDuplicatedSlugs();
+
+            if(!check)
+            {
+                return false;
+            }
+
             let url = this.ajax_url+'/store';
-            let params = this.list;
+            let params = {
+                list: this.list,
+                vh_lang_language_id: this.active_language.id,
+            };
             this.$vaahcms.ajax(url, params, this.storeAfter);
         },
         //---------------------------------------------------------------------
@@ -88,9 +190,78 @@ export default {
             this.$vaahcms.stopNprogress();
         },
         //---------------------------------------------------------------------
+        storeLanguage: function () {
+
+            let url = this.ajax_url+'/store/language';
+            let params = this.new_language;
+            this.$vaahcms.ajax(url, params, this.storeLanguageAfter);
+        },
+        //---------------------------------------------------------------------
+        storeLanguageAfter: function (data) {
+            this.getAssets();
+            this.new_language = {
+                name: null,
+                locale_code_iso_639: null,
+            };
+        },
+        //---------------------------------------------------------------------
+        storeCategory: function () {
+
+            let url = this.ajax_url+'/store/category';
+            let params = this.new_category;
+            this.$vaahcms.ajax(url, params, this.storeCategoryAfter);
+
+        },
+        //---------------------------------------------------------------------
+        storeCategoryAfter: function (data) {
+            this.getAssets();
+            this.new_category = {
+                name: null,
+            };
+        },
+        //---------------------------------------------------------------------
+
+        //---------------------------------------------------------------------
+        toggleLanguageForm: function()
+        {
+
+            this.show_add_category = false;
+
+            if(this.show_add_language)
+            {
+                this.show_add_language = false;
+            } else
+            {
+                this.show_add_language = true;
+            }
+
+
+
+            console.log('--->', this.show_add_language);
+
+        },
+        //---------------------------------------------------------------------
+        toggleCategoryForm: function()
+        {
+
+            this.show_add_language = false;
+
+            if(this.show_add_category)
+            {
+                this.show_add_category = false;
+            } else
+            {
+                this.show_add_category = true;
+            }
+
+            console.log('--->', this.show_add_category);
+
+        },
+        //---------------------------------------------------------------------
         setActiveLanguage: function (e, language) {
             e.preventDefault();
             this.active_language = language;
+            this.getList();
         },
         //---------------------------------------------------------------------
         setItemSlug: function(item)
@@ -167,12 +338,16 @@ export default {
         },
         //---------------------------------------------------------------------
         dataToCopy: function (item) {
+
+            console.log('--->this.active_category dataCopy', this.active_category);
+
             let text = "@lang('"+this.active_category.slug+'.'+item.slug+"')";
             return text;
         },
         //---------------------------------------------------------------------
         copiedData: function (data) {
             alertify.success('copied');
+            console.log('--->this.active_category dataCopy', this.active_category);
             this.$vaahcms.console(data, 'copied data');
         },
         //---------------------------------------------------------------------

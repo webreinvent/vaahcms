@@ -65,6 +65,50 @@ class LocalizationController extends Controller
 
     }
     //----------------------------------------------------------
+    public function store(Request $request)
+    {
+
+        $response = LanguageString::storeList($request);
+
+
+        return response()->json($response);
+
+    }
+    //----------------------------------------------------------
+    public function storeLanguage(Request $request)
+    {
+
+        $response = Language::store($request);
+
+        LanguageString::syncStrings($request);
+
+        return response()->json($response);
+
+    }
+    //----------------------------------------------------------
+    public function storeCategory(Request $request)
+    {
+
+        $response = LanguageCategory::store($request);
+
+        LanguageString::syncStrings($request);
+
+        return response()->json($response);
+
+    }
+    //----------------------------------------------------------
+    public function sync(Request $request)
+    {
+
+        LanguageString::syncStrings($request);
+
+        $response = LanguageString::getList($request);
+
+        return response()->json($response);
+
+    }
+    //----------------------------------------------------------
+    //----------------------------------------------------------
 
 
 }

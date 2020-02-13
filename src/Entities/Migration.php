@@ -172,10 +172,6 @@ class Migration extends Model {
                 '--force' => true
             ];
 
-            echo "<pre>";
-            print_r($params);
-            echo "</pre>";
-
             \Artisan::call($command, $params);
 
         }catch(\Exception $e)

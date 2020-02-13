@@ -12,17 +12,19 @@
                         <div class="align-self-center tx-18 flex-grow-1"><strong>Localization</strong></div>
                         <div class=" mg-l-auto btn-group btn-group-xs">
 
-                            <router-link class="btn btn-xs btn-light btn-uppercase"
-                                         :to="{ path: '/registrations/create'}">
+
+                            <button class="btn btn-xs btn-light btn-uppercase"
+                                         @click="toggleLanguageForm()">
+                                <i class="fas fa-plus"></i> Add Language
+                            </button>
+
+                            <button class="btn btn-xs btn-light btn-uppercase"
+                                    @click="toggleCategoryForm()">
                                 <i class="fas fa-plus"></i> Add Category
-                            </router-link>
+                            </button>
 
-                            <router-link class="btn btn-xs btn-light btn-uppercase"
-                                         :to="{ path: '/registrations/create'}">
-                                <i class="fas fa-check"></i> Translation
-                            </router-link>
-
-                            <button class="btn btn-xs btn-light btn-uppercase" >
+                            <button class="btn btn-xs btn-light btn-uppercase"
+                                    @click="sync()">
                                 <i class="fas fa-sync-alt"></i> Sync
                             </button>
 
@@ -32,30 +34,21 @@
                 </div>
                 <div class="card-body pd-b-0 " >
 
-                    <div class="form-row">
+                    <!--add language-->
+                    <div class="form-row" v-if="show_add_language">
                         <div class="form-group mg-b-0 col-md-4">
-                            <label>Filter By</label>
-                            <select v-model="filters.sort_by"
-                                    v-on:change="getList"
-                                    class="custom-select custom-select-sm">
-                                <option value="">Select Sort By</option>
-                                <option v-if="assets"
-                                        v-for="category in assets.categories"
-                                        :value="category">{{category}}</option>
-                            </select>
-
-                        </div>
-
-                    </div>
-
-                    <div class="form-row">
-                        <div class="form-group mg-b-0 col-md-4">
-                            <label>Add New Category</label>
+                            <label><strong>Add New Language</strong></label>
                             <div class="input-group input-group-sm" style="max-width: 350px;">
-                                <input type="text" class="form-control" placeholder="Category Name" />
+                                <input type="text" class="form-control"
+                                       v-model="new_language.name"
+                                       placeholder="Name" />
+                                <input type="text" class="form-control"
+                                       v-model="new_language.locale_code_iso_639"
+                                       placeholder="Locale ISO 639 Code" />
 
                                 <div class="input-group-append">
-                                    <button class="btn btn-outline-secondary" @click="bulkAction"
+                                    <button class="btn btn-outline-secondary"
+                                            @click="storeLanguage()"
                                             type="button">Save</button>
                                 </div>
                             </div>
@@ -63,37 +56,28 @@
                         </div>
 
                     </div>
+                    <!--/add category-->
 
+                    <!--add category-->
+                    <div class="form-row" v-if="show_add_category">
+                        <div class="form-group mg-b-0 col-md-4">
+                            <label><strong>Add New Category</strong></label>
+                            <div class="input-group input-group-sm" style="max-width: 350px;">
+                                <input type="text" class="form-control"
+                                       v-model="new_category.name"
+                                       placeholder="Category Name" />
 
-                    <div class="form-group">
-
-                        <label>Enable Translations</label>
-                        <br clear="all"/>
-
-                        <div class="form-row">
-
-
-                            <div class="form-group col-md-2">
-                                <div class="custom-control custom-checkbox">
-                                    <input type="checkbox" class="custom-control-input"
-                                           id="lang-en" >
-                                    <label class="custom-control-label"
-                                           for="lang-en">English (en)</label>
-                                </div>
-                            </div>
-
-                            <div class="form-group col-md-2">
-                                <div class="custom-control custom-checkbox">
-                                    <input type="checkbox" class="custom-control-input"
-                                           id="lang-es" >
-                                    <label class="custom-control-label"
-                                           for="lang-es">Spanish (es)</label>
+                                <div class="input-group-append">
+                                    <button class="btn btn-outline-secondary"
+                                            @click="storeCategory"
+                                            type="button">Save</button>
                                 </div>
                             </div>
 
                         </div>
 
                     </div>
+                    <!--/add category-->
 
 
                 </div>
@@ -147,7 +131,7 @@
                                                 <div class="">
                                                     <div class="input-group input-group-sm" style="max-width: 350px;">
                                                         <select class="custom-select"
-                                                                v-model="active_category.id"
+                                                                v-model="active_category_id"
                                                                 style="max-width: 150px" >
                                                             <option value="">Select Category</option>
                                                             <option v-for="category in assets.categories.list"
@@ -166,36 +150,51 @@
                                             <!--/body-header-->
 
                                             <!--list-->
-                                            <table class="table table-striped table-form-merge">
+                                            <table class="table table-form-merge">
 
-                                                <tr v-if="list" v-for="item in list">
-                                                    <td width="20">
+                                                <tbody>
 
-                                                        <vh-copy :data="dataToCopy(item)"
-                                                                 :label="icon_copy"
-                                                                 @copied="copiedData"
-                                                        >
-                                                        </vh-copy>
+                                                <template v-if="list && list.length > 0">
+                                                    <tr  v-for="item in list">
+                                                        <td width="20">
+
+                                                            <vh-copy :data="'@lang(\''+active_category.slug+'.'+item.slug+'\')'"
+                                                                     :label="icon_copy"
+                                                                     @copied="copiedData"
+                                                            >
+                                                            </vh-copy>
 
 
-                                                    </td>
-                                                    <td width="150">
+                                                        </td>
+                                                        <td width="150">
 
-                                                        <input type="text" class="form-control-merge"
-                                                               @blur="setItemSlug(item)"
-                                                               placeholder="Type Slug" v-model="item.slug" />
+                                                            <input type="text" class="form-control-merge"
+                                                                   @blur="setItemSlug(item)"
+                                                                   placeholder="Type Slug" v-model="item.slug" />
 
-                                                    </td>
-                                                    <td >
-                                                        <input type="text" class="form-control-merge"
-                                                               placeholder="Type Value" v-model="item.content" />
-                                                    </td>
-                                                    <td width="20">
-                                                        <button  class="btn btn-xs" @click="deleteString(item)" style="padding: 0px;">
-                                                            <i class="fas fa-trash"> </i>
-                                                        </button>
-                                                    </td>
-                                                </tr>
+                                                        </td>
+                                                        <td >
+                                                            <input type="text" class="form-control-merge"
+                                                                   placeholder="Type Value" v-model="item.content" />
+                                                        </td>
+                                                        <td width="20">
+                                                            <button  class="btn btn-xs" @click="deleteString(item)" style="padding: 0px;">
+                                                                <i class="fas fa-trash"> </i>
+                                                            </button>
+                                                        </td>
+                                                    </tr>
+                                                </template>
+                                                <template v-else>
+                                                    <tr>
+                                                        <td colspan="4">
+                                                            <span class="text-danger">No language string exist.</span>
+                                                        </td>
+                                                    </tr>
+                                                </template>
+
+                                                </tbody>
+
+
 
                                                 <tfoot>
 

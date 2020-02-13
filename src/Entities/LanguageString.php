@@ -38,7 +38,7 @@ class LanguageString extends Model {
     ];
     //-------------------------------------------------
     public function setSlugAttribute( $value ) {
-        $this->attributes['slug'] = Str::slug( $value );
+        $this->attributes['slug'] = Str::slug( $value, '_' );
     }
     //-------------------------------------------------
     public function getNameAttribute($value) {
@@ -114,10 +114,16 @@ class LanguageString extends Model {
         LanguageCategory::countRelations();
     }
     //-------------------------------------------------
-    public static function syncStrings()
+    public static function syncStrings($request)
     {
         //get default languages
-        $lang = Language::where('default', 1)->first();
+        if($request->has('vh_lang_language_id'))
+        {
+            $lang = Language::where('id', $request->vh_lang_language_id)->first();
+        } else
+        {
+            $lang = Language::where('default', 1)->first();
+        }
 
         //get all strings of default lang
         $strings = static::where('vh_lang_language_id', $lang->id)
@@ -136,27 +142,23 @@ class LanguageString extends Model {
         {
             foreach ($languages as $language)
             {
-                foreach ($categories as $category)
+                $insert = [];
+                $insert['vh_lang_language_id'] = $language->id;
+                $insert['vh_lang_category_id'] = $string->vh_lang_category_id;
+                $insert['name'] = $string->name;
+                $insert['slug'] = \Str::slug($string->name, "_");
+
+                $exist = static::where('vh_lang_language_id', $language->id)
+                    ->where('vh_lang_category_id', $string->vh_lang_category_id)
+                    ->where('slug', $insert['slug'])
+                    ->first();
+
+                if(!$exist)
                 {
-
-                    $insert = [];
-                    $insert['vh_lang_language_id'] = $language->id;
-                    $insert['vh_lang_category_id'] = $category->id;
-                    $insert['name'] = $string->name;
-                    $insert['slug'] = \Str::slug($string->name);
-
-                    $exist = static::where('vh_lang_language_id', $language->id)
-                        ->where('vh_lang_category_id', $language->id)
-                        ->where('slug', $insert['slug'])
-                        ->first();
-
-                    if(!$exist)
-                    {
-                        $new_string = new static();
-                        $new_string->fill($insert);
-                        $new_string->save();
-                    }
-
+                    $new_string = new static();
+                    $insert['content']=null;
+                    $new_string->fill($insert);
+                    $new_string->save();
                 }
             }
         }
@@ -182,6 +184,72 @@ class LanguageString extends Model {
 
     }
     //-------------------------------------------------
+    public static function storeList($request)
+    {
+
+
+        if(!is_array($request->list) || count($request->list) < 1)
+        {
+
+            $response['status'] = 'failed';
+            $response['messages'][] = 'At least one string is required';
+            return $response;
+
+        }
+
+        foreach($request->list as $item)
+        {
+            $string = null;
+
+            if(isset($item['id']))
+            {
+                $string = static::find($item['id']);
+
+                if(!$string)
+                {
+                    $string = new static();
+                }
+
+            } else
+            {
+
+                //find based on slug
+                $string = static::where('slug', $item['slug'])
+                    ->where('vh_lang_language_id', $item['vh_lang_language_id'])
+                    ->where('vh_lang_category_id', $item['vh_lang_category_id'])
+                    ->first();
+
+                if(!$string)
+                {
+                    $string = new static();
+                }
+
+            }
+
+            if(!isset($item['name']))
+            {
+                $item['name'] = $item['slug'];
+            }
+
+
+            $string->fill($item);
+            $string->save();
+
+        }
+
+        static::syncStrings($request);
+
+
+        //Generate a language file
+
+
+        $response['status'] = 'success';
+        $response['data'][] = '';
+        $response['messages'][] = 'Action was successful';
+        return $response;
+
+
+    }
     //-------------------------------------------------
 
 
