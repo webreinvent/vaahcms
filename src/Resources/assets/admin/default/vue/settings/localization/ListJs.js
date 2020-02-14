@@ -324,8 +324,19 @@ export default {
             } else
             {
                 this.$vaahcms.removeInArrayByKey(this.list, item, 'id');
+
+                let url = this.ajax_url+'/delete';
+                let params = item;
+                this.$vaahcms.ajax(url, params, this.deleteStringAfter);
+
+
             }
 
+
+        },
+        //---------------------------------------------------------------------
+        deleteStringAfter: function()
+        {
 
         },
         //---------------------------------------------------------------------

@@ -6,6 +6,8 @@ namespace WebReinvent\VaahCms\Http\Controllers\Admin\Settings;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\File;
 use WebReinvent\VaahCms\Entities\Language;
 use WebReinvent\VaahCms\Entities\LanguageCategory;
 use WebReinvent\VaahCms\Entities\LanguageString;
@@ -100,14 +102,24 @@ class LocalizationController extends Controller
     public function sync(Request $request)
     {
 
-        LanguageString::syncStrings($request);
+        LanguageString::syncAndGenerateStrings($request);
+
 
         $response = LanguageString::getList($request);
+
 
         return response()->json($response);
 
     }
     //----------------------------------------------------------
+    public function delete(Request $request)
+    {
+
+        $response = LanguageString::deleteItem($request);
+
+        return response()->json($response);
+
+    }
     //----------------------------------------------------------
 
 

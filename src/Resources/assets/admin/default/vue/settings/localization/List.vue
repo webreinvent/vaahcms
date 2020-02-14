@@ -158,7 +158,7 @@
                                                     <tr  v-for="item in list">
                                                         <td width="20">
 
-                                                            <vh-copy :data="'@lang(\''+active_category.slug+'.'+item.slug+'\')'"
+                                                            <vh-copy :data="'{!! trans(\'vaahcms-'+active_category.slug+'.'+item.slug+'\') !!}'"
                                                                      :label="icon_copy"
                                                                      @copied="copiedData"
                                                             >
@@ -199,12 +199,21 @@
                                                 <tfoot>
 
                                                 <tr>
-                                                    <td colspan="4">
+                                                    <td colspan="2">
                                                         <div class="btn-group btn-group-sm">
                                                         <button class="btn btn-light btn-sm" @click="addString()">Add String</button>
                                                         <button class="btn btn-primary btn-sm" @click="store()">Save</button>
                                                         </div>
                                                     </td>
+
+                                                    <td colspan="2">
+                                                        <div class="pull-right" style="float: right;">
+                                                        <button class="btn pull-right btn-success btn-sm" @click="sync()">
+                                                            <i class="fas fa-sync-alt"> </i> &nbsp; Generate Language Files
+                                                        </button>
+                                                        </div>
+                                                    </td>
+
                                                 </tr>
 
                                                 </tfoot>
