@@ -5,9 +5,9 @@ namespace WebReinvent\VaahCms\Providers;
 use App;
 
 use Illuminate\Support\ServiceProvider;
-use WebReinvent\VaahCms\Entities\Module;
 use WebReinvent\VaahCms\Libraries\VaahExcel;
-use WebReinvent\VaahCms\Loaders\ModulesLoader;
+use WebReinvent\VaahCms\Libraries\VaahFile;
+
 
 
 class FacadesServiceProvider extends ServiceProvider
@@ -29,6 +29,9 @@ class FacadesServiceProvider extends ServiceProvider
             return new VaahExcel();
         });
 
+        App::bind('vaahfile',function() {
+            return new VaahFile();
+        });
 
     }
 

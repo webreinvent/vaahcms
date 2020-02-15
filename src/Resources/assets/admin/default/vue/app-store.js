@@ -8,11 +8,13 @@ Vue.use(Vuex);
 var base_url = $('base').attr('href');
 var current_url = $('#current_url').attr('content');
 var debug = $('#debug').attr('content');
+var token = $('#_token').attr('content');
 //---------/Variables
 
 export const store = new Vuex.Store({
     state: {
         debug: debug,
+        csrf_token: token,
         urls: {
             base: base_url,
             current: current_url,
@@ -57,6 +59,6 @@ export const store = new Vuex.Store({
 
     },
     getters:{
-
+        state(state) {return state;},
     }
 });

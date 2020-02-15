@@ -1,5 +1,6 @@
 <?php
 namespace WebReinvent\VaahCms\Libraries;
+
 class VaahExcel{
 
     public function helloWorld() {

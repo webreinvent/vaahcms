@@ -107,6 +107,7 @@ class LocalizationController extends Controller
 
         $response = LanguageString::getList($request);
 
+        $response['messages'][] = "Language files successfully generated";
 
         return response()->json($response);
 
@@ -120,6 +121,25 @@ class LocalizationController extends Controller
         return response()->json($response);
 
     }
+    //----------------------------------------------------------
+    public function upload(Request $request)
+    {
+
+        /*echo \VaahExcel::helloWorld();
+        die("<hr/>line number=123");
+
+        $response = \VaahFile::upload($request);
+
+        echo "<pre>";
+        print_r($response);
+        echo "</pre>";
+        die("<hr/>line number=123");
+
+        return response()->json($response);*/
+
+    }
+    //----------------------------------------------------------
+    //----------------------------------------------------------
     //----------------------------------------------------------
 
 

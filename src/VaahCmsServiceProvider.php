@@ -3,6 +3,7 @@
 use Illuminate\Routing\Router;
 use Illuminate\Support\ServiceProvider;
 use WebReinvent\VaahCms\Facades\VaahExcelFacade;
+use WebReinvent\VaahCms\Facades\VaahFileFacade;
 use WebReinvent\VaahCms\Providers\FacadesServiceProvider;
 use WebReinvent\VaahCms\Providers\ModulesServiceProvider;
 use WebReinvent\VaahCms\Providers\ThemesServiceProvider;
@@ -123,7 +124,9 @@ class VaahCmsServiceProvider extends ServiceProvider {
     private function registerAlias() {
 
         $loader = \Illuminate\Foundation\AliasLoader::getInstance();
+
         $loader->alias('VaahExcel', VaahExcelFacade::class);
+        $loader->alias('VaahFile', VaahFileFacade::class);
         $loader->alias('Zip', \ZanySoft\Zip\ZipFacade::class);
         $loader->alias('Carbon', \Carbon\Carbon::class);
         $loader->alias('Gravatar', 'Creativeorange\Gravatar\Facades\Gravatar');

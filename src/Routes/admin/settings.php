@@ -46,7 +46,8 @@ Route::group(
         Route::any( '/delete', 'LocalizationController@delete' )
             ->name( 'vh.admin.settings.localization.delete' );
         //------------------------------------------------
-
+        Route::any( '/upload', 'LocalizationController@upload' )
+            ->name( 'vh.admin.settings.localization.upload' );
         //------------------------------------------------
         //------------------------------------------------
         //------------------------------------------------

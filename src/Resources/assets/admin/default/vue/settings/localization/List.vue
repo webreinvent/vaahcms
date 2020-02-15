@@ -23,6 +23,11 @@
                                 <i class="fas fa-plus"></i> Add Category
                             </button>
 
+                            <!--<button class="btn btn-xs btn-light btn-uppercase"
+                                    >
+                                <i class="fas fa-plus"></i> Import
+                            </button>-->
+
                             <button class="btn btn-xs btn-light btn-uppercase"
                                     @click="sync()">
                                 <i class="fas fa-sync-alt"></i> Sync
@@ -78,6 +83,32 @@
 
                     </div>
                     <!--/add category-->
+
+                    <!--import form-->
+                    <!--<form :action="ajax_url+'/upload'" method="post"
+                          enctype="multipart/form-data">
+                    <div class="form-row" >
+                        <div class="form-group mg-b-0 col-md-4">
+                            <label><strong>Add New Category</strong></label>
+                            <div class="input-group input-group-sm" style="max-width: 350px;">
+                                <input type="file" class="form-control"
+                                       name="file"
+                                       placeholder="Category Name" />
+
+                                <div class="input-group-append">
+                                    <button class="btn btn-outline-secondary"
+                                            type="submit">Save</button>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                        <input type="hidden" name="_token" :value="state.csrf_token"/>
+
+                    </form>-->
+                    <!--/import form-->
 
 
                 </div>
@@ -141,7 +172,7 @@
                                                             </option>
                                                         </select>
                                                         <div class="input-group-append">
-                                                            <button class="btn btn-outline-secondary" @click="bulkAction" type="button">Show</button>
+                                                            <button class="btn btn-outline-secondary" @click="getList()" type="button">Show</button>
                                                         </div>
                                                     </div>
                                                 </div>
