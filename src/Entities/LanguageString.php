@@ -3,6 +3,8 @@
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 use WebReinvent\VaahCms\Traits\CrudObservantTrait;
 
@@ -249,6 +251,93 @@ class LanguageString extends Model {
         return $response;
 
 
+    }
+    //-------------------------------------------------
+    public static function deleteItem($request)
+    {
+
+        $rules = array(
+            'slug' => 'required',
+        );
+
+        $validator = \Validator::make( $request->all(), $rules);
+        if ( $validator->fails() ) {
+
+            $errors             = errorsToArray($validator->errors());
+            $response['status'] = 'failed';
+            $response['errors'] = $errors;
+            return $response;
+        }
+
+        static::where('slug', $request->slug)->forceDelete();
+
+        $response['status'] = 'success';
+        $response['data'][] = '';
+        return $response;
+
+    }
+    //-------------------------------------------------
+    public static function generateLangFiles()
+    {
+
+        $languages = Language::all();
+        $categories = LanguageCategory::all();
+
+        foreach ($languages as $language)
+        {
+
+            foreach ($categories as $category)
+            {
+                $strings = static::where('vh_lang_language_id', $language->id)
+                    ->where('vh_lang_category_id', $category->id)
+                    ->whereNotNull('slug')
+                    ->whereNotNull('content')
+                    ->get();
+
+                if($strings->count() > 0)
+                {
+                    $inputs = [
+                        "language" => $language,
+                        "category" => $category,
+                        "strings" => $strings,
+                    ];
+
+                    $html = view('vaahcms::templates.lang')
+                        ->with($inputs)
+                        ->render();
+                    $html = html_entity_decode($html);
+
+                    $html = "<?php "."\n".$html;
+
+                    $folder_path = 'resources\lang\/'.$language->locale_code_iso_639;
+                    $folder_path_relative = base_path($folder_path);
+
+                    if(!File::exists($folder_path_relative)) {
+                        File::makeDirectory($folder_path_relative, 0755, true, true);
+                    }
+
+                    $file_name = 'vaahcms-'.$category->slug.'.php';
+
+                    $file_path = base_path($folder_path.'\/'.$file_name);
+
+                    File::put($file_path, $html);
+                }
+
+
+            }
+
+        }
+
+
+    }
+    //-------------------------------------------------
+    public static function syncAndGenerateStrings($request)
+    {
+        LanguageString::syncStrings($request);
+        LanguageString::generateLangFiles();
+
+        Artisan::call('cache:clear');
+        Artisan::call('view:clear');
     }
     //-------------------------------------------------
 

@@ -19,6 +19,9 @@ $settings =  [
     'minified' => 0,
     'api_route' => 'https://cms.vaah.dev/api',
     'debug' => 1,
+    'uploads' => [
+        'allowed_extensions' => ["jpg", "jpeg", 'png', "gif", "csv"]
+    ]
 ];
 
 return $settings;

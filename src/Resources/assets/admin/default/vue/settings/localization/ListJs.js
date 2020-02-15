@@ -4,6 +4,9 @@ export default {
 
     props: [],
     computed:{
+        state(){
+            return this.$store.getters['state'];
+        },
         ajax_url(){
             let ajax_url = this.$store.state.urls.current+'/settings/localization';
             return ajax_url;
@@ -36,6 +39,7 @@ export default {
             },
             show_add_language: false,
             show_add_category: false,
+            show_import_form: false,
             active_language: null,
             active_category_id: null,
             active_category: null,
@@ -324,17 +328,20 @@ export default {
             } else
             {
                 this.$vaahcms.removeInArrayByKey(this.list, item, 'id');
+
+                let url = this.ajax_url+'/delete';
+                let params = item;
+                this.$vaahcms.ajax(url, params, this.deleteStringAfter);
+
+
             }
 
 
         },
         //---------------------------------------------------------------------
-        bulkAction: function () {
-
-            var inputs = this.selected_items;
-            var data = this.bulk_action_data;
-            this.actions(false, this.bulk_action, inputs, data)
-
+        deleteStringAfter: function()
+        {
+            this.$vaahcms.stopNprogress();
         },
         //---------------------------------------------------------------------
         dataToCopy: function (item) {

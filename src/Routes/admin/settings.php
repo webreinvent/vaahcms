@@ -43,5 +43,12 @@ Route::group(
         Route::any( '/sync', 'LocalizationController@sync' )
             ->name( 'vh.admin.settings.localization.sync' );
         //------------------------------------------------
+        Route::any( '/delete', 'LocalizationController@delete' )
+            ->name( 'vh.admin.settings.localization.delete' );
+        //------------------------------------------------
+        Route::any( '/upload', 'LocalizationController@upload' )
+            ->name( 'vh.admin.settings.localization.upload' );
+        //------------------------------------------------
+        //------------------------------------------------
         //------------------------------------------------
     });

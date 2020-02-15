@@ -23,6 +23,11 @@
                                 <i class="fas fa-plus"></i> Add Category
                             </button>
 
+                            <!--<button class="btn btn-xs btn-light btn-uppercase"
+                                    >
+                                <i class="fas fa-plus"></i> Import
+                            </button>-->
+
                             <button class="btn btn-xs btn-light btn-uppercase"
                                     @click="sync()">
                                 <i class="fas fa-sync-alt"></i> Sync
@@ -78,6 +83,32 @@
 
                     </div>
                     <!--/add category-->
+
+                    <!--import form-->
+                    <!--<form :action="ajax_url+'/upload'" method="post"
+                          enctype="multipart/form-data">
+                    <div class="form-row" >
+                        <div class="form-group mg-b-0 col-md-4">
+                            <label><strong>Add New Category</strong></label>
+                            <div class="input-group input-group-sm" style="max-width: 350px;">
+                                <input type="file" class="form-control"
+                                       name="file"
+                                       placeholder="Category Name" />
+
+                                <div class="input-group-append">
+                                    <button class="btn btn-outline-secondary"
+                                            type="submit">Save</button>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                        <input type="hidden" name="_token" :value="state.csrf_token"/>
+
+                    </form>-->
+                    <!--/import form-->
 
 
                 </div>
@@ -141,7 +172,7 @@
                                                             </option>
                                                         </select>
                                                         <div class="input-group-append">
-                                                            <button class="btn btn-outline-secondary" @click="bulkAction" type="button">Show</button>
+                                                            <button class="btn btn-outline-secondary" @click="getList()" type="button">Show</button>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -158,7 +189,7 @@
                                                     <tr  v-for="item in list">
                                                         <td width="20">
 
-                                                            <vh-copy :data="'@lang(\''+active_category.slug+'.'+item.slug+'\')'"
+                                                            <vh-copy :data="'{!! trans(\'vaahcms-'+active_category.slug+'.'+item.slug+'\') !!}'"
                                                                      :label="icon_copy"
                                                                      @copied="copiedData"
                                                             >
@@ -199,12 +230,21 @@
                                                 <tfoot>
 
                                                 <tr>
-                                                    <td colspan="4">
+                                                    <td colspan="2">
                                                         <div class="btn-group btn-group-sm">
                                                         <button class="btn btn-light btn-sm" @click="addString()">Add String</button>
                                                         <button class="btn btn-primary btn-sm" @click="store()">Save</button>
                                                         </div>
                                                     </td>
+
+                                                    <td colspan="2">
+                                                        <div class="pull-right" style="float: right;">
+                                                        <button class="btn pull-right btn-success btn-sm" @click="sync()">
+                                                            <i class="fas fa-sync-alt"> </i> &nbsp; Generate Language Files
+                                                        </button>
+                                                        </div>
+                                                    </td>
+
                                                 </tr>
 
                                                 </tfoot>

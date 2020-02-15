@@ -2,6 +2,9 @@
 
 use Illuminate\Routing\Router;
 use Illuminate\Support\ServiceProvider;
+use WebReinvent\VaahCms\Facades\VaahExcelFacade;
+use WebReinvent\VaahCms\Facades\VaahFileFacade;
+use WebReinvent\VaahCms\Providers\FacadesServiceProvider;
 use WebReinvent\VaahCms\Providers\ModulesServiceProvider;
 use WebReinvent\VaahCms\Providers\ThemesServiceProvider;
 
@@ -48,6 +51,7 @@ class VaahCmsServiceProvider extends ServiceProvider {
         $this->registerProviders();
         $this->registerAlias();
         $this->registerHelpers();
+        $this->registerLibraries();
 
     }
 
@@ -81,6 +85,17 @@ class VaahCmsServiceProvider extends ServiceProvider {
     }
 
     /**
+     *
+     */
+    private function registerLibraries()
+    {
+        //load all the helpers
+        foreach (glob(__DIR__.'/Libraries/*.php') as $filename){
+            require_once($filename);
+        }
+    }
+
+    /**
      * @return array
      */
     public function provides() {
@@ -94,6 +109,7 @@ class VaahCmsServiceProvider extends ServiceProvider {
     private function registerProviders() {
 
         //register module service provider
+        $this->app->register(FacadesServiceProvider::class);
         $this->app->register(ModulesServiceProvider::class);
         $this->app->register(ThemesServiceProvider::class);
         $this->app->register(\ZanySoft\Zip\ZipServiceProvider::class);
@@ -108,6 +124,9 @@ class VaahCmsServiceProvider extends ServiceProvider {
     private function registerAlias() {
 
         $loader = \Illuminate\Foundation\AliasLoader::getInstance();
+
+        $loader->alias('VaahExcel', VaahExcelFacade::class);
+        $loader->alias('VaahFile', VaahFileFacade::class);
         $loader->alias('Zip', \ZanySoft\Zip\ZipFacade::class);
         $loader->alias('Carbon', \Carbon\Carbon::class);
         $loader->alias('Gravatar', 'Creativeorange\Gravatar\Facades\Gravatar');
