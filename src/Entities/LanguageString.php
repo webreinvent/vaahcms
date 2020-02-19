@@ -309,7 +309,7 @@ class LanguageString extends Model {
 
                     $html = "<?php "."\n".$html;
 
-                    $folder_path = 'resources\lang\/'.$language->locale_code_iso_639;
+                    $folder_path = 'resources/lang/'.$language->locale_code_iso_639;
                     $folder_path_relative = base_path($folder_path);
 
                     if(!File::exists($folder_path_relative)) {
@@ -318,7 +318,7 @@ class LanguageString extends Model {
 
                     $file_name = 'vaahcms-'.$category->slug.'.php';
 
-                    $file_path = base_path($folder_path.'\/'.$file_name);
+                    $file_path = base_path($folder_path.'/'.$file_name);
 
                     File::put($file_path, $html);
                 }
