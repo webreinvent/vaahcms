@@ -824,20 +824,31 @@ class User extends Authenticatable
             $remember = true;
         }
 
+        $user = static::where('email', $inputs['email'])->first();
+
+
+        //check user is active
+        if(!$user)
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = 'No user exist';
+            return $response;
+        }
+
+
+        //check user is active
+        if($user->is_active != 1)
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = trans('vaahcms::messages.inactive_account');
+            return $response;
+        }
 
         if (Auth::attempt(['email' => $inputs['email'],
             'password' => trim($request->get('password'))
         ], $remember))
         {
             $user = Auth::user();
-
-            //check user is active
-            if($user->is_active != 1)
-            {
-                $response['status'] = 'failed';
-                $response['errors'][] = trans('vaahcms::messages.inactive_account');
-                return $response;
-            }
             $user->last_login_at = Carbon::now();
             $user->save();
 
