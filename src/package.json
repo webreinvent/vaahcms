@@ -7,7 +7,8 @@
         "watch-poll": "npm run watch -- --watch-poll",
         "hot": "cross-env NODE_ENV=development node_modules/webpack-dev-server/bin/webpack-dev-server.js --inline --hot --config=node_modules/laravel-mix/setup/webpack.config.js",
         "prod": "npm run production",
-        "production": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --no-progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js"
+        "production": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --no-progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
+        "build:stats": "ng build --stats-json"
     },
     "devDependencies": {
         "cross-env": "^7.0.0",
@@ -17,7 +18,8 @@
         "node-sass": "^4.12.0",
         "resolve-url-loader": "^3.1.0",
         "sass-loader": "^7.3.1",
-        "vue-template-compiler": "^2.6.10"
+        "vue-template-compiler": "^2.6.10",
+        "webpack-visualizer-plugin": "^0.1.11"
     },
     "dependencies": {
         "axios": "^0.19.2",
@@ -30,8 +32,6 @@
         "vuex": "^3.1.2",
         "@fortawesome/vue-fontawesome": "^0.1.6",
         "@fortawesome/fontawesome-svg-core": "^1.2.22",
-        "@fortawesome/free-brands-svg-icons": "^5.10.2",
-        "@fortawesome/free-regular-svg-icons": "^5.10.2",
         "@fortawesome/free-solid-svg-icons": "^5.10.2",
         "laravel-vue-pagination": "^2.3.1",
         "vue-avatar": "^2.2.0",

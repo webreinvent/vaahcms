@@ -1,6 +1,7 @@
 const mix = require('laravel-mix');
 var fs = require('fs');
 const fs_extra = require('fs-extra');
+let Visualizer = require('webpack-visualizer-plugin');
 
 
 
@@ -16,25 +17,6 @@ let theme_path = "./themes/vaahone/";
 
 mix.sass('Resources/assets/admin/vaahone/scss/admin.scss', theme_path+'css/');
 
-/*
-mix.sass('Resources/assets/sass/custom.scss', './css/custom.css').options({
-     processCssUrls: false
-});
-*/
-
-/*
- |--------------------------------------------------------------------------
- | Copy Assets
- |--------------------------------------------------------------------------
- */
-/*
-
-let to_path = './../../../public/vaahcms/themes/themerxconnect/assets';
-let from_path = __dirname+"/Resources/assets";
-
-mix.copy(from_path, to_path);
-*/
-
 
 /*
  |--------------------------------------------------------------------------
@@ -42,8 +24,9 @@ mix.copy(from_path, to_path);
  |--------------------------------------------------------------------------
  */
 
-var path_vue = __dirname+"/Vue/vaahone/app.js";
+let path_vue = __dirname+"/Vue/vaahone/app.js";
 mix.js(path_vue,  theme_path+'/builds');
+
 
 mix.webpackConfig({
     watchOptions: {
@@ -61,5 +44,8 @@ mix.webpackConfig({
             '/node_modules/',
             '/vendor/',
         ]
-    }
+    },
+    plugins: [
+        new Visualizer()
+    ],
 });
