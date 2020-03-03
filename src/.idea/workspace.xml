@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="c571ffbd-7150-4981-a63b-b9dd68be4b23" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/src.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Resources/assets/admin/vaahone/scss/admin.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Resources/assets/admin/vaahone/scss/customize/bulma/bulma.sass" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Resources/assets/admin/vaahone/scss/customize/bulma/sass/base/_all.sass" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Resources/assets/admin/vaahone/scss/customize/bulma/sass/base/generic.sass" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Resources/assets/admin/vaahone/scss/customize/bulma/sass/components/_all.sass" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Resources/assets/admin/vaahone/scss/customize/bulma/sass/components/breadcrumb.sass" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Resources/assets/admin/vaahone/scss/customize/bulma/sass/components/card.sass" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Resources/assets/admin/vaahone/scss/customize/bulma/sass/components/dropdown.sass" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Resources/assets/admin/vaahone/scss/customize/bulma/sass/components/level.sass" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Resources/assets/admin/vaahone/scss/customize/bulma/sass/components/list.sass" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Resources/assets/admin/vaahone/scss/customize/bulma/sass/components/media.sass" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Resources/assets/admin/vaahone/scss/customize/bulma/sass/components/menu.sass" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Resources/assets/admin/vaahone/scss/customize/bulma/sass/components/message.sass" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Resources/assets/admin/vaahone/scss/customize/bulma/sass/components/modal.sass" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Resources/assets/admin/vaahone/scss/customize/bulma/sass/components/navbar.sass" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Resources/assets/admin/vaahone/scss/customize/bulma/sass/components/pagination.sass" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Resources/assets/admin/vaahone/scss/customize/bulma/sass/components/panel.sass" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Resources/assets/admin/vaahone/scss/customize/bulma/sass/components/tabs.sass" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Resources/assets/admin/vaahone/scss/customize/bulma/sass/elements/_all.sass" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Resources/assets/admin/vaahone/scss/customize/bulma/sass/elements/box.sass" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Resources/assets/admin/vaahone/scss/customize/bulma/sass/elements/button.sass" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Resources/assets/admin/vaahone/scss/customize/bulma/sass/elements/container.sass" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Resources/assets/admin/vaahone/scss/customize/bulma/sass/elements/content.sass" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Resources/assets/admin/vaahone/scss/customize/bulma/sass/elements/form.sass" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Resources/assets/admin/vaahone/scss/customize/bulma/sass/elements/icon.sass" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Resources/assets/admin/vaahone/scss/customize/bulma/sass/elements/image.sass" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Resources/assets/admin/vaahone/scss/customize/bulma/sass/elements/notification.sass" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Resources/assets/admin/vaahone/scss/customize/bulma/sass/elements/other.sass" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Resources/assets/admin/vaahone/scss/customize/bulma/sass/elements/progress.sass" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Resources/assets/admin/vaahone/scss/customize/bulma/sass/elements/table.sass" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Resources/assets/admin/vaahone/scss/customize/bulma/sass/elements/tag.sass" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Resources/assets/admin/vaahone/scss/customize/bulma/sass/elements/title.sass" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Resources/assets/admin/vaahone/scss/customize/bulma/sass/form/_all.sass" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Resources/assets/admin/vaahone/scss/customize/bulma/sass/form/checkbox-radio.sass" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Resources/assets/admin/vaahone/scss/customize/bulma/sass/form/file.sass" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Resources/assets/admin/vaahone/scss/customize/bulma/sass/form/input-textarea.sass" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Resources/assets/admin/vaahone/scss/customize/bulma/sass/form/select.sass" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Resources/assets/admin/vaahone/scss/customize/bulma/sass/form/shared.sass" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Resources/assets/admin/vaahone/scss/customize/bulma/sass/form/tools.sass" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Resources/assets/admin/vaahone/scss/customize/bulma/sass/grid/_all.sass" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Resources/assets/admin/vaahone/scss/customize/bulma/sass/layout/_all.sass" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Resources/assets/admin/vaahone/scss/customize/bulma/sass/layout/footer.sass" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Resources/assets/admin/vaahone/scss/customize/bulma/sass/layout/hero.sass" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Resources/assets/admin/vaahone/scss/customize/bulma/sass/layout/section.sass" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Resources/assets/admin/vaahone/scss/customize/bulma/sass/utilities/_all.sass" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Resources/assets/admin/vaahone/scss/customize/bulma/sass/utilities/controls.sass" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Resources/assets/admin/vaahone/scss/customize/bulma/sass/utilities/derived-variables.sass" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Resources/assets/admin/vaahone/scss/customize/bulma/sass/utilities/initial-variables.sass" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Resources/assets/admin/vaahone/scss/vaahnuxt/assets/scss/buefy/.gitkeep" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Resources/assets/admin/vaahone/scss/vaahnuxt/assets/scss/buefy/_all.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Resources/assets/admin/vaahone/scss/vaahnuxt/assets/scss/bulma/.gitkeep" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Resources/assets/admin/vaahone/scss/vaahnuxt/assets/scss/bulma/_all.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Resources/assets/admin/vaahone/scss/vaahnuxt/assets/scss/bulma/pagination.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Resources/assets/admin/vaahone/scss/vaahnuxt/assets/scss/vaahnuxt.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Resources/assets/admin/vaahone/scss/vaahnuxt/assets/scss/vaahnuxt/.gitkeep" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Resources/assets/admin/vaahone/scss/vaahnuxt/assets/scss/vaahnuxt/_all.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Resources/assets/admin/vaahone/scss/vaahnuxt/assets/scss/vaahnuxt/base/.gitkeep" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Resources/assets/admin/vaahone/scss/vaahnuxt/assets/scss/vaahnuxt/base/_all.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Resources/assets/admin/vaahone/scss/vaahnuxt/assets/scss/vaahnuxt/base/_math.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Resources/assets/admin/vaahone/scss/vaahnuxt/assets/scss/vaahnuxt/base/_var.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Resources/assets/admin/vaahone/scss/vaahnuxt/assets/scss/vaahnuxt/base/cheatsheet.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Resources/assets/admin/vaahone/scss/vaahnuxt/assets/scss/vaahnuxt/base/docs.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Resources/assets/admin/vaahone/scss/vaahnuxt/assets/scss/vaahnuxt/base/generic.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Resources/assets/admin/vaahone/scss/vaahnuxt/assets/scss/vaahnuxt/base/helpers.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Resources/assets/admin/vaahone/scss/vaahnuxt/assets/scss/vaahnuxt/base/minireset.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Resources/assets/admin/vaahone/scss/vaahnuxt/assets/scss/vaahnuxt/blocks/.gitkeep" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Resources/assets/admin/vaahone/scss/vaahnuxt/assets/scss/vaahnuxt/blocks/blocks.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Vue/vaahone/app.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Vue/vaahone/layouts/App.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Vue/vaahone/layouts/AppJs.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Vue/vaahone/routes/middleware/GetAssets.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Vue/vaahone/routes/middleware/IsLoggedIn.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Vue/vaahone/routes/middleware/middlewarePipeline.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Vue/vaahone/routes/router.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Vue/vaahone/routes/routes.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Vue/vaahone/store/modules/root.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Vue/vaahone/store/store.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Vue/vaahone/vaahvue/helpers/globalComponents.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Vue/vaahone/vaahvue/helpers/vaahhelper.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/webpack.mix.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../mix-manifest.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../webpack.mix.js" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ComposerSettings">
+    <execution>
+      <executable />
+    </execution>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="ProjectId" id="1YardoXBKLXSblyXF5pReXDccf0" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/Vue/vaahone/store/modules" />
+    <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
+    <property name="nodejs_npm_path_reset_for_default_project" value="true" />
+    <property name="nodejs_package_manager_path" value="npm" />
+    <property name="settings.editor.selected.configurable" value="configurable.group.appearance" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="H:\xampp73\htdocs\vaahcms-dev-env\packages\vaahcms\src\Vue\vaahone\store\modules" />
+    </key>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="c571ffbd-7150-4981-a63b-b9dd68be4b23" name="Default Changelist" comment="" />
+      <created>1583191635441</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1583191635441</updated>
+      <workItem from="1583191636808" duration="2204000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="431" y="145" width="672" height="678" key="search.everywhere.popup" timestamp="1583192244860">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="431" y="145" width="672" height="678" key="search.everywhere.popup/0.0.1536.824@0.0.1536.824" timestamp="1583192244860" />
+  </component>
+</project>

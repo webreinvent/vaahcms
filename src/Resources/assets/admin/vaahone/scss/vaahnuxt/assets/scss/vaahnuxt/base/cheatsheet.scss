@@ -1,0 +1,22 @@
+@import "math";
+@import "var";
+
+//------------borders (m-xxx)
+
+.cheathseet-list, .cheathseet-list ul{
+  list-style: none;
+  padding-left: 0;
+}
+.cheathseet-list ul li{
+  width: 32%;
+}
+
+@media (max-width: 767px) {
+  .cheathseet-list ul li{
+    width: 100% !important;
+    display: block !important;
+  }
+}
+
+
+//------------/borders (m-xxx)

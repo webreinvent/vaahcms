@@ -1,0 +1,30 @@
+@import "math";
+@import "var";
+
+//------------borders (m-xxx)
+
+$multiplier: 1;
+$max: 5;
+
+@for $i from 1 through $max
+{
+
+  $val: multiply($i, $multiplier);
+
+  .has-border-#{$val}{
+    border: #{$val}px solid #{$vh-default-border-color};
+  }
+
+  @each $item_key, $item_value in $directions
+  {
+
+    .has-border-#{$val}{
+      border-#{$item_value}: #{$val}px solid #{$vh-default-border-color};
+    }
+
+  }
+
+}
+
+
+//------------/borders (m-xxx)

@@ -1,0 +1,125 @@
+.docs{
+
+  &.section{
+    padding: 1.5rem 0;
+    border-top: 1px dotted #444;
+
+  }
+
+  &.code{
+    font-size: .9rem;
+    position: relative;
+
+
+    .level{
+      background-color: $docs-code-bg;
+      margin-bottom: 0;
+      padding: .5rem 1rem;
+      &.has-bottom-border{
+        border-bottom: 1px solid $docs-code-border-color;
+      }
+
+      strong{
+        color: $docs-code-gray-dark;
+      }
+    }
+
+
+    .is-text{
+      font-size: .9rem;
+      right: 0;
+      text-decoration: none;
+      &:hover{
+        color: #d14;
+      }
+    }
+
+  }
+
+
+  .vh-command{
+    margin-bottom: 1em;
+  }
+
+  .vh-code{
+
+    font-family: Consolas, "Andale Mono WT", "Andale Mono", "Lucida Console",
+    "Lucida Sans Typewriter", "DejaVu Sans Mono", "Bitstream Vera Sans Mono",
+    "Liberation Mono", "Nimbus Mono L", Monaco, "Courier New", Courier, monospace;
+
+    pre{
+      white-space: pre-wrap;
+      overflow-x: auto;
+      tab-size: 4;
+      margin: 0;
+      padding: 0;
+      background-color: $docs-code-bg;
+
+      code{
+        tab-size: 4;
+        margin: 0;
+        padding: 0;
+        background-color: $docs-code-bg;
+        line-height: 1rem;
+      }
+
+    }
+
+
+  }
+
+  .link-items{
+    margin-left: 0;
+    li{
+      a{
+        margin-right: 0.4em;
+        span{
+          color: $docs-black-text-color-light;
+        }
+      }
+      ul{
+        margin: 0 0.4em 0 0;
+        li{
+          margin: 0.1em 0 !important;
+        }
+      }
+    }
+  }
+
+  .heading{
+
+    text-transform: none;
+
+    span{
+      color: $docs-heading-text-color;
+    }
+  }
+
+  .menu {
+
+    .menu-container{
+      margin: 0 0 0.4em 0;
+      .menu-list{
+
+        ul{
+          margin: 0 0 1em 0;
+          li{
+            margin: 0px !important;
+            a{
+              padding: 0.4em 0.75em;
+            }
+
+          }
+        }
+
+      }
+    }
+
+
+
+  }
+
+
+
+
+}
