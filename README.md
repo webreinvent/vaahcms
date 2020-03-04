@@ -232,6 +232,9 @@ $options = (new ChromeOptions)->addArguments([
 - Step 8) Run `php artisan dusk`, it may show `Warning: TTY mode is not supported on Windows platform.` error
   you can ignore this error. If it run successfully, it will  will open chrome and run your tests.
 
+- Step 9) Install `composer require beyondcode/dusk-dashboard --dev`
+
+- Step 10) Run `php artisan dusk:dashboard`
 
 #### Create Tests for VaahCms Modules:
 - Change path of dusk in `phpunit.dusk.xml` to following:
@@ -261,6 +264,16 @@ https://packagist.org/api/github?username=PACKAGIST_USERNAME
 - In `Secrete` add `API Token`
 - Choose `Let me select individual events.` and select `Pushes`
 - Click on `Save`
+
+
+### For running `composer update`:
+```php
+
+$process = new Process('cd .. && php artisan dusk --group=bkkrishna');
+$process->setPTY(true);
+$process->run();
+
+```
 
 ## Support us
 
