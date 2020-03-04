@@ -6,12 +6,12 @@
 
             <div class="container">
                 <div class="columns is-flex align-items-center justify-center">
-                    <div class="column is-5">
+                    <div class="column is-4">
                         <div class="login-box box is-flex flex-column align-items-center has-text-centered justify-center">
-                            <img src="/images/vaah-dev-logo.png">
+                            <img src="https://via.placeholder.com/200x80">
                             <div class="content has-text-centered has-margin-top-20">
                                 <h3 class="title">Sign In</h3>
-                                <p class="subtitle">Welcome back! Please signin to continue</p>
+                                <p class="subtitle">Welcome back! Please SignIn to continue</p>
                             </div>
                             <b-field class="is-full-width has-margin-top-20">
                                 <b-input type="email"
@@ -53,6 +53,7 @@
                                     <li class="is-inline-block has-background-primary has-padding-10 is-rounded has-margin-right-20">
                                         <a href="#">
                                             <b-icon
+                                                pack="fab"
                                                 icon="facebook"
                                                 size="is-medium" class="has-text-white">
                                             </b-icon>
@@ -61,6 +62,7 @@
                                     <li class="is-inline-block has-background-info has-padding-10 is-rounded has-margin-right-20">
                                         <a href="#">
                                             <b-icon
+                                                pack="fab"
                                                 icon="twitter"
                                                 size="is-medium" class="has-text-white">
                                             </b-icon>
@@ -69,6 +71,7 @@
                                     <li class="is-inline-block has-background-danger has-padding-10 is-rounded">
                                         <a href="#">
                                             <b-icon
+                                                pack="fab"
                                                 icon="instagram"
                                                 size="is-medium" class="has-text-white">
                                             </b-icon>

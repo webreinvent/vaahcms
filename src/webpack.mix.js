@@ -24,7 +24,7 @@ mix.sass('Resources/assets/admin/vaahone/scss/admin.scss', theme_path+'css/');
  |--------------------------------------------------------------------------
  */
 
-let path_vue = __dirname+"/Vue/vaahone/app.js";
+let path_vue = __dirname+"/Resources/views/admin/vaahone/vue/app.js";
 mix.js(path_vue,  theme_path+'/builds');
 
 
