@@ -1,0 +1,19 @@
+[
+    {
+        "inputs": [
+            {
+                "selector": "@signin-username_or_email",
+                "value": "we@webreinvent.com"
+            },
+            {
+                "selector": "@signin-password",
+                "value": ""
+            }
+        ],
+        "action": {
+            "selector": "@signin-signin",
+            "action": "click"
+        },
+        "assert": "The password field is required."
+    }
+]
