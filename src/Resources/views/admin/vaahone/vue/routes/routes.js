@@ -18,6 +18,7 @@ import LayoutPublic from "./../layouts/Public";
 import LayoutAdmin from "./../layouts/Admin";
 
 import SignIn from "./../pages/SignIn";
+import ForgotPassword from "./../pages/ForgotPassword";
 
 
 routes_list =     {
@@ -32,8 +33,19 @@ routes_list =     {
     children: [
         {
             path: '/',
-            name: 'sign_in',
+            name: 'sign.in',
             component: SignIn,
+            props: true,
+            meta: {
+                middleware: [
+                    GetAssets
+                ]
+            },
+        },
+        {
+            path: '/forgot-password',
+            name: 'forgot.password',
+            component: ForgotPassword,
             props: true,
             meta: {
                 middleware: [

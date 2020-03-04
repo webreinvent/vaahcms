@@ -1,16 +1,18 @@
 import Vue from 'vue';
 import { ToastProgrammatic as Toast } from 'buefy'
+import {VaahHelper as Vaah} from "../../vaahvue/helpers/vaahhelper";
 
 //---------Variables
-var base_url = document.getElementsByTagName('base')[0].getAttribute("href");
-var current_url = document.getElementById('current_url').getAttribute('content');
-var debug = document.getElementById('debug').getAttribute('content');
-var ajax_url = base_url+'/app/ajax';
-var json_url = base_url+'/app/ajax/json';
+let base_url = document.getElementsByTagName('base')[0].getAttribute("href");
+let current_url = document.getElementById('current_url').getAttribute('content');
+let debug = document.getElementById('debug').getAttribute('content');
 //---------/Variables
 
-var assets_url = json_url+"/assets";
-var image_url = base_url+"/vaahcms/themes/themerxconnect/assets/images/";
+let assets_path = base_url+"/vaahcms/admin/themes/vaahone/assets";
+let assets_image_path = assets_path+"/images";
+
+let json_url = base_url+"/admin/json";
+let ajax_url = base_url+"/admin";
 
 export default {
     namespaced: true,
@@ -19,17 +21,16 @@ export default {
         debug: debug,
         route: null,
         base_url: base_url,
-        image_url: image_url,
+        assets_path: assets_path,
+        assets_image_path: assets_image_path,
         current_url: current_url,
         redirect_full_url: null,
-        assets_url: assets_url,
         ajax_url: ajax_url,
         json_url: json_url,
         assets: null,
         check_logged_in: null,
         is_logged_in: null,
         auth_user: null,
-        active_app: null,
     },
     //=========================================================================
     mutations:{
@@ -56,76 +57,18 @@ export default {
 
             console.log('-->payload.url', payload.url);
 
-            let data = await dispatch('ajax', payload);
+            //let data = await dispatch('ajax', payload);
+            let data = await Vaah.ajax(payload.url, payload.params);
 
             module_payload = {
                 key: 'assets',
-                value: data
+                value: data.data.data
             };
 
             commit('updateState', module_payload);
 
         },
         //-----------------------------------------------------------------
-
-        //-----------------------------------------------------------------
-        async ajax({ state, commit, dispatch }, payload) {
-            let url = payload.url;
-            let params = {};
-            let query = {};
-            if(payload.params)
-            {
-                params = payload.params;
-            }
-
-            if(payload.query)
-            {
-                query = {params:payload.query};
-            }
-
-            let data = false;
-            let self = this;
-
-            console.log('-->url', url);
-
-            data = await Vue.axios.post(url, params, query)
-                .then(response => {
-
-                    if(response.data.status)
-                    {
-                        if(response.data.status == 'failed')
-                        {
-                            if(response.data.errors)
-                            {
-                                dispatch('toastErrors', {errors: response.data.errors});
-                            }
-                            return false;
-                        }
-                        if(response.data.status == 'success')
-                        {
-                            if(response.data.messages)
-                            {
-                                dispatch('toastSuccess', {messages: response.data.messages});
-                            }
-                            return response.data.data;
-                        }
-                    }
-                })
-                .catch(error => {
-                    if(state.debug == true)
-                    {
-                        dispatch('toastErrors', {errors: [error]});
-                    } else
-                    {
-                        dispatch('toastErrors', {errors: ['Something went wrong']});
-                    }
-
-                    return false;
-                });
-
-            return data;
-
-        },
         //-----------------------------------------------------------------
         async checkIsLoggedIn({ state, commit, dispatch }, payload) {
 
@@ -149,25 +92,6 @@ export default {
             }
 
         },
-        //-----------------------------------------------------------------
-        toastSuccess(context, payload){
-            console.log('payload-->', payload);
-            payload.messages.forEach(function (message) {
-                Toast.open({
-                    message: message,
-                    type: 'is-success'
-                });
-            });
-        },
-        //-----------------------------------------------------------------
-        toastErrors(context, payload){
-            payload.errors.forEach(function (error) {
-                Toast.open({
-                    message: error,
-                    type: 'is-danger'
-                });
-            });
-        }
         //-----------------------------------------------------------------
         //-----------------------------------------------------------------
 

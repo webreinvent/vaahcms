@@ -30,7 +30,7 @@ const VaahHelper = {
 
                 if(response.data.status)
                 {
-                    if(response.data.status == 'failed')
+                    if(response.data.status === 'failed')
                     {
                         if(response.data.messages)
                         {
@@ -45,7 +45,7 @@ const VaahHelper = {
 
 
                     }
-                    if(response.data.status == 'success')
+                    if(response.data.status === 'success')
                     {
                         if(response.data.messages)
                         {
@@ -55,13 +55,17 @@ const VaahHelper = {
 
                 }
 
-                if(response.data && response.data.data)
+                if(callback)
                 {
-                    callback(response.data.data, response);
-                } else
-                {
-                    callback(false, response);
+                    if(response.data && response.data.data)
+                    {
+                        callback(response.data.data, response);
+                    } else
+                    {
+                        callback(false, response);
+                    }
                 }
+
 
                 return response;
 
@@ -78,7 +82,9 @@ const VaahHelper = {
                     this.toastErrors(['Something went wrong']);
                 }
 
-                callback(false, error);
+                if(callback) {
+                    callback(false, error);
+                }
 
                 return error;
             });
@@ -705,4 +711,8 @@ export default {
         Vue.prototype.$vaah = vaah;
         Vue.vaah = vaah;
     }
+}
+
+export {
+    VaahHelper
 }

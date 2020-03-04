@@ -11,6 +11,47 @@
 |
 */
 
+
+Route::group(
+    [
+        'prefix'     => 'admin/json',
+        'middleware' => ['web'],
+        'namespace'  => 'WebReinvent\VaahCms\Http\Controllers'
+    ],
+    function () {
+        //------------------------------------------------
+        //------------------------------------------------
+        Route::any( '/assets', 'JsonController@getPublicAssets' )
+            ->name( 'vh.admin.json.assets' );
+        //------------------------------------------------
+        //------------------------------------------------
+        //------------------------------------------------
+    });
+
+
+Route::group(
+    [
+        'prefix'     => 'admin',
+        'middleware' => ['web'],
+        'namespace'  => 'WebReinvent\VaahCms\Http\Controllers\Admin'
+    ],
+    function () {
+        //------------------------------------------------
+        //------------------------------------------------
+        Route::any( '/signin/post', 'PublicController@postLogin' )
+            ->name( 'vh.admin.signin.post' );
+        //------------------------------------------------
+        //------------------------------------------------
+        //------------------------------------------------
+    });
+
+
+//=================OLD ROUTES===========================================
+
+
+
+
+
 include('admin/settings.php');
 
 Route::group(
@@ -59,7 +100,7 @@ Route::group(
         Route::get( '/login', 'PublicController@redirectToLogin' )
             ->name( 'vh.admin.login' );
         //------------------------------------------------
-        Route::post( '/post', 'PublicController@postLogin' )
+        Route::post( '/login/post', 'PublicController@postLogin' )
             ->name( 'vh.admin.login.post' );
         //------------------------------------------------
         Route::get( '/logout', 'PublicController@logout' )
