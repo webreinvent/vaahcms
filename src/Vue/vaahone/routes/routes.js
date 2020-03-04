@@ -14,22 +14,34 @@ import IsLoggedIn from './middleware/IsLoggedIn'
 //----------LayoutApp
 
 
-import LayoutApp from "./../layouts/App";
+import LayoutPublic from "./../layouts/Public";
+import LayoutAdmin from "./../layouts/Admin";
+
+import SignIn from "./../pages/SignIn";
 
 
 routes_list =     {
     path: '/',
-    component: LayoutApp,
+    component: LayoutPublic,
     props: true,
     meta: {
         middleware: [
-            IsLoggedIn
+            GetAssets
         ]
     },
     children: [
         {
+            path: '/',
+            name: 'sign_in',
+            component: SignIn,
+            props: true,
+            meta: {
+                middleware: [
+                    GetAssets
+                ]
+            },
+        }
 
-        },
     ]
 };
 

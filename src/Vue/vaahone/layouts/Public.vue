@@ -8,4 +8,4 @@
 
 </template>
 
-<script src="./AppJs.js"></script>
+<script src="./PublicJs.js"></script>

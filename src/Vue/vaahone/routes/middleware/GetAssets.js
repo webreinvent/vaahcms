@@ -21,7 +21,7 @@ export default async function GetAssets ({ to, from, next, store }){
 
     if( Object.keys(payload.params).length > 0)
     {
-        await store.dispatch('root/getAssets', payload);
+        //await store.dispatch('root/getAssets', payload);
     }
 
 

@@ -11,11 +11,9 @@
 
 @section('content')
 
-    <div id="vh-app-login">
+    <div id="app">
 
-        <h1>Hosting</h1>
-
-
+        <router-view></router-view>
 
     </div>
 
