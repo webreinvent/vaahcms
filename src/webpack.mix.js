@@ -15,18 +15,30 @@ mix.setPublicPath('./../../../public/vaahcms/admin/');
 
 let theme_path = "./themes/vaahone/";
 
-mix.sass('Resources/assets/admin/vaahone/scss/admin.scss', theme_path+'css/');
+//mix.sass('Resources/assets/admin/vaahone/scss/admin.scss', theme_path+'css/');
 
+
+let path_vue;
 
 /*
  |--------------------------------------------------------------------------
- | Generate Build
+ | UI Build
  |--------------------------------------------------------------------------
  */
 
-let path_vue = __dirname+"/Resources/views/admin/vaahone/vue/app.js";
-mix.js(path_vue,  theme_path+'/builds');
+path_vue = __dirname+"/Resources/views/admin/vaahone/vue-ui/app.js";
+mix.js(path_vue,  theme_path+'/builds/ui.js');
 
+/*
+ |--------------------------------------------------------------------------
+ | App Build
+ |--------------------------------------------------------------------------
+ */
+
+path_vue = __dirname+"/Resources/views/admin/vaahone/vue/app.js";
+mix.js(path_vue,  theme_path+'/builds/app.js');
+
+//--------------------------------------------------------------------------
 
 mix.webpackConfig({
     watchOptions: {

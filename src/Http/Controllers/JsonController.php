@@ -69,6 +69,25 @@ class JsonController extends Controller
 
     }
     //----------------------------------------------------------
+    public function isLoggedIn(Request $request)
+    {
+
+
+        $data = [];
+
+        $is_logged = false;
+
+        if(\Auth::check())
+        {
+            $is_logged = true;
+        }
+
+        $response['status'] = 'success';
+        $response['data']['is_logged_in'] = $is_logged;
+
+        return response()->json($response);
+
+    }
     //----------------------------------------------------------
 
 

@@ -11,6 +11,7 @@
 |
 */
 
+include('admin/ui.php');
 
 Route::group(
     [
@@ -24,6 +25,8 @@ Route::group(
         Route::any( '/assets', 'JsonController@getPublicAssets' )
             ->name( 'vh.admin.json.assets' );
         //------------------------------------------------
+        Route::any( '/is-logged-in', 'JsonController@isLoggedIn' )
+            ->name( 'vh.admin.json.is_logged_in' );
         //------------------------------------------------
         //------------------------------------------------
     });
@@ -41,6 +44,7 @@ Route::group(
         Route::any( '/signin/post', 'PublicController@postLogin' )
             ->name( 'vh.admin.signin.post' );
         //------------------------------------------------
+
         //------------------------------------------------
         //------------------------------------------------
     });

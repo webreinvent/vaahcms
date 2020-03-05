@@ -1,0 +1,292 @@
+[
+  {
+    "name": "Color Modifiers",
+    "list": [
+      { "class": "is-primary" },
+      { "class": "is-link" },
+      { "class": "is-info" },
+      { "class": "is-success" },
+      { "class": "is-warning" },
+      { "class": "is-danger" }
+    ]
+  },
+  {
+    "name": "Size Modifiers",
+    "list": [
+      { "class": "is-small" },
+      { "class": "is-medium" },
+      { "class": "is-large" }
+    ]
+  },
+  {
+    "name": "State Modifiers",
+    "list": [
+      { "class": "is-outlined" },
+      { "class": "is-loading",
+        "notes": "For loading effect"
+      }
+    ]
+  },
+  {
+    "name": "Typography - Font-Size",
+    "list": [
+      { "class": "is-size-1" },
+      { "class": "is-size-2" },
+      { "class": "is-size-3" },
+      { "class": "is-size-4" },
+      { "class": "is-size-5" },
+      { "class": "is-size-6" },
+      { "class": "is-size-7" }
+    ]
+  },
+  {
+    "name": "Alignment",
+    "list": [
+      { "class": "has-text-centered" },
+      { "class": "has-text-justified" },
+      { "class": "has-text-left" },
+      { "class": "has-text-right" }
+    ]
+  },
+  {
+    "name": "Transform",
+    "list": [
+      { "class": "is-capitalized" },
+      { "class": "is-lowercase" },
+      { "class": "is-uppercase" }
+    ]
+  },
+  {
+    "name": "Responsive",
+    "list": [
+      { "class": "is-size-1-mobile" },
+      { "class": "is-size-1-tablet" },
+      { "class": "is-size-1-touch" },
+      { "class": "is-size-1-desktop" },
+      { "class": "is-size-1-widescreen" },
+      { "class": "is-size-1-fullhd" },
+      { "class": "has-text-left-mobile" },
+      { "class": "has-text-left-tablet" },
+      { "class": "has-text-left-tablet-only" },
+      { "class": "has-text-left-touch" },
+      { "class": "has-text-left-desktop" },
+      { "class": "has-text-left-desktop-only" },
+      { "class": "has-text-left-widescreen" },
+      { "class": "has-text-left-widescreen-only" },
+      { "class": "has-text-left-fullhd" },
+      { "class": "has-text-weight-light" },
+      { "class": "has-text-weight-normal" },
+      { "class": "has-text-weight-medium" },
+      { "class": "has-text-weight-semibold" },
+      { "class": "has-text-weight-bold" }
+    ]
+  },
+  {
+    "name": "Float",
+    "list": [
+      { "class": "is-clearfix" },
+      { "class": "is-pulled-left" },
+      { "class": "is-pulled-right" }
+    ]
+  },
+  {
+    "name": "Spacing",
+    "list": [
+      { "class": "is-marginless" },
+      { "class": "is-paddingless" }
+    ]
+  },
+  {
+    "name": "Helpers",
+    "list": [
+      { "class": "is-overlay" },
+      { "class": "is-clipped" },
+      { "class": "is-radiusless" },
+      { "class": "is-shadowless" },
+      { "class": "is-unselectable" },
+      { "class": "is-invisible" },
+      { "class": "is-hidden" },
+      { "class": "is-sr-only" },
+      { "class": "is-relative" }
+    ]
+  },
+  {
+    "name": "Responsive",
+    "list": [
+      { "class": "is-block" },
+      { "class": "is-flex" },
+      { "class": "is-inline" },
+      { "class": "is-inline-block" },
+      { "class": "is-inline-flex" },
+      { "class": "is-flex-mobile" },
+      { "class": "is-flex-tablet-only" },
+      { "class": "is-flex-desktop-only" },
+      { "class": "is-flex-widescreen-only" },
+      { "class": "is-flex-touch" },
+      { "class": "is-flex-tablet" },
+      { "class": "is-flex-desktop" },
+      { "class": "is-flex-widescreen" },
+      { "class": "is-hidden-mobile" },
+      { "class": "is-hidden-tablet-only" },
+      { "class": "is-hidden-desktop-only" },
+      { "class": "is-hidden-widescreen-only" },
+      { "class": "is-hidden-touch" },
+      { "class": "is-hidden-tablet" },
+      { "class": "is-hidden-desktop" },
+      { "class": "is-hidden-widescreen" },
+      { "class": "is-hidden-fullhd" }
+    ]
+  },
+  {
+    "name": "Typography - Text Color",
+    "list": [
+      { "class": "has-text-white" },
+      { "class": "has-text-black" },
+      { "class": "has-text-light" },
+      { "class": "has-text-dark" },
+      { "class": "has-text-primary" },
+      { "class": "has-text-info" },
+      { "class": "has-text-link" },
+      { "class": "has-text-success" },
+      { "class": "has-text-warning" },
+      { "class": "has-text-danger" },
+      { "class": "has-text-black-bis" },
+      { "class": "has-text-black-ter" },
+      { "class": "has-text-grey-darker" },
+      { "class": "has-text-grey" },
+      { "class": "has-text-grey-light" },
+      { "class": "has-text-grey-lighter" },
+      { "class": "has-text-white-ter" },
+      { "class": "has-text-white-bis" }
+    ]
+  },
+  {
+    "name": "Background Color",
+    "list": [
+      {"class": "has-background-white"},
+      {"class": "has-background-black"},
+      {"class": "has-background-light"},
+      {"class": "has-background-dark"},
+      {"class": "has-background-primary"},
+      {"class": "has-background-info"},
+      {"class": "has-background-link"},
+      {"class": "has-background-success"},
+      {"class": "has-background-warning"},
+      {"class": "has-background-danger"},
+      {"class": "has-background-black-bis"},
+      {"class": "has-background-black-ter"},
+      {"class": "has-background-grey-darker"},
+      {"class": "has-background-grey"},
+      {"class": "has-background-grey-light"},
+      {"class": "has-background-grey-lighter"},
+      {"class": "has-background-white-ter"},
+      {"class": "has-background-white-bis"}
+    ]
+  },
+  {
+    "name": "Bulma (bulma-helpers) - Margin  <small>| Range: 5-150 | multiple of 5 </small>",
+    "list": [
+      { "class": "has-margin-x" },
+      { "class": "has-margin-top-x" },
+      { "class": "has-margin-left-x" },
+      { "class": "has-margin-right-x" },
+      { "class": "has-margin-bottom-x" },
+      { "class": "has-margin-x-mobile" },
+      { "class": "has-margin-top-x-tablet" },
+      { "class": "has-margin-x-fullhd" },
+      { "class": "has-margin-x-widescreen" }
+    ]
+  },
+  {
+    "name": "Bulma (bulma-helpers) - Padding  <small>| Range: 5-150 | multiple of 5 </small>",
+    "list": [
+      { "class": "has-padding-x" },
+      { "class": "has-padding-top-x" },
+      { "class": "has-padding-left-x" },
+      { "class": "has-padding-right-x" },
+      { "class": "has-padding-bottom-x" },
+      { "class": "has-padding-x-mobile" },
+      { "class": "has-padding-top-x-tablet" },
+      { "class": "has-padding-x-fullhd" },
+      { "class": "has-padding-x-widescreen" }
+    ]
+  },
+  {
+    "name": "Bulma (bulma-helpers) - Width  <small>| Range: 50-400 | multiple of 50 </small>",
+    "list": [
+      { "class": "has-width-x" },
+      { "class": "has-max-width-x" },
+      { "class": "has-min-width-x" },
+      { "class": "is-full-width" },
+      { "class": "is-half-width" },
+      { "class": "has-page-width" },
+      { "class": "has-width-x-touch" },
+      { "class": "has-width-x-mobile" },
+      { "class": "has-max-width-x-desktop" },
+      { "class": "has-min-width-x-mobile" },
+      { "class": "is-full-width-tablet" },
+      { "class": "is-half-width-widescreen" },
+      { "class": "has-page-width-mobile" }
+    ]
+  },
+  {
+    "name": "Bulma (bulma-helpers) - Height  <small>| Range: 50-400 | multiple of 50 </small>",
+    "list": [
+      { "class": "has-height-x" },
+      { "class": "has-max-height-x" },
+      { "class": "has-min-height-x" },
+      { "class": "is-full-height" },
+      { "class": "is-half-height" },
+      { "class": "has-page-height" },
+      { "class": "has-height-x-touch" },
+      { "class": "has-height-x-mobile" },
+      { "class": "has-max-height-x-desktop" },
+      { "class": "has-min-height-x-mobile" },
+      { "class": "is-full-height-tablet" },
+      { "class": "is-half-height-widescreen" },
+      { "class": "has-page-height-mobile" }
+    ]
+  },
+  {
+    "name": "Bulma - Flex",
+    "list": [
+      { "class": "flex-row" },
+      { "class": "flex-column" },
+      { "class": "is-vcentered", "notes": "Vertically centered" },
+      { "class": "align-start" },
+      { "class": "justify-center" },
+      { "class": "align-self-baseline" },
+      { "class": "align-items-flex-end" },
+      { "class": "nowrap" },
+      { "class": "flex-mobile" },
+      { "class": "justify-center-desktop" }
+    ]
+  },
+  {
+    "name": "Bulma - Border <small>| Range: x=1, 2, 3, ..., 10</small>",
+    "list": [
+      { "class": "has-border-x" },
+      { "class": "is-borderless" },
+      { "class": "is-completely-borderless" },
+      { "class": "has-border-width-x" },
+      { "class": "has-border-top-width-x" },
+      { "class": "has-border-right-width-x" },
+      { "class": "has-border-bottom-width-x" },
+      { "class": "has-border-left-width-x" }
+    ]
+  },
+  {
+    "name": "Bulma - Blurred <small>| Range: 15px, 40px, 75px</small>",
+    "list": [
+      { "class": "is-blurred" },
+      { "class": "is-blurred-medium" },
+      { "class": "is-blurred-hard" }
+    ]
+  },
+  {
+    "name": "Bulma - Cursor",
+    "list": [
+      { "class": "has-cursor-pointer" }
+    ]
+  }
+]

@@ -1,9 +1,13 @@
+import TopMenu from './../components/App/TopMenu'
+import Footer from './../components/App/Footer'
 
 export default {
     computed:{
+        root() {return this.$store.getters['root/state']},
     },
     components:{
-
+        TopMenu,
+        Footer,
     },
     data()
     {

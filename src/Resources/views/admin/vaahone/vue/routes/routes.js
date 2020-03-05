@@ -1,5 +1,5 @@
 let routes;
-let routes_list;
+let routes_list=[];
 
 
 routes= [
@@ -14,14 +14,20 @@ import IsLoggedIn from './middleware/IsLoggedIn'
 //----------LayoutApp
 
 
+
+
+/*
+|--------------------------------------------------------------------------
+| Public Routes
+|--------------------------------------------------------------------------
+*/
 import LayoutPublic from "./../layouts/Public";
-import LayoutAdmin from "./../layouts/Admin";
+
 
 import SignIn from "./../pages/SignIn";
 import ForgotPassword from "./../pages/ForgotPassword";
 
-
-routes_list =     {
+let routes_public =     {
     path: '/',
     component: LayoutPublic,
     props: true,
@@ -57,8 +63,45 @@ routes_list =     {
     ]
 };
 
-routes.push(routes_list);
-//----------/LayoutApp
+routes.push(routes_public);
+
+
+/*
+|--------------------------------------------------------------------------
+| Admin Routes
+|--------------------------------------------------------------------------
+*/
+import LayoutAdmin from "./../layouts/Admin";
+import Index from "./../pages/dashboard/Index";
+
+let routes_admin =     {
+    path: '/app',
+    component: LayoutAdmin,
+    props: true,
+    meta: {
+        middleware: [
+            IsLoggedIn,
+            GetAssets
+        ]
+    },
+    children: [
+        {
+            path: '/',
+            name: 'dashboard.index',
+            component: Index,
+            props: true,
+            meta: {
+                middleware: [
+                    IsLoggedIn,
+                    GetAssets
+                ]
+            },
+        }
+
+    ]
+};
+
+routes.push(routes_admin);
 
 
 export default routes;

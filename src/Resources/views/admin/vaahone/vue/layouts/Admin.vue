@@ -2,7 +2,10 @@
 
     <div>
 
+        <TopMenu/>
         <router-view></router-view>
+
+        <Footer/>
 
     </div>
 

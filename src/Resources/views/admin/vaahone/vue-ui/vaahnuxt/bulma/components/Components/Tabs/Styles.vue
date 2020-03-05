@@ -1,0 +1,113 @@
+<template>
+  <div>
+    <div class="tabs is-boxed">
+      <ul>
+        <li class="is-active">
+          <a>
+            <span class="icon is-small"><i class="fas fa-image" aria-hidden="true"></i></span>
+            <span>Pictures</span>
+          </a>
+        </li>
+        <li>
+          <a>
+            <span class="icon is-small"><i class="fas fa-music" aria-hidden="true"></i></span>
+            <span>Music</span>
+          </a>
+        </li>
+        <li>
+          <a>
+            <span class="icon is-small"><i class="fas fa-film" aria-hidden="true"></i></span>
+            <span>Videos</span>
+          </a>
+        </li>
+        <li>
+          <a>
+            <span class="icon is-small"><i class="far fa-file-alt" aria-hidden="true"></i></span>
+            <span>Documents</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="tabs is-toggle">
+      <ul>
+        <li class="is-active">
+          <a>
+            <span class="icon is-small"><i class="fas fa-image" aria-hidden="true"></i></span>
+            <span>Pictures</span>
+          </a>
+        </li>
+        <li>
+          <a>
+            <span class="icon is-small"><i class="fas fa-music" aria-hidden="true"></i></span>
+            <span>Music</span>
+          </a>
+        </li>
+        <li>
+          <a>
+            <span class="icon is-small"><i class="fas fa-film" aria-hidden="true"></i></span>
+            <span>Videos</span>
+          </a>
+        </li>
+        <li>
+          <a>
+            <span class="icon is-small"><i class="far fa-file-alt" aria-hidden="true"></i></span>
+            <span>Documents</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="tabs is-toggle is-toggle-rounded">
+      <ul>
+        <li class="is-active">
+          <a>
+            <span class="icon is-small"><i class="fas fa-image"></i></span>
+            <span>Pictures</span>
+          </a>
+        </li>
+        <li>
+          <a>
+            <span class="icon is-small"><i class="fas fa-music"></i></span>
+            <span>Music</span>
+          </a>
+        </li>
+        <li>
+          <a>
+            <span class="icon is-small"><i class="fas fa-film"></i></span>
+            <span>Videos</span>
+          </a>
+        </li>
+        <li>
+          <a>
+            <span class="icon is-small"><i class="fas fa-file-alt"></i></span>
+            <span>Documents</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="tabs is-fullwidth">
+      <ul>
+        <li>
+          <a>
+            <span class="icon"><i class="fas fa-angle-left" aria-hidden="true"></i></span>
+            <span>Left</span>
+          </a>
+        </li>
+        <li>
+          <a>
+            <span class="icon"><i class="fas fa-angle-up" aria-hidden="true"></i></span>
+            <span>Up</span>
+          </a>
+        </li>
+        <li>
+          <a>
+            <span>Right</span>
+            <span class="icon"><i class="fas fa-angle-right" aria-hidden="true"></i></span>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</template>
