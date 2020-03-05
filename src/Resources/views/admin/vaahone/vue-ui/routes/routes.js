@@ -33,7 +33,7 @@ routes_list =     {
     children: [
         {
             path: '/',
-            name: 'index',
+            name: 'home',
             component: Index,
             props: true,
         }
