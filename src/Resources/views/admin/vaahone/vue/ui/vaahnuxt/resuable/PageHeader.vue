@@ -4,7 +4,7 @@
     <div class="hero-body">
       <div class="container">
         <h1 class="title">
-          UI Blocks
+          UI Blocks - {{page_name}}
         </h1>
         <h2 class="subtitle">
           Reference for UI Blocks Future:
@@ -45,7 +45,8 @@
 
     methods: {
       setPageName: function (fullPath) {
-
+        this.page_name = this.$vaah.getPageName(fullPath);
+        this.page_name = this.$vaah.ucfirst(this.page_name);
       }
     }
 

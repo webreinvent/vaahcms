@@ -10,9 +10,9 @@
           <p class="content mediium">{{content.details_one}}</p>
           <p class="content medium">{{content.details_two}}</p>
 
-          <router-link  v-if="content.link" class="button is-primary" to="/contact">
+          <nuxt-link  v-if="content.link" class="button is-primary" to="/contact">
             {{content.link.label}}
-          </router-link>
+          </nuxt-link>
         </div>
       </div>
     </div>

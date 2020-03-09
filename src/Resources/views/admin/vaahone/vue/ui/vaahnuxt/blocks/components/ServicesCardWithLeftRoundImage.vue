@@ -18,18 +18,18 @@
             <div class="columns card-content">
               <div class="column is-2 icon-position pr-2">
                 <div class="vmdl">
-                  <router-link :to="feature.link">
+                  <nuxt-link :to="feature.link">
                     <img :src="feature.src" class="round-image image-fluid" alt="">
-                  </router-link>
+                  </nuxt-link>
                 </div>
               </div>
               <div class="column is-10 pl-0">
-                <router-link :to="feature.link">
+                <nuxt-link :to="feature.link">
                   <div class="card-body">
                     <h4 class="title is-4 has-text-dark">{{feature.heading}}</h4>
                     <p class="content has-text-dark">{{feature.details}}</p>
                   </div>
-                </router-link>
+                </nuxt-link>
               </div>
             </div>
           </div>

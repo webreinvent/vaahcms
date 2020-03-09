@@ -9,9 +9,9 @@
       </div>
       <div class="columns is-centered">
         <div class="column is-2 has-text-centered">
-          <router-link  v-if="content.link" class="button is-danger is-medium" to="/contact">
+          <nuxt-link  v-if="content.link" class="button is-danger is-medium" to="/contact">
             {{content.link.label}} <i class="ti-arrow-right"></i>
-          </router-link>
+          </nuxt-link>
         </div>
       </div>
     </div>

@@ -12,9 +12,9 @@
           </ul>
 
           <p class="content is-medium">{{content.details_two}}</p>
-          <router-link  v-if="content.link" class="button is-primary" to="/contact">
+          <nuxt-link  v-if="content.link" class="button is-primary" to="/contact">
             {{content.link.label}}
-          </router-link>
+          </nuxt-link>
         </div>
       </div>
       <div class="column is-5 is-gapless">

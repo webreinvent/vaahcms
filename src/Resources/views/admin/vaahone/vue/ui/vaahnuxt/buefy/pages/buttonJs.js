@@ -39,12 +39,6 @@ export default {
     Router,
 
   },
-    data() {
-        return {
-            activeTab: 1,
-            showBooks: false
-        }
-    },
   methods:{
 
   },

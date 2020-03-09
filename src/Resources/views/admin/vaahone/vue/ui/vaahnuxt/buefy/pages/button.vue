@@ -20,7 +20,7 @@
           </SectionTitle>
 
 
-            <SectionCode name="Button" :code="ButtonCode">
+          <SectionCode name="Button" :code="ButtonCode">
             <Button></Button>
           </SectionCode>
 

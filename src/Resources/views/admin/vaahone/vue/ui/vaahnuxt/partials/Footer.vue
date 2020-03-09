@@ -10,16 +10,22 @@
 
           <div class="level-item has-text-centered">
             <div>
-              <router-link to="/ui/buefy">Buefy</router-link>
-              | <router-link to="/ui/bulma">Bulma</router-link>
-              | <router-link to="/ui/docs">Docs</router-link>
-              | <router-link to="/ui/blocks">Blocks</router-link>
+              <vaah-link to="/ui/buefy">Buefy</vaah-link>
+              | <vaah-link to="/ui/bulma">Bulma</vaah-link>
+              | <vaah-link to="/ui/docs">Docs</vaah-link>
+              | <vaah-link to="/ui/blocks">Blocks</vaah-link>
             </div>
           </div>
 
         </div>
 
+        <div class="versions ">
 
+          <b-tag>{{pkg.name}} v{{pkg.version}}</b-tag>
+          <b-tag>{{buefy.name}} v{{buefy.version}}</b-tag>
+          <b-tag>{{bulma.name}} v{{bulma.version}}</b-tag>
+
+        </div>
 
       </div>
     </div>
@@ -31,16 +37,22 @@
 </template>
 
 <script>
-
+  import pkg from './../../package';
+  import buefy from './../../node_modules/buefy/package';
+  import bulma from './../../node_modules/bulma/package';
+  import globalComponents from '../helpers/globalComponents';
   export default {
-    components:{
-    },
     data(){
       let obj = {
-
+        pkg: pkg,
+        buefy: buefy,
+        bulma: bulma,
       }
       return obj;
-    }
+    },
+    components:{
+      ...globalComponents,
+    },
   }
 </script>
 

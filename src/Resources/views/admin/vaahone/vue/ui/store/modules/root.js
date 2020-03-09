@@ -31,6 +31,7 @@ export default {
         check_logged_in: null,
         is_logged_in: null,
         auth_user: null,
+        vaah_link: 'vue'
     },
     //=========================================================================
     mutations:{

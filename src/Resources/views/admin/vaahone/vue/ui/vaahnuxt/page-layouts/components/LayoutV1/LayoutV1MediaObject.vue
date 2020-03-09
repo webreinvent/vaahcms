@@ -16,11 +16,11 @@
                       <img src="https://via.placeholder.com/50x50">
                     </div>
                     <div class="column is-10">
-                      <router-link to="/">
+                      <nuxt-link to="/">
                         inhouse/<b>Project-1</b>
-                      </router-link>
+                      </nuxt-link>
                       <span class="tag is-rounded">Developer</span>
-                      <p>Repository for <router-link to="/">https://www.google.com</router-link></p>
+                      <p>Repository for <nuxt-link to="/">https://www.google.com</nuxt-link></p>
                     </div>
                   </div>
                 </div>

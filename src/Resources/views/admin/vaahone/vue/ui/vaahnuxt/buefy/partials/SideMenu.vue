@@ -5,54 +5,53 @@
       General
     </p>
     <ul class="menu-list">
-      <li><router-link to="/buefy/button">Button</router-link></li>
+      <li><vaah-link to="/ui/buefy/button">Button</vaah-link></li>
     </ul>
 
     <p class="menu-label">UI COMPONENTS</p>
     <ul class="menu-list">
-      <li><router-link :to="{name: 'bue.index'}">Button</router-link></li>
-      <li><router-link :to="{name: 'bue.carousel'}">Carousel</router-link></li>
-      <li><router-link to="/buefy/carousel">Carousel</router-link></li>
-      <li><router-link to="/buefy/collapse">Collapse</router-link></li>
-      <li><router-link to="/buefy/dialog">Dialog</router-link></li>
-      <li><router-link to="/buefy/dropdown">Dropdown</router-link></li>
-      <li><router-link to="/buefy/icon">Icon</router-link></li>
-      <li><router-link to="/buefy/loading">Loading</router-link></li>
-      <li><router-link to="/buefy/menu">Menu</router-link></li>
-      <li><router-link to="/buefy/message">Message</router-link></li>
-      <li><router-link to="/buefy/modal">Modal</router-link></li>
-      <li><router-link to="/buefy/navbar">Navbar</router-link></li>
-      <li><router-link to="/buefy/notification">Notification</router-link></li>
-      <li><router-link to="/buefy/pagination">Pagination</router-link></li>
-      <li><router-link to="/buefy/progress">Progress</router-link></li>
-      <li><router-link to="/buefy/snackbar">Snackbar</router-link></li>
-      <li><router-link to="/buefy/steps">Steps</router-link></li>
-      <li><router-link to="/buefy/table">Table</router-link></li>
-      <li><router-link to="/buefy/toast">Toast</router-link></li>
-      <li><router-link to="/buefy/tooltip">ToolTip</router-link></li>
-      <li><router-link to="/buefy/tag">Tag</router-link></li>
-      <li><router-link to="/buefy/tabs">Tabs</router-link></li>
+      <li><vaah-link to="/ui/buefy/button">Button</vaah-link></li>
+      <li><vaah-link to="/ui/buefy/carousel">Carousel</vaah-link></li>
+      <li><vaah-link to="/ui/buefy/collapse">Collapse</vaah-link></li>
+      <li><vaah-link to="/ui/buefy/dialog">Dialog</vaah-link></li>
+      <li><vaah-link to="/ui/buefy/dropdown">Dropdown</vaah-link></li>
+      <li><vaah-link to="/ui/buefy/icon">Icon</vaah-link></li>
+      <li><vaah-link to="/ui/buefy/loading">Loading</vaah-link></li>
+      <li><vaah-link to="/ui/buefy/menu">Menu</vaah-link></li>
+      <li><vaah-link to="/ui/buefy/message">Message</vaah-link></li>
+      <li><vaah-link to="/ui/buefy/modal">Modal</vaah-link></li>
+      <li><vaah-link to="/ui/buefy/navbar">Navbar</vaah-link></li>
+      <li><vaah-link to="/ui/buefy/notification">Notification</vaah-link></li>
+      <li><vaah-link to="/ui/buefy/pagination">Pagination</vaah-link></li>
+      <li><vaah-link to="/ui/buefy/progress">Progress</vaah-link></li>
+      <li><vaah-link to="/ui/buefy/snackbar">Snackbar</vaah-link></li>
+      <li><vaah-link to="/ui/buefy/steps">Steps</vaah-link></li>
+      <li><vaah-link to="/ui/buefy/table">Table</vaah-link></li>
+      <li><vaah-link to="/ui/buefy/toast">Toast</vaah-link></li>
+      <li><vaah-link to="/ui/buefy/tooltip">ToolTip</vaah-link></li>
+      <li><vaah-link to="/ui/buefy/tag">Tag</vaah-link></li>
+      <li><vaah-link to="/ui/buefy/tabs">Tabs</vaah-link></li>
     </ul>
 
 
     <p class="menu-label">Form Controls</p>
     <ul class="menu-list">
-      <li><router-link to="/buefy/formcontrol/autocomplete">Autocomplete</router-link></li>
-      <li><router-link to="/buefy/formcontrol/checkbox">Checkbox</router-link></li>
-      <li><router-link to="/buefy/formcontrol/clockpicker">Clockpicker</router-link></li>
-      <li><router-link to="/buefy/formcontrol/datepicker">Datepicker</router-link></li>
-      <li><router-link to="/buefy/formcontrol/datetimepicker">Datetimepicker</router-link></li>
-      <li><router-link to="/buefy/formcontrol/field">Field</router-link></li>
-      <li><router-link to="/buefy/formcontrol/input">Input</router-link></li>
-      <li><router-link to="/buefy/formcontrol/numberinput">Numberinput</router-link></li>
-      <li><router-link to="/buefy/formcontrol/radio">Radio</router-link></li>
-      <li><router-link to="/buefy/formcontrol/rate">Rate</router-link></li>
-      <li><router-link to="/buefy/formcontrol/select">Select</router-link></li>
-      <li><router-link to="/buefy/formcontrol/slider">Slider</router-link></li>
-      <li><router-link to="/buefy/formcontrol/switch">Switch</router-link></li>
-      <li><router-link to="/buefy/formcontrol/taginput">Taginput</router-link></li>
-      <li><router-link to="/buefy/formcontrol/timepicker">TimePicker</router-link></li>
-      <li><router-link to="/buefy/formcontrol/upload">Upload</router-link></li>
+      <li><vaah-link to="/ui/buefy/formcontrol/autocomplete">Autocomplete</vaah-link></li>
+      <li><vaah-link to="/ui/buefy/formcontrol/checkbox">Checkbox</vaah-link></li>
+      <li><vaah-link to="/ui/buefy/formcontrol/clockpicker">Clockpicker</vaah-link></li>
+      <li><vaah-link to="/ui/buefy/formcontrol/datepicker">Datepicker</vaah-link></li>
+      <li><vaah-link to="/ui/buefy/formcontrol/datetimepicker">Datetimepicker</vaah-link></li>
+      <li><vaah-link to="/ui/buefy/formcontrol/field">Field</vaah-link></li>
+      <li><vaah-link to="/ui/buefy/formcontrol/input">Input</vaah-link></li>
+      <li><vaah-link to="/ui/buefy/formcontrol/numberinput">Numberinput</vaah-link></li>
+      <li><vaah-link to="/ui/buefy/formcontrol/radio">Radio</vaah-link></li>
+      <li><vaah-link to="/ui/buefy/formcontrol/rate">Rate</vaah-link></li>
+      <li><vaah-link to="/ui/buefy/formcontrol/select">Select</vaah-link></li>
+      <li><vaah-link to="/ui/buefy/formcontrol/slider">Slider</vaah-link></li>
+      <li><vaah-link to="/ui/buefy/formcontrol/switch">Switch</vaah-link></li>
+      <li><vaah-link to="/ui/buefy/formcontrol/taginput">Taginput</vaah-link></li>
+      <li><vaah-link to="/ui/buefy/formcontrol/timepicker">TimePicker</vaah-link></li>
+      <li><vaah-link to="/ui/buefy/formcontrol/upload">Upload</vaah-link></li>
     </ul>
 
   </aside>
@@ -60,11 +59,15 @@
 </template>
 
 <script>
+  import globalComponents from '../../helpers/globalComponents'
   export default {
     data() {
       return {
         isActive: true
       }
-    }
+    },
+    components:{
+      ...globalComponents,
+    },
   }
 </script>
