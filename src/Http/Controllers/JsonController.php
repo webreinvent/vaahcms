@@ -7,6 +7,7 @@ use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use VaahCms\Modules\Cms\Entities\MenuItem;
 use VaahCms\Modules\Cms\Entities\Page;
+use WebReinvent\VaahCms\Entities\Module;
 
 class JsonController extends Controller
 {
@@ -45,9 +46,6 @@ class JsonController extends Controller
                 $data['server']['http'] = 'https://';
             }
 
-
-
-
         }
 
         //-----Vue Errors----------------------
@@ -59,6 +57,20 @@ class JsonController extends Controller
         }
         \Session::forget('vue_errors');
         //-----Vue Errors----------------------
+
+
+        if($request->has('get_extended_views'))
+        {
+            $data['auth_user'] = [
+                'name' => \Auth::user()->name,
+                'email' => \Auth::user()->email,
+            ];
+        }
+
+        if($request->has('get_extended_views'))
+        {
+            $data['extended_views'] = $this->getExtendedViews();
+        }
 
 
         $response['status'] = 'success';
@@ -87,6 +99,97 @@ class JsonController extends Controller
 
         return response()->json($response);
 
+    }
+    //----------------------------------------------------------
+    public function getExtendedViews()
+    {
+
+
+
+        $modules = new \WebReinvent\VaahCms\Entities\Module();
+
+
+        $all = $modules->all();
+        $backend_theme = vh_get_backend_theme();
+
+        $locations = [
+            'top_left_menu'=>'extendTopLeftMenu',
+            'top_right_menu'=>'extendTopRightMenu',
+            'top_right_user_menu'=>'extendTopRightUserMenu',
+        ];
+
+        $ordered_modules = [];
+
+        if($all->count() > 0)
+        {
+
+            foreach ($locations as $location=>$method)
+            {
+                $i = 1;
+
+                if(isset($location)){
+                    $settings_name = $location.'_order';
+                }
+
+
+                foreach($all as $item)
+                {
+
+                    $settings = $item->settings()->key($settings_name)->first();
+
+                    if($settings && !is_null($settings->value) && $settings->value != "")
+                    {
+                        $ordered_modules[$location][$settings->value] = $item->slug;
+                    } else if($settings && !is_null($settings->id))
+                    {
+                        $ordered_modules[$location][$settings->id] = $item->slug;
+                    } else{
+                        $ordered_modules[$location][$i] = $item->slug;
+                    }
+
+                    ksort($ordered_modules[$location]);
+
+                    $i++;
+
+                }
+
+
+
+            }
+
+
+        }
+
+
+        $views = [];
+
+        foreach ($locations as $location=>$method)
+        {
+            $y = 0;
+
+            if(method_exists(new ExtendController(), $method)){
+                $views[$location]['vaahcms'] = ExtendController::$method();
+            }
+
+
+            foreach($ordered_modules as $module_slug)
+            {
+                $module = Module::where('slug', $module_slug)->first();
+
+                $class = "\VaahCms\Modules\\".$module->name."\\ExtendController";
+
+                if(class_exists($class) &&  method_exists(new $class, $method)){
+                    $views[$location][$module_slug] = $class::$method();
+                    $y++;
+                }
+
+            }
+
+
+        }
+
+
+        return $views;
     }
     //----------------------------------------------------------
 

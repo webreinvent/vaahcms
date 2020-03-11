@@ -1,6 +1,8 @@
 <template>
 
-        <b-navbar>
+
+
+        <b-navbar v-if="root.assets">
             <template slot="brand">
                 <b-navbar-item tag="router-link" :to="{ path: '/' }">
                     <img
@@ -9,73 +11,63 @@
                     >
                 </b-navbar-item>
             </template>
-            <template slot="start">
-                <b-navbar-item href="#">
-                    Dashboard
-                </b-navbar-item>
 
-                <b-navbar-dropdown label="Users & Access">
-                    <b-navbar-item href="#">
-                        About
-                    </b-navbar-item>
-                    <b-navbar-item href="#">
-                        Contact
-                    </b-navbar-item>
-                </b-navbar-dropdown>
+            <template slot="start" v-if="root.assets.extended_views.top_left_menu" >
 
 
-                <b-navbar-dropdown label="Extend">
-                    <b-navbar-item href="#">
-                        About
-                    </b-navbar-item>
-                    <b-navbar-item href="#">
-                        Contact
-                    </b-navbar-item>
-                </b-navbar-dropdown>
+                <template  v-for="menus in root.assets.extended_views.top_left_menu">
+
+                    <template v-for="link in menus">
+
+                        <b-navbar-dropdown v-if="link.child" :label="link.label">
+                            <b-navbar-item v-for="link_child in link.child" :href="link_child.link" >
+                                {{link_child.label}}
+                            </b-navbar-item>
+                        </b-navbar-dropdown>
+
+                        <b-navbar-item v-else
+                                       :href="link.link">
+                            {{link.label}}
+                        </b-navbar-item>
+
+                    </template>
+
+                </template>
 
 
-                <b-navbar-dropdown label="Settings">
-                    <b-navbar-item href="#">
-                        About
-                    </b-navbar-item>
-                    <b-navbar-item href="#">
-                        Contact
-                    </b-navbar-item>
-                </b-navbar-dropdown>
 
-
-                <b-navbar-item href="#">
-                    Modules
-                </b-navbar-item>
-                <b-navbar-item href="#">
-                    Themes
-                </b-navbar-item>
-                <b-navbar-item href="#">
-                    Settings
-                </b-navbar-item>
-                <b-navbar-dropdown label="Info">
-                    <b-navbar-item href="#">
-                        About
-                    </b-navbar-item>
-                    <b-navbar-item href="#">
-                        Contact
-                    </b-navbar-item>
-                </b-navbar-dropdown>
             </template>
 
             <template slot="end">
-                <b-navbar-item tag="div">
-                    <div class="buttons">
-                        <a class="button is-primary">
-                            <strong>Sign up</strong>
-                        </a>
-                        <a class="button is-light">
-                            Log in
-                        </a>
-                    </div>
-                </b-navbar-item>
+
+                <b-navbar-dropdown :right="true" :label="root.assets.auth_user.name">
+
+                    <template  v-for="menus in root.assets.extended_views.top_right_user_menu">
+
+                        <template v-for="link in menus">
+
+                            <b-navbar-item :href="link.link">
+                                {{link.label}}
+                            </b-navbar-item>
+
+                        </template>
+
+                    </template>
+
+                </b-navbar-dropdown>
+
+
             </template>
         </b-navbar>
 
 </template>
 
+<script>
+
+    export default {
+        computed:{
+            root() {return this.$store.getters['root/state']},
+        },
+    }
+
+</script>

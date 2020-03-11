@@ -24,13 +24,11 @@ export default {
         assets_path: assets_path,
         assets_image_path: assets_image_path,
         current_url: current_url,
-        redirect_full_url: null,
         ajax_url: ajax_url,
         json_url: json_url,
         assets: null,
         check_logged_in: null,
         is_logged_in: null,
-        auth_user: null,
     },
     //=========================================================================
     mutations:{
@@ -42,59 +40,7 @@ export default {
     //=========================================================================
     actions:{
         //-----------------------------------------------------------------
-        async getAssets({ state, commit, dispatch }, payload) {
-            let module_payload;
-            for( let item_key in payload.params)
-            {
-                module_payload = {
-                    key: item_key,
-                    value: payload.params[item_key]
-                };
-                commit('updateState', module_payload);
-            }
-
-            payload.url = state.json_url+'/assets';
-
-            console.log('-->payload.url', payload.url);
-
-            //let data = await dispatch('ajax', payload);
-            let data = await Vaah.ajax(payload.url, payload.params);
-
-            module_payload = {
-                key: 'assets',
-                value: data.data.data
-            };
-
-            commit('updateState', module_payload);
-
-        },
         //-----------------------------------------------------------------
-        //-----------------------------------------------------------------
-        async checkIsLoggedIn({ state, commit, dispatch }, payload) {
-
-            payload = {
-                url: state.json_url+'/is-logged-in',
-                params: {
-                    redirect_full_url: state.full_url
-                }
-            };
-
-            let data = await dispatch('ajax', payload);
-
-            if(data.user)
-            {
-                this.commit('root/updateState', {key:'check_logged_in', value: true});
-                this.commit('root/updateState', {key:'is_logged_in', value: true});
-
-            } else
-            {
-                this.commit('root/updateState', {key:'is_logged_in', value: false});
-            }
-
-        },
-        //-----------------------------------------------------------------
-        //-----------------------------------------------------------------
-
     },
     //=========================================================================
     getters:{

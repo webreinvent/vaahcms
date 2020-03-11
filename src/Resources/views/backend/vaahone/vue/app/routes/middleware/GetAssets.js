@@ -1,25 +1,40 @@
+import {VaahHelper as Vaah} from "../../vaahvue/helpers/VaahHelper";
+
 export default async function GetAssets ({ to, from, next, store }){
-    let root_state = store.getters['root/state'];
+    let root_assets = store.getters['root/state'].assets;
 
-    let payload = {
-        params:{},
-        query: {}
-    };
+    console.log('--->', root_assets);
 
-    payload.params.get_server_details = true;
-    if(!root_state.auth_user)
+    let params = {};
+
+    params.get_server_details = true;
+    if(!root_assets || (root_assets && !root_assets.server))
     {
-        payload.params.get_auth_user = true;
+        params.get_server_details = true;
     }
 
-    if(!root_state.auth_user)
+    if(!root_assets || (root_assets && !root_assets.auth_user))
     {
-        payload.params.get_auth_user = true;
+        params.get_auth_user = true;
     }
 
-    if( Object.keys(payload.params).length > 0)
+    if(!root_assets || (root_assets && !root_assets.extended_views))
     {
-        await store.dispatch('root/getAssets', payload);
+        params.get_extended_views = true;
+    }
+
+
+    if( Object.keys(params).length > 0)
+    {
+        let url = store.getters['root/state'].json_url+'/assets';
+        let data = await Vaah.ajax(url, params);
+
+        let payload = {
+            key: 'assets',
+            value: data.data.data
+        };
+        store.commit('root/updateState', payload);
+
     }
 
 
