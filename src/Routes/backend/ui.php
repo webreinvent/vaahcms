@@ -3,14 +3,14 @@
 
 Route::group(
     [
-        'prefix'     => 'admin/ui',
+        'prefix'     => 'backend/ui',
         'middleware' => ['web'],
-        'namespace'  => 'WebReinvent\VaahCms\Http\Controllers\Admin'
+        'namespace'  => 'WebReinvent\VaahCms\Http\Controllers'
     ],
     function () {
         //------------------------------------------------
         Route::get( '/', 'UiController@index' )
-            ->name( 'vh.admin.ui' );
+            ->name( 'vh.backend.ui' );
         //------------------------------------------------
         //------------------------------------------------
         //------------------------------------------------
