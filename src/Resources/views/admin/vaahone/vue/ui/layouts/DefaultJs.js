@@ -1,5 +1,5 @@
 import globalComponents from "../vaahnuxt/helpers/globalComponents";
-import Footer from './../components/Footer'
+import Footer from './../components/partials/Footer'
 
 export default {
     computed:{

@@ -21,7 +21,7 @@ import IsLoggedIn from './middleware/IsLoggedIn'
 | Public Routes
 |--------------------------------------------------------------------------
 */
-import Default from "./../layouts/default";
+import Default from "./../layouts/Default";
 
 
 import Index from "./../pages/Index";
@@ -54,7 +54,7 @@ import carousel from "./../vaahnuxt/buefy/pages/carousel";
 
 
 routes_list =     {
-    path: '/buefy',
+    path: '/ui/buefy',
     component: Ui,
     props: true,
     children: [

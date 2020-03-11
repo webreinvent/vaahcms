@@ -93,7 +93,7 @@
                                   <b-tooltip label="Issues"
                                              position="is-top">
                                     <b-icon
-                                      icon="content-copy"
+                                      icon="align-justify"
                                       size="is-small">
                                     </b-icon>10
                                   </b-tooltip>
@@ -174,7 +174,7 @@
                                   <b-tooltip label="Issues"
                                              position="is-top">
                                     <b-icon
-                                      icon="content-copy"
+                                      icon="align-justify"
                                       size="is-small">
                                     </b-icon>10
                                   </b-tooltip>
@@ -258,7 +258,7 @@
                                   <b-tooltip label="Issues"
                                              position="is-top">
                                     <b-icon
-                                      icon="content-copy"
+                                      icon="align-justify"
                                       size="is-small">
                                     </b-icon>10
                                   </b-tooltip>
@@ -339,7 +339,7 @@
                                   <b-tooltip label="Issues"
                                              position="is-top">
                                     <b-icon
-                                      icon="content-copy"
+                                      icon="align-justify"
                                       size="is-small">
                                     </b-icon>10
                                   </b-tooltip>
@@ -423,7 +423,7 @@
                                   <b-tooltip label="Issues"
                                              position="is-top">
                                     <b-icon
-                                      icon="content-copy"
+                                      icon="align-justify"
                                       size="is-small">
                                     </b-icon>10
                                   </b-tooltip>
@@ -503,7 +503,7 @@
                                   <b-tooltip label="Issues"
                                              position="is-top">
                                     <b-icon
-                                      icon="content-copy"
+                                      icon="align-justify"
                                       size="is-small">
                                     </b-icon>10
                                   </b-tooltip>

@@ -21,7 +21,7 @@
                 label=""
                 :confirm_dialog="'buefy'"
                 class="content has-text-right ">
-                <b-icon size="is-small" icon="content-copy"></b-icon>
+                <b-icon size="is-small" icon="align-justify"></b-icon>
               </vh-copy>
 
             </b-button>

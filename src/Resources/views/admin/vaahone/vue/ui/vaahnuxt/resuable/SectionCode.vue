@@ -39,7 +39,7 @@
 
                        <div class="level-item">
                          <b-button type="is-text">
-                          <b-icon size="is-small" icon="content-copy"></b-icon>
+                          <b-icon size="is-small" icon="align-justify"></b-icon>
                           <vh-copy
                             :data="code"
                             :label="'copy'"

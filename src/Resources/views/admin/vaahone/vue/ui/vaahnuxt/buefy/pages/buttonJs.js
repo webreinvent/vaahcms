@@ -30,6 +30,7 @@ export default {
   },
   components: {
     ...globalComponents,
+
     SideMenu,
     Button,
     TypesAndStates,

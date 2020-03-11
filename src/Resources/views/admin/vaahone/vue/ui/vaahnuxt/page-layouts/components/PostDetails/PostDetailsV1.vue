@@ -88,7 +88,7 @@
                   <span class="is-pulled-right">
                     <a href="#">
                       <b-icon
-                      icon="content-copy"
+                      icon="align-justify"
                       size="is-small"
                     >
                     </b-icon>
@@ -117,7 +117,7 @@
                   <span class="is-pulled-right">
                     <a href="#">
                       <b-icon
-                      icon="content-copy"
+                      icon="align-justify"
                       size="is-small"
                     >
                     </b-icon>
@@ -146,7 +146,7 @@
                   <span class="is-pulled-right">
                     <a href="#">
                       <b-icon
-                      icon="content-copy"
+                      icon="align-justify"
                       size="is-small"
                     >
                     </b-icon>
@@ -184,7 +184,7 @@
                   <span class="is-pulled-right">
                     <a href="#">
                       <b-icon
-                      icon="content-copy"
+                      icon="align-justify"
                       size="is-small"
                     >
                     </b-icon>
@@ -213,7 +213,7 @@
                   <span class="is-pulled-right">
                     <a href="#">
                       <b-icon
-                      icon="content-copy"
+                      icon="align-justify"
                       size="is-small"
                     >
                     </b-icon>
@@ -240,7 +240,7 @@
                   <span class="is-pulled-right">
                     <a href="#">
                       <b-icon
-                      icon="content-copy"
+                      icon="align-justify"
                       size="is-small"
                     >
                     </b-icon>
@@ -270,7 +270,7 @@
                   <span class="is-pulled-right">
                     <a href="#">
                       <b-icon
-                      icon="content-copy"
+                      icon="align-justify"
                       size="is-small"
                     >
                     </b-icon>
@@ -307,7 +307,7 @@
                   <span class="is-pulled-right">
                     <a href="#">
                       <b-icon
-                      icon="content-copy"
+                      icon="align-justify"
                       size="is-small"
                     >
                     </b-icon>
@@ -336,7 +336,7 @@
                   <span class="is-pulled-right">
                     <a href="#">
                       <b-icon
-                      icon="content-copy"
+                      icon="align-justify"
                       size="is-small"
                     >
                     </b-icon>
@@ -373,7 +373,7 @@
                   <span class="is-pulled-right">
                     <a href="#">
                       <b-icon
-                      icon="content-copy"
+                      icon="align-justify"
                       size="is-small"
                     >
                     </b-icon>
@@ -407,7 +407,7 @@
                   <span class="is-pulled-right">
                     <a href="#">
                       <b-icon
-                      icon="content-copy"
+                      icon="align-justify"
                       size="is-small"
                     >
                     </b-icon>
@@ -443,7 +443,7 @@
                   <span class="is-pulled-right">
                     <a href="#">
                       <b-icon
-                      icon="content-copy"
+                      icon="align-justify"
                       size="is-small"
                     >
                     </b-icon>
@@ -478,7 +478,7 @@
                   <span class="is-pulled-right">
                     <a href="#">
                       <b-icon
-                      icon="content-copy"
+                      icon="align-justify"
                       size="is-small"
                     >
                     </b-icon>

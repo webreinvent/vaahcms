@@ -4,7 +4,7 @@
 
     <b-icon size="is-small"
             v-if="hide_icon === false"
-            icon="content-copy"></b-icon>
+            icon="align-justify"></b-icon>
 
     <vh-copy
       :data="data"

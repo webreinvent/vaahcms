@@ -1,5 +1,5 @@
-import TopMenu from './../components/TopMenu'
-import Footer from './../components/Footer'
+import TopMenu from './../components/partials/TopMenu'
+import Footer from './../components/partials/Footer'
 
 export default {
     computed:{

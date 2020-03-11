@@ -1,5 +1,5 @@
-import Logo from '../components/Logo';
-import Footer from '../components/Footer';
+import Logo from '../components/partials/Logo';
+import Footer from '../components/partials/Footer';
 
 export default {
     computed:{
