@@ -11,10 +11,47 @@
             </template>
             <template slot="start">
                 <b-navbar-item href="#">
-                    Home
+                    Dashboard
+                </b-navbar-item>
+
+                <b-navbar-dropdown label="Users & Access">
+                    <b-navbar-item href="#">
+                        About
+                    </b-navbar-item>
+                    <b-navbar-item href="#">
+                        Contact
+                    </b-navbar-item>
+                </b-navbar-dropdown>
+
+
+                <b-navbar-dropdown label="Extend">
+                    <b-navbar-item href="#">
+                        About
+                    </b-navbar-item>
+                    <b-navbar-item href="#">
+                        Contact
+                    </b-navbar-item>
+                </b-navbar-dropdown>
+
+
+                <b-navbar-dropdown label="Settings">
+                    <b-navbar-item href="#">
+                        About
+                    </b-navbar-item>
+                    <b-navbar-item href="#">
+                        Contact
+                    </b-navbar-item>
+                </b-navbar-dropdown>
+
+
+                <b-navbar-item href="#">
+                    Modules
                 </b-navbar-item>
                 <b-navbar-item href="#">
-                    Documentation
+                    Themes
+                </b-navbar-item>
+                <b-navbar-item href="#">
+                    Settings
                 </b-navbar-item>
                 <b-navbar-dropdown label="Info">
                     <b-navbar-item href="#">

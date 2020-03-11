@@ -11,11 +11,11 @@
 |
 */
 
-include('admin/ui.php');
+include('backend/ui.php');
 
 Route::group(
     [
-        'prefix'     => 'admin/json',
+        'prefix'     => 'backend/json',
         'middleware' => ['web'],
         'namespace'  => 'WebReinvent\VaahCms\Http\Controllers'
     ],
@@ -23,10 +23,10 @@ Route::group(
         //------------------------------------------------
         //------------------------------------------------
         Route::any( '/assets', 'JsonController@getPublicAssets' )
-            ->name( 'vh.admin.json.assets' );
+            ->name( 'vh.backend.json.assets' );
         //------------------------------------------------
         Route::any( '/is-logged-in', 'JsonController@isLoggedIn' )
-            ->name( 'vh.admin.json.is_logged_in' );
+            ->name( 'vh.backend.json.is_logged_in' );
         //------------------------------------------------
         //------------------------------------------------
     });
@@ -34,15 +34,15 @@ Route::group(
 
 Route::group(
     [
-        'prefix'     => 'admin',
+        'prefix'     => 'backend',
         'middleware' => ['web'],
-        'namespace'  => 'WebReinvent\VaahCms\Http\Controllers\Admin'
+        'namespace'  => 'WebReinvent\VaahCms\Http\Controllers'
     ],
     function () {
         //------------------------------------------------
         //------------------------------------------------
         Route::any( '/signin/post', 'PublicController@postLogin' )
-            ->name( 'vh.admin.signin.post' );
+            ->name( 'vh.backend.signin.post' );
         //------------------------------------------------
 
         //------------------------------------------------
@@ -56,12 +56,12 @@ Route::group(
 
 
 
-include('admin/settings.php');
+include('backend/settings.php');
 
 Route::group(
     [
         'prefix'     => 'vaahcms/setup',
-        'namespace'  => 'WebReinvent\VaahCms\Http\Controllers\Admin'
+        'namespace'  => 'WebReinvent\VaahCms\Http\Controllers\Frontend'
     ],
     function () {
         //------------------------------------------------
@@ -82,7 +82,7 @@ Route::group(
             ->name( 'vh.setup.run.migrations' );
         //------------------------------------------------
         Route::post( '/store/admin', 'SetupController@storeAdmin' )
-            ->name( 'vh.setup.store.admin' );
+            ->name( 'vh.setup.store.backend' );
         //------------------------------------------------
         //------------------------------------------------
     });
@@ -91,24 +91,24 @@ Route::group(
 
 Route::group(
     [
-        'prefix'     => 'admin',
+        'prefix'     => 'backend',
         'middleware' => ['web'],
-        'namespace'  => 'WebReinvent\VaahCms\Http\Controllers\Admin'
+        'namespace'  => 'WebReinvent\VaahCms\Http\Controllers\Frontend'
     ],
     function () {
         //------------------------------------------------
         //------------------------------------------------
         Route::get( '/', 'PublicController@login' )
-            ->name( 'vh.admin' );
+            ->name( 'vh.backend' );
         //------------------------------------------------
         Route::get( '/login', 'PublicController@redirectToLogin' )
-            ->name( 'vh.admin.login' );
+            ->name( 'vh.backend.login' );
         //------------------------------------------------
         Route::post( '/login/post', 'PublicController@postLogin' )
-            ->name( 'vh.admin.login.post' );
+            ->name( 'vh.backend.login.post' );
         //------------------------------------------------
         Route::get( '/logout', 'PublicController@logout' )
-            ->name( 'vh.admin.logout' );
+            ->name( 'vh.backend.logout' );
         //------------------------------------------------
         //------------------------------------------------
     });
@@ -118,17 +118,17 @@ Route::group(
 Route::group(
     [
         'prefix'     => 'admin',
-        'middleware' => ['web','has.admin.access'],
-        'namespace'  => 'WebReinvent\VaahCms\Http\Controllers\Admin'
+        'middleware' => ['web','has.backend.access'],
+        'namespace'  => 'WebReinvent\VaahCms\Http\Controllers'
     ],
     function () {
         //------------------------------------------------
         //------------------------------------------------
         Route::get( '/dashboard', 'DashboardController@index' )
-            ->name( 'vh.admin.dashboard' );
+            ->name( 'vh.backend.dashboard' );
         //------------------------------------------------
         Route::get( '/layout/app', 'DashboardController@layoutApp' )
-            ->name( 'vh.admin.layout.app' );
+            ->name( 'vh.backend.layout.app' );
         //------------------------------------------------
         //------------------------------------------------
         //------------------------------------------------
@@ -141,13 +141,13 @@ Route::group(
 Route::group(
     [
         'prefix'     => 'admin/vaah',
-        'middleware' => ['web','has.admin.access'],
-        'namespace'  => 'WebReinvent\VaahCms\Http\Controllers\Admin'
+        'middleware' => ['web','has.backend.access'],
+        'namespace'  => 'WebReinvent\VaahCms\Http\Controllers'
     ],
     function () {
         //------------------------------------------------
         Route::get( '/', 'DashboardController@vaah' )
-            ->name( 'vh.admin.vaah' );
+            ->name( 'vh.backend.vaah' );
         //------------------------------------------------
         //------------------------------------------------
         //------------------------------------------------
@@ -161,35 +161,35 @@ Route::group(
 Route::group(
     [
         'prefix'     => 'admin/vaah/modules',
-        'middleware' => ['web','has.admin.access'],
-        'namespace'  => 'WebReinvent\VaahCms\Http\Controllers\Admin'
+        'middleware' => ['web','has.backend.access'],
+        'namespace'  => 'WebReinvent\VaahCms\Http\Controllers'
     ],
     function () {
         //------------------------------------------------
         //------------------------------------------------
         Route::get( '/', 'ModuleController@index' )
-            ->name( 'vh.admin.modules' );
+            ->name( 'vh.backend.modules' );
         //------------------------------------------------
         Route::any( '/assets', 'ModuleController@assets' )
-            ->name( 'vh.admin.modules.assets' );
+            ->name( 'vh.backend.modules.assets' );
         //------------------------------------------------
         Route::any( '/download', 'ModuleController@download' )
-            ->name( 'vh.admin.modules.download' );
+            ->name( 'vh.backend.modules.download' );
         //------------------------------------------------
         Route::any( '/list', 'ModuleController@getList' )
-            ->name( 'vh.admin.modules.list' );
+            ->name( 'vh.backend.modules.list' );
         //------------------------------------------------
         Route::any( '/actions', 'ModuleController@actions' )
-            ->name( 'vh.admin.modules.actions' );
+            ->name( 'vh.backend.modules.actions' );
         //------------------------------------------------
         Route::any( '/get/slugs', 'ModuleController@getModulesSlugs' )
-            ->name( 'vh.admin.modules.get.slugs' );
+            ->name( 'vh.backend.modules.get.slugs' );
         //------------------------------------------------
         Route::any( '/update/versions', 'ModuleController@updateModuleVersions' )
-            ->name( 'vh.admin.modules.update.version' );
+            ->name( 'vh.backend.modules.update.version' );
         //------------------------------------------------
         Route::any( '/install/updates', 'ModuleController@installUpdates' )
-            ->name( 'vh.admin.modules.install.updates' );
+            ->name( 'vh.backend.modules.install.updates' );
         //------------------------------------------------
         //------------------------------------------------
         //------------------------------------------------
@@ -199,35 +199,35 @@ Route::group(
 Route::group(
     [
         'prefix'     => 'admin/vaah/themes',
-        'middleware' => ['web','has.admin.access'],
-        'namespace'  => 'WebReinvent\VaahCms\Http\Controllers\Admin'
+        'middleware' => ['web','has.backend.access'],
+        'namespace'  => 'WebReinvent\VaahCms\Http\Controllers'
     ],
     function () {
         //------------------------------------------------
         //------------------------------------------------
         Route::get( '/', 'ThemeController@index' )
-            ->name( 'vh.admin.themes' );
+            ->name( 'vh.backend.themes' );
         //------------------------------------------------
         Route::any( '/assets', 'ThemeController@assets' )
-            ->name( 'vh.admin.themes.assets' );
+            ->name( 'vh.backend.themes.assets' );
         //------------------------------------------------
         Route::any( '/download', 'ThemeController@download' )
-            ->name( 'vh.admin.themes.download' );
+            ->name( 'vh.backend.themes.download' );
         //------------------------------------------------
         Route::any( '/list', 'ThemeController@getList' )
-            ->name( 'vh.admin.themes.list' );
+            ->name( 'vh.backend.themes.list' );
         //------------------------------------------------
         Route::any( '/actions', 'ThemeController@actions' )
-            ->name( 'vh.admin.themes.actions' );
+            ->name( 'vh.backend.themes.actions' );
         //------------------------------------------------
         Route::any( '/get/slugs', 'ThemeController@getModulesSlugs' )
-            ->name( 'vh.admin.themes.get.slugs' );
+            ->name( 'vh.backend.themes.get.slugs' );
         //------------------------------------------------
         Route::any( '/update/versions', 'ThemeController@updateModuleVersions' )
-            ->name( 'vh.admin.themes.update.version' );
+            ->name( 'vh.backend.themes.update.version' );
         //------------------------------------------------
         Route::any( '/install/updates', 'ThemeController@installUpdates' )
-            ->name( 'vh.admin.themes.install.updates' );
+            ->name( 'vh.backend.themes.install.updates' );
         //------------------------------------------------
         //------------------------------------------------
         //------------------------------------------------
@@ -238,13 +238,13 @@ Route::group(
 Route::group(
     [
         'prefix'     => 'admin/composer',
-        'middleware' => ['web','has.admin.access'],
-        'namespace'  => 'WebReinvent\VaahCms\Http\Controllers\Admin'
+        'middleware' => ['web','has.backend.access'],
+        'namespace'  => 'WebReinvent\VaahCms\Http\Controllers'
     ],
     function () {
         //------------------------------------------------
         Route::get( '/install', 'ComposerController@install' )
-            ->name( 'vh.admin.composer.install' );
+            ->name( 'vh.backend.composer.install' );
         //------------------------------------------------
         //------------------------------------------------
     });
@@ -253,93 +253,93 @@ Route::group(
 Route::group(
     [
         'prefix'     => 'admin/vaah/registrations',
-        'middleware' => ['web','has.admin.access'],
-        'namespace'  => 'WebReinvent\VaahCms\Http\Controllers\Admin'
+        'middleware' => ['web','has.backend.access'],
+        'namespace'  => 'WebReinvent\VaahCms\Http\Controllers'
     ],
     function () {
         //------------------------------------------------
         Route::get( '/', 'RegistrationController@index' )
-            ->name( 'vh.admin.registrations' );
+            ->name( 'vh.backend.registrations' );
         //------------------------------------------------
         Route::any( '/assets', 'RegistrationController@assets' )
-            ->name( 'vh.admin.registrations.assets' );
+            ->name( 'vh.backend.registrations.assets' );
         //------------------------------------------------
         Route::any( '/list', 'RegistrationController@getList' )
-            ->name( 'vh.admin.registrations.list' );
+            ->name( 'vh.backend.registrations.list' );
         //------------------------------------------------
         Route::any( '/actions', 'RegistrationController@actions' )
-            ->name( 'vh.admin.registrations.actions' );
+            ->name( 'vh.backend.registrations.actions' );
         //------------------------------------------------
         Route::any( '/store', 'RegistrationController@store' )
-            ->name( 'vh.admin.registrations.store' );
+            ->name( 'vh.backend.registrations.store' );
         //------------------------------------------------
         Route::any( '/view/{id}', 'RegistrationController@getDetails' )
-            ->name( 'vh.admin.registrations.view' );
+            ->name( 'vh.backend.registrations.view' );
         //------------------------------------------------
     });
 
 Route::group(
     [
         'prefix'     => 'admin/vaah/users',
-        'middleware' => ['web','has.admin.access'],
-        'namespace'  => 'WebReinvent\VaahCms\Http\Controllers\Admin'
+        'middleware' => ['web','has.backend.access'],
+        'namespace'  => 'WebReinvent\VaahCms\Http\Controllers'
     ],
     function () {
         //------------------------------------------------
         Route::get( '/', 'UserController@index' )
-            ->name( 'vh.admin.users' );
+            ->name( 'vh.backend.users' );
         //------------------------------------------------
         Route::any( '/assets', 'UserController@assets' )
-            ->name( 'vh.admin.users.assets' );
+            ->name( 'vh.backend.users.assets' );
         //------------------------------------------------
         Route::any( '/list', 'UserController@getList' )
-            ->name( 'vh.admin.users.list' );
+            ->name( 'vh.backend.users.list' );
         //------------------------------------------------
         Route::any( '/actions', 'UserController@actions' )
-            ->name( 'vh.admin.users.actions' );
+            ->name( 'vh.backend.users.actions' );
         //------------------------------------------------
         Route::any( '/store', 'UserController@store' )
-            ->name( 'vh.admin.users.store' );
+            ->name( 'vh.backend.users.store' );
         //------------------------------------------------
         Route::any( '/view/{id}', 'UserController@getDetails' )
-            ->name( 'vh.admin.users.view' );
+            ->name( 'vh.backend.users.view' );
         //------------------------------------------------
         Route::any( '/roles/{id}', 'UserController@getRoles' )
-            ->name( 'vh.admin.users.roles' );
+            ->name( 'vh.backend.users.roles' );
         //------------------------------------------------
     });
 
 Route::group(
     [
         'prefix'     => 'admin/vaah/roles',
-        'middleware' => ['web','has.admin.access'],
-        'namespace'  => 'WebReinvent\VaahCms\Http\Controllers\Admin'
+        'middleware' => ['web','has.backend.access'],
+        'namespace'  => 'WebReinvent\VaahCms\Http\Controllers'
     ],
     function () {
         //------------------------------------------------
         Route::get( '/', 'RoleController@index' )
-            ->name( 'vh.admin.roles' );
+            ->name( 'vh.backend.roles' );
         //------------------------------------------------
         Route::any( '/assets', 'RoleController@assets' )
-            ->name( 'vh.admin.roles.assets' );
+            ->name( 'vh.backend.roles.assets' );
         //------------------------------------------------
         Route::any( '/list', 'RoleController@getList' )
-            ->name( 'vh.admin.roles.list' );
+            ->name( 'vh.backend.roles.list' );
         //------------------------------------------------
         Route::any( '/actions', 'RoleController@actions' )
-            ->name( 'vh.admin.roles.actions' );
+            ->name( 'vh.backend.roles.actions' );
         //------------------------------------------------
         Route::any( '/store', 'RoleController@store' )
-            ->name( 'vh.admin.roles.store' );
+            ->name( 'vh.backend.roles.store' );
         //------------------------------------------------
         Route::any( '/view/{id}', 'RoleController@getDetails' )
-            ->name( 'vh.admin.roles.view' );
+            ->name( 'vh.backend.roles.view' );
         //------------------------------------------------
         Route::any( '/permissions/{id}', 'RoleController@getPermissions' )
-            ->name( 'vh.admin.roles.permissions' );
+            ->name( 'vh.backend.roles.permissions' );
         //------------------------------------------------
         Route::any( '/users/{id}', 'RoleController@getUsers' )
-            ->name( 'vh.admin.roles.users' );
+            ->name( 'vh.backend.roles.users' );
         //------------------------------------------------
         //------------------------------------------------
     });
@@ -347,31 +347,31 @@ Route::group(
 Route::group(
     [
         'prefix'     => 'admin/vaah/permissions',
-        'middleware' => ['web','has.admin.access'],
-        'namespace'  => 'WebReinvent\VaahCms\Http\Controllers\Admin'
+        'middleware' => ['web','has.backend.access'],
+        'namespace'  => 'WebReinvent\VaahCms\Http\Controllers'
     ],
     function () {
         //------------------------------------------------
         Route::get( '/', 'PermissionController@index' )
-            ->name( 'vh.admin.permissions' );
+            ->name( 'vh.backend.permissions' );
         //------------------------------------------------
         Route::any( '/assets', 'PermissionController@assets' )
-            ->name( 'vh.admin.permissions.assets' );
+            ->name( 'vh.backend.permissions.assets' );
         //------------------------------------------------
         Route::any( '/list', 'PermissionController@getList' )
-            ->name( 'vh.admin.permissions.list' );
+            ->name( 'vh.backend.permissions.list' );
         //------------------------------------------------
         Route::any( '/actions', 'PermissionController@actions' )
-            ->name( 'vh.admin.permissions.actions' );
+            ->name( 'vh.backend.permissions.actions' );
         //------------------------------------------------
         Route::any( '/store', 'PermissionController@store' )
-            ->name( 'vh.admin.permissions.store' );
+            ->name( 'vh.backend.permissions.store' );
         //------------------------------------------------
         Route::any( '/view/{id}', 'PermissionController@getDetails' )
-            ->name( 'vh.admin.permissions.view' );
+            ->name( 'vh.backend.permissions.view' );
         //------------------------------------------------
         Route::any( '/roles/{id}', 'PermissionController@getRoles' )
-            ->name( 'vh.admin.permissions.roles' );
+            ->name( 'vh.backend.permissions.roles' );
         //------------------------------------------------
         //------------------------------------------------
         //------------------------------------------------

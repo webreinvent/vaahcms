@@ -1,6 +1,6 @@
 <?php
 
-namespace WebReinvent\VaahCms\Http\Controllers\Admin;
+namespace WebReinvent\VaahCms\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;

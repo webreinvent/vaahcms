@@ -6,7 +6,7 @@ use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class HasAdminAccess
+class HasBackendAccess
 {
     /**
      * Handle an incoming request.
@@ -29,21 +29,21 @@ class HasAdminAccess
 
 			    session(['accessed_url' => $url]);
 
-			    return redirect()->guest(route('vh.admin.login'))
+			    return redirect()->guest(route('vh.backend.login'))
 				    ->withErrors([trans("vaahcms::messages.login_required")]);
 		    }
 	    }
 
 	    if(Auth::user()->is_active != 1)
 	    {
-		    return redirect()->guest(route('vh.admin.login'))
+		    return redirect()->guest(route('vh.backend.login'))
 		                     ->withErrors([trans("vaahcms::messages.inactive_account")]);
 	    }
 
 	    //check user have permission to back login
 	    if(!Auth::user()->hasPermission("vaahcms#admin#access"))
 	    {
-		    return redirect()->guest(route('vh.admin.login'))
+		    return redirect()->guest(route('vh.backend.login'))
 		                     ->withErrors([trans("vaahcms::messages.permission_denied")]);
 	    }
 

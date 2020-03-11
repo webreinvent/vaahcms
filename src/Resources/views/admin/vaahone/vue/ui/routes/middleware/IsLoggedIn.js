@@ -1,4 +1,4 @@
-import {VaahHelper as Vaah} from "../../vaahvue/helpers/vaahhelper";
+import {VaahHelper as Vaah} from "../../vaahvue/helpers/VaahHelper";
 
 export default async function IsLoggedIn ({ to, from, next, store }){
 

@@ -1,15 +1,17 @@
 <?php
 
-namespace WebReinvent\VaahCms\Http\Controllers\Admin;
+namespace WebReinvent\VaahCms\Http\Controllers;
 
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
-use WebReinvent\VaahCms\Entities\Permission;
+use Illuminate\Support\Facades\Hash;
+use WebReinvent\VaahCms\Entities\Registration;
 use WebReinvent\VaahCms\Entities\Role;
+use WebReinvent\VaahCms\Entities\User;
 
-class RoleController extends Controller
+class UserController extends Controller
 {
 
     public $theme;
@@ -23,15 +25,20 @@ class RoleController extends Controller
     //----------------------------------------------------------
     public function index()
     {
-        return view($this->theme.'.pages.roles');
+        return view($this->theme.'.pages.users');
     }
     //----------------------------------------------------------
     public function assets(Request $request)
     {
 
-        $model = new Role();
+        $model = new User();
         $data['columns'] = $model->getFormColumns(true);
         $data['debug'] = config('vaahcms.debug');
+        $data['country_calling_code'] = vh_get_country_list();
+        $data['country'] = vh_get_country_list();
+        $data['country_code'] = vh_get_country_list();
+        $data['registration_statuses'] = vh_registration_statuses();
+        $data['name_titles'] = vh_name_titles();
 
         $response['status'] = 'success';
         $response['data'] = $data;
@@ -41,14 +48,14 @@ class RoleController extends Controller
     //----------------------------------------------------------
     public function store(Request $request)
     {
-        $response = Role::store($request);
+        $response = User::store($request);
         return response()->json($response);
     }
     //----------------------------------------------------------
     public function getDetails(Request $request, $id)
     {
 
-        $item = Role::where('id', $id)->withTrashed()->first();
+        $item = User::where('id', $id)->withTrashed()->first();
 
         $response['status'] = 'success';
         $response['data'] = $item->recordForFormElement();
@@ -60,11 +67,10 @@ class RoleController extends Controller
     public function getList(Request $request)
     {
 
+
         if($request->has('recount') && $request->get('recount') == true)
         {
-            Permission::syncPermissionsWithRoles();
             Role::syncRolesWithUsers();
-            Role::recountRelations();
         }
 
         if($request->has("sort_by") && !is_null($request->sort_by))
@@ -72,24 +78,30 @@ class RoleController extends Controller
 
             if($request->sort_by == 'deleted_at')
             {
-                $list = Role::onlyTrashed();
+                $list = User::onlyTrashed();
             } else
             {
-                $list = Role::orderBy($request->sort_by, $request->sort_type);
+                $list = User::orderBy($request->sort_by, $request->sort_type);
             }
 
         } else
         {
-            $list = Role::orderBy('created_at', 'DESC');
+            $list = User::orderBy('created_at', 'DESC');
         }
 
         if($request->has("q"))
         {
             $list->where(function ($q) use ($request){
-                $q->where('name', 'LIKE', '%'.$request->q.'%')
-                    ->orWhere('slug', 'LIKE', '%'.$request->q.'%');
+                $q->where('first_name', 'LIKE', '%'.$request->q.'%')
+                    ->orWhere('middle_name', 'LIKE', '%'.$request->q.'%')
+                    ->orWhere('email', 'LIKE', '%'.$request->q.'%')
+                    ->orWhere('id', '=', $request->q)
+                    ->orWhere('last_name', 'LIKE', '%'.$request->q.'%');
             });
         }
+
+
+        $list->withCount(['activeRoles']);
 
         $data['list'] = $list->paginate(config('vaahcms.per_page'));
 
@@ -127,30 +139,33 @@ class RoleController extends Controller
             //------------------------------------
             case 'bulk_change_status':
 
-                $response = Role::bulkStatusChange($request);
+                $response = User::bulkStatusChange($request);
 
                 break;
             //------------------------------------
             case 'bulk_delete':
 
-                $response = Role::bulkDelete($request);
+                $response = User::bulkDelete($request);
 
                 break;
             //------------------------------------
             case 'bulk_restore':
 
-                $response = Role::bulkRestore($request);
+                $response = User::bulkRestore($request);
 
                 break;
 
             //------------------------------------
             case 'delete':
 
+                //only one active can't be deactivated
+                $response = User::onlyOneAdminValidation($inputs['inputs']['id']);
 
                 if($response['status'] == 'success')
                 {
-                    $item = Role::find($inputs['inputs']['id']);
+                    $item = User::find($inputs['inputs']['id']);
                     $item->is_active = 0;
+                    $item->status = 'inactive';
                     $item->save();
 
                     $item->delete();
@@ -162,49 +177,46 @@ class RoleController extends Controller
             //------------------------------------
             case 'change_active_status':
 
+                //only one active can't be deactivated
+                $response = User::onlyOneAdminValidation($inputs['inputs']['id']);
+
                 if($response['status'] == 'success')
                 {
-                    $item = Role::find($inputs['inputs']['id']);
+                    $item = User::find($inputs['inputs']['id']);
                     $item->is_active = $inputs['data']['is_active'];
+
+                    if($inputs['data']['is_active'] == 0)
+                    {
+                        $item->status = 'inactive';
+                    } else
+                    {
+                        $item->status = 'active';
+                    }
+
                     $item->save();
                     $response['messages'] = [];
                 }
 
                 break;
             //------------------------------------
-            case 'toggle_permission_active_status':
+            case 'toggle_role_active_status':
 
                 if($response['status'] == 'success')
                 {
-                    $item = Role::find($inputs['inputs']['id']);
-
-                    if($item->id == 1)
+                    if($inputs['inputs']['id'] == 1 && $inputs['inputs']['user_id'] == 1)
                     {
                         $response['status'] = 'failed';
-                        $response['errors'][] = 'Admin permission can not be changed';
+                        $response['errors'][] = 'First user will always be an admin';
                         return response()->json($response);
-
                     }
 
-                    $item->permissions()->updateExistingPivot($inputs['inputs']['permission_id'], array('is_active' => $inputs['data']['is_active']));
+                    $item = User::find($inputs['inputs']['id']);
+                    $item->roles()->updateExistingPivot($inputs['inputs']['user_id'], array('is_active' => $inputs['data']['is_active']));
                     Role::recountRelations();
                     $response['messages'] = [];
                 }
 
                 break;
-            //------------------------------------
-            case 'toggle_user_active_status':
-
-                if($response['status'] == 'success')
-                {
-                    $item = Role::find($inputs['inputs']['id']);
-                    $item->users()->updateExistingPivot($inputs['inputs']['user_id'], array('is_active' => $inputs['data']['is_active']));
-                    Role::recountRelations();
-                    $response['messages'] = [];
-                }
-
-                break;
-            //------------------------------------
             //------------------------------------
 
         }
@@ -213,20 +225,22 @@ class RoleController extends Controller
 
     }
     //----------------------------------------------------------
-    public function getPermissions(Request $request, $id)
+    public function getRoles(Request $request, $id)
     {
-        $item = Role::withTrashed()->where('id', $id)->first();
+        $item = User::withTrashed()->where('id', $id)->first();
+
         $response['data']['item'] = $item;
+
 
         if($request->has("q"))
         {
-            $list = $item->permissions()->where(function ($q) use ($request){
+            $list = $item->roles()->where(function ($q) use ($request){
                 $q->where('name', 'LIKE', '%'.$request->q.'%')
                     ->orWhere('slug', 'LIKE', '%'.$request->q.'%');
             });
         } else
         {
-            $list = $item->permissions();
+            $list = $item->roles();
         }
 
         $list->orderBy('pivot_is_active', 'desc');
@@ -240,31 +254,6 @@ class RoleController extends Controller
         return response()->json($response);
     }
     //----------------------------------------------------------
-    public function getUsers(Request $request, $id)
-    {
-        $item = Role::withTrashed()->where('id', $id)->first();
-        $response['data']['item'] = $item;
-
-        if($request->has("q"))
-        {
-            $list = $item->users()->where(function ($q) use ($request){
-                $q->where('name', 'LIKE', '%'.$request->q.'%')
-                    ->orWhere('email', 'LIKE', '%'.$request->q.'%');
-            });
-        } else
-        {
-            $list = $item->users();
-        }
-
-        $list->orderBy('pivot_is_active', 'desc');
-
-        $list = $list->paginate(config('vaahcms.per_page'));
-
-        $response['data']['list'] = $list;
-        $response['status'] = 'success';
-
-        return response()->json($response);
-    }
     //----------------------------------------------------------
     //----------------------------------------------------------
 

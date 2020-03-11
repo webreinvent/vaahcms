@@ -1,13 +1,13 @@
 <?php
 
-namespace WebReinvent\VaahCms\Http\Controllers\Admin;
+namespace WebReinvent\VaahCms\Http\Controllers\Settings;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use WebReinvent\VaahCms\Entities\User;
 
-class UiController extends Controller
+class SettingsController extends Controller
 {
 
     public $theme;
@@ -21,9 +21,10 @@ class UiController extends Controller
     //----------------------------------------------------------
     public function index()
     {
-        return view($this->theme.'.pages.ui.index');
+        return view($this->theme.'.pages.dashboard');
     }
-
+    //----------------------------------------------------------
+    //----------------------------------------------------------
     //----------------------------------------------------------
 
 

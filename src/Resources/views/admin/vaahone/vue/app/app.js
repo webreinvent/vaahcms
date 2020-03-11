@@ -12,7 +12,7 @@ Vue.config.delimiters = ['@{{', '}}'];
 Vue.config.async = false;
 //---------Configs
 
-import vaah from './vaahvue/helpers/vaahhelper';
+import vaah from './vaahvue/helpers/VaahHelper';
 
 //---------Helpers
 Vue.use(VueAxios, axios);
