@@ -3,3 +3,25 @@
 @import "~bulma-helpers/bulma-helpers";
 @import "~highlight.js/styles/github.css";
 
+
+.vaahcms{
+
+  background:#f2f2f2;
+
+  .btn{
+
+    border-radius: 4px;
+    background: #fff;
+
+    &.btn-primary{
+
+      background: #f00;
+
+    }
+
+
+  }
+
+
+
+} //end of .vaahcms

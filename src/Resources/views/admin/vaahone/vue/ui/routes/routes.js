@@ -75,4 +75,33 @@ routes_list =     {
 
 routes.push(routes_list);
 
+/*
+|--------------------------------------------------------------------------
+| Dashboard Routes
+|--------------------------------------------------------------------------
+*/
+
+import VaahCms from "./../layouts/VaahCms";
+
+import Dashboard from "./../pages/Dashboard";
+
+
+
+routes_list =     {
+    path: '/vaahcms',
+    component: VaahCms,
+    props: true,
+    children: [
+        {
+            path: '/',
+            name: 'vaahcms.dashboard',
+            component: Dashboard,
+            props: true,
+        },
+
+    ]
+};
+
+routes.push(routes_list);
+
 export default routes;
