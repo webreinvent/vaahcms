@@ -23,7 +23,7 @@ class ComposerController extends Controller
     {
         ini_set('memory_limit', '2G');
         set_time_limit(300); // 5 minutes execution
-        $this->theme = vh_get_admin_theme();
+        $this->theme = vh_get_backend_theme();
     }
 
     //----------------------------------------------------------

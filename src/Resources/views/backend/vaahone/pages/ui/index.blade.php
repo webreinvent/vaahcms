@@ -1,11 +1,11 @@
-@extends("vaahcms::admin.vaahone.layouts.default")
+@extends("vaahcms::backend.vaahone.layouts.ui")
 
-@section('vaahcms_extend_admin_css')
+@section('vaahcms_extend_backend_css')
 
 @endsection
 
 
-@section('vaahcms_extend_admin_js')
+@section('vaahcms_extend_backend_js')
 
 @endsection
 

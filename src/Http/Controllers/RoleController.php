@@ -17,7 +17,7 @@ class RoleController extends Controller
     //----------------------------------------------------------
     public function __construct()
     {
-        $this->theme = vh_get_admin_theme();
+        $this->theme = vh_get_backend_theme();
     }
 
     //----------------------------------------------------------

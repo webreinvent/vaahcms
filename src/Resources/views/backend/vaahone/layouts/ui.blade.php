@@ -19,21 +19,21 @@
 
     <base href="{{\URL::to('/')}}">
 
-    <link href="{{vh_get_admin_assets("css/admin.css")}}" rel="stylesheet" media="screen">
+    <link href="{{vh_get_backend_assets("css/backend.css")}}" rel="stylesheet" media="screen">
 
-    @yield('vaahcms_extend_admin_css')
+    @yield('vaahcms_extend_backend_css')
 
 </head>
 <body class="@if(isset($data->body_class)){{$data->body_class}}@endif">
 
-@include("vaahcms::admin.vaahone.components.errors")
-@include("vaahcms::admin.vaahone.components.flash")
+@include("vaahcms::backend.vaahone.components.errors")
+@include("vaahcms::backend.vaahone.components.flash")
 
 @yield('content')
 
-<script src="{{vh_get_admin_assets("builds/app.js")}}" defer></script>
+<script src="{{vh_get_backend_assets("builds/ui.js")}}" defer></script>
 
-@yield('vaahcms_extend_admin_js')
+@yield('vaahcms_extend_backend_js')
 
 </body>
 </html>

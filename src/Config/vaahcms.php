@@ -7,9 +7,9 @@
 $settings =  [
     'app_name' => 'VaahCms',
     'app_slug' => 'vaahcms',
-    'admin_theme' => 'vaahone',
-    'public_theme' => 'vaahone',
-    'public_theme_template' => 'vaahone',
+    'backend_theme' => 'vaahone',
+    'frontend_theme' => 'vaahone',
+    'frontend_theme_template' => 'vaahone',
     'root_folder' => 'VaahCms',
     'root_folder_path' => base_path().'/VaahCms',
     'modules_path' => base_path().'/VaahCms/Modules',

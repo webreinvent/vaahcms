@@ -27,7 +27,7 @@ import LayoutPublic from "./../layouts/Public";
 import SignIn from "./../pages/SignIn";
 import ForgotPassword from "./../pages/ForgotPassword";
 
-let routes_public =     {
+let routes_frontend =     {
     path: '/',
     component: LayoutPublic,
     props: true,
@@ -63,7 +63,7 @@ let routes_public =     {
     ]
 };
 
-routes.push(routes_public);
+routes.push(routes_frontend);
 
 
 /*
@@ -74,7 +74,7 @@ routes.push(routes_public);
 import LayoutAdmin from "./../layouts/Admin";
 import Index from "./../pages/dashboard/Index";
 
-let routes_admin =     {
+let routes_backend =     {
     path: '/app',
     component: LayoutAdmin,
     props: true,
@@ -101,7 +101,7 @@ let routes_admin =     {
     ]
 };
 
-routes.push(routes_admin);
+routes.push(routes_backend);
 
 
 export default routes;
