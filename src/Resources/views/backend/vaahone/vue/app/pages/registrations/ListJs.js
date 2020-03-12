@@ -67,6 +67,7 @@ export default {
     mounted() {
         //----------------------------------------------------
         this.getAssets();
+        this.getList();
         //----------------------------------------------------
         //----------------------------------------------------
     },
@@ -82,18 +83,8 @@ export default {
             this.$vaah.updateState(update);
         },
         //---------------------------------------------------------------------
-        getAssets: function () {
-
-            this.update('is_list_loading', true);
-
-            let params = {};
-            let url = this.ajax_url+'/assets';
-            this.$vaah.ajax(url, params, this.getAssetsAfter);
-        },
-        //---------------------------------------------------------------------
-        getAssetsAfter: function (data, res) {
-            this.assets = data;
-            this.getList();
+        async getAssets() {
+            await this.$store.dispatch(namespace+'/getAssets');
         },
         //---------------------------------------------------------------------
         getList: function () {

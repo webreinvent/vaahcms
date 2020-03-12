@@ -24,9 +24,27 @@
                         <!--right-->
                         <div class="level-right">
                             <div class="level-item">
-                                <b-button class="is-full-width-mobile" icon-left="plus">
-                                    Add
-                                </b-button>
+
+                                <div class="field has-addons is-pulled-right">
+                                    <p class="control">
+                                        <b-button tag="router-link"
+                                                  :to="{name: 'reg.create'}"
+                                                  icon-left="plus">
+                                            Create
+                                        </b-button>
+                                    </p>
+
+                                    <p class="control">
+                                        <a class="button">
+                                            <b-icon
+                                                icon="redo-alt"
+                                                size="is-small">
+                                            </b-icon>
+                                        </a>
+                                    </p>
+                                </div>
+
+
                             </div>
                         </div>
                         <!--/right-->
