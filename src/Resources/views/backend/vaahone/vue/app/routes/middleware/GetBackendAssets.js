@@ -15,7 +15,7 @@ export default async function GetBackendAssets ({ to, from, next, store }){
 
     let params = {};
 
-    
+
     if(!root_assets || (root_assets && !root_assets.server))
     {
         params.get_server_details = true;

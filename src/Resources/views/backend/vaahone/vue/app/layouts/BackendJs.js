@@ -1,4 +1,5 @@
 import TopMenu from './../components/App/TopMenu'
+import Aside from './../components/App/Aside'
 import Footer from './../components/App/Footer'
 
 export default {
@@ -7,6 +8,7 @@ export default {
     },
     components:{
         TopMenu,
+        Aside,
         Footer,
     },
     data()
