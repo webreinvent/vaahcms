@@ -9,35 +9,19 @@ use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Hash;
 use WebReinvent\VaahCms\Entities\Registration;
 
-class RegistrationController extends Controller
+class SampleController extends Controller
 {
-
-    public $theme;
 
     //----------------------------------------------------------
     public function __construct()
     {
-        $this->theme = vh_get_backend_theme();
-    }
 
-    //----------------------------------------------------------
-    public function index()
-    {
-        return view($this->theme.'.pages.registrations');
     }
     //----------------------------------------------------------
-    public function assets(Request $request)
+    public function getAssets(Request $request)
     {
 
-        $reg = new Registration();
-        $data['columns'] = $reg->getFormColumns(true);
-        $data['debug'] = config('vaahcms.debug');
-        $data['country_calling_code'] = vh_get_country_list();
-        $data['country'] = vh_get_country_list();
-        $data['country_code'] = vh_get_country_list();
-        $data['registration_statuses'] = vh_registration_statuses();
-        $data['name_titles'] = vh_name_titles();
-
+        $data['columns'] = '';
 
         $response['status'] = 'success';
         $response['data'] = $data;
@@ -45,19 +29,17 @@ class RegistrationController extends Controller
         return response()->json($response);
     }
     //----------------------------------------------------------
-    public function store(Request $request)
-    {
-        $response = Registration::store($request);
-        return response()->json($response);
-    }
-    //----------------------------------------------------------
-    public function getDetails(Request $request, $id)
+    public function postCreate(Request $request)
     {
 
-        $reg = Registration::find($id);
+        $data = [];
+
+        $response['status'] = 'failed';
+        $response['errors'][] = 'error';
 
         $response['status'] = 'success';
-        $response['data'] = $reg->recordForFormElement();
+        $response['messages'][] = 'Saved';
+        $response['data'] = $data;
 
         return response()->json($response);
 
@@ -67,48 +49,55 @@ class RegistrationController extends Controller
     {
 
 
-        if($request->has("sort_by") && !is_null($request->sort_by))
-        {
+        $data = [];
 
-            if($request->sort_by == 'deleted_at')
-            {
-                $list = Registration::onlyTrashed();
-            } else
-            {
-                $list = Registration::orderBy($request->sort_by, $request->sort_type);
-            }
-
-        } else
-        {
-            $list = Registration::orderBy('created_at', 'DESC');
-        }
-
-        if($request->has("q"))
-        {
-            $list->where(function ($q) use ($request){
-                $q->where('first_name', 'LIKE', '%'.$request->q.'%')
-                    ->orWhere('middle_name', 'LIKE', '%'.$request->q.'%')
-                    ->orWhere('email', 'LIKE', '%'.$request->q.'%')
-                    ->orWhere('id', '=', $request->q)
-                    ->orWhere('last_name', 'LIKE', '%'.$request->q.'%');
-            });
-        }
-
-
-
-        $data['list'] = $list->paginate(config('vaahcms.per_page'));
+        $response['status'] = 'failed';
+        $response['errors'][] = 'error';
 
         $response['status'] = 'success';
+        $response['messages'][] = 'Saved';
+        $response['data'] = $data;
+
+        return response()->json($response);
+
+    }
+
+    //----------------------------------------------------------
+    public function getItem(Request $request, $id)
+    {
+
+        $data = [];
+
+        $response['status'] = 'failed';
+        $response['errors'][] = 'error';
+
+        $response['status'] = 'success';
+        $response['messages'][] = 'Saved';
         $response['data'] = $data;
 
         return response()->json($response);
 
     }
     //----------------------------------------------------------
-    public function actions(Request $request)
+    public function postStore(Request $request)
+    {
+        $data = [];
+
+        $response['status'] = 'failed';
+        $response['errors'][] = 'error';
+
+        $response['status'] = 'success';
+        $response['messages'][] = 'Saved';
+        $response['data'] = $data;
+
+        return response()->json($response);
+    }
+    //----------------------------------------------------------
+
+    //----------------------------------------------------------
+    public function postActions(Request $request, $action)
     {
         $rules = array(
-            'action' => 'required',
             'inputs' => 'required',
         );
 

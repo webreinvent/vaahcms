@@ -327,6 +327,50 @@ class Registration extends Model
     }
 
     //-------------------------------------------------
+    public static function create($request)
+    {
+
+    }
+    //-------------------------------------------------
+    public static function getList($request)
+    {
+        if($request->has("sort_by") && !is_null($request->sort_by))
+        {
+
+            if($request->sort_by == 'deleted_at')
+            {
+                $list = Registration::onlyTrashed();
+            } else
+            {
+                $list = Registration::orderBy($request->sort_by, $request->sort_type);
+            }
+
+        } else
+        {
+            $list = Registration::orderBy('created_at', 'DESC');
+        }
+
+        if($request->has("q"))
+        {
+            $list->where(function ($q) use ($request){
+                $q->where('first_name', 'LIKE', '%'.$request->q.'%')
+                    ->orWhere('middle_name', 'LIKE', '%'.$request->q.'%')
+                    ->orWhere('email', 'LIKE', '%'.$request->q.'%')
+                    ->orWhere('id', '=', $request->q)
+                    ->orWhere('last_name', 'LIKE', '%'.$request->q.'%');
+            });
+        }
+
+        $list = $list->paginate(config('vaahcms.per_page'));
+
+        return $list;
+    }
+    //-------------------------------------------------
+    public static function getItem($request)
+    {
+
+    }
+    //-------------------------------------------------
     public static function store($request)
     {
         $rules = array(

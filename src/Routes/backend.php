@@ -50,6 +50,65 @@ Route::group(
     });
 
 
+Route::group(
+    [
+        'prefix' => 'backend/vaah/registrations',
+        'namespace'  => 'WebReinvent\VaahCms\Http\Controllers',
+        'middleware' => ['web', 'has.backend.access'],
+    ],
+    function () {
+        //---------------------------------------------------------
+        Route::any('/assets', 'RegistrationsController@getAssets')
+            ->name('backend.vaah.registrations.assets');
+        //---------------------------------------------------------
+        Route::post('/create', 'RegistrationsController@postCreate')
+            ->name('backend.vaah.registrations.create');
+        //---------------------------------------------------------
+        Route::post('/list', 'RegistrationsController@getList')
+            ->name('backend.vaah.registrations.list');
+        //---------------------------------------------------------
+        Route::any('/item/{uuid}', 'RegistrationsController@getItem')
+            ->name('backend.vaah.registrations.item');
+        //---------------------------------------------------------
+        Route::post('/store/{uuid}', 'RegistrationsController@postStore')
+            ->name('backend.vaah.registrations.store');
+        //---------------------------------------------------------
+        Route::post('/actions/{action_name}', 'RegistrationsController@postActions')
+            ->name('backend.vaah.registrations.actions');
+        //---------------------------------------------------------
+    });
+
+
+/*Route::group(
+    [
+        'prefix'     => 'backend/vaah/registrations',
+        'middleware' => ['web','has.backend.access'],
+        'namespace'  => 'WebReinvent\VaahCms\Http\Controllers'
+    ],
+    function () {
+        //------------------------------------------------
+        Route::get( '/', 'RegistrationController@index' )
+            ->name( 'vh.backend.registrations' );
+        //------------------------------------------------
+        Route::any( '/assets', 'RegistrationController@assets' )
+            ->name( 'vh.backend.registrations.assets' );
+        //------------------------------------------------
+        Route::any( '/list', 'RegistrationController@getList' )
+            ->name( 'vh.backend.registrations.list' );
+        //------------------------------------------------
+        Route::any( '/actions', 'RegistrationController@actions' )
+            ->name( 'vh.backend.registrations.actions' );
+        //------------------------------------------------
+        Route::any( '/store', 'RegistrationController@store' )
+            ->name( 'vh.backend.registrations.store' );
+        //------------------------------------------------
+        Route::any( '/view/{id}', 'RegistrationController@getDetails' )
+            ->name( 'vh.backend.registrations.view' );
+        //------------------------------------------------
+    });*/
+
+
+
 //=================OLD ROUTES===========================================
 
 
@@ -250,33 +309,7 @@ Route::group(
     });
 
 
-Route::group(
-    [
-        'prefix'     => 'admin/vaah/registrations',
-        'middleware' => ['web','has.backend.access'],
-        'namespace'  => 'WebReinvent\VaahCms\Http\Controllers'
-    ],
-    function () {
-        //------------------------------------------------
-        Route::get( '/', 'RegistrationController@index' )
-            ->name( 'vh.backend.registrations' );
-        //------------------------------------------------
-        Route::any( '/assets', 'RegistrationController@assets' )
-            ->name( 'vh.backend.registrations.assets' );
-        //------------------------------------------------
-        Route::any( '/list', 'RegistrationController@getList' )
-            ->name( 'vh.backend.registrations.list' );
-        //------------------------------------------------
-        Route::any( '/actions', 'RegistrationController@actions' )
-            ->name( 'vh.backend.registrations.actions' );
-        //------------------------------------------------
-        Route::any( '/store', 'RegistrationController@store' )
-            ->name( 'vh.backend.registrations.store' );
-        //------------------------------------------------
-        Route::any( '/view/{id}', 'RegistrationController@getDetails' )
-            ->name( 'vh.backend.registrations.view' );
-        //------------------------------------------------
-    });
+
 
 Route::group(
     [

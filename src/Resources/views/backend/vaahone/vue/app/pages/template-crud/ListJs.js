@@ -1,22 +1,19 @@
-import GlobalComponents from '../../vaahvue/helpers/GlobalComponents'
+import Logo from '../../components/Logo';
+import Footer from '../../components/Footer';
 
-let namespace = 'registrations';
 
 export default {
     computed:{
         root() {return this.$store.getters['root/state']},
-        page() {return this.$store.getters[namespace+'/state']},
-        ajax_url() {return this.$store.getters[namespace+'/state'].ajax_url},
+        ajax_url() {return this.$store.getters['root/state'].ajax_url},
     },
     components:{
-        ...GlobalComponents,
-
+        Logo,
+        Footer,
     },
     data()
     {
         return {
-            is_content_loading: false,
-            assets: null,
             data: [
                 { 'id': 1, 'title': 'Lorem ipsum dolor sit amet, consectetur adipisicing.', 'author': 'Simmons', 'categories': 'XYZ, ABC', 'tag_data': 'Male', 'date': '5 April, 2020' },
                 { 'id': 2, 'title': 'Lorem ipsum dolor sit amet, consectetur adipisicing.', 'author': 'Jacobs', 'categories': 'XYZ, ABC', 'tag_data': 'Male', 'date': '5 April, 2020' },
@@ -65,53 +62,27 @@ export default {
 
     },
     mounted() {
-        //----------------------------------------------------
-        this.getAssets();
-        //----------------------------------------------------
-        //----------------------------------------------------
+
     },
     methods: {
         //---------------------------------------------------------------------
-        update: function(name, value)
-        {
-            let update = {
-                state_name: name,
-                state_value: value,
-                namespace: namespace,
-            };
-            this.$vaah.updateState(update);
-        },
-        //---------------------------------------------------------------------
-        getAssets: function () {
+        signIn: function () {
 
-            this.update('is_list_loading', true);
+            this.is_btn_loading = true;
+            let params = this.credentials;
+            let url = this.ajax_url+'/signin/post';
+            this.$vaah.ajax(url, params, this.signInAfter);
 
-            let params = {};
-            let url = this.ajax_url+'/assets';
-            this.$vaah.ajax(url, params, this.getAssetsAfter);
         },
         //---------------------------------------------------------------------
-        getAssetsAfter: function (data, res) {
-            this.assets = data;
-            this.getList();
-        },
-        //---------------------------------------------------------------------
-        getList: function () {
-            let params = {};
-            let url = this.ajax_url+'/list';
-            this.$vaah.ajax(url, params, this.getListAfter);
-        },
-        //---------------------------------------------------------------------
-        getListAfter: function (data, res) {
-            this.update('is_list_loading', false);
-            this.update('list', data.list);
-
-            if(data.list.total === 0)
+        signInAfter: function (data, res) {
+            this.is_btn_loading = false;
+            if(data)
             {
-                this.update('list_is_empty', true);
+                console.log('--->', data);
             }
-
         },
+        //---------------------------------------------------------------------
         //---------------------------------------------------------------------
         //---------------------------------------------------------------------
         //---------------------------------------------------------------------

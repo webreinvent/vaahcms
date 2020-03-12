@@ -1,11 +1,9 @@
 <template>
 
 <!--sections-->
-<section class="section">
-    <div class="container has-text-centered">
-        Aside Menu
-    </div>
-</section>
+<div class="aside">
+    Aside Menu
+</div>
 <!--sections-->
 
 </template>

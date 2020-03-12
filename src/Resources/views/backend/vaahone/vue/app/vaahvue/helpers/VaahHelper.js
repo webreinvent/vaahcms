@@ -23,13 +23,13 @@ const VaahHelper = {
             params: query
         };
 
-        console.log('--->url', url);
+        //console.log('--->url', url);
 
         let data = await Vue.axios.post(url, params, q)
             .then(response => {
 
 
-                console.log('--->response', response);
+                //console.log('--->response', response);
 
                 if(response.data.status)
                 {
