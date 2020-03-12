@@ -20,14 +20,31 @@
             </SectionTitle>
 
 
-            <SectionCode name=" Material Design Icons" :code="IconCode">
-              <Icon></Icon>
-            </SectionCode>
+              <SectionCode name="FontAwesome - Use solid & free icons " :code="IconCode">
+                  <Icon></Icon>
+              </SectionCode>
 
 
-<!--            <SectionCode name="FontAwesome" :code="FontAwesomeCode">-->
-<!--              <FontAwesome></FontAwesome>-->
-<!--            </SectionCode>-->
+              <!--sections-->
+              <section class="section">
+                  <div class="container">
+
+                      <!--columns-->
+                      <div class="columns">
+                          <div class="column">
+                              <a href="https://fontawesome.com/icons?d=gallery&s=solid&m=free">Icons</a>
+                          </div>
+                      </div>
+                      <!--/columns-->
+
+                  </div>
+              </section>
+              <!--sections-->
+
+
+<!--            <SectionCode name="FontAwesome" :code="FontAwesomeCode">
+              <FontAwesome></FontAwesome>
+            </SectionCode>-->
 
 
             <SectionCode name="Object Syntax" :code="ObjectSyntaxCode">

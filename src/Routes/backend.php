@@ -36,7 +36,7 @@ Route::group(
     [
         'prefix'     => 'backend',
         'middleware' => ['web'],
-        'namespace'  => 'WebReinvent\VaahCms\Http\Controllers'
+        'namespace'  => 'WebReinvent\VaahCms\Http\Controllers\Frontend'
     ],
     function () {
         //------------------------------------------------

@@ -19,8 +19,11 @@
 
                     <template v-for="link in menus">
 
-                        <b-navbar-dropdown v-if="link.child" :label="link.label">
-                            <b-navbar-item v-for="link_child in link.child" :href="link_child.link" >
+                        <b-navbar-dropdown v-if="link.child"
+                                           :hoverable="true"
+                                           :label="link.label">
+                            <b-navbar-item v-for="(link_child, key) in link.child"
+                                           :href="link_child.link" :key="key" >
                                 {{link_child.label}}
                             </b-navbar-item>
                         </b-navbar-dropdown>
@@ -40,7 +43,9 @@
 
             <template slot="end">
 
-                <b-navbar-dropdown :right="true" :label="root.assets.auth_user.name">
+                <b-navbar-dropdown :right="true"
+                                   :hoverable="true"
+                                   :label="root.assets.auth_user.name">
 
                     <template  v-for="menus in root.assets.extended_views.top_right_user_menu">
 

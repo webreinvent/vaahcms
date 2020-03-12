@@ -13,7 +13,7 @@
                 <b-navbar-item tag="router-link" :to="{ name: 'home' }">
                     Home
                 </b-navbar-item>
-                <b-navbar-item tag="router-link" to="/ui/buefy">
+                <b-navbar-item tag="router-link" :to="{ name: 'bue.index' }">
                     Buefy
                 </b-navbar-item>
                 <b-navbar-dropdown label="Info">

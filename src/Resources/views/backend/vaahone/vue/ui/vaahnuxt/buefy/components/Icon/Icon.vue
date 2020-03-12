@@ -2,7 +2,7 @@
   <section>
     <div class="block">
       <b-icon
-        icon="account"
+        icon="address-book"
         size="is-small">
       </b-icon>
       <b-icon
@@ -10,20 +10,20 @@
         size="is-small">
       </b-icon>
       <b-icon
-        icon="view-dashboard"
+        icon="tachometer-alt"
         size="is-small">
       </b-icon>
     </div>
 
     <div class="block">
-      <b-icon icon="account"></b-icon>
+      <b-icon icon="address-book"></b-icon>
       <b-icon icon="home"></b-icon>
-      <b-icon icon="view-dashboard"></b-icon>
+      <b-icon icon="tachometer-alt"></b-icon>
     </div>
 
     <div class="block">
       <b-icon
-        icon="account"
+        icon="address-book"
         size="is-medium">
       </b-icon>
       <b-icon
@@ -31,14 +31,14 @@
         size="is-medium">
       </b-icon>
       <b-icon
-        icon="view-dashboard"
+        icon="tachometer-alt"
         size="is-medium">
       </b-icon>
     </div>
 
     <div class="block">
       <b-icon
-        icon="account"
+        icon="address-book"
         size="is-large"
         type="is-success">
       </b-icon>
@@ -48,7 +48,7 @@
         type="is-info">
       </b-icon>
       <b-icon
-        icon="view-dashboard"
+        icon="tachometer-alt"
         size="is-large"
         type="is-primary">
       </b-icon>

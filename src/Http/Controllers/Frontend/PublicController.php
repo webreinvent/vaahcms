@@ -27,7 +27,7 @@ class PublicController extends Controller
     //----------------------------------------------------------
     public function redirectToLogin()
     {
-        return redirect()->route('vh.admin');
+        return redirect()->route('vh.backend');
     }
     //----------------------------------------------------------
     public function postLogin(Request $request)
@@ -45,7 +45,7 @@ class PublicController extends Controller
             $request->session()->forget('accessed_url');
         } else
         {
-            $redirect_url = \URL::route('vh.admin.dashboard');
+            $redirect_url = \URL::route('vh.backend.dashboard');
         }
 
         $response['status'] = 'success';
@@ -59,7 +59,7 @@ class PublicController extends Controller
     public function logout()
     {
         \Auth::logout();
-        return redirect()->route('vh.admin');
+        return redirect()->route('vh.backend');
     }
     //----------------------------------------------------------
     //----------------------------------------------------------

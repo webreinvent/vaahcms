@@ -23,7 +23,6 @@ import IsLoggedIn from './middleware/IsLoggedIn'
 */
 import Default from "./../layouts/Default";
 
-
 import Index from "./../pages/Index";
 
 routes_list =     {
@@ -47,10 +46,15 @@ routes.push(routes_list);
 | Buefy Routes
 |--------------------------------------------------------------------------
 */
+
 import Ui from "./../layouts/Ui";
 
 import button from "./../vaahnuxt/buefy/pages/button";
 import carousel from "./../vaahnuxt/buefy/pages/carousel";
+import collapse from "./../vaahnuxt/buefy/pages/collapse";
+import dialog from "./../vaahnuxt/buefy/pages/dialog";
+import icon from "./../vaahnuxt/buefy/pages/icon";
+
 
 
 routes_list =     {
@@ -65,40 +69,35 @@ routes_list =     {
             props: true,
         },
         {
-            path: '/carousel',
+            path: 'button',
+            name: 'bue.button',
+            component: button,
+            props: true,
+        },
+        {
+            path: 'carousel',
             name: 'bue.carousel',
             component: carousel,
             props: true,
-        }
-    ]
-};
-
-routes.push(routes_list);
-
-/*
-|--------------------------------------------------------------------------
-| Dashboard Routes
-|--------------------------------------------------------------------------
-*/
-
-import VaahCms from "./../layouts/VaahCms";
-
-import Dashboard from "./../pages/Dashboard";
-
-
-
-routes_list =     {
-    path: '/vaahcms',
-    component: VaahCms,
-    props: true,
-    children: [
+        },
         {
-            path: '/',
-            name: 'vaahcms.dashboard',
-            component: Dashboard,
+            path: 'collapse',
+            name: 'bue.collapse',
+            component: collapse,
             props: true,
         },
-
+        {
+            path: 'dialog',
+            name: 'bue.dialog',
+            component: dialog,
+            props: true,
+        },
+        {
+            path: 'icon',
+            name: 'bue.icon',
+            component: icon,
+            props: true,
+        }
     ]
 };
 

@@ -21,17 +21,23 @@ class ExtendController extends Controller
 
     public static function extendTopLeftMenu()
     {
+
+        $vue_prefix = "vaah";
+        $base_url = route('vh.backend')."#/";
+        $dashboard_url = $base_url."vaah/";
+        $link = $base_url.$vue_prefix;
+
         $list = [
             [
-                'link' => route('vh.backend.dashboard'),
+                'link' => $dashboard_url,
                 'label'=> 'Dashboard'
             ],
             [
-                'link' => route('vh.backend.dashboard'),
+                'link' => $dashboard_url,
                 'label'=> 'Users & Access',
                 'child' => [
                     [
-                        'link' => route('vh.backend.dashboard'),
+                        'link' => $link."/registrations/",
                         'label'=> 'Registration'
                     ],
                     [

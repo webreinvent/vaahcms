@@ -1,9 +1,7 @@
 <template>
 
-
     <nuxt-link v-if="link_type==='nuxt'" :to="to"><slot></slot></nuxt-link>
     <router-link v-else :to="to"><slot></slot></router-link>
-
 
 </template>
 
@@ -23,10 +21,6 @@
     },
     watch: {
 
-    },
-    template: `
-      <nuxt-link v-if="link_type==='nuxt'" :to="to"><slot></slot></nuxt-link>
-      <router-link v-else :to="to"><slot></slot></router-link>
-  `,
+    }
   }
 </script>

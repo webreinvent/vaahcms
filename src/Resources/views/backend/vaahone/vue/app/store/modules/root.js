@@ -47,7 +47,6 @@ export default {
         state(state) {return state;},
         assets(state) {return state.assets;},
         is_logged_in(state) {return state.is_logged_in;},
-        redirect_full_url(state) {return state.redirect_full_url;},
     }
 
 }

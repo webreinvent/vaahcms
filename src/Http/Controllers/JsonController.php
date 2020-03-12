@@ -59,7 +59,7 @@ class JsonController extends Controller
         //-----Vue Errors----------------------
 
 
-        if($request->has('get_extended_views'))
+        if($request->has('get_extended_views') && \Auth::check())
         {
             $data['auth_user'] = [
                 'name' => \Auth::user()->name,

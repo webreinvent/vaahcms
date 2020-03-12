@@ -280,7 +280,7 @@ class SetupController extends Controller
         $response['messages'][] = trans("vaahcms::messages.setup_completed");
         $response['data']['flash_message'] =  trans("vaahcms::messages.setup_completed");
         $response['data']['active_step'] = 'completed';
-        $response['data']['redirect_url'] = \URL::route('vh.admin.login');
+        $response['data']['redirect_url'] = \URL::route('vh.backend.login');
 
         return response()->json($response);
 

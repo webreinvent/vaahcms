@@ -11,4 +11,4 @@
 
 </template>
 
-<script src="./AdminJs.js"></script>
+<script src="./BackendJs.js"></script>

@@ -11,6 +11,7 @@ routes= [
 //----------Middleware
 import GetAssets from './middleware/GetAssets'
 import IsLoggedIn from './middleware/IsLoggedIn'
+import GetBackendAssets from './middleware/GetBackendAssets'
 //----------LayoutApp
 
 
@@ -71,17 +72,17 @@ routes.push(routes_frontend);
 | Admin Routes
 |--------------------------------------------------------------------------
 */
-import LayoutAdmin from "./../layouts/Admin";
+import LayoutBackend from "./../layouts/Backend";
 import Index from "./../pages/dashboard/Index";
 
 let routes_backend =     {
-    path: '/app',
-    component: LayoutAdmin,
+    path: '/vaah',
+    component: LayoutBackend,
     props: true,
     meta: {
         middleware: [
             IsLoggedIn,
-            GetAssets
+            GetBackendAssets
         ]
     },
     children: [
@@ -93,7 +94,7 @@ let routes_backend =     {
             meta: {
                 middleware: [
                     IsLoggedIn,
-                    GetAssets
+                    GetBackendAssets
                 ]
             },
         }
@@ -102,6 +103,44 @@ let routes_backend =     {
 };
 
 routes.push(routes_backend);
+
+
+/*
+|--------------------------------------------------------------------------
+| Admin Routes
+|--------------------------------------------------------------------------
+*/
+
+import RegList from "./../pages/registrations/List";
+
+let routes_reg =     {
+    path: '/vaah/registrations',
+    component: LayoutBackend,
+    props: true,
+    meta: {
+        middleware: [
+            IsLoggedIn,
+            GetBackendAssets
+        ]
+    },
+    children: [
+        {
+            path: '/',
+            name: 'reg.list',
+            component: RegList,
+            props: true,
+            meta: {
+                middleware: [
+                    IsLoggedIn,
+                    GetBackendAssets
+                ]
+            },
+        }
+
+    ]
+};
+
+routes.push(routes_reg);
 
 
 export default routes;

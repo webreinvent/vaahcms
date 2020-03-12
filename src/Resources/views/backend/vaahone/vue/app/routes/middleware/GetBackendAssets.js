@@ -1,14 +1,21 @@
 import {VaahHelper as Vaah} from "../../vaahvue/helpers/VaahHelper";
 
-export default async function GetAssets ({ to, from, next, store }){
+export default async function GetBackendAssets ({ to, from, next, store }){
 
-    /*let root_assets = store.getters['root/state'].assets;
+    //--------------Redirect to Sign in
+    if(!store.getters['root/state'].is_logged_in){
+        return next({
+            name: 'sign.in'
+        })
+    }
+    //--------------/Redirect to Sign in
 
-    console.log('--->', root_assets);
+
+    let root_assets = store.getters['root/state'].assets;
 
     let params = {};
 
-    params.get_server_details = true;
+    
     if(!root_assets || (root_assets && !root_assets.server))
     {
         params.get_server_details = true;
@@ -27,6 +34,7 @@ export default async function GetAssets ({ to, from, next, store }){
 
     if( Object.keys(params).length > 0)
     {
+
         let url = store.getters['root/state'].json_url+'/assets';
         let data = await Vaah.ajax(url, params);
 
@@ -34,9 +42,10 @@ export default async function GetAssets ({ to, from, next, store }){
             key: 'assets',
             value: data.data.data
         };
+
         store.commit('root/updateState', payload);
 
-    }*/
+    }
 
 
     return next()

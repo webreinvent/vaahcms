@@ -1,4 +1,4 @@
-import globalComponents from "../vaahnuxt/helpers/globalComponents";
+import TopMenu from './../components/partials/TopMenu'
 import Footer from './../components/partials/Footer'
 
 export default {
@@ -6,7 +6,7 @@ export default {
         root() {return this.$store.getters['root/state']},
     },
     components:{
-        ...globalComponents,
+        TopMenu,
         Footer,
     },
     data()
