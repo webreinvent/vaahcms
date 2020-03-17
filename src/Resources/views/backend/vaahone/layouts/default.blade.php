@@ -19,12 +19,14 @@
 
     <base href="{{\URL::to('/')}}">
 
+    <link href="https://fonts.googleapis.com/css?family=IBM+Plex+Sans:300,400,500,600,700&display=swap" rel="stylesheet">
+
     <link href="{{vh_get_backend_assets("css/backend.css")}}" rel="stylesheet" media="screen">
 
     @yield('vaahcms_extend_backend_css')
 
 </head>
-<body class="@if(isset($data->body_class)){{$data->body_class}}@endif">
+<body class="@if(isset($data->body_class)){{$data->body_class}}@endif has-background-white-bis">
 
 @include("vaahcms::backend.vaahone.components.errors")
 @include("vaahcms::backend.vaahone.components.flash")

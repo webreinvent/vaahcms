@@ -37,30 +37,8 @@ class RegistrationsController extends Controller
     //----------------------------------------------------------
     public function postCreate(Request $request)
     {
-        $rules = array(
-            'name' => 'required',
-        );
-
-        $validator = \Validator::make( $request->all(), $rules);
-        if ( $validator->fails() ) {
-
-            $errors             = errorsToArray($validator->errors());
-            $response['status'] = 'failed';
-            $response['messages'] = $errors;
-            return response()->json($response);
-        }
-
-        $data = [];
-
-        $response['status'] = 'failed';
-        $response['errors'][] = 'error';
-
-        $response['status'] = 'success';
-        $response['messages'][] = 'Saved';
-        $response['data'] = $data;
-
+        $response = Registration::create($request);
         return response()->json($response);
-
     }
     //----------------------------------------------------------
     public function getList(Request $request)

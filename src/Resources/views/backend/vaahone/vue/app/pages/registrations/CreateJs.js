@@ -17,7 +17,9 @@ export default {
     {
         return {
             is_content_loading: false,
+            is_btn_loading: null,
             labelPosition: 'on-border',
+            params: {},
         }
     },
     watch: {
@@ -46,6 +48,23 @@ export default {
             await this.$store.dispatch(namespace+'/getAssets');
         },
         //---------------------------------------------------------------------
+        create: function (action) {
+            this.is_btn_loading = true;
+
+            this.params = {
+                new_item: this.new_item,
+                action: action
+            };
+
+
+            let url = this.ajax_url+'/create';
+            this.$vaah.ajax(url, params, this.createAfter);
+        },
+        //---------------------------------------------------------------------
+        createAfter: function (data, res) {
+            this.is_btn_loading = false;
+            this.list = data.list;
+        },
         //---------------------------------------------------------------------
 
         //---------------------------------------------------------------------

@@ -2,7 +2,7 @@
 
 
 
-        <b-navbar v-if="root.assets">
+        <b-navbar v-if="root.assets" class="has-shadow" :fixed-top="true">
             <template slot="brand">
                 <b-navbar-item tag="router-link" :to="{ path: '/' }">
                     <img

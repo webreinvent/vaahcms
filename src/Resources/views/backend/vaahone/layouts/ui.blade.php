@@ -19,6 +19,8 @@
 
     <base href="{{\URL::to('/')}}">
 
+    <link href="https://fonts.googleapis.com/css?family=IBM+Plex+Sans:300,400,500,600,700&display=swap" rel="stylesheet">
+
     <link href="{{vh_get_backend_assets("css/backend.css")}}" rel="stylesheet" media="screen">
 
     @yield('vaahcms_extend_backend_css')

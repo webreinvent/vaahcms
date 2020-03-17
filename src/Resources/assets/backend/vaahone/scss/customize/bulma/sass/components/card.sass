@@ -19,15 +19,17 @@ $card-media-margin: $block-spacing !default
 
 .card
   background-color: $card-background-color
-  box-shadow: $card-shadow
   color: $card-color
   max-width: 100%
   position: relative
+  border: $default-border
+  border-radius: $default-border-radius
 
 .card-header
   background-color: $card-header-background-color
   align-items: stretch
-  box-shadow: $card-header-shadow
+  border-bottom: 1px solid $default-border-color
+  //box-shadow: $card-header-shadow
   display: flex
 
 .card-header-title
@@ -35,8 +37,10 @@ $card-media-margin: $block-spacing !default
   color: $card-header-color
   display: flex
   flex-grow: 1
+  font-size: $size-5
   font-weight: $card-header-weight
   padding: $card-header-padding
+
   &.is-centered
     justify-content: center
 

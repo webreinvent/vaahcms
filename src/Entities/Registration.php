@@ -330,6 +330,55 @@ class Registration extends Model
     public static function create($request)
     {
 
+        $rules = array(
+            'email' => 'required|email',
+            'first_name' => 'required',
+            'status' => 'required',
+            'password' => 'required',
+        );
+
+        $validator = \Validator::make( $request->all(), $rules);
+        if ( $validator->fails() ) {
+
+            $errors             = errorsToArray($validator->errors());
+            $response['status'] = 'failed';
+            $response['errors'] = $errors;
+            return $response;
+        }
+
+        $inputs = $request->new_item;
+
+        // check if already exist
+        $user = static::where('email',$inputs['email'])->first();
+
+        if($user)
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = "This is already registered.";
+            if(env('APP_DEBUG'))
+            {
+                $response['hint'][] = 'Registration can be created only when user does not exist';
+            }
+            return $response;
+        }
+
+        // check if user already exist
+        $user = User::where('email',$inputs['email'])->first();
+
+        if($user)
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = 'User already exist';
+            if(env('APP_DEBUG'))
+            {
+                $response['hint'][] = 'Registration can be created only when user does not exist';
+            }
+            return $response;
+        }
+
+
+
+
     }
     //-------------------------------------------------
     public static function getList($request)

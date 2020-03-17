@@ -9,22 +9,18 @@
                 <!--list-->
                 <div class="column">
 
-                    <!--title-->
-                    <div class="level">
 
-                        <!--left-->
-                        <div class="level-left">
-                            <div class="level-item">
-                                <h2 class="title  is-bottom-marginless">Registrations</h2>
+                    <!--card-->
+                    <div class="card">
+
+                        <!--header-->
+                        <header class="card-header">
+
+                            <div class="card-header-title">
+                                Registrations
                             </div>
-                        </div>
-                        <!--/left-->
 
-
-                        <!--right-->
-                        <div class="level-right">
-                            <div class="level-item">
-
+                            <div class="card-header-buttons">
                                 <div class="field has-addons is-pulled-right">
                                     <p class="control">
                                         <b-button tag="router-link"
@@ -35,71 +31,87 @@
                                     </p>
 
                                     <p class="control">
-                                        <a class="button">
-                                            <b-icon
-                                                icon="redo-alt"
-                                                size="is-small">
-                                            </b-icon>
-                                        </a>
+
+                                        <b-button @click="getList()"
+                                                  icon-left="redo-alt">
+                                        </b-button>
+
                                     </p>
                                 </div>
-
-
                             </div>
-                        </div>
-                        <!--/right-->
 
-                    </div>
-                    <!--/title-->
+                        </header>
+                        <!--/header-->
 
-                    <!--loader-->
-                    <Loader/>
-                    <!--/loader-->
+                        <!--content-->
+                        <div class="card-content">
+                            <div class="block" v-if="page.list">
 
-                    <!--body-->
-                    <div class="block" v-if="page.list">
+                                <!--search-->
+                                <div class="level">
 
-
-                        <!--search-->
-                        <div class="level">
-
-                            <!--left-->
-                            <div class="level-left">
-                                <router-link to="/" class="level-item">All (8)</router-link>
-                                <router-link to="/" class="level-item">Published (8)</router-link>
-                                <router-link to="/" class="level-item">Trashed (8)</router-link>
-                            </div>
-                            <!--/left-->
+                                    <!--left-->
+                                    <div class="level-left">
+                                        <router-link to="/" class="level-item">All (8)</router-link>
+                                        <router-link to="/" class="level-item">Published (8)</router-link>
+                                        <router-link to="/" class="level-item">Trashed (8)</router-link>
+                                    </div>
+                                    <!--/left-->
 
 
-                            <!--right-->
-                            <div class="level-right">
-                                <div class="level-item">
-                                    <b-field class="control">
-                                        <b-input placeholder="Search..."
-                                                 type="search"
-                                                 icon="search">
-                                        </b-input>
-                                    </b-field>
+                                    <!--right-->
+                                    <div class="level-right">
+                                        <div class="level-item">
+                                            <b-field class="control">
+                                                <b-input placeholder="Search..."
+                                                         type="search"
+                                                         icon="search">
+                                                </b-input>
+                                            </b-field>
+                                        </div>
+                                    </div>
+                                    <!--/right-->
+
                                 </div>
-                            </div>
-                            <!--/right-->
-
-                        </div>
-                        <!--/search-->
+                                <!--/search-->
 
 
-                        <!--actions-->
-                        <div class="level">
+                                <!--actions-->
+                                <div class="level">
 
-                            <!--left-->
-                            <div class="level-left">
-                                <div  class="level-item">
-                                    <div class="field has-addons">
-                                        <div class="control">
+                                    <!--left-->
+                                    <div class="level-left">
+                                        <div  class="level-item">
+                                            <div class="field has-addons">
+                                                <div class="control">
+                                                    <b-dropdown aria-role="list">
+                                                        <button class="button" slot="trigger">
+                                                            <span>Bulk Actions</span>
+                                                            <b-icon icon="caret-down"></b-icon>
+                                                        </button>
+
+                                                        <b-dropdown-item aria-role="listitem">Edit</b-dropdown-item>
+                                                        <b-dropdown-item aria-role="listitem">Move to Trash</b-dropdown-item>
+                                                    </b-dropdown>
+                                                </div>
+                                                <div class="control">
+                                                    <a class="button is-info">
+                                                        Apply
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--/left-->
+
+
+                                    <!--right-->
+                                    <div class="level-right">
+
+                                        <div class="level-item">
                                             <b-dropdown aria-role="list">
                                                 <button class="button" slot="trigger">
-                                                    <span>Bulk Actions</span>
+                                                    <span>All Categories</span>
                                                     <b-icon icon="caret-down"></b-icon>
                                                 </button>
 
@@ -107,174 +119,97 @@
                                                 <b-dropdown-item aria-role="listitem">Move to Trash</b-dropdown-item>
                                             </b-dropdown>
                                         </div>
-                                        <div class="control">
+
+                                        <div class="level-item">
+                                            <b-dropdown aria-role="list">
+                                                <button class="button" slot="trigger">
+                                                    <span>All Formats</span>
+                                                    <b-icon icon="caret-down"></b-icon>
+                                                </button>
+
+                                                <b-dropdown-item aria-role="listitem">Edit</b-dropdown-item>
+                                                <b-dropdown-item aria-role="listitem">Move to Trash</b-dropdown-item>
+                                            </b-dropdown>
+                                        </div>
+
+                                        <div class="level-item">
                                             <a class="button is-info">
-                                                Apply
+                                                Filter
                                             </a>
                                         </div>
+
                                     </div>
+                                    <!--/right-->
+
                                 </div>
-                            </div>
-                            <!--/left-->
+                                <!--/actions-->
 
 
-                            <!--right-->
-                            <div class="level-right">
-                                <div class="level-item">
-                                    <b-dropdown aria-role="list">
-                                        <button class="button" slot="trigger">
-                                            <span>All Dates</span>
-                                            <b-icon icon="caret-down"></b-icon>
-                                        </button>
-
-                                        <b-dropdown-item aria-role="listitem">Edit</b-dropdown-item>
-                                        <b-dropdown-item aria-role="listitem">Move to Trash</b-dropdown-item>
-                                    </b-dropdown>
-                                </div>
-                                <div class="level-item">
-                                    <b-dropdown aria-role="list">
-                                        <button class="button" slot="trigger">
-                                            <span>All Categories</span>
-                                            <b-icon icon="caret-down"></b-icon>
-                                        </button>
-
-                                        <b-dropdown-item aria-role="listitem">Edit</b-dropdown-item>
-                                        <b-dropdown-item aria-role="listitem">Move to Trash</b-dropdown-item>
-                                    </b-dropdown>
-                                </div>
-
-                                <div class="level-item">
-                                    <b-dropdown aria-role="list">
-                                        <button class="button" slot="trigger">
-                                            <span>All Formats</span>
-                                            <b-icon icon="caret-down"></b-icon>
-                                        </button>
-
-                                        <b-dropdown-item aria-role="listitem">Edit</b-dropdown-item>
-                                        <b-dropdown-item aria-role="listitem">Move to Trash</b-dropdown-item>
-                                    </b-dropdown>
-                                </div>
-
-                                <div class="level-item">
-                                    <a class="button is-info">
-                                        Filter
-                                    </a>
-                                </div>
-
-                            </div>
-                            <!--/right-->
-
-                        </div>
-                        <!--/actions-->
+                                {{page.list_is_empty}} |
+                                {{page.list}}
 
 
-                        {{page.list_is_empty}} |
-                        {{page.list}}
+                                <b-table :data="page.list_is_empty ? [] : page.list.data">
 
+                                    <template slot-scope="props">
+                                        <b-table-column field="id" label="ID" width="40" numeric>
+                                            {{ props.row.id }}
+                                        </b-table-column>
 
-                        <b-table :data="page.list_is_empty ? [] : page.list.data">
+                                        <b-table-column field="first_name" label="First Name">
+                                            {{ props.row.first_name }}
+                                        </b-table-column>
 
-                            <template slot-scope="props">
-                                <b-table-column field="id" label="ID" width="40" numeric>
-                                    {{ props.row.id }}
-                                </b-table-column>
+                                        <b-table-column field="last_name" label="Last Name">
+                                            {{ props.row.last_name }}
+                                        </b-table-column>
 
-                                <b-table-column field="first_name" label="First Name">
-                                    {{ props.row.first_name }}
-                                </b-table-column>
-
-                                <b-table-column field="last_name" label="Last Name">
-                                    {{ props.row.last_name }}
-                                </b-table-column>
-
-                                <b-table-column field="date" label="Date" centered>
+                                        <b-table-column field="date" label="Date" centered>
                                 <span class="tag is-success">
                                     success
                                 </span>
-                                </b-table-column>
+                                        </b-table-column>
 
-                                <b-table-column label="Gender">
+                                        <b-table-column label="Gender">
                                 <span>
                                     <b-icon pack="fas"
                                             :icon="props.row.gender === 'Male' ? 'mars' : 'venus'">
                                     </b-icon>
                                     {{ props.row.gender }}
                                 </span>
-                                </b-table-column>
-                            </template>
+                                        </b-table-column>
+                                    </template>
 
-                            <template slot="empty">
-                                <section class="section">
-                                    <div class="content has-text-grey has-text-centered">
-                                        <p>Nothing here.</p>
-                                    </div>
-                                </section>
-                            </template>
+                                    <template slot="empty">
+                                        <section class="section">
+                                            <div class="content has-text-grey has-text-centered">
+                                                <p>Nothing here.</p>
+                                            </div>
+                                        </section>
+                                    </template>
 
-                        </b-table>
-
-
-                        <b-table
-                            :data="data"
-                            :columns="columns"
-                            class="control"
-                            checkable
-                            :checkbox-position="checkboxPosition">
-                        </b-table>
-
-                        <!--footer-->
-                        <div class="level">
-
-                            <!--left-->
-                            <div class="level-left">
-                                <div  class="level-item">
-                                    <div class="field has-addons">
-                                        <div class="control">
-                                            <b-dropdown aria-role="list">
-                                                <button class="button" slot="trigger">
-                                                    <span>Bulk Actions</span>
-                                                    <b-icon icon="caret-down"></b-icon>
-                                                </button>
-
-                                                <b-dropdown-item aria-role="listitem">Edit</b-dropdown-item>
-                                                <b-dropdown-item aria-role="listitem">Move to Trash</b-dropdown-item>
-                                            </b-dropdown>
-                                        </div>
-                                        <div class="control">
-                                            <a class="button is-info">
-                                                Apply
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <!--/left-->
+                                </b-table>
 
 
-                            <!--right-->
-                            <div class="level-right">
-                                <div class="level-item">
-                                    <b-pagination
-                                        total="200"
-                                        range-before="3"
-                                        range-after="1"
-                                        order="default"
-                                        size="default"
-                                        per-page="10"
-                                        aria-page-label="Page"
-                                        aria-current-label="Current page">
-                                    </b-pagination>
-                                </div>
+                                <b-table
+                                    :data="data"
+                                    :columns="columns"
+                                    class="control"
+                                    checkable
+                                    :checkbox-position="checkboxPosition">
+                                </b-table>
 
                             </div>
-                            <!--/right-->
-
                         </div>
-                        <!--/footer-->
-
+                        <!--/content-->
 
                     </div>
-                    <!--/body-->
+                    <!--/card-->
+
+
+
+
+
 
                 </div>
                 <!--/list-->

@@ -15,7 +15,7 @@ mix.setPublicPath('./../../../public/vaahcms/backend/');
 
 let theme_path = "./themes/vaahone/";
 
-//mix.sass('Resources/assets/backend/vaahone/scss/backend.scss', theme_path+'css/');
+mix.sass('Resources/assets/backend/vaahone/scss/backend.scss', theme_path+'css/');
 
 
 let path_vue;
