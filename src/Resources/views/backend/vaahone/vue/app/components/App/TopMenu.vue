@@ -12,7 +12,7 @@
                 </b-navbar-item>
             </template>
 
-            <template slot="start" v-if="root.assets.extended_views.top_left_menu" >
+            <template slot="start" v-if="root.assets.extended_views" >
 
 
                 <template  v-for="menus in root.assets.extended_views.top_left_menu">

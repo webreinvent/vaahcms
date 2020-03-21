@@ -35,7 +35,7 @@ export default {
             gender: null,
             country_calling_code: null,
             phone: null,
-        }
+        },
     },
     //=========================================================================
     mutations:{

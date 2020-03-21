@@ -94,6 +94,9 @@ export default {
         },
         //---------------------------------------------------------------------
         getListAfter: function (data, res) {
+
+            console.log('--->', data);
+
             this.update('is_list_loading', false);
             this.update('list', data.list);
 

@@ -16,6 +16,7 @@ class CreateVhUsersTable extends Migration
         Schema::create('vh_users', function (Blueprint $table) {
             $table->increments('id');
             $table->string('uid')->nullable();
+            $table->uuid('uuid')->nullable();
             $table->string('email')->nullable();
             $table->string('username')->nullable();
             $table->string('password')->nullable();

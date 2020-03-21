@@ -76,7 +76,7 @@
                     </b-field>
 
                     <b-field label="Password" :label-position="labelPosition">
-                        <b-input v-model="new_item.password"></b-input>
+                        <b-input type="password" v-model="new_item.password"></b-input>
                     </b-field>
 
                     <b-field label="Display Name" :label-position="labelPosition">
@@ -85,7 +85,6 @@
 
                     <b-field label="Title" :label-position="labelPosition">
                         <b-select placeholder="Select a title">
-                            <option value="2">Option 2</option>
                             <option v-for="title in page.assets.name_titles"
                                     :value="title.slug"
                             >{{title.name}}</option>
@@ -95,7 +94,8 @@
 
 
                     <b-field label="First Name" :label-position="labelPosition">
-                        <b-input v-model="new_item.first_name"></b-input>
+                        <b-input v-model="new_item.first_name"
+                        ></b-input>
                     </b-field>
 
                     <b-field label="Middle Name" :label-position="labelPosition">
@@ -127,7 +127,6 @@
 
 
                     </b-field>
-
 
 
                 </div>

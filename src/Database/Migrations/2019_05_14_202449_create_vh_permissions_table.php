@@ -15,6 +15,7 @@ class CreateVhPermissionsTable extends Migration
     {
         Schema::create('vh_permissions', function (Blueprint $table) {
             $table->increments('id');
+            $table->uuid('uuid')->nullable();
             $table->string('name')->nullable();
             $table->string('slug')->nullable();
 

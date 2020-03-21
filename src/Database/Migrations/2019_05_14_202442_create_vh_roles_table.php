@@ -15,7 +15,7 @@ class CreateVhRolesTable extends Migration
     {
         Schema::create('vh_roles', function (Blueprint $table) {
             $table->increments('id');
-
+            $table->uuid('uuid')->nullable();
             $table->string('name')->nullable();
             $table->string('slug')->nullable();
             $table->string('details')->nullable();

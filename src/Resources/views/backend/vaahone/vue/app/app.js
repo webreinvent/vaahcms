@@ -1,10 +1,18 @@
+import middlewarePipeline from "./routes/middleware/middlewarePipeline";
+
 window.Vue = require('vue');
+
+window.$ = require('jquery');
+window.JQuery = require('jquery');
+
 
 //---------Package imports
 import axios from 'axios';
 import VueAxios from 'vue-axios';
 import VueRouter from 'vue-router';
 import Vuex from 'vuex';
+import VueFuse from 'vue-fuse'
+import VueProgressBar from 'vue-progressbar'
 //---------/Package imports
 
 //---------Configs
@@ -12,14 +20,40 @@ Vue.config.delimiters = ['@{{', '}}'];
 Vue.config.async = false;
 //---------Configs
 
+//To make axios request as ajax request
+axios.defaults.headers.common = {
+    'X-Requested-With': 'XMLHttpRequest',
+};
+
+
+
 import vaah from './vaahvue/helpers/VaahHelper';
 
 //---------Helpers
 Vue.use(VueAxios, axios);
 Vue.use(VueRouter);
 Vue.use(Vuex);
+Vue.use(VueFuse);
 Vue.use(vaah);
 //---------/Helpers
+
+//--------Progress
+const options = {
+    color: '#7a58d5',
+    failedColor: '#7a58d5',
+    thickness: '2px',
+    transition: {
+        speed: '0.2s',
+        opacity: '0.8s',
+        termination: 300
+    },
+    autoRevert: true,
+    location: 'top',
+    inverse: false
+};
+
+Vue.use(VueProgressBar, options);
+//--------/Progress
 
 //--------FontAwesome
 import { library } from '@fortawesome/fontawesome-svg-core';
@@ -44,10 +78,9 @@ Vue.use(Buefy, {
 //---------/Buefy
 
 //---------Variables
-var base_url = document.getElementsByTagName('base')[0]
-    .getAttribute("href");
-var current_url = document.getElementById('current_url').getAttribute('content');
-var debug = document.getElementById('debug').getAttribute('content');
+var base_url = $('base').attr("href");
+var current_url = $('#current_url').attr('content');
+var debug = $('#debug').attr('content');
 //---------/Variables
 
 //---------Store
@@ -57,6 +90,23 @@ import {store} from './store/store';
 //---------Routes
 import router from './routes/router';
 //---------/Routes
+
+/*store.beforeEach(async (to, from, next) => {
+
+    if (to.meta.progress !== undefined) {
+        let meta = to.meta.progress;
+        // parse meta tags
+        this.$Progress.parseMeta(meta)
+    }
+    //  start the progress bar
+    this.$Progress.start();
+
+});
+
+store.afterEach((to, from) => {
+    //  finish the progress bar
+    this.$Progress.finish()
+});*/
 
 
 const app = new Vue({
@@ -68,7 +118,26 @@ const app = new Vue({
     router,
     data: {
     },
+    created () {
+        this.$Progress.start();
+        this.$router.beforeEach((to, from, next) => {
+            // pass meta.hide_progress in route's to hide progress
+            if (to.meta.hide_progress && to.meta.hide_progress === true) {
+                next()
+            } else
+            {
+                this.$Progress.start();
+                next()
+            }
+        });
+
+        this.$router.afterEach((to, from) => {
+            this.$Progress.finish()
+        });
+
+    },
     mounted() {
+        this.$Progress.finish()
     },
     methods:{
     }

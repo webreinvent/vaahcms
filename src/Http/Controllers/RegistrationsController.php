@@ -37,20 +37,22 @@ class RegistrationsController extends Controller
     //----------------------------------------------------------
     public function postCreate(Request $request)
     {
+
         $response = Registration::create($request);
+
+        if($response['status'] == 'success')
+        {
+            $list = Registration::getList($request);
+            $response['data']['list'] = $list['data']['list'];
+        }
+
         return response()->json($response);
     }
     //----------------------------------------------------------
     public function getList(Request $request)
     {
-
-        $list = Registration::getList($request);
-
-        $response['status'] = 'success';
-        $response['data']['list'] = $list;
-
+        $response = Registration::getList($request);
         return response()->json($response);
-
     }
 
     //----------------------------------------------------------

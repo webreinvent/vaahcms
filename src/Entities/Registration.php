@@ -6,14 +6,15 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Carbon;
-use WebReinvent\VaahCms\Traits\CrudWithUidObservantTrait;
+use Illuminate\Support\Str;
+use WebReinvent\VaahCms\Traits\CrudWithUuidObservantTrait;
 
 
 class Registration extends Model
 {
     use Notifiable;
     use SoftDeletes;
-    use CrudWithUidObservantTrait;
+    use CrudWithUuidObservantTrait;
 
     //-------------------------------------------------
     protected $table = 'vh_registrations';
@@ -26,7 +27,8 @@ class Registration extends Model
     protected $dateFormat = 'Y-m-d H:i:s';
     //-------------------------------------------------
     protected $fillable = [
-        "uid","email","username","password","display_name","title","first_name","middle_name","last_name",
+        "uuid", "email","username","password",
+        "display_name","title","first_name","middle_name","last_name",
         "gender","country_calling_code","phone","timezone","alternate_email",
         "avatar_url","birth", "country","country_code", "status",
         "activation_code", "activation_code_sent_at",
@@ -72,6 +74,11 @@ class Registration extends Model
     public function setBirthAttribute($value)
     {
         $this->attributes['birth'] = Carbon::parse($value)->format('Y-m-d');
+    }
+    //-------------------------------------------------
+    public function setPasswordAttribute($value)
+    {
+        $this->attributes['password'] = \Hash::make($value);
     }
     //-------------------------------------------------
     public function getNameAttribute() {
@@ -171,140 +178,6 @@ class Registration extends Model
             ->getColumnListing($this->getTable());
     }
     //-------------------------------------------------
-    public function getFormFillableColumns()
-    {
-        $list = [
-            'email', 'username', 'password', 'display_name',
-            'title', 'first_name', 'middle_name', 'last_name',
-            'gender', 'country_calling_code', 'phone', 'timezone',
-            'alternate_email', 'avatar_url', 'birth', 'country',
-            'status', 'invited_by',
-            'user_id',
-        ];
-
-        return $list;
-    }
-    //-------------------------------------------------
-    public function getFormColumns()
-    {
-        $columns = $this->getFormFillableColumns();
-
-        $result = [];
-        $i = 0;
-
-        foreach ($columns as $column)
-        {
-            $result[$i] = $this->getFormElement($column);
-            $i++;
-        }
-
-        return $result;
-    }
-    //-------------------------------------------------
-    public function getFormElement($column, $value=null)
-    {
-
-        $result['name'] = $column;
-        $result['value'] = $value;
-        $result['tr_class'] = "";
-        $result['editable'] = true;
-        $result['disabled'] = false;
-        $result['label'] = slug_to_str($column);
-        $result['column_type'] = $this->getConnection()->getSchemaBuilder()
-            ->getColumnType($this->getTable(), $column);
-
-
-        switch($column)
-        {
-            //------------------------------------------------
-            case 'id':
-            case 'uid':
-                $result['type'] = 'text';
-                $result['disabled'] = true;
-                $result['tr_class'] = 'tr__disabled';
-                break;
-            //------------------------------------------------
-            case 'created_by':
-                $result['type'] = 'select_with_ids';
-                $result['inputs'] = User::getUsersForAssets();
-                break;
-            //------------------------------------------------
-            case 'updated_by':
-            case 'deleted_by':
-            case 'meta':
-            case 'created_ip':
-            case 'activated_ip':
-            case 'activation_code_sent_at':
-            case 'user_created_at':
-            case 'deleted_at':
-            case 'updated_at':
-            case 'created_at':
-            case 'invited_at':
-            case 'activated_at':
-            case 'activation_code':
-                $result['type'] = 'hidden';
-                break;
-            //------------------------------------------------
-            case 'title':
-                $result['type'] = 'select';
-                $result['inputs'] = vh_name_titles();
-                break;
-            //------------------------------------------------
-            case 'gender':
-                $result['type'] = 'select';
-                $result['inputs'] = vh_genders();
-                break;
-            //------------------------------------------------
-            case 'country_calling_code':
-                $result['type'] = 'select';
-                $result['inputs'] = vh_get_countries_calling_codes();
-                break;
-            //------------------------------------------------
-            case 'timezone':
-                $result['type'] = 'select';
-                $result['inputs'] = vh_get_timezones();
-                break;
-            //------------------------------------------------
-            case 'birth':
-                $result['type'] = 'date';
-                $result['label'] = 'Birth Date';
-                break;
-            //------------------------------------------------
-            case 'status':
-                $result['type'] = 'select';
-                $result['inputs'] = vh_registration_statuses();
-                break;
-            //------------------------------------------------
-            case 'country':
-                $result['type'] = 'select';
-                $result['inputs'] = vh_get_country_list_with_slugs();
-                break;
-            //------------------------------------------------
-            case 'invited_by':
-                $result['type'] = 'select_with_ids';
-                $result['inputs'] = User::getUsersForAssets();
-                $result['label'] = "Invited By";
-                break;
-            //------------------------------------------------
-            case 'user_id':
-                $result['type'] = 'select_with_ids';
-                $result['inputs'] = User::getUsersForAssets();
-                $result['label'] = "Registration belongs to:";
-                break;
-            //------------------------------------------------
-            case 'password':
-                $result['type'] = 'password';
-                break;
-            //------------------------------------------------
-            default:
-                $result['type'] = 'text';
-                break;
-            //------------------------------------------------
-        }
-
-        return $result;
-    }
-    //-------------------------------------------------
     public static function findByUsername($username, $columns = array('*'))
     {
         if ( ! is_null($user = static::whereUsername($username)->first($columns))) {
@@ -329,15 +202,15 @@ class Registration extends Model
     //-------------------------------------------------
     public static function create($request)
     {
+        $inputs = $request->new_item;
 
         $rules = array(
             'email' => 'required|email',
             'first_name' => 'required',
-            'status' => 'required',
             'password' => 'required',
         );
 
-        $validator = \Validator::make( $request->all(), $rules);
+        $validator = \Validator::make( $inputs, $rules);
         if ( $validator->fails() ) {
 
             $errors             = errorsToArray($validator->errors());
@@ -346,19 +219,13 @@ class Registration extends Model
             return $response;
         }
 
-        $inputs = $request->new_item;
-
         // check if already exist
         $user = static::where('email',$inputs['email'])->first();
 
         if($user)
         {
             $response['status'] = 'failed';
-            $response['errors'][] = "This is already registered.";
-            if(env('APP_DEBUG'))
-            {
-                $response['hint'][] = 'Registration can be created only when user does not exist';
-            }
+            $response['errors'][] = "This email is already registered.";
             return $response;
         }
 
@@ -376,8 +243,21 @@ class Registration extends Model
             return $response;
         }
 
+        if(!isset($inputs['username']))
+        {
+            $inputs['username'] = Str::slug($inputs['email']);
+        }
 
 
+        $inputs['created_ip'] = request()->ip();
+
+        $reg = new static();
+        $reg->fill($inputs);
+        $reg->save();
+
+        $response['status'] = 'success';
+        $response['data']['item'] = $reg;
+        return $response;
 
     }
     //-------------------------------------------------
@@ -412,7 +292,11 @@ class Registration extends Model
 
         $list = $list->paginate(config('vaahcms.per_page'));
 
-        return $list;
+        $response['status'] = 'success';
+        $response['data']['list'] = $list;
+
+        return $response;
+
     }
     //-------------------------------------------------
     public static function getItem($request)

@@ -8,6 +8,7 @@ export default {
         page() {return this.$store.getters[namespace+'/state']},
         ajax_url() {return this.$store.getters[namespace+'/state'].ajax_url},
         new_item() {return this.$store.getters[namespace+'/state'].new_item},
+        new_item_errors() {return this.$store.getters[namespace+'/state'].new_item_errors},
     },
     components:{
         ...GlobalComponents,
@@ -51,19 +52,22 @@ export default {
         create: function (action) {
             this.is_btn_loading = true;
 
+            //  this.$Progress.start();
+
             this.params = {
                 new_item: this.new_item,
                 action: action
             };
 
-
             let url = this.ajax_url+'/create';
-            this.$vaah.ajax(url, params, this.createAfter);
+            this.$vaah.ajax(url, this.params, this.createAfter);
         },
         //---------------------------------------------------------------------
         createAfter: function (data, res) {
             this.is_btn_loading = false;
+            this.$Progress.finish();
             this.list = data.list;
+            this.update('list', data.list);
         },
         //---------------------------------------------------------------------
 

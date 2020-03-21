@@ -17,6 +17,7 @@ class CreateVhRegistrationsTable extends Migration
             $table->increments('id');
 
             $table->string('uid')->nullable();
+            $table->uuid('uuid')->nullable();
             $table->string('email')->nullable();
             $table->string('username')->nullable();
             $table->string('password')->nullable();

@@ -1,4 +1,5 @@
 import Vue from "vue";
+import Progress from 'vue-progressbar'
 
 import {store} from './../../store/store';
 import {ToastProgrammatic as Toast} from "buefy";
@@ -16,7 +17,7 @@ const VaahHelper = {
     //---------------------------------------------------------------------
 
     //---------------------------------------------------------------------
-    async ajax(url, params, callback, query )
+    async ajax(url, params, callback, query, that )
     {
 
         let q = {
@@ -24,6 +25,8 @@ const VaahHelper = {
         };
 
         //console.log('--->url', url);
+
+        //that.$Progress.start();
 
         let data = await Vue.axios.post(url, params, q)
             .then(response => {
@@ -168,21 +171,39 @@ const VaahHelper = {
     },
     //---------------------------------------------------------------------
     toastSuccess(messages){
+
+        let list_html = "";
+        let i = 1;
+        let duration = 1000;
         messages.forEach(function (message) {
-            Toast.open({
-                message: message,
-                type: 'is-success'
-            });
+            list_html += i+") "+message+"<br/>";
+            i++;
         });
+
+        Toast.open({
+            message: list_html,
+            type: 'is-success',
+            duration: duration*i
+        });
+
+
     },
     //-----------------------------------------------------------------
     toastErrors(messages){
+        let list_html = "";
+        let i = 1;
+        let duration = 1000;
         messages.forEach(function (error) {
-            Toast.open({
-                message: error,
-                type: 'is-danger'
-            });
+            list_html += i+") "+error+"<br/>";
+            i++;
         });
+
+        Toast.open({
+            message: list_html,
+            type: 'is-danger',
+            duration: duration*i
+        });
+
     },
     //---------------------------------------------------------------------
     //---------------------------------------------------------------------
