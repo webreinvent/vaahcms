@@ -18,34 +18,38 @@ class HasAdminAccess
     public function handle(Request $request, Closure $next)
     {
 
-    	//check user is logged in
-	    if (Auth::guest())
-	    {
-		    if ($request->ajax()) {
-			    return response('Unauthorized.', 401);
-		    } else {
+        //check user is logged in
+        if (Auth::guest())
+        {
+            if ($request->ajax()) {
+                return response('Unauthorized.', 401);
+            } else {
 
-			    $url = url()->full();
+                $url = url()->full();
 
-			    session(['accessed_url' => $url]);
+                session(['accessed_url' => $url]);
 
-			    return redirect()->guest(route('vh.admin.login'))
-				    ->withErrors([trans("vaahcms::messages.login_required")]);
-		    }
-	    }
+                return \Redirect::back()
+                    ->withErrors([trans("vaahcms::messages.login_required")]);
+            }
+        }
 
-	    if(Auth::user()->is_active != 1)
-	    {
-		    return redirect()->guest(route('vh.admin.login'))
-		                     ->withErrors([trans("vaahcms::messages.inactive_account")]);
-	    }
+        if(Auth::user()->is_active != 1)
+        {
+            return \Redirect::back()
+                ->withErrors([trans("vaahcms::messages.inactive_account")]);
+        }
 
-	    //check user have permission to back login
-	    if(!Auth::user()->hasPermission("vaahcms#admin#access"))
-	    {
-		    return redirect()->guest(route('vh.admin.login'))
-		                     ->withErrors([trans("vaahcms::messages.permission_denied")]);
-	    }
+
+        $check_permission = Auth::user()->hasPermission("can-access-admin-section");
+
+        //check user have permission to back login
+        if($check_permission['status'] == 'failed')
+        {
+
+            return \Redirect::back()
+                ->withErrors($check_permission['errors']);
+        }
 
 
         return $next($request);
