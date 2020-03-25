@@ -958,6 +958,19 @@ class User extends Authenticatable
     }
 
     //-------------------------------------------------
+    public function getPermissionsSlugs()
+    {
+        $roles = $this->roles()->get();
+        $permissions_list = array();
+        foreach ($roles as $role) {
+            $permissions = $role->permissions()->get();
+            foreach ($permissions as $permission) {
+                $permissions_list[$permission->id] = $permission->slug;
+            }
+        }
+        return $permissions_list;
+    }
+    //-------------------------------------------------
     public static function getAvatarById($id)
     {
         $user = User::find($id);
