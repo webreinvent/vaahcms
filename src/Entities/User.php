@@ -965,7 +965,12 @@ class User extends Authenticatable
         foreach ($roles as $role) {
             $permissions = $role->permissions()->get();
             foreach ($permissions as $permission) {
-                $permissions_list[] = $permission->slug;
+
+                if($permission->pivot->is_active)
+                {
+                    $permissions_list[] = $permission->slug;
+                }
+
             }
         }
         return $permissions_list;
