@@ -891,6 +891,18 @@ class User extends Authenticatable
     public function hasPermission($permission_slug)
     {
 
+
+        if ($this->isAdmin()) {
+
+            $response['status'] = 'success';
+            if(env('APP_DEBUG'))
+            {
+                $response['data']['permission'] = 'Permission slug: '.$permission_slug;
+                $response['hint'][] = 'Admin has all permission by default.';
+            }
+            return $response;
+        }
+
         //check if permission exist or not
         $permission = Permission::where('slug', $permission_slug)
             ->first();
@@ -899,26 +911,50 @@ class User extends Authenticatable
         {
             $response['status'] = 'failed';
             $response['errors'][] = 'No Permission exist with slug: '.$permission_slug;
-            return response()->json($response);
-        }
 
-        if ($this->isAdmin()) {
-            return true;
+            if(env('APP_DEBUG'))
+            {
+                $response['hint'][] = 'Check the migrations & seeds are properly run.';
+            }
+
+            return $response;
         }
 
         if ($permission->is_active != 1) {
-            return false;
+            $response['status'] = 'failed';
+            $response['errors'][] = $permission_slug.' is inactive';
+            if(env('APP_DEBUG'))
+            {
+                $response['hint'][] = 'Enable the permission status to active from backend/admin control panel.';
+            }
+            return $response;
         }
 
         foreach ($this->permissions() as $permission)
         {
-            if ($permission['slug'] == $permission_slug && $permission['is_active'] == 1)
+            if ($permission['slug'] == $permission_slug
+                && $permission['is_active'] == 1
+                && $permission['pivot']['is_active'] == 1
+            )
             {
-                return true;
+                $response['status'] = 'success';
+                if(env('APP_DEBUG'))
+                {
+                    $response['hint'][] = 'Permission slug: '.$permission_slug.' is active for '.\Auth::user()->email;
+                }
+                return $response;
+                break;
             }
         }
 
-        return false;
+        $response['status'] = 'failed';
+        $response['errors'][] = trans("vaahcms::messages.permission_denied");
+        if(env('APP_DEBUG'))
+        {
+            $response['hint'][] = 'Permission slug: '.$permission_slug.' is not active for '.\Auth::user()->email;
+        }
+        return $response;
+
     }
 
     //-------------------------------------------------
