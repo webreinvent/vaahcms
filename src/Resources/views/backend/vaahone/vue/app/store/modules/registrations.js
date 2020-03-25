@@ -23,6 +23,10 @@ export default {
         },
         is_list_loading: false,
         is_item_loading: false,
+        query_string: {
+            page: 1,
+            q: null,
+        },
         new_item:{
             email: null,
             username: null,
@@ -76,6 +80,7 @@ export default {
         ajax_url(state) {return state.ajax_url;},
         assets(state) {return state.assets;},
         new_item(state) {return state.new_item;},
+        query_string(state) {return state.query_string;},
     }
 
 }

@@ -7,6 +7,7 @@ export default {
         root() {return this.$store.getters['root/state']},
         page() {return this.$store.getters[namespace+'/state']},
         ajax_url() {return this.$store.getters[namespace+'/state'].ajax_url},
+        query_string() {return this.$store.getters[namespace+'/state'].query_string},
     },
     components:{
         ...GlobalComponents,
@@ -17,48 +18,7 @@ export default {
         return {
             is_content_loading: false,
             assets: null,
-            data: [
-                { 'id': 1, 'title': 'Lorem ipsum dolor sit amet, consectetur adipisicing.', 'author': 'Simmons', 'categories': 'XYZ, ABC', 'tag_data': 'Male', 'date': '5 April, 2020' },
-                { 'id': 2, 'title': 'Lorem ipsum dolor sit amet, consectetur adipisicing.', 'author': 'Jacobs', 'categories': 'XYZ, ABC', 'tag_data': 'Male', 'date': '5 April, 2020' },
-                { 'id': 3, 'title': 'Lorem ipsum dolor sit amet, consectetur adipisicing.', 'author': 'Gilbert', 'categories': 'XYZ, ABC', 'tag_data': 'Female', 'date': '5 April, 2020' },
-                { 'id': 4, 'title': 'Lorem ipsum dolor sit amet, consectetur adipisicing.', 'author': 'Flores', 'categories': 'XYZ, ABC', 'tag_data': 'Male', 'date': '5 April, 2020' },
-                { 'id': 5, 'title': 'Lorem ipsum dolor sit amet, consectetur adipisicing.', 'author': 'Lee', 'categories': 'XYZ, ABC', 'tag_data': 'Female', 'date': '5 April, 2020' }
-            ],
-            checkboxPosition: 'left',
-            columns: [
-                {
-                    field: 'id',
-                    label: 'ID',
-                    width: '40',
-                    numeric: true
-                },
-                {
-                    field: 'title',
-                    label: 'Title',
-                },
-                {
-                    field: 'author',
-                    label: 'Author',
-                },
-                {
-                    field: 'categories',
-                    label: 'Categories',
-                    centered: true
-                },
-                {
-                    field: 'tag_data',
-                    label: 'Tags',
-                },
-                {
-                    field: 'date',
-                    label: 'Date',
-                }
-            ],
             is_btn_loading: false,
-            credentials: {
-                email: null,
-                password: null
-            }
         }
     },
     watch: {
@@ -66,9 +26,7 @@ export default {
     },
     mounted() {
         //----------------------------------------------------
-        this.getAssets();
-        this.getList();
-        //----------------------------------------------------
+        this.updateQueryString();
         //----------------------------------------------------
     },
     methods: {
@@ -83,14 +41,49 @@ export default {
             this.$vaah.updateState(update);
         },
         //---------------------------------------------------------------------
+        updateQueryString: function()
+        {
+            let query = this.$vaah.removeEmpty(this.$route.query);
+            if(Object.keys(query).length)
+            {
+                for(let key in query)
+                {
+                    this.query_string[key] = query[key];
+                }
+            }
+            this.update('query_string', this.query_string);
+            this.$vaah.updateCurrentURL(this.query_string, this.$router);
+
+            this.getAssets();
+        },
+        //---------------------------------------------------------------------
         async getAssets() {
             await this.$store.dispatch(namespace+'/getAssets');
+
+            this.getList();
+        },
+        //---------------------------------------------------------------------
+        paginate: function(page=1)
+        {
+            this.query_string.page = page;
+            this.update('query_string', this.query_string);
+            this.getList();
+        },
+        //---------------------------------------------------------------------
+        delayedSearch: function()
+        {
+            let timeout = null;
+            clearTimeout(timeout);
+            // Make a new timeout set to go off in 800ms
+            timeout = setTimeout(() => {
+                this.getList();
+            }, 800);
         },
         //---------------------------------------------------------------------
         getList: function () {
-            let params = {};
+            this.$vaah.updateCurrentURL(this.query_string, this.$router);
             let url = this.ajax_url+'/list';
-            this.$vaah.ajax(url, params, this.getListAfter);
+            this.$vaah.ajax(url, this.query_string, this.getListAfter);
         },
         //---------------------------------------------------------------------
         getListAfter: function (data, res) {

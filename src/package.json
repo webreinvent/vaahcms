@@ -40,6 +40,7 @@
         "tiptap": "^1.26.6",
         "tiptap-extensions": "^1.28.6",
         "vaah-vue-clicktocopy": "^1.1.4",
+        "vaah-vue-pagination": "^1.0.7",
         "vue": "^2.6.11",
         "vue-avatar": "^2.2.0",
         "vue-axios": "^2.1.5",

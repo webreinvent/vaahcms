@@ -1,5 +1,4 @@
 import Vue from "vue";
-import Progress from 'vue-progressbar'
 
 import {store} from './../../store/store';
 import {ToastProgrammatic as Toast} from "buefy";
@@ -17,23 +16,15 @@ const VaahHelper = {
     //---------------------------------------------------------------------
 
     //---------------------------------------------------------------------
-    async ajax(url, params, callback, query, that )
+    async ajax(url, params, callback, query )
     {
 
         let q = {
             params: query
         };
 
-        //console.log('--->url', url);
-
-        //that.$Progress.start();
-
         let data = await Vue.axios.post(url, params, q)
             .then(response => {
-
-
-                //console.log('--->response', response);
-
                 if(response.data.status)
                 {
                     if(response.data.status === 'failed')
@@ -47,9 +38,6 @@ const VaahHelper = {
                         {
                             this.toastErrors(response.data.errors);
                         }
-
-
-
                     }
                     if(response.data.status === 'success')
                     {
@@ -58,7 +46,6 @@ const VaahHelper = {
                             this.toastSuccess(response.data.messages);
                         }
                     }
-
                 }
 
                 if(callback)
@@ -72,9 +59,7 @@ const VaahHelper = {
                     }
                 }
 
-
                 return response;
-
             })
             .catch(error => {
 
@@ -96,8 +81,6 @@ const VaahHelper = {
             });
 
         return data;
-
-
     },
     //---------------------------------------------------------------------
     updateRootState: function(state_name, state_value)
@@ -148,18 +131,7 @@ const VaahHelper = {
         }
     },
     //---------------------------------------------------------------------
-    updateCurrentURL: function(query,router)
-    {
-        if(query)
-        {
-            if(Object.keys(query).length > 0)
-            {
-                query = JSON.parse(JSON.stringify(query));
-                router.replace({ query: query }).catch(err => {});
-            }
-        }
 
-    },
 
     //---------------------------------------------------------------------
     confirmCopiedData: function(data)
@@ -175,10 +147,16 @@ const VaahHelper = {
         let list_html = "";
         let i = 1;
         let duration = 1000;
-        messages.forEach(function (message) {
-            list_html += i+") "+message+"<br/>";
-            i++;
-        });
+        if(messages.length > 1)
+        {
+            messages.forEach(function (error) {
+                list_html += i+") "+error+"<br/>";
+                i++;
+            });
+        } else
+        {
+            list_html += messages[0];
+        }
 
         Toast.open({
             message: list_html,
@@ -193,10 +171,18 @@ const VaahHelper = {
         let list_html = "";
         let i = 1;
         let duration = 1000;
-        messages.forEach(function (error) {
-            list_html += i+") "+error+"<br/>";
-            i++;
-        });
+
+        if(messages.length > 1)
+        {
+            messages.forEach(function (error) {
+                list_html += i+") "+error+"<br/>";
+                i++;
+            });
+        } else
+        {
+            list_html += messages[0];
+        }
+
 
         Toast.open({
             message: list_html,
@@ -217,6 +203,20 @@ const VaahHelper = {
         {
             console.log(label, data);
         }
+    },
+    //---------------------------------------------------------------------
+    updateCurrentURL: function(query,router)
+    {
+        if(query)
+        {
+            if(Object.keys(query).length > 0)
+            {
+                query = JSON.parse(JSON.stringify(query));
+                query = this.removeEmpty(query);
+                router.replace({ query: query }).catch(err => {});
+            }
+        }
+
     },
     //---------------------------------------------------------------------
     findAndReplaceString:  function (find_string, replace_string, full_string ) {
@@ -252,6 +252,22 @@ const VaahHelper = {
         let removeIndex = arr.map(function(item) { return item; }).indexOf(element);
         console.log('index', removeIndex);
         return arr.splice(removeIndex, 1);
+    },
+
+    //---------------------------------------------------------------------
+    removeEmpty: function(obj) {
+
+        Object.keys(obj).forEach(function(key) {
+            if (obj[key] && typeof obj[key] === 'object'){
+                this.removeEmpty(obj[key]);
+            }
+            else if (obj[key] == null) {
+                delete obj[key]
+            };
+        });
+
+        return obj;
+
     },
 
     //---------------------------------------------------------------------

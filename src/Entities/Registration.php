@@ -290,7 +290,8 @@ class Registration extends Model
             });
         }
 
-        $list = $list->paginate(config('vaahcms.per_page'));
+        //$list = $list->paginate(config('vaahcms.per_page'));
+        $list = $list->paginate(1);
 
         $response['status'] = 'success';
         $response['data']['list'] = $list;

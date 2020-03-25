@@ -13,6 +13,7 @@ import VueRouter from 'vue-router';
 import Vuex from 'vuex';
 import VueFuse from 'vue-fuse'
 import VueProgressBar from 'vue-progressbar'
+import VaahVuePagination from 'vaah-vue-pagination'
 //---------/Package imports
 
 //---------Configs
@@ -67,7 +68,6 @@ Vue.component('font-awesome-icon', FontAwesomeIcon);
 //--------/FontAwesome
 
 //---------Buefy
-
 Vue.component('vue-fontawesome', FontAwesomeIcon);
 import Buefy from 'buefy';
 Vue.use(Buefy, {
@@ -76,6 +76,9 @@ Vue.use(Buefy, {
     defaultIconComponent: 'vue-fontawesome',
 });
 //---------/Buefy
+
+
+Vue.component('vh-pagination', VaahVuePagination);
 
 //---------Variables
 var base_url = $('base').attr("href");
@@ -90,23 +93,6 @@ import {store} from './store/store';
 //---------Routes
 import router from './routes/router';
 //---------/Routes
-
-/*store.beforeEach(async (to, from, next) => {
-
-    if (to.meta.progress !== undefined) {
-        let meta = to.meta.progress;
-        // parse meta tags
-        this.$Progress.parseMeta(meta)
-    }
-    //  start the progress bar
-    this.$Progress.start();
-
-});
-
-store.afterEach((to, from) => {
-    //  finish the progress bar
-    this.$Progress.finish()
-});*/
 
 
 const app = new Vue({

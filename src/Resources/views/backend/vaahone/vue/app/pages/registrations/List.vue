@@ -6,7 +6,7 @@
 
             <div class="columns">
 
-                <!--list-->
+                <!--left-->
                 <div class="column">
 
 
@@ -45,6 +45,9 @@
 
                         <!--content-->
                         <div class="card-content">
+
+
+
                             <div class="block" v-if="page.list">
 
                                 <!--search-->
@@ -65,6 +68,8 @@
                                             <b-field class="control">
                                                 <b-input placeholder="Search..."
                                                          type="search"
+                                                         v-model="query_string.q"
+                                                         @input="delayedSearch"
                                                          icon="search">
                                                 </b-input>
                                             </b-field>
@@ -144,12 +149,11 @@
                                 </div>
                                 <!--/actions-->
 
+                                <!--list-->
+                                <div class="block ">
 
-                                {{page.list_is_empty}} |
-                                {{page.list}}
-
-
-                                <b-table :data="page.list_is_empty ? [] : page.list.data">
+                                    <div class="block">
+                                        <b-table :data="page.list_is_empty ? [] : page.list.data">
 
                                     <template slot-scope="props">
                                         <b-table-column field="id" label="ID" width="40" numeric>
@@ -165,18 +169,18 @@
                                         </b-table-column>
 
                                         <b-table-column field="date" label="Date" centered>
-                                <span class="tag is-success">
-                                    success
-                                </span>
+                                            <span class="tag is-success">
+                                                success
+                                            </span>
                                         </b-table-column>
 
                                         <b-table-column label="Gender">
-                                <span>
-                                    <b-icon pack="fas"
-                                            :icon="props.row.gender === 'Male' ? 'mars' : 'venus'">
-                                    </b-icon>
-                                    {{ props.row.gender }}
-                                </span>
+                                            <span>
+                                                <b-icon pack="fas"
+                                                        :icon="props.row.gender === 'Male' ? 'mars' : 'venus'">
+                                                </b-icon>
+                                                {{ props.row.gender }}
+                                            </span>
                                         </b-table-column>
                                     </template>
 
@@ -189,15 +193,19 @@
                                     </template>
 
                                 </b-table>
+                                    </div>
 
+                                    <hr/>
 
-                                <b-table
-                                    :data="data"
-                                    :columns="columns"
-                                    class="control"
-                                    checkable
-                                    :checkbox-position="checkboxPosition">
-                                </b-table>
+                                    <div class="block" v-if="page.list">
+                                        <vh-pagination  :limit="1" :data="page.list"
+                                                        @onPageChange="paginate">
+                                        </vh-pagination>
+                                    </div>
+
+                                </div>
+                                <!--/list-->
+
 
                             </div>
                         </div>
@@ -212,7 +220,7 @@
 
 
                 </div>
-                <!--/list-->
+                <!--/left-->
 
                 <router-view></router-view>
 
