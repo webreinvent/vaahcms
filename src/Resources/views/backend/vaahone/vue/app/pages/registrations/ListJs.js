@@ -19,14 +19,20 @@ export default {
             is_content_loading: false,
             assets: null,
             is_btn_loading: false,
+            search_delay: null,
+            search_delay_time: 800,
         }
     },
     watch: {
-
+        $route(to, from) {
+            this.updateView(this.$route)
+        }
     },
     mounted() {
         //----------------------------------------------------
-        this.updateQueryString();
+        this.onLoad();
+        //----------------------------------------------------
+
         //----------------------------------------------------
     },
     methods: {
@@ -39,6 +45,17 @@ export default {
                 namespace: namespace,
             };
             this.$vaah.updateState(update);
+        },
+        //---------------------------------------------------------------------
+        updateView: function()
+        {
+            this.$store.dispatch(namespace+'/updateView', this.$route);
+        },
+        //---------------------------------------------------------------------
+        onLoad: function()
+        {
+            this.updateView();
+            this.updateQueryString();
         },
         //---------------------------------------------------------------------
         updateQueryString: function()
@@ -72,12 +89,15 @@ export default {
         //---------------------------------------------------------------------
         delayedSearch: function()
         {
-            let timeout = null;
-            clearTimeout(timeout);
-            // Make a new timeout set to go off in 800ms
-            timeout = setTimeout(() => {
-                this.getList();
-            }, 800);
+            let self = this;
+            clearTimeout(this.search_delay);
+            this.search_delay = setTimeout(function() {
+                self.getList();
+            }, this.search_delay_time);
+
+            this.query_string.page = 1;
+            this.update('query_string', this.query_string);
+
         },
         //---------------------------------------------------------------------
         getList: function () {
@@ -96,6 +116,8 @@ export default {
             if(data.list.total === 0)
             {
                 this.update('list_is_empty', true);
+            }else{
+                this.update('list_is_empty', false);
             }
 
         },

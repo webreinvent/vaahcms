@@ -21,8 +21,15 @@
 
     <link href="https://fonts.googleapis.com/css?family=IBM+Plex+Sans:300,400,500,600,700&display=swap" rel="stylesheet">
 
-    <link href="{{vh_get_backend_assets("css/vaahcms.css")}}" rel="stylesheet" media="screen">
-    <link href="{{vh_get_backend_assets("css/backend.css")}}" rel="stylesheet" media="screen">
+
+    @if(env('APP_ENV') == 'local' || env('APP_ENV') == 'localhost')
+        <link href="http://localhost:8080/themes/vaahone/css/vaahcms.css" rel="stylesheet" media="screen">
+        <link href="http://localhost:8080/themes/vaahone/css/backend.css" rel="stylesheet" media="screen">
+    @else
+        <link href="{{vh_get_backend_assets("css/vaahcms.css")}}" rel="stylesheet" media="screen">
+        <link href="{{vh_get_backend_assets("css/backend.css")}}" rel="stylesheet" media="screen">
+    @endif
+
 
     @yield('vaahcms_extend_backend_css')
 
@@ -34,7 +41,14 @@
 
 @yield('content')
 
-<script src="{{vh_get_backend_assets("builds/app.js")}}" defer></script>
+
+
+@if(env('APP_ENV') == 'local' || env('APP_ENV') == 'localhost')
+    <script src="http://localhost:8080/themes/vaahone/builds/app.js" defer></script>
+    @else
+    <script src="{{vh_get_backend_assets("builds/app.js")}}" defer></script>
+@endif
+
 
 @yield('vaahcms_extend_backend_js')
 

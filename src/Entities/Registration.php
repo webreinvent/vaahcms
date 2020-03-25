@@ -248,6 +248,10 @@ class Registration extends Model
             $inputs['username'] = Str::slug($inputs['email']);
         }
 
+        if(!isset($inputs['status']))
+        {
+            $inputs['status'] = 'email-verification-pending';
+        }
 
         $inputs['created_ip'] = request()->ip();
 
@@ -291,7 +295,7 @@ class Registration extends Model
         }
 
         //$list = $list->paginate(config('vaahcms.per_page'));
-        $list = $list->paginate(1);
+        $list = $list->paginate(2);
 
         $response['status'] = 'success';
         $response['data']['list'] = $list;

@@ -23,6 +23,7 @@ export default {
         },
         is_list_loading: false,
         is_item_loading: false,
+        list_view: true,
         query_string: {
             page: 1,
             q: null,
@@ -73,6 +74,19 @@ export default {
             }
         },
         //-----------------------------------------------------------------
+        updateView({ state, commit, dispatch, getters }, payload) {
+            let list_view = false;
+            if(payload && payload.name && payload.name == 'reg.list')
+            {
+                list_view = true;
+            }
+            let view = {
+                key: 'list_view',
+                value: list_view
+            }
+            commit('updateState', view);
+        },
+        //-----------------------------------------------------------------
     },
     //=========================================================================
     getters:{
@@ -81,6 +95,7 @@ export default {
         assets(state) {return state.assets;},
         new_item(state) {return state.new_item;},
         query_string(state) {return state.query_string;},
+        split_view(state) {return state.split_view;},
     }
 
 }

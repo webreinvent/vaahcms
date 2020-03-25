@@ -24,11 +24,15 @@ export default {
         }
     },
     watch: {
-
+        $route(to, from) {
+            this.updateView(this.$route)
+        }
     },
     mounted() {
         //----------------------------------------------------
-        this.getAssets();
+        this.onLoad();
+        //----------------------------------------------------
+
         //----------------------------------------------------
         //----------------------------------------------------
     },
@@ -43,6 +47,17 @@ export default {
                 namespace: namespace,
             };
             this.$vaah.updateState(update);
+        },
+        //---------------------------------------------------------------------
+        updateView: function()
+        {
+            this.$store.dispatch(namespace+'/updateView', this.$route);
+        },
+        //---------------------------------------------------------------------
+        onLoad: function()
+        {
+            this.updateView();
+            this.getAssets();
         },
         //---------------------------------------------------------------------
         async getAssets() {

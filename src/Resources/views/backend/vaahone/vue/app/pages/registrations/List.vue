@@ -50,36 +50,6 @@
 
                             <div class="block" v-if="page.list">
 
-                                <!--search-->
-                                <div class="level">
-
-                                    <!--left-->
-                                    <div class="level-left">
-                                        <router-link to="/" class="level-item">All (8)</router-link>
-                                        <router-link to="/" class="level-item">Published (8)</router-link>
-                                        <router-link to="/" class="level-item">Trashed (8)</router-link>
-                                    </div>
-                                    <!--/left-->
-
-
-                                    <!--right-->
-                                    <div class="level-right">
-                                        <div class="level-item">
-                                            <b-field class="control">
-                                                <b-input placeholder="Search..."
-                                                         type="search"
-                                                         v-model="query_string.q"
-                                                         @input="delayedSearch"
-                                                         icon="search">
-                                                </b-input>
-                                            </b-field>
-                                        </div>
-                                    </div>
-                                    <!--/right-->
-
-                                </div>
-                                <!--/search-->
-
 
                                 <!--actions-->
                                 <div class="level">
@@ -87,9 +57,9 @@
                                     <!--left-->
                                     <div class="level-left">
                                         <div  class="level-item">
-                                            <div class="field has-addons">
+                                            <div class="field has-addons" custom-class="is-small">
                                                 <div class="control">
-                                                    <b-dropdown aria-role="list">
+                                                    <b-dropdown  aria-role="list">
                                                         <button class="button" slot="trigger">
                                                             <span>Bulk Actions</span>
                                                             <b-icon icon="caret-down"></b-icon>
@@ -112,6 +82,17 @@
 
                                     <!--right-->
                                     <div class="level-right">
+
+                                        <div class="level-item">
+                                            <b-field class="control">
+                                                <b-input placeholder="Search..."
+                                                         type="search"
+                                                         v-model="query_string.q"
+                                                         @input="delayedSearch"
+                                                         icon="search">
+                                                </b-input>
+                                            </b-field>
+                                        </div>
 
                                         <div class="level-item">
                                             <b-dropdown aria-role="list">
@@ -152,50 +133,62 @@
                                 <!--list-->
                                 <div class="block ">
 
-                                    <div class="block">
-                                        <b-table :data="page.list_is_empty ? [] : page.list.data">
+                                    <div class="block" style="margin-bottom: 0px;">
 
-                                    <template slot-scope="props">
-                                        <b-table-column field="id" label="ID" width="40" numeric>
-                                            {{ props.row.id }}
-                                        </b-table-column>
+                                        {{page.split_view}}
 
-                                        <b-table-column field="first_name" label="First Name">
-                                            {{ props.row.first_name }}
-                                        </b-table-column>
+                                        <b-table :data="page.list_is_empty ? [] : page.list.data"
+                                                 :checkable="true"
+                                                 checkbox-position="left"
+                                                 :hoverable="true"
+                                        >
 
-                                        <b-table-column field="last_name" label="Last Name">
-                                            {{ props.row.last_name }}
-                                        </b-table-column>
+                                            <template slot-scope="props">
+                                                <b-table-column field="id" label="ID" width="40" numeric>
+                                                    {{ props.row.id }}
+                                                </b-table-column>
 
-                                        <b-table-column field="date" label="Date" centered>
-                                            <span class="tag is-success">
-                                                success
-                                            </span>
-                                        </b-table-column>
+                                                <b-table-column field="name" label="Name">
+                                                    {{ props.row.name }}
+                                                </b-table-column>
 
-                                        <b-table-column label="Gender">
-                                            <span>
-                                                <b-icon pack="fas"
-                                                        :icon="props.row.gender === 'Male' ? 'mars' : 'venus'">
-                                                </b-icon>
-                                                {{ props.row.gender }}
-                                            </span>
-                                        </b-table-column>
-                                    </template>
+                                                <b-table-column field="email" label="Email">
+                                                    {{ props.row.email }}
+                                                </b-table-column>
 
-                                    <template slot="empty">
-                                        <section class="section">
-                                            <div class="content has-text-grey has-text-centered">
-                                                <p>Nothing here.</p>
-                                            </div>
-                                        </section>
-                                    </template>
+                                                <b-table-column field="status" label="Status">
+                                                    <span class="tag is-success">
+                                                        {{ props.row.status }}
+                                                    </span>
+                                                </b-table-column>
 
-                                </b-table>
+                                                <b-table-column field="date" v-if="page.list_view"
+                                                                label="Created At" centered>
+                                                    {{ props.row.created_at }}
+                                                </b-table-column>
+
+                                                <b-table-column label="Gender" v-if="page.list_view">
+                                                    <span>
+                                                        <b-icon pack="fas"
+                                                                :icon="props.row.gender === 'Male' ? 'mars' : 'venus'">
+                                                        </b-icon>
+                                                        {{ props.row.gender }}
+                                                    </span>
+                                                </b-table-column>
+                                            </template>
+
+                                            <template slot="empty">
+                                                <section class="section">
+                                                    <div class="content has-text-grey has-text-centered">
+                                                        <p>Nothing here.</p>
+                                                    </div>
+                                                </section>
+                                            </template>
+
+                                        </b-table>
                                     </div>
 
-                                    <hr/>
+                                    <hr style="margin-top: 0;"/>
 
                                     <div class="block" v-if="page.list">
                                         <vh-pagination  :limit="1" :data="page.list"
