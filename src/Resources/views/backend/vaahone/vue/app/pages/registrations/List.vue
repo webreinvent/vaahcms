@@ -164,7 +164,7 @@
 
                                                 <b-table-column field="date" v-if="page.list_view"
                                                                 label="Created At" centered>
-                                                    {{ props.row.created_at }}
+                                                    {{ $vaah.fromNow(props.row.created_at) }}
                                                 </b-table-column>
 
                                                 <b-table-column label="Gender" v-if="page.list_view">

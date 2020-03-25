@@ -1,4 +1,5 @@
 import Vue from "vue";
+import moment from "moment";
 
 import {store} from './../../store/store';
 import {ToastProgrammatic as Toast} from "buefy";
