@@ -965,7 +965,7 @@ class User extends Authenticatable
         foreach ($roles as $role) {
             $permissions = $role->permissions()->get();
             foreach ($permissions as $permission) {
-                $permissions_list[$permission->id] = $permission->slug;
+                $permissions_list[] = $permission->slug;
             }
         }
         return $permissions_list;
