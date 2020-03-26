@@ -211,7 +211,10 @@ class UserController extends Controller
                     }
 
                     $item = User::find($inputs['inputs']['id']);
-                    $item->roles()->updateExistingPivot($inputs['inputs']['user_id'], array('is_active' => $inputs['data']['is_active']));
+                    $role = Role::find($inputs['inputs']['role_id']);
+
+                    $item->roles()->updateExistingPivot($role, array('is_active' => $inputs['data']['is_active']), false);
+
                     Role::recountRelations();
                     $response['messages'] = [];
                 }
