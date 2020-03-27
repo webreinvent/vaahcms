@@ -67,7 +67,7 @@
                 <div class="block">
 
                     <b-field label="Email" :label-position="labelPosition">
-                        <b-input v-model="new_item.email"></b-input>
+                        <b-input type="email" v-model="new_item.email"></b-input>
                     </b-field>
 
 

@@ -70,7 +70,7 @@
                                                     </b-dropdown>
                                                 </div>
                                                 <div class="control">
-                                                    <a class="button is-info">
+                                                    <a class="button is-primary">
                                                         Apply
                                                     </a>
                                                 </div>
@@ -84,44 +84,38 @@
                                     <div class="level-right">
 
                                         <div class="level-item">
-                                            <b-field class="control">
-                                                <b-input placeholder="Search..."
-                                                         type="search"
-                                                         v-model="query_string.q"
+
+                                            <b-field>
+
+                                                <b-input placeholder="Search"
+                                                         type="text"
+                                                         icon="search"
                                                          @input="delayedSearch"
-                                                         icon="search">
+                                                         @keyup.enter.prevent="delayedSearch"
+                                                         v-model="query_string.q">
                                                 </b-input>
+
+                                                <p class="control">
+                                                    <button class="button is-primary"
+                                                    @click="getList">
+                                                        Filter
+                                                    </button>
+                                                </p>
+                                                <p class="control">
+                                                    <button class="button is-primary"
+                                                            @click="resetQueryString">
+                                                        Reset
+                                                    </button>
+                                                </p>
+                                                <p class="control">
+                                                    <button class="button is-primary"
+                                                            @click="toggleFilters()"
+                                                            slot="trigger">
+                                                        <b-icon icon="ellipsis-v"></b-icon>
+                                                    </button>
+                                                </p>
                                             </b-field>
-                                        </div>
 
-                                        <div class="level-item">
-                                            <b-dropdown aria-role="list">
-                                                <button class="button" slot="trigger">
-                                                    <span>All Categories</span>
-                                                    <b-icon icon="caret-down"></b-icon>
-                                                </button>
-
-                                                <b-dropdown-item aria-role="listitem">Edit</b-dropdown-item>
-                                                <b-dropdown-item aria-role="listitem">Move to Trash</b-dropdown-item>
-                                            </b-dropdown>
-                                        </div>
-
-                                        <div class="level-item">
-                                            <b-dropdown aria-role="list">
-                                                <button class="button" slot="trigger">
-                                                    <span>All Formats</span>
-                                                    <b-icon icon="caret-down"></b-icon>
-                                                </button>
-
-                                                <b-dropdown-item aria-role="listitem">Edit</b-dropdown-item>
-                                                <b-dropdown-item aria-role="listitem">Move to Trash</b-dropdown-item>
-                                            </b-dropdown>
-                                        </div>
-
-                                        <div class="level-item">
-                                            <a class="button is-info">
-                                                Filter
-                                            </a>
                                         </div>
 
                                     </div>
@@ -130,12 +124,57 @@
                                 </div>
                                 <!--/actions-->
 
+                                <!--filters-->
+                                <div class="level" v-if="page.show_filters">
+
+                                    <div class="level-left">
+
+
+
+                                        <div class="level-item">
+
+                                            <b-field label="">
+                                                <b-select placeholder="Select a status"
+                                                          v-model="query_string.status"
+                                                          @input="getList()"
+                                                >
+                                                    <option value="">
+                                                        - Select a status -
+                                                    </option>
+                                                    <option
+                                                        v-for="option in page.assets.registration_statuses"
+                                                        :value="option.slug"
+                                                        :key="option.slug">
+                                                        {{ option.name }}
+                                                    </option>
+                                                </b-select>
+                                            </b-field>
+
+
+                                        </div>
+
+                                        <div class="level-item">
+                                            <div class="field">
+                                                <b-checkbox v-model="query_string.trashed"
+                                                            @input="getList"
+                                                >
+                                                    Include Trashed
+                                                </b-checkbox>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+
+                                </div>
+                                <!--/filters-->
+
+
                                 <!--list-->
                                 <div class="block ">
 
                                     <div class="block" style="margin-bottom: 0px;">
 
-                                        {{page.split_view}}
 
                                         <b-table :data="page.list_is_empty ? [] : page.list.data"
                                                  :checkable="true"

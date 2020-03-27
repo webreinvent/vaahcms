@@ -76,8 +76,41 @@ export default {
         //---------------------------------------------------------------------
         async getAssets() {
             await this.$store.dispatch(namespace+'/getAssets');
+            this.getList();
+        },
+        //---------------------------------------------------------------------
+        toggleFilters: function()
+        {
+            if(this.page.show_filters == false)
+            {
+                this.page.show_filters = true;
+            } else
+            {
+                this.page.show_filters = false;
+            }
+
+            this.update('show_filters', this.page.show_filters);
+
+        },
+        //---------------------------------------------------------------------
+        clearSearch: function () {
+            this.query_string.q = null;
+            this.update('query_string', this.query_string);
+            this.getList();
+        },
+        //---------------------------------------------------------------------
+        resetQueryString: function()
+        {
+
+            for(let key in this.query_string)
+            {
+                this.query_string[key] = null;
+            }
+
+            this.update('query_string', this.query_string);
 
             this.getList();
+
         },
         //---------------------------------------------------------------------
         paginate: function(page=1)

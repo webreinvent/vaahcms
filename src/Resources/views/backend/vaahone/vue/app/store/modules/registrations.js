@@ -24,9 +24,12 @@ export default {
         is_list_loading: false,
         is_item_loading: false,
         list_view: true,
+        show_filters: false,
         query_string: {
             page: 1,
             q: null,
+            trashed: null,
+            status: null,
         },
         new_item:{
             email: null,

@@ -18,7 +18,7 @@ function vh_registration_statuses()
     $list = [
         ['slug' => 'email-verification-pending', 'name'=>'Email Verification Pending'],
         ['slug' => 'email-verified', 'name'=>'Email Verified'],
-        ['slug' => 'user-created', 'name'=>'user-created'],
+        ['slug' => 'user-created', 'name'=>'User Created'],
     ];
     return $list;
 }
