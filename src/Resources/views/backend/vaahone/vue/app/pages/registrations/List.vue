@@ -7,7 +7,7 @@
             <div class="columns">
 
                 <!--left-->
-                <div class="column">
+                <div class="column" :class="{'is-7': !page.list_view}">
 
 
                     <!--card-->
@@ -57,24 +57,44 @@
                                     <!--left-->
                                     <div class="level-left">
                                         <div  class="level-item">
-                                            <div class="field has-addons" custom-class="is-small">
-                                                <div class="control">
-                                                    <b-dropdown  aria-role="list">
-                                                        <button class="button" slot="trigger">
-                                                            <span>Bulk Actions</span>
-                                                            <b-icon icon="caret-down"></b-icon>
-                                                        </button>
+                                            <b-field>
 
-                                                        <b-dropdown-item aria-role="listitem">Edit</b-dropdown-item>
-                                                        <b-dropdown-item aria-role="listitem">Move to Trash</b-dropdown-item>
-                                                    </b-dropdown>
-                                                </div>
-                                                <div class="control">
-                                                    <a class="button is-primary">
+                                                <b-select placeholder="- Bulk Actions -"
+                                                          v-model="page.bulk_action.action">
+                                                    <option value="">
+                                                        - Bulk Actions -
+                                                    </option>
+                                                    <option
+                                                        v-for="option in page.assets.bulk_actions"
+                                                        :value="option.slug"
+                                                        :key="option.slug">
+                                                        {{ option.name }}
+                                                    </option>
+                                                </b-select>
+
+                                                <b-select placeholder="- Select Status -"
+                                                          v-if="page.bulk_action.action == 'bulk-change-status'"
+                                                          v-model="page.bulk_action.data.status">
+                                                    <option value="">
+                                                        - Select Status -
+                                                    </option>
+                                                    <option
+                                                        v-for="option in page.assets.registration_statuses"
+                                                        :value="option.slug"
+                                                        :key="option.slug">
+                                                        {{ option.name }}
+                                                    </option>
+                                                </b-select>
+
+
+                                                <p class="control">
+                                                    <button class="button is-primary"
+                                                            @click="actions">
                                                         Apply
-                                                    </a>
-                                                </div>
-                                            </div>
+                                                    </button>
+                                                </p>
+
+                                            </b-field>
                                         </div>
                                     </div>
                                     <!--/left-->
@@ -103,7 +123,7 @@
                                                 </p>
                                                 <p class="control">
                                                     <button class="button is-primary"
-                                                            @click="resetQueryString">
+                                                            @click="resetPage">
                                                         Reset
                                                     </button>
                                                 </p>
@@ -175,56 +195,15 @@
 
                                     <div class="block" style="margin-bottom: 0px;">
 
+                                        {{page.bulk_action.selected_items}}
 
-                                        <b-table :data="page.list_is_empty ? [] : page.list.data"
-                                                 :checkable="true"
-                                                 checkbox-position="left"
-                                                 :hoverable="true"
-                                        >
 
-                                            <template slot-scope="props">
-                                                <b-table-column field="id" label="ID" width="40" numeric>
-                                                    {{ props.row.id }}
-                                                </b-table-column>
+                                        <ListLargeView v-if="page.list_view" />
 
-                                                <b-table-column field="name" label="Name">
-                                                    {{ props.row.name }}
-                                                </b-table-column>
+                                        <ListSmallView v-else />
 
-                                                <b-table-column field="email" label="Email">
-                                                    {{ props.row.email }}
-                                                </b-table-column>
 
-                                                <b-table-column field="status" label="Status">
-                                                    <span class="tag is-success">
-                                                        {{ props.row.status }}
-                                                    </span>
-                                                </b-table-column>
 
-                                                <b-table-column field="date" v-if="page.list_view"
-                                                                label="Created At" centered>
-                                                    {{ $vaah.fromNow(props.row.created_at) }}
-                                                </b-table-column>
-
-                                                <b-table-column label="Gender" v-if="page.list_view">
-                                                    <span>
-                                                        <b-icon pack="fas"
-                                                                :icon="props.row.gender === 'Male' ? 'mars' : 'venus'">
-                                                        </b-icon>
-                                                        {{ props.row.gender }}
-                                                    </span>
-                                                </b-table-column>
-                                            </template>
-
-                                            <template slot="empty">
-                                                <section class="section">
-                                                    <div class="content has-text-grey has-text-centered">
-                                                        <p>Nothing here.</p>
-                                                    </div>
-                                                </section>
-                                            </template>
-
-                                        </b-table>
                                     </div>
 
                                     <hr style="margin-top: 0;"/>
@@ -245,10 +224,6 @@
 
                     </div>
                     <!--/card-->
-
-
-
-
 
 
                 </div>

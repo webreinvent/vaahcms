@@ -267,30 +267,21 @@ class Registration extends Model
     //-------------------------------------------------
     public static function getList($request)
     {
-        if($request->has("sort_by") && !is_null($request->sort_by))
-        {
+        $list = Registration::orderBy('created_at', 'DESC');
 
-            if($request->sort_by == 'deleted_at')
-            {
-                $list = Registration::onlyTrashed();
-            } else
-            {
-                $list = Registration::orderBy($request->sort_by, $request->sort_type);
-            }
-
-        } else
+        if($request->has('trashed') && $request->trashed == true)
         {
-            $list = Registration::orderBy('created_at', 'DESC');
+            $list->withTrashed();
         }
 
         if($request->has("q"))
         {
             $list->where(function ($q) use ($request){
                 $q->where('first_name', 'LIKE', '%'.$request->q.'%')
+                    ->orWhere('last_name', 'LIKE', '%'.$request->q.'%')
                     ->orWhere('middle_name', 'LIKE', '%'.$request->q.'%')
                     ->orWhere('email', 'LIKE', '%'.$request->q.'%')
-                    ->orWhere('id', '=', $request->q)
-                    ->orWhere('last_name', 'LIKE', '%'.$request->q.'%');
+                    ->orWhere('id', '=', $request->q);
             });
         }
 
@@ -497,11 +488,12 @@ class Registration extends Model
         foreach($request->inputs as $id)
         {
             $reg = Registration::find($id);
-            $reg->status = $request->data;
+            $reg->status = $request->data['status'];
             $reg->save();
         }
 
         $response['status'] = 'success';
+        $response['data'] = [];
         $response['messages'][] = 'Action was successful';
 
         return $response;
@@ -536,6 +528,7 @@ class Registration extends Model
         }
 
         $response['status'] = 'success';
+        $response['data'] = [];
         $response['messages'][] = 'Action was successful';
 
         return $response;
@@ -570,6 +563,7 @@ class Registration extends Model
         }
 
         $response['status'] = 'success';
+        $response['data'] = [];
         $response['messages'][] = 'Action was successful';
 
         return $response;

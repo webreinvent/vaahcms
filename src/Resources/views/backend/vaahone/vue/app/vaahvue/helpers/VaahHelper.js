@@ -293,6 +293,25 @@ const VaahHelper = {
         return element;
     },
     //---------------------------------------------------------------------
+    pluckFromObject: function(obj, key)
+    {
+        if(Object.keys(obj).length < 1)
+        {
+            return false;
+        }
+
+        let list = [];
+        for(let index in obj)
+        {
+            console.log('--->', obj[index]);
+            console.log('--->', obj[index][key]);
+
+            list.push(obj[index][key]);
+        }
+
+        return list;
+    },
+    //---------------------------------------------------------------------
     testReturn: function()
     {
         return 'value-----';

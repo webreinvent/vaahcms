@@ -1,4 +1,11 @@
+@import "~bulma/sass/utilities/functions.sass";
+@import "customize/bulma/sass/utilities/initial-variables";
+@import "customize/bulma/sass/utilities/derived-variables";
+
+//@import "vaahcms/_functions_bulma.sass";
+@import "vaahcms/_functions";
 @import "vaahcms/card";
+@import "vaahcms/table";
 
 .fa-lg{
     font-size: 0.9rem;
@@ -6,9 +13,9 @@
 
 .vaahcms{
 
-  background:#f2f2f2;
+    background:#f2f2f2;
 
-  .btn{
+    .btn{
 
     border-radius: 4px;
     background: #fff;
@@ -20,7 +27,10 @@
     }
 
 
-  }
+
+    }
+
+
 
 
 

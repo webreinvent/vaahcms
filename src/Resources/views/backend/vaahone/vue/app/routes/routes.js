@@ -113,6 +113,8 @@ routes.push(routes_backend);
 
 import RegList from "./../pages/registrations/List";
 import RegCreate from "./../pages/registrations/Create";
+import RegView from "./../pages/registrations/View";
+import RegEdit from "./../pages/registrations/Edit";
 
 let routes_reg =     {
     path: '/vaah/registrations',
@@ -141,6 +143,30 @@ let routes_reg =     {
                     path: 'create',
                     name: 'reg.create',
                     component: RegCreate,
+                    props: true,
+                    meta: {
+                        middleware: [
+                            IsLoggedIn,
+                            GetBackendAssets
+                        ]
+                    },
+                },
+                {
+                    path: 'view/:id',
+                    name: 'reg.view',
+                    component: RegView,
+                    props: true,
+                    meta: {
+                        middleware: [
+                            IsLoggedIn,
+                            GetBackendAssets
+                        ]
+                    },
+                },
+                {
+                    path: 'edit/:id',
+                    name: 'reg.edit',
+                    component: RegEdit,
                     props: true,
                     meta: {
                         middleware: [

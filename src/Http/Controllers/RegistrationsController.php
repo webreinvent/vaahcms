@@ -27,6 +27,7 @@ class RegistrationsController extends Controller
         $data['country'] = vh_get_country_list();
         $data['country_code'] = vh_get_country_list();
         $data['registration_statuses'] = vh_registration_statuses();
+        $data['bulk_actions'] = vh_general_bulk_actions();
         $data['name_titles'] = vh_name_titles();
 
         $response['status'] = 'success';
@@ -79,7 +80,6 @@ class RegistrationsController extends Controller
     public function postActions(Request $request, $action)
     {
         $rules = array(
-            'action' => 'required',
             'inputs' => 'required',
         );
 
@@ -94,23 +94,23 @@ class RegistrationsController extends Controller
 
         $response = [];
 
-        switch ($request->action)
+        switch ($action)
         {
 
             //------------------------------------
-            case 'bulk_change_status':
+            case 'bulk-change-status':
 
                 $response = Registration::bulkStatusChange($request);
 
                 break;
             //------------------------------------
-            case 'bulk_delete':
+            case 'bulk-delete':
 
                 $response = Registration::bulkDelete($request);
 
                 break;
             //------------------------------------
-            case 'bulk_restore':
+            case 'bulk-restore':
 
                 $response = Registration::bulkRestore($request);
 

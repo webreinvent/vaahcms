@@ -13,6 +13,16 @@ function vh_statuses()
     return $list;
 }
 //-----------------------------------------------------------------------------------
+function vh_general_bulk_actions()
+{
+    $list = [
+        ['slug' => 'bulk-change-status', 'name'=>'Change Status'],
+        ['slug' => 'bulk-delete', 'name'=>'Delete'],
+        ['slug' => 'bulk-restore', 'name'=>'Restore'],
+    ];
+    return $list;
+}
+//-----------------------------------------------------------------------------------
 function vh_registration_statuses()
 {
     $list = [

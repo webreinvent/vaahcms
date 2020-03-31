@@ -1,0 +1,25 @@
+.table{
+    tr{
+        @each $name, $pair in $colors {
+
+            //@debug "----------------------";
+
+            $color: nth($pair, 1);
+            $color-invert: nth($pair, 1);
+
+            //@debug "Name: #{$name} | Color: #{$color} | Invert: #{$color-invert}";
+
+            $color: findLighterColor($color,95%);
+
+            &.is-#{$name} {
+                background-color: $color;
+                border-color: $color;
+                color: $color-invert;
+            }
+        }
+    }
+
+    .icon{
+        float: left;
+    }
+}

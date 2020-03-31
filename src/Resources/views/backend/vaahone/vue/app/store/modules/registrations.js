@@ -31,6 +31,11 @@ export default {
             trashed: null,
             status: null,
         },
+        bulk_action:{
+            selected_items: [],
+            data: {},
+            action: "",
+        },
         new_item:{
             email: null,
             username: null,
