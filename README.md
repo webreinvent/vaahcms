@@ -1,4 +1,4 @@
-# vaahcms
+# vaahcms v1.0.0
 > Laravel Based Rapid Development CMS
 
 Please consider starring the project to show your :heart: and support.
