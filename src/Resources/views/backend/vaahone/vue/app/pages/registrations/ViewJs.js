@@ -1,4 +1,5 @@
 import GlobalComponents from '../../vaahvue/helpers/GlobalComponents'
+import TableTrView from '../../vaahvue/reusable/TableTrView'
 
 let namespace = 'registrations';
 
@@ -11,6 +12,7 @@ export default {
     },
     components:{
         ...GlobalComponents,
+        TableTrView,
     },
     data()
     {
@@ -88,8 +90,32 @@ export default {
             }
         },
         //---------------------------------------------------------------------
+        isCopiable: function (label) {
 
+            if(
+                label == 'id' || label == 'uuid'
+                || label == 'email' || label == 'username'
+            )
+            {
+                return true;
+            }
+
+            return false;
+
+        },
         //---------------------------------------------------------------------
+        isUpperCase: function (label) {
+
+            if(
+                label == 'id' || label == 'uuid'
+            )
+            {
+                return true;
+            }
+
+            return false;
+
+        },
         //---------------------------------------------------------------------
         //---------------------------------------------------------------------
     }

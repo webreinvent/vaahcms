@@ -2,7 +2,7 @@
 <template>
     <div class="column" v-if="page.assets">
 
-        <div class="block" v-if="is_content_loading">
+        <div class="card" v-if="is_content_loading">
             <Loader/>
         </div>
 
@@ -87,26 +87,17 @@
                             <table class="table is-hoverable">
 
                                 <tbody>
-                                <tr>
-                                    <th width="130" align="right">First Name</th>
-                                    <td colspan="2">{{item.first_name}}</td>
-                                </tr>
 
-                                <tr>
-                                    <th align="right">Last Name</th>
-                                    <td colspan="2">{{item.last_name}}</td>
-                                </tr>
+                                <template v-for="(value, label) in item">
 
-                                <tr>
-                                    <th class="text-right" align="right">Email</th>
-                                    <td>{{item.email}}</td>
-                                    <td width="20">
-                                        <vh-copy :data="item.email"
-                                                 confirm_dialog="buefy">
-                                            <b-icon icon="copy"></b-icon>
-                                        </vh-copy>
-                                    </td>
-                                </tr>
+                                    <TableTrView :value="value"
+                                                 :label="label"
+                                                 :is_copiable="isCopiable(label)"
+                                                 :is_upper_case="isUpperCase(label)"
+                                    />
+
+                                </template>
+
                                 </tbody>
 
 
@@ -117,17 +108,9 @@
                     </div>
 
 
-
-
-
-
-
                 </div>
             </div>
             <!--/content-->
-
-
-
 
 
         </div>

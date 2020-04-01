@@ -1,22 +1,19 @@
 <template>
 
 
-    <tbody>
-
-    <template v-for="(item, key) in data" >
-        <tr>
-            <th width="130" align="right">{{key}}</th>
-            <td>{{item}}</td>
-            <td width="20">
-                <vh-copy :data="item"
+    <tr>
+        <th width="130" align="right">{{label}}</th>
+        <td>{{value}}</td>
+        <td width="20">
+            <span v-if="is_copiable">
+                <vh-copy :data="''+value+''"
                          confirm_dialog="buefy">
-                    <b-icon icon="copy"></b-icon>
-                </vh-copy>
-            </td>
-        </tr>
-    </template>
+                <b-icon icon="copy"></b-icon>
+            </vh-copy>
+            </span>
 
-    </tbody>
+        </td>
+    </tr>
 
 
 </template>
@@ -25,8 +22,13 @@
     import {VaahHelper as Vaah} from "./../helpers/VaahHelper";
 
     export default {
-        name: "TableViewGenerator",
-        props: ['data'],
+        name: "TableTrView",
+        props: ['value', 'label', 'is_copiable', 'is_upper_case'],
+        computed:{
+            label: function () {
+                return this.label.replace("_", " ");
+            }
+        },
         components:{
         },
         data()
@@ -39,24 +41,17 @@
             return obj;
         },
         created() {
-            this.mapValues();
+
         },
         watch: {
+
         },
         methods: {
             //---------------------------------------------------------------------
             //---------------------------------------------------------------------
-            mapValues: function()
+            toLabel: function(str)
             {
-                var self = this;
-                var columns = this.columns;
-
-                columns.map(function(item, key) {
-                    if(item.value)
-                    {
-                        self.new_item[item.name] = item.value;
-                    }
-                });
+                return str.replace("_", " ");
             },
             //---------------------------------------------------------------------
             //---------------------------------------------------------------------
