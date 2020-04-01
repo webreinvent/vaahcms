@@ -196,13 +196,15 @@
                                 <!--list-->
                                 <div class="block ">
 
-                                    <div class="block" style="margin-bottom: 0px;">
+                                    <div class="block" style="margin-bottom: 0px;" >
 
+                                        <div v-if="page.list_view">
+                                            <ListLargeView/>
+                                        </div>
 
-                                        <ListLargeView v-if="page.list_view" />
-
-                                        <ListSmallView v-else />
-
+                                        <div v-else>
+                                            <ListSmallView/>
+                                        </div>
 
                                     </div>
 

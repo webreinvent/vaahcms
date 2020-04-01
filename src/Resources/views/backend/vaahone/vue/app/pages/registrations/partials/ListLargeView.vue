@@ -1,6 +1,7 @@
-<script src="./ListViewJs.js"></script>
+<script src="./ListLargeViewJs.js"></script>
 <template>
     <div>
+        <h4 class="is-4">large view</h4>
         <b-table :data="page.list_is_empty ? [] : page.list.data"
                  :checkable="true"
                  :checked-rows.sync="page.bulk_action.selected_items"
