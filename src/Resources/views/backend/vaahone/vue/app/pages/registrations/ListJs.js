@@ -30,7 +30,8 @@ export default {
     },
     watch: {
         $route(to, from) {
-            this.updateView(this.$route)
+            this.updateView()
+            this.updateQueryString();
         }
     },
     mounted() {
@@ -61,6 +62,7 @@ export default {
         {
             this.updateView();
             this.updateQueryString();
+            this.getAssets();
         },
         //---------------------------------------------------------------------
         updateQueryString: function()
@@ -75,8 +77,6 @@ export default {
             }
             this.update('query_string', this.query_string);
             this.$vaah.updateCurrentURL(this.query_string, this.$router);
-
-            this.getAssets();
         },
         //---------------------------------------------------------------------
         async getAssets() {

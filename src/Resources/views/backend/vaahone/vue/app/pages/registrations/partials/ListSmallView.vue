@@ -6,7 +6,7 @@
                  :checked-rows.sync="page.bulk_action.selected_items"
                  checkbox-position="left"
                  :hoverable="true"
-                 :row-class="(row, index) => row.deleted_at != null && 'is-danger'"
+                 :row-class="setRowClass"
         >
 
             <template slot-scope="props">
@@ -34,12 +34,10 @@
 
                     <b-tooltip label="View" type="is-dark">
                         <b-button size="is-small"
-                                  tag="router-link"
-                                  :to="{name:'reg.view', params: { id: props.row.gender }}"
+                                  @click="setActiveItem(props.row)"
                                   icon-left="chevron-right">
                         </b-button>
                     </b-tooltip>
-
 
                 </b-table-column>
 

@@ -7,25 +7,21 @@ export default {
         root() {return this.$store.getters['root/state']},
         page() {return this.$store.getters[namespace+'/state']},
         ajax_url() {return this.$store.getters[namespace+'/state'].ajax_url},
-        new_item() {return this.$store.getters[namespace+'/state'].new_item},
-        new_item_errors() {return this.$store.getters[namespace+'/state'].new_item_errors},
+        item() {return this.$store.getters[namespace+'/state'].active_item},
     },
     components:{
         ...GlobalComponents,
-
     },
     data()
     {
         return {
+            is_btn_loading: false,
             is_content_loading: false,
-            is_btn_loading: null,
-            labelPosition: 'on-border',
-            params: {},
         }
     },
     watch: {
         $route(to, from) {
-            this.updateView(this.$route)
+            this.updateView()
         }
     },
     mounted() {
@@ -37,7 +33,6 @@ export default {
         //----------------------------------------------------
     },
     methods: {
-        //---------------------------------------------------------------------
         //---------------------------------------------------------------------
         update: function(name, value)
         {
@@ -64,10 +59,10 @@ export default {
             await this.$store.dispatch(namespace+'/getAssets');
         },
         //---------------------------------------------------------------------
-        create: function (action) {
-            this.is_btn_loading = true;
+        getItem: function (action) {
 
-            //  this.$Progress.start();
+            this.$Progress.start();
+            this.is_content_loading = true;
 
             this.params = {
                 new_item: this.new_item,
@@ -75,14 +70,17 @@ export default {
             };
 
             let url = this.ajax_url+'/create';
-            this.$vaah.ajax(url, this.params, this.createAfter);
+            this.$vaah.ajax(url, this.params, this.getItemAfter);
         },
         //---------------------------------------------------------------------
-        createAfter: function (data, res) {
-            this.is_btn_loading = false;
+        getItemAfter: function (data, res) {
             this.$Progress.finish();
-            this.list = data.list;
-            this.update('list', data.list);
+            this.is_content_loading = false;
+
+            if(data)
+            {
+                this.update('active_item', data.item);
+            }
         },
         //---------------------------------------------------------------------
 

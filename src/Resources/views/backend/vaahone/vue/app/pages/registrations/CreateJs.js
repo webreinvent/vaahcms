@@ -25,7 +25,7 @@ export default {
     },
     watch: {
         $route(to, from) {
-            this.updateView(this.$route)
+            this.updateView()
         }
     },
     mounted() {

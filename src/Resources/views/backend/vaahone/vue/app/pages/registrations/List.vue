@@ -2,16 +2,19 @@
 <template>
     <div class="form-page-v1-layout">
 
-        <div class="container">
+        <div class="container" >
 
             <div class="columns">
 
                 <!--left-->
                 <div class="column" :class="{'is-7': !page.list_view}">
 
+                    <div class="block" v-if="is_content_loading">
+                        <Loader/>
+                    </div>
 
                     <!--card-->
-                    <div class="card">
+                    <div class="card" v-else-if="page.assets">
 
                         <!--header-->
                         <header class="card-header">
@@ -195,13 +198,10 @@
 
                                     <div class="block" style="margin-bottom: 0px;">
 
-                                        {{page.bulk_action.selected_items}}
-
 
                                         <ListLargeView v-if="page.list_view" />
 
                                         <ListSmallView v-else />
-
 
 
                                     </div>

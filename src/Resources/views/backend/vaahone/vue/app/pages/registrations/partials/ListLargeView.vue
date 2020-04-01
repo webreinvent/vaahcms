@@ -6,7 +6,7 @@
                  :checked-rows.sync="page.bulk_action.selected_items"
                  checkbox-position="left"
                  :hoverable="true"
-                 :row-class="(row, index) => row.deleted_at != null && 'is-danger'"
+                 :row-class="setRowClass"
         >
 
             <template slot-scope="props">

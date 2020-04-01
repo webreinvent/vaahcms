@@ -17,6 +17,17 @@
                 color: $color-invert;
             }
         }
+
+        &.is-selected{
+            background-color: findLighterColor($yellow, 85%);
+            border-color: findLighterColor($yellow, 85%);
+            color: $yellow-invert;
+
+            .b-checkbox.checkbox input[type=checkbox] + .check{
+                border: 2px solid #7a7a7a;
+            }
+
+        }
     }
 
     .icon{

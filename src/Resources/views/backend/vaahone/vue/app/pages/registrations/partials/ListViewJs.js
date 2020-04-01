@@ -29,6 +29,35 @@ export default {
     },
     methods: {
         //---------------------------------------------------------------------
+        update: function(name, value)
+        {
+            let update = {
+                state_name: name,
+                state_value: value,
+                namespace: namespace,
+            };
+            this.$vaah.updateState(update);
+        },
+        //---------------------------------------------------------------------
+        setRowClass: function(row, index)
+        {
+
+            if(this.page.active_item && row.id == this.page.active_item.id)
+            {
+                return 'is-selected';
+            }
+
+            if(row.deleted_at != null)
+            {
+                return 'is-danger';
+            }
+
+        },
+        //---------------------------------------------------------------------
+        setActiveItem: function (item) {
+            this.update('active_item', item);
+            this.$router.push({name: 'reg.view', params:{id:item.id}})
+        }
         //---------------------------------------------------------------------
         //---------------------------------------------------------------------
     }
