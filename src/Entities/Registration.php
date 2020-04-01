@@ -298,6 +298,15 @@ class Registration extends Model
     public static function getItem($request)
     {
 
+        $item = Registration::where('id', $request->id);
+        $item->withTrashed();
+        $item = $item->first();
+
+        $response['status'] = 'success';
+        $response['data']['item'] = $item;
+
+        return $response;
+
     }
     //-------------------------------------------------
     public static function store($request)

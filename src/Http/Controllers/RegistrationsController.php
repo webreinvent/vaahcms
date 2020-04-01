@@ -59,14 +59,9 @@ class RegistrationsController extends Controller
     //----------------------------------------------------------
     public function getItem(Request $request, $id)
     {
-
-        $reg = Registration::find($id);
-
-        $response['status'] = 'success';
-        $response['data'] = $reg->recordForFormElement();
-
+        $request->merge(['id'=>$id]);
+        $response = Registration::getItem($request);
         return response()->json($response);
-
     }
     //----------------------------------------------------------
     public function postStore(Request $request)

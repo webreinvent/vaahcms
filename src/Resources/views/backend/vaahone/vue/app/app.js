@@ -14,6 +14,7 @@ import Vuex from 'vuex';
 import VueFuse from 'vue-fuse'
 import VueProgressBar from 'vue-progressbar'
 import VaahVuePagination from 'vaah-vue-pagination'
+import VaahVueClickToCopy from 'vaah-vue-clicktocopy'
 //---------/Package imports
 
 //---------Configs
@@ -79,6 +80,7 @@ Vue.use(Buefy, {
 
 
 Vue.component('vh-pagination', VaahVuePagination);
+Vue.component('vh-copy', VaahVueClickToCopy)
 
 //---------Variables
 var base_url = $('base').attr("href");

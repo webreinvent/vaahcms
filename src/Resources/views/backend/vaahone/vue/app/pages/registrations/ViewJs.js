@@ -21,7 +21,8 @@ export default {
     },
     watch: {
         $route(to, from) {
-            this.updateView()
+            this.updateView();
+            this.getItem();
         }
     },
     mounted() {
@@ -53,6 +54,7 @@ export default {
         {
             this.updateView();
             this.getAssets();
+            this.getItem();
         },
         //---------------------------------------------------------------------
         async getAssets() {
@@ -69,7 +71,9 @@ export default {
                 action: action
             };
 
-            let url = this.ajax_url+'/create';
+            console.log('--->this.$route.params.id', this.$route.params.id);
+
+            let url = this.ajax_url+'/item/'+this.$route.params.id;
             this.$vaah.ajax(url, this.params, this.getItemAfter);
         },
         //---------------------------------------------------------------------
@@ -79,6 +83,7 @@ export default {
 
             if(data)
             {
+                console.log('--->data.item', data);
                 this.update('active_item', data.item);
             }
         },

@@ -35,7 +35,8 @@
 
                                     <p class="control">
 
-                                        <b-button @click="getList()"
+                                        <b-button @click="reload()"
+                                                  :loading="is_btn_loading"
                                                   icon-left="redo-alt">
                                         </b-button>
 

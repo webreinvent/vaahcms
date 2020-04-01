@@ -6,7 +6,7 @@
             <Loader/>
         </div>
 
-        <div class="card" v-else>
+        <div class="card" v-else-if="item">
 
             <!--header-->
             <header class="card-header">
@@ -23,7 +23,7 @@
                             <b-button icon-left="edit"
                                       :loading="is_btn_loading"
                                       @click="create('save')">
-                                Save
+                                Edit
                             </b-button>
                         </p>
 
@@ -36,12 +36,12 @@
                                 </button>
 
                                 <b-dropdown-item aria-role="listitem">
-                                    <b-icon icon="check"></b-icon>
-                                    Save & Close
+                                    <b-icon icon="trash-restore"></b-icon>
+                                    Restore
                                 </b-dropdown-item>
                                 <b-dropdown-item aria-role="listitem">
-                                    <b-icon icon="plus"></b-icon>
-                                    Save & New
+                                    <b-icon icon="eraser"></b-icon>
+                                    Delete
                                 </b-dropdown-item>
 
                             </b-dropdown>
@@ -57,7 +57,6 @@
                         </p>
 
 
-
                     </div>
 
 
@@ -66,13 +65,62 @@
             </header>
             <!--/header-->
 
+            <b-notification type="is-danger"
+                            :closable="false"
+                            class="is-light is-small"
+                            v-if="item.deleted_at"
+            >
+                Deleted {{$vaah.fromNow(item.deleted_at)}}
+            </b-notification>
+
             <!--content-->
-            <div class="card-content">
+            <div class="card-content is-paddingless ">
+
+
 
                 <div class="block" >
 
 
-                    content
+                    <div class="b-table">
+
+                        <div class="table-wrapper">
+                            <table class="table is-hoverable">
+
+                                <tbody>
+                                <tr>
+                                    <th width="130" align="right">First Name</th>
+                                    <td colspan="2">{{item.first_name}}</td>
+                                </tr>
+
+                                <tr>
+                                    <th align="right">Last Name</th>
+                                    <td colspan="2">{{item.last_name}}</td>
+                                </tr>
+
+                                <tr>
+                                    <th class="text-right" align="right">Email</th>
+                                    <td>{{item.email}}</td>
+                                    <td width="20">
+                                        <vh-copy :data="item.email"
+                                                 confirm_dialog="buefy">
+                                            <b-icon icon="copy"></b-icon>
+                                        </vh-copy>
+                                    </td>
+                                </tr>
+                                </tbody>
+
+
+
+                            </table>
+                        </div>
+
+                    </div>
+
+
+
+
+
+
 
                 </div>
             </div>

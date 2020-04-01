@@ -21,8 +21,8 @@ export default {
     {
         return {
             is_content_loading: false,
-            assets: null,
             is_btn_loading: false,
+            assets: null,
             search_delay: null,
             search_delay_time: 800,
             ids: []
@@ -164,6 +164,12 @@ export default {
 
         },
         //---------------------------------------------------------------------
+        reload: function()
+        {
+            this.is_btn_loading = true;
+            this.getList();
+        },
+        //---------------------------------------------------------------------
         getList: function () {
             this.$vaah.updateCurrentURL(this.query_string, this.$router);
             let url = this.ajax_url+'/list';
@@ -184,6 +190,7 @@ export default {
                 this.update('list_is_empty', false);
             }
 
+            this.is_btn_loading = false;
             this.$Progress.finish();
 
         },
