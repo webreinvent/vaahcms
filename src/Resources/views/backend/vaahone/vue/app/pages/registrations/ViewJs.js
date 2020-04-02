@@ -1,5 +1,6 @@
 import GlobalComponents from '../../vaahvue/helpers/GlobalComponents'
 import TableTrView from '../../vaahvue/reusable/TableTrView'
+import TableTrStatus from './partials/TableTrStatus'
 
 let namespace = 'registrations';
 
@@ -13,6 +14,7 @@ export default {
     components:{
         ...GlobalComponents,
         TableTrView,
+        TableTrStatus,
     },
     data()
     {
@@ -31,7 +33,9 @@ export default {
         //----------------------------------------------------
         this.onLoad();
         //----------------------------------------------------
-
+        this.$root.$on('eReloadItem', this.getItem);
+        //----------------------------------------------------
+        this.$root.$on('eResetBulkActions', this.resetBulkAction);
         //----------------------------------------------------
         //----------------------------------------------------
     },
@@ -54,6 +58,8 @@ export default {
         //---------------------------------------------------------------------
         onLoad: function()
         {
+            this.is_content_loading = true;
+
             this.updateView();
             this.getAssets();
             this.getItem();
@@ -63,18 +69,9 @@ export default {
             await this.$store.dispatch(namespace+'/getAssets');
         },
         //---------------------------------------------------------------------
-        getItem: function (action) {
-
+        getItem: function () {
             this.$Progress.start();
-            this.is_content_loading = true;
-
-            this.params = {
-                new_item: this.new_item,
-                action: action
-            };
-
-            console.log('--->this.$route.params.id', this.$route.params.id);
-
+            this.params = {};
             let url = this.ajax_url+'/item/'+this.$route.params.id;
             this.$vaah.ajax(url, this.params, this.getItemAfter);
         },
@@ -90,11 +87,90 @@ export default {
             }
         },
         //---------------------------------------------------------------------
+        actions: function (action) {
+
+            console.log('--->action', action);
+
+            this.$Progress.start();
+            this.page.bulk_action.action = action;
+            this.update('bulk_action', this.page.bulk_action);
+            let params = {
+                inputs: [this.item.id],
+                data: null
+            };
+
+            let url = this.ajax_url+'/actions/'+this.page.bulk_action.action;
+            this.$vaah.ajax(url, params, this.actionsAfter);
+
+        },
+        //---------------------------------------------------------------------
+        actionsAfter: function (data, res) {
+            let action = this.page.bulk_action.action;
+            if(data)
+            {
+                this.resetBulkAction();
+                this.$root.$emit('eReloadList');
+
+                if(action == 'bulk-delete')
+                {
+                    this.$router.push({name: 'reg.list'});
+                } else
+                {
+                    this.getItem();
+                }
+
+            } else
+            {
+                this.$Progress.finish();
+            }
+        },
+        //---------------------------------------------------------------------
+        changeStatus: function(status)
+        {
+            this.$Progress.start();
+
+            let params = {
+                inputs: [this.item.id],
+                data: {status: status}
+            };
+
+            let url = this.ajax_url+'/actions/bulk-change-status';
+            this.$vaah.ajax(url, params, this.actionsAfter);
+        },
+        //---------------------------------------------------------------------
+        //---------------------------------------------------------------------
+        resetBulkAction: function()
+        {
+            this.page.bulk_action = {
+                selected_items: [],
+                data: {},
+                action: "",
+            };
+            this.update('bulk_action', this.page.bulk_action);
+        },
+        //---------------------------------------------------------------------
+        confirmDelete: function()
+        {
+            let self = this;
+            this.$buefy.dialog.confirm({
+                title: 'Deleting record',
+                message: 'Are you sure you want to <b>delete</b> the record? This action cannot be undone.',
+                confirmText: 'Delete',
+                type: 'is-danger',
+                hasIcon: true,
+                onConfirm: function () {
+                    self.actions('bulk-delete');
+                }
+            })
+        },
+        //---------------------------------------------------------------------
         isCopiable: function (label) {
 
             if(
                 label == 'id' || label == 'uuid'
                 || label == 'email' || label == 'username'
+                || label == 'alternate_email' || label == 'phone'
+                || label == 'activation_code'
             )
             {
                 return true;

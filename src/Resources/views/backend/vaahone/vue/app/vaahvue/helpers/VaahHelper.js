@@ -494,6 +494,18 @@ const VaahHelper = {
         return x1 + x2;
     },
     //---------------------------------------------------------------------
+    toLabel: function(str)
+    {
+        str = str.replace(/_/g, " ");
+        str = this.toUpperCaseWords(str);
+        return str;
+    },
+    //---------------------------------------------------------------------
+    toUpperCaseWords: function(str)
+    {
+        return str.charAt(0).toUpperCase() + str.slice(1);
+    },
+    //---------------------------------------------------------------------
     currencyToSymbol: function (currency) {
 
         if(currency == "USD")
@@ -720,43 +732,7 @@ const VaahHelper = {
     //---------------------------------------------------------------------
     //---------------------------------------------------------------------
     //---------------------------------------------------------------------
-    btDropDown: function (e) {
-        if(e)
-        {
-            e.preventDefault();
-        }
 
-        var el = e.target;
-        var fd =  $(el).closest('.dropdown').find('.dropdown-menu');
-        $(fd).toggleClass('show');
-    },
-    //---------------------------------------------------------------------
-    btDropDownFormGroup: function (e) {
-        if(e)
-        {
-            e.preventDefault();
-        }
-
-        var el = e.target;
-        var fd =  $(el).closest('.btn-group').find('.dropdown-menu');
-
-        console.log('test');
-
-        console.log(fd.attr("class"));
-
-        $(fd).toggleClass('show');
-    },
-    //---------------------------------------------------------------------
-    btDropDownFormGroupHide: function (el) {
-
-        var fd =  $(el).closest('.btn-group').find('.dropdown-menu');
-
-        console.log('test');
-
-        console.log(fd.attr("class"));
-
-        $(fd).toggleClass('show');
-    },
     //---------------------------------------------------------------------
 
     //---------------------------------------------------------------------

@@ -1,4 +1,6 @@
 import GlobalComponents from '../../vaahvue/helpers/GlobalComponents'
+import DatePicker from '../../vaahvue/reusable/DatePicker'
+import AutoComplete from '../../vaahvue/reusable/AutoComplete'
 
 let namespace = 'registrations';
 
@@ -12,6 +14,9 @@ export default {
     },
     components:{
         ...GlobalComponents,
+        DatePicker,
+        'AutoCompleteTimeZone': AutoComplete,
+        'AutoCompleteCountry': AutoComplete,
 
     },
     data()
@@ -85,7 +90,29 @@ export default {
             this.update('list', data.list);
         },
         //---------------------------------------------------------------------
-
+        updateNewItem: function()
+        {
+            this.update('new_item', this.new_item);
+        },
+        //---------------------------------------------------------------------
+        setBirthDate: function (date) {
+            this.new_item.birth = date;
+            this.updateNewItem();
+        },
+        //---------------------------------------------------------------------
+        setTimeZone: function (item) {
+            this.new_item.timezone = item.slug;
+            this.updateNewItem();
+        },
+        //---------------------------------------------------------------------
+        setCountry: function (item) {
+            this.new_item.country = item.name;
+            this.new_item.country_code = item.code;
+            this.updateNewItem();
+        },
+        //---------------------------------------------------------------------
+        //---------------------------------------------------------------------
+        //---------------------------------------------------------------------
         //---------------------------------------------------------------------
         //---------------------------------------------------------------------
         //---------------------------------------------------------------------

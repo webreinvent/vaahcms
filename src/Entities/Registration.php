@@ -274,6 +274,11 @@ class Registration extends Model
             $list->withTrashed();
         }
 
+        if($request->has('status') && !empty( $request->status))
+        {
+            $list->where('status', $request->status);
+        }
+
         if($request->has("q"))
         {
             $list->where(function ($q) use ($request){
@@ -285,8 +290,7 @@ class Registration extends Model
             });
         }
 
-        //$list = $list->paginate(config('vaahcms.per_page'));
-        $list = $list->paginate(2);
+        $list = $list->paginate(config('vaahcms.per_page'));
 
         $response['status'] = 'success';
         $response['data']['list'] = $list;
@@ -510,7 +514,7 @@ class Registration extends Model
 
     }
     //-------------------------------------------------
-    public static function bulkDelete($request)
+    public static function bulkTrash($request)
     {
 
         if(!$request->has('inputs'))
@@ -520,16 +524,10 @@ class Registration extends Model
             return $response;
         }
 
-        if(!$request->has('data'))
-        {
-            $response['status'] = 'failed';
-            $response['errors'][] = 'Select Status';
-            return $response;
-        }
 
         foreach($request->inputs as $id)
         {
-            $reg = Registration::find($id);
+            $reg = Registration::withTrashed()->where('id', $id)->first();
             if($reg)
             {
                 $reg->delete();
@@ -555,13 +553,6 @@ class Registration extends Model
             return $response;
         }
 
-        if(!$request->has('data'))
-        {
-            $response['status'] = 'failed';
-            $response['errors'][] = 'Select Status';
-            return $response;
-        }
-
         foreach($request->inputs as $id)
         {
             $reg = Registration::withTrashed()->where('id', $id)->first();
@@ -577,6 +568,64 @@ class Registration extends Model
 
         return $response;
 
+
+    }
+    //-------------------------------------------------
+    public static function bulkDelete($request)
+    {
+
+        if(!$request->has('inputs'))
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = 'Select IDs';
+            return $response;
+        }
+
+
+        foreach($request->inputs as $id)
+        {
+            $reg = Registration::where('id', $id)->withTrashed()->first();
+            if($reg)
+            {
+                $reg->forceDelete();
+            }
+        }
+
+        $response['status'] = 'success';
+        $response['data'] = [];
+        $response['messages'][] = 'Action was successful';
+
+        return $response;
+
+
+    }
+    //-------------------------------------------------
+    public static function sendVerificationEmail($request)
+    {
+
+        if(!$request->has('inputs'))
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = 'Select IDs';
+            return $response;
+        }
+
+        foreach($request->inputs as $id)
+        {
+            $reg = Registration::where('id', $id)->withTrashed()->first();
+            if($reg)
+            {
+                $reg->activation_code = Str::uuid();
+                $reg->activation_code_sent_at = \Carbon::now();
+                $reg->save();
+            }
+        }
+
+        $response['status'] = 'success';
+        $response['data'] = [];
+        $response['messages'][] = 'Action was successful';
+
+        return $response;
 
     }
     //-------------------------------------------------

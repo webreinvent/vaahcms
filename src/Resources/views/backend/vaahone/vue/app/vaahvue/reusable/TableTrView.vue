@@ -2,7 +2,7 @@
 
 
     <tr>
-        <th width="130" align="right">{{label}}</th>
+        <th width="130" align="right">{{toLabel(label)}}</th>
         <td>{{value}}</td>
         <td width="20">
             <span v-if="is_copiable">
@@ -25,9 +25,7 @@
         name: "TableTrView",
         props: ['value', 'label', 'is_copiable', 'is_upper_case'],
         computed:{
-            label: function () {
-                return this.label.replace("_", " ");
-            }
+
         },
         components:{
         },
@@ -51,7 +49,13 @@
             //---------------------------------------------------------------------
             toLabel: function(str)
             {
-                return str.replace("_", " ");
+                if(!str)
+                {
+                    return null;
+                }
+
+                return Vaah.toLabel(str);
+                //return str;
             },
             //---------------------------------------------------------------------
             //---------------------------------------------------------------------

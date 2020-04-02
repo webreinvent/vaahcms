@@ -28,6 +28,14 @@ class CrudWithUuidObserver
         if ( ! isset( $model->uuid ) ) {
             $model->uuid = Str::uuid()->toString();
         }
+
+        if ( ! isset( $model->created_at ) ) {
+            $model->created_at = \Carbon::now();
+        }
+
+        $model->updated_by = $this->user_id;
+        $model->updated_at = \Carbon::now();
+
         return $model;
     }
 
@@ -39,13 +47,8 @@ class CrudWithUuidObserver
     //-----------------------------------------------------------
     public function saving( $model ) {
 
-        if ( ! isset( $model->created_by ) ) {
-            $model->created_by = $this->user_id;
-        }
-
-        if ( ! isset( $model->uuid ) ) {
-            $model->uuid = Str::uuid()->toString();
-        }
+        $model->updated_by = $this->user_id;
+        $model->updated_at = \Carbon::now();
 
         return $model;
     }
@@ -58,6 +61,7 @@ class CrudWithUuidObserver
     //-----------------------------------------------------------
     public function updating( $model ) {
         $model->updated_by = $this->user_id;
+        $model->updated_at = \Carbon::now();
 
         return $model;
     }
@@ -69,8 +73,10 @@ class CrudWithUuidObserver
 
     //-----------------------------------------------------------
     public function deleting( $model ) {
+        $model->updated_by = $this->user_id;
+        $model->updated_at = \Carbon::now();
+
         $model->deleted_by = $this->user_id;
-        $model->save();
 
         return $model;
     }
@@ -82,12 +88,12 @@ class CrudWithUuidObserver
 
     //-----------------------------------------------------------
     public function restoring( $model ) {
+        $model->updated_by = $this->user_id;
+        $model->updated_at = \Carbon::now();
     }
 
     //-----------------------------------------------------------
     public function restored( $model ) {
-        $model->deleted_by = null;
-        $model->save();
         return $model;
     }
 	//-----------------------------------------------------------

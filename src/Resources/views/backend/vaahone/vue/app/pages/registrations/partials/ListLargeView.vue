@@ -1,7 +1,6 @@
 <script src="./ListLargeViewJs.js"></script>
 <template>
     <div>
-        <h4 class="is-4">large view</h4>
         <b-table :data="page.list_is_empty ? [] : page.list.data"
                  :checkable="true"
                  :checked-rows.sync="page.bulk_action.selected_items"
@@ -29,8 +28,8 @@
                     </span>
                 </b-table-column>
 
-                <b-table-column field="created_at" label="Created At" >
-                    {{ $vaah.fromNow(props.row.created_at) }}
+                <b-table-column field="updated_at" label="Updated At" >
+                    {{ $vaah.fromNow(props.row.updated_at) }}
                 </b-table-column>
 
                 <b-table-column field="gender" label="Gender">

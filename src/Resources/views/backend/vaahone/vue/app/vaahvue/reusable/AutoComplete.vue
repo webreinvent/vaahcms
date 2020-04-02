@@ -110,7 +110,7 @@
 
 
 
-                console.log('--->auto list_filtered', list_filtered);
+                //console.log('--->auto list_filtered', list_filtered);
 
 
                 return list_filtered;

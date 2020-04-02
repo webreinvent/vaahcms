@@ -17,8 +17,9 @@ function vh_general_bulk_actions()
 {
     $list = [
         ['slug' => 'bulk-change-status', 'name'=>'Change Status'],
-        ['slug' => 'bulk-delete', 'name'=>'Delete'],
+        ['slug' => 'bulk-trash', 'name'=>'Trash'],
         ['slug' => 'bulk-restore', 'name'=>'Restore'],
+        ['slug' => 'bulk-delete', 'name'=>'Delete'],
     ];
     return $list;
 }

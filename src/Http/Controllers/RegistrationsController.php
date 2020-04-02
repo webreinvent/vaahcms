@@ -24,7 +24,8 @@ class RegistrationsController extends Controller
     {
 
         $data['country_calling_code'] = vh_get_country_list();
-        $data['country'] = vh_get_country_list();
+        $data['countries'] = vh_get_country_list();
+        $data['timezones'] = vh_get_timezones();
         $data['country_code'] = vh_get_country_list();
         $data['registration_statuses'] = vh_registration_statuses();
         $data['bulk_actions'] = vh_general_bulk_actions();
@@ -94,14 +95,12 @@ class RegistrationsController extends Controller
 
             //------------------------------------
             case 'bulk-change-status':
-
                 $response = Registration::bulkStatusChange($request);
-
                 break;
             //------------------------------------
-            case 'bulk-delete':
+            case 'bulk-trash':
 
-                $response = Registration::bulkDelete($request);
+                $response = Registration::bulkTrash($request);
 
                 break;
             //------------------------------------
@@ -112,6 +111,17 @@ class RegistrationsController extends Controller
                 break;
 
             //------------------------------------
+            case 'bulk-delete':
+
+                $response = Registration::bulkDelete($request);
+
+                break;
+            //------------------------------------
+            case 'send-verification-mail':
+
+                $response = Registration::sendVerificationEmail($request);
+
+                break;
             //------------------------------------
 
         }

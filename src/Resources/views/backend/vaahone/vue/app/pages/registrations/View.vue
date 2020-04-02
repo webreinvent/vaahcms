@@ -35,11 +35,24 @@
                                     <b-icon icon="caret-down"></b-icon>
                                 </button>
 
-                                <b-dropdown-item aria-role="listitem">
+                                <b-dropdown-item aria-role="listitem"
+                                                 v-if="!item.deleted_at"
+                                                 @click="actions('bulk-trash')"
+                                >
+                                    <b-icon icon="trash"></b-icon>
+                                    Trash
+                                </b-dropdown-item>
+
+                                <b-dropdown-item aria-role="listitem"
+                                                 v-if="item.deleted_at"
+                                                 @click="actions('bulk-restore')"
+                                >
                                     <b-icon icon="trash-restore"></b-icon>
                                     Restore
                                 </b-dropdown-item>
-                                <b-dropdown-item aria-role="listitem">
+                                <b-dropdown-item aria-role="listitem"
+                                                 @click="confirmDelete()"
+                                >
                                     <b-icon icon="eraser"></b-icon>
                                     Delete
                                 </b-dropdown-item>
@@ -90,11 +103,19 @@
 
                                 <template v-for="(value, label) in item">
 
-                                    <TableTrView :value="value"
-                                                 :label="label"
-                                                 :is_copiable="isCopiable(label)"
-                                                 :is_upper_case="isUpperCase(label)"
-                                    />
+                                    <template v-if="label == 'status'">
+                                        <TableTrStatus :value="value"
+                                                       :label="label"
+                                                       :is_copiable="isCopiable(label)"
+                                                       :is_upper_case="isUpperCase(label)"/>
+                                    </template>
+                                    <template v-else>
+                                        <TableTrView :value="value"
+                                                     :label="label"
+                                                     :is_copiable="isCopiable(label)"
+                                                     :is_upper_case="isUpperCase(label)"
+                                        />
+                                    </template>
 
                                 </template>
 

@@ -48,6 +48,13 @@ export default {
             gender: null,
             country_calling_code: null,
             phone: null,
+            timezone: null,
+            alternate_email: null,
+            avatar_url: null,
+            birth: null,
+            country: null,
+            country_code: null,
+            status: null,
         },
     },
     //=========================================================================
