@@ -23,3 +23,19 @@
         @return $result;
     }
 }
+
+@function findDarkColor($color, $dark: 29%){
+    @if(type-of($color) == 'color'){
+
+        $base-l: $dark;
+        $luminance: colorLuminance($color);
+        $luminance-delta: (0.53 - $luminance);
+        $target-l: round($base-l + ($luminance-delta * 53));
+
+        $result: change-color($color, $lightness: max($base-l, $target-l));
+
+        //@debug "result --> #{$result}";
+
+        @return $result;
+    }
+}

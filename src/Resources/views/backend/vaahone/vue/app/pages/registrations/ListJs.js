@@ -225,8 +225,10 @@ export default {
         },
         //---------------------------------------------------------------------
         actionsAfter: function (data, res) {
+            let action = this.page.bulk_action.action;
             if(data)
             {
+                this.$root.$emit('eReloadItem');
                 this.resetBulkAction();
                 this.getList();
             } else

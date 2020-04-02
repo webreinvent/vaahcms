@@ -12,7 +12,7 @@
             <header class="card-header">
 
                 <div class="card-header-title">
-                    <span>#{{item.id}} / </span>
+                    <span>#{{item.id}}&nbsp;/&nbsp;</span>
                     <span>{{item.name}}</span>
                 </div>
 
@@ -21,6 +21,7 @@
                     <div class="field has-addons is-pulled-right">
                         <p class="control">
                             <b-button icon-left="edit"
+                                      type="is-light"
                                       :loading="is_btn_loading"
                                       @click="create('save')">
                                 Edit
@@ -31,7 +32,7 @@
 
 
                             <b-dropdown aria-role="list" position="is-bottom-left">
-                                <button class="button" slot="trigger">
+                                <button class="button is-light" slot="trigger">
                                     <b-icon icon="caret-down"></b-icon>
                                 </button>
 
@@ -64,6 +65,7 @@
 
                         <p class="control">
                             <b-button tag="router-link"
+                                      type="is-light"
                                       :to="{name: 'reg.list'}"
                                       icon-left="times">
                             </b-button>

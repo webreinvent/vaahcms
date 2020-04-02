@@ -80,10 +80,15 @@ export default {
             this.$Progress.finish();
             this.is_content_loading = false;
 
-            if(data)
+            if(data && data.item)
             {
                 console.log('--->data.item', data);
                 this.update('active_item', data.item);
+            } else
+            {
+                //if item does not exist or delete then redirect to list
+                this.update('active_item', null);
+                this.$router.push({name: 'reg.list'});
             }
         },
         //---------------------------------------------------------------------

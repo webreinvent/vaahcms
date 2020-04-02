@@ -27,6 +27,7 @@
                                 <div class="field has-addons is-pulled-right">
                                     <p class="control">
                                         <b-button tag="router-link"
+                                                  type="is-light"
                                                   :to="{name: 'reg.create'}"
                                                   icon-left="plus">
                                             Create
@@ -36,6 +37,7 @@
                                     <p class="control">
 
                                         <b-button @click="reload()"
+                                                  type="is-light"
                                                   :loading="is_btn_loading"
                                                   icon-left="redo-alt">
                                         </b-button>

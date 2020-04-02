@@ -11,4 +11,26 @@
 
     }
 
+    &.has-addons{
+        .control{
+            .button{
+
+                @each $name, $pair in $colors {
+
+                    $color: nth($pair, 1);
+                    //$color: findLighterColor($color, 80%);
+
+                    $color: darken($color,8%);
+
+                    &.is-#{$name}
+                    {
+                        border-color: $color !important;
+                    }
+
+                }
+
+            }
+        }
+    }
+
 }

@@ -1,0 +1,44 @@
+.tag{
+
+    .button{
+        padding: 0;
+        margin: 0;
+        background: transparent;
+        border: none;
+        outline: none;
+        font-size: $size-small;
+        :active{
+            outline: none;
+            box-shadow: none;
+        }
+        :hover{
+            outline: none;
+            box-shadow: none;
+        }
+        :focus{
+            outline: none;
+            box-shadow: none;
+        }
+
+    }
+
+    .button:focus:not(:active), .button.is-focused:not(:active){
+        outline: none;
+        box-shadow: none;
+    }
+
+    @each $name, $pair in $colors {
+
+        $color: nth($pair, 1);
+        $color-invert: nth($pair, 2);
+
+        &.is-#{$name}
+        {
+            .button{
+                color: $color-invert !important;
+            }
+        }
+
+    }
+
+}
