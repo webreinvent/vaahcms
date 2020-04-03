@@ -12,18 +12,23 @@
             <header class="card-header">
 
                 <div class="card-header-title">
-                    <span>#{{item.id}}&nbsp;/&nbsp;</span>
-                    <span>{{item.name}}</span>
+                    <span>&nbsp;{{$vaah.limitString(item.name, 25)}}</span>
                 </div>
 
                 <div class="card-header-buttons">
 
                     <div class="field has-addons is-pulled-right">
                         <p class="control">
+                            <b-button type="is-light"
+                                      @click="resetActiveItem()">
+                                <small>#{{item.id}}</small>
+                            </b-button>
+                        </p>
+                        <p class="control">
                             <b-button icon-left="edit"
                                       type="is-light"
-                                      :loading="is_btn_loading"
-                                      @click="create('save')">
+                                      tag="router-link"
+                                      :to="{name:'reg.edit', params:{id: item.id}}">
                                 Edit
                             </b-button>
                         </p>
@@ -63,10 +68,11 @@
 
                         </p>
 
+
+
                         <p class="control">
-                            <b-button tag="router-link"
-                                      type="is-light"
-                                      :to="{name: 'reg.list'}"
+                            <b-button type="is-light"
+                                      @click="resetActiveItem()"
                                       icon-left="times">
                             </b-button>
                         </p>

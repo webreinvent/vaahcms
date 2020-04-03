@@ -109,6 +109,22 @@ export default {
             }
         },
         //---------------------------------------------------------------------
+        confirmCreateUser: function()
+        {
+
+        },
+        //---------------------------------------------------------------------
+        createUser: function () {
+            this.is_content_loading = true;
+            let params = {};
+            let url = this.ajax_url+'/url';
+            this.$vaah.ajax(url, params, this.createUserAfter);
+        },
+        //---------------------------------------------------------------------
+        createUserAfter: function (data, res) {
+            this.is_content_loading = false;
+            this.list = data.list;
+        },
         //---------------------------------------------------------------------
     }
 }

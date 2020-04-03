@@ -316,15 +316,11 @@ class Registration extends Model
     public static function store($request)
     {
         $rules = array(
+            'id' => 'required',
             'email' => 'required|email',
             'first_name' => 'required',
             'status' => 'required',
         );
-
-        if(!$request->has('id'))
-        {
-            $rules['password'] = 'required';
-        }
 
         $validator = \Validator::make( $request->all(), $rules);
         if ( $validator->fails() ) {
@@ -337,25 +333,11 @@ class Registration extends Model
 
         $data = [];
 
-        if($request->has('id'))
-        {
-            $item = Registration::find($request->id);
-        } else
-        {
-            $validation = static::registrationValidation($request);
-            if(isset($validation['status']) && $validation['status'] == 'failed')
-            {
-                return $validation;
-            } else if(isset($validation['status']) && $validation['status'] == 'registration-exist')
-            {
-                $item = $validation['data'];
-            } else
-            {
-                $item = new Registration();
-            }
-        }
+        $item = Registration::where('id', $request->id)
+            ->withTrashed()->first();
 
         $item->fill($request->all());
+
         if($request->has('password'))
         {
             $item->password = Hash::make($request->password);
@@ -378,7 +360,10 @@ class Registration extends Model
             $item->created_ip = $request->ip();
         }
 
-        $item->activation_code = str_random(40);
+        if(!$request->has('activation_code'))
+        {
+            $item->activation_code = str_random(40);
+        }
 
         if($request->has('user_id') && !$request->has('activated_at'))
         {
