@@ -25,7 +25,34 @@
 
                             </b-dropdown>
                         </b-tag>
-                        <b-tag type="is-info">
+                        <b-tag type="is-success"
+                               v-if="value == 'email-verified' && !item.user_id" >
+                            <b-button @click="confirmCreateUser">Create User</b-button>
+
+
+
+                        </b-tag>
+                        <b-tag type="is-success"
+                               v-if="value == 'email-verified' && !item.user_id" >
+                            <b-dropdown aria-role="list" position="is-bottom-left">
+
+                                <button class="button" slot="trigger">
+                                    <b-icon icon="caret-down"></b-icon>
+                                </button>
+
+                                <b-dropdown-item aria-role="listitem"
+                                                 key="email">
+                                    Create User & Send Welcome Email
+                                </b-dropdown-item>
+
+                                <b-dropdown-item aria-role="listitem"
+                                                 key="email-with-password">
+                                    Create User & Send Welcome Email with Password
+                                </b-dropdown-item>
+
+                            </b-dropdown>
+                        </b-tag>
+                        <b-tag type="is-info" v-if="value == 'email-verification-pending'">
                             <b-button @click="sendVerificationMail">Resend Verification Email</b-button>
                         </b-tag>
 

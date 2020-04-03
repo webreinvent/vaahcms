@@ -21,7 +21,7 @@
                 type: String,
                 default: "calendar-alt"
             },
-            value: {
+            selected_value: {
                 type: String,
                 default: null
             },
@@ -44,10 +44,10 @@
         created() {
         },
         mounted(){
-            if(this.value)
+            if(this.selected_value)
             {
-                this.value.toString();
-                this.selected = new Date(Date.parse(this.value));
+                this.selected_value.toString();
+                this.selected = new Date(Date.parse(this.selected_value));
             }
         },
         computed: {

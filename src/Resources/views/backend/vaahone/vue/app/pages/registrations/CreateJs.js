@@ -26,6 +26,7 @@ export default {
             is_btn_loading: null,
             labelPosition: 'on-border',
             params: {},
+            local_action: null,
         }
     },
     watch: {
@@ -34,6 +35,7 @@ export default {
         }
     },
     mounted() {
+
         //----------------------------------------------------
         this.onLoad();
         //----------------------------------------------------
@@ -91,8 +93,30 @@ export default {
         createAfter: function (data, res) {
             this.is_btn_loading = false;
             this.$Progress.finish();
-            this.list = data.list;
-            this.update('list', data.list);
+
+            if(data)
+            {
+
+                this.$root.$emit('eReloadList');
+
+                if(this.local_action === 'save-and-close')
+                {
+                    this.saveAndClose()
+                }
+
+                if(this.local_action === 'save-and-new')
+                {
+                    this.saveAndNew()
+                }
+
+                if(this.local_action === 'save-and-clone')
+                {
+                    this.saveAndClone()
+                }
+
+            }
+
+
         },
         //---------------------------------------------------------------------
         updateNewItem: function()
@@ -116,6 +140,86 @@ export default {
             this.updateNewItem();
         },
         //---------------------------------------------------------------------
+        setLocalAction: function (action) {
+            this.local_action = action;
+            this.create();
+        },
+        //---------------------------------------------------------------------
+        saveAndClose: function () {
+            this.update('active_item', null);
+            this.$router.push({name:'reg.list'});
+        },
+        //---------------------------------------------------------------------
+        saveAndNew: function () {
+            this.update('active_item', null);
+            this.resetNewItem();
+        },
+        //---------------------------------------------------------------------
+        saveAndClone: function () {
+            this.fillNewItem();
+            this.$router.push({name:'reg.create'});
+        },
+        //---------------------------------------------------------------------
+        getNewItem: function()
+        {
+            let new_item = {
+                email: null,
+                username: null,
+                password: null,
+                display_name: null,
+                title: null,
+                first_name: null,
+                middle_name: null,
+                last_name: null,
+                gender: null,
+                country_calling_code: null,
+                phone: null,
+                timezone: null,
+                alternate_email: null,
+                avatar_url: null,
+                birth: null,
+                country: null,
+                country_code: null,
+                status: null,
+            };
+            return new_item;
+        },
+        //---------------------------------------------------------------------
+        resetNewItem: function()
+        {
+            let new_item = this.getNewItem();
+            this.update('new_item', new_item);
+        },
+        //---------------------------------------------------------------------
+        fillNewItem: function () {
+
+            let new_item = {
+                email: null,
+                username: null,
+                password: null,
+                display_name: null,
+                title: null,
+                first_name: null,
+                middle_name: null,
+                last_name: null,
+                gender: null,
+                country_calling_code: null,
+                phone: null,
+                timezone: null,
+                alternate_email: null,
+                avatar_url: null,
+                birth: null,
+                country: null,
+                country_code: null,
+                status: null,
+            };
+
+            for(let key in new_item)
+            {
+                new_item[key] = this.new_item[key];
+            }
+            this.update('new_item', new_item);
+        },
         //---------------------------------------------------------------------
         //---------------------------------------------------------------------
         //---------------------------------------------------------------------

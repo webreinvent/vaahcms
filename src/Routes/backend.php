@@ -67,10 +67,10 @@ Route::group(
         Route::post('/list', 'RegistrationsController@getList')
             ->name('backend.vaah.registrations.list');
         //---------------------------------------------------------
-        Route::any('/item/{uuid}', 'RegistrationsController@getItem')
+        Route::any('/item/{id}', 'RegistrationsController@getItem')
             ->name('backend.vaah.registrations.item');
         //---------------------------------------------------------
-        Route::post('/store/{uuid}', 'RegistrationsController@postStore')
+        Route::post('/store/{id}', 'RegistrationsController@postStore')
             ->name('backend.vaah.registrations.store');
         //---------------------------------------------------------
         Route::post('/actions/{action_name}', 'RegistrationsController@postActions')

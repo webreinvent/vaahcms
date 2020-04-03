@@ -370,7 +370,7 @@ const VaahHelper = {
         return exist;
     },
     //---------------------------------------------------------------------
-    splitString: function (string, characters) {
+    limitString: function (string, characters) {
 
         if(string != "" && string != null)
         {

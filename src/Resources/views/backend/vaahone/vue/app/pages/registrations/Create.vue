@@ -32,13 +32,28 @@
                                     <b-icon icon="caret-down"></b-icon>
                                 </button>
 
-                                <b-dropdown-item aria-role="listitem">
+                                <b-dropdown-item aria-role="listitem"
+                                                 @click="setLocalAction('save-and-close')">
                                     <b-icon icon="check"></b-icon>
                                     Save & Close
                                 </b-dropdown-item>
-                                <b-dropdown-item aria-role="listitem">
+
+                                <b-dropdown-item aria-role="listitem"
+                                                 @click="setLocalAction('save-and-new')">
                                     <b-icon icon="plus"></b-icon>
                                     Save & New
+                                </b-dropdown-item>
+
+                                <b-dropdown-item aria-role="listitem"
+                                                 @click="setLocalAction('save-and-clone')">
+                                    <b-icon icon="copy"></b-icon>
+                                    Save & Clone
+                                </b-dropdown-item>
+
+                                <b-dropdown-item aria-role="listitem"
+                                                 @click="resetNewItem()">
+                                    <b-icon icon="eraser"></b-icon>
+                                    Reset
                                 </b-dropdown-item>
 
                             </b-dropdown>
@@ -91,9 +106,10 @@
                     </b-field>
 
                     <b-field label="Title" :label-position="labelPosition">
-                        <b-select placeholder="Select a title"
+                        <b-select placeholder="- Select a title -"
                                   name="register-title" dusk="register-title"
                                   v-model="new_item.title">
+                            <option value="">- Select a title -</option>
                             <option v-for="title in page.assets.name_titles"
                                     :value="title.slug"
                             >{{title.name}}</option>
@@ -146,9 +162,10 @@
                     </b-field>
 
                     <b-field label="Country Code" :label-position="labelPosition">
-                        <b-select placeholder="Select a country code"
+                        <b-select placeholder="- Select a country code -"
                                   name="register-country_code" dusk="register-country_code"
                                   v-model="new_item.country_calling_code">
+                            <option value="">- Select a country code -</option>
                             <option v-for="code in page.assets.country_calling_code"
                                     :value="code.calling_code"
                             >{{code.calling_code}}</option>
@@ -188,9 +205,10 @@
                     </b-field>
 
                     <b-field label="Status" :label-position="labelPosition">
-                        <b-select placeholder="Select a status"
+                        <b-select placeholder="- Select a status -"
                                   name="register-status" dusk="register-status"
                                   v-model="new_item.status">
+                            <option value="">- Select a status -</option>
                             <option v-for="status in page.assets.registration_statuses"
                                     :value="status.slug"
                             >{{status.name}}</option>

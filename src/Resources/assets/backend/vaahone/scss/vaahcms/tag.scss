@@ -1,4 +1,47 @@
+.tags{
+
+    &.has-addons{
+        .tag{
+
+            border: $default-border;
+
+            @each $name, $pair in $colors {
+
+                $color: nth($pair, 1);
+                //$color: findLighterColor($color, 80%);
+
+                $color: darken($color,8%);
+
+                &.is-#{$name}
+                {
+                    border: 1px solid $color ;
+                }
+
+            }
+        }
+    }
+
+
+
+}
+
 .tag{
+
+    border: $default-border;
+
+    @each $name, $pair in $colors {
+
+        $color: nth($pair, 1);
+        //$color: findLighterColor($color, 80%);
+
+        $color: darken($color,8%);
+
+        &.is-#{$name}
+        {
+            border: 1px solid $color ;
+        }
+
+    }
 
     .button{
         padding: 0;
