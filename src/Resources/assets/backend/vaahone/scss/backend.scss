@@ -3,7 +3,11 @@
 @import "customize/bulma/sass/utilities/derived-variables";
 
 //@import "vaahcms/_functions_bulma.sass";
+@import "vaahcms/_vars";
 @import "vaahcms/_functions";
+@import "vaahcms/general";
+@import "vaahcms/navbar";
+@import "vaahcms/aside";
 @import "vaahcms/card";
 @import "vaahcms/table";
 @import "vaahcms/notification";

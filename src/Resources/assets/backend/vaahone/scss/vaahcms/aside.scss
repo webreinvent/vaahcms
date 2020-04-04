@@ -1,0 +1,160 @@
+.aside{
+
+  $primary: map-get($colors, 'primary');
+  $link-background: nth($primary, 1);
+  $link-color: nth($primary, 2);
+
+
+
+  //why are you using # instead of class?
+    .menu-action {
+      cursor: pointer;
+      display: block;
+      float: left;
+      width: 2.875rem;
+      height: 3.2rem;
+      line-height: 3.125rem;
+      color: $grey-dark;
+      text-decoration: none;
+      text-align: center;
+      text-transform: uppercase;
+      transition: all .2s ease-in-out;
+      position: fixed;
+      top: 0;
+      padding-top: 0.62rem;
+      z-index: 999;
+      left: 9rem;
+      text-align: right;
+        i {
+            display: inline-block;
+            margin: 0 5px;
+        }
+        label {
+            width: 0rem;
+            display: none;
+            overflow: hidden;
+            -webkit-transition: all .2s ease-in-out;
+            transition: all .2s ease-in-out;
+        }
+        &:hover {
+        }
+        &.active {
+
+            -webkit-transition: all .2s ease-in-out;
+            transition: all .2s ease-in-out;
+            span {
+                -webkit-transition: all .2s ease-in-out;
+                transition: all .2s ease-in-out;
+            }
+        }
+    }
+    .sidebar {
+      position: fixed;
+      z-index: 99;
+      left: 0;
+      top: 3.8rem;
+      height: 100%;
+      width:46px;
+      background: $white;
+      box-shadow: $default-box-shadow;
+      text-align: center;
+      transition: all .2s ease-in-out;
+      padding-top: 0px;
+        &:after{ position: absolute; left: 0; top: -0.5rem; height: 0.625rem; width: 100%; background-color:$white; display: block; content: "";}
+        &:hover, &.active, &.hovered {
+           width: 11.875rem;
+            -webkit-transition: all .2s ease-in-out;
+            transition: all .2s ease-in-out;
+
+          label{
+           opacity: 1;
+          }
+        }
+        ul {
+            list-style-type: none;
+            position: relative;
+            padding: 0;
+            margin: 0;
+            li {
+                display: block;
+                position: relative;
+                a {
+                    display: block;
+                    position: relative;
+                    white-space: nowrap;
+                    overflow: hidden;
+                    color:$grey-dark;
+                    padding-top: 0.55rem;
+                    padding-bottom: 0.45rem;
+                    text-align: left;
+                    font-size: 0.955rem;
+                    .icon {
+                        display: inline-block;
+                        width: 46px;
+                        height:auto;
+                        line-height: normal;
+                        text-align: center;
+                        vertical-align: middle;
+                    }
+                    label {
+                        display: inline-block;
+                        cursor: pointer;
+                        margin-left: -0.4rem;
+                        opacity:0;
+                        span.icon{width: auto;
+                          text-align: right;
+                          position: absolute;
+                          left: 10.5rem;
+                          top: 0.5rem; }
+
+                    }
+
+                }
+
+              &.active > a, &:hover > a, &.hovered > a{
+                background-color:$link-background;
+                color:$link-color;
+
+              }
+              ul{
+                display: none;
+                background-color: findLighterColor($grey-lighter,95%);
+                li{
+                  a{ padding: 0.375rem 0.938rem 0.375rem 3.1rem;}
+                  &.active > a, &:hover > a, &.hovered > a{
+                    background-color: findLighterColor($light,90%);
+                    color: $link-background;
+                  }
+                }
+
+              }
+            }
+        }
+
+
+    }
+    //your entire code should be here wait, nothing should go beyond aside curly braces
+
+}
+
+$width: map-get($screens, 'tablet');
+@media (max-width: $width) {
+  .aside{
+    .menu-action{
+      left:38px;
+    }
+    .sidebar{
+      width: 0;
+
+    }
+  }
+}
+
+$width: map-get($screens, 'mobile');
+@media (min-width: $width) {
+
+
+
+
+}
+
