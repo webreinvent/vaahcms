@@ -9,14 +9,15 @@ use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Support\Facades\Password;
-use WebReinvent\VaahCms\Traits\CrudWithUidObservantTrait;
+use Illuminate\Support\Str;
+use WebReinvent\VaahCms\Traits\CrudWithUuidObservantTrait;
 
 class User extends Authenticatable
 {
 
     use Notifiable;
     use SoftDeletes;
-    use CrudWithUidObservantTrait;
+    use CrudWithUuidObservantTrait;
 
     //-------------------------------------------------
     protected $table = 'vh_users';
@@ -32,7 +33,7 @@ class User extends Authenticatable
     protected $dateFormat = 'Y-m-d H:i:s';
     //-------------------------------------------------
     protected $fillable = [
-        "uid","email","username","display_name","title","first_name","middle_name","last_name",
+        "uuid","email","username","display_name","title","first_name","middle_name","last_name",
         "gender","country_calling_code","phone","timezone","alternate_email","avatar_url","birth",
         "country","country_code","last_login_at","last_login_ip","remember_token","api_token","api_token_used_at",
         "api_token_used_ip","is_active","activated_at","status","affiliate_code","affiliate_code_used_at","reset_password_code",
@@ -259,112 +260,7 @@ class User extends Authenticatable
         return $result;
     }
     //-------------------------------------------------
-    public function getFormElement($column, $value=null)
-    {
 
-        $result['name'] = $column;
-        $result['value'] = $value;
-        $result['type'] = 'text';
-        $result['editable'] = true;
-        $result['tr_class'] = "";
-        $result['disabled'] = false;
-        $result['label'] = slug_to_str($column);
-        /*$result['column_type'] = $this->getConnection()->getSchemaBuilder()
-            ->getColumnType($this->getTable(), $column);*/
-
-
-        switch($column)
-        {
-            //------------------------------------------------
-            case 'id':
-            case 'uid':
-                $result['type'] = 'text';
-                $result['disabled'] = true;
-                $result['tr_class'] = 'tr__disabled';
-                break;
-            //------------------------------------------------
-            case 'created_by':
-            case 'updated_by':
-            case 'deleted_by':
-                $result['type'] = 'select_with_ids';
-                $result['editable'] = false;
-                $result['inputs'] = User::getUsersForAssets();
-                break;
-            //------------------------------------------------
-            case 'password':
-                $result['type'] = 'hidden';
-                $result['editable'] = false;
-                break;
-            //------------------------------------------------
-            case 'meta':
-            case 'last_login_at':
-            case 'last_login_ip':
-            case 'remember_token':
-            case 'api_token':
-            case 'api_token_used_at':
-            case 'api_token_used_ip':
-            case 'activated_at':
-            case 'affiliate_code_used_at':
-            case 'reset_password_code_sent_at':
-            case 'reset_password_code_used_at':
-            case 'created_ip':
-            case 'created_at':
-            case 'deleted_at':
-            case 'updated_at':
-                $result['editable'] = false;
-                break;
-            //------------------------------------------------
-
-            //------------------------------------------------
-            case 'title':
-                $result['type'] = 'select';
-                $result['inputs'] = vh_name_titles();
-                break;
-            //------------------------------------------------
-            case 'gender':
-                $result['type'] = 'select';
-                $result['inputs'] = vh_genders();
-                break;
-            //------------------------------------------------
-            case 'country_calling_code':
-                $result['type'] = 'select';
-                $result['inputs'] = vh_get_countries_calling_codes();
-                break;
-            //------------------------------------------------
-            case 'timezone':
-                $result['type'] = 'select';
-                $result['inputs'] = vh_get_timezones();
-                break;
-            //------------------------------------------------
-            case 'birth':
-                $result['type'] = 'date';
-                $result['label'] = 'Birth Date';
-                break;
-            //------------------------------------------------
-            case 'status':
-                $result['type'] = 'select';
-                $result['inputs'] = vh_user_statuses();
-                break;
-            //------------------------------------------------
-            case 'country':
-                $result['type'] = 'select';
-                $result['inputs'] = vh_get_country_list_with_slugs();
-                break;
-            //------------------------------------------------
-            //------------------------------------------------
-            case 'is_active':
-                $result['type'] = 'select';
-                $result['inputs'] = vh_is_active_options();
-                break;
-            //------------------------------------------------
-            default:
-                $result['type'] = 'text';
-                break;
-            //------------------------------------------------
-        }
-
-        return $result;
-    }
     //-------------------------------------------------
     //-------------------------------------------------
     //-------------------------------------------------
@@ -532,7 +428,7 @@ class User extends Authenticatable
                 $item->is_active = 1;
                 $item->status = 'active';
                 $item->activated_at = date('Y-m-d H:i:s');
-                $item->uid = uniqid();
+                $item->uuid = Str::uuid();
             }
         }
 
@@ -559,36 +455,7 @@ class User extends Authenticatable
 
     }
     //-------------------------------------------------
-    public function recordForFormElement()
-    {
-        $record = $this->toArray();
 
-        $columns = $this->getFormFillableColumns();
-
-        $visible = ['id', 'uid'];
-
-        $columns = array_merge($visible, $columns);
-
-        $result = [];
-        $i = 0;
-
-        foreach ($columns as $column)
-        {
-            if(isset($record[$column]))
-            {
-                $result[$i] = $this->getFormElement($column, $record[$column]);
-                $i++;
-            } else
-            {
-                $result[$i] = $this->getFormElement($column, "");
-                $i++;
-            }
-
-        }
-
-
-        return $result;
-    }
     //-------------------------------------------------
     public static function userValidation($request)
     {
