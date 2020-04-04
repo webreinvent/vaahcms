@@ -1,5 +1,6 @@
 import GlobalComponents from '../../vaahvue/helpers/GlobalComponents'
 import TableTrView from '../../vaahvue/reusable/TableTrView'
+import TableTrActedBy from '../../vaahvue/reusable/TableTrActedBy'
 import TableTrStatus from './partials/TableTrStatus'
 
 let namespace = 'registrations';
@@ -15,6 +16,7 @@ export default {
         ...GlobalComponents,
         TableTrView,
         TableTrStatus,
+        TableTrActedBy,
     },
     data()
     {
