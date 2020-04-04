@@ -149,27 +149,27 @@ class Registration extends Model
     //-------------------------------------------------
 
     //-------------------------------------------------
-    public function createdBy()
+    public function createdByUser()
     {
         return $this->belongsTo('WebReinvent\VaahCms\Entities\User',
             'created_by', 'id'
-        );
+        )->select('id', 'uuid', 'first_name', 'last_name', 'email');
     }
 
     //-------------------------------------------------
-    public function updatedBy()
+    public function updatedByUser()
     {
         return $this->belongsTo('WebReinvent\VaahCms\Entities\User',
             'updated_by', 'id'
-        );
+        )->select('id', 'uuid', 'first_name', 'last_name', 'email');
     }
 
     //-------------------------------------------------
-    public function deletedBy()
+    public function deletedByUser()
     {
         return $this->belongsTo('WebReinvent\VaahCms\Entities\User',
             'deleted_by', 'id'
-        );
+        )->select('id', 'uuid', 'first_name', 'last_name', 'email');
     }
 
     //-------------------------------------------------
@@ -304,6 +304,7 @@ class Registration extends Model
 
         $item = Registration::where('id', $request->id);
         $item->withTrashed();
+        $item->with(['createdByUser', 'updatedByUser', 'deletedByUser']);
         $item = $item->first();
 
         $response['status'] = 'success';

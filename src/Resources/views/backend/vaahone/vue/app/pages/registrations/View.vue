@@ -120,6 +120,27 @@
                                                        :is_copiable="isCopiable(label)"
                                                        :is_upper_case="isUpperCase(label)"/>
                                     </template>
+
+                                    <template v-else-if="label == 'created_by'">
+                                        <TableTrActedBy :value="item['created_by_user']"
+                                                       :label="label"/>
+                                    </template>
+
+                                    <template v-else-if="label == 'updated_by'">
+                                        <TableTrActedBy :value="item['updated_by_user']"
+                                                        :label="label"/>
+                                    </template>
+
+                                    <template v-else-if="label == 'deleted_by'">
+                                        <TableTrActedBy :value="item['deleted_by_user']"
+                                                        :label="label"/>
+                                    </template>
+
+                                    <template v-else-if="label == 'created_by_user'
+                                      || label == 'updated_by_user' || label == 'deleted_by_user' || label == 'name' ">
+
+                                    </template>
+
                                     <template v-else>
                                         <TableTrView :value="value"
                                                      :label="label"
