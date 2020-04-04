@@ -8,7 +8,6 @@
             <header class="card-header">
 
                 <div class="card-header-title">
-                    <span>#{{item.id}}&nbsp;/&nbsp;</span>
                     <span>{{$vaah.limitString(item.name, 25)}}</span>
                 </div>
 
@@ -16,6 +15,16 @@
                 <div class="card-header-buttons">
 
                     <div class="field has-addons is-pulled-right">
+                        <p class="control">
+                            <b-button type="is-light">
+                                <vh-copy
+                                    :data="item.id"
+                                    :confirm_dialog="'buefy'">
+                                    <small><b>#{{item.id}}</b></small>
+                                </vh-copy>
+                            </b-button>
+                        </p>
+
                         <p class="control">
                             <b-button icon-left="save"
                                       type="is-light"
