@@ -44,6 +44,8 @@ class SetupController extends Controller
         $data['environments'] = vh_environments();
         $data['timezones'] = vh_get_timezones();
         $data['database_types'] = vh_database_types();
+        $data['mail_encryption_types'] = vh_mail_encryption_types();
+        $data['app_url'] = url("/");
 
         $response['status'] = 'success';
         $response['data'] = $data;

@@ -1,5 +1,6 @@
 import Vue from "vue";
 import moment from "moment";
+import copy from 'copy-to-clipboard';
 
 import {store} from './../../store/store';
 import {ToastProgrammatic as Toast} from "buefy";
@@ -194,7 +195,11 @@ const VaahHelper = {
     },
     //---------------------------------------------------------------------
     //---------------------------------------------------------------------
-
+    copy: function(data, confirm=true)
+    {
+        copy(data);
+        this.toastSuccess(['Copied']);
+    },
     //---------------------------------------------------------------------
     console: function (data, label='--->') {
 

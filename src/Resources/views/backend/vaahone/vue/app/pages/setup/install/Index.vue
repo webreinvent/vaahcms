@@ -2,33 +2,22 @@
 <template>
 
     <div v-if="assets">
-        <!--sections-->
-        <section class="hero">
-            <div class="hero-body">
 
-                <!--container-->
-                <div class="container  has-text-centered">
-
-                    <Logo/>
-
-                    <VueErrors/>
-
-                    <VueMessages/>
-
-
-
-
-                </div>
-                <!--/container-->
-
-            </div>
-        </section>
-        <!--sections-->
 
         <!--sections-->
         <section class="section">
             <div class="container ">
 
+
+                <div class="columns">
+                    <div class="column has-text-centered">
+                        <Logo/>
+
+                        <VueErrors/>
+
+                        <VueMessages/>
+                    </div>
+                </div>
 
 
                 <!--columns-->
@@ -43,9 +32,14 @@
                             <b-step-item label="Dependencies" icon="cubes"></b-step-item>
                             <b-step-item label="Account" icon="user-plus"></b-step-item>
                         </b-steps>
+
+
+
                     </div>
                 </div>
                 <!--/columns-->
+
+                <hr/>
 
                 <router-view></router-view>
 

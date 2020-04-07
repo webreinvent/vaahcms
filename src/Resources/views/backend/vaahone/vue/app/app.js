@@ -1,5 +1,3 @@
-import middlewarePipeline from "./routes/middleware/middlewarePipeline";
-
 window.Vue = require('vue');
 
 window.$ = require('jquery');

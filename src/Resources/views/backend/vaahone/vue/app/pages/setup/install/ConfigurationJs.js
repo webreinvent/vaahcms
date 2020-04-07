@@ -63,6 +63,8 @@ export default {
         //---------------------------------------------------------------------
         async getAssets() {
             await this.$store.dispatch(namespace+'/getAssets');
+            this.config.env.app_url = this.assets.app_url;
+            this.updateConfig();
         },
         //---------------------------------------------------------------------
         updateConfig: function()
@@ -75,6 +77,17 @@ export default {
             this.updateNewItem();
         },
         //---------------------------------------------------------------------
+        testDatabaseConnection: function () {
+            this.is_content_loading = true;
+            let params = {};
+            let url = this.ajax_url+'/url';
+            this.$vaah.ajax(url, params, this.testDatabaseConnectionAfter);
+        },
+        //---------------------------------------------------------------------
+        testDatabaseConnectionAfter: function (data, res) {
+            this.is_content_loading = false;
+            this.list = data.list;
+        },
         //---------------------------------------------------------------------
         //---------------------------------------------------------------------
     }
