@@ -337,7 +337,7 @@ Route::group(
         Route::any('/role/{id}', 'PermissionController@getRoles')
             ->name('backend.vaah.permission.role');
         //---------------------------------------------------------
-        Route::post('/store', 'PermissionController@postStore')
+        Route::post('/store/{id}', 'PermissionController@postStore')
             ->name('backend.vaah.permission.store');
         //---------------------------------------------------------
         Route::post('/actions/{action_name}', 'PermissionController@postActions')

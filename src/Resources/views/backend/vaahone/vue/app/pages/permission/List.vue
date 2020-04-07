@@ -154,7 +154,7 @@
                                             <b-field label="">
                                                 <b-select placeholder="- Select a status -"
                                                           v-model="query_string.filter"
-                                                          @input="getList()"
+                                                          @input="setFilter()"
                                                 >
                                                     <option value="">
                                                         - Select a status -

@@ -341,7 +341,7 @@ class Permission extends Model {
 
     }
     //-------------------------------------------------
-    public static function updateDetail($request)
+    public static function updateDetail($request,$id)
     {
 
         $input = $request->item;
@@ -353,7 +353,7 @@ class Permission extends Model {
             return $validation;
         }
 
-        $update = static::where('id',$input['id'])->withTrashed()->first();
+        $update = static::where('id',$id)->withTrashed()->first();
 
         $update->name = $input['name'];
         $update->details = $input['details'];

@@ -137,7 +137,7 @@
                                     </template>
 
                                     <template v-else-if="label == 'created_by_user'
-                                      || label == 'updated_by_user' || label == 'deleted_by_user' || label == 'name' ">
+                                      || label == 'updated_by_user' || label == 'deleted_by_user'">
 
                                     </template>
 
