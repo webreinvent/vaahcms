@@ -1,4 +1,5 @@
 import {VaahHelper as Vaah} from "../../vaahvue/helpers/VaahHelper";
+import AutoComplete from '../../vaahvue/reusable/AutoComplete'
 
 //---------Variables
 let base_url = document.getElementsByTagName('base')[0].getAttribute("href");
@@ -14,6 +15,26 @@ export default {
         ajax_url: ajax_url,
         assets: null,
         assets_is_fetching: false,
+        config:{
+            env:{
+                app_env: null,
+                app_name: "VaahCMS",
+                app_url: null,
+                app_timezone: null,
+                db_connection: null,
+                db_host: null,
+                db_port: null,
+                db_database: null,
+                db_username: null,
+                db_password: null,
+                mail_driver: null,
+                mail_host: null,
+                mail_port: null,
+                mail_username: null,
+                mail_password: null,
+                mail_encryption: null,
+            }
+        }
     },
     //=========================================================================
     mutations:{
@@ -66,6 +87,7 @@ export default {
         state(state) {return state;},
         ajax_url(state) {return state.ajax_url;},
         assets(state) {return state.assets;},
+        config(state) {return state.config;},
     }
 
 }

@@ -42,6 +42,8 @@ class SetupController extends Controller
         $data['is_db_migrated'] = $this->isDBMigrated();
         $data['is_installed'] = $this->isInstalled();
         $data['environments'] = vh_environments();
+        $data['timezones'] = vh_get_timezones();
+        $data['database_types'] = vh_database_types();
 
         $response['status'] = 'success';
         $response['data'] = $data;

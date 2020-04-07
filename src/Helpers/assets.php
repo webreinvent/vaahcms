@@ -92,3 +92,16 @@ function vh_environments()
     return $list;
 }
 //-----------------------------------------------------------------------------------
+function vh_database_types()
+{
+    $list = [
+        ['slug' => 'mysql', 'name'=>'MySQL'],
+        ['slug' => 'pgsql', 'name'=>'PostgreSQL'],
+        ['slug' => 'sqlite', 'name'=>'SQLite'],
+        ['slug' => 'sqlsrv', 'name'=>'SQL Server'],
+    ];
+
+
+    return $list;
+}
+//-----------------------------------------------------------------------------------

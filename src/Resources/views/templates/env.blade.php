@@ -1,4 +1,4 @@
-APP_NAME=VaahCMS
+APP_NAME={{$data->app_name}}
 APP_ENV=local
 APP_KEY=
 APP_DEBUG=true
