@@ -80,12 +80,11 @@ class Permission extends Model {
             Permission::recountRelations();
         }
 
+        $list = Permission::orderBy('id', 'desc');
+
         if($request['trashed'] == 'true')
         {
-            $list = Permission::withTrashed()->orderBy('id', 'desc');
-        } else
-        {
-            $list = Permission::orderBy('id', 'desc');
+            $list->withTrashed();
         }
 
         if(isset($request['filter']) &&  $request['filter'])
