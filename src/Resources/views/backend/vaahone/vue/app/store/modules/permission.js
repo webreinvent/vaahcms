@@ -91,7 +91,7 @@ export default {
         //-----------------------------------------------------------------
         updateView({ state, commit, dispatch, getters }, payload) {
             let list_view = false;
-            if(payload && payload.name && payload.name == 'reg.list')
+            if(payload && payload.name && payload.name == 'perm.list')
             {
                 list_view = true;
             }

@@ -38,9 +38,9 @@ class PermissionController extends Controller
         return response()->json($response);
     }
     //----------------------------------------------------------
-    public function postStore(Request $request)
+    public function postStore(Request $request,$id)
     {
-        $response = Permission::updateDetail($request);
+        $response = Permission::updateDetail($request,$id);
         return response()->json($response);
     }
     //----------------------------------------------------------

@@ -1,10 +1,9 @@
 import GlobalComponents from '../../vaahvue/helpers/GlobalComponents'
-import DatePicker from '../../vaahvue/reusable/DatePicker'
-import AutoComplete from '../../vaahvue/reusable/AutoComplete'
 
 let namespace = 'permission';
 
 export default {
+    props: ['id'],
     computed:{
         root() {return this.$store.getters['root/state']},
         page() {return this.$store.getters[namespace+'/state']},
@@ -13,9 +12,6 @@ export default {
     },
     components:{
         ...GlobalComponents,
-        DatePicker,
-        'AutoCompleteTimeZone': AutoComplete,
-        'AutoCompleteCountry': AutoComplete,
 
     },
     data()
@@ -26,6 +22,7 @@ export default {
             labelPosition: 'on-border',
             params: {},
             local_action: null,
+            title: null,
         }
     },
     watch: {
@@ -82,10 +79,10 @@ export default {
             this.$Progress.finish();
             this.is_content_loading = false;
 
-            if(data && data.item)
+            if(data)
             {
-                console.log('--->data.item', data);
-                this.update('active_item', data.item);
+                this.title = data.name;
+                this.update('active_item', data);
             } else
             {
                 //if item does not exist or delete then redirect to list
@@ -94,33 +91,12 @@ export default {
             }
         },
         //---------------------------------------------------------------------
-        updateNewItem: function()
-        {
-            this.update('item', this.item);
-        },
-        //---------------------------------------------------------------------
-        setBirthDate: function (date) {
-            this.item.birth = date;
-            this.updateNewItem();
-        },
-        //---------------------------------------------------------------------
-        setTimeZone: function (item) {
-            this.item.timezone = item.slug;
-            this.updateNewItem();
-        },
-        //---------------------------------------------------------------------
-        setCountry: function (item) {
-            this.item.country = item.name;
-            this.item.country_code = item.code;
-            this.updateNewItem();
-        },
-        //---------------------------------------------------------------------
         store: function () {
             this.$Progress.start();
 
-            let params = this.item;
-
-            console.log('--->params', params);
+            let params = {
+                item: this.item,
+            };
 
             let url = this.ajax_url+'/store/'+this.item.id;
             this.$vaah.ajax(url, params, this.storeAfter);
@@ -137,16 +113,9 @@ export default {
                 if(this.local_action === 'save-and-close')
                 {
                     this.saveAndClose()
-                }
-
-                if(this.local_action === 'save-and-new')
-                {
-                    this.saveAndNew()
-                }
-
-                if(this.local_action === 'save-and-clone')
-                {
-                    this.saveAndClone()
+                }else{
+                    this.$router.push({name: 'perm.view', params:{id:this.id}});
+                    this.$root.$emit('eReloadItem');
                 }
 
             }
@@ -161,18 +130,6 @@ export default {
         saveAndClose: function () {
             this.update('active_item', null);
             this.$router.push({name:'perm.list'});
-        },
-        //---------------------------------------------------------------------
-        saveAndNew: function () {
-            this.update('active_item', null);
-            this.resetNewItem();
-            this.$router.push({name:'perm.create'});
-        },
-        //---------------------------------------------------------------------
-        saveAndClone: function () {
-            this.fillNewItem();
-            this.update('active_item', null);
-            this.$router.push({name:'perm.create'});
         },
         //---------------------------------------------------------------------
         getNewItem: function()
