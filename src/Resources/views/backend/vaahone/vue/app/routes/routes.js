@@ -294,4 +294,79 @@ let routes_reg =     {
 routes.push(routes_reg);
 
 
+
+import PermList from "./../pages/permission/List";
+import PermView from "./../pages/permission/View";
+import PermRole from "./../pages/permission/ViewRole";
+import PermEdit from "./../pages/permission/Edit";
+
+let routes_perm =     {
+    path: '/vaah/permission',
+    component: LayoutBackend,
+    props: true,
+    meta: {
+        middleware: [
+            IsLoggedIn,
+            GetBackendAssets
+        ]
+    },
+    children: [
+        {
+            path: '/',
+            name: 'perm.list',
+            component: PermList,
+            props: true,
+            meta: {
+                middleware: [
+                    IsLoggedIn,
+                    GetBackendAssets
+                ]
+            },
+            children: [
+                {
+                    path: 'view/:id',
+                    name: 'perm.view',
+                    component: PermView,
+                    props: true,
+                    meta: {
+                        middleware: [
+                            IsLoggedIn,
+                            GetBackendAssets
+                        ]
+                    },
+                },
+                {
+                    path: 'role/:id',
+                    name: 'perm.role',
+                    component: PermRole,
+                    props: true,
+                    meta: {
+                        middleware: [
+                            IsLoggedIn,
+                            GetBackendAssets
+                        ]
+                    },
+                },
+                {
+                    path: 'edit/:id',
+                    name: 'perm.edit',
+                    component: PermEdit,
+                    props: true,
+                    meta: {
+                        middleware: [
+                            IsLoggedIn,
+                            GetBackendAssets
+                        ]
+                    },
+                }
+
+            ]
+        }
+
+    ]
+};
+
+routes.push(routes_perm);
+
+
 export default routes;
