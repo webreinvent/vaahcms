@@ -20,18 +20,17 @@ class PermissionController extends Controller
         $this->theme = vh_get_backend_theme();
     }
 
-    //----------------------------------------------------------
-    public function index()
+    public function getAssets(Request $request)
     {
-        return view($this->theme.'.pages.permissions');
-    }
-    //----------------------------------------------------------
-    public function assets(Request $request)
-    {
+        $module = Permission::getModuleList();
 
-        $model = new Permission();
-        $data['columns'] = $model->getFormColumns(true);
-        $data['debug'] = config('vaahcms.debug');
+        $data['country_calling_code'] = vh_get_country_list();
+        $data['country'] = vh_get_country_list();
+        $data['country_code'] = vh_get_country_list();
+        $data['registration_statuses'] = vh_registration_statuses();
+        $data['bulk_actions'] = vh_general_bulk_actions();
+        $data['name_titles'] = vh_name_titles();
+        $data['module'] = $module;
 
         $response['status'] = 'success';
         $response['data'] = $data;
@@ -39,70 +38,46 @@ class PermissionController extends Controller
         return response()->json($response);
     }
     //----------------------------------------------------------
-    public function store(Request $request)
+    public function postStore(Request $request)
     {
-        $response = Permission::store($request);
+        $response = Permission::updateDetail($request);
         return response()->json($response);
     }
     //----------------------------------------------------------
-    public function getDetails(Request $request, $id)
+    public function getItem(Request $request, $id)
     {
 
-        $item = Permission::where('id', $id)->withTrashed()->first();
-
-        $response['status'] = 'success';
-        $response['data'] = $item->recordForFormElement();
-
+        $response = Permission::getDetail($id);
         return response()->json($response);
 
     }
     //----------------------------------------------------------
     public function getList(Request $request)
     {
-
-        if($request->has('recount') && $request->get('recount') == true)
-        {
-            Permission::syncPermissionsWithRoles();
-            Permission::recountRelations();
-        }
-
-        if($request->has("sort_by") && !is_null($request->sort_by))
-        {
-
-            if($request->sort_by == 'deleted_at')
-            {
-                $list = Permission::onlyTrashed();
-            } else
-            {
-                $list = Permission::orderBy($request->sort_by, $request->sort_type);
-            }
-
-        } else
-        {
-            $list = Permission::orderBy('created_at', 'DESC');
-        }
-
-        if($request->has("q"))
-        {
-            $list->where(function ($q) use ($request){
-                $q->where('name', 'LIKE', '%'.$request->q.'%')
-                    ->orWhere('slug', 'LIKE', '%'.$request->q.'%');
-            });
-        }
-
-        $data['list'] = $list->paginate(config('vaahcms.per_page'));
-
-        $response['status'] = 'success';
-        $response['data'] = $data;
-
+        $response = Permission::getList($request);
         return response()->json($response);
-
     }
     //----------------------------------------------------------
-    public function actions(Request $request)
+    //----------------------------------------------------------
+
+    public function getRoles(Request $request, $id)
+    {
+        $response = Permission::getRoles($request,$id);
+        return response()->json($response);
+    }
+    //----------------------------------------------------------
+
+    public function getModuleSections(Request $request)
+    {
+        $response = Permission::getModuleSections($request);
+        return response()->json($response);
+    }
+
+    //----------------------------------------------------------
+    //----------------------------------------------------------
+    public function postActions(Request $request, $action)
     {
         $rules = array(
-            'action' => 'required',
             'inputs' => 'required',
         );
 
@@ -115,59 +90,36 @@ class PermissionController extends Controller
             return response()->json($response);
         }
 
+        $response = [];
+
         $response['status'] = 'success';
-        $response['messages'][] = 'Action was successful';
 
         $inputs = $request->all();
 
-        switch ($request->action)
+        switch ($action)
         {
 
             //------------------------------------
-            case 'bulk_change_status':
-
+            case 'bulk-change-status':
                 $response = Permission::bulkStatusChange($request);
+                break;
+            //------------------------------------
+            case 'bulk-trash':
+
+                $response = Permission::bulkTrash($request);
 
                 break;
             //------------------------------------
-            case 'bulk_delete':
-
-                $response = Permission::bulkDelete($request);
-
-                break;
-            //------------------------------------
-            case 'bulk_restore':
+            case 'bulk-restore':
 
                 $response = Permission::bulkRestore($request);
 
                 break;
 
             //------------------------------------
-            case 'delete':
+            case 'bulk-delete':
 
-
-                if($response['status'] == 'success')
-                {
-                    $item = Permission::find($inputs['inputs']['id']);
-                    $item->is_active = 0;
-                    $item->save();
-
-                    $item->delete();
-
-                    $response['messages'] = [];
-                }
-
-                break;
-            //------------------------------------
-            case 'change_active_status':
-
-                if($response['status'] == 'success')
-                {
-                    $item = Permission::find($inputs['inputs']['id']);
-                    $item->is_active = $inputs['data']['is_active'];
-                    $item->save();
-                    $response['messages'] = [];
-                }
+                $response = Permission::bulkDelete($request);
 
                 break;
             //------------------------------------
@@ -177,49 +129,20 @@ class PermissionController extends Controller
                 {
                     $item = Permission::find($inputs['inputs']['id']);
                     $item->roles()->updateExistingPivot($inputs['inputs']['role_id'], array('is_active' => $inputs['data']['is_active']));
+                    $item->save();
                     Permission::recountRelations();
                     Role::recountRelations();
-                    $response['messages'] = [];
+                    $response['status'] = 'success';
+                    $response['data'] = [];
                 }
 
                 break;
             //------------------------------------
-
         }
 
         return response()->json($response);
 
     }
-    //----------------------------------------------------------
-
-    public function getRoles(Request $request, $id)
-    {
-        $item = Permission::find($id);
-        $response['data']['permission'] = $item;
-
-
-        if($request->has("q"))
-        {
-            $list = $item->roles()->where(function ($q) use ($request){
-                $q->where('name', 'LIKE', '%'.$request->q.'%')
-                    ->orWhere('slug', 'LIKE', '%'.$request->q.'%');
-            });
-        } else
-        {
-            $list = $item->roles();
-        }
-
-        $list->orderBy('pivot_is_active', 'desc');
-
-        $list = $list->paginate(config('vaahcms.per_page'));
-
-        $response['data']['list'] = $list;
-
-        $response['status'] = 'success';
-
-        return response()->json($response);
-    }
-
     //----------------------------------------------------------
     //----------------------------------------------------------
     //----------------------------------------------------------
