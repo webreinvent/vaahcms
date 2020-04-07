@@ -1,5 +1,3 @@
-import VaahVueClickToCopy from 'vaah-vue-clicktocopy'
-
 let namespace = 'permission';
 export default {
     computed: {
@@ -9,7 +7,7 @@ export default {
         query_string() {return this.$store.getters[namespace+'/state'].query_string},
     },
     components:{
-        'vh-copy': VaahVueClickToCopy,
+
     },
 
     data()
