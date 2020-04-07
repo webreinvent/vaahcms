@@ -187,6 +187,11 @@ export default {
                 this.update('list_is_empty', false);
             }
 
+            this.page.query_string.recount = null;
+
+            this.update('query_string', this.page.query_string);
+            this.$vaah.updateCurrentURL(this.page.query_string, this.$router);
+
             this.is_btn_loading = false;
             this.$Progress.finish();
 
