@@ -269,7 +269,7 @@ class Registration extends Model
     {
         $list = Registration::orderBy('created_at', 'DESC');
 
-        if($request->has('trashed') && $request->trashed == true)
+        if($request->has('trashed') && $request->trashed == 'true')
         {
             $list->withTrashed();
         }

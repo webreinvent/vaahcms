@@ -34,7 +34,7 @@ export default {
         bulk_action:{
             selected_items: [],
             data: {},
-            action: "",
+            action: null,
         },
         new_item:{
             email: null,
