@@ -49,6 +49,10 @@ class JsonController extends Controller
         }
 
         //-----Vue Errors----------------------
+        /*
+         * To Set Errors:
+         * session(['vue_errors'=>$response['errors']]);
+         */
         $data['vue_errors'] = null;
         $vue_errors = session()->get('vue_errors');
         if(isset($vue_errors) && count($vue_errors) > 0)
@@ -57,6 +61,20 @@ class JsonController extends Controller
         }
         \Session::forget('vue_errors');
         //-----Vue Errors----------------------
+
+        //-----Vue Messages----------------------
+        /*
+         * To Set messages:
+         * session(['vue_messages'=>$response['messages']]);
+         */
+        $data['vue_messages'] = null;
+        $vue_messages = session()->get('vue_messages');
+        if(isset($vue_messages) && count($vue_messages) > 0)
+        {
+            $data['vue_messages'] = $vue_messages;
+        }
+        \Session::forget('vue_messages');
+        //-----/Vue Messages----------------------
 
 
         if($request->has('get_extended_views') && \Auth::check())
@@ -71,6 +89,11 @@ class JsonController extends Controller
         {
             $data['extended_views'] = $this->getExtendedViews();
         }
+
+
+        $data['urls']['public'] = url("/");
+        $data['urls']['theme'] = vh_get_backend_theme_url();
+        $data['urls']['image'] = vh_get_backend_theme_image_url();
 
 
         $response['status'] = 'success';

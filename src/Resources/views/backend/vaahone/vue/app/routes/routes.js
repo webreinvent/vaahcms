@@ -66,6 +66,124 @@ let routes_frontend =     {
 
 routes.push(routes_frontend);
 
+/*
+|--------------------------------------------------------------------------
+| Setup Routes
+|--------------------------------------------------------------------------
+*/
+
+import SetupIndex from "./../pages/setup/Index";
+import InstallIndex from "./../pages/setup/install/Index";
+import InstallConfiguration from "./../pages/setup/install/Configuration";
+
+
+routes_list =     {
+    path: '/setup',
+    component: LayoutPublic,
+    props: true,
+    meta: {
+        middleware: [
+            GetAssets
+        ]
+    },
+    children: [
+        {
+            path: '/',
+            name: 'setup.index',
+            component: SetupIndex,
+            props: true,
+            meta: {
+                middleware: [
+                    GetAssets
+                ]
+            },
+        },
+        {
+            path: '/reset',
+            name: 'setup.reset',
+            component: ForgotPassword,
+            props: true,
+            meta: {
+                middleware: [
+                    GetAssets
+                ]
+            },
+        },
+        {
+            path: '/deploy',
+            name: 'setup.deploy',
+            component: ForgotPassword,
+            props: true,
+            meta: {
+                middleware: [
+                    GetAssets
+                ]
+            },
+        },
+        {
+            path: '/install',
+            name: 'setup.install',
+            component: InstallIndex,
+            props: true,
+            meta: {
+                middleware: [
+                    GetAssets
+                ]
+            },
+            children: [
+                {
+                    path: '/',
+                    name: 'setup.install.configuration',
+                    component: InstallConfiguration,
+                    props: true,
+                    meta: {
+                        middleware: [
+                            GetAssets
+                        ]
+                    },
+                },
+                {
+                    path: '/database',
+                    name: 'setup.install.database',
+                    component: ForgotPassword,
+                    props: true,
+                    meta: {
+                        middleware: [
+                            GetAssets
+                        ]
+                    },
+                },
+                {
+                    path: '/dependencies',
+                    name: 'setup.install.dependencies',
+                    component: ForgotPassword,
+                    props: true,
+                    meta: {
+                        middleware: [
+                            GetAssets
+                        ]
+                    },
+                },
+                {
+                    path: '/admin',
+                    name: 'setup.install.admin',
+                    component: ForgotPassword,
+                    props: true,
+                    meta: {
+                        middleware: [
+                            GetAssets
+                        ]
+                    },
+                },
+            ]
+        },
+
+
+    ]
+};
+
+routes.push(routes_list);
+
 
 /*
 |--------------------------------------------------------------------------

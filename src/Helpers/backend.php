@@ -29,6 +29,16 @@ function vh_get_backend_theme_url()
 
 }
 //-----------------------------------------------------------------------------------
+function vh_get_backend_theme_image_url()
+{
+
+    $path = ('/vaahcms/backend/themes/'.config('vaahcms.backend_theme').'/images/');
+    $url = \URL::asset($path);
+
+    return $url;
+
+}
+//-----------------------------------------------------------------------------------
 function vh_get_backend_assets_json_file()
 {
     $path = vh_get_backend_theme_url()."/assets.json";

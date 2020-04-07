@@ -52,5 +52,18 @@ function generate_password()
     return generate_random_string();
 }
 //-------------------------------------------------------------
+function vh_list_with_slugs($arr)
+{
+    $list = [];
+    $i = 0;
+    foreach ($arr as $item)
+    {
+        $list[$i]['slug'] = \Str::slug($item);
+        $list[$i]['name'] = $item;
+        $i++;
+    }
+
+    return $list;
+}
 //-------------------------------------------------------------
 //-------------------------------------------------------------

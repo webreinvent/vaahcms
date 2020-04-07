@@ -108,6 +108,15 @@ function vh_get_theme_slug($theme_slug=null)
     return $theme->slug;
 }
 //-----------------------------------------------------------------------------------
+function vh_theme_image_url()
+{
+    $slug = vh_get_theme_slug();
+
+    $url = url("vaahcms/themes/".$slug."/assets/");
+
+    return $url;
+}
+//-----------------------------------------------------------------------------------
 function vh_theme_assets_url($name, $file_path)
 {
     $slug = \Str::slug($name);

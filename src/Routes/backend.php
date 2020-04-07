@@ -78,7 +78,37 @@ Route::group(
         //---------------------------------------------------------
     });
 
-
+Route::group(
+    [
+        'prefix'     => 'vaahcms/setup',
+        'namespace'  => 'WebReinvent\VaahCms\Http\Controllers'
+    ],
+    function () {
+        //------------------------------------------------
+        //------------------------------------------------
+        Route::get( '/', 'SetupController@index' )
+            ->name( 'vh.setup.index' );
+        //------------------------------------------------
+        Route::post( '/assets', 'SetupController@getAssets' )
+            ->name( 'vh.setup.assets' );
+        //------------------------------------------------
+        Route::post( '/check/status', 'SetupController@checkSetupStatus' )
+            ->name( 'vh.setup.check.status' );
+        //------------------------------------------------
+        Route::post( '/store/app/info', 'SetupController@storeAppInfo' )
+            ->name( 'vh.setup.store.app.info' );
+        //------------------------------------------------
+        Route::post( '/run/migrations', 'SetupController@runMigrations' )
+            ->name( 'vh.setup.run.migrations' );
+        //------------------------------------------------
+        Route::any( '/setup/cms', 'SetupController@setupCMS' )
+            ->name( 'vh.setup.run.migrations' );
+        //------------------------------------------------
+        Route::post( '/store/admin', 'SetupController@storeAdmin' )
+            ->name( 'vh.setup.store.backend' );
+        //------------------------------------------------
+        //------------------------------------------------
+    });
 
 
 
@@ -120,34 +150,7 @@ Route::group(
 
 include('backend/settings.php');
 
-Route::group(
-    [
-        'prefix'     => 'vaahcms/setup',
-        'namespace'  => 'WebReinvent\VaahCms\Http\Controllers\Frontend'
-    ],
-    function () {
-        //------------------------------------------------
-        //------------------------------------------------
-        Route::get( '/', 'SetupController@index' )
-            ->name( 'vh.setup.index' );
-        //------------------------------------------------
-        Route::post( '/check/status', 'SetupController@checkSetupStatus' )
-            ->name( 'vh.setup.check.status' );
-        //------------------------------------------------
-        Route::post( '/store/app/info', 'SetupController@storeAppInfo' )
-            ->name( 'vh.setup.store.app.info' );
-        //------------------------------------------------
-        Route::post( '/run/migrations', 'SetupController@runMigrations' )
-            ->name( 'vh.setup.run.migrations' );
-        //------------------------------------------------
-        Route::any( '/setup/cms', 'SetupController@setupCMS' )
-            ->name( 'vh.setup.run.migrations' );
-        //------------------------------------------------
-        Route::post( '/store/admin', 'SetupController@storeAdmin' )
-            ->name( 'vh.setup.store.backend' );
-        //------------------------------------------------
-        //------------------------------------------------
-    });
+
 
 
 

@@ -35,17 +35,61 @@ class SetupController extends Controller
     }
 
     //----------------------------------------------------------
+    public function getAssets(Request $request)
+    {
+
+        $data['is_db_connected'] = $this->isDBConnected();
+        $data['is_db_migrated'] = $this->isDBMigrated();
+        $data['is_installed'] = $this->isInstalled();
+        $data['environments'] = vh_environments();
+
+        $response['status'] = 'success';
+        $response['data'] = $data;
+
+        return response()->json($response);
+
+    }
+    //----------------------------------------------------------
+    public function isDBConnected()
+    {
+        try {
+            \DB::connection()->getPdo();
+            return true;
+        } catch (\Exception $e) {
+            return false;
+        }
+
+    }
+    //----------------------------------------------------------
+    public function isDBMigrated()
+    {
+        try {
+            $exist = \Schema::hasTable('migrations');
+            return $exist;
+        } catch (\Exception $e) {
+            return false;
+        }
+    }
+    //----------------------------------------------------------
+    public function isInstalled()
+    {
+        $db_connected = $this->isDBConnected();
+        $db_migrated = $this->isDBMigrated();
+
+        if($db_connected && $db_migrated)
+        {
+            return true;
+        }
+
+        return false;
+
+    }
+    //----------------------------------------------------------
     public function checkSetupStatus()
     {
 
         //check database connection
-        try {
-            \DB::connection()->getPdo();
-        } catch (\Exception $e) {
-            $response['status'] = 'success';
-            $response['data']['active_step'] = 'database';
-            return response()->json($response);
-        }
+
 
         //check users table
         if(!\Schema::hasTable('vh_users'))
