@@ -32,7 +32,7 @@
                             </b-button>
                         </p>
 
-                        <p class="control">
+                       <!-- <p class="control">
 
 
                             <b-dropdown aria-role="list" position="is-bottom-left">
@@ -65,7 +65,7 @@
                             </b-dropdown>
 
 
-                        </p>
+                        </p>-->
 
 
 

@@ -53,7 +53,7 @@
                 </b-table-column>
 
                 <b-table-column field="count_permissions" label="Permission" >
-                    <b-tooltip label="View Role" type="is-dark">
+                    <b-tooltip label="View Permission" type="is-dark">
                         <b-button rounded size="is-small"
                                   type="is-primary" @click="getRolePermission(props.row)">
                             {{ props.row.count_permissions }} / {{page.total_permissions}}

@@ -125,16 +125,7 @@ class PermissionsController extends Controller
             //------------------------------------
             case 'toggle_role_active_status':
 
-                if($response['status'] == 'success')
-                {
-                    $item = Permission::where('id',$inputs['inputs']['id'])->withTrashed()->first();
-                    $item->roles()->updateExistingPivot($inputs['inputs']['role_id'], array('is_active' => $inputs['data']['is_active']));
-                    $item->save();
-                    Permission::recountRelations();
-                    Role::recountRelations();
-                    $response['status'] = 'success';
-                    $response['data'] = [];
-                }
+                $response = Permission::bulkChangeRoleStatus($request);
 
                 break;
             //------------------------------------

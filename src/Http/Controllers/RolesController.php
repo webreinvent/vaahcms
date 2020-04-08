@@ -124,34 +124,13 @@ class RolesController extends Controller
             //------------------------------------
             case 'toggle_permission_active_status':
 
-                if($response['status'] == 'success')
-                {
-                    $item = Role::where('id',$inputs['inputs']['id'])->withTrashed()->first();
-
-                    if($item->id == 1)
-                    {
-                        $response['status'] = 'failed';
-                        $response['errors'][] = 'Admin permission can not be changed';
-                        return response()->json($response);
-
-                    }
-
-                    $item->permissions()->updateExistingPivot($inputs['inputs']['permission_id'], array('is_active' => $inputs['data']['is_active']));
-                    Role::recountRelations();
-                    $response['messages'] = [];
-                }
+                $response = Role::bulkChangePermissionStatus($request);
 
                 break;
             //------------------------------------
             case 'toggle_user_active_status':
 
-                if($response['status'] == 'success')
-                {
-                    $item = Role::where('id',$inputs['inputs']['id'])->withTrashed()->first();
-                    $item->users()->updateExistingPivot($inputs['inputs']['user_id'], array('is_active' => $inputs['data']['is_active']));
-                    Role::recountRelations();
-                    $response['messages'] = [];
-                }
+                $response = Role::bulkChangeUserStatus($request);
 
                 break;
             //------------------------------------
