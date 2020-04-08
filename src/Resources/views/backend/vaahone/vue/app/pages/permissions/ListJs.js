@@ -33,6 +33,7 @@ export default {
         $route(to, from) {
             this.updateView();
             this.updateQueryString();
+            this.updateActiveItem();
         }
     },
     mounted() {
@@ -280,6 +281,13 @@ export default {
             this.update('query_string', this.query_string);
 
             console.log('check-status',this.page.assets.module.some(item => item.module === this.query_string.filter));
+        },
+        //---------------------------------------------------------------------
+        updateActiveItem: function () {
+
+            if(this.$route.fullPath.includes('permissions/?')){
+                this.update('active_item', null);
+            }
         },
         //---------------------------------------------------------------------
         //---------------------------------------------------------------------

@@ -30,8 +30,9 @@ export default {
     },
     watch: {
         $route(to, from) {
-            this.updateView()
+            this.updateView();
             this.updateQueryString();
+            this.updateActiveItem();
         }
     },
     mounted() {
@@ -241,6 +242,13 @@ export default {
             } else
             {
                 this.$Progress.finish();
+            }
+        },
+        //---------------------------------------------------------------------
+        updateActiveItem: function () {
+
+            if(this.$route.fullPath.includes('registrations/?')){
+                this.update('active_item', null);
             }
         },
         //---------------------------------------------------------------------

@@ -28,10 +28,12 @@
                 </b-table-column>
 
                 <b-table-column field="count_roles" label="Roles" >
-                    <b-button rounded size="is-small"
-                              type="is-primary" @click="getRole(props.row)">
-                        {{ props.row.count_roles }} / {{page.total_roles}}
-                    </b-button>
+                    <b-tooltip label="View Role" type="is-dark">
+                        <b-button rounded size="is-small"
+                                  type="is-primary" @click="getRole(props.row)">
+                            {{ props.row.count_roles }} / {{page.total_roles}}
+                        </b-button>
+                    </b-tooltip>
                 </b-table-column>
 
 
