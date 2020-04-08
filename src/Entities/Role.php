@@ -436,7 +436,7 @@ class Role extends Model {
 
         $list->orderBy('pivot_is_active', 'desc');
 
-        $list = $list->paginate(config('vaahcms.per_page'));
+        $list = $list->paginate(2);
 
 
         $response['data']['list'] = $list;
@@ -579,6 +579,52 @@ class Role extends Model {
         $response['data']['item'] = $role;
         return $response;
 
+    }
+    //-------------------------------------------------
+    public static function bulkChangePermissionStatus($request)
+    {
+        $inputs = $request->all();
+
+        $item = Role::where('id',$inputs['inputs']['id'])->withTrashed()->first();
+
+        if($item->id == 1)
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = 'Admin permission can not be changed';
+            return response()->json($response);
+
+        }
+
+        if($inputs['inputs']['permission_id']){
+            $item->permissions()->updateExistingPivot($inputs['inputs']['permission_id'], array('is_active' => $inputs['data']['is_active']));
+        }else{
+            $item->permissions()
+                ->newPivotStatement()
+                ->where('vh_role_id', '=', $item->id)
+                ->update(array('is_active' => $inputs['data']['is_active']));
+//            $item->permissions()->updateExistingPivot('', array('is_active' => $inputs['data']['is_active']));
+        }
+
+
+        Role::recountRelations();
+            $response['messages'] = [];
+    }
+    //-------------------------------------------------
+    public static function bulkChangeUserStatus($request)
+    {
+        $inputs = $request->all();
+
+        $item = Role::where('id',$inputs['inputs']['id'])->withTrashed()->first();
+        if($inputs['inputs']['user_id']){
+            $item->users()->updateExistingPivot($inputs['inputs']['user_id'], array('is_active' => $inputs['data']['is_active']));
+        }else{
+            $item->users()
+                ->newPivotStatement()
+                ->where('vh_role_id', '=', $item->id)
+                ->update(array('is_active' => $inputs['data']['is_active']));
+        }
+        Role::recountRelations();
+        $response['messages'] = [];
     }
     //-------------------------------------------------
 

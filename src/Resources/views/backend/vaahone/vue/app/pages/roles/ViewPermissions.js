@@ -19,6 +19,9 @@ export default {
             is_btn_loading: false,
             is_content_loading: false,
             items: null,
+            filter: {
+                page: 1
+            },
             search_item:null,
             search_delay_time: 800,
         }
@@ -67,11 +70,16 @@ export default {
             console.log('from assets')
         },
         //---------------------------------------------------------------------
-        getItemPermissions: function (action = false) {
+        getItemPermissions: function (page = 1) {
+
+            this.filter.page = page;
+
+            this.selected_item = [];
 
             this.$Progress.start();
             this.params = {
                 q:this.search_item,
+                page:page,
             };
 
             let url = this.ajax_url+'/item/'+this.id+'/permissions';
@@ -80,6 +88,7 @@ export default {
         //---------------------------------------------------------------------
         getItemPermissionsAfter: function (data, res) {
 
+            let self = this;
             this.$Progress.finish();
             this.is_content_loading = false;
 
@@ -89,6 +98,8 @@ export default {
                 this.update('active_item', data.item);
             }
 
+
+
         },
         //---------------------------------------------------------------------
         changePermission: function (item) {
@@ -96,7 +107,6 @@ export default {
             let params = {
                 id : this.id,
                 permission_id : item.id,
-                query_string : this.page.query_string,
             };
 
             var data = {};
@@ -130,7 +140,7 @@ export default {
         },
         //---------------------------------------------------------------------
         actionsAfter: function (data,res) {
-            this.getItemPermissions(true);
+            this.getItemPermissions(this.filter.page);
             this.update('is_list_loading', false);
             this.$root.$emit('eReloadList');
         },
@@ -152,6 +162,20 @@ export default {
         resetActiveItem: function () {
             this.update('active_item', null);
             this.$router.push({name:'role.list'});
+        },
+        //---------------------------------------------------------------------
+        bulkActions: function (input) {
+            let params = {
+                id : this.id,
+                permission_id : null
+            };
+
+            var data = {
+                is_active: input
+            };
+
+            this.actions(false, 'toggle_permission_active_status', params, data)
+
         },
         //---------------------------------------------------------------------
         //---------------------------------------------------------------------

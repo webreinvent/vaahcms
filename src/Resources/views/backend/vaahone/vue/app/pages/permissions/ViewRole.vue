@@ -22,6 +22,30 @@
                             </b-button>
 
                         </p>
+
+                        <p class="control">
+
+
+                            <b-dropdown aria-role="list" position="is-bottom-left">
+                                <button class="button is-light" slot="trigger">
+                                    <b-icon icon="caret-down"></b-icon>
+                                </button>
+
+                                <b-dropdown-item aria-role="listitem"
+                                                 @click="bulkActions('1')">
+                                    Active All Permission
+                                </b-dropdown-item>
+
+                                <b-dropdown-item aria-role="listitem"
+                                                 @click="bulkActions('0')">
+                                    Inactive All Permission
+                                </b-dropdown-item>
+
+                            </b-dropdown>
+
+
+                        </p>
+
                         <p class="control">
                             <b-button type="is-light"
                                     @click="resetActiveItem()"
@@ -70,7 +94,13 @@
 
                         <template slot-scope="props">
                             <b-table-column field="id" label="Role" >
-                                {{ props.row.name }}
+                                <b-tooltip label="Copy Slug" type="is-dark">
+                                    <b-button type="is-small"
+                                              class="is-light"
+                                              @click="$vaah.copy(props.row.slug)">
+                                        {{ props.row.name }}
+                                    </b-button>
+                                </b-tooltip>
                             </b-table-column>
 
                             <b-table-column field="name" class="has-text-centered" label="Has Permission" numeric >
@@ -87,6 +117,11 @@
 
                     </b-table>
 
+                </div>
+                <div class="block" v-if="items">
+                    <vh-pagination  :limit="1" :data="items.list"
+                                    @onPageChange="getItemRoles">
+                    </vh-pagination>
                 </div>
             </div>
             <!--/content-->

@@ -448,7 +448,7 @@ class Permission extends Model {
 
         $list->orderBy('pivot_is_active', 'desc');
 
-        $list = $list->paginate(config('vaahcms.per_page'));
+        $list = $list->paginate(2);
 
         $response['data']['list'] = $list;
 
@@ -496,6 +496,35 @@ class Permission extends Model {
 
         $response['status'] = 'success';
         $response['data'] = $item;
+
+        return $response;
+
+
+    }
+
+    //-------------------------------------------------
+
+    public static function bulkChangeRoleStatus($request)
+    {
+        $inputs = $request->all();
+
+        $item = Permission::where('id',$inputs['inputs']['id'])->withTrashed()->first();
+
+        if($inputs['inputs']['role_id']){
+            $item->roles()->updateExistingPivot($inputs['inputs']['role_id'], array('is_active' => $inputs['data']['is_active']));
+        }else{
+            $item->roles()
+                ->newPivotStatement()
+                ->where('vh_permission_id', '=', $item->id)
+                ->update(array('is_active' => $inputs['data']['is_active']));
+        }
+
+
+        $item->save();
+        Permission::recountRelations();
+        Role::recountRelations();
+        $response['status'] = 'success';
+        $response['data'] = [];
 
         return $response;
 
