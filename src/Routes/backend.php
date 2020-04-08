@@ -368,11 +368,11 @@ Route::group(
         Route::any('/item/{id}', 'RolesController@getItem')
             ->name('backend.vaah.roles.item');
         //---------------------------------------------------------
-        Route::any('/getRolePermission/{id}', 'RolesController@getRolePermission')
-            ->name('backend.vaah.roles.role-permission');
+        Route::any('/item/{id}/permissions', 'RolesController@getItemPermission')
+            ->name('backend.vaah.roles.item.permissions');
         //---------------------------------------------------------
-        Route::any('/getRoleUser/{id}', 'RolesController@getRoleUser')
-            ->name('backend.vaah.roles.role-user');
+        Route::any('/item/{id}/users', 'RolesController@getItemUser')
+            ->name('backend.vaah.roles.item.users');
         //---------------------------------------------------------
         Route::post('/store/{id}', 'RolesController@postStore')
             ->name('backend.vaah.roles.store');

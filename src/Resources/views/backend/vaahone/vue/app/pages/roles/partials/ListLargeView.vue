@@ -56,16 +56,18 @@
                     <b-tooltip label="View Role" type="is-dark">
                         <b-button rounded size="is-small"
                                   type="is-primary" @click="getRolePermission(props.row)">
-                            {{ props.row.count_permissions }}
+                            {{ props.row.count_permissions }} / {{page.total_permissions}}
                         </b-button>
                     </b-tooltip>
                 </b-table-column>
 
                 <b-table-column field="count_users" label="Users">
-                    <b-button rounded size="is-small"
-                           type="is-light" @click="getRoleUser(props.row)" >
-                        {{ props.row.count_users }}
-                    </b-button>
+                    <b-tooltip label="View User" type="is-dark">
+                        <b-button rounded size="is-small"
+                                  type="is-primary" @click="getRoleUser(props.row)" >
+                            {{ props.row.count_users }} / {{page.total_users}}
+                        </b-button>
+                    </b-tooltip>
 
                 </b-table-column>
 

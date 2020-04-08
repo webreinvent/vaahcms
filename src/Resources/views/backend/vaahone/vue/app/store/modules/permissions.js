@@ -16,6 +16,8 @@ export default {
         assets: null,
         assets_is_fetching: false,
         list: null,
+        total_roles: null,
+        total_users: null,
         list_is_empty: false,
         active_item: null,
         filters: {

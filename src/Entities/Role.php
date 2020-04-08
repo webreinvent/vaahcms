@@ -4,12 +4,12 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
-use WebReinvent\VaahCms\Traits\CrudObservantTrait;
+use WebReinvent\VaahCms\Traits\CrudWithUuidObservantTrait;
 
 class Role extends Model {
 
     use SoftDeletes;
-    use CrudObservantTrait;
+    use CrudWithUuidObservantTrait;
 
     //-------------------------------------------------
     protected $table = 'vh_roles';
@@ -23,6 +23,7 @@ class Role extends Model {
     protected $dateFormat = 'Y-m-d H:i:s';
     //-------------------------------------------------
     protected $fillable = [
+        'uuid',
         'name',
         'slug',
         'details',
@@ -239,6 +240,23 @@ class Role extends Model {
     //-------------------------------------------------
     public static function syncRolesWithUsers()
     {
+        $roles_list = static::all();
+
+        if($roles_list){
+            foreach ($roles_list as $role){
+                if(!$role->uuid){
+                    $role->uuid = Str::uuid();
+                }
+
+                if(!$role->slug){
+                    $role->slug = Str::slug($role->name);
+                }
+
+                $role->save();
+
+            }
+        }
+
         $all_users = User::select('id')->get()->pluck('id')->toArray();
         $all_roles = Role::select('id')->get();
 
@@ -315,6 +333,7 @@ class Role extends Model {
 
         $update->name = $input['name'];
         $update->slug = Str::slug($input['slug']);
+        $update->details = $input['details'];
         $update->is_active = $input['is_active'];
 
         $update->save();
@@ -336,11 +355,13 @@ class Role extends Model {
         $rules = array(
             'name' => 'required',
             'slug' => 'required',
+            'details' => 'required',
             'is_active' => 'required',
         );
 
         $messages = [
-            'is_active.required' => 'The is active field is required.'
+            'is_active.required' => 'The is active field is required.',
+            'details.required' => 'The detail field is required.'
         ];
 
         $validator = \Validator::make( $inputs, $rules, $messages);
@@ -377,6 +398,10 @@ class Role extends Model {
             $item = static::where('id', $id)->withTrashed()->first();
             if($item)
             {
+
+                $item->permissions()->detach();
+
+                $item->users()->detach();
 
                 $item->forceDelete();
 
@@ -493,9 +518,15 @@ class Role extends Model {
 
         $data['list'] = $list->paginate(config('vaahcms.per_page'));
 
+        $countPermission = Permission::all()->count();
+
+        $countUser = User::all()->count();
+
 
         $response['status'] = 'success';
         $response['data'] = $data;
+        $response['data']['totalPermission'] = $countPermission;
+        $response['data']['totalUser'] = $countUser;
 
         return $response;
 
@@ -537,6 +568,7 @@ class Role extends Model {
 
         $role = new static();
         $role->fill($inputs);
+        $role->slug = Str::slug($inputs['slug']);
         $role->save();
 
         Permission::syncPermissionsWithRoles();

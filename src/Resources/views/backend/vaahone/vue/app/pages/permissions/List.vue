@@ -61,11 +61,8 @@
                                                     <option value="">
                                                         - Bulk Actions -
                                                     </option>
-                                                    <option
-                                                        v-for="option in page.assets.bulk_actions"
-                                                        :value="option.slug"
-                                                        :key="option.slug">
-                                                        {{ option.name }}
+                                                    <option value='bulk-change-status'>
+                                                        Change Status
                                                     </option>
                                                 </b-select>
 

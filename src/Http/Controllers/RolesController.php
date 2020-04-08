@@ -163,13 +163,13 @@ class RolesController extends Controller
 
     }
     //----------------------------------------------------------
-    public function getRolePermission(Request $request, $id)
+    public function getItemPermission(Request $request, $id)
     {
         $response = Role::getRolePermission($request, $id);
         return response()->json($response);
     }
     //----------------------------------------------------------
-    public function getRoleUser(Request $request, $id)
+    public function getItemUser(Request $request, $id)
     {
         $response = Role::getRoleUser($request, $id);
         return response()->json($response);
