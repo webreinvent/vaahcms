@@ -1,17 +1,22 @@
 import GlobalComponents from '../../vaahvue/helpers/GlobalComponents'
+import DatePicker from '../../vaahvue/reusable/DatePicker'
+import AutoComplete from '../../vaahvue/reusable/AutoComplete'
 
 let namespace = 'roles';
 
 export default {
-    props: ['id'],
     computed:{
         root() {return this.$store.getters['root/state']},
         page() {return this.$store.getters[namespace+'/state']},
         ajax_url() {return this.$store.getters[namespace+'/state'].ajax_url},
-        item() {return this.$store.getters[namespace+'/state'].active_item},
+        new_item() {return this.$store.getters[namespace+'/state'].new_item},
+        new_item_errors() {return this.$store.getters[namespace+'/state'].new_item_errors},
     },
     components:{
         ...GlobalComponents,
+        DatePicker,
+        'AutoCompleteTimeZone': AutoComplete,
+        'AutoCompleteCountry': AutoComplete,
 
     },
     data()
@@ -22,7 +27,6 @@ export default {
             labelPosition: 'on-border',
             params: {},
             local_action: null,
-            title: null,
         }
     },
     watch: {
@@ -31,10 +35,12 @@ export default {
         }
     },
     mounted() {
+
         //----------------------------------------------------
         this.onLoad();
         //----------------------------------------------------
-
+        this.resetActiveItem();
+        //----------------------------------------------------
         //----------------------------------------------------
     },
     methods: {
@@ -57,57 +63,40 @@ export default {
         //---------------------------------------------------------------------
         onLoad: function()
         {
-            this.is_content_loading = true;
-
             this.updateView();
             this.getAssets();
-            this.getItem();
         },
         //---------------------------------------------------------------------
         async getAssets() {
             await this.$store.dispatch(namespace+'/getAssets');
         },
         //---------------------------------------------------------------------
-        getItem: function () {
-            this.$Progress.start();
-            this.params = {};
-            let url = this.ajax_url+'/item/'+this.$route.params.id;
-            this.$vaah.ajax(url, this.params, this.getItemAfter);
+        resetActiveItem: function()
+        {
+            this.update('active_item', null);
         },
         //---------------------------------------------------------------------
-        getItemAfter: function (data, res) {
-            this.$Progress.finish();
-            this.is_content_loading = false;
+        create: function (action) {
+            this.is_btn_loading = true;
 
-            if(data)
-            {
-                this.title = data.name;
-                this.update('active_item', data);
-            } else
-            {
-                //if item does not exist or delete then redirect to list
-                this.update('active_item', null);
-                this.$router.push({name: 'role.list'});
-            }
-        },
-        //---------------------------------------------------------------------
-        store: function () {
-            this.$Progress.start();
+            //  this.$Progress.start();
 
-            let params = {
-                item: this.item,
+            this.params = {
+                new_item: this.new_item,
+                action: action
             };
 
-            let url = this.ajax_url+'/store/'+this.item.id;
-            this.$vaah.ajax(url, params, this.storeAfter);
+            let url = this.ajax_url+'/create';
+            this.$vaah.ajax(url, this.params, this.createAfter);
         },
         //---------------------------------------------------------------------
-        storeAfter: function (data, res) {
-
+        createAfter: function (data, res) {
+            this.is_btn_loading = false;
             this.$Progress.finish();
 
             if(data)
             {
+
                 this.$root.$emit('eReloadList');
 
                 if(this.local_action === 'save-and-close')
@@ -125,19 +114,20 @@ export default {
                     this.saveAndClone()
                 }
 
-                if(this.local_action === 'save')
-                {
-                    this.$router.push({name: 'role.view', params:{id:this.id}});
-                    this.$root.$emit('eReloadItem');
-                }
-
             }
+
 
         },
         //---------------------------------------------------------------------
+        updateNewItem: function()
+        {
+            this.update('new_item', this.new_item);
+        },
+        //---------------------------------------------------------------------
+        //---------------------------------------------------------------------
         setLocalAction: function (action) {
             this.local_action = action;
-            this.store();
+            this.create();
         },
         //---------------------------------------------------------------------
         saveAndClose: function () {
@@ -148,12 +138,10 @@ export default {
         saveAndNew: function () {
             this.update('active_item', null);
             this.resetNewItem();
-            this.$router.push({name:'role.create'});
         },
         //---------------------------------------------------------------------
         saveAndClone: function () {
             this.fillNewItem();
-            this.update('active_item', null);
             this.$router.push({name:'role.create'});
         },
         //---------------------------------------------------------------------
@@ -183,10 +171,14 @@ export default {
 
             for(let key in new_item)
             {
-                new_item[key] = this.item[key];
+                new_item[key] = this.new_item[key];
             }
             this.update('new_item', new_item);
-        }
+        },
+        //---------------------------------------------------------------------
+        //---------------------------------------------------------------------
+        //---------------------------------------------------------------------
+        //---------------------------------------------------------------------
         //---------------------------------------------------------------------
     }
 }

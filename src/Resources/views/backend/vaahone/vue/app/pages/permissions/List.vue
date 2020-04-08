@@ -151,12 +151,12 @@
                                         <div class="level-item">
 
                                             <b-field label="">
-                                                <b-select placeholder="- Select a status -"
+                                                <b-select placeholder="- Select a filter -"
                                                           v-model="query_string.filter"
                                                           @input="setFilter()"
                                                 >
                                                     <option value="">
-                                                        - Select a status -
+                                                        - Select a filter -
                                                     </option>
                                                     <optgroup label="Status">
                                                         <option value=01>

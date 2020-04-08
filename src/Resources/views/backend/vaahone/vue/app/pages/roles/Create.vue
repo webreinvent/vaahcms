@@ -1,6 +1,6 @@
-<script src="./EditJs.js"></script>
+<script src="./CreateJs.js"></script>
 <template>
-    <div class="column" v-if="page.assets && item">
+    <div class="column" v-if="page.assets">
 
         <div class="card">
 
@@ -8,7 +8,7 @@
             <header class="card-header">
 
                 <div class="card-header-title">
-                    <span>{{$vaah.limitString(title, 15)}}</span>
+                    Create
                 </div>
 
 
@@ -16,16 +16,10 @@
 
                     <div class="field has-addons is-pulled-right">
                         <p class="control">
-                            <b-button @click="$vaah.copy(item.id)"  type="is-light">
-                                <small><b>#{{item.id}}</b></small>
-                            </b-button>
-                        </p>
-
-                        <p class="control">
-                            <b-button icon-left="save"
+                            <b-button icon-left="edit"
                                       type="is-light"
                                       :loading="is_btn_loading"
-                                      @click="setLocalAction('save')">
+                                      @click="create('save')">
                                 Save
                             </b-button>
                         </p>
@@ -34,8 +28,7 @@
 
 
                             <b-dropdown aria-role="list" position="is-bottom-left">
-                                <button class="button is-light"
-                                        slot="trigger">
+                                <button class="button is-light" slot="trigger">
                                     <b-icon icon="caret-down"></b-icon>
                                 </button>
 
@@ -57,6 +50,12 @@
                                     Save & Clone
                                 </b-dropdown-item>
 
+                                <b-dropdown-item aria-role="listitem"
+                                                 @click="resetNewItem()">
+                                    <b-icon icon="eraser"></b-icon>
+                                    Reset
+                                </b-dropdown-item>
+
                             </b-dropdown>
 
 
@@ -65,7 +64,7 @@
                         <p class="control">
                             <b-button tag="router-link"
                                       type="is-light"
-                                      :to="{name: 'role.view', params:{id:item.id}}"
+                                      :to="{name: 'role.list'}"
                                       icon-left="times">
                             </b-button>
                         </p>
@@ -85,22 +84,22 @@
                 <div class="block">
 
                     <b-field label="Name" :label-position="labelPosition">
-                        <b-input name="role-name" dusk="role-name" v-model="item.name"></b-input>
+                        <b-input name="role-name" dusk="role-name" v-model="new_item.name"></b-input>
                     </b-field>
 
                     <b-field label="Slug" :label-position="labelPosition">
-                        <b-input name="role-slug" dusk="role-slug" v-model="item.slug"></b-input>
+                        <b-input name="role-slug" dusk="role-slug" v-model="new_item.slug"></b-input>
                     </b-field>
 
                     <b-field label="Is Active" :label-position="labelPosition">
                         <b-radio-button name="role-is_active" dusk="role-is_active"
-                                        v-model="item.is_active"
+                                        v-model="new_item.is_active"
                                         :native-value=1>
                             <span>Yes</span>
                         </b-radio-button>
 
                         <b-radio-button type="is-danger" name="role-is_active" dusk="role-is_active"
-                                        v-model="item.is_active"
+                                        v-model="new_item.is_active"
                                         :native-value=0>
                             <span>No</span>
                         </b-radio-button>

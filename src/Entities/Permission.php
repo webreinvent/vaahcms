@@ -139,22 +139,22 @@ class Permission extends Model {
 
         foreach($request->inputs as $id)
         {
-            $reg = static::where('id',$id)->withTrashed()->first();
+            $perm = static::where('id',$id)->withTrashed()->first();
 
-            if($reg->deleted_at){
+            if($perm->deleted_at){
                 continue ;
             }
 
             if($request['data']){
-                $reg->is_active = $request['data']['status'];
+                $perm->is_active = $request['data']['status'];
             }else{
-                if($reg->is_active == 1){
-                    $reg->is_active = 0;
+                if($perm->is_active == 1){
+                    $perm->is_active = 0;
                 }else{
-                    $reg->is_active = 1;
+                    $perm->is_active = 1;
                 }
             }
-            $reg->save();
+            $perm->save();
         }
 
         $response['status'] = 'success';

@@ -1,4 +1,4 @@
-<script src="./ViewRoleJs.js"></script>
+<script src="./ViewUserJs.js"></script>
 <template>
     <div class="column" v-if="page.assets">
 
@@ -9,8 +9,8 @@
         <div class="card" v-else>
             <!--header-->
             <header class="card-header">
-                <div v-if="items && items.permission" class="card-header-title">
-                    <span>{{$vaah.limitString(items.permission.name, 30)}}</span>
+                <div v-if="item" class="card-header-title">
+                    <span>{{$vaah.limitString(item.name, 30)}}</span>
                 </div>
 
                 <div class="card-header-buttons">
@@ -53,7 +53,7 @@
                 <div class="block"  v-if="items && items.list">
 
                     <b-field>
-                        <b-input placeholder="Search Roles"
+                        <b-input placeholder="Search Users"
                                  type="search"
                                  icon="search"
                                  @input="delayedSearch"
@@ -70,7 +70,7 @@
 
                         <template slot-scope="props">
                             <b-table-column field="id" label="Role" >
-                                {{ props.row.name }}
+                                {{ props.row.name }}<br>{{ props.row.email }}
                             </b-table-column>
 
                             <b-table-column field="name" class="has-text-centered" label="Has Permission" numeric >
