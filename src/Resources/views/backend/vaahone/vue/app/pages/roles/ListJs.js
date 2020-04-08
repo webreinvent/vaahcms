@@ -174,10 +174,11 @@ export default {
         //---------------------------------------------------------------------
         getListAfter: function (data, res) {
 
-            console.log('--->', data);
-
             this.update('is_list_loading', false);
             this.update('list', data.list);
+
+            this.update('total_permissions', data.totalPermission);
+            this.update('total_users', data.totalUser);
 
             if(data.list.total === 0)
             {

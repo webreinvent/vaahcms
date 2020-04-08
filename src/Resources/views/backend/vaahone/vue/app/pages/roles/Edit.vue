@@ -92,6 +92,10 @@
                         <b-input name="role-slug" dusk="role-slug" v-model="item.slug"></b-input>
                     </b-field>
 
+                    <b-field label="Detail" :label-position="labelPosition">
+                        <b-input type="textarea" name="role-detail" dusk="role-detail" v-model="item.details"></b-input>
+                    </b-field>
+
                     <b-field label="Is Active" :label-position="labelPosition">
                         <b-radio-button name="role-is_active" dusk="role-is_active"
                                         v-model="item.is_active"

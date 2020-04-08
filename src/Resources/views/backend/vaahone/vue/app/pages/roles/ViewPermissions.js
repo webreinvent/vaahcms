@@ -26,7 +26,8 @@ export default {
     watch: {
         $route(to, from) {
             this.updateView();
-            this.getItem();
+            this.getItemPermissions();
+            console.log('from routes', to)
         }
     },
     mounted() {
@@ -62,21 +63,22 @@ export default {
         //---------------------------------------------------------------------
         async getAssets() {
             await this.$store.dispatch(namespace+'/getAssets');
-            this.getItem();
+            this.getItemPermissions();
+            console.log('from assets')
         },
         //---------------------------------------------------------------------
-        getItem: function (action = false) {
+        getItemPermissions: function (action = false) {
 
             this.$Progress.start();
             this.params = {
                 q:this.search_item,
             };
 
-            let url = this.ajax_url+'/getRolePermission/'+this.id;
-            this.$vaah.ajax(url, this.params, this.getItemAfter);
+            let url = this.ajax_url+'/item/'+this.id+'/permissions';
+            this.$vaah.ajax(url, this.params, this.getItemPermissionsAfter);
         },
         //---------------------------------------------------------------------
-        getItemAfter: function (data, res) {
+        getItemPermissionsAfter: function (data, res) {
 
             this.$Progress.finish();
             this.is_content_loading = false;
@@ -128,7 +130,7 @@ export default {
         },
         //---------------------------------------------------------------------
         actionsAfter: function (data,res) {
-            this.getItem(true);
+            this.getItemPermissions(true);
             this.update('is_list_loading', false);
             this.$root.$emit('eReloadList');
         },
@@ -139,7 +141,7 @@ export default {
             let self = this;
             clearTimeout(this.search_delay);
             this.search_delay = setTimeout(function() {
-                self.getItem();
+                self.getItemPermissions();
             }, this.search_delay_time);
 
             // this.query_string.page = 1;

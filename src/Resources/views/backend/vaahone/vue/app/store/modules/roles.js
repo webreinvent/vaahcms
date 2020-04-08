@@ -17,6 +17,8 @@ export default {
         assets_is_fetching: false,
         list: null,
         list_is_empty: false,
+        total_permissions: null,
+        total_users: null,
         active_item: null,
         filters: {
             q: null,
@@ -40,6 +42,7 @@ export default {
             name: null,
             slug: null,
             is_active: null,
+            details: null,
         },
     },
     //=========================================================================

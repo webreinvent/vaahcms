@@ -180,6 +180,9 @@ export default {
             this.update('is_list_loading', false);
             this.update('list', data.list);
 
+
+            this.update('total_roles', data.totalRole);
+
             if(data.list.total === 0)
             {
                 this.update('list_is_empty', true);

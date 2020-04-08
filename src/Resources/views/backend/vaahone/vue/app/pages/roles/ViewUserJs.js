@@ -26,7 +26,7 @@ export default {
     watch: {
         $route(to, from) {
             this.updateView();
-            this.getItem();
+            this.getItemUser();
         }
     },
     mounted() {
@@ -62,21 +62,21 @@ export default {
         //---------------------------------------------------------------------
         async getAssets() {
             await this.$store.dispatch(namespace+'/getAssets');
-            this.getItem();
+            this.getItemUser();
         },
         //---------------------------------------------------------------------
-        getItem: function (action = false) {
+        getItemUser: function (action = false) {
 
             this.$Progress.start();
             this.params = {
                 q:this.search_item,
             };
 
-            let url = this.ajax_url+'/getRoleUser/'+this.id;
-            this.$vaah.ajax(url, this.params, this.getItemAfter);
+            let url = this.ajax_url+'/item/'+this.id+'/users';
+            this.$vaah.ajax(url, this.params, this.getItemUserAfter);
         },
         //---------------------------------------------------------------------
-        getItemAfter: function (data, res) {
+        getItemUserAfter: function (data, res) {
 
             this.$Progress.finish();
             this.is_content_loading = false;
@@ -128,7 +128,7 @@ export default {
         },
         //---------------------------------------------------------------------
         actionsAfter: function (data,res) {
-            this.getItem(true);
+            this.getItemUser(true);
             this.update('is_list_loading', false);
             this.$root.$emit('eReloadList');
         },
@@ -139,7 +139,7 @@ export default {
             let self = this;
             clearTimeout(this.search_delay);
             this.search_delay = setTimeout(function() {
-                self.getItem();
+                self.getItemUser();
             }, this.search_delay_time);
 
             // this.query_string.page = 1;

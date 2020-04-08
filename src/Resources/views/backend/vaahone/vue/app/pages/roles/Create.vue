@@ -19,8 +19,8 @@
                             <b-button icon-left="edit"
                                       type="is-light"
                                       :loading="is_btn_loading"
-                                      @click="create('save')">
-                                Save
+                                      @click="setLocalAction('save-and-new')">
+                                Save & New
                             </b-button>
                         </p>
 
@@ -38,11 +38,11 @@
                                     Save & Close
                                 </b-dropdown-item>
 
-                                <b-dropdown-item aria-role="listitem"
-                                                 @click="setLocalAction('save-and-new')">
-                                    <b-icon icon="plus"></b-icon>
-                                    Save & New
-                                </b-dropdown-item>
+<!--                                <b-dropdown-item aria-role="listitem"-->
+<!--                                                 @click="setLocalAction('save-and-new')">-->
+<!--                                    <b-icon icon="plus"></b-icon>-->
+<!--                                    Save & New-->
+<!--                                </b-dropdown-item>-->
 
                                 <b-dropdown-item aria-role="listitem"
                                                  @click="setLocalAction('save-and-clone')">
@@ -89,6 +89,10 @@
 
                     <b-field label="Slug" :label-position="labelPosition">
                         <b-input name="role-slug" dusk="role-slug" v-model="new_item.slug"></b-input>
+                    </b-field>
+
+                    <b-field label="Detail" :label-position="labelPosition">
+                        <b-input type="textarea" name="role-detail" dusk="role-detail" v-model="new_item.details"></b-input>
                     </b-field>
 
                     <b-field label="Is Active" :label-position="labelPosition">

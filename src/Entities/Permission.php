@@ -114,8 +114,13 @@ class Permission extends Model {
 
         $data['list'] = $list->paginate(config('vaahcms.per_page'));
 
+        $countRole = Role::all()->count();
+        $countUser = User::all()->count();
+
         $response['status'] = 'success';
         $response['data'] = $data;
+        $response['data']['totalRole'] = $countRole;
+        $response['data']['totalUser'] = $countUser;
 
         return $response;
     }
@@ -188,6 +193,8 @@ class Permission extends Model {
             $item = static::where('id', $id)->withTrashed()->first();
             if($item)
             {
+
+                $item->roles()->detach();
 
                 $item->forceDelete();
 

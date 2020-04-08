@@ -151,6 +151,7 @@ export default {
                 name: null,
                 slug: null,
                 is_active: null,
+                details: null,
             };
             return new_item;
         },
@@ -167,6 +168,7 @@ export default {
                 name: null,
                 slug: null,
                 is_active: null,
+                details: null,
             };
 
             for(let key in new_item)
