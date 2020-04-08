@@ -3,7 +3,7 @@ import TableTrView from '../../vaahvue/reusable/TableTrView'
 import TableTrActedBy from '../../vaahvue/reusable/TableTrActedBy'
 import TableTrStatus from './partials/TableTrStatus'
 
-let namespace = 'permission';
+let namespace = 'permissions';
 
 export default {
     computed:{

@@ -6,12 +6,14 @@ Vue.use(Vuex);
 
 import root from './modules/root';
 import registrations from './modules/registrations';
-import permission from './modules/permission';
+import permissions from './modules/permissions';
+import roles from './modules/roles';
 
 export const store = new Vuex.Store({
     modules: {
         root: root,
         registrations: registrations,
-        permission: permission,
+        permissions: permissions,
+        roles: roles,
     }
 });

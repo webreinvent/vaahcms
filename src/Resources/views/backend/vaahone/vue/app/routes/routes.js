@@ -186,13 +186,13 @@ routes.push(routes_reg);
 
 
 
-import PermList from "./../pages/permission/List";
-import PermView from "./../pages/permission/View";
-import PermRole from "./../pages/permission/ViewRole";
-import PermEdit from "./../pages/permission/Edit";
+import PermList from "./../pages/permissions/List";
+import PermView from "./../pages/permissions/View";
+import PermRole from "./../pages/permissions/ViewRole";
+import PermEdit from "./../pages/permissions/Edit";
 
 let routes_perm =     {
-    path: '/vaah/permission',
+    path: '/vaah/permissions',
     component: LayoutBackend,
     props: true,
     meta: {
@@ -258,6 +258,69 @@ let routes_perm =     {
 };
 
 routes.push(routes_perm);
+
+
+
+
+import RoleList from "./../pages/roles/List";
+import RoleView from "./../pages/roles/View";
+import RoleEdit from "./../pages/roles/Edit";
+
+let routes_roles =     {
+    path: '/vaah/roles',
+    component: LayoutBackend,
+    props: true,
+    meta: {
+        middleware: [
+            IsLoggedIn,
+            GetBackendAssets
+        ]
+    },
+    children: [
+        {
+            path: '/',
+            name: 'role.list',
+            component: RoleList,
+            props: true,
+            meta: {
+                middleware: [
+                    IsLoggedIn,
+                    GetBackendAssets
+                ]
+            },
+            children: [
+                {
+                    path: 'view/:id',
+                    name: 'role.view',
+                    component: RoleView,
+                    props: true,
+                    meta: {
+                        middleware: [
+                            IsLoggedIn,
+                            GetBackendAssets
+                        ]
+                    },
+                },
+                {
+                    path: 'edit/:id',
+                    name: 'role.edit',
+                    component: RoleEdit,
+                    props: true,
+                    meta: {
+                        middleware: [
+                            IsLoggedIn,
+                            GetBackendAssets
+                        ]
+                    },
+                }
+
+            ]
+        }
+
+    ]
+};
+
+routes.push(routes_roles);
 
 
 export default routes;

@@ -1,9 +1,11 @@
 import GlobalComponents from '../../vaahvue/helpers/GlobalComponents'
+import TableTrView from '../../vaahvue/reusable/TableTrView'
+import TableTrActedBy from '../../vaahvue/reusable/TableTrActedBy'
+import TableTrStatus from './partials/TableTrStatus'
 
-let namespace = 'permission';
+let namespace = 'roles';
 
 export default {
-    props: ['id'],
     computed:{
         root() {return this.$store.getters['root/state']},
         page() {return this.$store.getters[namespace+'/state']},
@@ -12,33 +14,34 @@ export default {
     },
     components:{
         ...GlobalComponents,
-
+        TableTrView,
+        TableTrStatus,
+        TableTrActedBy,
     },
     data()
     {
         return {
+            is_btn_loading: false,
             is_content_loading: false,
-            is_btn_loading: null,
-            labelPosition: 'on-border',
-            params: {},
-            local_action: null,
-            title: null,
         }
     },
     watch: {
         $route(to, from) {
-            this.updateView()
+            this.updateView();
+            this.getItem();
         }
     },
     mounted() {
         //----------------------------------------------------
         this.onLoad();
         //----------------------------------------------------
-
+        this.$root.$on('eReloadItem', this.getItem);
+        //----------------------------------------------------
+        this.$root.$on('eResetBulkActions', this.resetBulkAction);
+        //----------------------------------------------------
         //----------------------------------------------------
     },
     methods: {
-        //---------------------------------------------------------------------
         //---------------------------------------------------------------------
         update: function(name, value)
         {
@@ -79,119 +82,118 @@ export default {
             this.$Progress.finish();
             this.is_content_loading = false;
 
-            if(data)
+            if(data && data)
             {
-                this.title = data.name;
+                if(data.is_active == 1){
+                    data.is_active = 'Yes';
+                }else{
+                    data.is_active = 'No';
+                }
                 this.update('active_item', data);
             } else
             {
                 //if item does not exist or delete then redirect to list
                 this.update('active_item', null);
-                this.$router.push({name: 'perm.list'});
+                this.$router.push({name: 'role.list'});
             }
         },
         //---------------------------------------------------------------------
-        store: function () {
-            this.$Progress.start();
+        actions: function (action) {
 
+            console.log('--->action', action);
+
+            this.$Progress.start();
+            this.page.bulk_action.action = action;
+            this.update('bulk_action', this.page.bulk_action);
             let params = {
-                item: this.item,
+                inputs: [this.item.id],
+                data: null
             };
 
-            let url = this.ajax_url+'/store/'+this.item.id;
-            this.$vaah.ajax(url, params, this.storeAfter);
+            let url = this.ajax_url+'/actions/'+this.page.bulk_action.action;
+            this.$vaah.ajax(url, params, this.actionsAfter);
+
         },
         //---------------------------------------------------------------------
-        storeAfter: function (data, res) {
-
-            this.$Progress.finish();
-
+        actionsAfter: function (data, res) {
+            let action = this.page.bulk_action.action;
             if(data)
             {
+                this.resetBulkAction();
                 this.$root.$emit('eReloadList');
 
-                if(this.local_action === 'save-and-close')
+                if(action == 'bulk-delete')
                 {
-                    this.saveAndClose()
-                }else{
-                    this.$router.push({name: 'perm.view', params:{id:this.id}});
-                    this.$root.$emit('eReloadItem');
+                    this.$router.push({name: 'role.list'});
+                } else
+                {
+                    this.getItem();
                 }
 
-            }
-
-        },
-        //---------------------------------------------------------------------
-        setLocalAction: function (action) {
-            this.local_action = action;
-            this.store();
-        },
-        //---------------------------------------------------------------------
-        saveAndClose: function () {
-            this.update('active_item', null);
-            this.$router.push({name:'perm.list'});
-        },
-        //---------------------------------------------------------------------
-        getNewItem: function()
-        {
-            let new_item = {
-                email: null,
-                username: null,
-                password: null,
-                display_name: null,
-                title: null,
-                first_name: null,
-                middle_name: null,
-                last_name: null,
-                gender: null,
-                country_calling_code: null,
-                phone: null,
-                timezone: null,
-                alternate_email: null,
-                avatar_url: null,
-                birth: null,
-                country: null,
-                country_code: null,
-                status: null,
-            };
-            return new_item;
-        },
-        //---------------------------------------------------------------------
-        resetNewItem: function()
-        {
-            let new_item = this.getNewItem();
-            this.update('new_item', new_item);
-        },
-        //---------------------------------------------------------------------
-        fillNewItem: function () {
-
-            let new_item = {
-                    email: null,
-                    username: null,
-                    password: null,
-                    display_name: null,
-                    title: null,
-                    first_name: null,
-                    middle_name: null,
-                    last_name: null,
-                    gender: null,
-                    country_calling_code: null,
-                    phone: null,
-                    timezone: null,
-                    alternate_email: null,
-                    avatar_url: null,
-                    birth: null,
-                    country: null,
-                    country_code: null,
-                    status: null,
-                };
-
-            for(let key in new_item)
+            } else
             {
-                new_item[key] = this.item[key];
+                this.$Progress.finish();
             }
-            this.update('new_item', new_item);
-        }
+        },
+        //---------------------------------------------------------------------
+        //---------------------------------------------------------------------
+        resetBulkAction: function()
+        {
+            this.page.bulk_action = {
+                selected_items: [],
+                data: {},
+                action: "",
+            };
+            this.update('bulk_action', this.page.bulk_action);
+        },
+        //---------------------------------------------------------------------
+        confirmDelete: function()
+        {
+            let self = this;
+            this.$buefy.dialog.confirm({
+                title: 'Deleting record',
+                message: 'Are you sure you want to <b>delete</b> the record? This action cannot be undone.',
+                confirmText: 'Delete',
+                type: 'is-danger',
+                hasIcon: true,
+                onConfirm: function () {
+                    self.actions('bulk-delete');
+                }
+            })
+        },
+        //---------------------------------------------------------------------
+        isCopiable: function (label) {
+
+            if(
+                label == 'id' || label == 'uuid' || label == 'slug'
+            )
+            {
+                return true;
+            }
+
+            return false;
+
+        },
+        //---------------------------------------------------------------------
+        isUpperCase: function (label) {
+
+            if(
+                label == 'id' || label == 'uuid'
+            )
+            {
+                return true;
+            }
+
+            return false;
+
+        },
+        //---------------------------------------------------------------------
+        resetActiveItem: function () {
+            this.update('active_item', null);
+            this.$router.push({name:'role.list'});
+        },
+        //---------------------------------------------------------------------
+
         //---------------------------------------------------------------------
     }
 }

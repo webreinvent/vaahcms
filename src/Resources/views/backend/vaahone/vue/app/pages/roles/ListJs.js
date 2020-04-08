@@ -2,7 +2,7 @@ import GlobalComponents from '../../vaahvue/helpers/GlobalComponents';
 import ListLargeView from './partials/ListLargeView';
 import ListSmallView from './partials/ListSmallView';
 
-let namespace = 'permission';
+let namespace = 'roles';
 
 export default {
     computed:{
@@ -83,7 +83,7 @@ export default {
         async getAssets() {
             await this.$store.dispatch(namespace+'/getAssets');
             this.getList();
-            this.getModuleSection();
+            // this.getModuleSection();
         },
         //---------------------------------------------------------------------
         toggleFilters: function()
@@ -269,7 +269,7 @@ export default {
 
             this.query_string.section = '';
 
-            this.getModuleSection();
+            // this.getModuleSection();
 
             this.getList();
 

@@ -9,7 +9,7 @@ use Illuminate\Routing\Controller;
 use WebReinvent\VaahCms\Entities\Permission;
 use WebReinvent\VaahCms\Entities\Role;
 
-class RoleController extends Controller
+class RolesController extends Controller
 {
 
     public $theme;
@@ -25,6 +25,24 @@ class RoleController extends Controller
     {
         return view($this->theme.'.pages.roles');
     }
+
+    public function getAssets(Request $request)
+{
+    $module = Permission::getModuleList();
+
+    $data['country_calling_code'] = vh_get_country_list();
+    $data['country'] = vh_get_country_list();
+    $data['country_code'] = vh_get_country_list();
+    $data['registration_statuses'] = vh_registration_statuses();
+    $data['bulk_actions'] = vh_general_bulk_actions();
+    $data['name_titles'] = vh_name_titles();
+    $data['module'] = $module;
+
+    $response['status'] = 'success';
+    $response['data'] = $data;
+
+    return response()->json($response);
+}
     //----------------------------------------------------------
     public function assets(Request $request)
     {
@@ -45,14 +63,10 @@ class RoleController extends Controller
         return response()->json($response);
     }
     //----------------------------------------------------------
-    public function getDetails(Request $request, $id)
+    public function getItem(Request $request, $id)
     {
 
-        $item = Role::where('id', $id)->withTrashed()->first();
-
-        $response['status'] = 'success';
-        $response['data'] = $item->recordForFormElement();
-
+        $response = Role::getDetail($id);
         return response()->json($response);
 
     }

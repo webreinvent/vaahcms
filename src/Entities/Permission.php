@@ -139,7 +139,12 @@ class Permission extends Model {
 
         foreach($request->inputs as $id)
         {
-            $reg = static::find($id);
+            $reg = static::where('id',$id)->withTrashed()->first();
+
+            if($reg->deleted_at){
+                continue ;
+            }
+
             if($request['data']){
                 $reg->is_active = $request['data']['status'];
             }else{
@@ -301,6 +306,23 @@ class Permission extends Model {
     public static function syncPermissionsWithRoles()
     {
 
+        $permissions_list = Permission::all();
+
+        if($permissions_list){
+            foreach ($permissions_list as $permission){
+                if(!$permission->uuid){
+                    $permission->uuid = Str::uuid();
+                }
+
+                if(!$permission->slug){
+                    $permission->slug = Str::slug($permission->name);
+                }
+
+                $permission->save();
+
+            }
+        }
+
         $permissions = Permission::all()->pluck('id')->toArray();
 
         $roles = Role::all();
@@ -402,7 +424,7 @@ class Permission extends Model {
     public static function getRoles($request,$id)
     {
 
-        $item = Permission::find($id);
+        $item = Permission::where('id',$id)->withTrashed()->first();
         $response['data']['permission'] = $item;
 
 

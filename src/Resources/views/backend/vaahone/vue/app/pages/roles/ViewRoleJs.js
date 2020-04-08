@@ -1,6 +1,6 @@
 import GlobalComponents from '../../vaahvue/helpers/GlobalComponents'
 
-let namespace = 'permission';
+let namespace = 'roles';
 
 export default {
     props: ['id'],
@@ -149,7 +149,7 @@ export default {
         //---------------------------------------------------------------------
         resetActiveItem: function () {
             this.update('active_item', null);
-            this.$router.push({name:'perm.list'});
+            this.$router.push({name:'role.list'});
         },
         //---------------------------------------------------------------------
         //---------------------------------------------------------------------

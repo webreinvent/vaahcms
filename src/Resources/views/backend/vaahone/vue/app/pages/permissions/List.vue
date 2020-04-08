@@ -20,7 +20,7 @@
                         <header class="card-header">
 
                             <div class="card-header-title">
-                                Permission
+                                Permissions
                             </div>
 
                             <div class="card-header-buttons">
@@ -75,7 +75,6 @@
                                                     <option value="">
                                                         - Select Status -
                                                     </option>
-                                                    <option
                                                     <option value=1>
                                                         Active
                                                     </option>

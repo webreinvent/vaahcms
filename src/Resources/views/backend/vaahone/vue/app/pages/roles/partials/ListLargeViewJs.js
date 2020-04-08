@@ -1,4 +1,4 @@
-let namespace = 'permission';
+let namespace = 'roles';
 export default {
     computed: {
         root() {return this.$store.getters['root/state']},
@@ -56,7 +56,7 @@ export default {
         //---------------------------------------------------------------------
         setActiveItem: function (item) {
             this.update('active_item', item);
-            this.$router.push({name: 'perm.view', params:{id:item.id}})
+            this.$router.push({name: 'role.view', params:{id:item.id}})
         },
         //---------------------------------------------------------------------
         changeStatus: function (id) {
@@ -77,7 +77,7 @@ export default {
         //---------------------------------------------------------------------
         getRole: function (item) {
             this.update('active_item', item);
-            this.$router.push({name: 'perm.role', params:{id:item.id}})
+            this.$router.push({name: 'role.role', params:{id:item.id}})
         },
         //---------------------------------------------------------------------
         copiedData: function (data) {
