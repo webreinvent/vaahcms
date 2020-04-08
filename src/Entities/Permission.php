@@ -112,7 +112,7 @@ class Permission extends Model {
             });
         }
 
-        $data['list'] = $list->paginate(2);
+        $data['list'] = $list->paginate(config('vaahcms.per_page'));
 
         $response['status'] = 'success';
         $response['data'] = $data;

@@ -290,6 +290,27 @@ class Role extends Model {
             return $validation;
         }
 
+        // check if name exist
+        $user = static::where('id','!=',$input['id'])->where('name',$input['name'])->first();
+
+        if($user)
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = "This name is already exist.";
+            return $response;
+        }
+
+
+        // check if slug exist
+        $user = static::where('id','!=',$input['id'])->where('slug',$input['slug'])->first();
+
+        if($user)
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = "This slug is already exist.";
+            return $response;
+        }
+
         $update = static::where('id',$id)->withTrashed()->first();
 
         $update->name = $input['name'];
