@@ -60,9 +60,9 @@ class PermissionsController extends Controller
     //----------------------------------------------------------
     //----------------------------------------------------------
 
-    public function getRoles(Request $request, $id)
+    public function getItemRoles(Request $request, $id)
     {
-        $response = Permission::getRoles($request,$id);
+        $response = Permission::getItemRoles($request,$id);
         return response()->json($response);
     }
     //----------------------------------------------------------

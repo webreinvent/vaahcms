@@ -33,6 +33,7 @@ export default {
         $route(to, from) {
             this.updateView();
             this.updateQueryString();
+            this.updateActiveItem();
         }
     },
     mounted() {
@@ -263,6 +264,13 @@ export default {
         getModuleSectionAfter: function (data,res) {
 
             this.moduleSection = data;
+        },
+        //---------------------------------------------------------------------
+        updateActiveItem: function () {
+
+            if(this.$route.fullPath.includes('roles/?')){
+                this.update('active_item', null);
+            }
         },
         //---------------------------------------------------------------------
         //---------------------------------------------------------------------

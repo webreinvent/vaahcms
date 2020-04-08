@@ -428,7 +428,7 @@ class Permission extends Model {
 
     //-------------------------------------------------
 
-    public static function getRoles($request,$id)
+    public static function getItemRoles($request,$id)
     {
 
         $item = Permission::where('id',$id)->withTrashed()->first();
