@@ -19,12 +19,8 @@
 
                     <div class="field has-addons is-pulled-right">
                         <p class="control">
-                            <b-button type="is-light">
-                                <vh-copy
-                                    :data="item.id"
-                                    :confirm_dialog="'buefy'">
-                                    <small><b>#{{item.id}}</b></small>
-                                </vh-copy>
+                            <b-button @click="$vaah.copy(item.id)"  type="is-light">
+                                <small><b>#{{item.id}}</b></small>
                             </b-button>
                         </p>
                         <p class="control">
