@@ -29,9 +29,18 @@
 
                 <b-table-column field="count_permission" label="Permissions" >
                     <b-button rounded size="is-small"
-                              type="is-primary" @click="getRole(props.row)">
+                              type="is-primary" @click="getRolePermission(props.row)">
                         {{ props.row.count_permissions }}
                     </b-button>
+                </b-table-column>
+
+
+                <b-table-column field="count_users" label="Users">
+                    <b-button rounded size="is-small"
+                              type="is-light" @click="getRoleUser(props.row)" >
+                        {{ props.row.count_users }}
+                    </b-button>
+
                 </b-table-column>
 
 

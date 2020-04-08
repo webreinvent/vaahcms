@@ -26,13 +26,20 @@
                             <div class="card-header-buttons">
                                 <div class="field has-addons is-pulled-right">
                                     <p class="control">
+                                        <b-button tag="router-link"
+                                                  type="is-light"
+                                                  :to="{name: 'role.create'}"
+                                                  icon-left="plus">
+                                            Create
+                                        </b-button>
+                                    </p>
 
+                                    <p class="control">
                                         <b-button type="is-light"
                                                   @click="sync()"
                                                   :loading="is_btn_loading"
                                                   icon-left="redo-alt">
                                         </b-button>
-
                                     </p>
                                 </div>
                             </div>
@@ -154,42 +161,16 @@
                                             <b-field label="">
                                                 <b-select placeholder="- Select a status -"
                                                           v-model="query_string.filter"
-                                                          @input="setFilter()"
+                                                          @input="getList()"
                                                 >
                                                     <option value="">
                                                         - Select a status -
                                                     </option>
-                                                    <optgroup label="Status">
-                                                        <option value=01>
-                                                            Active
-                                                        </option>
-                                                        <option value=10>
-                                                            Not active
-                                                        </option>
-                                                    </optgroup>
-
-                                                    <optgroup label="Module">
-                                                        <option
-                                                                v-for="option in page.assets.module"
-                                                                :value="option.module"
-                                                                :key="option.module">
-                                                            {{  option.module.charAt(0).toUpperCase() + option.module.slice(1) }}
-                                                        </option>
-                                                    </optgroup>
-                                                </b-select>
-
-                                                <b-select placeholder="- Select a section -"
-                                                          v-if="page.assets.module.some(item => item.module === query_string.filter)"
-                                                          v-model="query_string.section"
-                                                          @input="getList()">
-                                                    <option value="">
-                                                        - Select a section -
+                                                    <option value=01>
+                                                        Active
                                                     </option>
-                                                    <option
-                                                            v-for="option in moduleSection"
-                                                            :value="option.section"
-                                                            :key="option.section">
-                                                        {{  option.section.charAt(0).toUpperCase() + option.section.slice(1) }}
+                                                    <option value=10>
+                                                        Not active
                                                     </option>
                                                 </b-select>
                                             </b-field>

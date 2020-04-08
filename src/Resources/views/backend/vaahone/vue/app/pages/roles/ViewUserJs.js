@@ -1,6 +1,6 @@
 import GlobalComponents from '../../vaahvue/helpers/GlobalComponents'
 
-let namespace = 'permissions';
+let namespace = 'roles';
 
 export default {
     props: ['id'],
@@ -12,33 +12,32 @@ export default {
     },
     components:{
         ...GlobalComponents,
-
     },
     data()
     {
         return {
+            is_btn_loading: false,
             is_content_loading: false,
-            is_btn_loading: null,
-            labelPosition: 'on-border',
-            params: {},
-            local_action: null,
-            title: null,
+            items: null,
+            search_item:null,
+            search_delay_time: 800,
         }
     },
     watch: {
         $route(to, from) {
-            this.updateView()
+            this.updateView();
+            this.getItem();
         }
     },
     mounted() {
         //----------------------------------------------------
         this.onLoad();
         //----------------------------------------------------
-
+        this.is_content_loading = true;
+        //----------------------------------------------------
         //----------------------------------------------------
     },
     methods: {
-        //---------------------------------------------------------------------
         //---------------------------------------------------------------------
         update: function(name, value)
         {
@@ -57,80 +56,103 @@ export default {
         //---------------------------------------------------------------------
         onLoad: function()
         {
-            this.is_content_loading = true;
-
             this.updateView();
             this.getAssets();
-            this.getItem();
         },
         //---------------------------------------------------------------------
         async getAssets() {
             await this.$store.dispatch(namespace+'/getAssets');
+            this.getItem();
         },
         //---------------------------------------------------------------------
-        getItem: function () {
+        getItem: function (action = false) {
+
             this.$Progress.start();
-            this.params = {};
-            let url = this.ajax_url+'/item/'+this.$route.params.id;
+            this.params = {
+                q:this.search_item,
+            };
+
+            let url = this.ajax_url+'/getRoleUser/'+this.id;
             this.$vaah.ajax(url, this.params, this.getItemAfter);
         },
         //---------------------------------------------------------------------
         getItemAfter: function (data, res) {
+
             this.$Progress.finish();
             this.is_content_loading = false;
 
             if(data)
             {
-                this.title = data.name;
-                this.update('active_item', data);
-            } else
-            {
-                //if item does not exist or delete then redirect to list
-                this.update('active_item', null);
-                this.$router.push({name: 'perm.list'});
+                this.items = data;
+                this.update('active_item', data.item);
             }
+
         },
         //---------------------------------------------------------------------
-        store: function () {
-            this.$Progress.start();
+        changePermission: function (item) {
 
             let params = {
-                item: this.item,
+                id : this.id,
+                user_id : item.id,
+                query_string : this.page.query_string,
             };
 
-            let url = this.ajax_url+'/store/'+this.item.id;
-            this.$vaah.ajax(url, params, this.storeAfter);
-        },
-        //---------------------------------------------------------------------
-        storeAfter: function (data, res) {
+            var data = {};
 
-            this.$Progress.finish();
-
-            if(data)
+            if(item.pivot.is_active)
             {
-                this.$root.$emit('eReloadList');
-
-                if(this.local_action === 'save-and-close')
-                {
-                    this.saveAndClose()
-                }else{
-                    this.$router.push({name: 'perm.view', params:{id:this.id}});
-                    this.$root.$emit('eReloadItem');
-                }
-
+                data.is_active = 0;
+            } else
+            {
+                data.is_active = 1;
             }
 
+            this.actions(false, 'toggle_user_active_status', params, data)
+
+        },
+
+        //---------------------------------------------------------------------
+        actions: function (e, action, inputs, data) {
+            if(e)
+            {
+                e.preventDefault();
+            }
+
+            var url = this.ajax_url+"/actions/"+action;
+            var params = {
+                inputs: inputs,
+                data: data,
+            };
+
+            this.$vaah.ajax(url, params, this.actionsAfter);
         },
         //---------------------------------------------------------------------
-        setLocalAction: function (action) {
-            this.local_action = action;
-            this.store();
+        actionsAfter: function (data,res) {
+            this.getItem(true);
+            this.update('is_list_loading', false);
+            this.$root.$emit('eReloadList');
         },
         //---------------------------------------------------------------------
-        saveAndClose: function () {
+        delayedSearch: function()
+        {
+            this.$Progress.start();
+            let self = this;
+            clearTimeout(this.search_delay);
+            this.search_delay = setTimeout(function() {
+                self.getItem();
+            }, this.search_delay_time);
+
+            // this.query_string.page = 1;
+            // this.update('query_string', this.query_string);
+
+        },
+        //---------------------------------------------------------------------
+        resetActiveItem: function () {
             this.update('active_item', null);
-            this.$router.push({name:'perm.list'});
+            this.$router.push({name:'role.list'});
         },
+        //---------------------------------------------------------------------
+        //---------------------------------------------------------------------
         //---------------------------------------------------------------------
     }
 }

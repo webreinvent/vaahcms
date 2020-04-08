@@ -83,7 +83,6 @@ export default {
         async getAssets() {
             await this.$store.dispatch(namespace+'/getAssets');
             this.getList();
-            // this.getModuleSection();
         },
         //---------------------------------------------------------------------
         toggleFilters: function()
@@ -263,20 +262,6 @@ export default {
         getModuleSectionAfter: function (data,res) {
 
             this.moduleSection = data;
-        },
-        //---------------------------------------------------------------------
-        setFilter: function () {
-
-            this.query_string.section = '';
-
-            // this.getModuleSection();
-
-            this.getList();
-
-            this.query_string.page = 1;
-            this.update('query_string', this.query_string);
-
-            console.log('check-status',this.page.assets.module.some(item => item.module === this.query_string.filter));
         },
         //---------------------------------------------------------------------
         //---------------------------------------------------------------------

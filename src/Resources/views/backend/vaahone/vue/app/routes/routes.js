@@ -372,7 +372,10 @@ routes.push(routes_perm);
 
 
 import RoleList from "./../pages/roles/List";
+import RoleCreate from "../pages/roles/Create.vue";
 import RoleView from "./../pages/roles/View";
+import RoleViewPermission from "./../pages/roles/ViewPermission";
+import RoleViewUser from "./../pages/roles/ViewUser";
 import RoleEdit from "./../pages/roles/Edit";
 
 let routes_roles =     {
@@ -399,6 +402,18 @@ let routes_roles =     {
             },
             children: [
                 {
+                    path: 'create',
+                    name: 'role.create',
+                    component: RoleCreate,
+                    props: true,
+                    meta: {
+                        middleware: [
+                            IsLoggedIn,
+                            GetBackendAssets
+                        ]
+                    },
+                },
+                {
                     path: 'view/:id',
                     name: 'role.view',
                     component: RoleView,
@@ -414,6 +429,30 @@ let routes_roles =     {
                     path: 'edit/:id',
                     name: 'role.edit',
                     component: RoleEdit,
+                    props: true,
+                    meta: {
+                        middleware: [
+                            IsLoggedIn,
+                            GetBackendAssets
+                        ]
+                    },
+                },
+                {
+                    path: 'permission/:id',
+                    name: 'role.perm',
+                    component: RoleViewPermission,
+                    props: true,
+                    meta: {
+                        middleware: [
+                            IsLoggedIn,
+                            GetBackendAssets
+                        ]
+                    },
+                },
+                {
+                    path: 'user/:id',
+                    name: 'role.user',
+                    component: RoleViewUser,
                     props: true,
                     meta: {
                         middleware: [

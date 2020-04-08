@@ -292,6 +292,9 @@ Route::group(
         //------------------------------------------------
         Route::any( '/assets', 'RolesController@getAssets' )
             ->name( 'vh.backend.roles.assets' );
+        //---------------------------------------------------------
+        Route::post('/create', 'RolesController@postCreate')
+            ->name('backend.vaah.registrations.create');
         //------------------------------------------------
         Route::any( '/list', 'RolesController@getList' )
             ->name( 'vh.backend.roles.list' );
@@ -299,8 +302,11 @@ Route::group(
         Route::any('/item/{id}', 'RolesController@getItem')
             ->name('backend.vaah.roles.item');
         //---------------------------------------------------------
-        Route::any('/role/{id}', 'RolesController@getRoles')
-            ->name('backend.vaah.roles.role');
+        Route::any('/getRolePermission/{id}', 'RolesController@getRolePermission')
+            ->name('backend.vaah.roles.role-permission');
+        //---------------------------------------------------------
+        Route::any('/getRoleUser/{id}', 'RolesController@getRoleUser')
+            ->name('backend.vaah.roles.role-user');
         //---------------------------------------------------------
         Route::post('/store/{id}', 'RolesController@postStore')
             ->name('backend.vaah.roles.store');

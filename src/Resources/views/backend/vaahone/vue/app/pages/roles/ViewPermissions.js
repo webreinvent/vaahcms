@@ -72,7 +72,7 @@ export default {
                 q:this.search_item,
             };
 
-            let url = this.ajax_url+'/role/'+this.id;
+            let url = this.ajax_url+'/getRolePermission/'+this.id;
             this.$vaah.ajax(url, this.params, this.getItemAfter);
         },
         //---------------------------------------------------------------------
@@ -84,7 +84,7 @@ export default {
             if(data)
             {
                 this.items = data;
-                this.update('active_item', data.permission);
+                this.update('active_item', data.item);
             }
 
         },
@@ -93,7 +93,7 @@ export default {
 
             let params = {
                 id : this.id,
-                role_id : item.id,
+                permission_id : item.id,
                 query_string : this.page.query_string,
             };
 
@@ -107,7 +107,7 @@ export default {
                 data.is_active = 1;
             }
 
-            this.actions(false, 'toggle_role_active_status', params, data)
+            this.actions(false, 'toggle_permission_active_status', params, data)
 
         },
 

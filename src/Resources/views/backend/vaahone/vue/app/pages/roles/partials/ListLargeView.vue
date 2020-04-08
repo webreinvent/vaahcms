@@ -55,15 +55,15 @@
                 <b-table-column field="count_permissions" label="Permission" >
                     <b-tooltip label="View Role" type="is-dark">
                         <b-button rounded size="is-small"
-                                  type="is-primary" @click="getRole(props.row)">
+                                  type="is-primary" @click="getRolePermission(props.row)">
                             {{ props.row.count_permissions }}
                         </b-button>
                     </b-tooltip>
                 </b-table-column>
 
                 <b-table-column field="count_users" label="Users">
-                    <b-button disabled rounded size="is-small"
-                           type="is-light">
+                    <b-button rounded size="is-small"
+                           type="is-light" @click="getRoleUser(props.row)" >
                         {{ props.row.count_users }}
                     </b-button>
 

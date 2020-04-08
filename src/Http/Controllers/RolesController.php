@@ -27,29 +27,16 @@ class RolesController extends Controller
     }
 
     public function getAssets(Request $request)
-{
-    $module = Permission::getModuleList();
-
-    $data['country_calling_code'] = vh_get_country_list();
-    $data['country'] = vh_get_country_list();
-    $data['country_code'] = vh_get_country_list();
-    $data['registration_statuses'] = vh_registration_statuses();
-    $data['bulk_actions'] = vh_general_bulk_actions();
-    $data['name_titles'] = vh_name_titles();
-    $data['module'] = $module;
-
-    $response['status'] = 'success';
-    $response['data'] = $data;
-
-    return response()->json($response);
-}
-    //----------------------------------------------------------
-    public function assets(Request $request)
     {
+        $module = Permission::getModuleList();
 
-        $model = new Role();
-        $data['columns'] = $model->getFormColumns(true);
-        $data['debug'] = config('vaahcms.debug');
+        $data['country_calling_code'] = vh_get_country_list();
+        $data['country'] = vh_get_country_list();
+        $data['country_code'] = vh_get_country_list();
+        $data['registration_statuses'] = vh_registration_statuses();
+        $data['bulk_actions'] = vh_general_bulk_actions();
+        $data['name_titles'] = vh_name_titles();
+        $data['module'] = $module;
 
         $response['status'] = 'success';
         $response['data'] = $data;
@@ -57,9 +44,17 @@ class RolesController extends Controller
         return response()->json($response);
     }
     //----------------------------------------------------------
-    public function store(Request $request)
+
+    //----------------------------------------------------------
+    public function postCreate(Request $request)
     {
-        $response = Role::store($request);
+        $response = Role::create($request);
+        return response()->json($response);
+    }
+    //----------------------------------------------------------
+    public function postStore(Request $request,$id)
+    {
+        $response = Role::updateDetail($request,$id);
         return response()->json($response);
     }
     //----------------------------------------------------------
@@ -73,51 +68,13 @@ class RolesController extends Controller
     //----------------------------------------------------------
     public function getList(Request $request)
     {
-
-        if($request->has('recount') && $request->get('recount') == true)
-        {
-            Permission::syncPermissionsWithRoles();
-            Role::syncRolesWithUsers();
-            Role::recountRelations();
-        }
-
-        if($request->has("sort_by") && !is_null($request->sort_by))
-        {
-
-            if($request->sort_by == 'deleted_at')
-            {
-                $list = Role::onlyTrashed();
-            } else
-            {
-                $list = Role::orderBy($request->sort_by, $request->sort_type);
-            }
-
-        } else
-        {
-            $list = Role::orderBy('created_at', 'DESC');
-        }
-
-        if($request->has("q"))
-        {
-            $list->where(function ($q) use ($request){
-                $q->where('name', 'LIKE', '%'.$request->q.'%')
-                    ->orWhere('slug', 'LIKE', '%'.$request->q.'%');
-            });
-        }
-
-        $data['list'] = $list->paginate(config('vaahcms.per_page'));
-
-        $response['status'] = 'success';
-        $response['data'] = $data;
-
+        $response = Role::getList($request);
         return response()->json($response);
-
     }
     //----------------------------------------------------------
-    public function actions(Request $request)
+    public function postActions(Request $request, $action)
     {
         $rules = array(
-            'action' => 'required',
             'inputs' => 'required',
         );
 
@@ -130,59 +87,38 @@ class RolesController extends Controller
             return response()->json($response);
         }
 
+        $response = [];
+
         $response['status'] = 'success';
-        $response['messages'][] = 'Action was successful';
 
         $inputs = $request->all();
 
-        switch ($request->action)
+        switch ($action)
         {
 
             //------------------------------------
-            case 'bulk_change_status':
+            case 'bulk-change-status':
 
                 $response = Role::bulkStatusChange($request);
 
                 break;
             //------------------------------------
-            case 'bulk_delete':
+            case 'bulk-trash':
 
-                $response = Role::bulkDelete($request);
+                $response = Role::bulkTrash($request);
 
                 break;
             //------------------------------------
-            case 'bulk_restore':
+            case 'bulk-restore':
 
                 $response = Role::bulkRestore($request);
 
                 break;
 
             //------------------------------------
-            case 'delete':
+            case 'bulk-delete':
 
-
-                if($response['status'] == 'success')
-                {
-                    $item = Role::find($inputs['inputs']['id']);
-                    $item->is_active = 0;
-                    $item->save();
-
-                    $item->delete();
-
-                    $response['messages'] = [];
-                }
-
-                break;
-            //------------------------------------
-            case 'change_active_status':
-
-                if($response['status'] == 'success')
-                {
-                    $item = Role::find($inputs['inputs']['id']);
-                    $item->is_active = $inputs['data']['is_active'];
-                    $item->save();
-                    $response['messages'] = [];
-                }
+                $response = Role::bulkDelete($request);
 
                 break;
             //------------------------------------
@@ -190,7 +126,7 @@ class RolesController extends Controller
 
                 if($response['status'] == 'success')
                 {
-                    $item = Role::find($inputs['inputs']['id']);
+                    $item = Role::where('id',$inputs['inputs']['id'])->withTrashed()->first();
 
                     if($item->id == 1)
                     {
@@ -211,7 +147,7 @@ class RolesController extends Controller
 
                 if($response['status'] == 'success')
                 {
-                    $item = Role::find($inputs['inputs']['id']);
+                    $item = Role::where('id',$inputs['inputs']['id'])->withTrashed()->first();
                     $item->users()->updateExistingPivot($inputs['inputs']['user_id'], array('is_active' => $inputs['data']['is_active']));
                     Role::recountRelations();
                     $response['messages'] = [];
@@ -227,56 +163,15 @@ class RolesController extends Controller
 
     }
     //----------------------------------------------------------
-    public function getPermissions(Request $request, $id)
+    public function getRolePermission(Request $request, $id)
     {
-        $item = Role::withTrashed()->where('id', $id)->first();
-        $response['data']['item'] = $item;
-
-        if($request->has("q"))
-        {
-            $list = $item->permissions()->where(function ($q) use ($request){
-                $q->where('name', 'LIKE', '%'.$request->q.'%')
-                    ->orWhere('slug', 'LIKE', '%'.$request->q.'%');
-            });
-        } else
-        {
-            $list = $item->permissions();
-        }
-
-        $list->orderBy('pivot_is_active', 'desc');
-
-        $list = $list->paginate(config('vaahcms.per_page'));
-
-        $response['data']['list'] = $list;
-
-        $response['status'] = 'success';
-
+        $response = Role::getRolePermission($request, $id);
         return response()->json($response);
     }
     //----------------------------------------------------------
-    public function getUsers(Request $request, $id)
+    public function getRoleUser(Request $request, $id)
     {
-        $item = Role::withTrashed()->where('id', $id)->first();
-        $response['data']['item'] = $item;
-
-        if($request->has("q"))
-        {
-            $list = $item->users()->where(function ($q) use ($request){
-                $q->where('name', 'LIKE', '%'.$request->q.'%')
-                    ->orWhere('email', 'LIKE', '%'.$request->q.'%');
-            });
-        } else
-        {
-            $list = $item->users();
-        }
-
-        $list->orderBy('pivot_is_active', 'desc');
-
-        $list = $list->paginate(config('vaahcms.per_page'));
-
-        $response['data']['list'] = $list;
-        $response['status'] = 'success';
-
+        $response = Role::getRoleUser($request, $id);
         return response()->json($response);
     }
     //----------------------------------------------------------
