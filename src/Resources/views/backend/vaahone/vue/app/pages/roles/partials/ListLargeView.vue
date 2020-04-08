@@ -29,13 +29,13 @@
 
                 <b-table-column v-if="props.row.deleted_at" field="status" label="Is Active">
 
-                    <b-tag v-if="props.row.is_active === 1" rounded size="is-small"
+                    <b-button v-if="props.row.is_active === 1" rounded size="is-small"
                            type="is-success">
                         Yes
-                    </b-tag>
-                    <b-tag v-else rounded size="is-small" type="is-danger">
+                    </b-button>
+                    <b-button v-else rounded size="is-small" type="is-danger">
                         No
-                    </b-tag>
+                    </b-button>
 
                 </b-table-column>
 
@@ -52,27 +52,20 @@
                     </b-tooltip>
                 </b-table-column>
 
-                <b-table-column v-if="props.row.deleted_at" field="count_roles" label="Roles" >
-                    <b-tag rounded size="is-small"
-                           type="is-primary">
-                        {{ props.row.count_roles }}
-                    </b-tag>
-                </b-table-column>
-
-                <b-table-column v-else field="count_roles" label="Roles" >
+                <b-table-column field="count_permissions" label="Permission" >
                     <b-tooltip label="View Role" type="is-dark">
                         <b-button rounded size="is-small"
                                   type="is-primary" @click="getRole(props.row)">
-                            {{ props.row.count_roles }}
+                            {{ props.row.count_permissions }}
                         </b-button>
                     </b-tooltip>
                 </b-table-column>
 
                 <b-table-column field="count_users" label="Users">
-                    <b-tag rounded size="is-small"
+                    <b-button disabled rounded size="is-small"
                            type="is-light">
                         {{ props.row.count_users }}
-                    </b-tag>
+                    </b-button>
 
                 </b-table-column>
 

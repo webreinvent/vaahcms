@@ -281,69 +281,63 @@ Route::group(
 
 Route::group(
     [
-        'prefix'     => 'admin/vaah/roles',
+        'prefix'     => 'backend/vaah/roles',
         'middleware' => ['web','has.backend.access'],
         'namespace'  => 'WebReinvent\VaahCms\Http\Controllers'
     ],
     function () {
         //------------------------------------------------
-        Route::get( '/', 'RoleController@index' )
+        Route::get( '/', 'RolesController@index' )
             ->name( 'vh.backend.roles' );
         //------------------------------------------------
-        Route::any( '/assets', 'RoleController@assets' )
+        Route::any( '/assets', 'RolesController@getAssets' )
             ->name( 'vh.backend.roles.assets' );
         //------------------------------------------------
-        Route::any( '/list', 'RoleController@getList' )
+        Route::any( '/list', 'RolesController@getList' )
             ->name( 'vh.backend.roles.list' );
         //------------------------------------------------
-        Route::any( '/actions', 'RoleController@actions' )
-            ->name( 'vh.backend.roles.actions' );
-        //------------------------------------------------
-        Route::any( '/store', 'RoleController@store' )
-            ->name( 'vh.backend.roles.store' );
-        //------------------------------------------------
-        Route::any( '/view/{id}', 'RoleController@getDetails' )
-            ->name( 'vh.backend.roles.view' );
-        //------------------------------------------------
-        Route::any( '/permissions/{id}', 'RoleController@getPermissions' )
-            ->name( 'vh.backend.roles.permissions' );
-        //------------------------------------------------
-        Route::any( '/users/{id}', 'RoleController@getUsers' )
-            ->name( 'vh.backend.roles.users' );
-        //------------------------------------------------
+        Route::any('/item/{id}', 'RolesController@getItem')
+            ->name('backend.vaah.roles.item');
+        //---------------------------------------------------------
+        Route::any('/role/{id}', 'RolesController@getRoles')
+            ->name('backend.vaah.roles.role');
+        //---------------------------------------------------------
+        Route::post('/store/{id}', 'RolesController@postStore')
+            ->name('backend.vaah.roles.store');
+        //---------------------------------------------------------
+        Route::post('/actions/{action_name}', 'RolesController@postActions')
+            ->name('backend.vaah.roles.actions');
+        //---------------------------------------------------------
         //------------------------------------------------
     });
 
 Route::group(
     [
-        'prefix' => 'backend/vaah/permission',
+        'prefix' => 'backend/vaah/permissions',
         'namespace'  => 'WebReinvent\VaahCms\Http\Controllers',
         'middleware' => ['web', 'has.backend.access'],
     ],
     function () {
         //---------------------------------------------------------
-        Route::get('/', 'PermissionController@getIndex')
-            ->name('backend.vaah.permission.index');
+        Route::any('/assets', 'PermissionsController@getAssets')
+            ->name('backend.vaah.permissions.assets');
         //---------------------------------------------------------
-        Route::any('/assets', 'PermissionController@getAssets')
-            ->name('backend.vaah.permission.assets');
+        Route::any('/list', 'PermissionsController@getList')
+            ->name('backend.vaah.permissions.list');
         //---------------------------------------------------------
-        Route::any('/list', 'PermissionController@getList')
-            ->name('backend.vaah.permission.list');
+        Route::any('/item/{id}', 'PermissionsController@getItem')
+            ->name('backend.vaah.permissions.item');
         //---------------------------------------------------------
-        Route::any('/item/{id}', 'PermissionController@getItem')
-            ->name('backend.vaah.permission.item');
+        Route::any('/role/{id}', 'PermissionsController@getRoles')
+            ->name('backend.vaah.permissions.role');
         //---------------------------------------------------------
-        Route::any('/role/{id}', 'PermissionController@getRoles')
-            ->name('backend.vaah.permission.role');
+        Route::post('/store/{id}', 'PermissionsController@postStore')
+            ->name('backend.vaah.permissions.store');
         //---------------------------------------------------------
-        Route::post('/store/{id}', 'PermissionController@postStore')
-            ->name('backend.vaah.permission.store');
+        Route::post('/actions/{action_name}', 'PermissionsController@postActions')
+            ->name('backend.vaah.permissions.actions');
         //---------------------------------------------------------
-        Route::post('/actions/{action_name}', 'PermissionController@postActions')
-            ->name('backend.vaah.registrations.actions');
-        //---------------------------------------------------------
-        Route::post('/getModuleSections', 'PermissionController@getModuleSections')
-            ->name('backend.vaah.registrations.module-section');
+        Route::post('/getModuleSections', 'PermissionsController@getModuleSections')
+            ->name('backend.vaah.permissions.module-section');
         //---------------------------------------------------------
     });

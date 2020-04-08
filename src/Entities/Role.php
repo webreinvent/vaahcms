@@ -89,23 +89,30 @@ class Role extends Model {
         return $query->whereBetween( 'deleted_at', array( $from, $to ) );
     }
     //-------------------------------------------------
-    public function createdBy() {
-        return $this->belongsTo( 'WebReinvent\VaahCms\Entities\User',
+
+    public function createdByUser()
+    {
+        return $this->belongsTo('WebReinvent\VaahCms\Entities\User',
             'created_by', 'id'
-        );
+        )->select('id', 'uuid', 'first_name', 'last_name', 'email');
     }
+
     //-------------------------------------------------
-    public function updatedBy() {
-        return $this->belongsTo( 'WebReinvent\VaahCms\Entities\User',
+    public function updatedByUser()
+    {
+        return $this->belongsTo('WebReinvent\VaahCms\Entities\User',
             'updated_by', 'id'
-        );
+        )->select('id', 'uuid', 'first_name', 'last_name', 'email');
+    }
+
+    //-------------------------------------------------
+    public function deletedByUser()
+    {
+        return $this->belongsTo('WebReinvent\VaahCms\Entities\User',
+            'deleted_by', 'id'
+        )->select('id', 'uuid', 'first_name', 'last_name', 'email');
     }
     //-------------------------------------------------
-    public function deletedBy() {
-        return $this->belongsTo( 'WebReinvent\VaahCms\Entities\User',
-            'deleted_by', 'id'
-        );
-    }
     //-------------------------------------------------
     public function getTableColumns() {
         return $this->getConnection()->getSchemaBuilder()
@@ -482,6 +489,17 @@ class Role extends Model {
 
 
         return true;
+
+    }
+    //-------------------------------------------------
+    public static function getDetail($id)
+    {
+        $item = Role::where('id', $id)->with(['createdByUser', 'updatedByUser', 'deletedByUser'])->withTrashed()->first();
+
+        $response['status'] = 'success';
+        $response['data'] = $item;
+
+        return $response;
 
     }
     //-------------------------------------------------

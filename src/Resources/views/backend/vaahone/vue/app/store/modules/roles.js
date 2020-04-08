@@ -4,7 +4,7 @@ import {VaahHelper as Vaah} from "../../vaahvue/helpers/VaahHelper";
 let base_url = document.getElementsByTagName('base')[0].getAttribute("href");
 //---------/Variables
 
-let ajax_url = base_url+"/backend/vaah/permission";
+let ajax_url = base_url+"/backend/vaah/roles";
 
 console.log('--->ajax_url', ajax_url);
 
@@ -79,6 +79,7 @@ export default {
 
                 let url = state.ajax_url+'/assets';
                 let params = {};
+                console.log(url);
                 let data = await Vaah.ajax(url, params);
                 payload = {
                     key: 'assets',
@@ -91,7 +92,7 @@ export default {
         //-----------------------------------------------------------------
         updateView({ state, commit, dispatch, getters }, payload) {
             let list_view = false;
-            if(payload && payload.name && payload.name == 'perm.list')
+            if(payload && payload.name && payload.name == 'role.list')
             {
                 list_view = true;
             }

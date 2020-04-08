@@ -8,6 +8,8 @@ import root from './modules/root';
 import registrations from './modules/registrations';
 import setup from './modules/setup';
 import permission from './modules/permission';
+import permissions from './modules/permissions';
+import roles from './modules/roles';
 
 export const store = new Vuex.Store({
     modules: {
@@ -15,5 +17,7 @@ export const store = new Vuex.Store({
         registrations: registrations,
         setup: setup,
         permission: permission,
+        permissions: permissions,
+        roles: roles,
     }
 });

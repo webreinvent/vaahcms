@@ -45,11 +45,11 @@ class ExtendController extends Controller
                         'label'=> 'Users'
                     ],
                     [
-                        'link' => route('vh.backend.dashboard'),
+                        'link' => $link."/roles/",
                         'label'=> 'Roles'
                     ],
                     [
-                        'link' => $link."/permission/",
+                        'link' => $link."/permissions/",
                         'label'=> 'Permissions'
                     ]
                 ]

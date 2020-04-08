@@ -9,7 +9,7 @@ use Illuminate\Routing\Controller;
 use WebReinvent\VaahCms\Entities\Permission;
 use WebReinvent\VaahCms\Entities\Role;
 
-class PermissionController extends Controller
+class PermissionsController extends Controller
 {
 
     public $theme;
@@ -127,7 +127,7 @@ class PermissionController extends Controller
 
                 if($response['status'] == 'success')
                 {
-                    $item = Permission::find($inputs['inputs']['id']);
+                    $item = Permission::where('id',$inputs['inputs']['id'])->withTrashed()->first();
                     $item->roles()->updateExistingPivot($inputs['inputs']['role_id'], array('is_active' => $inputs['data']['is_active']));
                     $item->save();
                     Permission::recountRelations();

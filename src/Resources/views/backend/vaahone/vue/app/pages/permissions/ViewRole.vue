@@ -10,20 +10,17 @@
             <!--header-->
             <header class="card-header">
                 <div v-if="items && items.permission" class="card-header-title">
-                    <span>{{items.permission.name}}</span>
+                    <span>{{$vaah.limitString(items.permission.name, 30)}}</span>
                 </div>
 
                 <div class="card-header-buttons">
 
                     <div class="field has-addons is-pulled-right">
                         <p class="control">
-                            <b-button type="is-light">
-                                <vh-copy
-                                        :data="item.id"
-                                        :confirm_dialog="'buefy'">
-                                    <small><b>#{{item.id}}</b></small>
-                                </vh-copy>
+                            <b-button @click="$vaah.copy(item.id)"  type="is-light">
+                                <small><b>#{{item.id}}</b></small>
                             </b-button>
+
                         </p>
                         <p class="control">
                             <b-button type="is-light"
@@ -41,6 +38,14 @@
 
             </header>
             <!--/header-->
+
+            <b-notification type="is-danger"
+                            :closable="false"
+                            class="is-light is-small"
+                            v-if="item.deleted_at"
+            >
+                Deleted {{$vaah.fromNow(item.deleted_at)}}
+            </b-notification>
 
             <!--content-->
             <div class="card-content">

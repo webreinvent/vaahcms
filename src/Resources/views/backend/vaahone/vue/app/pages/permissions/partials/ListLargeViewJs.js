@@ -1,4 +1,4 @@
-let namespace = 'permission';
+let namespace = 'permissions';
 export default {
     computed: {
         root() {return this.$store.getters['root/state']},
@@ -13,7 +13,7 @@ export default {
     data()
     {
         let obj = {
-
+            icon_copy: "<i class='fas fa-copy'></i>"
         };
 
         return obj;
@@ -59,6 +59,22 @@ export default {
             this.$router.push({name: 'perm.view', params:{id:item.id}})
         },
         //---------------------------------------------------------------------
+        changeStatus: function (id) {
+            this.$Progress.start();
+            let url = this.ajax_url+'/actions/bulk-change-status';
+            let params = {
+                inputs: [id],
+                data: null
+            };
+            this.$vaah.ajax(url, params, this.changeStatusAfter);
+        },
+        //---------------------------------------------------------------------
+        changeStatusAfter: function (data,res) {
+            this.$root.$emit('eReloadList');
+            this.update('is_list_loading', false);
+
+        },
+        //---------------------------------------------------------------------
         getRole: function (item) {
             this.update('active_item', item);
             this.$router.push({name: 'perm.role', params:{id:item.id}})
@@ -73,6 +89,8 @@ export default {
             this.$vaah.console(data, 'copied data');
 
         }
+        //---------------------------------------------------------------------
+        //---------------------------------------------------------------------
         //---------------------------------------------------------------------
         //---------------------------------------------------------------------
     }
