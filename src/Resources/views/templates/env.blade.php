@@ -1,18 +1,20 @@
-APP_NAME={{$data->app_name}}
-APP_ENV=local
-APP_KEY=
+APP_NAME={{$data->app_name ?? '' }}
+APP_ENV={{$data->app_env ?? '' }}
+APP_KEY={{$data->app_key ?? '' }}
+@isset($data->app_debug)
 APP_DEBUG=true
-APP_URL=http://localhost
-APP_TIMEZONE=Asia/Kolkata
+@endisset
+APP_URL={{$data->app_url ?? '' }}
+APP_TIMEZONE={{$data->app_timezone ?? '' }}
 
 LOG_CHANNEL=stack
 
-DB_CONNECTION=sqlite
-DB_HOST=
-DB_PORT=
-DB_DATABASE=:memory:
-DB_USERNAME=
-DB_PASSWORD=
+DB_CONNECTION={{$data->db_connection ?? '' }}
+DB_HOST={{$data->db_host ?? '' }}
+DB_PORT={{$data->db_port ?? '' }}
+DB_DATABASE={{$data->db_database ?? '' }}
+DB_USERNAME={{$data->db_username ?? '' }}
+DB_PASSWORD={{$data->db_password ?? '' }}
 
 BROADCAST_DRIVER=log
 CACHE_DRIVER=file
@@ -24,12 +26,15 @@ REDIS_HOST=127.0.0.1
 REDIS_PASSWORD=null
 REDIS_PORT=6379
 
-MAIL_DRIVER=smtp
-MAIL_HOST=smtp.mailtrap.io
-MAIL_PORT=2525
-MAIL_USERNAME=null
-MAIL_PASSWORD=null
-MAIL_ENCRYPTION=null
+MAIL_DRIVER={{$data->mail_driver ?? '' }}
+MAIL_HOST={{$data->mail_host ?? '' }}
+MAIL_PORT={{$data->mail_port ?? '' }}
+MAIL_USERNAME={{$data->mail_username ?? '' }}
+MAIL_PASSWORD={{$data->mail_password ?? '' }}
+MAIL_ENCRYPTION={{$data->mail_encryption ?? '' }}
+
+MAIL_FROM_NAME={{$data->mail_from_name ?? '' }}
+MAIL_FROM_ADDRESS={{$data->test_email_to ?? '' }}
 
 AWS_ACCESS_KEY_ID=
 AWS_SECRET_ACCESS_KEY=

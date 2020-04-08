@@ -157,14 +157,22 @@ const VaahHelper = {
             });
         } else
         {
-            list_html += messages[0];
+            if(messages[0])
+            {
+                list_html += messages[0];
+            }
         }
 
-        Toast.open({
-            message: list_html,
-            type: 'is-success',
-            duration: duration*i
-        });
+
+
+        if(list_html != "")
+        {
+            Toast.open({
+                message: list_html,
+                type: 'is-success',
+                duration: duration*i
+            });
+        }
 
 
     },
@@ -182,15 +190,24 @@ const VaahHelper = {
             });
         } else
         {
-            list_html += messages[0];
+            if(messages[0])
+            {
+                list_html += messages[0];
+            }
+        }
+
+        console.log('--->', list_html);
+
+        if(list_html != "")
+        {
+            Toast.open({
+                message: list_html,
+                type: 'is-danger',
+                duration: duration*i
+            });
         }
 
 
-        Toast.open({
-            message: list_html,
-            type: 'is-danger',
-            duration: duration*i
-        });
 
     },
     //---------------------------------------------------------------------

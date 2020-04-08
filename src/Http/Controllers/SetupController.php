@@ -7,6 +7,7 @@ namespace WebReinvent\VaahCms\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Str;
 use WebReinvent\VaahCms\Entities\Migration;
 use WebReinvent\VaahCms\Entities\Module;
@@ -15,6 +16,9 @@ use WebReinvent\VaahCms\Entities\Permission;
 use WebReinvent\VaahCms\Entities\Role;
 use WebReinvent\VaahCms\Entities\Theme;
 use WebReinvent\VaahCms\Entities\User;
+use WebReinvent\VaahCms\Libraries\VaahHelper;
+use WebReinvent\VaahCms\Libraries\VaahSetup;
+use WebReinvent\VaahCms\Notifications\TestSmtp;
 
 
 class SetupController extends Controller
@@ -45,6 +49,7 @@ class SetupController extends Controller
         $data['timezones'] = vh_get_timezones();
         $data['database_types'] = vh_database_types();
         $data['mail_encryption_types'] = vh_mail_encryption_types();
+        $data['mail_sample_settings'] = vh_mail_sample_settings();
         $data['app_url'] = url("/");
 
         $response['status'] = 'success';
@@ -87,6 +92,139 @@ class SetupController extends Controller
 
         return false;
 
+    }
+    //----------------------------------------------------------
+    public function testDBConnection(Request $request)
+    {
+        $response = VaahHelper::testDBConnection($request);
+        return response()->json($response);
+    }
+    //----------------------------------------------------------
+    public function sendTestEmail(Request $request)
+    {
+        $response = VaahHelper::sendTestEmail($request);
+        return response()->json($response);
+    }
+    //----------------------------------------------------------
+    public function getConfigurations(Request $request)
+    {
+        $rules = array(
+            'app_env' => 'required',
+        );
+
+        $validator = \Validator::make( $request->all(), $rules);
+        if ( $validator->fails() ) {
+
+            $errors             = errorsToArray($validator->errors());
+            $response['status'] = 'failed';
+            $response['errors'] = $errors;
+            return response()->json($response);
+        }
+
+        $data = [];
+
+        $env_file = '.env.'.$request->app_env;
+
+        $file_path = base_path('/'.$env_file);
+
+        if(!file_exists($file_path))
+        {
+            $response['status'] = 'failed';
+            $response['errors'] = [];
+            return response()->json($response);
+        }
+
+        $params = vh_env_file_to_array($file_path, true);
+
+        $response['status'] = 'success';
+        $response['data'] = $params;
+
+        return response()->json($response);
+
+    }
+    //----------------------------------------------------------
+    public function testConfigurations(Request $request)
+    {
+
+        $rules = array(
+            'app_env' => 'required',
+            'app_name' => 'required',
+            'app_timezone' => 'required',
+        );
+
+        $validator = \Validator::make( $request->all(), $rules);
+        if ( $validator->fails() ) {
+            $errors             = errorsToArray($validator->errors());
+            $response['status'] = 'failed';
+            $response['errors'] = $errors;
+            return $response;
+        }
+
+        //verify database connection
+        if(!$request->has('db_is_valid') || $request->db_is_valid != true)
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = 'Test the database configuration';
+            return response()->json($response);
+        }
+
+
+        //verify mail configuration if set
+        /*if($request->has('mail_is_valid') && $request->mail_is_valid == false)
+        {
+            if($request->has('mail_provider') && !empty($request->mail_provider))
+            {
+                $response['status'] = 'failed';
+                $response['errors'][] = 'Test the mail configuration';
+                return response()->json($response);
+            }
+        }*/
+
+        //$request->merge(['app_key' => VaahHelper::generateEnvKey()]);
+
+        //generate env file
+        $response = VaahSetup::generateEnvFile($request);
+        if($response['status'] == 'failed')
+        {
+            return response()->json($response);
+        }
+
+        //generate vaahcms.json file
+        $response = VaahSetup::createVaahCmsJsonFile($request);
+        if($response['status'] == 'failed')
+        {
+            return response()->json($response);
+        }
+
+        $data = [];
+        $response = [];
+
+        $response['status'] = 'success';
+        $response['messages'][] = 'Configuration Saved';
+        $response['data'] = $data;
+        if(env('APP_DEBUG'))
+        {
+            $response['hint'][] = '';
+        }
+
+        return response()->json($response);
+
+    }
+    //----------------------------------------------------------
+    public function generateKey()
+    {
+        $response = VaahHelper::generateEnvKey();
+        if($response['status'] == 'success')
+        {
+            $response = VaahHelper::clearCache();
+        }
+
+        if($response['status'] == 'success')
+        {
+            $response['data']['redirect_url'] = route('vh.backend')."#/setup/install/migrate";
+        }
+
+        return response()->json($response);
     }
     //----------------------------------------------------------
     public function checkSetupStatus()

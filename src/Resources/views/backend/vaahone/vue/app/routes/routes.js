@@ -75,6 +75,7 @@ routes.push(routes_frontend);
 import SetupIndex from "./../pages/setup/Index";
 import InstallIndex from "./../pages/setup/install/Index";
 import InstallConfiguration from "./../pages/setup/install/Configuration";
+import InstallMigrate from "./../pages/setup/install/Migrate";
 
 
 routes_list =     {
@@ -99,7 +100,7 @@ routes_list =     {
             },
         },
         {
-            path: '/reset',
+            path: 'reset',
             name: 'setup.reset',
             component: ForgotPassword,
             props: true,
@@ -110,7 +111,7 @@ routes_list =     {
             },
         },
         {
-            path: '/deploy',
+            path: 'deploy',
             name: 'setup.deploy',
             component: ForgotPassword,
             props: true,
@@ -121,7 +122,7 @@ routes_list =     {
             },
         },
         {
-            path: '/install',
+            path: 'install',
             name: 'setup.install',
             component: InstallIndex,
             props: true,
@@ -143,9 +144,9 @@ routes_list =     {
                     },
                 },
                 {
-                    path: '/database',
-                    name: 'setup.install.database',
-                    component: ForgotPassword,
+                    path: 'migrate',
+                    name: 'setup.install.migrate',
+                    component: InstallMigrate,
                     props: true,
                     meta: {
                         middleware: [
@@ -154,7 +155,7 @@ routes_list =     {
                     },
                 },
                 {
-                    path: '/dependencies',
+                    path: 'dependencies',
                     name: 'setup.install.dependencies',
                     component: ForgotPassword,
                     props: true,
@@ -165,7 +166,7 @@ routes_list =     {
                     },
                 },
                 {
-                    path: '/admin',
+                    path: 'admin',
                     name: 'setup.install.admin',
                     component: ForgotPassword,
                     props: true,

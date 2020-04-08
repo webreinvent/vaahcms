@@ -108,14 +108,42 @@ function vh_database_types()
 function vh_mail_encryption_types()
 {
     $list = [
-        ['slug' => 'null', 'name'=>'None'],
+        ['slug' => 'none', 'name'=>'None'],
         ['slug' => 'ssl', 'name'=>'SSL'],
         ['slug' => 'tls', 'name'=>'TLS'],
     ];
-
-
     return $list;
 }
 //-----------------------------------------------------------------------------------
+function vh_mail_sample_settings()
+{
+    $list = [
+        [
+            'slug' => 'mailtrap',
+            'name'=>'MailTrap',
+            'settings'=>[
+                'mail_driver' => 'smtp',
+                'mail_host' => 'smtp.mailtrap.io',
+                'mail_port' => '2525',
+                'mail_encryption' => 'none',
+            ]
+        ],
+        [
+            'slug' => 'gmail',
+            'name'=>'GMail',
+            'settings'=>[
+                'mail_driver' => 'smtp',
+                'mail_host' => 'smtp.gmail.com',
+                'mail_port' => '587',
+                'mail_encryption' => 'tls',
+            ]
+        ],
+        [
+            'slug' => 'other',
+            'name'=>'Other'
+        ],
+    ];
+    return $list;
+}
 //-----------------------------------------------------------------------------------
 //-----------------------------------------------------------------------------------

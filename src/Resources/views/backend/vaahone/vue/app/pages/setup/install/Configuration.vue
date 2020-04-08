@@ -24,6 +24,7 @@
                                   expanded
                                   name="config-app_env"
                                   dusk="config-app_env"
+                                  @input="loadConfigurations()"
                                   v-model="config.env.app_env">
                             <option value="">- Select an environment -</option>
                             <option v-for="item in page.assets.environments"
@@ -32,12 +33,27 @@
                         </b-select>
                     </b-field>
 
+                    <b-field label="Debug" expanded
+                             :label-position="labelPosition">
+                        <b-select placeholder="- Select debug status -"
+                                  expanded
+                                  name="config-db_connection"
+                                  dusk="config-db_connection"
+                                  v-model="config.env.app_debug">
+                            <option value="">- Select debug status -</option>
+                            <option value="true">True</option>
+                            <option value="false">False</option>
+                        </b-select>
+                    </b-field>
+
                     <b-field label="Timezone"
                              expanded
                              :label-position="labelPosition">
+                        {{config.env.app_timezones}}
                         <AutoCompleteTimeZone
                             :options="page.assets.timezones"
                             :open_on_focus="true"
+                            :selected_value="config.env.app_timezones"
                             @onSelect="setTimeZone"
                         />
                     </b-field>
@@ -49,11 +65,6 @@
                              dusk="config-app_name"
                     ></b-input>
                 </b-field>
-
-
-
-
-
 
 
                 <hr>
@@ -123,22 +134,48 @@
                         <b-input v-model="config.env.db_password"
                                  expanded
                                  password-reveal
+                                 autocomplete="new-password"
                                  name="config-db_password"
                                  dusk="config-db_password"
                         ></b-input>
                     </b-field>
                 </b-field>
 
-                <b-button type="is-info"
+                <b-button type="is-success"
+                          v-if="config.env.db_is_valid"
                           size="is-small"
-                          icon-left="database"
+                          icon-left="check"
+                          :loading="is_btn_loading_db_connection"
                           @click="testDatabaseConnection()">
                     Test Database Connection
                 </b-button>
 
+                <b-button type="is-info"
+                          v-else
+                          size="is-small"
+                          icon-left="database"
+                          :loading="is_btn_loading_db_connection"
+                          @click="testDatabaseConnection()">
+                    Test Database Connection
+                </b-button>
 
                 <hr>
                 <b-field grouped>
+                    <b-field label="Mail Provider" expanded
+                             :label-position="labelPosition">
+                        <b-select placeholder="- Mail provider -"
+                                  expanded
+                                  name="config-mail_encryption"
+                                  dusk="config-mail_encryption"
+                                  @input="setMailConfigurations()"
+                                  v-model="config.env.mail_provider">
+                            <option value="">- Mail provider -</option>
+                            <option v-for="item in page.assets.mail_sample_settings"
+                                    :value="item.slug"
+                            >{{item.name}}</option>
+                        </b-select>
+                    </b-field>
+
                     <b-field label="Mail Driver" expanded
                              :label-position="labelPosition">
                         <b-input v-model="config.env.mail_driver"
@@ -157,6 +194,13 @@
                         ></b-input>
                     </b-field>
 
+
+                </b-field>
+
+                <b-field grouped>
+
+
+
                     <b-field label="Mail Port" expanded
                              :label-position="labelPosition">
                         <b-input v-model="config.env.mail_port"
@@ -165,9 +209,7 @@
                                  dusk="config-mail_port"
                         ></b-input>
                     </b-field>
-                </b-field>
 
-                <b-field grouped>
                     <b-field label="Mail Username" expanded
                              :label-position="labelPosition">
                         <b-input v-model="config.env.mail_username"
@@ -183,11 +225,18 @@
                                  expanded
                                  type="password"
                                  password-reveal
+                                 autocomplete="new-password"
                                  name="config-mail_password"
                                  dusk="config-mail_password"
                         ></b-input>
                     </b-field>
 
+
+                </b-field>
+
+
+
+                <b-field grouped>
                     <b-field label="Mail Encryption" expanded
                              :label-position="labelPosition">
                         <b-select placeholder="- Select an mail encryption -"
@@ -201,14 +250,72 @@
                             >{{item.name}}</option>
                         </b-select>
                     </b-field>
+
+                    <b-field label="From Name" expanded
+                             :label-position="labelPosition">
+                        <b-input v-model="config.env.mail_from_name"
+                                 expanded
+                                 name="config-mail_from_name"
+                                 dusk="config-mail_from_name"
+                        ></b-input>
+                    </b-field>
+                    <b-field label="From Email Address" expanded
+                             :label-position="labelPosition">
+                        <b-input v-model="config.env.mail_from_address"
+                                 expanded
+                                 type="email"
+                                 name="config-mail_from_address"
+                                 dusk="config-mail_from_address"
+                        ></b-input>
+                    </b-field>
                 </b-field>
+
+                <b-button type="is-success"
+                          size="is-small"
+                          v-if="config.env.mail_is_valid"
+                          icon-left="check"
+                          @click="is_modal_test_mail_active = true">
+                    Test Mail Configuration
+                </b-button>
 
                 <b-button type="is-info"
                           size="is-small"
+                          v-else
                           icon-left="envelope"
-                          @click="testDatabaseConnection()">
+                          @click="is_modal_test_mail_active = true">
                     Test Mail Configuration
                 </b-button>
+
+                <!--modal-->
+                <b-modal :active.sync="is_modal_test_mail_active">
+                    <form action="">
+                        <div class="modal-card" style="width: 350px">
+                            <header class="modal-card-head">
+                                <p class="modal-card-title">
+                                    Test Mail Configuration
+                                </p>
+                            </header>
+                            <section class="modal-card-body">
+                                <b-field label="Send a test email to:">
+                                    <b-input
+                                        v-model="config.env.test_email_to"
+                                        type="email"
+                                        placeholder="Your email"
+                                        required>
+                                    </b-input>
+                                </b-field>
+                            </section>
+                            <footer class="modal-card-foot">
+                                <b-button type="is-primary"
+                                        :loading="is_btn_loading_mail_config"
+                                        @click="testMailConfiguration()">
+                                    Send Email
+                                </b-button>
+                            </footer>
+                        </div>
+                    </form>
+                </b-modal>
+                <!--/modal-->
 
                 <hr>
 
@@ -222,7 +329,8 @@
                         <div class="level-item">
                             <b-button type="is-primary"
                                       size="small"
-                                      @click="testDatabaseConnection()">
+                                      :loading="is_btn_loading_config"
+                                      @click="validateConfigurations()">
                                 Save & Next
                             </b-button>
                         </div>

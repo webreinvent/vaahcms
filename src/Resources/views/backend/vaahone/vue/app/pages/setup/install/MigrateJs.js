@@ -41,6 +41,7 @@ export default {
         //----------------------------------------------------
         this.$root.$on('eReloadList', this.getList);
         //----------------------------------------------------
+        //----------------------------------------------------
     },
     methods: {
         //---------------------------------------------------------------------
@@ -62,7 +63,7 @@ export default {
         onLoad: function()
         {
             this.getAssets();
-            this.config.active_step = 0;
+            this.config.active_step = 1;
             this.updateConfig();
         },
         //---------------------------------------------------------------------
@@ -79,28 +80,7 @@ export default {
         //---------------------------------------------------------------------
         setTimeZone: function (item) {
             this.config.env.app_timezone = item.slug;
-            this.updateConfig();
-        },
-        //---------------------------------------------------------------------
-        loadConfigurations: function () {
-            let params = this.config.env;
-            let url = this.ajax_url+'/get/configurations';
-            this.$vaah.ajax(url, params, this.loadConfigurationsAfter);
-        },
-        //---------------------------------------------------------------------
-        loadConfigurationsAfter: function (data, res) {
-            if(data)
-            {
-                for(let key in this.config.env)
-                {
-                    if(data[key])
-                    {
-                        this.config.env[key] = data[key];
-                    }
-                }
-
-                this.updateConfig();
-            }
+            this.updateNewItem();
         },
         //---------------------------------------------------------------------
         testDatabaseConnection: function () {
@@ -194,8 +174,7 @@ export default {
             if(data)
             {
                 this.config.active_step = 1;
-                //this.$router.push({name: 'setup.install.migrate'})
-                window.location = data.redirect_url;
+                this.$router.push({name: 'setup.install.migrate'})
             }
         },
         //---------------------------------------------------------------------

@@ -95,6 +95,21 @@ Route::group(
         Route::post( '/check/status', 'SetupController@checkSetupStatus' )
             ->name( 'vh.setup.check.status' );
         //------------------------------------------------
+        Route::post( '/test/database/connection', 'SetupController@testDBConnection' )
+            ->name( 'vh.setup.test.database' );
+        //------------------------------------------------
+        Route::post( '/test/mail/configuration', 'SetupController@sendTestEmail' )
+            ->name( 'vh.setup.mail.configuration' );
+        //------------------------------------------------
+        Route::post( '/test/configurations', 'SetupController@testConfigurations' )
+            ->name( 'vh.setup.configurations' );
+        //------------------------------------------------
+        Route::post( '/get/configurations', 'SetupController@getConfigurations' )
+            ->name( 'vh.setup.get.configurations' );
+        //------------------------------------------------
+        Route::post( '/generate/key', 'SetupController@generateKey' )
+            ->name( 'vh.setup.generate.key' );
+        //------------------------------------------------
         Route::post( '/store/app/info', 'SetupController@storeAppInfo' )
             ->name( 'vh.setup.store.app.info' );
         //------------------------------------------------

@@ -2,15 +2,20 @@
 
 
 //-----------------------------------------------------------------------------------
-
-
-
 function vh_get_all_files($path, $ignored_files = array('.', '..', '.gitkeep'))
 {
     $files = array_diff(scandir($path), $ignored_files);
     return $files;
 }
 //-----------------------------------------------------------------------------------
+function vh_file_exist($file_path)
+{
+    if(file_exists($file_path)){
+        return true;
+    }else{
+        return false;
+    }
+}
 //-----------------------------------------------------------------------------------
 function vh_create_folder($folder, $mode=0777, $recursive=true){
     mkdir($folder, $mode, $recursive);

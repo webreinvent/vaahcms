@@ -26,9 +26,11 @@
 
                         <h3 class="title is-3">Install VaahCMS</h3>
 
-                        <b-steps size="is-small" :has-navigation="false">
+                        <b-steps size="is-small"
+                                 v-model="config.active_step"
+                                 :has-navigation="false">
                             <b-step-item label="Configuration" icon="cogs"></b-step-item>
-                            <b-step-item label="Database" icon="database"></b-step-item>
+                            <b-step-item label="Migrate" icon="database"></b-step-item>
                             <b-step-item label="Dependencies" icon="cubes"></b-step-item>
                             <b-step-item label="Account" icon="user-plus"></b-step-item>
                         </b-steps>

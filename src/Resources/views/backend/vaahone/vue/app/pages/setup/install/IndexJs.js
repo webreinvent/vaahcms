@@ -10,7 +10,8 @@ export default {
         root() {return this.$store.getters['root/state']},
         page() {return this.$store.getters[namespace+'/state']},
         assets() {return this.$store.getters[namespace+'/state'].assets},
-        ajax_url() {return this.$store.getters['root/state'].ajax_url},
+        ajax_url() {return this.$store.getters[namespace+'/state'].ajax_url},
+        config() {return this.$store.getters[namespace+'/state'].config},
     },
     components:{
         ...GlobalComponents,
