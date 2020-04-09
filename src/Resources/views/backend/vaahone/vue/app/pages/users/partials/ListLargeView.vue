@@ -64,7 +64,10 @@
                 </b-table-column>
 
                 <b-table-column field="status" label="Status">
-                    <b-tag type="is-small">
+                    <b-tag v-if="props.row.status == 'active'" type="is-small" class="is-success">
+                        {{ props.row.status }}
+                    </b-tag>
+                    <b-tag v-else type="is-small" class="is-danger">
                         {{ props.row.status }}
                     </b-tag>
                 </b-table-column>

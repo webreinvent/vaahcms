@@ -198,6 +198,7 @@ export default {
                 country: null,
                 country_code: null,
                 status: null,
+                is_active: null,
             };
             return new_item;
         },
@@ -219,8 +220,6 @@ export default {
         //---------------------------------------------------------------------
         setIsActiveStatus: function()
         {
-
-            console.log('dszfsdf',this.item.status);
            if(this.item.status == 'active'){
                this.item.is_active = 1;
            }else{
@@ -249,6 +248,7 @@ export default {
                     country: null,
                     country_code: null,
                     status: null,
+                    is_active: null,
                 };
 
             for(let key in new_item)
