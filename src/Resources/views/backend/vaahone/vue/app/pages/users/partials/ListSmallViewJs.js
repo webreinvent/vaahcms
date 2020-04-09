@@ -1,4 +1,4 @@
-let namespace = 'registrations';
+let namespace = 'users';
 export default {
     computed: {
         root() {return this.$store.getters['root/state']},
@@ -56,8 +56,13 @@ export default {
         //---------------------------------------------------------------------
         setActiveItem: function (item) {
             this.update('active_item', item);
-            this.$router.push({name: 'reg.view', params:{id:item.id}})
-        }
+            this.$router.push({name: 'user.view', params:{id:item.id}})
+        },
+        //---------------------------------------------------------------------
+        getRole: function (item) {
+            this.update('active_item', item);
+            this.$router.push({name: 'user.role', params:{id:item.id}})
+        },
         //---------------------------------------------------------------------
         //---------------------------------------------------------------------
     }

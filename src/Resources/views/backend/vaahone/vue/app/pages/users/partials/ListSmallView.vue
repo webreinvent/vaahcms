@@ -22,11 +22,16 @@
                     {{ props.row.email }}
                 </b-table-column>
 
-                <b-table-column field="status" label="Status">
-                                                    <span class="tag">
-                                                        {{ props.row.status }}
-                                                    </span>
+
+                <b-table-column field="roles" label="Roles">
+                    <b-tooltip label="View Role" type="is-dark">
+                        <b-button rounded size="is-small"
+                                  type="is-primary" @click="getRole(props.row)">
+                            {{ props.row.active_roles_count }} / {{page.total_roles}}
+                        </b-button>
+                    </b-tooltip>
                 </b-table-column>
+
 
 
                 <b-table-column field="actions" label=""
