@@ -56,6 +56,7 @@ export default {
             country: null,
             country_code: null,
             status: null,
+            is_active: null,
         },
     },
     //=========================================================================

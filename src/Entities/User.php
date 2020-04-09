@@ -500,11 +500,18 @@ class User extends Authenticatable
 
             if($request['data']){
                 $reg->is_active = $request['data']['status'];
+                if( $request['data']['status'] == 1){
+                    $reg->status = 'active';
+                }else{
+                    $reg->status = 'inactive';
+                }
             }else{
                 if($reg->is_active == 1){
                     $reg->is_active = 0;
+                    $reg->status = 'inactive';
                 }else{
                     $reg->is_active = 1;
+                    $reg->status = 'active';
                 }
             }
 

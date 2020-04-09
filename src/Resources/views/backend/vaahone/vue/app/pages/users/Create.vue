@@ -199,14 +199,33 @@
                     </b-field>
 
                     <b-field label="Status" :label-position="labelPosition">
-                        <b-select placeholder="- Select a status -"
-                                  name="register-status" dusk="register-status"
+                        <b-select placeholder="Select a status"
+                                  @input="setIsActiveStatus()"
+                                  name="user-status" dusk="user-status"
                                   v-model="new_item.status">
-                            <option value="">- Select a status -</option>
-                            <option v-for="status in page.assets.registration_statuses"
-                                    :value="status.slug"
-                            >{{status.name}}</option>
+                            <option value="active"
+                            >Active</option>
+                            <option value="inactive"
+                            >Inactive</option>
+                            <option value="blocked"
+                            >Blocked</option>
+                            <option value="banned"
+                            >Banned</option>
                         </b-select>
+                    </b-field>
+
+                    <b-field label="Is Active" :label-position="labelPosition">
+                        <b-radio-button name="user-is_active" @input="setStatus()" dusk="user-is_active"
+                                        v-model="new_item.is_active"
+                                        :native-value=1>
+                            <span>Yes</span>
+                        </b-radio-button>
+
+                        <b-radio-button type="is-danger" @input="setStatus()" name="user-is_active" dusk="user-is_active"
+                                        v-model="new_item.is_active"
+                                        :native-value=0>
+                            <span>No</span>
+                        </b-radio-button>
                     </b-field>
 
 
