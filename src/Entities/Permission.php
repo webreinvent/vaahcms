@@ -448,7 +448,7 @@ class Permission extends Model {
 
         $list->orderBy('pivot_is_active', 'desc');
 
-        $list = $list->paginate(2);
+        $list = $list->paginate(config('vaahcms.per_page'));
 
         $response['data']['list'] = $list;
 

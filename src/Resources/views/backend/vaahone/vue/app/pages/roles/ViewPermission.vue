@@ -108,6 +108,16 @@
                                 </b-tooltip>
                             </b-table-column>
 
+                            <b-table-column  field="status" label="Permission Status">
+                                <b-button v-if="props.row.is_active == 1" rounded class="is-success" type="is-small" @click="changeItemStatus(props.row.id)">
+                                    Active
+                                </b-button>
+
+                                <b-button v-else rounded class="is-danger" type="is-small" @click="changeItemStatus(props.row.id)">
+                                    Inactive
+                                </b-button>
+                            </b-table-column>
+
 
                             <b-table-column field="name" class="has-text-centered" label="Has Role" numeric >
                                 <b-button v-if="props.row.pivot.is_active === 1" rounded size="is-small"

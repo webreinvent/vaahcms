@@ -15,13 +15,13 @@
                 </b-table-column>
 
                 <b-table-column field="name" label="Name">
-                    {{ props.row.name }}
+                    {{ $vaah.limitString(props.row.name, 15) }}
                 </b-table-column>
 
                 <b-table-column field="slug" label="Slug">
                     <vh-copy class="text-copyable"
                              :data="props.row.slug"
-                             :label="props.row.slug"
+                             :label="$vaah.limitString(props.row.slug, 15)"
                              @copied="copiedData"
                     >
                     </vh-copy>

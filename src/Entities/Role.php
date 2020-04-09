@@ -436,7 +436,7 @@ class Role extends Model {
 
         $list->orderBy('pivot_is_active', 'desc');
 
-        $list = $list->paginate(2);
+        $list = $list->paginate(config('vaahcms.per_page'));
 
 
         $response['data']['list'] = $list;
@@ -625,6 +625,49 @@ class Role extends Model {
         }
         Role::recountRelations();
         $response['messages'] = [];
+    }
+    //-------------------------------------------------
+    public static function bulkPermissionStatusChange($request)
+    {
+        if(!$request->has('inputs'))
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = 'Select IDs';
+            return $response;
+        }
+
+        if(!$request->has('data'))
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = 'Select Status';
+            return $response;
+        }
+
+        foreach($request->inputs as $id)
+        {
+            $perm = Permission::where('id',$id)->withTrashed()->first();
+
+            if($perm->deleted_at){
+                continue ;
+            }
+
+            if($request['data']){
+                $perm->is_active = $request['data']['status'];
+            }else{
+                if($perm->is_active == 1){
+                    $perm->is_active = 0;
+                }else{
+                    $perm->is_active = 1;
+                }
+            }
+            $perm->save();
+        }
+
+        $response['status'] = 'success';
+        $response['data'] = [];
+
+        return $response;
+
     }
     //-------------------------------------------------
 

@@ -74,8 +74,6 @@ export default {
 
             this.filter.page = page;
 
-            this.selected_item = [];
-
             this.$Progress.start();
             this.params = {
                 q:this.search_item,
@@ -176,6 +174,35 @@ export default {
 
             this.actions(false, 'toggle_permission_active_status', params, data)
 
+        },
+        //---------------------------------------------------------------------
+        changeItemStatus: function (id) {
+
+            let url = this.ajax_url+'/actions/change-role-permission-status';
+            let params = {
+                inputs: [id],
+                data: null
+            };
+
+            let self = this;
+            this.$buefy.dialog.confirm({
+                title: 'Changing Status',
+                message: 'Are you sure you want to <b>change</b> the status? This action will impact all roles that assign to this permission.',
+                confirmText: 'Change',
+                type: 'is-danger',
+                hasIcon: true,
+                onConfirm: function () {
+                    self.$Progress.start();
+                    self.$vaah.ajax(url, params, self.changeItemStatusAfter);
+                }
+            })
+
+
+
+        },
+        //---------------------------------------------------------------------
+        changeItemStatusAfter: function (data,res) {
+            this.getItemPermissions(this.filter.page);
         },
         //---------------------------------------------------------------------
         //---------------------------------------------------------------------

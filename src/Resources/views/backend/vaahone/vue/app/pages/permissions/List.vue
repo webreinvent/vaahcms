@@ -57,20 +57,9 @@
                                             <b-field>
 
                                                 <b-select placeholder="- Bulk Actions -"
-                                                          v-model="page.bulk_action.action">
-                                                    <option value="">
-                                                        - Bulk Actions -
-                                                    </option>
-                                                    <option value='bulk-change-status'>
-                                                        Change Status
-                                                    </option>
-                                                </b-select>
-
-                                                <b-select placeholder="- Select Status -"
-                                                          v-if="page.bulk_action.action == 'bulk-change-status'"
                                                           v-model="page.bulk_action.data.status">
                                                     <option value="">
-                                                        - Select Status -
+                                                        - Bulk Actions -
                                                     </option>
                                                     <option value=1>
                                                         Active
@@ -79,7 +68,6 @@
                                                         Not active
                                                     </option>
                                                 </b-select>
-
 
                                                 <p class="control">
                                                     <button class="button is-primary"

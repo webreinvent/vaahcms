@@ -34,13 +34,13 @@
                                 <b-dropdown-item aria-role="listitem"
                                                  @click="bulkActions('1')"
                                 >
-                                    Active All Permission
+                                    Attach To All Users
                                 </b-dropdown-item>
 
                                 <b-dropdown-item aria-role="listitem"
                                                  @click="bulkActions('0')"
                                 >
-                                    Inactive All Permission
+                                    Detach To All Users
                                 </b-dropdown-item>
 
                             </b-dropdown>
@@ -94,17 +94,22 @@
                              :hoverable="true">
 
                         <template slot-scope="props">
-                            <b-table-column field="id" label="User" >
-                                <b-tooltip label="Copy Id" type="is-dark">
+                            <b-table-column field="name" label="Name" >
+                                        {{ props.row.name }}
+                            </b-table-column>
+
+
+                            <b-table-column field="email" label="Email" >
+                                <b-tooltip label="Copy Email" type="is-dark">
                                     <b-button type="is-small"
                                               class="is-light"
-                                              @click="$vaah.copy(props.row.id)">
+                                              @click="$vaah.copy(props.row.email)">
                                         {{ props.row.email }}
                                     </b-button>
                                 </b-tooltip>
                             </b-table-column>
 
-                            <b-table-column field="name" class="has-text-centered" label="Has Role" numeric >
+                            <b-table-column field="actions" class="has-text-right" label="Has Role" numeric>
                                 <b-button v-if="props.row.pivot.is_active === 1" rounded size="is-small"
                                           type="is-success" @click="changePermission(props.row)">
                                     Yes
