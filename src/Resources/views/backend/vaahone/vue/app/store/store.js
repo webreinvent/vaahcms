@@ -6,6 +6,7 @@ Vue.use(Vuex);
 
 import root from './modules/root';
 import registrations from './modules/registrations';
+import users from './modules/users';
 import permissions from './modules/permissions';
 import roles from './modules/roles';
 
@@ -15,5 +16,6 @@ export const store = new Vuex.Store({
         registrations: registrations,
         permissions: permissions,
         roles: roles,
+        users: users,
     }
 });
