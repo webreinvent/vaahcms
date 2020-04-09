@@ -134,6 +134,12 @@ class RolesController extends Controller
 
                 break;
             //------------------------------------
+            case 'change-role-permission-status':
+
+                $response = Role::bulkPermissionStatusChange($request);
+                break;
+            //------------
+            //------------------------------------
             //------------------------------------
 
         }

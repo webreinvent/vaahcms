@@ -30,6 +30,7 @@ export default {
         $route(to, from) {
             this.updateView();
             this.getItemRoles();
+            console.log('to',to,'from',from)
         }
     },
     mounted() {
@@ -61,11 +62,11 @@ export default {
         {
             this.updateView();
             this.getAssets();
+            this.getItemRoles();
         },
         //---------------------------------------------------------------------
         async getAssets() {
             await this.$store.dispatch(namespace+'/getAssets');
-            this.getItemRoles();
         },
         //---------------------------------------------------------------------
         getItemRoles: function (page = 1) {

@@ -16,7 +16,7 @@
                 <div class="card-header-buttons">
 
                     <div class="field has-addons is-pulled-right">
-                        <p class="control">
+                        <p v-if="item" class="control">
                             <b-button @click="$vaah.copy(item.id)"  type="is-light">
                                 <small><b>#{{item.id}}</b></small>
                             </b-button>
@@ -33,12 +33,12 @@
 
                                 <b-dropdown-item aria-role="listitem"
                                                  @click="bulkActions('1')">
-                                    Active All Permission
+                                    Active All Roles
                                 </b-dropdown-item>
 
                                 <b-dropdown-item aria-role="listitem"
                                                  @click="bulkActions('0')">
-                                    Inactive All Permission
+                                    Inactive All Roles
                                 </b-dropdown-item>
 
                             </b-dropdown>

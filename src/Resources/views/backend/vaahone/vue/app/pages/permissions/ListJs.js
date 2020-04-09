@@ -203,17 +203,11 @@ export default {
         //---------------------------------------------------------------------
         actions: function () {
 
-            if(!this.page.bulk_action.action)
-            {
+            this.page.bulk_action.action = 'bulk-change-status';
+
+            if(!this.page.bulk_action.data.status){
                 this.$vaah.toastErrors(['Select an action']);
                 return false;
-            }
-
-            if(this.page.bulk_action.action == 'bulk-change-status'){
-                if(!this.page.bulk_action.data.status){
-                    this.$vaah.toastErrors(['Select a status']);
-                    return false;
-                }
             }
 
             if(this.page.bulk_action.selected_items.length < 1)
