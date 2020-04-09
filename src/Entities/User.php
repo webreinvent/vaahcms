@@ -280,6 +280,60 @@ class User extends Authenticatable
 
     public static function create($request)
     {
+        $inputs = $request->new_item;
+
+        $rules = array(
+            'email' => 'required|email',
+            'first_name' => 'required',
+            'password' => 'required',
+        );
+
+        $validator = \Validator::make( $inputs, $rules);
+        if ( $validator->fails() ) {
+
+            $errors             = errorsToArray($validator->errors());
+            $response['status'] = 'failed';
+            $response['errors'] = $errors;
+            return $response;
+        }
+
+        // check if already exist
+        $user = static::where('email',$inputs['email'])->first();
+
+        if($user)
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = "This email is already registered.";
+            return $response;
+        }
+
+        if(!isset($inputs['username']))
+        {
+            $inputs['username'] = Str::slug($inputs['email']);
+        }
+
+        if(!isset($inputs['status']))
+        {
+            $inputs['status'] = 'inactive';
+        }
+
+        $inputs['created_ip'] = request()->ip();
+
+        $reg = new static();
+        $reg->fill($inputs);
+        $reg->save();
+
+        Role::syncRolesWithUsers();
+
+        $response['status'] = 'success';
+        $response['data']['item'] = $reg;
+        return $response;
+
+    }
+
+    //-------------------------------------------------
+    public static function store($request)
+    {
 
         if(!\Auth::user()->hasPermission('can-create-users',true))
         {
@@ -539,18 +593,11 @@ class User extends Authenticatable
 
             if($request['data']){
                 $reg->is_active = $request['data']['status'];
-                if( $request['data']['status'] == 1){
-                    $reg->status = 'active';
-                }else{
-                    $reg->status = 'inactive';
-                }
             }else{
                 if($reg->is_active == 1){
                     $reg->is_active = 0;
-                    $reg->status = 'inactive';
                 }else{
                     $reg->is_active = 1;
-                    $reg->status = 'active';
                 }
             }
 
@@ -967,14 +1014,6 @@ class User extends Authenticatable
     public static function getList($request)
     {
 
-        if(!\Auth::user()->hasPermission('has-access-of-users-section',true))
-        {
-            $response['status'] = 'failed';
-            $response['errors'][] = trans("vaahcms::messages.permission_denied");
-
-            return $response;
-        }
-
         if($request->has('recount') && $request->get('recount') == true)
         {
             Role::syncRolesWithUsers();
@@ -1024,16 +1063,6 @@ class User extends Authenticatable
 
     public static function bulkChangeRoleStatus($request)
     {
-
-        if(!\Auth::user()->hasPermission('can-manage-users',true) &&
-            !\Auth::user()->hasPermission('can-update-users',true))
-        {
-            $response['status'] = 'failed';
-            $response['errors'][] = trans("vaahcms::messages.permission_denied");
-
-            return $response;
-        }
-
         $inputs = $request->all();
 
 
@@ -1069,15 +1098,6 @@ class User extends Authenticatable
 
     public static function bulkDelete($request)
     {
-
-        if(!\Auth::user()->hasPermission('can-update-registrations',true) ||
-            !\Auth::user()->hasPermission('can-delete-registrations',true))
-        {
-            $response['status'] = 'failed';
-            $response['errors'][] = trans("vaahcms::messages.permission_denied");
-
-            return $response;
-        }
 
         if(!$request->has('inputs'))
         {
@@ -1119,18 +1139,6 @@ class User extends Authenticatable
 
     public static function getDetail($id)
     {
-
-        if(!\Auth::user()->hasPermission('can-manage-users',true) &&
-            !\Auth::user()->hasPermission('can-update-users',true) &&
-            !\Auth::user()->hasPermission('can-create-users',true) &&
-            !\Auth::user()->hasPermission('can-read-users',true))
-        {
-            $response['status'] = 'failed';
-            $response['errors'][] = trans("vaahcms::messages.permission_denied");
-
-            return $response;
-        }
-
         $item = static::where('id', $id)->with(['createdByUser', 'updatedByUser', 'deletedByUser'])->withTrashed()->first();
 
         $response['status'] = 'success';
@@ -1144,16 +1152,6 @@ class User extends Authenticatable
 
     public static function getItemRoles($request,$id)
     {
-
-        if(!\Auth::user()->hasPermission('can-manage-users',true) &&
-            !\Auth::user()->hasPermission('can-update-users',true) &&
-            !\Auth::user()->hasPermission('can-read-users',true))
-        {
-            $response['status'] = 'failed';
-            $response['errors'][] = trans("vaahcms::messages.permission_denied");
-
-            return $response;
-        }
 
         $item = User::withTrashed()->where('id', $id)->first();
 
@@ -1182,31 +1180,7 @@ class User extends Authenticatable
 
     }
     //-------------------------------------------------
-
     //-------------------------------------------------
-    public static function validation($request){
-
-        $rules = array(
-
-            'email' => 'required|email',
-            'first_name' => 'required',
-            'status' => 'required',
-            'is_active' => 'required',
-
-        );
-
-
-        $validator = \Validator::make($request,$rules);
-
-        if ( $validator->fails() ) {
-
-            $errors             = errorsToArray($validator->errors());
-            $response['status'] = 'failed';
-            $response['errors'] = $errors;
-            return $response;
-        }
-
-    }
     //-------------------------------------------------
     //-------------------------------------------------
 }

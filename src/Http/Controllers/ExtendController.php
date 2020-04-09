@@ -41,7 +41,7 @@ class ExtendController extends Controller
                         'label'=> 'Registration'
                     ],
                     [
-                        'link' => route('vh.backend.dashboard'),
+                        'link' => $link."/users/",
                         'label'=> 'Users'
                     ],
                     [

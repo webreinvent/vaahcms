@@ -58,7 +58,7 @@
                         <p class="control">
                             <b-button tag="router-link"
                                       type="is-light"
-                                      :to="{name: 'reg.list'}"
+                                      :to="{name: 'user.list'}"
                                       icon-left="times">
                             </b-button>
                         </p>

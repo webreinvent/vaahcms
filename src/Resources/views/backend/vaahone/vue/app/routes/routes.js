@@ -294,6 +294,93 @@ let routes_reg =     {
 routes.push(routes_reg);
 
 
+import UserList from "./../pages/users/List";
+import UserCreate from "./../pages/users/Create";
+import UserView from "./../pages/users/View";
+import UserRole from "./../pages/users/ViewRole";
+import UserEdit from "./../pages/users/Edit";
+
+let routes_user =     {
+    path: '/vaah/users',
+    component: LayoutBackend,
+    props: true,
+    meta: {
+        middleware: [
+            IsLoggedIn,
+            GetBackendAssets
+        ]
+    },
+    children: [
+        {
+            path: '/',
+            name: 'user.list',
+            component: UserList,
+            props: true,
+            meta: {
+                middleware: [
+                    IsLoggedIn,
+                    GetBackendAssets
+                ]
+            },
+            children: [
+                {
+                    path: 'create',
+                    name: 'user.create',
+                    component: UserCreate,
+                    props: true,
+                    meta: {
+                        middleware: [
+                            IsLoggedIn,
+                            GetBackendAssets
+                        ]
+                    },
+                },
+                {
+                    path: 'view/:id',
+                    name: 'user.view',
+                    component: UserView,
+                    props: true,
+                    meta: {
+                        middleware: [
+                            IsLoggedIn,
+                            GetBackendAssets
+                        ]
+                    },
+                },
+                {
+                    path: 'role/:id',
+                    name: 'user.role',
+                    component: UserRole,
+                    props: true,
+                    meta: {
+                        middleware: [
+                            IsLoggedIn,
+                            GetBackendAssets
+                        ]
+                    },
+                },
+                {
+                    path: 'edit/:id',
+                    name: 'user.edit',
+                    component: UserEdit,
+                    props: true,
+                    meta: {
+                        middleware: [
+                            IsLoggedIn,
+                            GetBackendAssets
+                        ]
+                    },
+                }
+
+            ]
+        }
+
+    ]
+};
+
+routes.push(routes_user);
+
+
 
 import PermList from "./../pages/permissions/List";
 import PermView from "./../pages/permissions/View";

@@ -2,7 +2,7 @@ import GlobalComponents from '../../vaahvue/helpers/GlobalComponents';
 import ListLargeView from './partials/ListLargeView';
 import ListSmallView from './partials/ListSmallView';
 
-let namespace = 'roles';
+let namespace = 'users';
 
 export default {
     computed:{
@@ -25,8 +25,7 @@ export default {
             assets: null,
             search_delay: null,
             search_delay_time: 800,
-            ids: [],
-            moduleSection: null,
+            ids: []
         }
     },
     watch: {
@@ -166,8 +165,17 @@ export default {
 
         },
         //---------------------------------------------------------------------
+        sync: function () {
+
+            this.page.query_string.recount = true;
+
+            this.is_btn_loading = true;
+
+            this.update('query_string', this.page.query_string);
+            this.getList();
+        },
+        //---------------------------------------------------------------------
         getList: function () {
-            this.$Progress.start();
             this.$vaah.updateCurrentURL(this.query_string, this.$router);
             let url = this.ajax_url+'/list';
             this.$vaah.ajax(url, this.query_string, this.getListAfter);
@@ -175,11 +183,12 @@ export default {
         //---------------------------------------------------------------------
         getListAfter: function (data, res) {
 
+            console.log('--->', data);
+
             this.update('is_list_loading', false);
             this.update('list', data.list);
 
-            this.update('total_permissions', data.totalPermission);
-            this.update('total_users', data.totalUser);
+            this.update('total_roles', data.totalRole);
 
             if(data.list.total === 0)
             {
@@ -235,6 +244,7 @@ export default {
         },
         //---------------------------------------------------------------------
         actionsAfter: function (data, res) {
+            let action = this.page.bulk_action.action;
             if(data)
             {
                 this.$root.$emit('eReloadItem');
@@ -246,30 +256,9 @@ export default {
             }
         },
         //---------------------------------------------------------------------
-        sync: function () {
-
-            this.page.query_string.recount = true;
-
-            this.is_btn_loading = true;
-
-            this.update('query_string', this.page.query_string);
-            this.getList();
-        },
-        //---------------------------------------------------------------------
-        getModuleSection: function () {
-
-            let url = this.ajax_url+'/getModuleSections';
-            this.$vaah.ajax(url, this.query_string, this.getModuleSectionAfter);
-        },
-        //---------------------------------------------------------------------
-        getModuleSectionAfter: function (data,res) {
-
-            this.moduleSection = data;
-        },
-        //---------------------------------------------------------------------
         updateActiveItem: function () {
 
-            if(this.$route.fullPath.includes('roles/?')){
+            if(this.$route.fullPath.includes('users/?')){
                 this.update('active_item', null);
             }
         },

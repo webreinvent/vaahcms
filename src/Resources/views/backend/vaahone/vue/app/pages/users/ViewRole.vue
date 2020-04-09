@@ -9,8 +9,8 @@
         <div class="card" v-else>
             <!--header-->
             <header class="card-header">
-                <div v-if="items && items.permission" class="card-header-title">
-                    <span>{{$vaah.limitString(items.permission.name, 30)}}</span>
+                <div v-if="item" class="card-header-title">
+                    <span>{{$vaah.limitString(item.name, 30)}}</span>
                 </div>
 
                 <div class="card-header-buttons">
@@ -116,13 +116,13 @@
                         </template>
 
                     </b-table>
-
                     <hr style="margin-top: 0;"/>
 
                 </div>
+
                 <div class="block" v-if="items">
                     <vh-pagination  :limit="1" :data="items.list"
-                                    @onPageChange="getItemRoles">
+                                    @onPageChange="getItemPermissions">
                     </vh-pagination>
                 </div>
             </div>

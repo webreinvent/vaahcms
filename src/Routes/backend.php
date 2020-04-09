@@ -250,34 +250,35 @@ Route::group(
 
 Route::group(
     [
-        'prefix'     => 'admin/vaah/users',
-        'middleware' => ['web','has.backend.access'],
-        'namespace'  => 'WebReinvent\VaahCms\Http\Controllers'
+        'prefix' => 'backend/vaah/users',
+        'namespace'  => 'WebReinvent\VaahCms\Http\Controllers',
+        'middleware' => ['web', 'has.backend.access'],
     ],
     function () {
-        //------------------------------------------------
-        Route::get( '/', 'UserController@index' )
-            ->name( 'vh.backend.users' );
-        //------------------------------------------------
-        Route::any( '/assets', 'UserController@assets' )
-            ->name( 'vh.backend.users.assets' );
-        //------------------------------------------------
-        Route::any( '/list', 'UserController@getList' )
-            ->name( 'vh.backend.users.list' );
-        //------------------------------------------------
-        Route::any( '/actions', 'UserController@actions' )
-            ->name( 'vh.backend.users.actions' );
-        //------------------------------------------------
-        Route::any( '/store', 'UserController@store' )
-            ->name( 'vh.backend.users.store' );
-        //------------------------------------------------
-        Route::any( '/view/{id}', 'UserController@getDetails' )
-            ->name( 'vh.backend.users.view' );
-        //------------------------------------------------
-        Route::any( '/roles/{id}', 'UserController@getRoles' )
-            ->name( 'vh.backend.users.roles' );
-        //------------------------------------------------
+        //---------------------------------------------------------
+        Route::any('/assets', 'UsersController@getAssets')
+            ->name('backend.vaah.users.assets');
+        //---------------------------------------------------------
+        Route::post('/create', 'UsersController@postCreate')
+            ->name('backend.vaah.users.create');
+        //---------------------------------------------------------
+        Route::post('/list', 'UsersController@getList')
+            ->name('backend.vaah.users.list');
+        //---------------------------------------------------------
+        Route::any('/item/{id}', 'UsersController@getItem')
+            ->name('backend.vaah.users.item');
+        //---------------------------------------------------------
+        Route::any('/item/{id}/roles', 'UsersController@getItemRoles')
+            ->name('backend.vaah.users.role');
+        //---------------------------------------------------------
+        Route::post('/store/{id}', 'UsersController@postStore')
+            ->name('backend.vaah.users.store');
+        //---------------------------------------------------------
+        Route::post('/actions/{action_name}', 'UsersController@postActions')
+            ->name('backend.vaah.users.actions');
+        //---------------------------------------------------------
     });
+
 
 Route::group(
     [
