@@ -71,6 +71,12 @@ class RegistrationsController extends Controller
         return response()->json($response);
     }
     //----------------------------------------------------------
+    public function createUser(Request $request,$id)
+    {
+        $response = Registration::createUser($id);
+        return response()->json($response);
+    }
+    //----------------------------------------------------------
 
     //----------------------------------------------------------
     public function postActions(Request $request, $action)

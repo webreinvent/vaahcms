@@ -49,6 +49,7 @@ class CreateVhUsersTable extends Migration
             $table->dateTime('reset_password_code_sent_at')->nullable();
             $table->dateTime('reset_password_code_used_at')->nullable();
 
+            $table->integer('registration_id')->nullable();
             $table->text('meta')->nullable();
 
             $table->ipAddress('created_ip')->nullable();

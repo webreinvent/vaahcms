@@ -61,6 +61,14 @@
                                     <b-icon icon="eraser"></b-icon>
                                     Delete
                                 </b-dropdown-item>
+                                <b-dropdown-item aria-role="listitem">
+                                    <b-icon icon="envelope"></b-icon>
+                                    Send Welcome Email
+                                </b-dropdown-item>
+                                <b-dropdown-item aria-role="listitem">
+                                    <b-icon icon="share "></b-icon>
+                                    Send Reset Password Email
+                                </b-dropdown-item>
 
                             </b-dropdown>
 

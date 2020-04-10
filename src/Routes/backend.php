@@ -70,6 +70,9 @@ Route::group(
         Route::any('/item/{id}', 'RegistrationsController@getItem')
             ->name('backend.vaah.registrations.item');
         //---------------------------------------------------------
+        Route::any('/item/{id}/createUser', 'RegistrationsController@createUser')
+            ->name('backend.vaah.registrations.item.createUser');
+        //---------------------------------------------------------
         Route::post('/store/{id}', 'RegistrationsController@postStore')
             ->name('backend.vaah.registrations.store');
         //---------------------------------------------------------
