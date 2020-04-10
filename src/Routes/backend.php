@@ -107,8 +107,14 @@ Route::group(
         Route::post( '/get/configurations', 'SetupController@getConfigurations' )
             ->name( 'vh.setup.get.configurations' );
         //------------------------------------------------
-        Route::post( '/generate/key', 'SetupController@generateKey' )
-            ->name( 'vh.setup.generate.key' );
+        Route::post( '/get/key', 'SetupController@getKey' )
+            ->name( 'vh.setup.get.key' );
+        //------------------------------------------------
+        Route::any( '/get/dependencies', 'SetupController@getDependencies' )
+            ->name( 'vh.setup.get.dependencies' );
+        //------------------------------------------------
+        Route::any( '/install/dependencies', 'SetupController@installDependencies' )
+            ->name( 'vh.setup.install.dependencies' );
         //------------------------------------------------
         Route::post( '/store/app/info', 'SetupController@storeAppInfo' )
             ->name( 'vh.setup.store.app.info' );

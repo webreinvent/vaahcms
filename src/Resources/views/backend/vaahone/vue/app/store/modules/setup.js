@@ -17,8 +17,14 @@ export default {
         assets_is_fetching: false,
         config:{
             active_step: 0,
+            is_migrated: false,
+            dependencies: null,
+            count_total_dependencies: 0,
+            count_installed_dependencies: 0,
+            count_installed_progress: 0,
             env:{
                 app_name: "VaahCMS",
+                app_key: null,
                 app_debug: true,
                 app_env: null,
                 app_url: null,

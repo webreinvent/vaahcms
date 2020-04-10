@@ -1,6 +1,7 @@
 <?php
 namespace WebReinvent\VaahCms\Libraries;
 
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Notification;
 use WebReinvent\VaahCms\Notifications\TestSmtp;
 
@@ -171,7 +172,94 @@ class VaahHelper{
         return $response;
     }
     //----------------------------------------------------------
+    public static function getActiveEnvFileName()
+    {
+        $vaahcms_file = base_path('/vaahcms.json');
+        $env_file_name = '.env';
+
+        if(file_exists($vaahcms_file))
+        {
+
+            $host = null;
+            $actual_url = null;
+
+            if(isset($_SERVER) && isset($_SERVER['HTTP_HOST']))
+            {
+                $actual_url = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://".$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
+            }
+
+
+            if($actual_url)
+            {
+                $vaahcms = file_get_contents(base_path('/vaahcms.json'));
+                $vaahcms = json_decode($vaahcms, true);
+
+                if(isset($vaahcms['environments']) && is_array($vaahcms['environments'])
+                    && count($vaahcms['environments'])>0
+                )
+                {
+                    foreach ($vaahcms['environments'] as $environment)
+                    {
+                        $environment_url = explode( '://', $environment['app_url']);
+                        if (strpos($actual_url, $environment_url[1]) !== false){
+                            $env_file_name = $environment['env_file'];
+                        }
+
+                    }
+
+                    if(!file_exists(base_path($env_file_name)))
+                    {
+                        $env_file_name = '.env';
+                    }
+
+                }
+            }
+
+
+
+        }
+
+        return $env_file_name;
+
+    }
     //----------------------------------------------------------
+    public static function getVaahCMSJsonFileParams()
+    {
+        try{
+            if(File::exists(base_path('/vaahcms.json'))){
+                $vaahcms_params = file_get_contents(base_path('/vaahcms.json'));
+                $vaahcms_params = json_decode($vaahcms_params, true);
+                $data = $vaahcms_params;
+                $response['status'] = 'success';
+                $response['data'] = $data;
+                return $response;
+            } else{
+                $response['status'] = 'failed';
+                $response['errors'][] = 'vaahcms.json configuration file is missing';
+            }
+        }catch(\Exception $e)
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = $e->getMessage();
+        }
+    }
+    //----------------------------------------------------------
+    public static function getVaahCMSJsonFileParam($key)
+    {
+        $params = static::getVaahCMSJsonFileParams();
+
+        if($params['status'] == 'failed')
+        {
+            return null;
+        }
+
+        if(!isset($params['data'][$key]))
+        {
+            return null;
+        }
+
+        return $params['data'][$key];
+    }
     //----------------------------------------------------------
 
 }

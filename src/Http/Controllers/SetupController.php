@@ -180,7 +180,7 @@ class SetupController extends Controller
             }
         }*/
 
-        //$request->merge(['app_key' => VaahHelper::generateEnvKey()]);
+
 
         //generate env file
         $response = VaahSetup::generateEnvFile($request);
@@ -211,18 +211,73 @@ class SetupController extends Controller
 
     }
     //----------------------------------------------------------
-    public function generateKey()
+    public function getKey()
     {
-        $response = VaahHelper::generateEnvKey();
-        if($response['status'] == 'success')
-        {
-            $response = VaahHelper::clearCache();
+
+        $active_env_file = VaahHelper::getActiveEnvFileName();
+
+        $env_params = vh_env_file_to_array(base_path('/'.$active_env_file), true);
+
+        $response['status'] = 'success';
+        $response['data']['key'] = $env_params['app_key'];
+
+        return response()->json($response);
+    }
+    //----------------------------------------------------------
+    public function getDependencies(Request $request)
+    {
+        $response['status'] = 'success';
+        $response['data']['list'] = VaahSetup::getDependencies();
+        return response()->json($response);
+    }
+    //----------------------------------------------------------
+    public function installDependencies(Request $request)
+    {
+
+
+        $rules = array(
+            'name' => 'required',
+            'slug' => 'required',
+            'type' => 'required',
+            'source' => 'required',
+        );
+
+        $validator = \Validator::make( $request->all(), $rules);
+        if ( $validator->fails() ) {
+
+            $errors             = errorsToArray($validator->errors());
+            $response['status'] = 'failed';
+            $response['errors'] = $errors;
+            return response()->json($response);
         }
 
-        if($response['status'] == 'success')
+        $inputs = $request->all();
+
+        if($request->source=='vaahcms' && $request->type='module')
         {
-            $response['data']['redirect_url'] = route('vh.backend')."#/setup/install/migrate";
+            $module_details = Module::getOfficialModuleDetails($request->slug);
+
+            if($module_details['status'] == 'failed')
+            {
+                return response()->json($module_details);
+
+            } elseif($module_details['data']['data']['github_url'])
+            {
+
+            }
+
+
+
+
+        } else if($request->source=='vaahcms' && $request->type='theme')
+        {
+            $module_details = Module::getOfficialModuleDetails($request->slug);
         }
+
+        //$response = Module::download($default_module_slug);
+
+        $response['status'] = 'success';
+        $response['data']['inputs'] = $inputs;
 
         return response()->json($response);
     }
@@ -317,13 +372,6 @@ class SetupController extends Controller
         try
         {
 
-            //Set APP_KEY
-            $command = 'key:generate';
-            $params = [
-                '--force' => true
-            ];
-            \Artisan::call($command, $params);
-
             //reset migration
             Migration::resetMigrations();
 
@@ -357,6 +405,8 @@ class SetupController extends Controller
 
 
     }
+
+    //----------------------------------------------------------
 
     //----------------------------------------------------------
 

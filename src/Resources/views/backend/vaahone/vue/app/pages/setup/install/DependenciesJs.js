@@ -26,6 +26,7 @@ export default {
         return {
             btn_is_migration: false,
             labelPosition: 'on-border',
+            active_dependency: null,
 
         }
     },
@@ -58,9 +59,9 @@ export default {
         onLoad: function()
         {
             this.getAssets();
-            this.config.is_migrated = false;
-            this.config.active_step = 1;
+            this.config.active_step = 2;
             this.updateConfig();
+            this.getDependencies();
         },
         //---------------------------------------------------------------------
         async getAssets() {
@@ -74,41 +75,84 @@ export default {
             this.update('config', this.config);
         },
         //---------------------------------------------------------------------
-
-        runMigrations: function () {
-            this.btn_is_migration = true;
-            this.config.is_migrated = false;
-            this.updateConfig();
-
+        getDependencies: function () {
             let params = {};
-            let url = this.ajax_url+'/run/migrations';
-            this.$vaah.ajax(url, params, this.runMigrationsAfter);
+            let url = this.ajax_url+'/get/dependencies';
+            this.$vaah.ajax(url, params, this.getDependenciesAfter);
         },
         //---------------------------------------------------------------------
-        runMigrationsAfter: function (data, res) {
-            this.btn_is_migration = false;
+        getDependenciesAfter: function (data, res) {
             if(data)
             {
-                this.config.is_migrated = true;
+                this.config.dependencies = data.list;
+                this.config.count_total_dependencies = data.list.length;
                 this.updateConfig();
             }
         },
-
         //---------------------------------------------------------------------
-        validateMigration: function () {
+        async installDependencies() {
 
-            if(!this.config.is_migrated)
+            let index;
+            let dependency;
+
+            this.config.count_installed_dependencies = 0;
+            this.config.count_installed_progress = 0;
+
+            this.updateConfig();
+
+            if(this.config.dependencies)
             {
-                this.$vaah.toastErrors(['Click on Migrate & Run Seeds button']);
-                return false;
-            } else
-            {
-                this.$router.push({name: 'setup.install.dependencies'})
+                let dependencies = this.config.dependencies;
+                for(index in dependencies)
+                {
+                    dependency = dependencies[index];
+                    await this.installDependency(dependency);
+                }
             }
 
         },
         //---------------------------------------------------------------------
+        async installDependency(dependency) {
+            this.active_dependency = dependency;
+            let params = {
+                name: this.active_dependency.name,
+                slug: this.active_dependency.slug,
+                type: this.active_dependency.type,
+                source: this.active_dependency.source,
+                download_link: this.active_dependency.download_link,
+            };
+            let url = this.ajax_url+'/install/dependencies';
+            await this.$vaah.ajax(url, params, this.installDependencyAfter);
+        },
+        //---------------------------------------------------------------------
+        installDependencyAfter: function (data, res) {
+            if(data)
+            {
+                console.log('--->this.active_dependency', this.active_dependency);
+                if(this.active_dependency)
+                {
+                    this.active_dependency.installed = true;
+                    this.$vaah.updateArray(this.config.dependencies, this.active_dependency);
 
+                    this.config.count_installed_dependencies = this.config.count_installed_dependencies+1;
+                    let progress = this.config.count_total_dependencies/this.config.count_installed_dependencies;
+
+                    progress =  Math.round(progress*100);
+                    this.config.count_installed_progress = progress;
+
+                    this.updateConfig();
+                    this.active_dependency = null;
+                }
+
+            }
+        },
+        //---------------------------------------------------------------------
+
+        //---------------------------------------------------------------------
+        fnAfter: function (data, res) {
+            this.is_content_loading = false;
+            this.list = data.list;
+        },
         //---------------------------------------------------------------------
         //---------------------------------------------------------------------
     }

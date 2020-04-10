@@ -313,37 +313,61 @@ class Module extends Model {
         return true;
     }
     //-------------------------------------------------
+    public static function getOfficialModuleDetails($slug)
+    {
+
+        try{
+            $api = config('vaahcms.api_route')."/module/by/slug/".$slug;
+
+            $api_response = @file_get_contents($api);
+
+            if(!isset($api_response) || empty($api_response))
+            {
+                $response['status'] = 'failed';
+                $response['data']['url'] = $api;
+                $response['errors'][] = 'API Response Error.';
+                return $response;
+            }
+
+            $api_response = json_decode($api_response, true);
+
+            if(!isset($api_response) || !isset($api_response['status']) || $api_response['status'] != 'success')
+            {
+                $response['status'] = 'failed';
+                $response['data']['url'] = $api;
+                $response['data']['data'] = $api_response;
+                $response['errors'][] = 'API Response Error.';
+
+
+                return $response;
+
+            } else if($api_response['status'] == 'success')
+            {
+                return $api_response;
+            } else
+            {
+                $response['status'] = 'failed';
+                $response['data']['url'] = $api;
+                $response['data']['data'] = $api_response;
+                $response['errors'][] = 'Unknown Error.';
+            }
+
+
+        }catch(\Exception $e)
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = $e->getMessage();
+            return $response;
+        }
+
+
+
+
+    }
+    //-------------------------------------------------
     public static function download($slug)
     {
 
-        $api = config('vaahcms.api_route')."/module/by/slug/".$slug;
-
-        $api_response = @file_get_contents($api);
-
-        if(!isset($api_response) || empty($api_response))
-        {
-            $response['status'] = 'failed';
-            $response['data']['url'] = $api;
-            $response['errors'][] = 'API Response Error.';
-            return $response;
-        }
-
-        $api_response = json_decode($api_response);
-
-        if(!isset($api_response) || !isset($api_response->status) || $api_response->status != 'success')
-        {
-            $response['status'] = 'failed';
-            $response['data']['url'] = $api;
-            $response['data']['data'] = $api_response;
-            $response['errors'][] = 'API Response Error.';
-            return $response;
-
-        }
-
-        if($api_response->status != 'success')
-        {
-            return $api_response;
-        }
 
         //check if module is already installed
         $module_path = config('vaahcms.modules_path')."/".$api_response->data->name;

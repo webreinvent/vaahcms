@@ -29,7 +29,6 @@ export default {
             is_btn_loading_config: false,
             is_modal_test_mail_active: false,
             labelPosition: 'on-border',
-
         }
     },
     watch: {
@@ -39,7 +38,7 @@ export default {
         //----------------------------------------------------
         this.onLoad();
         //----------------------------------------------------
-        this.$root.$on('eReloadList', this.getList);
+
         //----------------------------------------------------
     },
     methods: {
@@ -61,6 +60,7 @@ export default {
         //---------------------------------------------------------------------
         onLoad: function()
         {
+            this.getAppKey();
             this.getAssets();
             this.config.active_step = 0;
             this.updateConfig();
@@ -75,6 +75,22 @@ export default {
         updateConfig: function()
         {
             this.update('config', this.config);
+        },
+        //---------------------------------------------------------------------
+        getAppKey: function () {
+
+            let params = {};
+            let url = this.ajax_url+'/get/key';
+            this.$vaah.ajax(url, params, this.getAppKeyAfter);
+        },
+        //---------------------------------------------------------------------
+        getAppKeyAfter: function (data, res) {
+
+            if(data)
+            {
+                this.config.env.app_key = data.key;
+                this.updateConfig();
+            }
         },
         //---------------------------------------------------------------------
         setTimeZone: function (item) {
@@ -177,27 +193,14 @@ export default {
                 this.is_btn_loading_config = false
             } else
             {
-                this.generateAppKey();
-            }
-
-        },
-        //---------------------------------------------------------------------
-        generateAppKey: function () {
-
-            let params = {};
-            let url = this.ajax_url+'/generate/key';
-            this.$vaah.ajax(url, params, this.generateAppKeyAfter);
-        },
-        //---------------------------------------------------------------------
-        generateAppKeyAfter: function (data, res) {
-            this.is_btn_loading_config = false;
-            if(data)
-            {
                 this.config.active_step = 1;
-                //this.$router.push({name: 'setup.install.migrate'})
-                window.location = data.redirect_url;
+                this.$router.push({name: 'setup.install.migrate'})
+                //window.location = data.redirect_url;
             }
+
         },
+        //---------------------------------------------------------------------
+
         //---------------------------------------------------------------------
     }
 }
