@@ -33,7 +33,7 @@ class Registration extends Model
         "avatar_url","birth", "country","country_code", "status",
         "activation_code", "activation_code_sent_at",
         "activated_ip","invited_by", "invited_at","user_id",
-        "user_created_at", "created_ip", "meta",
+        "user_created_at", "created_ip", "registration_id", "meta",
         "created_by", "updated_by","deleted_by"
     ];
     //-------------------------------------------------
@@ -610,6 +610,37 @@ class Registration extends Model
         $response['status'] = 'success';
         $response['data'] = [];
         $response['messages'][] = 'Action was successful';
+
+        return $response;
+
+    }
+    //-------------------------------------------------
+    public static function createUser($id)
+    {
+
+        $reg = static::where('id',$id)->withTrashed()->first()->makeVisible('password');
+
+        if($reg->user_id){
+            $response['status'] = 'failed';
+            $response['errors'][] = 'User already exist.';
+            return $response;
+        }
+
+        $user = new User();
+        $user->fill($reg->toArray());
+        $user->password = $reg->password;
+        $user->registration_id = $reg->id;
+        $user->status = 'active';
+        $user->is_active = 1;
+        $user->save();
+
+        $reg->user_id = $user->id;
+        $reg->status = 'user-created';
+        $reg->save();
+
+        $response['status'] = 'success';
+        $response['data'] = [];
+        $response['messages'][] = 'User is created.';
 
         return $response;
 

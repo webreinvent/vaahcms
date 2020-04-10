@@ -111,7 +111,17 @@ export default {
         //---------------------------------------------------------------------
         confirmCreateUser: function()
         {
+            this.is_content_loading = true;
+            let params = {};
+            let url = this.ajax_url+'/item/'+this.item.id+'/createUser';
+            this.$vaah.ajax(url, params, this.confirmCreateUserAfter);
 
+        },
+        //---------------------------------------------------------------------
+        confirmCreateUserAfter: function(data)
+        {
+            this.$root.$emit('eReloadList');
+            this.$root.$emit('eReloadItem');
         },
         //---------------------------------------------------------------------
         createUser: function () {

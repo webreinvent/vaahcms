@@ -117,6 +117,16 @@
                                                        :label="label"/>
                                     </template>
 
+                                    <template v-else-if="label == 'count_users'">
+                                        <TableTrStatus :value="value"
+                                                       :label="label"/>
+                                    </template>
+
+                                    <template v-else-if="label == 'count_roles'">
+                                        <TableTrStatus :value="value"
+                                                       :label="label"/>
+                                    </template>
+
                                     <template v-else-if="label == 'created_by'">
                                         <TableTrActedBy :value="item['created_by_user']"
                                                        :label="label"/>
