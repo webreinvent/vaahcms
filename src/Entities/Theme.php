@@ -278,74 +278,97 @@ class Theme extends Model {
         return $response;
     }
     //-------------------------------------------------
-    public static function download($slug)
+    public static function getOfficialDetails($slug)
     {
 
-        $api = config('vaahcms.api_route')."/theme/by/slug/".$slug;
+        try{
+            $api = config('vaahcms.api_route')."/theme/by/slug/".$slug;
 
-        $api_response = @file_get_contents($api);
+            $api_response = @file_get_contents($api);
 
-        if(!isset($api_response) || empty($api_response))
+            if(!isset($api_response) || empty($api_response))
+            {
+                $response['status'] = 'failed';
+                $response['data']['url'] = $api;
+                $response['errors'][] = 'API Response Error.';
+                return $response;
+            }
+
+            $api_response = json_decode($api_response, true);
+
+
+            if(!isset($api_response) || !isset($api_response['status']) || $api_response['status'] != 'success')
+            {
+                $response['status'] = 'failed';
+                $response['data']['url'] = $api;
+                $response['data']['data'] = $api_response;
+                $response['errors'][] = 'API Response Error.';
+
+
+                return $response;
+
+            } else if($api_response['status'] == 'success')
+            {
+                return $api_response;
+            } else
+            {
+                $response['status'] = 'failed';
+                $response['data']['url'] = $api;
+                $response['data']['data'] = $api_response;
+                $response['errors'][] = 'Unknown Error.';
+            }
+
+
+        }catch(\Exception $e)
         {
             $response['status'] = 'failed';
-            $response['data']['url'] = $api;
-            $response['errors'][] = 'API Response Error.';
+            $response['errors'][] = $e->getMessage();
             return $response;
         }
 
-        $api_response = json_decode($api_response);
-
-        if(!isset($api_response) || !isset($api_response->status) || $api_response->status != 'success')
-        {
-            $response['status'] = 'failed';
-            $response['data']['url'] = $api;
-            $response['data']['data'] = $api_response;
-            $response['errors'][] = 'API Response Error.';
-            return $response;
-
-        }
 
 
-        if($api_response->status != 'success')
-        {
-            return $api_response;
-        }
+
+    }
+    //-------------------------------------------------
+    public static function download($name, $download_link)
+    {
 
         //check if module is already installed
-        $theme_path = config('vaahcms.themes_path')."/".$api_response->data->name;
-        if(is_dir($theme_path))
+        //$vaahcms_module_path = config('vaahcms.themes_path').'/';
+        $vaahcms_path = base_path('Download/Themes').'/';
+
+        $package_path = $vaahcms_path.$name;
+
+        if(is_dir($package_path))
         {
             $response['status'] = 'success';
-            $response['messages'][] = $api_response->data->name." theme already exist.";
+            $response['data'] = [];
+            $response['messages'][] = $name." theme already exist.";
             return $response;
         }
 
-        $parsed = parse_url($api_response->data->github_url);
+        $zip_file = $package_path.".zip";
 
-
-        $uri_parts = explode('/', $parsed['path']);
-        $folder_name = end($uri_parts);
-        $folder_name = $folder_name."-master";
-
-
-        $filename = $api_response->data->name.'.zip';
-        $folder_path = config('vaahcms.themes_path')."/";
-        $path = $folder_path.$filename;
-
-        copy($api_response->data->github_url.'/archive/master.zip', $path);
+        copy($download_link, $zip_file);
 
         try{
-            Zip::check($path);
-            $zip = Zip::open($path);
-            $zip->extract(config('vaahcms.themes_path'));
+            Zip::check($zip_file);
+            $zip = Zip::open($zip_file);
+            $zip_content_list = $zip->listFiles();
+            $zip->extract($vaahcms_path);
             $zip->close();
 
-            rename($folder_path.$folder_name, $folder_path.$api_response->data->name);
+            if (strpos($download_link, 'github.com') !== false) {
+                $extracted_folder_name = $zip_content_list[0];
+                rename($vaahcms_path.$extracted_folder_name, $package_path);
+            }
 
-            vh_delete_folder($path);
+            vh_delete_folder($zip_file);
 
             $response['status'] = 'success';
-            $response['messages'][] = 'installed';
+            $response['data'] = [];
+            $response['messages'][] = $name." module is installed.";
             return $response;
 
         }catch(\Exception $e)

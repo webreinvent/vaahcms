@@ -24,7 +24,7 @@ export default {
     data()
     {
         return {
-            btn_is_migration: false,
+            btn_is_installing: false,
             labelPosition: 'on-border',
             active_dependency: null,
 
@@ -95,6 +95,7 @@ export default {
             let index;
             let dependency;
 
+
             this.config.count_installed_dependencies = 0;
             this.config.count_installed_progress = 0;
 
@@ -102,13 +103,18 @@ export default {
 
             if(this.config.dependencies)
             {
+                this.btn_is_installing = true;
                 let dependencies = this.config.dependencies;
                 for(index in dependencies)
                 {
                     dependency = dependencies[index];
                     await this.installDependency(dependency);
                 }
+
+                this.btn_is_installing = false;
             }
+
+
 
         },
         //---------------------------------------------------------------------
@@ -120,6 +126,7 @@ export default {
                 type: this.active_dependency.type,
                 source: this.active_dependency.source,
                 download_link: this.active_dependency.download_link,
+                import_sample_data: this.active_dependency.import_sample_data,
             };
             let url = this.ajax_url+'/install/dependencies';
             await this.$vaah.ajax(url, params, this.installDependencyAfter);
@@ -135,7 +142,7 @@ export default {
                     this.$vaah.updateArray(this.config.dependencies, this.active_dependency);
 
                     this.config.count_installed_dependencies = this.config.count_installed_dependencies+1;
-                    let progress = this.config.count_total_dependencies/this.config.count_installed_dependencies;
+                    let progress = this.config.count_installed_dependencies/this.config.count_total_dependencies;
 
                     progress =  Math.round(progress*100);
                     this.config.count_installed_progress = progress;
@@ -145,13 +152,6 @@ export default {
                 }
 
             }
-        },
-        //---------------------------------------------------------------------
-
-        //---------------------------------------------------------------------
-        fnAfter: function (data, res) {
-            this.is_content_loading = false;
-            this.list = data.list;
         },
         //---------------------------------------------------------------------
         //---------------------------------------------------------------------

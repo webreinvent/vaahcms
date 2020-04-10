@@ -253,33 +253,86 @@ class SetupController extends Controller
 
         $inputs = $request->all();
 
-        if($request->source=='vaahcms' && $request->type='module')
+        if($request->type=='module')
         {
-            $module_details = Module::getOfficialModuleDetails($request->slug);
 
-            if($module_details['status'] == 'failed')
+            if($request->source=='vaahcms')
             {
-                return response()->json($module_details);
+                $response = $this->downloadOfficialModule($request);
+            } else{
+                $response = Module::download($request->name, $request->download_link);
+            }
 
-            } elseif($module_details['data']['data']['github_url'])
+            if($response['status'] == 'success')
             {
+                Module::syncAllModules();
+                Module::activate($request->slug);
+            }
 
+            if($response['status'] == 'success' && $request->import_sample_data)
+            {
+                Module::importSampleData($request->slug);
             }
 
 
-
-
-        } else if($request->source=='vaahcms' && $request->type='theme')
+        } else if($request->type=='theme')
         {
-            $module_details = Module::getOfficialModuleDetails($request->slug);
+
+            if($request->source=='vaahcms')
+            {
+                $response = $this->downloadOfficialTheme($request);
+            } else{
+                $response = Theme::download($request->name, $request->download_link);
+            }
+
+            if($response['status'] == 'success')
+            {
+                Theme::syncAll();
+                Theme::activate($request->slug);
+            }
+
+            if($response['status'] == 'success' && $request->import_sample_data)
+            {
+                Theme::importSampleData($request->slug);
+            }
+
         }
 
-        //$response = Module::download($default_module_slug);
-
-        $response['status'] = 'success';
-        $response['data']['inputs'] = $inputs;
-
         return response()->json($response);
+    }
+    //----------------------------------------------------------
+    public function downloadOfficialModule($request)
+    {
+
+        $details = Module::getOfficialDetails($request->slug);
+
+        if($details['status'] == 'failed')
+        {
+            return response()->json($details);
+
+        }
+
+        $response = Module::download($request->name, $details['data']['download_link']);
+
+        return $response;
+
+    }
+    //----------------------------------------------------------
+    public function downloadOfficialTheme($request)
+    {
+
+        $details = Theme::getOfficialDetails($request->slug);
+
+        if($details['status'] == 'failed')
+        {
+            return response()->json($details);
+
+        }
+
+        $response = Theme::download($request->name, $details['data']['download_link']);
+
+        return $response;
+
     }
     //----------------------------------------------------------
     public function checkSetupStatus()
@@ -313,145 +366,8 @@ class SetupController extends Controller
 
         return response()->json($response);
     }
-    //----------------------------------------------------------
-    public function storeAppInfo(Request $request)
-    {
-        $rules = array(
-            'app_name' => 'required',
-            'db_host' => 'required',
-            'db_port' => 'required',
-            'db_database' => 'required',
-            'db_username' => 'required'
-        );
-
-        $validator = \Validator::make( $request->all(), $rules);
-        if ( $validator->fails() ) {
-
-            $errors             = errorsToArray($validator->errors());
-            $response['status'] = 'failed';
-            $response['errors'] = $errors;
-            return response()->json($response);
-        }
-
-        $inputs = $request->all();
-        $inputs['app_url'] = url("/");
-
-        if(!isset($inputs['db_password']))
-        {
-            $inputs['db_password'] = "";
-        }
-
-        $inputs['app_env'] = env('APP_ENV');
-
-        $env_data = \View::make($this->theme.'.setup.partials.setup-env-sample')
-            ->with('data', (object)$inputs)->render();
-
-        if(app()->environment() == 'local')
-        {
-            $env_file = ".env";
-        } else
-        {
-            $env_file = ".env.".app()->environment();
-        }
-
-        \File::put(base_path($env_file), $env_data);
-
-        $response['status'] = 'success';
-        $response['messages'][] = 'Details Saved';
-        $response['data']['env'] = $env_data;
-        return response()->json($response);
-    }
-    //----------------------------------------------------------
-    public function runMigrations(Request $request)
-    {
-
-        $data = [];
-
-        //$this->deleteExistingMigration();
-
-        try
-        {
-
-            //reset migration
-            Migration::resetMigrations();
-
-            //publish all migrations of vaahcms package
-            $provider = "WebReinvent\VaahCms\VaahCmsServiceProvider";
-            Migration::publishMigrations($provider);
-
-            //run migration
-            Migration::runMigrations(null,true);
-
-            //publish vaahcms seeds
-            Migration::publishSeeds($provider);
-
-            //run vaahcms seeds
-            $namespace = "VaahCmsTableSeeder";
-            Migration::runSeeds($namespace);
-
-            $response['status'] = 'success';
-            $response['messages'][] = 'Migration were successful';
-            $response['data'] = $data;
-
-            return response()->json($response);
-
-        }
-        catch(\Exception $e) {
-
-            $response['status'] = 'failed';
-            $response['errors'][] = $e->getMessage();
-            return response()->json($response);
-        }
-
-
-    }
 
     //----------------------------------------------------------
-
-    //----------------------------------------------------------
-
-    public function setupCMS(Request $request)
-    {
-
-        $inputs = $request->all();
-
-        //download cms module
-        $default_module_slug = 'cms';
-        $response = Module::download($default_module_slug);
-        if($response['status'] == 'failed')
-        {
-            return response()->json($response);
-        }
-        Module::syncAllModules();
-        Module::activate($default_module_slug);
-
-        if(isset($inputs[$default_module_slug]['sample_data']) && $inputs[$default_module_slug]['sample_data'] == true)
-        {
-            Module::importSampleData($default_module_slug);
-        }
-
-        //download theme
-        $default_theme_slug = 'btfourpointthree';
-        $response = Theme::download($default_theme_slug);
-        if($response['status'] == 'failed' )
-        {
-            return response()->json($response);
-        }
-        Theme::syncAll();
-        Theme::activate($default_theme_slug);
-        if(isset($inputs['theme']['sample_data']) && $inputs['theme']['sample_data'] == true)
-        {
-            Theme::importSampleData($default_theme_slug);
-        }
-
-        $data = [];
-
-        $response['status'] = 'success';
-        $response['messages'][] = 'CMS setup was successful';
-
-        return response()->json($response);
-
-    }
 
     //----------------------------------------------------------
 

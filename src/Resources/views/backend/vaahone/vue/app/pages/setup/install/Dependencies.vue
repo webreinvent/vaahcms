@@ -18,11 +18,11 @@
                          v-for="item in config.dependencies">
                         <div class="card">
 
-                            <div class="card-image" v-if="item.thumbnail">
+                            <!--<div class="card-image" v-if="item.thumbnail">
                                 <figure class="image">
                                     <img style="max-height: 160px;" :src="item.thumbnail">
                                 </figure>
-                            </div>
+                            </div>-->
 
                             <div class="card-content">
                                 <div class="media">
@@ -112,9 +112,9 @@
 
 
                 <b-button type="is-success"
-                          v-if="config.is_migrated"
+                          v-if="config.count_installed_progress === 100"
                           icon-left="check"
-                          :loading="btn_is_migration"
+                          :loading="btn_is_installing"
                           @click="installDependencies()">
                     Download & Install Dependencies
                 </b-button>
@@ -122,7 +122,7 @@
                 <b-button type="is-info"
                           v-else
                           icon-left="download"
-                          :loading="btn_is_migration"
+                          :loading="btn_is_installing"
                           @click="installDependencies()">
                     Download & Install Dependencies
                 </b-button>

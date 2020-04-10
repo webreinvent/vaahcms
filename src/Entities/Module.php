@@ -313,7 +313,7 @@ class Module extends Model {
         return true;
     }
     //-------------------------------------------------
-    public static function getOfficialModuleDetails($slug)
+    public static function getOfficialDetails($slug)
     {
 
         try{
@@ -330,6 +330,7 @@ class Module extends Model {
             }
 
             $api_response = json_decode($api_response, true);
+
 
             if(!isset($api_response) || !isset($api_response['status']) || $api_response['status'] != 'success')
             {
@@ -365,45 +366,44 @@ class Module extends Model {
 
     }
     //-------------------------------------------------
-    public static function download($slug)
+    public static function download($name, $download_link)
     {
 
-
         //check if module is already installed
-        $module_path = config('vaahcms.modules_path')."/".$api_response->data->name;
-        if(is_dir($module_path))
+        //$vaahcms_module_path = config('vaahcms.modules_path').'/';
+        $vaahcms_path = base_path('Download/Modules').'/';
+
+        $package_path = $vaahcms_path.$name;
+
+        if(is_dir($package_path))
         {
             $response['status'] = 'success';
-            $response['messages'][] = $api_response->data->name." module already exist.";
+            $response['data'] = [];
+            $response['messages'][] = $name." module already exist.";
             return $response;
         }
 
-        $parsed = parse_url($api_response->data->github_url);
+        $zip_file = $package_path.".zip";
 
-
-        $uri_parts = explode('/', $parsed['path']);
-        $folder_name = end($uri_parts);
-        $folder_name = $folder_name."-master";
-
-
-        $filename = $api_response->data->name.'.zip';
-        $folder_path = config('vaahcms.modules_path')."/";
-        $path = $folder_path.$filename;
-
-        copy($api_response->data->github_url.'/archive/master.zip', $path);
+        copy($download_link, $zip_file);
 
         try{
-            Zip::check($path);
-            $zip = Zip::open($path);
-            $zip->extract(config('vaahcms.modules_path'));
+            Zip::check($zip_file);
+            $zip = Zip::open($zip_file);
+            $zip_content_list = $zip->listFiles();
+            $zip->extract($vaahcms_path);
             $zip->close();
 
-            rename($folder_path.$folder_name, $folder_path.$api_response->data->name);
+            if (strpos($download_link, 'github.com') !== false) {
+                $extracted_folder_name = $zip_content_list[0];
+                rename($vaahcms_path.$extracted_folder_name, $package_path);
+            }
 
-            vh_delete_folder($path);
+            vh_delete_folder($zip_file);
 
             $response['status'] = 'success';
-            $response['messages'][] = 'installed';
+            $response['data'] = [];
+            $response['messages'][] = $name." module is installed.";
             return $response;
 
         }catch(\Exception $e)
