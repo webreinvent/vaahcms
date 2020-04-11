@@ -59,9 +59,9 @@
                                 <div class="level">
 
                                     <!--left-->
-                                    <div class="level-left">
+                                    <div class="level-left" v-if="hasPermission('can-update-roles')">
                                         <div  class="level-item">
-                                            <b-field v-if="hasPermission('can-update-roles')">
+                                            <b-field >
 
                                                 <b-select placeholder="- Bulk Actions -"
                                                           v-model="page.bulk_action.action">
@@ -82,7 +82,6 @@
                                                     <option value="">
                                                         - Select Status -
                                                     </option>
-                                                    <option
                                                     <option value=1>
                                                         Active
                                                     </option>

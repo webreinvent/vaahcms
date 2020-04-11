@@ -20,9 +20,13 @@ export default {
             is_btn_loading: false,
             is_content_loading: false,
             items: null,
+            show_filters: false,
             filter: {
-                page: 1
+                page: 1,
+                module:null,
+                section:null
             },
+            moduleSectionList:null,
             search_item:null,
             search_delay_time: 800,
         }
@@ -31,7 +35,6 @@ export default {
         $route(to, from) {
             this.updateView();
             this.getItemPermissions();
-            console.log('from routes', to)
         }
     },
     mounted() {
@@ -77,8 +80,9 @@ export default {
 
             this.$Progress.start();
             this.params = {
-                q:this.search_item,
-                page:page,
+                q: this.search_item,
+                page: page,
+                filter: this.filter
             };
 
             let url = this.ajax_url+'/item/'+this.id+'/permissions';
@@ -209,6 +213,55 @@ export default {
         hasPermission: function(slug)
         {
             return this.$vaah.hasPermission(this.permissions, slug);
+        },
+        //---------------------------------------------------------------------
+        toggleFilters: function()
+        {
+            if(this.show_filters == false)
+            {
+                this.show_filters = true;
+            } else
+            {
+                this.show_filters = false;
+            }
+
+
+        },
+        //---------------------------------------------------------------------
+        setSection: function()
+        {
+                this.filter.section = null;
+
+                this.getModuleSection();
+
+                this.getItemPermissions();
+        },
+        //---------------------------------------------------------------------
+        getModuleSection: function () {
+
+            let url = this.ajax_url+'/getModuleSections';
+            this.$vaah.ajax(url, this.filter, this.getModuleSectionAfter);
+        },
+        //---------------------------------------------------------------------
+        getModuleSectionAfter: function (data,res) {
+
+            if(data){
+                this.moduleSectionList = data;
+            }
+
+        },
+        //---------------------------------------------------------------------
+        resetPage: function (data,res) {
+
+            this.filter= {
+                module:null,
+                section:null
+            };
+
+            this.search_item=null;
+
+            this.getItemPermissions();
+
         },
         //---------------------------------------------------------------------
         //---------------------------------------------------------------------

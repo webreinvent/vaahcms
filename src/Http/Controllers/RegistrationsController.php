@@ -88,6 +88,7 @@ class RegistrationsController extends Controller
     //----------------------------------------------------------
     public function postActions(Request $request, $action)
     {
+
         $rules = array(
             'inputs' => 'required',
         );

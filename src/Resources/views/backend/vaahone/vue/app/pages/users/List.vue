@@ -61,9 +61,9 @@
                                 <div class="level">
 
                                     <!--left-->
-                                    <div class="level-left">
+                                    <div class="level-left" v-if="hasPermission('can-update-users')">
                                         <div v-if="permissions"  class="level-item">
-                                            <b-field v-if="hasPermission('can-update-users')">
+                                            <b-field >
 
                                                 <b-select placeholder="- Bulk Actions -"
                                                           v-model="page.bulk_action.action">

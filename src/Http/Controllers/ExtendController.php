@@ -62,6 +62,10 @@ class ExtendController extends Controller
             ];
         }
 
+        $p = \Auth::user()->hasPermission('has-access-of-permissions-section',true);
+
+
+
         if(\Auth::user()->hasPermission('has-access-of-permissions-section',true))
         {
             $list[1]['child'][] =  [

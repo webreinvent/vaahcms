@@ -41,7 +41,9 @@
 
 
 
-                <b-table-column field="actions" label=""
+                <b-table-column v-if="( hasPermission('can-manage-users') || hasPermission('can-update-users')
+                         || hasPermission('can-create-users') || hasPermission('can-read-users')
+                          || hasPermission('can-delete-users'))" field="actions" label=""
                                 width="40">
 
                     <b-tooltip label="View" type="is-dark">

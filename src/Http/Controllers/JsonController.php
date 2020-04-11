@@ -121,7 +121,7 @@ class JsonController extends Controller
         }
 
         $response['status'] = 'success';
-        $response['data']['list'] = \Auth::user()->getPermissionsSlugs();
+        $response['data']['list'] = \Auth::user()->permissions(true);
 
         return response()->json($response);
 
