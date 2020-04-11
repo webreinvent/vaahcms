@@ -5,41 +5,54 @@ let Visualizer = require('webpack-visualizer-plugin');
 
 
 
+let publish_folder;
+let output_theme_folder;
+let source_theme_folder;
+let source_vue_folder;
+
+
+
+
+if (mix.inProduction()) {
 /*
  |--------------------------------------------------------------------------
- | CSS
+ | Only in Production
  |--------------------------------------------------------------------------
  */
+    console.log('this is visible in production');
 
-mix.setPublicPath('./../../../public/vaahcms/backend/');
+    publish_folder = './Resources/assets/backend/';
+    output_theme_folder = "./themes/vaahone/";
+    source_theme_folder = "Resources/assets/backend/vaahone";
+    source_vue_folder = __dirname+'/Resources/views/backend/vaahone/vue';
 
-let theme_path = "./themes/vaahone/";
+    mix.setPublicPath(publish_folder);
 
-//mix.sass('Resources/assets/backend/vaahone/scss/vaahcms.scss', theme_path+'css/');
-mix.sass('Resources/assets/backend/vaahone/scss/backend.scss', theme_path+'css/');
+    mix.sass(source_theme_folder+'/scss/vaahcms.scss', output_theme_folder+'css/');
+    mix.sass(source_theme_folder+'/scss/backend.scss', output_theme_folder+'css/');
 
 
-let path_vue;
+    mix.js(source_vue_folder+"/ui/app.js",  output_theme_folder+'/builds/ui.js');
+    mix.js(source_vue_folder+"/app/app.js",  output_theme_folder+'/builds/app.js');
 
-/*
- |--------------------------------------------------------------------------
- | UI Build
- |--------------------------------------------------------------------------
- */
 
-/*path_vue = __dirname+"/Resources/views/backend/vaahone/vue/ui/app.js";
-mix.js(path_vue,  theme_path+'/builds/ui.js');*/
+} else {
 
-/*
- |--------------------------------------------------------------------------
- | App Build
- |--------------------------------------------------------------------------
- */
+    publish_folder = './../../../public/vaahcms/backend/';
+    output_theme_folder = "./themes/vaahone/";
+    source_theme_folder = "Resources/assets/backend/vaahone";
+    source_vue_folder = __dirname+'/Resources/views/backend/vaahone/vue';
 
-path_vue = __dirname+"/Resources/views/backend/vaahone/vue/app/app.js";
-mix.js(path_vue,  theme_path+'/builds/app.js');
+    mix.setPublicPath(publish_folder);
 
-//--------------------------------------------------------------------------
+    mix.sass(source_theme_folder+'/scss/vaahcms.scss', output_theme_folder+'css/');
+    mix.sass(source_theme_folder+'/scss/backend.scss', output_theme_folder+'css/');
+
+
+    mix.js(source_vue_folder+"/ui/app.js",  output_theme_folder+'/builds/ui.js');
+    mix.js(source_vue_folder+"/app/app.js",  output_theme_folder+'/builds/app.js');
+
+}
 
 mix.webpackConfig({
     watchOptions: {
