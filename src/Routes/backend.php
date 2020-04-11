@@ -315,6 +315,9 @@ Route::group(
         Route::any('/item/{id}/users', 'RolesController@getItemUser')
             ->name('backend.vaah.roles.item.users');
         //---------------------------------------------------------
+        Route::post('/getModuleSections', 'RolesController@getModuleSections')
+            ->name('backend.vaah.permissions.module-section');
+        //---------------------------------------------------------
         Route::post('/store/{id}', 'RolesController@postStore')
             ->name('backend.vaah.roles.store');
         //---------------------------------------------------------

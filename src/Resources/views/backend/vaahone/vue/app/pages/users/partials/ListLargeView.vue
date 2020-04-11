@@ -31,11 +31,11 @@
 
                 <b-table-column v-if="props.row.deleted_at || ( !hasPermission('can-manage-users') && !hasPermission('can-update-users'))" field="is_active" label="Is Active">
 
-                    <b-button v-if="props.row.is_active === 1" rounded size="is-small"
+                    <b-button v-if="props.row.is_active === 1" disabled rounded size="is-small"
                               type="is-success">
                         Yes
                     </b-button>
-                    <b-button v-else rounded size="is-small" type="is-danger">
+                    <b-button v-else rounded size="is-small" disabled type="is-danger">
                         No
                     </b-button>
 
@@ -54,13 +54,20 @@
                     </b-tooltip>
                 </b-table-column>
 
-                <b-table-column field="roles" label="Roles">
+                <b-table-column v-if="hasPermission('can-manage-users') || hasPermission('can-update-users' ) || hasPermission('can-read-users' )" field="roles" label="Roles">
                     <b-tooltip label="View Role" type="is-dark">
                         <b-button rounded size="is-small"
                                   type="is-primary" @click="getRole(props.row)">
                             {{ props.row.active_roles_count }} / {{page.total_roles}}
                         </b-button>
                     </b-tooltip>
+                </b-table-column>
+
+                <b-table-column v-else field="roles" label="Roles">
+                        <b-button rounded size="is-small"
+                                  type="is-primary" disabled>
+                            {{ props.row.active_roles_count }} / {{page.total_roles}}
+                        </b-button>
                 </b-table-column>
 
                 <b-table-column field="status" label="Status">
@@ -81,7 +88,9 @@
                 </b-table-column>
 
 
-                <b-table-column field="actions" label=""
+                <b-table-column v-if="( hasPermission('can-manage-users') || hasPermission('can-update-users')
+                         || hasPermission('can-create-users') || hasPermission('can-read-users')
+                          || hasPermission('can-delete-users'))"  field="actions" label=""
                                 width="40">
 
                     <b-tooltip label="View" type="is-dark">

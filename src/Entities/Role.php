@@ -271,6 +271,18 @@ class Role extends Model {
     //-------------------------------------------------
     public static function getDetail($id)
     {
+
+        if(!\Auth::user()->hasPermission('can-manage-roles',true) &&
+            !\Auth::user()->hasPermission('can-update-roles',true) &&
+            !\Auth::user()->hasPermission('can-create-roles',true) &&
+            !\Auth::user()->hasPermission('can-read-roles',true))
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+            return $response;
+        }
+
         $item = Role::where('id', $id)->with(['createdByUser', 'updatedByUser', 'deletedByUser'])->withTrashed()->first();
 
         $response['status'] = 'success';
@@ -284,6 +296,15 @@ class Role extends Model {
     //-------------------------------------------------
     public static function updateDetail($request,$id)
     {
+
+        if(!\Auth::user()->hasPermission('can-update-roles',true))
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+            return $response;
+        }
+
 
         $input = $request->item;
 
@@ -420,7 +441,16 @@ class Role extends Model {
             $list = $item->permissions();
         }
 
+        if($request['filter']['module']){
+            $list->where('module',$request['filter']['module']);
+        }
+
+        if($request['filter']['section']){
+            $list->where('section',$request['filter']['section']);
+        }
+
         $list->orderBy('pivot_is_active', 'desc');
+
 
         $list = $list->paginate(config('vaahcms.per_page'));
 
@@ -465,6 +495,14 @@ class Role extends Model {
     //-------------------------------------------------
     public static function getList($request)
     {
+
+        if(!\Auth::user()->hasPermission('has-access-of-users-section',true))
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+            return $response;
+        }
 
         if(isset($request->recount) && $request->recount == true)
         {
@@ -521,6 +559,14 @@ class Role extends Model {
     //-------------------------------------------------
     public static function create($request)
     {
+
+        if(!\Auth::user()->hasPermission('can-create-roles',true))
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+            return $response;
+        }
 
         $inputs = $request->new_item;
 
@@ -656,6 +702,22 @@ class Role extends Model {
 
     }
     //-------------------------------------------------
+
+
+    //-------------------------------------------------
+
+    public static function getModuleSections($request)
+    {
+
+        $item = Permission::where('module',$request->module)->withTrashed()->select('section')->get()->unique('section');
+
+        $response['status'] = 'success';
+        $response['data'] = $item;
+
+        return $response;
+
+
+    }
 
 
 }

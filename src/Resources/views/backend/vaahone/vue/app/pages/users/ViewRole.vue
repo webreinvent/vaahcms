@@ -115,11 +115,11 @@
                             </b-table-column>
 
                             <b-table-column v-else field="name" class="has-text-centered" label="Has Permission" numeric >
-                                <b-button v-if="props.row.pivot.is_active === 1" rounded size="is-small"
+                                <b-button v-if="props.row.pivot.is_active === 1" disabled rounded size="is-small"
                                           type="is-success">
                                     Yes
                                 </b-button>
-                                <b-button v-else rounded size="is-small" type="is-danger">
+                                <b-button v-else disabled rounded size="is-small" type="is-danger">
                                     No
                                 </b-button>
                             </b-table-column>

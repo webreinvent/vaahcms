@@ -81,7 +81,7 @@
                 <div class="block"  v-if="items && items.list">
 
                     <b-field>
-                        <b-input placeholder="Search Roles"
+                        <b-input style="width: 100%" placeholder="Search Permissions"
                                  type="search"
                                  icon="search"
                                  @input="delayedSearch"
@@ -89,7 +89,74 @@
                                  v-model="search_item">>
 
                         </b-input>
+
+                        <p class="control">
+                            <button class="button is-primary"
+                                    @click="resetPage">
+                                Reset
+                            </button>
+                        </p>
+
+                        <p class="control">
+                            <button class="button is-primary"
+                                    @click="toggleFilters()"
+                                    slot="trigger">
+                                <b-icon icon="ellipsis-v"></b-icon>
+                            </button>
+                        </p>
                     </b-field>
+
+                    <!--filters-->
+                    <div class="level" v-if="show_filters">
+
+                        <div class="level-left">
+
+
+
+                            <div class="level-item">
+
+                                <b-field label="">
+                                    <b-select placeholder="- Select a module -"
+                                              v-model="filter.module"
+                                              @input="setSection()"
+                                    >
+                                        <option value="">
+                                            - Select a module -
+                                        </option>
+                                        <option
+                                                v-for="option in page.assets.module"
+                                                :value="option.module"
+                                                :key="option.module">
+                                            {{  option.module.charAt(0).toUpperCase() + option.module.slice(1) }}
+                                        </option>
+                                    </b-select>
+
+                                    <b-select placeholder="- Select a section -"
+                                              v-if="page.assets.module.some(item => item.module === filter.module)"
+                                              v-model="filter.section"
+                                              @input="getItemPermissions()">
+                                        <option value="">
+                                            - Select a section -
+                                        </option>
+                                        <option
+                                                v-for="option in moduleSectionList"
+                                                :value="option.section"
+                                                :key="option.section">
+                                            {{  option.section.charAt(0).toUpperCase() + option.section.slice(1) }}
+                                        </option>
+                                    </b-select>
+
+                                </b-field>
+
+
+                            </div>
+
+                        </div>
+
+
+                    </div>
+                    <!--/filters-->
+
 
 
                     <b-table :data="items.list.data"
