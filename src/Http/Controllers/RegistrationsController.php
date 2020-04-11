@@ -40,6 +40,13 @@ class RegistrationsController extends Controller
     public function postCreate(Request $request)
     {
 
+        /*$permission = \Auth::user()->hasPermission('slug');
+        if($permission['status'] == 'failed')
+        {
+            return response()->json($permission);
+        }*/
+
+
         $response = Registration::create($request);
 
         if($response['status'] == 'success')

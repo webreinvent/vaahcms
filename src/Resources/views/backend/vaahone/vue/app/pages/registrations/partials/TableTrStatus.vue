@@ -9,7 +9,7 @@
                 <div class="control">
                     <b-taglist attached>
                         <b-tag>{{value}}</b-tag>
-                        <b-tag>
+                        <b-tag v-if="hasPermission('can-update-registrations') || hasPermission('can-manage-registrations')">
                             <b-dropdown aria-role="list" position="is-bottom-left">
 
                                 <button class="button" slot="trigger">
@@ -25,15 +25,15 @@
 
                             </b-dropdown>
                         </b-tag>
-                        <b-tag type="is-success"
-                               v-if="value == 'email-verified' && !item.user_id" >
+                        <b-tag  type="is-success"
+                               v-if="value == 'email-verified' && !item.user_id && ( hasPermission('can-update-registrations') || hasPermission('can-manage-registrations') )" >
                             <b-button @click="confirmCreateUser">Create User</b-button>
 
 
 
                         </b-tag>
                         <b-tag type="is-success"
-                               v-if="value == 'email-verified' && !item.user_id" >
+                               v-if="value == 'email-verified' && !item.user_id && ( hasPermission('can-update-registrations') || hasPermission('can-manage-registrations') )" >
                             <b-dropdown aria-role="list" position="is-bottom-left">
 
                                 <button class="button" slot="trigger">

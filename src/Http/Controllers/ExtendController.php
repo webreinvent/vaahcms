@@ -27,58 +27,77 @@ class ExtendController extends Controller
         $dashboard_url = $base_url."vaah/";
         $link = $base_url.$vue_prefix;
 
-        $list = [
-            [
-                'link' => $dashboard_url,
-                'label'=> 'Dashboard'
-            ],
-            [
-                'link' => $dashboard_url,
-                'label'=> 'Users & Access',
-                'child' => [
-                    [
-                        'link' => $link."/registrations/",
-                        'label'=> 'Registration'
-                    ],
-                    [
-                        'link' => $link."/users/",
-                        'label'=> 'Users'
-                    ],
-                    [
-                        'link' => $link."/roles/",
-                        'label'=> 'Roles'
-                    ],
-                    [
-                        'link' => $link."/permissions/",
-                        'label'=> 'Permissions'
-                    ]
-                ]
-            ],
-            [
-                'link' => route('vh.backend.dashboard'),
-                'label'=> 'Extend',
-                'child' => [
-                    [
-                        'link' => route('vh.backend.dashboard'),
-                        'label'=> 'Modules'
-                    ],
-                    [
-                        'link' => route('vh.backend.dashboard'),
-                        'label'=> 'Themes'
-                    ]
-                ]
-            ],
-            [
-                'link' => route('vh.backend.dashboard'),
-                'label'=> 'Settings',
-                'child' => [
-                    [
-                        'link' => route('vh.backend.dashboard'),
-                        'label'=> 'Localization'
-                    ],
+        $list[0] = [
+            'link' => $dashboard_url,
+            'label'=> 'Dashboard'
+        ];
+
+        $list[1] = [
+            'link' => $dashboard_url,
+            'label'=> 'Users & Access',
+
+        ];
+
+        if(\Auth::user()->hasPermission('has-access-of-registrations-section',true))
+        {
+            $list[1]['child'][] =  [
+                'link' => $link."/registrations/",
+                'label'=> 'Registration'
+            ];
+        }
+
+        if(\Auth::user()->hasPermission('has-access-of-users-section',true))
+        {
+            $list[1]['child'][] =  [
+                'link' => $link."/users/",
+                'label'=> 'Users'
+            ];
+        }
+
+        if(\Auth::user()->hasPermission('has-access-of-roles-section',true))
+        {
+            $list[1]['child'][] =  [
+                'link' => $link."/roles/",
+                'label'=> 'Roles'
+            ];
+        }
+
+        if(\Auth::user()->hasPermission('has-access-of-permissions-section',true))
+        {
+            $list[1]['child'][] =  [
+                'link' => $link."/permissions/",
+                'label'=> 'Permissions'
+            ];
+        }
+
+        $list[2] = [
+            'link' => route('vh.backend.dashboard'),
+            'label'=> 'Extend',
+            'child' => [
+                [
+                    'link' => route('vh.backend.dashboard'),
+                    'label'=> 'Modules'
+                ],
+                [
+                    'link' => route('vh.backend.dashboard'),
+                    'label'=> 'Themes'
                 ]
             ]
         ];
+
+        $list[3] = [
+            'link' => route('vh.backend.dashboard'),
+            'label'=> 'Settings',
+            'child' => [
+                [
+                    'link' => route('vh.backend.dashboard'),
+                    'label'=> 'Localization'
+                ],
+            ]
+        ];
+
+
+
 
         return $list;
     }

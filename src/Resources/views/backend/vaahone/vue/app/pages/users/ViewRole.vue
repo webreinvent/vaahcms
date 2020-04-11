@@ -23,7 +23,7 @@
 
                         </p>
 
-                        <p class="control">
+                        <p v-if="hasPermission('can-update-users') || hasPermission('can-manage-users')" class="control">
 
 
                             <b-dropdown aria-role="list" position="is-bottom-left">
@@ -66,7 +66,7 @@
             <b-notification type="is-danger"
                             :closable="false"
                             class="is-light is-small"
-                            v-if="item.deleted_at"
+                            v-if="item && item.deleted_at"
             >
                 Deleted {{$vaah.fromNow(item.deleted_at)}}
             </b-notification>
@@ -103,13 +103,23 @@
                                 </b-tooltip>
                             </b-table-column>
 
-                            <b-table-column field="name" class="has-text-centered" label="Has Permission" numeric >
+                            <b-table-column v-if="hasPermission('can-update-users') || hasPermission('can-manage-users')" field="name" class="has-text-centered" label="Has Permission" numeric >
                                 <b-button v-if="props.row.pivot.is_active === 1" rounded size="is-small"
                                           type="is-success" @click="changePermission(props.row)">
                                     Yes
                                 </b-button>
                                 <b-button v-else rounded size="is-small" type="is-danger"
                                           @click="changePermission(props.row)">
+                                    No
+                                </b-button>
+                            </b-table-column>
+
+                            <b-table-column v-else field="name" class="has-text-centered" label="Has Permission" numeric >
+                                <b-button v-if="props.row.pivot.is_active === 1" rounded size="is-small"
+                                          type="is-success">
+                                    Yes
+                                </b-button>
+                                <b-button v-else rounded size="is-small" type="is-danger">
                                     No
                                 </b-button>
                             </b-table-column>
@@ -122,7 +132,7 @@
 
                 <div class="block" v-if="items">
                     <vh-pagination  :limit="1" :data="items.list"
-                                    @onPageChange="getItemPermissions">
+                                    @onPageChange="getItemRoles">
                     </vh-pagination>
                 </div>
             </div>

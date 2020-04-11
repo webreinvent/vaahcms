@@ -23,7 +23,7 @@
                                 <small><b>#{{item.id}}</b></small>
                             </b-button>
                         </p>
-                        <p class="control">
+                        <p v-if="hasPermission('can-update-permissions')" class="control">
                             <b-button icon-left="edit"
                                       type="is-light"
                                       tag="router-link"

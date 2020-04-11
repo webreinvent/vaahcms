@@ -27,6 +27,8 @@ export default {
         ajax_url: ajax_url,
         json_url: json_url,
         assets: null,
+        assets_is_fetching: null,
+        permissions: null,
         check_logged_in: null,
         is_logged_in: null,
     },
@@ -40,12 +42,33 @@ export default {
     //=========================================================================
     actions:{
         //-----------------------------------------------------------------
+        async getPermissions({ state, commit, dispatch, getters }) {
+
+
+            let url = state.ajax_url+'/json/permissions';
+            let params = {};
+            let data = await Vaah.ajax(url, params);
+
+            let payload = {
+                key: 'permissions',
+                value: data.data.data.list
+
+
+            };
+
+            commit('updateState', payload);
+
+
+
+        },
+        //-----------------------------------------------------------------
         //-----------------------------------------------------------------
     },
     //=========================================================================
     getters:{
         state(state) {return state;},
         assets(state) {return state.assets;},
+        permissions(state) {return state.permissions;},
         is_logged_in(state) {return state.is_logged_in;},
     }
 

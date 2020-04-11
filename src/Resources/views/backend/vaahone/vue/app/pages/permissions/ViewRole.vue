@@ -23,7 +23,7 @@
 
                         </p>
 
-                        <p class="control">
+                        <p v-if="hasPermission('can-update-permissions') || hasPermission('can-manage-permissions')" class="control">
 
 
                             <b-dropdown aria-role="list" position="is-bottom-left">
@@ -103,13 +103,24 @@
                                 </b-tooltip>
                             </b-table-column>
 
-                            <b-table-column field="name" class="has-text-centered" label="Has Permission" numeric >
+                            <b-table-column v-if="hasPermission('can-update-permissions') || hasPermission('can-manage-permissions')"
+                                            field="name" class="has-text-centered" label="Has Permission" numeric >
                                 <b-button v-if="props.row.pivot.is_active === 1" rounded size="is-small"
                                           type="is-success" @click="changePermission(props.row)">
                                     Yes
                                 </b-button>
                                 <b-button v-else rounded size="is-small" type="is-danger"
                                           @click="changePermission(props.row)">
+                                    No
+                                </b-button>
+                            </b-table-column>
+
+                            <b-table-column v-else field="name" class="has-text-centered" label="Has Permission" numeric >
+                                <b-button v-if="props.row.pivot.is_active === 1" rounded size="is-small"
+                                          type="is-success">
+                                    Yes
+                                </b-button>
+                                <b-button v-else rounded size="is-small" type="is-danger">
                                     No
                                 </b-button>
                             </b-table-column>

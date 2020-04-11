@@ -25,7 +25,8 @@
 
                             <div class="card-header-buttons">
                                 <div class="field has-addons is-pulled-right">
-                                    <p class="control">
+<!--                                    {{$vaah.checkPermission('can-create-registrations')}}-->
+                                    <p v-if="hasPermission('can-create-registrations')" class="control">
                                         <b-button tag="router-link"
                                                   type="is-light"
                                                   :to="{name: 'reg.create'}"
@@ -63,7 +64,7 @@
                                     <!--left-->
                                     <div class="level-left">
                                         <div  class="level-item">
-                                            <b-field>
+                                            <b-field v-if="hasPermission('can-update-registrations')">
 
                                                 <b-select placeholder="- Bulk Actions -"
                                                           v-model="page.bulk_action.action">

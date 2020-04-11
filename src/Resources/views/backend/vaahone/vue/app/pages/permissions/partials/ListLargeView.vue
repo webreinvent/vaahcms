@@ -2,7 +2,7 @@
 <template>
     <div>
         <b-table :data="page.list_is_empty ? [] : page.list.data"
-                 :checkable="true"
+                 :checkable="hasPermission('can-update-permissions') ? true : false"
                  :checked-rows.sync="page.bulk_action.selected_items"
                  checkbox-position="left"
                  :hoverable="true"
@@ -27,7 +27,8 @@
                     </vh-copy>
                 </b-table-column>
 
-                <b-table-column v-if="props.row.deleted_at" field="status" label="Is Active">
+                <b-table-column v-if="props.row.deleted_at || ( !hasPermission('can-manage-permissions') && !hasPermission('can-update-permissions'))"
+                                field="status" label="Is Active">
 
                     <b-button v-if="props.row.is_active === 1" rounded size="is-small"
                            type="is-success">
@@ -39,17 +40,16 @@
 
                 </b-table-column>
 
-                <b-table-column v-else field="status" label="Is Active">
-                    <b-tooltip label="Change Status" type="is-dark">
+                <b-table-column v-if="!props.row.deleted_at && ( hasPermission('can-manage-permissions') || hasPermission('can-update-permissions') )" field="status" label="Is Active">
+
                         <b-button v-if="props.row.is_active === 1" rounded size="is-small"
-                                  type="is-success" @click="changeStatus(props.row.id)">
+                                  type="is-success">
                             Yes
                         </b-button>
-                        <b-button v-else rounded size="is-small" type="is-danger"
-                                  @click="changeStatus(props.row.id)">
+                        <b-button v-else rounded size="is-small" type="is-danger">
                             No
                         </b-button>
-                    </b-tooltip>
+
                 </b-table-column>
 
                 <b-table-column field="count_roles" label="Roles" >

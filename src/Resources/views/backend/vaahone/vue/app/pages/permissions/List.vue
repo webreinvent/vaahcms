@@ -54,7 +54,7 @@
                                     <!--left-->
                                     <div class="level-left">
                                         <div  class="level-item">
-                                            <b-field>
+                                            <b-field v-if="hasPermission('can-update-permissions')">
 
                                                 <b-select placeholder="- Bulk Actions -"
                                                           v-model="page.bulk_action.data.status">

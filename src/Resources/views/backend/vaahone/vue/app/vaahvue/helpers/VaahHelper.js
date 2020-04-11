@@ -440,8 +440,19 @@ const VaahHelper = {
         return moment(value).format('YYYY MMM DD hh:mm A (dddd)')
     },
     //---------------------------------------------------------------------
-    checkPermission: function (slug) {
-        return this.permissions.indexOf(slug) > -1 ? true : false;
+    hasPermission: function (permissions, slug) {
+
+        if(!permissions)
+        {
+            return false;
+        }
+
+        if(permissions.length < 1)
+        {
+            return false;
+        }
+
+        return permissions.indexOf(slug) > -1 ? true : false;
     },
     //---------------------------------------------------------------------
     paginate: function (event, page) {

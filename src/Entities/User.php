@@ -276,9 +276,14 @@ class User extends Authenticatable
     {
         $inputs = $request->new_item;
 
+        $validate = static::validation($inputs);
+
+        if(isset($validate['status']) && $validate['status'] == 'failed')
+        {
+            return $validate;
+        }
+
         $rules = array(
-            'email' => 'required|email',
-            'first_name' => 'required',
             'password' => 'required',
         );
 
@@ -328,29 +333,31 @@ class User extends Authenticatable
     //-------------------------------------------------
     public static function store($request)
     {
-        $rules = array(
-            'email' => 'required|email',
-            'first_name' => 'required',
-        );
-
-        if($request->has('phone'))
-        {
-            $rules['phone'] = 'integer';
-        }
-
-
-        $validator = \Validator::make( $request->all(), $rules);
-        if ( $validator->fails() ) {
-
-            $errors             = errorsToArray($validator->errors());
-            $response['status'] = 'failed';
-            $response['errors'] = $errors;
-            return $response;
-        }
-
-        $data = [];
 
         $inputs = $request->all();
+
+        $validate = static::validation($inputs);
+
+        if(isset($validate['status']) && $validate['status'] == 'failed')
+        {
+            return $validate;
+        }
+
+        if(isset($inputs['phone']))
+        {
+            $rules['phone'] = 'integer';
+
+            $validator = \Validator::make( $request->all(), $rules);
+            if ( $validator->fails() ) {
+
+                $errors             = errorsToArray($validator->errors());
+                $response['status'] = 'failed';
+                $response['errors'] = $errors;
+                return $response;
+            }
+        }
+
+
 
 
         if($request->has('birth'))
@@ -772,8 +779,25 @@ class User extends Authenticatable
     }
 
     //-------------------------------------------------
-    public function hasPermission($permission_slug)
+    public function hasPermission($permission_slug, $boolean=false)
     {
+
+        if ($this->isAdmin()) {
+
+            if($boolean)
+            {
+                return true;
+            } else{
+                $response['status'] = 'success';
+                if(env('APP_DEBUG'))
+                {
+                    $response['data']['permission'] = 'Permission slug: '.$permission_slug;
+                    $response['hint'][] = 'Admin has all permission by default.';
+                }
+                return $response;
+            }
+
+        }
 
         //check if permission exist or not
         $permission = Permission::where('slug', $permission_slug)
@@ -781,29 +805,76 @@ class User extends Authenticatable
 
         if (!$permission)
         {
-            $response['status'] = 'failed';
-            $response['errors'][] = 'No Permission exist with slug: '.$permission_slug;
-            return response()->json($response);
-        }
+            if($boolean)
+            {
+                return false;
+            } else {
+                $response['status'] = 'failed';
+                $response['errors'][] = 'No Permission exist with slug: ' . $permission_slug;
 
-        if ($this->isAdmin()) {
-            return true;
+                if (env('APP_DEBUG')) {
+                    $response['hint'][] = 'Check the migrations & seeds are properly run.';
+                }
+
+                return $response;
+            }
         }
 
         if ($permission->is_active != 1) {
-            return false;
+            if($boolean)
+            {
+                return false;
+            } else{
+                $response['status'] = 'failed';
+                $response['errors'][] = $permission_slug.' is inactive';
+                if(env('APP_DEBUG'))
+                {
+                    $response['hint'][] = 'Enable the permission status to active from backend/admin control panel.';
+                }
+                return $response;
+            }
+
         }
 
         foreach ($this->permissions() as $permission)
         {
-            if ($permission['slug'] == $permission_slug && $permission['is_active'] == 1)
+            if ($permission['slug'] == $permission_slug
+                && $permission['is_active'] == 1
+                && $permission['pivot']['is_active'] == 1
+            )
             {
-                return true;
+                if($boolean)
+                {
+                    return true;
+                } else{
+                    $response['status'] = 'success';
+                    if(env('APP_DEBUG'))
+                    {
+                        $response['hint'][] = 'Permission slug: '.$permission_slug.' is active for '.\Auth::user()->email;
+                    }
+                    return $response;
+
+                }
+                break;
             }
         }
 
-        return false;
+        if($boolean)
+        {
+            return false;
+        } else{
+            $response['status'] = 'failed';
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+            if(env('APP_DEBUG'))
+            {
+                $response['hint'][] = 'Permission slug: '.$permission_slug.' is not active for '.\Auth::user()->email;
+            }
+            return $response;
+        }
+
     }
+
+    //-------------------------------------------------
 
     //-------------------------------------------------
     public static function getAvatarById($id)
@@ -1003,7 +1074,47 @@ class User extends Authenticatable
 
     }
     //-------------------------------------------------
+    public function getPermissionsSlugs()
+    {
+        $roles = $this->roles()->wherePivot('is_active', 1)->get();
+        
+        $permissions_list = array();
+        foreach ($roles as $role) {
+            $permissions = $role->permissions()->get();
+            foreach ($permissions as $permission) {
+                if($permission->pivot->is_active == 1)
+                {
+                    $permissions_list[] = $permission->slug;
+                }
+
+            }
+        }
+        return $permissions_list;
+    }
     //-------------------------------------------------
+    public static function validation($request){
+
+        $rules = array(
+
+            'email' => 'required|email',
+            'first_name' => 'required',
+            'status' => 'required',
+            'is_active' => 'required',
+
+        );
+
+
+        $validator = \Validator::make($request,$rules);
+
+        if ( $validator->fails() ) {
+
+            $errors             = errorsToArray($validator->errors());
+            $response['status'] = 'failed';
+            $response['errors'] = $errors;
+            return $response;
+        }
+
+    }
     //-------------------------------------------------
     //-------------------------------------------------
 }

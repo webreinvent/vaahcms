@@ -2,7 +2,7 @@
 <template>
     <div>
         <b-table :data="page.list_is_empty ? [] : page.list.data"
-                 :checkable="true"
+                 :checkable="hasPermission('can-update-users') ? true : false"
                  :checked-rows.sync="page.bulk_action.selected_items"
                  checkbox-position="left"
                  :hoverable="true"
@@ -19,7 +19,14 @@
                 </b-table-column>
 
                 <b-table-column field="email" label="Email">
-                    {{ props.row.email }}
+                    <b-tooltip label="Copy Email" type="is-dark">
+                        <vh-copy class="text-copyable"
+                                 :data="props.row.email"
+                                 :label="props.row.email"
+                                 @copied="copiedData"
+                        >
+                        </vh-copy>
+                    </b-tooltip>
                 </b-table-column>
 
 

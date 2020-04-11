@@ -64,6 +64,21 @@ export default {
             this.$router.push({name: 'user.role', params:{id:item.id}})
         },
         //---------------------------------------------------------------------
+        copiedData: function (data) {
+
+            this.$vaah.toastSuccess(['copied']);
+
+            // alertify.success('copied');
+
+            this.$vaah.console(data, 'copied data');
+
+        },
+        //---------------------------------------------------------------------
+        hasPermission: function(slug)
+        {
+            return this.$vaah.hasPermission(this.permissions, slug);
+        },
+        //---------------------------------------------------------------------
         //---------------------------------------------------------------------
     }
 }

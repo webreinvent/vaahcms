@@ -2,7 +2,7 @@
 <template>
     <div>
         <b-table :data="page.list_is_empty ? [] : page.list.data"
-                 :checkable="true"
+                 :checkable="hasPermission('can-update-users') ? true : false"
                  :checked-rows.sync="page.bulk_action.selected_items"
                  checkbox-position="left"
                  :hoverable="true"
@@ -29,7 +29,7 @@
                     </b-tooltip>
                 </b-table-column>
 
-                <b-table-column v-if="props.row.deleted_at" field="is_active" label="Is Active">
+                <b-table-column v-if="props.row.deleted_at || ( !hasPermission('can-manage-users') && !hasPermission('can-update-users'))" field="is_active" label="Is Active">
 
                     <b-button v-if="props.row.is_active === 1" rounded size="is-small"
                               type="is-success">
@@ -41,7 +41,7 @@
 
                 </b-table-column>
 
-                <b-table-column v-else field="is_active" label="Is Active">
+                <b-table-column v-if="!props.row.deleted_at && ( hasPermission('can-manage-users') || hasPermission('can-update-users') )" field="is_active" label="Is Active">
                     <b-tooltip label="Change Status" type="is-dark">
                         <b-button v-if="props.row.is_active === 1" rounded size="is-small"
                                   type="is-success" @click="changeStatus(props.row.id)">

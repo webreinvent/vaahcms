@@ -13,6 +13,7 @@ export default async function GetBackendAssets ({ to, from, next, store }){
 
     let root_assets = store.getters['root/state'].assets;
 
+
     let params = {};
 
 
@@ -24,6 +25,11 @@ export default async function GetBackendAssets ({ to, from, next, store }){
     if(!root_assets || (root_assets && !root_assets.auth_user))
     {
         params.get_auth_user = true;
+    }
+
+    if(!root_assets || (root_assets && !root_assets.extended_views))
+    {
+        params.get_extended_views = true;
     }
 
     if(!root_assets || (root_assets && !root_assets.extended_views))
@@ -53,6 +59,8 @@ export default async function GetBackendAssets ({ to, from, next, store }){
         };
 
         store.commit('root/updateState', payload);
+
+        await store.dispatch('root/getPermissions');
 
     }
 

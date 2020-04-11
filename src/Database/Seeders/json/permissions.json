@@ -1,0 +1,160 @@
+[
+
+    {
+        "name": "Has Access Of Users Section",
+        "module": "vaahcms",
+        "section": "user",
+        "details": "This will allow user see the link of user section."
+    },
+    {
+        "name": "Can Create Users",
+        "module": "vaahcms",
+        "section": "user",
+        "details": "This will allow user to add anything in the user section."
+    },
+    {
+        "name": "Can Read Users",
+        "module": "vaahcms",
+        "section": "user",
+        "details": "This will allow user to view anything in the user section."
+    },
+    {
+        "name": "Can Update Users",
+        "module": "vaahcms",
+        "section": "user",
+        "details": "This will allow user to edit anything in the user section."
+    },
+    {
+        "name": "Can Delete Users",
+        "module": "vaahcms",
+        "section": "user",
+        "details": "This will allow user to delete anything in the user section."
+    },
+    {
+        "name": "Can Manage Users",
+        "module": "vaahcms",
+        "section": "user",
+        "details": "This will allow user to manage anything in the user section."
+    },
+    {
+        "name": "Can See Users Contact Details",
+        "module": "vaahcms",
+        "section": "user",
+        "details": "This will allow user to view contact (email, mobile) detail in the user section."
+    },
+
+
+    {
+        "name": "Has Access Of Registrations Section",
+        "module": "vaahcms",
+        "section": "registration",
+        "details": "This will allow user see the link of registration section."
+    },
+    {
+        "name": "Can Create Registrations",
+        "module": "vaahcms",
+        "section": "registration",
+        "details": "This will allow user to add anything in the registration section."
+    },
+    {
+        "name": "Can Create Users From Registrations",
+        "module": "vaahcms",
+        "section": "registration",
+        "details": "This will allow user to add users in the registration section."
+    },
+    {
+        "name": "Can Read Registrations",
+        "module": "vaahcms",
+        "section": "registration",
+        "details": "This will allow user to view anything in the registration section."
+    },
+    {
+        "name": "Can Update Registrations",
+        "module": "vaahcms",
+        "section": "registration",
+        "details": "This will allow user to edit anything in the registration section."
+    },
+    {
+        "name": "Can Delete Registrations",
+        "module": "vaahcms",
+        "section": "registration",
+        "details": "This will allow user to delete anything in the registration section."
+    },
+    {
+        "name": "Can Manage Registrations",
+        "module": "vaahcms",
+        "section": "registration",
+        "details": "This will allow user to manage anything in the registration section."
+    },
+    {
+        "name": "Can See Registrations Contact Details",
+        "module": "vaahcms",
+        "section": "registration",
+        "details": "This will allow user to view contact detail in the registration section."
+    },
+
+
+    {
+        "name": "Has Access Of Roles Section",
+        "module": "vaahcms",
+        "section": "role",
+        "details": "This will allow user see the link of role section."
+    },
+    {
+        "name": "Can Create Roles",
+        "module": "vaahcms",
+        "section": "role",
+        "details": "This will allow user to add anything in the role section."
+    },
+    {
+        "name": "Can Read Roles",
+        "module": "vaahcms",
+        "section": "role",
+        "details": "This will allow user to view anything in the role section."
+    },
+    {
+        "name": "Can Update Roles",
+        "module": "vaahcms",
+        "section": "role",
+        "details": "This will allow user to edit anything in the role section."
+    },
+    {
+        "name": "Can Delete Roles",
+        "module": "vaahcms",
+        "section": "role",
+        "details": "This will allow user to delete anything in the role section."
+    },
+    {
+        "name": "Can Manage Roles",
+        "module": "vaahcms",
+        "section": "role",
+        "details": "This will allow user to manage anything in the role section."
+    },
+
+
+    {
+        "name": "Has Access Of Permissions Section",
+        "module": "vaahcms",
+        "section": "permission",
+        "details": "This will allow user see the link of permission section."
+    },
+    {
+        "name": "Can Read Permissions",
+        "module": "vaahcms",
+        "section": "permission",
+        "details": "This will allow user to view anything in the permission section."
+    },
+    {
+        "name": "Can Update Permissions",
+        "module": "vaahcms",
+        "section": "permission",
+        "details": "This will allow user to edit anything in the permission section."
+    },
+    {
+        "name": "Can Manage Permissions",
+        "module": "vaahcms",
+        "section": "permission",
+        "details": "This will allow user to manage anything in the permission section."
+    }
+
+]
