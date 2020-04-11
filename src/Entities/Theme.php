@@ -335,8 +335,8 @@ class Theme extends Model {
     {
 
         //check if module is already installed
-        //$vaahcms_module_path = config('vaahcms.themes_path').'/';
-        $vaahcms_path = base_path('Download/Themes').'/';
+        $vaahcms_path = config('vaahcms.themes_path').'/';
+        //$vaahcms_path = base_path('Download/Themes').'/';
 
         $package_path = $vaahcms_path.$name;
 

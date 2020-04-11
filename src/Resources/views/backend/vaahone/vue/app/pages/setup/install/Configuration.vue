@@ -134,6 +134,7 @@
                         <b-input v-model="config.env.db_password"
                                  expanded
                                  password-reveal
+                                 type="password"
                                  autocomplete="new-password"
                                  name="config-db_password"
                                  dusk="config-db_password"

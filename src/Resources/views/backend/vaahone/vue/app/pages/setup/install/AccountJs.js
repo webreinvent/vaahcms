@@ -1,5 +1,6 @@
 import GlobalComponents from '../../../vaahvue/helpers/GlobalComponents';
 
+
 let namespace = 'setup';
 
 import Logo from '../../../components/Logo';
@@ -16,7 +17,7 @@ export default {
     },
     components:{
         ...GlobalComponents,
-        'AutoCompleteTimeZone': AutoComplete,
+        'AutoCompleteCallingCode': AutoComplete,
         Logo,
         Footer,
 
@@ -24,9 +25,8 @@ export default {
     data()
     {
         return {
-            btn_is_migration: false,
+            btn_is_account_creating: false,
             labelPosition: 'on-border',
-
         }
     },
     watch: {
@@ -35,8 +35,6 @@ export default {
     mounted() {
         //----------------------------------------------------
         this.onLoad();
-        //----------------------------------------------------
-        this.$root.$on('eReloadList', this.getList);
         //----------------------------------------------------
         //----------------------------------------------------
     },
@@ -52,16 +50,10 @@ export default {
             this.$vaah.updateState(update);
         },
         //---------------------------------------------------------------------
-        updateView: function()
-        {
-            this.$store.dispatch(namespace+'/updateView', this.$route);
-        },
-        //---------------------------------------------------------------------
         onLoad: function()
         {
             this.getAssets();
-            this.config.is_migrated = false;
-            this.config.active_step = 1;
+            this.config.active_step = 3;
             this.updateConfig();
         },
         //---------------------------------------------------------------------
@@ -76,41 +68,51 @@ export default {
             this.update('config', this.config);
         },
         //---------------------------------------------------------------------
-
-        runMigrations: function () {
-            this.btn_is_migration = true;
-            this.config.is_migrated = false;
+        setCallingCode: function (item) {
+            this.config.account.country_calling_code = item.slug;
             this.updateConfig();
-
-            let params = {};
-            let url = this.ajax_url+'/run/migrations';
-            this.$vaah.ajax(url, params, this.runMigrationsAfter);
         },
         //---------------------------------------------------------------------
-        runMigrationsAfter: function (data, res) {
-            this.btn_is_migration = false;
+
+        //---------------------------------------------------------------------
+        createAccount: function () {
+            this.btn_is_account_creating = true;
+            let params = this.config.account;
+            let url = this.ajax_url+'/store/admin';
+            this.$vaah.ajax(url, params, this.createAccountAfter);
+        },
+        //---------------------------------------------------------------------
+        createAccountAfter: function (data, res) {
+            this.btn_is_account_creating = false;
             if(data)
             {
-                this.config.is_migrated = true;
+                this.config.is_account_created = true;
                 this.updateConfig();
             }
         },
 
         //---------------------------------------------------------------------
-        validateMigration: function () {
 
-            if(!this.btn_is_migration)
-            {
-                this.$vaah.toastErrors(['Click on Migrate & Run Seeds button']);
-                return false;
-            } else
-            {
-                this.$router.push({name: 'setup.install.dependencies'})
-            }
-
-        },
         //---------------------------------------------------------------------
 
+        generateUsername: function () {
+            let email = this.config.account.email.split('@');
+            if(email[0])
+            {
+                this.config.account.username = email[0];
+                this.updateConfig();
+            }
+        },
+        //---------------------------------------------------------------------
+        validateAccountCreation: function () {
+            if(!this.config.is_account_created)
+            {
+                this.$vaah.toastErrors(['Create the Administrator Account'])
+            } else
+            {
+                this.$router.push({name: 'sign.in'})
+            }
+        },
         //---------------------------------------------------------------------
         //---------------------------------------------------------------------
     }

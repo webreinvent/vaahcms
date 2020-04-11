@@ -22,6 +22,19 @@ export default {
             count_total_dependencies: 0,
             count_installed_dependencies: 0,
             count_installed_progress: 0,
+            is_account_created: false,
+            account:{
+
+                email: null,
+                username: null,
+                password: null,
+                first_name: null,
+                middle_name: null,
+                last_name: null,
+                country_calling_code: null,
+                phone: null,
+
+            },
             env:{
                 app_name: "VaahCMS",
                 app_key: null,

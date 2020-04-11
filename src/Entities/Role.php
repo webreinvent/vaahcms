@@ -474,7 +474,7 @@ class Role extends Model {
 
 
         //enable all roles for admin users
-        $admin_role = Role::slug('admin')->first();
+        $admin_role = Role::slug('administrator')->first();
         $admin_users = $admin_role->users()->get()->pluck('id')->toArray();
         $pivotData = array_fill(0, count($admin_users), ['is_active' => 1]);
         $syncData  = array_combine($admin_users, $pivotData);

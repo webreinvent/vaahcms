@@ -70,8 +70,8 @@ class VaahCmsTableSeeder extends Seeder
     {
         $list = [
             [
-                'name' => 'Admin',
-                'slug' => 'admin',
+                'name' => 'Administrator',
+                'slug' => 'administrator',
                 'details' => 'Users who have admin roles has all the permission access and manage the data.',
                 'is_active' => 1,
             ],

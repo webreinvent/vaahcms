@@ -127,6 +127,10 @@
                     Download & Install Dependencies
                 </b-button>
 
+                <b-button type="is-light"
+                          @click="skipDependencies()">
+                    Skip
+                </b-button>
 
                 <hr>
 
@@ -148,6 +152,7 @@
 
                         <div class="level-item">
                             <b-button type="is-primary"
+                                      @click="validateDependencies()"
                                       size="small">
                                 Save & Next
                             </b-button>

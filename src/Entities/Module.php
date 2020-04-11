@@ -370,8 +370,8 @@ class Module extends Model {
     {
 
         //check if module is already installed
-        //$vaahcms_module_path = config('vaahcms.modules_path').'/';
-        $vaahcms_path = base_path('Download/Modules').'/';
+        $vaahcms_path = config('vaahcms.modules_path').'/';
+        //$vaahcms_path = base_path('Download/Modules').'/';
 
         $package_path = $vaahcms_path.$name;
 

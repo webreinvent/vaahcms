@@ -77,6 +77,7 @@ import InstallIndex from "./../pages/setup/install/Index";
 import InstallConfiguration from "./../pages/setup/install/Configuration";
 import InstallMigrate from "./../pages/setup/install/Migrate";
 import InstallDependencies from "./../pages/setup/install/Dependencies";
+import InstallAccount from "./../pages/setup/install/Account";
 
 
 routes_list =     {
@@ -167,9 +168,9 @@ routes_list =     {
                     },
                 },
                 {
-                    path: 'admin',
-                    name: 'setup.install.admin',
-                    component: ForgotPassword,
+                    path: 'account',
+                    name: 'setup.install.account',
+                    component: InstallAccount,
                     props: true,
                     meta: {
                         middleware: [

@@ -154,6 +154,24 @@ export default {
             }
         },
         //---------------------------------------------------------------------
+        validateDependencies: function () {
+            if(this.config.count_installed_progress != 100)
+            {
+                this.$vaah.toastErrors(['Dependencies are not installed.']);
+                return false;
+            } else
+            {
+                this.$router.push({name: 'setup.install.account'})
+            }
+        },
+        //---------------------------------------------------------------------
+        skipDependencies: function () {
+            this.config.count_installed_progress = 100;
+            this.updateConfig();
+        },
+        //---------------------------------------------------------------------
+
+
         //---------------------------------------------------------------------
     }
 }

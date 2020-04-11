@@ -50,6 +50,7 @@ class SetupController extends Controller
         $data['database_types'] = vh_database_types();
         $data['mail_encryption_types'] = vh_mail_encryption_types();
         $data['mail_sample_settings'] = vh_mail_sample_settings();
+        $data['country_calling_codes'] = vh_get_countries_calling_codes();
         $data['app_url'] = url("/");
 
         $response['status'] = 'success';
@@ -369,7 +370,6 @@ class SetupController extends Controller
 
     //----------------------------------------------------------
 
-    //----------------------------------------------------------
 
     //----------------------------------------------------------
     public function storeAdmin(Request $request)
@@ -378,10 +378,10 @@ class SetupController extends Controller
             'first_name' => 'required',
             'last_name' => 'required',
             'email' => 'required',
-            'country_calling_code' => 'required',
-            'phone' => 'required',
             'username' => 'required',
             'password' => 'required',
+            'country_calling_code' => 'required',
+            'phone' => 'required',
         );
 
         $validator = \Validator::make( $request->all(), $rules);
@@ -406,19 +406,20 @@ class SetupController extends Controller
 
         $user = new User();
         $user->fill($request->all());
-        $user->uid = uniqid();
+        $user->uuid = Str::uuid();
         $user->password = \Hash::make($request->password);
         $user->is_active = 1;
+        $user->activated_at = \Carbon::now();
         $user->status = 'active';
         $user->created_ip = \Request::ip();
         $user->save();
 
-        $role = Role::where('slug', 'admin')->first();
+        $role = Role::where('slug', 'administrator')->first();
 
         if(!$role)
         {
             $response['status'] = 'failed';
-            $response['errors'][] = \Lang::get('vaahcms::messages.not_exist', ['key' => 'role slug', 'value' => 'admin']);;
+            $response['errors'][] = \Lang::get('vaahcms::messages.not_exist', ['key' => 'role slug', 'value' => 'administrator']);;
             return response()->json($response);
         }
 
