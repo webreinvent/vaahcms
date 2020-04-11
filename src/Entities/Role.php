@@ -240,23 +240,6 @@ class Role extends Model {
     //-------------------------------------------------
     public static function syncRolesWithUsers()
     {
-        $roles_list = static::all();
-
-        if($roles_list){
-            foreach ($roles_list as $role){
-                if(!$role->uuid){
-                    $role->uuid = Str::uuid();
-                }
-
-                if(!$role->slug){
-                    $role->slug = Str::slug($role->name);
-                }
-
-                $role->save();
-
-            }
-        }
-
         $all_users = User::select('id')->get()->pluck('id')->toArray();
         $all_roles = Role::select('id')->get();
 
@@ -272,8 +255,11 @@ class Role extends Model {
 
 
         //enable all roles for admin users
-        $admin_role = Role::slug('administrator')->first();
-        $admin_users = $admin_role->users()->get()->pluck('id')->toArray();
+        $admin_role = Role::slug('admin')->first();
+        $admin_users = $admin_role->users()->wherePivot('is_active', 1)
+            ->get()
+            ->pluck('id')
+            ->toArray();
         $pivotData = array_fill(0, count($admin_users), ['is_active' => 1]);
         $syncData  = array_combine($admin_users, $pivotData);
         $admin_role->users()->syncWithoutDetaching($syncData);

@@ -1,0 +1,19 @@
+[
+
+    {
+        "name": "Administrator",
+        "details": "Users who have admin roles has all the permission access and manage the data.Somebody who has access to all the administration features within a single site",
+        "is_active": 1
+    },
+    {
+        "name": "Manager",
+        "details": "Users who have manage roles can assign a role to user.",
+        "is_active": 1
+    },
+    {
+        "name": "Registered",
+        "details": "Users who have registered roles can access only public website.",
+        "is_active": 1
+    }
+
+]

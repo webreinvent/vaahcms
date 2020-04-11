@@ -8,6 +8,7 @@ let namespace = 'roles';
 export default {
     computed:{
         root() {return this.$store.getters['root/state']},
+        permissions() {return this.$store.getters['root/state'].permissions},
         page() {return this.$store.getters[namespace+'/state']},
         ajax_url() {return this.$store.getters[namespace+'/state'].ajax_url},
         item() {return this.$store.getters[namespace+'/state'].active_item},
@@ -191,6 +192,11 @@ export default {
         resetActiveItem: function () {
             this.update('active_item', null);
             this.$router.push({name:'role.list'});
+        },
+        //---------------------------------------------------------------------
+        hasPermission: function(slug)
+        {
+            return this.$vaah.hasPermission(this.permissions, slug);
         },
         //---------------------------------------------------------------------
 

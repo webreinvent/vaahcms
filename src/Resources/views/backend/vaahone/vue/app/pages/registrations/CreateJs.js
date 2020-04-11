@@ -7,6 +7,7 @@ let namespace = 'registrations';
 export default {
     computed:{
         root() {return this.$store.getters['root/state']},
+        permissions() {return this.$store.getters['root/state'].permissions},
         page() {return this.$store.getters[namespace+'/state']},
         ajax_url() {return this.$store.getters[namespace+'/state'].ajax_url},
         new_item() {return this.$store.getters[namespace+'/state'].new_item},

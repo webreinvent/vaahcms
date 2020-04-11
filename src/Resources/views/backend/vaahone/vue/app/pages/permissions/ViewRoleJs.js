@@ -6,6 +6,7 @@ export default {
     props: ['id'],
     computed:{
         root() {return this.$store.getters['root/state']},
+        permissions() {return this.$store.getters['root/state'].permissions},
         page() {return this.$store.getters[namespace+'/state']},
         ajax_url() {return this.$store.getters[namespace+'/state'].ajax_url},
         item() {return this.$store.getters[namespace+'/state'].active_item},
@@ -170,6 +171,11 @@ export default {
 
             this.actions(false, 'toggle_role_active_status', params, data)
 
+        },
+        //---------------------------------------------------------------------
+        hasPermission: function(slug)
+        {
+            return this.$vaah.hasPermission(this.permissions, slug);
         },
         //---------------------------------------------------------------------
         //---------------------------------------------------------------------

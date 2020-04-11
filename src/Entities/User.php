@@ -282,69 +282,6 @@ class User extends Authenticatable
     {
         $inputs = $request->new_item;
 
-        $rules = array(
-            'email' => 'required|email',
-            'first_name' => 'required',
-            'password' => 'required',
-        );
-
-        $validator = \Validator::make( $inputs, $rules);
-        if ( $validator->fails() ) {
-
-            $errors             = errorsToArray($validator->errors());
-            $response['status'] = 'failed';
-            $response['errors'] = $errors;
-            return $response;
-        }
-
-        // check if already exist
-        $user = static::where('email',$inputs['email'])->first();
-
-        if($user)
-        {
-            $response['status'] = 'failed';
-            $response['errors'][] = "This email is already registered.";
-            return $response;
-        }
-
-        if(!isset($inputs['username']))
-        {
-            $inputs['username'] = Str::slug($inputs['email']);
-        }
-
-        if(!isset($inputs['status']))
-        {
-            $inputs['status'] = 'inactive';
-        }
-
-        $inputs['created_ip'] = request()->ip();
-
-        $reg = new static();
-        $reg->fill($inputs);
-        $reg->save();
-
-        Role::syncRolesWithUsers();
-
-        $response['status'] = 'success';
-        $response['data']['item'] = $reg;
-        return $response;
-
-    }
-
-    //-------------------------------------------------
-    public static function store($request)
-    {
-
-        if(!\Auth::user()->hasPermission('can-create-users',true))
-        {
-            $response['status'] = 'failed';
-            $response['errors'][] = trans("vaahcms::messages.permission_denied");
-
-            return $response;
-        }
-
-        $inputs = $request->new_item;
-
         $validate = static::validation($inputs);
 
         if(isset($validate['status']) && $validate['status'] == 'failed')
@@ -403,15 +340,30 @@ class User extends Authenticatable
     public static function store($request)
     {
 
-        if(!\Auth::user()->hasPermission('can-update-users',true))
-        {
-            $response['status'] = 'failed';
-            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+        $inputs = $request->all();
 
-            return $response;
+        $validate = static::validation($inputs);
+
+        if(isset($validate['status']) && $validate['status'] == 'failed')
+        {
+            return $validate;
         }
 
-        $inputs = $request->all();
+        if(isset($inputs['phone']))
+        {
+            $rules['phone'] = 'integer';
+
+            $validator = \Validator::make( $request->all(), $rules);
+            if ( $validator->fails() ) {
+
+                $errors             = errorsToArray($validator->errors());
+                $response['status'] = 'failed';
+                $response['errors'] = $errors;
+                return $response;
+            }
+        }
+
+
 
         $validate = static::validation($inputs);
 
@@ -945,8 +897,6 @@ class User extends Authenticatable
 
         foreach ($this->permissions() as $permission)
         {
-
-
             if ($permission['slug'] == $permission_slug
                 && $permission['is_active'] == 1
                 && $permission['pivot']['is_active'] == 1
@@ -957,7 +907,6 @@ class User extends Authenticatable
                     return true;
                 } else{
                     $response['status'] = 'success';
-                    $response['data'] = [];
                     if(env('APP_DEBUG'))
                     {
                         $response['hint'][] = 'Permission slug: '.$permission_slug.' is active for '.\Auth::user()->email;
@@ -983,9 +932,6 @@ class User extends Authenticatable
         }
 
     }
-
-    //-------------------------------------------------
-
 
     //-------------------------------------------------
 
@@ -1187,7 +1133,47 @@ class User extends Authenticatable
 
     }
     //-------------------------------------------------
+    public function getPermissionsSlugs()
+    {
+        $roles = $this->roles()->wherePivot('is_active', 1)->get();
+        
+        $permissions_list = array();
+        foreach ($roles as $role) {
+            $permissions = $role->permissions()->get();
+            foreach ($permissions as $permission) {
+                if($permission->pivot->is_active == 1)
+                {
+                    $permissions_list[] = $permission->slug;
+                }
+
+            }
+        }
+        return $permissions_list;
+    }
     //-------------------------------------------------
+    public static function validation($request){
+
+        $rules = array(
+
+            'email' => 'required|email',
+            'first_name' => 'required',
+            'status' => 'required',
+            'is_active' => 'required',
+
+        );
+
+
+        $validator = \Validator::make($request,$rules);
+
+        if ( $validator->fails() ) {
+
+            $errors             = errorsToArray($validator->errors());
+            $response['status'] = 'failed';
+            $response['errors'] = $errors;
+            return $response;
+        }
+
+    }
     //-------------------------------------------------
     //-------------------------------------------------
 }

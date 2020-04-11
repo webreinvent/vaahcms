@@ -25,7 +25,7 @@
 
                             <div class="card-header-buttons">
                                 <div class="field has-addons is-pulled-right">
-                                    <p class="control">
+                                    <p v-if="hasPermission('can-create-users')" class="control">
                                         <b-button tag="router-link"
                                                   type="is-light"
                                                   :to="{name: 'user.create'}"
@@ -62,8 +62,8 @@
 
                                     <!--left-->
                                     <div class="level-left">
-                                        <div  class="level-item">
-                                            <b-field>
+                                        <div v-if="permissions"  class="level-item">
+                                            <b-field v-if="hasPermission('can-update-users')">
 
                                                 <b-select placeholder="- Bulk Actions -"
                                                           v-model="page.bulk_action.action">

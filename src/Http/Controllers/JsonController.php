@@ -8,6 +8,7 @@ use Illuminate\Routing\Controller;
 use VaahCms\Modules\Cms\Entities\MenuItem;
 use VaahCms\Modules\Cms\Entities\Page;
 use WebReinvent\VaahCms\Entities\Module;
+use WebReinvent\VaahCms\Entities\User;
 
 class JsonController extends Controller
 {
@@ -121,6 +122,31 @@ class JsonController extends Controller
 
         $response['status'] = 'success';
         $response['data']['is_logged_in'] = $is_logged;
+
+        return response()->json($response);
+
+    }
+    //----------------------------------------------------------
+
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getPermissions(Request $request)
+    {
+
+
+        $data = [];
+
+        if(!\Auth::check())
+        {
+            $response['status'] = 'failed';
+            $response['errors'] = [];
+            return response()->json($response);
+        }
+
+        $response['status'] = 'success';
+        $response['data']['list'] = \Auth::user()->getPermissionsSlugs();
 
         return response()->json($response);
 

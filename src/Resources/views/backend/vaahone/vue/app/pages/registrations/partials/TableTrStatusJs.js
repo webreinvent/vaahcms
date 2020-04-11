@@ -4,6 +4,7 @@ export default {
     props: ['value', 'label', 'is_copiable', 'is_upper_case'],
     computed: {
         root() {return this.$store.getters['root/state']},
+        permissions() {return this.$store.getters['root/state'].permissions},
         page() {return this.$store.getters[namespace+'/state']},
         ajax_url() {return this.$store.getters[namespace+'/state'].ajax_url},
         item() {return this.$store.getters[namespace+'/state'].active_item},
@@ -134,6 +135,11 @@ export default {
         createUserAfter: function (data, res) {
             this.is_content_loading = false;
             this.list = data.list;
+        },
+        //---------------------------------------------------------------------
+        hasPermission: function(slug)
+        {
+            return this.$vaah.hasPermission(this.permissions, slug);
         },
         //---------------------------------------------------------------------
     }

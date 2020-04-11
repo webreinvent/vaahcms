@@ -29,6 +29,9 @@ Route::group(
         Route::any( '/is-logged-in', 'JsonController@isLoggedIn' )
             ->name( 'vh.backend.json.is_logged_in' );
         //------------------------------------------------
+        Route::any( '/permissions', 'JsonController@getPermissions' )
+            ->name( 'vh.backend.json.permissions' );
+        //------------------------------------------------
     });
 
 

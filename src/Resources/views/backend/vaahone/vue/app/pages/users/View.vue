@@ -23,7 +23,7 @@
                                 <small><b>#{{item.id}}</b></small>
                             </b-button>
                         </p>
-                        <p class="control">
+                        <p v-if="hasPermission('can-update-users')" class="control">
                             <b-button icon-left="edit"
                                       type="is-light"
                                       tag="router-link"
@@ -32,7 +32,7 @@
                             </b-button>
                         </p>
 
-                        <p class="control">
+                        <p v-if="hasPermission('can-update-users') || hasPermission('can-manage-users')" class="control">
 
 
                             <b-dropdown aria-role="list" position="is-bottom-left">
@@ -120,29 +120,35 @@
 
                                     <template v-if="label == 'status'">
                                         <TableTrStatus :value="value"
-                                                       :label="label"/>
+                                                       :label="label">
+                                        </TableTrStatus>
                                     </template>
 
                                     <template v-else-if="label == 'is_active'">
                                         <TableTrStatus v-if="value == 1" :value="'Yes'"
-                                                       :label="label"/>
+                                                       :label="label">
+                                        </TableTrStatus>
                                         <TableTrStatus v-else :value="'No'"
-                                                       :label="label"/>
+                                                       :label="label">
+                                        </TableTrStatus>
                                     </template>
 
                                     <template v-else-if="label == 'created_by'">
                                         <TableTrActedBy :value="item['created_by_user']"
-                                                       :label="label"/>
+                                                       :label="label">
+                                        </TableTrActedBy>
                                     </template>
 
                                     <template v-else-if="label == 'updated_by'">
                                         <TableTrActedBy :value="item['updated_by_user']"
-                                                        :label="label"/>
+                                                        :label="label">
+                                        </TableTrActedBy>
                                     </template>
 
                                     <template v-else-if="label == 'deleted_by'">
                                         <TableTrActedBy :value="item['deleted_by_user']"
-                                                        :label="label"/>
+                                                        :label="label">
+                                        </TableTrActedBy>
                                     </template>
 
                                     <template v-else-if="label == 'created_by_user'
@@ -150,12 +156,21 @@
 
                                     </template>
 
+                                    <template v-else-if="label == 'registration_id'">
+                                        <TableTrTag :value="value"
+                                                    :label="label"
+                                                    :is_hashed="true"
+                                                    :is_copiable="true"
+                                        >
+                                        </TableTrTag>
+                                    </template>
+
                                     <template v-else>
                                         <TableTrView :value="value"
                                                      :label="label"
                                                      :is_copiable="isCopiable(label)"
-                                                     :is_upper_case="isUpperCase(label)"
-                                        />
+                                                     :is_upper_case="isUpperCase(label)">
+                                        </TableTrView>
                                     </template>
 
                                 </template>

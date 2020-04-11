@@ -1,6 +1,7 @@
 import GlobalComponents from '../../vaahvue/helpers/GlobalComponents'
 import TableTrView from '../../vaahvue/reusable/TableTrView'
 import TableTrActedBy from '../../vaahvue/reusable/TableTrActedBy'
+import TableTrTag from '../../vaahvue/reusable/TableTrTag'
 import TableTrStatus from './partials/TableTrStatus'
 
 let namespace = 'users';
@@ -8,6 +9,7 @@ let namespace = 'users';
 export default {
     computed:{
         root() {return this.$store.getters['root/state']},
+        permissions() {return this.$store.getters['root/state'].permissions},
         page() {return this.$store.getters[namespace+'/state']},
         ajax_url() {return this.$store.getters[namespace+'/state'].ajax_url},
         item() {return this.$store.getters[namespace+'/state'].active_item},
@@ -17,6 +19,7 @@ export default {
         TableTrView,
         TableTrStatus,
         TableTrActedBy,
+        TableTrTag,
     },
     data()
     {
@@ -177,7 +180,7 @@ export default {
                 label == 'id' || label == 'uuid'
                 || label == 'email' || label == 'username'
                 || label == 'alternate_email' || label == 'phone'
-                || label == 'activation_code'
+                || label == 'activation_code'|| label == 'registration_id'
             )
             {
                 return true;
@@ -203,6 +206,11 @@ export default {
         resetActiveItem: function () {
             this.update('active_item', null);
             this.$router.push({name:'user.list'});
+        },
+        //---------------------------------------------------------------------
+        hasPermission: function(slug)
+        {
+            return this.$vaah.hasPermission(this.permissions, slug);
         },
         //---------------------------------------------------------------------
 
