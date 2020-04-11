@@ -22,7 +22,7 @@ if (mix.inProduction()) {
     console.log('this is visible in production');
 
     publish_folder = './Resources/assets/backend/';
-    output_theme_folder = "./themes/vaahone/";
+    output_theme_folder = "./vaahone/";
     source_theme_folder = "Resources/assets/backend/vaahone";
     source_vue_folder = __dirname+'/Resources/views/backend/vaahone/vue';
 

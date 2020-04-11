@@ -22,7 +22,7 @@ function vh_get_backend_assets_url()
 function vh_get_backend_theme_url()
 {
 
-    $path = ('/vaahcms/backend/themes/'.config('vaahcms.backend_theme'));
+    $path = ('/vaahcms/backend/'.config('vaahcms.backend_theme'));
     $url = \URL::asset($path);
 
     return $url;
@@ -32,7 +32,7 @@ function vh_get_backend_theme_url()
 function vh_get_backend_theme_image_url()
 {
 
-    $path = ('/vaahcms/backend/themes/'.config('vaahcms.backend_theme').'/images/');
+    $path = ('/vaahcms/backend/'.config('vaahcms.backend_theme').'/images/');
     $url = \URL::asset($path);
 
     return $url;

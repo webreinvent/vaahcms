@@ -1,6 +1,6 @@
 {
-    "/themes/vaahone/builds/app.js": "/themes/vaahone/builds/app.js",
-    "/themes/vaahone/builds/ui.js": "/themes/vaahone/builds/ui.js",
-    "/themes/vaahone/css/vaahcms.css": "/themes/vaahone/css/vaahcms.css",
-    "/themes/vaahone/css/backend.css": "/themes/vaahone/css/backend.css"
+    "/vaahone/builds/app.js": "/vaahone/builds/app.js",
+    "/vaahone/builds/ui.js": "/vaahone/builds/ui.js",
+    "/vaahone/css/vaahcms.css": "/vaahone/css/vaahcms.css",
+    "/vaahone/css/backend.css": "/vaahone/css/backend.css"
 }
