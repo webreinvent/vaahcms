@@ -13,6 +13,7 @@
 
 include('backend/ui.php');
 include('backend/setup.php');
+include('backend/settings.php');
 
 Route::group(
     [
@@ -79,45 +80,7 @@ Route::group(
 
 
 
-
-/*Route::group(
-    [
-        'prefix'     => 'backend/vaah/registrations',
-        'middleware' => ['web','has.backend.access'],
-        'namespace'  => 'WebReinvent\VaahCms\Http\Controllers'
-    ],
-    function () {
-        //------------------------------------------------
-        Route::get( '/', 'RegistrationController@index' )
-            ->name( 'vh.backend.registrations' );
-        //------------------------------------------------
-        Route::any( '/assets', 'RegistrationController@assets' )
-            ->name( 'vh.backend.registrations.assets' );
-        //------------------------------------------------
-        Route::any( '/list', 'RegistrationController@getList' )
-            ->name( 'vh.backend.registrations.list' );
-        //------------------------------------------------
-        Route::any( '/actions', 'RegistrationController@actions' )
-            ->name( 'vh.backend.registrations.actions' );
-        //------------------------------------------------
-        Route::any( '/store', 'RegistrationController@store' )
-            ->name( 'vh.backend.registrations.store' );
-        //------------------------------------------------
-        Route::any( '/view/{id}', 'RegistrationController@getDetails' )
-            ->name( 'vh.backend.registrations.view' );
-        //------------------------------------------------
-    });*/
-
-
-
 //=================OLD ROUTES===========================================
-
-
-
-
-
-include('backend/settings.php');
-
 
 
 
