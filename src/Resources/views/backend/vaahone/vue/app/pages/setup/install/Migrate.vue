@@ -15,7 +15,7 @@
                           v-if="config.is_migrated"
                           icon-left="check"
                           :loading="btn_is_migration"
-                          @click="runMigrations()">
+                          @click="confirmDelete()">
                     Migrate & Run Seeds
                 </b-button>
 
@@ -23,10 +23,9 @@
                           v-else
                           icon-left="database"
                           :loading="btn_is_migration"
-                          @click="runMigrations()">
+                          @click="confirmDelete()">
                     Migrate & Run Seeds
                 </b-button>
-
 
                 <hr>
 

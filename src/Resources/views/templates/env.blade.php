@@ -7,6 +7,8 @@ APP_DEBUG=true
 APP_URL={{$data->app_url ?? '' }}
 APP_TIMEZONE={{$data->app_timezone ?? '' }}
 
+APP_VAAHCMS_ENV={{$data->app_vaahcms_env ?? '' }}
+
 LOG_CHANNEL=stack
 
 DB_CONNECTION={{$data->db_connection ?? '' }}

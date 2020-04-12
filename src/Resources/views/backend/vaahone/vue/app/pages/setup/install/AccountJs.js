@@ -110,10 +110,64 @@ export default {
                 this.$vaah.toastErrors(['Create the Administrator Account'])
             } else
             {
+                this.resetConfig();
                 this.$router.push({name: 'sign.in'})
             }
         },
         //---------------------------------------------------------------------
+        resetConfig: function () {
+
+            let config = {
+                active_step: 0,
+                is_migrated: false,
+                dependencies: null,
+                count_total_dependencies: 0,
+                count_installed_dependencies: 0,
+                count_installed_progress: 0,
+                is_account_created: false,
+                account:{
+
+                    email: null,
+                    username: null,
+                    password: null,
+                    first_name: null,
+                    middle_name: null,
+                    last_name: null,
+                    country_calling_code: null,
+                    phone: null,
+
+                },
+                env:{
+                    app_name: "VaahCMS",
+                    app_key: null,
+                    app_debug: true,
+                    app_env: null,
+                    app_url: null,
+                    app_timezone: null,
+                    db_connection: 'mysql',
+                    db_host: '127.0.0.1',
+                    db_port: 3306,
+                    db_database: null,
+                    db_username: null,
+                    db_password: null,
+                    db_is_valid: false,
+                    mail_provider: null,
+                    mail_driver: null,
+                    mail_host: null,
+                    mail_port: null,
+                    mail_username: null,
+                    mail_password: null,
+                    mail_encryption: null,
+                    mail_from_address: null,
+                    mail_from_name: null,
+                    mail_is_valid: false,
+                    test_email_to: null,
+                }
+            };
+
+            this.update('config', config);
+
+        }
         //---------------------------------------------------------------------
     }
 }

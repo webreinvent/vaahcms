@@ -182,7 +182,6 @@ class SetupController extends Controller
         }*/
 
 
-
         //generate env file
         $response = VaahSetup::generateEnvFile($request);
         if($response['status'] == 'failed')
@@ -212,12 +211,31 @@ class SetupController extends Controller
 
     }
     //----------------------------------------------------------
+    public function getRequiredConfigurations()
+    {
+
+        $active_env_file = VaahHelper::getActiveEnvFileName();
+
+        $env_params = vh_env_file_to_array(base_path('/'.$active_env_file), true);
+
+        $response['status'] = 'success';
+        $response['data']['app_key'] = $env_params['app_key'];
+        $response['data']['app_vaahcms_env'] = "";
+        if(isset($env_params['app_vaahcms_env']))
+        {
+            $response['data']['app_vaahcms_env'] = $env_params['app_vaahcms_env'];
+        }
+
+
+        return response()->json($response);
+    }
+    //----------------------------------------------------------
     public function runMigrations(Request $request)
     {
 
         $data = [];
 
-        //$this->deleteExistingMigration();
+        $this->deleteExistingMigration();
 
         try
         {

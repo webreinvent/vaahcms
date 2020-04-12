@@ -107,8 +107,8 @@ Route::group(
         Route::post( '/get/configurations', 'SetupController@getConfigurations' )
             ->name( 'vh.setup.get.configurations' );
         //------------------------------------------------
-        Route::post( '/get/key', 'SetupController@getKey' )
-            ->name( 'vh.setup.get.key' );
+        Route::post( '/get/required/configurations', 'SetupController@getRequiredConfigurations' )
+            ->name( 'vh.setup.get.get.required.configurations' );
         //------------------------------------------------
         Route::any( '/get/dependencies', 'SetupController@getDependencies' )
             ->name( 'vh.setup.get.dependencies' );

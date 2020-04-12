@@ -60,7 +60,7 @@ export default {
         //---------------------------------------------------------------------
         onLoad: function()
         {
-            this.getAppKey();
+            this.getRequiredConfigurations();
             this.getAssets();
             this.config.active_step = 0;
             this.updateConfig();
@@ -77,18 +77,19 @@ export default {
             this.update('config', this.config);
         },
         //---------------------------------------------------------------------
-        getAppKey: function () {
+        getRequiredConfigurations: function () {
 
             let params = {};
-            let url = this.ajax_url+'/get/key';
-            this.$vaah.ajax(url, params, this.getAppKeyAfter);
+            let url = this.ajax_url+'/get/required/configurations';
+            this.$vaah.ajax(url, params, this.getRequiredConfigurationsAfter);
         },
         //---------------------------------------------------------------------
-        getAppKeyAfter: function (data, res) {
+        getRequiredConfigurationsAfter: function (data, res) {
 
             if(data)
             {
-                this.config.env.app_key = data.key;
+                this.config.env.app_key = data.app_key;
+                this.config.env.app_vaahcms_env = data.app_vaahcms_env;
                 this.updateConfig();
             }
         },

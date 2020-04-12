@@ -76,6 +76,21 @@ export default {
             this.update('config', this.config);
         },
         //---------------------------------------------------------------------
+        confirmDelete: function()
+        {
+            let self = this;
+            this.$buefy.dialog.confirm({
+                title: 'Deleting existing migrations',
+                message: 'This will <b>delete</b> all existing migration from  <b>database/migrations</b> folder.',
+                confirmText: 'Proceed',
+                type: 'is-danger',
+                hasIcon: true,
+                onConfirm: function () {
+                    self.runMigrations();
+                }
+            })
+        },
+        //---------------------------------------------------------------------
 
         runMigrations: function () {
             this.btn_is_migration = true;
