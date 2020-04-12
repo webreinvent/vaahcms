@@ -28,6 +28,8 @@ class JsonController extends Controller
             'name' => config('vaahcms.app_name'),
             'slug' => config('vaahcms.app_slug'),
             'version' => config('vaahcms.version'),
+            'website' => config('vaahcms.website'),
+            'docs' => config('vaahcms.documentation'),
         ];
 
         if($request->has('get_server_details'))

@@ -45,6 +45,12 @@
 
                 <router-view></router-view>
 
+                <div class="columns">
+                    <div class="column has-text-centered">
+                        <Footer/>
+                    </div>
+                </div>
+
             </div>
         </section>
         <!--sections-->

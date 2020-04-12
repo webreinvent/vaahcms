@@ -10,6 +10,7 @@ export default {
         root() {return this.$store.getters['root/state']},
         page() {return this.$store.getters[namespace+'/state']},
         assets() {return this.$store.getters[namespace+'/state'].assets},
+        status() {return this.$store.getters[namespace+'/state'].status},
         ajax_url() {return this.$store.getters[namespace+'/state'].ajax_url},
         config() {return this.$store.getters[namespace+'/state'].config},
     },
@@ -35,8 +36,6 @@ export default {
     mounted() {
         //----------------------------------------------------
         this.onLoad();
-        //----------------------------------------------------
-        this.$root.$on('eReloadList', this.getList);
         //----------------------------------------------------
     },
     methods: {

@@ -89,136 +89,31 @@ class User extends Authenticatable
         return $name;
     }
     //-------------------------------------------------
-    public function setFirstNameAttribute($value)
-    {
-        $this->attributes['first_name'] = ucfirst(trim($value));
-    }
-    //-------------------------------------------------
-    public function setLastNameAttribute($value)
-    {
-        $this->attributes['last_name'] = ucfirst(trim($value));
-    }
-    //-------------------------------------------------
-    public function setEmailAttribute($value)
-    {
-        $this->attributes['email'] = trim($value);
-    }
-    //-------------------------------------------------
 
     //-------------------------------------------------
-    public function scopeActive($query)
-    {
-        return $query->where('is_active', 1);
-    }
+    //-------------------------------------------------
 
-    //-------------------------------------------------
-    public function scopeInactive($query)
-    {
-        return $query->where('is_active', 0);
-    }
-
-    //-------------------------------------------------
-    public function scopeStatus($query, $status)
-    {
-        return $query->where('status', $status);
-    }
-    //-------------------------------------------------
-    public function scopeUsername($query, $username)
-    {
-        return $query->where('username', $username);
-    }
-
-    //-------------------------------------------------
-    public function scopeEmail($query, $email)
-    {
-        return $query->where('email', $email);
-    }
-
-    //-------------------------------------------------
-    public function scopeActivatedBetween($query, $from, $to)
-    {
-        return $query->whereBetween('activated_at', array($from, $to));
-    }
-
-    //-------------------------------------------------
-    public function scopeCreatedBy($query, $user_id)
-    {
-        return $query->where('created_by', $user_id);
-    }
-
-    //-------------------------------------------------
-    public function scopeUpdatedBy($query, $user_id)
-    {
-        return $query->where('updated_by', $user_id);
-    }
-
-    //-------------------------------------------------
-    public function scopeDeletedBy($query, $user_id)
-    {
-        return $query->where('deleted_by', $user_id);
-    }
-
-    //-------------------------------------------------
-    public function scopeCreatedBetween($query, $from, $to)
-    {
-        return $query->whereBetween('created_at', array($from, $to));
-    }
-
-    //-------------------------------------------------
-    public function scopeUpdatedBetween($query, $from, $to)
-    {
-        return $query->whereBetween('updated_at', array($from, $to));
-    }
-
-    //-------------------------------------------------
-    public function scopeDeletedBetween($query, $from, $to)
-    {
-        return $query->whereBetween('deleted_at', array($from, $to));
-    }
-
-
-    //-------------------------------------------------
-    public function scopeLastLoginBetween($query, $from, $to)
-    {
-        return $query->whereBetween('last_login_at', array($from, $to));
-    }
-
-    //-------------------------------------------------
-    public function scopeNeverLoggedIn($query)
-    {
-        return $query->whereNull('last_login_at');
-    }
-
-    //-------------------------------------------------
-    public function scopeDoesNotHaveRole($query, $role_id)
-    {
-        return $query->whereDoesntHave('roles', function ($r) use ($role_id)
-        {
-            $r->where('vh_role_id', $role_id);
-        });
-    }
-    //-------------------------------------------------
-    public function createdBy()
+    public function createdByUser()
     {
         return $this->belongsTo('WebReinvent\VaahCms\Entities\User',
             'created_by', 'id'
-        );
+        )->select('id', 'uuid', 'first_name', 'last_name', 'email');
     }
 
     //-------------------------------------------------
-    public function updatedBy()
+    public function updatedByUser()
     {
         return $this->belongsTo('WebReinvent\VaahCms\Entities\User',
             'updated_by', 'id'
-        );
+        )->select('id', 'uuid', 'first_name', 'last_name', 'email');
     }
 
     //-------------------------------------------------
-    public function deletedBy()
+    public function deletedByUser()
     {
         return $this->belongsTo('WebReinvent\VaahCms\Entities\User',
             'deleted_by', 'id'
-        );
+        )->select('id', 'uuid', 'first_name', 'last_name', 'email');
     }
 
     //-------------------------------------------------
@@ -303,7 +198,7 @@ class User extends Authenticatable
     public static function countAdmins()
     {
         $count = User::whereHas('roles', function ($query) {
-            $query->slug('admin');
+            $query->slug('administrator');
         })->count();
         return $count;
     }
@@ -348,16 +243,22 @@ class User extends Authenticatable
         return $list;
     }
     //-------------------------------------------------
-    public function permissions()
+    public function permissions($slugs_only=false)
     {
-        $roles = $this->roles()->get();
+        $roles = $this->roles()->wherePivot('is_active', 1)->get();
         $permissions_list = array();
         foreach ($roles as $role) {
-            $permissions = $role->permissions()->get();
+            $permissions = $role->permissions()->wherePivot('is_active', 1)->get();
             foreach ($permissions as $permission) {
                 $permissions_list[$permission->id] = $permission->toArray();
             }
         }
+
+        if($slugs_only)
+        {
+            $permissions_list = collect($permissions_list)->pluck('slug')->toArray();
+        }
+
         return $permissions_list;
     }
 
@@ -375,22 +276,33 @@ class User extends Authenticatable
         ];
         return $rules;
     }
-
     //-------------------------------------------------
-    public static function store($request)
-    {
-        $rules = array(
-            'email' => 'required|email',
-            'first_name' => 'required',
-        );
 
-        if($request->has('phone'))
+    public static function create($request)
+    {
+
+        if(!\Auth::user()->hasPermission('can-create-users',true))
         {
-            $rules['phone'] = 'integer';
+            $response['status'] = 'failed';
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+            return $response;
         }
 
+        $inputs = $request->new_item;
 
-        $validator = \Validator::make( $request->all(), $rules);
+        $validate = static::validation($inputs);
+
+        if(isset($validate['status']) && $validate['status'] == 'failed')
+        {
+            return $validate;
+        }
+
+        $rules = array(
+            'password' => 'required',
+        );
+
+        $validator = \Validator::make( $inputs, $rules);
         if ( $validator->fails() ) {
 
             $errors             = errorsToArray($validator->errors());
@@ -399,9 +311,76 @@ class User extends Authenticatable
             return $response;
         }
 
-        $data = [];
+        // check if already exist
+        $user = static::where('email',$inputs['email'])->first();
+
+        if($user)
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = "This email is already registered.";
+            return $response;
+        }
+
+        if(!isset($inputs['username']))
+        {
+            $inputs['username'] = Str::slug($inputs['email']);
+        }
+
+        if(!isset($inputs['status']))
+        {
+            $inputs['status'] = 'inactive';
+        }
+
+        $inputs['created_ip'] = request()->ip();
+
+        $reg = new static();
+        $reg->fill($inputs);
+        $reg->save();
+
+        Role::syncRolesWithUsers();
+
+        $response['status'] = 'success';
+        $response['data']['item'] = $reg;
+        return $response;
+
+    }
+
+    //-------------------------------------------------
+    public static function store($request)
+    {
+
+        if(!\Auth::user()->hasPermission('can-update-users',true))
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+            return $response;
+        }
 
         $inputs = $request->all();
+
+        $validate = static::validation($inputs);
+
+        if(isset($validate['status']) && $validate['status'] == 'failed')
+        {
+            return $validate;
+        }
+
+        if(isset($inputs['phone']))
+        {
+            $rules['phone'] = 'integer';
+
+            $validator = \Validator::make( $request->all(), $rules);
+            if ( $validator->fails() ) {
+
+                $errors             = errorsToArray($validator->errors());
+                $response['status'] = 'failed';
+                $response['errors'] = $errors;
+                return $response;
+            }
+        }
+
+
 
 
         if($request->has('birth'))
@@ -519,6 +498,15 @@ class User extends Authenticatable
     public static function bulkStatusChange($request)
     {
 
+        if(!\Auth::user()->hasPermission('can-manage-users',true) &&
+            !\Auth::user()->hasPermission('can-update-users',true))
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+            return $response;
+        }
+
         if(!$request->has('inputs'))
         {
             $response['status'] = 'failed';
@@ -535,12 +523,42 @@ class User extends Authenticatable
 
         foreach($request->inputs as $id)
         {
-            $reg = User::find($id);
-            $reg->status = $request->data;
+            $reg = User::where('id',$id)->withTrashed()->first();
+
+
+            if($reg->deleted_at){
+                continue ;
+            }
+
+            $is_restricted = static::restrictedActions($request->action, $reg->id);
+
+            if($is_restricted)
+            {
+                continue;
+            }
+
+            if($request['data']){
+                $reg->is_active = $request['data']['status'];
+                if( $request['data']['status'] == 1){
+                    $reg->status = 'active';
+                }else{
+                    $reg->status = 'inactive';
+                }
+            }else{
+                if($reg->is_active == 1){
+                    $reg->is_active = 0;
+                    $reg->status = 'inactive';
+                }else{
+                    $reg->is_active = 1;
+                    $reg->status = 'active';
+                }
+            }
+
             $reg->save();
         }
 
         $response['status'] = 'success';
+        $response['data'] = [];
         $response['messages'][] = 'Action was successful';
 
         return $response;
@@ -548,8 +566,16 @@ class User extends Authenticatable
 
     }
     //-------------------------------------------------
-    public static function bulkDelete($request)
+    public static function bulkTrash($request)
     {
+
+        if(!\Auth::user()->hasPermission('can-update-users',true))
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+            return $response;
+        }
 
         if(!$request->has('inputs'))
         {
@@ -579,6 +605,7 @@ class User extends Authenticatable
         }
 
         $response['status'] = 'success';
+        $response['data'] = [];
         $response['messages'][] = 'Action was successful';
 
         return $response;
@@ -588,6 +615,14 @@ class User extends Authenticatable
     //-------------------------------------------------
     public static function bulkRestore($request)
     {
+
+        if(!\Auth::user()->hasPermission('can-update-registrations',true))
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+            return $response;
+        }
 
         if(!$request->has('inputs'))
         {
@@ -603,9 +638,12 @@ class User extends Authenticatable
             return $response;
         }
 
+
         foreach($request->inputs as $id)
         {
+
             $item = User::withTrashed()->where('id', $id)->first();
+
             if(isset($item) && isset($item->deleted_at))
             {
                 $item->restore();
@@ -613,6 +651,7 @@ class User extends Authenticatable
         }
 
         $response['status'] = 'success';
+        $response['data'] = [];
         $response['messages'][] = 'Action was successful';
 
         return $response;
@@ -620,31 +659,64 @@ class User extends Authenticatable
 
     }
     //-------------------------------------------------
-    public static function onlyOneAdminValidation($user_id)
+    public static function isLastAdmin()
     {
-        $user = User::where('id', $user_id)->withTrashed()->first();
-
-        if(isset($user->deleted_at))
-        {
-            $response['status'] = 'failed';
-            $response['errors'][] = 'Account is deleted, hence you can not perform this action.';
-            return $response;
-
-        }
-
         $count_admin = User::countAdmins();
-
-        if($user->isAdmin() && $count_admin < 2)
+        if($count_admin < 2)
         {
-            $response['status'] = 'failed';
-            $response['errors'][] = "You have only one admin account which can't be deactivated.";
-            return $response;
+            return true;
+        }
+        return false;
+    }
+    //-------------------------------------------------
+    public static function restrictedActions($action_type, $user_id)
+    {
+
+
+        //restricted actions on logged in users
+        $result = false;
+        if($user_id == \Auth::user()->id)
+        {
+            switch ($action_type)
+            {
+                //------------------------
+                case 'bulk-change-status':
+                    $result = true;
+                    break;
+                //------------------------
+                default:
+                    break;
+                //------------------------
+            }
+
+            return $result;
         }
 
-        $response['status'] = 'success';
 
-        return $response;
+        //restricted action if this user is last admin
+        $result = false;
+        $user = static::find($user_id);
+        $is_last_admin = static::isLastAdmin();
 
+        if($user->hasRole('admin') && $is_last_admin)
+        {
+            switch ($action_type)
+            {
+                //------------------------
+                case 'bulk-change-status':
+                    $result = true;
+                    break;
+                //------------------------
+                default:
+                    break;
+                //------------------------
+            }
+
+            return $result;
+        }
+
+
+        return $result;
     }
     //-------------------------------------------------
 
@@ -737,7 +809,12 @@ class User extends Authenticatable
     //-------------------------------------------------
     public function hasRole($role_slug)
     {
-        foreach ($this->roles()->get() as $role) {
+
+        $roles = $this->roles()->wherePivot('is_active', 1)->get();
+
+
+
+        foreach ($roles as $role) {
             if ($role->slug == $role_slug)
             {
                 return true;
@@ -755,8 +832,25 @@ class User extends Authenticatable
     }
 
     //-------------------------------------------------
-    public function hasPermission($permission_slug)
+    public function hasPermission($permission_slug, $boolean=false)
     {
+
+        if ($this->isAdmin()) {
+
+            if($boolean)
+            {
+                return true;
+            } else{
+                $response['status'] = 'success';
+                if(env('APP_DEBUG'))
+                {
+                    $response['data']['permission'] = 'Permission slug: '.$permission_slug;
+                    $response['hint'][] = 'Admin has all permission by default.';
+                }
+                return $response;
+            }
+
+        }
 
         //check if permission exist or not
         $permission = Permission::where('slug', $permission_slug)
@@ -764,29 +858,82 @@ class User extends Authenticatable
 
         if (!$permission)
         {
-            $response['status'] = 'failed';
-            $response['errors'][] = 'No Permission exist with slug: '.$permission_slug;
-            return response()->json($response);
-        }
+            if($boolean)
+            {
+                return false;
+            } else {
+                $response['status'] = 'failed';
+                $response['errors'][] = 'No Permission exist with slug: ' . $permission_slug;
 
-        if ($this->isAdmin()) {
-            return true;
+                if (env('APP_DEBUG')) {
+                    $response['hint'][] = 'Check the migrations & seeds are properly run.';
+                }
+
+                return $response;
+            }
         }
 
         if ($permission->is_active != 1) {
-            return false;
+            if($boolean)
+            {
+                return false;
+            } else{
+                $response['status'] = 'failed';
+                $response['errors'][] = $permission_slug.' is inactive';
+                if(env('APP_DEBUG'))
+                {
+                    $response['hint'][] = 'Enable the permission status to active from backend/admin control panel.';
+                }
+                return $response;
+            }
+
         }
 
         foreach ($this->permissions() as $permission)
         {
-            if ($permission['slug'] == $permission_slug && $permission['is_active'] == 1)
+
+
+            if ($permission['slug'] == $permission_slug
+                && $permission['is_active'] == 1
+                && $permission['pivot']['is_active'] == 1
+            )
             {
-                return true;
+                if($boolean)
+                {
+                    return true;
+                } else{
+                    $response['status'] = 'success';
+                    $response['data'] = [];
+                    if(env('APP_DEBUG'))
+                    {
+                        $response['hint'][] = 'Permission slug: '.$permission_slug.' is active for '.\Auth::user()->email;
+                    }
+                    return $response;
+
+                }
+                break;
             }
         }
 
-        return false;
+        if($boolean)
+        {
+            return false;
+        } else{
+            $response['status'] = 'failed';
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+            if(env('APP_DEBUG'))
+            {
+                $response['hint'][] = 'Permission slug: '.$permission_slug.' is not active for '.\Auth::user()->email;
+            }
+            return $response;
+        }
+
     }
+
+    //-------------------------------------------------
+
+
+    //-------------------------------------------------
 
     //-------------------------------------------------
     public static function getAvatarById($id)
@@ -817,8 +964,249 @@ class User extends Authenticatable
         return $list;
 
     }
+    public static function getList($request)
+    {
+
+        if(!\Auth::user()->hasPermission('has-access-of-users-section',true))
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+            return $response;
+        }
+
+        if($request->has('recount') && $request->get('recount') == true)
+        {
+            Role::syncRolesWithUsers();
+        }
+
+        $list = static::orderBy('created_at', 'DESC');
+
+        if($request->has('trashed') && $request->trashed == 'true')
+        {
+            $list->withTrashed();
+        }
+
+        if($request['status'] && $request['status'] == '1')
+        {
+
+            $list->where('is_active',$request['status']);
+        }elseif($request['status'] == '10'){
+
+            $list->whereNull('is_active')->orWhere('is_active',0);
+        }
+
+        if($request->has("q"))
+        {
+            $list->where(function ($q) use ($request){
+                $q->where('first_name', 'LIKE', '%'.$request->q.'%')
+                    ->orWhere('last_name', 'LIKE', '%'.$request->q.'%')
+                    ->orWhere('middle_name', 'LIKE', '%'.$request->q.'%')
+                    ->orWhere('email', 'LIKE', '%'.$request->q.'%')
+                    ->orWhere('id', '=', $request->q);
+            });
+        }
+
+        $list->withCount(['activeRoles']);
+
+        $list = $list->paginate(config('vaahcms.per_page'));
+        $countRole = Role::all()->count();
+
+        $response['status'] = 'success';
+        $response['data']['list'] = $list;
+        $response['data']['totalRole'] = $countRole;
+
+        return $response;
+
+    }
+
     //-------------------------------------------------
+
+    public static function bulkChangeRoleStatus($request)
+    {
+
+        if(!\Auth::user()->hasPermission('can-manage-users',true) &&
+            !\Auth::user()->hasPermission('can-update-users',true))
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+            return $response;
+        }
+
+        $inputs = $request->all();
+
+
+        if($inputs['inputs']['id'] == 1 && $inputs['inputs']['user_id'] == 1)
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = 'First user will always be an admin';
+            return response()->json($response);
+        }
+
+        $item = User::find($inputs['inputs']['id']);
+
+        if($inputs['inputs']['role_id']){
+            $item->roles()->updateExistingPivot($inputs['inputs']['role_id'], array('is_active' => $inputs['data']['is_active']));
+        }else{
+            $item->roles()
+                ->newPivotStatement()
+                ->where('vh_user_id', '=', $item->id)
+                ->update(array('is_active' => $inputs['data']['is_active']));
+        }
+
+        Role::recountRelations();
+
+        $response['status'] = 'success';
+        $response['data'] = [];
+
+        return $response;
+
+
+    }
+
     //-------------------------------------------------
+
+    public static function bulkDelete($request)
+    {
+
+        if(!\Auth::user()->hasPermission('can-update-registrations',true) ||
+            !\Auth::user()->hasPermission('can-delete-registrations',true))
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+            return $response;
+        }
+
+        if(!$request->has('inputs'))
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = 'Select IDs';
+            return $response;
+        }
+
+        if(!$request->has('data'))
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = 'Select Status';
+            return $response;
+        }
+
+        foreach($request->inputs as $id)
+        {
+            $item = static::where('id', $id)->withTrashed()->first();
+            if($item)
+            {
+
+                $item->roles()->detach();
+
+                $item->forceDelete();
+
+            }
+        }
+
+        $response['status'] = 'success';
+        $response['data'] = [];
+        $response['messages'][] = 'Action was successful';
+
+        return $response;
+
+
+    }
+
+    //-------------------------------------------------
+
+    public static function getDetail($id)
+    {
+
+        if(!\Auth::user()->hasPermission('can-manage-users',true) &&
+            !\Auth::user()->hasPermission('can-update-users',true) &&
+            !\Auth::user()->hasPermission('can-create-users',true) &&
+            !\Auth::user()->hasPermission('can-read-users',true))
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+            return $response;
+        }
+
+        $item = static::where('id', $id)->with(['createdByUser', 'updatedByUser', 'deletedByUser'])->withTrashed()->first();
+
+        $response['status'] = 'success';
+        $response['data'] = $item;
+
+        return $response;
+
+    }
+
+    //-------------------------------------------------
+
+    public static function getItemRoles($request,$id)
+    {
+
+        if(!\Auth::user()->hasPermission('can-manage-users',true) &&
+            !\Auth::user()->hasPermission('can-update-users',true) &&
+            !\Auth::user()->hasPermission('can-read-users',true))
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+            return $response;
+        }
+
+        $item = User::withTrashed()->where('id', $id)->first();
+
+        $response['data']['item'] = $item;
+
+
+        if($request->has("q"))
+        {
+            $list = $item->roles()->where(function ($q) use ($request){
+                $q->where('name', 'LIKE', '%'.$request->q.'%')
+                    ->orWhere('slug', 'LIKE', '%'.$request->q.'%');
+            });
+        } else
+        {
+            $list = $item->roles();
+        }
+
+        $list->orderBy('pivot_is_active', 'desc');
+
+        $list = $list->paginate(config('vaahcms.per_page'));
+
+        $response['data']['list'] = $list;
+        $response['status'] = 'success';
+
+        return $response;
+
+    }
+    //-------------------------------------------------
+
+    //-------------------------------------------------
+    public static function validation($request){
+
+        $rules = array(
+
+            'email' => 'required|email',
+            'first_name' => 'required',
+            'status' => 'required',
+            'is_active' => 'required',
+
+        );
+
+
+        $validator = \Validator::make($request,$rules);
+
+        if ( $validator->fails() ) {
+
+            $errors             = errorsToArray($validator->errors());
+            $response['status'] = 'failed';
+            $response['errors'] = $errors;
+            return $response;
+        }
+
+    }
     //-------------------------------------------------
     //-------------------------------------------------
 }

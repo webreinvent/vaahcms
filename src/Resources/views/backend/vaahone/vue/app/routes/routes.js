@@ -10,6 +10,7 @@ routes= [
 
 //----------Middleware
 import GetAssets from './middleware/GetAssets'
+import GetSetupStatus from './middleware/GetSetupStatus'
 import IsLoggedIn from './middleware/IsLoggedIn'
 import GetBackendAssets from './middleware/GetBackendAssets'
 //----------LayoutApp
@@ -102,35 +103,14 @@ routes_list =     {
             },
         },
         {
-            path: 'reset',
-            name: 'setup.reset',
-            component: ForgotPassword,
-            props: true,
-            meta: {
-                middleware: [
-                    GetAssets
-                ]
-            },
-        },
-        {
-            path: 'deploy',
-            name: 'setup.deploy',
-            component: ForgotPassword,
-            props: true,
-            meta: {
-                middleware: [
-                    GetAssets
-                ]
-            },
-        },
-        {
             path: 'install',
             name: 'setup.install',
             component: InstallIndex,
             props: true,
             meta: {
                 middleware: [
-                    GetAssets
+                    GetAssets,
+                    GetSetupStatus,
                 ]
             },
             children: [
@@ -141,7 +121,8 @@ routes_list =     {
                     props: true,
                     meta: {
                         middleware: [
-                            GetAssets
+                            GetAssets,
+                            GetSetupStatus,
                         ]
                     },
                 },
@@ -152,7 +133,8 @@ routes_list =     {
                     props: true,
                     meta: {
                         middleware: [
-                            GetAssets
+                            GetAssets,
+                            GetSetupStatus,
                         ]
                     },
                 },
@@ -163,7 +145,8 @@ routes_list =     {
                     props: true,
                     meta: {
                         middleware: [
-                            GetAssets
+                            GetAssets,
+                            GetSetupStatus,
                         ]
                     },
                 },
@@ -174,7 +157,8 @@ routes_list =     {
                     props: true,
                     meta: {
                         middleware: [
-                            GetAssets
+                            GetAssets,
+                            GetSetupStatus,
                         ]
                     },
                 },

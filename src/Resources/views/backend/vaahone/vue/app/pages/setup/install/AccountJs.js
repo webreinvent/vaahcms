@@ -12,6 +12,7 @@ export default {
         root() {return this.$store.getters['root/state']},
         page() {return this.$store.getters[namespace+'/state']},
         assets() {return this.$store.getters[namespace+'/state'].assets},
+        status() {return this.$store.getters[namespace+'/state'].status},
         config() {return this.$store.getters[namespace+'/state'].config},
         ajax_url() {return this.$store.getters[namespace+'/state'].ajax_url},
     },

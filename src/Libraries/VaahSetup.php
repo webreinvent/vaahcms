@@ -3,6 +3,7 @@ namespace WebReinvent\VaahCms\Libraries;
 
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Notification;
+use WebReinvent\VaahCms\Entities\User;
 use WebReinvent\VaahCms\Notifications\TestSmtp;
 
 use Dotenv\Dotenv;
@@ -146,7 +147,75 @@ class VaahSetup{
     }
 
     //----------------------------------------------------------
+    public static function isDBConnected()
+    {
+        try {
+            \DB::connection()->getPdo();
+            return true;
+        } catch (\Exception $e) {
+            return false;
+        }
+
+    }
     //----------------------------------------------------------
+    public static function isDBMigrated()
+    {
+        try {
+            $exist = \Schema::hasTable('vh_users');
+            return $exist;
+        } catch (\Exception $e) {
+            return false;
+        }
+    }
+    //----------------------------------------------------------
+    public static function isInstalled()
+    {
+
+        $data['stage'] = "";
+
+        if(static::isDBConnected())
+        {
+            $data['stage'] = 'database';
+        }
+
+        if(static::isDBMigrated())
+        {
+            $data['stage'] = 'migrated';
+        }
+
+        if(static::isAdminCreated())
+        {
+            $data['stage'] = 'installed';
+        }
+
+        if($data['stage'] == 'installed')
+        {
+            return true;
+        }
+
+        return false;
+
+    }
+    //----------------------------------------------------------
+    public static function isAdminCreated()
+    {
+        $db_connected = static::isDBConnected();
+        $db_migrated = static::isDBMigrated();
+
+        if(!$db_connected || !$db_migrated)
+        {
+            return false;
+        }
+
+        $count = User::countAdmins();
+
+        if($count > 0)
+        {
+            return true;
+        }
+
+
+    }
     //----------------------------------------------------------
 
 }

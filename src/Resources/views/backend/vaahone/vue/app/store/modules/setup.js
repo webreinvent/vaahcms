@@ -15,6 +15,7 @@ export default {
         ajax_url: ajax_url,
         assets: null,
         assets_is_fetching: false,
+        status: null,
         config:{
             active_step: 0,
             is_migrated: false,
@@ -95,6 +96,19 @@ export default {
             }
         },
         //-----------------------------------------------------------------
+        async getStatus({ state, commit, dispatch, getters }) {
+
+            let url = state.ajax_url+'/status';
+            let params = {};
+            let data = await Vaah.ajax(url, params);
+            let payload = {
+                key: 'status',
+                value: data.data.data
+            };
+
+            commit('updateState', payload);
+        },
+        //-----------------------------------------------------------------
         updateView({ state, commit, dispatch, getters }, payload) {
             let list_view = false;
             if(payload && payload.name && payload.name == 'reg.list')
@@ -115,6 +129,7 @@ export default {
         ajax_url(state) {return state.ajax_url;},
         assets(state) {return state.assets;},
         config(state) {return state.config;},
+        status(state) {return state.status;},
     }
 
 }

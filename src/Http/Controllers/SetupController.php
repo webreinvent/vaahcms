@@ -4,6 +4,7 @@ namespace WebReinvent\VaahCms\Http\Controllers;
 
 
 
+use Illuminate\Filesystem\Filesystem;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
@@ -42,9 +43,7 @@ class SetupController extends Controller
     public function getAssets(Request $request)
     {
 
-        $data['is_db_connected'] = $this->isDBConnected();
-        $data['is_db_migrated'] = $this->isDBMigrated();
-        $data['is_installed'] = $this->isInstalled();
+        $data['is_installed'] = VaahSetup::isInstalled();
         $data['environments'] = vh_environments();
         $data['timezones'] = vh_get_timezones();
         $data['database_types'] = vh_database_types();
@@ -60,43 +59,142 @@ class SetupController extends Controller
 
     }
     //----------------------------------------------------------
-    public function isDBConnected()
+    public function appSetupStatus(Request $request)
     {
-        try {
-            \DB::connection()->getPdo();
-            return true;
-        } catch (\Exception $e) {
-            return false;
-        }
 
-    }
-    //----------------------------------------------------------
-    public function isDBMigrated()
-    {
-        try {
-            $exist = \Schema::hasTable('migrations');
-            return $exist;
-        } catch (\Exception $e) {
-            return false;
-        }
-    }
-    //----------------------------------------------------------
-    public function isInstalled()
-    {
-        $db_connected = $this->isDBConnected();
-        $db_migrated = $this->isDBMigrated();
 
-        if($db_connected && $db_migrated)
+        $data['is_db_connected'] = VaahSetup::isDBConnected();
+        $data['is_db_migrated'] = VaahSetup::isDBMigrated();
+        $data['is_admin_created'] = VaahSetup::isInstalled();
+        $data['is_user_administrator'] = false;
+
+        $data['stage'] = 'unknown';
+
+        if(VaahSetup::isDBConnected())
         {
-            return true;
+            $data['stage'] = 'database';
         }
 
-        return false;
+        if(VaahSetup::isDBMigrated())
+        {
+            $data['stage'] = 'migrated';
+        }
+
+        if(VaahSetup::isAdminCreated())
+        {
+            $data['stage'] = 'installed';
+
+            if(\Auth::check())
+            {
+                if(\Auth::user()->hasRole('administrator'))
+                {
+                    $data['is_user_administrator'] = true;
+                }
+            }
+        }
+
+
+
+        $response['status'] = 'success';
+        $response['data'] = $data;
+
+        return response()->json($response);
+    }
+
+    //----------------------------------------------------------
+    public function resetConfirm(Request $request)
+    {
+
+        $rules = array(
+            'confirm' => 'required',
+        );
+
+        $validator = \Validator::make( $request->all(), $rules);
+        if ( $validator->fails() ) {
+
+            $errors             = errorsToArray($validator->errors());
+            $response['status'] = 'failed';
+            $response['errors'] = $errors;
+            return response()->json($response);
+        }
+
+        if(!VaahSetup::isInstalled())
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = 'Application is installed.';
+            return response()->json($response);
+        }
+
+        if(!\Auth::check())
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = 'You are not logged in.';
+            return response()->json($response);
+        }
+
+        if(!\Auth::user()->hasRole('administrator'))
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = 'Permission denied. You must be logged in from Administrator account.';
+            return response()->json($response);
+        }
+
+        if($request->confirm != 'RESET')
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = 'Type RESET to confirm.';
+            return response()->json($response);
+        }
+
+        try{
+
+            if($request->delete_media)
+            {
+                $file = new Filesystem();
+                $file->cleanDirectory('storage/public');
+            }
+
+            if($request->delete_dependencies)
+            {
+                $file = new Filesystem();
+                $file->cleanDirectory('VaahCms/Modules');
+                $file->cleanDirectory('VaahCms/Themes');
+            }
+
+            \Auth::logout();
+
+            //remove all database database tables
+            \Artisan::call('migrate:reset', ['--force' => true]);
+
+            //clear cache
+            VaahHelper::clearCache();
+            $request->session()->flush();
+
+
+            $response['status'] = 'success';
+            $response['data'][] = '';
+
+        }catch(\Exception $e)
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = $e->getMessage();
+
+        }
+
+        return response()->json($response);
 
     }
     //----------------------------------------------------------
     public function testDBConnection(Request $request)
     {
+
+        if(VaahSetup::isInstalled())
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = 'Application';
+            return response()->json($response);
+        }
+
         $response = VaahHelper::testDBConnection($request);
         return response()->json($response);
     }

@@ -41,7 +41,7 @@
 
             </template>
 
-            <template slot="end">
+            <template slot="end" v-if="root.assets && root.assets.auth_user">
 
                 <b-navbar-dropdown :right="true"
                                    :hoverable="true"

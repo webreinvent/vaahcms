@@ -12,6 +12,7 @@
 */
 
 include('backend/ui.php');
+include('backend/setup.php');
 
 Route::group(
     [
@@ -78,52 +79,6 @@ Route::group(
         //---------------------------------------------------------
     });
 
-Route::group(
-    [
-        'prefix'     => 'vaahcms/setup',
-        'namespace'  => 'WebReinvent\VaahCms\Http\Controllers'
-    ],
-    function () {
-        //------------------------------------------------
-        //------------------------------------------------
-        Route::get( '/', 'SetupController@index' )
-            ->name( 'vh.setup.index' );
-        //------------------------------------------------
-        Route::post( '/assets', 'SetupController@getAssets' )
-            ->name( 'vh.setup.assets' );
-        //------------------------------------------------
-        Route::post( '/check/status', 'SetupController@checkSetupStatus' )
-            ->name( 'vh.setup.check.status' );
-        //------------------------------------------------
-        Route::post( '/test/database/connection', 'SetupController@testDBConnection' )
-            ->name( 'vh.setup.test.database' );
-        //------------------------------------------------
-        Route::post( '/test/mail/configuration', 'SetupController@sendTestEmail' )
-            ->name( 'vh.setup.mail.configuration' );
-        //------------------------------------------------
-        Route::post( '/test/configurations', 'SetupController@testConfigurations' )
-            ->name( 'vh.setup.configurations' );
-        //------------------------------------------------
-        Route::post( '/get/configurations', 'SetupController@getConfigurations' )
-            ->name( 'vh.setup.get.configurations' );
-        //------------------------------------------------
-        Route::post( '/get/required/configurations', 'SetupController@getRequiredConfigurations' )
-            ->name( 'vh.setup.get.get.required.configurations' );
-        //------------------------------------------------
-        Route::any( '/get/dependencies', 'SetupController@getDependencies' )
-            ->name( 'vh.setup.get.dependencies' );
-        //------------------------------------------------
-        Route::any( '/install/dependencies', 'SetupController@installDependencies' )
-            ->name( 'vh.setup.install.dependencies' );
-        //------------------------------------------------
-        Route::post( '/run/migrations', 'SetupController@runMigrations' )
-            ->name( 'vh.setup.run.migrations' );
-        //------------------------------------------------
-        Route::post( '/store/admin', 'SetupController@storeAdmin' )
-            ->name( 'vh.setup.store.backend' );
-        //------------------------------------------------
-        //------------------------------------------------
-    });
 
 
 

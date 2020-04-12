@@ -160,6 +160,7 @@ class VaahHelper{
             \Artisan::call('config:clear');
             \Artisan::call('view:clear');
             \Artisan::call('clear-compiled');
+
             $response['status'] = 'success';
             $response['data'] = [];
         }catch(\Exception $e)

@@ -5,8 +5,10 @@
  */
 
 $settings =  [
-    'app_name' => 'VaahCms',
+    'app_name' => 'VaahCMS',
     'app_slug' => 'vaahcms',
+    'website' => 'https://vaah.dev/cms',
+    'documentation' => 'https://vaah.dev/cms/docs',
     'backend_theme' => 'vaahone',
     'frontend_theme' => 'vaahone',
     'frontend_theme_template' => 'vaahone',
