@@ -116,8 +116,11 @@ Route::group(
         Route::any( '/install/dependencies', 'SetupController@installDependencies' )
             ->name( 'vh.setup.install.dependencies' );
         //------------------------------------------------
+        Route::post( '/run/migrations', 'SetupController@runMigrations' )
+            ->name( 'vh.setup.run.migrations' );
+        //------------------------------------------------
         Route::post( '/store/admin', 'SetupController@storeAdmin' )
-            ->name( 'vh.setup.install.store.backend' );
+            ->name( 'vh.setup.store.backend' );
         //------------------------------------------------
         //------------------------------------------------
     });
