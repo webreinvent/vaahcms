@@ -108,7 +108,7 @@ class Module extends Model {
             'slug' => 'required',
             'thumbnail' => 'required',
             'excerpt' => 'required',
-            'github_url' => 'required',
+            'download_link' => 'required',
             'author_name' => 'required',
             'author_website' => 'required',
             'version' => 'required',
@@ -130,6 +130,7 @@ class Module extends Model {
         $module = Module::firstOrCreate(['slug' => $settings['slug']]);
         $module->fill($settings);
         $module->save();
+
 
         $removeKeys = [
             'name',
@@ -269,9 +270,7 @@ class Module extends Model {
 
         $module = Module::slug($slug)->first();
 
-        $is_migratable = $module->is_migratable;
-
-        if(!isset($is_migratable) || (isset($is_migratable) && $is_migratable == true))
+        if(!isset($module->is_migratable) || (isset($module->is_migratable) && $module->is_migratable == true))
         {
             $module_path = config('vaahcms.modules_path').$module->name;
             $path = "/".config('vaahcms.root_folder')."/Modules/".$module->name."/Database/Migrations/";

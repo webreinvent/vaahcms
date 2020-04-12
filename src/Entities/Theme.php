@@ -130,7 +130,7 @@ class Theme extends Model {
             'slug' => 'required',
             'thumbnail' => 'required',
             'excerpt' => 'required',
-            'github_url' => 'required',
+            'download_link' => 'required',
             'author_name' => 'required',
             'author_website' => 'required',
             'version' => 'required',
