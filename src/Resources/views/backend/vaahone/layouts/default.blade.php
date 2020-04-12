@@ -23,8 +23,8 @@
 
 
     @if(env('APP_VAAHCMS_ENV') == 'develop')
-        <link href="http://localhost:8080/themes/vaahone/css/vaahcms.css" rel="stylesheet" media="screen">
-        <link href="http://localhost:8080/themes/vaahone/css/backend.css" rel="stylesheet" media="screen">
+        <link href="http://localhost:8080/vaahone/css/vaahcms.css" rel="stylesheet" media="screen">
+        <link href="http://localhost:8080/vaahone/css/backend.css" rel="stylesheet" media="screen">
     @else
         <link href="{{vh_get_backend_assets("css/vaahcms.css")}}" rel="stylesheet" media="screen">
         <link href="{{vh_get_backend_assets("css/backend.css")}}" rel="stylesheet" media="screen">
@@ -44,7 +44,7 @@
 
 
 @if(env('APP_VAAHCMS_ENV') == 'develop')
-    <script src="http://localhost:8080/themes/vaahone/builds/app.js" defer></script>
+    <script src="http://localhost:8080/vaahone/builds/app.js" defer></script>
     @else
     <script src="{{vh_get_backend_assets("builds/app.js")}}" defer></script>
 @endif

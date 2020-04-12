@@ -225,6 +225,50 @@ class SetupController extends Controller
         return response()->json($response);
     }
     //----------------------------------------------------------
+    public function runMigrations(Request $request)
+    {
+
+        $data = [];
+
+        //$this->deleteExistingMigration();
+
+        try
+        {
+
+            //reset migration
+            Migration::resetMigrations();
+
+            //publish all migrations of vaahcms package
+            $provider = "WebReinvent\VaahCms\VaahCmsServiceProvider";
+            Migration::publishMigrations($provider);
+
+            //run migration
+            Migration::runMigrations(null,true);
+
+            //publish vaahcms seeds
+            Migration::publishSeeds($provider);
+
+            //run vaahcms seeds
+            $namespace = "VaahCmsTableSeeder";
+            Migration::runSeeds($namespace);
+
+            $response['status'] = 'success';
+            $response['messages'][] = 'Migration were successful';
+            $response['data'] = $data;
+
+            return response()->json($response);
+
+        }
+        catch(\Exception $e) {
+
+            $response['status'] = 'failed';
+            $response['errors'][] = $e->getMessage();
+            return response()->json($response);
+        }
+
+
+    }
+    //----------------------------------------------------------
     public function getDependencies(Request $request)
     {
         $response['status'] = 'success';

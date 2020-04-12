@@ -99,7 +99,7 @@ export default {
         //---------------------------------------------------------------------
         validateMigration: function () {
 
-            if(!this.btn_is_migration)
+            if(!this.config.is_migrated)
             {
                 this.$vaah.toastErrors(['Click on Migrate & Run Seeds button']);
                 return false;
