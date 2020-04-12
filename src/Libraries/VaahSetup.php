@@ -111,6 +111,14 @@ class VaahSetup{
                         $data['environments'][$env_params['APP_ENV']]['env_file'] = $file;
                         $data['environments'][$env_params['APP_ENV']]['app_url'] = $env_params['APP_URL'];
                     }
+                } elseif($file == '.env')
+                {
+                    if(File::exists(base_path($file)))
+                    {
+                        $env_params = vh_env_file_to_array(base_path($file));
+                        $data['environments']['default']['env_file'] = $file;
+                        $data['environments']['default']['app_url'] = $env_params['APP_URL'];
+                    }
                 }
             }
 

@@ -133,7 +133,8 @@ class Migration extends Model {
     {
         $command = 'migrate:fresh';
         $params = [
-            '--force' => true
+            '--force' => true,
+            '--quiet' => true,
         ];
         \Artisan::call($command, $params);
     }
@@ -144,7 +145,8 @@ class Migration extends Model {
         $params = [
             '--provider' => $provider,
             '--tag' => "migrations",
-            '--force' => true
+            '--force' => true,
+            '--quiet' => true,
         ];
         \Artisan::call($command, $params);
     }
@@ -155,7 +157,8 @@ class Migration extends Model {
         $params = [
             '--provider' => $provider,
             '--tag' => "seeds",
-            '--force' => true
+            '--force' => true,
+            '--quiet' => true,
         ];
         \Artisan::call($command, $params);
     }

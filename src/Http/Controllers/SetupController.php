@@ -212,19 +212,6 @@ class SetupController extends Controller
 
     }
     //----------------------------------------------------------
-    public function getKey()
-    {
-
-        $active_env_file = VaahHelper::getActiveEnvFileName();
-
-        $env_params = vh_env_file_to_array(base_path('/'.$active_env_file), true);
-
-        $response['status'] = 'success';
-        $response['data']['key'] = $env_params['app_key'];
-
-        return response()->json($response);
-    }
-    //----------------------------------------------------------
     public function runMigrations(Request $request)
     {
 
