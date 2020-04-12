@@ -9,7 +9,9 @@
 
                 <div class="columns">
                     <div class="column has-text-centered">
-                        <Logo/>
+                        <div class="">
+                            <Logo height="40"/>
+                        </div>
 
                         <VueErrors/>
 
@@ -18,11 +20,10 @@
                 </div>
 
                 <!--columns-->
-                <div class="columns">
+                <div class="columns" v-if="assets.is_installed">
                     <div class="column is-half is-offset-one-quarter has-text-centered">
-                        <b-notification type="is-success"
-                                        v-if="assets.is_installed">
-                            VaahCMS is successfully Setup
+                        <b-notification type="is-success">
+                            VaahCMS is successfully setup.
                         </b-notification>
                     </div>
                 </div>
@@ -113,11 +114,7 @@
 
                                                 </div>
 
-                                                <p>
-
-                                                    You can reset/re-install the application if you're logged in from "Administrator" Account.
-
-                                                </p>
+                                                <p>You can reset/re-install the application if you're logged in from "Administrator" account.</p>
 
                                                 <p class="has-margin-top-20">
 

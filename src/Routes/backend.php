@@ -22,13 +22,11 @@ Route::group(
     ],
     function () {
         //------------------------------------------------
-        //------------------------------------------------
         Route::any( '/assets', 'JsonController@getPublicAssets' )
             ->name( 'vh.backend.json.assets' );
         //------------------------------------------------
         Route::any( '/is-logged-in', 'JsonController@isLoggedIn' )
             ->name( 'vh.backend.json.is_logged_in' );
-        //------------------------------------------------
         //------------------------------------------------
     });
 

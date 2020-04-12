@@ -5,10 +5,7 @@
         <b-navbar v-if="root.assets" class="has-shadow" :fixed-top="true">
             <template slot="brand">
                 <b-navbar-item tag="router-link" :to="{ path: '/' }">
-                    <img
-                        src="https://vaah.dev/images/vaahcms-logo.svg"
-                        alt="VaahCMS"
-                    >
+                    <Logo height="30"/>
                 </b-navbar-item>
             </template>
 
@@ -68,10 +65,13 @@
 </template>
 
 <script>
-
+    import Logo from '../../components/Logo';
     export default {
         computed:{
             root() {return this.$store.getters['root/state']},
+        },
+        components:{
+            Logo,
         },
     }
 

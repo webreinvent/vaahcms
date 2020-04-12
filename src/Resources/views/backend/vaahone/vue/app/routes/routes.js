@@ -10,6 +10,7 @@ routes= [
 
 //----------Middleware
 import GetAssets from './middleware/GetAssets'
+import IfNotSetup from './middleware/IfNotSetup'
 import GetSetupStatus from './middleware/GetSetupStatus'
 import IsLoggedIn from './middleware/IsLoggedIn'
 import GetBackendAssets from './middleware/GetBackendAssets'
@@ -35,7 +36,8 @@ let routes_frontend =     {
     props: true,
     meta: {
         middleware: [
-            GetAssets
+            GetAssets,
+            IfNotSetup,
         ]
     },
     children: [
@@ -46,7 +48,8 @@ let routes_frontend =     {
             props: true,
             meta: {
                 middleware: [
-                    GetAssets
+                    GetAssets,
+                    IfNotSetup,
                 ]
             },
         },
@@ -57,7 +60,8 @@ let routes_frontend =     {
             props: true,
             meta: {
                 middleware: [
-                    GetAssets
+                    GetAssets,
+                    IfNotSetup,
                 ]
             },
         }

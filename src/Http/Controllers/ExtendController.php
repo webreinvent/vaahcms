@@ -88,7 +88,7 @@ class ExtendController extends Controller
     {
         $list = [
             [
-                'link' => route('vh.backend.dashboard'),
+                'link' => route('vh.backend.logout'),
                 'label'=> 'Logout'
             ],
         ];
