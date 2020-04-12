@@ -151,14 +151,14 @@ class SetupController extends Controller
             if($request->delete_media)
             {
                 $file = new Filesystem();
-                $file->cleanDirectory('storage/public');
+                $file->cleanDirectory(base_path('storage/public'));
             }
 
             if($request->delete_dependencies)
             {
                 $file = new Filesystem();
-                $file->cleanDirectory('VaahCms/Modules');
-                $file->cleanDirectory('VaahCms/Themes');
+                $file->cleanDirectory(base_path('VaahCms/Modules'));
+                $file->cleanDirectory(base_path('VaahCms/Themes'));
             }
 
             \Auth::logout();
