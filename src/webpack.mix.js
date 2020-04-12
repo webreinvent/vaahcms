@@ -19,7 +19,9 @@ if (mix.inProduction()) {
  | Only in Production
  |--------------------------------------------------------------------------
  */
-    console.log('this is visible in production');
+    console.log('---------------------');
+    console.log('IN PRODUCTION MODE');
+    console.log('---------------------');
 
     publish_folder = './Resources/assets/backend/';
     output_theme_folder = "./vaahone/";

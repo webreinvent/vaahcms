@@ -8,7 +8,7 @@
                 <div class="column is-4">
                     <div class="login-box box is-flex flex-column align-items-center has-text-centered justify-center">
 
-                        <Logo/>
+                        <Logo height="35"/>
 
                         <div class="content has-text-centered has-margin-top-20">
                             <h3 class="title">Sign In</h3>
