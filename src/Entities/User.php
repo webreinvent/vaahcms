@@ -250,6 +250,12 @@ class User extends Authenticatable
         foreach ($roles as $role) {
             $permissions = $role->permissions()->wherePivot('is_active', 1)->get();
             foreach ($permissions as $permission) {
+
+                if(!$permission->is_active)
+                {
+                    continue;
+                }
+
                 $permissions_list[$permission->id] = $permission->toArray();
             }
         }
@@ -832,7 +838,8 @@ class User extends Authenticatable
     //-------------------------------------------------
     public function hasRole($role_slug)
     {
-        foreach ($this->roles()->wherePivot('is_active', 1)->get() as $role) {
+        $roles = $this->roles()->where('is_active', 1)->wherePivot('is_active', 1)->get();
+        foreach ($roles as $role) {
             if ($role->slug == $role_slug)
             {
                 return true;
