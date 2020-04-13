@@ -213,6 +213,7 @@ export default {
         //---------------------------------------------------------------------
         changeItemStatusAfter: function (data,res) {
             this.getItemPermissions(this.filter.page);
+            this.$store.dispatch('root/getPermissions');
         },
         //---------------------------------------------------------------------
         hasPermission: function(slug)
