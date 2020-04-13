@@ -45,7 +45,7 @@ class Role extends Model {
     //-------------------------------------------------
     public function scopeIsActive($query)
     {
-        $query->where('is_active', 1);
+        $query->where('vh_roles.is_active', 1);
     }
     //-------------------------------------------------
 

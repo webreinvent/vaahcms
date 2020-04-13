@@ -67,7 +67,7 @@ class ExtendController extends Controller
         {
             $list[1]['child'][] =  [
                 'link' => $link."/permissions/",
-                'label'=> \Auth::user()->hasPermission('has-access-of-permissions-section')
+                'label'=> 'Permissions'
             ];
         }
 

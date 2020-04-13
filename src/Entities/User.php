@@ -255,16 +255,32 @@ class User extends Authenticatable
     //-------------------------------------------------
     public function permissions($slugs_only=false)
     {
-        $roles = $this->roles()->wherePivot('is_active', 1)->get();
+        $roles = $this->roles()->isActive()->wherePivot('is_active', 1)->get();
+
+
         $permissions_list = array();
         foreach ($roles as $role) {
-            $permissions = $role->permissions()->wherePivot('is_active', 1)->get();
+
+            if($role->slug !='administrator')
+            {
+                $permissions = $role->permissions()->isActive()->wherePivot('is_active', 1)->get();
+            } else{
+                $permissions = $role->permissions()->get();
+            }
+
             foreach ($permissions as $permission) {
-                if(!$permission->is_active)
+
+                if($role->slug =='administrator')
                 {
-                    continue;
+                    $permissions_list[$permission->id] = $permission->toArray();
+
+                } else{
+                    if(!$permission->is_active)
+                    {
+                        continue;
+                    }
+                    $permissions_list[$permission->id] = $permission->toArray();
                 }
-                $permissions_list[$permission->id] = $permission->toArray();
             }
         }
 
@@ -825,15 +841,13 @@ class User extends Authenticatable
     }
 
     //-------------------------------------------------
-    public function hasPermission($permission_slug, $boolean=true)
+    public function hasPermission($permission_slug, $details=false)
     {
 
         if ($this->isAdmin()) {
 
-            if($boolean)
+            if($details)
             {
-                return true;
-            } else{
                 $response['status'] = 'success';
                 if(env('APP_DEBUG'))
                 {
@@ -841,6 +855,9 @@ class User extends Authenticatable
                     $response['hint'][] = 'Admin has all permission by default.';
                 }
                 return $response;
+
+            } else{
+                return true;
             }
 
         }
@@ -851,10 +868,8 @@ class User extends Authenticatable
 
         if (!$permission)
         {
-            if($boolean)
+            if($details)
             {
-                return false;
-            } else {
                 $response['status'] = 'failed';
                 $response['errors'][] = 'No Permission exist with slug: ' . $permission_slug;
 
@@ -863,14 +878,15 @@ class User extends Authenticatable
                 }
 
                 return $response;
+
+            } else {
+                return false;
             }
         }
 
         if ($permission->is_active != 1) {
-            if($boolean)
+            if($details)
             {
-                return false;
-            } else{
                 $response['status'] = 'failed';
                 $response['errors'][] = $permission_slug.' is inactive';
                 if(env('APP_DEBUG'))
@@ -878,6 +894,9 @@ class User extends Authenticatable
                     $response['hint'][] = 'Enable the permission status to active from backend/admin control panel.';
                 }
                 return $response;
+
+            } else{
+                return false;
             }
 
         }
@@ -891,10 +910,8 @@ class User extends Authenticatable
                 && $permission['pivot']['is_active'] == 1
             )
             {
-                if($boolean)
+                if($details)
                 {
-                    return true;
-                } else{
                     $response['status'] = 'success';
                     $response['data'] = [];
                     if(env('APP_DEBUG'))
@@ -903,15 +920,15 @@ class User extends Authenticatable
                     }
                     return $response;
 
+                } else{
+                    return true;
                 }
                 break;
             }
         }
 
-        if($boolean)
+        if($details)
         {
-            return false;
-        } else{
             $response['status'] = 'failed';
             $response['errors'][] = trans("vaahcms::messages.permission_denied");
             if(env('APP_DEBUG'))
@@ -919,6 +936,9 @@ class User extends Authenticatable
                 $response['hint'][] = 'Permission slug: '.$permission_slug.' is not active for '.\Auth::user()->email;
             }
             return $response;
+
+        } else{
+            return false;
         }
 
     }
