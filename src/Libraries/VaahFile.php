@@ -148,6 +148,7 @@ class VaahFile{
             $path = base_path('/');
         }
 
+
         if (is_array($array)) {
 
             $content = stripslashes(json_encode($array, JSON_PRETTY_PRINT));

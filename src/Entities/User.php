@@ -90,6 +90,11 @@ class User extends Authenticatable
     }
     //-------------------------------------------------
 
+    public function scopeIsActive($query)
+    {
+        $query->where('is_active', 1);
+    }
+
     //-------------------------------------------------
     //-------------------------------------------------
 
@@ -199,7 +204,7 @@ class User extends Authenticatable
     {
         $count = User::whereHas('roles', function ($query) {
             $query->slug('administrator');
-        })->count();
+        })->isActive()->count();
         return $count;
     }
 
@@ -686,7 +691,7 @@ class User extends Authenticatable
         $user = static::find($user_id);
         $is_last_admin = static::isLastAdmin();
 
-        if($user->hasRole('admin') && $is_last_admin)
+        if($user->hasRole('administrator') && $is_last_admin)
         {
             switch ($action_type)
             {
@@ -811,7 +816,7 @@ class User extends Authenticatable
     //-------------------------------------------------
     public function isAdmin()
     {
-        return $this->hasRole('admin');
+        return $this->hasRole('administrator');
     }
 
     //-------------------------------------------------
@@ -928,7 +933,7 @@ class User extends Authenticatable
     public static function notifyAdmins($subject, $message)
     {
         $users = new User();
-        $admins = $users->listByRole('admin');
+        $admins = $users->listByRole('administrator');
 
         $notification = new \stdClass();
         $notification->subject = $subject;
@@ -1015,7 +1020,7 @@ class User extends Authenticatable
         if($inputs['inputs']['id'] == 1 && $inputs['inputs']['user_id'] == 1)
         {
             $response['status'] = 'failed';
-            $response['errors'][] = 'First user will always be an admin';
+            $response['errors'][] = 'First user will always be an administrator';
             return response()->json($response);
         }
 

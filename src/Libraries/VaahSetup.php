@@ -105,14 +105,13 @@ class VaahSetup{
 
             foreach ($files as $file)
             {
-                if (strpos($file, '.env') !== false) {
-                    if(File::exists(base_path($file)))
-                    {
-                        $env_params = vh_env_file_to_array(base_path($file));
-                        $data['environments'][$env_params['APP_ENV']]['env_file'] = $file;
-                        $data['environments'][$env_params['APP_ENV']]['app_url'] = $env_params['APP_URL'];
-                    }
-                } elseif($file == '.env')
+
+                if($file == '.env.example')
+                {
+                    continue;
+                }
+
+                if($file == '.env')
                 {
                     if(File::exists(base_path($file)))
                     {
@@ -120,7 +119,23 @@ class VaahSetup{
                         $data['environments']['default']['env_file'] = $file;
                         $data['environments']['default']['app_url'] = $env_params['APP_URL'];
                     }
+                } else{
+                    if (strpos($file, '.env') !== false) {
+                        if(File::exists(base_path($file)))
+                        {
+                            $env_params = vh_env_file_to_array(base_path($file));
+
+                            $env = trim($env_params['APP_ENV']);
+                            $env_url = trim($env_params['APP_URL']);
+
+                            $data['environments'][$env]['env_file'] = trim($file);
+                            $data['environments'][$env]['app_url'] = $env_url;
+                        }
+                    }
                 }
+
+
+
             }
 
 

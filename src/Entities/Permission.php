@@ -40,6 +40,14 @@ class Permission extends Model {
 
     ];
     //-------------------------------------------------
+    public function scopeSlug( $query, $slug ) {
+        return $query->where( 'slug', $slug );
+    }
+    //-------------------------------------------------
+    public function scopeIsActive($query)
+    {
+        $query->where('is_active', 1);
+    }
     //-------------------------------------------------
     //-------------------------------------------------
     public function createdByUser()

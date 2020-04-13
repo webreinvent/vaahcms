@@ -43,6 +43,33 @@ class VaahCmsTableSeeder extends Seeder
                 $item['slug'] = Str::slug($item[$create_slug_from]);
             }
 
+
+            $record = DB::table($table)
+                ->where($primary_key, $item[$primary_key])
+                ->first();
+
+
+            if(!$record)
+            {
+                DB::table($table)->insert($item);
+            } else{
+                DB::table($table)->where($primary_key, $item[$primary_key])
+                    ->update($item);
+            }
+        }
+    }
+    //---------------------------------------------------------------
+    public function storeSeedsWithUuid($table, $list, $primary_key='slug', $create_slug=true, $create_slug_from='name')
+    {
+        foreach ($list as $item)
+        {
+            if($create_slug)
+            {
+                $item['slug'] = Str::slug($item[$create_slug_from]);
+            }
+
+            $item['uuid'] = Str::uuid();
+
             $record = DB::table($table)
                 ->where($primary_key, $item[$primary_key])
                 ->first();
@@ -61,13 +88,13 @@ class VaahCmsTableSeeder extends Seeder
     public function seedPermissions()
     {
         $list = $this->getListFromJson("permissions.json");
-        $this->storeSeeds('vh_permissions', $list);
+        $this->storeSeedsWithUuid('vh_permissions', $list);
     }
     //---------------------------------------------------------------
     public function seedRoles()
     {
         $list = $this->getListFromJson("roles.json");
-        $this->storeSeeds('vh_roles', $list);
+        $this->storeSeedsWithUuid('vh_roles', $list);
     }
     //---------------------------------------------------------------
     public function seedLanguages()

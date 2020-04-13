@@ -43,6 +43,11 @@ class Role extends Model {
         return $query->where( 'slug', $slug );
     }
     //-------------------------------------------------
+    public function scopeIsActive($query)
+    {
+        $query->where('is_active', 1);
+    }
+    //-------------------------------------------------
 
     public function createdByUser()
     {
@@ -280,7 +285,7 @@ class Role extends Model {
 
 
         //enable all roles for admin users
-        $admin_role = Role::slug('admin')->first();
+        $admin_role = Role::slug('administrator')->first();
         $admin_users = $admin_role->users()->wherePivot('is_active', 1)
             ->get()
             ->pluck('id')
