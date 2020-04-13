@@ -7,6 +7,7 @@ let namespace = 'roles';
 export default {
     computed:{
         root() {return this.$store.getters['root/state']},
+        permissions() {return this.$store.getters['root/state'].permissions},
         page() {return this.$store.getters[namespace+'/state']},
         ajax_url() {return this.$store.getters[namespace+'/state'].ajax_url},
         new_item() {return this.$store.getters[namespace+'/state'].new_item},
@@ -63,6 +64,15 @@ export default {
         //---------------------------------------------------------------------
         onLoad: function()
         {
+            if(!this.hasPermission('can-create-roles'))
+            {
+                this.update('active_item', null);
+                this.$router.push({name: 'role.list'});
+                this.$vaah.toastErrors(['Permission denied']);
+            }
+
+
+
             this.updateView();
             this.getAssets();
         },
@@ -176,6 +186,11 @@ export default {
                 new_item[key] = this.new_item[key];
             }
             this.update('new_item', new_item);
+        },
+        //---------------------------------------------------------------------
+        hasPermission: function(slug)
+        {
+            return this.$vaah.hasPermission(this.permissions, slug);
         },
         //---------------------------------------------------------------------
         //---------------------------------------------------------------------

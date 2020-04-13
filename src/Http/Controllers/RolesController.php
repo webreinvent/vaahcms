@@ -28,6 +28,15 @@ class RolesController extends Controller
 
     public function getAssets(Request $request)
     {
+
+        if(!\Auth::user()->hasPermission('has-access-of-users-section',true))
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+            return response()->json($response);
+        }
+
         $module = Permission::getModuleList();
 
         $data['country_calling_code'] = vh_get_country_list();
@@ -48,18 +57,45 @@ class RolesController extends Controller
     //----------------------------------------------------------
     public function postCreate(Request $request)
     {
+        if(!\Auth::user()->hasPermission('can-create-roles',true))
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+            return response()->json($response);
+        }
+
         $response = Role::create($request);
         return response()->json($response);
     }
     //----------------------------------------------------------
     public function postStore(Request $request,$id)
     {
+        if(!\Auth::user()->hasPermission('can-update-roles',true))
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+            return response()->json($response);
+        }
+
         $response = Role::updateDetail($request,$id);
         return response()->json($response);
     }
     //----------------------------------------------------------
     public function getItem(Request $request, $id)
     {
+
+        if(!\Auth::user()->hasPermission('can-manage-roles',true) &&
+            !\Auth::user()->hasPermission('can-update-roles',true) &&
+            !\Auth::user()->hasPermission('can-create-roles',true) &&
+            !\Auth::user()->hasPermission('can-read-roles',true))
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+            return response()->json($response);
+        }
 
         $response = Role::getDetail($id);
         return response()->json($response);
@@ -68,6 +104,14 @@ class RolesController extends Controller
     //----------------------------------------------------------
     public function getList(Request $request)
     {
+        if(!\Auth::user()->hasPermission('has-access-of-users-section',true))
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+            return response()->json($response);
+        }
+
         $response = Role::getList($request);
         return response()->json($response);
     }
@@ -150,12 +194,34 @@ class RolesController extends Controller
     //----------------------------------------------------------
     public function getItemPermission(Request $request, $id)
     {
+
+        if(!\Auth::user()->hasPermission('can-manage-roles',true) &&
+            !\Auth::user()->hasPermission('can-update-roles',true) &&
+            !\Auth::user()->hasPermission('can-read-roles',true))
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+            return response()->json($response);
+        }
+
         $response = Role::getRolePermission($request, $id);
         return response()->json($response);
     }
     //----------------------------------------------------------
     public function getItemUser(Request $request, $id)
     {
+
+        if(!\Auth::user()->hasPermission('can-manage-roles',true) &&
+            !\Auth::user()->hasPermission('can-update-roles',true) &&
+            !\Auth::user()->hasPermission('can-read-roles',true))
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+            return response()->json($response);
+        }
+
         $response = Role::getRoleUser($request, $id);
         return response()->json($response);
     }

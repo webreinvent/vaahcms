@@ -7,6 +7,7 @@ let namespace = 'users';
 export default {
     computed:{
         root() {return this.$store.getters['root/state']},
+        permissions() {return this.$store.getters['root/state'].permissions},
         page() {return this.$store.getters[namespace+'/state']},
         ajax_url() {return this.$store.getters[namespace+'/state'].ajax_url},
         new_item() {return this.$store.getters[namespace+'/state'].new_item},
@@ -63,6 +64,13 @@ export default {
         //---------------------------------------------------------------------
         onLoad: function()
         {
+            if(!this.hasPermission('can-create-users'))
+            {
+                this.update('active_item', null);
+                this.$router.push({name: 'user.list'});
+                this.$vaah.toastErrors(['Permission denied']);
+            }
+
             this.updateView();
             this.getAssets();
         },
@@ -238,6 +246,11 @@ export default {
             }else{
                 this.new_item.is_active = 0;
             }
+        },
+        //---------------------------------------------------------------------
+        hasPermission: function(slug)
+        {
+            return this.$vaah.hasPermission(this.permissions, slug);
         },
         //---------------------------------------------------------------------
         //---------------------------------------------------------------------

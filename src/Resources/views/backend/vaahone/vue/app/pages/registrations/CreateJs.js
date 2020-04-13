@@ -64,6 +64,12 @@ export default {
         //---------------------------------------------------------------------
         onLoad: function()
         {
+            if(!this.hasPermission('can-create-users'))
+            {
+                this.update('active_item', null);
+                this.$router.push({name: 'user.list'});
+                this.$vaah.toastErrors(['Permission denied']);
+            }
             this.updateView();
             this.getAssets();
         },
@@ -220,6 +226,11 @@ export default {
                 new_item[key] = this.new_item[key];
             }
             this.update('new_item', new_item);
+        },
+        //---------------------------------------------------------------------
+        hasPermission: function(slug)
+        {
+            return this.$vaah.hasPermission(this.permissions, slug);
         },
         //---------------------------------------------------------------------
         //---------------------------------------------------------------------

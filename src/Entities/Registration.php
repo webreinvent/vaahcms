@@ -178,6 +178,11 @@ class Registration extends Model
             ->getColumnListing($this->getTable());
     }
     //-------------------------------------------------
+    public function scopeExclude($query, $columns)
+    {
+        return $query->select( array_diff( $this->getTableColumns(),$columns) );
+    }
+    //-------------------------------------------------
     public static function findByUsername($username, $columns = array('*'))
     {
         if ( ! is_null($user = static::whereUsername($username)->first($columns))) {
@@ -334,7 +339,13 @@ class Registration extends Model
         $item = Registration::where('id', $request->id);
         $item->withTrashed();
         $item->with(['createdByUser', 'updatedByUser', 'deletedByUser']);
+
+        if(!\Auth::user()->hasPermission('can-see-registrations-contact-details',true)){
+            $item->exclude(['email','alternate_email', 'phone']);
+        }
+
         $item = $item->first();
+
 
         $response['status'] = 'success';
         $response['data']['item'] = $item;

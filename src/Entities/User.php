@@ -250,12 +250,10 @@ class User extends Authenticatable
         foreach ($roles as $role) {
             $permissions = $role->permissions()->wherePivot('is_active', 1)->get();
             foreach ($permissions as $permission) {
-
                 if(!$permission->is_active)
                 {
                     continue;
                 }
-
                 $permissions_list[$permission->id] = $permission->toArray();
             }
         }
@@ -286,14 +284,6 @@ class User extends Authenticatable
 
     public static function create($request)
     {
-
-        if(!\Auth::user()->hasPermission('can-create-users',true))
-        {
-            $response['status'] = 'failed';
-            $response['errors'][] = trans("vaahcms::messages.permission_denied");
-
-            return $response;
-        }
 
         $inputs = $request->new_item;
 
@@ -355,38 +345,7 @@ class User extends Authenticatable
     public static function store($request)
     {
 
-        if(!\Auth::user()->hasPermission('can-update-users',true))
-        {
-            $response['status'] = 'failed';
-            $response['errors'][] = trans("vaahcms::messages.permission_denied");
-
-            return $response;
-        }
-
         $inputs = $request->all();
-
-        $validate = static::validation($inputs);
-
-        if(isset($validate['status']) && $validate['status'] == 'failed')
-        {
-            return $validate;
-        }
-
-        if(isset($inputs['phone']))
-        {
-            $rules['phone'] = 'integer';
-
-            $validator = \Validator::make( $request->all(), $rules);
-            if ( $validator->fails() ) {
-
-                $errors             = errorsToArray($validator->errors());
-                $response['status'] = 'failed';
-                $response['errors'] = $errors;
-                return $response;
-            }
-        }
-
-
 
         $validate = static::validation($inputs);
 
@@ -838,8 +797,7 @@ class User extends Authenticatable
     //-------------------------------------------------
     public function hasRole($role_slug)
     {
-        $roles = $this->roles()->where('is_active', 1)->wherePivot('is_active', 1)->get();
-        foreach ($roles as $role) {
+        foreach ($this->roles()->wherePivot('is_active', 1)->get() as $role) {
             if ($role->slug == $role_slug)
             {
                 return true;
@@ -992,14 +950,6 @@ class User extends Authenticatable
     public static function getList($request)
     {
 
-        if(!\Auth::user()->hasPermission('has-access-of-users-section',true))
-        {
-            $response['status'] = 'failed';
-            $response['errors'][] = trans("vaahcms::messages.permission_denied");
-
-            return $response;
-        }
-
         if($request->has('recount') && $request->get('recount') == true)
         {
             Role::syncRolesWithUsers();
@@ -1145,18 +1095,13 @@ class User extends Authenticatable
     public static function getDetail($id)
     {
 
-        if(!\Auth::user()->hasPermission('can-manage-users',true) &&
-            !\Auth::user()->hasPermission('can-update-users',true) &&
-            !\Auth::user()->hasPermission('can-create-users',true) &&
-            !\Auth::user()->hasPermission('can-read-users',true))
-        {
-            $response['status'] = 'failed';
-            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+        $item = static::where('id', $id)->with(['createdByUser', 'updatedByUser', 'deletedByUser'])->withTrashed();
 
-            return $response;
+        if(!\Auth::user()->hasPermission('can-see-users-contact-details',true)){
+            $item = $item->first()->makeHidden(['email','alternate_email', 'phone',]);
+        }else{
+            $item = $item->first();
         }
-
-        $item = static::where('id', $id)->with(['createdByUser', 'updatedByUser', 'deletedByUser'])->withTrashed()->first();
 
         $response['status'] = 'success';
         $response['data'] = $item;
@@ -1169,16 +1114,6 @@ class User extends Authenticatable
 
     public static function getItemRoles($request,$id)
     {
-
-        if(!\Auth::user()->hasPermission('can-manage-users',true) &&
-            !\Auth::user()->hasPermission('can-update-users',true) &&
-            !\Auth::user()->hasPermission('can-read-users',true))
-        {
-            $response['status'] = 'failed';
-            $response['errors'][] = trans("vaahcms::messages.permission_denied");
-
-            return $response;
-        }
 
         $item = User::withTrashed()->where('id', $id)->first();
 
