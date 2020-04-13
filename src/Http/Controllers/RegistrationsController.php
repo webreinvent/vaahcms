@@ -23,7 +23,7 @@ class RegistrationsController extends Controller
     public function getAssets(Request $request)
     {
 
-        if(!\Auth::user()->hasPermission('has-access-of-users-section',true))
+        if(!\Auth::user()->hasPermission('has-access-of-users-section'))
         {
             $response['status'] = 'failed';
             $response['errors'][] = trans("vaahcms::messages.permission_denied");
@@ -48,7 +48,7 @@ class RegistrationsController extends Controller
     public function postCreate(Request $request)
     {
 
-        if(!\Auth::user()->hasPermission('can-create-registrations',true))
+        if(!\Auth::user()->hasPermission('can-create-registrations'))
         {
             $response['status'] = 'failed';
             $response['errors'][] = trans("vaahcms::messages.permission_denied");
@@ -69,7 +69,7 @@ class RegistrationsController extends Controller
     //----------------------------------------------------------
     public function getList(Request $request)
     {
-        if(!\Auth::user()->hasPermission('has-access-of-registrations-section',true))
+        if(!\Auth::user()->hasPermission('has-access-of-registrations-section'))
         {
             $response['status'] = 'failed';
             $response['errors'][] = trans("vaahcms::messages.permission_denied");
@@ -85,10 +85,10 @@ class RegistrationsController extends Controller
     public function getItem(Request $request, $id)
     {
 
-        if(!\Auth::user()->hasPermission('can-manage-registrations',true) &&
-            !\Auth::user()->hasPermission('can-update-registrations',true) &&
-            !\Auth::user()->hasPermission('can-create-registrations',true) &&
-            !\Auth::user()->hasPermission('can-read-registrations',true))
+        if(!\Auth::user()->hasPermission('can-manage-registrations') &&
+            !\Auth::user()->hasPermission('can-update-registrations') &&
+            !\Auth::user()->hasPermission('can-create-registrations') &&
+            !\Auth::user()->hasPermission('can-read-registrations'))
         {
             $response['status'] = 'failed';
             $response['errors'][] = trans("vaahcms::messages.permission_denied");
@@ -104,7 +104,7 @@ class RegistrationsController extends Controller
     public function postStore(Request $request)
     {
 
-        if(!\Auth::user()->hasPermission('can-update-registrations',true))
+        if(!\Auth::user()->hasPermission('can-update-registrations'))
         {
             $response['status'] = 'failed';
             $response['errors'][] = trans("vaahcms::messages.permission_denied");
@@ -118,7 +118,7 @@ class RegistrationsController extends Controller
     //----------------------------------------------------------
     public function createUser(Request $request,$id)
     {
-        if(!\Auth::user()->hasPermission('can-create-users-from-registrations',true))
+        if(!\Auth::user()->hasPermission('can-create-users-from-registrations'))
         {
             $response['status'] = 'failed';
             $response['errors'][] = trans("vaahcms::messages.permission_denied");

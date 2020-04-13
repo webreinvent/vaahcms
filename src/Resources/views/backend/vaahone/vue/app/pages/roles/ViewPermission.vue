@@ -78,41 +78,10 @@
             <!--content-->
             <div class="card-content">
 
-                <div class="block"  v-if="items && items.list">
+                <div class="block is-flex flex-column"  v-if="items && items.list">
 
-                    <b-field>
-                        <b-input style="width: 100%" placeholder="Search Permissions"
-                                 type="search"
-                                 icon="search"
-                                 @input="delayedSearch"
-                                 @keyup.enter.prevent="delayedSearch"
-                                 v-model="search_item">>
-
-                        </b-input>
-
-                        <p class="control">
-                            <button class="button is-primary"
-                                    @click="resetPage">
-                                Reset
-                            </button>
-                        </p>
-
-                        <p class="control">
-                            <button class="button is-primary"
-                                    @click="toggleFilters()"
-                                    slot="trigger">
-                                <b-icon icon="ellipsis-v"></b-icon>
-                            </button>
-                        </p>
-                    </b-field>
-
-                    <!--filters-->
-                    <div class="level" v-if="show_filters">
-
+                    <div class="level">
                         <div class="level-left">
-
-
-
                             <div class="level-item">
 
                                 <b-field label="">
@@ -150,11 +119,40 @@
 
 
                             </div>
-
                         </div>
+                        <div class="level-right">
+                            <b-field>
+                                <b-input style="width: 100%" placeholder="Search Permissions"
+                                         type="search"
+                                         icon="search"
+                                         @input="delayedSearch"
+                                         @keyup.enter.prevent="delayedSearch"
+                                         v-model="search_item">>
 
+                                </b-input>
 
+                                <p class="control">
+                                    <button class="button is-primary"
+                                            @click="resetPage">
+                                        Reset
+                                    </button>
+                                </p>
+                            </b-field>
+                        </div>
                     </div>
+
+
+
+                    <!--filters-->
+
+                    <!--/filters-->
+
+                </div>
+
+                <div class="block"  v-if="items && items.list">
+
+                    <!--filters-->
+
                     <!--/filters-->
 
 

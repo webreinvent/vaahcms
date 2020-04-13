@@ -56,6 +56,11 @@ class Permission extends Model {
             'created_by', 'id'
         )->select('id', 'uuid', 'first_name', 'last_name', 'email');
     }
+    //-------------------------------------------------
+    public function scopeExclude($query, $columns)
+    {
+        return $query->select( array_diff( $this->getTableColumns(),$columns) );
+    }
 
     //-------------------------------------------------
     public function updatedByUser()
@@ -136,8 +141,8 @@ class Permission extends Model {
     public static function bulkStatusChange($request)
     {
 
-        if(!\Auth::user()->hasPermission('can-manage-permissions',true) &&
-            !\Auth::user()->hasPermission('can-update-permissions',true))
+        if(!\Auth::user()->hasPermission('can-manage-permissions') &&
+            !\Auth::user()->hasPermission('can-update-permissions'))
         {
             $response['status'] = 'failed';
             $response['errors'][] = trans("vaahcms::messages.permission_denied");
@@ -189,8 +194,8 @@ class Permission extends Model {
     public static function bulkDelete($request)
     {
 
-        if(!\Auth::user()->hasPermission('can-update-permissions',true) ||
-            !\Auth::user()->hasPermission('can-delete-permissions',true))
+        if(!\Auth::user()->hasPermission('can-update-permissions') ||
+            !\Auth::user()->hasPermission('can-delete-permissions'))
         {
             $response['status'] = 'failed';
             $response['errors'][] = trans("vaahcms::messages.permission_denied");
@@ -238,7 +243,7 @@ class Permission extends Model {
     public static function bulkTrash($request)
     {
 
-        if(!\Auth::user()->hasPermission('can-update-permissions',true))
+        if(!\Auth::user()->hasPermission('can-update-permissions'))
         {
             $response['status'] = 'failed';
             $response['errors'][] = trans("vaahcms::messages.permission_denied");
@@ -277,7 +282,7 @@ class Permission extends Model {
     public static function bulkRestore($request)
     {
 
-        if(!\Auth::user()->hasPermission('can-update-permissions',true))
+        if(!\Auth::user()->hasPermission('can-update-permissions'))
         {
             $response['status'] = 'failed';
             $response['errors'][] = trans("vaahcms::messages.permission_denied");
@@ -548,8 +553,8 @@ class Permission extends Model {
     public static function bulkChangeRoleStatus($request)
     {
 
-        if(!\Auth::user()->hasPermission('can-manage-permissions',true) &&
-            !\Auth::user()->hasPermission('can-update-permissions',true))
+        if(!\Auth::user()->hasPermission('can-manage-permissions') &&
+            !\Auth::user()->hasPermission('can-update-permissions'))
         {
             $response['status'] = 'failed';
             $response['errors'][] = trans("vaahcms::messages.permission_denied");

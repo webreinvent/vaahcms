@@ -127,6 +127,11 @@ class User extends Authenticatable
             ->getColumnListing($this->getTable());
     }
     //-------------------------------------------------
+    public function scopeExclude($query, $columns)
+    {
+        return $query->select( array_diff( $this->getTableColumns(),$columns) );
+    }
+    //-------------------------------------------------
     public function getFormFillableColumns()
     {
         $list = [
@@ -491,8 +496,8 @@ class User extends Authenticatable
     public static function bulkStatusChange($request)
     {
 
-        if(!\Auth::user()->hasPermission('can-manage-users',true) &&
-            !\Auth::user()->hasPermission('can-update-users',true))
+        if(!\Auth::user()->hasPermission('can-manage-users') &&
+            !\Auth::user()->hasPermission('can-update-users'))
         {
             $response['status'] = 'failed';
             $response['errors'][] = trans("vaahcms::messages.permission_denied");
@@ -562,7 +567,7 @@ class User extends Authenticatable
     public static function bulkTrash($request)
     {
 
-        if(!\Auth::user()->hasPermission('can-update-users',true))
+        if(!\Auth::user()->hasPermission('can-update-users'))
         {
             $response['status'] = 'failed';
             $response['errors'][] = trans("vaahcms::messages.permission_denied");
@@ -609,7 +614,7 @@ class User extends Authenticatable
     public static function bulkRestore($request)
     {
 
-        if(!\Auth::user()->hasPermission('can-update-registrations',true))
+        if(!\Auth::user()->hasPermission('can-update-registrations'))
         {
             $response['status'] = 'failed';
             $response['errors'][] = trans("vaahcms::messages.permission_denied");
@@ -820,7 +825,7 @@ class User extends Authenticatable
     }
 
     //-------------------------------------------------
-    public function hasPermission($permission_slug, $boolean=false)
+    public function hasPermission($permission_slug, $boolean=true)
     {
 
         if ($this->isAdmin()) {
@@ -989,6 +994,10 @@ class User extends Authenticatable
 
         $list->withCount(['activeRoles']);
 
+        if(!\Auth::user()->hasPermission('can-see-users-contact-details')){
+            $list->exclude(['email','alternate_email', 'phone']);
+        }
+
         $list = $list->paginate(config('vaahcms.per_page'));
         $countRole = Role::all()->count();
 
@@ -1005,8 +1014,8 @@ class User extends Authenticatable
     public static function bulkChangeRoleStatus($request)
     {
 
-        if(!\Auth::user()->hasPermission('can-manage-users',true) &&
-            !\Auth::user()->hasPermission('can-update-users',true))
+        if(!\Auth::user()->hasPermission('can-manage-users') &&
+            !\Auth::user()->hasPermission('can-update-users'))
         {
             $response['status'] = 'failed';
             $response['errors'][] = trans("vaahcms::messages.permission_denied");
@@ -1050,8 +1059,8 @@ class User extends Authenticatable
     public static function bulkDelete($request)
     {
 
-        if(!\Auth::user()->hasPermission('can-update-registrations',true) ||
-            !\Auth::user()->hasPermission('can-delete-registrations',true))
+        if(!\Auth::user()->hasPermission('can-update-registrations') ||
+            !\Auth::user()->hasPermission('can-delete-registrations'))
         {
             $response['status'] = 'failed';
             $response['errors'][] = trans("vaahcms::messages.permission_denied");
@@ -1102,11 +1111,11 @@ class User extends Authenticatable
 
         $item = static::where('id', $id)->with(['createdByUser', 'updatedByUser', 'deletedByUser'])->withTrashed();
 
-        if(!\Auth::user()->hasPermission('can-see-users-contact-details',true)){
-            $item = $item->first()->makeHidden(['email','alternate_email', 'phone',]);
-        }else{
-            $item = $item->first();
+        if(!\Auth::user()->hasPermission('can-see-users-contact-details')){
+            $item->exclude(['email','alternate_email', 'phone']);
         }
+
+        $item = $item->first();
 
         $response['status'] = 'success';
         $response['data'] = $item;

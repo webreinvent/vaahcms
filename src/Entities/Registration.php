@@ -208,7 +208,7 @@ class Registration extends Model
     public static function create($request)
     {
 
-        if(!\Auth::user()->hasPermission('can-create-registrations',true))
+        if(!\Auth::user()->hasPermission('can-create-registrations'))
         {
             $response['status'] = 'failed';
             $response['errors'][] = trans("vaahcms::messages.permission_denied");
@@ -282,7 +282,7 @@ class Registration extends Model
     public static function getList($request)
     {
 
-        if(!\Auth::user()->hasPermission('has-access-of-registrations-section',true))
+        if(!\Auth::user()->hasPermission('has-access-of-registrations-section'))
         {
             $response['status'] = 'failed';
             $response['errors'][] = trans("vaahcms::messages.permission_denied");
@@ -313,6 +313,11 @@ class Registration extends Model
             });
         }
 
+        if(!\Auth::user()->hasPermission('can-see-registrations-contact-details')){
+            $list->exclude(['email','alternate_email', 'phone']);
+        }
+
+
         $list = $list->paginate(config('vaahcms.per_page'));
 
         $response['status'] = 'success';
@@ -325,10 +330,10 @@ class Registration extends Model
     public static function getItem($request)
     {
 
-        if(!\Auth::user()->hasPermission('can-manage-registrations',true) &&
-            !\Auth::user()->hasPermission('can-update-registrations',true) &&
-            !\Auth::user()->hasPermission('can-create-registrations',true) &&
-            !\Auth::user()->hasPermission('can-read-registrations',true))
+        if(!\Auth::user()->hasPermission('can-manage-registrations') &&
+            !\Auth::user()->hasPermission('can-update-registrations') &&
+            !\Auth::user()->hasPermission('can-create-registrations') &&
+            !\Auth::user()->hasPermission('can-read-registrations'))
         {
             $response['status'] = 'failed';
             $response['errors'][] = trans("vaahcms::messages.permission_denied");
@@ -340,7 +345,7 @@ class Registration extends Model
         $item->withTrashed();
         $item->with(['createdByUser', 'updatedByUser', 'deletedByUser']);
 
-        if(!\Auth::user()->hasPermission('can-see-registrations-contact-details',true)){
+        if(!\Auth::user()->hasPermission('can-see-registrations-contact-details')){
             $item->exclude(['email','alternate_email', 'phone']);
         }
 
@@ -357,7 +362,7 @@ class Registration extends Model
     public static function store($request)
     {
 
-        if(!\Auth::user()->hasPermission('can-update-registrations',true))
+        if(!\Auth::user()->hasPermission('can-update-registrations'))
         {
             $response['status'] = 'failed';
             $response['errors'][] = trans("vaahcms::messages.permission_denied");
@@ -519,8 +524,8 @@ class Registration extends Model
     public static function bulkStatusChange($request)
     {
 
-        if(!\Auth::user()->hasPermission('can-manage-registrations',true) &&
-            !\Auth::user()->hasPermission('can-update-registrations',true))
+        if(!\Auth::user()->hasPermission('can-manage-registrations') &&
+            !\Auth::user()->hasPermission('can-update-registrations'))
         {
             $response['status'] = 'failed';
             $response['errors'][] = trans("vaahcms::messages.permission_denied");
@@ -561,7 +566,7 @@ class Registration extends Model
     public static function bulkTrash($request)
     {
 
-        if(!\Auth::user()->hasPermission('can-update-registrations',true))
+        if(!\Auth::user()->hasPermission('can-update-registrations'))
         {
             $response['status'] = 'failed';
             $response['errors'][] = trans("vaahcms::messages.permission_denied");
@@ -598,7 +603,7 @@ class Registration extends Model
     public static function bulkRestore($request)
     {
 
-        if(!\Auth::user()->hasPermission('can-update-registrations',true))
+        if(!\Auth::user()->hasPermission('can-update-registrations'))
         {
             $response['status'] = 'failed';
             $response['errors'][] = trans("vaahcms::messages.permission_denied");
@@ -634,8 +639,8 @@ class Registration extends Model
     public static function bulkDelete($request)
     {
 
-        if(!\Auth::user()->hasPermission('can-update-registrations',true) ||
-            !\Auth::user()->hasPermission('can-delete-registrations',true))
+        if(!\Auth::user()->hasPermission('can-update-registrations') ||
+            !\Auth::user()->hasPermission('can-delete-registrations'))
         {
             $response['status'] = 'failed';
             $response['errors'][] = trans("vaahcms::messages.permission_denied");
@@ -672,8 +677,8 @@ class Registration extends Model
     public static function sendVerificationEmail($request)
     {
 
-        if(!\Auth::user()->hasPermission('can-manage-registrations',true) &&
-            !\Auth::user()->hasPermission('can-update-registrations',true))
+        if(!\Auth::user()->hasPermission('can-manage-registrations') &&
+            !\Auth::user()->hasPermission('can-update-registrations'))
         {
             $response['status'] = 'failed';
             $response['errors'][] = trans("vaahcms::messages.permission_denied");
@@ -710,7 +715,7 @@ class Registration extends Model
     public static function createUser($id)
     {
 
-        if(!\Auth::user()->hasPermission('can-create-users-from-registrations',true))
+        if(!\Auth::user()->hasPermission('can-create-users-from-registrations'))
         {
             $response['status'] = 'failed';
             $response['errors'][] = trans("vaahcms::messages.permission_denied");

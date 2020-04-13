@@ -18,7 +18,7 @@
                     {{ props.row.name }}
                 </b-table-column>
 
-                <b-table-column field="email" label="Email">
+                <b-table-column v-if="props.row.email" field="email" label="Email">
                     {{ props.row.email }}
                 </b-table-column>
 

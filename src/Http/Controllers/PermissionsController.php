@@ -23,7 +23,7 @@ class PermissionsController extends Controller
     public function getAssets(Request $request)
     {
 
-        if(!\Auth::user()->hasPermission('has-access-of-permissions-section',true))
+        if(!\Auth::user()->hasPermission('has-access-of-permissions-section'))
         {
             $response['status'] = 'failed';
             $response['errors'][] = trans("vaahcms::messages.permission_denied");
@@ -49,7 +49,7 @@ class PermissionsController extends Controller
     //----------------------------------------------------------
     public function postStore(Request $request,$id)
     {
-        if(!\Auth::user()->hasPermission('can-update-permissions',true))
+        if(!\Auth::user()->hasPermission('can-update-permissions'))
         {
             $response['status'] = 'failed';
             $response['errors'][] = trans("vaahcms::messages.permission_denied");
@@ -64,7 +64,7 @@ class PermissionsController extends Controller
     public function getItem(Request $request, $id)
     {
 
-        if(!\Auth::user()->hasPermission('can-read-permissions',true))
+        if(!\Auth::user()->hasPermission('can-read-permissions'))
         {
             $response['status'] = 'failed';
             $response['errors'][] = trans("vaahcms::messages.permission_denied");
@@ -79,7 +79,7 @@ class PermissionsController extends Controller
     //----------------------------------------------------------
     public function getList(Request $request)
     {
-        if(!\Auth::user()->hasPermission('has-access-of-permissions-section',true))
+        if(!\Auth::user()->hasPermission('has-access-of-permissions-section'))
         {
             $response['status'] = 'failed';
             $response['errors'][] = trans("vaahcms::messages.permission_denied");
@@ -96,9 +96,9 @@ class PermissionsController extends Controller
     public function getItemRoles(Request $request, $id)
     {
 
-        if(!\Auth::user()->hasPermission('can-manage-permissions',true) &&
-            !\Auth::user()->hasPermission('can-update-permissions',true) &&
-            !\Auth::user()->hasPermission('can-read-permissions',true))
+        if(!\Auth::user()->hasPermission('can-manage-permissions') &&
+            !\Auth::user()->hasPermission('can-update-permissions') &&
+            !\Auth::user()->hasPermission('can-read-permissions'))
         {
             $response['status'] = 'failed';
             $response['errors'][] = trans("vaahcms::messages.permission_denied");

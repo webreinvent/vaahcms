@@ -18,7 +18,7 @@
                     {{ props.row.name }}
                 </b-table-column>
 
-                <b-table-column field="email" label="Email">
+                <b-table-column  field="email" label="Email">
                     <b-tooltip label="Copy Email" type="is-dark">
                         <vh-copy class="text-copyable"
                                  :data="props.row.email"

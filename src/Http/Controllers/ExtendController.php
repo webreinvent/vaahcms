@@ -38,7 +38,7 @@ class ExtendController extends Controller
 
         ];
 
-        if(\Auth::user()->hasPermission('has-access-of-registrations-section',true))
+        if(\Auth::user()->hasPermission('has-access-of-registrations-section'))
         {
             $list[1]['child'][] =  [
                 'link' => $link."/registrations/",
@@ -46,7 +46,7 @@ class ExtendController extends Controller
             ];
         }
 
-        if(\Auth::user()->hasPermission('has-access-of-users-section',true))
+        if(\Auth::user()->hasPermission('has-access-of-users-section'))
         {
             $list[1]['child'][] =  [
                 'link' => $link."/users/",
@@ -54,7 +54,7 @@ class ExtendController extends Controller
             ];
         }
 
-        if(\Auth::user()->hasPermission('has-access-of-roles-section',true))
+        if(\Auth::user()->hasPermission('has-access-of-roles-section'))
         {
             $list[1]['child'][] =  [
                 'link' => $link."/roles/",
@@ -62,11 +62,8 @@ class ExtendController extends Controller
             ];
         }
 
-        $p = \Auth::user()->hasPermission('has-access-of-permissions-section',true);
 
-
-
-        if(\Auth::user()->hasPermission('has-access-of-permissions-section',true))
+        if(\Auth::user()->hasPermission('has-access-of-permissions-section'))
         {
             $list[1]['child'][] =  [
                 'link' => $link."/permissions/",
