@@ -31,6 +31,14 @@ class UsersController extends Controller
     public function getAssets(Request $request)
     {
 
+        if(!\Auth::user()->hasPermission('has-access-of-users-section',true))
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+            return response()->json($response);
+        }
+
         $data['country_calling_code'] = vh_get_country_list();
         $data['countries'] = vh_get_country_list();
         $data['timezones'] = vh_get_timezones();
@@ -47,6 +55,15 @@ class UsersController extends Controller
     //----------------------------------------------------------
     public function postStore(Request $request)
     {
+
+        if(!\Auth::user()->hasPermission('can-update-users',true))
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+            return response()->json($response);
+        }
+
         $response = User::store($request);
         return response()->json($response);
     }
@@ -54,18 +71,46 @@ class UsersController extends Controller
     public function postCreate(Request $request)
     {
 
+        if(!\Auth::user()->hasPermission('can-create-users',true))
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+            return response()->json($response);
+        }
+
+
         $response = User::create($request);
         return response()->json($response);
     }
     //----------------------------------------------------------
     public function getItem(Request $request, $id)
     {
+        if(!\Auth::user()->hasPermission('can-manage-users',true) &&
+            !\Auth::user()->hasPermission('can-update-users',true) &&
+            !\Auth::user()->hasPermission('can-create-users',true) &&
+            !\Auth::user()->hasPermission('can-read-users',true))
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+            return response()->json($response);
+        }
+
         $response = User::getDetail($id);
         return response()->json($response);
     }
     //----------------------------------------------------------
     public function getList(Request $request)
     {
+        if(!\Auth::user()->hasPermission('has-access-of-users-section',true))
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+            return response()->json($response);
+        }
+
         $response = User::getList($request);
         return response()->json($response);
     }
@@ -135,6 +180,17 @@ class UsersController extends Controller
     //----------------------------------------------------------
     public function getItemRoles(Request $request, $id)
     {
+
+        if(!\Auth::user()->hasPermission('can-manage-users',true) &&
+            !\Auth::user()->hasPermission('can-update-users',true) &&
+            !\Auth::user()->hasPermission('can-read-users',true))
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+            return response()->json($response);
+        }
+
         $response = User::getItemRoles($request, $id);
         return response()->json($response);
     }

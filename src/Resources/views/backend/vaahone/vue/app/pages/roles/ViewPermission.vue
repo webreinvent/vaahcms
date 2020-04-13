@@ -189,17 +189,17 @@
 
 
                             <b-table-column v-else field="name" class="has-text-centered" label="Has Role">
-                                <b-button v-if="props.row.pivot.is_active === 1" rounded size="is-small"
+                                <b-button v-if="props.row.pivot.is_active === 1" disabled rounded size="is-small"
                                           type="is-success">
                                     Yes
                                 </b-button>
-                                <b-button v-else rounded size="is-small" type="is-danger">
+                                <b-button v-else disabled rounded size="is-small" type="is-danger">
                                     No
                                 </b-button>
                             </b-table-column>
 
 
-                            <b-table-column v-if="( hasPermission('can-update-permission') || hasPermission('can-manage-permission') ) && ( hasPermission('can-update-roles') || hasPermission('can-manage-roles') )"  field="status" label="Permission Status" numeric>
+                            <b-table-column v-if="( hasPermission('can-update-permissions') || hasPermission('can-manage-permissions') ) && ( hasPermission('can-update-roles') || hasPermission('can-manage-roles') )"  field="status" label="Permission Status" numeric>
                                 <b-button v-if="props.row.is_active == 1" rounded class="is-success" type="is-small" @click="changeItemStatus(props.row.id)">
                                     Active
                                 </b-button>
@@ -211,11 +211,11 @@
 
 
                             <b-table-column v-else  field="status" label="Permission Status" numeric>
-                                <b-button v-if="props.row.is_active == 1" rounded class="is-success" type="is-small">
+                                <b-button v-if="props.row.is_active == 1" disabled rounded class="is-success" type="is-small">
                                     Active
                                 </b-button>
 
-                                <b-button v-else rounded class="is-danger" type="is-small">
+                                <b-button v-else disabled rounded class="is-danger" type="is-small">
                                     Inactive
                                 </b-button>
                             </b-table-column>

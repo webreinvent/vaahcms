@@ -30,11 +30,11 @@
                 <b-table-column v-if="props.row.deleted_at || ( !hasPermission('can-manage-permissions') && !hasPermission('can-update-permissions'))"
                                 field="status" label="Is Active">
 
-                    <b-button v-if="props.row.is_active === 1" rounded size="is-small"
+                    <b-button v-if="props.row.is_active === 1" disabled rounded size="is-small"
                            type="is-success">
                         Yes
                     </b-button>
-                    <b-button v-else rounded size="is-small" type="is-danger">
+                    <b-button v-else disabled rounded size="is-small" type="is-danger">
                         No
                     </b-button>
 
@@ -43,16 +43,16 @@
                 <b-table-column v-if="!props.row.deleted_at && ( hasPermission('can-manage-permissions') || hasPermission('can-update-permissions') )" field="status" label="Is Active">
 
                         <b-button v-if="props.row.is_active === 1" rounded size="is-small"
-                                  type="is-success">
+                                  type="is-success" @click="changeStatus(props.row.id)">
                             Yes
                         </b-button>
-                        <b-button v-else rounded size="is-small" type="is-danger">
+                        <b-button v-else rounded size="is-small" type="is-danger" @click="changeStatus(props.row.id)">
                             No
                         </b-button>
 
                 </b-table-column>
 
-                <b-table-column field="count_roles" label="Roles" >
+                <b-table-column v-if="hasPermission('can-manage-permissions') || hasPermission('can-update-permissions') || hasPermission('can-read-permissions') " field="count_roles" label="Roles" >
                     <b-tooltip label="View Role" type="is-dark">
                         <b-button rounded size="is-small"
                                   type="is-primary" @click="getRole(props.row)">
@@ -61,10 +61,19 @@
                     </b-tooltip>
                 </b-table-column>
 
+                <b-table-column v-else field="count_roles" label="Roles" >
+                    <b-tooltip label="View Role" type="is-dark">
+                        <b-button rounded size="is-small"
+                                  type="is-primary" disabled>
+                            {{ props.row.count_roles }} / {{page.total_roles}}
+                        </b-button>
+                    </b-tooltip>
+                </b-table-column>
+
                 <b-table-column field="count_users" label="Users">
                     <b-button disabled rounded size="is-small"
                            type="is-light">
-                        {{ props.row.count_users }}
+                        {{ props.row.count_users }} / {{page.total_users}}
                     </b-button>
 
                 </b-table-column>
@@ -74,7 +83,8 @@
                 </b-table-column>
 
 
-                <b-table-column field="actions" label=""
+                <b-table-column v-if="hasPermission('can-manage-permissions') ||
+                                    hasPermission('can-update-permissions') || hasPermission('can-read-permissions')" field="actions" label=""
                                 width="40">
 
                     <b-tooltip label="View" type="is-dark">

@@ -27,7 +27,7 @@
                     </vh-copy>
                 </b-table-column>
 
-                <b-table-column field="count_roles" label="Roles" >
+                <b-table-column v-if="hasPermission('can-manage-permissions') || hasPermission('can-update-permissions') || hasPermission('can-read-permissions') " field="count_roles" label="Roles" >
                     <b-tooltip label="View Role" type="is-dark">
                         <b-button rounded size="is-small"
                                   type="is-primary" @click="getRole(props.row)">
@@ -36,8 +36,19 @@
                     </b-tooltip>
                 </b-table-column>
 
+                <b-table-column v-else field="count_roles" label="Roles" >
+                    <b-tooltip label="View Role" type="is-dark">
+                        <b-button rounded size="is-small"
+                                  type="is-primary" disabled>
+                            {{ props.row.count_roles }} / {{page.total_roles}}
+                        </b-button>
+                    </b-tooltip>
+                </b-table-column>
 
-                <b-table-column field="actions" label=""
+
+                <b-table-column v-if="hasPermission('can-manage-permissions') ||
+                                    hasPermission('can-update-permissions') || hasPermission('can-read-permissions')"
+                                field="actions" label=""
                                 width="40">
                     <b-tooltip label="View" type="is-dark">
                         <b-button size="is-small"

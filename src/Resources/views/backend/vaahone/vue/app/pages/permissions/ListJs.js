@@ -184,6 +184,7 @@ export default {
 
 
             this.update('total_roles', data.totalRole);
+            this.update('total_users', data.totalUser);
 
             if(data.list.total === 0)
             {

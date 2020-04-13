@@ -93,6 +93,11 @@ export default {
             {
                 this.items = data;
                 this.update('active_item', data.permission);
+            } else
+            {
+                //if item does not exist or delete then redirect to list
+                this.update('active_item', null);
+                this.$router.push({name: 'perm.list'});
             }
 
         },
