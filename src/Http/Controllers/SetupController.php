@@ -497,7 +497,7 @@ class SetupController extends Controller
             return response()->json($response);
         }
 
-        $any_admin_exist = User::countAdmins();
+        $any_admin_exist = User::countAdministrators();
 
         if($any_admin_exist > 0)
         {
@@ -542,7 +542,7 @@ class SetupController extends Controller
 
         $data = [];
 
-        $any_admin_exist = User::countAdmins();
+        $any_admin_exist = User::countAdministrators();
 
         if($any_admin_exist > 0)
         {
@@ -576,11 +576,13 @@ class SetupController extends Controller
         Permission::recountRelations();
         Role::recountRelations();
 
+        $role->users()->updateExistingPivot($user['id'], array('is_active' => 1));
+
         $response['status'] = 'success';
         $response['messages'][] = trans("vaahcms::messages.setup_completed");
         $response['data']['flash_message'] =  trans("vaahcms::messages.setup_completed");
         $response['data']['active_step'] = 'completed';
-        $response['data']['redirect_url'] = \URL::route('vh.backend.login');
+        $response['data']['redirect_url'] = \URL::route('vh.backend');
 
         return response()->json($response);
 

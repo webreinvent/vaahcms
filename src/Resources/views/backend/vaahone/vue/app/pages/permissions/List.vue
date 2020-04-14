@@ -236,7 +236,7 @@
                 </div>
                 <!--/left-->
 
-                <router-view></router-view>
+                <router-view @eReloadList="getList"></router-view>
 
             </div>
 

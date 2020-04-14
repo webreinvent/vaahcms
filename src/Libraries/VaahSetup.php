@@ -222,7 +222,7 @@ class VaahSetup{
             return false;
         }
 
-        $count = User::countAdmins();
+        $count = User::countAdministrators();
 
         if($count > 0)
         {

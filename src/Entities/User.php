@@ -205,7 +205,7 @@ class User extends Authenticatable
         return $this->roles()->wherePivot('is_active', 1);
     }
     //-------------------------------------------------
-    public static function countAdmins()
+    public static function countAdministrators()
     {
         $count = User::whereHas('roles', function ($query) {
             $query->where('vh_user_roles.is_active', '=', 1)->slug('administrator');
@@ -371,7 +371,7 @@ class User extends Authenticatable
     //-------------------------------------------------
     public static function isLastAdmin()
     {
-        $count_admin = User::countAdmins();
+        $count_admin = User::countAdministrators();
         if($count_admin < 2)
         {
             return true;
@@ -391,6 +391,14 @@ class User extends Authenticatable
             {
                 //------------------------
                 case 'bulk-change-status':
+                    $result = true;
+                    break;
+                //------------------------
+                case 'bulk-trash':
+                    $result = true;
+                    break;
+                //------------------------
+                case 'bulk-delete':
                     $result = true;
                     break;
                 //------------------------
@@ -1031,7 +1039,6 @@ class User extends Authenticatable
                     continue;
                 }
 
-
                 $item->is_active = 0;
                 $item->status = 'inactive';
                 $item->save();
@@ -1052,7 +1059,7 @@ class User extends Authenticatable
     public static function bulkRestore($request)
     {
 
-        if(!\Auth::user()->hasPermission('can-update-registrations'))
+        if(!\Auth::user()->hasPermission('can-update-users'))
         {
             $response['status'] = 'failed';
             $response['errors'][] = trans("vaahcms::messages.permission_denied");
@@ -1144,8 +1151,8 @@ class User extends Authenticatable
     public static function bulkDelete($request)
     {
 
-        if(!\Auth::user()->hasPermission('can-update-registrations') ||
-            !\Auth::user()->hasPermission('can-delete-registrations'))
+        if(!\Auth::user()->hasPermission('can-update-users') ||
+            !\Auth::user()->hasPermission('can-delete-users'))
         {
             $response['status'] = 'failed';
             $response['errors'][] = trans("vaahcms::messages.permission_denied");

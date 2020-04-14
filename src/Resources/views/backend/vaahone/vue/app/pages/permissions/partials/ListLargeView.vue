@@ -21,7 +21,7 @@
                 <b-table-column field="slug" label="Slug">
                     <vh-copy class="text-copyable"
                              :data="props.row.slug"
-                             :label="props.row.slug"
+                             :label="props.row.slug+' '+icon_copy"
                              @copied="copiedData"
                     >
                     </vh-copy>
@@ -52,7 +52,7 @@
 
                 </b-table-column>
 
-                <b-table-column v-if="hasPermission('can-manage-permissions') || hasPermission('can-update-permissions') || hasPermission('can-read-permissions') " field="count_roles" label="Roles" >
+                <b-table-column v-if="hasPermission('can-read-permissions') " field="count_roles" label="Roles" >
                     <b-tooltip label="View Role" type="is-dark">
                         <b-button rounded size="is-small"
                                   type="is-primary" @click="getRole(props.row)">
@@ -83,8 +83,7 @@
                 </b-table-column>
 
 
-                <b-table-column v-if="hasPermission('can-manage-permissions') ||
-                                    hasPermission('can-update-permissions') || hasPermission('can-read-permissions')" field="actions" label=""
+                <b-table-column v-if="hasPermission('can-read-permissions')" field="actions" label=""
                                 width="40">
 
                     <b-tooltip label="View" type="is-dark">

@@ -105,7 +105,7 @@ export default {
             if(data)
             {
 
-                this.$root.$emit('eReloadList');
+                this.$emit('eReloadList');
 
                 if(this.local_action === 'save-and-close')
                 {

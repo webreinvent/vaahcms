@@ -66,7 +66,7 @@
             <b-notification type="is-danger"
                             :closable="false"
                             class="is-light is-small"
-                            v-if="item.deleted_at"
+                            v-if="item && item.deleted_at"
             >
                 Deleted {{$vaah.fromNow(item.deleted_at)}}
             </b-notification>

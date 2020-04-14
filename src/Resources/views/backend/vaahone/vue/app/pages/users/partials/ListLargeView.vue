@@ -54,7 +54,7 @@
                     </b-tooltip>
                 </b-table-column>
 
-                <b-table-column v-if="hasPermission('can-manage-users') || hasPermission('can-update-users' ) || hasPermission('can-read-users' )" field="roles" label="Roles">
+                <b-table-column v-if="hasPermission('can-read-users')" field="roles" label="Roles">
                     <b-tooltip label="View Role" type="is-dark">
                         <b-button rounded size="is-small"
                                   type="is-primary" @click="getRole(props.row)">
@@ -88,9 +88,7 @@
                 </b-table-column>
 
 
-                <b-table-column v-if="( hasPermission('can-manage-users') || hasPermission('can-update-users')
-                         || hasPermission('can-create-users') || hasPermission('can-read-users')
-                          || hasPermission('can-delete-users'))"  field="actions" label=""
+                <b-table-column v-if="hasPermission('can-read-users')"  field="actions" label=""
                                 width="40">
 
                     <b-tooltip label="View" type="is-dark">

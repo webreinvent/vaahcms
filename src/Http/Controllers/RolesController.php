@@ -25,7 +25,7 @@ class RolesController extends Controller
     public function getAssets(Request $request)
     {
 
-        if(!\Auth::user()->hasPermission('has-access-of-users-section'))
+        if(!\Auth::user()->hasPermission('has-access-of-roles-section'))
         {
             $response['status'] = 'failed';
             $response['errors'][] = trans("vaahcms::messages.permission_denied");
@@ -67,7 +67,7 @@ class RolesController extends Controller
     //----------------------------------------------------------
     public function getList(Request $request)
     {
-        if(!\Auth::user()->hasPermission('has-access-of-users-section'))
+        if(!\Auth::user()->hasPermission('has-access-of-roles-section'))
         {
             $response['status'] = 'failed';
             $response['errors'][] = trans("vaahcms::messages.permission_denied");

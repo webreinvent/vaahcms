@@ -41,7 +41,6 @@ export default {
         //----------------------------------------------------
         this.onLoad();
         //----------------------------------------------------
-        this.$root.$on('eReloadList', this.getList);
         //----------------------------------------------------
     },
     methods: {
@@ -180,25 +179,29 @@ export default {
             console.log('--->', data);
 
             this.update('is_list_loading', false);
-            this.update('list', data.list);
+
+            if(data){
+                this.update('list', data.list);
 
 
-            this.update('total_roles', data.totalRole);
-            this.update('total_users', data.totalUser);
+                this.update('total_roles', data.totalRole);
+                this.update('total_users', data.totalUser);
 
-            if(data.list.total === 0)
-            {
-                this.update('list_is_empty', true);
-            }else{
-                this.update('list_is_empty', false);
+                if(data.list.total === 0)
+                {
+                    this.update('list_is_empty', true);
+                }else{
+                    this.update('list_is_empty', false);
+                }
+
+                this.page.query_string.recount = null;
+
+                this.update('query_string', this.page.query_string);
+                this.$vaah.updateCurrentURL(this.page.query_string, this.$router);
+
+                this.is_btn_loading = false;
             }
 
-            this.page.query_string.recount = null;
-
-            this.update('query_string', this.page.query_string);
-            this.$vaah.updateCurrentURL(this.page.query_string, this.$router);
-
-            this.is_btn_loading = false;
             this.$Progress.finish();
 
         },

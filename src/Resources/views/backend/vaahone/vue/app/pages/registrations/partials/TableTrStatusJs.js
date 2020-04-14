@@ -78,7 +78,7 @@ export default {
             {
                 this.$root.$emit('eResetBulkActions');
                 this.$root.$emit('eReloadItem');
-                this.$root.$emit('eReloadList');
+                this.$emit('eReloadList');
             } else
             {
                 this.$Progress.finish();
@@ -121,7 +121,7 @@ export default {
         //---------------------------------------------------------------------
         confirmCreateUserAfter: function(data)
         {
-            this.$root.$emit('eReloadList');
+            this.$emit('eReloadList');
             this.$root.$emit('eReloadItem');
         },
         //---------------------------------------------------------------------

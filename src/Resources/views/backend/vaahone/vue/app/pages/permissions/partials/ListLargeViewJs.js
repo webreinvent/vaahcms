@@ -14,7 +14,7 @@ export default {
     data()
     {
         let obj = {
-            icon_copy: "<i class='fas fa-copy'></i>"
+            icon_copy: "<b-icon icon='envelope' size='is-small'></b-icon>"
         };
 
         return obj;
@@ -71,7 +71,7 @@ export default {
         },
         //---------------------------------------------------------------------
         changeStatusAfter: function (data,res) {
-            this.$root.$emit('eReloadList');
+            this.$emit('eReloadList');
             this.update('is_list_loading', false);
             this.$store.dispatch('root/getPermissions');
 

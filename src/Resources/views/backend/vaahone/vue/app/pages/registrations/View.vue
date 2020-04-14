@@ -32,7 +32,7 @@
                             </b-button>
                         </p>
 
-                        <p v-if="hasPermission('can-update-registrations') || hasPermission('can-manage-registrations')" class="control">
+                        <p v-if="hasPermission('can-update-registrations')" class="control">
 
 
                             <b-dropdown aria-role="list" position="is-bottom-left">

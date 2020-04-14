@@ -55,9 +55,8 @@
                 </b-table-column>
 
 
-                <b-table-column v-if="( hasPermission('can-manage-registrations') || hasPermission('can-update-registrations')
-                         || hasPermission('can-create-registrations') || hasPermission('can-read-registrations')
-                          || hasPermission('can-delete-registrations'))" field="actions" label=""
+                <b-table-column v-if="hasPermission('can-read-registrations')"
+                                field="actions" label=""
                                 width="40">
 
                     <b-tooltip label="View" type="is-dark">

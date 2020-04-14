@@ -76,7 +76,7 @@ export default {
         },
         //---------------------------------------------------------------------
         changeStatusAfter: function (data,res) {
-            this.$root.$emit('eReloadList');
+            this.$emit('eReloadList');
             this.update('is_list_loading', false);
 
         },

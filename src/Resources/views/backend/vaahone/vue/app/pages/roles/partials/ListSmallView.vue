@@ -27,7 +27,7 @@
                     </vh-copy>
                 </b-table-column>
 
-                <b-table-column v-if="hasPermission('can-manage-roles') || hasPermission('can-update-roles') || hasPermission('can-read-roles') " field="count_permissions" label="Permission" >
+                <b-table-column v-if="hasPermission('can-read-roles')" field="count_permissions" label="Permission" >
                     <b-tooltip label="View Permission" type="is-dark">
                         <b-button rounded size="is-small"
                                   type="is-primary" @click="getRolePermission(props.row)">
@@ -46,8 +46,7 @@
                 </b-table-column>
 
 
-                <b-table-column  v-if="hasPermission('can-manage-roles') ||
-                                    hasPermission('can-update-roles') || hasPermission('can-read-roles') "
+                <b-table-column  v-if="hasPermission('can-read-roles')"
                                  field="count_users" label="Users">
                     <b-tooltip label="View User" type="is-dark">
                         <b-button rounded size="is-small"
@@ -67,8 +66,7 @@
                 </b-table-column>
 
 
-                <b-table-column v-if="hasPermission('can-manage-roles') ||
-                                    hasPermission('can-update-roles') || hasPermission('can-read-roles') "
+                <b-table-column v-if="hasPermission('can-read-roles')"
                                     field="actions" label=""
                                 width="40">
                     <b-tooltip label="View" type="is-dark">

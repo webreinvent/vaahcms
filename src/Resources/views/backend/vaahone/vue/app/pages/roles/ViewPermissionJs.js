@@ -150,7 +150,7 @@ export default {
         actionsAfter: function (data,res) {
             this.getItemPermissions(this.filter.page);
             this.update('is_list_loading', false);
-            this.$root.$emit('eReloadList');
+            this.$emit('eReloadList');
             this.$store.dispatch('root/getPermissions');
 
         },

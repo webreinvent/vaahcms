@@ -119,7 +119,7 @@ export default {
             if(data)
             {
                 this.resetBulkAction();
-                this.$root.$emit('eReloadList');
+                this.$emit('eReloadList');
 
                 if(action == 'bulk-delete')
                 {
