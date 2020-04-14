@@ -21,12 +21,6 @@ class UsersController extends Controller
     {
         $this->theme = vh_get_backend_theme();
     }
-
-    //----------------------------------------------------------
-    public function index()
-    {
-        return view($this->theme.'.pages.users');
-    }
     //----------------------------------------------------------
     public function getAssets(Request $request)
     {
@@ -53,21 +47,6 @@ class UsersController extends Controller
         return response()->json($response);
     }
     //----------------------------------------------------------
-    public function postStore(Request $request)
-    {
-
-        if(!\Auth::user()->hasPermission('can-update-users'))
-        {
-            $response['status'] = 'failed';
-            $response['errors'][] = trans("vaahcms::messages.permission_denied");
-
-            return response()->json($response);
-        }
-
-        $response = User::store($request);
-        return response()->json($response);
-    }
-    //----------------------------------------------------------
     public function postCreate(Request $request)
     {
 
@@ -81,6 +60,20 @@ class UsersController extends Controller
 
 
         $response = User::create($request);
+        return response()->json($response);
+    }
+    //----------------------------------------------------------
+    public function getList(Request $request)
+    {
+        if(!\Auth::user()->hasPermission('has-access-of-users-section'))
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+            return response()->json($response);
+        }
+
+        $response = User::getList($request);
         return response()->json($response);
     }
     //----------------------------------------------------------
@@ -101,9 +94,12 @@ class UsersController extends Controller
         return response()->json($response);
     }
     //----------------------------------------------------------
-    public function getList(Request $request)
+    public function getItemRoles(Request $request, $id)
     {
-        if(!\Auth::user()->hasPermission('has-access-of-users-section'))
+
+        if(!\Auth::user()->hasPermission('can-manage-users') &&
+            !\Auth::user()->hasPermission('can-update-users') &&
+            !\Auth::user()->hasPermission('can-read-users'))
         {
             $response['status'] = 'failed';
             $response['errors'][] = trans("vaahcms::messages.permission_denied");
@@ -111,7 +107,22 @@ class UsersController extends Controller
             return response()->json($response);
         }
 
-        $response = User::getList($request);
+        $response = User::getItemRoles($request, $id);
+        return response()->json($response);
+    }
+    //----------------------------------------------------------
+    public function postStore(Request $request)
+    {
+
+        if(!\Auth::user()->hasPermission('can-update-users'))
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+            return response()->json($response);
+        }
+
+        $response = User::store($request);
         return response()->json($response);
     }
     //----------------------------------------------------------
@@ -176,23 +187,6 @@ class UsersController extends Controller
 
         return response()->json($response);
 
-    }
-    //----------------------------------------------------------
-    public function getItemRoles(Request $request, $id)
-    {
-
-        if(!\Auth::user()->hasPermission('can-manage-users') &&
-            !\Auth::user()->hasPermission('can-update-users') &&
-            !\Auth::user()->hasPermission('can-read-users'))
-        {
-            $response['status'] = 'failed';
-            $response['errors'][] = trans("vaahcms::messages.permission_denied");
-
-            return response()->json($response);
-        }
-
-        $response = User::getItemRoles($request, $id);
-        return response()->json($response);
     }
     //----------------------------------------------------------
     //----------------------------------------------------------

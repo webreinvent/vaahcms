@@ -294,9 +294,6 @@ Route::group(
     ],
     function () {
         //------------------------------------------------
-        Route::get( '/', 'RolesController@index' )
-            ->name( 'vh.backend.roles' );
-        //------------------------------------------------
         Route::any( '/assets', 'RolesController@getAssets' )
             ->name( 'vh.backend.roles.assets' );
         //---------------------------------------------------------

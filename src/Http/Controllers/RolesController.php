@@ -21,10 +21,6 @@ class RolesController extends Controller
     }
 
     //----------------------------------------------------------
-    public function index()
-    {
-        return view($this->theme.'.pages.roles');
-    }
 
     public function getAssets(Request $request)
     {
@@ -69,9 +65,9 @@ class RolesController extends Controller
         return response()->json($response);
     }
     //----------------------------------------------------------
-    public function postStore(Request $request,$id)
+    public function getList(Request $request)
     {
-        if(!\Auth::user()->hasPermission('can-update-roles'))
+        if(!\Auth::user()->hasPermission('has-access-of-users-section'))
         {
             $response['status'] = 'failed';
             $response['errors'][] = trans("vaahcms::messages.permission_denied");
@@ -79,7 +75,7 @@ class RolesController extends Controller
             return response()->json($response);
         }
 
-        $response = Role::updateDetail($request,$id);
+        $response = Role::getList($request);
         return response()->json($response);
     }
     //----------------------------------------------------------
@@ -102,9 +98,12 @@ class RolesController extends Controller
 
     }
     //----------------------------------------------------------
-    public function getList(Request $request)
+    public function getItemPermission(Request $request, $id)
     {
-        if(!\Auth::user()->hasPermission('has-access-of-users-section'))
+
+        if(!\Auth::user()->hasPermission('can-manage-roles') &&
+            !\Auth::user()->hasPermission('can-update-roles') &&
+            !\Auth::user()->hasPermission('can-read-roles'))
         {
             $response['status'] = 'failed';
             $response['errors'][] = trans("vaahcms::messages.permission_denied");
@@ -112,7 +111,45 @@ class RolesController extends Controller
             return response()->json($response);
         }
 
-        $response = Role::getList($request);
+        $response = Role::getRolePermission($request, $id);
+        return response()->json($response);
+    }
+    //----------------------------------------------------------
+    public function getItemUser(Request $request, $id)
+    {
+
+        if(!\Auth::user()->hasPermission('can-manage-roles') &&
+            !\Auth::user()->hasPermission('can-update-roles') &&
+            !\Auth::user()->hasPermission('can-read-roles'))
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+            return response()->json($response);
+        }
+
+        $response = Role::getRoleUser($request, $id);
+        return response()->json($response);
+    }
+    //----------------------------------------------------------
+
+    public function getModuleSections(Request $request)
+    {
+        $response = Role::getModuleSections($request);
+        return response()->json($response);
+    }
+    //----------------------------------------------------------
+    public function postStore(Request $request,$id)
+    {
+        if(!\Auth::user()->hasPermission('can-update-roles'))
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+            return response()->json($response);
+        }
+
+        $response = Role::updateDetail($request,$id);
         return response()->json($response);
     }
     //----------------------------------------------------------
@@ -192,48 +229,6 @@ class RolesController extends Controller
 
     }
     //----------------------------------------------------------
-    public function getItemPermission(Request $request, $id)
-    {
-
-        if(!\Auth::user()->hasPermission('can-manage-roles') &&
-            !\Auth::user()->hasPermission('can-update-roles') &&
-            !\Auth::user()->hasPermission('can-read-roles'))
-        {
-            $response['status'] = 'failed';
-            $response['errors'][] = trans("vaahcms::messages.permission_denied");
-
-            return response()->json($response);
-        }
-
-        $response = Role::getRolePermission($request, $id);
-        return response()->json($response);
-    }
-    //----------------------------------------------------------
-    public function getItemUser(Request $request, $id)
-    {
-
-        if(!\Auth::user()->hasPermission('can-manage-roles') &&
-            !\Auth::user()->hasPermission('can-update-roles') &&
-            !\Auth::user()->hasPermission('can-read-roles'))
-        {
-            $response['status'] = 'failed';
-            $response['errors'][] = trans("vaahcms::messages.permission_denied");
-
-            return response()->json($response);
-        }
-
-        $response = Role::getRoleUser($request, $id);
-        return response()->json($response);
-    }
-    //----------------------------------------------------------
-
-    //----------------------------------------------------------
-
-    public function getModuleSections(Request $request)
-    {
-        $response = Role::getModuleSections($request);
-        return response()->json($response);
-    }
     //----------------------------------------------------------
 
 

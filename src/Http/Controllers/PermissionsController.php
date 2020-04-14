@@ -47,9 +47,9 @@ class PermissionsController extends Controller
         return response()->json($response);
     }
     //----------------------------------------------------------
-    public function postStore(Request $request,$id)
+    public function getList(Request $request)
     {
-        if(!\Auth::user()->hasPermission('can-update-permissions'))
+        if(!\Auth::user()->hasPermission('has-access-of-permissions-section'))
         {
             $response['status'] = 'failed';
             $response['errors'][] = trans("vaahcms::messages.permission_denied");
@@ -57,7 +57,7 @@ class PermissionsController extends Controller
             return response()->json($response);
         }
 
-        $response = Permission::updateDetail($request,$id);
+        $response = Permission::getList($request);
         return response()->json($response);
     }
     //----------------------------------------------------------
@@ -75,20 +75,6 @@ class PermissionsController extends Controller
         $response = Permission::getDetail($id);
         return response()->json($response);
 
-    }
-    //----------------------------------------------------------
-    public function getList(Request $request)
-    {
-        if(!\Auth::user()->hasPermission('has-access-of-permissions-section'))
-        {
-            $response['status'] = 'failed';
-            $response['errors'][] = trans("vaahcms::messages.permission_denied");
-
-            return response()->json($response);
-        }
-
-        $response = Permission::getList($request);
-        return response()->json($response);
     }
     //----------------------------------------------------------
     //----------------------------------------------------------
@@ -110,10 +96,17 @@ class PermissionsController extends Controller
         return response()->json($response);
     }
     //----------------------------------------------------------
-
-    public function getModuleSections(Request $request)
+    public function postStore(Request $request,$id)
     {
-        $response = Permission::getModuleSections($request);
+        if(!\Auth::user()->hasPermission('can-update-permissions'))
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+            return response()->json($response);
+        }
+
+        $response = Permission::updateDetail($request,$id);
         return response()->json($response);
     }
 
@@ -177,6 +170,13 @@ class PermissionsController extends Controller
 
         return response()->json($response);
 
+    }
+    //----------------------------------------------------------
+
+    public function getModuleSections(Request $request)
+    {
+        $response = Permission::getModuleSections($request);
+        return response()->json($response);
     }
     //----------------------------------------------------------
     //----------------------------------------------------------

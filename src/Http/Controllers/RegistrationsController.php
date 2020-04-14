@@ -101,6 +101,20 @@ class RegistrationsController extends Controller
         return response()->json($response);
     }
     //----------------------------------------------------------
+    public function createUser(Request $request,$id)
+    {
+        if(!\Auth::user()->hasPermission('can-create-users-from-registrations'))
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+            return response()->json($response);
+        }
+
+        $response = Registration::createUser($id);
+        return response()->json($response);
+    }
+    //----------------------------------------------------------
     public function postStore(Request $request)
     {
 
@@ -113,20 +127,6 @@ class RegistrationsController extends Controller
         }
 
         $response = Registration::store($request);
-        return response()->json($response);
-    }
-    //----------------------------------------------------------
-    public function createUser(Request $request,$id)
-    {
-        if(!\Auth::user()->hasPermission('can-create-users-from-registrations'))
-        {
-            $response['status'] = 'failed';
-            $response['errors'][] = trans("vaahcms::messages.permission_denied");
-
-            return response()->json($response);
-        }
-
-        $response = Registration::createUser($id);
         return response()->json($response);
     }
     //----------------------------------------------------------

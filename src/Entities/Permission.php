@@ -84,6 +84,87 @@ class Permission extends Model {
         )->withPivot('is_active');
     }
     //-------------------------------------------------
+    public static function getPermissionRoleIds($id)
+    {
+        $roles = static::getPermissionRoles($id);
+        return $roles->pluck('id')->toArray();
+    }
+    //-------------------------------------------------
+    public static function countUsers($id)
+    {
+        $roles_ids = Permission::getPermissionRoleIds($id);
+
+        if(!$roles_ids || !is_array($roles_ids))
+        {
+            return false;
+        }
+
+        $users = User::whereHas('roles', function ($q) use ($roles_ids){
+            $q->whereIn('vh_roles.id', $roles_ids);
+        })->count();
+
+        return $users;
+    }
+    //-------------------------------------------------
+    public static function syncPermissionsWithRoles()
+    {
+
+        $permissions_list = Permission::all();
+
+        if($permissions_list){
+            foreach ($permissions_list as $permission){
+                if(!$permission->uuid){
+                    $permission->uuid = Str::uuid();
+                }
+
+                if(!$permission->slug){
+                    $permission->slug = Str::slug($permission->name);
+                }
+
+                $permission->save();
+
+            }
+        }
+
+        $permissions = Permission::all()->pluck('id')->toArray();
+
+        $roles = Role::all();
+
+        if($roles)
+        {
+            foreach ($roles as $role)
+            {
+                if($role->id == 1)
+                {
+                    $pivotData = array_fill(0, count($permissions), ['is_active' => 1]);
+                    $syncData  = array_combine($permissions, $pivotData);
+                    $role->permissions()->syncWithoutDetaching($syncData);
+                } else
+                {
+                    $role->permissions()->syncWithoutDetaching($permissions);
+                }
+            }
+        }
+
+    }
+    //-------------------------------------------------
+    public static function recountRelations()
+    {
+        $list = Permission::withTrashed()->select('id')->get();
+
+        if($list)
+        {
+            foreach ($list as $item)
+            {
+                $roles_ids = Permission::getPermissionRoleIds($item->id);
+                $item->count_roles = count($roles_ids);
+                $item->count_users = Permission::countUsers($item->id);
+                $item->save();
+            }
+        }
+
+    }
+    //-------------------------------------------------
     public static function getList($request)
     {
 
@@ -137,6 +218,98 @@ class Permission extends Model {
 
         return $response;
     }
+
+    //-------------------------------------------------
+
+    public static function getDetail($id)
+    {
+
+        $item = Permission::where('id', $id)->with(['createdByUser', 'updatedByUser', 'deletedByUser'])
+            ->withTrashed()->first();
+
+        $response['status'] = 'success';
+        $response['data'] = $item;
+
+        return $response;
+
+
+    }
+    //-------------------------------------------------
+    public static function getPermissionRoles($id)
+    {
+
+        $item = Permission::withTrashed()->where('id', $id)->first();
+
+        if(!$item)
+        {
+            return false;
+        }
+
+        return $item->roles()->wherePivot('is_active', 1)->get();
+    }
+
+    //-------------------------------------------------
+
+    public static function getItemRoles($request,$id)
+    {
+
+        $item = Permission::where('id',$id)->withTrashed()->first();
+        $response['data']['permission'] = $item;
+
+
+        if($request->has("q"))
+        {
+            $list = $item->roles()->where(function ($q) use ($request){
+                $q->where('name', 'LIKE', '%'.$request->q.'%')
+                    ->orWhere('slug', 'LIKE', '%'.$request->q.'%');
+            });
+        } else
+        {
+            $list = $item->roles();
+        }
+
+        $list->orderBy('pivot_is_active', 'desc');
+
+        $list = $list->paginate(config('vaahcms.per_page'));
+
+        $response['data']['list'] = $list;
+
+        $response['status'] = 'success';
+
+        return $response;
+
+
+    }
+    //-------------------------------------------------
+    public static function updateDetail($request,$id)
+    {
+
+        $input = $request->item;
+
+
+        $validation = static::validation($input);
+        if(isset($validation['status']) && $validation['status'] == 'failed')
+        {
+            return $validation;
+        }
+
+        $update = static::where('id',$id)->withTrashed()->first();
+
+        $update->name = $input['name'];
+        $update->details = $input['details'];
+        $update->is_active = $input['is_active'];
+
+        $update->save();
+
+
+        $response['status'] = 'success';
+        $response['data'] = [];
+        $response['messages'][] = 'Data updated.';
+
+        return $response;
+
+    }
+
     //-------------------------------------------------
     public static function bulkStatusChange($request)
     {
@@ -320,233 +493,6 @@ class Permission extends Model {
         return $response;
 
     }
-    //-------------------------------------------------
-    public static function getPermissionRoles($id)
-    {
-
-        $item = Permission::withTrashed()->where('id', $id)->first();
-
-        if(!$item)
-        {
-            return false;
-        }
-
-        return $item->roles()->wherePivot('is_active', 1)->get();
-    }
-    //-------------------------------------------------
-    public static function getPermissionRoleIds($id)
-    {
-        $roles = static::getPermissionRoles($id);
-        return $roles->pluck('id')->toArray();
-    }
-    //-------------------------------------------------
-    public static function countUsers($id)
-    {
-        $roles_ids = Permission::getPermissionRoleIds($id);
-
-        if(!$roles_ids || !is_array($roles_ids))
-        {
-            return false;
-        }
-
-        $users = User::whereHas('roles', function ($q) use ($roles_ids){
-            $q->whereIn('vh_roles.id', $roles_ids);
-        })->count();
-
-        return $users;
-    }
-    //-------------------------------------------------
-    public static function syncPermissionsWithRoles()
-    {
-
-        $permissions_list = Permission::all();
-
-        if($permissions_list){
-            foreach ($permissions_list as $permission){
-                if(!$permission->uuid){
-                    $permission->uuid = Str::uuid();
-                }
-
-                if(!$permission->slug){
-                    $permission->slug = Str::slug($permission->name);
-                }
-
-                $permission->save();
-
-            }
-        }
-
-        $permissions = Permission::all()->pluck('id')->toArray();
-
-        $roles = Role::all();
-
-        if($roles)
-        {
-            foreach ($roles as $role)
-            {
-                if($role->id == 1)
-                {
-                    $pivotData = array_fill(0, count($permissions), ['is_active' => 1]);
-                    $syncData  = array_combine($permissions, $pivotData);
-                    $role->permissions()->syncWithoutDetaching($syncData);
-                } else
-                {
-                    $role->permissions()->syncWithoutDetaching($permissions);
-                }
-            }
-        }
-
-    }
-    //-------------------------------------------------
-    public static function recountRelations()
-    {
-        $list = Permission::withTrashed()->select('id')->get();
-
-        if($list)
-        {
-            foreach ($list as $item)
-            {
-                $roles_ids = Permission::getPermissionRoleIds($item->id);
-                $item->count_roles = count($roles_ids);
-                $item->count_users = Permission::countUsers($item->id);
-                $item->save();
-            }
-        }
-
-    }
-    //-------------------------------------------------
-    public static function updateDetail($request,$id)
-    {
-
-        $input = $request->item;
-
-
-        $validation = static::validation($input);
-        if(isset($validation['status']) && $validation['status'] == 'failed')
-        {
-            return $validation;
-        }
-
-        $update = static::where('id',$id)->withTrashed()->first();
-
-        $update->name = $input['name'];
-        $update->details = $input['details'];
-        $update->is_active = $input['is_active'];
-
-        $update->save();
-
-
-        $response['status'] = 'success';
-        $response['data'] = [];
-        $response['messages'][] = 'Data updated.';
-
-        return $response;
-
-    }
-
-    //-------------------------------------------------
-
-    public static function validation($inputs)
-    {
-
-        $rules = array(
-            'id' => 'required',
-            'name' => 'required',
-            'details' => 'required',
-            'is_active' => 'required',
-        );
-
-        $messages = [
-            'is_active.required' => 'The is active field is required.'
-        ];
-
-        $validator = \Validator::make( $inputs, $rules, $messages);
-        if ( $validator->fails() ) {
-
-            $errors             = errorsToArray($validator->errors());
-            $response['status'] = 'failed';
-            $response['errors'] = $errors;
-            return $response;
-        }
-
-
-    }
-
-    //-------------------------------------------------
-
-    public static function getItemRoles($request,$id)
-    {
-
-        $item = Permission::where('id',$id)->withTrashed()->first();
-        $response['data']['permission'] = $item;
-
-
-        if($request->has("q"))
-        {
-            $list = $item->roles()->where(function ($q) use ($request){
-                $q->where('name', 'LIKE', '%'.$request->q.'%')
-                    ->orWhere('slug', 'LIKE', '%'.$request->q.'%');
-            });
-        } else
-        {
-            $list = $item->roles();
-        }
-
-        $list->orderBy('pivot_is_active', 'desc');
-
-        $list = $list->paginate(config('vaahcms.per_page'));
-
-        $response['data']['list'] = $list;
-
-        $response['status'] = 'success';
-
-        return $response;
-
-
-    }
-
-    //-------------------------------------------------
-
-    public static function getDetail($id)
-    {
-
-        $item = Permission::where('id', $id)->with(['createdByUser', 'updatedByUser', 'deletedByUser'])
-            ->withTrashed()->first();
-
-        $response['status'] = 'success';
-        $response['data'] = $item;
-
-        return $response;
-
-
-    }
-
-    //-------------------------------------------------
-
-    public static function getModuleList()
-    {
-
-        $item = Permission::withTrashed()->select('module')->get()->unique('module');
-
-        return $item;
-
-
-    }
-
-    //-------------------------------------------------
-
-    public static function getModuleSections($request)
-    {
-
-        $item = Permission::where('module',$request->filter)->withTrashed()->select('section')->get()->unique('section');
-
-        $response['status'] = 'success';
-        $response['data'] = $item;
-
-        return $response;
-
-
-    }
 
     //-------------------------------------------------
 
@@ -583,6 +529,60 @@ class Permission extends Model {
         $response['data'] = [];
 
         return $response;
+
+
+    }
+    //-------------------------------------------------
+
+    public static function validation($inputs)
+    {
+
+        $rules = array(
+            'id' => 'required',
+            'name' => 'required',
+            'details' => 'required',
+            'is_active' => 'required',
+        );
+
+        $messages = [
+            'is_active.required' => 'The is active field is required.'
+        ];
+
+        $validator = \Validator::make( $inputs, $rules, $messages);
+        if ( $validator->fails() ) {
+
+            $errors             = errorsToArray($validator->errors());
+            $response['status'] = 'failed';
+            $response['errors'] = $errors;
+            return $response;
+        }
+
+
+    }
+
+    //-------------------------------------------------
+
+    public static function getModuleSections($request)
+    {
+
+        $item = Permission::where('module',$request->filter)->withTrashed()->select('section')->get()->unique('section');
+
+        $response['status'] = 'success';
+        $response['data'] = $item;
+
+        return $response;
+
+
+    }
+
+    //-------------------------------------------------
+
+    public static function getModuleList()
+    {
+
+        $item = Permission::withTrashed()->select('module')->get()->unique('module');
+
+        return $item;
 
 
     }

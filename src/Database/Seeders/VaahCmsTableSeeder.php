@@ -69,6 +69,7 @@ class VaahCmsTableSeeder extends Seeder
             }
 
             $item['uuid'] = Str::uuid();
+            $item['is_active'] = 1;
 
             $record = DB::table($table)
                 ->where($primary_key, $item[$primary_key])
