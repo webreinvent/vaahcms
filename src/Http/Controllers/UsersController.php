@@ -79,10 +79,7 @@ class UsersController extends Controller
     //----------------------------------------------------------
     public function getItem(Request $request, $id)
     {
-        if(!\Auth::user()->hasPermission('can-manage-users') &&
-            !\Auth::user()->hasPermission('can-update-users') &&
-            !\Auth::user()->hasPermission('can-create-users') &&
-            !\Auth::user()->hasPermission('can-read-users'))
+        if(!\Auth::user()->hasPermission('can-read-users'))
         {
             $response['status'] = 'failed';
             $response['errors'][] = trans("vaahcms::messages.permission_denied");
@@ -97,9 +94,7 @@ class UsersController extends Controller
     public function getItemRoles(Request $request, $id)
     {
 
-        if(!\Auth::user()->hasPermission('can-manage-users') &&
-            !\Auth::user()->hasPermission('can-update-users') &&
-            !\Auth::user()->hasPermission('can-read-users'))
+        if(!\Auth::user()->hasPermission('can-read-users'))
         {
             $response['status'] = 'failed';
             $response['errors'][] = trans("vaahcms::messages.permission_denied");

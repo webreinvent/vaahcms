@@ -151,6 +151,8 @@ export default {
             this.getItemPermissions(this.filter.page);
             this.update('is_list_loading', false);
             this.$root.$emit('eReloadList');
+            this.$store.dispatch('root/getPermissions');
+
         },
         //---------------------------------------------------------------------
         delayedSearch: function()

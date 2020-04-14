@@ -82,9 +82,7 @@ class PermissionsController extends Controller
     public function getItemRoles(Request $request, $id)
     {
 
-        if(!\Auth::user()->hasPermission('can-manage-permissions') &&
-            !\Auth::user()->hasPermission('can-update-permissions') &&
-            !\Auth::user()->hasPermission('can-read-permissions'))
+        if(!\Auth::user()->hasPermission('can-read-permissions'))
         {
             $response['status'] = 'failed';
             $response['errors'][] = trans("vaahcms::messages.permission_denied");

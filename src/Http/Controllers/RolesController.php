@@ -82,10 +82,7 @@ class RolesController extends Controller
     public function getItem(Request $request, $id)
     {
 
-        if(!\Auth::user()->hasPermission('can-manage-roles') &&
-            !\Auth::user()->hasPermission('can-update-roles') &&
-            !\Auth::user()->hasPermission('can-create-roles') &&
-            !\Auth::user()->hasPermission('can-read-roles'))
+        if(!\Auth::user()->hasPermission('can-read-roles'))
         {
             $response['status'] = 'failed';
             $response['errors'][] = trans("vaahcms::messages.permission_denied");
@@ -101,9 +98,7 @@ class RolesController extends Controller
     public function getItemPermission(Request $request, $id)
     {
 
-        if(!\Auth::user()->hasPermission('can-manage-roles') &&
-            !\Auth::user()->hasPermission('can-update-roles') &&
-            !\Auth::user()->hasPermission('can-read-roles'))
+        if(!\Auth::user()->hasPermission('can-read-roles'))
         {
             $response['status'] = 'failed';
             $response['errors'][] = trans("vaahcms::messages.permission_denied");
@@ -118,9 +113,7 @@ class RolesController extends Controller
     public function getItemUser(Request $request, $id)
     {
 
-        if(!\Auth::user()->hasPermission('can-manage-roles') &&
-            !\Auth::user()->hasPermission('can-update-roles') &&
-            !\Auth::user()->hasPermission('can-read-roles'))
+        if(!\Auth::user()->hasPermission('can-read-roles'))
         {
             $response['status'] = 'failed';
             $response['errors'][] = trans("vaahcms::messages.permission_denied");

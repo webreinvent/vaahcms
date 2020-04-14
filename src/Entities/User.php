@@ -208,8 +208,9 @@ class User extends Authenticatable
     public static function countAdmins()
     {
         $count = User::whereHas('roles', function ($query) {
-            $query->slug('administrator');
-        })->isActive()->count();
+            $query->where('vh_user_roles.is_active', '=', 1)->slug('administrator');
+        })->isActive()->get()->count();
+
         return $count;
     }
 
@@ -768,11 +769,13 @@ class User extends Authenticatable
             });
         }
 
-        $list->withCount(['activeRoles']);
+
 
         if(!\Auth::user()->hasPermission('can-see-users-contact-details')){
             $list->exclude(['email','alternate_email', 'phone']);
         }
+
+        $list->withCount(['activeRoles']);
 
         $list = $list->paginate(config('vaahcms.per_page'));
         $countRole = Role::all()->count();
@@ -1019,6 +1022,16 @@ class User extends Authenticatable
             $item = User::find($id);
             if($item)
             {
+
+
+                $is_restricted = static::restrictedActions($request->action, $item->id);
+
+                if($is_restricted)
+                {
+                    continue;
+                }
+
+
                 $item->is_active = 0;
                 $item->status = 'inactive';
                 $item->save();
@@ -1159,6 +1172,13 @@ class User extends Authenticatable
             $item = static::where('id', $id)->withTrashed()->first();
             if($item)
             {
+
+                $is_restricted = static::restrictedActions($request->action, $item->id);
+
+                if($is_restricted)
+                {
+                    continue;
+                }
 
                 $item->roles()->detach();
 

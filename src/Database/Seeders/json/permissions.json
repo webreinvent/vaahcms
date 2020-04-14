@@ -1,6 +1,12 @@
 [
 
     {
+        "name": "Can Permission",
+        "module": "vaahcms",
+        "section": "backend",
+        "details": "This will allow user to login in the backend."
+    },
+    {
         "name": "Can Login In Backend",
         "module": "vaahcms",
         "section": "backend",

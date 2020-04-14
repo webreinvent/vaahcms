@@ -85,10 +85,7 @@ class RegistrationsController extends Controller
     public function getItem(Request $request, $id)
     {
 
-        if(!\Auth::user()->hasPermission('can-manage-registrations') &&
-            !\Auth::user()->hasPermission('can-update-registrations') &&
-            !\Auth::user()->hasPermission('can-create-registrations') &&
-            !\Auth::user()->hasPermission('can-read-registrations'))
+        if(!\Auth::user()->hasPermission('can-read-registrations'))
         {
             $response['status'] = 'failed';
             $response['errors'][] = trans("vaahcms::messages.permission_denied");

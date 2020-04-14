@@ -1,4 +1,4 @@
-<script src="./ViewPermissions.js"></script>
+<script src="./ViewPermissionJs.js"></script>
 <template>
     <div class="column" v-if="page.assets">
 

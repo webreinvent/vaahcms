@@ -41,7 +41,7 @@ class HasBackendAccess
 	    }
 
 	    //check user have permission to back login
-	    if(!Auth::user()->hasPermission("vaahcms#admin#access"))
+	    if(!Auth::user()->hasPermission("can-login-in-backend"))
 	    {
 		    return redirect()->guest(route('vh.backend.login'))
 		                     ->withErrors([trans("vaahcms::messages.permission_denied")]);
