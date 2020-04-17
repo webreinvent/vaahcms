@@ -27,18 +27,19 @@ class LocalizationController extends Controller
     //----------------------------------------------------------
     public function getAssets(Request $request)
     {
-        $data = [];
+
+        $lang_list = Language::getLangList();
+
         $response['status'] = 'success';
-        $response['data']['languages']['list'] = Language::orderBy('default','desc')
-            ->get();
+        $response['data']['languages']['list'] = $lang_list;
+
         $response['data']['languages']['default'] = Language::where('default',1)
             ->first();
 
 
         $response['data']['categories']['list'] = LanguageCategory::orderBy('name','asc')
             ->get();
-        $response['data']['categories']['default'] = LanguageCategory::where('slug','general')
-            ->first();
+        $response['data']['categories']['default']['id'] = null;
 
         return response()->json($response);
     }
@@ -46,6 +47,9 @@ class LocalizationController extends Controller
     public function getList(Request $request)
     {
 
+        if($request->sync){
+            LanguageString::syncAndGenerateStrings($request);
+        }
 
         $data = [];
 
@@ -67,14 +71,10 @@ class LocalizationController extends Controller
 
     }
     //----------------------------------------------------------
-    public function store(Request $request)
+    public function postStore(Request $request,$id)
     {
-
         $response = LanguageString::storeList($request);
-
-
         return response()->json($response);
-
     }
     //----------------------------------------------------------
     public function storeLanguage(Request $request)
@@ -94,20 +94,6 @@ class LocalizationController extends Controller
         $response = LanguageCategory::store($request);
 
         LanguageString::syncStrings($request);
-
-        return response()->json($response);
-
-    }
-    //----------------------------------------------------------
-    public function sync(Request $request)
-    {
-
-        LanguageString::syncAndGenerateStrings($request);
-
-
-        $response = LanguageString::getList($request);
-
-        $response['messages'][] = "Language files successfully generated";
 
         return response()->json($response);
 
@@ -136,6 +122,26 @@ class LocalizationController extends Controller
         die("<hr/>line number=123");
 
         return response()->json($response);*/
+
+    } //----------------------------------------------------------
+    public function postActions(Request $request, $action)
+    {
+
+        switch ($action)
+        {
+
+            //------------------------------------
+            case 'delete-language-string':
+
+                $response = LanguageString::deleteItem($request);
+
+                break;
+
+            //------------------------------------
+
+        }
+
+        return response()->json($response);
 
     }
     //----------------------------------------------------------

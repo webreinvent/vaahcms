@@ -33,7 +33,7 @@ class RolesController extends Controller
             return response()->json($response);
         }
 
-        $module = Permission::getModuleList();
+        $module = Permission::withTrashed()->select('module')->get()->unique('module');
 
         $data['country_calling_code'] = vh_get_country_list();
         $data['country'] = vh_get_country_list();

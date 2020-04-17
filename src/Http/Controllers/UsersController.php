@@ -33,6 +33,8 @@ class UsersController extends Controller
             return response()->json($response);
         }
 
+        $role = Role::withTrashed()->select('id','uuid','name','slug')->get();
+
         $data['country_calling_code'] = vh_get_country_list();
         $data['countries'] = vh_get_country_list();
         $data['timezones'] = vh_get_timezones();
@@ -40,6 +42,7 @@ class UsersController extends Controller
         $data['registration_statuses'] = vh_registration_statuses();
         $data['bulk_actions'] = vh_general_bulk_actions();
         $data['name_titles'] = vh_name_titles();
+        $data['role'] = $role;
 
         $response['status'] = 'success';
         $response['data'] = $data;
@@ -65,6 +68,7 @@ class UsersController extends Controller
     //----------------------------------------------------------
     public function getList(Request $request)
     {
+
         if(!\Auth::user()->hasPermission('has-access-of-users-section'))
         {
             $response['status'] = 'failed';
@@ -73,7 +77,7 @@ class UsersController extends Controller
             return response()->json($response);
         }
 
-        $response = User::getList($request);
+        $response = User::getList($request['query_string'],$request['roles']);
         return response()->json($response);
     }
     //----------------------------------------------------------

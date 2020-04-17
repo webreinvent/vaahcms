@@ -5,6 +5,7 @@ Vue.use(Vuex);
 
 
 import root from './modules/root';
+import localizations from './modules/localizations';
 import registrations from './modules/registrations';
 import setup from './modules/setup';
 import users from './modules/users';
@@ -19,5 +20,6 @@ export const store = new Vuex.Store({
         permissions: permissions,
         roles: roles,
         users: users,
+        localizations: localizations,
     }
 });

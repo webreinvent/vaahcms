@@ -555,7 +555,55 @@ let routes_roles =     {
     ]
 };
 
+
 routes.push(routes_roles);
+
+
+import SettingsLayout from "./../pages/settings/SettingsLayout";
+import LocalizationList from "./../pages/settings/localization/List";
+
+let routes_setting_localization =     {
+    path: '/vaah/',
+    component: LayoutBackend,
+    props: true,
+    meta: {
+        middleware: [
+            IsLoggedIn,
+            GetBackendAssets
+        ]
+    },
+    children: [
+        {
+            path: 'settings',
+            component: SettingsLayout,
+            props: true,
+            meta: {
+                middleware: [
+                    IsLoggedIn,
+                    GetBackendAssets
+                ]
+            },
+            children: [
+                {
+                    path: 'localization',
+                    name: 'loc.list',
+                    component: LocalizationList,
+                    props: true,
+                    meta: {
+                        middleware: [
+                            IsLoggedIn,
+                            GetBackendAssets
+                        ]
+                    }
+                }
+
+            ]
+        }
+
+    ]
+};
+
+routes.push(routes_setting_localization);
 
 
 export default routes;

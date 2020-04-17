@@ -168,12 +168,23 @@
                                                         - Select a status -
                                                     </option>
                                                     <option value=01>
-                                                        Active
-                                                    </option>
+                                                    Active
+                                                </option>
                                                     <option value=10>
                                                         Not active
                                                     </option>
                                                 </b-select>
+
+                                                <b-dropdown multiple aria-role="list" @input="setRoleAction" v-model="selected_roles">
+                                                    <button class="button is-primary" type="button" slot="trigger">
+                                                        <span>Roles ({{ selected_roles.length }})</span>
+                                                    </button>
+
+                                                    <b-dropdown-item v-for="option in page.assets.role" :key="option.name" :value="option.id">
+                                                        <span>{{  option.name.charAt(0).toUpperCase() + option.name.slice(1) }}</span>
+                                                    </b-dropdown-item>
+                                                </b-dropdown>
+
                                             </b-field>
 
 

@@ -256,6 +256,46 @@ Route::group(
 
 Route::group(
     [
+        'prefix' => 'backend/vaah/settings/localization',
+        'namespace'  => 'WebReinvent\VaahCms\Http\Controllers\Settings',
+        'middleware' => ['web', 'has.backend.access'],
+    ],
+    function () {
+        //---------------------------------------------------------
+        Route::any('/assets', 'LocalizationController@getAssets')
+            ->name('backend.vaah.localization.assets');
+        //---------------------------------------------------------
+        Route::post('/create', 'LocalizationController@postCreate')
+            ->name('backend.vaah.localization.create');
+        //---------------------------------------------------------
+        Route::post('/list', 'LocalizationController@getList')
+            ->name('backend.vaah.localization.list');
+        //---------------------------------------------------------
+        Route::any('/item/{id}', 'LocalizationController@getItem')
+            ->name('backend.vaah.localization.item');
+        //---------------------------------------------------------
+        Route::any('/item/{id}/roles', 'LocalizationController@getItemRoles')
+            ->name('backend.vaah.localization.role');
+        //---------------------------------------------------------
+        Route::post('/store/{id}', 'LocalizationController@postStore')
+            ->name('backend.vaah.localization.store');
+        //---------------------------------------------------------
+        Route::post('/store/language', 'LocalizationController@storeLanguage')
+            ->name('backend.vaah.localization.store');
+        //---------------------------------------------------------
+        Route::post('/store/category', 'LocalizationController@storeCategory')
+            ->name('backend.vaah.localization.store');
+        //---------------------------------------------------------
+        Route::post('/actions/{action_name}', 'LocalizationController@postActions')
+            ->name('backend.vaah.localization.actions');
+        //---------------------------------------------------------
+    });
+
+
+
+
+Route::group(
+    [
         'prefix' => 'backend/vaah/users',
         'namespace'  => 'WebReinvent\VaahCms\Http\Controllers',
         'middleware' => ['web', 'has.backend.access'],

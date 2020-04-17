@@ -175,9 +175,12 @@ class LanguageString extends Model {
         $list = static::orderBy('created_at', 'asc');
 
         $list->where('vh_lang_language_id', $request->vh_lang_language_id);
-        $list->where('vh_lang_category_id', $request->vh_lang_category_id);
 
-        $list = $list->get();
+        if($request->vh_lang_category_id){
+            $list->where('vh_lang_category_id', $request->vh_lang_category_id);
+        }
+
+        $list = $list->paginate(config('vaahcms.per_page'));
 
         $response['status'] = 'success';
         $response['data']['list'] = $list;
@@ -203,6 +206,11 @@ class LanguageString extends Model {
         {
             $string = null;
 
+            if(!$item['slug']){
+                continue;
+            }
+
+
             if(isset($item['id']))
             {
                 $string = static::find($item['id']);
@@ -214,6 +222,14 @@ class LanguageString extends Model {
 
             } else
             {
+                if(!$item['vh_lang_category_id'])
+                {
+
+                    $response['status'] = 'failed';
+                    $response['messages'][] = 'Category not selected';
+                    return $response;
+
+                }
 
                 //find based on slug
                 $string = static::where('slug', $item['slug'])

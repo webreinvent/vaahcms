@@ -23,6 +23,7 @@ export default {
         return {
             is_content_loading: false,
             is_btn_loading: false,
+            selected_roles: [],
             assets: null,
             search_delay: null,
             search_delay_time: 800,
@@ -73,6 +74,7 @@ export default {
         //---------------------------------------------------------------------
         updateQueryString: function()
         {
+
             let query = this.$vaah.removeEmpty(this.$route.query);
             if(Object.keys(query).length)
             {
@@ -183,7 +185,13 @@ export default {
         getList: function () {
             this.$vaah.updateCurrentURL(this.query_string, this.$router);
             let url = this.ajax_url+'/list';
-            this.$vaah.ajax(url, this.query_string, this.getListAfter);
+
+            let params = {
+                query_string:this.query_string,
+                roles:this.selected_roles
+            };
+
+            this.$vaah.ajax(url, params, this.getListAfter);
         },
         //---------------------------------------------------------------------
         getListAfter: function (data, res) {
@@ -202,10 +210,9 @@ export default {
                 this.update('list_is_empty', false);
             }
 
-            this.page.query_string.recount = null;
+            this.query_string.recount = null;
 
             this.update('query_string', this.page.query_string);
-            this.$vaah.updateCurrentURL(this.page.query_string, this.$router);
 
             this.is_btn_loading = false;
             this.$Progress.finish();
@@ -249,7 +256,6 @@ export default {
         },
         //---------------------------------------------------------------------
         actionsAfter: function (data, res) {
-            let action = this.page.bulk_action.action;
             if(data)
             {
                 this.$root.$emit('eReloadItem');
@@ -266,6 +272,11 @@ export default {
             if(this.$route.fullPath.includes('users/?')){
                 this.update('active_item', null);
             }
+        },
+        //---------------------------------------------------------------------
+        setRoleAction: function () {
+
+            this.getList();
         },
         //---------------------------------------------------------------------
         //---------------------------------------------------------------------
