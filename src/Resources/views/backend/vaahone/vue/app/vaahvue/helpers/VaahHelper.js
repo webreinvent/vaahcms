@@ -279,9 +279,10 @@ const VaahHelper = {
 
     //---------------------------------------------------------------------
     removeEmpty: function(obj) {
+        let self = this;
         Object.keys(obj).forEach(function(key) {
             if (obj[key] && typeof obj[key] === 'object'){
-                this.removeEmpty(obj[key]);
+                self.removeEmpty(obj[key]);
             }
             else if (obj[key] == null) {
                 delete obj[key]

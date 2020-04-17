@@ -157,7 +157,7 @@
                                                     :expanded="expanded">
 
                                                 <b-tab-item v-for="(language,index) in page.assets.languages.list" v-bind:data="language"
-                                                            v-bind:key="index" :label="language.locale_code_iso_639+' ('+language.not_empty+' / '+language.total+')'">
+                                                            v-bind:key="index" :label="language.locale_code_iso_639+' ('+language.not_empty+'/'+language.total+')'">
                                                     <div class="level">
                                                         <div class="level-left has-text-weight-bold is-size-5">
                                                                 {{language.name}} ({{language.locale_code_iso_639}})
@@ -181,11 +181,50 @@
                                                                         Show
                                                                     </button>
                                                                 </p>
+                                                                <p class="control">
+                                                                    <button class="button is-primary"
+                                                                            @click="toggleFilters()"
+                                                                            slot="trigger">
+                                                                        <b-icon icon="ellipsis-v"></b-icon>
+                                                                    </button>
+                                                                </p>
                                                             </b-field>
 
                                                         </div>
 
                                                     </div>
+
+                                                    <!--filters-->
+                                                    <div class="level" v-if="show_filters">
+
+                                                        <div class="level-left">
+
+
+
+                                                            <div class="level-item">
+
+                                                                <b-field label="">
+                                                                    <b-select placeholder="- Select a filter -" v-model="query_string.filter" @input="getList()">
+                                                                        <option value="">
+                                                                            - Select a filter -
+                                                                        </option>
+                                                                        <option value='filled'>
+                                                                            Filled Value
+                                                                        </option>
+                                                                        <option value='empty'>
+                                                                            Empty Value
+                                                                        </option>
+                                                                    </b-select>
+                                                                </b-field>
+
+
+                                                            </div>
+
+                                                        </div>
+
+
+                                                    </div>
+                                                    <!--/filters-->
 
                                                     <table v-if="list" class="table">
                                                         <template v-if="list && list.data && list.data.length > 0">

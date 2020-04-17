@@ -176,6 +176,13 @@ class LanguageString extends Model {
 
         $list->where('vh_lang_language_id', $request->vh_lang_language_id);
 
+        if($request->filter && $request->filter == 'filled'){
+
+            $list->whereNotNull('content');
+        }elseif($request->filter && $request->filter == 'empty'){
+            $list->whereNull('content');
+        }
+
         if($request->vh_lang_category_id){
             $list->where('vh_lang_category_id', $request->vh_lang_category_id);
         }

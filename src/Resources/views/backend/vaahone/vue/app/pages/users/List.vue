@@ -160,31 +160,34 @@
                                         <div class="level-item">
 
                                             <b-field label="">
-                                                <b-select placeholder="- Select a status -"
-                                                          v-model="query_string.status"
-                                                          @input="getList()"
-                                                >
-                                                    <option value="">
-                                                        - Select a status -
-                                                    </option>
-                                                    <option value=01>
-                                                    Active
-                                                </option>
-                                                    <option value=10>
-                                                        Not active
-                                                    </option>
-                                                </b-select>
+                                                <p class="control">
+                                                    <b-select placeholder="- Select a status -"
+                                                              v-model="query_string.status"
+                                                              @input="getList()"
+                                                    >
+                                                        <option value="">
+                                                            - Select a status -
+                                                        </option>
+                                                        <option value=01>
+                                                            Active
+                                                        </option>
+                                                        <option value=10>
+                                                            Not active
+                                                        </option>
+                                                    </b-select>
+                                                </p>
 
-                                                <b-dropdown multiple aria-role="list" @input="setRoleAction" v-model="selected_roles">
-                                                    <button class="button is-primary" type="button" slot="trigger">
-                                                        <span>Roles ({{ selected_roles.length }})</span>
-                                                    </button>
+                                                <p class="control">
+                                                    <b-dropdown multiple aria-role="list" @input="setRoleAction" v-model="selected_roles">
+                                                        <button class="button is-primary" type="button" slot="trigger">
+                                                            <span>Roles ({{ selected_roles.length }})</span>
+                                                        </button>
 
-                                                    <b-dropdown-item v-for="option in page.assets.role" :key="option.name" :value="option.id">
-                                                        <span>{{  option.name.charAt(0).toUpperCase() + option.name.slice(1) }}</span>
-                                                    </b-dropdown-item>
-                                                </b-dropdown>
-
+                                                        <b-dropdown-item v-for="option in page.assets.role" :key="option.name" :value="option.id">
+                                                            <span>{{  option.name.charAt(0).toUpperCase() + option.name.slice(1) }}</span>
+                                                        </b-dropdown-item>
+                                                    </b-dropdown>
+                                                </p>
                                             </b-field>
 
 

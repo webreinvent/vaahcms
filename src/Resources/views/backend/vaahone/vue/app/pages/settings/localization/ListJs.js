@@ -43,7 +43,11 @@ export default {
                 lang_id: null,
                 cat_id: null,
                 page: null,
+                filter: null,
             },
+
+
+            show_filters: false,
 
 
             is_btn_loading: false,
@@ -131,6 +135,7 @@ export default {
             this.filters.vh_lang_category_id = this.page.assets.categories.default.id;
             this.filters.sync = sync;
             this.filters.page = page;
+            this.filters.filter = this.query_string.filter;
             let params = this.filters;
             this.$vaah.ajax(url, params, this.getListAfter);
         },
@@ -167,10 +172,7 @@ export default {
             let text = "";
             let self = this;
 
-
-
-
-            if(this.list && this.list.data)
+            if(this.list && this.list.data && this.list.data.length > 0)
             {
 
                 this.list.data.forEach(function (item) {
@@ -186,23 +188,20 @@ export default {
 
                     });
 
-                    console.log('--->', count);
-
                     if(count > 1)
                     {
-                        console.log('check--->', count);
                         exist = true;
                         text = item.slug+", ";
+                        return false;
                     }
 
                 })
             }
 
-            console.log(exist,'--->', count,'--->',text);
 
             if(exist)
             {
-                this.$vaah.toastErrors(text+" are duplicate slugs");
+                this.$vaah.toastErrors([text+" are duplicate slugs"]);
                 return false;
             } else
             {
@@ -214,10 +213,12 @@ export default {
         store: function (lang_id) {
 
             this.$Progress.start();
+
             let check = this.checkDuplicatedSlugs();
 
             if(!check)
             {
+                this.$Progress.finish();
                 return false;
             }
 
@@ -420,6 +421,7 @@ export default {
             let cat = this.$vaah.findInArrayByKey(this.page.assets.categories.list, 'id', this.query_string.cat_id);
             this.active_category = cat;
 
+            this.list = null;
             this.query_string.page = 1;
             this.getList(this.query_string.page);
         },
@@ -433,6 +435,8 @@ export default {
             this.update('assets',this.page.assets);
 
             this.query_string.page = 1;
+
+            this.list = null;
 
             this.getList(this.query_string.page);
         },
@@ -473,6 +477,19 @@ export default {
 
             this.query_string.page = page;
             this.getList(page);
+
+        },
+        //---------------------------------------------------------------------
+        toggleFilters: function()
+        {
+            if(this.show_filters == false)
+            {
+                this.show_filters = true;
+            } else
+            {
+                this.show_filters = false;
+            }
+
 
         },
         //---------------------------------------------------------------------

@@ -276,6 +276,8 @@ export default {
         //---------------------------------------------------------------------
         setRoleAction: function () {
 
+            this.query_string.roles = this.selected_roles;
+
             this.getList();
         },
         //---------------------------------------------------------------------
