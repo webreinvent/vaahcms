@@ -42,6 +42,41 @@ export default {
     //=========================================================================
     actions:{
         //-----------------------------------------------------------------
+        async getAssets({ state, commit, dispatch, getters }) {
+
+            let root_assets = state.assets;
+
+
+            let params = {};
+
+            params.get_server_details = true;
+
+            params.get_auth_user = true;
+
+            params.get_extended_views = true;
+
+            params.get_extended_views = true;
+
+            let url = state.json_url + '/assets';
+            let data = await Vaah.ajax(url, params);
+
+            if (!root_assets) {
+                root_assets = {};
+            }
+
+            for (let index in data.data.data) {
+                root_assets[index] = data.data.data[index];
+            }
+
+            let payload = {
+                key: 'assets',
+                value: root_assets
+            };
+
+            this.commit('root/updateState', payload);
+
+        },
+        //-----------------------------------------------------------------
         async getPermissions({ state, commit, dispatch, getters }) {
 
 

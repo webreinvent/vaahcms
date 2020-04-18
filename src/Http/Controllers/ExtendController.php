@@ -6,6 +6,7 @@ namespace WebReinvent\VaahCms\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
+use WebReinvent\VaahCms\Entities\Module;
 
 class ExtendController extends Controller
 {
@@ -72,15 +73,15 @@ class ExtendController extends Controller
         }
 
         $list[2] = [
-            'link' => route('vh.backend.dashboard'),
+            'link' => "#",
             'label'=> 'Extend',
             'child' => [
                 [
-                    'link' => route('vh.backend.dashboard'),
+                    'link' => $link."/modules/",
                     'label'=> 'Modules'
                 ],
                 [
-                    'link' => route('vh.backend.dashboard'),
+                    'link' => $link."/themes/",
                     'label'=> 'Themes'
                 ]
             ]
@@ -99,6 +100,21 @@ class ExtendController extends Controller
 
 
 
+        $active_modules = Module::getActiveModules();
+
+        if($active_modules)
+        {
+            foreach ($active_modules as $active_module)
+            {
+                $links = vh_module_action($active_module->name, 'ExtendController@extendTopLeftMenu');
+
+                if($links && is_array($links) && count($links) > 0)
+                {
+                    $list = array_merge($list, $links);
+                }
+
+            }
+        }
 
         return $list;
     }
@@ -112,6 +128,23 @@ class ExtendController extends Controller
                 'label'=> 'Logout'
             ],
         ];
+
+
+        $active_modules = Module::getActiveModules();
+
+        if($active_modules)
+        {
+            foreach ($active_modules as $active_module)
+            {
+                $links = vh_module_action($active_module->name, 'ExtendController@extendTopRightUserMenu');
+
+                if($links && is_array($links) && count($links) > 0)
+                {
+                    $list = array_merge($list, $links);
+                }
+
+            }
+        }
 
         return $list;
     }

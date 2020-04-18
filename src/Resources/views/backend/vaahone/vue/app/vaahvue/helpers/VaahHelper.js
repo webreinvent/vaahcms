@@ -4,6 +4,7 @@ import copy from 'copy-to-clipboard';
 
 import {store} from './../../store/store';
 import {ToastProgrammatic as Toast} from "buefy";
+import axios from "axios";
 
 var debug = document.getElementById('debug').getAttribute('content');
 
@@ -17,9 +18,85 @@ const VaahHelper = {
     },
     //---------------------------------------------------------------------
 
+    async ajaxGet(url, params, callback )
+    {
+
+        axios.defaults.headers.common = null;
+
+        let q = {
+            params: params
+        };
+
+        console.log('--->url', url);
+
+        let data = await Vue.axios.get(url, q)
+            .then(response => {
+                if(response.data.status)
+                {
+                    if(response.data.status === 'failed')
+                    {
+                        if(response.data.messages)
+                        {
+                            this.toastErrors(response.data.messages);
+                        }
+
+                        if(response.data.errors)
+                        {
+                            this.toastErrors(response.data.errors);
+                        }
+                    }
+                    if(response.data.status === 'success')
+                    {
+                        if(response.data.messages)
+                        {
+                            this.toastSuccess(response.data.messages);
+                        }
+                    }
+                }
+
+                if(callback)
+                {
+                    if(response.data && response.data.data)
+                    {
+                        callback(response.data.data, response);
+                    } else
+                    {
+                        callback(false, response);
+                    }
+                }
+
+                return response;
+            })
+            .catch(error => {
+
+                console.log('--->error', error);
+
+                if(debug == true)
+                {
+                    this.toastErrors([error]);
+                } else
+                {
+                    this.toastErrors(['Something went wrong']);
+                }
+
+                if(callback) {
+                    callback(false, error);
+                }
+
+                return error;
+            });
+
+        return data;
+    },
+
     //---------------------------------------------------------------------
     async ajax(url, params, callback, query )
     {
+
+        //To make axios request as ajax request
+        axios.defaults.headers.common = {
+            'X-Requested-With': 'XMLHttpRequest',
+        };
 
         let q = {
             params: query

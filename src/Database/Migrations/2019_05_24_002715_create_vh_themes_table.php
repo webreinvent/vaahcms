@@ -21,9 +21,10 @@ class CreateVhThemesTable extends Migration
             $table->string('thumbnail')->nullable();
             $table->string('excerpt')->nullable();
             $table->string('description')->nullable();
-            $table->string('github_url')->nullable();
+            $table->string('download_link')->nullable();
             $table->string('author_name')->nullable();
             $table->string('author_website')->nullable();
+            $table->string('vaah_url')->nullable();
             $table->string('version')->nullable();
             $table->integer('version_number')->nullable();
             $table->boolean('is_sample_data_available')->nullable();

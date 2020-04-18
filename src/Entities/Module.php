@@ -24,11 +24,12 @@ class Module extends Model {
         'title',
         'name',
         'slug',
-        'github_url',
+        'download_link',
         'excerpt',
         'description',
         'author_name',
         'author_website',
+        'vaah_url',
         'version',
         'version_number',
         'db_table_prefix',
@@ -90,6 +91,20 @@ class Module extends Model {
         return $this->morphMany('WebReinvent\VaahCms\Entities\Migration', 'migrationable');
     }
     //-------------------------------------------------
+    public static function getDetail($id)
+    {
+
+        $item = static::where('id', $id)
+            ->withTrashed()
+            ->first();
+
+        $response['status'] = 'success';
+        $response['data'] = $item;
+
+        return $response;
+
+    }
+    //-------------------------------------------------
     public static function syncModule($module_path)
     {
 
@@ -108,7 +123,7 @@ class Module extends Model {
             'slug' => 'required',
             'thumbnail' => 'required',
             'excerpt' => 'required',
-            'download_link' => 'required',
+            //'download_link' => 'required',
             'author_name' => 'required',
             'author_website' => 'required',
             'version' => 'required',
@@ -120,7 +135,7 @@ class Module extends Model {
             $errors             = errorsToArray($validator->errors());
             $response['status'] = 'failed';
             $response['errors'] = $errors;
-            return response()->json($response);
+            return $response;
         }
 
 
@@ -188,6 +203,21 @@ class Module extends Model {
 
         $list = vh_get_all_modules_paths();
 
+        $installed = static::orderBy('name', 'asc')->get()
+            ->pluck('name')->toArray();
+
+
+
+        if($installed && count($list) < 1)
+        {
+            foreach ($installed as $item)
+            {
+                $installed_module = static::where('name', $item)->first();
+                $installed_module->forceDelete();
+            }
+        }
+
+
         if(count($list) < 1)
         {
             $response['status'] = 'failed';
@@ -195,11 +225,44 @@ class Module extends Model {
             return $response;
         }
 
+        $installed_module_names = [];
+
+        if(count($list) > 0)
+        {
+            foreach ($list as $module_path)
+            {
+                $installed_module_names[] = basename($module_path);
+            }
+        }
+
+        //remove database records if module folder does not exist
+        if(count($installed_module_names) > 0)
+        {
+            foreach ($installed as $item)
+            {
+                if(!in_array($item, $installed_module_names))
+                {
+                    $installed_module = static::where('name', $item)->first();
+                    $installed_module->forceDelete();
+                }
+            }
+
+        }
+
+
 
         foreach($list as $module_path)
         {
-            Module::syncModule($module_path);
+            $res = Module::syncModule($module_path);
 
+            /*if($res['status'] == 'failed')
+            {
+                echo "<pre>";
+                print_r($res);
+                echo "</pre>";
+                die("<hr/>line number=123");
+
+            }*/
         }
 
     }
@@ -209,6 +272,12 @@ class Module extends Model {
         $list = Model::all();
         return $list;
     }
+    //-------------------------------------------------
+    public static function getActiveModules()
+    {
+        return Module::where('is_active', 1)->get();
+    }
+
     //-------------------------------------------------
     public static function validateDependencies($dependencies)
     {

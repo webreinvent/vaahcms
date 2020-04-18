@@ -66,4 +66,34 @@ function vh_list_with_slugs($arr)
     return $list;
 }
 //-------------------------------------------------------------
+function vh_action($class_namespace, $method) {
+
+    try{
+        $c = new $class_namespace();
+        return $c->$method();
+    } catch (\Exception $e) {
+        return $e->getMessage();
+    }
+}
+//-------------------------------------------------------------
+function vh_module_action($module_name, $action, $type='backend'){
+
+    $namespace = '\VaahCms\Modules\\'.$module_name;
+
+    if($type=='backend')
+    {
+        $namespace .= '\Http\Controllers\Backend\\';
+    } else{
+        $namespace .= '\Http\Controllers\Frontend\\';
+    }
+
+    $action = explode('@', $action);
+
+    $namespace .= $action[0];
+    $method = $action[1];
+
+    return vh_action($namespace, $method);
+}
+//-------------------------------------------------------------
+//-------------------------------------------------------------
 //-------------------------------------------------------------

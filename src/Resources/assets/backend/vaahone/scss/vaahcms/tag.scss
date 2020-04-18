@@ -18,6 +18,17 @@
                 }
 
             }
+
+            a{
+                align-items: center;
+                display: inline-flex;
+                font-size: .75rem;
+                height: 2.5em;
+                justify-content: center;
+                line-height: 1.5;
+                white-space: nowrap;
+            }
+
         }
     }
 
@@ -42,6 +53,10 @@
         }
 
     }
+
+
+
+
 
     .button{
         padding: 0;
@@ -77,11 +92,12 @@
 
         &.is-#{$name}
         {
-            .button{
+            .button, a{
                 color: $color-invert !important;
             }
         }
 
     }
+
 
 }

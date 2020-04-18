@@ -10,6 +10,7 @@ import setup from './modules/setup';
 import users from './modules/users';
 import permissions from './modules/permissions';
 import roles from './modules/roles';
+import modules from './modules/modules';
 
 export const store = new Vuex.Store({
     modules: {
@@ -19,5 +20,6 @@ export const store = new Vuex.Store({
         permissions: permissions,
         roles: roles,
         users: users,
+        modules: modules,
     }
 });

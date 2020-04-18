@@ -3,6 +3,15 @@
     .section{ padding: 1.5rem;}
 }
 
+hr{
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.clickable{
+    cursor: pointer;
+}
+
 
 $width: map-get($screens, 'widescreen');
 @media (min-width: $width) {

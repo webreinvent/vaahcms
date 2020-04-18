@@ -22,15 +22,15 @@ class ModuleController extends Controller
     }
 
     //----------------------------------------------------------
-    public function index()
-    {
-        return view($this->theme.'.pages.modules');
-    }
+
     //----------------------------------------------------------
     public function assets(Request $request)
     {
+        Module::syncAllModules();
+
         $data['vaahcms_api_route'] = config('vaahcms.api_route');
         $data['debug'] = config('vaahcms.debug');
+        $data['installed'] = Module::select('slug')->get()->pluck('slug')->toArray();
 
         $response['status'] = 'success';
         $response['data'] = $data;
@@ -39,27 +39,7 @@ class ModuleController extends Controller
 
     }
     //----------------------------------------------------------
-    public function download(Request $request)
-    {
 
-        $rules = array(
-            'slug' => 'required',
-        );
-
-        $validator = \Validator::make( $request->toArray(), $rules);
-        if ( $validator->fails() ) {
-
-            $errors             = errorsToArray($validator->errors());
-            $response['status'] = 'failed';
-            $response['errors'] = $errors;
-            return response()->json($response);
-        }
-
-        $response = Module::download($request->slug);
-
-        return response()->json($response);
-
-    }
     //----------------------------------------------------------
     public function getList(Request $request)
     {
@@ -101,6 +81,35 @@ class ModuleController extends Controller
         $response['status'] = 'success';
         $response['data']['list'] = $list->paginate(10);
         $response['data']['stats'] = $stats;
+
+        return response()->json($response);
+
+    }
+    //----------------------------------------------------------
+    public function getItem(Request $request, $id)
+    {
+        $response = Module::getDetail($id);
+        return response()->json($response);
+    }
+    //----------------------------------------------------------
+    public function download(Request $request)
+    {
+
+        $rules = array(
+            'name' => 'required',
+            'download_link' => 'required',
+        );
+
+        $validator = \Validator::make( $request->toArray(), $rules);
+        if ( $validator->fails() ) {
+
+            $errors             = errorsToArray($validator->errors());
+            $response['status'] = 'failed';
+            $response['errors'] = $errors;
+            return response()->json($response);
+        }
+
+        $response = Module::download($request->name, $request->download_link);
 
         return response()->json($response);
 
@@ -171,7 +180,7 @@ class ModuleController extends Controller
                 $module->save();
                 break;
             //---------------------------------------
-            case 'importSampleData':
+            case 'import_sample_data':
                 Module::importSampleData($module->slug);
                 $response['status'] = 'success';
                 $response['messages'][] = 'Sample Data Successfully Imported';
@@ -190,6 +199,7 @@ class ModuleController extends Controller
         }
 
         $response['status'] = 'success';
+        $response['data'] = [];
         return response()->json($response);
     }
     //----------------------------------------------------------
@@ -231,7 +241,6 @@ class ModuleController extends Controller
                 $migration_path = $path.$migration;
                 include_once ($migration_path);
                 $migration_class = vh_get_class_from_file($migration_path);
-
                 if($migration_class)
                 {
                     $migration_obj = new $migration_class;
@@ -239,6 +248,10 @@ class ModuleController extends Controller
                 }
             }
         }
+
+        $module_item = Module::where('slug', $module->slug)->first();
+        $module_item->is_active = 0;
+        $module_item->save();
 
         //delete all database migrations
         $module_migrations = $module->migrations()->get()->pluck('migration_id')->toArray();

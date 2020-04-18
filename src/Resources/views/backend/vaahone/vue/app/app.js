@@ -20,10 +20,7 @@ Vue.config.delimiters = ['@{{', '}}'];
 Vue.config.async = false;
 //---------Configs
 
-//To make axios request as ajax request
-axios.defaults.headers.common = {
-    'X-Requested-With': 'XMLHttpRequest',
-};
+
 
 
 
