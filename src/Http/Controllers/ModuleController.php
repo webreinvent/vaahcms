@@ -202,13 +202,7 @@ class ModuleController extends Controller
         $response['data'] = [];
         return response()->json($response);
     }
-    //----------------------------------------------------------
 
-    //----------------------------------------------------------
-    public function deactivate($module)
-    {
-
-    }
     //----------------------------------------------------------
     public function callModuleControllerMethod($module, $controller, $method)
     {
@@ -338,7 +332,8 @@ class ModuleController extends Controller
     public function installUpdates(Request $request)
     {
         $rules = array(
-            'slug' => 'required',
+            'name' => 'required',
+            'download_link' => 'required',
         );
 
         $validator = \Validator::make( $request->toArray(), $rules);
@@ -350,51 +345,9 @@ class ModuleController extends Controller
             return response()->json($response);
         }
 
-        $module = Module::where('slug', $request->slug)->first();
+        $response = Module::installUpdates($request);
 
-        if(!$module)
-        {
-            $response['status'] = 'failed';
-            $response['errors'][] = trans("vaahcms::messages.not_exist", ['key' => 'slug', 'value' => $request->slug]);
-            return response()->json($response);
-
-        }
-
-
-        $parsed = parse_url($module->github_url);
-
-
-        $uri_parts = explode('/', $parsed['path']);
-        $folder_name = end($uri_parts);
-        $folder_name = $folder_name."-master";
-
-
-        $filename = $module->name.'.zip';
-        $folder_path = config('vaahcms.modules_path')."/";
-        $path = $folder_path.$filename;
-
-        copy($module->github_url.'/archive/master.zip', $path);
-
-        try{
-            Zip::check($path);
-            $zip = Zip::open($path);
-            $zip->extract(config('vaahcms.modules_path'));
-            $zip->close();
-
-            rename($folder_path.$folder_name, $folder_path.$module->name);
-
-            vh_delete_folder($path);
-
-            $response['status'] = 'success';
-            $response['messages'][] = 'Module Updated';
-            return response()->json($response);
-
-        }catch(\Exception $e)
-        {
-            $response['status'] = 'failed';
-            $response['errors'][] = $e->getMessage();
-            return response()->json($response);
-        }
+        return response()->json($response);
 
 
     }

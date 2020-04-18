@@ -16,7 +16,7 @@ export default {
     data()
     {
         let obj = {
-
+            namespace: namespace,
         };
 
         return obj;
@@ -37,13 +37,13 @@ export default {
             let update = {
                 state_name: name,
                 state_value: value,
-                namespace: namespace,
+                namespace: this.namespace,
             };
             this.$vaah.updateState(update);
         },
         //---------------------------------------------------------------------
         async getAssets() {
-            await this.$store.dispatch(namespace+'/getAssets');
+            await this.$store.dispatch(this.namespace+'/getAssets');
         },
         //---------------------------------------------------------------------
         async getRootAssets() {

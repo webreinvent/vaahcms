@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 use ZanySoft\Zip\Zip;
 
@@ -468,6 +469,63 @@ class Module extends Model {
             }
 
             vh_delete_folder($zip_file);
+
+            $response['status'] = 'success';
+            $response['data'] = [];
+            $response['messages'][] = $name." module is installed.";
+            return $response;
+
+        }catch(\Exception $e)
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = $e->getMessage();
+            return $response;
+        }
+
+    }
+    //-------------------------------------------------
+    public static function installUpdates($request)
+    {
+
+        $name = $request->name;
+        $download_link = $request->download_link;
+
+        $vaahcms_path = config('vaahcms.modules_path').'/';
+
+        $module = static::where('name', $name)->first();
+
+
+        $package_path = $vaahcms_path.$name;
+
+        $zip_file = $package_path.".zip";
+
+        copy($download_link, $zip_file);
+
+        try{
+            Zip::check($zip_file);
+            $zip = Zip::open($zip_file);
+            $zip_content_list = $zip->listFiles();
+            $zip->extract($vaahcms_path);
+            $zip->close();
+
+            if (strpos($download_link, 'github.com') !== false) {
+                $extracted_folder_name = $zip_content_list[0];
+                File::copyDirectory($vaahcms_path.$extracted_folder_name, $package_path);
+            }
+
+            vh_delete_folder($vaahcms_path.$extracted_folder_name);
+            vh_delete_folder($zip_file);
+
+            //if the modules is active then run migration & seeds
+            if($module->is_active)
+            {
+                static::activate($module->slug);
+                $module->version = $request->version;
+                $module->version_number = $request->version_number;
+                $module->is_update_available = null;
+                $module->save();
+            }
+
 
             $response['status'] = 'success';
             $response['data'] = [];

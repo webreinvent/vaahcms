@@ -35,9 +35,7 @@ Route::group(
         //------------------------------------------------
         Route::any( '/store/updates', 'ModuleController@storeUpdates' )
             ->name( 'vh.backend.modules.store.updates' );
-        //------------------------------------------------
-        Route::any( '/update/versions', 'ModuleController@updateModuleVersions' )
-            ->name( 'vh.backend.modules.update.version' );
+
         //------------------------------------------------
 
         //------------------------------------------------
