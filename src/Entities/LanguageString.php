@@ -171,6 +171,9 @@ class LanguageString extends Model {
     //-------------------------------------------------
     public static function getList($request)
     {
+        if($request->sync){
+            LanguageString::syncAndGenerateStrings($request);
+        }
 
         $list = static::orderBy('created_at', 'asc');
 
@@ -232,9 +235,9 @@ class LanguageString extends Model {
                 if(!$item['vh_lang_category_id'])
                 {
 
-                    $response['status'] = 'failed';
-                    $response['messages'][] = 'Category not selected';
-                    return $response;
+                    $cat = LanguageCategory::where('slug', 'general')->first();
+
+                    $item['vh_lang_category_id'] = $cat->id;
 
                 }
 

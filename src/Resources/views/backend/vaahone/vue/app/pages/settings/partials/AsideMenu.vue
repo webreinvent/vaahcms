@@ -2,10 +2,11 @@
 
         <b-menu>
             <b-menu-list label="Settings">
-                <b-menu-item @input="setActive('setting')" v-bind:active="is_setting" v-bind:expanded="is_setting">
-                    <template slot="label" slot-scope="props">
-                        Localization
-                    </template>
+                <b-menu-item label="Localization"
+                             tag="router-link"
+                             :active="!!($route.path == '/vaah/settings/localization/')"
+                             :to="{name: 'loc.list'}">
+
                 </b-menu-item>
             </b-menu-list>
         </b-menu>
@@ -58,23 +59,6 @@
 <script>
     export default {
         name: "AsideMenu",
-        data()
-        {
-            let obj = {
-               is_setting: false,
-
-            };
-
-            return obj;
-        },
-        methods: {
-            //---------------------------------------------------------------------
-            setActive(data){
-                if(data == setting){
-                    this.is_setting = true;
-                }
-            }
-        }
     }
 </script>
 

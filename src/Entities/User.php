@@ -769,7 +769,7 @@ class User extends Authenticatable
         if(count($roles) > 0){
 
             $list->whereHas('roles', function ($query) use ($roles){
-                $query->where('vh_user_roles.is_active', '=', 1)->whereIn('vh_user_roles.vh_role_id', $roles);
+                $query->where('vh_user_roles.is_active', '=', 1)->whereIn('vh_roles.slug', $roles);
             });
 
         }
@@ -799,6 +799,7 @@ class User extends Authenticatable
         $response['status'] = 'success';
         $response['data']['list'] = $list;
         $response['data']['totalRole'] = $countRole;
+        $response['fsfsf']['totalRole'] = $request;
 
         return $response;
 

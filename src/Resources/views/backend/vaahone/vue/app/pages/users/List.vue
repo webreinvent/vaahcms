@@ -88,7 +88,7 @@
                                                         Active
                                                     </option>
                                                     <option value=0>
-                                                        Not active
+                                                        Inactive
                                                     </option>
                                                 </b-select>
 
@@ -172,7 +172,7 @@
                                                             Active
                                                         </option>
                                                         <option value=10>
-                                                            Not active
+                                                            Inactive
                                                         </option>
                                                     </b-select>
                                                 </p>
@@ -183,7 +183,7 @@
                                                             <span>Roles ({{ selected_roles.length }})</span>
                                                         </button>
 
-                                                        <b-dropdown-item v-for="option in page.assets.role" :key="option.name" :value="option.id">
+                                                        <b-dropdown-item v-for="option in page.assets.role" v-bind:key="option.id" v-bind:value="option.slug">
                                                             <span>{{  option.name.charAt(0).toUpperCase() + option.name.slice(1) }}</span>
                                                         </b-dropdown-item>
                                                     </b-dropdown>

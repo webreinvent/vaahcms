@@ -102,7 +102,7 @@ export default {
             this.$vaah.updateState(update);
         },
         //---------------------------------------------------------------------
-        async getAssets() {
+        async getAssets(refresh = true) {
 
             await this.$store.dispatch(namespace+'/getAssets');
 
@@ -117,7 +117,9 @@ export default {
             }
             if(this.query_string.cat_id){
                 this.page.assets.categories.default.id = this.query_string.cat_id;
-                this.showCategoryData();
+                if(refresh){
+                    this.showCategoryData();
+                }
             }
 
 
@@ -212,7 +214,7 @@ export default {
         //---------------------------------------------------------------------
         store: function (lang_id) {
 
-            this.$Progress.start();
+            // this.$Progress.start();
 
             let check = this.checkDuplicatedSlugs();
 
@@ -222,18 +224,54 @@ export default {
                 return false;
             }
 
+
             let url = this.ajax_url+'/store/'+lang_id;
             let params = {
                 list: this.list.data,
                 vh_lang_language_id: lang_id,
             };
-            this.$vaah.ajax(url, params, this.storeAfter);
+
+
+            let count = 0;
+
+            if(!this.page.assets.categories.default.id && this.list && this.list.data && this.list.data.length > 0)
+            {
+
+                this.list.data.forEach(function (item) {
+
+                   if(!item.id && item.slug){
+                       count++;
+                   }
+
+                })
+            }
+
+            if(count > 0){
+
+                let self = this;
+                this.$buefy.dialog.confirm({
+                    title: 'Add new Language String',
+                    message: 'Are you sure you want to <b>Add</b> the Language String? This new string will added to general category.',
+                    confirmText: 'Add',
+                    type: 'is-danger',
+                    hasIcon: true,
+                    onConfirm: function () {
+                        self.$Progress.start();
+                        self.$vaah.ajax(url, params, self.storeAfter);
+                    }
+                })
+
+            }else{
+                this.$Progress.start();
+                this.$vaah.ajax(url, params, this.storeAfter);
+            }
+
         },
         //---------------------------------------------------------------------
         storeAfter: function (data) {
 
             this.$Progress.finish();
-            this.getAssets();
+            this.getAssets(false);
 
         },
         //---------------------------------------------------------------------
@@ -391,8 +429,7 @@ export default {
         //---------------------------------------------------------------------
         deleteStringAfter: function()
         {
-            this.getAssets();
-            this.getAssets();
+            this.getAssets(false);
             this.$Progress.finish();
         },
         //---------------------------------------------------------------------

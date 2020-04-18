@@ -30,6 +30,7 @@ export default {
             page: 1,
             q: null,
             trashed: null,
+            roles: [],
             status: null,
         },
         bulk_action:{

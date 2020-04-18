@@ -286,7 +286,7 @@
 
                                                     <div class="level">
                                                         <div class="level-left">
-                                                            <b-field v-if="page.assets.categories.default.id">
+                                                            <b-field>
                                                                 <p class="control">
                                                                     <button @click="addString(language.id,page.assets.categories.default.id)" class="button is-light">
                                                                         Add String

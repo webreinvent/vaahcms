@@ -46,29 +46,8 @@ class LocalizationController extends Controller
     //----------------------------------------------------------
     public function getList(Request $request)
     {
-
-        if($request->sync){
-            LanguageString::syncAndGenerateStrings($request);
-        }
-
-        $data = [];
-
-        if(!$request->has('vh_lang_language_id'))
-        {
-            $lang = Language::where('default', 1)->first();
-            $request->merge(['vh_lang_language_id'=>$lang->id]);
-        }
-
-        if(!$request->has('vh_lang_category_id'))
-        {
-            $cat = LanguageCategory::where('slug', 'general')->first();
-            $request->merge(['vh_lang_category_id'=>$cat->id]);
-        }
-
         $response = LanguageString::getList($request);
-
         return response()->json($response);
-
     }
     //----------------------------------------------------------
     public function postStore(Request $request,$id)
@@ -99,31 +78,6 @@ class LocalizationController extends Controller
 
     }
     //----------------------------------------------------------
-    public function delete(Request $request)
-    {
-
-        $response = LanguageString::deleteItem($request);
-
-        return response()->json($response);
-
-    }
-    //----------------------------------------------------------
-    public function upload(Request $request)
-    {
-
-        /*echo \VaahExcel::helloWorld();
-        die("<hr/>line number=123");
-
-        $response = \VaahFile::upload($request);
-
-        echo "<pre>";
-        print_r($response);
-        echo "</pre>";
-        die("<hr/>line number=123");
-
-        return response()->json($response);*/
-
-    } //----------------------------------------------------------
     public function postActions(Request $request, $action)
     {
 

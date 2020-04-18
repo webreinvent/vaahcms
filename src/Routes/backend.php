@@ -265,17 +265,8 @@ Route::group(
         Route::any('/assets', 'LocalizationController@getAssets')
             ->name('backend.vaah.localization.assets');
         //---------------------------------------------------------
-        Route::post('/create', 'LocalizationController@postCreate')
-            ->name('backend.vaah.localization.create');
-        //---------------------------------------------------------
         Route::post('/list', 'LocalizationController@getList')
             ->name('backend.vaah.localization.list');
-        //---------------------------------------------------------
-        Route::any('/item/{id}', 'LocalizationController@getItem')
-            ->name('backend.vaah.localization.item');
-        //---------------------------------------------------------
-        Route::any('/item/{id}/roles', 'LocalizationController@getItemRoles')
-            ->name('backend.vaah.localization.role');
         //---------------------------------------------------------
         Route::post('/store/{id}', 'LocalizationController@postStore')
             ->name('backend.vaah.localization.store');
