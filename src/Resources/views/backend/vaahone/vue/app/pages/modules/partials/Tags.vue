@@ -60,7 +60,7 @@
             </b-taglist>
         </div>
 
-        <div class="control" v-if="!hide_update_tag">
+        <!--<div class="control" v-if="!hide_update_tag">
             <b-taglist attached>
                 <b-tag type="is-success">update available</b-tag>
                 <b-tag type="is-success"
@@ -74,7 +74,7 @@
                 </b-tag>
 
             </b-taglist>
-        </div>
+        </div>-->
 
     </b-field>
 

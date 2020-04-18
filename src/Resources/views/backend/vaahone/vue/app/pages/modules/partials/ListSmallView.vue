@@ -30,7 +30,7 @@
 
 
 
-                    <b-field>
+                    <b-field class="float-right" style="float: right;">
 
                         <p class="control">
                             <b-button v-if='props.row.is_active'
@@ -66,10 +66,10 @@
                             </b-tooltip>
                         </p>
 
-                        <p class="control">
+                        <p class="control" v-if="props.row.is_update_available">
                             <b-tooltip label="View" type="is-dark">
                                 <b-button size="is-small"
-                                          v-if="props.row.is_update_available"
+
                                           type="is-info"
                                           @click="installUpdate(props.row)">
                                     Update

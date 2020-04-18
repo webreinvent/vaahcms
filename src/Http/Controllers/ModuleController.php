@@ -314,6 +314,27 @@ class ModuleController extends Controller
     }
 
     //----------------------------------------------------------
+    public function storeUpdates(Request $request)
+    {
+        $rules = array(
+            'modules' => 'required|array',
+        );
+
+        $validator = \Validator::make( $request->all(), $rules);
+        if ( $validator->fails() ) {
+
+            $errors             = errorsToArray($validator->errors());
+            $response['status'] = 'failed';
+            $response['errors'] = $errors;
+            return response()->json($response);
+        }
+
+        $response = Module::storeUpdates($request);
+
+        return response()->json($response);
+
+    }
+    //----------------------------------------------------------
     public function installUpdates(Request $request)
     {
         $rules = array(

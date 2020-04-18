@@ -25,54 +25,73 @@
                 </b-table-column>
 
 
-                <b-table-column width="300" field="actions" label="" numeric>
+                <b-table-column width="100" field="actions" label="" numeric>
 
-                    <div class="buttons float-right">
 
-                        <b-tooltip label="View" type="is-dark">
-                            <b-button size="is-small"
-                                      class="has-margin-left-5"
-                                      type="is-success"
-                                      @click="setActiveItem(props.row)">
-                                Activate
-                            </b-button>
-                        </b-tooltip>
 
-                        <b-tooltip label="View" type="is-dark">
-                            <b-button size="is-small"
-                                      class="has-margin-left-5"
+
+                    <b-field class="float-right" style="float: right;">
+
+                        <p class="control">
+                            <b-button v-if='props.row.is_active'
+                                      size="is-small"
                                       type="is-warning"
-                                      @click="setActiveItem(props.row)">
+                                      @click="actions('deactivate', props.row)">
                                 Deactivate
                             </b-button>
-                        </b-tooltip>
 
-                        <b-tooltip label="View" type="is-dark">
-                            <b-button size="is-small"
-                                      class="has-margin-left-5"
-                                      type="is-info"
-                                      @click="setActiveItem(props.row)">
-                                Update
+                            <b-button v-else size="is-small"
+                                      type="is-success"
+                                      @click="actions('activate', props.row)">
+                                Activate
                             </b-button>
-                        </b-tooltip>
+                        </p>
+                        <p class="control" v-if="props.row.is_active && props.row.is_sample_data_available">
+                            <b-tooltip label="Import Sample Data" type="is-dark">
+                                <b-button size="is-small"
+                                          icon-left="database"
+                                          @click="confirmDataImport(props.row)"
+                                          type="is-warning">
+                                </b-button>
+                            </b-tooltip>
+                        </p>
 
-                        <b-tooltip label="Delete" type="is-dark">
-                            <b-button size="is-small" class="has-margin-left-5"
-                            type="is-danger">
-                                Delete
-                            </b-button>
+                        <p class="control">
+                            <b-tooltip label="Delete" type="is-dark">
+                                <b-button size="is-small"
+                                          icon-left="trash"
+                                          @click="confirmDelete(props.row)"
+                                          type="is-danger">
+                                </b-button>
+                            </b-tooltip>
+                        </p>
 
-                        </b-tooltip>
+                        <p class="control" v-if="props.row.is_update_available">
+                            <b-tooltip label="View" type="is-dark">
+                                <b-button size="is-small"
 
-                        <b-tooltip label="View" type="is-dark">
-                            <b-button size="is-small" class="has-margin-left-5"
-                                      @click="setActiveItem(props.row)"
-                                      icon-left="chevron-right">
-                            </b-button>
+                                          type="is-info"
+                                          @click="installUpdate(props.row)">
+                                    Update
+                                </b-button>
+                            </b-tooltip>
+                        </p>
 
-                        </b-tooltip>
 
-                    </div>
+
+                        <p class="control">
+                            <b-tooltip label="View" type="is-dark">
+                                <b-button size="is-small"
+                                          @click="setActiveItem(props.row)"
+                                          icon-left="chevron-right">
+                                </b-button>
+                            </b-tooltip>
+                        </p>
+
+
+
+
+                    </b-field>
 
 
                 </b-table-column>
@@ -90,4 +109,3 @@
         </b-table>
     </div>
 </template>
-

@@ -16,7 +16,7 @@ export default {
     data()
     {
         let obj = {
-            icon_copy: "<b-icon icon='envelope' size='is-small'></b-icon>"
+
         };
 
         return obj;
@@ -42,6 +42,15 @@ export default {
             this.$vaah.updateState(update);
         },
         //---------------------------------------------------------------------
+        async getAssets() {
+            await this.$store.dispatch(namespace+'/getAssets');
+        },
+        //---------------------------------------------------------------------
+        async getRootAssets() {
+            console.log('--->root assets');
+            await this.$store.dispatch('root/getAssets');
+        },
+        //---------------------------------------------------------------------
         setRowClass: function(row, index)
         {
 
@@ -65,44 +74,131 @@ export default {
         //---------------------------------------------------------------------
 
         //---------------------------------------------------------------------
-        changeStatus: function (id) {
-            this.$Progress.start();
-            let url = this.ajax_url+'/actions/bulk-change-status';
-            let params = {
-                inputs: [id],
-                data: null
-            };
-            this.$vaah.ajax(url, params, this.changeStatusAfter);
-        },
-        //---------------------------------------------------------------------
-        changeStatusAfter: function (data,res) {
-            this.$emit('eReloadList');
-            this.update('is_list_loading', false);
-            this.$store.dispatch('root/getPermissions');
-
-        },
-        //---------------------------------------------------------------------
-        getRole: function (item) {
-            this.update('active_item', item);
-            this.$router.push({name: 'perm.role', params:{id:item.id}})
-        },
-        //---------------------------------------------------------------------
-        copiedData: function (data) {
-
-            this.$vaah.toastSuccess(['copied']);
-
-            // alertify.success('copied');
-
-            this.$vaah.console(data, 'copied data');
-
-        },
-        //---------------------------------------------------------------------
         hasPermission: function(slug)
         {
             return this.$vaah.hasPermission(this.permissions, slug);
         },
         //---------------------------------------------------------------------
+
+        confirmDelete: function (module) {
+            let self = this;
+            this.$buefy.dialog.confirm({
+                title: 'Deleting Module',
+                message: 'This will <b>delete</b> all files & database of the module  <b>'+module.name+'</b>. This action cannot be undone.',
+                confirmText: 'Proceed',
+                type: 'is-danger',
+                hasIcon: true,
+                onConfirm: function () {
+                    self.delete(module);
+                }
+            })
+        },
         //---------------------------------------------------------------------
+        delete: function (module) {
+            this.$Progress.start();
+            let params = {
+                action: 'delete',
+                inputs: module
+            };
+
+            if(this.page.active_item && this.page.active_item.id === module.id
+                && this.$router.name === 'modules.view'
+            )
+            {
+                this.update('active_item', null);
+                this.$router.push({name: 'modules.list'});
+            }
+
+            let url = this.ajax_url+'/actions';
+            this.$vaah.ajax(url, params, this.deleteAfter);
+        },
+        //---------------------------------------------------------------------
+        deleteAfter: function (data, res) {
+            this.$Progress.finish();
+            if(data)
+            {
+                this.update('assets_is_fetching', false);
+                this.getAssets();
+                this.getRootAssets();
+                this.$emit('eReloadList');
+            }
+        },
+        //---------------------------------------------------------------------
+        actions: function (action, module) {
+            this.$Progress.start();
+            this.update('selected_item', module);
+            let params = {
+                action: action,
+                inputs: module
+            };
+            let url = this.ajax_url+'/actions';
+            this.$vaah.ajax(url, params, this.actionsAfter);
+        },
+        //---------------------------------------------------------------------
+        actionsAfter: function (data, res) {
+
+            if(data)
+            {
+                this.update('selected_item', null);
+                this.getRootAssets();
+                this.$emit('eReloadList');
+            }
+
+        },
+        //---------------------------------------------------------------------
+        installUpdate: function (action, module) {
+            this.$Progress.start();
+            this.update('selected_item', module);
+            let params = {
+                action: action,
+                inputs: module
+            };
+            let url = this.ajax_url+'/actions';
+            this.$vaah.ajax(url, params, this.installUpdateAfter);
+        },
+        //---------------------------------------------------------------------
+        installUpdateAfter: function (data, res) {
+
+            if(data)
+            {
+                this.update('selected_item', null);
+                this.$emit('eReloadList');
+            }
+
+        },
+        //---------------------------------------------------------------------
+        confirmDataImport: function (module) {
+            let self = this;
+            this.$buefy.dialog.confirm({
+                title: 'Importing Sample Data',
+                message: 'This will <b>import</b> sample/dummy data of the module <b>'+module.name+'</b>. This action cannot be undone.',
+                confirmText: 'Proceed',
+                type: 'is-warning',
+                hasIcon: true,
+                onConfirm: function () {
+                    self.importSampleData(module);
+                }
+            })
+        },
+        //---------------------------------------------------------------------
+        importSampleData: function (module) {
+            this.$Progress.start();
+            let params = {
+                action: 'import_sample_data',
+                inputs: module
+            };
+            let url = this.ajax_url+'/actions';
+            this.$vaah.ajax(url, params, this.importSampleDataAfter);
+        },
+        //---------------------------------------------------------------------
+        importSampleDataAfter: function (data, res) {
+            this.$Progress.finish();
+            if(data)
+            {
+                this.$emit('eReloadList');
+            }
+
+        },
         //---------------------------------------------------------------------
         //---------------------------------------------------------------------
     }

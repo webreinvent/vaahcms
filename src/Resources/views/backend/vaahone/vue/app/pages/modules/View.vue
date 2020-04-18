@@ -23,36 +23,7 @@
                                 <small><b>#{{item.id}}</b></small>
                             </b-button>
                         </p>
-                         <p class="control">
 
-                              <b-dropdown aria-role="list" position="is-bottom-left">
-                                  <button class="button is-light" slot="trigger">
-                                      <b-icon icon="caret-down"></b-icon>
-                                  </button>
-
-                                  <b-dropdown-item aria-role="listitem"
-                                                   v-if="!item.is_active"
-                                                   @click="actions('bulk-activate')"
-                                  >
-                                      Activate
-                                  </b-dropdown-item>
-
-                                  <b-dropdown-item aria-role="listitem"
-                                                   v-if="item.is_active"
-                                                   @click="actions('bulk-deactivate')"
-                                  >
-                                      Deactivate
-                                  </b-dropdown-item>
-                                  <b-dropdown-item aria-role="listitem"
-                                                   @click="confirmDelete()"
-                                  >
-                                      <b-icon icon="eraser"></b-icon>
-                                      Delete
-                                  </b-dropdown-item>
-                              </b-dropdown>
-
-
-                              </p>
 
                         <p class="control">
                             <b-button type="is-light"

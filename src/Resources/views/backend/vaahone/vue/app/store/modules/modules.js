@@ -18,6 +18,7 @@ export default {
         list_is_empty: false,
         active_item: null,
         selected_item: null,
+        updates_list: null,
         filters: {
             q: null,
         },

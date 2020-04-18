@@ -25,7 +25,7 @@
                         <header class="card-header">
 
                             <div class="card-header-title">
-                                Modules {{page.list_view_class}}
+                                Modules
                             </div>
 
                             <div class="card-header-buttons">
@@ -41,6 +41,18 @@
                                         </b-button>
 
                                     </p>
+
+                                    <p class="control">
+
+                                        <b-button type="is-light"
+                                                  :loading="is_fetching_updates"
+                                                  @click="checkUpdate()"
+                                                  icon-left="cloud-download-alt">
+                                            Check Updates
+                                        </b-button>
+
+                                    </p>
+
                                     <p class="control">
 
                                         <b-button type="is-light"

@@ -495,6 +495,40 @@ class Module extends Model {
         \Artisan::call($command, $params);
     }
     //-------------------------------------------------
+    public static function storeUpdates($request)
+    {
+        $updates = 0;
+        if(count($request->modules) > 0 )
+        {
+            foreach ($request->modules as $module)
+            {
+                $store_modules = static::where('slug', $module['slug'])->first();
+
+                if($store_modules->version_number < $module['version_number'])
+                {
+                    $store_modules->is_update_available = 1;
+                    $store_modules->save();
+                    $updates++;
+                }
+
+            }
+        }
+
+        $response['status'] = 'success';
+        $response['data'][] = '';
+        if($updates > 0)
+        {
+            $response['messages'][] = 'New updates are available for '.$updates.' modules.';
+        } else{
+            $response['messages'][] = 'No new update available.';
+        }
+        if(env('APP_DEBUG'))
+        {
+            $response['hint'][] = '';
+        }
+        return $response;
+
+    }
 
     //-------------------------------------------------
     //-------------------------------------------------

@@ -9,6 +9,7 @@ export default {
         root() {return this.$store.getters['root/state']},
         permissions() {return this.$store.getters['root/state'].permissions},
         page() {return this.$store.getters[namespace+'/state']},
+        assets() {return this.$store.getters[namespace+'/state'].assets},
         ajax_url() {return this.$store.getters[namespace+'/state'].ajax_url},
         query_string() {return this.$store.getters[namespace+'/state'].query_string},
     },
@@ -23,7 +24,8 @@ export default {
         return {
             is_content_loading: false,
             is_btn_loading: false,
-            assets: null,
+            namespace: namespace,
+            is_fetching_updates: false,
             search_delay: null,
             search_delay_time: 800,
             ids: [],
@@ -85,7 +87,7 @@ export default {
         //---------------------------------------------------------------------
         async getAssets() {
             this.$Progress.start();
-            await this.$store.dispatch(namespace+'/getAssets');
+            await this.$store.dispatch(this.namespace+'/getAssets');
             this.getList();
         },
         //---------------------------------------------------------------------
@@ -287,6 +289,39 @@ export default {
             return this.$vaah.hasPermission(this.permissions, slug);
         },
         //---------------------------------------------------------------------
+        checkUpdate: function () {
+            this.is_fetching_updates = true;
+            let params = {
+                slugs: this.assets.installed
+            };
+            let url = this.assets.vaahcms_api_route+'module/updates';
+            this.$vaah.ajaxGet(url, params, this.checkUpdateAfter);
+        },
+        //---------------------------------------------------------------------
+        checkUpdateAfter: function (data, res) {
+            if(data)
+            {
+                this.update('updates_list', data);
+                this.storeUpdates();
+            }
+        },
+        //---------------------------------------------------------------------
+        storeUpdates: function () {
+            let params = {
+                modules: this.page.updates_list
+            };
+            let url = this.ajax_url+'/store/updates';
+            this.$vaah.ajax(url, params, this.storeUpdatesAfter);
+        },
+        //---------------------------------------------------------------------
+        storeUpdatesAfter: function (data, res) {
+            this.is_fetching_updates = false;
+            if(data)
+            {
+                this.getList();
+            }
+        },
+
         //---------------------------------------------------------------------
     }
 }
