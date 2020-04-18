@@ -175,7 +175,7 @@ class LanguageString extends Model {
             LanguageString::syncAndGenerateStrings($request);
         }
 
-        $list = static::orderBy('created_at', 'asc');
+        $list = static::orderBy('created_at', 'desc');
 
         $list->where('vh_lang_language_id', $request->vh_lang_language_id);
 
