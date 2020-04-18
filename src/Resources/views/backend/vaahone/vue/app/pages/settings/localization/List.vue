@@ -231,12 +231,7 @@
                                                             <tr  v-for="item in list.data">
                                                                 <td width="20">
 
-                                                                    <vh-copy v-if="active_category && item.slug" :data="'{!! trans(\'vaahcms-'+active_category.slug+'.'+item.slug+'\') !!}'"
-                                                                             confirm_dialog="buefy">
-                                                                        <b-icon icon="copy"></b-icon>
-                                                                    </vh-copy>
-
-                                                                    <vh-copy v-else
+                                                                    <vh-copy v-if="item.language_category" :data="'{!! trans(\'vaahcms-'+item.language_category.slug+'.'+item.slug+'\') !!}'"
                                                                              confirm_dialog="buefy">
                                                                         <b-icon icon="copy"></b-icon>
                                                                     </vh-copy>

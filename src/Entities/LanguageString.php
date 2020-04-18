@@ -190,7 +190,7 @@ class LanguageString extends Model {
             $list->where('vh_lang_category_id', $request->vh_lang_category_id);
         }
 
-        $list = $list->paginate(config('vaahcms.per_page'));
+        $list = $list->with('languageCategory')->paginate(config('vaahcms.per_page'));
 
         $response['status'] = 'success';
         $response['data']['list'] = $list;
