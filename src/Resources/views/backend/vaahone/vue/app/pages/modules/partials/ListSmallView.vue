@@ -2,12 +2,9 @@
 <template>
     <div v-if="page.list">
         <b-table :data="page.list_is_empty ? [] : page.list.data"
-                 :checkable="hasPermission('can-update-permissions') ? true : false"
                  :checked-rows.sync="page.bulk_action.selected_items"
-                 checkbox-position="left"
                  :hoverable="true"
-                 :row-class="setRowClass"
-        >
+                 :row-class="setRowClass">
 
             <template slot-scope="props">
                 <b-table-column field="name" label="Module">
@@ -56,6 +53,17 @@
                             </b-tooltip>
                         </p>
 
+                        <p class="control" v-if="props.row.is_update_available">
+                            <b-tooltip label="Download Updates" type="is-dark">
+                                <b-button size="is-small"
+                                          icon-left="cloud-download-alt"
+                                          type="is-info"
+                                          @click="confirmUpdate(props.row)">
+                                    Update
+                                </b-button>
+                            </b-tooltip>
+                        </p>
+
                         <p class="control">
                             <b-tooltip label="Delete" type="is-dark">
                                 <b-button size="is-small"
@@ -66,16 +74,7 @@
                             </b-tooltip>
                         </p>
 
-                        <p class="control" v-if="props.row.is_update_available">
-                            <b-tooltip label="View" type="is-dark">
-                                <b-button size="is-small"
 
-                                          type="is-info"
-                                          @click="installUpdate(props.row)">
-                                    Update
-                                </b-button>
-                            </b-tooltip>
-                        </p>
 
 
 

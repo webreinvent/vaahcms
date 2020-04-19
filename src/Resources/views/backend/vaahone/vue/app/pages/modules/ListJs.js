@@ -53,14 +53,17 @@ export default {
             let update = {
                 state_name: name,
                 state_value: value,
-                namespace: namespace,
+                namespace: this.namespace,
             };
+
+            console.log('--->', update);
+
             this.$vaah.updateState(update);
         },
         //---------------------------------------------------------------------
         updateView: function()
         {
-            this.$store.dispatch(namespace+'/updateView', this.$route);
+            this.$store.dispatch(this.namespace+'/updateView', this.$route);
         },
         //---------------------------------------------------------------------
         onLoad: function()
@@ -101,6 +104,7 @@ export default {
         getListAfter: function (data, res) {
             this.$Progress.finish();
             this.is_content_loading = false;
+            this.is_btn_loading = false;
 
             if(data){
                 this.update('list', data.list);
@@ -118,7 +122,7 @@ export default {
         //---------------------------------------------------------------------
         toggleFilters: function()
         {
-            if(this.page.show_filters == false)
+            if(this.page.show_filters === false)
             {
                 this.page.show_filters = true;
             } else
@@ -251,11 +255,8 @@ export default {
             }
         }, //---------------------------------------------------------------------
         sync: function () {
-
             this.page.query_string.recount = true;
-
             this.is_btn_loading = true;
-
             this.update('query_string', this.page.query_string);
             this.getList();
         },
@@ -263,22 +264,14 @@ export default {
 
         //---------------------------------------------------------------------
         setFilter: function () {
-
-            this.query_string.section = '';
-
-            this.getModuleSection();
-
             this.getList();
-
             this.query_string.page = 1;
             this.update('query_string', this.query_string);
-
-            console.log('check-status',this.page.assets.module.some(item => item.module === this.query_string.filter));
         },
         //---------------------------------------------------------------------
         updateActiveItem: function () {
 
-            if(this.$route.fullPath.includes('permissions/?')){
+            if(this.$route.fullPath.includes('modules/?')){
                 this.update('active_item', null);
             }
         },

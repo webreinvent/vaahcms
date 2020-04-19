@@ -10,7 +10,7 @@ use WebReinvent\VaahCms\Entities\Migration;
 use WebReinvent\VaahCms\Entities\Module;
 use ZanySoft\Zip\Zip;
 
-class ModuleController extends Controller
+class ModulesController extends Controller
 {
 
     public $theme;
@@ -52,7 +52,8 @@ class ModuleController extends Controller
         {
             $list->where(function ($s) use ($request) {
                 $s->where('name', 'LIKE', '%'.$request->q.'%')
-                    ->where('title', 'LIKE', '%'.$request->q.'%');
+                    ->orWhere('slug', 'LIKE', '%'.$request->q.'%')
+                    ->orWhere('title', 'LIKE', '%'.$request->q.'%');
             });
         }
 
@@ -79,7 +80,7 @@ class ModuleController extends Controller
 
 
         $response['status'] = 'success';
-        $response['data']['list'] = $list->paginate(10);
+        $response['data']['list'] = $list->paginate(config('vaahcms.per_page'));
         $response['data']['stats'] = $stats;
 
         return response()->json($response);
@@ -114,6 +115,7 @@ class ModuleController extends Controller
         return response()->json($response);
 
     }
+
     //----------------------------------------------------------
     public function actions(Request $request)
     {
@@ -135,35 +137,19 @@ class ModuleController extends Controller
         $data = [];
         $inputs = $request->inputs;
 
+
+        /*
+         * Call method from module setup controller
+         */
         $module = Module::find($inputs['id']);
 
-        $controller = "\VaahCms\Modules\\{$module->name}\\Http\Controllers\SetupController";
-        $method = $request->action;
 
-        $response = $this->callModuleControllerMethod($module, $controller, $method);
-
-        if(isset($response['status']) && $response['status'] == 'failed')
+        $response = vh_module_action($module->name, 'SetupController@'.$request->action);
+        if($response['status'] == 'failed')
         {
             return response()->json($response);
         }
 
-
-        //check dependencies are installed and active
-        if(isset($response['status'])
-            && $response['status'] == 'success'
-            && isset($response['dependencies'])
-            && is_array($response['dependencies'])
-        )
-        {
-
-            $response = Module::validateDependencies($response['dependencies']);
-
-            if(isset($response['status']) && $response['status'] == 'failed')
-            {
-                return response()->json($response);
-            }
-
-        }
 
 
         switch($request->action)
@@ -171,35 +157,25 @@ class ModuleController extends Controller
 
             //---------------------------------------
             case 'activate':
-                Module::activate($module->slug);
+                $response = Module::activateItem($module->slug);
                 break;
             //---------------------------------------
             case 'deactivate':
-                $this->deactivate($module);
-                $module->is_active = null;
-                $module->save();
+                $response = Module::deactivateItem($module->slug);
                 break;
             //---------------------------------------
             case 'import_sample_data':
-                Module::importSampleData($module->slug);
-                $response['status'] = 'success';
-                $response['messages'][] = 'Sample Data Successfully Imported';
-                return response()->json($response);
+                $response = Module::importSampleData($module->slug);
                 break;
             //---------------------------------------
             case 'delete':
-
-                $this->delete($module);
-
+                $response = Module::deleteItem($module->slug);
                 break;
             //---------------------------------------
             //---------------------------------------
-            //---------------------------------------
-            //---------------------------------------
+
         }
 
-        $response['status'] = 'success';
-        $response['data'] = [];
         return response()->json($response);
     }
 
@@ -218,54 +194,7 @@ class ModuleController extends Controller
 
     }
     //----------------------------------------------------------
-    public function delete($module)
-    {
 
-        $module_path = config('vaahcms.modules_path')."/".$module->name;
-
-        //Delete all migrations
-        $path =  $module_path . "/Database/Migrations/";
-
-        $migrations = vh_get_all_files($path);
-
-        if(count($migrations) > 0)
-        {
-            foreach($migrations as $migration)
-            {
-                $migration_path = $path.$migration;
-                include_once ($migration_path);
-                $migration_class = vh_get_class_from_file($migration_path);
-                if($migration_class)
-                {
-                    $migration_obj = new $migration_class;
-                    $migration_obj->down();
-                }
-            }
-        }
-
-        $module_item = Module::where('slug', $module->slug)->first();
-        $module_item->is_active = 0;
-        $module_item->save();
-
-        //delete all database migrations
-        $module_migrations = $module->migrations()->get()->pluck('migration_id')->toArray();
-
-        if($module_migrations)
-        {
-            \DB::table('migrations')->whereIn('id', $module_migrations)->delete();
-            Migration::whereIn('migration_id', $module_migrations)->delete();
-        }
-
-        //delete module folder
-        vh_delete_folder($module_path);
-
-        //Delete module settings too
-        $module->settings()->delete();
-
-        //Delete module entry
-        Module::where('slug', $module->slug)->forceDelete();
-
-    }
     //----------------------------------------------------------
     public function getModulesSlugs(Request $request)
     {

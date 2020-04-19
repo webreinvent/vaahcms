@@ -95,6 +95,22 @@ function vh_module_assets_url($name, $file_path)
     return $url;
 }
 //-----------------------------------------------------------------------------------
+function vh_module_migrations_path($module_name)
+{
+    return "/".config('vaahcms.root_folder')."/Modules/".$module_name."/Database/Migrations/";
+}
+//-----------------------------------------------------------------------------------
+function vh_module_database_seeder($module_name)
+{
+    return config('vaahcms.root_folder')."\Modules\\{$module_name}\\Database\Seeds\DatabaseTableSeeder";
+}
+//-----------------------------------------------------------------------------------
+function vh_module_namespace($module_name)
+{
+    $namespace = "VaahCms\Modules\\".$module_name;
+    return $namespace;
+}
+//-----------------------------------------------------------------------------------
 function vh_module_service_provider_name($module_name)
 {
     $provider = "VaahCms\Modules\\".$module_name."\\Providers\\".$module_name."ServiceProvider";

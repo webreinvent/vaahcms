@@ -25,7 +25,7 @@
                         <header class="card-header">
 
                             <div class="card-header-title">
-                                Modules
+                                Modules {{page.list_view_class}}
                             </div>
 
                             <div class="card-header-buttons">
@@ -80,29 +80,29 @@
                                 <div class="level">
 
                                     <!--left-->
-                                    <div class="level-left" v-if="hasPermission('can-update-permissions')">
+                                    <div class="level-left" >
                                         <div  class="level-item">
-                                            <b-field >
-
-                                                <b-select placeholder="- Bulk Actions -"
-                                                          v-model="page.bulk_action.data.status">
+                                            <b-field label="">
+                                                <b-select placeholder="- Select a filter -"
+                                                          v-model="query_string.status"
+                                                          @input="setFilter()">
                                                     <option value="">
-                                                        - Bulk Actions -
+                                                        - Select a filter -
                                                     </option>
-                                                    <option value=1>
-                                                        Active
-                                                    </option>
-                                                    <option value=0>
-                                                        Not active
-                                                    </option>
-                                                </b-select>
+                                                    <optgroup label="Status">
+                                                        <option value='active'>
+                                                            Active
+                                                        </option>
+                                                        <option value='inactive'>
+                                                            Inactive
+                                                        </option>
+                                                        <option value='update_available'>
+                                                            Update Available
+                                                        </option>
+                                                    </optgroup>
 
-                                                <p class="control">
-                                                    <button class="button is-primary"
-                                                            @click="actions">
-                                                        Apply
-                                                    </button>
-                                                </p>
+
+                                                </b-select>
 
                                             </b-field>
                                         </div>
@@ -137,13 +137,7 @@
                                                         Reset
                                                     </button>
                                                 </p>
-                                                <p class="control">
-                                                    <button class="button is-primary"
-                                                            @click="toggleFilters()"
-                                                            slot="trigger">
-                                                        <b-icon icon="ellipsis-v"></b-icon>
-                                                    </button>
-                                                </p>
+
                                             </b-field>
 
                                         </div>
@@ -153,73 +147,6 @@
 
                                 </div>
                                 <!--/actions-->
-
-                                <!--filters-->
-                                <div class="level" v-if="page.show_filters">
-
-                                    <div class="level-left">
-
-                                        <div class="level-item">
-
-                                            <b-field label="">
-                                                <b-select placeholder="- Select a filter -"
-                                                          v-model="query_string.filter"
-                                                          @input="setFilter()">
-                                                    <option value="">
-                                                        - Select a filter -
-                                                    </option>
-                                                    <optgroup label="Status">
-                                                        <option value=01>
-                                                            Active
-                                                        </option>
-                                                        <option value=10>
-                                                            Not active
-                                                        </option>
-                                                    </optgroup>
-
-                                                    <optgroup label="Module">
-                                                        <option
-                                                            v-for="option in page.assets.module"
-                                                            :value="option.module"
-                                                            :key="option.module">
-                                                            {{  option.module.charAt(0).toUpperCase() + option.module.slice(1) }}
-                                                        </option>
-                                                    </optgroup>
-                                                </b-select>
-
-                                                <b-select placeholder="- Select a section -"
-                                                          v-if="page.assets.module.some(item => item.module === query_string.filter)"
-                                                          v-model="query_string.section"
-                                                          @input="getList()">
-                                                    <option value="">
-                                                        - Select a section -
-                                                    </option>
-                                                    <option
-                                                        v-for="option in moduleSection"
-                                                        :value="option.section"
-                                                        :key="option.section">
-                                                        {{  option.section.charAt(0).toUpperCase() + option.section.slice(1) }}
-                                                    </option>
-                                                </b-select>
-                                            </b-field>
-
-
-                                        </div>
-
-                                        <div class="level-item">
-                                            <div class="field">
-                                                <b-checkbox v-model="query_string.trashed"
-                                                            @input="getList">
-                                                    Include Trashed
-                                                </b-checkbox>
-                                            </div>
-                                        </div>
-
-                                    </div>
-
-
-                                </div>
-                                <!--/filters-->
 
 
                                 <!--list-->

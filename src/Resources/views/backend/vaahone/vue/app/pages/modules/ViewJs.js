@@ -196,7 +196,7 @@ export default {
         //---------------------------------------------------------------------
         resetActiveItem: function () {
             this.update('active_item', null);
-            this.update('list_view_class', '');
+            this.update('list_view_class', 'is-12');
             this.$router.push({name:'modules.list'});
         },
         //---------------------------------------------------------------------

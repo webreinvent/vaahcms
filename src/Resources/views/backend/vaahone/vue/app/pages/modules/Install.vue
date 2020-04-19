@@ -22,6 +22,17 @@
                         <div class="field has-addons is-pulled-right">
 
                             <p class="control">
+                                <b-input placeholder="Search..."
+                                         type="search"
+                                         icon="search"
+                                         v-model="modules.query_string.q"
+                                         @input="delayedSearch"
+                                         @keyup.enter.prevent="delayedSearch"
+                                >
+                                </b-input>
+                            </p>
+
+                            <p class="control">
                                 <b-button type="is-light"
                                           @click="reset()"
                                           icon-left="times">

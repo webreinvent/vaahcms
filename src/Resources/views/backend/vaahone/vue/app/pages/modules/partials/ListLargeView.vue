@@ -2,12 +2,9 @@
 <template>
     <div v-if="page.list">
         <b-table :data="page.list_is_empty ? [] : page.list.data"
-                 :checkable="hasPermission('can-update-permissions') ? true : false"
                  :checked-rows.sync="page.bulk_action.selected_items"
-                 checkbox-position="left"
                  :hoverable="true"
-                 :row-class="setRowClass"
-        >
+                 :row-class="setRowClass">
 
             <template slot-scope="props">
                 <b-table-column field="name" label="Module">

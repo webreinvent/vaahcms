@@ -276,7 +276,7 @@ class Module extends Model {
     //-------------------------------------------------
     public static function getActiveModules()
     {
-        return Module::where('is_active', 1)->get();
+        return static::where('is_active', 1)->get();
     }
 
     //-------------------------------------------------
@@ -288,8 +288,6 @@ class Module extends Model {
 
         foreach ($dependencies as $key => $dependency_list)
         {
-
-
             switch($key){
 
                 case 'modules':
@@ -303,7 +301,7 @@ class Module extends Model {
                             if(!$module)
                             {
                                 $response['status'] = 'failed';
-                                $response['errors'][] = "Please install and activate '".$dependency_slug."'.";
+                                $response['errors'][] = "Please install and activate '".$dependency_slug."' module.";
                             }
 
                             if($module && $module->is_active != 1)
@@ -317,7 +315,28 @@ class Module extends Model {
 
                     break;
                 //------------------------
-                case 'theme':
+                case 'themes':
+
+                    if(is_array($dependency_list))
+                    {
+                        foreach ($dependency_list as $dependency_slug)
+                        {
+                            $theme = Theme::slug($dependency_slug)->first();
+
+                            if(!$theme)
+                            {
+                                $response['status'] = 'failed';
+                                $response['errors'][] = "Please install and activate '".$dependency_slug."' theme.";
+                            }
+
+                            if($theme && $theme->is_active != 1)
+                            {
+                                $response['status'] = 'failed';
+                                $response['errors'][] = $dependency_slug.' theme is not active';
+                            }
+                        }
+
+                    }
 
                     break;
                 //------------------------
@@ -335,21 +354,43 @@ class Module extends Model {
     //-------------------------------------------------
 
     //-------------------------------------------------
-    public static function activate($slug)
+    public static function activateItem($slug)
     {
 
         $module = Module::slug($slug)->first();
 
+        /*
+         * get module dependencies
+         */
+        $response = vh_module_action($module->name, 'SetupController@dependencies');
+
+        if($response['status'] == 'failed')
+        {
+            return $response;
+        }
+
+        /*
+         * check module dependencies are installed
+         */
+        $response = Module::validateDependencies($response['data']);
+
+
+        if(isset($response['status']) && $response['status'] == 'failed')
+        {
+            return $response;
+        }
+
+
         if(!isset($module->is_migratable) || (isset($module->is_migratable) && $module->is_migratable == true))
         {
             $module_path = config('vaahcms.modules_path').$module->name;
-            $path = "/".config('vaahcms.root_folder')."/Modules/".$module->name."/Database/Migrations/";
+            $path = vh_module_migrations_path($module->name);
 
             Migration::runMigrations($path);
 
             Migration::syncModuleMigrations($module->id);
 
-            $seeds_namespace = config('vaahcms.root_folder')."\Modules\\{$module->name}\\Database\Seeds\DatabaseTableSeeder";
+            $seeds_namespace = vh_module_database_seeder($module->name);
             Migration::runSeeds($seeds_namespace);
 
             //copy assets to public folder
@@ -360,6 +401,104 @@ class Module extends Model {
         $module->is_active = 1;
         $module->is_assets_published = 1;
         $module->save();
+
+        $response['status'] = 'success';
+        $response['data'][] = '';
+        $response['messages'][] = 'Module is activated';
+
+        if(env('APP_DEBUG'))
+        {
+            $response['hint'][] = '';
+        }
+        return $response;
+
+    }
+    //-------------------------------------------------
+    public static function deactivateItem($slug)
+    {
+        $item = static::slug($slug)->first();
+        $item->is_active = null;
+        $item->save();
+        $response['status'] = 'success';
+        $response['data'][] = '';
+        $response['messages'][] = 'Action was successful';
+        if(env('APP_DEBUG'))
+        {
+            $response['hint'][] = '';
+        }
+        return $response;
+    }
+    //-------------------------------------------------
+    public static function deleteItem($slug)
+    {
+
+        try{
+
+            $item = static::where('slug', $slug)->first();
+
+
+            $item_path = config('vaahcms.modules_path')."/".$item->name;
+
+            //Delete all migrations
+            $path =  $item_path . "/Database/Migrations/";
+
+            $migrations = vh_get_all_files($path);
+
+            if(count($migrations) > 0)
+            {
+                foreach($migrations as $migration)
+                {
+                    $migration_path = $path.$migration;
+                    include_once ($migration_path);
+                    $migration_class = vh_get_class_from_file($migration_path);
+                    if($migration_class)
+                    {
+                        $migration_obj = new $migration_class;
+                        $migration_obj->down();
+                    }
+                }
+            }
+
+            //Delete module settings
+            $item->settings()->delete();
+
+            //delete all database migrations
+            $module_migrations = $item->migrations()->get()->pluck('migration_id')->toArray();
+
+            if($module_migrations)
+            {
+                \DB::table('migrations')->whereIn('id', $module_migrations)->delete();
+                Migration::whereIn('migration_id', $module_migrations)->delete();
+            }
+
+            $item->is_active = 0;
+            $item->save();
+
+
+            //delete module folder
+            vh_delete_folder($item_path);
+
+            //Delete module entry
+            static::where('slug', $item->slug)->forceDelete();
+
+            $response['status'] = 'success';
+            $response['data'][] = '';
+            $response['messages'][] = 'Action was successful';
+            if(env('APP_DEBUG'))
+            {
+                $response['hint'][] = '';
+            }
+            return $response;
+
+        }catch(\Exception $e)
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = $e->getMessage();
+
+        }
+
+
+        return $response;
 
     }
     //-------------------------------------------------
@@ -520,16 +659,15 @@ class Module extends Model {
             if($module->is_active)
             {
                 static::activate($module->slug);
-                $module->version = $request->version;
-                $module->version_number = $request->version_number;
-                $module->is_update_available = null;
-                $module->save();
             }
 
 
+            $module->is_update_available = null;
+            $module->save();
+
             $response['status'] = 'success';
             $response['data'] = [];
-            $response['messages'][] = $name." module is installed.";
+            $response['messages'][] = $name." module is updated.";
             return $response;
 
         }catch(\Exception $e)
@@ -543,14 +681,27 @@ class Module extends Model {
     //-------------------------------------------------
     public static function importSampleData($slug)
     {
-        $module = Module::slug($slug)->first();
+        try{
+            $module = Module::slug($slug)->first();
 
-        $command = 'db:seed';
-        $params = [
-            '--class' => config('vaahcms.root_folder')."\Modules\\{$module->name}\\Database\Seeds\SampleDataTableSeeder"
-        ];
+            $command = 'db:seed';
+            $params = [
+                '--class' => config('vaahcms.root_folder')."\Modules\\{$module->name}\\Database\Seeds\SampleDataTableSeeder"
+            ];
 
-        \Artisan::call($command, $params);
+            \Artisan::call($command, $params);
+
+            $response['status'] = 'success';
+            $response['messages'][] = 'Sample Data Successfully Imported';
+        }catch(\Exception $e)
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = $e->getMessage();
+        }
+
+
+        return $response;
+
     }
     //-------------------------------------------------
     public static function storeUpdates($request)
@@ -589,6 +740,44 @@ class Module extends Model {
     }
 
     //-------------------------------------------------
+    public static function bulkStatusChange($request)
+    {
+
+
+        if(!$request->has('inputs'))
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = 'Select IDs';
+            return $response;
+        }
+
+        if(!$request->has('data'))
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = 'Select Status';
+            return $response;
+        }
+
+        foreach($request->inputs as $id)
+        {
+            $item = static::find($id);
+            if($request->data['status'] == 1)
+            {
+                Module::activate($item->slug);
+            }
+
+            $item->status = $request->data['status'];
+            $item->save();
+        }
+
+        $response['status'] = 'success';
+        $response['data'] = [];
+        $response['messages'][] = 'Action was successful';
+
+        return $response;
+
+
+    }
     //-------------------------------------------------
     //-------------------------------------------------
     //-------------------------------------------------

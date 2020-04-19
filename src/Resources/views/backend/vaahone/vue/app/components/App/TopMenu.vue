@@ -2,17 +2,17 @@
 
 
 
-        <b-navbar v-if="root.assets" class="has-shadow" :fixed-top="true">
+        <b-navbar v-if="assets" class="has-shadow" :fixed-top="true">
             <template slot="brand">
                 <b-navbar-item tag="router-link" :to="{ path: '/' }">
                     <Logo height="30"/>
                 </b-navbar-item>
             </template>
 
-            <template slot="start" v-if="root.assets.extended_views" >
+            <template slot="start" v-if="assets.extended_views" >
 
 
-                <template  v-for="menus in root.assets.extended_views.top_left_menu">
+                <template  v-for="menus in assets.extended_views.top_left_menu">
 
                     <template v-for="link in menus">
 
@@ -38,13 +38,13 @@
 
             </template>
 
-            <template slot="end" v-if="root.assets && root.assets.auth_user">
+            <template slot="end" v-if="assets && assets.auth_user">
 
                 <b-navbar-dropdown :right="true"
                                    :hoverable="true"
-                                   :label="root.assets.auth_user.name">
+                                   :label="assets.auth_user.name">
 
-                    <template  v-for="menus in root.assets.extended_views.top_right_user_menu">
+                    <template  v-for="menus in assets.extended_views.top_right_user_menu">
 
                         <template v-for="link in menus">
 
@@ -69,6 +69,7 @@
     export default {
         computed:{
             root() {return this.$store.getters['root/state']},
+            assets() {return this.$store.getters['root/state'].assets},
         },
         components:{
             Logo,

@@ -66,21 +66,23 @@ function vh_list_with_slugs($arr)
     return $list;
 }
 //-------------------------------------------------------------
-function vh_action($class_namespace, $method) {
-
+function vh_action($class_namespace, $method, $params=null) {
     try{
-        $c = new $class_namespace();
-        return $c->$method();
+        $c = new $class_namespace($params);
+        $response = $c->$method($params);
+        return $response;
     } catch (\Exception $e) {
-        return $e->getMessage();
+        $response['status'] = 'failed';
+        $response['errors'][] = $e->getMessage();
+        return $response;
     }
 }
 //-------------------------------------------------------------
-function vh_module_action($module_name, $action, $type='backend'){
+function vh_module_action($module_name, $action, $params=null, $section='backend'){
 
     $namespace = '\VaahCms\Modules\\'.$module_name;
 
-    if($type=='backend')
+    if($section=='backend')
     {
         $namespace .= '\Http\Controllers\Backend\\';
     } else{
@@ -92,7 +94,7 @@ function vh_module_action($module_name, $action, $type='backend'){
     $namespace .= $action[0];
     $method = $action[1];
 
-    return vh_action($namespace, $method);
+    return vh_action($namespace, $method, $params);
 }
 //-------------------------------------------------------------
 //-------------------------------------------------------------

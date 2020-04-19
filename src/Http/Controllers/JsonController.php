@@ -155,23 +155,20 @@ class JsonController extends Controller
     public function getExtendedViews()
     {
 
-
-
         $modules = new \WebReinvent\VaahCms\Entities\Module();
-
-
-        $all = $modules->all();
+        $active_modules = Module::getActiveModules();
         $backend_theme = vh_get_backend_theme();
 
         $locations = [
-            'top_left_menu'=>'extendTopLeftMenu',
-            'top_right_menu'=>'extendTopRightMenu',
-            'top_right_user_menu'=>'extendTopRightUserMenu',
+            'top_left_menu'=>'topLeftMenu',
+            'top_right_menu'=>'topRightMenu',
+            'top_right_user_menu'=>'topRightUserMenu',
+            'sidebar_menu'=>'sidebarMenu',
         ];
 
         $ordered_modules = [];
 
-        if($all->count() > 0)
+        if($active_modules->count() > 0)
         {
 
             foreach ($locations as $location=>$method)
@@ -182,8 +179,7 @@ class JsonController extends Controller
                     $settings_name = $location.'_order';
                 }
 
-
-                foreach($all as $item)
+                foreach($active_modules as $item)
                 {
 
                     $settings = $item->settings()->key($settings_name)->first();
@@ -201,10 +197,7 @@ class JsonController extends Controller
                     ksort($ordered_modules[$location]);
 
                     $i++;
-
                 }
-
-
 
             }
 
@@ -212,27 +205,49 @@ class JsonController extends Controller
         }
 
 
+
+
         $views = [];
 
         foreach ($locations as $location=>$method)
         {
-            $y = 0;
 
-            if(method_exists(new ExtendController(), $method)){
-                $views[$location]['vaahcms'] = ExtendController::$method();
+
+            $namespace = '\WebReinvent\VaahCms\Http\Controllers\ExtendController';
+
+            $response = $ordered_modules[$location]['vaahcms'] = vh_action($namespace, $method);
+
+            if($response['status']=='success' && isset($response['data']))
+            {
+                $views[$location]['vaahcms'] = $response['data'];
             }
 
 
-            foreach($ordered_modules as $module_slug)
+            foreach($ordered_modules[$location] as $module_slug)
             {
-                $module = Module::where('slug', $module_slug)->first();
 
-                $class = "\VaahCms\Modules\\".$module->name."\\ExtendController";
+                $module = Module::where('slug', $module_slug)->where('is_active', 1)
+                    ->first();
 
-                if(class_exists($class) &&  method_exists(new $class, $method)){
-                    $views[$location][$module_slug] = $class::$method();
-                    $y++;
+                if(!$module)
+                {
+                    continue;
                 }
+
+                $res = null;
+                $res = vh_module_action($module->name, 'ExtendController@'.$method);
+
+                if($res['status'] == 'failed')
+                {
+                    continue;
+                }
+
+                if($res['status'] != 'success' || !isset($res['data']))
+                {
+                    continue;
+                }
+
+                $views[$location][$module->slug] = $res['data'];
 
             }
 

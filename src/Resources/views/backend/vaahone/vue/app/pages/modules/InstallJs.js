@@ -21,7 +21,8 @@ export default {
         return {
             is_content_loading: false,
             namespace: namespace,
-
+            search_delay: null,
+            search_delay_time: 800,
         }
     },
     watch: {
@@ -104,6 +105,19 @@ export default {
             }
         },
         //---------------------------------------------------------------------
+        delayedSearch: function()
+        {
+            let self = this;
+            clearTimeout(this.search_delay);
+            this.search_delay = setTimeout(function() {
+                self.getList();
+            }, this.search_delay_time);
+
+            this.modules.query_string.page = 1;
+            this.updateModules();
+
+        },
+        //---------------------------------------------------------------------
         clearSearch: function () {
             this.modules.query_string.q = null;
             this.updateModules();
@@ -155,18 +169,7 @@ export default {
             this.getList();
         },
         //---------------------------------------------------------------------
-        delayedSearch: function()
-        {
-            let self = this;
-            clearTimeout(this.search_delay);
-            this.search_delay = setTimeout(function() {
-                self.getList();
-            }, this.search_delay_time);
 
-            this.query_string.page = 1;
-            this.update('query_string', this.query_string);
-
-        },
         //---------------------------------------------------------------------
 
         //---------------------------------------------------------------------

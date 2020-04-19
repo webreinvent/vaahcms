@@ -10,6 +10,41 @@
         </div>
         <div class="menu">
             <div class="sidebar">
+
+                <ul>
+
+                    <template v-if="assets.extended_views" >
+
+
+                        <template  v-for="menus in assets.extended_views.sidebar_menu">
+
+                            <template v-for="link in menus">
+
+                                <b-navbar-dropdown v-if="link.child"
+                                                   :hoverable="true"
+                                                   :label="link.label">
+                                    <b-navbar-item v-for="(link_child, key) in link.child"
+                                                   :href="link_child.link" :key="key" >
+                                        {{link_child.label}}
+                                    </b-navbar-item>
+                                </b-navbar-dropdown>
+
+                                <b-navbar-item v-else
+                                               :href="link.link">
+                                    {{link.label}}
+                                </b-navbar-item>
+
+                            </template>
+
+                        </template>
+
+
+
+                    </template>
+
+                </ul>
+
+
                 <ul>
                     <li><a href="#">
                         <b-icon
@@ -92,6 +127,7 @@
     export default {
         computed:{
             root() {return this.$store.getters['root/state']},
+            assets() {return this.$store.getters['root/state'].assets},
         },
         components:{
 

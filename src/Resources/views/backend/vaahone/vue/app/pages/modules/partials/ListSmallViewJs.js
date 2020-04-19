@@ -6,6 +6,7 @@ export default {
         root() {return this.$store.getters['root/state']},
         permissions() {return this.$store.getters['root/state'].permissions},
         page() {return this.$store.getters[namespace+'/state']},
+        assets() {return this.$store.getters[namespace+'/state'].assets},
         ajax_url() {return this.$store.getters[namespace+'/state'].ajax_url},
         query_string() {return this.$store.getters[namespace+'/state'].query_string},
     },
@@ -16,7 +17,9 @@ export default {
     data()
     {
         let obj = {
-            namespace: namespace,
+
+            namespace: namespace
+
         };
 
         return obj;
@@ -146,26 +149,7 @@ export default {
 
         },
         //---------------------------------------------------------------------
-        installUpdate: function (action, module) {
-            this.$Progress.start();
-            this.update('selected_item', module);
-            let params = {
-                action: action,
-                inputs: module
-            };
-            let url = this.ajax_url+'/actions';
-            this.$vaah.ajax(url, params, this.installUpdateAfter);
-        },
-        //---------------------------------------------------------------------
-        installUpdateAfter: function (data, res) {
 
-            if(data)
-            {
-                this.update('selected_item', null);
-                this.$emit('eReloadList');
-            }
-
-        },
         //---------------------------------------------------------------------
         confirmDataImport: function (module) {
             let self = this;
@@ -200,6 +184,52 @@ export default {
 
         },
         //---------------------------------------------------------------------
+        confirmUpdate: function(module)
+        {
+            let self = this;
+            this.$buefy.dialog.confirm({
+                title: 'Updating module',
+                message: 'It is recommended to create a backup before this action. This will <b>download</b> the updates for module <b>'+module.name+'</b>. This action cannot be undone.',
+                confirmText: 'Proceed',
+                type: 'is-info',
+                hasIcon: true,
+                onConfirm: function () {
+                    self.getModuleDetails(module);
+                }
+            })
+        },
+        //---------------------------------------------------------------------
+        getModuleDetails: function (module) {
+            this.$Progress.start();
+            let params = {};
+            let url = this.assets.vaahcms_api_route+'module/by/slug/'+module.slug;
+            this.$vaah.ajaxGet(url, params, this.getModuleDetailsAfter);
+        },
+        //---------------------------------------------------------------------
+        getModuleDetailsAfter: function (data, res) {
+
+            if(data)
+            {
+                this.update('selected_item', data);
+                this.installUpdate();
+            }
+        },
+        //---------------------------------------------------------------------
+        installUpdate: function () {
+            let params = this.page.selected_item;
+            let url = this.ajax_url+'/install/updates';
+            this.$vaah.ajax(url, params, this.installUpdateAfter);
+        },
+        //---------------------------------------------------------------------
+        installUpdateAfter: function (data, res) {
+            this.$Progress.finish();
+            if(data)
+            {
+                this.update('selected_item', null);
+                this.$emit('eReloadList');
+            }
+
+        },
         //---------------------------------------------------------------------
     }
 }

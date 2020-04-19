@@ -9,31 +9,31 @@ Route::group(
     function () {
         //------------------------------------------------
         //------------------------------------------------
-        Route::get( '/', 'ModuleController@index' )
+        Route::get( '/', 'ModulesController@index' )
             ->name( 'vh.backend.modules' );
         //------------------------------------------------
-        Route::any( '/assets', 'ModuleController@assets' )
+        Route::any( '/assets', 'ModulesController@assets' )
             ->name( 'vh.backend.modules.assets' );
         //------------------------------------------------
-        Route::any( '/list', 'ModuleController@getList' )
+        Route::any( '/list', 'ModulesController@getList' )
             ->name( 'vh.backend.modules.list' );
         //------------------------------------------------
-        Route::any('/item/{id}', 'ModuleController@getItem')
+        Route::any('/item/{id}', 'ModulesController@getItem')
             ->name('backend.vaah.modules.item');
         //---------------------------------------------------------
-        Route::any( '/download', 'ModuleController@download' )
+        Route::any( '/download', 'ModulesController@download' )
             ->name( 'vh.backend.modules.download' );
         //------------------------------------------------
-        Route::any( '/install/updates', 'ModuleController@installUpdates' )
+        Route::any( '/install/updates', 'ModulesController@installUpdates' )
             ->name( 'vh.backend.modules.install.updates' );
         //------------------------------------------------
-        Route::any( '/actions', 'ModuleController@actions' )
+        Route::any( '/actions', 'ModulesController@actions' )
             ->name( 'vh.backend.modules.actions' );
         //------------------------------------------------
-        Route::any( '/get/slugs', 'ModuleController@getModulesSlugs' )
+        Route::any( '/get/slugs', 'ModulesController@getModulesSlugs' )
             ->name( 'vh.backend.modules.get.slugs' );
         //------------------------------------------------
-        Route::any( '/store/updates', 'ModuleController@storeUpdates' )
+        Route::any( '/store/updates', 'ModulesController@storeUpdates' )
             ->name( 'vh.backend.modules.store.updates' );
 
         //------------------------------------------------
