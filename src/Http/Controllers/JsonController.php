@@ -163,13 +163,27 @@ class JsonController extends Controller
             'sidebar_menu'=>'sidebarMenu',
         ];
 
+        $views = [];
         $modules_views = [];
         $themes_views = [];
 
         $modules_views = $this->getModulesExtendedViews($locations);
         $themes_views = $this->getThemesExtendedViews($locations);
 
-        $views = array_filter(array_merge($modules_views, $themes_views));
+        foreach ($locations as $key => $location)
+        {
+            if(!isset($modules_views[$key]))
+            {
+                $modules_views[$key] = [];
+            }
+            if(!isset($themes_views[$key]))
+            {
+                $themes_views[$key] = [];
+            }
+
+            $views[$key] = array_filter(array_merge($modules_views[$key], $themes_views[$key]));
+        }
+
 
         return $views;
     }
@@ -217,6 +231,8 @@ class JsonController extends Controller
 
 
         }
+
+
 
         $views = [];
 
