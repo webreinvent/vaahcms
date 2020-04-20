@@ -141,8 +141,11 @@ class ThemesController extends Controller
          */
         $theme = Theme::find($inputs['id']);
 
+        $method_name = str_replace("_", " ", $request->action);
+        $method_name = ucwords($method_name);
+        $method_name = lcfirst(str_replace(" ", "", $method_name));
 
-        $response = vh_theme_action($theme->name, 'SetupController@'.$request->action);
+        $response = vh_theme_action($theme->name, 'SetupController@'.$method_name);
         if($response['status'] == 'failed')
         {
             return response()->json($response);
@@ -179,7 +182,7 @@ class ThemesController extends Controller
     public function storeUpdates(Request $request)
     {
         $rules = array(
-            'modules' => 'required|array',
+            'themes' => 'required|array',
         );
 
         $validator = \Validator::make( $request->all(), $rules);

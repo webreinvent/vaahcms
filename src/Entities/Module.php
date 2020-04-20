@@ -658,7 +658,7 @@ class Module extends Model {
             //if the modules is active then run migration & seeds
             if($module->is_active)
             {
-                static::activate($module->slug);
+                static::activateItem($module->slug);
             }
 
 

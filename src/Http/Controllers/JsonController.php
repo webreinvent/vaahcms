@@ -167,7 +167,7 @@ class JsonController extends Controller
         $themes_views = [];
 
         $modules_views = $this->getModulesExtendedViews($locations);
-        //$themes_views = $this->getThemesExtendedViews($locations);
+        $themes_views = $this->getThemesExtendedViews($locations);
 
         $views = array_filter(array_merge($modules_views, $themes_views));
 

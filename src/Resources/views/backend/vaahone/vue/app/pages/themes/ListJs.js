@@ -286,7 +286,7 @@ export default {
             let params = {
                 slugs: this.assets.installed
             };
-            let url = this.assets.vaahcms_api_route+'themes/updates';
+            let url = this.assets.vaahcms_api_route+'theme/updates';
             this.$vaah.ajaxGet(url, params, this.checkUpdateAfter);
         },
         //---------------------------------------------------------------------

@@ -143,13 +143,15 @@ class ModulesController extends Controller
          */
         $module = Module::find($inputs['id']);
 
+        $method_name = str_replace("_", " ", $request->action);
+        $method_name = ucwords($method_name);
+        $method_name = lcfirst(str_replace(" ", "", $method_name));
 
-        $response = vh_module_action($module->name, 'SetupController@'.$request->action);
+        $response = vh_module_action($module->name, 'SetupController@'.$method_name);
         if($response['status'] == 'failed')
         {
             return response()->json($response);
         }
-
 
 
         switch($request->action)

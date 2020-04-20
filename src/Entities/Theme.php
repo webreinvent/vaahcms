@@ -115,6 +115,20 @@ class Theme extends Model {
             ->where('slug', 'default');
     }
     //-------------------------------------------------
+    public static function getItem($id)
+    {
+
+        $item = static::where('id', $id)
+            ->withTrashed()
+            ->first();
+
+        $response['status'] = 'success';
+        $response['data'] = $item;
+
+        return $response;
+
+    }
+    //-------------------------------------------------
     public static function syncTheme($path)
     {
 
@@ -134,7 +148,6 @@ class Theme extends Model {
             'slug' => 'required',
             'thumbnail' => 'required',
             'excerpt' => 'required',
-            'download_link' => 'required',
             'author_name' => 'required',
             'author_website' => 'required',
             'version' => 'required',
@@ -205,6 +218,18 @@ class Theme extends Model {
     {
         $list = vh_get_all_themes_paths();
 
+        $installed = static::orderBy('name', 'asc')->get()
+            ->pluck('name')->toArray();
+
+        if($installed && count($list) < 1)
+        {
+            foreach ($installed as $item)
+            {
+                $installed_theme = static::where('name', $item)->first();
+                $installed_theme->forceDelete();
+            }
+        }
+
         if(count($list) < 1)
         {
             $response['status'] = 'failed';
@@ -212,10 +237,34 @@ class Theme extends Model {
             return $response;
         }
 
-        foreach($list as $path)
+        $installed_names = [];
+
+        if(count($list) > 0)
         {
-            Theme::syncTheme($path);
+            foreach ($list as $module_path)
+            {
+                $installed_names[] = basename($module_path);
+            }
         }
+
+        //remove database records if module folder does not exist
+        if(count($installed_names) > 0)
+        {
+            foreach ($installed as $item)
+            {
+                if(!in_array($item, $installed_names))
+                {
+                    $installed_theme = static::where('name', $item)->first();
+                    $installed_theme->forceDelete();
+                }
+            }
+        }
+
+        foreach($list as $module_path)
+        {
+            $res = Theme::syncTheme($module_path);
+        }
+
 
         return true;
     }
@@ -589,7 +638,7 @@ class Theme extends Model {
             //if the theme is active then run migration & seeds
             if($item->is_active)
             {
-                static::activate($item->slug);
+                static::activateItem($item->slug);
             }
 
 
@@ -614,6 +663,8 @@ class Theme extends Model {
     {
         try{
             $item = static::slug($slug)->first();
+
+
 
             $command = 'db:seed';
             $params = [
