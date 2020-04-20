@@ -624,6 +624,68 @@ routes.push(routes_modules);
 
 
 
+import ThemeList from "./../pages/themes/List";
+import ThemeView from "./../pages/themes/View";
+import ThemeInstall from "./../pages/themes/Install";
+
+let routes_themes =     {
+    path: '/vaah/themes',
+    component: LayoutBackend,
+    props: true,
+    meta: {
+        middleware: [
+            IsLoggedIn,
+            GetBackendAssets
+        ]
+    },
+    children: [
+        {
+            path: '/',
+            name: 'themes.list',
+            component: ThemeList,
+            props: true,
+            meta: {
+                middleware: [
+                    IsLoggedIn,
+                    GetBackendAssets
+                ]
+            },
+            children: [
+                {
+                    path: 'view/:id',
+                    name: 'themes.view',
+                    component: ThemeView,
+                    props: true,
+                    meta: {
+                        middleware: [
+                            IsLoggedIn,
+                            GetBackendAssets
+                        ]
+                    },
+                },
+                {
+                    path: 'install',
+                    name: 'themes.install',
+                    component: ThemeInstall,
+                    props: true,
+                    meta: {
+                        middleware: [
+                            IsLoggedIn,
+                            GetBackendAssets
+                        ]
+                    },
+                },
+
+            ]
+
+        }
+
+    ]
+};
+
+routes.push(routes_themes);
+
+
 import SettingsLayout from "./../pages/settings/SettingsLayout";
 import LocalizationList from "./../pages/settings/localization/List";
 

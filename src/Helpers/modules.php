@@ -97,7 +97,7 @@ function vh_module_assets_url($name, $file_path)
 //-----------------------------------------------------------------------------------
 function vh_module_migrations_path($module_name)
 {
-    return "/".config('vaahcms.root_folder')."/Modules/".$module_name."/Database/Migrations/";
+    return "/".config('vaahcms.modules_path')."/".$module_name."/Database/Migrations/";
 }
 //-----------------------------------------------------------------------------------
 function vh_module_database_seeder($module_name)

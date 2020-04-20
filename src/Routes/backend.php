@@ -15,6 +15,7 @@ include('backend/ui.php');
 include('backend/setup.php');
 include('backend/settings.php');
 include('backend/modules.php');
+include('backend/themes.php');
 
 Route::group(
     [
@@ -151,51 +152,6 @@ Route::group(
         //------------------------------------------------
         Route::get( '/', 'DashboardController@vaah' )
             ->name( 'vh.backend.vaah' );
-        //------------------------------------------------
-        //------------------------------------------------
-        //------------------------------------------------
-    });
-
-
-
-
-
-
-
-
-
-Route::group(
-    [
-        'prefix'     => 'admin/vaah/themes',
-        'middleware' => ['web','has.backend.access'],
-        'namespace'  => 'WebReinvent\VaahCms\Http\Controllers'
-    ],
-    function () {
-        //------------------------------------------------
-        //------------------------------------------------
-        Route::get( '/', 'ThemeController@index' )
-            ->name( 'vh.backend.themes' );
-        //------------------------------------------------
-        Route::any( '/assets', 'ThemeController@assets' )
-            ->name( 'vh.backend.themes.assets' );
-        //------------------------------------------------
-        Route::any( '/download', 'ThemeController@download' )
-            ->name( 'vh.backend.themes.download' );
-        //------------------------------------------------
-        Route::any( '/list', 'ThemeController@getList' )
-            ->name( 'vh.backend.themes.list' );
-        //------------------------------------------------
-        Route::any( '/actions', 'ThemeController@actions' )
-            ->name( 'vh.backend.themes.actions' );
-        //------------------------------------------------
-        Route::any( '/get/slugs', 'ThemeController@getModulesSlugs' )
-            ->name( 'vh.backend.themes.get.slugs' );
-        //------------------------------------------------
-        Route::any( '/update/versions', 'ThemeController@updateModuleVersions' )
-            ->name( 'vh.backend.themes.update.version' );
-        //------------------------------------------------
-        Route::any( '/install/updates', 'ThemeController@installUpdates' )
-            ->name( 'vh.backend.themes.install.updates' );
         //------------------------------------------------
         //------------------------------------------------
         //------------------------------------------------

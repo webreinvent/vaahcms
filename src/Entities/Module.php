@@ -84,15 +84,15 @@ class Module extends Model {
     //-------------------------------------------------
     public function settings()
     {
-        return $this->morphMany('WebReinvent\VaahCms\Entities\Setting', 'settingable');
+        return $this->morphMany(Setting::class, 'settingable');
     }
     //-------------------------------------------------
     public function migrations()
     {
-        return $this->morphMany('WebReinvent\VaahCms\Entities\Migration', 'migrationable');
+        return $this->morphMany(Migration::class, 'migrationable');
     }
     //-------------------------------------------------
-    public static function getDetail($id)
+    public static function getItem($id)
     {
 
         $item = static::where('id', $id)

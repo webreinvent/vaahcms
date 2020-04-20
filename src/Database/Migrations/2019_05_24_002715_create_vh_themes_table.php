@@ -27,10 +27,12 @@ class CreateVhThemesTable extends Migration
             $table->string('vaah_url')->nullable();
             $table->string('version')->nullable();
             $table->integer('version_number')->nullable();
+            $table->string('db_table_prefix')->nullable();
+            $table->boolean('is_migratable')->nullable();
             $table->boolean('is_sample_data_available')->nullable();
             $table->boolean('is_update_available')->nullable();
+            $table->boolean('is_assets_published')->nullable();
             $table->dateTime('update_checked_at')->nullable();
-
             $table->boolean('is_active')->nullable();
 
             $table->timestamps();

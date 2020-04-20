@@ -191,6 +191,27 @@ function vh_location($location_slug, $html=false, $type='bootstrap')
     return $data;
 }
 //-----------------------------------------------------------------------------------
+function vh_theme_migrations_path($theme_name)
+{
+    return "/".config('vaahcms.themes_path')."/".$theme_name."/Database/Migrations/";
+}
+//-----------------------------------------------------------------------------------
+function vh_theme_database_seeder($module_name)
+{
+    return config('vaahcms.root_folder')."\Themes\\{$module_name}\\Database\Seeds\DatabaseTableSeeder";
+}
+//-----------------------------------------------------------------------------------
+function vh_theme_namespace($module_name)
+{
+    $namespace = "VaahCms\Themes\\".$module_name;
+    return $namespace;
+}
+//-----------------------------------------------------------------------------------
+function vh_theme_service_provider_name($module_name)
+{
+    $provider = "VaahCms\Themes\\".$module_name."\\Providers\\".$module_name."ServiceProvider";
+    return $provider;
+}
 //-----------------------------------------------------------------------------------
 //-----------------------------------------------------------------------------------
 //-----------------------------------------------------------------------------------

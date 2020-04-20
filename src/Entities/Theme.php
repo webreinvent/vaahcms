@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 use ZanySoft\Zip\Zip;
 
@@ -24,7 +25,6 @@ class Theme extends Model {
         'title',
         'name',
         'slug',
-        'thumbnail',
         'download_link',
         'excerpt',
         'description',
@@ -33,7 +33,10 @@ class Theme extends Model {
         'vaah_url',
         'version',
         'version_number',
+        'db_table_prefix',
         'is_active',
+        'is_migratable',
+        'is_assets_published',
         'is_sample_data_available',
         'is_update_available',
         'update_checked_at',
@@ -92,13 +95,13 @@ class Theme extends Model {
     //-------------------------------------------------
     public function themeTemplates()
     {
-        return $this->hasMany('WebReinvent\VaahCms\Entities\ThemeTemplate',
+        return $this->hasMany(ThemeTemplate::class,
             'vh_theme_id', 'id');
     }
     //-------------------------------------------------
     public function pageTemplates()
     {
-        return $this->hasMany('WebReinvent\VaahCms\Entities\ThemeTemplate',
+        return $this->hasMany(ThemeTemplate::class,
             'vh_theme_id', 'id')
             ->where('type', 'page');
     }
@@ -106,7 +109,7 @@ class Theme extends Model {
     //-------------------------------------------------
     public function defaultPageTemplate()
     {
-        return $this->hasOne('WebReinvent\VaahCms\Entities\ThemeTemplate',
+        return $this->hasOne(ThemeTemplate::class,
             'vh_theme_id', 'id')
             ->where('type', 'page')
             ->where('slug', 'default');
@@ -161,7 +164,7 @@ class Theme extends Model {
             'slug',
             'thumbnail',
             'excerpt',
-            'github_url',
+            'download_link',
             'author_name',
             'author_website',
             'is_sample_data_available',
@@ -236,25 +239,20 @@ class Theme extends Model {
 
         foreach ($dependencies as $key => $dependency_list)
         {
-
-
             switch($key){
 
                 case 'modules':
 
-
                     if(is_array($dependency_list))
                     {
-
                         foreach ($dependency_list as $dependency_slug)
                         {
                             $module = Module::slug($dependency_slug)->first();
 
                             if(!$module)
                             {
-
                                 $response['status'] = 'failed';
-                                $response['errors'][] = "Please install and activate '".$dependency_slug."'.";
+                                $response['errors'][] = "Please install and activate '".$dependency_slug."' module.";
                             }
 
                             if($module && $module->is_active != 1)
@@ -268,7 +266,28 @@ class Theme extends Model {
 
                     break;
                 //------------------------
-                case 'theme':
+                case 'themes':
+
+                    if(is_array($dependency_list))
+                    {
+                        foreach ($dependency_list as $dependency_slug)
+                        {
+                            $theme = Theme::slug($dependency_slug)->first();
+
+                            if(!$theme)
+                            {
+                                $response['status'] = 'failed';
+                                $response['errors'][] = "Please install and activate '".$dependency_slug."' theme.";
+                            }
+
+                            if($theme && $theme->is_active != 1)
+                            {
+                                $response['status'] = 'failed';
+                                $response['errors'][] = $dependency_slug.' theme is not active';
+                            }
+                        }
+
+                    }
 
                     break;
                 //------------------------
@@ -282,6 +301,154 @@ class Theme extends Model {
         }
 
         return $response;
+    }
+    //-------------------------------------------------
+    public static function activateItem($slug)
+    {
+
+        $item = static::slug($slug)->first();
+
+        /*
+         * get theme dependencies
+         */
+        $response = vh_theme_action($item->name, 'SetupController@dependencies');
+
+        if($response['status'] == 'failed')
+        {
+            return $response;
+        }
+
+        /*
+         * check theme dependencies are installed
+         */
+        $response = static::validateDependencies($response['data']);
+
+
+        if(isset($response['status']) && $response['status'] == 'failed')
+        {
+            return $response;
+        }
+
+
+        if(!isset($item->is_migratable) || (isset($item->is_migratable) && $item->is_migratable == true))
+        {
+
+            $path = vh_theme_migrations_path($item->name);
+
+            Migration::runMigrations($path);
+
+            Migration::syncThemeMigrations($item->id);
+
+            $seeds_namespace = vh_theme_database_seeder($item->name);
+            Migration::runSeeds($seeds_namespace);
+
+            //copy assets to public folder
+            static::copyAssets($item);
+
+        }
+
+        $item->is_active = 1;
+        $item->is_assets_published = 1;
+        $item->save();
+
+        $response['status'] = 'success';
+        $response['data'][] = '';
+        $response['messages'][] = 'Theme is activated';
+
+        if(env('APP_DEBUG'))
+        {
+            $response['hint'][] = '';
+        }
+        return $response;
+
+    }
+    //-------------------------------------------------
+    public static function deactivateItem($slug)
+    {
+        $item = static::slug($slug)->first();
+        $item->is_active = null;
+        $item->save();
+        $response['status'] = 'success';
+        $response['data'][] = '';
+        $response['messages'][] = 'Action was successful';
+        if(env('APP_DEBUG'))
+        {
+            $response['hint'][] = '';
+        }
+        return $response;
+    }
+    //-------------------------------------------------
+    public static function deleteItem($slug)
+    {
+
+        try{
+
+            $item = static::where('slug', $slug)->first();
+
+
+            $item_path = config('vaahcms.themes_path')."/".$item->name;
+
+            //Delete all migrations
+            $path =  $item_path . "/Database/Migrations/";
+
+            $migrations = vh_get_all_files($path);
+
+            if(count($migrations) > 0)
+            {
+                foreach($migrations as $migration)
+                {
+                    $migration_path = $path.$migration;
+                    include_once ($migration_path);
+                    $migration_class = vh_get_class_from_file($migration_path);
+                    if($migration_class)
+                    {
+                        $migration_obj = new $migration_class;
+                        $migration_obj->down();
+                    }
+                }
+            }
+
+            //Delete theme settings
+            $item->settings()->delete();
+
+            //delete all database migrations
+            $theme_migrations = $item->migrations()->get()->pluck('migration_id')->toArray();
+
+            if($theme_migrations)
+            {
+                \DB::table('migrations')->whereIn('id', $theme_migrations)->delete();
+                Migration::whereIn('migration_id', $theme_migrations)->delete();
+            }
+
+            $item->is_active = 0;
+            $item->save();
+
+
+            //delete theme folder
+            vh_delete_folder($item_path);
+
+            //Delete theme entry
+            static::where('slug', $item->slug)->forceDelete();
+
+            $response['status'] = 'success';
+            $response['data'][] = '';
+            $response['messages'][] = 'Action was successful';
+            if(env('APP_DEBUG'))
+            {
+                $response['hint'][] = '';
+            }
+            return $response;
+
+        }catch(\Exception $e)
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = $e->getMessage();
+
+        }
+
+
+        return $response;
+
     }
     //-------------------------------------------------
     public static function getOfficialDetails($slug)
@@ -340,7 +507,7 @@ class Theme extends Model {
     public static function download($name, $download_link)
     {
 
-        //check if module is already installed
+        //check if theme is already installed
         $vaahcms_path = config('vaahcms.themes_path').'/';
         //$vaahcms_path = base_path('Download/Themes').'/';
 
@@ -374,7 +541,64 @@ class Theme extends Model {
 
             $response['status'] = 'success';
             $response['data'] = [];
-            $response['messages'][] = $name." module is installed.";
+            $response['messages'][] = $name." theme is installed.";
+            return $response;
+
+        }catch(\Exception $e)
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = $e->getMessage();
+            return $response;
+        }
+
+    }
+
+    //-------------------------------------------------
+    public static function installUpdates($request)
+    {
+
+        $name = $request->name;
+        $download_link = $request->download_link;
+
+        $vaahcms_path = config('vaahcms.themes_path').'/';
+
+        $item = static::where('name', $name)->first();
+
+
+        $package_path = $vaahcms_path.$name;
+
+        $zip_file = $package_path.".zip";
+
+        copy($download_link, $zip_file);
+
+        try{
+            Zip::check($zip_file);
+            $zip = Zip::open($zip_file);
+            $zip_content_list = $zip->listFiles();
+            $zip->extract($vaahcms_path);
+            $zip->close();
+
+            if (strpos($download_link, 'github.com') !== false) {
+                $extracted_folder_name = $zip_content_list[0];
+                File::copyDirectory($vaahcms_path.$extracted_folder_name, $package_path);
+            }
+
+            vh_delete_folder($vaahcms_path.$extracted_folder_name);
+            vh_delete_folder($zip_file);
+
+            //if the theme is active then run migration & seeds
+            if($item->is_active)
+            {
+                static::activate($item->slug);
+            }
+
+
+            $item->is_update_available = null;
+            $item->save();
+
+            $response['status'] = 'success';
+            $response['data'] = [];
+            $response['messages'][] = $name." theme is updated.";
             return $response;
 
         }catch(\Exception $e)
@@ -386,27 +610,102 @@ class Theme extends Model {
 
     }
     //-------------------------------------------------
-    public static function activate($slug)
+    public static function importSampleData($slug)
     {
-        $theme = Theme::slug($slug)->first();
+        try{
+            $item = static::slug($slug)->first();
 
-        $path = "/".config('vaahcms.root_folder')."/".$theme->name."/Database/Migrations/";
+            $command = 'db:seed';
+            $params = [
+                '--class' => config('vaahcms.root_folder')."\Themes\\{$item->name}\\Database\Seeds\SampleDataTableSeeder"
+            ];
 
-        Migration::runMigrations($path);
+            \Artisan::call($command, $params);
 
-        Migration::syncThemeMigrations($theme->id);
+            $response['status'] = 'success';
+            $response['messages'][] = 'Sample Data Successfully Imported';
+        }catch(\Exception $e)
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = $e->getMessage();
+        }
 
-        $seeds_namespace = config('vaahcms.root_folder')."\Themes\\{$theme->name}\\Database\Seeds\DatabaseTableSeeder";
 
-        Migration::runSeeds($seeds_namespace);
+        return $response;
 
-        $provider = "VaahCms\Themes\\".$theme->name."\\Providers\\".$theme->name."ServiceProvider";
+    }
+    //-------------------------------------------------
+    public static function storeUpdates($request)
+    {
+        $updates = 0;
+        if(count($request->themes) > 0 )
+        {
+            foreach ($request->themes as $theme)
+            {
+                $store = static::where('slug', $theme['slug'])->first();
 
-        //copy assets to public folder
-        Theme::copyAssets($theme);
+                if($store->version_number < $theme['version_number'])
+                {
+                    $store->is_update_available = 1;
+                    $store->save();
+                    $updates++;
+                }
 
-        $theme->is_active = 1;
-        $theme->save();
+            }
+        }
+
+        $response['status'] = 'success';
+        $response['data'][] = '';
+        if($updates > 0)
+        {
+            $response['messages'][] = 'New updates are available for '.$updates.' theme(s).';
+        } else{
+            $response['messages'][] = 'No new update available.';
+        }
+        if(env('APP_DEBUG'))
+        {
+            $response['hint'][] = '';
+        }
+        return $response;
+
+    }
+    //-------------------------------------------------
+    public static function bulkStatusChange($request)
+    {
+
+
+        if(!$request->has('inputs'))
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = 'Select IDs';
+            return $response;
+        }
+
+        if(!$request->has('data'))
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = 'Select Status';
+            return $response;
+        }
+
+        foreach($request->inputs as $id)
+        {
+            $item = static::find($id);
+            if($request->data['status'] == 1)
+            {
+                static::activate($item->slug);
+            }
+
+            $item->status = $request->data['status'];
+            $item->save();
+        }
+
+        $response['status'] = 'success';
+        $response['data'] = [];
+        $response['messages'][] = 'Action was successful';
+
+        return $response;
+
 
     }
     //-------------------------------------------------
@@ -431,19 +730,7 @@ class Theme extends Model {
     }
     //-------------------------------------------------
     //-------------------------------------------------
-    public static function importSampleData($slug)
-    {
-        $item = Theme::slug($slug)->first();
 
-        $command = 'db:seed';
-        $params = [
-            '--class' => config('vaahcms.root_folder')."\Themes\\{$item->name}\\Database\Seeds\SampleDataTableSeeder"
-        ];
-
-        \Artisan::call($command, $params);
-
-
-    }
     //-------------------------------------------------
     //-------------------------------------------------
     //-------------------------------------------------
