@@ -50,13 +50,13 @@ class ExtendController extends Controller
     //----------------------------------------------------------
     public static function sidebarMenu()
     {
-        $vue_prefix = "vaah";
         $base_url = route('vh.backend')."#/";
-        $dashboard_url = $base_url."vaah/";
+        $vue_prefix = "vaah";
         $link = $base_url.$vue_prefix;
 
+
         $list[0] = [
-            'link' => $dashboard_url,
+            'link' => $link,
             'icon' => 'tachometer-alt',
             'label'=> 'Dashboard'
         ];
