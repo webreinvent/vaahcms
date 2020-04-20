@@ -65,7 +65,7 @@
                                                         Active
                                                     </option>
                                                     <option value=0>
-                                                        Not active
+                                                        Inactive
                                                     </option>
                                                 </b-select>
 
@@ -148,7 +148,7 @@
                                                             Active
                                                         </option>
                                                         <option value=10>
-                                                            Not active
+                                                            Inactive
                                                         </option>
                                                     </optgroup>
 

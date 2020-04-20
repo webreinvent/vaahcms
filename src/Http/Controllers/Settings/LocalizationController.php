@@ -27,54 +27,33 @@ class LocalizationController extends Controller
     //----------------------------------------------------------
     public function getAssets(Request $request)
     {
-        $data = [];
+
+        $lang_list = Language::getLangList();
+
         $response['status'] = 'success';
-        $response['data']['languages']['list'] = Language::orderBy('default','desc')
-            ->get();
+        $response['data']['languages']['list'] = $lang_list;
+
         $response['data']['languages']['default'] = Language::where('default',1)
             ->first();
 
 
         $response['data']['categories']['list'] = LanguageCategory::orderBy('name','asc')
             ->get();
-        $response['data']['categories']['default'] = LanguageCategory::where('slug','general')
-            ->first();
+        $response['data']['categories']['default']['id'] = null;
 
         return response()->json($response);
     }
     //----------------------------------------------------------
     public function getList(Request $request)
     {
-
-
-        $data = [];
-
-        if(!$request->has('vh_lang_language_id'))
-        {
-            $lang = Language::where('default', 1)->first();
-            $request->merge(['vh_lang_language_id'=>$lang->id]);
-        }
-
-        if(!$request->has('vh_lang_category_id'))
-        {
-            $cat = LanguageCategory::where('slug', 'general')->first();
-            $request->merge(['vh_lang_category_id'=>$cat->id]);
-        }
-
         $response = LanguageString::getList($request);
-
         return response()->json($response);
-
     }
     //----------------------------------------------------------
-    public function store(Request $request)
+    public function postStore(Request $request,$id)
     {
-
         $response = LanguageString::storeList($request);
-
-
         return response()->json($response);
-
     }
     //----------------------------------------------------------
     public function storeLanguage(Request $request)
@@ -99,43 +78,24 @@ class LocalizationController extends Controller
 
     }
     //----------------------------------------------------------
-    public function sync(Request $request)
+    public function postActions(Request $request, $action)
     {
 
-        LanguageString::syncAndGenerateStrings($request);
+        switch ($action)
+        {
 
+            //------------------------------------
+            case 'delete-language-string':
 
-        $response = LanguageString::getList($request);
+                $response = LanguageString::deleteItem($request);
 
-        $response['messages'][] = "Language files successfully generated";
+                break;
+
+            //------------------------------------
+
+        }
 
         return response()->json($response);
-
-    }
-    //----------------------------------------------------------
-    public function delete(Request $request)
-    {
-
-        $response = LanguageString::deleteItem($request);
-
-        return response()->json($response);
-
-    }
-    //----------------------------------------------------------
-    public function upload(Request $request)
-    {
-
-        /*echo \VaahExcel::helloWorld();
-        die("<hr/>line number=123");
-
-        $response = \VaahFile::upload($request);
-
-        echo "<pre>";
-        print_r($response);
-        echo "</pre>";
-        die("<hr/>line number=123");
-
-        return response()->json($response);*/
 
     }
     //----------------------------------------------------------

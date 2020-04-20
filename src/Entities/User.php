@@ -742,31 +742,39 @@ class User extends Authenticatable
 
     }
     //-------------------------------------------------
-    public static function getList($request)
+    public static function getList($request,$roles)
     {
 
-        if($request->has('recount') && $request->get('recount') == true)
+        if(isset($request['recount']) && $request['recount'] == true)
         {
             Role::syncRolesWithUsers();
         }
 
         $list = static::orderBy('created_at', 'DESC');
 
-        if($request->has('trashed') && $request->trashed == 'true')
+        if(isset($request['trashed']) && $request['trashed'] == 'true')
         {
             $list->withTrashed();
         }
 
-        if($request['status'] && $request['status'] == '1')
-        {
-
-            $list->where('is_active',$request['status']);
-        }elseif($request['status'] == '10'){
-
-            $list->whereNull('is_active')->orWhere('is_active',0);
+        if($request['status']){
+            if($request['status'] == '1')
+            {
+                $list->where('is_active',$request['status']);
+            }elseif($request['status'] == '10'){
+                $list->whereNull('is_active')->orWhere('is_active',0);
+            }
         }
 
-        if($request->has("q"))
+        if(count($roles) > 0){
+
+            $list->whereHas('roles', function ($query) use ($roles){
+                $query->where('vh_user_roles.is_active', '=', 1)->whereIn('vh_roles.slug', $roles);
+            });
+
+        }
+
+        if(isset($request['q']))
         {
             $list->where(function ($q) use ($request){
                 $q->where('first_name', 'LIKE', '%'.$request->q.'%')
@@ -791,6 +799,7 @@ class User extends Authenticatable
         $response['status'] = 'success';
         $response['data']['list'] = $list;
         $response['data']['totalRole'] = $countRole;
+        $response['fsfsf']['totalRole'] = $request;
 
         return $response;
 
@@ -1118,7 +1127,7 @@ class User extends Authenticatable
         $inputs = $request->all();
 
 
-        if($inputs['inputs']['id'] == 1 && $inputs['inputs']['user_id'] == 1)
+        if($inputs['inputs']['id'] == 1 && $inputs['inputs']['role_id'] == 1)
         {
             $response['status'] = 'failed';
             $response['errors'][] = 'First user will always be an administrator';

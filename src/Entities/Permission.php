@@ -574,17 +574,5 @@ class Permission extends Model {
 
 
     }
-
-    //-------------------------------------------------
-
-    public static function getModuleList()
-    {
-
-        $item = Permission::withTrashed()->select('module')->get()->unique('module');
-
-        return $item;
-
-
-    }
     //-------------------------------------------------
 }

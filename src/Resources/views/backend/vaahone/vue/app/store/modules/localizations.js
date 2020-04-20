@@ -4,7 +4,7 @@ import {VaahHelper as Vaah} from "../../vaahvue/helpers/VaahHelper";
 let base_url = document.getElementsByTagName('base')[0].getAttribute("href");
 //---------/Variables
 
-let ajax_url = base_url+"/backend/vaah/users";
+let ajax_url = base_url+"/backend/vaah/settings/localization";
 
 console.log('--->ajax_url', ajax_url);
 
@@ -16,8 +16,9 @@ export default {
         assets: null,
         assets_is_fetching: false,
         list: null,
-        total_roles: null,
         list_is_empty: false,
+        total_permissions: null,
+        total_users: null,
         active_item: null,
         filters: {
             q: null,
@@ -30,8 +31,7 @@ export default {
             page: 1,
             q: null,
             trashed: null,
-            roles: [],
-            status: null,
+            filter: null,
         },
         bulk_action:{
             selected_items: [],
@@ -39,25 +39,10 @@ export default {
             action: null,
         },
         new_item:{
-            email: null,
-            username: null,
-            password: null,
-            display_name: null,
-            title: null,
-            first_name: null,
-            middle_name: null,
-            last_name: null,
-            gender: null,
-            country_calling_code: null,
-            phone: null,
-            timezone: null,
-            alternate_email: null,
-            avatar_url: null,
-            birth: null,
-            country: null,
-            country_code: null,
-            status: null,
+            name: null,
+            slug: null,
             is_active: null,
+            details: null,
         },
     },
     //=========================================================================
@@ -72,8 +57,6 @@ export default {
         //-----------------------------------------------------------------
         async getAssets({ state, commit, dispatch, getters }) {
 
-            if(state.assets_is_fetching === false && !state.assets)
-            {
                 let payload = {
                     key: 'assets_is_fetching',
                     value: true
@@ -82,6 +65,7 @@ export default {
 
                 let url = state.ajax_url+'/assets';
                 let params = {};
+                console.log(url);
                 let data = await Vaah.ajax(url, params);
                 payload = {
                     key: 'assets',
@@ -89,12 +73,11 @@ export default {
                 };
 
                 commit('updateState', payload);
-            }
         },
         //-----------------------------------------------------------------
         updateView({ state, commit, dispatch, getters }, payload) {
             let list_view = false;
-            if(payload && payload.name && payload.name == 'user.list')
+            if(payload && payload.name && payload.name == 'role.list')
             {
                 list_view = true;
             }

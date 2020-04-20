@@ -122,7 +122,7 @@ class ExtendController extends Controller
             'label'=> 'Settings',
             'child' => [
                 [
-                    'link' => route('vh.backend.dashboard'),
+                    'link' => $link."/settings/localization/",
                     'label'=> 'Localization'
                 ],
             ]

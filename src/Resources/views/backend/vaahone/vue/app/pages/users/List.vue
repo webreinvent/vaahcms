@@ -88,7 +88,7 @@
                                                         Active
                                                     </option>
                                                     <option value=0>
-                                                        Not active
+                                                        Inactive
                                                     </option>
                                                 </b-select>
 
@@ -160,20 +160,34 @@
                                         <div class="level-item">
 
                                             <b-field label="">
-                                                <b-select placeholder="- Select a status -"
-                                                          v-model="query_string.status"
-                                                          @input="getList()"
-                                                >
-                                                    <option value="">
-                                                        - Select a status -
-                                                    </option>
-                                                    <option value=01>
-                                                        Active
-                                                    </option>
-                                                    <option value=10>
-                                                        Not active
-                                                    </option>
-                                                </b-select>
+                                                <p class="control">
+                                                    <b-select placeholder="- Select a status -"
+                                                              v-model="query_string.status"
+                                                              @input="getList()"
+                                                    >
+                                                        <option value="">
+                                                            - Select a status -
+                                                        </option>
+                                                        <option value=01>
+                                                            Active
+                                                        </option>
+                                                        <option value=10>
+                                                            Inactive
+                                                        </option>
+                                                    </b-select>
+                                                </p>
+
+                                                <p class="control">
+                                                    <b-dropdown multiple aria-role="list" @input="setRoleAction" v-model="selected_roles">
+                                                        <button class="button is-primary" type="button" slot="trigger">
+                                                            <span>Roles ({{ selected_roles.length }})</span>
+                                                        </button>
+
+                                                        <b-dropdown-item v-for="option in page.assets.role" v-bind:key="option.id" v-bind:value="option.slug">
+                                                            <span>{{  option.name.charAt(0).toUpperCase() + option.name.slice(1) }}</span>
+                                                        </b-dropdown-item>
+                                                    </b-dropdown>
+                                                </p>
                                             </b-field>
 
 

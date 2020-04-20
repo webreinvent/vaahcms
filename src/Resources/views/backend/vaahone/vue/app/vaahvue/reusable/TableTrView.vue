@@ -22,7 +22,7 @@
                 <vh-copy :data="''+value+''"
                          confirm_dialog="buefy">
                 <b-icon icon="copy"></b-icon>
-            </vh-copy>
+                </vh-copy>
             </span>
 
         </td>
