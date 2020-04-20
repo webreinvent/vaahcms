@@ -223,6 +223,11 @@ class Theme extends Model {
         return $list;
     }
     //-------------------------------------------------
+    public static function getActiveThemes()
+    {
+        return static::where('is_active', 1)->get();
+    }
+    //-------------------------------------------------
     public static function validateDependencies($dependencies)
     {
 

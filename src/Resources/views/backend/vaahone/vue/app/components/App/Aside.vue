@@ -20,19 +20,44 @@
 
                             <template v-for="link in menus">
 
-                                <b-navbar-dropdown v-if="link.child"
-                                                   :hoverable="true"
-                                                   :label="link.label">
-                                    <b-navbar-item v-for="(link_child, key) in link.child"
-                                                   :href="link_child.link" :key="key" >
-                                        {{link_child.label}}
-                                    </b-navbar-item>
-                                </b-navbar-dropdown>
+                                <li>
+                                    <a href="#" :class="{'has-child': link.child}">
+                                        <b-icon v-if="link.icon" pack="fas"
+                                                :icon="link.icon"
+                                                size="is-small">
+                                        </b-icon>
+                                        <b-icon v-else pack="fas"
+                                                icon="link"
+                                                size="is-small">
+                                        </b-icon>
+                                        <label>
+                                            {{link.label}}
 
-                                <b-navbar-item v-else
-                                               :href="link.link">
-                                    {{link.label}}
-                                </b-navbar-item>
+                                            <b-icon
+                                                v-if="link.child"
+                                                pack="fas"
+                                                icon="angle-right"
+                                                size="is-small">
+                                            </b-icon>
+                                        </label>
+
+
+
+                                    </a>
+                                    <ul class="has-submenu" v-if="link.child">
+                                        <li v-for="(link_child, key) in link.child">
+                                        <a :href="link_child.link">
+                                            <b-icon v-if="link_child.icon" pack="fas" :icon="link_child.icon" size="is-small">
+                                            </b-icon>
+                                            <label>{{link_child.label}}</label>
+                                        </a>
+                                        </li>
+                                    </ul>
+
+                                </li>
+
+
+
 
                             </template>
 
@@ -45,73 +70,7 @@
                 </ul>
 
 
-                <ul>
-                    <li><a href="#">
-                        <b-icon
-                                pack="fas"
-                                icon="desktop"
-                                size="is-small">
-                        </b-icon>
-                        <label>Desktop</label></a></li>
-                    <li><a href="#">
-                        <b-icon
-                                pack="fas"
-                                icon="server"
-                                size="is-small">
-                        </b-icon>
-                        <label>Server</label></a></li>
-                    <li><a href="#">
-                        <b-icon
-                                pack="fas"
-                                icon="calendar"
-                                size="is-small">
-                        </b-icon>
-                        <label>Calendar</label></a></li>
-                    <li><a href="#">
-                        <b-icon
-                                pack="fas"
-                                icon="envelope"
-                                size="is-small">
-                        </b-icon>
-                       <label>Messages
 
-                           <b-icon
-                                   pack="fas"
-                                   icon="angle-right"
-                                   size="is-small">
-                           </b-icon>
-                       </label>
-
-                    </a>
-
-                        <ul class="has-submenu">
-                            <li><a href="#">Messages v1</a> </li>
-                            <li><a href="#">Messages v2</a> </li>
-                        </ul>
-                    </li>
-                    <li><a href="#">
-                        <b-icon
-                                pack="fas"
-                                icon="table"
-                                size="is-small">
-                        </b-icon>
-                        <label>Data Table
-
-                            <b-icon
-                                    pack="fas"
-                                    icon="angle-right"
-                                    size="is-small">
-                            </b-icon>
-                        </label>
-
-                    </a>
-
-                    <ul class="has-submenu">
-                        <li><a href="#">Dashboard v1</a> </li>
-                        <li><a href="#">Dashboard v2</a> </li>
-                    </ul>
-                    </li>
-                </ul>
             </div>
         </div>
     <!--sections-->
@@ -133,12 +92,9 @@
 
         },
         mounted() {
-//----------------------------------------------------
+            //----------------------------------------------------
             this.onLoad();
-//----------------------------------------------------
-
-//----------------------------------------------------
-//----------------------------------------------------
+            //----------------------------------------------------
         },
         methods: {
 

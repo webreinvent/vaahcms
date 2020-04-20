@@ -8,6 +8,7 @@ use Illuminate\Routing\Controller;
 use VaahCms\Modules\Cms\Entities\MenuItem;
 use VaahCms\Modules\Cms\Entities\Page;
 use WebReinvent\VaahCms\Entities\Module;
+use WebReinvent\VaahCms\Entities\Theme;
 use WebReinvent\VaahCms\Entities\User;
 
 class JsonController extends Controller
@@ -155,10 +156,6 @@ class JsonController extends Controller
     public function getExtendedViews()
     {
 
-        $modules = new \WebReinvent\VaahCms\Entities\Module();
-        $active_modules = Module::getActiveModules();
-        $backend_theme = vh_get_backend_theme();
-
         $locations = [
             'top_left_menu'=>'topLeftMenu',
             'top_right_menu'=>'topRightMenu',
@@ -166,7 +163,24 @@ class JsonController extends Controller
             'sidebar_menu'=>'sidebarMenu',
         ];
 
-        $ordered_modules = [];
+        $modules_views = [];
+        $themes_views = [];
+
+        $modules_views = $this->getModulesExtendedViews($locations);
+        //$themes_views = $this->getThemesExtendedViews($locations);
+
+        $views = array_filter(array_merge($modules_views, $themes_views));
+
+        return $views;
+    }
+    //----------------------------------------------------------
+    public function getModulesExtendedViews($locations)
+    {
+
+        $active_modules = Module::getActiveModules();
+
+
+        $ordered = [];
 
         if($active_modules->count() > 0)
         {
@@ -186,15 +200,15 @@ class JsonController extends Controller
 
                     if($settings && !is_null($settings->value) && $settings->value != "")
                     {
-                        $ordered_modules[$location][$settings->value] = $item->slug;
+                        $ordered[$location][$settings->value] = $item->slug;
                     } else if($settings && !is_null($settings->id))
                     {
-                        $ordered_modules[$location][$settings->id] = $item->slug;
+                        $ordered[$location][$settings->id] = $item->slug;
                     } else{
-                        $ordered_modules[$location][$i] = $item->slug;
+                        $ordered[$location][$i] = $item->slug;
                     }
 
-                    ksort($ordered_modules[$location]);
+                    ksort($ordered[$location]);
 
                     $i++;
                 }
@@ -204,18 +218,17 @@ class JsonController extends Controller
 
         }
 
-
-
-
         $views = [];
 
         foreach ($locations as $location=>$method)
         {
 
+            $views[$location] = [];
 
             $namespace = '\WebReinvent\VaahCms\Http\Controllers\ExtendController';
 
-            $response = $ordered_modules[$location]['vaahcms'] = vh_action($namespace, $method);
+            $response = vh_action($namespace, $method);
+
 
             if($response['status']=='success' && isset($response['data']))
             {
@@ -223,37 +236,127 @@ class JsonController extends Controller
             }
 
 
-            foreach($ordered_modules[$location] as $module_slug)
+            if(isset($ordered[$location]))
             {
-
-                $module = Module::where('slug', $module_slug)->where('is_active', 1)
-                    ->first();
-
-                if(!$module)
+                foreach($ordered[$location] as $module_slug)
                 {
-                    continue;
+                    $res = null;
+
+                    $module = Module::where('slug', $module_slug)->where('is_active', 1)
+                        ->first();
+
+                    if(!$module)
+                    {
+                        continue;
+                    }
+
+
+                    $res = vh_module_action($module->name, 'ExtendController@'.$method);
+
+                    if($res['status'] == 'failed')
+                    {
+                        continue;
+                    } elseif(isset($res['status']) && $res['status'] == 'success'
+                        && isset($res['data']) && count(array_filter($res['data'])) > 0)
+                    {
+                        $views[$location][$module->slug] = $res['data'];
+                    }
+
+
+                }
+            }
+
+
+        }
+
+        return $views;
+    }
+    //----------------------------------------------------------
+    public function getThemesExtendedViews($locations)
+    {
+
+        $active_themes = Theme::getActiveThemes();
+
+
+        $ordered = [];
+
+        if($active_themes->count() > 0)
+        {
+
+            foreach ($locations as $location=>$method)
+            {
+                $i = 1;
+
+                if(isset($location)){
+                    $settings_name = $location.'_order';
                 }
 
-                $res = null;
-                $res = vh_module_action($module->name, 'ExtendController@'.$method);
-
-                if($res['status'] == 'failed')
+                foreach($active_themes as $item)
                 {
-                    continue;
-                }
 
-                if($res['status'] != 'success' || !isset($res['data']))
-                {
-                    continue;
-                }
+                    $settings = $item->settings()->key($settings_name)->first();
 
-                $views[$location][$module->slug] = $res['data'];
+                    if($settings && !is_null($settings->value) && $settings->value != "")
+                    {
+                        $ordered[$location][$settings->value] = $item->slug;
+                    } else if($settings && !is_null($settings->id))
+                    {
+                        $ordered[$location][$settings->id] = $item->slug;
+                    } else{
+                        $ordered[$location][$i] = $item->slug;
+                    }
+
+                    ksort($ordered[$location]);
+
+                    $i++;
+                }
 
             }
 
 
         }
 
+        if(count($ordered) < 1 )
+        {
+            return [];
+        }
+
+
+        $views = [];
+
+        foreach ($locations as $location=>$method)
+        {
+
+            if(isset($ordered[$location]))
+            {
+                foreach($ordered[$location] as $slug)
+                {
+
+                    $theme = Theme::where('slug', $slug)->where('is_active', 1)
+                        ->first();
+
+                    if(!$theme)
+                    {
+                        continue;
+                    }
+
+                    $res = null;
+                    $res = vh_theme_action($theme->name, 'ExtendController@'.$method);
+
+                    if($res['status'] == 'failed')
+                    {
+                        continue;
+                    } elseif(isset($res['status']) && $res['status'] == 'success' && isset($res['data']))
+                    {
+                        $views[$location][$theme->slug] = $res['data'];
+                    }
+
+                }
+            }
+
+
+
+        }
 
         return $views;
     }

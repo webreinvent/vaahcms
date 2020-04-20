@@ -97,5 +97,23 @@ function vh_module_action($module_name, $action, $params=null, $section='backend
     return vh_action($namespace, $method, $params);
 }
 //-------------------------------------------------------------
+function vh_theme_action($theme_name, $action, $params=null, $section='backend'){
+
+    $namespace = '\VaahCms\Themes\\'.$theme_name;
+
+    if($section=='backend')
+    {
+        $namespace .= '\Http\Controllers\Backend\\';
+    } else{
+        $namespace .= '\Http\Controllers\Frontend\\';
+    }
+
+    $action = explode('@', $action);
+
+    $namespace .= $action[0];
+    $method = $action[1];
+
+    return vh_action($namespace, $method, $params);
+}
 //-------------------------------------------------------------
 //-------------------------------------------------------------
