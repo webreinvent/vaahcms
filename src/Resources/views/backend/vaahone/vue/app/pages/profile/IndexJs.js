@@ -1,12 +1,14 @@
 import GlobalComponents from '../../vaahvue/helpers/GlobalComponents'
 import DatePicker from '../../vaahvue/reusable/DatePicker'
 import AutoComplete from '../../vaahvue/reusable/AutoComplete'
+import FileUploader from '../../vaahvue/reusable/FileUploader'
 
 let namespace = 'profile';
 
 export default {
     computed:{
         root() {return this.$store.getters['root/state']},
+        root_assets() {return this.$store.getters['root/state'].assets},
         page() {return this.$store.getters[namespace+'/state']},
         profile() {return this.$store.getters[namespace+'/state'].profile},
         ajax_url() {return this.$store.getters[namespace+'/state'].ajax_url},
@@ -16,6 +18,7 @@ export default {
         DatePicker,
         'AutoCompleteTimeZone': AutoComplete,
         'AutoCompleteCountry': AutoComplete,
+        'AvatarUploader': FileUploader,
     },
     data()
     {
@@ -24,6 +27,8 @@ export default {
             is_content_loading: false,
             namespace: namespace,
             labelPosition: 'on-border',
+            server:null,
+            myFiles: []
         }
     },
     watch: {
@@ -56,7 +61,36 @@ export default {
         //---------------------------------------------------------------------
         onLoad: function()
         {
+            this.serverConfig();
             this.getAssets();
+        },
+        //---------------------------------------------------------------------
+        serverConfig: function()
+        {
+            this.server = {
+                url: this.root_assets.urls.upload,
+                process:{
+                    method: 'POST',
+                    timeout: 7000,
+                    onload: function (response) {
+                        console.log('--->onload', response);
+                    },
+                    onerror: function (response) {
+                        console.log('--->onerror', response);
+                    },
+                    ondata: function (formData) {
+                        console.log('--->formData', formData);
+                        return formData;
+                    },
+                    headers: {
+                        'X-CSRF-TOKEN': $('#_token').attr('content'),
+                        'Upload-Name': 'media'
+                    },
+                }
+
+
+
+            };
         },
         //---------------------------------------------------------------------
         async getAssets() {
@@ -124,6 +158,27 @@ export default {
                 window.location.href = data.redirect_url;
             }
         },
+        //---------------------------------------------------------------------
+
+        storeAvatar: function (data) {
+            console.log('--->data received', data);
+            //this.$Progress.start();
+            let params = {};
+            let url = this.ajax_url+'/url';
+            //this.$vaah.ajax(url, params, this.fnAfter);
+        },
+        //---------------------------------------------------------------------
+        fnAfter: function (data, res) {
+            this.$Progress.finish();
+            if(data){
+                this.update('list', data.list);
+            }
+
+        },
+        //---------------------------------------------------------------------
+
+        //---------------------------------------------------------------------
+        //---------------------------------------------------------------------
         //---------------------------------------------------------------------
     }
 }

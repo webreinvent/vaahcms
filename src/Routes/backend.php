@@ -16,6 +16,7 @@ include('backend/setup.php');
 include('backend/settings.php');
 include('backend/modules.php');
 include('backend/themes.php');
+include('backend/media.php');
 
 Route::group(
     [

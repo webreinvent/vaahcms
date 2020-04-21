@@ -98,6 +98,7 @@ class JsonController extends Controller
         $data['urls']['public'] = url("/");
         $data['urls']['theme'] = vh_get_backend_theme_url();
         $data['urls']['image'] = vh_get_backend_theme_image_url();
+        $data['urls']['upload'] = route('vh.backend.media.upload');
 
 
         $response['status'] = 'success';

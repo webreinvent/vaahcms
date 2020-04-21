@@ -4,6 +4,7 @@ window.$ = require('jquery');
 window.JQuery = require('jquery');
 
 
+
 //---------Package imports
 import axios from 'axios';
 import VueAxios from 'vue-axios';
@@ -11,16 +12,32 @@ import VueRouter from 'vue-router';
 import Vuex from 'vuex';
 import VueFuse from 'vue-fuse'
 import VueProgressBar from 'vue-progressbar'
+
+import vueFilePond, {setOptions} from 'vue-filepond';
+import FilePondPluginFileValidateType from 'filepond-plugin-file-validate-type/dist/filepond-plugin-file-validate-type.esm.js';
+import FilePondPluginImagePreview from 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.esm.js';
+import FilePondPluginImageEdit from 'filepond-plugin-image-edit';
+import FilePondPluginImageCrop from 'filepond-plugin-image-crop';
+import FilePondPluginFileRename from 'filepond-plugin-file-rename';
+
 import VaahVuePagination from 'vaah-vue-pagination'
 import VaahVueClickToCopy from 'vaah-vue-clicktocopy'
 //---------/Package imports
+
+//---File Uploader
+setOptions({
+    allowDrop: true,
+    allowReplace: false,
+    instantUpload: false,
+});
+const FilePond = vueFilePond( FilePondPluginFileValidateType, FilePondPluginImagePreview,
+    FilePondPluginImageEdit, FilePondPluginImageCrop, FilePondPluginFileRename  );
+//---/File Uploader
 
 //---------Configs
 Vue.config.delimiters = ['@{{', '}}'];
 Vue.config.async = false;
 //---------Configs
-
-
 
 
 
@@ -30,9 +47,13 @@ import vaah from './vaahvue/helpers/VaahHelper';
 Vue.use(VueAxios, axios);
 Vue.use(VueRouter);
 Vue.use(Vuex);
+Vue.use(Vuex);
 Vue.use(VueFuse);
 Vue.use(vaah);
 //---------/Helpers
+
+
+Vue.component('file-pond', FilePond);
 
 //--------Progress
 const options = {

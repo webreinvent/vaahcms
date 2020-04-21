@@ -2,7 +2,7 @@
 <template>
 
     <!--sections-->
-    <section class="section" v-if="profile">
+    <section class="section" v-if="root_assets && profile">
         <div class="container">
 
             <!--repeatable-->
@@ -40,7 +40,9 @@
                                              :src="profile.avatar">
                                     </p>
                                 </figure>
-                                <div class="media-content">
+                                <div class="media-content" v-if="server">
+
+                                    <AvatarUploader @afterUpload="storeAvatar"/>
 
                                     <b-field class="has-margin-bottom-5">
                                         <b-upload drag-drop>

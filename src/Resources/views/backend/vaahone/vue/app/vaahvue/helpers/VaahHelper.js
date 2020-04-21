@@ -102,29 +102,7 @@ const VaahHelper = {
 
         let data = await Vue.axios.post(url, params, q)
             .then(response => {
-                if(response.data.status)
-                {
-                    if(response.data.status === 'failed')
-                    {
-                        if(response.data.messages)
-                        {
-                            this.toastErrors(response.data.messages);
-                        }
-
-                        if(response.data.errors)
-                        {
-                            this.toastErrors(response.data.errors);
-                        }
-                    }
-                    if(response.data.status === 'success')
-                    {
-                        if(response.data.messages)
-                        {
-                            this.toastSuccess(response.data.messages);
-                        }
-                    }
-                }
-
+                this.processResponse(response);
                 if(callback)
                 {
                     if(response.data && response.data.data)
@@ -137,6 +115,7 @@ const VaahHelper = {
                 }
 
                 return response;
+
             })
             .catch(error => {
 
@@ -147,14 +126,7 @@ const VaahHelper = {
                     location.reload();
                 }
 
-                if(debug == true)
-                {
-                    console.log('--->error', error);
-                    this.toastErrors([error]);
-                } else
-                {
-                    this.toastErrors(['Something went wrong']);
-                }
+                this.processError(processError);
 
                 if(callback) {
                     callback(false, error);
@@ -164,6 +136,48 @@ const VaahHelper = {
             });
 
         return data;
+    },
+    //---------------------------------------------------------------------
+    processResponse: function(response)
+    {
+        if(response.data.status)
+        {
+            if(response.data.status === 'failed')
+            {
+                if(response.data.messages)
+                {
+                    this.toastErrors(response.data.messages);
+                }
+
+                if(response.data.errors)
+                {
+                    this.toastErrors(response.data.errors);
+                }
+            }
+            if(response.data.status === 'success')
+            {
+                if(response.data.messages)
+                {
+                    this.toastSuccess(response.data.messages);
+                }
+            }
+        }
+
+
+
+        return response;
+    },
+    //---------------------------------------------------------------------
+    processError: function(error)
+    {
+        if(debug == true)
+        {
+            console.log('--->error', error);
+            this.toastErrors([error]);
+        } else
+        {
+            this.toastErrors(['Something went wrong']);
+        }
     },
     //---------------------------------------------------------------------
     updateRootState: function(state_name, state_value)

@@ -47,7 +47,7 @@ if (mix.inProduction()) {
 
     mix.setPublicPath(publish_folder);
 
-    //mix.sass(source_theme_folder+'/scss/vaahcms.scss', output_theme_folder+'css/');
+    mix.sass(source_theme_folder+'/scss/vaahcms.scss', output_theme_folder+'css/');
     mix.sass(source_theme_folder+'/scss/backend.scss', output_theme_folder+'css/');
 
 
