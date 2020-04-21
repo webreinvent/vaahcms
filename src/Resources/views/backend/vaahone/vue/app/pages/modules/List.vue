@@ -25,7 +25,7 @@
                         <header class="card-header">
 
                             <div class="card-header-title">
-                                Modules {{page.list_view_class}}
+                                Modules
                             </div>
 
                             <div class="card-header-buttons">

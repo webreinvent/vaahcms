@@ -733,4 +733,38 @@ let routes_setting_localization =     {
 routes.push(routes_setting_localization);
 
 
+import Profile from "./../pages/profile/Index";
+
+
+let routes_profile =     {
+    path: '/vaah/',
+    component: LayoutBackend,
+    props: true,
+    meta: {
+        middleware: [
+            IsLoggedIn,
+            GetBackendAssets
+        ]
+    },
+    children: [
+        {
+            path: 'profile',
+            component: Profile,
+            props: true,
+            meta: {
+                middleware: [
+                    IsLoggedIn,
+                    GetBackendAssets
+                ]
+            },
+        }
+
+    ]
+};
+
+routes.push(routes_profile);
+
+
+
+
 export default routes;

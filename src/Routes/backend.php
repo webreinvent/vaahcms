@@ -86,7 +86,23 @@ Route::group(
         //---------------------------------------------------------
     });
 
+Route::group(
+    [
+        'prefix' => 'backend/vaah/profile',
+        'namespace'  => 'WebReinvent\VaahCms\Http\Controllers',
+        'middleware' => ['web', 'has.backend.access'],
+    ],
+    function () {
+        //---------------------------------------------------------
+        Route::post('/', 'UsersController@getProfile')
+            ->name('backend.vaah.profile');
+        //---------------------------------------------------------
+        Route::post('/assets', 'UsersController@getAssets')
+            ->name('backend.vaah.profile.assets');
+        //---------------------------------------------------------
 
+        //---------------------------------------------------------
+    });
 
 //=================OLD ROUTES===========================================
 

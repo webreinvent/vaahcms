@@ -11,11 +11,16 @@ use WebReinvent\VaahCms\Entities\Module;
 class ExtendController extends Controller
 {
 
+    public static $link;
 
     //----------------------------------------------------------
     public function __construct()
     {
+        $base_url = route('vh.backend')."#/";
+        $vue_prefix = "vaah";
+        $link = $base_url.$vue_prefix;
 
+        self::$link = $link;
     }
 
     //----------------------------------------------------------
@@ -37,9 +42,14 @@ class ExtendController extends Controller
     {
         $list = [
             [
+                'link' => self::$link."/profile/",
+                'label'=> 'Profile'
+            ],
+            [
                 'link' => route('vh.backend.logout'),
                 'label'=> 'Logout'
             ],
+
         ];
 
         $response['status'] = 'success';
@@ -50,13 +60,9 @@ class ExtendController extends Controller
     //----------------------------------------------------------
     public static function sidebarMenu()
     {
-        $base_url = route('vh.backend')."#/";
-        $vue_prefix = "vaah";
-        $link = $base_url.$vue_prefix;
-
 
         $list[0] = [
-            'link' => $link,
+            'link' => self::$link,
             'icon' => 'tachometer-alt',
             'label'=> 'Dashboard'
         ];
@@ -70,7 +76,7 @@ class ExtendController extends Controller
         if(\Auth::user()->hasPermission('has-access-of-registrations-section'))
         {
             $list[1]['child'][] =  [
-                'link' => $link."/registrations/",
+                'link' => self::$link."/registrations/",
                 'label'=> 'Registration'
             ];
         }
@@ -78,7 +84,7 @@ class ExtendController extends Controller
         if(\Auth::user()->hasPermission('has-access-of-users-section'))
         {
             $list[1]['child'][] =  [
-                'link' => $link."/users/",
+                'link' => self::$link."/users/",
                 'label'=> 'Users'
             ];
         }
@@ -86,7 +92,7 @@ class ExtendController extends Controller
         if(\Auth::user()->hasPermission('has-access-of-roles-section'))
         {
             $list[1]['child'][] =  [
-                'link' => $link."/roles/",
+                'link' => self::$link."/roles/",
                 'label'=> 'Roles'
             ];
         }
@@ -95,7 +101,7 @@ class ExtendController extends Controller
         if(\Auth::user()->hasPermission('has-access-of-permissions-section'))
         {
             $list[1]['child'][] =  [
-                'link' => $link."/permissions/",
+                'link' => self::$link."/permissions/",
                 'label'=> 'Permissions'
             ];
         }
@@ -106,11 +112,11 @@ class ExtendController extends Controller
             'label'=> 'Extend',
             'child' => [
                 [
-                    'link' => $link."/modules/",
+                    'link' => self::$link."/modules/",
                     'label'=> 'Modules'
                 ],
                 [
-                    'link' => $link."/themes/",
+                    'link' => self::$link."/themes/",
                     'label'=> 'Themes'
                 ]
             ]
@@ -122,7 +128,7 @@ class ExtendController extends Controller
             'label'=> 'Settings',
             'child' => [
                 [
-                    'link' => $link."/settings/localization/",
+                    'link' => self::$link."/settings/localization/",
                     'label'=> 'Localization'
                 ],
             ]

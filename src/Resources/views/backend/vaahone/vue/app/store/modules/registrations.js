@@ -6,8 +6,6 @@ let base_url = document.getElementsByTagName('base')[0].getAttribute("href");
 
 let ajax_url = base_url+"/backend/vaah/registrations";
 
-console.log('--->ajax_url', ajax_url);
-
 export default {
     namespaced: true,
     //=========================================================================

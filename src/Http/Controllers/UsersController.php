@@ -188,6 +188,22 @@ class UsersController extends Controller
 
     }
     //----------------------------------------------------------
+    public function getProfile(Request $request)
+    {
+
+
+        $data['profile'] = User::find(\Auth::user()->id);
+
+        $response['status'] = 'success';
+        $response['data'] = $data;
+        if(env('APP_DEBUG'))
+        {
+            $response['hint'][] = '';
+        }
+
+        return response()->json($response);
+
+    }
     //----------------------------------------------------------
     //----------------------------------------------------------
 

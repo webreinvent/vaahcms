@@ -25,7 +25,7 @@
                         <header class="card-header">
 
                             <div class="card-header-title">
-                                Themes {{page.list_view_class}}
+                                Themes
                             </div>
 
                             <div class="card-header-buttons">

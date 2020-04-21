@@ -27,8 +27,6 @@ const VaahHelper = {
             params: params
         };
 
-        console.log('--->url', url);
-
         let data = await Vue.axios.get(url, q)
             .then(response => {
                 if(response.data.status)
@@ -69,10 +67,10 @@ const VaahHelper = {
             })
             .catch(error => {
 
-                console.log('--->error', error);
-
                 if(debug == true)
                 {
+                    console.log('--->error', error);
+
                     this.toastErrors([error]);
                 } else
                 {
@@ -142,10 +140,11 @@ const VaahHelper = {
             })
             .catch(error => {
 
-                console.log('--->error', error);
 
                 if(debug == true)
                 {
+                    console.log('--->error', error);
+
                     this.toastErrors([error]);
                 } else
                 {

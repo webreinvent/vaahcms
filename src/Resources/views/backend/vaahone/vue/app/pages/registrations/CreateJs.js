@@ -18,7 +18,6 @@ export default {
         DatePicker,
         'AutoCompleteTimeZone': AutoComplete,
         'AutoCompleteCountry': AutoComplete,
-
     },
     data()
     {
