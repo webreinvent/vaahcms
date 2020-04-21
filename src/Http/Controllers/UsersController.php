@@ -191,7 +191,6 @@ class UsersController extends Controller
     public function getProfile(Request $request)
     {
 
-
         $data['profile'] = User::find(\Auth::user()->id);
 
         $response['status'] = 'success';
@@ -205,6 +204,25 @@ class UsersController extends Controller
 
     }
     //----------------------------------------------------------
+    public function storeProfile(Request $request)
+    {
+        $response = User::storeProfile($request);
+        return response()->json($response);
+    }
+    //----------------------------------------------------------
+    public function storeProfilePassword(Request $request)
+    {
+        $response = User::storePassword($request);
+
+        if($response['status'] == 'success')
+        {
+            \Auth::logout();
+
+            $response['data']['redirect_url'] = route('vh.backend');
+        }
+
+        return response()->json($response);
+    }
     //----------------------------------------------------------
 
 

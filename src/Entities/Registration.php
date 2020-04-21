@@ -372,10 +372,15 @@ class Registration extends Model
 
         $rules = array(
             'id' => 'required',
-            'email' => 'required|email',
+            'email' => 'required|email|unique:vh_registrations',
             'first_name' => 'required',
             'status' => 'required',
         );
+
+        if($request->has('username'))
+        {
+            $rules['username'] = 'alpha_dash|max:15';
+        }
 
         $validator = \Validator::make( $request->all(), $rules);
         if ( $validator->fails() ) {

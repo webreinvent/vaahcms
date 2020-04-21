@@ -6,6 +6,7 @@
             :placeholder="placeholder"
             :icon="icon"
             @input="onSelect"
+            :date-formatter="dateFormat"
             editable>
         </b-datepicker>
     </div>
@@ -14,6 +15,7 @@
 </template>
 
 <script>
+    import {VaahHelper as Vaah} from "../../vaahvue/helpers/VaahHelper";
 
     export default {
         props: {
@@ -66,13 +68,16 @@
 
             //---------------------------------------------------------------------
             onSelect: function (selected_date) {
-
-                let val = selected_date.toLocaleString().toString();
-
+                let val = Vaah.formatDate(selected_date);
                 this.$emit('blur', val);
                 this.$emit('input', val);
-            }
+                this.$emit('onSelect', val);
+            },
             //---------------------------------------------------------------------
+            dateFormat: function (data) {
+                let val = Vaah.formatDate(data);
+                return val;
+            }
             //---------------------------------------------------------------------
         }
     }

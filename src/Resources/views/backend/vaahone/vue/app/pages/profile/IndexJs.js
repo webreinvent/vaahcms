@@ -80,22 +80,50 @@ export default {
         },
         //---------------------------------------------------------------------
         setBirthDate: function (date) {
-            this.item.birth = date;
-            this.updateNewItem();
+            console.log('--->date', date);
+            this.profile.birth = date;
+            this.updateProfile();
         },
         //---------------------------------------------------------------------
         setTimeZone: function (item) {
-            this.item.timezone = item.slug;
-            this.updateNewItem();
+            this.profile.timezone = item.slug;
+            this.updateProfile();
         },
         //---------------------------------------------------------------------
         setCountry: function (item) {
-            this.item.country = item.name;
-            this.item.country_code = item.code;
-            this.updateNewItem();
+            this.profile.country = item.name;
+            this.profile.country_code = item.code;
+            this.updateProfile();
         },
         //---------------------------------------------------------------------
+        storeProfile: function () {
+            this.$Progress.start();
+            let params = this.profile;
+            let url = this.ajax_url+'/store';
+            this.$vaah.ajax(url, params, this.storeProfileAfter);
+        },
         //---------------------------------------------------------------------
+        storeProfileAfter: function (data, res) {
+            this.$Progress.finish();
+            if(data)
+            {
+                this.update('profile', this.profile);
+            }
+        },
+        //---------------------------------------------------------------------
+        storePassword: function () {
+            this.$Progress.start();
+            let params = this.page.reset_password;
+            let url = this.ajax_url+'/store/password';
+            this.$vaah.ajax(url, params, this.storePasswordAfter);
+        },
+        //---------------------------------------------------------------------
+        storePasswordAfter: function (data, res) {
+            this.$Progress.finish();
+            if(data){
+                window.location.href = data.redirect_url;
+            }
+        },
         //---------------------------------------------------------------------
     }
 }

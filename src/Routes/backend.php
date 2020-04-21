@@ -100,7 +100,11 @@ Route::group(
         Route::post('/assets', 'UsersController@getAssets')
             ->name('backend.vaah.profile.assets');
         //---------------------------------------------------------
-
+        Route::post('/store', 'UsersController@storeProfile')
+            ->name('backend.vaah.profile.store');
+        //---------------------------------------------------------
+        Route::post('/store/password', 'UsersController@storeProfilePassword')
+            ->name('backend.vaah.profile.store.password');
         //---------------------------------------------------------
     });
 

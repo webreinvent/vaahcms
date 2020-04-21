@@ -133,6 +133,9 @@
         methods: {
             //---------------------------------------------------------------------
             setSelectedValue: function (selected_value) {
+
+                console.log('--->selected_value', selected_value);
+
                 this.$refs.autocomplete.setSelected(selected_value);
             },
             //---------------------------------------------------------------------

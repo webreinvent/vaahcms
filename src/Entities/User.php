@@ -54,11 +54,11 @@ class User extends Authenticatable
 
     //-------------------------------------------------
     protected $appends  = [
-        'thumbnail', 'name'
+        'avatar', 'name'
     ];
 
     //-------------------------------------------------
-    public function getThumbnailAttribute() {
+    public function getAvatarAttribute() {
 
         if($this->avatar_url)
         {
@@ -73,6 +73,11 @@ class User extends Authenticatable
 
     //-------------------------------------------------
     public function getNameAttribute() {
+
+        if($this->display_name)
+        {
+            return $this->display_name;
+        }
 
         $name = $this->first_name;
 
@@ -1225,8 +1230,12 @@ class User extends Authenticatable
 
         );
 
+        if($request->has('username'))
+        {
+            $rules['username'] = 'alpha_dash|max:15';
+        }
 
-        $validator = \Validator::make($request,$rules);
+        $validator = \Validator::make($request->all(),$rules);
 
         if ( $validator->fails() ) {
 
@@ -1238,5 +1247,145 @@ class User extends Authenticatable
 
     }
     //-------------------------------------------------
+    public static function storeProfile($request)
+    {
+        $rules = array(
+            'first_name' => 'required',
+            'last_name' => 'required',
+            'email' => 'required|email',
+        );
+
+        if($request->has('username'))
+        {
+            $rules['username'] = 'alpha_dash|max:15';
+        }
+
+
+        $validator = \Validator::make( $request->all(), $rules);
+        if ( $validator->fails() ) {
+
+            $errors             = errorsToArray($validator->errors());
+            $response['status'] = 'failed';
+            $response['errors'] = $errors;
+            return response()->json($response);
+        }
+
+        if(!\Auth::check())
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = 'You must be logged in to update your profile';
+            return $response;
+        }
+
+
+        $inputs = $request->all();
+
+        $user = static::find(\Auth::user()->id);
+
+
+        if(
+            $request->has('username') && !empty($request->username)
+            && $request->username != $user->username
+        )
+        {
+            $user_exist = static::where('username', $request->username)
+                ->first();
+            if($user_exist)
+            {
+                $response['status'] = 'failed';
+                $response['errors'][] = 'Username already taken';
+                return $response;
+            }
+        }
+
+        if($user->email != $inputs['email'] && !empty($inputs['email']))
+        {
+
+            $email_exist = static::where('email', $inputs['email'])
+                ->first();
+
+            if($email_exist)
+            {
+                $response['status'] = 'failed';
+                $response['errors'][] = 'Email is associated with other user.';
+                return $response;
+            }
+
+        }
+
+        if(isset($inputs['password']))
+        {
+            unset($inputs['password']);
+        }
+
+        $user->fill($inputs);
+        $user->save();
+
+
+        $response['status'] = 'success';
+        $response['data'][] = '';
+        $response['messages'][] = 'Action was successful';
+        return $response;
+
+
+    }
+    //-------------------------------------------------
+    public static function storePassword($request)
+    {
+        $rules = array(
+            'current_password' => 'required|max:25',
+            'new_password' => 'required|max:25',
+            'confirm_password' => 'required|max:25',
+        );
+
+        $validator = \Validator::make($request->all(),$rules);
+
+        if ( $validator->fails() ) {
+
+            $errors             = errorsToArray($validator->errors());
+            $response['status'] = 'failed';
+            $response['errors'] = $errors;
+            return $response;
+        }
+
+        if($request->new_password != $request->confirm_password)
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = 'Confirm password does not match';
+            return $response;
+        }
+
+
+        try{
+
+            $check = \Hash::check($request->current_password, auth()->user()->password);
+
+            if(!$check)
+            {
+                $response['status'] = 'failed';
+                $response['errors'][] = 'Current password is incorrect';
+                return $response;
+            }
+
+            $user = static::find(\Auth::user()->id);
+            $user->password = \Hash::make($request->new_password);
+            $user->save();
+
+            $response['status'] = 'success';
+            $response['data'][] = '';
+            $response['messages'][] = 'Action was successful';
+
+            return $response;
+
+
+        }catch(\Exception $e)
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = $e->getMessage();
+
+        }
+
+        return $response;
+    }
     //-------------------------------------------------
 }

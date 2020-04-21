@@ -25,7 +25,8 @@
             <div class="columns">
                 <div class="column is-3 is-offset-2" >
                     <h4 class="title is-5">Public Avatar</h4>
-                    <h2 class="subtitle is-6">You can upload your avatar here or change it at gravatar.com</h2>
+                    <h2 class="subtitle is-6">You can upload your avatar here or change it at
+                        <a href="https://en.gravatar.com/" target="_blank">gravatar.com</a></h2>
                 </div>
                 <div class="column is-5 " >
 
@@ -33,9 +34,10 @@
                         <div class="card-content">
 
                             <article class="media">
-                                <figure class="media-left">
+                                <figure class="media-left" v-if="profile.avatar">
                                     <p class="image is-64x64">
-                                        <img class="is-rounded" src="https://bulma.io/images/placeholders/128x128.png">
+                                        <img class="is-rounded"
+                                             :src="profile.avatar">
                                     </p>
                                 </figure>
                                 <div class="media-content">
@@ -214,7 +216,9 @@
                                     />
                                 </b-field>
 
-                                <b-button type="is-primary">Save Profile</b-button>
+                                <b-button type="is-primary" @click="storeProfile()">
+                                    Save Profile
+                                </b-button>
 
                             </div>
 
@@ -270,7 +274,7 @@
                             </b-field>
 
 
-                            <b-button type="is-primary">Save Password</b-button>
+                            <b-button type="is-primary" @click="storePassword">Save Password</b-button>
 
                         </div>
 
@@ -279,13 +283,6 @@
                 </div>
             </div>
             <!--/repeatable-->
-
-
-
-
-
-
-
 
 
         </div>

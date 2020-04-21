@@ -140,11 +140,16 @@ const VaahHelper = {
             })
             .catch(error => {
 
+                if(error.response && error.response.status
+                && error.response.status == 401)
+                {
+                    this.toastErrors(['Session Expired']);
+                    location.reload();
+                }
 
                 if(debug == true)
                 {
                     console.log('--->error', error);
-
                     this.toastErrors([error]);
                 } else
                 {
