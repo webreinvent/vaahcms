@@ -40,26 +40,19 @@
                                              :src="profile.avatar">
                                     </p>
                                 </figure>
-                                <div class="media-content" v-if="server">
+                                <div class="media-content">
 
-                                    <AvatarUploader @afterUpload="storeAvatar"/>
+                                    <AvatarUploader
+                                        max_size="200KB"
+                                        aspect_ratio="1:1"
+                                        @afterUpload="storeAvatar"/>
 
-                                    <b-field class="has-margin-bottom-5">
-                                        <b-upload drag-drop>
-                                            <section class="section">
-                                                <div class="content has-text-centered">
-                                                    <p class="is-bottom-marginless">
-                                                        <b-icon icon="upload"
-                                                            size="is-small">
-                                                        </b-icon>
-                                                    </p>
-                                                    <p>Drop your files here or click to upload.</p>
-                                                </div>
-                                            </section>
-                                        </b-upload>
-
-                                    </b-field>
-                                    <p class="help">The maximum file size allowed is 200KB.</p>
+                                    <br/>
+                                    <b-button type="is-primary"
+                                              v-if="profile.avatar_url"
+                                              @click="removeAvatar()">
+                                        Remove Avatar
+                                    </b-button>
 
                                 </div>
                             </article>
@@ -186,6 +179,14 @@
                                     <b-input v-model="profile.phone"
                                              name="profile-phone" dusk="profile-phone"
                                     ></b-input>
+                                </b-field>
+
+
+                                <b-field label="Bio" :label-position="labelPosition">
+                                    <b-input maxlength="250"
+                                             v-model="profile.bio"
+                                             name="profile-bio" dusk="profile-bio"
+                                             type="textarea"></b-input>
                                 </b-field>
 
                                 <b-field label="Timezone" :label-position="labelPosition">

@@ -34,10 +34,14 @@ class User extends Authenticatable
     //-------------------------------------------------
     protected $fillable = [
         "uuid","email","username","display_name","title","first_name","middle_name","last_name",
-        "gender","country_calling_code","phone","timezone","alternate_email","avatar_url","birth",
-        "country","country_code","last_login_at","last_login_ip","remember_token","api_token","api_token_used_at",
-        "api_token_used_ip","is_active","activated_at","status","affiliate_code","affiliate_code_used_at","reset_password_code",
-        "reset_password_code_sent_at","reset_password_code_used_at","meta","created_ip","created_by",
+        "gender","country_calling_code","phone", "bio", "timezone",
+        "alternate_email","avatar_url","birth",
+        "country","country_code","last_login_at","last_login_ip",
+        "remember_token","api_token","api_token_used_at",
+        "api_token_used_ip","is_active","activated_at","status",
+        "affiliate_code","affiliate_code_used_at","reset_password_code",
+        "reset_password_code_sent_at","reset_password_code_used_at",
+        "meta","created_ip","created_by",
         "updated_by","deleted_by"
     ];
     //-------------------------------------------------
@@ -62,7 +66,7 @@ class User extends Authenticatable
 
         if($this->avatar_url)
         {
-            return $this->avatar_url;
+            return asset($this->avatar_url);
         }
 
         $grav_url = vh_get_avatar_by_email($this->email);
@@ -92,6 +96,18 @@ class User extends Authenticatable
         }
 
         return $name;
+    }
+    //-------------------------------------------------
+    public function setFirstNameAttribute($value) {
+        $this->attributes['first_name'] = ucfirst($value);
+    }
+    //-------------------------------------------------
+    public function setMiddleNameAttribute($value) {
+        $this->attributes['middle_name'] = ucfirst($value);
+    }
+    //-------------------------------------------------
+    public function setLastNameAttribute($value) {
+        $this->attributes['last_name'] = ucfirst($value);
     }
     //-------------------------------------------------
 
@@ -1219,7 +1235,7 @@ class User extends Authenticatable
     //-------------------------------------------------
 
     //-------------------------------------------------
-    public static function validation($request){
+    public static function validation($inputs){
 
         $rules = array(
 
@@ -1230,12 +1246,12 @@ class User extends Authenticatable
 
         );
 
-        if($request->has('username'))
+        if(isset($inputs['username']))
         {
             $rules['username'] = 'alpha_dash|max:15';
         }
 
-        $validator = \Validator::make($request->all(),$rules);
+        $validator = \Validator::make($inputs,$rules);
 
         if ( $validator->fails() ) {
 
@@ -1386,6 +1402,67 @@ class User extends Authenticatable
         }
 
         return $response;
+    }
+    //-------------------------------------------------
+    public static function storeAvatar($request,$user_id=null)
+    {
+        $rules = array(
+            'url' => 'required',
+        );
+
+        $validator = \Validator::make( $request->all(), $rules);
+        if ( $validator->fails() ) {
+
+            $errors             = errorsToArray($validator->errors());
+            $response['status'] = 'failed';
+            $response['errors'] = $errors;
+            return $response;
+        }
+
+        $data = [];
+
+        if(!$user_id)
+        {
+            $user_id = \Auth::user()->id;
+        }
+
+        $user = User::find($user_id);
+
+        $user->avatar_url = $request->url;
+        $user->save();
+
+        $response['status'] = 'success';
+        $response['messages'][] = 'Avatar updated.';
+        $response['data']['avatar'] = $user->avatar;
+        $response['data']['avatar_url'] = $user->avatar_url;
+
+        return $response;
+
+    }
+    //-------------------------------------------------
+    public static function removeAvatar($request, $user_id=null)
+    {
+
+        $data = [];
+
+        if(!$user_id)
+        {
+            $user_id = \Auth::user()->id;
+        }
+
+        $user = User::find($user_id);
+
+        $user = User::find(\Auth::user()->id);
+        $user->avatar_url = null;
+        $user->save();
+
+        $response['status'] = 'success';
+        $response['messages'][] = 'Avatar removed.';
+        $response['data']['avatar'] = $user->avatar;
+        $response['data']['avatar_url'] = $user->avatar_url;
+
+        return $response;
+
     }
     //-------------------------------------------------
 }

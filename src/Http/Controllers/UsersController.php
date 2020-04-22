@@ -188,6 +188,63 @@ class UsersController extends Controller
 
     }
     //----------------------------------------------------------
+    public function storeAvatar(Request $request)
+    {
+
+        if(!\Auth::user()->hasPermission('can-update-users'))
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+            return response()->json($response);
+        }
+
+        $rules = array(
+            'user_id' => 'required',
+        );
+
+        $validator = \Validator::make( $request->all(), $rules);
+        if ( $validator->fails() ) {
+
+            $errors             = errorsToArray($validator->errors());
+            $response['status'] = 'failed';
+            $response['errors'] = $errors;
+            return response()->json($response);
+        }
+
+        $response = User::storeAvatar($request, $request->user_id);
+        return response()->json($response);
+    }
+    //----------------------------------------------------------
+    public function removeAvatar(Request $request)
+    {
+
+        if(!\Auth::user()->hasPermission('can-update-users'))
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+            return response()->json($response);
+        }
+
+        $rules = array(
+            'user_id' => 'required',
+        );
+
+        $validator = \Validator::make( $request->all(), $rules);
+        if ( $validator->fails() ) {
+
+            $errors             = errorsToArray($validator->errors());
+            $response['status'] = 'failed';
+            $response['errors'] = $errors;
+            return response()->json($response);
+        }
+
+
+        $response = User::removeAvatar($request, $request->user_id);
+        return response()->json($response);
+    }
+    //----------------------------------------------------------
     public function getProfile(Request $request)
     {
 
@@ -221,6 +278,18 @@ class UsersController extends Controller
             $response['data']['redirect_url'] = route('vh.backend');
         }
 
+        return response()->json($response);
+    }
+    //----------------------------------------------------------
+    public function storeProfileAvatar(Request $request)
+    {
+        $response = User::storeAvatar($request);
+        return response()->json($response);
+    }
+    //----------------------------------------------------------
+    public function removeProfileAvatar(Request $request)
+    {
+        $response = User::removeAvatar($request);
         return response()->json($response);
     }
     //----------------------------------------------------------

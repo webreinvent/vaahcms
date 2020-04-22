@@ -13,6 +13,7 @@ $settings =  [
     'frontend_theme' => 'vaahone',
     'frontend_theme_template' => 'vaahone',
     'root_folder' => 'VaahCms',
+    'allowed_file_upload_size' => '50',
     'root_folder_path' => base_path().'/VaahCms',
     'modules_path' => base_path().'/VaahCms/Modules',
     'themes_path' => base_path().'/VaahCms/Themes',

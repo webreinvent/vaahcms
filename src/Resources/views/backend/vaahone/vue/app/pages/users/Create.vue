@@ -172,6 +172,13 @@
                         ></b-input>
                     </b-field>
 
+                    <b-field label="Bio" :label-position="labelPosition">
+                        <b-input maxlength="250"
+                                 v-model="new_item.bio"
+                                 name="profile-bio" dusk="profile-bio"
+                                 type="textarea"></b-input>
+                    </b-field>
+
                     <b-field label="Timezone" :label-position="labelPosition">
                         <AutoCompleteTimeZone
                             :options="page.assets.timezones"

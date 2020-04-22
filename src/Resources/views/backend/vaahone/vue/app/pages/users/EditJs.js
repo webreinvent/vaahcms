@@ -1,6 +1,7 @@
 import GlobalComponents from '../../vaahvue/helpers/GlobalComponents'
 import DatePicker from '../../vaahvue/reusable/DatePicker'
 import AutoComplete from '../../vaahvue/reusable/AutoComplete'
+import FileUploader from '../../vaahvue/reusable/FileUploader'
 
 let namespace = 'users';
 
@@ -16,6 +17,7 @@ export default {
         DatePicker,
         'AutoCompleteTimeZone': AutoComplete,
         'AutoCompleteCountry': AutoComplete,
+        'AvatarUploader': FileUploader,
 
     },
     data()
@@ -256,7 +258,48 @@ export default {
                 new_item[key] = this.item[key];
             }
             this.update('new_item', new_item);
-        }
+        },
+        //---------------------------------------------------------------------
+        storeAvatar: function (data) {
+            console.log('--->data received', data);
+            this.$Progress.start();
+            let params = data;
+            params.user_id = this.item.id;
+            let url = this.ajax_url+'/avatar/store';
+            this.$vaah.ajax(url, params, this.storeAvatarAfter);
+        },
+        //---------------------------------------------------------------------
+        storeAvatarAfter: function (data, res) {
+            this.$Progress.finish();
+            if(data){
+                this.item.avatar = data.avatar;
+                this.item.avatar_url = data.avatar_url;
+                this.update('active_item', this.item);
+            }
+
+        },
+        //---------------------------------------------------------------------
+        removeAvatar: function () {
+            this.$Progress.start();
+            let params = {
+                user_id: this.item.id
+            };
+
+            let url = this.ajax_url+'/avatar/remove';
+            this.$vaah.ajax(url, params, this.removeAvatarAfter);
+        },
+        //---------------------------------------------------------------------
+        removeAvatarAfter: function (data, res) {
+            this.$Progress.finish();
+            if(data){
+                this.item.avatar = data.avatar;
+                this.item.avatar_url = data.avatar_url;
+                this.update('active_item', this.item);
+            }
+
+        },
+        //---------------------------------------------------------------------
+        //---------------------------------------------------------------------
         //---------------------------------------------------------------------
     }
 }

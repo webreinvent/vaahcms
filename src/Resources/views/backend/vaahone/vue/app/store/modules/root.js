@@ -46,54 +46,54 @@ export default {
 
             let root_assets = state.assets;
 
+            if(!root_assets)
+            {
+                let params = {};
 
-            let params = {};
+                params.get_server_details = true;
 
-            params.get_server_details = true;
+                params.get_auth_user = true;
 
-            params.get_auth_user = true;
+                params.get_extended_views = true;
 
-            params.get_extended_views = true;
+                params.get_extended_views = true;
 
-            params.get_extended_views = true;
+                let url = state.json_url + '/assets';
+                let data = await Vaah.ajax(url, params);
 
-            let url = state.json_url + '/assets';
-            let data = await Vaah.ajax(url, params);
+                if (!root_assets) {
+                    root_assets = {};
+                }
 
-            if (!root_assets) {
-                root_assets = {};
+                for (let index in data.data.data) {
+                    root_assets[index] = data.data.data[index];
+                }
+
+                let payload = {
+                    key: 'assets',
+                    value: root_assets
+                };
+
+                this.commit('root/updateState', payload);
             }
-
-            for (let index in data.data.data) {
-                root_assets[index] = data.data.data[index];
-            }
-
-            let payload = {
-                key: 'assets',
-                value: root_assets
-            };
-
-            this.commit('root/updateState', payload);
 
         },
         //-----------------------------------------------------------------
         async getPermissions({ state, commit, dispatch, getters }) {
 
+            if(!state.permissions)
+            {
+                let url = state.ajax_url+'/json/permissions';
+                let params = {};
+                let data = await Vaah.ajax(url, params);
 
-            let url = state.ajax_url+'/json/permissions';
-            let params = {};
-            let data = await Vaah.ajax(url, params);
+                let payload = {
+                    key: 'permissions',
+                    value: data.data.data.list
+                };
 
-            let payload = {
-                key: 'permissions',
-                value: data.data.data.list
-
-
-            };
-
-            commit('updateState', payload);
-
-
+                commit('updateState', payload);
+            }
 
         },
         //-----------------------------------------------------------------

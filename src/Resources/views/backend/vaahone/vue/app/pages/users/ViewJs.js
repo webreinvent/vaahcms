@@ -3,6 +3,7 @@ import TableTrView from '../../vaahvue/reusable/TableTrView'
 import TableTrActedBy from '../../vaahvue/reusable/TableTrActedBy'
 import TableTrTag from '../../vaahvue/reusable/TableTrTag'
 import TableTrStatus from './partials/TableTrStatus'
+import TableTrUrl from "../../vaahvue/reusable/TableTrUrl";
 
 let namespace = 'users';
 
@@ -20,6 +21,7 @@ export default {
         TableTrStatus,
         TableTrActedBy,
         TableTrTag,
+        TableTrUrl,
     },
     data()
     {

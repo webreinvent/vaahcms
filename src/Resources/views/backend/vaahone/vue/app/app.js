@@ -19,6 +19,7 @@ import FilePondPluginImagePreview from 'filepond-plugin-image-preview/dist/filep
 import FilePondPluginImageEdit from 'filepond-plugin-image-edit';
 import FilePondPluginImageCrop from 'filepond-plugin-image-crop';
 import FilePondPluginFileRename from 'filepond-plugin-file-rename';
+import FilePondPluginFileValidateSize from 'filepond-plugin-file-validate-size';
 
 import VaahVuePagination from 'vaah-vue-pagination'
 import VaahVueClickToCopy from 'vaah-vue-clicktocopy'
@@ -31,7 +32,8 @@ setOptions({
     instantUpload: false,
 });
 const FilePond = vueFilePond( FilePondPluginFileValidateType, FilePondPluginImagePreview,
-    FilePondPluginImageEdit, FilePondPluginImageCrop, FilePondPluginFileRename  );
+    FilePondPluginImageEdit, FilePondPluginImageCrop, FilePondPluginFileRename,
+    FilePondPluginFileValidateSize  );
 //---/File Uploader
 
 //---------Configs

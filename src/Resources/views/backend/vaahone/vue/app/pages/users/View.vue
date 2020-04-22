@@ -66,7 +66,7 @@
                                     Send Welcome Email
                                 </b-dropdown-item>
                                 <b-dropdown-item aria-role="listitem">
-                                    <b-icon icon="share "></b-icon>
+                                    <b-icon icon="envelope-square"></b-icon>
                                     Send Reset Password Email
                                 </b-dropdown-item>
 
@@ -116,12 +116,30 @@
 
                                 <tbody>
 
+                                <tr v-if="item.avatar">
+                                    <th align="right" class="is-vcentered"></th>
+                                    <td colspan="2" class="">
+                                        <div class="block has-text-centered">
+                                        <span class="image is-64x64">
+                                            <img class="is-rounded"
+                                                 :src="item.avatar">
+                                        </span>
+                                        </div>
+                                    </td>
+                                </tr>
+
                                 <template v-for="(value, label) in item">
 
                                     <template v-if="label == 'status'">
                                         <TableTrStatus :value="value"
                                                        :label="label">
                                         </TableTrStatus>
+                                    </template>
+
+                                    <template v-if="label == 'avatar'">
+                                        <TableTrUrl :value="value"
+                                                       :label="label">
+                                        </TableTrUrl>
                                     </template>
 
                                     <template v-else-if="label == 'is_active'">

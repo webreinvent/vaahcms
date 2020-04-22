@@ -1,11 +1,11 @@
 <template>
 
-    <div v-if="root_assets">
+    <div v-if="root_assets" class="filepond" :class="custom_class">
         <file-pond
             :name="file_name"
             :ref="uid"
             :id="uid"
-            :class-name="custom_class"
+            :maxFileSize="max_size"
             :label-idle="label"
             :allow-multiple="allow_multiple"
             allowImageEdit="true"
@@ -16,7 +16,7 @@
             :onprocessfile="onFileProcessed"
             v-bind:files="files"
             v-on:init="handleFilePondInit()"/>
-        <p class="help">Maximum size allowed is {{max_size}}MB. File Types: {{allowed_types}}</p>
+        <p class="help">Maximum size allowed is {{max_size}}. File Types: {{allowed_types}}</p>
     </div>
 
 
@@ -48,7 +48,7 @@ export default {
         custom_class: {
             type: String,
             default: function () {
-                return 'file_uploader';
+                return 'is-primary';
             }
         },
         label: {
@@ -74,8 +74,8 @@ export default {
             default: 'image/jpeg, image/png'
         },
         max_size: {
-            type: Number,
-            default: 2
+            type: String,
+            default: '2MB'
         },
 
     },
@@ -144,7 +144,10 @@ export default {
                         Vaah.processResponse(res);
                     },
                     onerror: function (error) {
-                        Vaah.processError(error);
+
+                        console.log('--->', error);
+
+                        //Vaah.processError(error);
                     },
                     ondata: function (formData) {
                         formData.append('folder_path', self.folder_path);

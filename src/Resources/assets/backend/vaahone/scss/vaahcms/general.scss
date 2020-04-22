@@ -1,13 +1,27 @@
-.filepond--wrapper{
+.container-backend{
+    margin-left: 46px;
+    .section{ padding: 1.5rem;}
+}
 
-    .filepond--root{
-        margin-bottom: 0;
+hr{
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.clickable{
+    cursor: pointer;
+}
+
+
+$width: map-get($screens, 'widescreen');
+@media (min-width: $width) {
+    .container{
+        max-width: 100%;
     }
-
-    .filepond--drop-label{
-        border: 1px dashed $grey-light;
-        border-radius: $default-border-radius;
-        background: $white;
+}
+$width: map-get($screens, 'tablet');
+@media (max-width: $width) {
+    .container-backend{
+        margin-left: 0px;
     }
-
 }

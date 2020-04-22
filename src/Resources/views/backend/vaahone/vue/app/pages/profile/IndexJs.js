@@ -162,21 +162,39 @@ export default {
 
         storeAvatar: function (data) {
             console.log('--->data received', data);
-            //this.$Progress.start();
-            let params = {};
-            let url = this.ajax_url+'/url';
-            //this.$vaah.ajax(url, params, this.fnAfter);
+            this.$Progress.start();
+            let params = data
+            let url = this.ajax_url+'/avatar/store';
+            this.$vaah.ajax(url, params, this.storeAvatarAfter);
         },
         //---------------------------------------------------------------------
-        fnAfter: function (data, res) {
+        storeAvatarAfter: function (data, res) {
             this.$Progress.finish();
             if(data){
-                this.update('list', data.list);
+                this.profile.avatar = data.avatar;
+                this.profile.avatar_url = data.avatar_url;
+                this.updateProfile();
             }
 
         },
         //---------------------------------------------------------------------
+        removeAvatar: function (data) {
+            console.log('--->data received', data);
+            this.$Progress.start();
+            let params = data
+            let url = this.ajax_url+'/avatar/remove';
+            this.$vaah.ajax(url, params, this.removeAvatarAfter);
+        },
+        //---------------------------------------------------------------------
+        removeAvatarAfter: function (data, res) {
+            this.$Progress.finish();
+            if(data){
+                this.profile.avatar = data.avatar;
+                this.profile.avatar_url = data.avatar_url;
+                this.updateProfile();
+            }
 
+        },
         //---------------------------------------------------------------------
         //---------------------------------------------------------------------
         //---------------------------------------------------------------------

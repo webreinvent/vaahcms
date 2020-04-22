@@ -21,9 +21,13 @@ class MediaController extends Controller
     public function upload(Request $request)
     {
 
+
+        $allowed_file_upload_size = config('vaahcms.allowed_file_upload_size');
+
         $input_file_name = null;
         $rules = array(
             'folder_path' => 'required',
+            'file' => 'max:'.$allowed_file_upload_size,
         );
 
         if($request->has('file_name'))
@@ -34,6 +38,8 @@ class MediaController extends Controller
             $rules['file'] = 'required';
             $input_file_name = 'file';
         }
+
+
 
         $validator = \Validator::make( $request->all(), $rules);
         if ( $validator->fails() ) {

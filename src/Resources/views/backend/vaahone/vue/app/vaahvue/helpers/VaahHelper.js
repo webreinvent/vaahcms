@@ -126,7 +126,7 @@ const VaahHelper = {
                     location.reload();
                 }
 
-                this.processError(processError);
+                this.processError(error);
 
                 if(callback) {
                     callback(false, error);

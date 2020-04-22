@@ -107,7 +107,85 @@ Route::group(
         Route::post('/store/password', 'UsersController@storeProfilePassword')
             ->name('backend.vaah.profile.store.password');
         //---------------------------------------------------------
+        Route::post('/avatar/store', 'UsersController@storeProfileAvatar')
+            ->name('backend.vaah.profile.avatar.store');
+        //---------------------------------------------------------
+        Route::post('/avatar/remove', 'UsersController@removeProfileAvatar')
+            ->name('backend.vaah.profile.avatar.remove');
+        //---------------------------------------------------------
     });
+
+
+
+Route::group(
+    [
+        'prefix' => 'backend/vaah/settings/localization',
+        'namespace'  => 'WebReinvent\VaahCms\Http\Controllers\Settings',
+        'middleware' => ['web', 'has.backend.access'],
+    ],
+    function () {
+        //---------------------------------------------------------
+        Route::any('/assets', 'LocalizationController@getAssets')
+            ->name('backend.vaah.localization.assets');
+        //---------------------------------------------------------
+        Route::post('/list', 'LocalizationController@getList')
+            ->name('backend.vaah.localization.list');
+        //---------------------------------------------------------
+        Route::post('/store/{id}', 'LocalizationController@postStore')
+            ->name('backend.vaah.localization.store');
+        //---------------------------------------------------------
+        Route::post('/store/language', 'LocalizationController@storeLanguage')
+            ->name('backend.vaah.localization.store');
+        //---------------------------------------------------------
+        Route::post('/store/category', 'LocalizationController@storeCategory')
+            ->name('backend.vaah.localization.store');
+        //---------------------------------------------------------
+        Route::post('/actions/{action_name}', 'LocalizationController@postActions')
+            ->name('backend.vaah.localization.actions');
+        //---------------------------------------------------------
+    });
+
+
+
+
+Route::group(
+    [
+        'prefix' => 'backend/vaah/users',
+        'namespace'  => 'WebReinvent\VaahCms\Http\Controllers',
+        'middleware' => ['web', 'has.backend.access'],
+    ],
+    function () {
+        //---------------------------------------------------------
+        Route::any('/assets', 'UsersController@getAssets')
+            ->name('backend.vaah.users.assets');
+        //---------------------------------------------------------
+        Route::post('/create', 'UsersController@postCreate')
+            ->name('backend.vaah.users.create');
+        //---------------------------------------------------------
+        Route::post('/list', 'UsersController@getList')
+            ->name('backend.vaah.users.list');
+        //---------------------------------------------------------
+        Route::any('/item/{id}', 'UsersController@getItem')
+            ->name('backend.vaah.users.item');
+        //---------------------------------------------------------
+        Route::any('/item/{id}/roles', 'UsersController@getItemRoles')
+            ->name('backend.vaah.users.role');
+        //---------------------------------------------------------
+        Route::post('/store/{id}', 'UsersController@postStore')
+            ->name('backend.vaah.users.store');
+        //---------------------------------------------------------
+        Route::post('/actions/{action_name}', 'UsersController@postActions')
+            ->name('backend.vaah.users.actions');
+        //---------------------------------------------------------
+        Route::post('/avatar/store', 'UsersController@storeAvatar')
+            ->name('backend.vaah.users.avatar.store');
+        //---------------------------------------------------------
+        Route::post('/avatar/remove', 'UsersController@removeAvatar')
+            ->name('backend.vaah.users.avatar.remove');
+        //---------------------------------------------------------
+    });
+
+
 
 //=================OLD ROUTES===========================================
 
@@ -197,67 +275,6 @@ Route::group(
 
 
 
-Route::group(
-    [
-        'prefix' => 'backend/vaah/settings/localization',
-        'namespace'  => 'WebReinvent\VaahCms\Http\Controllers\Settings',
-        'middleware' => ['web', 'has.backend.access'],
-    ],
-    function () {
-        //---------------------------------------------------------
-        Route::any('/assets', 'LocalizationController@getAssets')
-            ->name('backend.vaah.localization.assets');
-        //---------------------------------------------------------
-        Route::post('/list', 'LocalizationController@getList')
-            ->name('backend.vaah.localization.list');
-        //---------------------------------------------------------
-        Route::post('/store/{id}', 'LocalizationController@postStore')
-            ->name('backend.vaah.localization.store');
-        //---------------------------------------------------------
-        Route::post('/store/language', 'LocalizationController@storeLanguage')
-            ->name('backend.vaah.localization.store');
-        //---------------------------------------------------------
-        Route::post('/store/category', 'LocalizationController@storeCategory')
-            ->name('backend.vaah.localization.store');
-        //---------------------------------------------------------
-        Route::post('/actions/{action_name}', 'LocalizationController@postActions')
-            ->name('backend.vaah.localization.actions');
-        //---------------------------------------------------------
-    });
-
-
-
-
-Route::group(
-    [
-        'prefix' => 'backend/vaah/users',
-        'namespace'  => 'WebReinvent\VaahCms\Http\Controllers',
-        'middleware' => ['web', 'has.backend.access'],
-    ],
-    function () {
-        //---------------------------------------------------------
-        Route::any('/assets', 'UsersController@getAssets')
-            ->name('backend.vaah.users.assets');
-        //---------------------------------------------------------
-        Route::post('/create', 'UsersController@postCreate')
-            ->name('backend.vaah.users.create');
-        //---------------------------------------------------------
-        Route::post('/list', 'UsersController@getList')
-            ->name('backend.vaah.users.list');
-        //---------------------------------------------------------
-        Route::any('/item/{id}', 'UsersController@getItem')
-            ->name('backend.vaah.users.item');
-        //---------------------------------------------------------
-        Route::any('/item/{id}/roles', 'UsersController@getItemRoles')
-            ->name('backend.vaah.users.role');
-        //---------------------------------------------------------
-        Route::post('/store/{id}', 'UsersController@postStore')
-            ->name('backend.vaah.users.store');
-        //---------------------------------------------------------
-        Route::post('/actions/{action_name}', 'UsersController@postActions')
-            ->name('backend.vaah.users.actions');
-        //---------------------------------------------------------
-    });
 
 
 Route::group(

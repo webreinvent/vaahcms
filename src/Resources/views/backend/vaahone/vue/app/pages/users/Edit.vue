@@ -84,6 +84,35 @@
             <div class="card-content">
                 <div class="block">
 
+                    <article class="media">
+                        <figure class="media-left" v-if="item.avatar">
+                            <p class="image is-64x64">
+                                <img class="is-rounded"
+                                     :src="item.avatar">
+                            </p>
+                        </figure>
+                        <div class="media-content" >
+
+                            <AvatarUploader
+                                max_size="200KB"
+                                label="Upload user avatar"
+                                aspect_ratio="1:1"
+                                @afterUpload="storeAvatar"/>
+
+                            <br/>
+                            <b-button type="is-primary"
+                                      v-if="item.avatar_url"
+                                      @click="removeAvatar()">
+                                Remove Avatar
+                            </b-button>
+
+                        </div>
+                    </article>
+
+
+                    <hr/>
+                    <br/>
+
                     <b-field label="Email" :label-position="labelPosition">
                         <b-input type="email"  name="user-email" dusk="user-email"
                                  v-model="item.email"></b-input>
@@ -175,6 +204,13 @@
                         <b-input v-model="item.phone"
                                  name="user-phone" dusk="user-phone"
                         ></b-input>
+                    </b-field>
+
+                    <b-field label="Bio" :label-position="labelPosition">
+                        <b-input maxlength="250"
+                                 v-model="item.bio"
+                                 name="profile-bio" dusk="profile-bio"
+                                 type="textarea"></b-input>
                     </b-field>
 
                     <b-field label="Timezone" :label-position="labelPosition">
