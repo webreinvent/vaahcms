@@ -146,4 +146,13 @@ function vh_mail_sample_settings()
     return $list;
 }
 //-----------------------------------------------------------------------------------
+function vh_file_types()
+{
+    $list = [
+        ['slug' => 'jpeg', 'name'=>'jpeg'],
+        ['slug' => 'bmp', 'name'=>'bmp'],
+        ['slug' => 'png', 'name'=>'png'],
+    ];
+    return $list;
+}
 //-----------------------------------------------------------------------------------

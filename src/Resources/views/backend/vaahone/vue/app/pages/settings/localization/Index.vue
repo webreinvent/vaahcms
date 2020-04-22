@@ -1,4 +1,4 @@
-<script src="./ListJs.js"></script>
+<script src="./IndexJs.js"></script>
 <template>
     <div class="form-page-v1-layout">
 

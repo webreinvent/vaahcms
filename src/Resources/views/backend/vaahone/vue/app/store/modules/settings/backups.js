@@ -1,10 +1,10 @@
-import {VaahHelper as Vaah} from "../../vaahvue/helpers/VaahHelper";
+import {VaahHelper as Vaah} from "../../../vaahvue/helpers/VaahHelper";
 
 //---------Variables
 let base_url = document.getElementsByTagName('base')[0].getAttribute("href");
 //---------/Variables
 
-let ajax_url = base_url+"/backend/vaah/settings/localization";
+let ajax_url = base_url+"/backend/vaah/settings/backups";
 
 
 export default {
@@ -16,9 +16,6 @@ export default {
         assets_is_fetching: false,
         list: null,
         list_is_empty: false,
-        total_permissions: null,
-        total_users: null,
-        active_item: null,
         filters: {
             q: null,
         },
@@ -56,17 +53,12 @@ export default {
         //-----------------------------------------------------------------
         async getAssets({ state, commit, dispatch, getters }) {
 
-                let payload = {
-                    key: 'assets_is_fetching',
-                    value: true
-                };
-                commit('updateState', payload);
 
                 let url = state.ajax_url+'/assets';
                 let params = {};
                 console.log(url);
                 let data = await Vaah.ajax(url, params);
-                payload = {
+                let payload = {
                     key: 'assets',
                     value: data.data.data
                 };
@@ -83,7 +75,7 @@ export default {
             let view = {
                 key: 'list_view',
                 value: list_view
-            }
+            };
             commit('updateState', view);
         },
         //-----------------------------------------------------------------
@@ -93,9 +85,7 @@ export default {
         state(state) {return state;},
         ajax_url(state) {return state.ajax_url;},
         assets(state) {return state.assets;},
-        new_item(state) {return state.new_item;},
         query_string(state) {return state.query_string;},
-        split_view(state) {return state.split_view;},
     }
 
 }
