@@ -151,7 +151,7 @@ export default {
             this.getItemPermissions(this.filter.page);
             this.update('is_list_loading', false);
             this.$emit('eReloadList');
-            this.$store.dispatch('root/getPermissions');
+            this.$store.dispatch('root/reloadPermissions');
 
         },
         //---------------------------------------------------------------------
@@ -215,7 +215,7 @@ export default {
         //---------------------------------------------------------------------
         changeItemStatusAfter: function (data,res) {
             this.getItemPermissions(this.filter.page);
-            this.$store.dispatch('root/getPermissions');
+            this.$store.dispatch('root/reloadPermissions');
         },
         //---------------------------------------------------------------------
         hasPermission: function(slug)

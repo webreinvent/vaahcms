@@ -143,7 +143,7 @@ export default {
             this.getItemRoles(this.filter.page);
             this.update('is_list_loading', false);
             this.$emit('eReloadList');
-            this.$store.dispatch('root/getPermissions');
+            this.$store.dispatch('root/reloadPermissions');
         },
         //---------------------------------------------------------------------
         delayedSearch: function()

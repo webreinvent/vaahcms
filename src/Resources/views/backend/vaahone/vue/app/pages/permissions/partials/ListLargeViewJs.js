@@ -73,7 +73,7 @@ export default {
         changeStatusAfter: function (data,res) {
             this.$emit('eReloadList');
             this.update('is_list_loading', false);
-            this.$store.dispatch('root/getPermissions');
+            this.$store.dispatch('root/reloadPermissions');
 
         },
         //---------------------------------------------------------------------

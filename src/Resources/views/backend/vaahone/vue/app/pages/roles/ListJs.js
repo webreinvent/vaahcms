@@ -249,7 +249,7 @@ export default {
                 this.$root.$emit('eReloadItem');
                 this.resetBulkAction();
                 this.getList();
-                this.$store.dispatch('root/getPermissions');
+                this.$store.dispatch('root/reloadPermissions');
             } else
             {
                 this.$Progress.finish();

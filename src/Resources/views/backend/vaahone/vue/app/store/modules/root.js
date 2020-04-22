@@ -28,7 +28,9 @@ export default {
         json_url: json_url,
         assets: null,
         assets_is_fetching: null,
+        assets_reload: false,
         permissions: null,
+        permissions_reload: false,
         check_logged_in: null,
         is_logged_in: null,
     },
@@ -46,7 +48,7 @@ export default {
 
             let root_assets = state.assets;
 
-            if(!root_assets)
+            if(!root_assets || state.assets_reload == true)
             {
                 let params = {};
 
@@ -75,13 +77,30 @@ export default {
                 };
 
                 this.commit('root/updateState', payload);
+
+                payload = {
+                    key: 'assets_reload',
+                    value: false
+                };
+
+                this.commit('root/updateState', payload);
+
             }
 
         },
         //-----------------------------------------------------------------
+        reloadAssets: function ({ state, commit, dispatch, getters }) {
+            let payload = {
+                key: 'assets_reload',
+                value: true
+            };
+            commit('updateState', payload);
+            dispatch('getAssets');
+        },
+        //-----------------------------------------------------------------
         async getPermissions({ state, commit, dispatch, getters }) {
 
-            if(!state.permissions)
+            if(!state.permissions || state.permissions_reload == true)
             {
                 let url = state.ajax_url+'/json/permissions';
                 let params = {};
@@ -93,10 +112,26 @@ export default {
                 };
 
                 commit('updateState', payload);
+
+                payload = {
+                    key: 'permissions_reload',
+                    value: false
+                };
+
+                commit('updateState', payload);
+
             }
 
         },
         //-----------------------------------------------------------------
+        reloadPermissions: function ({ state, commit, dispatch, getters }) {
+            let payload = {
+                key: 'permissions_reload',
+                value: true
+            };
+            commit('updateState', payload);
+            dispatch('getPermissions');
+        },
         //-----------------------------------------------------------------
     },
     //=========================================================================

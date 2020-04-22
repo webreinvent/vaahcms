@@ -44,6 +44,16 @@ export default {
     },
     methods: {
         //---------------------------------------------------------------------
+        updateRoot: function(name, value)
+        {
+            let update = {
+                state_name: name,
+                state_value: value,
+                namespace: 'root',
+            };
+            this.$vaah.updateState(update);
+        },
+        //---------------------------------------------------------------------
         update: function(name, value)
         {
             let update = {
@@ -143,7 +153,7 @@ export default {
             this.getItemRoles(this.filter.page);
             this.update('is_list_loading', false);
             this.$emit('eReloadList');
-            this.$store.dispatch('root/getPermissions');
+            this.$store.dispatch('root/reloadPermissions');
         },
         //---------------------------------------------------------------------
         delayedSearch: function()

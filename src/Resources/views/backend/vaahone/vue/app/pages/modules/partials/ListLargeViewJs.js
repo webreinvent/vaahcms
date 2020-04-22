@@ -51,7 +51,7 @@ export default {
         //---------------------------------------------------------------------
         async getRootAssets() {
             console.log('--->root assets');
-            await this.$store.dispatch('root/getAssets');
+            await this.$store.dispatch('root/reloadAssets');
         },
         //---------------------------------------------------------------------
         setRowClass: function(row, index)
