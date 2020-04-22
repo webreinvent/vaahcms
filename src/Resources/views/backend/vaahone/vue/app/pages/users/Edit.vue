@@ -209,8 +209,14 @@
                     <b-field label="Bio" :label-position="labelPosition">
                         <b-input maxlength="250"
                                  v-model="item.bio"
-                                 name="profile-bio" dusk="profile-bio"
+                                 name="user-bio" dusk="user-bio"
                                  type="textarea"></b-input>
+                    </b-field>
+
+                    <b-field label="Website" :label-position="labelPosition">
+                        <b-input v-model="item.website"
+                                 name="user-website" dusk="user-website"
+                        ></b-input>
                     </b-field>
 
                     <b-field label="Timezone" :label-position="labelPosition">

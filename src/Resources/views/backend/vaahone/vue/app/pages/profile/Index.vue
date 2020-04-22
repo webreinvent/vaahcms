@@ -189,6 +189,12 @@
                                              type="textarea"></b-input>
                                 </b-field>
 
+                                <b-field label="Website" :label-position="labelPosition">
+                                    <b-input v-model="profile.website"
+                                             name="profile-website" dusk="profile-website"
+                                    ></b-input>
+                                </b-field>
+
                                 <b-field label="Timezone" :label-position="labelPosition">
                                     <AutoCompleteTimeZone
                                         :selected_value="profile.timezone"

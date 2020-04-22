@@ -179,6 +179,12 @@
                                  type="textarea"></b-input>
                     </b-field>
 
+                    <b-field label="Website" :label-position="labelPosition">
+                        <b-input v-model="new_item.website"
+                                 name="register-website" dusk="register-website"
+                        ></b-input>
+                    </b-field>
+
                     <b-field label="Timezone" :label-position="labelPosition">
                         <AutoCompleteTimeZone
                             :options="page.assets.timezones"
