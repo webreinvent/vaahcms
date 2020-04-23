@@ -23,8 +23,14 @@
                                 <div class="field has-addons is-pulled-right">
                                     <p  class="control">
                                         <b-button type="is-light"
-                                                  icon-left="plus">
-                                            Add
+                                                  icon-left="angle-double-down">
+                                            Expand All
+                                        </b-button>
+                                    </p>
+                                    <p  class="control">
+                                        <b-button type="is-light"
+                                                  icon-left="angle-double-up">
+                                            Collapse All
                                         </b-button>
                                     </p>
                                 </div>
@@ -34,9 +40,136 @@
                         <!--/header-->
 
                         <!--content-->
-                        <div class="card-content has-background-white-bis">
+                        <div class="card-content">
 
 
+                            <div class="block">
+
+
+                                <b-collapse :open="false" aria-id="contentIdForA11y1">
+
+                                    <div class="level" slot="trigger"
+                                         aria-controls="contentIdForA11y1">
+
+                                        <div class="label-left">
+                                            <h4 class="title is-5">Site Settings</h4>
+                                            <h2 class="subtitle is-6">After a successful password update, you will be redirected to the login page where you can log in with your new password.</h2>
+                                        </div>
+                                        <div class="label-right">
+                                            <b-button aria-controls="contentIdForA11y1"  slot="trigger">Expand</b-button>
+                                        </div>
+
+                                    </div>
+
+
+                                    <div class="block">
+
+                                        <b-field label="Name" message="Testing Testing">
+                                            <b-input></b-input>
+                                        </b-field>
+
+                                        <b-field label="Message">
+                                            <b-input maxlength="200" type="textarea"></b-input>
+                                        </b-field>
+                                    </div>
+                                </b-collapse>
+
+
+                                <hr class="has-margin-top-20"/>
+                            </div>
+
+                            <div class="block">
+
+
+                                <b-collapse :open="false" aria-id="contentIdForA11y1">
+
+                                    <div class="level" slot="trigger"
+                                         aria-controls="contentIdForA11y1">
+
+                                        <div class="label-left">
+                                            <h4 class="title is-5">Site Settings</h4>
+                                            <h2 class="subtitle is-6">After a successful password update, you will be redirected to the login page where you can log in with your new password.</h2>
+                                        </div>
+                                        <div class="label-right">
+                                            <b-button aria-controls="contentIdForA11y1"  slot="trigger">Expand</b-button>
+                                        </div>
+
+                                    </div>
+
+
+                                    <div class="block">
+
+                                        <b-field label="Name" message="Testing Testing">
+                                            <b-input></b-input>
+                                        </b-field>
+
+                                        <b-field label="Message">
+                                            <b-input maxlength="200" type="textarea"></b-input>
+                                        </b-field>
+                                    </div>
+                                </b-collapse>
+
+
+                                <hr class="has-margin-top-20"/>
+                            </div>
+
+                            <div class="block">
+
+
+                                <b-collapse :open="false" aria-id="contentIdForA11y1">
+
+                                    <div class="level" slot="trigger"
+                                         aria-controls="contentIdForA11y1">
+
+                                        <div class="label-left">
+                                            <h4 class="title is-5">Site Settings</h4>
+                                            <h2 class="subtitle is-6">After a successful password update, you will be redirected to the login page where you can log in with your new password.</h2>
+                                        </div>
+                                        <div class="label-right">
+                                            <b-button aria-controls="contentIdForA11y1"  slot="trigger">Expand</b-button>
+                                        </div>
+
+                                    </div>
+
+
+                                    <div class="block">
+
+                                        <b-field label="Name" message="Testing Testing">
+                                            <b-input></b-input>
+                                        </b-field>
+
+                                        <b-field label="Message">
+                                            <b-input maxlength="200" type="textarea"></b-input>
+                                        </b-field>
+                                    </div>
+                                </b-collapse>
+
+
+                                <hr class="has-margin-top-20"/>
+                            </div>
+
+
+
+                            <br/>
+                            <br/>
+                            <br/>
+                            <br/>
+                            <br/>
+                            <br/>
+                            <br/>
+                            <br/>
+                            <br/>
+                            <br/>
+                            <br/>
+                            <br/>
+                            <br/>
+                            <br/>
+                            <br/>
+                            <br/>
+                            <br/>
+                            <br/>
+                            <br/>
+                            <hr/>
 
 
                             <!--repeatable-->
