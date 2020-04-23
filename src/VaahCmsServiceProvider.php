@@ -2,6 +2,7 @@
 
 use Illuminate\Routing\Router;
 use Illuminate\Support\ServiceProvider;
+use WebReinvent\VaahCms\Entities\Setting;
 use WebReinvent\VaahCms\Facades\VaahExcelFacade;
 use WebReinvent\VaahCms\Facades\VaahFileFacade;
 use WebReinvent\VaahCms\Providers\FacadesServiceProvider;
@@ -32,6 +33,7 @@ class VaahCmsServiceProvider extends ServiceProvider {
 
         $this->registerMiddleware($router);
         $this->registerConfigs();
+        $this->registerGlobalSettings();
         $this->registerMigrations();
         $this->registerSeeders();
         $this->registerViews();
@@ -47,7 +49,7 @@ class VaahCmsServiceProvider extends ServiceProvider {
      */
     public function register() {
 
-        $this->registerConfigs();
+
         $this->registerProviders();
         $this->registerAlias();
         $this->registerHelpers();
@@ -150,6 +152,24 @@ class VaahCmsServiceProvider extends ServiceProvider {
         $this->publishes([$configPath => config_path('vaahcms.php')], 'config');
 
         $this->mergeConfigFrom($configPath, 'vaahcms');
+
+    }
+
+    /**
+     *
+     */
+    private function registerGlobalSettings() {
+
+        if(!config('settings'))
+        {
+            $global_settings = Setting::where('category', 'global')
+                ->get()
+                ->pluck('value', 'key' )->toArray();
+
+            config([
+                'settings.global' => $global_settings
+            ]);
+        }
 
     }
 

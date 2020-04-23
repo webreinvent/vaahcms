@@ -11,6 +11,21 @@
 
             <template slot="start" v-if="assets.extended_views" >
 
+                <b-tooltip label="Visit Site"
+                           position="is-bottom">
+                    <b-navbar-item target="_blank" :href="assets.urls.public">
+
+                        <b-icon
+                            icon="external-link-alt"
+                            size="is-small">
+                        </b-icon>
+
+
+                    </b-navbar-item>
+                </b-tooltip>
+
+
+
                 <template  v-for="menus in assets.extended_views.top_left_menu">
 
                     <template v-for="link in menus">

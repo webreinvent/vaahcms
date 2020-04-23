@@ -28,6 +28,8 @@ Route::group(
         Route::any( '/assets', 'GeneralController@getAssets' )
             ->name( 'vh.backend.settings.general.assets' );
         //------------------------------------------------
+        Route::any( '/list', 'GeneralController@getList' )
+            ->name( 'vh.backend.settings.general.list' );
         //------------------------------------------------
         //------------------------------------------------
     });

@@ -7,6 +7,7 @@ use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use VaahCms\Modules\Cms\Entities\MenuItem;
 use VaahCms\Modules\Cms\Entities\Page;
+use WebReinvent\VaahCms\Entities\Module;
 
 class WelcomeController extends Controller
 {
@@ -22,6 +23,12 @@ class WelcomeController extends Controller
     //----------------------------------------------------------
     public function index()
     {
+
+        //if CMS module is not installed or active
+        if(!Module::slug('cms')->active()->exists())
+        {
+            return view($this->theme.'::frontend.default');
+        }
 
         $menu_item = MenuItem::where('is_home', 1)->first();
 
@@ -40,7 +47,7 @@ class WelcomeController extends Controller
         }
 
 
-        return view($this->theme.'::page-templates.'.$template_name)->with('data', $page);
+        return view($this->theme.'::frontend.page-templates.'.$template_name)->with('data', $page);
 
 
     }

@@ -15,7 +15,7 @@ Route::group(
     [
         'prefix'     => '/',
         'middleware' => ['web', 'set.theme.details'],
-        'namespace'  => 'WebReinvent\VaahCms\Http\Controllers'
+        'namespace'  => 'WebReinvent\VaahCms\Http\Controllers\Frontend'
     ],
     function () {
         //------------------------------------------------

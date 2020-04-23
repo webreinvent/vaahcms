@@ -84,8 +84,42 @@ function vh_get_theme_view_path($name)
     return $theme_path;
 }
 //-----------------------------------------------------------------------------------
+function vh_get_vaahcms_theme()
+{
+    $theme = new stdClass();
+    $theme->name = "VaahCms";
+    $theme->title = "VaahCms Default Theme";
+    $theme->slug = "vaahcms";
+    $theme->thumbnail = "https://placehold.jp/300x160.png";
+    $theme->excerpt = "VaahCms Default Theme";
+    $theme->description = "VaahCms Default Theme";
+    $theme->download_link = null;
+    $theme->author_name = "Vaah";
+    $theme->author_website = "https://vaah.dev";
+    $theme->vaah_url = "";
+    $theme->version = "1.0.0";
+    $theme->version_number = "1";
+    $theme->db_table_prefix = null;
+    $theme->is_migratable = null;
+    $theme->is_sample_data_available = null;
+    $theme->is_update_available = null;
+    $theme->is_assets_published = null;
+    $theme->update_checked_at = null;
+    $theme->is_active = true;
+    $theme->created_at = null;
+    $theme->updated_at = null;
+    $theme->deleted_at = null;
+
+    return $theme;
+}
+//-----------------------------------------------------------------------------------
 function vh_get_theme_from_slug($theme_slug=null)
 {
+    if(!$theme_slug)
+    {
+        return vh_get_vaahcms_theme();
+    }
+
     if(is_null($theme_slug))
     {
         $theme = \WebReinvent\VaahCms\Entities\Theme::whereNotNull('is_active')->first();

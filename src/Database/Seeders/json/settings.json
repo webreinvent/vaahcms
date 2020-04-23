@@ -1,0 +1,8 @@
+[
+    {"category": "global", "key": "site_title", "value": "VaahCMS" },
+    {"category": "global", "key": "site_description", "value": "Another awesome site on VaahCMS" },
+    {"category": "global", "key": "language", "value": "en" },
+    {"category": "global", "key": "search_engine_visibility", "value": true },
+    {"category": "global", "key": "maintenance", "value": false }
+
+]

@@ -9,6 +9,7 @@ use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\File;
 use WebReinvent\VaahCms\Entities\Role;
+use WebReinvent\VaahCms\Entities\Setting;
 use WebReinvent\VaahCms\Libraries\VaahBackup;
 
 
@@ -33,6 +34,19 @@ class GeneralController extends Controller
         return response()->json($response);
     }
     //----------------------------------------------------------
+    public function getList(Request $request)
+    {
+
+        $data = [];
+
+        $data['list'] = Setting::getGlobalSettings($request);
+
+        $response['status'] = 'success';
+        $response['data'] = $data;
+
+        return response()->json($response);
+
+    }
 
     //----------------------------------------------------------
     //----------------------------------------------------------

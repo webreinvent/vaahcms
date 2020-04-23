@@ -22,6 +22,7 @@ class VaahCmsTableSeeder extends Seeder
         $this->seedRoles();
         $this->seedLanguages();
         $this->seedLanguageCategories();
+        $this->seedSettings();
 
     }
     //------------------------------------------------------------
@@ -131,6 +132,30 @@ class VaahCmsTableSeeder extends Seeder
         $this->storeSeeds('vh_lang_categories', $list);
 
     }
+    //---------------------------------------------------------------
+    public function seedSettings()
+    {
+
+
+        $list = $this->getListFromJson("settings.json");
+
+        foreach($list as $item)
+        {
+            $exist = \DB::table( 'vh_settings' )
+                ->where( 'category', $item['category'] )
+                ->where( 'key', $item['key'] )
+                ->first();
+
+            if (!$exist){
+                \DB::table( 'vh_settings' )->insert( $item );
+            }
+        }
+
+    }
+    //---------------------------------------------------------------
+    //---------------------------------------------------------------
+    //---------------------------------------------------------------
+    //---------------------------------------------------------------
 
 
 }
