@@ -1,0 +1,51 @@
+.form-setting{
+
+    .subtitle{
+        color: $grey;
+    }
+
+    .title{
+        &.is-5{
+            font-size: 1.15rem;
+        }
+    }
+
+    .columns-settings{
+        padding: 20px 0 20px 0;
+    }
+
+    .field{
+        .button, .input{
+            height: 2em;
+            font-size: 0.9rem;
+            padding: calc(.375em - 7px) .75em;
+        }
+
+        .select:not(.is-multiple), select{
+            height: 2em;
+            font-size: 0.9rem;
+            padding-top: calc(0.375em - 3px);
+        }
+
+        .control.has-icons-left .icon, .control.has-icons-right .icon{
+            height: 1.9em;
+        }
+
+        .taginput{
+            .input{
+                padding: calc(.375em - 7px) 2em;
+            }
+            .icon{
+                height: 1.9em;
+            }
+            .taginput-container>.tags .tag{
+                font-size: 1.1em;
+            }
+            .taginput-container{
+                padding-top: 0.3em !important;
+                padding-bottom: 0.2em;
+            }
+        }
+    }
+
+}

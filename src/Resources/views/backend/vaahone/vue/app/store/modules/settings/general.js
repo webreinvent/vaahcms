@@ -14,6 +14,8 @@ export default {
         ajax_url: ajax_url,
         assets: null,
         assets_is_fetching: false,
+        list: null,
+
         settings:{
             general:{
                 search_engine_visibility: true,
@@ -48,11 +50,6 @@ export default {
                 {
                     name: 'Github',
                     slug: 'github',
-                    url: '',
-                },
-                {
-                    name: 'Instagram',
-                    slug: 'instagram',
                     url: '',
                 }
             ],
@@ -137,6 +134,7 @@ export default {
         ajax_url(state) {return state.ajax_url;},
         assets(state) {return state.assets;},
         query_string(state) {return state.query_string;},
+        list(state) {return state.list;},
         settings(state) {return state.settings;},
     }
 

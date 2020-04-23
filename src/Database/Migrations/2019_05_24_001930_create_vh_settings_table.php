@@ -26,6 +26,8 @@ class CreateVhSettingsTable extends Migration
             $table->string('type')->nullable();
             $table->string('key')->nullable();
             $table->text('value')->nullable();
+            $table->json('meta')->nullable();
+
             $table->timestamps();
 
         });

@@ -17,13 +17,25 @@ class Setting extends Model {
     protected $fillable = [
         'settingable_id',
         'settingable_type',
+        'category',
         'label',
         'excerpt',
         'type',
         'key',
         'value',
+        'meta',
     ];
 
+    //-------------------------------------------------
+    public function getValueAttribute($value) {
+
+        if(isset($this->type) && $this->type == 'json')
+        {
+            return json_decode($value);
+        }
+
+        return $value;
+    }
     //-------------------------------------------------
     public function scopeKey( $query, $key ) {
         return $query->where( 'key', $key );
@@ -35,7 +47,7 @@ class Setting extends Model {
         return $this->morphTo();
     }
     //-------------------------------------------------
-    public function getGlobalSettings($request)
+    public static function getGlobalSettings($request)
     {
 
         $global_settings = Setting::where('category', 'global')
