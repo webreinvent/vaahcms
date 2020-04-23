@@ -61,6 +61,19 @@ export default {
             await this.$store.dispatch(this.namespace+'/getAssets');
         },
         //---------------------------------------------------------------------
+        expandAll: function () {
+
+            $('.collapse-content').each(function (index, item) {
+                $(item).slideDown();
+            });
+
+        },
+        //---------------------------------------------------------------------
+        collapseAll: function () {
+            $('.collapse-content').each(function (index, item) {
+                $(item).slideUp();
+            });
+        },
         //---------------------------------------------------------------------
         //---------------------------------------------------------------------
     }

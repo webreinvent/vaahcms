@@ -156,3 +156,12 @@ function vh_file_types()
     return $list;
 }
 //-----------------------------------------------------------------------------------
+function vh_meta_attributes()
+{
+    $list = [
+        ['slug' => 'name', 'name'=>'name'],
+        ['slug' => 'property', 'name'=>'property'],
+    ];
+    return $list;
+}
+//-----------------------------------------------------------------------------------
