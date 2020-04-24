@@ -28,16 +28,11 @@
                         <div class="block has-padding-10">
 
 
-                            <div class="block" v-for="meta in settings.meta_tags">
+                            <div class="block" v-if="tags.length > 0" v-for="tag in tags">
 
-                                <b-field :label="meta.label" :label-position="labelPosition">
+                                <b-field :label="tag.label" :label-position="labelPosition">
 
-                                    <p class="control" v-if="meta.attribute">
-                                        <a class="button is-static">
-                                            {{ meta.attribute }}                                                                </a>
-                                    </p>
-
-                                    <b-select v-else placeholder="Select attribute">
+                                    <b-select v-model="tag.value.attribute" placeholder="Select attribute">
                                         <option
                                             v-for="attr in assets.vh_meta_attributes"
                                             :value="attr.slug"
@@ -47,24 +42,18 @@
                                     </b-select>
 
 
-                                    <p class="control" v-if="meta.property_value">
-                                        <a class="button is-static">
-                                            {{meta.property_value}}
-                                        </a>
-                                    </p>
-
-                                    <b-input v-else v-model="meta.property_value"></b-input>
+                                    <b-input v-model="tag.value.attribute_value"></b-input>
 
                                     <p class="control">
                                         <a class="button is-static">
                                             Content:
                                         </a>
                                     </p>
-                                    <b-input expanded v-model="meta.content"></b-input>
+                                    <b-input expanded v-model="tag.value.content"></b-input>
 
                                     <p class="control">
                                         <b-tooltip label="Delete" type="is-dark">
-                                            <b-button icon-left="trash"></b-button>
+                                            <b-button @click="removeTag(tag)" icon-left="trash"></b-button>
                                         </b-tooltip>
                                     </p>
 
@@ -79,7 +68,9 @@
 
                                 <b-field>
                                     <p class="control">
-                                        <b-button type="is-success" icon-left="plus">Add Meta Tag</b-button>
+                                        <b-button type="is-success"
+                                                  @click="addTag"
+                                                  icon-left="plus">Add Meta Tag</b-button>
                                     </p>
                                     <p class="control">
                                         <b-button type="is-primary">Save</b-button>
@@ -92,19 +83,19 @@
                                 </b-field>
 
                                 <b-field class="has-margin-left-20">
-                                    <b-select placeholder="Select Meta Tags Group">
+                                    <b-select v-model="tag_type" placeholder="Select Meta Tags Group">
+
+                                        <option value="google-webmaster">
+                                            Google Webmaster
+                                        </option>
+
                                         <option value="open-graph">
-                                            Open Graph
+                                            Open Graph (Facebook)
                                         </option>
-                                        <option value="facebook">
-                                            Facebook
-                                        </option>
-                                        <option value="twitter">
-                                            Twitter
-                                        </option>
+
                                     </b-select>
                                     <p class="control">
-                                        <b-button type="is-primary">Generate</b-button>
+                                        <b-button @click="generateTags()" type="is-primary">Generate</b-button>
                                     </p>
                                 </b-field>
 

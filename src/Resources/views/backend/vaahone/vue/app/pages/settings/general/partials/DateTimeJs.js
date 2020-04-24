@@ -26,21 +26,10 @@ export default {
             namespace:namespace,
             labelPosition: 'on-border',
             inputs: {
-                copyright_text_custom: false,
-                copyright_link_custom: false,
-                copyright_year_custom: false,
-                search_engine_visibility:{
-                    type: null,
-                    message: null,
-                },
-                maintenance_mode:{
-                    type: null,
-                    message: null,
-                },
-                password_protection:{
-                    type: null,
-                    message: null,
-                },
+                date_format_custom: false,
+                time_format_custom: false,
+                datetime_format_custom: false,
+
 
             },
         };
@@ -49,107 +38,72 @@ export default {
     },
     watch: {
 
-        'list.copyright_text': {
+        'list.date_format': {
             deep: true,
             handler(new_val, old_val) {
-                if(new_val == 'app_name')
+                if(new_val == 'Y-m-d' || new_val == 'Y/m/d' || new_val == 'Y.m.d')
                 {
-                    this.inputs.copyright_text_custom = false;
+                    this.inputs.date_format_custom = false;
+                } else {
+                    this.inputs.date_format_custom = true;
                 }
             }
         },
-        'inputs.copyright_text_custom': {
+        'inputs.date_format_custom': {
             deep: true,
             handler(new_val, old_val) {
                 if(new_val)
                 {
-                    this.list.copyright_text = '';
+                    this.list.date_format = '';
                     this.updateList();
                 }
             }
         },
 
-        'list.copyright_link': {
+        'list.time_format': {
             deep: true,
             handler(new_val, old_val) {
-                if(new_val == 'app_url')
+                if(new_val == 'H:i:s' || new_val == 'h:i A' || new_val == 'h:i:s A')
                 {
-                    this.inputs.copyright_link_custom = false;
+                    this.inputs.time_format_custom = false;
+                } else {
+                    this.inputs.time_format_custom = true;
                 }
             }
         },
-        'inputs.copyright_link_custom': {
+        'inputs.time_format_custom': {
             deep: true,
             handler(new_val, old_val) {
                 if(new_val)
                 {
-                    this.list.copyright_link = '';
+                    this.list.time_format = '';
                     this.updateList();
                 }
             }
         },
 
-        'list.copyright_year': {
+        'list.datetime_format': {
             deep: true,
             handler(new_val, old_val) {
-                if(new_val == 'use_current_year')
+                if(new_val == 'Y-m-d H:i:s' || new_val == 'F j, Y h:i A' || new_val == 'd-M-Y H:i')
                 {
-                    this.inputs.copyright_year_custom = false;
+                    this.inputs.datetime_format_custom = false;
+                } else {
+                    this.inputs.datetime_format_custom = true;
                 }
             }
         },
-        'inputs.copyright_year_custom': {
+        'inputs.datetime_format_custom': {
             deep: true,
             handler(new_val, old_val) {
                 if(new_val)
                 {
-                    this.list.copyright_year = '';
+                    this.list.datetime_format = '';
                     this.updateList();
                 }
             }
         },
-        'list.search_engine_visibility': {
-            deep: true,
-            handler(new_val, old_val) {
-                if(new_val == 1)
-                {
-                    this.inputs.search_engine_visibility.type = null;
-                    this.inputs.search_engine_visibility.message = null;
-                } else
-                {
-                    this.inputs.search_engine_visibility.type = 'is-danger';
-                    this.inputs.search_engine_visibility.message = "The site will be discouraged to be indexed by search engines";
-                }
-            }
-        },
-        'list.maintenance_mode': {
-            deep: true,
-            handler(new_val, old_val) {
-                if(new_val == 0)
-                {
-                    this.inputs.maintenance_mode.type = null;
-                    this.inputs.maintenance_mode.message = null;
-                } else
-                {
-                    this.inputs.maintenance_mode.type = 'is-danger';
-                    this.inputs.maintenance_mode.message = "The site will display a maintenance page only.";
-                }
-            }
-        },
-        'list.password_protection': {
-            deep: true,
-            handler(new_val, old_val) {
-                if(new_val == 0)
-                {
-                    this.inputs.password_protection.type = null;
-                    this.inputs.password_protection.message = null;
-                } else
-                {
-                    this.inputs.password_protection.type = 'is-danger';
-                    this.inputs.password_protection.message = "The site will only be accessing using this password.";
-                }
-            }
-        },
+
 
     },
     mounted() {
@@ -163,7 +117,7 @@ export default {
             let update = {
                 state_name: name,
                 state_value: value,
-                namespace: namespace,
+                namespace: this.namespace,
             };
             this.$vaah.updateState(update);
         },
@@ -173,7 +127,7 @@ export default {
             let update = {
                 state_name: 'list',
                 state_value: this.list,
-                namespace: namespace,
+                namespace: this.namespace,
             };
             this.$vaah.updateState(update);
         },

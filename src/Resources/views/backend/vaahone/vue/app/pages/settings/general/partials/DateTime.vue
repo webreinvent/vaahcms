@@ -31,32 +31,31 @@
 
                             <b-field  expanded
                                       label="Date Format"
-                                      class="has-margin-bottom-15"
                                       :label-position="labelPosition">
 
                                 <b-radio-button native-value="Y-m-d"
-                                                v-model="settings.formats.date">
+                                                v-model="list.date_format">
                                     <span>Y-m-d</span>
                                 </b-radio-button>
 
                                 <b-radio-button native-value="Y/m/d"
-                                                v-model="settings.formats.date">
+                                                v-model="list.date_format">
                                     <span>Y/m/d</span>
                                 </b-radio-button>
 
                                 <b-radio-button native-value="Y.m.d"
-                                                v-model="settings.formats.date">
+                                                v-model="list.date_format">
                                     <span>Y.m.d</span>
                                 </b-radio-button>
 
-                                <b-radio-button native-value="custom"
-                                                v-model="settings.formats.date_type">
+                                <b-radio-button :native-value="true"
+                                                v-model="inputs.date_format_custom">
                                     <span>Custom</span>
                                 </b-radio-button>
 
                                 <b-input expanded type="text"
-                                         v-if="settings.formats.date_type"
-                                         v-model="settings.formats.date"
+                                         v-if="inputs.date_format_custom"
+                                         v-model="list.date_format"
                                          placeholder="Type valid date format">
                                 </b-input>
 
@@ -73,28 +72,28 @@
                                       :label-position="labelPosition">
 
                                 <b-radio-button native-value="H:i:s"
-                                                v-model="settings.formats.time">
+                                                v-model="list.time_format">
                                     <span>H:i:s</span>
                                 </b-radio-button>
 
                                 <b-radio-button native-value="h:i A"
-                                                v-model="settings.formats.time">
+                                                v-model="list.time_format">
                                     <span>h:i A</span>
                                 </b-radio-button>
 
                                 <b-radio-button native-value="h:i:s A"
-                                                v-model="settings.formats.time">
+                                                v-model="list.time_format">
                                     <span>h:i:s A</span>
                                 </b-radio-button>
 
-                                <b-radio-button native-value="custom"
-                                                v-model="settings.formats.time_type">
+                                <b-radio-button :native-value="true"
+                                                v-model="inputs.time_format_custom">
                                     <span>Custom</span>
                                 </b-radio-button>
 
                                 <b-input expanded type="text"
-                                         v-if="settings.formats.time_type"
-                                         v-model="settings.formats.time"
+                                         v-if="inputs.time_format_custom"
+                                         v-model="list.time_format"
                                          placeholder="Type valid time format">
                                 </b-input>
 
@@ -110,30 +109,30 @@
                                       label="Date Time Format"
                                       :label-position="labelPosition">
 
-                                <b-radio-button native-value="H:i:s"
-                                                v-model="settings.formats.time">
-                                    <span>H:i:s</span>
+                                <b-radio-button native-value="Y-m-d H:i:s"
+                                                v-model="list.datetime_format">
+                                    <span>Y-m-d H:i:s</span>
                                 </b-radio-button>
 
-                                <b-radio-button native-value="h:i A"
-                                                v-model="settings.formats.time">
-                                    <span>h:i A</span>
+                                <b-radio-button native-value="F j, Y h:i A"
+                                                v-model="list.datetime_format">
+                                    <span>F j, Y h:i A</span>
                                 </b-radio-button>
 
-                                <b-radio-button native-value="h:i:s A"
-                                                v-model="settings.formats.time">
-                                    <span>h:i:s A</span>
+                                <b-radio-button native-value="d-M-Y H:i"
+                                                v-model="list.datetime_format">
+                                    <span>d-M-Y H:i</span>
                                 </b-radio-button>
 
-                                <b-radio-button native-value="custom"
-                                                v-model="settings.formats.time_type">
+                                <b-radio-button :native-value="true"
+                                                v-model="inputs.datetime_format_custom">
                                     <span>Custom</span>
                                 </b-radio-button>
 
                                 <b-input expanded type="text"
-                                         v-if="settings.formats.time_type"
-                                         v-model="settings.formats.time"
-                                         placeholder="Type valid time format">
+                                         v-if="inputs.datetime_format_custom"
+                                         v-model="list.datetime_format"
+                                         placeholder="Type valid date time format">
                                 </b-input>
 
                                 <p class="control">

@@ -15,79 +15,12 @@ export default {
         assets: null,
         assets_is_fetching: false,
         list: null,
-
         settings:{
-            general:{
-                search_engine_visibility: true,
-                maintenance_mode: false,
-            },
-            links:[
-                {
-                    name: 'Facebook',
-                    slug: 'facebook',
-                    url: '',
-                },
-                {
-                    name: 'Twitter',
-                    slug: 'twitter',
-                    url: '',
-                },
-                {
-                    name: 'Linkedin',
-                    slug: 'linkedin',
-                    url: '',
-                },
-                {
-                    name: 'Youtube',
-                    slug: 'youtube',
-                    url: '',
-                },
-                {
-                    name: 'Instagram',
-                    slug: 'instagram',
-                    url: '',
-                },
-                {
-                    name: 'Github',
-                    slug: 'github',
-                    url: '',
-                }
-            ],
-            scripts:{
-                after_head_start: null,
-                before_head_close: null,
-                after_body_start: null,
-                before_body_close: null,
-            },
-            meta_tags:[
-                {
-                    label: "Open Graph - Title",
-                    attribute: "property",
-                    property_value:'og:title',
-                    content:'',
-                },
-                {
-                    label: "Open Graph - Description",
-                    attribute: "property",
-                    property_value:'og:description',
-                    content:'',
-                },
-                {
-                    label: "Meta Tag",
-                    attribute: "",
-                    property_value:'',
-                    content:'',
-                },
-            ],
-            formats:{
-                date_type: null,
-                date: 'Y-m-d',
-                time_type: null,
-                time: 'H:i:s',
-                datetime_type: null,
-                date_time: null,
-            }
-        }
+            list: null,
+            links: [],
+            scripts: null,
+            meta_tags: [],
+        },
 
     },
     //=========================================================================

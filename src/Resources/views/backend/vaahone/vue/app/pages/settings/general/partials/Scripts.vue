@@ -1,7 +1,7 @@
 <script src="./ScriptsJs.js"></script>
 <template>
 
-    <div class="block is-marginless">
+    <div class="block is-marginless" >
 
         <b-collapse :open="false" aria-id="scripts">
 
@@ -21,7 +21,7 @@
             </div>
 
 
-            <div class="block has-margin-top-10 has-padding-10">
+            <div class="block has-margin-top-10 has-padding-10"  v-if="settings.scripts">
 
                 <div class="columns has-background-white-bis  columns-settings">
                     <div class="column is-half">
@@ -34,7 +34,7 @@
                                       :label-position="labelPosition">
 
                                 <b-input expanded type="textarea"
-                                         v-model="settings.scripts.after_head_start"
+                                         v-model="settings.scripts.script_after_head_start"
                                          placeholder="">
                                 </b-input>
 
@@ -52,7 +52,7 @@
                                       :label-position="labelPosition">
 
                                 <b-input expanded type="textarea"
-                                         v-model="settings.scripts.after_head_start"
+                                         v-model="settings.scripts.script_before_head_close"
                                          placeholder="">
                                 </b-input>
 
@@ -86,7 +86,7 @@
                                       :label-position="labelPosition">
 
                                 <b-input expanded type="textarea"
-                                         v-model="settings.scripts.after_body_start"
+                                         v-model="settings.scripts.script_after_body_start"
                                          placeholder="">
                                 </b-input>
 
@@ -104,7 +104,7 @@
                                       :label-position="labelPosition">
 
                                 <b-input expanded type="textarea"
-                                         v-model="settings.scripts.before_body_close"
+                                         v-model="settings.scripts.script_before_body_close"
                                          placeholder="">
                                 </b-input>
 

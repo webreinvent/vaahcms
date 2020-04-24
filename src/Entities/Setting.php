@@ -59,8 +59,39 @@ class Setting extends Model {
 
     }
     //-------------------------------------------------
+    public static function getGlobalLinks($request)
+    {
+
+        $global_settings = Setting::where('category', 'global')
+            ->where('type', 'link')
+            ->get();
+
+        return $global_settings;
+
+    }
     //-------------------------------------------------
+    public static function getGlobalScripts($request)
+    {
+
+        $global_settings = Setting::where('category', 'global')
+            ->where('type', 'script')
+            ->get()->pluck('value', 'key' )
+            ->toArray();;
+
+        return $global_settings;
+
+    }
     //-------------------------------------------------
+    public static function getGlobalMetaTags($request)
+    {
+
+        $global_settings = Setting::where('category', 'global')
+            ->where('type', 'meta_tags')
+            ->get();
+
+        return $global_settings;
+
+    }
     //-------------------------------------------------
     //-------------------------------------------------
 

@@ -42,6 +42,9 @@ class GeneralController extends Controller
         $data = [];
 
         $data['list'] = Setting::getGlobalSettings($request);
+        $data['links'] = Setting::getGlobalLinks($request);
+        $data['scripts'] = Setting::getGlobalScripts($request);
+        $data['meta_tags'] = Setting::getGlobalMetaTags($request);
 
         $response['status'] = 'success';
         $response['data'] = $data;

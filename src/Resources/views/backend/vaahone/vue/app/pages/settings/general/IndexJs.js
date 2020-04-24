@@ -58,7 +58,7 @@ export default {
             let update = {
                 state_name: name,
                 state_value: value,
-                namespace: namespace,
+                namespace: this.namespace,
             };
             this.$vaah.updateState(update);
         },
@@ -68,7 +68,17 @@ export default {
             let update = {
                 state_name: 'list',
                 state_value: this.list,
-                namespace: namespace,
+                namespace: this.namespace,
+            };
+            this.$vaah.updateState(update);
+        },
+        //---------------------------------------------------------------------
+        updateSettings: function()
+        {
+            let update = {
+                state_name: 'settings',
+                state_value: this.settings,
+                namespace: this.namespace,
             };
             this.$vaah.updateState(update);
         },
@@ -94,8 +104,8 @@ export default {
             this.$Progress.finish();
             if(data){
                 this.update('list', data.list);
+                this.update('settings', data);
             }
-
         },
         //---------------------------------------------------------------------
         expandAll: function () {

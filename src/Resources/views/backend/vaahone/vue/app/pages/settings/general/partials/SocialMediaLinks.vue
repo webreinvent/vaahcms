@@ -1,7 +1,7 @@
 <script src="./SocialMediaLinksJs.js"></script>
 <template>
 
-    <div class="block is-marginless">
+    <div class="block is-marginless" >
 
         <b-collapse :open="false" aria-id="social_links">
 
@@ -25,26 +25,23 @@
 
                 <div class="columns has-background-white-bis  columns-settings">
                     <div class="column is-half">
-                        <div class="block has-padding-10">
-
-
+                        <div class="block has-padding-10" v-if="links">
 
                             <b-field  expanded
-                                      v-for="link in settings.links"
-                                      :key="link.name"
-                                      :label="link.name"
+                                      v-for="link in links"
+                                      :key="link.key"
+                                      :label="$vaah.toLabel(link.label)"
                                       :label-position="labelPosition">
 
                                 <b-input expanded type="text"
-                                         v-model="link.name"
+                                         v-model="link.label"
                                          placeholder="Link Label">
                                 </b-input>
 
                                 <b-input expanded type="text"
-                                         v-model="link.url"
+                                         v-model="link.value"
                                          placeholder="Link Url">
                                 </b-input>
-
 
 
                                 <p class="control">
@@ -52,9 +49,12 @@
                                         <b-button icon-left="copy"></b-button>
                                     </b-tooltip>
                                 </p>
+
                                 <p class="control">
-                                    <b-tooltip label="Delete" type="is-dark">
-                                        <b-button icon-left="trash"></b-button>
+                                    <b-tooltip label="Delete"
+                                               type="is-dark">
+                                        <b-button @click="removeLink(link)"
+                                                  icon-left="trash"></b-button>
                                     </b-tooltip>
                                 </p>
 
@@ -63,7 +63,9 @@
 
                             <b-field>
                                 <p class="control">
-                                    <b-button type="is-primary" icon-left="plus">Add Link</b-button>
+                                    <b-button type="is-primary"
+                                              @click="addLink"
+                                              icon-left="plus">Add Link</b-button>
                                 </p>
                                 <p class="control">
                                     <b-button type="is-primary">Save</b-button>

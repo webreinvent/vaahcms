@@ -26,130 +26,22 @@ export default {
             namespace:namespace,
             labelPosition: 'on-border',
             inputs: {
-                copyright_text_custom: false,
-                copyright_link_custom: false,
-                copyright_year_custom: false,
-                search_engine_visibility:{
-                    type: null,
-                    message: null,
-                },
-                maintenance_mode:{
-                    type: null,
-                    message: null,
-                },
-                password_protection:{
-                    type: null,
-                    message: null,
-                },
-
             },
+            tag_type: null,
+            tags: [],
         };
 
         return obj;
     },
     watch: {
 
-        'list.copyright_text': {
+        'settings.meta_tags': {
             deep: true,
             handler(new_val, old_val) {
-                if(new_val == 'app_name')
-                {
-                    this.inputs.copyright_text_custom = false;
-                }
-            }
-        },
-        'inputs.copyright_text_custom': {
-            deep: true,
-            handler(new_val, old_val) {
-                if(new_val)
-                {
-                    this.list.copyright_text = '';
-                    this.updateList();
-                }
+                this.tags = new_val;
             }
         },
 
-        'list.copyright_link': {
-            deep: true,
-            handler(new_val, old_val) {
-                if(new_val == 'app_url')
-                {
-                    this.inputs.copyright_link_custom = false;
-                }
-            }
-        },
-        'inputs.copyright_link_custom': {
-            deep: true,
-            handler(new_val, old_val) {
-                if(new_val)
-                {
-                    this.list.copyright_link = '';
-                    this.updateList();
-                }
-            }
-        },
-
-        'list.copyright_year': {
-            deep: true,
-            handler(new_val, old_val) {
-                if(new_val == 'use_current_year')
-                {
-                    this.inputs.copyright_year_custom = false;
-                }
-            }
-        },
-        'inputs.copyright_year_custom': {
-            deep: true,
-            handler(new_val, old_val) {
-                if(new_val)
-                {
-                    this.list.copyright_year = '';
-                    this.updateList();
-                }
-            }
-        },
-        'list.search_engine_visibility': {
-            deep: true,
-            handler(new_val, old_val) {
-                if(new_val == 1)
-                {
-                    this.inputs.search_engine_visibility.type = null;
-                    this.inputs.search_engine_visibility.message = null;
-                } else
-                {
-                    this.inputs.search_engine_visibility.type = 'is-danger';
-                    this.inputs.search_engine_visibility.message = "The site will be discouraged to be indexed by search engines";
-                }
-            }
-        },
-        'list.maintenance_mode': {
-            deep: true,
-            handler(new_val, old_val) {
-                if(new_val == 0)
-                {
-                    this.inputs.maintenance_mode.type = null;
-                    this.inputs.maintenance_mode.message = null;
-                } else
-                {
-                    this.inputs.maintenance_mode.type = 'is-danger';
-                    this.inputs.maintenance_mode.message = "The site will display a maintenance page only.";
-                }
-            }
-        },
-        'list.password_protection': {
-            deep: true,
-            handler(new_val, old_val) {
-                if(new_val == 0)
-                {
-                    this.inputs.password_protection.type = null;
-                    this.inputs.password_protection.message = null;
-                } else
-                {
-                    this.inputs.password_protection.type = 'is-danger';
-                    this.inputs.password_protection.message = "The site will only be accessing using this password.";
-                }
-            }
-        },
 
     },
     mounted() {
@@ -163,7 +55,7 @@ export default {
             let update = {
                 state_name: name,
                 state_value: value,
-                namespace: namespace,
+                namespace: this.namespace,
             };
             this.$vaah.updateState(update);
         },
@@ -173,10 +65,191 @@ export default {
             let update = {
                 state_name: 'list',
                 state_value: this.list,
-                namespace: namespace,
+                namespace: this.namespace,
             };
             this.$vaah.updateState(update);
         },
+
+        //---------------------------------------------------------------------
+        addTag: function () {
+            let item = this.linkItem();
+
+            this.tags.push(item);
+
+            console.log('--->tags', this.tags);
+
+        },
+        //---------------------------------------------------------------------
+        linkItem: function () {
+
+            let count = this.tags.length;
+
+            let item = {
+                id: null,
+                uid: count,
+                category: "global",
+                label: "Meta Tag",
+                excerpt: null,
+                type: "meta_tags",
+                key: "meta_tags_"+count,
+                value: {
+                    attribute: 'name',
+                    attribute_value: '',
+                    content: '',
+                },
+                created_at: null,
+                updated_at: null,
+            };
+
+            return item;
+
+        },
+        //---------------------------------------------------------------------
+        removeTag: function (tag) {
+
+            console.log('--->tag', tag);
+
+            if(tag.id)
+            {
+                this.tags = this.$vaah.removeInArrayByKey(this.tags, tag, 'id');
+            } else
+            {
+                this.tags = this.$vaah.removeInArrayByKey(this.tags, tag, 'uid');
+            }
+
+            console.log('--->tags', this.tags);
+
+        },
+        //---------------------------------------------------------------------
+        generateTags: function () {
+            if(this.tag_type == 'open-graph')
+            {
+                this.generateOpenGraph();
+            }
+
+            if(this.tag_type == 'google-webmaster')
+            {
+                this.generateWebmaster();
+            }
+
+        },
+        //---------------------------------------------------------------------
+        generateOpenGraph: function () {
+
+            let list = [
+                {
+                    id: null,
+                    uid: 'meta_tags_og_title',
+                    category: "global",
+                    label: "Open Graph Title",
+                    type: "meta_tags",
+                    key: "meta_tags_og_title",
+                    value: {
+                        attribute: 'property',
+                        attribute_value: 'og:title',
+                        content: '',
+                    },
+
+                },
+                {
+                    id: null,
+                    uid: 'meta_tags_og_site_name',
+                    category: "global",
+                    label: "Open Graph Site Name",
+                    type: "meta_tags",
+                    key: "meta_tags_og_site_name",
+                    value: {
+                        attribute: 'property',
+                        attribute_value: 'og:site_name',
+                        content: '',
+                    },
+
+                },
+                {
+                    id: null,
+                    uid: 'meta_tags_og_url',
+                    category: "global",
+                    label: "Open Graph Site Url",
+                    type: "meta_tags",
+                    key: "meta_tags_og_url",
+                    value: {
+                        attribute: 'property',
+                        attribute_value: 'og:url',
+                        content: '',
+                    },
+
+                },
+                {
+                    id: null,
+                    uid: 'meta_tags_og_description',
+                    category: "global",
+                    label: "Open Graph Description",
+                    type: "meta_tags",
+                    key: "meta_tags_og_description",
+                    value: {
+                        attribute: 'property',
+                        attribute_value: 'og:description',
+                        content: '',
+                    },
+
+                },
+                {
+                    id: null,
+                    uid: 'meta_tags_og_type',
+                    category: "global",
+                    label: "Open Graph Type",
+                    type: "meta_tags",
+                    key: "meta_tags_og_type",
+                    value: {
+                        attribute: 'property',
+                        attribute_value: 'og:type',
+                        content: '',
+                    },
+
+                },
+                {
+                    id: null,
+                    uid: 'meta_tags_og_image',
+                    category: "global",
+                    label: "Open Graph Image",
+                    type: "meta_tags",
+                    key: "meta_tags_og_image",
+                    value: {
+                        attribute: 'property',
+                        attribute_value: 'og:image',
+                        content: '',
+                    },
+
+                }
+            ];
+
+            this.tags = this.tags.concat(list);
+
+        },
+        //---------------------------------------------------------------------
+        generateWebmaster: function () {
+
+            let list = [
+                {
+                    id: null,
+                    uid: 'meta_tags_google_webmaster',
+                    category: "global",
+                    label: "Google Webmaster",
+                    type: "meta_tags",
+                    key: "meta_tags_google_webmaster",
+                    value: {
+                        attribute: 'name',
+                        attribute_value: 'google-site-verification',
+                        content: '',
+                    },
+
+                }
+            ];
+
+            this.tags = this.tags.concat(list);
+
+        },
+        //---------------------------------------------------------------------
 
         //---------------------------------------------------------------------
         //---------------------------------------------------------------------
