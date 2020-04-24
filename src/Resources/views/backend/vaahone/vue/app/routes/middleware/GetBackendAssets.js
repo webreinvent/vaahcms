@@ -9,9 +9,22 @@ export default async function GetBackendAssets ({ to, from, next, store }){
     }
     //--------------/Redirect to Sign in
 
-    await store.dispatch('root/getAssets');
+    let assets = store.getters['root/state'].assets;
+    console.log('--->', assets);
 
-    await store.dispatch('root/getPermissions');
+    if(assets && !assets.auth_user)
+    {
+        await store.dispatch('root/reloadAssets');
+        await store.dispatch('root/reloadPermissions');
+    } else
+    {
+        await store.dispatch('root/getAssets');
+        await store.dispatch('root/getPermissions');
+    }
+
+
+
+
 
 
     return next()

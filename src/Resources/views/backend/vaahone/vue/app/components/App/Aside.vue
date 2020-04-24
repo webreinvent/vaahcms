@@ -9,9 +9,11 @@
             </b-icon>
         </div>
         <div class="menu">
-            <div class="sidebar">
+            <div class="sidebar" v-if="assets">
+
                 <ul>
                     <template v-if="assets.extended_views" >
+                        {{assets.extended_views.sidebar_menu}}
                         <template  v-for="menus in assets.extended_views.sidebar_menu">
                             <template v-for="link in menus">
                                 <li>

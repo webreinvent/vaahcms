@@ -13,9 +13,7 @@ import roles from './modules/roles';
 import modules from './modules/modules';
 import themes from './modules/themes';
 import profile from './modules/profile';
-import general from './modules/settings/general';
-import localizations from './modules/settings/localizations';
-import backups from './modules/settings/backups';
+
 
 export const store = new Vuex.Store({
     modules: {
@@ -28,8 +26,6 @@ export const store = new Vuex.Store({
         modules: modules,
         themes: themes,
         profile: profile,
-        general: general,
-        localizations: localizations,
-        backups: backups,
+
     }
 });

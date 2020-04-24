@@ -51,7 +51,9 @@
                                                 <b-field :label-position="labelPosition">
 
                                                     <b-field>
-                                                        <b-input v-model="item.key"></b-input>
+                                                        <b-input v-model="item.key"
+                                                                 :disabled="isDisable(item)"
+                                                        ></b-input>
 
                                                         <b-input expanded
                                                                  :type="inputType(item)"
@@ -64,7 +66,7 @@
                                                                 <b-button icon-left="copy"></b-button>
                                                             </b-tooltip>
                                                         </p>
-                                                        <p class="control">
+                                                        <p class="control" v-if="!isDisable(item)">
                                                             <b-tooltip label="Delete" type="is-dark">
                                                                 <b-button @click="removeVariable(item)"
                                                                           icon-left="trash"></b-button>
