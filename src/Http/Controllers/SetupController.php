@@ -233,7 +233,8 @@ class SetupController extends Controller
             return response()->json($response);
         }
 
-        $params = vh_env_file_to_array($file_path, true);
+        //$params = vh_env_file_to_array($file_path, true);
+        $params = VaahSetup::getEnvFileVariables($file_path, 'key_value', true);
 
         $response['status'] = 'success';
         $response['data'] = $params;
@@ -312,7 +313,7 @@ class SetupController extends Controller
     public function getRequiredConfigurations()
     {
 
-        $active_env_file = VaahHelper::getActiveEnvFileName();
+        $active_env_file = VaahSetup::getActiveEnvFileName();
 
         $env_params = vh_env_file_to_array(base_path('/'.$active_env_file), true);
 

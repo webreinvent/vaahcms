@@ -17,6 +17,7 @@ export default {
     data()
     {
         let obj = {
+            namespace:namespace,
             assets:null,
             list: null,
         };
@@ -31,7 +32,7 @@ export default {
 
 
         //---------------------------------------------------------------------
-
+        this.onLoad();
         //---------------------------------------------------------------------
 
         //---------------------------------------------------------------------
@@ -44,12 +45,35 @@ export default {
             let update = {
                 state_name: name,
                 state_value: value,
-                namespace: namespace,
+                namespace: this.namespace,
             };
             this.$vaah.updateState(update);
         },
         //---------------------------------------------------------------------
-
+        onLoad: function()
+        {
+            //this.getAssets();
+        },
+        //---------------------------------------------------------------------
+        async getAssets() {
+            await this.$store.dispatch(this.namespace+'/getAssets');
+            this.getList();
+        },
+        //---------------------------------------------------------------------
+        getList: function () {
+            this.$Progress.start();
+            let params = {};
+            let url = this.ajax_url+'/list';
+            this.$vaah.ajax(url, params, this.getListAfter);
+        },
+        //---------------------------------------------------------------------
+        getListAfter: function (data, res) {
+            this.$Progress.finish();
+            if(data){
+                this.update('list', data.list);
+                this.update('settings', data);
+            }
+        },
         //---------------------------------------------------------------------
         //---------------------------------------------------------------------
         //---------------------------------------------------------------------

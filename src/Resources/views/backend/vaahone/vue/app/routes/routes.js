@@ -689,6 +689,7 @@ routes.push(routes_themes);
 import SettingsLayout from "./../pages/settings/SettingsLayout";
 import GeneralIndex from "./../pages/settings/general/Index";
 import LocalizationIndex from "./../pages/settings/localization/Index";
+import EnvIndex from "./../pages/settings/env/Index";
 import BackupsIndex from "./../pages/settings/backups/Index";
 
 let routes_setting_localization =     {
@@ -717,6 +718,18 @@ let routes_setting_localization =     {
                     path: 'general',
                     name: 'general.index',
                     component: GeneralIndex,
+                    props: true,
+                    meta: {
+                        middleware: [
+                            IsLoggedIn,
+                            GetBackendAssets
+                        ]
+                    }
+                },
+                {
+                    path: 'env-variables',
+                    name: 'env.index',
+                    component: EnvIndex,
                     props: true,
                     meta: {
                         middleware: [

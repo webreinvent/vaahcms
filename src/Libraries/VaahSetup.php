@@ -11,22 +11,45 @@ use Dotenv\Dotenv;
 class VaahSetup{
 
     //----------------------------------------------------------
-    public static function generateEnvFile($request)
+    /*
+     * $list_type will accept: key_value | list
+     */
+    public static function generateEnvFile($request, $list_type='key_value', $env_file_name=null)
     {
 
         try{
 
-            $html = view('vaahcms::templates.env')
-                ->with('data', (object)$request->all())
-                ->render();
+            if($list_type=='key_value')
+            {
+                $html = view('vaahcms::templates.env')
+                    ->with('data', (object)$request->all())
+                    ->render();
+            }
+
+            if($list_type=='list')
+            {
+                $html = view('vaahcms::templates.env_v2')
+                    ->with('data', (object)$request->all())
+                    ->render();
+            }
 
             $html = html_entity_decode($html);
 
-            $file_name = '.env.'.$request->app_env;
+            if($request->has('app_env'))
+            {
+                $file_name = '.env.'.$request->app_env;
+            } else if($env_file_name)
+            {
+                $file_name = $env_file_name;
+            } else
+            {
+                $file_name = self::getActiveEnvFileName();
+            }
 
             VaahFile::createFile(base_path('/'), $file_name, $html);
 
             $response['status'] = 'success';
+            $response['data'] = [];
             return $response;
 
         }catch(\Exception $e)
@@ -231,6 +254,118 @@ class VaahSetup{
 
 
     }
+    //----------------------------------------------------------
+    public static function getActiveEnvFileName()
+    {
+        $vaahcms_file = base_path('/vaahcms.json');
+        $env_file_name = '.env';
+
+        if(file_exists($vaahcms_file))
+        {
+
+            $host = null;
+            $actual_url = null;
+
+            if(isset($_SERVER) && isset($_SERVER['HTTP_HOST']))
+            {
+                $actual_url = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://".$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
+            }
+
+
+            if($actual_url)
+            {
+                $vaahcms = file_get_contents(base_path('/vaahcms.json'));
+                $vaahcms = json_decode($vaahcms, true);
+
+                if(isset($vaahcms['environments']) && is_array($vaahcms['environments'])
+                    && count($vaahcms['environments'])>0
+                )
+                {
+                    foreach ($vaahcms['environments'] as $environment)
+                    {
+                        $environment_url = explode( '://', $environment['app_url']);
+                        if (strpos($actual_url, $environment_url[1]) !== false){
+                            $env_file_name = $environment['env_file'];
+                        }
+
+                    }
+
+                    if(!file_exists(base_path($env_file_name)))
+                    {
+                        $env_file_name = '.env';
+                    }
+
+                }
+            }
+
+
+
+        }
+
+        return $env_file_name;
+
+    }
+    //----------------------------------------------------------
+    /*
+     * $list_type will accept: key_value | list
+     */
+    public static function getEnvFileVariables($env_file=null, $list_type='key_value', $key_lower=false)
+    {
+        if(!$env_file)
+        {
+            $env_file = self::getActiveEnvFileName();
+        }
+
+        $env_file_path = base_path($env_file);
+
+        $string      = file_get_contents($env_file_path);
+        $string      = preg_split('/\n+/', $string);
+        $returnArray = array();
+
+        foreach ($string as $one) {
+            if (preg_match('/^(#\s)/', $one) === 1 || preg_match('/^([\\n\\r]+)/', $one)) {
+                continue;
+            }
+            $entry                  = explode("=", $one, 2);
+            $returnArray[$entry[0]] = isset($entry[1]) ? $entry[1] : null;
+        }
+
+        $list = array_filter(
+            $returnArray,
+            function ($key) {
+                return !empty($key);
+            },
+            ARRAY_FILTER_USE_KEY
+        );
+
+        $result = [];
+        $i = 0;
+        foreach ($list as $key => $value)
+        {
+            if($key_lower)
+            {
+                $key = strtolower($key);
+            }
+
+            if($list_type == 'key_value')
+            {
+                $result[$key] = $value;
+            }
+
+            if($list_type == 'list')
+            {
+                $result[$i]['key'] = $key;
+                $result[$i]['value'] = $value;
+            }
+
+            $i++;
+        }
+
+        return $result;
+
+    }
+    //----------------------------------------------------------
+    //----------------------------------------------------------
     //----------------------------------------------------------
 
 }

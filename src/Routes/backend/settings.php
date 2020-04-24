@@ -45,6 +45,27 @@ Route::group(
     });
 
 
+Route::group(
+    [
+        'prefix'     => 'backend/vaah/settings/env',
+        'middleware' => ['web','has.backend.access'],
+        'namespace'  => 'WebReinvent\VaahCms\Http\Controllers\Settings'
+    ],
+    function () {
+        //------------------------------------------------
+        Route::any( '/assets', 'EnvController@getAssets' )
+            ->name( 'vh.backend.settings.env.assets' );
+        //------------------------------------------------
+        Route::any( '/list', 'EnvController@getList' )
+            ->name( 'vh.backend.settings.env.list' );
+        //------------------------------------------------
+        Route::any( '/store', 'EnvController@store' )
+            ->name( 'vh.backend.settings.env.store' );
+        //------------------------------------------------
+        //------------------------------------------------
+        //------------------------------------------------
+    });
+
 
 Route::group(
     [
