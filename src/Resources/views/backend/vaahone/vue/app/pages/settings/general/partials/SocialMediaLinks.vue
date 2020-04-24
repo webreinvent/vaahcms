@@ -68,7 +68,8 @@
                                               icon-left="plus">Add Link</b-button>
                                 </p>
                                 <p class="control">
-                                    <b-button type="is-primary">Save</b-button>
+                                    <b-button @click="storeLinks()"
+                                              type="is-primary">Save</b-button>
                                 </p>
                             </b-field>
 

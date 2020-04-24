@@ -109,7 +109,7 @@ export default {
                 label: "Link",
                 excerpt: null,
                 type: "link",
-                key: "link-"+count,
+                key: "link_"+count,
                 value: null,
                 created_at: null,
                 updated_at: null,
@@ -135,6 +135,18 @@ export default {
 
         },
         //---------------------------------------------------------------------
+        storeLinks: function () {
+            this.$Progress.start();
+            let params = {
+                links: this.links
+            };
+            let url = this.ajax_url+'/store/links';
+            this.$vaah.ajax(url, params, this.storeLinksAfter);
+        },
+        //---------------------------------------------------------------------
+        storeLinksAfter: function (data, res) {
+            this.$Progress.finish();
+        },
         //---------------------------------------------------------------------
         //---------------------------------------------------------------------
         //---------------------------------------------------------------------

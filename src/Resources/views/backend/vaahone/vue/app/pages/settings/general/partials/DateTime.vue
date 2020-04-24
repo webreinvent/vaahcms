@@ -145,7 +145,8 @@
 
 
 
-                            <b-button type="is-primary" >Save Password</b-button>
+                            <b-button @click="storeSiteSettings"
+                                      type="is-primary" >Save Settings</b-button>
 
                         </div>
 

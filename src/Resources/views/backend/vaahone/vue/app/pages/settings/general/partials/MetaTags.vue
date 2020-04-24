@@ -73,7 +73,7 @@
                                                   icon-left="plus">Add Meta Tag</b-button>
                                     </p>
                                     <p class="control">
-                                        <b-button type="is-primary">Save</b-button>
+                                        <b-button @click="storeTags" type="is-primary">Save</b-button>
                                     </p>
                                     <p class="control">
                                         <b-tooltip label="Copy Code Snippet" type="is-dark">

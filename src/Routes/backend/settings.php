@@ -31,6 +31,16 @@ Route::group(
         Route::any( '/list', 'GeneralController@getList' )
             ->name( 'vh.backend.settings.general.list' );
         //------------------------------------------------
+        Route::any( '/store/site/settings', 'GeneralController@storeSiteSettings' )
+            ->name( 'vh.backend.settings.general.store.site.settings' );
+        //------------------------------------------------
+        Route::any( '/store/links', 'GeneralController@storeLinks' )
+            ->name( 'vh.backend.settings.general.store.links' );
+        //------------------------------------------------
+        Route::any( '/store/meta/tags', 'GeneralController@storeMetaTags' )
+            ->name( 'vh.backend.settings.general.store.meta.tags' );
+        //------------------------------------------------
+        //------------------------------------------------
         //------------------------------------------------
     });
 

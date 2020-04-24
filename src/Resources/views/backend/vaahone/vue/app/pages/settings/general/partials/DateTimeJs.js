@@ -133,6 +133,18 @@ export default {
         },
 
         //---------------------------------------------------------------------
+        storeSiteSettings: function () {
+            this.$Progress.start();
+            let params = {
+                list: this.list
+            };
+            let url = this.ajax_url+'/store/site/settings';
+            this.$vaah.ajax(url, params, this.storeSiteSettingsAfter);
+        },
+        //---------------------------------------------------------------------
+        storeSiteSettingsAfter: function (data, res) {
+            this.$Progress.finish();
+        },
         //---------------------------------------------------------------------
     }
 }

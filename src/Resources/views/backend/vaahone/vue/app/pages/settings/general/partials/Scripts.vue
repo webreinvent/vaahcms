@@ -1,7 +1,7 @@
 <script src="./ScriptsJs.js"></script>
 <template>
 
-    <div class="block is-marginless" >
+    <div class="block is-marginless scripts" >
 
         <b-collapse :open="false" aria-id="scripts">
 
@@ -67,7 +67,8 @@
 
                             <b-field>
                                 <p class="control">
-                                    <b-button type="is-primary">Save</b-button>
+                                    <b-button @click="storeSiteSettings"
+                                              type="is-primary">Save Scripts</b-button>
                                 </p>
                             </b-field>
 

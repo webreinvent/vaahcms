@@ -250,7 +250,18 @@ export default {
 
         },
         //---------------------------------------------------------------------
-
+        storeTags: function () {
+            this.$Progress.start();
+            let params = {
+                tags: this.tags
+            };
+            let url = this.ajax_url+'/store/meta/tags';
+            this.$vaah.ajax(url, params, this.storeTagsAfter);
+        },
+        //---------------------------------------------------------------------
+        storeTagsAfter: function (data, res) {
+            this.$Progress.finish();
+        },
         //---------------------------------------------------------------------
         //---------------------------------------------------------------------
     }

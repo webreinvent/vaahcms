@@ -296,7 +296,7 @@
 
                     <div class="column">
                         <div class="block has-padding-left-10 has-padding-right-10">
-                            <b-button type="is-primary" >Save Settings</b-button>
+                            <b-button type="is-primary" @click="storeSiteSettings" >Save Settings</b-button>
                         </div>
                     </div>
 

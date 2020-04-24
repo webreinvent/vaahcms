@@ -29,12 +29,21 @@ class Setting extends Model {
     //-------------------------------------------------
     public function getValueAttribute($value) {
 
-        if(isset($this->type) && $this->type == 'json')
+        if(isset($this->type) && ($this->type == 'json' || $this->type == 'meta_tags'))
         {
             return json_decode($value);
         }
 
         return $value;
+    }
+    //-------------------------------------------------
+    public function setValueAttribute($value) {
+        if(is_array($value))
+        {
+            $this->attributes['value'] = json_encode($value);
+        } else{
+            $this->attributes['value'] = $value;
+        }
     }
     //-------------------------------------------------
     public function scopeKey( $query, $key ) {
