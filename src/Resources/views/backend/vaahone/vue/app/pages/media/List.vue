@@ -7,7 +7,7 @@
             <div class="columns">
 
                 <!--left-->
-                <div class="column" :class="{'is-6': !page.list_view}">
+                <div class="column" :class="{'is-8': !page.list_view}">
 
                     <div class="block" v-if="is_content_loading">
                         <Loader/>
@@ -20,26 +20,28 @@
                         <header class="card-header">
 
                             <div class="card-header-title">
-                                Roles
+                                Media
                             </div>
 
                             <div class="card-header-buttons">
                                 <div class="field has-addons is-pulled-right">
-                                    <p  v-if="hasPermission('can-create-roles')" class="control">
+                                    <p v-if="hasPermission('can-create-registrations')" class="control">
                                         <b-button tag="router-link"
                                                   type="is-light"
-                                                  :to="{name: 'role.create'}"
+                                                  :to="{name: 'media.create'}"
                                                   icon-left="plus">
                                             Create
                                         </b-button>
                                     </p>
 
                                     <p class="control">
-                                        <b-button type="is-light"
-                                                  @click="sync()"
+
+                                        <b-button @click="reload()"
+                                                  type="is-light"
                                                   :loading="is_btn_loading"
                                                   icon-left="redo-alt">
                                         </b-button>
+
                                     </p>
                                 </div>
                             </div>
@@ -59,9 +61,9 @@
                                 <div class="level">
 
                                     <!--left-->
-                                    <div class="level-left" v-if="hasPermission('can-update-roles')">
+                                    <div class="level-left" v-if="hasPermission('can-update-registrations')">
                                         <div  class="level-item">
-                                            <b-field >
+                                            <b-field>
 
                                                 <b-select placeholder="- Bulk Actions -"
                                                           v-model="page.bulk_action.action">
@@ -82,11 +84,11 @@
                                                     <option value="">
                                                         - Select Status -
                                                     </option>
-                                                    <option value=1>
-                                                        Active
-                                                    </option>
-                                                    <option value=0>
-                                                        Inactive
+                                                    <option
+                                                        v-for="option in page.assets.registration_statuses"
+                                                        :value="option.slug"
+                                                        :key="option.slug">
+                                                        {{ option.name }}
                                                     </option>
                                                 </b-select>
 
@@ -159,17 +161,17 @@
 
                                             <b-field label="">
                                                 <b-select placeholder="- Select a status -"
-                                                          v-model="query_string.filter"
+                                                          v-model="query_string.status"
                                                           @input="getList()"
                                                 >
                                                     <option value="">
                                                         - Select a status -
                                                     </option>
-                                                    <option value=01>
-                                                        Active
-                                                    </option>
-                                                    <option value=10>
-                                                        Inactive
+                                                    <option
+                                                        v-for="option in page.assets.registration_statuses"
+                                                        :value="option.slug"
+                                                        :key="option.slug">
+                                                        {{ option.name }}
                                                     </option>
                                                 </b-select>
                                             </b-field>

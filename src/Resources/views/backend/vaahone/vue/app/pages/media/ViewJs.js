@@ -1,9 +1,10 @@
 import GlobalComponents from '../../vaahvue/helpers/GlobalComponents'
 import TableTrView from '../../vaahvue/reusable/TableTrView'
 import TableTrActedBy from '../../vaahvue/reusable/TableTrActedBy'
+import TableTrTag from '../../vaahvue/reusable/TableTrTag'
 import TableTrStatus from './partials/TableTrStatus'
 
-let namespace = 'roles';
+let namespace = 'registrations';
 
 export default {
     computed:{
@@ -17,6 +18,7 @@ export default {
         ...GlobalComponents,
         TableTrView,
         TableTrStatus,
+        TableTrTag,
         TableTrActedBy,
     },
     data()
@@ -83,19 +85,15 @@ export default {
             this.$Progress.finish();
             this.is_content_loading = false;
 
-            if(data && data)
+            if(data && data.item)
             {
-                if(data.is_active == 1){
-                    data.is_active = 'Yes';
-                }else{
-                    data.is_active = 'No';
-                }
-                this.update('active_item', data);
+                console.log('--->data.item', data);
+                this.update('active_item', data.item);
             } else
             {
                 //if item does not exist or delete then redirect to list
                 this.update('active_item', null);
-                this.$router.push({name: 'role.list'});
+                this.$router.push({name: 'reg.list'});
             }
         },
         //---------------------------------------------------------------------
@@ -125,7 +123,7 @@ export default {
 
                 if(action == 'bulk-delete')
                 {
-                    this.$router.push({name: 'role.list'});
+                    this.$router.push({name: 'reg.list'});
                 } else
                 {
                     this.getItem();
@@ -135,6 +133,19 @@ export default {
             {
                 this.$Progress.finish();
             }
+        },
+        //---------------------------------------------------------------------
+        changeStatus: function(status)
+        {
+            this.$Progress.start();
+
+            let params = {
+                inputs: [this.item.id],
+                data: {status: status}
+            };
+
+            let url = this.ajax_url+'/actions/bulk-change-status';
+            this.$vaah.ajax(url, params, this.actionsAfter);
         },
         //---------------------------------------------------------------------
         //---------------------------------------------------------------------
@@ -166,7 +177,10 @@ export default {
         isCopiable: function (label) {
 
             if(
-                label == 'id' || label == 'uuid' || label == 'slug'
+                label == 'id' || label == 'uuid'
+                || label == 'email' || label == 'username'
+                || label == 'alternate_email' || label == 'phone'
+                || label == 'activation_code'|| label == 'user_id'
             )
             {
                 return true;
@@ -191,7 +205,7 @@ export default {
         //---------------------------------------------------------------------
         resetActiveItem: function () {
             this.update('active_item', null);
-            this.$router.push({name:'role.list'});
+            this.$router.push({name:'reg.list'});
         },
         //---------------------------------------------------------------------
         hasPermission: function(slug)

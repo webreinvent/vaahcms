@@ -142,6 +142,19 @@ class ExtendController extends Controller
             ]
         ];
 
+
+        $list[4] = [
+            'link' => '#',
+            'icon'=> 'photo-video',
+            'label'=> 'Manage',
+            'child' => [
+                [
+                    'link' => self::$link."/manage/media",
+                    'label'=> 'Media'
+                ],
+            ]
+        ];
+
         $response['status'] = 'success';
         $response['data'] = $list;
 

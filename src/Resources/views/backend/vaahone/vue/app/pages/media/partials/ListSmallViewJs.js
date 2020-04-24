@@ -1,4 +1,4 @@
-let namespace = 'roles';
+let namespace = 'registrations';
 export default {
     computed: {
         root() {return this.$store.getters['root/state']},
@@ -57,27 +57,7 @@ export default {
         //---------------------------------------------------------------------
         setActiveItem: function (item) {
             this.update('active_item', item);
-            this.$router.push({name: 'role.view', params:{id:item.id}})
-        },
-        //---------------------------------------------------------------------
-        getRolePermission: function (item) {
-            this.update('active_item', item);
-            this.$router.push({name: 'role.perm', params:{id:item.id}})
-        },
-        //---------------------------------------------------------------------
-        getRoleUser: function (item) {
-            this.update('active_item', item);
-            this.$router.push({name: 'role.user', params:{id:item.id}})
-        },
-        //---------------------------------------------------------------------
-        copiedData: function (data) {
-
-            this.$vaah.toastSuccess(['copied']);
-
-            // alertify.success('copied');
-
-            this.$vaah.console(data, 'copied data');
-
+            this.$router.push({name: 'reg.view', params:{id:item.id}})
         },
         //---------------------------------------------------------------------
         hasPermission: function(slug)

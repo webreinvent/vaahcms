@@ -1,14 +1,16 @@
 import GlobalComponents from '../../vaahvue/helpers/GlobalComponents'
 import DatePicker from '../../vaahvue/reusable/DatePicker'
 import AutoComplete from '../../vaahvue/reusable/AutoComplete'
+import FileUploader from '../../vaahvue/reusable/FileUploader'
 
-let namespace = 'roles';
+let namespace = 'media';
 
 export default {
     computed:{
         root() {return this.$store.getters['root/state']},
         permissions() {return this.$store.getters['root/state'].permissions},
         page() {return this.$store.getters[namespace+'/state']},
+        assets() {return this.$store.getters[namespace+'/state'].assets},
         ajax_url() {return this.$store.getters[namespace+'/state'].ajax_url},
         new_item() {return this.$store.getters[namespace+'/state'].new_item},
         new_item_errors() {return this.$store.getters[namespace+'/state'].new_item_errors},
@@ -18,7 +20,7 @@ export default {
         DatePicker,
         'AutoCompleteTimeZone': AutoComplete,
         'AutoCompleteCountry': AutoComplete,
-
+        'MediaUploader': FileUploader,
     },
     data()
     {
@@ -64,17 +66,42 @@ export default {
         //---------------------------------------------------------------------
         onLoad: function()
         {
-            if(!this.hasPermission('can-create-roles'))
+            if(!this.hasPermission('can-create-users'))
             {
                 this.update('active_item', null);
-                this.$router.push({name: 'role.list'});
+                this.$router.push({name: 'user.list'});
                 this.$vaah.toastErrors(['Permission denied']);
             }
-
-
-
             this.updateView();
             this.getAssets();
+        },
+        //---------------------------------------------------------------------
+        serverConfig: function()
+        {
+            this.server = {
+                url: this.root.assets.urls.upload,
+                process:{
+                    method: 'POST',
+                    timeout: 7000,
+                    onload: function (response) {
+                        console.log('--->onload', response);
+                    },
+                    onerror: function (response) {
+                        console.log('--->onerror', response);
+                    },
+                    ondata: function (formData) {
+                        console.log('--->formData', formData);
+                        return formData;
+                    },
+                    headers: {
+                        'X-CSRF-TOKEN': $('#_token').attr('content'),
+                        'Upload-Name': 'media'
+                    },
+                }
+
+
+
+            };
         },
         //---------------------------------------------------------------------
         async getAssets() {
@@ -129,11 +156,44 @@ export default {
 
         },
         //---------------------------------------------------------------------
-        updateNewItem: function()
+        updateMediaToNewItem: function(media)
         {
+
+            console.log('--->', media);
+
+
+
+            for(let index in media)
+            {
+                this.new_item[index] = media[index];
+            }
+
+            console.log('--->', this.new_item);
+
             this.update('new_item', this.new_item);
         },
         //---------------------------------------------------------------------
+        updateNewItem: function(media)
+        {
+            this.update('new_item', this.new_item);
+            console.log('--->', this.new_item);
+        },
+        //---------------------------------------------------------------------
+        setBirthDate: function (date) {
+            this.new_item.birth = date;
+            this.updateNewItem();
+        },
+        //---------------------------------------------------------------------
+        setTimeZone: function (item) {
+            this.new_item.timezone = item.slug;
+            this.updateNewItem();
+        },
+        //---------------------------------------------------------------------
+        setCountry: function (item) {
+            this.new_item.country = item.name;
+            this.new_item.country_code = item.code;
+            this.updateNewItem();
+        },
         //---------------------------------------------------------------------
         setLocalAction: function (action) {
             this.local_action = action;
@@ -142,7 +202,7 @@ export default {
         //---------------------------------------------------------------------
         saveAndClose: function () {
             this.update('active_item', null);
-            this.$router.push({name:'role.list'});
+            this.$router.push({name:'reg.list'});
         },
         //---------------------------------------------------------------------
         saveAndNew: function () {
@@ -152,16 +212,30 @@ export default {
         //---------------------------------------------------------------------
         saveAndClone: function () {
             this.fillNewItem();
-            this.$router.push({name:'role.create'});
+            this.$router.push({name:'reg.create'});
         },
         //---------------------------------------------------------------------
         getNewItem: function()
         {
             let new_item = {
-                name: null,
-                slug: null,
-                is_active: null,
-                details: null,
+                email: null,
+                username: null,
+                password: null,
+                display_name: null,
+                title: null,
+                first_name: null,
+                middle_name: null,
+                last_name: null,
+                gender: null,
+                country_calling_code: null,
+                phone: null,
+                timezone: null,
+                alternate_email: null,
+                avatar_url: null,
+                birth: null,
+                country: null,
+                country_code: null,
+                status: null,
             };
             return new_item;
         },
@@ -175,10 +249,24 @@ export default {
         fillNewItem: function () {
 
             let new_item = {
-                name: null,
-                slug: null,
-                is_active: null,
-                details: null,
+                email: null,
+                username: null,
+                password: null,
+                display_name: null,
+                title: null,
+                first_name: null,
+                middle_name: null,
+                last_name: null,
+                gender: null,
+                country_calling_code: null,
+                phone: null,
+                timezone: null,
+                alternate_email: null,
+                avatar_url: null,
+                birth: null,
+                country: null,
+                country_code: null,
+                status: null,
             };
 
             for(let key in new_item)

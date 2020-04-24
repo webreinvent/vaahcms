@@ -16,7 +16,8 @@
             :onprocessfile="onFileProcessed"
             v-bind:files="files"
             v-on:init="handleFilePondInit()"/>
-        <p class="help">Maximum size allowed is {{max_size}}. File Types: {{allowed_types}}</p>
+        <p class="help">Maximum size allowed is {{max_size}}.
+            <span v-if="show_allowed_types">File Types: {{allowed_types}}</span></p>
     </div>
 
 
@@ -76,6 +77,14 @@ export default {
         max_size: {
             type: String,
             default: '2MB'
+        },
+        remove_after_upload: {
+            type: Boolean,
+            default: true
+        },
+        show_allowed_types: {
+            type: Boolean,
+            default: true
         },
 
     },
@@ -170,7 +179,7 @@ export default {
         },
         //---------------------------------------------------------------------
         onFileProcessed: function (error, file) {
-            if(!error)
+            if(!error && this.remove_after_upload == true)
             {
                 this.pond.removeFile(file.id);
             }

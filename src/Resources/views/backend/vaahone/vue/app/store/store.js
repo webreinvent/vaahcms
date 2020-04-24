@@ -3,7 +3,6 @@ import Vuex from 'vuex';
 
 Vue.use(Vuex);
 
-
 import root from './modules/root';
 import registrations from './modules/registrations';
 import setup from './modules/setup';
@@ -15,7 +14,7 @@ import themes from './modules/themes';
 import profile from './modules/profile';
 import general from './modules/settings/general';
 import localizations from './modules/settings/localizations';
-import backups from './modules/settings/backups';
+import media from './modules/media';
 
 export const store = new Vuex.Store({
     modules: {
@@ -30,6 +29,6 @@ export const store = new Vuex.Store({
         profile: profile,
         general: general,
         localizations: localizations,
-        backups: backups,
+        media: media,
     }
 });

@@ -2,7 +2,7 @@ import GlobalComponents from '../../vaahvue/helpers/GlobalComponents';
 import ListLargeView from './partials/ListLargeView';
 import ListSmallView from './partials/ListSmallView';
 
-let namespace = 'roles';
+let namespace = 'media';
 
 export default {
     computed:{
@@ -21,13 +21,13 @@ export default {
     data()
     {
         return {
+            namespace: namespace,
             is_content_loading: false,
             is_btn_loading: false,
             assets: null,
             search_delay: null,
             search_delay_time: 800,
-            ids: [],
-            moduleSection: null,
+            ids: []
         }
     },
     watch: {
@@ -37,33 +37,27 @@ export default {
             this.updateActiveItem();
         }
     },
-    created()
-    {
-
-    },
     mounted() {
         //----------------------------------------------------
         this.onLoad();
         //----------------------------------------------------
-
         //----------------------------------------------------
     },
     methods: {
-        //---------------------------------------------------------------------
         //---------------------------------------------------------------------
         update: function(name, value)
         {
             let update = {
                 state_name: name,
                 state_value: value,
-                namespace: namespace,
+                namespace: this.namespace,
             };
             this.$vaah.updateState(update);
         },
         //---------------------------------------------------------------------
         updateView: function()
         {
-            this.$store.dispatch(namespace+'/updateView', this.$route);
+            this.$store.dispatch(this.namespace+'/updateView', this.$route);
         },
         //---------------------------------------------------------------------
         onLoad: function()
@@ -91,8 +85,6 @@ export default {
             await this.$store.dispatch(namespace+'/getAssets');
             this.getList();
         },
-        //---------------------------------------------------------------------
-
         //---------------------------------------------------------------------
         toggleFilters: function()
         {
@@ -174,9 +166,13 @@ export default {
 
         },
         //---------------------------------------------------------------------
+        reload: function()
+        {
+            this.is_btn_loading = true;
+            this.getList();
+        },
         //---------------------------------------------------------------------
         getList: function () {
-            this.$Progress.start();
             this.$vaah.updateCurrentURL(this.query_string, this.$router);
             let url = this.ajax_url+'/list';
             this.$vaah.ajax(url, this.query_string, this.getListAfter);
@@ -184,11 +180,10 @@ export default {
         //---------------------------------------------------------------------
         getListAfter: function (data, res) {
 
+            console.log('--->', data);
+
             this.update('is_list_loading', false);
             this.update('list', data.list);
-
-            this.update('total_permissions', data.totalPermission);
-            this.update('total_users', data.totalUser);
 
             if(data.list.total === 0)
             {
@@ -196,11 +191,6 @@ export default {
             }else{
                 this.update('list_is_empty', false);
             }
-
-            this.page.query_string.recount = null;
-
-            this.update('query_string', this.page.query_string);
-            this.$vaah.updateCurrentURL(this.page.query_string, this.$router);
 
             this.is_btn_loading = false;
             this.$Progress.finish();
@@ -244,42 +234,21 @@ export default {
         },
         //---------------------------------------------------------------------
         actionsAfter: function (data, res) {
+            let action = this.page.bulk_action.action;
             if(data)
             {
                 this.$root.$emit('eReloadItem');
                 this.resetBulkAction();
                 this.getList();
-                this.$store.dispatch('root/reloadPermissions');
             } else
             {
                 this.$Progress.finish();
             }
         },
         //---------------------------------------------------------------------
-        sync: function () {
-
-            this.page.query_string.recount = true;
-
-            this.is_btn_loading = true;
-
-            this.update('query_string', this.page.query_string);
-            this.getList();
-        },
-        //---------------------------------------------------------------------
-        getModuleSection: function () {
-
-            let url = this.ajax_url+'/getModuleSections';
-            this.$vaah.ajax(url, this.query_string, this.getModuleSectionAfter);
-        },
-        //---------------------------------------------------------------------
-        getModuleSectionAfter: function (data,res) {
-
-            this.moduleSection = data;
-        },
-        //---------------------------------------------------------------------
         updateActiveItem: function () {
 
-            if(this.$route.fullPath.includes('roles/?')){
+            if(this.$route.fullPath.includes('registrations/?')){
                 this.update('active_item', null);
             }
         },

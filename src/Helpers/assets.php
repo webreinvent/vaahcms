@@ -148,11 +148,22 @@ function vh_mail_sample_settings()
 //-----------------------------------------------------------------------------------
 function vh_file_types()
 {
-    $list = [
-        ['slug' => 'jpeg', 'name'=>'jpeg'],
-        ['slug' => 'bmp', 'name'=>'bmp'],
-        ['slug' => 'png', 'name'=>'png'],
+
+    //get list from https://gist.github.com/plasticbrain/3887245
+    $arr = [
+        'text/html',
+        'image/x-icon',
+        'text/plain',
+        'image/jpeg',
+        'video/mpeg', 'video/quicktime', 'audio/mpeg', 'audio/x-mpeg',
+        'image/png', 'application/msword', 'application/excel', 'image/jpeg',
+        'image/gif',
     ];
+
+    $arr = array_unique(array_filter($arr));
+
+    $list = vh_list_with_slugs($arr);
+
     return $list;
 }
 //-----------------------------------------------------------------------------------

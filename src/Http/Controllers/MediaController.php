@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Str;
+use WebReinvent\VaahCms\Entities\Media;
 
 class MediaController extends Controller
 {
@@ -93,6 +94,147 @@ class MediaController extends Controller
         return response()->json($response);
 
     }
+    //----------------------------------------------------------
+    public function getAssets(Request $request)
+    {
+
+        if(!\Auth::user()->hasPermission('has-access-of-media-section'))
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+            return response()->json($response);
+        }
+
+
+        $data['allowed_file_types'] = vh_file_pond_allowed_file_type();
+
+        $response['status'] = 'success';
+        $response['data'] = $data;
+
+        return response()->json($response);
+    }
+    //----------------------------------------------------------
+    public function postCreate(Request $request)
+    {
+
+        if(!\Auth::user()->hasPermission('can-create-media'))
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+            return response()->json($response);
+        }
+
+        $response = Media::createItem($request);
+
+        if($response['status'] == 'success')
+        {
+            $list = Media::getList($request);
+            $response['data']['list'] = $list['data']['list'];
+        }
+
+        return response()->json($response);
+    }
+    //----------------------------------------------------------
+    public function getList(Request $request)
+    {
+        if(!\Auth::user()->hasPermission('has-access-of-media-section'))
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+            return response()->json($response);
+        }
+
+        $response = Media::getList($request);
+        return response()->json($response);
+    }
+
+    //----------------------------------------------------------
+    public function getItem(Request $request, $id)
+    {
+
+        if(!\Auth::user()->hasPermission('can-read-media'))
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+            return response()->json($response);
+        }
+
+        $request->merge(['id'=>$id]);
+        $response = Media::getItem($request);
+        return response()->json($response);
+    }
+    //----------------------------------------------------------
+    public function postStore(Request $request)
+    {
+
+        if(!\Auth::user()->hasPermission('can-update-media'))
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+            return response()->json($response);
+        }
+
+        $response = Media::store($request);
+        return response()->json($response);
+    }
+    //----------------------------------------------------------
+    public function postActions(Request $request, $action)
+    {
+
+        $rules = array(
+            'inputs' => 'required',
+        );
+
+        $validator = \Validator::make( $request->all(), $rules);
+        if ( $validator->fails() ) {
+
+            $errors             = errorsToArray($validator->errors());
+            $response['status'] = 'failed';
+            $response['errors'] = $errors;
+            return response()->json($response);
+        }
+
+        $response = [];
+
+        switch ($action)
+        {
+
+            //------------------------------------
+            case 'bulk-change-status':
+                $response = Media::bulkStatusChange($request);
+                break;
+            //------------------------------------
+            case 'bulk-trash':
+
+                $response = Media::bulkTrash($request);
+
+                break;
+            //------------------------------------
+            case 'bulk-restore':
+
+                $response = Media::bulkRestore($request);
+
+                break;
+
+            //------------------------------------
+            case 'bulk-delete':
+
+                $response = Media::bulkDelete($request);
+
+                break;
+            //------------------------------------
+
+        }
+
+        return response()->json($response);
+
+    }
+    //----------------------------------------------------------
     //----------------------------------------------------------
 
 

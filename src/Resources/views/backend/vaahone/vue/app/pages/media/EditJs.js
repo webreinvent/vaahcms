@@ -1,9 +1,10 @@
 import GlobalComponents from '../../vaahvue/helpers/GlobalComponents'
+import DatePicker from '../../vaahvue/reusable/DatePicker'
+import AutoComplete from '../../vaahvue/reusable/AutoComplete'
 
-let namespace = 'roles';
+let namespace = 'registrations';
 
 export default {
-    props: ['id'],
     computed:{
         root() {return this.$store.getters['root/state']},
         page() {return this.$store.getters[namespace+'/state']},
@@ -12,6 +13,9 @@ export default {
     },
     components:{
         ...GlobalComponents,
+        DatePicker,
+        'AutoCompleteTimeZone': AutoComplete,
+        'AutoCompleteCountry': AutoComplete,
 
     },
     data()
@@ -22,7 +26,6 @@ export default {
             labelPosition: 'on-border',
             params: {},
             local_action: null,
-            title: null,
         }
     },
     watch: {
@@ -79,24 +82,45 @@ export default {
             this.$Progress.finish();
             this.is_content_loading = false;
 
-            if(data)
+            if(data && data.item)
             {
-                this.title = data.name;
-                this.update('active_item', data);
+                console.log('--->data.item', data);
+                this.update('active_item', data.item);
             } else
             {
                 //if item does not exist or delete then redirect to list
                 this.update('active_item', null);
-                this.$router.push({name: 'role.list'});
+                this.$router.push({name: 'reg.list'});
             }
+        },
+        //---------------------------------------------------------------------
+        updateNewItem: function()
+        {
+            this.update('item', this.item);
+        },
+        //---------------------------------------------------------------------
+        setBirthDate: function (date) {
+            this.item.birth = date;
+            this.updateNewItem();
+        },
+        //---------------------------------------------------------------------
+        setTimeZone: function (item) {
+            this.item.timezone = item.slug;
+            this.updateNewItem();
+        },
+        //---------------------------------------------------------------------
+        setCountry: function (item) {
+            this.item.country = item.name;
+            this.item.country_code = item.code;
+            this.updateNewItem();
         },
         //---------------------------------------------------------------------
         store: function () {
             this.$Progress.start();
 
-            let params = {
-                item: this.item,
-            };
+            let params = this.item;
+
+            console.log('--->params', params);
 
             let url = this.ajax_url+'/store/'+this.item.id;
             this.$vaah.ajax(url, params, this.storeAfter);
@@ -125,12 +149,6 @@ export default {
                     this.saveAndClone()
                 }
 
-                if(this.local_action === 'save')
-                {
-                    this.$router.push({name: 'role.view', params:{id:this.id}});
-                    this.$root.$emit('eReloadItem');
-                }
-
             }
 
         },
@@ -142,28 +160,42 @@ export default {
         //---------------------------------------------------------------------
         saveAndClose: function () {
             this.update('active_item', null);
-            this.$router.push({name:'role.list'});
+            this.$router.push({name:'reg.list'});
         },
         //---------------------------------------------------------------------
         saveAndNew: function () {
             this.update('active_item', null);
             this.resetNewItem();
-            this.$router.push({name:'role.create'});
+            this.$router.push({name:'reg.create'});
         },
         //---------------------------------------------------------------------
         saveAndClone: function () {
             this.fillNewItem();
             this.update('active_item', null);
-            this.$router.push({name:'role.create'});
+            this.$router.push({name:'reg.create'});
         },
         //---------------------------------------------------------------------
         getNewItem: function()
         {
             let new_item = {
-                name: null,
-                slug: null,
-                is_active: null,
-                details: null,
+                email: null,
+                username: null,
+                password: null,
+                display_name: null,
+                title: null,
+                first_name: null,
+                middle_name: null,
+                last_name: null,
+                gender: null,
+                country_calling_code: null,
+                phone: null,
+                timezone: null,
+                alternate_email: null,
+                avatar_url: null,
+                birth: null,
+                country: null,
+                country_code: null,
+                status: null,
             };
             return new_item;
         },
@@ -177,11 +209,25 @@ export default {
         fillNewItem: function () {
 
             let new_item = {
-                name: null,
-                slug: null,
-                is_active: null,
-                details: null,
-            };
+                    email: null,
+                    username: null,
+                    password: null,
+                    display_name: null,
+                    title: null,
+                    first_name: null,
+                    middle_name: null,
+                    last_name: null,
+                    gender: null,
+                    country_calling_code: null,
+                    phone: null,
+                    timezone: null,
+                    alternate_email: null,
+                    avatar_url: null,
+                    birth: null,
+                    country: null,
+                    country_code: null,
+                    status: null,
+                };
 
             for(let key in new_item)
             {

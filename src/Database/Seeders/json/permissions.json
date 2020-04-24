@@ -161,6 +161,42 @@
         "module": "vaahcms",
         "section": "permission",
         "details": "This will allow user to manage anything in the permission section."
-    }
+    },
 
+    {
+        "name": "Has Access Of Media Section",
+        "module": "vaahcms",
+        "section": "media",
+        "details": "This will allow user see the link of media section."
+    },
+    {
+        "name": "Can Create Media",
+        "module": "vaahcms",
+        "section": "media",
+        "details": "This will allow user to add anything in the media section."
+    },
+    {
+        "name": "Can Read Media",
+        "module": "vaahcms",
+        "section": "media",
+        "details": "This will allow user to view anything in the media section."
+    },
+    {
+        "name": "Can Update Media",
+        "module": "vaahcms",
+        "section": "media",
+        "details": "This will allow user to edit anything in the media section."
+    },
+    {
+        "name": "Can Delete Media",
+        "module": "vaahcms",
+        "section": "media",
+        "details": "This will allow user to delete anything in the media section."
+    },
+    {
+        "name": "Can Manage Media",
+        "module": "vaahcms",
+        "section": "media",
+        "details": "This will allow user to manage anything in the media section."
+    }
 ]

@@ -1,4 +1,4 @@
-let namespace = 'roles';
+let namespace = 'registrations';
 export default {
     computed: {
         root() {return this.$store.getters['root/state']},
@@ -14,7 +14,7 @@ export default {
     data()
     {
         let obj = {
-            icon_copy: "<i class='fas fa-copy'></i>"
+
         };
 
         return obj;
@@ -57,51 +57,13 @@ export default {
         //---------------------------------------------------------------------
         setActiveItem: function (item) {
             this.update('active_item', item);
-            this.$router.push({name: 'role.view', params:{id:item.id}})
-        },
-        //---------------------------------------------------------------------
-        changeStatus: function (id) {
-            this.$Progress.start();
-            let url = this.ajax_url+'/actions/bulk-change-status';
-            let params = {
-                inputs: [id],
-                data: null
-            };
-            this.$vaah.ajax(url, params, this.changeStatusAfter);
-        },
-        //---------------------------------------------------------------------
-        changeStatusAfter: function (data,res) {
-            this.$emit('eReloadList');
-            this.update('is_list_loading', false);
-
-        },
-        //---------------------------------------------------------------------
-        getRolePermission: function (item) {
-            this.update('active_item', item);
-            this.$router.push({name: 'role.perm', params:{id:item.id}})
-        },
-        //---------------------------------------------------------------------
-        getRoleUser: function (item) {
-            this.update('active_item', item);
-            this.$router.push({name: 'role.user', params:{id:item.id}})
-        },
-        //---------------------------------------------------------------------
-        copiedData: function (data) {
-
-            this.$vaah.toastSuccess(['copied']);
-
-            // alertify.success('copied');
-
-            this.$vaah.console(data, 'copied data');
-
+            this.$router.push({name: 'reg.view', params:{id:item.id}})
         },
         //---------------------------------------------------------------------
         hasPermission: function(slug)
         {
             return this.$vaah.hasPermission(this.permissions, slug);
         },
-        //---------------------------------------------------------------------
-        //---------------------------------------------------------------------
         //---------------------------------------------------------------------
         //---------------------------------------------------------------------
     }

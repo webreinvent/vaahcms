@@ -38,12 +38,6 @@
                                     Save & Close
                                 </b-dropdown-item>
 
-<!--                                <b-dropdown-item aria-role="listitem"-->
-<!--                                                 @click="setLocalAction('save-and-new')">-->
-<!--                                    <b-icon icon="plus"></b-icon>-->
-<!--                                    Save & New-->
-<!--                                </b-dropdown-item>-->
-
                                 <b-dropdown-item aria-role="listitem"
                                                  @click="setLocalAction('save-and-clone')">
                                     <b-icon icon="copy"></b-icon>
@@ -64,7 +58,7 @@
                         <p class="control">
                             <b-button tag="router-link"
                                       type="is-light"
-                                      :to="{name: 'role.list'}"
+                                      :to="{name: 'media.list'}"
                                       icon-left="times">
                             </b-button>
                         </p>
@@ -80,34 +74,25 @@
             <!--/header-->
 
             <!--content-->
-            <div class="card-content">
+            <div class="card-content" v-if="assets">
                 <div class="block">
 
+
+                    <MediaUploader
+                        :remove_after_upload="false"
+                        :show_allowed_types="false"
+                        :allowed_types="assets.allowed_file_types"
+                        @afterUpload="updateMediaToNewItem"/>
+
+
+                    <hr/>
+                    <br/>
+
                     <b-field label="Name" :label-position="labelPosition">
-                        <b-input name="role-name" dusk="role-name" v-model="new_item.name"></b-input>
+                        <b-input type="text"  name="media-name" dusk="media-name"
+                                 v-model="new_item.name"></b-input>
                     </b-field>
 
-                    <b-field label="Slug" :label-position="labelPosition">
-                        <b-input name="role-slug" dusk="role-slug" v-model="new_item.slug"></b-input>
-                    </b-field>
-
-                    <b-field label="Detail" :label-position="labelPosition">
-                        <b-input type="textarea" name="role-detail" dusk="role-detail" v-model="new_item.details"></b-input>
-                    </b-field>
-
-                    <b-field label="Is Active" :label-position="labelPosition">
-                        <b-radio-button name="role-is_active" dusk="role-is_active"
-                                        v-model="new_item.is_active"
-                                        :native-value=1>
-                            <span>Yes</span>
-                        </b-radio-button>
-
-                        <b-radio-button type="is-danger" name="role-is_active" dusk="role-is_active"
-                                        v-model="new_item.is_active"
-                                        :native-value=0>
-                            <span>No</span>
-                        </b-radio-button>
-                    </b-field>
 
 
                 </div>
