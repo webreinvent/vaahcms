@@ -48,40 +48,45 @@ export default {
 
             let root_assets = state.assets;
 
-            let params = {};
+            if(!state.assets || state.assets_reload == true)
+            {
 
-            params.get_server_details = true;
+                let params = {};
 
-            params.get_auth_user = true;
+                params.get_server_details = true;
 
-            params.get_extended_views = true;
+                params.get_auth_user = true;
 
-            params.get_extended_views = true;
+                params.get_extended_views = true;
 
-            let url = state.json_url + '/assets';
-            let data = await Vaah.ajax(url, params);
+                params.get_extended_views = true;
 
-            if (!root_assets) {
-                root_assets = {};
+                let url = state.json_url + '/assets';
+                let data = await Vaah.ajax(url, params);
+
+                if (!root_assets) {
+                    root_assets = {};
+                }
+
+                for (let index in data.data.data) {
+                    root_assets[index] = data.data.data[index];
+                }
+
+                let payload = {
+                    key: 'assets',
+                    value: root_assets
+                };
+
+                this.commit('root/updateState', payload);
+
+                payload = {
+                    key: 'assets_reload',
+                    value: false
+                };
+
+                this.commit('root/updateState', payload);
+
             }
-
-            for (let index in data.data.data) {
-                root_assets[index] = data.data.data[index];
-            }
-
-            let payload = {
-                key: 'assets',
-                value: root_assets
-            };
-
-            this.commit('root/updateState', payload);
-
-            payload = {
-                key: 'assets_reload',
-                value: false
-            };
-
-            this.commit('root/updateState', payload);
 
         },
         //-----------------------------------------------------------------

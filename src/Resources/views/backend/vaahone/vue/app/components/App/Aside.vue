@@ -11,7 +11,7 @@
         <div class="menu">
             <div class="sidebar">
                 <ul>
-                    <template v-if="assets.extended_views" >
+                    <template v-if="assets && assets.extended_views" >
                         <template  v-for="menus in assets.extended_views.sidebar_menu">
                             <template v-for="link in menus">
                                 <li>
