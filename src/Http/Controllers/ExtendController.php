@@ -128,7 +128,15 @@ class ExtendController extends Controller
             'label'=> 'Settings',
             'child' => [
                 [
-                    'link' => self::$link."/settings/localization/",
+                    'link' => self::$link."/settings/general",
+                    'label'=> 'General'
+                ],
+                [
+                    'link' => self::$link."/settings/env-variables",
+                    'label'=> 'Env Variables'
+                ],
+                [
+                    'link' => self::$link."/settings/localization",
                     'label'=> 'Localization'
                 ],
             ]
