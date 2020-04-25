@@ -14,6 +14,9 @@ Route::group(
         Route::any('/assets', 'MediaController@getAssets')
             ->name('backend.vaah.media.assets');
         //---------------------------------------------------------
+        Route::any('/downloadable/slug/available', 'MediaController@isDownloadableSlugAvailable')
+            ->name('backend.vaah.media.downloadable.slug.available');
+        //---------------------------------------------------------
         Route::post('/create', 'MediaController@postCreate')
             ->name('backend.vaah.media.create');
         //---------------------------------------------------------
@@ -35,3 +38,6 @@ Route::group(
 
         //------------------------------------------------
     });
+
+
+

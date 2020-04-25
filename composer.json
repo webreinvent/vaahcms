@@ -13,22 +13,20 @@
   ],
   "require": {
     "php": "^7.2",
-    "zanysoft/laravel-zip": "*",
-    "doctrine/dbal": "*",
     "webreinvent/laravel-nestable": "*",
     "barryvdh/laravel-dompdf": "*",
     "berkayk/onesignal-laravel": "*",
     "bugsnag/bugsnag-laravel": "*",
     "composer/composer": "^1.8",
     "creativeorange/gravatar": "^1.0",
-    "intervention/image": "*",
+    "intervention/image": "^2.5",
     "maatwebsite/excel": "*",
     "ixudra/curl": "*",
     "nahid/linkify": "*",
     "php-imap/php-imap": "*",
     "stevebauman/purify": "*",
-    "zanysoft/laravel-zip": "*",
-    "doctrine/dbal": "*"
+    "zanysoft/laravel-zip": "^1.0",
+    "doctrine/dbal": "^2.10"
   },
   "autoload": {
     "psr-4": {

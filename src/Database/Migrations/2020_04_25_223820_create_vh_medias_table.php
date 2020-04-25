@@ -18,16 +18,19 @@ class CreateVhMediasTable extends Migration
             $table->increments('id');
 
             $table->string('name')->nullable()->index();
-            $table->string('slug')->nullable();
+            $table->uuid('uuid')->nullable();
+            $table->string('original_name')->nullable();
             $table->string('mime_type')->nullable();
+            $table->string('extension')->nullable();
             $table->string('path')->nullable();
             $table->string('url')->nullable();
+            $table->string('url_thumbnail')->nullable();
             $table->integer('size')->nullable();
             $table->string('title')->nullable();
             $table->string('caption')->nullable();
             $table->string('alt_text')->nullable();
             $table->boolean('is_hidden')->nullable();
-            $table->boolean('download_url')->nullable();
+            $table->string('download_url')->nullable();
             $table->boolean('download_requires_login')->nullable();
             $table->json('meta')->nullable();
 
@@ -48,6 +51,6 @@ class CreateVhMediasTable extends Migration
     */
     public function down()
     {
-        Schema::dropIfExists('vh_lang_strings');
+        Schema::dropIfExists('vh_medias');
     }
 }

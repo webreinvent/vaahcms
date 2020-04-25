@@ -2,9 +2,11 @@ import GlobalComponents from '../../vaahvue/helpers/GlobalComponents'
 import TableTrView from '../../vaahvue/reusable/TableTrView'
 import TableTrActedBy from '../../vaahvue/reusable/TableTrActedBy'
 import TableTrTag from '../../vaahvue/reusable/TableTrTag'
-import TableTrStatus from './partials/TableTrStatus'
+import TableTrStatus from '../../vaahvue/reusable/TableTrStatus'
+import TableTrUrl from '../../vaahvue/reusable/TableTrUrl'
+import TableTrYesNo from '../../vaahvue/reusable/TableTrYesNo'
 
-let namespace = 'registrations';
+let namespace = 'media';
 
 export default {
     computed:{
@@ -20,6 +22,8 @@ export default {
         TableTrStatus,
         TableTrTag,
         TableTrActedBy,
+        TableTrUrl,
+        TableTrYesNo,
     },
     data()
     {
@@ -93,7 +97,7 @@ export default {
             {
                 //if item does not exist or delete then redirect to list
                 this.update('active_item', null);
-                this.$router.push({name: 'reg.list'});
+                this.$router.push({name: 'media.list'});
             }
         },
         //---------------------------------------------------------------------
@@ -123,7 +127,7 @@ export default {
 
                 if(action == 'bulk-delete')
                 {
-                    this.$router.push({name: 'reg.list'});
+                    this.$router.push({name: 'media.list'});
                 } else
                 {
                     this.getItem();
@@ -178,7 +182,7 @@ export default {
 
             if(
                 label == 'id' || label == 'uuid'
-                || label == 'email' || label == 'username'
+                || label == 'url' || label == 'username'
                 || label == 'alternate_email' || label == 'phone'
                 || label == 'activation_code'|| label == 'user_id'
             )
@@ -205,7 +209,7 @@ export default {
         //---------------------------------------------------------------------
         resetActiveItem: function () {
             this.update('active_item', null);
-            this.$router.push({name:'reg.list'});
+            this.$router.push({name:'media.list'});
         },
         //---------------------------------------------------------------------
         hasPermission: function(slug)

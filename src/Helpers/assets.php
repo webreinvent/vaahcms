@@ -157,7 +157,7 @@ function vh_file_types()
         'image/jpeg',
         'video/mpeg', 'video/quicktime', 'audio/mpeg', 'audio/x-mpeg',
         'image/png', 'application/msword', 'application/excel', 'image/jpeg',
-        'image/gif',
+        'image/gif',  'audio/mp4',  'video/mp4',
     ];
 
     $arr = array_unique(array_filter($arr));

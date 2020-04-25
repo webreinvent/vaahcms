@@ -27,7 +27,7 @@
                             <b-button icon-left="edit"
                                       type="is-light"
                                       tag="router-link"
-                                      :to="{name:'reg.edit', params:{id: item.id}}">
+                                      :to="{name:'media.edit', params:{id: item.id}}">
                                 Edit
                             </b-button>
                         </p>
@@ -110,12 +110,12 @@
 
                                 <template v-for="(value, label) in item">
 
-                                    <template v-if="label == 'status'">
-                                        <TableTrStatus :value="value"
+                                    <template v-if="label == 'download_requires_login'">
+                                        <TableTrYesNo :value="value"
                                                        :label="label"
                                                        :is_copiable="isCopiable(label)"
                                                        :is_upper_case="isUpperCase(label)">
-                                        </TableTrStatus>
+                                        </TableTrYesNo>
                                     </template>
 
                                     <template v-else-if="label == 'created_by'">
@@ -137,19 +137,26 @@
                                         </TableTrActedBy>
                                     </template>
 
-                                    <template v-else-if="label == 'user_id'">
-                                        <TableTrTag :value="value"
+                                    <template v-else-if="label == 'size' ">
+                                        <TableTrTag :value="item['size_for_humans']"
                                                     :label="label"
-                                                    :is_hashed="true"
-                                                    :is_copiable="true"
                                         >
                                         </TableTrTag>
                                     </template>
 
-
+                                    <template v-else-if="label == 'url' || label == 'url_thumbnail'
+                                     || label == 'download_url'">
+                                        <TableTrUrl :value="value"
+                                                    :label="label"
+                                                    :is_hashed="true"
+                                                    :is_copiable="true"
+                                        >
+                                        </TableTrUrl>
+                                    </template>
 
                                     <template v-else-if="label == 'created_by_user'
-                                      || label == 'updated_by_user' || label == 'deleted_by_user' || label == 'name' ">
+                                      || label == 'updated_by_user' || label == 'deleted_by_user'
+                                       || label == 'size_for_humans'">
 
                                     </template>
 

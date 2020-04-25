@@ -35,7 +35,16 @@ export default {
     watch: {
         $route(to, from) {
             this.updateView()
-        }
+        },
+        'new_item.download_url': {
+            deep: true,
+            handler(new_val, old_val) {
+                let slug = this.$vaah.strToSlug(new_val);
+                this.new_item.download_url =  slug;
+                this.new_item.downloadable_slug_available =  null;
+            }
+        },
+
     },
     mounted() {
 
@@ -113,15 +122,32 @@ export default {
             this.update('active_item', null);
         },
         //---------------------------------------------------------------------
+        isDownloadableSlugAvailable: function () {
+            this.$Progress.start();
+            this.new_item.downloadable_slug_available = null;
+            this.update('new_item', this.new_item);
+            let params = {
+                download_url: this.new_item.download_url
+            };
+            let url = this.ajax_url+'/downloadable/slug/available';
+            this.$vaah.ajax(url, params, this.isDownloadableSlugAvailableAfter);
+        },
+        //---------------------------------------------------------------------
+        isDownloadableSlugAvailableAfter: function (data, res) {
+            this.$Progress.finish();
+            if(data){
+                this.new_item.downloadable_slug_available = data;
+                this.update('new_item', this.new_item);
+            }
+
+        },
+        //---------------------------------------------------------------------
         create: function (action) {
             this.is_btn_loading = true;
 
             //  this.$Progress.start();
 
-            this.params = {
-                new_item: this.new_item,
-                action: action
-            };
+            this.params = this.new_item;
 
             let url = this.ajax_url+'/create';
             this.$vaah.ajax(url, this.params, this.createAfter);
@@ -158,17 +184,14 @@ export default {
         //---------------------------------------------------------------------
         updateMediaToNewItem: function(media)
         {
-
-            console.log('--->', media);
-
-
-
             for(let index in media)
             {
+                if(index == 'name' && this.new_item[index])
+                {
+                    continue;
+                }
                 this.new_item[index] = media[index];
             }
-
-            console.log('--->', this.new_item);
 
             this.update('new_item', this.new_item);
         },
@@ -179,22 +202,6 @@ export default {
             console.log('--->', this.new_item);
         },
         //---------------------------------------------------------------------
-        setBirthDate: function (date) {
-            this.new_item.birth = date;
-            this.updateNewItem();
-        },
-        //---------------------------------------------------------------------
-        setTimeZone: function (item) {
-            this.new_item.timezone = item.slug;
-            this.updateNewItem();
-        },
-        //---------------------------------------------------------------------
-        setCountry: function (item) {
-            this.new_item.country = item.name;
-            this.new_item.country_code = item.code;
-            this.updateNewItem();
-        },
-        //---------------------------------------------------------------------
         setLocalAction: function (action) {
             this.local_action = action;
             this.create();
@@ -202,7 +209,7 @@ export default {
         //---------------------------------------------------------------------
         saveAndClose: function () {
             this.update('active_item', null);
-            this.$router.push({name:'reg.list'});
+            this.$router.push({name:'media.list'});
         },
         //---------------------------------------------------------------------
         saveAndNew: function () {
@@ -212,30 +219,25 @@ export default {
         //---------------------------------------------------------------------
         saveAndClone: function () {
             this.fillNewItem();
-            this.$router.push({name:'reg.create'});
+            this.$router.push({name:'media.create'});
         },
         //---------------------------------------------------------------------
         getNewItem: function()
         {
             let new_item = {
-                email: null,
-                username: null,
-                password: null,
-                display_name: null,
+                uploaded_file_name: null,
+                name: null,
+                mime_type: null,
+                path: null,
+                url: null,
+                size: null,
                 title: null,
-                first_name: null,
-                middle_name: null,
-                last_name: null,
-                gender: null,
-                country_calling_code: null,
-                phone: null,
-                timezone: null,
-                alternate_email: null,
-                avatar_url: null,
-                birth: null,
-                country: null,
-                country_code: null,
-                status: null,
+                caption: null,
+                alt_text: null,
+                is_downloadable: false,
+                download_url: '',
+                download_requires_login: false,
+                downloadable_slug_available: null,
             };
             return new_item;
         },
@@ -249,24 +251,19 @@ export default {
         fillNewItem: function () {
 
             let new_item = {
-                email: null,
-                username: null,
-                password: null,
-                display_name: null,
+                uploaded_file_name: null,
+                name: null,
+                mime_type: null,
+                path: null,
+                url: null,
+                size: null,
                 title: null,
-                first_name: null,
-                middle_name: null,
-                last_name: null,
-                gender: null,
-                country_calling_code: null,
-                phone: null,
-                timezone: null,
-                alternate_email: null,
-                avatar_url: null,
-                birth: null,
-                country: null,
-                country_code: null,
-                status: null,
+                caption: null,
+                alt_text: null,
+                is_downloadable: false,
+                download_url: '',
+                download_requires_login: false,
+                downloadable_slug_available: null,
             };
 
             for(let key in new_item)

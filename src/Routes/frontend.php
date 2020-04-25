@@ -44,3 +44,17 @@ Route::group(
         //------------------------------------------------
     });
 
+
+
+Route::group(
+    [
+        'prefix'     => 'media',
+        'middleware' => ['web'],
+        'namespace'  => 'WebReinvent\VaahCms\Http\Controllers'
+    ],
+    function () {
+        //------------------------------------------------
+        Route::post( '/download/{slug?}', 'MediaController@upload' )
+            ->name( 'vh.frontend.media.download' );
+        //------------------------------------------------
+    });

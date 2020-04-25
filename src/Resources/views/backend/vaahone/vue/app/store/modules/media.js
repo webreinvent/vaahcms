@@ -38,8 +38,20 @@ export default {
             action: null,
         },
         new_item:{
+            uploaded_file_name: null,
             name: null,
-            slug: null,
+            mime_type: null,
+            path: null,
+            url: null,
+            url_thumbnail: null,
+            size: null,
+            title: null,
+            caption: null,
+            alt_text: null,
+            is_downloadable: false,
+            download_url: '',
+            download_requires_login: false,
+            downloadable_slug_available: null,
         },
     },
     //=========================================================================
@@ -77,7 +89,7 @@ export default {
         //-----------------------------------------------------------------
         updateView({ state, commit, dispatch, getters }, payload) {
             let list_view = false;
-            if(payload && payload.name && payload.name == 'role.list')
+            if(payload && payload.name && payload.name == 'media.list')
             {
                 list_view = true;
             }

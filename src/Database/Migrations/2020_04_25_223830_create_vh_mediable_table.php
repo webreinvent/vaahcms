@@ -39,6 +39,6 @@ class CreateVhMediableTable extends Migration
     */
     public function down()
     {
-        Schema::dropIfExists('vh_lang_strings');
+        Schema::dropIfExists('vh_mediable');
     }
 }

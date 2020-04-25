@@ -3,13 +3,13 @@
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
-use WebReinvent\VaahCms\Traits\CrudObservantTrait;
+use WebReinvent\VaahCms\Traits\CrudWithUuidObservantTrait;
 
 
 class Media extends Model {
 
     use SoftDeletes;
-    use CrudObservantTrait;
+    use CrudWithUuidObservantTrait;
     //-------------------------------------------------
     protected $table = 'vh_medias';
     //-------------------------------------------------
@@ -21,12 +21,17 @@ class Media extends Model {
     //-------------------------------------------------
     protected $dateFormat = 'Y-m-d H:i:s';
     //-------------------------------------------------
+    //-------------------------------------------------
+
     protected $fillable = [
         'name',
-        'slug',
+        'original_name',
+        'uuid',
         'mime_type',
+        'extension',
         'path',
         'url',
+        'url_thumbnail',
         'size',
         'title',
         'caption',
@@ -39,23 +44,72 @@ class Media extends Model {
         'updated_by',
         'deleted_by'
     ];
+    //-------------------------------------------------
+    protected $hidden = [
+        'is_hidden',
+    ];
 
     //-------------------------------------------------
-    protected $appends  = [
 
+    protected $appends  = [
+        'type', 'size_for_humans'
     ];
     //-------------------------------------------------
-    public function scopeSlug( $query, $slug ) {
-        return $query->where( 'slug', $slug );
+    public function getDownloadUrlAttribute($value) {
+        return route('vh.frontend.media.download',[$value]);
     }
     //-------------------------------------------------
+    public function getUrlAttribute($value) {
 
+        if(!$value)
+        {
+            return $value;
+        }
+
+        return asset($value);
+    }
+    //-------------------------------------------------
+    public function getTypeAttribute() {
+        $explode = explode('/', $this->mime_type);
+        return $explode[0];
+    }
+    //-------------------------------------------------
+    public function getUrlThumbnailAttribute($value) {
+
+        if(!$value)
+        {
+            return null;
+        }
+
+        return asset($value);
+    }
+    //-------------------------------------------------
+    public function getSizeForHumansAttribute() {
+
+        $size = $this->size;
+        $precision = 2;
+
+        if ($size > 0) {
+            $size = (int) $size;
+            $base = log($size) / log(1024);
+            $suffixes = array(' bytes', ' KB', ' MB', ' GB', ' TB');
+
+            return round(pow(1024, $base - floor($base)), $precision) . $suffixes[floor($base)];
+        } else {
+            return $size;
+        }
+    }
     //-------------------------------------------------
     public function createdByUser()
     {
         return $this->belongsTo('WebReinvent\VaahCms\Entities\User',
             'created_by', 'id'
         )->select('id', 'uuid', 'first_name', 'last_name', 'email');
+    }
+    //-------------------------------------------------
+    public function getTableColumns() {
+        return $this->getConnection()->getSchemaBuilder()
+            ->getColumnListing($this->getTable());
     }
     //-------------------------------------------------
     public function scopeExclude($query, $columns)
@@ -82,26 +136,43 @@ class Media extends Model {
     public static function createItem($request)
     {
 
-        $list = self::orderBy('id', 'desc');
+        $rules = array(
+            'name' => 'required',
+            'mime_type' => 'required',
+            'url' => 'required',
+            'path' => 'required',
+        );
 
-        if($request['trashed'] == 'true')
-        {
-            $list->withTrashed();
+        $validator = \Validator::make( $request->all(), $rules);
+        if ( $validator->fails() ) {
+
+            $errors             = errorsToArray($validator->errors());
+            $response['status'] = 'failed';
+            $response['errors'] = $errors;
+            return $response;
         }
 
-        if(isset($request->q))
+        //check download url is set and not taken
+        if($request->has('download_url') && !empty($request->download_url))
         {
-            $list->where(function ($q) use ($request){
-                $q->where('name', 'LIKE', '%'.$request->q.'%')
-                    ->orWhere('slug', 'LIKE', '%'.$request->q.'%');
-            });
+            $download_url_exist = static::where('download_url', $request->download_url)
+            ->first();
+
+            if($download_url_exist)
+            {
+                $response['status'] = 'failed';
+                $response['errors'][] = 'Download url is associated with other media.';
+                return $response;
+            }
         }
 
-        $data['list'] = $list->paginate(config('vaahcms.per_page'));
 
+        $item = new Media();
+        $item->fill($request->all());
+        $item->save();
 
         $response['status'] = 'success';
-        $response['data'] = $data;
+        $response['data'] = $item;
 
         return $response;
     }
@@ -124,6 +195,8 @@ class Media extends Model {
             });
         }
 
+        $list->whereNull('is_hidden');
+
         $data['list'] = $list->paginate(config('vaahcms.per_page'));
 
 
@@ -134,20 +207,32 @@ class Media extends Model {
     }
 
     //-------------------------------------------------
-
-    public static function getDetail($id)
+    public static function getItem($request)
     {
 
-        $item = Permission::where('id', $id)->with(['createdByUser', 'updatedByUser', 'deletedByUser'])
-            ->withTrashed()->first();
+        if(!\Auth::user()->hasPermission('can-manage-registrations') &&
+            !\Auth::user()->hasPermission('can-update-registrations') &&
+            !\Auth::user()->hasPermission('can-create-registrations') &&
+            !\Auth::user()->hasPermission('can-read-registrations'))
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+            return $response;
+        }
+
+        $item = static::where('id', $request->id);
+        $item->withTrashed();
+        $item->with(['createdByUser', 'updatedByUser', 'deletedByUser']);
+        $item = $item->first();
 
         $response['status'] = 'success';
-        $response['data'] = $item;
+        $response['data']['item'] = $item;
 
         return $response;
 
-
     }
+
     //-------------------------------------------------
 
     //-------------------------------------------------

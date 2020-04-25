@@ -2,7 +2,7 @@ import GlobalComponents from '../../vaahvue/helpers/GlobalComponents'
 import DatePicker from '../../vaahvue/reusable/DatePicker'
 import AutoComplete from '../../vaahvue/reusable/AutoComplete'
 
-let namespace = 'registrations';
+let namespace = 'media';
 
 export default {
     computed:{
@@ -90,7 +90,7 @@ export default {
             {
                 //if item does not exist or delete then redirect to list
                 this.update('active_item', null);
-                this.$router.push({name: 'reg.list'});
+                this.$router.push({name: 'media.list'});
             }
         },
         //---------------------------------------------------------------------
@@ -160,19 +160,19 @@ export default {
         //---------------------------------------------------------------------
         saveAndClose: function () {
             this.update('active_item', null);
-            this.$router.push({name:'reg.list'});
+            this.$router.push({name:'media.list'});
         },
         //---------------------------------------------------------------------
         saveAndNew: function () {
             this.update('active_item', null);
             this.resetNewItem();
-            this.$router.push({name:'reg.create'});
+            this.$router.push({name:'media.create'});
         },
         //---------------------------------------------------------------------
         saveAndClone: function () {
             this.fillNewItem();
             this.update('active_item', null);
-            this.$router.push({name:'reg.create'});
+            this.$router.push({name:'media.create'});
         },
         //---------------------------------------------------------------------
         getNewItem: function()

@@ -8,6 +8,7 @@ use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Str;
 use WebReinvent\VaahCms\Entities\Media;
+use Illuminate\Support\Facades\File;
 
 class MediaController extends Controller
 {
@@ -31,10 +32,10 @@ class MediaController extends Controller
             'file' => 'max:'.$allowed_file_upload_size,
         );
 
-        if($request->has('file_name'))
+        if($request->has('file_input_name'))
         {
-            $rules[$request->file_name] = 'required';
-            $input_file_name = $request->file_name;
+            $rules[$request->file_input_name] = 'required';
+            $input_file_name = $request->file_input_name;
         } else{
             $rules['file'] = 'required';
             $input_file_name = 'file';
@@ -59,20 +60,46 @@ class MediaController extends Controller
                 $request->folder_path = $request->folder_path."/".date('Y')."/".date('m');
             }
 
-            $path = $request->file($input_file_name)->store($request->folder_path);
+            $data['extension'] = $request->file($input_file_name)->extension();
+            $data['original_name'] = $request->file($input_file_name)->getClientOriginalName();
+            $data['mime_type'] = $request->file($input_file_name)->getClientMimeType();
+            $type = explode('/',$data['mime_type']);
+            $data['type'] = $type[0];
+            $data['size'] = $request->file($input_file_name)->getSize();
 
+            if($request->file_name && !is_null($request->file_name)
+                && $request->file_name != 'null')
+            {
+                $upload_file_name = Str::slug($request->file_name).'.'.$data['extension'];
 
-            $data['full_name'] = $request->file('file')->getClientOriginalName();
-            $name_details = pathinfo($data['full_name']);
-            $data['name'] = $name_details['filename'];
+                $upload_file_path = 'storage/app/'.$request->folder_path.'/'.$upload_file_name;
+
+                $full_upload_file_path = base_path($upload_file_path);
+
+                //if file already exist then prefix if with microtime
+                if(File::exists($full_upload_file_path))
+                {
+                    $time_stamp = \Carbon\Carbon::now()->timestamp;
+                    $upload_file_name = Str::slug($request->file_name).'-'.$time_stamp.'.'.$data['extension'];
+                }
+                $path = $request->file($input_file_name)
+                    ->storeAs($request->folder_path, $upload_file_name);
+
+                $data['name'] = $request->file_name;
+                $data['uploaded_file_name'] = $data['name'].'.'.$data['extension'];
+
+            } else{
+                $path = $request->file($input_file_name)->store($request->folder_path);
+
+                $data['name'] = $data['original_name'];
+                $data['uploaded_file_name'] = $data['name'];
+            }
+
             $data['slug'] = Str::slug($data['name']);
-            $data['extension'] = $name_details['extension'];
+            //$data['extension'] = $name_details['extension'];
 
-            $data['type'] = $request->file('file')->extension();
-            $data['mime_type'] = $request->file('file')->getClientMimeType();
-
-            $data['path'] = $path;
-            $data['full_path'] = app_path($path);
+            $data['path'] = 'storage/app/'.$path;
+            $data['full_path'] = base_path($data['path']);
 
             $data['url'] = $path;
 
@@ -81,6 +108,23 @@ class MediaController extends Controller
             }
 
             $data['full_url'] = asset($data['url']);
+
+            //create thumbnail if image
+            if($data['type'] == 'image')
+            {
+                $image = \Image::make($data['full_path'])->fit(180, 101, function ($constraint) {
+                    $constraint->aspectRatio();
+                });
+                $name_details = pathinfo($data['full_path']);
+                $thumbnail_name = $name_details['filename'].'-thumbnail.'.$name_details['extension'];
+                $thumbnail_path = $request->folder_path.'/'.$thumbnail_name;
+                \Storage::put($thumbnail_path, (string) $image->encode());
+
+                if (substr($thumbnail_path, 0, 6) =='public') {
+                    $data['url_thumbnail'] = 'storage'.substr($thumbnail_path, 6);
+                }
+
+            }
 
             $response['status'] = 'success';
             $response['data'] = $data;
@@ -108,11 +152,48 @@ class MediaController extends Controller
 
 
         $data['allowed_file_types'] = vh_file_pond_allowed_file_type();
+        $data['download_url'] = route('vh.frontend.media.download').'/';
 
         $response['status'] = 'success';
         $response['data'] = $data;
 
         return response()->json($response);
+    }
+    //----------------------------------------------------------
+    public function isDownloadableSlugAvailable(Request $request)
+    {
+        $rules = array(
+            'download_url' => 'required',
+        );
+
+
+        $validator = \Validator::make( $request->all(), $rules);
+        if ( $validator->fails() ) {
+
+            $errors             = errorsToArray($validator->errors());
+            $response['status'] = 'failed';
+            $response['errors'] = $errors;
+            return response()->json($response);
+        }
+
+        $data = [];
+
+        $exist = Media::where('download_url', $request->download_url)
+            ->first();
+
+        if(!$exist)
+        {
+            $response['status'] = 'success';
+            $response['messages'][] = 'Url is available';
+            $response['data'] = true;
+        } else
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = 'Url is taken';
+        }
+
+        return response()->json($response);
+
     }
     //----------------------------------------------------------
     public function postCreate(Request $request)
@@ -127,12 +208,6 @@ class MediaController extends Controller
         }
 
         $response = Media::createItem($request);
-
-        if($response['status'] == 'success')
-        {
-            $list = Media::getList($request);
-            $response['data']['list'] = $list['data']['list'];
-        }
 
         return response()->json($response);
     }

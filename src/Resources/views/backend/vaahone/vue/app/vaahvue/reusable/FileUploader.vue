@@ -2,7 +2,7 @@
 
     <div v-if="root_assets" class="filepond" :class="custom_class">
         <file-pond
-            :name="file_name"
+            :name="file_input_name"
             :ref="uid"
             :id="uid"
             :maxFileSize="max_size"
@@ -10,6 +10,7 @@
             :allow-multiple="allow_multiple"
             allowImageEdit="true"
             allowImageCrop="true"
+            :instantUpload="instant_upload"
             :imageCropAspectRatio="aspect_ratio"
             :accepted-file-types="allowed_types"
             :server="server"
@@ -36,9 +37,13 @@ export default {
             type: String,
             default: 'public/media'
         },
-        file_name: {
+        file_input_name: {
             type: String,
             default: 'file'
+        },
+        file_name: {
+            type: String,
+            default: null
         },
         uid: {
             type: String,
@@ -85,6 +90,10 @@ export default {
         show_allowed_types: {
             type: Boolean,
             default: true
+        },
+        instant_upload: {
+            type: Boolean,
+            default: false
         },
 
     },
@@ -141,6 +150,14 @@ export default {
                 process:{
                     method: 'POST',
                     timeout: 7000,
+                    ondata: function (formData) {
+                        formData.append('folder_path', self.folder_path);
+                        formData.append('file_name', self.file_name);
+                        return formData;
+                    },
+                    headers: {
+                        'X-CSRF-TOKEN': $('#_token').attr('content')
+                    },
                     onload: function (data) {
                         data = JSON.parse(data);
                         if(data && data.data)
@@ -158,14 +175,7 @@ export default {
 
                         //Vaah.processError(error);
                     },
-                    ondata: function (formData) {
-                        formData.append('folder_path', self.folder_path);
-                        formData.append('file_name', self.file_name);
-                        return formData;
-                    },
-                    headers: {
-                        'X-CSRF-TOKEN': $('#_token').attr('content')
-                    },
+
                 }
             };
         },

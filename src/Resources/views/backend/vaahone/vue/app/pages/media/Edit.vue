@@ -65,7 +65,7 @@
                         <p class="control">
                             <b-button tag="router-link"
                                       type="is-light"
-                                      :to="{name: 'reg.view', params:{id:item.id}}"
+                                      :to="{name: 'media.view', params:{id:item.id}}"
                                       icon-left="times">
                             </b-button>
                         </p>

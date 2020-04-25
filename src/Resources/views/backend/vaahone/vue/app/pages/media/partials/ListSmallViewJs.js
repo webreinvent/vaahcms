@@ -1,4 +1,4 @@
-let namespace = 'registrations';
+let namespace = 'media';
 export default {
     computed: {
         root() {return this.$store.getters['root/state']},
@@ -57,7 +57,7 @@ export default {
         //---------------------------------------------------------------------
         setActiveItem: function (item) {
             this.update('active_item', item);
-            this.$router.push({name: 'reg.view', params:{id:item.id}})
+            this.$router.push({name: 'media.view', params:{id:item.id}})
         },
         //---------------------------------------------------------------------
         hasPermission: function(slug)

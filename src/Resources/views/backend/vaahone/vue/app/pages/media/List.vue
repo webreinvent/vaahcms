@@ -162,17 +162,7 @@
                                             <b-field label="">
                                                 <b-select placeholder="- Select a status -"
                                                           v-model="query_string.status"
-                                                          @input="getList()"
-                                                >
-                                                    <option value="">
-                                                        - Select a status -
-                                                    </option>
-                                                    <option
-                                                        v-for="option in page.assets.registration_statuses"
-                                                        :value="option.slug"
-                                                        :key="option.slug">
-                                                        {{ option.name }}
-                                                    </option>
+                                                          @input="getList()">
                                                 </b-select>
                                             </b-field>
 
@@ -201,7 +191,9 @@
 
                                     <div class="block" style="margin-bottom: 0px;" >
 
+                                        {{page.list_view}}
                                         <div v-if="page.list_view">
+
                                             <ListLargeView/>
                                         </div>
 
