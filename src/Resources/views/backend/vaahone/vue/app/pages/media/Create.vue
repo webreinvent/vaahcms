@@ -196,30 +196,7 @@
                         </b-field>
                     </b-field>
 
-                        <b-field label="Requires login to download?"
-                             :label-position="labelPosition">
 
-                        <b-radio-button v-model="new_item.download_requires_login"
-                                        name="media-download_requires_login"
-                                        dusk="media-download_requires_login"
-                                        type="is-success"
-                                        size="is-small"
-                                        :native-value="false">
-                            <b-icon icon="lock-open"></b-icon>
-                            <span>No</span>
-                        </b-radio-button>
-
-                        <b-radio-button v-model="new_item.download_requires_login"
-                                        name="media-download_requires_login"
-                                        dusk="media-download_requires_login"
-                                        type="is-danger"
-                                        size="is-small"
-                                        :native-value="true">
-                            <b-icon icon="lock"></b-icon>
-                            <span>Yes</span>
-                        </b-radio-button>
-
-                    </b-field>
 
                     </div>
 

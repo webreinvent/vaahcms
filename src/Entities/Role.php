@@ -360,7 +360,7 @@ class Role extends Model {
 
 
     //-------------------------------------------------
-    public static function updateDetail($request,$id)
+    public static function postStore($request,$id)
     {
 
         if(!\Auth::user()->hasPermission('can-update-roles'))

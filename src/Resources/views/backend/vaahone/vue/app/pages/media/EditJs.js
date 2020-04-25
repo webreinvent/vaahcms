@@ -8,14 +8,12 @@ export default {
     computed:{
         root() {return this.$store.getters['root/state']},
         page() {return this.$store.getters[namespace+'/state']},
+        assets() {return this.$store.getters[namespace+'/state'].assets},
         ajax_url() {return this.$store.getters[namespace+'/state'].ajax_url},
         item() {return this.$store.getters[namespace+'/state'].active_item},
     },
     components:{
         ...GlobalComponents,
-        DatePicker,
-        'AutoCompleteTimeZone': AutoComplete,
-        'AutoCompleteCountry': AutoComplete,
 
     },
     data()
@@ -26,12 +24,34 @@ export default {
             labelPosition: 'on-border',
             params: {},
             local_action: null,
+            downloadable_slug_available: null,
         }
     },
     watch: {
         $route(to, from) {
             this.updateView()
-        }
+        },
+        'item.download_url': {
+            deep: true,
+            handler(new_val, old_val) {
+                let slug = this.$vaah.strToSlug(new_val);
+                this.item.download_url =  slug;
+                this.downloadable_slug_available =  null;
+            }
+        },
+        'item.is_downloadable': {
+            deep: true,
+            handler(new_val, old_val) {
+
+                if(!new_val)
+                {
+                    this.item.download_url =  '';
+                    this.downloadable_slug_available =  null;
+                }
+
+
+            }
+        },
     },
     mounted() {
         //----------------------------------------------------
@@ -94,26 +114,30 @@ export default {
             }
         },
         //---------------------------------------------------------------------
+        isDownloadableSlugAvailable: function () {
+            this.$Progress.start();
+            this.downloadable_slug_available = null;
+            let params = {
+                download_url: this.item.download_url
+            };
+            let url = this.ajax_url+'/downloadable/slug/available';
+            this.$vaah.ajax(url, params, this.isDownloadableSlugAvailableAfter);
+        },
+        //---------------------------------------------------------------------
+        isDownloadableSlugAvailableAfter: function (data, res) {
+            this.$Progress.finish();
+            if(data){
+                this.downloadable_slug_available = data;
+                this.update('item', this.item);
+            }
+        },
+        //---------------------------------------------------------------------
         updateNewItem: function()
         {
             this.update('item', this.item);
         },
         //---------------------------------------------------------------------
-        setBirthDate: function (date) {
-            this.item.birth = date;
-            this.updateNewItem();
-        },
-        //---------------------------------------------------------------------
-        setTimeZone: function (item) {
-            this.item.timezone = item.slug;
-            this.updateNewItem();
-        },
-        //---------------------------------------------------------------------
-        setCountry: function (item) {
-            this.item.country = item.name;
-            this.item.country_code = item.code;
-            this.updateNewItem();
-        },
+
         //---------------------------------------------------------------------
         store: function () {
             this.$Progress.start();
@@ -178,24 +202,19 @@ export default {
         getNewItem: function()
         {
             let new_item = {
-                email: null,
-                username: null,
-                password: null,
-                display_name: null,
+                uploaded_file_name: null,
+                name: null,
+                mime_type: null,
+                path: null,
+                url: null,
+                size: null,
                 title: null,
-                first_name: null,
-                middle_name: null,
-                last_name: null,
-                gender: null,
-                country_calling_code: null,
-                phone: null,
-                timezone: null,
-                alternate_email: null,
-                avatar_url: null,
-                birth: null,
-                country: null,
-                country_code: null,
-                status: null,
+                caption: null,
+                alt_text: null,
+                is_downloadable: false,
+                download_url: '',
+                download_requires_login: false,
+                downloadable_slug_available: null,
             };
             return new_item;
         },
@@ -209,32 +228,32 @@ export default {
         fillNewItem: function () {
 
             let new_item = {
-                    email: null,
-                    username: null,
-                    password: null,
-                    display_name: null,
-                    title: null,
-                    first_name: null,
-                    middle_name: null,
-                    last_name: null,
-                    gender: null,
-                    country_calling_code: null,
-                    phone: null,
-                    timezone: null,
-                    alternate_email: null,
-                    avatar_url: null,
-                    birth: null,
-                    country: null,
-                    country_code: null,
-                    status: null,
-                };
+                uploaded_file_name: null,
+                name: null,
+                mime_type: null,
+                path: null,
+                url: null,
+                size: null,
+                title: null,
+                caption: null,
+                alt_text: null,
+                is_downloadable: false,
+                download_url: '',
+                download_requires_login: false,
+                downloadable_slug_available: null,
+            };
 
             for(let key in new_item)
             {
-                new_item[key] = this.item[key];
+                new_item[key] = this.new_item[key];
             }
             this.update('new_item', new_item);
-        }
+        },
+        //---------------------------------------------------------------------
+        hasPermission: function(slug)
+        {
+            return this.$vaah.hasPermission(this.permissions, slug);
+        },
         //---------------------------------------------------------------------
     }
 }

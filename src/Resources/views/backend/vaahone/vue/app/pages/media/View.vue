@@ -110,7 +110,7 @@
 
                                 <template v-for="(value, label) in item">
 
-                                    <template v-if="label == 'download_requires_login'">
+                                    <template v-if="label == 'download_requires_login' || label == 'is_downloadable'">
                                         <TableTrYesNo :value="value"
                                                        :label="label"
                                                        :is_copiable="isCopiable(label)"
@@ -144,6 +144,13 @@
                                         </TableTrTag>
                                     </template>
 
+                                    <template v-else-if="label == 'download_url' ">
+                                        <TableTrUrl :value="item['download_url_full']"
+                                                    :label="label"
+                                        >
+                                        </TableTrUrl>
+                                    </template>
+
                                     <template v-else-if="label == 'url' || label == 'url_thumbnail'
                                      || label == 'download_url'">
                                         <TableTrUrl :value="value"
@@ -156,7 +163,7 @@
 
                                     <template v-else-if="label == 'created_by_user'
                                       || label == 'updated_by_user' || label == 'deleted_by_user'
-                                       || label == 'size_for_humans'">
+                                       || label == 'size_for_humans' || label == 'download_url_full'">
 
                                     </template>
 

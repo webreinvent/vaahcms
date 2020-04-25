@@ -82,143 +82,93 @@
 
             <!--content-->
             <div class="card-content">
+
                 <div class="block">
 
-                    <b-field label="Email" :label-position="labelPosition">
-                        <b-input type="email"  name="register-email" dusk="register-email"
-                                 v-model="item.email"></b-input>
+
+                    <b-field label="Name" :label-position="labelPosition">
+                        <b-input type="text"  name="media-name" dusk="media-name"
+                                 v-model="item.name"></b-input>
                     </b-field>
 
-
-                    <b-field label="Username" :label-position="labelPosition">
-                        <b-input v-model="item.username"  name="register-username"
-                                 dusk="register-username" ></b-input>
-                    </b-field>
-
-                    <b-field label="New Password" :label-position="labelPosition">
-                        <b-input type="password" v-model="item.password"
-                                 name="register-password" dusk="register-password" ></b-input>
-                    </b-field>
-
-                    <b-field label="Display Name" :label-position="labelPosition">
-                        <b-input v-model="item.display_name"
-                                 name="register-display_name" dusk="register-display_name" >
-                        </b-input>
-                    </b-field>
 
                     <b-field label="Title" :label-position="labelPosition">
-                        <b-select placeholder="Select a title"
-                                  name="register-title" dusk="register-title"
-                                  v-model="item.title">
-                            <option v-for="title in page.assets.name_titles"
-                                    :value="title.slug"
-                            >{{title.name}}</option>
-                        </b-select>
+                        <b-input type="text"  name="media-title" dusk="media-title"
+                                 v-model="item.title"></b-input>
+                    </b-field>
+
+                    <b-field label="Alternate Text" :label-position="labelPosition">
+                        <b-input type="text"  name="media-alt_text" dusk="media-alt_text"
+                                 v-model="item.alt_text"></b-input>
+                    </b-field>
+
+                    <b-field label="Caption" :label-position="labelPosition">
+                        <b-input type="textarea"  name="media-caption" dusk="media-caption"
+                                 v-model="item.caption"></b-input>
                     </b-field>
 
 
+                    <b-field label="Is this a downloadable media?"
+                             :label-position="labelPosition">
 
-                    <b-field label="First Name" :label-position="labelPosition">
-                        <b-input v-model="item.first_name"
-                                 name="register-first_name" dusk="register-first_name"
-                        ></b-input>
-                    </b-field>
-
-                    <b-field label="Middle Name" :label-position="labelPosition">
-                        <b-input v-model="item.middle_name"
-                                 name="register-middle_name" dusk="register-middle_name"
-                        ></b-input>
-                    </b-field>
-
-                    <b-field label="Last Name" :label-position="labelPosition">
-                        <b-input v-model="item.last_name"
-                                 name="register-last_name" dusk="register-last_name"
-                        ></b-input>
-                    </b-field>
-
-                    <b-field label="Gender" :label-position="labelPosition">
-                        <b-radio-button v-model="item.gender"
-                                        name="register-gender" dusk="register-gender"
-                                        native-value="m">
-                            <b-icon icon="mars"></b-icon>
-                            <span>Male</span>
+                        <b-radio-button v-model="item.is_downloadable"
+                                        name="media-downloadable"
+                                        dusk="media-downloadable"
+                                        type="is-success"
+                                        size="is-small"
+                                        :native-value="0">
+                            <b-icon icon="lock-open"></b-icon>
+                            <span>No</span>
                         </b-radio-button>
 
-                        <b-radio-button v-model="item.gender"
-                                        name="register-gender" dusk="register-gender"
-                                        native-value="f">
-                            <b-icon icon="venus"></b-icon>
-                            <span>Female</span>
+                        <b-radio-button v-model="item.is_downloadable"
+                                        name="media-download_requires_login"
+                                        dusk="media-download_requires_login"
+                                        type="is-danger"
+                                        size="is-small"
+                                        :native-value="1">
+                            <b-icon icon="lock"></b-icon>
+                            <span>Yes</span>
                         </b-radio-button>
 
-                        <b-radio-button v-model="item.gender"
-                                        name="register-gender" dusk="register-gender"
-                                        native-value="o">
-                            <b-icon icon="transgender-alt"></b-icon>
-                            <span>Other</span>
-                        </b-radio-button>
-
-
                     </b-field>
 
-                    <b-field label="Country Code" :label-position="labelPosition">
-                        <b-select placeholder="Select a country code"
-                                  name="register-country_code" dusk="register-country_code"
-                                  v-model="item.country_calling_code">
-                            <option v-for="code in page.assets.country_calling_code"
-                                    :value="code.calling_code"
-                            >{{code.calling_code}}</option>
-                        </b-select>
-                    </b-field>
+                    <div v-if="item.is_downloadable">
 
-                    <b-field label="Phone" :label-position="labelPosition">
-                        <b-input v-model="item.phone"
-                                 name="register-phone" dusk="register-phone"
-                        ></b-input>
-                    </b-field>
+                        <b-field label="Download URL"
+                                 :message="assets.download_url+item.download_url"
+                                 :label-position="labelPosition">
+                            <b-field expanded>
+                                <b-input type="text"
+                                         name="media-download_url"
+                                         dusk="media-download_url"
+                                         expanded
+                                         placeholder="Type slug"
+                                         v-model="item.download_url"></b-input>
+                                <p class="control">
+                                    <b-tooltip label="Check url availability" type="is-dark">
+                                        <b-button v-if="downloadable_slug_available"
+                                                  @click="isDownloadableSlugAvailable"
+                                                  type="is-success"
+                                                  icon-left="check"></b-button>
+                                        <b-button v-else
+                                                  @click="isDownloadableSlugAvailable"
+                                                  icon-left="question"></b-button>
+                                    </b-tooltip>
+                                </p>
+                                <p class="control">
+                                    <b-tooltip label="Copy Link" type="is-dark">
+                                        <b-button icon-left="copy"></b-button>
+                                    </b-tooltip>
+                                </p>
+                            </b-field>
+                        </b-field>
 
-                    <b-field label="Timezone" :label-position="labelPosition">
-                        <AutoCompleteTimeZone
-                            :selected_value="item.timezone"
-                            :options="page.assets.timezones"
-                            :open_on_focus="true"
-                            @onSelect="setTimeZone"
-                        />
-                    </b-field>
-
-                    <b-field label="Alternate Email" :label-position="labelPosition">
-                        <b-input type="email" v-model="item.alternate_email"
-                                 name="register-alternate_email" dusk="register-alternate_email"
-                        ></b-input>
-                    </b-field>
-
-                    <b-field label="Date of Birth" :label-position="labelPosition">
-                        <DatePicker
-                            :selected_value="item.birth"
-                            @onSelect="setBirthDate"/>
-                    </b-field>
-
-                    <b-field label="Country" :label-position="labelPosition">
-                        <AutoCompleteCountry
-                            :selected_value="item.country"
-                            :options="page.assets.countries"
-                            :open_on_focus="true"
-                            @onSelect="setCountry"
-                        />
-                    </b-field>
-
-                    <b-field label="Status" :label-position="labelPosition">
-                        <b-select placeholder="Select a status"
-                                  name="register-status" dusk="register-status"
-                                  v-model="item.status">
-                            <option v-for="status in page.assets.registration_statuses"
-                                    :value="status.slug"
-                            >{{status.name}}</option>
-                        </b-select>
-                    </b-field>
-
+                    </div>
 
                 </div>
+
+
             </div>
             <!--/content-->
 

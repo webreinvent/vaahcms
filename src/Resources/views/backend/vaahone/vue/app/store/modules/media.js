@@ -48,7 +48,7 @@ export default {
             title: null,
             caption: null,
             alt_text: null,
-            is_downloadable: false,
+            is_downloadable: 0,
             download_url: '',
             download_requires_login: false,
             downloadable_slug_available: null,

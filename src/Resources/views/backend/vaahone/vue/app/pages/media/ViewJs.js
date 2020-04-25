@@ -113,7 +113,7 @@ export default {
                 data: null
             };
 
-            let url = this.ajax_url+'/actions/'+this.page.bulk_action.action;
+            let url = this.ajax_url+'/actions/'+action;
             this.$vaah.ajax(url, params, this.actionsAfter);
 
         },

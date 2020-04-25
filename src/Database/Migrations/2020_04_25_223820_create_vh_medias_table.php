@@ -30,6 +30,7 @@ class CreateVhMediasTable extends Migration
             $table->string('caption')->nullable();
             $table->string('alt_text')->nullable();
             $table->boolean('is_hidden')->nullable();
+            $table->boolean('is_downloadable')->nullable();
             $table->string('download_url')->nullable();
             $table->boolean('download_requires_login')->nullable();
             $table->json('meta')->nullable();

@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 use WebReinvent\VaahCms\Traits\CrudWithUuidObservantTrait;
 
@@ -37,6 +38,7 @@ class Media extends Model {
         'caption',
         'alt_text',
         'is_hidden',
+        'is_downloadable',
         'download_url',
         'download_requires_login',
         'meta',
@@ -52,11 +54,18 @@ class Media extends Model {
     //-------------------------------------------------
 
     protected $appends  = [
-        'type', 'size_for_humans'
+        'type', 'size_for_humans', 'download_url_full'
     ];
+
     //-------------------------------------------------
-    public function getDownloadUrlAttribute($value) {
-        return route('vh.frontend.media.download',[$value]);
+    public function getDownloadUrlFullAttribute() {
+
+        if(!$this->download_url)
+        {
+            return '';
+        }
+
+        return route('vh.frontend.media.download',[$this->download_url]);
     }
     //-------------------------------------------------
     public function getUrlAttribute($value) {
@@ -131,6 +140,11 @@ class Media extends Model {
         return $this->belongsTo('WebReinvent\VaahCms\Entities\User',
             'deleted_by', 'id'
         )->select('id', 'uuid', 'first_name', 'last_name', 'email');
+    }
+    //-------------------------------------------------
+    public function mediables()
+    {
+        return $this->hasMany(Mediable::class, 'vh_media_id', 'id');
     }
     //-------------------------------------------------
     public static function createItem($request)
@@ -217,7 +231,6 @@ class Media extends Model {
         {
             $response['status'] = 'failed';
             $response['errors'][] = trans("vaahcms::messages.permission_denied");
-
             return $response;
         }
 
@@ -236,30 +249,47 @@ class Media extends Model {
     //-------------------------------------------------
 
     //-------------------------------------------------
-    public static function updateDetail($request,$id)
+    public static function postStore($request)
     {
 
-        $input = $request->item;
+        $rules = array(
+            'name' => 'required',
+            'mime_type' => 'required',
+            'url' => 'required',
+            'path' => 'required',
+        );
 
+        $validator = \Validator::make( $request->all(), $rules);
+        if ( $validator->fails() ) {
 
-        $validation = static::validation($input);
-        if(isset($validation['status']) && $validation['status'] == 'failed')
-        {
-            return $validation;
+            $errors             = errorsToArray($validator->errors());
+            $response['status'] = 'failed';
+            $response['errors'] = $errors;
+            return $response;
         }
 
-        $update = static::where('id',$id)->withTrashed()->first();
+        //check download url is set and not taken
+        if($request->has('download_url') && !empty($request->download_url))
+        {
+            $download_url_exist = static::where('download_url', $request->download_url)
+                ->where('id', '!=', $request->id)
+                ->first();
 
-        $update->name = $input['name'];
-        $update->details = $input['details'];
-        $update->is_active = $input['is_active'];
+            if($download_url_exist)
+            {
+                $response['status'] = 'failed';
+                $response['errors'][] = 'Download url is associated with other media.';
+                return $response;
+            }
+        }
 
-        $update->save();
 
+        $item = static::where('id', $request->id)->withTrashed()->first();
+        $item->fill($request->all());
+        $item->save();
 
         $response['status'] = 'success';
-        $response['data'] = [];
-        $response['messages'][] = 'Data updated.';
+        $response['data'] = $item;
 
         return $response;
 
@@ -292,15 +322,6 @@ class Media extends Model {
                 continue ;
             }
 
-            if($request['data']){
-                $perm->is_active = $request['data']['status'];
-            }else{
-                if($perm->is_active == 1){
-                    $perm->is_active = 0;
-                }else{
-                    $perm->is_active = 1;
-                }
-            }
             $perm->save();
         }
 
@@ -313,8 +334,6 @@ class Media extends Model {
     //-------------------------------------------------
     public static function bulkDelete($request)
     {
-
-
 
         if(!$request->has('inputs'))
         {
@@ -336,8 +355,15 @@ class Media extends Model {
             if($item)
             {
 
-                //delete relationship
+                $file_path = base_path($item->path);
 
+                if(File::exists($file_path))
+                {
+                    File::delete($file_path);
+                }
+
+                //delete relationship
+                $item->mediables()->forceDelete();
                 $item->forceDelete();
 
             }
@@ -348,7 +374,6 @@ class Media extends Model {
         $response['messages'][] = 'Action was successful';
 
         return $response;
-
 
     }
 
@@ -366,12 +391,11 @@ class Media extends Model {
 
         foreach($request->inputs as $id)
         {
-            $permission = static::withTrashed()->where('id', $id)->first();
-            if($permission)
+            $item = static::withTrashed()->where('id', $id)->first();
+            if($item)
             {
-                $permission->is_active = 0;
-                $permission->save();
-                $permission->delete();
+                $item->mediables()->delete();
+                $item->delete();
             }
         }
 
@@ -386,8 +410,6 @@ class Media extends Model {
     //-------------------------------------------------
     public static function bulkRestore($request)
     {
-
-
 
         if(!$request->has('inputs'))
         {
@@ -409,6 +431,7 @@ class Media extends Model {
             if(isset($item) && isset($item->deleted_at))
             {
                 $item->restore();
+                $item->mediables()->restore();
             }
         }
 

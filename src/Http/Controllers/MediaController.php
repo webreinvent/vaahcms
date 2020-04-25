@@ -254,7 +254,7 @@ class MediaController extends Controller
             return response()->json($response);
         }
 
-        $response = Media::store($request);
+        $response = Media::postStore($request);
         return response()->json($response);
     }
     //----------------------------------------------------------
