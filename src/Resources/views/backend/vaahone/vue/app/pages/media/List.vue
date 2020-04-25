@@ -190,7 +190,7 @@
                                 <div class="block ">
 
                                     <div class="block" style="margin-bottom: 0px;" >
-                                        
+
                                         <div v-if="page.list_view">
 
                                             <ListLargeView/>
