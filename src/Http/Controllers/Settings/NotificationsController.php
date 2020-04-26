@@ -25,8 +25,8 @@ class NotificationsController extends Controller
     public function getAssets(Request $request)
     {
 
-        $data['notification_variables'] = vh_action('getNotificationVariables', true);
-        $data['notification_actions'] = vh_action('getNotificationActions', true);
+        $data['notification_variables'] = vh_action('getNotificationVariables', null, 'array');
+        $data['notification_actions'] = vh_action('getNotificationActions', null, 'array');
         $data['notifications'] = Notification::getList($request);
         $data['from'] = env('MAIL_FROM_NAME');
         $data['from_email'] = env('MAIL_FROM_ADDRESS');
@@ -80,6 +80,40 @@ class NotificationsController extends Controller
 
     }
     //----------------------------------------------------------
+    public function send(Request $request)
+    {
+        $rules = array(
+            'notification_id' => 'required',
+            'user_id' => 'required',
+        );
+
+        $validator = \Validator::make( $request->all(), $rules);
+        if ( $validator->fails() ) {
+
+            $errors             = errorsToArray($validator->errors());
+            $response['status'] = 'failed';
+            $response['errors'] = $errors;
+            return response()->json($response);
+        }
+
+        $data = [];
+        $response = [];
+
+        $params = [
+           'string' => 'Hello *|USER:NAME|* |!USER:FIRST_NAME!| #!USER:EMAIL!#',
+           'user_id' => 1,
+        ];
+
+        $translated = vh_translate_dynamic_strings($params);
+
+        echo "<pre>";
+        print_r($translated);
+        echo "</pre>";
+        die("<hr/>line number=112");
+
+        return response()->json($response);
+
+    }
     //----------------------------------------------------------
 
 

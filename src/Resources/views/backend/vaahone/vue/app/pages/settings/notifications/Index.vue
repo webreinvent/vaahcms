@@ -1,6 +1,6 @@
 <script src="./IndexJs.js"></script>
 <template>
-    <div class="form-page-v1-layout">
+    <div class="settings-notifications">
 
         <div class="container" >
 
@@ -42,17 +42,27 @@
                                 <div class="column is-3">
 
                                     <b-field v-for="variable in assets.notification_variables"
-                                             :key="variable.name"
-                                            :message="variable.details">
+                                             :key="variable.name">
 
                                         <b-field >
 
                                             <b-input v-model="variable.name"></b-input>
 
                                             <p class="control">
-                                                <b-button
-                                                    @click="$vaah.copy(variable.name)"
-                                                    icon-left="copy"></b-button>
+                                                <b-tooltip label="Copy" type="is-dark">
+                                                    <b-button
+                                                        @click="$vaah.copy(variable.name)"
+                                                        icon-left="copy"></b-button>
+                                                </b-tooltip>
+
+                                            </p>
+
+                                            <p class="control">
+
+                                                <b-tooltip :label="variable.details" type="is-dark">
+                                                    <b-button icon-left="question-circle"></b-button>
+                                                </b-tooltip>
+
                                             </p>
 
                                         </b-field>
@@ -63,11 +73,55 @@
                                 </div>
                                 <div class="column is-9">
 
-                                    <AutoComplete :options="assets.notifications"
-                                                  @onSelect="setActiveItem"
-                                                  :open_on_focus="true"
 
-                                    />
+                                    <b-field grouped  >
+                                        <b-field expanded>
+                                            <AutoComplete :options="assets.notifications"
+                                                          @onSelect="setActiveItem"
+                                                          :open_on_focus="true"
+
+                                            />
+                                            <p class="control">
+                                                <b-button type="is-light"
+                                                          @click="store()"
+                                                          icon-left="save">
+                                                    Save
+                                                </b-button>
+                                            </p>
+
+                                            <p class="control" >
+                                                <b-button  type="is-light"
+                                                           @click="is_testing=true"
+                                                           icon-left="share">
+                                                    Test
+                                                </b-button>
+                                            </p>
+                                        </b-field>
+                                    </b-field>
+
+
+
+                                    <div v-if="is_testing">
+
+                                        <div class="columns">
+                                            <div class="column is-half">
+                                                <b-field expanded>
+                                                    <AutoCompleteUsers @onSelect="setSendTo"/>
+
+                                                    <p class="control" >
+                                                        <b-button  type="is-light"
+                                                                   @click="sendNotification()"
+                                                                   icon-left="share">
+                                                            Send
+                                                        </b-button>
+                                                    </p>
+                                                </b-field>
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+
 
                                     <hr/>
 
@@ -79,26 +133,31 @@
 
 
                                             <b-switch size="is-small"
+                                                      type="is-success"
                                                       v-model="active_item.via_mail">
                                                 Mail
                                             </b-switch>
 
                                             <b-switch size="is-small"
+                                                      type="is-success"
                                                       v-model="active_item.via_sms">
                                                 SMS
                                             </b-switch>
 
                                             <b-switch size="is-small"
+                                                      type="is-success"
                                                       v-model="active_item.via_push">
                                                 Push
                                             </b-switch>
 
                                             <b-switch size="is-small"
+                                                      type="is-success"
                                                       v-model="active_item.via_backend">
                                                 Backend
                                             </b-switch>
 
                                             <b-switch size="is-small"
+                                                      type="is-success"
                                                       v-model="active_item.via_frontend">
                                                 Frontend
                                             </b-switch>
@@ -113,8 +172,8 @@
 
                                             <div class="block">
 
-
                                                 <b-switch size="is-small"
+                                                          type="is-danger"
                                                           v-model="active_item.is_errors">
                                                     Yes
                                                 </b-switch>
@@ -131,8 +190,9 @@
                                             <b-tab-item :visible="active_item.via_mail"
                                                         label="Mail">
 
+                                                <div class="notification-lines">
 
-                                                <div v-if="active_item.contents" class="has-margin-bottom-15">
+                                                    <div v-if="active_item.contents" class="has-margin-bottom-15">
                                                     <div v-if="active_item.contents.mail
                                                     && active_item.contents.mail.length > 0"
                                                          v-for="line in active_item.contents.mail">
@@ -148,9 +208,7 @@
                                                     </div>
                                                 </div>
 
-
-
-                                                <div v-if="active_item.contents">
+                                                    <div  v-if="active_item.contents">
                                                     <div v-if="active_item.contents.mail
                                                     && active_item.contents.mail.length > 0"
                                                          v-for="line in active_item.contents.mail">
@@ -212,7 +270,7 @@
 
                                                     </div>
                                                 </div>
-
+                                                </div>
 
                                                 <div class="has-margin-top-15">
 
@@ -223,39 +281,38 @@
 
                                                 </div>
 
-                                                <hr/>
-                                                <b-button type="is-primary" @click="store()">Save</b-button>
-                                                <b-button type="is-primary">Send Test Notification</b-button>
+
+
 
 
                                             </b-tab-item>
 
                                             <b-tab-item :visible="active_item.via_sms"
+                                                        key="sms"
                                                         label="SMS">
 
                                                 <div v-if=" active_item.contents && active_item.contents.sms
                                                 && active_item.contents.sms.length > 0">
 
-                                                    <b-field v-for="line in active_item.contents.sms">
+                                                    <div class="notification-lines">
+                                                    <b-field v-for="line in active_item.contents.sms"
+                                                             :key="'sms'+line.sort">
 
                                                         <b-field v-if="line.key == 'content'">
                                                             <p class="control">
                                                                 <span class="button is-static">Message</span>
                                                             </p>
-                                                            <b-input expanded v-model="line.value" type="textarea">
+                                                            <b-input expanded v-model="line.value"
+                                                                     maxlength="200"
+                                                                     type="textarea">
 
                                                             </b-input>
                                                         </b-field>
 
-
-
-
-
                                                     </b-field>
+                                                    </div>
 
-                                                    <hr/>
-                                                    <b-button type="is-primary" @click="store()">Save</b-button>
-                                                    <b-button type="is-primary">Send Test Notification</b-button>
+
                                                 </div>
                                                 <div v-else>
                                                     <b-button @click="addSmsContent">Add Content</b-button>
@@ -266,18 +323,23 @@
                                             </b-tab-item>
 
                                             <b-tab-item :visible="active_item.via_push"
+                                                        key="push"
                                                         label="Push">
 
                                                 <div v-if=" active_item.contents && active_item.contents.push
                                                 && active_item.contents.push.length > 0">
 
-                                                    <b-field v-for="line in active_item.contents.push">
+                                                    <div class="notification-lines">
+                                                    <b-field v-for="line in active_item.contents.push"
+                                                             :key="'push'+line.sort">
 
                                                         <b-field v-if="line.key == 'content'">
                                                             <p class="control">
                                                                 <span class="button is-static">Message</span>
                                                             </p>
-                                                            <b-input expanded v-model="line.value" type="textarea">
+                                                            <b-input expanded v-model="line.value"
+                                                                     maxlength="200"
+                                                                     type="textarea">
 
                                                             </b-input>
                                                         </b-field>
@@ -306,10 +368,9 @@
                                                         </b-field>
 
                                                     </b-field>
+                                                    </div>
 
-                                                    <hr/>
-                                                    <b-button type="is-primary" @click="store()">Save</b-button>
-                                                    <b-button type="is-primary">Send Test Notification</b-button>
+
                                                 </div>
                                                 <div v-else>
                                                     <b-button @click="addPushContent">Add Content</b-button>
@@ -322,17 +383,20 @@
 
 
                                             <b-tab-item :visible="active_item.via_backend"
+                                                        key="backend"
                                                         label="Backend">
                                                 <div v-if=" active_item.contents && active_item.contents.backend
                                                 && active_item.contents.backend.length > 0">
 
-                                                    <b-field v-for="line in active_item.contents.backend">
-
+                                                    <b-field v-for="line in active_item.contents.backend"
+                                                             :key="'backend'+line.sort">
+                                                        <div class="notification-lines">
                                                         <b-field v-if="line.key == 'content'">
                                                             <p class="control">
                                                                 <span class="button is-static">Message</span>
                                                             </p>
-                                                            <b-input expanded v-model="line.value" type="textarea">
+                                                            <b-input expanded v-model="line.value"
+                                                                     type="textarea">
 
                                                             </b-input>
                                                         </b-field>
@@ -360,11 +424,10 @@
 
                                                         </b-field>
 
+                                                        </div>
                                                     </b-field>
 
-                                                    <hr/>
-                                                    <b-button type="is-primary" @click="store()">Save</b-button>
-                                                    <b-button type="is-primary">Send Test Notification</b-button>
+
                                                 </div>
                                                 <div v-else>
                                                     <b-button @click="addBackendContent()">Add Content</b-button>
@@ -372,17 +435,21 @@
                                             </b-tab-item>
 
                                             <b-tab-item :visible="active_item.via_frontend"
+                                                        key="frontend"
                                                         label="Frontend">
                                                 <div v-if=" active_item.contents && active_item.contents.frontend
                                                 && active_item.contents.frontend.length > 0">
 
-                                                    <b-field v-for="line in active_item.contents.frontend">
+                                                    <div class="notification-lines">
+                                                    <b-field v-for="line in active_item.contents.frontend"
+                                                             :key="'frontend'+line.sort">
 
                                                         <b-field v-if="line.key == 'content'">
                                                             <p class="control">
                                                                 <span class="button is-static">Message</span>
                                                             </p>
-                                                            <b-input expanded v-model="line.value" type="textarea">
+                                                            <b-input expanded
+                                                                     v-model="line.value" type="textarea">
 
                                                             </b-input>
                                                         </b-field>
@@ -412,9 +479,8 @@
 
                                                     </b-field>
 
-                                                    <hr/>
-                                                    <b-button type="is-primary" @click="store()">Save</b-button>
-                                                    <b-button type="is-primary">Send Test Notification</b-button>
+                                                    </div>
+
                                                 </div>
                                                 <div v-else>
                                                     <b-button @click="addFrontendContent">Add Content</b-button>
@@ -422,7 +488,10 @@
                                             </b-tab-item>
 
                                         </b-tabs>
+
+
                                     </section>
+
 
 
                                     </div>
@@ -447,10 +516,14 @@
                 </div>
                 <!--/left-->
 
+
+
             </div>
 
 
         </div>
+
+
 
     </div>
 </template>

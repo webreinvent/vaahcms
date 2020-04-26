@@ -1,33 +1,30 @@
 <template>
 
-    <div >
-        <!--autocomplete users-->
-        <b-field>
-            <b-autocomplete
-                v-model="q"
-                :data="filteredDataArray"
-                :field="field_name"
-                :placeholder="placeholder"
-                :icon="icon"
-                :open-on-focus="open_on_focus"
-                ref="autocomplete"
-                @select="option => selected = option">
+    <!--autocomplete users-->
+    <b-autocomplete
+        expanded
+        v-model="q"
+        :data="filteredDataArray"
+        :field="field_name"
+        :placeholder="placeholder"
+        :icon="icon"
+        :open-on-focus="open_on_focus"
+        ref="autocomplete"
+        @select="option => selected = option">
 
-                <template slot-scope="props">
-                    <div class="media">
-                        <div class="media-content" v-if="props.option">
+        <template slot-scope="props">
+            <div class="media">
+                <div class="media-content" v-if="props.option">
                             <span v-if="props.option[field_name]">
                                 {{ props.option[field_name] }}
                             </span>
-                        </div>
-                    </div>
-                </template>
+                </div>
+            </div>
+        </template>
 
-                <template slot="empty">No results found</template>
-            </b-autocomplete>
-        </b-field>
-        <!--/autocomplete users-->
-    </div>
+        <template slot="empty">No results found</template>
+    </b-autocomplete>
+    <!--/autocomplete users-->
 
 
 </template>

@@ -1,6 +1,7 @@
 import GlobalComponents from '../../../vaahvue/helpers/GlobalComponents';
 
 import AutoComplete from '../../../vaahvue/reusable/AutoComplete'
+import AutoCompleteUsers from '../../../vaahvue/reusable/AutoCompleteUsers'
 
 
 let namespace = 'notifications';
@@ -19,11 +20,14 @@ export default {
     components:{
         ...GlobalComponents,
         AutoComplete,
+        AutoCompleteUsers,
     },
     data()
     {
         let obj = {
             namespace:namespace,
+            is_testing: true,
+            send_to: null,
 
         };
 
@@ -337,6 +341,31 @@ export default {
 
         },
         //---------------------------------------------------------------------
+        setSendTo: function(item)
+        {
+            this.send_to = item;
+        },
+        //---------------------------------------------------------------------
+        sendNotification: function () {
+            this.$Progress.start();
+            let params = {
+                notification_id: this.active_item.id,
+                user_id: this.send_to.id
+            };
+
+            console.log('--->', params);
+
+            let url = this.ajax_url+'/send';
+            this.$vaah.ajax(url, params, this.sendNotificationAfter);
+        },
+        //---------------------------------------------------------------------
+        sendNotificationAfter: function (data, res) {
+            this.$Progress.finish();
+            if(data){
+                //this.update('list', data.list);
+            }
+
+        },
         //---------------------------------------------------------------------
     }
 }

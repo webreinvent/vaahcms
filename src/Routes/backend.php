@@ -35,8 +35,25 @@ Route::group(
         Route::any( '/permissions', 'JsonController@getPermissions' )
             ->name( 'vh.backend.json.permissions' );
         //------------------------------------------------
+
+        //------------------------------------------------
     });
 
+
+Route::group(
+    [
+        'prefix'     => 'backend/json',
+        'middleware' => ['web', 'has.backend.access'],
+        'namespace'  => 'WebReinvent\VaahCms\Http\Controllers'
+    ],
+    function () {
+        //------------------------------------------------
+        Route::any( '/users/{name?}', 'JsonController@getUsers' )
+            ->name( 'vh.backend.json.users' );
+        //------------------------------------------------
+
+        //------------------------------------------------
+    });
 
 Route::group(
     [

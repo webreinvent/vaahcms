@@ -377,14 +377,24 @@ class JsonController extends Controller
         return $views;
     }
     //----------------------------------------------------------
-    public function getExtendedData($method='notificationVariables'){
+    public function getUsers(Request $request, $query=null)
+    {
 
+        $list = User::where(function($q) use ($query){
+            $q->where('first_name', 'LIKE', '%'.$query.'%')
+                ->orWhere('last_name', 'LIKE', '%'.$query.'%')
+                ->orWhere('email', 'LIKE', '%'.$query.'%')
+                ->orWhere('phone', 'LIKE', '%'.$query.'%');
+        })->select('id', 'first_name', 'middle_name',
+            'last_name', 'display_name', 'email')
+            ->take(10)
+            ->orderBy('created_at', 'desc')->get();
 
-        $active_modules = Module::getActiveModules();
-
-
+        return $list;
 
     }
+    //----------------------------------------------------------
+
     //----------------------------------------------------------
 
     //----------------------------------------------------------

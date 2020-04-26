@@ -125,6 +125,8 @@ Route::group(
         Route::any( '/content', 'NotificationsController@getContent' )
             ->name( 'vh.backend.settings.notifications.content' );
         //------------------------------------------------
+        Route::any( '/send', 'NotificationsController@send' )
+            ->name( 'vh.backend.settings.notifications.send' );
         //------------------------------------------------
     });
 

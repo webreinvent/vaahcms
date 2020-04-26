@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use WebReinvent\VaahCms\Entities\Module;
+use WebReinvent\VaahCms\Libraries\VaahStr;
 
 class ExtendController extends Controller
 {
@@ -169,19 +170,19 @@ class ExtendController extends Controller
     {
         $list = [
             [
-                'name'=>'*|USER:NAME|*',
+                'name'=>'#!USER:NAME!#',
                 'details'=>'Will be replaced with name.',
             ],
             [
-                'name'=>'*|USER:DISPLAYNAME|*',
+                'name'=>'#!USER:DISPLAY_NAME!#',
                 'details'=>'Will be replaced with display name.',
             ],
             [
-                'name'=>'*|USER:EMAIL|*',
+                'name'=>'#!USER:EMAIL!#',
                 'details'=>'Will be replaced with email.',
             ],
             [
-                'name'=>'*|USER:PHONE|*',
+                'name'=>'#!USER:PHONE!#',
                 'details'=>'Will be replaced with phone.',
             ]
         ];
@@ -196,13 +197,13 @@ class ExtendController extends Controller
     {
         $list = [
             [
-                'name'=>'*|URL:LOGIN|*'
+                'name'=>'#!ROUTE:LOGIN!#'
             ],
             [
-                'name'=>'*|URL:REGISTER|*'
+                'name'=>'#!ROUTE:REGISTER!#'
             ],
             [
-                'name'=>'*|URL:VERIFICATION_LINK|*'
+                'name'=>'#!ROUTE:VERIFICATION_LINK!#'
             ],
         ];
 
@@ -212,6 +213,16 @@ class ExtendController extends Controller
         return $response;
     }
     //----------------------------------------------------------
+    public function translateDynamicStrings($params)
+    {
+        $string = VaahStr::translateDynamicStrings($params);
+
+        $response['status'] = 'success';
+        $response['data'] = $string;
+
+        return $response;
+
+    }
     //----------------------------------------------------------
     //----------------------------------------------------------
 
