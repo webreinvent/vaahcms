@@ -13,13 +13,13 @@
 
                 <b-table-column field="thumbnail" width="150" label="thumbnail" centered>
 
-                    <figure class="image" v-if="props.row.url_thumbnail_full">
-                        <img style="max-width: 150px; max-height: 84px" :src="props.row.url_thumbnail">
+                    <figure class="image" v-if="props.row.url_thumbnail">
+                        <img style="max-width: 75px; max-height: 42px" :src="props.row.url_thumbnail">
                     </figure>
 
                     <b-icon v-else
-                        icon="file"
-                        size="is-medium">
+                            icon="file"
+                            size="is-medium">
                     </b-icon>
 
                 </b-table-column>

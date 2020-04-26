@@ -693,9 +693,10 @@ import SettingsLayout from "./../pages/settings/SettingsLayout";
 import GeneralIndex from "./../pages/settings/general/Index";
 import LocalizationIndex from "./../pages/settings/localization/Index";
 import EnvIndex from "./../pages/settings/env/Index";
+import NotificationsIndex from "./../pages/settings/notifications/Index";
 import BackupsIndex from "./../pages/settings/backups/Index";
 
-let routes_setting_localization =     {
+let routes_settings =     {
     path: '/vaah/',
     component: LayoutBackend,
     props: true,
@@ -754,6 +755,18 @@ let routes_setting_localization =     {
                     }
                 },
                 {
+                    path: 'notifications',
+                    name: 'notifications.index',
+                    component: NotificationsIndex,
+                    props: true,
+                    meta: {
+                        middleware: [
+                            IsLoggedIn,
+                            GetBackendAssets
+                        ]
+                    }
+                },
+                {
                     path: 'backups',
                     name: 'backups.index',
                     component: BackupsIndex,
@@ -772,7 +785,7 @@ let routes_setting_localization =     {
     ]
 };
 
-routes.push(routes_setting_localization);
+routes.push(routes_settings);
 
 
 import Profile from "./../pages/profile/Index";

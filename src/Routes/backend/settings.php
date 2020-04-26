@@ -104,6 +104,31 @@ Route::group(
     });
 
 
+
+Route::group(
+    [
+        'prefix'     => 'backend/vaah/settings/notifications',
+        'middleware' => ['web','has.backend.access'],
+        'namespace'  => 'WebReinvent\VaahCms\Http\Controllers\Settings'
+    ],
+    function () {
+        //------------------------------------------------
+        Route::any( '/assets', 'NotificationsController@getAssets' )
+            ->name( 'vh.backend.settings.notifications.assets' );
+        //------------------------------------------------
+        Route::any( '/list', 'NotificationsController@getList' )
+            ->name( 'vh.backend.settings.notifications.list' );
+        //------------------------------------------------
+        Route::any( '/store', 'NotificationsController@store' )
+            ->name( 'vh.backend.settings.notifications.store' );
+        //------------------------------------------------
+        Route::any( '/content', 'NotificationsController@getContent' )
+            ->name( 'vh.backend.settings.notifications.content' );
+        //------------------------------------------------
+        //------------------------------------------------
+    });
+
+
 Route::group(
     [
         'prefix'     => 'backend/vaah/settings/backups',

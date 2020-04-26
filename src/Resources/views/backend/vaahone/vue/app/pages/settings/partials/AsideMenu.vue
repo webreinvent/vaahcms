@@ -22,14 +22,14 @@
                      :to="{name: 'localization.index'}">
         </b-menu-item>
 
-        <!--<b-menu-item label="Notifications"
+        <b-menu-item label="Notifications"
                      icon="bell"
                      tag="router-link"
-                     :active="!!($route.path == '/vaah/settings/general/')"
-                     :to="{name: 'general.index'}">
+                     :active="!!($route.path == '/vaah/settings/notifications')"
+                     :to="{name: 'notifications.index'}">
         </b-menu-item>
 
-        <b-menu-item label="Scheduled Actions"
+        <!--<b-menu-item label="Scheduled Actions"
                      icon="stopwatch"
                      tag="router-link"
                      :active="!!($route.path == '/vaah/settings/general/')"

@@ -14,6 +14,7 @@ import themes from './modules/themes';
 import profile from './modules/profile';
 import general from './modules/settings/general';
 import localizations from './modules/settings/localizations';
+import notifications from './modules/settings/notifications';
 import media from './modules/media';
 
 export const store = new Vuex.Store({
@@ -29,6 +30,7 @@ export const store = new Vuex.Store({
         profile: profile,
         general: general,
         localizations: localizations,
+        notifications: notifications,
         media: media,
     }
 });

@@ -185,7 +185,6 @@ class JsonController extends Controller
             $views[$key] = array_filter(array_merge($modules_views[$key], $themes_views[$key]));
         }
 
-
         return $views;
     }
     //----------------------------------------------------------
@@ -244,7 +243,7 @@ class JsonController extends Controller
 
             $namespace = '\WebReinvent\VaahCms\Http\Controllers\ExtendController';
 
-            $response = vh_action($namespace, $method);
+            $response = vh_action_response($namespace, $method);
 
 
             if($response['status']=='success' && isset($response['data']))
@@ -268,7 +267,7 @@ class JsonController extends Controller
                     }
 
 
-                    $res = vh_module_action($module->name, 'ExtendController@'.$method);
+                    $res = vh_module_action_response($module->name, 'ExtendController@'.$method);
 
                     if($res['status'] == 'failed')
                     {
@@ -358,7 +357,7 @@ class JsonController extends Controller
                     }
 
                     $res = null;
-                    $res = vh_theme_action($theme->name, 'ExtendController@'.$method);
+                    $res = vh_theme_action_response($theme->name, 'ExtendController@'.$method);
 
                     if($res['status'] == 'failed')
                     {
@@ -377,6 +376,19 @@ class JsonController extends Controller
 
         return $views;
     }
+    //----------------------------------------------------------
+    public function getExtendedData($method='notificationVariables'){
+
+
+        $active_modules = Module::getActiveModules();
+
+
+
+    }
+    //----------------------------------------------------------
+
+    //----------------------------------------------------------
+    //----------------------------------------------------------
     //----------------------------------------------------------
 
 

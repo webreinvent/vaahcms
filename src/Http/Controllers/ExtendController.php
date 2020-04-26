@@ -139,6 +139,10 @@ class ExtendController extends Controller
                     'link' => self::$link."/settings/localization",
                     'label'=> 'Localization'
                 ],
+                [
+                    'link' => self::$link."/settings/notifications",
+                    'label'=> 'Notifications'
+                ],
             ]
         ];
 
@@ -160,6 +164,55 @@ class ExtendController extends Controller
 
         return $response;
     }
+    //----------------------------------------------------------
+    public function getNotificationVariables()
+    {
+        $list = [
+            [
+                'name'=>'*|USER:NAME|*',
+                'details'=>'Will be replaced with name.',
+            ],
+            [
+                'name'=>'*|USER:DISPLAYNAME|*',
+                'details'=>'Will be replaced with display name.',
+            ],
+            [
+                'name'=>'*|USER:EMAIL|*',
+                'details'=>'Will be replaced with email.',
+            ],
+            [
+                'name'=>'*|USER:PHONE|*',
+                'details'=>'Will be replaced with phone.',
+            ]
+        ];
+
+        $response['status'] = 'success';
+        $response['data'] = $list;
+
+        return $response;
+    }
+    //----------------------------------------------------------
+    public function getNotificationActions()
+    {
+        $list = [
+            [
+                'name'=>'*|URL:LOGIN|*'
+            ],
+            [
+                'name'=>'*|URL:REGISTER|*'
+            ],
+            [
+                'name'=>'*|URL:VERIFICATION_LINK|*'
+            ],
+        ];
+
+        $response['status'] = 'success';
+        $response['data'] = $list;
+
+        return $response;
+    }
+    //----------------------------------------------------------
+    //----------------------------------------------------------
     //----------------------------------------------------------
 
 

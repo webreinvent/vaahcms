@@ -1,0 +1,55 @@
+<?php
+
+use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
+
+class CreateVhNotificationsTable extends Migration
+{
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+
+        Schema::create('vh_notifications', function (Blueprint $table) {
+            $table->increments('id');
+
+            $table->uuid('uuid')->nullable();
+
+            $table->string('name')->nullable()->index();
+            $table->string('slug')->nullable();
+
+            $table->string('details')->nullable();
+
+            $table->boolean('via_mail')->nullable();
+            $table->boolean('via_sms')->nullable();
+            $table->boolean('via_push')->nullable();
+            $table->boolean('via_frontend')->nullable();
+            $table->boolean('via_backend')->nullable();
+            $table->boolean('is_error')->nullable();
+            $table->boolean('can_update_via')->nullable();
+
+
+            $table->integer('created_by')->nullable();
+            $table->integer('updated_by')->nullable();
+            $table->integer('deleted_by')->nullable();
+
+            $table->timestamps();
+            $table->softDeletes();
+
+        });
+    }
+
+    /**
+    * Reverse the migrations.
+    *
+    * @return void
+    */
+    public function down()
+    {
+        Schema::dropIfExists('vh_notifications');
+    }
+}
