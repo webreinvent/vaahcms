@@ -182,10 +182,9 @@ class Notification extends Model {
         }
 
         $inputs = $request->except('content');
-
         $item->fill($inputs);
-
         $item->save();
+
 
         if(count($request->contents) > 0)
         {
@@ -253,7 +252,21 @@ class Notification extends Model {
 
 
         try{
-            $user->notify(new Notice($notification, $request->all()));
+
+            if($notification->via_mail == true)
+            {
+                static::sendViaMail($notification, $user, $request->all());
+            }
+
+            if($notification->via_backend == true)
+            {
+                static::sendViaBackend($notification, $user, $request->all());
+            }
+
+            if($notification->via_frontend == true)
+            {
+                static::sendViaFrontend($notification, $user, $request->all());
+            }
 
             $response['status'] = 'success';
             $response['data'] = [];
@@ -269,6 +282,78 @@ class Notification extends Model {
 
     }
 
+    //-------------------------------------------------
+    public static function sendViaMail(Notification $notification, User $user, $params=[])
+    {
+        $user->notify(new Notice($notification, $params));
+    }
+    //-------------------------------------------------
+    public static function sendViaBackend(Notification $notification, User $user, $params=[])
+    {
+
+        $translated = static::getTranslatedContent('backend', $notification,  $params);
+
+        if($notification->is_error)
+        {
+            $translated['is_error'] = true;
+        }
+
+        $notify = new Notified();
+        $notify->vh_notification_id = $notification->id;
+        $notify->vh_user_id = $user->id;
+        $notify->via = 'backend';
+        $notify->meta = $translated;
+        $notify->save();
+
+    }
+    //-------------------------------------------------
+    public static function sendViaFrontend(Notification $notification, User $user, $params=[])
+    {
+        $user->notify(new Notice($notification, $params));
+    }
+    //-------------------------------------------------
+    public static function getTranslatedContent($vai, Notification $notification, $params=[])
+    {
+
+        $contents = $notification->contents()
+            ->where('via', $vai)
+            ->orderBy('sort', 'asc')
+            ->get();
+
+
+
+        $translated = [];
+
+        if($contents)
+        {
+            foreach ($contents as $content)
+            {
+
+                switch ($content->key)
+                {
+
+                    case 'content':
+                        $translate = vh_translate_dynamic_strings($content->value, $params);
+                        $translated['message'] = $translate;
+                        break;
+
+                    case 'action':
+
+                        $translated['action']['label'] = $content->value;
+                        $translate = vh_translate_dynamic_strings($content->meta->action, []);
+                        $translated['action']['link'] = $translate;
+
+                        break;
+                }
+            }
+        }
+
+        return $translated;
+    }
+    //-------------------------------------------------
+
+    //-------------------------------------------------
+    //-------------------------------------------------
     //-------------------------------------------------
     //-------------------------------------------------
 

@@ -8,6 +8,7 @@ use Illuminate\Routing\Controller;
 use VaahCms\Modules\Cms\Entities\MenuItem;
 use VaahCms\Modules\Cms\Entities\Page;
 use WebReinvent\VaahCms\Entities\Module;
+use WebReinvent\VaahCms\Entities\Notified;
 use WebReinvent\VaahCms\Entities\Theme;
 use WebReinvent\VaahCms\Entities\User;
 
@@ -81,12 +82,20 @@ class JsonController extends Controller
         //-----/Vue Messages----------------------
 
 
+
+
+
         if($request->has('get_extended_views') && \Auth::check())
         {
             $data['auth_user'] = [
                 'name' => \Auth::user()->name,
                 'email' => \Auth::user()->email,
             ];
+
+            //-----Vue Backend Notices----------------------
+            $data['vue_notices'] = Notified::viaBackend();
+            //-----/Vue Backend Notices----------------------
+
         }
 
         if($request->has('get_extended_views'))

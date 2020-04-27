@@ -4,11 +4,14 @@
 
         <TopMenu/>
 
+
         <Aside/>
         <!--sections-->
         <section class="section">
 
             <div class="container">
+
+                <Notices></Notices>
 
                 <router-view></router-view>
 

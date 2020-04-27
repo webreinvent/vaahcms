@@ -1,6 +1,7 @@
 import TopMenu from './../components/App/TopMenu'
 import Aside from './../components/App/Aside'
 import Footer from './../components/App/Footer'
+import Notices from './../components/Notices'
 
 export default {
     computed:{
@@ -10,6 +11,7 @@ export default {
         TopMenu,
         Aside,
         Footer,
+        Notices,
     },
     data()
     {
