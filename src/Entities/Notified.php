@@ -13,6 +13,10 @@ class Notified extends Model {
     protected $table = 'vh_notified';
     //-------------------------------------------------
     protected $dates = [
+        'last_attempt_at',
+        'sent_at',
+        'read_at',
+        'marked_delivered',
         'created_at',
         'updated_at',
         'deleted_at'

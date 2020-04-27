@@ -10,6 +10,8 @@ use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 use WebReinvent\VaahCms\Entities\Notification;
+use WebReinvent\VaahCms\Entities\Notified;
+use WebReinvent\VaahCms\Notifications\Notice;
 
 
 class NotificationsController extends Controller
@@ -116,6 +118,37 @@ class NotificationsController extends Controller
         return response()->json($response);
 
     }
+    //----------------------------------------------------------
+    public function markAsRead(Request $request)
+    {
+        $rules = array(
+            'id' => 'required',
+        );
+
+        $validator = \Validator::make( $request->all(), $rules);
+        if ( $validator->fails() ) {
+
+            $errors             = errorsToArray($validator->errors());
+            $response['status'] = 'failed';
+            $response['errors'] = $errors;
+            return response()->json($response);
+        }
+
+        $data = [];
+
+        $item = Notified::find($request->id);
+        $item->read_at = \Carbon::now();
+        $item->marked_delivered = \Carbon::now();
+        $item->save();
+
+        $response['status'] = 'success';
+        $response['data'] = $data;
+        return response()->json($response);
+
+    }
+    //----------------------------------------------------------
+    //----------------------------------------------------------
+    //----------------------------------------------------------
     //----------------------------------------------------------
 
 

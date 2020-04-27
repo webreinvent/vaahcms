@@ -49,6 +49,8 @@ class Notification extends Model {
     }
 
     //-------------------------------------------------
+
+    //-------------------------------------------------
     public function getViaMailAttribute($value) {
         if($value)
         {
@@ -303,6 +305,7 @@ class Notification extends Model {
         $notify->vh_user_id = $user->id;
         $notify->via = 'backend';
         $notify->meta = $translated;
+
         $notify->save();
 
     }

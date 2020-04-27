@@ -175,10 +175,9 @@
 
                                                 <b-switch size="is-small"
                                                           type="is-danger"
-                                                          v-model="active_item.is_errors">
+                                                          v-model="active_item.is_error">
                                                     Yes
                                                 </b-switch>
-
 
 
                                             </div>
