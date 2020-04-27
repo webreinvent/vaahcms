@@ -119,6 +119,9 @@ Route::group(
         Route::any( '/list', 'NotificationsController@getList' )
             ->name( 'vh.backend.settings.notifications.list' );
         //------------------------------------------------
+        Route::any( '/create', 'NotificationsController@createItem' )
+            ->name( 'vh.backend.settings.notifications.create' );
+        //------------------------------------------------
         Route::any( '/store', 'NotificationsController@store' )
             ->name( 'vh.backend.settings.notifications.store' );
         //------------------------------------------------

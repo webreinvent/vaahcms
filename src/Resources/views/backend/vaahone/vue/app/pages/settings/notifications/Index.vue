@@ -16,13 +16,14 @@
                         <header class="card-header">
 
                             <div class="card-header-title">
-                                General
+                                Notifications
                             </div>
 
                             <div class="card-header-buttons">
                                 <div class="field has-addons is-pulled-right">
                                     <p  class="control">
                                         <b-button type="is-light"
+                                                  @click="show_new_item_form = $vaah.toggle(show_new_item_form)"
                                                   icon-left="plus">
                                             Add
                                         </b-button>
@@ -73,6 +74,35 @@
                                 </div>
                                 <div class="column is-9">
 
+                                    <div v-if="show_new_item_form">
+
+                                        <b-notification type="is-danger" :closable="false"
+                                                        class="is-light is-small has-margin-bottom-5">
+                                            These are notifications needs to be send manually.
+                                        </b-notification>
+
+                                        <b-field grouped   >
+
+                                            <b-field expanded>
+                                                <b-input v-model="new_item.name"
+                                                         expanded
+                                                         placeholder="Enter new notification name"></b-input>
+                                                <p class="control">
+                                                    <b-button type="is-light"
+                                                              @click="create()"
+                                                              icon-left="save">
+                                                        Save
+                                                    </b-button>
+                                                </p>
+                                            </b-field>
+                                        </b-field>
+
+                                        <hr/>
+
+                                    </div>
+
+
+
 
                                     <b-field grouped  >
                                         <b-field expanded>
@@ -81,52 +111,19 @@
                                                           :open_on_focus="true"
 
                                             />
-                                            <p class="control">
-                                                <b-button type="is-light"
-                                                          @click="store()"
-                                                          icon-left="save">
-                                                    Save
-                                                </b-button>
-                                            </p>
 
-                                            <p class="control" >
-                                                <b-button  type="is-light"
-                                                           @click="is_testing=true"
-                                                           icon-left="share">
-                                                    Test
-                                                </b-button>
-                                            </p>
                                         </b-field>
                                     </b-field>
 
 
 
-                                    <div v-if="is_testing">
-
-                                        <div class="columns">
-                                            <div class="column is-half">
-                                                <b-field expanded>
-                                                    <AutoCompleteUsers @onSelect="setSendTo"/>
-
-                                                    <p class="control" >
-                                                        <b-button  type="is-light"
-                                                                   @click="sendNotification()"
-                                                                   :loading="is_sending"
-                                                                   icon-left="share">
-                                                            Send
-                                                        </b-button>
-                                                    </p>
-                                                </b-field>
-                                            </div>
-                                        </div>
-
-
-                                    </div>
-
-
                                     <hr/>
 
                                     <div v-if="page.active_item">
+
+                                        <h3 class="title is-4">{{page.active_item.name}}</h3>
+
+
 
                                     <b-field label="Deliver via">
 
@@ -221,7 +218,6 @@
                                                                 <b-input placeholder="From name"
                                                                          v-model="line.meta.name"
                                                                          expanded></b-input>
-
                                                             </b-field>
 
 
@@ -232,7 +228,6 @@
                                                                 <b-input placeholder="From email"
                                                                          v-model="line.value"
                                                                          expanded></b-input>
-
                                                             </b-field>
 
                                                         </div>
@@ -264,7 +259,8 @@
                                                                          expanded></b-input>
 
                                                                 <p class="control">
-                                                                    <b-button icon-left="trash"></b-button>
+                                                                    <b-button @click="removeContent(line, 'mail')"
+                                                                              icon-left="trash"></b-button>
                                                                 </p>
 
                                                             </b-field>
@@ -294,7 +290,7 @@
                                                                 </b-select>
 
                                                                 <p class="control">
-                                                                    <b-button icon-left="trash"></b-button>
+                                                                    <b-button @click="removeContent(line, 'mail')" icon-left="trash"></b-button>
                                                                 </p>
 
                                                             </b-field>
@@ -307,12 +303,11 @@
                                                 </div>
 
                                                 <div class="has-margin-top-15">
-
+                                                    <b-button @click="addSubject()">Add Subject</b-button>
                                                     <b-button @click="addFrom()">Add From</b-button>
                                                     <b-button @click="addToMail('greetings')">Add Greetings</b-button>
                                                     <b-button @click="addToMail('line')">Add Line</b-button>
                                                     <b-button @click="addAction()">Add Action</b-button>
-
                                                 </div>
 
 
@@ -525,6 +520,55 @@
 
 
                                     </section>
+
+                                        <hr/>
+
+                                        <div class="columns">
+
+                                            <div class="column is-3">
+                                                <b-field>
+                                                    <p class="control">
+                                                        <b-button type="is-light"
+                                                                  @click="store()"
+                                                                  icon-left="save">
+                                                            Save
+                                                        </b-button>
+                                                    </p>
+
+                                                    <p class="control" >
+                                                        <b-button  type="is-light"
+                                                                   @click="is_testing=true"
+                                                                   icon-left="share">
+                                                            Test
+                                                        </b-button>
+                                                    </p>
+                                                </b-field>
+
+                                            </div>
+                                            <div class="column is-8">
+
+                                                <div v-if="is_testing">
+
+                                                    <b-field expanded>
+                                                        <AutoCompleteUsers @onSelect="setSendTo"/>
+
+                                                        <p class="control" >
+                                                            <b-button  type="is-light"
+                                                                       @click="sendNotification()"
+                                                                       :loading="is_sending"
+                                                                       icon-left="share">
+                                                                Send
+                                                            </b-button>
+                                                        </p>
+                                                    </b-field>
+
+
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+
 
 
 

@@ -429,6 +429,18 @@ const VaahHelper = {
         return list;
     },
     //---------------------------------------------------------------------
+    toggle: function(item)
+    {
+        console.log('--->', item);
+        if(item == true)
+        {
+            return false;
+        } else
+        {
+            return true;
+        }
+    },
+    //---------------------------------------------------------------------
     testReturn: function()
     {
         return 'value-----';

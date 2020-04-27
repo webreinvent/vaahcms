@@ -59,6 +59,38 @@ class NotificationsController extends Controller
     }
 
     //----------------------------------------------------------
+    public function createItem(Request $request)
+    {
+        $rules = array(
+            'name' => 'required',
+        );
+
+        $validator = \Validator::make( $request->all(), $rules);
+        if ( $validator->fails() ) {
+
+            $errors             = errorsToArray($validator->errors());
+            $response['status'] = 'failed';
+            $response['errors'] = $errors;
+            return response()->json($response);
+        }
+
+        $data = [];
+
+        $item = new Notification();
+        $item->fill($request->all());
+        $item->slug = Str::slug($request->name);
+        $item->save();
+
+
+        $response['status'] = 'success';
+        $response['messages'][] = 'Saved';
+        $response['data']['item'] = $item;
+        $response['data']['list'] = Notification::getList($request);
+
+        return response()->json($response);
+
+    }
+    //----------------------------------------------------------
 
     public function store(Request $request)
     {

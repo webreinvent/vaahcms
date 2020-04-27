@@ -26,27 +26,20 @@ export default {
     {
         let obj = {
             namespace:namespace,
-            is_testing: true,
+            is_testing: false,
             send_to: null,
             is_sending: false,
+            show_new_item_form: false,
+            new_item: {
+                name: null,
+            },
 
         };
 
         return obj;
     },
     watch: {
-        /*'active_item.via_sms': {
-            deep: true,
-            handler(new_val, old_val) {
-                if(new_val == true)
-                {
-                    this.addSmsContent();
-                } else
-                {
-                    this.removeSmsContent();
-                }
-            }
-        },*/
+
 
     },
     mounted() {
@@ -87,12 +80,33 @@ export default {
         setActiveItem: function(item)
         {
             this.update('active_item', item);
-
-
-
             this.fetchContent();
         },
         //---------------------------------------------------------------------
+        create: function () {
+            this.$Progress.start();
+            let params = this.new_item;
+            let url = this.ajax_url+'/create';
+            this.$vaah.ajax(url, params, this.createAfter);
+        },
+        //---------------------------------------------------------------------
+        createAfter: function (data, res) {
+            this.$Progress.finish();
+            if(data){
+
+                this.new_item = {
+                    name: null,
+                };
+
+                this.show_new_item_form = false;
+
+                this.assets.notifications = data.list;
+                this.update('assets', this.assets);
+                this.update('active_item', data.item);
+                this.fetchContent();
+            }
+
+        },
         //---------------------------------------------------------------------
         fetchContent: function () {
             this.$Progress.start();
@@ -161,6 +175,28 @@ export default {
             this.update('active_item', this.active_item);
 
             console.log('--->', this.active_item.contents);
+
+        },
+        //---------------------------------------------------------------------
+        addSubject: function () {
+            let sort = 0;
+            if(this.active_item.contents && this.active_item.contents.mail)
+            {
+                sort = this.active_item.contents.mail.length;
+            }
+
+            let line = {
+                vh_notification_id: this.active_item.id,
+                via: 'mail',
+                sort: sort,
+                key: 'subject',
+                value: null,
+            };
+
+            this.active_item.contents.mail.push(line);
+
+            this.update('active_item', this.active_item);
+
 
         },
         //---------------------------------------------------------------------
@@ -338,6 +374,17 @@ export default {
             ];
 
             this.$set(this.active_item.contents, 'frontend', lines);
+
+            this.update('active_item', this.active_item);
+
+        },
+        //---------------------------------------------------------------------
+        removeContent: function(item, via)
+        {
+
+            let lines = this.$vaah.removeInArrayByKey(this.active_item.contents[via], item, 'sort');
+
+            this.active_item.contents[via] = lines;
 
             this.update('active_item', this.active_item);
 
