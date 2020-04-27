@@ -23,6 +23,9 @@ class VaahStr{
             $string = static::translateDynamicStringsOfUser($string, $user);
         }
 
+        $string = static::translateDynamicStringsOfRoutes($string);
+
+
         return $string;
     }
     //----------------------------------------------------------
@@ -42,6 +45,30 @@ class VaahStr{
         return $string;
     }
     //----------------------------------------------------------
+    public static function translateDynamicStringsOfRoutes($string)
+    {
+
+
+        $pattern = '/#!ROUTE:(.*?)!#/';
+
+        preg_match_all($pattern, $string, $matches);
+
+        $map = [];
+
+        if(count($matches[1]) > 0)
+        {
+            foreach ($matches[1] as $item)
+            {
+                $route = strtolower($item);
+                $route = route($route);
+                $map['#!ROUTE:'.$item.'!#'] = $route;
+            }
+        }
+
+        $string = strtr($string, $map);
+
+        return $string;
+    }
     //----------------------------------------------------------
 
 }

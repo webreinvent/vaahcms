@@ -217,15 +217,10 @@ function vh_action($method, $params=null, $output_type=null){
 /*
  * $params = array('user_id', 'string');
  */
-function vh_translate_dynamic_strings($params)
+function vh_translate_dynamic_strings($string, $params)
 {
+    $params['string'] = $string;
     $output = vh_action('translateDynamicStrings', $params, 'string' );
-
-    echo "<pre>";
-    print_r($output);
-    echo "</pre>";
-    die("<hr/>line number=123");
-
     return $output;
 }
 //-------------------------------------------------------------

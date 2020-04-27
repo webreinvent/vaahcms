@@ -21,8 +21,10 @@ Route::group(
         //------------------------------------------------
         //------------------------------------------------
         Route::get( '/', 'WelcomeController@index' )
-            ->name( 'vh.public.index' );
+            ->name( 'vh.home' );
         //------------------------------------------------
+        Route::get( '/login', 'WelcomeController@index' )
+            ->name( 'vh.login' );
         //------------------------------------------------
         Route::group(
             [

@@ -99,6 +99,8 @@ class NotificationsController extends Controller
         $data = [];
         $response = [];
 
+        /*
+
         $params = [
            'string' => 'Hello *|USER:NAME|* |!USER:FIRST_NAME!| #!USER:EMAIL!#',
            'user_id' => 1,
@@ -106,10 +108,10 @@ class NotificationsController extends Controller
 
         $translated = vh_translate_dynamic_strings($params);
 
-        echo "<pre>";
-        print_r($translated);
-        echo "</pre>";
-        die("<hr/>line number=112");
+        */
+
+
+        $response = Notification::send($request);
 
         return response()->json($response);
 

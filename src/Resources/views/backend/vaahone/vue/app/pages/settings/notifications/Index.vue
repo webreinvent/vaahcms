@@ -111,6 +111,7 @@
                                                     <p class="control" >
                                                         <b-button  type="is-light"
                                                                    @click="sendNotification()"
+                                                                   :loading="is_sending"
                                                                    icon-left="share">
                                                             Send
                                                         </b-button>
@@ -190,21 +191,54 @@
                                             <b-tab-item :visible="active_item.via_mail"
                                                         label="Mail">
 
-                                                <div class="notification-lines">
+                                                <div class="notification-lines" v-if="active_item.contents">
 
-                                                    <div v-if="active_item.contents" class="has-margin-bottom-15">
                                                     <div v-if="active_item.contents.mail
                                                     && active_item.contents.mail.length > 0"
-                                                         v-for="line in active_item.contents.mail">
-                                                        <b-field v-if="line.key == 'from' || line.key == 'from_email' ">
-                                                            <p class="control">
-                                                                <span class="button is-static">{{$vaah.toLabel(line.key)}}</span>
-                                                            </p>
-                                                            <b-input :placeholder="$vaah.toLabel(line.key)"
-                                                                     v-model="line.value"
-                                                                     expanded></b-input>
+                                                         class="has-margin-bottom-15">
+                                                    <div v-for="line in active_item.contents.mail">
 
-                                                        </b-field>
+                                                        <div v-if="line.key == 'subject'">
+
+                                                            <b-field >
+                                                                <p class="control">
+                                                                    <span class="button is-static">Subject</span>
+                                                                </p>
+                                                                <b-input placeholder="Subject"
+                                                                         v-model="line.value"
+                                                                         expanded></b-input>
+
+                                                            </b-field>
+
+
+                                                        </div>
+
+                                                        <div v-if="line.key == 'from'">
+
+                                                            <b-field >
+                                                                <p class="control">
+                                                                    <span class="button is-static">From</span>
+                                                                </p>
+                                                                <b-input placeholder="From name"
+                                                                         v-model="line.meta.name"
+                                                                         expanded></b-input>
+
+                                                            </b-field>
+
+
+                                                            <b-field>
+                                                                <p class="control">
+                                                                    <span class="button is-static">From Email</span>
+                                                                </p>
+                                                                <b-input placeholder="From email"
+                                                                         v-model="line.value"
+                                                                         expanded></b-input>
+
+                                                            </b-field>
+
+                                                        </div>
+
+
                                                     </div>
                                                 </div>
 
@@ -212,8 +246,9 @@
                                                     <div v-if="active_item.contents.mail
                                                     && active_item.contents.mail.length > 0"
                                                          v-for="line in active_item.contents.mail">
-                                                        <b-field v-if="line.key != 'action'">
-                                                            <b-field v-if="line.key != 'from' && line.key != 'from_email' ">
+
+                                                        <b-field v-if="line.key == 'line' || line.key == 'greetings'">
+                                                            <b-field >
                                                                 <p class="control">
                                                                     <span class="button is-static">{{$vaah.toLabel(line.key)}}</span>
                                                                 </p>
@@ -236,9 +271,9 @@
                                                             </b-field>
                                                         </b-field>
 
-                                                        <b-field v-else>
+                                                        <b-field v-if="line.key == 'action' ">
 
-                                                            <b-field v-if="line.key != 'from' && line.key != 'from_email' ">
+                                                            <b-field >
                                                                 <p class="control">
                                                                     <span class="button is-static">{{$vaah.toLabel(line.key)}}</span>
                                                                 </p>

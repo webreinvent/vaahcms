@@ -168,47 +168,18 @@ class ExtendController extends Controller
     //----------------------------------------------------------
     public function getNotificationVariables()
     {
-        $list = [
-            [
-                'name'=>'#!USER:NAME!#',
-                'details'=>'Will be replaced with name.',
-            ],
-            [
-                'name'=>'#!USER:DISPLAY_NAME!#',
-                'details'=>'Will be replaced with display name.',
-            ],
-            [
-                'name'=>'#!USER:EMAIL!#',
-                'details'=>'Will be replaced with email.',
-            ],
-            [
-                'name'=>'#!USER:PHONE!#',
-                'details'=>'Will be replaced with phone.',
-            ]
-        ];
 
         $response['status'] = 'success';
-        $response['data'] = $list;
+        $response['data'] = vh_notification_variables();
 
         return $response;
     }
     //----------------------------------------------------------
     public function getNotificationActions()
     {
-        $list = [
-            [
-                'name'=>'#!ROUTE:LOGIN!#'
-            ],
-            [
-                'name'=>'#!ROUTE:REGISTER!#'
-            ],
-            [
-                'name'=>'#!ROUTE:VERIFICATION_LINK!#'
-            ],
-        ];
 
         $response['status'] = 'success';
-        $response['data'] = $list;
+        $response['data'] = vh_notification_actions();
 
         return $response;
     }

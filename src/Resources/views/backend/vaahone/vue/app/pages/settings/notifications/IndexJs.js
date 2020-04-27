@@ -28,6 +28,7 @@ export default {
             namespace:namespace,
             is_testing: true,
             send_to: null,
+            is_sending: false,
 
         };
 
@@ -108,6 +109,11 @@ export default {
 
                 //this.active_item.contents = data.list;
 
+                if(this.active_item.via_mail && data.list.mail.length < 1)
+                {
+                    this.addMailContent();
+                }
+
                 if(this.active_item.via_sms && data.list.sms.length < 1)
                 {
                     this.addSmsContent();
@@ -170,18 +176,10 @@ export default {
                 via: 'mail',
                 sort: sort,
                 key: 'from',
-                value: this.assets.from,
-            }
-
-            this.active_item.contents.mail.push(line);
-
-
-            line = {
-                vh_notification_id: this.active_item.id,
-                via: 'mail',
-                sort: sort+1,
-                key: 'from_email',
-                value: this.assets.from_email,
+                value: this.assets.email,
+                meta: {
+                    name: null
+                }
             };
 
             this.active_item.contents.mail.push(line);
@@ -215,6 +213,25 @@ export default {
 
             console.log('--->', this.active_item.contents);
 
+        },
+        //---------------------------------------------------------------------
+        addMailContent: function()
+        {
+
+            let lines = [
+                {
+                    vh_notification_id: this.active_item.id,
+                    via: 'mail',
+                    sort: 0,
+                    key: 'subject',
+                    value: null,
+                }
+            ];
+
+            this.$set(this.active_item.contents, 'mail', lines);
+
+
+            this.update('active_item', this.active_item);
         },
         //---------------------------------------------------------------------
         addSmsContent: function () {
@@ -348,6 +365,7 @@ export default {
         //---------------------------------------------------------------------
         sendNotification: function () {
             this.$Progress.start();
+            this.is_sending = true;
             let params = {
                 notification_id: this.active_item.id,
                 user_id: this.send_to.id
@@ -361,6 +379,7 @@ export default {
         //---------------------------------------------------------------------
         sendNotificationAfter: function (data, res) {
             this.$Progress.finish();
+            this.is_sending = false;
             if(data){
                 //this.update('list', data.list);
             }

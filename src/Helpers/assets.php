@@ -176,3 +176,44 @@ function vh_meta_attributes()
     return $list;
 }
 //-----------------------------------------------------------------------------------
+function vh_notification_variables()
+{
+    $list = [
+        [
+            'name'=>'#!USER:NAME!#',
+            'details'=>'Will be replaced with name.',
+        ],
+        [
+            'name'=>'#!USER:DISPLAY_NAME!#',
+            'details'=>'Will be replaced with display name.',
+        ],
+        [
+            'name'=>'#!USER:EMAIL!#',
+            'details'=>'Will be replaced with email.',
+        ],
+        [
+            'name'=>'#!USER:PHONE!#',
+            'details'=>'Will be replaced with phone.',
+        ]
+    ];
+
+    return $list;
+
+}
+//-----------------------------------------------------------------------------------
+function vh_notification_actions()
+{
+    $list = [
+        [
+            'name'=>'#!ROUTE:VH.LOGIN!#'
+        ],
+        [
+            'name'=>'#!ROUTE:VH.REGISTER!#'
+        ],
+    ];
+
+    return $list;
+
+}
+//-----------------------------------------------------------------------------------
+//-----------------------------------------------------------------------------------

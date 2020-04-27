@@ -4,6 +4,7 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
+use WebReinvent\VaahCms\Notifications\Notice;
 use WebReinvent\VaahCms\Traits\CrudWithUuidObservantTrait;
 
 class Notification extends Model {
@@ -231,6 +232,42 @@ class Notification extends Model {
 
     }
     //-------------------------------------------------
+    public static function send($request){
+
+        $rules = array(
+            'user_id' => 'required',
+            'notification_id' => 'required',
+        );
+
+        $validator = \Validator::make( $request->all(), $rules);
+        if ( $validator->fails() ) {
+
+            $errors             = errorsToArray($validator->errors());
+            $response['status'] = 'failed';
+            $response['errors'] = $errors;
+            return $response;
+        }
+
+        $user = User::find($request->user_id);
+        $notification = static::find($request->notification_id);
+
+
+        try{
+            $user->notify(new Notice($notification, $request->all()));
+
+            $response['status'] = 'success';
+            $response['data'] = [];
+            $response['messages'][] = 'Action was successful';
+
+        }catch(\Exception $e)
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = $e->getMessage();
+        }
+
+        return $response;
+
+    }
 
     //-------------------------------------------------
     //-------------------------------------------------
