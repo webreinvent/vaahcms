@@ -437,7 +437,7 @@ class SetupController extends Controller
             if($response['status'] == 'success')
             {
                 Theme::syncAll();
-                Theme::activate($request->slug);
+                Theme::activateItem($request->slug);
             }
 
             if($response['status'] == 'success' && $request->import_sample_data)
@@ -457,7 +457,7 @@ class SetupController extends Controller
 
         if($details['status'] == 'failed')
         {
-            return response()->json($details);
+            return $details;
 
         }
 
@@ -474,7 +474,7 @@ class SetupController extends Controller
 
         if($details['status'] == 'failed')
         {
-            return response()->json($details);
+            return $details;
 
         }
 

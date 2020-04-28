@@ -504,7 +504,7 @@ class Theme extends Model {
     {
 
         try{
-            $api = config('vaahcms.api_route')."/theme/by/slug/".$slug;
+            $api = config('vaahcms.api_route')."theme/by/slug/".$slug;
 
             $api_response = @file_get_contents($api);
 
@@ -664,8 +664,6 @@ class Theme extends Model {
         try{
             $item = static::slug($slug)->first();
 
-
-
             $command = 'db:seed';
             $params = [
                 '--class' => config('vaahcms.root_folder')."\Themes\\{$item->name}\\Database\Seeds\SampleDataTableSeeder"
@@ -744,7 +742,7 @@ class Theme extends Model {
             $item = static::find($id);
             if($request->data['status'] == 1)
             {
-                static::activate($item->slug);
+                static::activateItem($item->slug);
             }
 
             $item->status = $request->data['status'];

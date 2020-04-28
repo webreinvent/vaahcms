@@ -526,7 +526,7 @@ class Module extends Model {
     {
 
         try{
-            $api = config('vaahcms.api_route')."/module/by/slug/".$slug;
+            $api = config('vaahcms.api_route')."module/by/slug/".$slug;
 
             $api_response = @file_get_contents($api);
 
@@ -764,7 +764,7 @@ class Module extends Model {
             $item = static::find($id);
             if($request->data['status'] == 1)
             {
-                Module::activate($item->slug);
+                Module::activateItem($item->slug);
             }
 
             $item->status = $request->data['status'];
