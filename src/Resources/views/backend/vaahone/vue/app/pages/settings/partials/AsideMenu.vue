@@ -29,6 +29,12 @@
                      :to="{name: 'notifications.index'}">
         </b-menu-item>
 
+        <b-menu-item label="Reset"
+                     icon="retweet"
+                     tag="router-link"
+                     :to="{name: 'setup.index'}">
+        </b-menu-item>
+
         <!--<b-menu-item label="Scheduled Actions"
                      icon="stopwatch"
                      tag="router-link"

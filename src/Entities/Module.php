@@ -364,6 +364,7 @@ class Module extends Model {
          */
         $response = vh_module_action($module->name, 'SetupController@dependencies');
 
+
         if($response['status'] == 'failed')
         {
             return $response;

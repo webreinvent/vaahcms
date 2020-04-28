@@ -224,7 +224,7 @@ class SetupController extends Controller
 
         $env_file = '.env.'.$request->app_env;
 
-        $file_path = base_path('/'.$env_file);
+        $file_path = base_path($env_file);
 
         if(!file_exists($file_path))
         {
@@ -234,7 +234,7 @@ class SetupController extends Controller
         }
 
         //$params = vh_env_file_to_array($file_path, true);
-        $params = VaahSetup::getEnvFileVariables($file_path, 'key_value', true);
+        $params = VaahSetup::getEnvFileVariables($env_file, 'key_value', true);
 
         $response['status'] = 'success';
         $response['data'] = $params;

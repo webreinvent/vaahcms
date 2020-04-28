@@ -5,6 +5,7 @@ use Illuminate\Support\ServiceProvider;
 use WebReinvent\VaahCms\Entities\Setting;
 use WebReinvent\VaahCms\Facades\VaahExcelFacade;
 use WebReinvent\VaahCms\Facades\VaahFileFacade;
+use WebReinvent\VaahCms\Libraries\VaahSetup;
 use WebReinvent\VaahCms\Providers\FacadesServiceProvider;
 use WebReinvent\VaahCms\Providers\ModulesServiceProvider;
 use WebReinvent\VaahCms\Providers\ThemesServiceProvider;
@@ -162,7 +163,7 @@ class VaahCmsServiceProvider extends ServiceProvider {
      */
     private function registerGlobalSettings() {
 
-        if(!config('settings'))
+        if(VaahSetup::isInstalled() && !config('settings'))
         {
             $global_settings = Setting::where('category', 'global')
                 ->get()
