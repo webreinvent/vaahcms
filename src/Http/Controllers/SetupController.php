@@ -350,10 +350,10 @@ class SetupController extends Controller
             Migration::runMigrations(null,true);
 
             //publish vaahcms seeds
-            Migration::publishSeeds($provider);
+            //Migration::publishSeeds($provider);
 
             //run vaahcms seeds
-            $namespace = "VaahCmsTableSeeder";
+            $namespace = "WebReinvent\VaahCms\Database\Seeders\VaahCmsTableSeeder";
             Migration::runSeeds($namespace);
 
             $response['status'] = 'success';
