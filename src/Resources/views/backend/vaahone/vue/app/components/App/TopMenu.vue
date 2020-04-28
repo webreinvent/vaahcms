@@ -26,11 +26,9 @@
 
 
 
-                <template  v-for="menus in assets.extended_views.top_left_menu">
+                <template  v-for="menus in assets.extended_views.top_left_menu.success">
 
                     <template v-for="link in menus">
-
-
 
                         <b-navbar-dropdown v-if="link.child"
                                            :hoverable="true"

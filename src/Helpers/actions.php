@@ -48,6 +48,8 @@ function vh_module_action($module_name, $action, $params=null, $section='backend
 function vh_modules_action($method, $params=null, $output_type=null)
 {
 
+
+
     $active_modules = Module::getActiveModules();
 
 
@@ -56,7 +58,7 @@ function vh_modules_action($method, $params=null, $output_type=null)
         return [];
     }
 
-    $output['success'] = [];
+    $output['success']['data'] = [];
     $output['failed'] = [];
 
     foreach ($active_modules as $item)
@@ -71,8 +73,9 @@ function vh_modules_action($method, $params=null, $output_type=null)
         } elseif(isset($res['status']) && $res['status'] == 'success'
             && isset($res['data']) && count(array_filter($res['data'])) > 0)
         {
+
             if($output_type == 'array'){
-                $output['success']['data'][] = $res['data'];
+                $output['success']['data'] = array_merge($output['success']['data'], $res['data']);
             }else if($output_type == 'string'){
                 $output['success']['data'] = $res['data'];
             }else if($output_type == 'concatenate_string'){
@@ -164,40 +167,62 @@ function vh_action($method, $params=null, $output_type=null){
     switch($output_type)
     {
         case 'array':
-            $vaahcms = vh_vaahcms_action($method, $params);
+
+
+            $vaahcms_res = vh_vaahcms_action($method, $params);
+
+            if(isset($vaahcms_res['status']) && $vaahcms_res['status'] == 'failed')
+            {
+                $output['failed'] = $vaahcms_res;
+            } else{
+                $output['success'] = $vaahcms_res['data'];
+            }
+
             $modules = vh_modules_action($method, $params, $output_type);
+
+            if(isset($modules['success']) && count($modules['success']) > 0)
+            {
+                $output['success'] = array_merge($output['success'], $modules['success']['data']);
+            }
+
+
             $themes = vh_themes_action($method, $params, $output_type);
 
-            $output = array_merge($vaahcms, $modules, $themes);
+            if(isset($themes['success']) &&  count($themes['success']) > 0)
+            {
+                $output['success'] = array_merge($output['success'], $themes['success']);
+            }
+
+
 
             break;
 
         case 'string':
 
-            $string = vh_vaahcms_action($method, $params);
+            $response = vh_vaahcms_action($method, $params);
 
-            if(!empty($string) && !is_null($string))
+
+            if(isset($response['status']) && $response['status'] == 'success')
             {
-                $params['string'] = $string;
+                $params['string'] = $response['data'];
             }
 
+            $response = vh_modules_action($method, $params, $output_type);
 
-            $string = vh_modules_action($method, $params, $output_type);
-
-            if(!empty($string) && !is_null($string))
+            if(isset($response['success']) && isset($response['data']))
             {
-                $params['string'] = $string;
+                $params['string'] = $response['data'];
             }
 
+            $response = vh_themes_action($method, $output, $output_type);
 
-            $string = vh_themes_action($method, $output, $output_type);
-
-            if(!empty($string) && !is_null($string))
+            if(isset($response['success'])  && isset($response['data']))
             {
-                $params['string'] = $string;
+                $params['string'] = $response['data'];
             }
 
             $output = $params['string'];
+
 
             break;
 
@@ -222,24 +247,6 @@ function vh_action($method, $params=null, $output_type=null){
             $modules = vh_modules_action($method, $params, $output_type);
             $themes = vh_themes_action($method, $params, $output_type);
 
-            /*if($method == 'sidebarMenu')
-            {
-
-                echo "<pre>";
-                print_r($vaahcms);
-                echo "</pre>";
-
-                echo "<pre>";
-                print_r($modules);
-                echo "</pre>";
-
-                echo "<hr/>";
-
-
-
-
-            }*/
-
             $output = array_replace_recursive($vaahcms, $modules);
             $output = array_replace_recursive($output, $themes);
 
@@ -252,7 +259,7 @@ function vh_action($method, $params=null, $output_type=null){
 /*
  * $params = array('user_id', 'string');
  */
-function vh_translate_dynamic_strings($string, $params)
+function vh_translate_dynamic_strings($string, $params=[])
 {
     $params['string'] = $string;
     $output = vh_action('translateDynamicStrings', $params, 'string' );

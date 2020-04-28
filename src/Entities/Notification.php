@@ -49,7 +49,9 @@ class Notification extends Model {
     }
 
     //-------------------------------------------------
-
+    public function setNameAttribute($value) {
+        $this->attributes['name'] = ucwords($value);
+    }
     //-------------------------------------------------
     public function getViaMailAttribute($value) {
         if($value)

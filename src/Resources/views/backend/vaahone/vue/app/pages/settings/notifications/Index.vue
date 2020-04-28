@@ -2,7 +2,7 @@
 <template>
     <div class="settings-notifications">
 
-        <div class="container" >
+        <div class="container" v-if="assets">
 
             <div class="columns">
 
@@ -35,14 +35,14 @@
                         <!--/header-->
 
                         <!--content-->
-                        <div class="card-content" v-if="assets && assets.notification_variables.length>0">
+                        <div class="card-content" >
 
 
                             <div class="columns">
 
-                                <div class="column is-3">
+                                <div class="column is-3" v-if="assets.notification_variables">
 
-                                    <b-field v-for="variable in assets.notification_variables"
+                                    <b-field v-for="variable in assets.notification_variables.success"
                                              :key="variable.name">
 
                                         <b-field >
@@ -104,7 +104,7 @@
 
 
 
-                                    <b-field grouped  >
+                                    <b-field grouped  v-if="assets && assets.notifications.length>0">
                                         <b-field expanded>
                                             <AutoComplete :options="assets.notifications"
                                                           @onSelect="setActiveItem"
@@ -125,7 +125,7 @@
 
 
 
-                                    <b-field label="Deliver via">
+                                        <b-field label="Deliver via">
 
                                         <div class="block">
 
@@ -181,7 +181,7 @@
 
                                         </b-field>
 
-                                    <section>
+                                        <section>
 
                                         <b-tabs >
                                             <b-tab-item :visible="active_item.via_mail"
@@ -282,7 +282,7 @@
                                                                         Select an action
                                                                     </option>
                                                                     <option
-                                                                        v-for="option in assets.notification_actions"
+                                                                        v-for="option in assets.notification_actions.success"
                                                                         :value="option.name"
                                                                         :key="option.name">
                                                                         {{ option.name }}
@@ -387,7 +387,7 @@
                                                                     Select an action
                                                                 </option>
                                                                 <option
-                                                                    v-for="option in assets.notification_actions"
+                                                                    v-for="option in assets.notification_actions.success"
                                                                     :value="option.name"
                                                                     :key="option.name">
                                                                     {{ option.name }}
@@ -444,7 +444,7 @@
                                                                     Select an action
                                                                 </option>
                                                                 <option
-                                                                    v-for="option in assets.notification_actions"
+                                                                    v-for="option in assets.notification_actions.success"
                                                                     :value="option.name"
                                                                     :key="option.name">
                                                                     {{ option.name }}
@@ -497,7 +497,7 @@
                                                                     Select an action
                                                                 </option>
                                                                 <option
-                                                                    v-for="option in assets.notification_actions"
+                                                                    v-for="option in assets.notification_actions.success"
                                                                     :value="option.name"
                                                                     :key="option.name">
                                                                     {{ option.name }}
@@ -568,9 +568,6 @@
                                             </div>
 
                                         </div>
-
-
-
 
                                     </div>
 

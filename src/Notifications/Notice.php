@@ -63,6 +63,7 @@ class Notice extends Notification
             foreach ($contents as $content)
             {
 
+
                 $translated = vh_translate_dynamic_strings($content->value, $this->params);
                 switch ($content->key)
                 {
@@ -71,6 +72,7 @@ class Notice extends Notification
                         break;
 
                     case 'greetings':
+                        echo "<pre>";
                         $mail->greeting($translated);
                         break;
 

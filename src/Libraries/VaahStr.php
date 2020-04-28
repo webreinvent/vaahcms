@@ -15,7 +15,6 @@ class VaahStr{
     {
         $string = $params['string'];
 
-
         if(isset($params['user_id']))
         {
             $user = User::find($params['user_id']);
@@ -24,7 +23,6 @@ class VaahStr{
         }
 
         $string = static::translateDynamicStringsOfRoutes($string);
-
 
         return $string;
     }
