@@ -3,10 +3,6 @@
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
-use VaahCms\Modules\Cmd\Database\Seeds\PermissionDataTableSeeder;
-use VaahCms\Modules\Cmd\Database\Seeds\RoleDataTableSeeder;
-use VaahCms\Modules\Cmd\Database\Seeds\LanguageDataTableSeeder;
-use VaahCms\Modules\Cmd\Database\Seeds\LanguageCategoryDataTableSeeder;
 
 class VaahCmsTableSeeder extends Seeder
 {
