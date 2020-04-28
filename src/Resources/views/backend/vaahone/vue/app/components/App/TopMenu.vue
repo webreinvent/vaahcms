@@ -58,7 +58,7 @@
                                    :hoverable="true"
                                    :label="assets.auth_user.name">
 
-                    <template  v-for="menus in assets.extended_views.top_right_user_menu">
+                    <template  v-for="menus in assets.extended_views.top_right_user_menu.success">
 
                         <template v-for="link in menus">
 

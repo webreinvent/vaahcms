@@ -22,6 +22,7 @@ include('backend/profile.php');
 include('backend/localization.php');
 include('backend/roles.php');
 include('backend/permissions.php');
+include('backend/users.php');
 
 Route::group(
     [
