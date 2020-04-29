@@ -1,16 +1,29 @@
 <?php
 
-namespace WebReinvent\VaahCms\Http\Controllers\Frontend;
+namespace WebReinvent\VaahCms\Http\Controllers;
 
+
+
+use Illuminate\Filesystem\Filesystem;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Notification;
+use Illuminate\Support\Str;
+use WebReinvent\VaahCms\Entities\Migration;
+use WebReinvent\VaahCms\Entities\Module;
+use WebReinvent\VaahCms\Entities\ModuleMigration;
+use WebReinvent\VaahCms\Entities\Permission;
+use WebReinvent\VaahCms\Entities\Role;
+use WebReinvent\VaahCms\Entities\Theme;
 use WebReinvent\VaahCms\Entities\User;
+use WebReinvent\VaahCms\Libraries\VaahHelper;
+use WebReinvent\VaahCms\Libraries\VaahSetup;
+use WebReinvent\VaahCms\Notifications\TestSmtp;
+
 
 class PublicController extends Controller
 {
-
-    public $theme;
 
     //----------------------------------------------------------
     public function __construct()
@@ -45,7 +58,7 @@ class PublicController extends Controller
             $request->session()->forget('accessed_url');
         } else
         {
-            $redirect_url = \URL::route('vh.backend.dashboard');
+            $redirect_url = \URL::route('vh.backend');
         }
 
         $response['status'] = 'success';
@@ -63,6 +76,5 @@ class PublicController extends Controller
     }
     //----------------------------------------------------------
     //----------------------------------------------------------
-
 
 }
