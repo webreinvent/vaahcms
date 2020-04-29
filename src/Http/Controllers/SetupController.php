@@ -37,6 +37,31 @@ class SetupController extends Controller
     public function index()
     {
 
+        //check .env file exist or not
+        if(!file_exists(base_path('.env')))
+        {
+            //publish assets
+            $response = VaahSetup::publishDotEnv();
+
+            if($response['status'] == 'failed')
+            {
+                abort(403, $response['errors']);
+            }
+
+        }
+
+        //check env file has app key
+        $list = VaahSetup::getEnvFileVariables('.env');
+        if(!isset($list['APP_KEY']) || empty($list['APP_KEY']))
+        {
+            //generate app key
+            VaahSetup::generateAppKey();
+            header('Location: '.$_SERVER['REQUEST_URI']);
+            exit();
+        }
+
+
+
         //check assets exist of not
         if(!file_exists(public_path('vaahcms/backend/vaahone/builds/app.js')))
         {

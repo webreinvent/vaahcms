@@ -409,6 +409,46 @@ class VaahSetup{
 
     }
     //----------------------------------------------------------
+    public static function publishDotEnv($namespace=null)
+    {
+        try{
+            \File::copy(base_path('.env.example'),base_path('.env'));
+
+            $response['status'] = 'success';
+            $response['data'][] = '';
+
+
+        }catch(\Exception $e)
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = $e->getMessage();
+        }
+
+
+        return $response;
+
+
+    }
+    //----------------------------------------------------------
+    public static function generateAppKey($env_suffix=null)
+    {
+
+        $command = 'key:generate';
+
+        $params = [];
+
+        if($env_suffix)
+        {
+            $params['--env'] = $env_suffix;
+        }
+
+        $params['--force'] = true;
+
+        \Artisan::call($command, $params);
+
+    }
+    //----------------------------------------------------------
+    //----------------------------------------------------------
     //----------------------------------------------------------
 
 }
