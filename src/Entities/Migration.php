@@ -131,7 +131,7 @@ class Migration extends Model {
     //-------------------------------------------------
     public static function resetMigrations()
     {
-        $command = 'migrate:fresh';
+        $command = 'migrate:reset';
         $params = [
             '--force' => true,
             '--quiet' => true,
