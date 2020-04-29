@@ -27,7 +27,6 @@ Route::group(
             [
                 'prefix'     => 'json',
                 'middleware' => ['web'],
-                'namespace'  => 'WebReinvent\VaahCms\Http\Controllers'
             ],
             function () {
                 //------------------------------------------------
@@ -67,7 +66,6 @@ Route::group(
             [
                 'prefix'     => 'json',
                 'middleware' => ['web', 'has.backend.access'],
-                'namespace'  => 'WebReinvent\VaahCms\Http\Controllers'
             ],
             function () {
                 //------------------------------------------------

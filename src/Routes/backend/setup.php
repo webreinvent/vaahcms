@@ -1,5 +1,18 @@
 <?php
 
+Route::group(
+    [
+        'prefix'     => 'vaahcms/setup',
+        'namespace'  => 'WebReinvent\VaahCms\Http\Controllers'
+    ],
+    function () {
+
+        //------------------------------------------------
+        Route::get( '/', 'SetupController@index' )
+            ->name( 'vh.setup' );
+        //------------------------------------------------
+    });
+
 
 /*
 |--------------------------------------------------------------------------

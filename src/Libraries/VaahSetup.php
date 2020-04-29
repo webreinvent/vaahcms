@@ -369,7 +369,7 @@ class VaahSetup{
     {
         if(!$namespace)
         {
-            $namespace = 'WebReinvent\VaahCms\Database\Seeders\VaahCmsTableSeeder';
+            $namespace = 'WebReinvent\VaahCms\VaahCmsServiceProvider';
 
         }
 
@@ -380,7 +380,7 @@ class VaahSetup{
         $params['--force'] = true;
         if($namespace)
         {
-            $params['--class'] = $namespace;
+            $params['--provider'] = $namespace;
         }
 
         \Artisan::call($command, $params);
@@ -391,7 +391,7 @@ class VaahSetup{
     {
         if(!$namespace)
         {
-            $namespace = 'WebReinvent\VaahCms\Database\Seeders\VaahCmsTableSeeder';
+            $namespace = 'WebReinvent\VaahCms\VaahCmsServiceProvider';
 
         }
 
@@ -402,7 +402,7 @@ class VaahSetup{
         $params['--force'] = true;
         if($namespace)
         {
-            $params['--class'] = $namespace;
+            $params['--provider'] = $namespace;
         }
 
         \Artisan::call($command, $params);

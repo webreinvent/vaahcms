@@ -37,6 +37,14 @@ class SetupController extends Controller
     public function index()
     {
 
+
+        //check assets exist of not
+        if(!file_exists(public_path('vaahcms/backend/vaahone/builds/app.js')))
+        {
+            //publish assets
+            VaahSetup::publishAssets();
+        }
+
         //check .env file exist or not
         if(!file_exists(base_path('.env')))
         {
@@ -56,20 +64,10 @@ class SetupController extends Controller
         {
             //generate app key
             VaahSetup::generateAppKey();
-            header('Location: '.$_SERVER['REQUEST_URI']);
-            exit();
         }
 
 
-
-        //check assets exist of not
-        if(!file_exists(public_path('vaahcms/backend/vaahone/builds/app.js')))
-        {
-            //publish assets
-            VaahSetup::publishAssets();
-        }
-
-        return view($this->theme.'.setup.welcome');
+        return redirect()->route('vh.backend');
     }
 
     //----------------------------------------------------------
