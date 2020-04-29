@@ -387,6 +387,28 @@ class VaahSetup{
 
     }
     //----------------------------------------------------------
+    public static function publishAssets($namespace=null)
+    {
+        if(!$namespace)
+        {
+            $namespace = 'WebReinvent\VaahCms\Database\Seeders\VaahCmsTableSeeder';
+
+        }
+
+        $command = 'vendor:publish';
+
+        $params = [];
+        $params['--tag'] = 'assets';
+        $params['--force'] = true;
+        if($namespace)
+        {
+            $params['--class'] = $namespace;
+        }
+
+        \Artisan::call($command, $params);
+
+    }
+    //----------------------------------------------------------
     //----------------------------------------------------------
 
 }

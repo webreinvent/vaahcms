@@ -36,6 +36,14 @@ class SetupController extends Controller
     //----------------------------------------------------------
     public function index()
     {
+
+        //check assets exist of not
+        if(!file_exists(public_path('vaahcms/backend/vaahone/builds/app.js')))
+        {
+            //publish assets
+            VaahSetup::publishAssets();
+        }
+
         return view($this->theme.'.setup.welcome');
     }
 
