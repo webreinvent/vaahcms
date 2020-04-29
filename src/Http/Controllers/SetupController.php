@@ -295,6 +295,10 @@ class SetupController extends Controller
             return response()->json($response);
         }
 
+        //publish vaahcms configurations
+        VaahSetup::publishConfig();
+
+
         $data = [];
         $response = [];
 
@@ -350,7 +354,7 @@ class SetupController extends Controller
             Migration::runMigrations(null,true);
 
             //publish vaahcms seeds
-            //Migration::publishSeeds($provider);
+            Migration::publishSeeds($provider);
 
             //run vaahcms seeds
             $namespace = "WebReinvent\VaahCms\Database\Seeders\VaahCmsTableSeeder";
