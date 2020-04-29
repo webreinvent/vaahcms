@@ -415,7 +415,7 @@ class SetupController extends Controller
             if($response['status'] == 'success')
             {
                 Module::syncAllModules();
-                Module::activate($request->slug);
+                Module::activateItem($request->slug);
             }
 
             if($response['status'] == 'success' && $request->import_sample_data)
