@@ -179,8 +179,6 @@ export default {
         //---------------------------------------------------------------------
         getListAfter: function (data, res) {
 
-            console.log('--->', data);
-
             this.update('is_list_loading', false);
             this.update('list', data.list);
 
@@ -225,8 +223,6 @@ export default {
                 inputs: ids,
                 data: this.page.bulk_action.data
             };
-
-            console.log('--->params', params);
 
             let url = this.ajax_url+'/actions/'+this.page.bulk_action.action;
             this.$vaah.ajax(url, params, this.actionsAfter);

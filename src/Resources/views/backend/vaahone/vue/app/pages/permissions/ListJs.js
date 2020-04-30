@@ -176,8 +176,6 @@ export default {
         //---------------------------------------------------------------------
         getListAfter: function (data, res) {
 
-            console.log('--->', data);
-
             this.update('is_list_loading', false);
 
             if(data){
@@ -230,8 +228,6 @@ export default {
                 data: this.page.bulk_action.data
             };
 
-            console.log('--->params', params);
-
             let url = this.ajax_url+'/actions/'+this.page.bulk_action.action;
             this.$vaah.ajax(url, params, this.actionsAfter);
         },
@@ -281,7 +277,6 @@ export default {
             this.query_string.page = 1;
             this.update('query_string', this.query_string);
 
-            console.log('check-status',this.page.assets.module.some(item => item.module === this.query_string.filter));
         },
         //---------------------------------------------------------------------
         updateActiveItem: function () {

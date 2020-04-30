@@ -108,11 +108,6 @@
                     list_filtered = this.options;
                 }
 
-
-
-                console.log('--->auto list_filtered', list_filtered);
-
-
                 return list_filtered;
             }
 

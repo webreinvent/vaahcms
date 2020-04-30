@@ -86,7 +86,6 @@ export default {
 
             if(data)
             {
-                console.log('--->data.item', data);
                 this.update('active_item', data);
             } else
             {
@@ -122,8 +121,6 @@ export default {
 
             let params = this.item;
 
-            console.log('--->params', params);
-
             let url = this.ajax_url+'/store/'+this.item.id;
             this.$vaah.ajax(url, params, this.storeAfter);
         },
@@ -135,7 +132,6 @@ export default {
             if(data)
             {
 
-                console.log(123);
                 this.$emit('eReloadList');
 
                 if(this.local_action === 'save-and-close')
@@ -261,7 +257,6 @@ export default {
         },
         //---------------------------------------------------------------------
         storeAvatar: function (data) {
-            console.log('--->data received', data);
             this.$Progress.start();
             let params = data;
             params.user_id = this.item.id;

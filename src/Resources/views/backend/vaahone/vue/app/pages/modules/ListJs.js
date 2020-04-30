@@ -56,8 +56,6 @@ export default {
                 namespace: this.namespace,
             };
 
-            console.log('--->', update);
-
             this.$vaah.updateState(update);
         },
         //---------------------------------------------------------------------
@@ -233,8 +231,6 @@ export default {
                 inputs: ids,
                 data: this.page.bulk_action.data
             };
-
-            console.log('--->params', params);
 
             let url = this.ajax_url+'/actions/'+this.page.bulk_action.action;
 

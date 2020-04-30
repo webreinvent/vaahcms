@@ -91,7 +91,6 @@
             }
         },
         mounted() {
-            console.log('--->', this.selected_value);
             this.tags = this.selected_value;
             this.getFilteredTags();
         },
@@ -131,8 +130,6 @@
                 {
                     list_filtered = this.options;
                 }
-
-                console.log('--->list_filtered', list_filtered);
 
                 this.filteredTags = list_filtered;
             },

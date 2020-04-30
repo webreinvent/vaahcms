@@ -161,8 +161,6 @@
   export default {
     created() {
 
-      console.log('testing', customIconConfig);
-
       this.$buefy.config.setOptions(customIconConfig)
     }
   }

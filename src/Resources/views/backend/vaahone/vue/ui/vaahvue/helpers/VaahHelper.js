@@ -23,13 +23,8 @@ const VaahHelper = {
             params: query
         };
 
-        console.log('--->url', url);
-
         let data = await Vue.axios.post(url, params, q)
             .then(response => {
-
-
-                console.log('--->response', response);
 
                 if(response.data.status)
                 {
@@ -74,8 +69,6 @@ const VaahHelper = {
 
             })
             .catch(error => {
-
-                console.log('--->error', error);
 
                 if(debug == true)
                 {
@@ -229,7 +222,6 @@ const VaahHelper = {
     //---------------------------------------------------------------------
     removeFromArray: function(arr, element) {
         let removeIndex = arr.map(function(item) { return item; }).indexOf(element);
-        console.log('index', removeIndex);
         return arr.splice(removeIndex, 1);
     },
 
@@ -266,8 +258,6 @@ const VaahHelper = {
         {
             return false;
         }
-
-        console.log("array===>", array);
 
         array.map(function(item, index) {
 
@@ -683,20 +673,12 @@ const VaahHelper = {
         var el = e.target;
         var fd =  $(el).closest('.btn-group').find('.dropdown-menu');
 
-        console.log('test');
-
-        console.log(fd.attr("class"));
-
         $(fd).toggleClass('show');
     },
     //---------------------------------------------------------------------
     btDropDownFormGroupHide: function (el) {
 
         var fd =  $(el).closest('.btn-group').find('.dropdown-menu');
-
-        console.log('test');
-
-        console.log(fd.attr("class"));
 
         $(fd).toggleClass('show');
     },

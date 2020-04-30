@@ -41,7 +41,6 @@ export default {
             this.is_btn_loading = false;
             if(data)
             {
-                console.log('--->', data);
                 this.$router.push({ name: 'dashboard.index' })
             }
         },

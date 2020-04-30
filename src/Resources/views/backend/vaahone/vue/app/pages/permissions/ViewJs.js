@@ -101,8 +101,6 @@ export default {
         //---------------------------------------------------------------------
         actions: function (action) {
 
-            console.log('--->action', action);
-
             this.$Progress.start();
             this.page.bulk_action.action = action;
             this.update('bulk_action', this.page.bulk_action);

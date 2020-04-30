@@ -69,8 +69,6 @@ const VaahHelper = {
 
                 if(debug == true)
                 {
-                    console.log('--->error', error);
-
                     this.toastErrors([error]);
                 } else
                 {
@@ -172,7 +170,6 @@ const VaahHelper = {
     {
         if(debug == true)
         {
-            console.log('--->error', error);
             this.toastErrors([error]);
         } else
         {
@@ -291,8 +288,6 @@ const VaahHelper = {
             }
         }
 
-        console.log('--->', list_html);
-
         if(list_html != "")
         {
             Toast.open({
@@ -368,7 +363,6 @@ const VaahHelper = {
     //---------------------------------------------------------------------
     removeFromArray: function(arr, element) {
         let removeIndex = arr.map(function(item) { return item; }).indexOf(element);
-        console.log('index', removeIndex);
         return arr.splice(removeIndex, 1);
     },
 
@@ -420,8 +414,6 @@ const VaahHelper = {
         let list = [];
         for(let index in obj)
         {
-            console.log('--->', obj[index]);
-            console.log('--->', obj[index][key]);
 
             list.push(obj[index][key]);
         }
@@ -431,7 +423,6 @@ const VaahHelper = {
     //---------------------------------------------------------------------
     toggle: function(item)
     {
-        console.log('--->', item);
         if(item == true)
         {
             return false;
@@ -452,8 +443,6 @@ const VaahHelper = {
         {
             return false;
         }
-
-        console.log("array===>", array);
 
         array.map(function(item, index) {
 

@@ -31,7 +31,6 @@ export default {
         $route(to, from) {
             this.updateView();
             this.getItemRoles();
-            console.log('to',to,'from',from)
         }
     },
     mounted() {

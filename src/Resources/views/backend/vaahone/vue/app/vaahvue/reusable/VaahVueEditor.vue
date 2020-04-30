@@ -176,7 +176,6 @@
             //---------------------------------------------------------------------
         },
         beforeCreate() {
-            console.log('for created-->');
             if(this.editor)
             {
                 this.editor.destroy()

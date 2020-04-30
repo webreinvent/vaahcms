@@ -91,7 +91,6 @@
             }
         },
         mounted() {
-            console.log('--->', this.selected_value);
             this.tags = this.selected_value;
         },
         watch: {

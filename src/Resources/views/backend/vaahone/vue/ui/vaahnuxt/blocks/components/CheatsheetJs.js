@@ -134,8 +134,6 @@ export default {
 
       this.list_filtered = list_filtered;
 
-      console.log('--->this.list_filtered', this.list_filtered);
-
     }
 
   }

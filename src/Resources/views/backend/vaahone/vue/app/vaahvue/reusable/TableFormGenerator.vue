@@ -111,8 +111,6 @@
             'new_item': {
                 handler: function (newVal) {
 
-                    console.log('test-->', newVal);
-
                     this.emitItem();
                 },
                 deep: true

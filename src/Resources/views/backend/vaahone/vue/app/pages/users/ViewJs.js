@@ -89,7 +89,6 @@ export default {
 
             if(data)
             {
-                console.log('--->data.item', data);
                 this.update('active_item', data);
             } else
             {
@@ -100,8 +99,6 @@ export default {
         },
         //---------------------------------------------------------------------
         actions: function (action) {
-
-            console.log('--->action', action);
 
             this.$Progress.start();
             this.page.bulk_action.action = action;

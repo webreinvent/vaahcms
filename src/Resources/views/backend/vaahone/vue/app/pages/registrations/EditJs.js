@@ -84,7 +84,6 @@ export default {
 
             if(data && data.item)
             {
-                console.log('--->data.item', data);
                 this.update('active_item', data.item);
             } else
             {
@@ -119,8 +118,6 @@ export default {
             this.$Progress.start();
 
             let params = this.item;
-
-            console.log('--->params', params);
 
             let url = this.ajax_url+'/store/'+this.item.id;
             this.$vaah.ajax(url, params, this.storeAfter);
