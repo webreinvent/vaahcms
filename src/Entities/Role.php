@@ -64,6 +64,11 @@ class Role extends Model {
         )->select('id', 'uuid', 'first_name', 'last_name', 'email');
     }
     //-------------------------------------------------
+    public function getTableColumns() {
+        return $this->getConnection()->getSchemaBuilder()
+            ->getColumnListing($this->getTable());
+    }
+    //-------------------------------------------------
     public function scopeExclude($query, $columns)
     {
         return $query->select( array_diff( $this->getTableColumns(),$columns) );
