@@ -190,6 +190,26 @@
                                     </div>
 
 
+                                    <div class="level-right">
+
+                                        <div class="level-item">
+
+                                            <b-field>
+                                                <b-datepicker
+                                                        position="is-bottom-left"
+                                                        placeholder="- Select a dates -"
+                                                        v-model="selected_date"
+                                                        @input="setDateRange"
+                                                        range>
+                                                </b-datepicker>
+                                            </b-field>
+
+
+                                        </div>
+
+                                    </div>
+
+
                                 </div>
                                 <!--/filters-->
 

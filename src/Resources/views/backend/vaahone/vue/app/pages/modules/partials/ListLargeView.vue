@@ -2,6 +2,7 @@
 <template>
     <div v-if="page.list">
         <b-table :data="page.list_is_empty ? [] : page.list.data"
+                 :checkable="hasPermission('can-update-module') ? true : false"
                  :checked-rows.sync="page.bulk_action.selected_items"
                  :hoverable="true"
                  :row-class="setRowClass">
@@ -29,21 +30,21 @@
 
                     <b-field class="float-right" style="float: right;">
 
-                        <p class="control">
-                            <b-button v-if='props.row.is_active'
+                        <p v-if="hasPermission('can-activate-module') || hasPermission('can-deactivate-module')" class="control">
+                            <b-button v-if="props.row.is_active && hasPermission('can-deactivate-module')"
                                       size="is-small"
                                       type="is-warning"
                                       @click="actions('deactivate', props.row)">
                                 Deactivate
                             </b-button>
 
-                            <b-button v-else size="is-small"
+                            <b-button v-if="!props.row.is_active && hasPermission('can-activate-module')" size="is-small"
                                       type="is-success"
                                       @click="actions('activate', props.row)">
                                 Activate
                             </b-button>
                         </p>
-                        <p class="control" v-if="props.row.is_active && props.row.is_sample_data_available">
+                        <p class="control" v-if="props.row.is_active && props.row.is_sample_data_available && hasPermission('can-import-sample-data-in-module')">
                             <b-tooltip label="Import Sample Data" type="is-dark">
                                 <b-button size="is-small"
                                           icon-left="database"
@@ -53,7 +54,7 @@
                             </b-tooltip>
                         </p>
 
-                        <p class="control" v-if="props.row.is_update_available">
+                        <p class="control" v-if="props.row.is_update_available && hasPermission('can-update-module')">
                             <b-tooltip label="Download Updates" type="is-dark">
                                 <b-button size="is-small"
                                           icon-left="cloud-download-alt"
@@ -64,7 +65,7 @@
                             </b-tooltip>
                         </p>
 
-                        <p class="control">
+                        <p v-if="hasPermission('can-delete-module')" class="control">
                             <b-tooltip label="Delete" type="is-dark">
                                 <b-button size="is-small"
                                           icon-left="trash"
@@ -78,7 +79,7 @@
 
 
 
-                        <p class="control">
+                        <p v-if="hasPermission('can-read-module')" class="control">
                             <b-tooltip label="View" type="is-dark">
                                 <b-button size="is-small"
                                           @click="setActiveItem(props.row)"

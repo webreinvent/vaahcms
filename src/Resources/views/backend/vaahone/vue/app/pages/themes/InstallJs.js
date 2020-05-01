@@ -84,6 +84,12 @@ export default {
             this.update('active_item', null);
         },
         //---------------------------------------------------------------------
+        //---------------------------------------------------------------------
+        hasPermission: function(slug)
+        {
+            return this.$vaah.hasPermission(this.permissions, slug);
+        },
+        //---------------------------------------------------------------------
         async getAssets() {
             await this.$store.dispatch(this.namespace+'/getAssets');
             this.getList();

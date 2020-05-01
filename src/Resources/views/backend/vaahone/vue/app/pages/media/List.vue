@@ -25,7 +25,7 @@
 
                             <div class="card-header-buttons">
                                 <div class="field has-addons is-pulled-right">
-                                    <p v-if="hasPermission('can-create-registrations')" class="control">
+                                    <p v-if="hasPermission('can-create-media')" class="control">
                                         <b-button tag="router-link"
                                                   type="is-light"
                                                   :to="{name: 'media.create'}"
@@ -61,7 +61,7 @@
                                 <div class="level">
 
                                     <!--left-->
-                                    <div class="level-left" v-if="hasPermission('can-update-registrations')">
+                                    <div class="level-left" v-if="hasPermission('can-update-media')">
                                         <div  class="level-item">
                                             <b-field>
 
@@ -155,8 +155,6 @@
 
                                     <div class="level-left">
 
-
-
                                         <div class="level-item">
 
                                             <b-field label="">
@@ -170,6 +168,42 @@
                                         </div>
 
                                         <div class="level-item">
+
+                                            <b-select @input="setQueryString" placeholder="- Select a month -"
+                                                      v-model="selected_month">
+                                                <option value="">
+                                                    - Select a month -
+                                                </option>
+                                                <option
+                                                        v-for="option in page.assets.date.month"
+                                                        :value="option.month"
+                                                        :key="option.month">
+                                                    {{  option.month.charAt(0).toUpperCase() + option.month.slice(1) }}
+                                                </option>
+                                            </b-select>
+
+
+                                        </div>
+
+                                        <div class="level-item">
+
+                                            <b-select @input="setQueryString" placeholder="- Select a year -"
+                                                      v-model="selected_year">
+                                                <option value="">
+                                                    - Select a year -
+                                                </option>
+                                                <option
+                                                        v-for="option in page.assets.date.year"
+                                                        :value="option.year"
+                                                        :key="option.year">
+                                                    {{  option.year }}
+                                                </option>
+                                            </b-select>
+
+
+                                        </div>
+
+                                        <div class="level-item">
                                             <div class="field">
                                                 <b-checkbox v-model="query_string.trashed"
                                                             @input="getList"
@@ -177,6 +211,25 @@
                                                     Include Trashed
                                                 </b-checkbox>
                                             </div>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="level-right">
+
+                                        <div class="level-item">
+
+                                            <b-field>
+                                                <b-datepicker
+                                                        position="is-bottom-left"
+                                                        placeholder="- Select a dates -"
+                                                        v-model="selected_date"
+                                                        @input="setDateRange"
+                                                        range>
+                                                </b-datepicker>
+                                            </b-field>
+
+
                                         </div>
 
                                     </div>

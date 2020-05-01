@@ -151,8 +151,12 @@ class MediaController extends Controller
         }
 
 
+        $year_and_month = Media::getDateList();
+
+
         $data['allowed_file_types'] = vh_file_pond_allowed_file_type();
         $data['download_url'] = route('vh.frontend.media.download').'/';
+        $data['date'] = $year_and_month;
 
         $response['status'] = 'success';
         $response['data'] = $data;

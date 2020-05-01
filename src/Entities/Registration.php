@@ -297,6 +297,11 @@ class Registration extends Model
             $list->withTrashed();
         }
 
+        if(isset($request->from) && isset($request->to))
+        {
+            $list->whereBetween('created_at',[$request->from." 00:00:00",$request->to." 23:59:59"]);
+        }
+
         if($request->has('status') && !empty( $request->status))
         {
             $list->where('status', $request->status);

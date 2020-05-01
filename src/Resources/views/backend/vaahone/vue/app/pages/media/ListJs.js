@@ -24,7 +24,12 @@ export default {
             namespace: namespace,
             is_content_loading: false,
             is_btn_loading: false,
+            today: null,
+            selected_date: null,
+            selected_year: null,
+            selected_month: null,
             assets: null,
+            range: [-100, 6],
             search_delay: null,
             search_delay_time: 800,
             ids: []
@@ -65,6 +70,7 @@ export default {
             this.updateView();
             this.updateQueryString();
             this.getAssets();
+            this.setDateFilter();
         },
         //---------------------------------------------------------------------
         updateQueryString: function()
@@ -115,9 +121,24 @@ export default {
             //reset bulk actions
             this.resetBulkAction();
 
+            this.resetSelectedDate();
+
+            this.resetSelectedMonthYear();
+
             //reload page list
             this.getList();
 
+        },
+        //---------------------------------------------------------------------
+        resetSelectedDate: function()
+        {
+            this.selected_date = null;
+        },
+        //---------------------------------------------------------------------
+        resetSelectedMonthYear: function()
+        {
+            this.selected_month = null;
+            this.selected_year = null;
         },
         //---------------------------------------------------------------------
         resetQueryString: function()
@@ -179,8 +200,6 @@ export default {
         },
         //---------------------------------------------------------------------
         getListAfter: function (data, res) {
-
-            console.log('--->', data);
 
             this.update('is_list_loading', false);
             this.update('list', data.list);
@@ -248,7 +267,7 @@ export default {
         //---------------------------------------------------------------------
         updateActiveItem: function () {
 
-            if(this.$route.fullPath.includes('registrations/?')){
+            if(this.$route.fullPath.includes('media?')){
                 this.update('active_item', null);
             }
         },
@@ -256,6 +275,55 @@ export default {
         hasPermission: function(slug)
         {
             return this.$vaah.hasPermission(this.permissions, slug);
+        },
+        //---------------------------------------------------------------------
+        setDateFilter: function()
+        {
+            if(this.query_string.month){
+                this.selected_month = this.query_string.month;
+            }
+
+            if(this.query_string.year){
+                let year = parseInt(this.query_string.year);
+                this.selected_year = year;
+            }
+
+            if(this.query_string.from){
+                let from = new Date(this.query_string.from);
+
+                this.selected_date=[
+                    from
+                ];
+            }
+
+            if(this.query_string.to){
+                let to = new Date(this.query_string.to);
+
+                this.selected_date[1] = to;
+            }
+        },
+        //---------------------------------------------------------------------
+        setQueryString: function()
+        {
+          this.query_string.month = this.selected_month;
+          this.query_string.year = this.selected_year;
+
+          this.getList();
+        },
+        //---------------------------------------------------------------------
+        setDateRange: function()
+        {
+
+            if(this.selected_date.length > 0){
+                let current_datetime = new Date(this.selected_date[0]);
+                this.query_string.from = current_datetime.getFullYear() + "-" + (current_datetime.getMonth() + 1) + "-" + current_datetime.getDate();
+
+                current_datetime = new Date(this.selected_date[1]);
+                this.query_string.to = current_datetime.getFullYear() + "-" + (current_datetime.getMonth() + 1) + "-" + current_datetime.getDate();
+
+                this.getList();
+            }
+
         },
         //---------------------------------------------------------------------
         //---------------------------------------------------------------------

@@ -17,7 +17,7 @@ Route::group(
         Route::get( '/login', 'PublicController@redirectToLogin' )
             ->name( 'vh.backend.login' );
         //------------------------------------------------
-        Route::any( '/signin/post', 'PublicController@postLogin' )
+        Route::post( '/signin/post', 'PublicController@postLogin' )
             ->name( 'vh.backend.signin.post' );
         //------------------------------------------------
         Route::get( '/logout', 'PublicController@logout' )

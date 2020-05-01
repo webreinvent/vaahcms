@@ -201,6 +201,27 @@ class Media extends Model {
             $list->withTrashed();
         }
 
+        if(isset($request->from) && isset($request->to))
+        {
+            $list->whereBetween('created_at',[$request->from." 00:00:00",$request->to." 23:59:59"]);
+        }
+
+        if(isset($request->month))
+        {
+
+            $date = date_parse($request->month);
+            $month = $date['month'];
+
+            $list->whereMonth('created_at', $month);
+
+//            $list->whereIn(\DB::raw('MONTH(column)'), [1,2,3]);
+        }
+
+        if(isset($request->year))
+        {
+            $list->whereYear('created_at', $request->year);
+        }
+
         if(isset($request->q))
         {
             $list->where(function ($q) use ($request){
@@ -442,6 +463,24 @@ class Media extends Model {
         return $response;
 
     }
+    //-------------------------------------------------
+    public static function getDateList()
+    {
+        $list['month'] = static::select(\DB::raw('MONTHNAME(created_at) month'))
+        ->groupby('month')
+        ->get();
+
+
+        $list['year'] = static::select(\DB::raw('YEAR(created_at) year'))
+        ->groupby('year')
+        ->get();
+
+
+        return $list;
+
+    }
+
+
 
     //-------------------------------------------------
     //-------------------------------------------------

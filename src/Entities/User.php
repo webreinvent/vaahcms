@@ -780,6 +780,11 @@ class User extends Authenticatable
             $list->withTrashed();
         }
 
+        if(isset($request['from']) && isset($request['to']))
+        {
+            $list->whereBetween('created_at',[$request['from']." 00:00:00",$request['to']." 23:59:59"]);
+        }
+
         if($request['status']){
             if($request['status'] == '1')
             {

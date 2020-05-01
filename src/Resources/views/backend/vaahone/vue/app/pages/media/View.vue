@@ -23,7 +23,7 @@
                                 <small><b>#{{item.id}}</b></small>
                             </b-button>
                         </p>
-                        <p v-if="hasPermission('can-update-registrations')" class="control">
+                        <p v-if="hasPermission('can-update-media')" class="control">
                             <b-button icon-left="edit"
                                       type="is-light"
                                       tag="router-link"
@@ -32,7 +32,7 @@
                             </b-button>
                         </p>
 
-                        <p v-if="hasPermission('can-update-registrations')" class="control">
+                        <p v-if="hasPermission('can-update-media')" class="control">
 
 
                             <b-dropdown aria-role="list" position="is-bottom-left">

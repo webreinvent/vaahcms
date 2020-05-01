@@ -198,5 +198,104 @@
         "module": "vaahcms",
         "section": "media",
         "details": "This will allow user to manage anything in the media section."
+    },
+
+    {
+        "name": "Has Access Of Module Section",
+        "module": "vaahcms",
+        "section": "module",
+        "details": "This will allow user see the link of module section."
+    },
+    {
+        "name": "Can Install Module",
+        "module": "vaahcms",
+        "section": "module",
+        "details": "This will allow user to install a module."
+    },
+    {
+        "name": "Can Delete Module",
+        "module": "vaahcms",
+        "section": "module",
+        "details": "This will allow user to delete a module."
+    },
+    {
+        "name": "Can Deactivate Module",
+        "module": "vaahcms",
+        "section": "module",
+        "details": "This will allow user to deactivate a module."
+    },
+    {
+        "name": "Can Activate Module",
+        "module": "vaahcms",
+        "section": "module",
+        "details": "This will allow user to activate a module."
+    },
+    {
+        "name": "Can Import Sample Data In Module",
+        "module": "vaahcms",
+        "section": "module",
+        "details": "This will allow user to import sample data in module."
+    },
+    {
+        "name": "Can Update Module",
+        "module": "vaahcms",
+        "section": "module",
+        "details": "This will allow user to update a module."
+    },
+    {
+        "name": "Can Read Module",
+        "module": "vaahcms",
+        "section": "module",
+        "details": "This will allow user to read a module."
+    },
+
+    {
+        "name": "Has Access Of Theme Section",
+        "module": "vaahcms",
+        "section": "theme",
+        "details": "This will allow user see the link of theme section."
+    },
+    {
+        "name": "Can Install Theme",
+        "module": "vaahcms",
+        "section": "theme",
+        "details": "This will allow user to install a theme."
+    },
+    {
+        "name": "Can Delete Theme",
+        "module": "vaahcms",
+        "section": "theme",
+        "details": "This will allow user to delete a theme."
+    },
+    {
+        "name": "Can Deactivate Theme",
+        "module": "vaahcms",
+        "section": "theme",
+        "details": "This will allow user to deactivate a theme."
+    },
+    {
+        "name": "Can Activate Theme",
+        "module": "vaahcms",
+        "section": "theme",
+        "details": "This will allow user to activate a theme."
+    },
+    {
+        "name": "Can Import Sample Data In Theme",
+        "module": "vaahcms",
+        "section": "theme",
+        "details": "This will allow user to import sample data in theme."
+    },
+    {
+        "name": "Can Update Theme",
+        "module": "vaahcms",
+        "section": "theme",
+        "details": "This will allow user to update a theme."
+    },
+    {
+        "name": "Can Read Theme",
+        "module": "vaahcms",
+        "section": "theme",
+        "details": "This will allow user to read a theme."
     }
+
 ]

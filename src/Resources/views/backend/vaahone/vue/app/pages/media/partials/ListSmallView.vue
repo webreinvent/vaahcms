@@ -2,7 +2,7 @@
 <template>
     <div v-if="page.list">
         <b-table :data="page.list_is_empty ? [] : page.list.data"
-                 :checkable="hasPermission('can-update-registrations') ? true : false"
+                 :checkable="hasPermission('can-update-media') ? true : false"
                  :checked-rows.sync="page.bulk_action.selected_items"
                  checkbox-position="left"
                  :hoverable="true"
@@ -39,7 +39,7 @@
                     {{ $vaah.fromNow(props.row.created_at) }}
                 </b-table-column>
 
-                <b-table-column v-if="hasPermission('can-read-registrations')"
+                <b-table-column v-if="hasPermission('can-read-media')"
                                 field="actions" label=""
                                 width="80">
 

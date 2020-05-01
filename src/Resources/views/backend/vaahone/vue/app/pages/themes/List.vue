@@ -30,19 +30,19 @@
 
                             <div class="card-header-buttons">
                                 <div class="field has-addons is-pulled-right">
-                                    <p class="control">
+                                    <p v-if="hasPermission('can-install-theme')" class="control">
 
                                         <b-button type="is-light"
                                                   tag="router-link"
                                                   @click="setSixColumns()"
                                                   :to="{name: 'themes.install'}"
                                                   icon-left="plus">
-                                            Add New
+                                            Install
                                         </b-button>
 
                                     </p>
 
-                                    <p class="control">
+                                    <p v-if="hasPermission('can-update-theme')" class="control">
 
                                         <b-button type="is-light"
                                                   :loading="is_fetching_updates"
@@ -80,7 +80,7 @@
                                 <div class="level">
 
                                     <!--left-->
-                                    <div class="level-left" >
+                                    <div v-if="hasPermission('can-update-theme')" class="level-left" >
                                         <div  class="level-item">
                                             <b-field label="">
                                                 <b-select placeholder="- Select a filter -"

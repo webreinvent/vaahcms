@@ -458,7 +458,6 @@ export default {
             let cat = this.$vaah.findInArrayByKey(this.page.assets.categories.list, 'id', this.query_string.cat_id);
             this.active_category = cat;
 
-            this.list = null;
             this.query_string.page = 1;
             this.getList(this.query_string.page);
         },
@@ -472,8 +471,6 @@ export default {
             this.update('assets',this.page.assets);
 
             this.query_string.page = 1;
-
-            this.list = null;
 
             this.getList(this.query_string.page);
         },

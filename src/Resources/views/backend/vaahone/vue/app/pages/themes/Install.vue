@@ -92,7 +92,7 @@
                                                         size="is-hair"></b-progress>
                                         </div>
 
-                                        <p>
+                                        <p v-if="hasPermission('can-install-theme')">
                                             <b-button icon-left="check" type="is-success"
                                                       v-if="isInstalled(item)">Installed</b-button>
                                             <b-button icon-left="download" v-else @click="install(item)">Install</b-button>

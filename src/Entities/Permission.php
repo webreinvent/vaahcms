@@ -186,6 +186,11 @@ class Permission extends Model {
             $list->withTrashed();
         }
 
+        if(isset($request->from) && isset($request->to))
+        {
+            $list->whereBetween('updated_at',[$request->from." 00:00:00",$request->to." 23:59:59"]);
+        }
+
         if(isset($request['filter']) &&  $request['filter'])
         {
             if($request['filter'] == '1')

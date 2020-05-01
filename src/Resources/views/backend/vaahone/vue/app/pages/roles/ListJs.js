@@ -24,6 +24,7 @@ export default {
             is_content_loading: false,
             is_btn_loading: false,
             assets: null,
+            selected_date: null,
             search_delay: null,
             search_delay_time: 800,
             ids: [],
@@ -71,6 +72,7 @@ export default {
             this.updateView();
             this.updateQueryString();
             this.getAssets();
+            this.setDateFilter();
         },
         //---------------------------------------------------------------------
         updateQueryString: function()
@@ -114,11 +116,30 @@ export default {
             this.getList();
         },
         //---------------------------------------------------------------------
+        setDateFilter: function()
+        {
+            if(this.query_string.from){
+                let from = new Date(this.query_string.from);
+
+                this.selected_date=[
+                    from
+                ];
+            }
+
+            if(this.query_string.to){
+                let to = new Date(this.query_string.to);
+
+                this.selected_date[1] = to;
+            }
+        },
+        //---------------------------------------------------------------------
         resetPage: function()
         {
 
             //reset query strings
             this.resetQueryString();
+
+            this.resetSelectedDate();
 
             //reset bulk actions
             this.resetBulkAction();
@@ -126,6 +147,11 @@ export default {
             //reload page list
             this.getList();
 
+        },
+        //---------------------------------------------------------------------
+        resetSelectedDate: function()
+        {
+            this.selected_date = null;
         },
         //---------------------------------------------------------------------
         resetQueryString: function()
@@ -287,6 +313,23 @@ export default {
         hasPermission: function(slug)
         {
             return this.$vaah.hasPermission(this.permissions, slug);
+        },
+        //---------------------------------------------------------------------
+        setDateRange: function()
+        {
+
+            if(this.selected_date.length > 0){
+                let current_datetime = new Date(this.selected_date[0]);
+                this.query_string.from = current_datetime.getFullYear() + "-" + (current_datetime.getMonth() + 1) + "-" + current_datetime.getDate();
+
+                current_datetime = new Date(this.selected_date[1]);
+                this.query_string.to = current_datetime.getFullYear() + "-" + (current_datetime.getMonth() + 1) + "-" + current_datetime.getDate();
+
+                this.getList();
+            }
+
+
+
         },
         //---------------------------------------------------------------------
         //---------------------------------------------------------------------
