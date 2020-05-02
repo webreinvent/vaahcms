@@ -48,7 +48,7 @@
     {
         "category": "general",
         "name": "Category Limit",
-        "content": "The Category character is not greater than 150."
+        "content": "The category character is not greater than 150."
     },
     {
         "category": "general",
@@ -64,7 +64,7 @@
 
 
     {
-        "category": "vaahcms-localization",
+        "category": "localization",
         "name": "Locale Code ISO 639 Required",
         "content": "The locale code iso 639 field is required."
     },
@@ -72,27 +72,27 @@
 
 
     {
-        "category": "vaahcms-media",
+        "category": "media",
         "name": "Alternate Text Required",
         "content": "The alternate text field is required."
     },
     {
-        "category": "vaahcms-media",
+        "category": "media",
         "name": "Alternate Text Limit",
         "content": "The alternate text character is not greater than 150."
     },
     {
-        "category": "vaahcms-media",
+        "category": "media",
         "name": "Caption Required",
         "content": "The caption field is required."
     },
     {
-        "category": "vaahcms-media",
+        "category": "media",
         "name": "Caption Limit",
         "content": "The caption character is not greater than 255."
     },
     {
-        "category": "vaahcms-media",
+        "category": "media",
         "name": "Is Downloadable Required",
         "content": "The is downloadable option is required."
     },
@@ -101,67 +101,67 @@
 
 
     {
-        "category": "vaahcms-user",
+        "category": "user",
         "name": "First Name Required",
         "content": "The first name field is required."
     },
     {
-        "category": "vaahcms-user",
+        "category": "user",
         "name": "Last Name Required",
         "content": "The last name field is required."
     },
     {
-        "category": "vaahcms-user",
+        "category": "user",
         "name": "Phone Required",
         "content": "The phone field is required."
     },
     {
-        "category": "vaahcms-user",
+        "category": "user",
         "name": "Phone Digit",
         "content": "The phone character is in number."
     },
     {
-        "category": "vaahcms-user",
+        "category": "user",
         "name": "Name Required",
         "content": "The name field is required."
     },
     {
-        "category": "vaahcms-user",
+        "category": "user",
         "name": "Name Limit",
         "content": "The name character is not greater than 150."
     },
     {
-        "category": "vaahcms-user",
+        "category": "user",
         "name": "Email Required",
         "content": "The email field is required."
     },
     {
-        "category": "vaahcms-user",
+        "category": "user",
         "name": "Email Limit",
         "content": "The email character is not greater than 150."
     },
     {
-        "category": "vaahcms-user",
+        "category": "user",
         "name": "Email Invalid",
         "content": "The email is invalid."
     },
     {
-        "category": "vaahcms-user",
+        "category": "user",
         "name": "Username Required",
         "content": "The name field is required."
     },
     {
-        "category": "vaahcms-user",
+        "category": "user",
         "name": "Username Limit",
         "content": "The username character is not greater than 20."
     },
     {
-        "category": "vaahcms-user",
+        "category": "user",
         "name": "Display Name Required",
         "content": "The display name field is required."
     },
     {
-        "category": "vaahcms-user",
+        "category": "user",
         "name": "Display Name Limit",
         "content": "The display name character is not greater than 50."
     }
