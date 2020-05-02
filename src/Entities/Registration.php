@@ -219,8 +219,8 @@ class Registration extends Model
         $inputs = $request->new_item;
 
         $rules = array(
-            'email' => 'required|email',
-            'first_name' => 'required',
+            'email' => 'required|email|max:150',
+            'first_name' => 'required|max:150',
             'password' => 'required',
         );
 
@@ -377,8 +377,8 @@ class Registration extends Model
 
         $rules = array(
             'id' => 'required',
-            'email' => 'required|email|unique:vh_registrations',
-            'first_name' => 'required',
+            'email' => 'required|email|unique:vh_registrations|max:150',
+            'first_name' => 'required|max:150',
             'status' => 'required',
         );
 

@@ -17,7 +17,7 @@ class CreateVhLangLanguagesTable extends Migration
         Schema::create('vh_lang_languages', function (Blueprint $table) {
             $table->increments('id');
 
-            $table->string('name')->nullable();
+            $table->string('name',150)->nullable();
             $table->string('locale_code_iso_639')->nullable();
             $table->boolean('right_to_left')->nullable()->default(0);
             $table->boolean('default')->nullable()->default(0);

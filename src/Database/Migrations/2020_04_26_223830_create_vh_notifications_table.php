@@ -19,10 +19,10 @@ class CreateVhNotificationsTable extends Migration
 
             $table->uuid('uuid')->nullable();
 
-            $table->string('name')->nullable()->index();
-            $table->string('slug')->nullable();
+            $table->string('name',150)->nullable()->index();
+            $table->string('slug',150)->nullable();
 
-            $table->string('details')->nullable();
+            $table->string('details',255)->nullable();
 
             $table->boolean('via_mail')->nullable();
             $table->boolean('via_sms')->nullable();

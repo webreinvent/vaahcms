@@ -549,8 +549,8 @@ class Permission extends Model {
 
         $rules = array(
             'id' => 'required',
-            'name' => 'required',
-            'details' => 'required',
+            'name' => 'required|max:150',
+            'details' => 'required|max:255',
             'is_active' => 'required',
         );
 

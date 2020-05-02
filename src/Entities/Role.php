@@ -766,9 +766,9 @@ class Role extends Model {
     {
 
         $rules = array(
-            'name' => 'required',
-            'slug' => 'required',
-            'details' => 'required',
+            'name' => 'required|max:150',
+            'slug' => 'required|max:150',
+            'details' => 'required|max:255',
             'is_active' => 'required',
         );
 

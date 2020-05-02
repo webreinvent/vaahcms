@@ -15,9 +15,9 @@ class CreateVhThemesTable extends Migration
     {
         Schema::create('vh_themes', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name')->nullable();
-            $table->string('title')->nullable();
-            $table->string('slug')->nullable();
+            $table->string('name',150)->nullable();
+            $table->string('title',200)->nullable();
+            $table->string('slug',150)->nullable();
             $table->string('thumbnail')->nullable();
             $table->string('excerpt')->nullable();
             $table->string('description')->nullable();

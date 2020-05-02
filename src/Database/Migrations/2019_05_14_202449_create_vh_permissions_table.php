@@ -16,13 +16,13 @@ class CreateVhPermissionsTable extends Migration
         Schema::create('vh_permissions', function (Blueprint $table) {
             $table->increments('id');
             $table->uuid('uuid')->nullable();
-            $table->string('name')->nullable();
-            $table->string('slug')->nullable();
+            $table->string('name',150)->nullable();
+            $table->string('slug',150)->nullable();
 
             $table->string('module')->nullable();
             $table->string('section')->nullable();
 
-            $table->string('details')->nullable();
+            $table->string('details',255)->nullable();
             $table->integer('count_users')->nullable();
             $table->integer('count_roles')->nullable();
             $table->boolean('is_active')->nullable();

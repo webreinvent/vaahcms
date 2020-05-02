@@ -471,7 +471,7 @@ class User extends Authenticatable
         }
 
         $rules = array(
-            'email' => 'required|email',
+            'email' => 'required|email|max:150',
         );
         $validator = \Validator::make($request->all(), $rules);
 
@@ -1246,8 +1246,8 @@ class User extends Authenticatable
 
         $rules = array(
 
-            'email' => 'required|email',
-            'first_name' => 'required',
+            'email' => 'required|email|max:150',
+            'first_name' => 'required|max:150',
             'status' => 'required',
             'is_active' => 'required',
 
@@ -1273,9 +1273,9 @@ class User extends Authenticatable
     public static function storeProfile($request)
     {
         $rules = array(
-            'first_name' => 'required',
-            'last_name' => 'required',
-            'email' => 'required|email',
+            'first_name' => 'required|max:150',
+            'last_name' => 'required|max:150',
+            'email' => 'required|email|max:150',
         );
 
         if($request->has('username'))

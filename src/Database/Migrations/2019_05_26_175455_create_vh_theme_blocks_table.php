@@ -16,8 +16,8 @@ class CreateVhThemeBlocksTable extends Migration
         Schema::create('vh_theme_blocks', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('vh_theme_id')->nullable();
-            $table->string('name')->nullable();
-            $table->string('slug')->nullable();
+            $table->string('name',150)->nullable();
+            $table->string('slug',150)->nullable();
             $table->timestamps();
         });
     }

@@ -284,7 +284,7 @@ class LanguageString extends Model {
     {
 
         $rules = array(
-            'slug' => 'required',
+            'slug' => 'required|max:150',
         );
 
         $validator = \Validator::make( $request->all(), $rules);

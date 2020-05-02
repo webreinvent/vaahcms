@@ -20,8 +20,8 @@ class CreateVhLangStringsTable extends Migration
             $table->integer('vh_lang_language_id')->nullable();
             $table->integer('vh_lang_category_id')->nullable();
 
-            $table->string('name')->nullable();
-            $table->string('slug')->nullable();
+            $table->string('name',150)->nullable();
+            $table->string('slug',150)->nullable();
             $table->mediumText('content')->nullable();
 
 

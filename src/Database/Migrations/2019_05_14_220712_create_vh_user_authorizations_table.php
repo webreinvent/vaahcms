@@ -17,8 +17,8 @@ class CreateVhUserAuthorizationsTable extends Migration
             $table->increments('id');
 
             $table->integer('vh_user_id')->nullable();
-            $table->string('name')->nullable();
-            $table->string('slug')->nullable();
+            $table->string('name',150)->nullable();
+            $table->string('slug',150)->nullable();
             $table->string('authorization_id')->nullable();
             $table->dateTime('last_authorization_at')->nullable();
             $table->text('meta')->nullable();

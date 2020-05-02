@@ -17,7 +17,7 @@ class CreateVhMediasTable extends Migration
         Schema::create('vh_medias', function (Blueprint $table) {
             $table->increments('id');
 
-            $table->string('name')->nullable()->index();
+            $table->string('name',150)->nullable()->index();
             $table->uuid('uuid')->nullable();
             $table->string('original_name')->nullable();
             $table->string('mime_type')->nullable();
@@ -26,7 +26,7 @@ class CreateVhMediasTable extends Migration
             $table->string('url')->nullable();
             $table->string('url_thumbnail')->nullable();
             $table->integer('size')->nullable();
-            $table->string('title')->nullable();
+            $table->string('title',200)->nullable();
             $table->string('caption')->nullable();
             $table->string('alt_text')->nullable();
             $table->boolean('is_hidden')->nullable();
