@@ -80,7 +80,7 @@ export default {
             };
 
             let url = this.ajax_url+'/item/'+this.id+'/users';
-            this.$vaah.ajax(url, this.params, this.getItemUsersAfter);
+            this.$vaah.ajaxGet(url, this.params, this.getItemUsersAfter);
         },
         //---------------------------------------------------------------------
         getItemUsersAfter: function (data, res) {

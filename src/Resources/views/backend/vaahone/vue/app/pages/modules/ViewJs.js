@@ -81,7 +81,7 @@ export default {
             this.$Progress.start();
             this.params = {};
             let url = this.ajax_url+'/item/'+this.$route.params.id;
-            this.$vaah.ajax(url, this.params, this.getItemAfter);
+            this.$vaah.ajaxGet(url, this.params, this.getItemAfter);
         },
         //---------------------------------------------------------------------
         getItemAfter: function (data, res) {
@@ -100,7 +100,7 @@ export default {
             {
                 //if item does not exist or delete then redirect to list
                 this.update('active_item', null);
-                this.$router.push({name: 'module.list'});
+                this.$router.push({name: 'modules.list'});
             }
         },
         //---------------------------------------------------------------------

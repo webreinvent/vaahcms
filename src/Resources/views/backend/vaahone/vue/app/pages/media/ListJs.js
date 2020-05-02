@@ -196,7 +196,7 @@ export default {
         getList: function () {
             this.$vaah.updateCurrentURL(this.query_string, this.$router);
             let url = this.ajax_url+'/list';
-            this.$vaah.ajax(url, this.query_string, this.getListAfter);
+            this.$vaah.ajaxGet(url, this.query_string, this.getListAfter);
         },
         //---------------------------------------------------------------------
         getListAfter: function (data, res) {

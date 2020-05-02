@@ -115,7 +115,7 @@ class ModulesController extends Controller
             return response()->json($response);
         }
 
-        $response = Module::getDetail($id);
+        $response = Module::getItem($id);
         return response()->json($response);
     }
     //----------------------------------------------------------

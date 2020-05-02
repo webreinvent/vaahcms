@@ -139,7 +139,7 @@ export default {
             this.filters.page = page;
             this.filters.filter = this.query_string.filter;
             let params = this.filters;
-            this.$vaah.ajax(url, params, this.getListAfter);
+            this.$vaah.ajaxGet(url, params, this.getListAfter);
         },
         //---------------------------------------------------------------------
         getListAfter: function (data) {

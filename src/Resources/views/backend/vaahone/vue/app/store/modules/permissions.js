@@ -80,7 +80,7 @@ export default {
 
                 let url = state.ajax_url+'/assets';
                 let params = {};
-                let data = await Vaah.ajax(url, params);
+                let data = await Vaah.ajaxGet(url, params);
                 payload = {
                     key: 'assets',
                     value: data.data.data

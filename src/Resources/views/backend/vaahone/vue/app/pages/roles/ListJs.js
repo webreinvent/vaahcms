@@ -205,7 +205,7 @@ export default {
             this.$Progress.start();
             this.$vaah.updateCurrentURL(this.query_string, this.$router);
             let url = this.ajax_url+'/list';
-            this.$vaah.ajax(url, this.query_string, this.getListAfter);
+            this.$vaah.ajaxGet(url, this.query_string, this.getListAfter);
         },
         //---------------------------------------------------------------------
         getListAfter: function (data, res) {
@@ -290,17 +290,6 @@ export default {
 
             this.update('query_string', this.page.query_string);
             this.getList();
-        },
-        //---------------------------------------------------------------------
-        getModuleSection: function () {
-
-            let url = this.ajax_url+'/getModuleSections';
-            this.$vaah.ajax(url, this.query_string, this.getModuleSectionAfter);
-        },
-        //---------------------------------------------------------------------
-        getModuleSectionAfter: function (data,res) {
-
-            this.moduleSection = data;
         },
         //---------------------------------------------------------------------
         updateActiveItem: function () {

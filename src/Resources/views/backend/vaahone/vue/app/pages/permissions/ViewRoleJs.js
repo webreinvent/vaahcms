@@ -81,7 +81,7 @@ export default {
             };
 
             let url = this.ajax_url+'/item/'+this.id+'/roles';
-            this.$vaah.ajax(url, this.params, this.getItemRolesAfter);
+            this.$vaah.ajaxGet(url, this.params, this.getItemRolesAfter);
         },
         //---------------------------------------------------------------------
         getItemRolesAfter: function (data, res) {

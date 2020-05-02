@@ -8,16 +8,16 @@ Route::group(
     ],
     function () {
         //---------------------------------------------------------
-        Route::post('/assets', 'RegistrationsController@getAssets')
+        Route::get('/assets', 'RegistrationsController@getAssets')
             ->name('backend.vaah.registrations.assets');
         //---------------------------------------------------------
         Route::post('/create', 'RegistrationsController@postCreate')
             ->name('backend.vaah.registrations.create');
         //---------------------------------------------------------
-        Route::post('/list', 'RegistrationsController@getList')
+        Route::get('/list', 'RegistrationsController@getList')
             ->name('backend.vaah.registrations.list');
         //---------------------------------------------------------
-        Route::post('/item/{id}', 'RegistrationsController@getItem')
+        Route::get('/item/{id}', 'RegistrationsController@getItem')
             ->name('backend.vaah.registrations.item');
         //---------------------------------------------------------
         Route::post('/item/{id}/createUser', 'RegistrationsController@createUser')

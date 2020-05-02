@@ -12,13 +12,13 @@ Route::group(
         Route::get( '/', 'ModulesController@index' )
             ->name( 'vh.backend.modules' );
         //------------------------------------------------
-        Route::post( '/assets', 'ModulesController@assets' )
+        Route::get( '/assets', 'ModulesController@assets' )
             ->name( 'vh.backend.modules.assets' );
         //------------------------------------------------
-        Route::post( '/list', 'ModulesController@getList' )
+        Route::get( '/list', 'ModulesController@getList' )
             ->name( 'vh.backend.modules.list' );
         //------------------------------------------------
-        Route::post('/item/{id}', 'ModulesController@getItem')
+        Route::get('/item/{id}', 'ModulesController@getItem')
             ->name('backend.vaah.modules.item');
         //---------------------------------------------------------
         Route::post( '/download', 'ModulesController@download' )
@@ -30,7 +30,7 @@ Route::group(
         Route::post( '/actions', 'ModulesController@actions' )
             ->name( 'vh.backend.modules.actions' );
         //------------------------------------------------
-        Route::post( '/get/slugs', 'ModulesController@getModulesSlugs' )
+        Route::get( '/get/slugs', 'ModulesController@getModulesSlugs' )
             ->name( 'vh.backend.modules.get.slugs' );
         //------------------------------------------------
         Route::post( '/store/updates', 'ModulesController@storeUpdates' )

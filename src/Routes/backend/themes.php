@@ -12,13 +12,13 @@ Route::group(
         Route::get( '/', 'ThemesController@index' )
             ->name( 'vh.backend.themes' );
         //------------------------------------------------
-        Route::post( '/assets', 'ThemesController@assets' )
+        Route::get( '/assets', 'ThemesController@assets' )
             ->name( 'vh.backend.themes.assets' );
         //------------------------------------------------
-        Route::post( '/list', 'ThemesController@getList' )
+        Route::get( '/list', 'ThemesController@getList' )
             ->name( 'vh.backend.themes.list' );
         //------------------------------------------------
-        Route::post('/item/{id}', 'ThemesController@getItem')
+        Route::get('/item/{id}', 'ThemesController@getItem')
             ->name('backend.vaah.themes.item');
         //---------------------------------------------------------
         Route::post( '/download', 'ThemesController@download' )

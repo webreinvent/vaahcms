@@ -75,10 +75,10 @@ Route::group(
     ],
     function () {
         //---------------------------------------------------------
-        Route::post('/assets', 'LocalizationController@getAssets')
+        Route::get('/assets', 'LocalizationController@getAssets')
             ->name('backend.vaah.localization.assets');
         //---------------------------------------------------------
-        Route::post('/list', 'LocalizationController@getList')
+        Route::get('/list', 'LocalizationController@getList')
             ->name('backend.vaah.localization.list');
         //---------------------------------------------------------
         Route::post('/generateLanguage', 'LocalizationController@generateLanguage')
