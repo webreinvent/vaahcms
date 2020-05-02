@@ -1,0 +1,168 @@
+[
+
+    {
+        "category": "general",
+        "name": "Title Required",
+        "content": "The title field is required."
+    },
+    {
+        "category": "general",
+        "name": "Title Limit",
+        "content": "The title character is not greater than 200."
+    },
+    {
+        "category": "general",
+        "name": "Slug Required",
+        "content": "The slug field is required."
+    },
+    {
+        "category": "general",
+        "name": "Slug Limit",
+        "content": "The slug character is not greater than 150."
+    },
+    {
+        "category": "general",
+        "name": "Description Required",
+        "content": "The description field is required."
+    },
+    {
+        "category": "general",
+        "name": "Description Limit",
+        "content": "The description character is not greater than 255."
+    },
+    {
+        "category": "general",
+        "name": "Detail Required",
+        "content": "The detail field is required."
+    },
+    {
+        "category": "general",
+        "name": "Detail Limit",
+        "content": "The detail character is not greater than 255."
+    },
+    {
+        "category": "general",
+        "name": "Category Required",
+        "content": "The category field is required."
+    },
+    {
+        "category": "general",
+        "name": "Category Limit",
+        "content": "The Category character is not greater than 150."
+    },
+    {
+        "category": "general",
+        "name": "Is Active Required",
+        "content": "The is active option is required."
+    },
+    {
+        "category": "general",
+        "name": "Status Required",
+        "content": "The status is required."
+    },
+
+
+
+    {
+        "category": "vaahcms-localization",
+        "name": "Locale Code ISO 639 Required",
+        "content": "The locale code iso 639 field is required."
+    },
+
+
+
+    {
+        "category": "vaahcms-media",
+        "name": "Alternate Text Required",
+        "content": "The alternate text field is required."
+    },
+    {
+        "category": "vaahcms-media",
+        "name": "Alternate Text Limit",
+        "content": "The alternate text character is not greater than 150."
+    },
+    {
+        "category": "vaahcms-media",
+        "name": "Caption Required",
+        "content": "The caption field is required."
+    },
+    {
+        "category": "vaahcms-media",
+        "name": "Caption Limit",
+        "content": "The caption character is not greater than 255."
+    },
+    {
+        "category": "vaahcms-media",
+        "name": "Is Downloadable Required",
+        "content": "The is downloadable option is required."
+    },
+
+
+
+
+    {
+        "category": "vaahcms-user",
+        "name": "First Name Required",
+        "content": "The first name field is required."
+    },
+    {
+        "category": "vaahcms-user",
+        "name": "Last Name Required",
+        "content": "The last name field is required."
+    },
+    {
+        "category": "vaahcms-user",
+        "name": "Phone Required",
+        "content": "The phone field is required."
+    },
+    {
+        "category": "vaahcms-user",
+        "name": "Phone Digit",
+        "content": "The phone character is in number."
+    },
+    {
+        "category": "vaahcms-user",
+        "name": "Name Required",
+        "content": "The name field is required."
+    },
+    {
+        "category": "vaahcms-user",
+        "name": "Name Limit",
+        "content": "The name character is not greater than 150."
+    },
+    {
+        "category": "vaahcms-user",
+        "name": "Email Required",
+        "content": "The email field is required."
+    },
+    {
+        "category": "vaahcms-user",
+        "name": "Email Limit",
+        "content": "The email character is not greater than 150."
+    },
+    {
+        "category": "vaahcms-user",
+        "name": "Email Invalid",
+        "content": "The email is invalid."
+    },
+    {
+        "category": "vaahcms-user",
+        "name": "Username Required",
+        "content": "The name field is required."
+    },
+    {
+        "category": "vaahcms-user",
+        "name": "Username Limit",
+        "content": "The username character is not greater than 20."
+    },
+    {
+        "category": "vaahcms-user",
+        "name": "Display Name Required",
+        "content": "The display name field is required."
+    },
+    {
+        "category": "vaahcms-user",
+        "name": "Display Name Limit",
+        "content": "The display name character is not greater than 50."
+    }
+]

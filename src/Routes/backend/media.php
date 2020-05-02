@@ -11,10 +11,10 @@ Route::group(
         Route::post( '/upload', 'MediaController@upload' )
             ->name( 'vh.backend.media.upload' );
         //------------------------------------------------
-        Route::any('/assets', 'MediaController@getAssets')
+        Route::post('/assets', 'MediaController@getAssets')
             ->name('backend.vaah.media.assets');
         //---------------------------------------------------------
-        Route::any('/downloadable/slug/available', 'MediaController@isDownloadableSlugAvailable')
+        Route::post('/downloadable/slug/available', 'MediaController@isDownloadableSlugAvailable')
             ->name('backend.vaah.media.downloadable.slug.available');
         //---------------------------------------------------------
         Route::post('/create', 'MediaController@postCreate')
@@ -23,10 +23,10 @@ Route::group(
         Route::post('/list', 'MediaController@getList')
             ->name('backend.vaah.media.list');
         //---------------------------------------------------------
-        Route::any('/item/{id}', 'MediaController@getItem')
+        Route::post('/item/{id}', 'MediaController@getItem')
             ->name('backend.vaah.media.item');
         //---------------------------------------------------------
-        Route::any('/item/{id}/createUser', 'MediaController@createUser')
+        Route::post('/item/{id}/createUser', 'MediaController@createUser')
             ->name('backend.vaah.media.item.createUser');
         //---------------------------------------------------------
         Route::post('/store/{id}', 'MediaController@postStore')

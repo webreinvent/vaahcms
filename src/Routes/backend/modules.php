@@ -12,28 +12,28 @@ Route::group(
         Route::get( '/', 'ModulesController@index' )
             ->name( 'vh.backend.modules' );
         //------------------------------------------------
-        Route::any( '/assets', 'ModulesController@assets' )
+        Route::post( '/assets', 'ModulesController@assets' )
             ->name( 'vh.backend.modules.assets' );
         //------------------------------------------------
-        Route::any( '/list', 'ModulesController@getList' )
+        Route::post( '/list', 'ModulesController@getList' )
             ->name( 'vh.backend.modules.list' );
         //------------------------------------------------
-        Route::any('/item/{id}', 'ModulesController@getItem')
+        Route::post('/item/{id}', 'ModulesController@getItem')
             ->name('backend.vaah.modules.item');
         //---------------------------------------------------------
-        Route::any( '/download', 'ModulesController@download' )
+        Route::post( '/download', 'ModulesController@download' )
             ->name( 'vh.backend.modules.download' );
         //------------------------------------------------
-        Route::any( '/install/updates', 'ModulesController@installUpdates' )
+        Route::post( '/install/updates', 'ModulesController@installUpdates' )
             ->name( 'vh.backend.modules.install.updates' );
         //------------------------------------------------
-        Route::any( '/actions', 'ModulesController@actions' )
+        Route::post( '/actions', 'ModulesController@actions' )
             ->name( 'vh.backend.modules.actions' );
         //------------------------------------------------
-        Route::any( '/get/slugs', 'ModulesController@getModulesSlugs' )
+        Route::post( '/get/slugs', 'ModulesController@getModulesSlugs' )
             ->name( 'vh.backend.modules.get.slugs' );
         //------------------------------------------------
-        Route::any( '/store/updates', 'ModulesController@storeUpdates' )
+        Route::post( '/store/updates', 'ModulesController@storeUpdates' )
             ->name( 'vh.backend.modules.store.updates' );
 
         //------------------------------------------------

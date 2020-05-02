@@ -30,13 +30,13 @@ Route::group(
             ],
             function () {
                 //------------------------------------------------
-                Route::any( '/assets', 'JsonController@getPublicAssets' )
+                Route::post( '/assets', 'JsonController@getPublicAssets' )
                     ->name( 'vh.backend.json.assets' );
                 //------------------------------------------------
-                Route::any( '/is-logged-in', 'JsonController@isLoggedIn' )
+                Route::post( '/is-logged-in', 'JsonController@isLoggedIn' )
                     ->name( 'vh.backend.json.is_logged_in' );
                 //------------------------------------------------
-                Route::any( '/permissions', 'JsonController@getPermissions' )
+                Route::post( '/permissions', 'JsonController@getPermissions' )
                     ->name( 'vh.backend.json.permissions' );
                 //------------------------------------------------
 
@@ -69,7 +69,7 @@ Route::group(
             ],
             function () {
                 //------------------------------------------------
-                Route::any( '/users/{name?}', 'JsonController@getUsers' )
+                Route::post( '/users/{name?}', 'JsonController@getUsers' )
                     ->name( 'vh.backend.json.users' );
                 //------------------------------------------------
 
@@ -89,7 +89,7 @@ Route::group(
     function () {
         //------------------------------------------------
         //------------------------------------------------
-        Route::any( '/signin/post', 'PublicController@postLogin' )
+        Route::post( '/signin/post', 'PublicController@postLogin' )
             ->name( 'vh.backend.signin.post' );
         //------------------------------------------------
 

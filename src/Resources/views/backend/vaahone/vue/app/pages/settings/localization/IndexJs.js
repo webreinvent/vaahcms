@@ -225,7 +225,7 @@ export default {
             }
 
 
-            let url = this.ajax_url+'/store/'+lang_id;
+            let url = this.ajax_url+'/store';
             let params = {
                 list: this.list.data,
                 vh_lang_language_id: lang_id,

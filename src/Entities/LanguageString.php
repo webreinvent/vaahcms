@@ -202,7 +202,6 @@ class LanguageString extends Model {
     public static function storeList($request)
     {
 
-
         if(!is_array($request->list) || count($request->list) < 1)
         {
 
@@ -253,6 +252,8 @@ class LanguageString extends Model {
                 }
 
             }
+
+
 
             if(!isset($item['name']))
             {

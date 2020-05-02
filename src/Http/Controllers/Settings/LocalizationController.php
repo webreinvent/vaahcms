@@ -50,7 +50,7 @@ class LocalizationController extends Controller
         return response()->json($response);
     }
     //----------------------------------------------------------
-    public function postStore(Request $request,$id)
+    public function postStore(Request $request)
     {
         $response = LanguageString::storeList($request);
         return response()->json($response);

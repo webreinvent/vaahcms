@@ -1255,7 +1255,7 @@ class User extends Authenticatable
 
         if(isset($inputs['username']))
         {
-            $rules['username'] = 'alpha_dash|max:15';
+            $rules['username'] = 'alpha_dash|max:20';
         }
 
         $validator = \Validator::make($inputs,$rules);

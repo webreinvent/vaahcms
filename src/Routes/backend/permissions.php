@@ -10,16 +10,16 @@ Route::group(
     ],
     function () {
         //---------------------------------------------------------
-        Route::any('/assets', 'PermissionsController@getAssets')
+        Route::post('/assets', 'PermissionsController@getAssets')
             ->name('backend.vaah.permissions.assets');
         //---------------------------------------------------------
-        Route::any('/list', 'PermissionsController@getList')
+        Route::post('/list', 'PermissionsController@getList')
             ->name('backend.vaah.permissions.list');
         //---------------------------------------------------------
-        Route::any('/item/{id}', 'PermissionsController@getItem')
+        Route::post('/item/{id}', 'PermissionsController@getItem')
             ->name('backend.vaah.permissions.item');
         //---------------------------------------------------------
-        Route::any('/item/{id}/roles', 'PermissionsController@getItemRoles')
+        Route::post('/item/{id}/roles', 'PermissionsController@getItemRoles')
             ->name('backend.vaah.permissions.role');
         //---------------------------------------------------------
         Route::post('/store/{id}', 'PermissionsController@postStore')

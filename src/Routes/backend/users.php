@@ -10,7 +10,7 @@ Route::group(
     ],
     function () {
         //---------------------------------------------------------
-        Route::any('/assets', 'UsersController@getAssets')
+        Route::post('/assets', 'UsersController@getAssets')
             ->name('backend.vaah.users.assets');
         //---------------------------------------------------------
         Route::post('/create', 'UsersController@postCreate')
@@ -19,10 +19,10 @@ Route::group(
         Route::post('/list', 'UsersController@getList')
             ->name('backend.vaah.users.list');
         //---------------------------------------------------------
-        Route::any('/item/{id}', 'UsersController@getItem')
+        Route::post('/item/{id}', 'UsersController@getItem')
             ->name('backend.vaah.users.item');
         //---------------------------------------------------------
-        Route::any('/item/{id}/roles', 'UsersController@getItemRoles')
+        Route::post('/item/{id}/roles', 'UsersController@getItemRoles')
             ->name('backend.vaah.users.role');
         //---------------------------------------------------------
         Route::post('/store/{id}', 'UsersController@postStore')

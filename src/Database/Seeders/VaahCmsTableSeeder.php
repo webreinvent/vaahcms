@@ -18,6 +18,7 @@ class VaahCmsTableSeeder extends Seeder
         $this->seedRoles();
         $this->seedLanguages();
         $this->seedLanguageCategories();
+        $this->seedLanguageStrings();
         $this->seedSettings();
 
     }
@@ -119,10 +120,51 @@ class VaahCmsTableSeeder extends Seeder
 
     }
     //---------------------------------------------------------------
+    public function seedLanguageStrings()
+    {
+
+        $list = $this->getListFromJson("language_strings.json");
+
+        foreach($list as $item)
+        {
+
+            $item['slug'] = Str::slug($item['name'],'_');
+
+            $exist = \DB::table( 'vh_lang_strings' )
+                ->where( 'slug',  $item['slug'] )
+                ->first();
+
+
+            $lang = \DB::table( 'vh_lang_languages' )
+                ->where( 'locale_code_iso_639', 'en' )
+                ->first();
+
+            $cat = \DB::table( 'vh_lang_categories' )
+                ->where( 'slug', $item['category'] )
+                ->first();
+
+
+            if (!$exist && $lang && $cat){
+
+                $item['vh_lang_language_id'] = $lang->id;
+
+                $item['vh_lang_category_id'] = $cat->id;
+
+                unset($item['category']);
+
+                \DB::table( 'vh_lang_strings' )->insert( $item );
+            }
+        }
+
+    }
+    //---------------------------------------------------------------
     public function seedLanguageCategories()
     {
         $list = [
-            ["name" => 'General']
+            ["name" => 'General'],
+            ["name" => 'VaahCms - User'],
+            ["name" => 'VaahCms - Media'],
+            ["name" => 'VaahCms - Localization']
         ];
 
         $this->storeSeeds('vh_lang_categories', $list);

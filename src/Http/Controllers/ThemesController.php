@@ -24,6 +24,15 @@ class ThemesController extends Controller
     //----------------------------------------------------------
     public function assets(Request $request)
     {
+
+        if(!\Auth::user()->hasPermission('has-access-of-theme-section'))
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+            return response()->json($response);
+        }
+
         Theme::syncAll();
 
         $data['vaahcms_api_route'] = config('vaahcms.api_route');
@@ -41,6 +50,14 @@ class ThemesController extends Controller
     //----------------------------------------------------------
     public function getList(Request $request)
     {
+
+        if(!\Auth::user()->hasPermission('has-access-of-theme-section'))
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+            return response()->json($response);
+        }
 
         Theme::syncAll();
 
@@ -87,12 +104,29 @@ class ThemesController extends Controller
     //----------------------------------------------------------
     public function getItem(Request $request, $id)
     {
+
+        if(!\Auth::user()->hasPermission('can-read-theme'))
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+            return response()->json($response);
+        }
+
         $response = Theme::getItem($id);
         return response()->json($response);
     }
     //----------------------------------------------------------
     public function download(Request $request)
     {
+
+        if(!\Auth::user()->hasPermission('can-install-theme'))
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+            return response()->json($response);
+        }
 
         $rules = array(
             'name' => 'required',
@@ -111,6 +145,38 @@ class ThemesController extends Controller
         $response = Theme::download($request->name, $request->download_link);
 
         return response()->json($response);
+
+    }
+    //----------------------------------------------------------
+    public function installUpdates(Request $request)
+    {
+
+        if(!\Auth::user()->hasPermission('can-update-theme'))
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+            return response()->json($response);
+        }
+
+        $rules = array(
+            'name' => 'required',
+            'download_link' => 'required',
+        );
+
+        $validator = \Validator::make( $request->toArray(), $rules);
+        if ( $validator->fails() ) {
+
+            $errors             = errorsToArray($validator->errors());
+            $response['status'] = 'failed';
+            $response['errors'] = $errors;
+            return response()->json($response);
+        }
+
+        $response = Theme::installUpdates($request);
+
+        return response()->json($response);
+
 
     }
 
@@ -156,18 +222,46 @@ class ThemesController extends Controller
 
             //---------------------------------------
             case 'activate':
+                if(!\Auth::user()->hasPermission('can-activate-theme'))
+                {
+                    $response['status'] = 'failed';
+                    $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+                    return response()->json($response);
+                }
                 $response = Theme::activateItem($theme->slug);
                 break;
             //---------------------------------------
             case 'deactivate':
+                if(!\Auth::user()->hasPermission('can-deactivate-theme'))
+                {
+                    $response['status'] = 'failed';
+                    $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+                    return response()->json($response);
+                }
                 $response = Theme::deactivateItem($theme->slug);
                 break;
             //---------------------------------------
             case 'import_sample_data':
+                if(!\Auth::user()->hasPermission('can-import-sample-data-in-theme'))
+                {
+                    $response['status'] = 'failed';
+                    $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+                    return response()->json($response);
+                }
                 $response = Theme::importSampleData($theme->slug);
                 break;
             //---------------------------------------
             case 'delete':
+                if(!\Auth::user()->hasPermission('can-delete-theme'))
+                {
+                    $response['status'] = 'failed';
+                    $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+                    return response()->json($response);
+                }
                 $response = Theme::deleteItem($theme->slug);
                 break;
             //---------------------------------------
@@ -181,6 +275,15 @@ class ThemesController extends Controller
     //----------------------------------------------------------
     public function storeUpdates(Request $request)
     {
+
+        if(!\Auth::user()->hasPermission('can-update-theme'))
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+            return response()->json($response);
+        }
+
         $rules = array(
             'themes' => 'required|array',
         );
@@ -197,29 +300,6 @@ class ThemesController extends Controller
         $response = Theme::storeUpdates($request);
 
         return response()->json($response);
-
-    }
-    //----------------------------------------------------------
-    public function installUpdates(Request $request)
-    {
-        $rules = array(
-            'name' => 'required',
-            'download_link' => 'required',
-        );
-
-        $validator = \Validator::make( $request->toArray(), $rules);
-        if ( $validator->fails() ) {
-
-            $errors             = errorsToArray($validator->errors());
-            $response['status'] = 'failed';
-            $response['errors'] = $errors;
-            return response()->json($response);
-        }
-
-        $response = Theme::installUpdates($request);
-
-        return response()->json($response);
-
 
     }
     //----------------------------------------------------------

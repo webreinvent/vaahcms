@@ -71,10 +71,10 @@ Route::group(
         Route::post( '/get/required/configurations', 'SetupController@getRequiredConfigurations' )
             ->name( 'vh.setup.get.get.required.configurations' );
         //------------------------------------------------
-        Route::any( '/get/dependencies', 'SetupController@getDependencies' )
+        Route::post( '/get/dependencies', 'SetupController@getDependencies' )
             ->name( 'vh.setup.get.dependencies' );
         //------------------------------------------------
-        Route::any( '/install/dependencies', 'SetupController@installDependencies' )
+        Route::post( '/install/dependencies', 'SetupController@installDependencies' )
             ->name( 'vh.setup.install.dependencies' );
         //------------------------------------------------
         Route::post( '/run/migrations', 'SetupController@runMigrations' )

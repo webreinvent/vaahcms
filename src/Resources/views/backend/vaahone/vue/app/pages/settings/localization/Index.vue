@@ -76,10 +76,14 @@
                                             <div  class="level-item">
                                                 <b-field >
                                                     <b-input type="text"
+                                                             name="localization-language-name"
+                                                             dusk="localization-language-name"
                                                              v-model="new_language.name"
                                                              placeholder="Name">
                                                     </b-input>
                                                     <b-input type="text"
+                                                             name="localization-language-local-code-iso-639"
+                                                             dusk="localization-language-local-code-iso-639"
                                                              v-model="new_language.locale_code_iso_639"
                                                              placeholder="Locale ISO 639 Code">
                                                     </b-input>
@@ -114,6 +118,8 @@
                                             <div  class="level-item">
                                                 <b-field >
                                                     <b-input type="text"
+                                                             name="localization-category-name"
+                                                             dusk="localization-category-name"
                                                              v-model="new_category.name"
                                                              placeholder="Category Name">
                                                     </b-input>
@@ -238,14 +244,20 @@
 
                                                                 </td>
                                                                 <td width="150">
-                                                                    <input type="text" class="input is-borderless"
+                                                                    <b-input type="text" class="is-borderless"
+                                                                           name="localization-language-string-slug"
+                                                                           dusk="localization-language-string-slug"
                                                                            @blur="setItemSlug(item)"
-                                                                           placeholder="Type Slug" v-model="item.slug" />
+                                                                           placeholder="Type Slug" v-model="item.slug" >
+                                                                    </b-input>
 
                                                                 </td>
                                                                 <td >
-                                                                    <input type="text" class="input is-borderless"
-                                                                           placeholder="Type Value" v-model="item.content" />
+                                                                    <b-input type="text" class="is-borderless"
+                                                                             name="localization-language-string-value"
+                                                                             dusk="localization-language-string-value"
+                                                                           placeholder="Type Value" v-model="item.content" >
+                                                                    </b-input>
                                                                 </td>
                                                                 <td width="20">
                                                                     <b-button outlined type="is-danger"

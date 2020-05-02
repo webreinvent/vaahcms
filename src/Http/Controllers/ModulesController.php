@@ -26,6 +26,15 @@ class ModulesController extends Controller
     //----------------------------------------------------------
     public function assets(Request $request)
     {
+
+        if(!\Auth::user()->hasPermission('has-access-of-module-section'))
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+            return response()->json($response);
+        }
+
         Module::syncAllModules();
 
         $data['vaahcms_api_route'] = config('vaahcms.api_route');
@@ -43,6 +52,14 @@ class ModulesController extends Controller
     //----------------------------------------------------------
     public function getList(Request $request)
     {
+
+        if(!\Auth::user()->hasPermission('has-access-of-module-section'))
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+            return response()->json($response);
+        }
 
         Module::syncAllModules();
 
@@ -89,12 +106,29 @@ class ModulesController extends Controller
     //----------------------------------------------------------
     public function getItem(Request $request, $id)
     {
+
+        if(!\Auth::user()->hasPermission('can-read-module'))
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+            return response()->json($response);
+        }
+
         $response = Module::getDetail($id);
         return response()->json($response);
     }
     //----------------------------------------------------------
     public function download(Request $request)
     {
+
+        if(!\Auth::user()->hasPermission('can-install-module'))
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+            return response()->json($response);
+        }
 
         $rules = array(
             'name' => 'required',
@@ -113,6 +147,38 @@ class ModulesController extends Controller
         $response = Module::download($request->name, $request->download_link);
 
         return response()->json($response);
+
+    }
+
+    //----------------------------------------------------------
+    public function installUpdates(Request $request)
+    {
+        if(!\Auth::user()->hasPermission('can-update-module'))
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+            return response()->json($response);
+        }
+
+        $rules = array(
+            'name' => 'required',
+            'download_link' => 'required',
+        );
+
+        $validator = \Validator::make( $request->toArray(), $rules);
+        if ( $validator->fails() ) {
+
+            $errors             = errorsToArray($validator->errors());
+            $response['status'] = 'failed';
+            $response['errors'] = $errors;
+            return response()->json($response);
+        }
+
+        $response = Module::installUpdates($request);
+
+        return response()->json($response);
+
 
     }
 
@@ -159,18 +225,46 @@ class ModulesController extends Controller
 
             //---------------------------------------
             case 'activate':
+                if(!\Auth::user()->hasPermission('can-activate-module'))
+                {
+                    $response['status'] = 'failed';
+                    $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+                    return response()->json($response);
+                }
                 $response = Module::activateItem($module->slug);
                 break;
             //---------------------------------------
             case 'deactivate':
+                if(!\Auth::user()->hasPermission('can-deactivate-module'))
+                {
+                    $response['status'] = 'failed';
+                    $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+                    return response()->json($response);
+                }
                 $response = Module::deactivateItem($module->slug);
                 break;
             //---------------------------------------
             case 'import_sample_data':
+                if(!\Auth::user()->hasPermission('can-import-sample-data-in-module'))
+                {
+                    $response['status'] = 'failed';
+                    $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+                    return response()->json($response);
+                }
                 $response = Module::importSampleData($module->slug);
                 break;
             //---------------------------------------
             case 'delete':
+                if(!\Auth::user()->hasPermission('can-delete-module'))
+                {
+                    $response['status'] = 'failed';
+                    $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+                    return response()->json($response);
+                }
                 $response = Module::deleteItem($module->slug);
                 break;
             //---------------------------------------
@@ -214,6 +308,15 @@ class ModulesController extends Controller
     //----------------------------------------------------------
     public function updateModuleVersions(Request $request)
     {
+
+        if(!\Auth::user()->hasPermission('can-update-module'))
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+            return response()->json($response);
+        }
+
         if(!$request->has('modules'))
         {
             $response['status'] = 'success';
@@ -241,6 +344,15 @@ class ModulesController extends Controller
     //----------------------------------------------------------
     public function storeUpdates(Request $request)
     {
+
+        if(!\Auth::user()->hasPermission('can-update-module'))
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+            return response()->json($response);
+        }
+
         $rules = array(
             'modules' => 'required|array',
         );
@@ -257,29 +369,6 @@ class ModulesController extends Controller
         $response = Module::storeUpdates($request);
 
         return response()->json($response);
-
-    }
-    //----------------------------------------------------------
-    public function installUpdates(Request $request)
-    {
-        $rules = array(
-            'name' => 'required',
-            'download_link' => 'required',
-        );
-
-        $validator = \Validator::make( $request->toArray(), $rules);
-        if ( $validator->fails() ) {
-
-            $errors             = errorsToArray($validator->errors());
-            $response['status'] = 'failed';
-            $response['errors'] = $errors;
-            return response()->json($response);
-        }
-
-        $response = Module::installUpdates($request);
-
-        return response()->json($response);
-
 
     }
     //----------------------------------------------------------

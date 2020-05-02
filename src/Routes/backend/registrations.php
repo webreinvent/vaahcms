@@ -8,7 +8,7 @@ Route::group(
     ],
     function () {
         //---------------------------------------------------------
-        Route::any('/assets', 'RegistrationsController@getAssets')
+        Route::post('/assets', 'RegistrationsController@getAssets')
             ->name('backend.vaah.registrations.assets');
         //---------------------------------------------------------
         Route::post('/create', 'RegistrationsController@postCreate')
@@ -17,10 +17,10 @@ Route::group(
         Route::post('/list', 'RegistrationsController@getList')
             ->name('backend.vaah.registrations.list');
         //---------------------------------------------------------
-        Route::any('/item/{id}', 'RegistrationsController@getItem')
+        Route::post('/item/{id}', 'RegistrationsController@getItem')
             ->name('backend.vaah.registrations.item');
         //---------------------------------------------------------
-        Route::any('/item/{id}/createUser', 'RegistrationsController@createUser')
+        Route::post('/item/{id}/createUser', 'RegistrationsController@createUser')
             ->name('backend.vaah.registrations.item.createUser');
         //---------------------------------------------------------
         Route::post('/store/{id}', 'RegistrationsController@postStore')

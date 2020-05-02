@@ -25,19 +25,19 @@ Route::group(
     ],
     function () {
         //------------------------------------------------
-        Route::any( '/assets', 'GeneralController@getAssets' )
+        Route::post( '/assets', 'GeneralController@getAssets' )
             ->name( 'vh.backend.settings.general.assets' );
         //------------------------------------------------
-        Route::any( '/list', 'GeneralController@getList' )
+        Route::post( '/list', 'GeneralController@getList' )
             ->name( 'vh.backend.settings.general.list' );
         //------------------------------------------------
-        Route::any( '/store/site/settings', 'GeneralController@storeSiteSettings' )
+        Route::post( '/store/site/settings', 'GeneralController@storeSiteSettings' )
             ->name( 'vh.backend.settings.general.store.site.settings' );
         //------------------------------------------------
-        Route::any( '/store/links', 'GeneralController@storeLinks' )
+        Route::post( '/store/links', 'GeneralController@storeLinks' )
             ->name( 'vh.backend.settings.general.store.links' );
         //------------------------------------------------
-        Route::any( '/store/meta/tags', 'GeneralController@storeMetaTags' )
+        Route::post( '/store/meta/tags', 'GeneralController@storeMetaTags' )
             ->name( 'vh.backend.settings.general.store.meta.tags' );
         //------------------------------------------------
         //------------------------------------------------
@@ -53,13 +53,13 @@ Route::group(
     ],
     function () {
         //------------------------------------------------
-        Route::any( '/assets', 'EnvController@getAssets' )
+        Route::post( '/assets', 'EnvController@getAssets' )
             ->name( 'vh.backend.settings.env.assets' );
         //------------------------------------------------
-        Route::any( '/list', 'EnvController@getList' )
+        Route::post( '/list', 'EnvController@getList' )
             ->name( 'vh.backend.settings.env.list' );
         //------------------------------------------------
-        Route::any( '/store', 'EnvController@store' )
+        Route::post( '/store', 'EnvController@store' )
             ->name( 'vh.backend.settings.env.store' );
         //------------------------------------------------
         //------------------------------------------------
@@ -74,33 +74,25 @@ Route::group(
         'namespace'  => 'WebReinvent\VaahCms\Http\Controllers\Settings'
     ],
     function () {
-        //------------------------------------------------
-        Route::any( '/assets', 'LocalizationController@getAssets' )
-            ->name( 'vh.backend.settings.localization.assets' );
-        //------------------------------------------------
-        Route::any( '/list', 'LocalizationController@getList' )
-            ->name( 'vh.backend.settings.localization.list' );
-        //------------------------------------------------
-        Route::any( '/store', 'LocalizationController@store' )
-            ->name( 'vh.backend.settings.localization.store' );
-        //------------------------------------------------
-        Route::any( '/store/language', 'LocalizationController@storeLanguage' )
-            ->name( 'vh.backend.settings.localization.store.language' );
-        //------------------------------------------------
-        Route::any( '/store/category', 'LocalizationController@storeCategory' )
-            ->name( 'vh.backend.settings.localization.store.category' );
-        //------------------------------------------------
-        Route::any( '/sync', 'LocalizationController@sync' )
-            ->name( 'vh.backend.settings.localization.sync' );
-        //------------------------------------------------
-        Route::any( '/delete', 'LocalizationController@delete' )
-            ->name( 'vh.backend.settings.localization.delete' );
-        //------------------------------------------------
-        Route::any( '/upload', 'LocalizationController@upload' )
-            ->name( 'vh.backend.settings.localization.upload' );
-        //------------------------------------------------
-        //------------------------------------------------
-        //------------------------------------------------
+        //---------------------------------------------------------
+        Route::post('/assets', 'LocalizationController@getAssets')
+            ->name('backend.vaah.localization.assets');
+        //---------------------------------------------------------
+        Route::post('/list', 'LocalizationController@getList')
+            ->name('backend.vaah.localization.list');
+        //---------------------------------------------------------
+        Route::post('/store', 'LocalizationController@postStore')
+            ->name('backend.vaah.localization.store');
+        //---------------------------------------------------------
+        Route::post('/store/language', 'LocalizationController@storeLanguage')
+            ->name('backend.vaah.localization.store');
+        //---------------------------------------------------------
+        Route::post('/store/category', 'LocalizationController@storeCategory')
+            ->name('backend.vaah.localization.store');
+        //---------------------------------------------------------
+        Route::post('/actions/{action_name}', 'LocalizationController@postActions')
+            ->name('backend.vaah.localization.actions');
+        //---------------------------------------------------------
     });
 
 
@@ -113,22 +105,22 @@ Route::group(
     ],
     function () {
         //------------------------------------------------
-        Route::any( '/assets', 'NotificationsController@getAssets' )
+        Route::post( '/assets', 'NotificationsController@getAssets' )
             ->name( 'vh.backend.settings.notifications.assets' );
         //------------------------------------------------
-        Route::any( '/list', 'NotificationsController@getList' )
+        Route::post( '/list', 'NotificationsController@getList' )
             ->name( 'vh.backend.settings.notifications.list' );
         //------------------------------------------------
-        Route::any( '/create', 'NotificationsController@createItem' )
+        Route::post( '/create', 'NotificationsController@createItem' )
             ->name( 'vh.backend.settings.notifications.create' );
         //------------------------------------------------
-        Route::any( '/store', 'NotificationsController@store' )
+        Route::post( '/store', 'NotificationsController@store' )
             ->name( 'vh.backend.settings.notifications.store' );
         //------------------------------------------------
-        Route::any( '/content', 'NotificationsController@getContent' )
+        Route::post( '/content', 'NotificationsController@getContent' )
             ->name( 'vh.backend.settings.notifications.content' );
         //------------------------------------------------
-        Route::any( '/send', 'NotificationsController@send' )
+        Route::post( '/send', 'NotificationsController@send' )
             ->name( 'vh.backend.settings.notifications.send' );
         //------------------------------------------------
     });
@@ -142,28 +134,28 @@ Route::group(
     ],
     function () {
         //------------------------------------------------
-        Route::any( '/assets', 'BackupsController@getAssets' )
+        Route::post( '/assets', 'BackupsController@getAssets' )
             ->name( 'vh.backend.settings.localization.assets' );
         //------------------------------------------------
-        Route::any( '/list', 'BackupsController@getList' )
+        Route::post( '/list', 'BackupsController@getList' )
             ->name( 'vh.backend.settings.localization.list' );
         //------------------------------------------------
-        Route::any( '/store', 'BackupsController@store' )
+        Route::post( '/store', 'BackupsController@store' )
             ->name( 'vh.backend.settings.localization.store' );
         //------------------------------------------------
-        Route::any( '/store/language', 'BackupsController@storeLanguage' )
+        Route::post( '/store/language', 'BackupsController@storeLanguage' )
             ->name( 'vh.backend.settings.localization.store.language' );
         //------------------------------------------------
-        Route::any( '/store/category', 'BackupsController@storeCategory' )
+        Route::post( '/store/category', 'BackupsController@storeCategory' )
             ->name( 'vh.backend.settings.localization.store.category' );
         //------------------------------------------------
-        Route::any( '/sync', 'BackupsController@sync' )
+        Route::post( '/sync', 'BackupsController@sync' )
             ->name( 'vh.backend.settings.localization.sync' );
         //------------------------------------------------
-        Route::any( '/delete', 'BackupsController@delete' )
+        Route::post( '/delete', 'BackupsController@delete' )
             ->name( 'vh.backend.settings.localization.delete' );
         //------------------------------------------------
-        Route::any( '/upload', 'BackupsController@upload' )
+        Route::post( '/upload', 'BackupsController@upload' )
             ->name( 'vh.backend.settings.localization.upload' );
         //------------------------------------------------
         //------------------------------------------------

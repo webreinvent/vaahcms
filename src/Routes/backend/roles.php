@@ -9,22 +9,22 @@ Route::group(
     ],
     function () {
         //------------------------------------------------
-        Route::any( '/assets', 'RolesController@getAssets' )
+        Route::post( '/assets', 'RolesController@getAssets' )
             ->name( 'vh.backend.roles.assets' );
         //---------------------------------------------------------
         Route::post('/create', 'RolesController@postCreate')
             ->name('backend.vaah.registrations.create');
         //------------------------------------------------
-        Route::any( '/list', 'RolesController@getList' )
+        Route::post( '/list', 'RolesController@getList' )
             ->name( 'vh.backend.roles.list' );
         //------------------------------------------------
-        Route::any('/item/{id}', 'RolesController@getItem')
+        Route::post('/item/{id}', 'RolesController@getItem')
             ->name('backend.vaah.roles.item');
         //---------------------------------------------------------
-        Route::any('/item/{id}/permissions', 'RolesController@getItemPermission')
+        Route::post('/item/{id}/permissions', 'RolesController@getItemPermission')
             ->name('backend.vaah.roles.item.permissions');
         //---------------------------------------------------------
-        Route::any('/item/{id}/users', 'RolesController@getItemUser')
+        Route::post('/item/{id}/users', 'RolesController@getItemUser')
             ->name('backend.vaah.roles.item.users');
         //---------------------------------------------------------
         Route::post('/getModuleSections', 'RolesController@getModuleSections')

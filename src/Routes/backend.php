@@ -19,7 +19,6 @@ include('backend/themes.php');
 include('backend/media.php');
 include('backend/registrations.php');
 include('backend/profile.php');
-include('backend/localization.php');
 include('backend/roles.php');
 include('backend/permissions.php');
 include('backend/users.php');
