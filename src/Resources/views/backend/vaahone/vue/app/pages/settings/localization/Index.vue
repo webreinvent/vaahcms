@@ -311,7 +311,7 @@
                                                             <b-field>
                                                                 <p class="control">
                                                                     <b-button type="is-success"
-                                                                              @click="sync()"
+                                                                              @click="generateLanguage()"
                                                                               :loading="is_btn_loading"
                                                                               icon-left="redo-alt">
                                                                         Generate Language Files

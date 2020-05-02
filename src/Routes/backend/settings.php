@@ -81,6 +81,9 @@ Route::group(
         Route::post('/list', 'LocalizationController@getList')
             ->name('backend.vaah.localization.list');
         //---------------------------------------------------------
+        Route::post('/generateLanguage', 'LocalizationController@generateLanguage')
+            ->name('backend.vaah.localization.generate_language');
+        //---------------------------------------------------------
         Route::post('/store', 'LocalizationController@postStore')
             ->name('backend.vaah.localization.store');
         //---------------------------------------------------------

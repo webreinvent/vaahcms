@@ -156,6 +156,22 @@ export default {
 
             this.getList(true);
 
+        },//---------------------------------------------------------------------
+        generateLanguage: function () {
+
+            this.is_btn_loading = true;
+
+            let url = this.ajax_url+'/generateLanguage';
+
+            let params = [];
+            this.$vaah.ajax(url, params, this.generateLanguageAfter);
+
+        },
+        //---------------------------------------------------------------------
+        generateLanguageAfter: function (data) {
+
+            this.is_btn_loading = false;
+
         },
         //---------------------------------------------------------------------
         topSync: function () {

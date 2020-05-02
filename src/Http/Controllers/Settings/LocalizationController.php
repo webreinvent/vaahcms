@@ -50,6 +50,20 @@ class LocalizationController extends Controller
         return response()->json($response);
     }
     //----------------------------------------------------------
+    public function generateLanguage(Request $request)
+    {
+
+        LanguageString::syncAndGenerateStrings($request);
+
+
+        $response = LanguageString::getList($request);
+
+        $response['messages'][] = "Language files successfully generated";
+
+        return response()->json($response);
+
+    }
+    //----------------------------------------------------------
     public function postStore(Request $request)
     {
         $response = LanguageString::storeList($request);

@@ -785,7 +785,7 @@ class User extends Authenticatable
             $list->whereBetween('created_at',[$request['from']." 00:00:00",$request['to']." 23:59:59"]);
         }
 
-        if($request['status']){
+        if(isset($request['status'])){
             if($request['status'] == '1')
             {
                 $list->where('is_active',$request['status']);
