@@ -60,13 +60,13 @@ class SetupController extends Controller
 
         //check env file has app key
         $list = VaahSetup::getEnvFileVariables('.env');
-        if(!isset($list['APP_KEY']) || empty($list['APP_KEY']))
+
+        if(isset($list['APP_KEY']) || empty(trim($list['APP_KEY'])) || trim($list['APP_KEY']) == "")
         {
             //generate app key
             VaahSetup::generateAppKey();
         }
-
-
+        
         return redirect()->route('vh.backend');
     }
 
