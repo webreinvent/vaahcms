@@ -1,5 +1,5 @@
 import Vue from "vue";
-import moment from "moment";
+import moment from 'moment/moment';
 import copy from 'copy-to-clipboard';
 
 import {store} from './../../store/store';
