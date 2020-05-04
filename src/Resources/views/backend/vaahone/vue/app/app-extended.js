@@ -53,9 +53,9 @@ var debug = $('#debug').attr('content');
 
 
 import TopMenu from "./components/App/TopMenu";
-import SideMenu from "./components/App/Aside";
+import Aside from "./components/App/Aside";
 
-Vue.component('sidemenu', SideMenu);
+Vue.component('sidemenu', Aside);
 
 Vue.component('topmenu', TopMenu);
 

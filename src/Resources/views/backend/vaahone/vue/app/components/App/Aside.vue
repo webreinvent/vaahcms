@@ -2,11 +2,7 @@
     <div class="aside">
     <!--sections-->
         <div class="menu-action">
-            <b-icon
-                    pack="fas"
-                    icon="bars"
-                    size="is-small">
-            </b-icon>
+            <font-awesome-icon icon="bars" />
         </div>
         <div class="menu">
             <div class="sidebar">
