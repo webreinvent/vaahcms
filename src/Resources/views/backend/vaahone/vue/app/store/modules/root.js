@@ -53,14 +53,6 @@ export default {
 
                 let params = {};
 
-                params.get_server_details = true;
-
-                params.get_auth_user = true;
-
-                params.get_extended_views = true;
-
-                params.get_extended_views = true;
-
                 let url = state.json_url + '/assets';
                 let data = await Vaah.ajax(url, params);
 

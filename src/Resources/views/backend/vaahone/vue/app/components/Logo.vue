@@ -6,10 +6,8 @@
 <script>
 
     export default {
-        props:['width', 'height'],
+        props:['assets', 'width', 'height'],
         computed:{
-            root() {return this.$store.getters['root/state']},
-            assets() {return this.$store.getters['root/state'].assets},
         },
     }
 

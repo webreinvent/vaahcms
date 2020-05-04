@@ -37,7 +37,6 @@ let routes_frontend =     {
     props: true,
     meta: {
         middleware: [
-            ResetRootAssets,
             GetAssets,
             IfNotSetup,
         ]
@@ -50,7 +49,6 @@ let routes_frontend =     {
             props: true,
             meta: {
                 middleware: [
-                    ResetRootAssets,
                     GetAssets,
                     IfNotSetup,
                 ]
@@ -110,8 +108,7 @@ routes_list =     {
             },
         },
         {
-            path: 'install',
-            name: 'setup.install',
+            path: '/install',
             component: InstallIndex,
             props: true,
             meta: {
@@ -123,7 +120,7 @@ routes_list =     {
             children: [
                 {
                     path: '/',
-                    name: 'setup.install.configuration',
+                    name: 'setup.install',
                     component: InstallConfiguration,
                     props: true,
                     meta: {

@@ -35,22 +35,18 @@ class JsonController extends Controller
             'docs' => config('vaahcms.documentation'),
         ];
 
-        if($request->has('get_server_details'))
+        $data['server'] = [
+            'host' => $request->getHost(),
+            'current_year' => \Carbon::now()->format('Y'),
+            'current_date' => \Carbon::now()->format('Y-m-d'),
+            'current_time' => \Carbon::now()->format('H:i:s'),
+            'current_date_time' => \Carbon::now()->format('Y-m-d H:i:s'),
+            'http' => 'http://',
+        ];
+
+        if(\Request::secure())
         {
-            $data['server'] = [
-                'host' => $request->getHost(),
-                'current_year' => \Carbon::now()->format('Y'),
-                'current_date' => \Carbon::now()->format('Y-m-d'),
-                'current_time' => \Carbon::now()->format('H:i:s'),
-                'current_date_time' => \Carbon::now()->format('Y-m-d H:i:s'),
-                'http' => 'http://',
-            ];
-
-            if(\Request::secure())
-            {
-                $data['server']['http'] = 'https://';
-            }
-
+            $data['server']['http'] = 'https://';
         }
 
         //-----Vue Errors----------------------
@@ -85,7 +81,7 @@ class JsonController extends Controller
 
 
 
-        if($request->has('get_extended_views') && \Auth::check())
+        if(\Auth::check())
         {
             $data['auth_user'] = [
                 'name' => \Auth::user()->name,
@@ -96,11 +92,8 @@ class JsonController extends Controller
             $data['vue_notices'] = Notified::viaBackend();
             //-----/Vue Backend Notices----------------------
 
-        }
-
-        if($request->has('get_extended_views'))
-        {
             $data['extended_views'] = $this->getExtendedViews();
+
         }
 
 

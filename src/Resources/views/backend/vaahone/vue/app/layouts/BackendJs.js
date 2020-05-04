@@ -6,6 +6,7 @@ import Notices from './../components/Notices'
 export default {
     computed:{
         root() {return this.$store.getters['root/state']},
+        assets() {return this.$store.getters['root/state'].assets},
     },
     components:{
         TopMenu,
@@ -16,7 +17,6 @@ export default {
     data()
     {
         let obj = {
-            assets: null,
         };
 
         return obj;

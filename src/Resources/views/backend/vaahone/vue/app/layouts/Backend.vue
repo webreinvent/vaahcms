@@ -2,10 +2,9 @@
 
     <div class="container-backend">
 
-        <TopMenu/>
+        <TopMenu :assets="assets"/>
 
-
-        <Aside/>
+        <Aside :assets="assets"/>
         <!--sections-->
         <section class="section">
 

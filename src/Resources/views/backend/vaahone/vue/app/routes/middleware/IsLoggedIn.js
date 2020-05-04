@@ -29,6 +29,8 @@ export default async function IsLoggedIn ({ to, from, next, store }){
             };
         }
 
+
+
         store.commit('root/updateState', payload);
 
     }

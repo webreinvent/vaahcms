@@ -66,7 +66,7 @@ class SetupController extends Controller
             //generate app key
             VaahSetup::generateAppKey();
         }
-        
+
         return redirect()->route('vh.backend');
     }
 

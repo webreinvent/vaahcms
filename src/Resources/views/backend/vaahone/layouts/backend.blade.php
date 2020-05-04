@@ -39,9 +39,28 @@
 @include("vaahcms::backend.vaahone.components.errors")
 @include("vaahcms::backend.vaahone.components.flash")
 
+<div class="container-backend">
+    <div id="appExtended">
+        <topmenu :assets="assets"></topmenu>
+        <sidemenu :assets="assets"></sidemenu>
+    </div>
 
-@yield('content')
+    <!--sections-->
+    <section class="section">
 
+        <div class="container">
+            @yield('content')
+        </div>
+    </section>
+    <!--sections-->
+
+</div>
+
+@if(env('APP_VAAHCMS_ENV') == 'develop')
+    <script src="http://localhost:8080/vaahone/builds/app-extended.js" defer></script>
+@else
+    <script src="{{vh_get_backend_assets("builds/app-extended.js")}}" defer></script>
+@endif
 
 @yield('vaahcms_extend_backend_js')
 
