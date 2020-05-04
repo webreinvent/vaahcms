@@ -65,7 +65,6 @@ const appExtended = new Vue({
     },
     data: {
         assets: null,
-        test: "testing v1",
         base_url: base_url,
     },
     mounted() {
@@ -76,18 +75,13 @@ const appExtended = new Vue({
         getAssets: function () {
             let params = {};
             let url = this.base_url+'/backend/json/assets';
-
-            console.log('--->url', url);
-
             this.$vaah.ajax(url, params, this.getAssetsAfter);
         },
         //---------------------------------------------------------------------
         getAssetsAfter: function (data, res) {
             if(data){
-                console.log('--->', data);
                 this.assets = data;
             }
-
         },
         //---------------------------------------------------------------------
     }
