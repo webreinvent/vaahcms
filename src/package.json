@@ -32,6 +32,7 @@
         "axios": "^0.19.2",
         "buefy": "0.8.17",
         "bulma-helpers": "^0.3.10",
+        "compass-mixins": "^0.12.10",
         "filepond": "^4.13.4",
         "filepond-plugin-file-rename": "^1.1.4",
         "filepond-plugin-file-validate-size": "^2.2.1",

@@ -1,0 +1,3 @@
+[submodule "src/Resources/assets/backend/vaahone/scss/vaahscss"]
+	path = src/Resources/assets/backend/vaahone/scss/vaahscss
+	url = git@github.com:webreinvent/vaahscss.git

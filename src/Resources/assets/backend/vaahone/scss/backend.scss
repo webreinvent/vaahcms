@@ -1,26 +1,10 @@
 @import "~bulma/sass/utilities/functions.sass";
+@import "~compass-mixins/lib/compass";
 @import "customize/bulma/sass/utilities/initial-variables";
 @import "customize/bulma/sass/utilities/derived-variables";
 
 //@import "vaahcms/_functions_bulma.sass";
-@import "vaahcms/_vars";
-@import "vaahcms/_functions";
-@import "vaahcms/general";
-@import "vaahcms/navbar";
-@import "vaahcms/aside";
-@import "vaahcms/card";
-@import "vaahcms/table";
-@import "vaahcms/notification";
-@import "vaahcms/tools";
-@import "vaahcms/datepicker";
-@import "vaahcms/tag";
-@import "vaahcms/button";
-@import "vaahcms/progress";
-@import "vaahcms/modal";
-@import "vaahcms/menu";
-@import "vaahcms/filepond";
-@import "vaahcms/field";
-@import "vaahcms/page-settings";
+@import "vaahscss/_all";
 
 .fa-lg{
     font-size: 0.9rem;
