@@ -56,13 +56,13 @@
 
 </div>
 
+@yield('vaahcms_extend_backend_js')
+
 @if(env('APP_VAAHCMS_ENV') == 'develop')
     <script src="http://localhost:8080/vaahone/builds/app-extended.js" defer></script>
 @else
     <script src="{{vh_get_backend_assets("builds/app-extended.js")}}" defer></script>
 @endif
-
-@yield('vaahcms_extend_backend_js')
 
 </body>
 </html>

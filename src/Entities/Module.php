@@ -382,6 +382,7 @@ class Module extends Model {
         }
 
 
+
         if(!isset($module->is_migratable) || (isset($module->is_migratable) && $module->is_migratable == true))
         {
             $module_path = config('vaahcms.modules_path').$module->name;

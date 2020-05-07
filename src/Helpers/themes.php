@@ -227,7 +227,9 @@ function vh_location($location_slug, $html=false, $type='bootstrap')
 //-----------------------------------------------------------------------------------
 function vh_theme_migrations_path($theme_name)
 {
-    return "/".config('vaahcms.themes_path')."/".$theme_name."/Database/Migrations/";
+    $path =config('vaahcms.themes_path')."/".$theme_name."/Database/Migrations/";
+    $path = str_replace(base_path()."/", "", $path);
+    return $path;
 }
 //-----------------------------------------------------------------------------------
 function vh_theme_database_seeder($module_name)
