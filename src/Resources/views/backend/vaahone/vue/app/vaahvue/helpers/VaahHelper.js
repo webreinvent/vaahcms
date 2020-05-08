@@ -363,7 +363,8 @@ const VaahHelper = {
     //---------------------------------------------------------------------
     removeFromArray: function(arr, element) {
         let removeIndex = arr.map(function(item) { return item; }).indexOf(element);
-        return arr.splice(removeIndex, 1);
+        arr.splice(removeIndex, 1);
+        return arr;
     },
 
     //---------------------------------------------------------------------
