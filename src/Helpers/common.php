@@ -66,4 +66,9 @@ function vh_list_with_slugs($arr)
     return $list;
 }
 //-------------------------------------------------------------
+function vh_is_json($string)
+{
+    json_decode($string);
+    return (json_last_error() == JSON_ERROR_NONE);
+}
 //-------------------------------------------------------------
