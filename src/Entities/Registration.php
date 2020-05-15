@@ -104,6 +104,27 @@ class Registration extends Model
     }
 
     //-------------------------------------------------
+    public function scopeBetweenDates($query, $from, $to)
+    {
+
+        if($from)
+        {
+            $from = Carbon::parse($from)
+                ->startOfDay()
+                ->toDateTimeString();
+        }
+
+        if($to)
+        {
+            $to = Carbon::parse($to)
+                ->endOfDay()
+                ->toDateTimeString();
+        }
+
+        $query->whereBetween('created_at',[$from,$to]);
+    }
+
+    //-------------------------------------------------
     public function scopeActivatedBetween($query, $from, $to)
     {
         return $query->whereBetween('activated_at', array($from, $to));
@@ -299,7 +320,7 @@ class Registration extends Model
 
         if(isset($request->from) && isset($request->to))
         {
-            $list->whereBetween('created_at',[$request->from." 00:00:00",$request->to." 23:59:59"]);
+            $list->betweenDates($request['from'],$request['to']);
         }
 
         if($request->has('status') && !empty( $request->status))
@@ -364,7 +385,7 @@ class Registration extends Model
 
     }
     //-------------------------------------------------
-    public static function store($request)
+    public static function postStore($request)
     {
 
         if(!\Auth::user()->hasPermission('can-update-registrations'))

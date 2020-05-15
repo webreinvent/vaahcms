@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 use WebReinvent\VaahCms\Traits\CrudWithUuidObservantTrait;
@@ -127,6 +128,27 @@ class Media extends Model {
     }
 
     //-------------------------------------------------
+    public function scopeBetweenDates($query, $from, $to)
+    {
+
+        if($from)
+        {
+            $from = Carbon::parse($from)
+                ->startOfDay()
+                ->toDateTimeString();
+        }
+
+        if($to)
+        {
+            $to = Carbon::parse($to)
+                ->endOfDay()
+                ->toDateTimeString();
+        }
+
+        $query->whereBetween('created_at',[$from,$to]);
+    }
+
+    //-------------------------------------------------
     public function updatedByUser()
     {
         return $this->belongsTo('WebReinvent\VaahCms\Entities\User',
@@ -203,7 +225,7 @@ class Media extends Model {
 
         if(isset($request->from) && isset($request->to))
         {
-            $list->whereBetween('created_at',[$request->from." 00:00:00",$request->to." 23:59:59"]);
+            $list->betweenDates($request['from'],$request['to']);
         }
 
         if(isset($request->month))

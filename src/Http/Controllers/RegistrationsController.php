@@ -123,7 +123,7 @@ class RegistrationsController extends Controller
             return response()->json($response);
         }
 
-        $response = Registration::store($request);
+        $response = Registration::postStore($request);
         return response()->json($response);
     }
     //----------------------------------------------------------

@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Str;
 use WebReinvent\VaahCms\Traits\CrudWithUuidObservantTrait;
 
@@ -65,6 +66,27 @@ class Permission extends Model {
     public function scopeExclude($query, $columns)
     {
         return $query->select( array_diff( $this->getTableColumns(),$columns) );
+    }
+
+    //-------------------------------------------------
+    public function scopeBetweenDates($query, $from, $to)
+    {
+
+        if($from)
+        {
+            $from = Carbon::parse($from)
+                ->startOfDay()
+                ->toDateTimeString();
+        }
+
+        if($to)
+        {
+            $to = Carbon::parse($to)
+                ->endOfDay()
+                ->toDateTimeString();
+        }
+
+        $query->whereBetween('updated_at',[$from,$to]);
     }
 
     //-------------------------------------------------
@@ -188,7 +210,7 @@ class Permission extends Model {
 
         if(isset($request->from) && isset($request->to))
         {
-            $list->whereBetween('updated_at',[$request->from." 00:00:00",$request->to." 23:59:59"]);
+            $list->betweenDates($request['from'],$request['to']);
         }
 
         if(isset($request['filter']) &&  $request['filter'])
@@ -231,7 +253,7 @@ class Permission extends Model {
 
     //-------------------------------------------------
 
-    public static function getDetail($id)
+    public static function getItem($id)
     {
 
         $item = Permission::where('id', $id)->with(['createdByUser', 'updatedByUser', 'deletedByUser'])
@@ -291,7 +313,7 @@ class Permission extends Model {
 
     }
     //-------------------------------------------------
-    public static function updateDetail($request,$id)
+    public static function postStore($request,$id)
     {
 
         $input = $request->item;

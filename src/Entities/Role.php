@@ -75,6 +75,27 @@ class Role extends Model {
     }
 
     //-------------------------------------------------
+    public function scopeBetweenDates($query, $from, $to)
+    {
+
+        if($from)
+        {
+            $from = \Illuminate\Support\Carbon::parse($from)
+                ->startOfDay()
+                ->toDateTimeString();
+        }
+
+        if($to)
+        {
+            $to = Carbon::parse($to)
+                ->endOfDay()
+                ->toDateTimeString();
+        }
+
+        $query->whereBetween('updated_at',[$from,$to]);
+    }
+
+    //-------------------------------------------------
     public function deletedByUser()
     {
         return $this->belongsTo('WebReinvent\VaahCms\Entities\User',
@@ -247,7 +268,7 @@ class Role extends Model {
 
         if(isset($request->from) && isset($request->to))
         {
-            $list->whereBetween('updated_at',[$request->from." 00:00:00",$request->to." 23:59:59"]);
+            $list->betweenDates($request['from'],$request['to']);
         }
 
         if($request['filter'] && $request['filter'] == '1')
@@ -286,7 +307,7 @@ class Role extends Model {
 
     }
     //-------------------------------------------------
-    public static function getDetail($id)
+    public static function getItem($id)
     {
 
         $item = Role::where('id', $id)->with(['createdByUser', 'updatedByUser', 'deletedByUser'])->withTrashed()->first();

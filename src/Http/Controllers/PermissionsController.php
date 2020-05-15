@@ -72,7 +72,7 @@ class PermissionsController extends Controller
             return response()->json($response);
         }
 
-        $response = Permission::getDetail($id);
+        $response = Permission::getItem($id);
         return response()->json($response);
 
     }
@@ -104,7 +104,7 @@ class PermissionsController extends Controller
             return response()->json($response);
         }
 
-        $response = Permission::updateDetail($request,$id);
+        $response = Permission::postStore($request,$id);
         return response()->json($response);
     }
 

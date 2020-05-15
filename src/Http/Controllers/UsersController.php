@@ -91,7 +91,7 @@ class UsersController extends Controller
             return response()->json($response);
         }
 
-        $response = User::getDetail($id);
+        $response = User::getItem($id);
         return response()->json($response);
     }
     //----------------------------------------------------------
@@ -112,7 +112,6 @@ class UsersController extends Controller
     //----------------------------------------------------------
     public function postStore(Request $request)
     {
-
         if(!\Auth::user()->hasPermission('can-update-users'))
         {
             $response['status'] = 'failed';
@@ -121,7 +120,7 @@ class UsersController extends Controller
             return response()->json($response);
         }
 
-        $response = User::store($request);
+        $response = User::postStore($request);
         return response()->json($response);
     }
     //----------------------------------------------------------

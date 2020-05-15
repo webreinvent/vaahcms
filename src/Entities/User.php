@@ -119,6 +119,25 @@ class User extends Authenticatable
     }
 
     //-------------------------------------------------
+    public function scopeBetweenDates($query, $from, $to)
+    {
+
+        if($from)
+        {
+            $from = Carbon::parse($from)
+                ->startOfDay()
+                ->toDateTimeString();
+        }
+
+        if($to)
+        {
+            $to = Carbon::parse($to)
+                ->endOfDay()
+                ->toDateTimeString();
+        }
+
+        $query->whereBetween('created_at',[$from,$to]);
+    }
     //-------------------------------------------------
 
     public function createdByUser()
@@ -782,7 +801,7 @@ class User extends Authenticatable
 
         if(isset($request['from']) && isset($request['to']))
         {
-            $list->whereBetween('created_at',[$request['from']." 00:00:00",$request['to']." 23:59:59"]);
+            $list->betweenDates($request['from'],$request['to']);
         }
 
         if(isset($request['status'])){
@@ -835,7 +854,7 @@ class User extends Authenticatable
 
     //-------------------------------------------------
 
-    public static function getDetail($id)
+    public static function getItem($id)
     {
 
         $item = static::where('id', $id)->with(['createdByUser', 'updatedByUser', 'deletedByUser'])->withTrashed();
@@ -886,7 +905,7 @@ class User extends Authenticatable
     }
 
     //-------------------------------------------------
-    public static function store($request)
+    public static function postStore($request)
     {
 
         $inputs = $request->all();

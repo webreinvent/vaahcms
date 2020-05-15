@@ -90,7 +90,7 @@ class RolesController extends Controller
             return response()->json($response);
         }
 
-        $response = Role::getDetail($id);
+        $response = Role::getItem($id);
         return response()->json($response);
 
     }
@@ -142,7 +142,7 @@ class RolesController extends Controller
             return response()->json($response);
         }
 
-        $response = Role::updateDetail($request,$id);
+        $response = Role::postStore($request,$id);
         return response()->json($response);
     }
     //----------------------------------------------------------
