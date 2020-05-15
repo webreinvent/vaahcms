@@ -19,6 +19,7 @@ class CreateVhThemeLocationsTable extends Migration
             $table->string('type')->nullable();
             $table->string('name',150)->nullable();
             $table->string('slug',150)->nullable();
+            $table->string('excerpt')->nullable();
             $table->timestamps();
         });
     }

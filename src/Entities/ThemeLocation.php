@@ -25,6 +25,7 @@ class ThemeLocation extends Model {
         'type',
         'name',
         'slug',
+        'excerpt',
     ];
 
     //-------------------------------------------------

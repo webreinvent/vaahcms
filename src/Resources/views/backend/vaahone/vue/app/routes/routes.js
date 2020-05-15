@@ -11,6 +11,7 @@ routes= [
 //----------Middleware
 import GetAssets from './middleware/GetAssets'
 import ResetRootAssets from './middleware/ResetRootAssets'
+import SetAssetsToReload from './middleware/SetAssetsToReload'
 import IfNotSetup from './middleware/IfNotSetup'
 import GetSetupStatus from './middleware/GetSetupStatus'
 import IsLoggedIn from './middleware/IsLoggedIn'
@@ -50,6 +51,7 @@ let routes_frontend =     {
             meta: {
                 middleware: [
                     GetAssets,
+                    SetAssetsToReload,
                     IfNotSetup,
                 ]
             },
@@ -120,7 +122,7 @@ routes_list =     {
             children: [
                 {
                     path: '/',
-                    name: 'setup.install',
+                    name: 'setup.install.configuration',
                     component: InstallConfiguration,
                     props: true,
                     meta: {

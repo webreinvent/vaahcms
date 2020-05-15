@@ -35,6 +35,7 @@ class Theme extends Model {
         'version_number',
         'db_table_prefix',
         'is_active',
+        'is_default',
         'is_migratable',
         'is_assets_published',
         'is_sample_data_available',
@@ -88,31 +89,10 @@ class Theme extends Model {
         return $this->morphMany('WebReinvent\VaahCms\Entities\Setting', 'settingable');
     }
     //-------------------------------------------------
-    public function formGroups()
-    {
-        return $this->morphMany('WebReinvent\VaahCms\Entities\Migration', 'groupable');
-    }
-    //-------------------------------------------------
-    public function themeTemplates()
+    public function templates()
     {
         return $this->hasMany(ThemeTemplate::class,
             'vh_theme_id', 'id');
-    }
-    //-------------------------------------------------
-    public function pageTemplates()
-    {
-        return $this->hasMany(ThemeTemplate::class,
-            'vh_theme_id', 'id')
-            ->where('type', 'page');
-    }
-
-    //-------------------------------------------------
-    public function defaultPageTemplate()
-    {
-        return $this->hasOne(ThemeTemplate::class,
-            'vh_theme_id', 'id')
-            ->where('type', 'page')
-            ->where('slug', 'default');
     }
     //-------------------------------------------------
     public static function getItem($id)
@@ -277,7 +257,49 @@ class Theme extends Model {
     //-------------------------------------------------
     public static function getActiveThemes()
     {
-        return static::where('is_active', 1)->get();
+        return static::where('is_active', 1)
+            ->orderBy('is_default', 'desc')
+            ->get();
+    }
+    //-------------------------------------------------
+    public static function getActiveThemesWithRelations()
+    {
+        return static::where('is_active', 1)
+            ->with(['templates.fields'])
+            ->orderBy('is_default', 'desc')
+            ->get();
+    }
+    //-------------------------------------------------
+    public static function getDefaultThemesAndTemplateWithRelations($content_slug)
+    {
+
+        $result['theme'] = static::whereNotNull('is_active')
+            ->with(['templates.fields'])
+            ->whereNotNull('is_default')
+            ->first();
+
+        $theme = static::whereNotNull('is_active')
+            ->whereNotNull('is_default')
+            ->with(['templates' => function($t) use ($content_slug){
+                $t->where('slug', $content_slug)->with(['fields']);
+            }])
+            ->first();
+
+        if($theme && isset($theme->templates[0]))
+        {
+            $result['template'] = $theme->templates;
+        } else {
+            $theme = static::whereNotNull('is_active')
+                ->whereNotNull('is_default')
+                ->with(['templates' => function($t) {
+                    $t->where('slug', 'default')->with(['fields']);
+                }])
+                ->first();
+
+            $result['template'] = $theme->templates;
+        }
+
+        return $result;
     }
     //-------------------------------------------------
     public static function validateDependencies($dependencies)
@@ -416,6 +438,25 @@ class Theme extends Model {
     {
         $item = static::slug($slug)->first();
         $item->is_active = null;
+        $item->save();
+        $response['status'] = 'success';
+        $response['data'][] = '';
+        $response['messages'][] = 'Action was successful';
+        if(env('APP_DEBUG'))
+        {
+            $response['hint'][] = '';
+        }
+        return $response;
+    }
+    //-------------------------------------------------
+    public static function makeItemAsDefault($slug)
+    {
+
+        //make all themes as not default
+        static::whereNotNull('is_default')->update(['is_default' => null]);
+
+        $item = static::slug($slug)->first();
+        $item->is_default = 1;
         $item->save();
         $response['status'] = 'success';
         $response['data'][] = '';
@@ -778,6 +819,7 @@ class Theme extends Model {
         return true;
     }
     //-------------------------------------------------
+
     //-------------------------------------------------
 
     //-------------------------------------------------

@@ -3,11 +3,15 @@
 <section class="section">
     <div class="container">
 
-        <ul>
-            @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul>
+
+        @foreach ($errors->all() as $error)
+        <div class="notification is-danger is-light">
+            {{ $error }}
+        </div>
+
+        @endforeach
+
+
 
     </div>
 </section>

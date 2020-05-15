@@ -6,8 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use VaahCms\Modules\Cms\Entities\MenuItem;
-use VaahCms\Modules\Cms\Entities\Page;
 use WebReinvent\VaahCms\Entities\Module;
+use WebReinvent\VaahCms\Entities\Theme;
 
 class WelcomeController extends Controller
 {
@@ -24,17 +24,37 @@ class WelcomeController extends Controller
     public function index()
     {
 
-        //if CMS module is not installed or active
-        if(!Module::slug('cms')->active()->exists())
+        $errors = [];
+        $is_cms_exists = Module::slug('cms')->active()->exists();
+
+        if(!$is_cms_exists)
         {
-            return view($this->theme.'::frontend.default');
+            $errors[] = 'Install and Activate CMS Module.';
+            return view($this->theme.'::frontend.welcome')->withErrors($errors);
         }
+
+        $is_theme_active = Theme::active()->count();
+
+        //if CMS module is not installed or active
+        if($is_theme_active < 1)
+        {
+            $errors[] = 'Install and Activate at least one theme.';
+            return view($this->theme.'::frontend.welcome')->withErrors($errors);
+        }
+
 
         $menu_item = MenuItem::where('is_home', 1)->first();
 
         if(!$menu_item)
         {
-            return view($this->theme.'::default');
+
+            //check if dedicated home page is exist
+            if (view()->exists($this->theme.'::home')) {
+                return view($this->theme.'::home');
+            } else {
+                return view($this->theme.'::default');
+            }
+
         }
 
         $template_name = 'default';

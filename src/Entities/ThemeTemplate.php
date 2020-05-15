@@ -25,6 +25,8 @@ class ThemeTemplate extends Model {
         'type',
         'name',
         'slug',
+        'file_path',
+        'excerpt',
     ];
 
     //-------------------------------------------------
@@ -60,160 +62,19 @@ class ThemeTemplate extends Model {
         return $query->whereBetween( 'deleted_at', array( $from, $to ) );
     }
     //-------------------------------------------------
-    public function formGroups()
+    public function fields()
     {
-        return $this->morphMany(FormGroup::class,
-            'groupable');
+        return $this->hasMany(ThemeTemplateField::class,
+            'vh_template_id', 'id')
+            ->orderBy('sort', 'asc');
     }
+    //-------------------------------------------------
 
     //-------------------------------------------------
 
     //-------------------------------------------------
-    public static function syncTemplateFieldsViaViewRendering($inputs)
-    {
-
-        $theme = session('theme');
-
-        if(!isset($theme))
-        {
-            $theme = Theme::active()->first();
-        }
-
-        $template = session('template');
-
-        $inputs['slug'] = Str::slug($inputs['name']);
-        $inputs['group_slug'] = $theme->slug."-".$template->slug."-".Str::slug($inputs['name']);
-
-        $group = FormGroup::firstOrCreate(['slug' => $inputs['group_slug']]);
-        $group->fill($inputs);
-        $group->slug = $inputs['group_slug'];
-        $group->is_auto_generated = true;
-        $group->save();
-
-        $template->formGroups()->save($group);
-
-        $field = FormField::where('vh_cms_form_group_id', $group->id)
-            ->where('slug', $inputs['slug'])->first();
-
-        if(!$field)
-        {
-            $field = new FormField();
-        }
-
-        $field->fill($inputs);
-        $field->vh_cms_form_group_id = $group->id;
-        $field->save();
-
-        $content  = ThemeTemplate::getPageFieldContent($field);
-
-        return $content;
-
-    }
-    //-------------------------------------------------
-    public static function getPageFieldContent($field)
-    {
-        $page = session('page')->toArray();
 
 
-        $content = Content::where('contentable_type', Page::class)
-            ->where('contentable_id', $page['id'])
-            ->where('vh_cms_form_group_id', $field->vh_cms_form_group_id)
-            ->where('vh_cms_form_field_id', $field->id)
-            ->first();
-
-        if ($content)
-        {
-            return $content->content;
-        }
-
-
-        return null;
-
-    }
-    //-------------------------------------------------
-    public static function syncPageTemplates()
-    {
-        $get_page_templates = vh_get_page_templates();
-
-        if(count($get_page_templates) > 0)
-        {
-            foreach ($get_page_templates as $template)
-            {
-                $template = str_replace(".blade.php", "", $template);
-
-                $slug = Str::slug($template);
-
-                $template_exist = ThemeTemplate::theme(vh_get_theme_id())
-                    ->slug($slug)
-                    ->first();
-
-                if(!$template_exist)
-                {
-
-                    $new_template = new ThemeTemplate();
-                    $new_template->name = slug_to_str($slug);
-                    $new_template->type = 'page';
-                    $new_template->slug = slug_to_str($slug);
-                    $new_template->vh_theme_id = vh_get_theme_id();
-                    $new_template->save();
-
-                }
-
-            }
-        }
-
-    }
-    //-------------------------------------------------
-    public static function getAssetsList()
-    {
-
-        ThemeTemplate::syncPageTemplates();
-
-        $list = ThemeTemplate::theme(vh_get_theme_id())->get();
-
-        $result = [];
-        $i = 0;
-        foreach ($list as $item)
-        {
-
-            $result[$i]['name'] = $item->name;
-            $result[$i]['id'] = $item->id;
-
-            $i++;
-        }
-
-        return $result;
-
-    }
-    //-------------------------------------------------
-    public static function getDefaultPageTemplate()
-    {
-
-        $item = ThemeTemplate::theme(vh_get_theme_id())
-            ->where('type', 'page')
-            ->where('slug', 'default')
-            ->first();
-
-        $result['name'] = $item->name;
-        $result['id'] = $item->id;
-
-        return $result;
-
-    }
-    //-------------------------------------------------
-    public static function syncTemplateCustomFields($template_id)
-    {
-        $template = ThemeTemplate::find($template_id);
-
-        \Session::put('template', $template);
-
-        //sync all the fields types
-        view(vh_get_theme_slug()."::page-templates.".$template->slug)->render();
-
-        $template = ThemeTemplate::find($template->id);
-
-        return $template;
-    }
     //-------------------------------------------------
 
 }

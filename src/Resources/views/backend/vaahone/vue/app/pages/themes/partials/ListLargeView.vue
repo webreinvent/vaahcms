@@ -43,7 +43,36 @@
                                       @click="actions('activate', props.row)">
                                 Activate
                             </b-button>
+
                         </p>
+
+
+                        <p v-if="hasPermission('can-activate-theme') && props.row.is_active"
+                           class="control">
+
+                            <b-tooltip label="This theme is marked as Default" v-if="props.row.is_default"
+                                       type="is-dark">
+                                <b-button
+                                    size="is-small"
+                                    icon-left="check"
+                                    type="is-success">
+                                </b-button>
+                            </b-tooltip>
+
+                            <b-tooltip label="Mark this theme as Default" v-else
+                                       type="is-dark">
+                                <b-button
+                                    size="is-small"
+                                    type="is-success"
+                                    @click="actions('make_default', props.row)">
+                                    Make Default
+                                </b-button>
+                            </b-tooltip>
+
+                        </p>
+
+
+
                         <p class="control" v-if="props.row.is_active && props.row.is_sample_data_available && hasPermission('can-import-sample-data-in-theme')">
                             <b-tooltip label="Import Sample Data" type="is-dark">
                                 <b-button size="is-small"

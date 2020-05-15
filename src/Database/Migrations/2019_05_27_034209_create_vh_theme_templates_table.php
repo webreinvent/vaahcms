@@ -19,6 +19,8 @@ class CreateVhThemeTemplatesTable extends Migration
             $table->string('type')->nullable();
             $table->string('name',150)->nullable();
             $table->string('slug',150)->nullable();
+            $table->string('file_path')->nullable();
+            $table->string('excerpt')->nullable();
             $table->timestamps();
         });
     }

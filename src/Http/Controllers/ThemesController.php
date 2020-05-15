@@ -232,6 +232,17 @@ class ThemesController extends Controller
                 $response = Theme::activateItem($theme->slug);
                 break;
             //---------------------------------------
+            case 'make_default':
+                if(!\Auth::user()->hasPermission('can-activate-theme'))
+                {
+                    $response['status'] = 'failed';
+                    $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+                    return response()->json($response);
+                }
+                $response = Theme::makeItemAsDefault($theme->slug);
+                break;
+            //---------------------------------------
             case 'deactivate':
                 if(!\Auth::user()->hasPermission('can-deactivate-theme'))
                 {
@@ -242,6 +253,8 @@ class ThemesController extends Controller
                 }
                 $response = Theme::deactivateItem($theme->slug);
                 break;
+            //---------------------------------------
+
             //---------------------------------------
             case 'import_sample_data':
                 if(!\Auth::user()->hasPermission('can-import-sample-data-in-theme'))

@@ -115,16 +115,15 @@ function vh_get_vaahcms_theme()
 //-----------------------------------------------------------------------------------
 function vh_get_theme_from_slug($theme_slug=null)
 {
-    if(!$theme_slug)
+
+    $theme = \WebReinvent\VaahCms\Entities\Theme::whereNotNull('is_active')
+        ->whereNotNull('is_default')
+        ->first();
+
+
+    if(!$theme)
     {
         return vh_get_vaahcms_theme();
-    }
-
-    if(is_null($theme_slug))
-    {
-        $theme = \WebReinvent\VaahCms\Entities\Theme::whereNotNull('is_active')->first();
-    } else{
-        $theme = \WebReinvent\VaahCms\Entities\Theme::where('slug', $theme_slug)->first();
     }
 
     return $theme;

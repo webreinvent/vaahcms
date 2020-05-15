@@ -29,6 +29,7 @@ class CreateVhThemesTable extends Migration
             $table->integer('version_number')->nullable();
             $table->string('db_table_prefix')->nullable();
             $table->boolean('is_migratable')->nullable();
+            $table->boolean('is_default')->nullable();
             $table->boolean('is_sample_data_available')->nullable();
             $table->boolean('is_update_available')->nullable();
             $table->boolean('is_assets_published')->nullable();
