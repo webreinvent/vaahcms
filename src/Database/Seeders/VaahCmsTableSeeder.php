@@ -20,6 +20,8 @@ class VaahCmsTableSeeder extends Seeder
         $this->seedLanguageCategories();
         $this->seedLanguageStrings();
         $this->seedSettings();
+        $this->seedNotifications();
+        $this->seedNotificationContent();
 
     }
     //------------------------------------------------------------
@@ -57,7 +59,7 @@ class VaahCmsTableSeeder extends Seeder
         }
     }
     //---------------------------------------------------------------
-    public function storeSeedsWithUuid($table, $list, $primary_key='slug', $create_slug=true, $create_slug_from='name')
+    public function storeSeedsWithUuid($table, $list,$has_active=true, $primary_key='slug', $create_slug=true, $create_slug_from='name')
     {
         foreach ($list as $item)
         {
@@ -67,7 +69,10 @@ class VaahCmsTableSeeder extends Seeder
             }
 
             $item['uuid'] = Str::uuid();
-            $item['is_active'] = 1;
+
+            if($has_active){
+                $item['is_active'] = 1;
+            }
 
             $record = DB::table($table)
                 ->where($primary_key, $item[$primary_key])
@@ -200,6 +205,50 @@ class VaahCmsTableSeeder extends Seeder
             }
         }
 
+    }
+
+
+    //---------------------------------------------------------------
+    public function seedNotifications()
+    {
+        $list = $this->getListFromJson("notifications.json");
+        $this->storeSeedsWithUuid('vh_notifications', $list,false);
+    }
+
+
+    //---------------------------------------------------------------
+    public function seedNotificationContent()
+    {
+        $list = $this->getListFromJson("notification_contents.json");
+
+        foreach($list as $item)
+        {
+            $notification = \DB::table( 'vh_notifications' )
+                ->where( 'slug', $item['slug'] )
+                ->first();
+
+            $exist = \DB::table( 'vh_notification_contents' )
+                ->where( 'vh_notification_id', $notification->id )->where('sort',  $item['sort'])
+                ->where('via',  $item['via'])
+                ->first();
+
+            $item['vh_notification_id'] = $notification->id;
+
+            if(isset($item['meta'])){
+                $item['meta'] = json_encode($item['meta']);
+            }
+
+            unset($item['slug']);
+
+
+            if(!$exist)
+            {
+                DB::table('vh_notification_contents')->insert($item);
+            } else{
+                DB::table('vh_notification_contents')->where('sort',  $item['sort'])
+                    ->update($item);
+            }
+        }
     }
     //---------------------------------------------------------------
     //---------------------------------------------------------------

@@ -210,6 +210,12 @@ function vh_notification_actions()
         [
             'name'=>'#!ROUTE:VH.REGISTER!#'
         ],
+        [
+            'name'=>'#!ROUTE:VH.RESET!#'
+        ],
+        [
+            'name'=>'#!ROUTE:VH.VERIFICATION!#'
+        ],
     ];
 
     return $list;

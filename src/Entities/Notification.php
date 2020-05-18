@@ -189,14 +189,36 @@ class Notification extends Model {
         $item->fill($inputs);
         $item->save();
 
-
         if(count($request->contents) > 0)
         {
-            foreach ($request->contents as $vias)
+            foreach ($request->contents as $key => $vias)
             {
                 if(count($vias) < 1)
                 {
                     continue;
+                }
+
+                $list = NotificationContent::where('vh_notification_id', $vias[0]['vh_notification_id'])
+                    ->where('via',  'mail')->get();
+
+                if($key == 'mail'){
+                    foreach ($list as $item){
+
+                        $count = 0;
+
+                        foreach ($vias as $via){
+                            if(isset($via['id']) && $via['id']){
+                                if($via['id'] == $item['id']){
+                                    $count++;
+                                }
+                            }
+                        }
+
+                        if($count == 0){
+                            $item->forceDelete();
+                        }
+
+                    }
                 }
 
                 foreach ($vias as $via)
@@ -213,13 +235,17 @@ class Notification extends Model {
                     ->where('sort', $via['sort'])
                     ->where('via', $via['via'])->first();
 
-
                     if(!$content)
                     {
-                        $content = new NotificationContent($via);
+                        $new_content = new NotificationContent();
+                        $new_content->fill($via);
+                        $new_content->save();
+
+                    }else{
+                        $content->fill($via);
+                        $content->save();
                     }
 
-                    $item->contents()->save($content);
                 }
 
             }

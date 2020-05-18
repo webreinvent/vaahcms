@@ -69,7 +69,7 @@ Route::group(
             ],
             function () {
                 //------------------------------------------------
-                Route::post( '/users/{name?}', 'JsonController@getUsers' )
+                Route::get( '/users/{name?}', 'JsonController@getUsers' )
                     ->name( 'vh.backend.json.users' );
                 //------------------------------------------------
 

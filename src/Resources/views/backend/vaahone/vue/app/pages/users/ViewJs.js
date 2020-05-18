@@ -32,8 +32,10 @@ export default {
     },
     watch: {
         $route(to, from) {
-            this.updateView();
-            this.getItem();
+            if (to.query.page) {
+                this.updateView();
+                this.getItem();
+            }
         }
     },
     mounted() {
