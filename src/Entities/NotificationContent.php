@@ -79,6 +79,11 @@ class NotificationContent extends Model {
         )->select('id', 'uuid', 'first_name', 'last_name', 'email');
     }
     //-------------------------------------------------
+    public static function deleteItem($id)
+    {
+        static::where('id',$id)->forceDelete();
+    }
+    //-------------------------------------------------
     //-------------------------------------------------
     //-------------------------------------------------
 

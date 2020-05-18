@@ -198,26 +198,22 @@ class Notification extends Model {
                     continue;
                 }
 
-                $list = NotificationContent::where('vh_notification_id', $vias[0]['vh_notification_id'])
-                    ->where('via',  'mail')->get();
 
                 if($key == 'mail'){
-                    foreach ($list as $item){
+                    $list = NotificationContent::where('vh_notification_id', $vias[0]['vh_notification_id'])
+                        ->where('via',  'mail')->pluck('id')->toArray();
 
-                        $count = 0;
+                    $input_groups = collect($vias)->pluck('id')->toArray();
 
-                        foreach ($vias as $via){
-                            if(isset($via['id']) && $via['id']){
-                                if($via['id'] == $item['id']){
-                                    $count++;
-                                }
-                            }
+
+                    $groups_to_delete = array_diff($list, $input_groups);
+
+                    if(count($groups_to_delete) > 0)
+                    {
+                        foreach ($groups_to_delete as $id)
+                        {
+                            NotificationContent::deleteItem($id);
                         }
-
-                        if($count == 0){
-                            $item->forceDelete();
-                        }
-
                     }
                 }
 
