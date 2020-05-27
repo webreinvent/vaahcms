@@ -78,9 +78,6 @@ class JsonController extends Controller
         //-----/Vue Messages----------------------
 
 
-
-
-
         if(\Auth::check())
         {
             $data['auth_user'] = [

@@ -24,7 +24,6 @@
     "ixudra/curl": "*",
     "nahid/linkify": "*",
     "php-imap/php-imap": "*",
-    "stevebauman/purify": "*",
     "zanysoft/laravel-zip": "^1.0",
     "doctrine/dbal": "^2.10"
   },
