@@ -42,32 +42,23 @@ class WelcomeController extends Controller
             return view($this->theme.'::frontend.welcome')->withErrors($errors);
         }
 
+        $menu_item = MenuItem::getHomePage();
 
-        $menu_item = MenuItem::where('is_home', 1)->first();
 
         if(!$menu_item)
         {
-
             //check if dedicated home page is exist
-            if (view()->exists($this->theme.'::home')) {
-                return view($this->theme.'::home');
+            if (view()->exists()) {
+                return view($this->theme.'::frontend.home');
             } else {
-                return view($this->theme.'::default');
+                return view($this->theme.'::frontend.default');
             }
-
         }
 
-        $template_name = 'default';
-
-        $page = $menu_item->page()->first();
-
-        if($page->template)
-        {
-            $template_name = $page->template->slug;
-        }
+        $blade = $menu_item->content->theme->slug.'::'.$menu_item->content->template->file_path;
 
 
-        return view($this->theme.'::frontend.page-templates.'.$template_name)->with('data', $page);
+        return view($blade)->with('content', $menu_item->content);
 
 
     }

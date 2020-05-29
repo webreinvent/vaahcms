@@ -64,6 +64,11 @@ class ThemeTemplate extends Model {
         return $query->whereBetween( 'deleted_at', array( $from, $to ) );
     }
     //-------------------------------------------------
+    public function theme()
+    {
+        return $this->belongsTo(Theme::class, 'vh_theme_id', 'id');
+    }
+    //-------------------------------------------------
     public function groups()
     {
         return $this->morphMany(FormGroup::class, 'groupable');
