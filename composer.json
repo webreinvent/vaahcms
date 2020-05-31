@@ -25,7 +25,19 @@
     "zanysoft/laravel-zip": "^1.0.3",
     "doctrine/dbal": "^2.10.2"
   },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "WebReinvent\\VaahCms\\VaahCmsServiceProvider"
+            ],
+            "aliases": {
+            }
+        }
+    },
   "autoload": {
+      "classmap": [
+          "src/"
+      ],
     "psr-4": {
       "WebReinvent\\VaahCms\\": "src/"
     },
