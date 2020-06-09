@@ -14,21 +14,30 @@
   "require": {
     "php": "^7.2",
     "webreinvent/laravel-nestable": "*",
-    "barryvdh/laravel-dompdf": "*",
-    "berkayk/onesignal-laravel": "*",
-    "bugsnag/bugsnag-laravel": "*",
-    "composer/composer": "^1.8",
+    "barryvdh/laravel-dompdf": "^0.8.6",
+    "berkayk/onesignal-laravel": "^1.0.5",
+    "composer/composer": "^1.10.6",
     "creativeorange/gravatar": "^1.0",
     "intervention/image": "^2.5",
-    "maatwebsite/excel": "*",
-    "ixudra/curl": "*",
-    "nahid/linkify": "*",
-    "php-imap/php-imap": "*",
-    "stevebauman/purify": "*",
-    "zanysoft/laravel-zip": "^1.0",
-    "doctrine/dbal": "^2.10"
+    "maatwebsite/excel": "^3.1.19",
+    "ixudra/curl": "^6.19.0",
+    "nahid/linkify": "^1.0.0",
+    "zanysoft/laravel-zip": "^1.0.3",
+    "doctrine/dbal": "^2.10.2"
   },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "WebReinvent\\VaahCms\\VaahCmsServiceProvider"
+            ],
+            "aliases": {
+            }
+        }
+    },
   "autoload": {
+      "classmap": [
+          "src/"
+      ],
     "psr-4": {
       "WebReinvent\\VaahCms\\": "src/"
     },

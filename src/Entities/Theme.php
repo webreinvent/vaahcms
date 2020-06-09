@@ -95,6 +95,12 @@ class Theme extends Model {
             'vh_theme_id', 'id');
     }
     //-------------------------------------------------
+    public function locations()
+    {
+        return $this->hasMany(ThemeLocation::class,
+            'vh_theme_id', 'id');
+    }
+    //-------------------------------------------------
     public static function getItem($id)
     {
 
@@ -262,6 +268,14 @@ class Theme extends Model {
             ->get();
     }
     //-------------------------------------------------
+    public static function getActiveThemesWithLocations()
+    {
+        return static::where('is_active', 1)
+            ->with(['locations.menus.items.content'])
+            ->orderBy('is_default', 'desc')
+            ->get();
+    }
+    //-------------------------------------------------
     public static function getActiveThemesWithRelations()
     {
         return static::where('is_active', 1)
@@ -274,29 +288,30 @@ class Theme extends Model {
     {
 
         $result['theme'] = static::whereNotNull('is_active')
-            ->with(['templates.fields'])
+            ->with(['templates.groups.fields.type'])
             ->whereNotNull('is_default')
             ->first();
 
         $theme = static::whereNotNull('is_active')
             ->whereNotNull('is_default')
             ->with(['templates' => function($t) use ($content_slug){
-                $t->where('slug', $content_slug)->with(['fields']);
+                $t->where('slug', $content_slug)->with(['groups.fields.type']);
             }])
             ->first();
 
         if($theme && isset($theme->templates[0]))
         {
-            $result['template'] = $theme->templates;
+            $result['template'] = $theme->templates[0];
         } else {
             $theme = static::whereNotNull('is_active')
                 ->whereNotNull('is_default')
                 ->with(['templates' => function($t) {
-                    $t->where('slug', 'default')->with(['fields']);
+                    $t->where('slug', 'default')->with(['groups.fields.type']);
                 }])
                 ->first();
 
-            $result['template'] = $theme->templates;
+            $result['template'] = $theme->templates[0];
+
         }
 
         return $result;
