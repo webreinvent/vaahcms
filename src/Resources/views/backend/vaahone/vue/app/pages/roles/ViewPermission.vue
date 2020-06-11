@@ -100,21 +100,23 @@
                                         </option>
                                     </b-select>
 
-                                    <b-select placeholder="- Select a section -"
-                                              v-if="page.assets.module.some(item => item.module === filter.module)"
-                                              v-model="filter.section"
-                                              @input="getItemPermissions()">
-                                        <option value="">
-                                            - Select a section -
-                                        </option>
-                                        <option
-                                                v-for="option in moduleSectionList"
-                                                :value="option.section"
-                                                :key="option.section">
-                                            {{  option.section.charAt(0).toUpperCase() + option.section.slice(1) }}
-                                        </option>
-                                    </b-select>
-
+                                    <div v-for="item in page.assets.module">
+                                        <b-select placeholder="- Select a section -"
+                                                  v-if="item.module === filter.module"
+                                                  v-model="filter.section"
+                                                  @input="getItemPermissions()">
+                                            <option value="">
+                                                - Select a section -
+                                            </option>
+                                            <option
+                                                    v-for="option in moduleSectionList"
+                                                    :value="option.section"
+                                                    :key="option.section">
+                                                {{  option.section.charAt(0).toUpperCase() + option.section.slice(1) }}
+                                            </option>
+                                        </b-select>
+                                    </div>
+                                    
                                 </b-field>
 
 

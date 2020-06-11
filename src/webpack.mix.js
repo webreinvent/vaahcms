@@ -52,9 +52,9 @@ if (mix.inProduction()) {
     mix.sass(source_theme_folder+'/scss/backend.scss', output_theme_folder+'css/');
 
 
-    //mix.js(source_vue_folder+"/ui/app.js",  output_theme_folder+'/builds/ui.js');
-    //mix.js(source_vue_folder+"/app/app.js",  output_theme_folder+'/builds/app.js');
-    //mix.js(source_vue_folder+"/app/app-extended.js",  output_theme_folder+'/builds/app-extended.js');
+    mix.js(source_vue_folder+"/ui/app.js",  output_theme_folder+'/builds/ui.js');
+    mix.js(source_vue_folder+"/app/app.js",  output_theme_folder+'/builds/app.js');
+    mix.js(source_vue_folder+"/app/app-extended.js",  output_theme_folder+'/builds/app-extended.js');
 
 }
 

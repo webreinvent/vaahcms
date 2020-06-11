@@ -24,6 +24,9 @@ Route::group(
         Route::post('/item/{id}/permissions', 'RolesController@getItemPermission')
             ->name('backend.vaah.roles.item.permissions');
         //---------------------------------------------------------
+        Route::post('/getModuleSections', 'RolesController@getModuleSections')
+            ->name('backend.vaah.roles.getModuleSections');
+        //---------------------------------------------------------
         Route::get('/item/{id}/users', 'RolesController@getItemUser')
             ->name('backend.vaah.roles.item.users');
         //---------------------------------------------------------

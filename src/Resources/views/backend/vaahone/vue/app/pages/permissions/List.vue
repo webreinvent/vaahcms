@@ -81,7 +81,6 @@
                                     </div>
                                     <!--/left-->
 
-
                                     <!--right-->
                                     <div class="level-right">
 
@@ -162,20 +161,22 @@
                                                     </optgroup>
                                                 </b-select>
 
-                                                <b-select placeholder="- Select a section -"
-                                                          v-if="page.assets.module.some(item => item.module === query_string.filter)"
-                                                          v-model="query_string.section"
-                                                          @input="getList()">
-                                                    <option value="">
-                                                        - Select a section -
-                                                    </option>
-                                                    <option
-                                                            v-for="option in moduleSection"
-                                                            :value="option.section"
-                                                            :key="option.section">
-                                                        {{  option.section.charAt(0).toUpperCase() + option.section.slice(1) }}
-                                                    </option>
-                                                </b-select>
+                                                <div v-for="item in page.assets.module">
+                                                    <b-select  placeholder="- Select a section -"
+                                                               v-if="item.module === query_string.filter"
+                                                               v-model="query_string.section"
+                                                               @input="getList()">
+                                                        <option value="">
+                                                            - Select a section -
+                                                        </option>
+                                                        <option
+                                                                v-for="option in moduleSection"
+                                                                :value="option.section"
+                                                                :key="option.section">
+                                                            {{  option.section.charAt(0).toUpperCase() + option.section.slice(1) }}
+                                                        </option>
+                                                    </b-select>
+                                                </div>
                                             </b-field>
 
 
