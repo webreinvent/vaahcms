@@ -62,11 +62,17 @@ class ExtendController extends Controller
     public static function sidebarMenu()
     {
 
-        $list[0] = [
-            'link' => self::$link,
-            'icon' => 'tachometer-alt',
-            'label'=> 'Dashboard'
-        ];
+
+        if(\Auth::user()->hasPermission('has-access-of-dashboard'))
+        {
+            $list[0] = [
+                'link' => self::$link,
+                'icon' => 'tachometer-alt',
+                'label'=> 'Dashboard'
+            ];
+        }
+
+
 
 
         if(\Auth::user()->hasPermission('has-access-of-registrations-section') ||
@@ -141,29 +147,36 @@ class ExtendController extends Controller
             ];
         }
 
-        $list[3] = [
-            'link' => '#',
-            'icon'=> 'cog',
-            'label'=> 'Settings',
-            'child' => [
-                [
-                    'link' => self::$link."/settings/general",
-                    'label'=> 'General'
-                ],
-                [
-                    'link' => self::$link."/settings/env-variables",
-                    'label'=> 'Env Variables'
-                ],
-                [
-                    'link' => self::$link."/settings/localization",
-                    'label'=> 'Localization'
-                ],
-                [
-                    'link' => self::$link."/settings/notifications",
-                    'label'=> 'Notifications'
-                ],
-            ]
-        ];
+
+        if(\Auth::user()->hasPermission('has-access-of-setting-section'))
+        {
+            $list[3] = [
+                'link' => '#',
+                'icon'=> 'cog',
+                'label'=> 'Settings',
+                'child' => [
+                    [
+                        'link' => self::$link."/settings/general",
+                        'label'=> 'General'
+                    ],
+                    [
+                        'link' => self::$link."/settings/env-variables",
+                        'label'=> 'Env Variables'
+                    ],
+                    [
+                        'link' => self::$link."/settings/localization",
+                        'label'=> 'Localization'
+                    ],
+                    [
+                        'link' => self::$link."/settings/notifications",
+                        'label'=> 'Notifications'
+                    ],
+                ]
+            ];
+        }
+
+
+
 
 
         if(\Auth::user()->hasPermission('has-access-of-media-section'))
