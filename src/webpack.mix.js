@@ -35,7 +35,7 @@ if (mix.inProduction()) {
 
 
     // mix.js(source_vue_folder+"/ui/app.js",  output_theme_folder+'/builds/ui.js');
-    // mix.js(source_vue_folder+"/app/app.js",  output_theme_folder+'/builds/app.js');
+    mix.js(source_vue_folder+"/app/app.js",  output_theme_folder+'/builds/app.js');
     // mix.js(source_vue_folder+"/app/app-extended.js",  output_theme_folder+'/builds/app-extended.js');
 
 

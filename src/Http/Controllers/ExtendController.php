@@ -68,11 +68,18 @@ class ExtendController extends Controller
             'label'=> 'Dashboard'
         ];
 
-        $list[1] = [
-            'link' => '#',
-            'icon' => 'users-cog',
-            'label'=> 'Users & Access',
-        ];
+
+        if(\Auth::user()->hasPermission('has-access-of-registrations-section') ||
+            \Auth::user()->hasPermission('has-access-of-users-section') ||
+            \Auth::user()->hasPermission('has-access-of-roles-section') ||
+            \Auth::user()->hasPermission('has-access-of-permissions-section'))
+        {
+            $list[1] = [
+                'link' => '#',
+                'icon' => 'users-cog',
+                'label'=> 'Users & Access',
+            ];
+        }
 
         if(\Auth::user()->hasPermission('has-access-of-registrations-section'))
         {
@@ -107,21 +114,32 @@ class ExtendController extends Controller
             ];
         }
 
-        $list[2] = [
-            'link' => "#",
-            'icon' => "cubes",
-            'label'=> 'Extend',
-            'child' => [
-                [
-                    'link' => self::$link."/modules/",
-                    'label'=> 'Modules'
-                ],
-                [
-                    'link' => self::$link."/themes/",
-                    'label'=> 'Themes'
-                ]
-            ]
-        ];
+
+        if(\Auth::user()->hasPermission('has-access-of-module-section') ||
+            \Auth::user()->hasPermission('has-access-of-theme-section'))
+        {
+            $list[2] = [
+                'link' => "#",
+                'icon' => "cubes",
+                'label'=> 'Extend',
+            ];
+        }
+
+        if(\Auth::user()->hasPermission('has-access-of-module-section'))
+        {
+            $list[2]['child'][] =  [
+                'link' => self::$link."/modules/",
+                'label'=> 'Modules'
+            ];
+        }
+
+        if(\Auth::user()->hasPermission('has-access-of-theme-section'))
+        {
+            $list[2]['child'][] =  [
+                'link' => self::$link."/themes/",
+                'label'=> 'Themes'
+            ];
+        }
 
         $list[3] = [
             'link' => '#',
@@ -148,17 +166,22 @@ class ExtendController extends Controller
         ];
 
 
-        $list[4] = [
-            'link' => '#',
-            'icon'=> 'photo-video',
-            'label'=> 'Manage',
-            'child' => [
-                [
-                    'link' => self::$link."/manage/media",
-                    'label'=> 'Media'
-                ],
-            ]
-        ];
+        if(\Auth::user()->hasPermission('has-access-of-media-section'))
+        {
+            $list[4] = [
+                'link' => '#',
+                'icon'=> 'photo-video',
+                'label'=> 'Manage',
+                'child' => [
+                    [
+                        'link' => self::$link."/manage/media",
+                        'label'=> 'Media'
+                    ],
+                ]
+            ];
+        }
+
+
 
         $response['status'] = 'success';
         $response['data'] = $list;
