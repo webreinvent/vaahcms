@@ -824,11 +824,11 @@ class User extends Authenticatable
         if(isset($request['q']))
         {
             $list->where(function ($q) use ($request){
-                $q->where('first_name', 'LIKE', '%'.$request->q.'%')
-                    ->orWhere('last_name', 'LIKE', '%'.$request->q.'%')
-                    ->orWhere('middle_name', 'LIKE', '%'.$request->q.'%')
-                    ->orWhere('email', 'LIKE', '%'.$request->q.'%')
-                    ->orWhere('id', '=', $request->q);
+                $q->where('first_name', 'LIKE', '%'.$request['q'].'%')
+                    ->orWhere('last_name', 'LIKE', '%'.$request['q'].'%')
+                    ->orWhere('middle_name', 'LIKE', '%'.$request['q'].'%')
+                    ->orWhere('email', 'LIKE', '%'.$request['q'].'%')
+                    ->orWhere('id', '=', $request['q']);
             });
         }
 
