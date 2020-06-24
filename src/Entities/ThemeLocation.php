@@ -25,6 +25,7 @@ class ThemeLocation extends Model {
         'type',
         'name',
         'slug',
+        'excerpt',
     ];
 
     //-------------------------------------------------
@@ -65,6 +66,11 @@ class ThemeLocation extends Model {
     }
 
     //-------------------------------------------------
+    public function menus()
+    {
+        return $this->hasMany(Menu::class,
+            'vh_theme_location_id', 'id');
+    }
 
     //-------------------------------------------------
 

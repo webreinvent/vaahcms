@@ -28,6 +28,23 @@ function vh_get_all_modules_paths()
 
 }
 //-----------------------------------------------------------------------------------
+function vh_get_all_modules_names()
+{
+    $list = vh_get_all_modules_paths();
+
+    $names = null;
+
+    if(count($list)>0)
+    {
+        foreach ($list as $item)
+        {
+            $names[] = basename($item);
+        }
+    }
+
+    return $names;
+}
+//-----------------------------------------------------------------------------------
 function vh_get_module_settings_from_path($plugin_path)
 {
     $path_settings = $plugin_path.'/settings.json';
@@ -43,9 +60,9 @@ function vh_get_module_settings_from_path($plugin_path)
     return null;
 }
 //-----------------------------------------------------------------------------------
-function vh_get_module_settings_from_name($plugin_name)
+function vh_get_module_settings_from_name($module_name)
 {
-    $path = vh_get_module_path($plugin_name);
+    $path = vh_get_module_path($module_name);
 
     $path_settings = $path.'/settings.json';
 
@@ -76,6 +93,24 @@ function vh_module_assets_url($name, $file_path)
     $version = config($slug.'.version');
     $url = url("vaahcms/modules/".$slug."/assets/".$file_path)."?v=".$version;
     return $url;
+}
+//-----------------------------------------------------------------------------------
+function vh_module_migrations_path($module_name)
+{
+    $path =config('vaahcms.modules_path')."/".$module_name."/Database/Migrations/";
+    $path = str_replace(base_path()."/", "", $path);
+    return $path;
+}
+//-----------------------------------------------------------------------------------
+function vh_module_database_seeder($module_name)
+{
+    return config('vaahcms.root_folder')."\Modules\\{$module_name}\\Database\Seeds\DatabaseTableSeeder";
+}
+//-----------------------------------------------------------------------------------
+function vh_module_namespace($module_name)
+{
+    $namespace = "VaahCms\Modules\\".$module_name;
+    return $namespace;
 }
 //-----------------------------------------------------------------------------------
 function vh_module_service_provider_name($module_name)

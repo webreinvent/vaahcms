@@ -197,6 +197,21 @@ class Language extends Model {
 
     }
     //-------------------------------------------------
+    public static function getLangList()
+    {
+        $lang_list =  Language::orderBy('default','desc')->get();
+
+        foreach ($lang_list as $item){
+            $total = LanguageString::where('vh_lang_language_id',$item->id)->count();
+            $not_empty = LanguageString::where('vh_lang_language_id',$item->id)->whereNOtNull('content')->count();
+
+            $item['total'] = $total;
+            $item['not_empty'] = $not_empty;
+
+        }
+        return $lang_list;
+    }
+    //-------------------------------------------------
     //-------------------------------------------------
 
 

@@ -1,6 +1,7 @@
-<?php
+<?php namespace WebReinvent\VaahCms\Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
 class VaahCmsTableSeeder extends Seeder
@@ -13,102 +14,97 @@ class VaahCmsTableSeeder extends Seeder
      */
     public function run()
     {
-
         $this->seedPermissions();
         $this->seedRoles();
         $this->seedLanguages();
         $this->seedLanguageCategories();
+        $this->seedLanguageStrings();
+        $this->seedSettings();
+        $this->seedNotifications();
+        $this->seedNotificationContent();
 
     }
-
-    /**
-     * Run the database seeds.
-     *
-     * @return void
-     */
-    function seedPermissions()
+    //------------------------------------------------------------
+    //------------------------------------------------------------
+    public function getListFromJson($json_file_name)
     {
-        $permissions = [
-            'Can Access Admin Section',
-            'Can Manage Users',
-        ];
-
-        $list = [];
-        foreach ($permissions as $permission)
+        $json_file = __DIR__."/json/".$json_file_name;
+        $jsonString = file_get_contents($json_file);
+        $list = json_decode($jsonString, true);
+        return $list;
+    }
+    //---------------------------------------------------------------
+    public function storeSeeds($table, $list, $primary_key='slug', $create_slug=true, $create_slug_from='name')
+    {
+        foreach ($list as $item)
         {
-            $list[] = [
-                'name' => $permission,
-                'slug' => Str::slug($permission),
-                'module' => 'vaahcms',
-                'section' => 'admin',
-                'details' => 'This will allow user to access admin control panel',
-                'is_active' => 1,
-            ];
-        }
+            if($create_slug)
+            {
+                $item['slug'] = Str::slug($item[$create_slug_from]);
+            }
 
 
-        foreach($list as $item)
-        {
-            $exist = \DB::table( 'vh_permissions' )
-                ->where( 'slug', $item['slug'] )
+            $record = DB::table($table)
+                ->where($primary_key, $item[$primary_key])
                 ->first();
 
-            if (!$exist){
-                \DB::table( 'vh_permissions' )->insert( $item );
+
+            if(!$record)
+            {
+                DB::table($table)->insert($item);
+            } else{
+                DB::table($table)->where($primary_key, $item[$primary_key])
+                    ->update($item);
             }
         }
-
     }
-
-
-    /**
-     * Run the database seeds.
-     *
-     * @return void
-     */
-    function seedRoles()
+    //---------------------------------------------------------------
+    public function storeSeedsWithUuid($table, $list,$has_active=true, $primary_key='slug', $create_slug=true, $create_slug_from='name')
     {
-        $list = [
-            [
-                'name' => 'Admin',
-                'slug' => 'admin',
-                'details' => 'Users who have admin roles has all the permission access and manage the data.',
-                'is_active' => 1,
-            ],
-            [
-                'name' => 'Registered',
-                'slug' => 'registered',
-                'details' => 'Users who have registered roles can access only public website.',
-                'is_active' => 1,
-            ],
-        ];
-
-
-        foreach($list as $item)
+        foreach ($list as $item)
         {
-            $exist = \DB::table( 'vh_roles' )
-                ->where( 'slug', $item['slug'] )
+            if($create_slug)
+            {
+                $item['slug'] = Str::slug($item[$create_slug_from]);
+            }
+
+            $item['uuid'] = Str::uuid();
+
+            if($has_active){
+                $item['is_active'] = 1;
+            }
+
+            $record = DB::table($table)
+                ->where($primary_key, $item[$primary_key])
                 ->first();
 
-            if (!$exist){
-                \DB::table( 'vh_roles' )->insert( $item );
+
+            if(!$record)
+            {
+                DB::table($table)->insert($item);
+            } else{
+                DB::table($table)->where($primary_key, $item[$primary_key])
+                    ->update($item);
             }
         }
-
     }
-
-
-    /**
-     * Run the database seeds.
-     *
-     * @return void
-     */
-    function seedLanguages()
+    //---------------------------------------------------------------
+    public function seedPermissions()
+    {
+        $list = $this->getListFromJson("permissions.json");
+        $this->storeSeedsWithUuid('vh_permissions', $list);
+    }
+    //---------------------------------------------------------------
+    public function seedRoles()
+    {
+        $list = $this->getListFromJson("roles.json");
+        $this->storeSeedsWithUuid('vh_roles', $list);
+    }
+    //---------------------------------------------------------------
+    public function seedLanguages()
     {
 
-        $list = file_get_contents(__DIR__.'/json/languages.json');
-        $list = json_decode($list, true);
-
+        $list = $this->getListFromJson("languages.json");
 
         foreach($list as $item)
         {
@@ -128,40 +124,136 @@ class VaahCmsTableSeeder extends Seeder
         }
 
     }
-
-    /**
-     * Run the database seeds.
-     *
-     * @return void
-     */
-    function seedLanguageCategories()
+    //---------------------------------------------------------------
+    public function seedLanguageStrings()
     {
-        $row_list = [
-            'General',
-        ];
 
-        $list = [];
-        foreach ($row_list as $row_item)
-        {
-            $list[] = [
-                'name' => $row_item,
-                'slug' => Str::slug($row_item),
-            ];
-        }
-
+        $list = $this->getListFromJson("language_strings.json");
 
         foreach($list as $item)
         {
-            $exist = \DB::table( 'vh_lang_categories' )
-                ->where( 'slug', $item['slug'] )
+
+            $item['slug'] = Str::slug($item['name'],'_');
+
+            $exist = \DB::table( 'vh_lang_strings' )
+                ->where( 'slug',  $item['slug'] )
                 ->first();
 
-            if (!$exist){
-                \DB::table( 'vh_lang_categories' )->insert( $item );
+
+            $lang = \DB::table( 'vh_lang_languages' )
+                ->where( 'locale_code_iso_639', 'en' )
+                ->first();
+
+            $cat = \DB::table( 'vh_lang_categories' )
+                ->where( 'slug', $item['category'] )
+                ->first();
+
+
+            if (!$exist && $lang && $cat){
+
+                $item['vh_lang_language_id'] = $lang->id;
+
+                $item['vh_lang_category_id'] = $cat->id;
+
+                unset($item['category']);
+
+                \DB::table( 'vh_lang_strings' )->insert( $item );
             }
         }
 
     }
+    //---------------------------------------------------------------
+    public function seedLanguageCategories()
+    {
+        $list = [
+            ["name" => 'General'],
+            ["name" => 'User'],
+            ["name" => 'Media'],
+            ["name" => 'Localization']
+        ];
+
+        $this->storeSeeds('vh_lang_categories', $list);
+
+    }
+    //---------------------------------------------------------------
+    public function seedSettings()
+    {
+
+
+        $list = $this->getListFromJson("settings.json");
+
+        foreach($list as $item)
+        {
+            $exist = \DB::table( 'vh_settings' )
+                ->where( 'category', $item['category'] )
+                ->where( 'key', $item['key'] )
+                ->first();
+
+            if (!$exist){
+
+                if(isset($item['type']) && $item['type']=='json')
+                {
+                    $item['value']=json_encode($item['value']);
+                }
+
+                \DB::table( 'vh_settings' )->insert( $item );
+            } else{
+                \DB::table( 'vh_settings' )
+                    ->where( 'category', $item['category'] )
+                    ->where( 'key', $item['key'] )
+                    ->update($item);
+            }
+        }
+
+    }
+
+
+    //---------------------------------------------------------------
+    public function seedNotifications()
+    {
+        $list = $this->getListFromJson("notifications.json");
+        $this->storeSeedsWithUuid('vh_notifications', $list,false);
+    }
+
+
+    //---------------------------------------------------------------
+    public function seedNotificationContent()
+    {
+        $list = $this->getListFromJson("notification_contents.json");
+
+        foreach($list as $item)
+        {
+            $notification = \DB::table( 'vh_notifications' )
+                ->where( 'slug', $item['slug'] )
+                ->first();
+
+            $exist = \DB::table( 'vh_notification_contents' )
+                ->where( 'vh_notification_id', $notification->id )->where('sort',  $item['sort'])
+                ->where('via',  $item['via'])
+                ->first();
+
+            $item['vh_notification_id'] = $notification->id;
+
+            if(isset($item['meta'])){
+                $item['meta'] = json_encode($item['meta']);
+            }
+
+            unset($item['slug']);
+
+
+            if(!$exist)
+            {
+                DB::table('vh_notification_contents')->insert($item);
+            } else{
+                DB::table('vh_notification_contents')->where('sort',  $item['sort'])
+                    ->update($item);
+            }
+        }
+    }
+    //---------------------------------------------------------------
+    //---------------------------------------------------------------
+    //---------------------------------------------------------------
+    //---------------------------------------------------------------
 
 
 }

@@ -2,8 +2,10 @@
 
 use Illuminate\Routing\Router;
 use Illuminate\Support\ServiceProvider;
+use WebReinvent\VaahCms\Entities\Setting;
 use WebReinvent\VaahCms\Facades\VaahExcelFacade;
 use WebReinvent\VaahCms\Facades\VaahFileFacade;
+use WebReinvent\VaahCms\Libraries\VaahSetup;
 use WebReinvent\VaahCms\Providers\FacadesServiceProvider;
 use WebReinvent\VaahCms\Providers\ModulesServiceProvider;
 use WebReinvent\VaahCms\Providers\ThemesServiceProvider;
@@ -32,6 +34,7 @@ class VaahCmsServiceProvider extends ServiceProvider {
 
         $this->registerMiddleware($router);
         $this->registerConfigs();
+        $this->registerGlobalSettings();
         $this->registerMigrations();
         $this->registerSeeders();
         $this->registerViews();
@@ -47,7 +50,7 @@ class VaahCmsServiceProvider extends ServiceProvider {
      */
     public function register() {
 
-        $this->registerConfigs();
+
         $this->registerProviders();
         $this->registerAlias();
         $this->registerHelpers();
@@ -63,7 +66,9 @@ class VaahCmsServiceProvider extends ServiceProvider {
     private function registerMiddleware($router) {
 
         //register middleware
-        $router->aliasMiddleware('has.admin.access', \WebReinvent\VaahCms\Http\Middleware\HasAdminAccess::class);
+        $router->aliasMiddleware('app.is.installed', \WebReinvent\VaahCms\Http\Middleware\IsInstalled::class);
+        $router->aliasMiddleware('app.is.not.installed', \WebReinvent\VaahCms\Http\Middleware\IsNotInstalled::class);
+        $router->aliasMiddleware('has.backend.access', \WebReinvent\VaahCms\Http\Middleware\HasBackendAccess::class);
         $router->aliasMiddleware('set.theme.details', \WebReinvent\VaahCms\Http\Middleware\SetThemeDetails::class);
         $router->aliasMiddleware('set.template.details', \WebReinvent\VaahCms\Http\Middleware\SetTemplateDetails::class);
 
@@ -113,6 +118,7 @@ class VaahCmsServiceProvider extends ServiceProvider {
         $this->app->register(ModulesServiceProvider::class);
         $this->app->register(ThemesServiceProvider::class);
         $this->app->register(\ZanySoft\Zip\ZipServiceProvider::class);
+        $this->app->register(\Intervention\Image\ImageServiceProvider::class);
         $this->app->register(\Creativeorange\Gravatar\GravatarServiceProvider::class);
 
     }
@@ -129,6 +135,7 @@ class VaahCmsServiceProvider extends ServiceProvider {
         $loader->alias('VaahFile', VaahFileFacade::class);
         $loader->alias('Zip', \ZanySoft\Zip\ZipFacade::class);
         $loader->alias('Carbon', \Carbon\Carbon::class);
+        $loader->alias('Image', \Intervention\Image\Facades\Image::class);
         $loader->alias('Gravatar', 'Creativeorange\Gravatar\Facades\Gravatar');
 
 
@@ -148,6 +155,24 @@ class VaahCmsServiceProvider extends ServiceProvider {
         $this->publishes([$configPath => config_path('vaahcms.php')], 'config');
 
         $this->mergeConfigFrom($configPath, 'vaahcms');
+
+    }
+
+    /**
+     *
+     */
+    private function registerGlobalSettings() {
+
+        if(VaahSetup::isInstalled() && !config('settings'))
+        {
+            $global_settings = Setting::where('category', 'global')
+                ->get()
+                ->pluck('value', 'key' )->toArray();
+
+            config([
+                'settings.global' => $global_settings
+            ]);
+        }
 
     }
 
@@ -177,7 +202,7 @@ class VaahCmsServiceProvider extends ServiceProvider {
      *
      */
     private function registerAssets() {
-        $this->publishes([__DIR__.'/Resources/assets' => public_path('vendor/vaahcms')], 'assets');
+        $this->publishes([__DIR__.'/Resources/assets' => public_path('vaahcms')], 'assets');
     }
 
     /**
@@ -201,8 +226,8 @@ class VaahCmsServiceProvider extends ServiceProvider {
      */
     private function registerRoutes() {
 
-        include __DIR__.'/Routes/admin.php';
-        include __DIR__.'/Routes/public.php';
+        include __DIR__.'/Routes/backend.php';
+        include __DIR__.'/Routes/frontend.php';
         include __DIR__.'/Routes/api.php';
 
     }

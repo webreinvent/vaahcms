@@ -9,14 +9,15 @@ use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Support\Facades\Password;
-use WebReinvent\VaahCms\Traits\CrudWithUidObservantTrait;
+use Illuminate\Support\Str;
+use WebReinvent\VaahCms\Traits\CrudWithUuidObservantTrait;
 
 class User extends Authenticatable
 {
 
     use Notifiable;
     use SoftDeletes;
-    use CrudWithUidObservantTrait;
+    use CrudWithUuidObservantTrait;
 
     //-------------------------------------------------
     protected $table = 'vh_users';
@@ -32,11 +33,17 @@ class User extends Authenticatable
     protected $dateFormat = 'Y-m-d H:i:s';
     //-------------------------------------------------
     protected $fillable = [
-        "uid","email","username","display_name","title","first_name","middle_name","last_name",
-        "gender","country_calling_code","phone","timezone","alternate_email","avatar_url","birth",
-        "country","country_code","last_login_at","last_login_ip","remember_token","api_token","api_token_used_at",
-        "api_token_used_ip","is_active","activated_at","status","affiliate_code","affiliate_code_used_at","reset_password_code",
-        "reset_password_code_sent_at","reset_password_code_used_at","meta","created_ip","created_by",
+        "uuid","email","username","display_name","title",
+        "first_name","middle_name","last_name",
+        "gender","country_calling_code","phone", "bio",
+        "website","timezone",
+        "alternate_email","avatar_url","birth",
+        "country","country_code","last_login_at","last_login_ip",
+        "remember_token","api_token","api_token_used_at",
+        "api_token_used_ip","is_active","activated_at","status",
+        "affiliate_code","affiliate_code_used_at","reset_password_code",
+        "reset_password_code_sent_at","reset_password_code_used_at",
+        "meta","created_ip","created_by",
         "updated_by","deleted_by"
     ];
     //-------------------------------------------------
@@ -53,15 +60,15 @@ class User extends Authenticatable
 
     //-------------------------------------------------
     protected $appends  = [
-        'thumbnail', 'name'
+        'avatar', 'name'
     ];
 
     //-------------------------------------------------
-    public function getThumbnailAttribute() {
+    public function getAvatarAttribute() {
 
         if($this->avatar_url)
         {
-            return $this->avatar_url;
+            return asset($this->avatar_url);
         }
 
         $grav_url = vh_get_avatar_by_email($this->email);
@@ -72,6 +79,11 @@ class User extends Authenticatable
 
     //-------------------------------------------------
     public function getNameAttribute() {
+
+        if($this->display_name)
+        {
+            return $this->display_name;
+        }
 
         $name = $this->first_name;
 
@@ -88,142 +100,78 @@ class User extends Authenticatable
         return $name;
     }
     //-------------------------------------------------
-    public function setFirstNameAttribute($value)
-    {
-        $this->attributes['first_name'] = ucfirst(trim($value));
+    public function setFirstNameAttribute($value) {
+        $this->attributes['first_name'] = ucfirst($value);
     }
     //-------------------------------------------------
-    public function setLastNameAttribute($value)
-    {
-        $this->attributes['last_name'] = ucfirst(trim($value));
+    public function setMiddleNameAttribute($value) {
+        $this->attributes['middle_name'] = ucfirst($value);
     }
     //-------------------------------------------------
-    public function setEmailAttribute($value)
-    {
-        $this->attributes['email'] = trim($value);
+    public function setLastNameAttribute($value) {
+        $this->attributes['last_name'] = ucfirst($value);
     }
     //-------------------------------------------------
 
-    //-------------------------------------------------
-    public function scopeActive($query)
+    public function scopeIsActive($query)
     {
-        return $query->where('is_active', 1);
+        $query->where('is_active', 1);
     }
 
     //-------------------------------------------------
-    public function scopeInactive($query)
+    public function scopeBetweenDates($query, $from, $to)
     {
-        return $query->where('is_active', 0);
-    }
 
-    //-------------------------------------------------
-    public function scopeStatus($query, $status)
-    {
-        return $query->where('status', $status);
-    }
-    //-------------------------------------------------
-    public function scopeUsername($query, $username)
-    {
-        return $query->where('username', $username);
-    }
-
-    //-------------------------------------------------
-    public function scopeEmail($query, $email)
-    {
-        return $query->where('email', $email);
-    }
-
-    //-------------------------------------------------
-    public function scopeActivatedBetween($query, $from, $to)
-    {
-        return $query->whereBetween('activated_at', array($from, $to));
-    }
-
-    //-------------------------------------------------
-    public function scopeCreatedBy($query, $user_id)
-    {
-        return $query->where('created_by', $user_id);
-    }
-
-    //-------------------------------------------------
-    public function scopeUpdatedBy($query, $user_id)
-    {
-        return $query->where('updated_by', $user_id);
-    }
-
-    //-------------------------------------------------
-    public function scopeDeletedBy($query, $user_id)
-    {
-        return $query->where('deleted_by', $user_id);
-    }
-
-    //-------------------------------------------------
-    public function scopeCreatedBetween($query, $from, $to)
-    {
-        return $query->whereBetween('created_at', array($from, $to));
-    }
-
-    //-------------------------------------------------
-    public function scopeUpdatedBetween($query, $from, $to)
-    {
-        return $query->whereBetween('updated_at', array($from, $to));
-    }
-
-    //-------------------------------------------------
-    public function scopeDeletedBetween($query, $from, $to)
-    {
-        return $query->whereBetween('deleted_at', array($from, $to));
-    }
-
-
-    //-------------------------------------------------
-    public function scopeLastLoginBetween($query, $from, $to)
-    {
-        return $query->whereBetween('last_login_at', array($from, $to));
-    }
-
-    //-------------------------------------------------
-    public function scopeNeverLoggedIn($query)
-    {
-        return $query->whereNull('last_login_at');
-    }
-
-    //-------------------------------------------------
-    public function scopeDoesNotHaveRole($query, $role_id)
-    {
-        return $query->whereDoesntHave('roles', function ($r) use ($role_id)
+        if($from)
         {
-            $r->where('vh_role_id', $role_id);
-        });
+            $from = Carbon::parse($from)
+                ->startOfDay()
+                ->toDateTimeString();
+        }
+
+        if($to)
+        {
+            $to = Carbon::parse($to)
+                ->endOfDay()
+                ->toDateTimeString();
+        }
+
+        $query->whereBetween('created_at',[$from,$to]);
     }
     //-------------------------------------------------
-    public function createdBy()
+
+    public function createdByUser()
     {
         return $this->belongsTo('WebReinvent\VaahCms\Entities\User',
             'created_by', 'id'
-        );
+        )->select('id', 'uuid', 'first_name', 'last_name', 'email');
     }
 
     //-------------------------------------------------
-    public function updatedBy()
+    public function updatedByUser()
     {
         return $this->belongsTo('WebReinvent\VaahCms\Entities\User',
             'updated_by', 'id'
-        );
+        )->select('id', 'uuid', 'first_name', 'last_name', 'email');
     }
 
     //-------------------------------------------------
-    public function deletedBy()
+    public function deletedByUser()
     {
         return $this->belongsTo('WebReinvent\VaahCms\Entities\User',
             'deleted_by', 'id'
-        );
+        )->select('id', 'uuid', 'first_name', 'last_name', 'email');
     }
 
     //-------------------------------------------------
     public function getTableColumns() {
         return $this->getConnection()->getSchemaBuilder()
             ->getColumnListing($this->getTable());
+    }
+    //-------------------------------------------------
+    public function scopeExclude($query, $columns)
+    {
+        return $query->select( array_diff( $this->getTableColumns(),$columns) );
     }
     //-------------------------------------------------
     public function getFormFillableColumns()
@@ -259,112 +207,7 @@ class User extends Authenticatable
         return $result;
     }
     //-------------------------------------------------
-    public function getFormElement($column, $value=null)
-    {
 
-        $result['name'] = $column;
-        $result['value'] = $value;
-        $result['type'] = 'text';
-        $result['editable'] = true;
-        $result['tr_class'] = "";
-        $result['disabled'] = false;
-        $result['label'] = slug_to_str($column);
-        /*$result['column_type'] = $this->getConnection()->getSchemaBuilder()
-            ->getColumnType($this->getTable(), $column);*/
-
-
-        switch($column)
-        {
-            //------------------------------------------------
-            case 'id':
-            case 'uid':
-                $result['type'] = 'text';
-                $result['disabled'] = true;
-                $result['tr_class'] = 'tr__disabled';
-                break;
-            //------------------------------------------------
-            case 'created_by':
-            case 'updated_by':
-            case 'deleted_by':
-                $result['type'] = 'select_with_ids';
-                $result['editable'] = false;
-                $result['inputs'] = User::getUsersForAssets();
-                break;
-            //------------------------------------------------
-            case 'password':
-                $result['type'] = 'hidden';
-                $result['editable'] = false;
-                break;
-            //------------------------------------------------
-            case 'meta':
-            case 'last_login_at':
-            case 'last_login_ip':
-            case 'remember_token':
-            case 'api_token':
-            case 'api_token_used_at':
-            case 'api_token_used_ip':
-            case 'activated_at':
-            case 'affiliate_code_used_at':
-            case 'reset_password_code_sent_at':
-            case 'reset_password_code_used_at':
-            case 'created_ip':
-            case 'created_at':
-            case 'deleted_at':
-            case 'updated_at':
-                $result['editable'] = false;
-                break;
-            //------------------------------------------------
-
-            //------------------------------------------------
-            case 'title':
-                $result['type'] = 'select';
-                $result['inputs'] = vh_name_titles();
-                break;
-            //------------------------------------------------
-            case 'gender':
-                $result['type'] = 'select';
-                $result['inputs'] = vh_genders();
-                break;
-            //------------------------------------------------
-            case 'country_calling_code':
-                $result['type'] = 'select';
-                $result['inputs'] = vh_get_countries_calling_codes();
-                break;
-            //------------------------------------------------
-            case 'timezone':
-                $result['type'] = 'select';
-                $result['inputs'] = vh_get_timezones();
-                break;
-            //------------------------------------------------
-            case 'birth':
-                $result['type'] = 'date';
-                $result['label'] = 'Birth Date';
-                break;
-            //------------------------------------------------
-            case 'status':
-                $result['type'] = 'select';
-                $result['inputs'] = vh_user_statuses();
-                break;
-            //------------------------------------------------
-            case 'country':
-                $result['type'] = 'select';
-                $result['inputs'] = vh_get_country_list_with_slugs();
-                break;
-            //------------------------------------------------
-            //------------------------------------------------
-            case 'is_active':
-                $result['type'] = 'select';
-                $result['inputs'] = vh_is_active_options();
-                break;
-            //------------------------------------------------
-            default:
-                $result['type'] = 'text';
-                break;
-            //------------------------------------------------
-        }
-
-        return $result;
-    }
     //-------------------------------------------------
     //-------------------------------------------------
     //-------------------------------------------------
@@ -404,11 +247,12 @@ class User extends Authenticatable
         return $this->roles()->wherePivot('is_active', 1);
     }
     //-------------------------------------------------
-    public static function countAdmins()
+    public static function countAdministrators()
     {
         $count = User::whereHas('roles', function ($query) {
-            $query->slug('admin');
-        })->count();
+            $query->where('vh_user_roles.is_active', '=', 1)->slug('administrator');
+        })->isActive()->get()->count();
+
         return $count;
     }
 
@@ -452,16 +296,42 @@ class User extends Authenticatable
         return $list;
     }
     //-------------------------------------------------
-    public function permissions()
+    public function permissions($slugs_only=false)
     {
-        $roles = $this->roles()->get();
+        $roles = $this->roles()->isActive()->wherePivot('is_active', 1)->get();
+
+
         $permissions_list = array();
         foreach ($roles as $role) {
-            $permissions = $role->permissions()->get();
+
+            if($role->slug !='administrator')
+            {
+                $permissions = $role->permissions()->isActive()->wherePivot('is_active', 1)->get();
+            } else{
+                $permissions = $role->permissions()->get();
+            }
+
             foreach ($permissions as $permission) {
-                $permissions_list[$permission->id] = $permission->toArray();
+
+                if($role->slug =='administrator')
+                {
+                    $permissions_list[$permission->id] = $permission->toArray();
+
+                } else{
+                    if(!$permission->is_active)
+                    {
+                        continue;
+                    }
+                    $permissions_list[$permission->id] = $permission->toArray();
+                }
             }
         }
+
+        if($slugs_only)
+        {
+            $permissions_list = collect($permissions_list)->pluck('slug')->toArray();
+        }
+
         return $permissions_list;
     }
 
@@ -479,116 +349,8 @@ class User extends Authenticatable
         ];
         return $rules;
     }
-
     //-------------------------------------------------
-    public static function store($request)
-    {
-        $rules = array(
-            'email' => 'required|email',
-            'first_name' => 'required',
-        );
 
-        if($request->has('phone'))
-        {
-            $rules['phone'] = 'integer';
-        }
-
-
-        $validator = \Validator::make( $request->all(), $rules);
-        if ( $validator->fails() ) {
-
-            $errors             = errorsToArray($validator->errors());
-            $response['status'] = 'failed';
-            $response['errors'] = $errors;
-            return $response;
-        }
-
-        $data = [];
-
-        $inputs = $request->all();
-
-
-        if($request->has('birth'))
-        {
-            $inputs['birth'] = Carbon::parse($request->birth)->format('Y-m-d');
-        }
-
-        if($request->has('id'))
-        {
-            $item = User::find($request->id);
-        } else
-        {
-            $validation = static::userValidation($request);
-            if(isset($validation['status']) && $validation['status'] == 'failed')
-            {
-                return $validation;
-            } else if(isset($validation['status']) && $validation['status'] == 'registration-exist')
-            {
-                $item = $validation['data'];
-            } else
-            {
-                $item = new User();
-                $item->password = generate_password();
-                $item->is_active = 1;
-                $item->status = 'active';
-                $item->activated_at = date('Y-m-d H:i:s');
-                $item->uid = uniqid();
-            }
-        }
-
-        $item->fill($inputs);
-        if($request->has('password'))
-        {
-            $item->password = Hash::make($request->password);
-        }
-
-        $item->save();
-
-        if(!$request->has('id'))
-        {
-            Role::syncRolesWithUsers();
-        }
-
-
-        $response['status'] = 'success';
-        $response['messages'][] = 'Saved';
-        $response['data'] = $item;
-
-        return $response;
-
-
-    }
-    //-------------------------------------------------
-    public function recordForFormElement()
-    {
-        $record = $this->toArray();
-
-        $columns = $this->getFormFillableColumns();
-
-        $visible = ['id', 'uid'];
-
-        $columns = array_merge($visible, $columns);
-
-        $result = [];
-        $i = 0;
-
-        foreach ($columns as $column)
-        {
-            if(isset($record[$column]))
-            {
-                $result[$i] = $this->getFormElement($column, $record[$column]);
-                $i++;
-            } else
-            {
-                $result[$i] = $this->getFormElement($column, "");
-                $i++;
-            }
-
-        }
-
-
-        return $result;
-    }
     //-------------------------------------------------
     public static function userValidation($request)
     {
@@ -649,135 +411,72 @@ class User extends Authenticatable
 
     }
     //-------------------------------------------------
-    public static function bulkStatusChange($request)
+    public static function isLastAdmin()
     {
-
-        if(!$request->has('inputs'))
+        $count_admin = User::countAdministrators();
+        if($count_admin < 2)
         {
-            $response['status'] = 'failed';
-            $response['errors'][] = 'Select IDs';
-            return $response;
+            return true;
         }
-
-        if(!$request->has('data'))
-        {
-            $response['status'] = 'failed';
-            $response['errors'][] = 'Select Status';
-            return $response;
-        }
-
-        foreach($request->inputs as $id)
-        {
-            $reg = User::find($id);
-            $reg->status = $request->data;
-            $reg->save();
-        }
-
-        $response['status'] = 'success';
-        $response['messages'][] = 'Action was successful';
-
-        return $response;
-
-
+        return false;
     }
     //-------------------------------------------------
-    public static function bulkDelete($request)
+    public static function restrictedActions($action_type, $user_id)
     {
 
-        if(!$request->has('inputs'))
-        {
-            $response['status'] = 'failed';
-            $response['errors'][] = 'Select IDs';
-            return $response;
-        }
 
-        if(!$request->has('data'))
+        //restricted actions on logged in users
+        $result = false;
+        if($user_id == \Auth::user()->id)
         {
-            $response['status'] = 'failed';
-            $response['errors'][] = 'Select Status';
-            return $response;
-        }
-
-        foreach($request->inputs as $id)
-        {
-            $item = User::find($id);
-            if($item)
+            switch ($action_type)
             {
-                $item->is_active = 0;
-                $item->status = 'inactive';
-                $item->save();
-
-                $item->delete();
+                //------------------------
+                case 'bulk-change-status':
+                    $result = true;
+                    break;
+                //------------------------
+                case 'bulk-trash':
+                    $result = true;
+                    break;
+                //------------------------
+                case 'bulk-delete':
+                    $result = true;
+                    break;
+                //------------------------
+                default:
+                    break;
+                //------------------------
             }
+
+            return $result;
         }
 
-        $response['status'] = 'success';
-        $response['messages'][] = 'Action was successful';
 
-        return $response;
+        //restricted action if this user is last admin
+        $result = false;
+        $user = static::find($user_id);
+        $is_last_admin = static::isLastAdmin();
 
-
-    }
-    //-------------------------------------------------
-    public static function bulkRestore($request)
-    {
-
-        if(!$request->has('inputs'))
+        if($user->hasRole('administrator') && $is_last_admin)
         {
-            $response['status'] = 'failed';
-            $response['errors'][] = 'Select IDs';
-            return $response;
-        }
-
-        if(!$request->has('data'))
-        {
-            $response['status'] = 'failed';
-            $response['errors'][] = 'Select Status';
-            return $response;
-        }
-
-        foreach($request->inputs as $id)
-        {
-            $item = User::withTrashed()->where('id', $id)->first();
-            if(isset($item) && isset($item->deleted_at))
+            switch ($action_type)
             {
-                $item->restore();
+                //------------------------
+                case 'bulk-change-status':
+                    $result = true;
+                    break;
+                //------------------------
+                default:
+                    break;
+                //------------------------
             }
+
+            return $result;
         }
 
-        $response['status'] = 'success';
-        $response['messages'][] = 'Action was successful';
 
-        return $response;
-
-
-    }
-    //-------------------------------------------------
-    public static function onlyOneAdminValidation($user_id)
-    {
-        $user = User::where('id', $user_id)->withTrashed()->first();
-
-        if(isset($user->deleted_at))
-        {
-            $response['status'] = 'failed';
-            $response['errors'][] = 'Account is deleted, hence you can not perform this action.';
-            return $response;
-
-        }
-
-        $count_admin = User::countAdmins();
-
-        if($user->isAdmin() && $count_admin < 2)
-        {
-            $response['status'] = 'failed';
-            $response['errors'][] = "You have only one admin account which can't be deactivated.";
-            return $response;
-        }
-
-        $response['status'] = 'success';
-
-        return $response;
-
+        return $result;
     }
     //-------------------------------------------------
 
@@ -791,7 +490,7 @@ class User extends Authenticatable
         }
 
         $rules = array(
-            'email' => 'required|email',
+            'email' => 'required|email|max:150',
         );
         $validator = \Validator::make($request->all(), $rules);
 
@@ -870,7 +569,7 @@ class User extends Authenticatable
     //-------------------------------------------------
     public function hasRole($role_slug)
     {
-        foreach ($this->roles()->get() as $role) {
+        foreach ($this->roles()->wherePivot('is_active', 1)->get() as $role) {
             if ($role->slug == $role_slug)
             {
                 return true;
@@ -884,23 +583,29 @@ class User extends Authenticatable
     //-------------------------------------------------
     public function isAdmin()
     {
-        return $this->hasRole('admin');
+        return $this->hasRole('administrator');
     }
 
     //-------------------------------------------------
-    public function hasPermission($permission_slug)
+    public function hasPermission($permission_slug, $details=false)
     {
-
 
         if ($this->isAdmin()) {
 
-            $response['status'] = 'success';
-            if(env('APP_DEBUG'))
+            if($details)
             {
-                $response['data']['permission'] = 'Permission slug: '.$permission_slug;
-                $response['hint'][] = 'Admin has all permission by default.';
+                $response['status'] = 'success';
+                if(env('APP_DEBUG'))
+                {
+                    $response['data']['permission'] = 'Permission slug: '.$permission_slug;
+                    $response['hint'][] = 'Admin has all permission by default.';
+                }
+                return $response;
+
+            } else{
+                return true;
             }
-            return $response;
+
         }
 
         //check if permission exist or not
@@ -909,72 +614,86 @@ class User extends Authenticatable
 
         if (!$permission)
         {
-            $response['status'] = 'failed';
-            $response['errors'][] = 'No Permission exist with slug: '.$permission_slug;
-
-            if(env('APP_DEBUG'))
+            if($details)
             {
-                $response['hint'][] = 'Check the migrations & seeds are properly run.';
-            }
+                $response['status'] = 'failed';
+                $response['errors'][] = 'No Permission exist with slug: ' . $permission_slug;
 
-            return $response;
+                if (env('APP_DEBUG')) {
+                    $response['hint'][] = 'Check the migrations & seeds are properly run.';
+                }
+
+                return $response;
+
+            } else {
+                return false;
+            }
         }
 
         if ($permission->is_active != 1) {
-            $response['status'] = 'failed';
-            $response['errors'][] = $permission_slug.' is inactive';
-            if(env('APP_DEBUG'))
+            if($details)
             {
-                $response['hint'][] = 'Enable the permission status to active from backend/admin control panel.';
+                $response['status'] = 'failed';
+                $response['errors'][] = $permission_slug.' is inactive';
+                if(env('APP_DEBUG'))
+                {
+                    $response['hint'][] = 'Enable the permission status to active from backend/admin control panel.';
+                }
+                return $response;
+
+            } else{
+                return false;
             }
-            return $response;
+
         }
 
         foreach ($this->permissions() as $permission)
         {
+
+
             if ($permission['slug'] == $permission_slug
                 && $permission['is_active'] == 1
                 && $permission['pivot']['is_active'] == 1
             )
             {
-                $response['status'] = 'success';
-                if(env('APP_DEBUG'))
+                if($details)
                 {
-                    $response['hint'][] = 'Permission slug: '.$permission_slug.' is active for '.\Auth::user()->email;
+                    $response['status'] = 'success';
+                    $response['data'] = [];
+                    if(env('APP_DEBUG'))
+                    {
+                        $response['hint'][] = 'Permission slug: '.$permission_slug.' is active for '.\Auth::user()->email;
+                    }
+                    return $response;
+
+                } else{
+                    return true;
                 }
-                return $response;
                 break;
             }
         }
 
-        $response['status'] = 'failed';
-        $response['errors'][] = trans("vaahcms::messages.permission_denied");
-        if(env('APP_DEBUG'))
+        if($details)
         {
-            $response['hint'][] = 'Permission slug: '.$permission_slug.' is not active for '.\Auth::user()->email;
+            $response['status'] = 'failed';
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+            if(env('APP_DEBUG'))
+            {
+                $response['hint'][] = 'Permission slug: '.$permission_slug.' is not active for '.\Auth::user()->email;
+            }
+            return $response;
+
+        } else{
+            return false;
         }
-        return $response;
 
     }
 
     //-------------------------------------------------
-    public function getPermissionsSlugs()
-    {
-        $roles = $this->roles()->get();
-        $permissions_list = array();
-        foreach ($roles as $role) {
-            $permissions = $role->permissions()->get();
-            foreach ($permissions as $permission) {
 
-                if($permission->pivot->is_active)
-                {
-                    $permissions_list[] = $permission->slug;
-                }
 
-            }
-        }
-        return $permissions_list;
-    }
+    //-------------------------------------------------
+
     //-------------------------------------------------
     public static function getAvatarById($id)
     {
@@ -985,7 +704,7 @@ class User extends Authenticatable
     public static function notifyAdmins($subject, $message)
     {
         $users = new User();
-        $admins = $users->listByRole('admin');
+        $admins = $users->listByRole('administrator');
 
         $notification = new \stdClass();
         $notification->subject = $subject;
@@ -1005,7 +724,771 @@ class User extends Authenticatable
 
     }
     //-------------------------------------------------
+
+    public static function create($request)
+    {
+
+        $inputs = $request->new_item;
+
+        $validate = static::validation($inputs);
+
+        if(isset($validate['status']) && $validate['status'] == 'failed')
+        {
+            return $validate;
+        }
+
+        $rules = array(
+            'password' => 'required',
+        );
+
+        $validator = \Validator::make( $inputs, $rules);
+        if ( $validator->fails() ) {
+
+            $errors             = errorsToArray($validator->errors());
+            $response['status'] = 'failed';
+            $response['errors'] = $errors;
+            return $response;
+        }
+
+        // check if already exist
+        $user = static::where('email',$inputs['email'])->first();
+
+        if($user)
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = "This email is already registered.";
+            return $response;
+        }
+
+        if(!isset($inputs['username']))
+        {
+            $inputs['username'] = Str::slug($inputs['email']);
+        }
+
+        if(!isset($inputs['status']))
+        {
+            $inputs['status'] = 'inactive';
+        }
+
+        $inputs['created_ip'] = request()->ip();
+
+        $reg = new static();
+        $reg->fill($inputs);
+        $reg->save();
+
+        Role::syncRolesWithUsers();
+
+        $response['status'] = 'success';
+        $response['data']['item'] = $reg;
+        return $response;
+
+    }
     //-------------------------------------------------
+    public static function getList($request,$roles)
+    {
+
+        if(isset($request['recount']) && $request['recount'] == true)
+        {
+            Role::syncRolesWithUsers();
+        }
+
+        $list = static::orderBy('created_at', 'DESC');
+
+        if(isset($request['trashed']) && $request['trashed'] == 'true')
+        {
+            $list->withTrashed();
+        }
+
+        if(isset($request['from']) && isset($request['to']))
+        {
+            $list->betweenDates($request['from'],$request['to']);
+        }
+
+        if(isset($request['status'])){
+            if($request['status'] == '1')
+            {
+                $list->where('is_active',$request['status']);
+            }elseif($request['status'] == '10'){
+                $list->whereNull('is_active')->orWhere('is_active',0);
+            }
+        }
+
+        if(count($roles) > 0){
+
+            $list->whereHas('roles', function ($query) use ($roles){
+                $query->where('vh_user_roles.is_active', '=', 1)->whereIn('vh_roles.slug', $roles);
+            });
+
+        }
+
+        if(isset($request['q']))
+        {
+            $list->where(function ($q) use ($request){
+                $q->where('first_name', 'LIKE', '%'.$request['q'].'%')
+                    ->orWhere('last_name', 'LIKE', '%'.$request['q'].'%')
+                    ->orWhere('middle_name', 'LIKE', '%'.$request['q'].'%')
+                    ->orWhere('email', 'LIKE', '%'.$request['q'].'%')
+                    ->orWhere('id', '=', $request['q']);
+            });
+        }
+
+
+
+        if(!\Auth::user()->hasPermission('can-see-users-contact-details')){
+            $list->exclude(['email','alternate_email', 'phone']);
+        }
+
+        $list->withCount(['activeRoles']);
+
+        $list = $list->paginate(config('vaahcms.per_page'));
+        $countRole = Role::all()->count();
+
+        $response['status'] = 'success';
+        $response['data']['list'] = $list;
+        $response['data']['totalRole'] = $countRole;
+        $response['fsfsf']['totalRole'] = $request;
+
+        return $response;
+
+    }
+
     //-------------------------------------------------
+
+    public static function getItem($id)
+    {
+
+        $item = static::where('id', $id)->with(['createdByUser', 'updatedByUser', 'deletedByUser'])->withTrashed();
+
+        if(!\Auth::user()->hasPermission('can-see-users-contact-details')){
+            $item->exclude(['email','alternate_email', 'phone']);
+        }
+
+        $item = $item->first();
+
+        $response['status'] = 'success';
+        $response['data'] = $item;
+
+        return $response;
+
+    }
+
+    //-------------------------------------------------
+
+    public static function getItemRoles($request,$id)
+    {
+
+        $item = User::withTrashed()->where('id', $id)->first();
+
+        $response['data']['item'] = $item;
+
+
+        if($request->has("q"))
+        {
+            $list = $item->roles()->where(function ($q) use ($request){
+                $q->where('name', 'LIKE', '%'.$request->q.'%')
+                    ->orWhere('slug', 'LIKE', '%'.$request->q.'%');
+            });
+        } else
+        {
+            $list = $item->roles();
+        }
+
+        $list->orderBy('pivot_is_active', 'desc');
+
+        $list = $list->paginate(config('vaahcms.per_page'));
+
+        $response['data']['list'] = $list;
+        $response['status'] = 'success';
+
+        return $response;
+
+    }
+
+    //-------------------------------------------------
+    public static function postStore($request)
+    {
+
+        $inputs = $request->all();
+
+        $validate = static::validation($inputs);
+
+        if(isset($validate['status']) && $validate['status'] == 'failed')
+        {
+            return $validate;
+        }
+
+        if(isset($inputs['phone']))
+        {
+            $rules['phone'] = 'integer';
+
+            $validator = \Validator::make( $request->all(), $rules);
+            if ( $validator->fails() ) {
+
+                $errors             = errorsToArray($validator->errors());
+                $response['status'] = 'failed';
+                $response['errors'] = $errors;
+                return $response;
+            }
+        }
+
+
+
+
+        if($request->has('birth'))
+        {
+            $inputs['birth'] = Carbon::parse($request->birth)->format('Y-m-d');
+        }
+
+        if($request->has('id'))
+        {
+            $item = User::find($request->id);
+        } else
+        {
+            $validation = static::userValidation($request);
+            if(isset($validation['status']) && $validation['status'] == 'failed')
+            {
+                return $validation;
+            } else if(isset($validation['status']) && $validation['status'] == 'registration-exist')
+            {
+                $item = $validation['data'];
+            } else
+            {
+                $item = new User();
+                $item->password = generate_password();
+                $item->is_active = 1;
+                $item->status = 'active';
+                $item->activated_at = date('Y-m-d H:i:s');
+                $item->uuid = Str::uuid();
+            }
+        }
+
+        $item->fill($inputs);
+        if($request->has('password'))
+        {
+            $item->password = Hash::make($request->password);
+        }
+
+        $item->save();
+
+        if(!$request->has('id'))
+        {
+            Role::syncRolesWithUsers();
+        }
+
+
+        $response['status'] = 'success';
+        $response['messages'][] = 'Saved';
+        $response['data'] = $item;
+
+        return $response;
+
+
+    }
+    //-------------------------------------------------
+    public static function bulkStatusChange($request)
+    {
+
+        if(!\Auth::user()->hasPermission('can-manage-users') &&
+            !\Auth::user()->hasPermission('can-update-users'))
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+            return $response;
+        }
+
+        if(!$request->has('inputs'))
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = 'Select IDs';
+            return $response;
+        }
+
+        if(!$request->has('data'))
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = 'Select Status';
+            return $response;
+        }
+
+        foreach($request->inputs as $id)
+        {
+            $reg = User::where('id',$id)->withTrashed()->first();
+
+
+            if($reg->deleted_at){
+                continue ;
+            }
+
+            $is_restricted = static::restrictedActions($request->action, $reg->id);
+
+            if($is_restricted)
+            {
+                continue;
+            }
+
+            if($request['data']){
+                $reg->is_active = $request['data']['status'];
+                if( $request['data']['status'] == 1){
+                    $reg->status = 'active';
+                }else{
+                    $reg->status = 'inactive';
+                }
+            }else{
+                if($reg->is_active == 1){
+                    $reg->is_active = 0;
+                    $reg->status = 'inactive';
+                }else{
+                    $reg->is_active = 1;
+                    $reg->status = 'active';
+                }
+            }
+
+            $reg->save();
+        }
+
+        $response['status'] = 'success';
+        $response['data'] = [];
+        $response['messages'][] = 'Action was successful';
+
+        return $response;
+
+
+    }
+    //-------------------------------------------------
+    public static function bulkTrash($request)
+    {
+
+        if(!\Auth::user()->hasPermission('can-update-users'))
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+            return $response;
+        }
+
+        if(!$request->has('inputs'))
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = 'Select IDs';
+            return $response;
+        }
+
+        if(!$request->has('data'))
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = 'Select Status';
+            return $response;
+        }
+
+        foreach($request->inputs as $id)
+        {
+            $item = User::find($id);
+            if($item)
+            {
+
+
+                $is_restricted = static::restrictedActions($request->action, $item->id);
+
+                if($is_restricted)
+                {
+                    continue;
+                }
+
+                $item->is_active = 0;
+                $item->status = 'inactive';
+                $item->save();
+
+                $item->delete();
+            }
+        }
+
+        $response['status'] = 'success';
+        $response['data'] = [];
+        $response['messages'][] = 'Action was successful';
+
+        return $response;
+
+
+    }
+    //-------------------------------------------------
+    public static function bulkRestore($request)
+    {
+
+        if(!\Auth::user()->hasPermission('can-update-users'))
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+            return $response;
+        }
+
+        if(!$request->has('inputs'))
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = 'Select IDs';
+            return $response;
+        }
+
+        if(!$request->has('data'))
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = 'Select Status';
+            return $response;
+        }
+
+
+        foreach($request->inputs as $id)
+        {
+
+            $item = User::withTrashed()->where('id', $id)->first();
+
+            if(isset($item) && isset($item->deleted_at))
+            {
+                $item->restore();
+            }
+        }
+
+        $response['status'] = 'success';
+        $response['data'] = [];
+        $response['messages'][] = 'Action was successful';
+
+        return $response;
+
+
+    }
+    //-------------------------------------------------
+
+    public static function bulkChangeRoleStatus($request)
+    {
+
+        if(!\Auth::user()->hasPermission('can-manage-users') &&
+            !\Auth::user()->hasPermission('can-update-users'))
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+            return $response;
+        }
+
+        $inputs = $request->all();
+
+
+        if($inputs['inputs']['id'] == 1 && $inputs['inputs']['role_id'] == 1)
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = 'First user will always be an administrator';
+            return response()->json($response);
+        }
+
+        $item = User::find($inputs['inputs']['id']);
+
+        if($inputs['inputs']['role_id']){
+            $item->roles()->updateExistingPivot($inputs['inputs']['role_id'], array('is_active' => $inputs['data']['is_active']));
+        }else{
+            $item->roles()
+                ->newPivotStatement()
+                ->where('vh_user_id', '=', $item->id)
+                ->update(array('is_active' => $inputs['data']['is_active']));
+        }
+
+        Role::recountRelations();
+
+        $response['status'] = 'success';
+        $response['data'] = [];
+
+        return $response;
+
+
+    }
+
+    //-------------------------------------------------
+
+    public static function bulkDelete($request)
+    {
+
+        if(!\Auth::user()->hasPermission('can-update-users') ||
+            !\Auth::user()->hasPermission('can-delete-users'))
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+            return $response;
+        }
+
+        if(!$request->has('inputs'))
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = 'Select IDs';
+            return $response;
+        }
+
+        if(!$request->has('data'))
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = 'Select Status';
+            return $response;
+        }
+
+        foreach($request->inputs as $id)
+        {
+            $item = static::where('id', $id)->withTrashed()->first();
+            if($item)
+            {
+
+                $is_restricted = static::restrictedActions($request->action, $item->id);
+
+                if($is_restricted)
+                {
+                    continue;
+                }
+
+                $item->roles()->detach();
+
+                $item->forceDelete();
+
+            }
+        }
+
+        $response['status'] = 'success';
+        $response['data'] = [];
+        $response['messages'][] = 'Action was successful';
+
+        return $response;
+
+
+    }
+    //-------------------------------------------------
+
+    //-------------------------------------------------
+    public static function validation($inputs){
+
+        $rules = array(
+
+            'email' => 'required|email|max:150',
+            'first_name' => 'required|max:150',
+            'status' => 'required',
+            'is_active' => 'required',
+
+        );
+
+        if(isset($inputs['username']))
+        {
+            $rules['username'] = 'alpha_dash|max:20';
+        }
+
+        $validator = \Validator::make($inputs,$rules);
+
+        if ( $validator->fails() ) {
+
+            $errors             = errorsToArray($validator->errors());
+            $response['status'] = 'failed';
+            $response['errors'] = $errors;
+            return $response;
+        }
+
+    }
+    //-------------------------------------------------
+    public static function storeProfile($request)
+    {
+        $rules = array(
+            'first_name' => 'required|max:150',
+            'last_name' => 'required|max:150',
+            'email' => 'required|email|max:150',
+        );
+
+        if($request->has('username'))
+        {
+            $rules['username'] = 'alpha_dash|max:15';
+        }
+
+
+        $validator = \Validator::make( $request->all(), $rules);
+        if ( $validator->fails() ) {
+
+            $errors             = errorsToArray($validator->errors());
+            $response['status'] = 'failed';
+            $response['errors'] = $errors;
+            return response()->json($response);
+        }
+
+        if(!\Auth::check())
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = 'You must be logged in to update your profile';
+            return $response;
+        }
+
+
+        $inputs = $request->all();
+
+        $user = static::find(\Auth::user()->id);
+
+
+        if(
+            $request->has('username') && !empty($request->username)
+            && $request->username != $user->username
+        )
+        {
+            $user_exist = static::where('username', $request->username)
+                ->first();
+            if($user_exist)
+            {
+                $response['status'] = 'failed';
+                $response['errors'][] = 'Username already taken';
+                return $response;
+            }
+        }
+
+        if($user->email != $inputs['email'] && !empty($inputs['email']))
+        {
+
+            $email_exist = static::where('email', $inputs['email'])
+                ->first();
+
+            if($email_exist)
+            {
+                $response['status'] = 'failed';
+                $response['errors'][] = 'Email is associated with other user.';
+                return $response;
+            }
+
+        }
+
+        if(isset($inputs['password']))
+        {
+            unset($inputs['password']);
+        }
+
+        $user->fill($inputs);
+        $user->save();
+
+
+        $response['status'] = 'success';
+        $response['data'][] = '';
+        $response['messages'][] = 'Action was successful';
+        return $response;
+
+
+    }
+    //-------------------------------------------------
+    public static function storePassword($request)
+    {
+        $rules = array(
+            'current_password' => 'required|max:25',
+            'new_password' => 'required|max:25',
+            'confirm_password' => 'required|max:25',
+        );
+
+        $validator = \Validator::make($request->all(),$rules);
+
+        if ( $validator->fails() ) {
+
+            $errors             = errorsToArray($validator->errors());
+            $response['status'] = 'failed';
+            $response['errors'] = $errors;
+            return $response;
+        }
+
+        if($request->new_password != $request->confirm_password)
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = 'Confirm password does not match';
+            return $response;
+        }
+
+
+        try{
+
+            $check = \Hash::check($request->current_password, auth()->user()->password);
+
+            if(!$check)
+            {
+                $response['status'] = 'failed';
+                $response['errors'][] = 'Current password is incorrect';
+                return $response;
+            }
+
+            $user = static::find(\Auth::user()->id);
+            $user->password = \Hash::make($request->new_password);
+            $user->save();
+
+            $response['status'] = 'success';
+            $response['data'][] = '';
+            $response['messages'][] = 'Action was successful';
+
+            return $response;
+
+
+        }catch(\Exception $e)
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = $e->getMessage();
+
+        }
+
+        return $response;
+    }
+    //-------------------------------------------------
+    public static function storeAvatar($request,$user_id=null)
+    {
+        $rules = array(
+            'url' => 'required',
+        );
+
+        $validator = \Validator::make( $request->all(), $rules);
+        if ( $validator->fails() ) {
+
+            $errors             = errorsToArray($validator->errors());
+            $response['status'] = 'failed';
+            $response['errors'] = $errors;
+            return $response;
+        }
+
+        $data = [];
+
+        if(!$user_id)
+        {
+            $user_id = \Auth::user()->id;
+        }
+
+        $user = User::find($user_id);
+
+        $user->avatar_url = $request->url;
+        $user->save();
+
+        $response['status'] = 'success';
+        $response['messages'][] = 'Avatar updated.';
+        $response['data']['avatar'] = $user->avatar;
+        $response['data']['avatar_url'] = $user->avatar_url;
+
+        return $response;
+
+    }
+    //-------------------------------------------------
+    public static function removeAvatar($request, $user_id=null)
+    {
+
+        $data = [];
+
+        if(!$user_id)
+        {
+            $user_id = \Auth::user()->id;
+        }
+
+        $user = User::find($user_id);
+
+        $user = User::find(\Auth::user()->id);
+        $user->avatar_url = null;
+        $user->save();
+
+        $response['status'] = 'success';
+        $response['messages'][] = 'Avatar removed.';
+        $response['data']['avatar'] = $user->avatar;
+        $response['data']['avatar_url'] = $user->avatar_url;
+
+        return $response;
+
+    }
     //-------------------------------------------------
 }

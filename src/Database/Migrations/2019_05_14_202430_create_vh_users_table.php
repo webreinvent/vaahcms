@@ -15,18 +15,20 @@ class CreateVhUsersTable extends Migration
     {
         Schema::create('vh_users', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('uid')->nullable();
-            $table->string('email')->nullable();
-            $table->string('username')->nullable();
+            $table->uuid('uuid')->nullable();
+            $table->string('email',150)->nullable();
+            $table->string('username',150)->nullable();
             $table->string('password')->nullable();
-            $table->string('display_name')->nullable();
-            $table->string('title', 5)->nullable();
-            $table->string('first_name')->nullable();
+            $table->string('display_name',50)->nullable();
+            $table->string('title',200)->nullable();
+            $table->string('first_name',150)->nullable();
             $table->string('middle_name')->nullable();
-            $table->string('last_name')->nullable();
+            $table->string('last_name',150)->nullable();
             $table->string('gender', 15)->nullable();
             $table->integer('country_calling_code')->nullable();
             $table->bigInteger('phone')->nullable();
+            $table->mediumText('bio')->nullable();
+            $table->string('website')->nullable();
             $table->string('timezone')->nullable();
             $table->string('alternate_email')->nullable();
             $table->string('avatar_url')->nullable();
@@ -49,6 +51,7 @@ class CreateVhUsersTable extends Migration
             $table->dateTime('reset_password_code_sent_at')->nullable();
             $table->dateTime('reset_password_code_used_at')->nullable();
 
+            $table->integer('registration_id')->nullable();
             $table->text('meta')->nullable();
 
             $table->ipAddress('created_ip')->nullable();

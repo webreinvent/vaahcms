@@ -13,6 +13,4 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/vaahcms', function (Request $request) {
-    return $request->user();
-});
+

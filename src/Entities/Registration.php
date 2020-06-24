@@ -6,14 +6,15 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Carbon;
-use WebReinvent\VaahCms\Traits\CrudWithUidObservantTrait;
+use Illuminate\Support\Str;
+use WebReinvent\VaahCms\Traits\CrudWithUuidObservantTrait;
 
 
 class Registration extends Model
 {
     use Notifiable;
     use SoftDeletes;
-    use CrudWithUidObservantTrait;
+    use CrudWithUuidObservantTrait;
 
     //-------------------------------------------------
     protected $table = 'vh_registrations';
@@ -26,12 +27,13 @@ class Registration extends Model
     protected $dateFormat = 'Y-m-d H:i:s';
     //-------------------------------------------------
     protected $fillable = [
-        "uid","email","username","password","display_name","title","first_name","middle_name","last_name",
+        "uuid", "email","username","password",
+        "display_name","title","first_name","middle_name","last_name",
         "gender","country_calling_code","phone","timezone","alternate_email",
         "avatar_url","birth", "country","country_code", "status",
         "activation_code", "activation_code_sent_at",
         "activated_ip","invited_by", "invited_at","user_id",
-        "user_created_at", "created_ip", "meta",
+        "user_created_at", "created_ip", "registration_id", "meta",
         "created_by", "updated_by","deleted_by"
     ];
     //-------------------------------------------------
@@ -74,6 +76,11 @@ class Registration extends Model
         $this->attributes['birth'] = Carbon::parse($value)->format('Y-m-d');
     }
     //-------------------------------------------------
+    public function setPasswordAttribute($value)
+    {
+        $this->attributes['password'] = \Hash::make($value);
+    }
+    //-------------------------------------------------
     public function getNameAttribute() {
         return $this->first_name." ".$this->last_name;
     }
@@ -94,6 +101,27 @@ class Registration extends Model
     public function scopeEmail($query, $email)
     {
         return $query->where('email', $email);
+    }
+
+    //-------------------------------------------------
+    public function scopeBetweenDates($query, $from, $to)
+    {
+
+        if($from)
+        {
+            $from = Carbon::parse($from)
+                ->startOfDay()
+                ->toDateTimeString();
+        }
+
+        if($to)
+        {
+            $to = Carbon::parse($to)
+                ->endOfDay()
+                ->toDateTimeString();
+        }
+
+        $query->whereBetween('created_at',[$from,$to]);
     }
 
     //-------------------------------------------------
@@ -142,27 +170,27 @@ class Registration extends Model
     //-------------------------------------------------
 
     //-------------------------------------------------
-    public function createdBy()
+    public function createdByUser()
     {
         return $this->belongsTo('WebReinvent\VaahCms\Entities\User',
             'created_by', 'id'
-        );
+        )->select('id', 'uuid', 'first_name', 'last_name', 'email');
     }
 
     //-------------------------------------------------
-    public function updatedBy()
+    public function updatedByUser()
     {
         return $this->belongsTo('WebReinvent\VaahCms\Entities\User',
             'updated_by', 'id'
-        );
+        )->select('id', 'uuid', 'first_name', 'last_name', 'email');
     }
 
     //-------------------------------------------------
-    public function deletedBy()
+    public function deletedByUser()
     {
         return $this->belongsTo('WebReinvent\VaahCms\Entities\User',
             'deleted_by', 'id'
-        );
+        )->select('id', 'uuid', 'first_name', 'last_name', 'email');
     }
 
     //-------------------------------------------------
@@ -171,138 +199,9 @@ class Registration extends Model
             ->getColumnListing($this->getTable());
     }
     //-------------------------------------------------
-    public function getFormFillableColumns()
+    public function scopeExclude($query, $columns)
     {
-        $list = [
-            'email', 'username', 'password', 'display_name',
-            'title', 'first_name', 'middle_name', 'last_name',
-            'gender', 'country_calling_code', 'phone', 'timezone',
-            'alternate_email', 'avatar_url', 'birth', 'country',
-            'status', 'invited_by',
-            'user_id',
-        ];
-
-        return $list;
-    }
-    //-------------------------------------------------
-    public function getFormColumns()
-    {
-        $columns = $this->getFormFillableColumns();
-
-        $result = [];
-        $i = 0;
-
-        foreach ($columns as $column)
-        {
-            $result[$i] = $this->getFormElement($column);
-            $i++;
-        }
-
-        return $result;
-    }
-    //-------------------------------------------------
-    public function getFormElement($column, $value=null)
-    {
-
-        $result['name'] = $column;
-        $result['value'] = $value;
-        $result['tr_class'] = "";
-        $result['editable'] = true;
-        $result['disabled'] = false;
-        $result['label'] = slug_to_str($column);
-        $result['column_type'] = $this->getConnection()->getSchemaBuilder()
-            ->getColumnType($this->getTable(), $column);
-
-
-        switch($column)
-        {
-            //------------------------------------------------
-            case 'id':
-            case 'uid':
-                $result['type'] = 'text';
-                $result['disabled'] = true;
-                $result['tr_class'] = 'tr__disabled';
-                break;
-            //------------------------------------------------
-            case 'created_by':
-                $result['type'] = 'select_with_ids';
-                $result['inputs'] = User::getUsersForAssets();
-                break;
-            //------------------------------------------------
-            case 'updated_by':
-            case 'deleted_by':
-            case 'meta':
-            case 'created_ip':
-            case 'activated_ip':
-            case 'activation_code_sent_at':
-            case 'user_created_at':
-            case 'deleted_at':
-            case 'updated_at':
-            case 'created_at':
-            case 'invited_at':
-            case 'activated_at':
-            case 'activation_code':
-                $result['type'] = 'hidden';
-                break;
-            //------------------------------------------------
-            case 'title':
-                $result['type'] = 'select';
-                $result['inputs'] = vh_name_titles();
-                break;
-            //------------------------------------------------
-            case 'gender':
-                $result['type'] = 'select';
-                $result['inputs'] = vh_genders();
-                break;
-            //------------------------------------------------
-            case 'country_calling_code':
-                $result['type'] = 'select';
-                $result['inputs'] = vh_get_countries_calling_codes();
-                break;
-            //------------------------------------------------
-            case 'timezone':
-                $result['type'] = 'select';
-                $result['inputs'] = vh_get_timezones();
-                break;
-            //------------------------------------------------
-            case 'birth':
-                $result['type'] = 'date';
-                $result['label'] = 'Birth Date';
-                break;
-            //------------------------------------------------
-            case 'status':
-                $result['type'] = 'select';
-                $result['inputs'] = vh_registration_statuses();
-                break;
-            //------------------------------------------------
-            case 'country':
-                $result['type'] = 'select';
-                $result['inputs'] = vh_get_country_list_with_slugs();
-                break;
-            //------------------------------------------------
-            case 'invited_by':
-                $result['type'] = 'select_with_ids';
-                $result['inputs'] = User::getUsersForAssets();
-                $result['label'] = "Invited By";
-                break;
-            //------------------------------------------------
-            case 'user_id':
-                $result['type'] = 'select_with_ids';
-                $result['inputs'] = User::getUsersForAssets();
-                $result['label'] = "Registration belongs to:";
-                break;
-            //------------------------------------------------
-            case 'password':
-                $result['type'] = 'password';
-                break;
-            //------------------------------------------------
-            default:
-                $result['type'] = 'text';
-                break;
-            //------------------------------------------------
-        }
-
-        return $result;
+        return $query->select( array_diff( $this->getTableColumns(),$columns) );
     }
     //-------------------------------------------------
     public static function findByUsername($username, $columns = array('*'))
@@ -327,17 +226,186 @@ class Registration extends Model
     }
 
     //-------------------------------------------------
-    public static function store($request)
+    public static function create($request)
     {
+
+        if(!\Auth::user()->hasPermission('can-create-registrations'))
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+            return $response;
+        }
+
+        $inputs = $request->new_item;
+
         $rules = array(
-            'email' => 'required|email',
-            'first_name' => 'required',
+            'email' => 'required|email|max:150',
+            'first_name' => 'required|max:150',
+            'password' => 'required',
+        );
+
+        $validator = \Validator::make( $inputs, $rules);
+        if ( $validator->fails() ) {
+
+            $errors             = errorsToArray($validator->errors());
+            $response['status'] = 'failed';
+            $response['errors'] = $errors;
+            return $response;
+        }
+
+        // check if already exist
+        $user = static::where('email',$inputs['email'])->first();
+
+        if($user)
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = "This email is already registered.";
+            return $response;
+        }
+
+        // check if user already exist
+        $user = User::where('email',$inputs['email'])->first();
+
+        if($user)
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = 'User already exist';
+            if(env('APP_DEBUG'))
+            {
+                $response['hint'][] = 'Registration can be created only when user does not exist';
+            }
+            return $response;
+        }
+
+        if(!isset($inputs['username']))
+        {
+            $inputs['username'] = Str::slug($inputs['email']);
+        }
+
+        if(!isset($inputs['status']))
+        {
+            $inputs['status'] = 'email-verification-pending';
+        }
+
+        $inputs['created_ip'] = request()->ip();
+
+        $reg = new static();
+        $reg->fill($inputs);
+        $reg->save();
+
+        $response['status'] = 'success';
+        $response['data']['item'] = $reg;
+        return $response;
+
+    }
+    //-------------------------------------------------
+    public static function getList($request)
+    {
+
+        if(!\Auth::user()->hasPermission('has-access-of-registrations-section'))
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+            return $response;
+        }
+
+        $list = Registration::orderBy('created_at', 'DESC');
+
+        if($request->has('trashed') && $request->trashed == 'true')
+        {
+            $list->withTrashed();
+        }
+
+        if(isset($request->from) && isset($request->to))
+        {
+            $list->betweenDates($request['from'],$request['to']);
+        }
+
+        if($request->has('status') && !empty( $request->status))
+        {
+            $list->where('status', $request->status);
+        }
+
+        if($request->has("q"))
+        {
+            $list->where(function ($q) use ($request){
+                $q->where('first_name', 'LIKE', '%'.$request->q.'%')
+                    ->orWhere('last_name', 'LIKE', '%'.$request->q.'%')
+                    ->orWhere('middle_name', 'LIKE', '%'.$request->q.'%')
+                    ->orWhere('email', 'LIKE', '%'.$request->q.'%')
+                    ->orWhere('id', '=', $request->q);
+            });
+        }
+
+        if(!\Auth::user()->hasPermission('can-see-registrations-contact-details')){
+            $list->exclude(['email','alternate_email', 'phone']);
+        }
+
+
+        $list = $list->paginate(config('vaahcms.per_page'));
+
+        $response['status'] = 'success';
+        $response['data']['list'] = $list;
+
+        return $response;
+
+    }
+    //-------------------------------------------------
+    public static function getItem($request)
+    {
+
+        if(!\Auth::user()->hasPermission('can-manage-registrations') &&
+            !\Auth::user()->hasPermission('can-update-registrations') &&
+            !\Auth::user()->hasPermission('can-create-registrations') &&
+            !\Auth::user()->hasPermission('can-read-registrations'))
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+            return $response;
+        }
+
+        $item = Registration::where('id', $request->id);
+        $item->withTrashed();
+        $item->with(['createdByUser', 'updatedByUser', 'deletedByUser']);
+
+        if(!\Auth::user()->hasPermission('can-see-registrations-contact-details')){
+            $item->exclude(['email','alternate_email', 'phone']);
+        }
+
+        $item = $item->first();
+
+
+        $response['status'] = 'success';
+        $response['data']['item'] = $item;
+
+        return $response;
+
+    }
+    //-------------------------------------------------
+    public static function postStore($request)
+    {
+
+        if(!\Auth::user()->hasPermission('can-update-registrations'))
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+            return $response;
+        }
+
+        $rules = array(
+            'id' => 'required',
+            'email' => 'required|email|unique:vh_registrations|max:150',
+            'first_name' => 'required|max:150',
             'status' => 'required',
         );
 
-        if(!$request->has('id'))
+        if($request->has('username'))
         {
-            $rules['password'] = 'required';
+            $rules['username'] = 'alpha_dash|max:15';
         }
 
         $validator = \Validator::make( $request->all(), $rules);
@@ -351,25 +419,11 @@ class Registration extends Model
 
         $data = [];
 
-        if($request->has('id'))
-        {
-            $item = Registration::find($request->id);
-        } else
-        {
-            $validation = static::registrationValidation($request);
-            if(isset($validation['status']) && $validation['status'] == 'failed')
-            {
-                return $validation;
-            } else if(isset($validation['status']) && $validation['status'] == 'registration-exist')
-            {
-                $item = $validation['data'];
-            } else
-            {
-                $item = new Registration();
-            }
-        }
+        $item = Registration::where('id', $request->id)
+            ->withTrashed()->first();
 
         $item->fill($request->all());
+
         if($request->has('password'))
         {
             $item->password = Hash::make($request->password);
@@ -392,7 +446,10 @@ class Registration extends Model
             $item->created_ip = $request->ip();
         }
 
-        $item->activation_code = str_random(40);
+        if(!$request->has('activation_code'))
+        {
+            $item->activation_code = str_random(40);
+        }
 
         if($request->has('user_id') && !$request->has('activated_at'))
         {
@@ -498,6 +555,15 @@ class Registration extends Model
     public static function bulkStatusChange($request)
     {
 
+        if(!\Auth::user()->hasPermission('can-manage-registrations') &&
+            !\Auth::user()->hasPermission('can-update-registrations'))
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+            return $response;
+        }
+
         if(!$request->has('inputs'))
         {
             $response['status'] = 'failed';
@@ -515,11 +581,12 @@ class Registration extends Model
         foreach($request->inputs as $id)
         {
             $reg = Registration::find($id);
-            $reg->status = $request->data;
+            $reg->status = $request->data['status'];
             $reg->save();
         }
 
         $response['status'] = 'success';
+        $response['data'] = [];
         $response['messages'][] = 'Action was successful';
 
         return $response;
@@ -527,8 +594,16 @@ class Registration extends Model
 
     }
     //-------------------------------------------------
-    public static function bulkDelete($request)
+    public static function bulkTrash($request)
     {
+
+        if(!\Auth::user()->hasPermission('can-update-registrations'))
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+            return $response;
+        }
 
         if(!$request->has('inputs'))
         {
@@ -537,16 +612,10 @@ class Registration extends Model
             return $response;
         }
 
-        if(!$request->has('data'))
-        {
-            $response['status'] = 'failed';
-            $response['errors'][] = 'Select Status';
-            return $response;
-        }
 
         foreach($request->inputs as $id)
         {
-            $reg = Registration::find($id);
+            $reg = Registration::withTrashed()->where('id', $id)->first();
             if($reg)
             {
                 $reg->delete();
@@ -554,6 +623,7 @@ class Registration extends Model
         }
 
         $response['status'] = 'success';
+        $response['data'] = [];
         $response['messages'][] = 'Action was successful';
 
         return $response;
@@ -564,17 +634,18 @@ class Registration extends Model
     public static function bulkRestore($request)
     {
 
+        if(!\Auth::user()->hasPermission('can-update-registrations'))
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+            return $response;
+        }
+
         if(!$request->has('inputs'))
         {
             $response['status'] = 'failed';
             $response['errors'][] = 'Select IDs';
-            return $response;
-        }
-
-        if(!$request->has('data'))
-        {
-            $response['status'] = 'failed';
-            $response['errors'][] = 'Select Status';
             return $response;
         }
 
@@ -588,10 +659,126 @@ class Registration extends Model
         }
 
         $response['status'] = 'success';
+        $response['data'] = [];
         $response['messages'][] = 'Action was successful';
 
         return $response;
 
+
+    }
+    //-------------------------------------------------
+    public static function bulkDelete($request)
+    {
+
+        if(!\Auth::user()->hasPermission('can-update-registrations') ||
+            !\Auth::user()->hasPermission('can-delete-registrations'))
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+            return $response;
+        }
+
+        if(!$request->has('inputs'))
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = 'Select IDs';
+            return $response;
+        }
+
+
+        foreach($request->inputs as $id)
+        {
+            $reg = Registration::where('id', $id)->withTrashed()->first();
+            if($reg)
+            {
+                $reg->forceDelete();
+            }
+        }
+
+        $response['status'] = 'success';
+        $response['data'] = [];
+        $response['messages'][] = 'Action was successful';
+
+        return $response;
+
+
+    }
+    //-------------------------------------------------
+    public static function sendVerificationEmail($request)
+    {
+
+        if(!\Auth::user()->hasPermission('can-manage-registrations') &&
+            !\Auth::user()->hasPermission('can-update-registrations'))
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+            return $response;
+        }
+
+        if(!$request->has('inputs'))
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = 'Select IDs';
+            return $response;
+        }
+
+        foreach($request->inputs as $id)
+        {
+            $reg = Registration::where('id', $id)->withTrashed()->first();
+            if($reg)
+            {
+                $reg->activation_code = Str::uuid();
+                $reg->activation_code_sent_at = \Carbon::now();
+                $reg->save();
+            }
+        }
+
+        $response['status'] = 'success';
+        $response['data'] = [];
+        $response['messages'][] = 'Action was successful';
+
+        return $response;
+
+    }
+    //-------------------------------------------------
+    public static function createUser($id)
+    {
+
+        if(!\Auth::user()->hasPermission('can-create-users-from-registrations'))
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+            return $response;
+        }
+
+        $reg = static::where('id',$id)->withTrashed()->first()->makeVisible('password');
+
+        if($reg->user_id){
+            $response['status'] = 'failed';
+            $response['errors'][] = 'User already exist.';
+            return $response;
+        }
+
+        $user = new User();
+        $user->fill($reg->toArray());
+        $user->password = $reg->password;
+        $user->registration_id = $reg->id;
+        $user->status = 'active';
+        $user->is_active = 1;
+        $user->save();
+
+        $reg->user_id = $user->id;
+        $reg->status = 'user-created';
+        $reg->save();
+
+        $response['status'] = 'success';
+        $response['data'] = [];
+        $response['messages'][] = 'User is created.';
+
+        return $response;
 
     }
     //-------------------------------------------------

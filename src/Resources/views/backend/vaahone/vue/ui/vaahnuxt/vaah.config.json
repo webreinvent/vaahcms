@@ -1,0 +1,28 @@
+{
+  "css": [
+    "~/node_modules/highlight.js/styles/github.css",
+    "~/node_modules/bulma-helpers/bulma-helpers.sass",
+    "@/vaahnuxt/assets/scss/vaahnuxt.scss"
+  ],
+  "plugins": [
+    "~/plugins/vaah",
+    "~/plugins/vue-highlightjs",
+    "~/plugins/vh-copy"
+  ],
+  "buildModules": [
+    "@nuxtjs/eslint-module"
+  ],
+  "modules": [
+    "nuxt-buefy",
+    "@nuxtjs/axios",
+    "nuxt-fontawesome",
+    "nuxt-webfontloader",
+    "@nuxtjs/markdownit",
+    "@nuxtjs/sentry",
+    "@nuxtjs/auth",
+    "@nuxtjs/redirect-module",
+    "@nuxtjs/google-analytics"
+  ],
+  "axios": {
+  }
+}

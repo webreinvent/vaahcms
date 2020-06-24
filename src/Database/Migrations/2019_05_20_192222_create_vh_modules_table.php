@@ -15,15 +15,16 @@ class CreateVhModulesTable extends Migration
     {
         Schema::create('vh_modules', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name')->nullable();
-            $table->string('title')->nullable();
-            $table->string('slug')->nullable();
+            $table->string('name',150)->nullable();
+            $table->string('title',200)->nullable();
+            $table->string('slug',150)->nullable();
             $table->string('thumbnail')->nullable();
             $table->string('excerpt')->nullable();
             $table->string('description')->nullable();
-            $table->string('github_url')->nullable();
+            $table->string('download_link')->nullable();
             $table->string('author_name')->nullable();
             $table->string('author_website')->nullable();
+            $table->string('vaah_url')->nullable();
             $table->string('version')->nullable();
             $table->integer('version_number')->nullable();
             $table->string('db_table_prefix')->nullable();
@@ -32,7 +33,6 @@ class CreateVhModulesTable extends Migration
             $table->boolean('is_update_available')->nullable();
             $table->boolean('is_assets_published')->nullable();
             $table->dateTime('update_checked_at')->nullable();
-
             $table->boolean('is_active')->nullable();
 
             $table->timestamps();

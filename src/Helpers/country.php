@@ -71,242 +71,242 @@ function vh_get_country_list_select_options($show='country_name')
 function vh_get_country_list()
 {
 
-    $countries = [];
-    $countries[] = array("code" => "IN", "name" => "India", "calling_code" => "91");
-    $countries[] = array("code" => "US", "name" => "United States", "calling_code" => "1");
+    $countries = [
+        ["code" => "IN", "name" => "India", "calling_code" => "91"],
+        ["code" => "US", "name" => "United States", "calling_code" => "1"],
+        ["code" => "AF", "name" => "Afghanistan", "calling_code" => "93"],
+        ["code" => "AL", "name" => "Albania", "calling_code" => "355"],
+        ["code" => "DZ", "name" => "Algeria", "calling_code" => "213"],
+        ["code" => "AS", "name" => "American Samoa", "calling_code" => "1"],
+        ["code" => "AD", "name" => "Andorra", "calling_code" => "376"],
+        ["code" => "AO", "name" => "Angola", "calling_code" => "244"],
+        ["code" => "AI", "name" => "Anguilla", "calling_code" => "1"],
+        ["code" => "AG", "name" => "Antigua", "calling_code" => "1"],
+        ["code" => "AR", "name" => "Argentina", "calling_code" => "54"],
+        ["code" => "AM", "name" => "Armenia", "calling_code" => "374"],
+        ["code" => "AW", "name" => "Aruba", "calling_code" => "297"],
+        ["code" => "AU", "name" => "Australia", "calling_code" => "61"],
+        ["code" => "AT", "name" => "Austria", "calling_code" => "43"],
+        ["code" => "AZ", "name" => "Azerbaijan", "calling_code" => "994"],
+        ["code" => "BH", "name" => "Bahrain", "calling_code" => "973"],
+        ["code" => "BD", "name" => "Bangladesh", "calling_code" => "880"],
+        ["code" => "BB", "name" => "Barbados", "calling_code" => "1"],
+        ["code" => "BY", "name" => "Belarus", "calling_code" => "375"],
+        ["code" => "BE", "name" => "Belgium", "calling_code" => "32"],
+        ["code" => "BZ", "name" => "Belize", "calling_code" => "501"],
+        ["code" => "BJ", "name" => "Benin", "calling_code" => "229"],
+        ["code" => "BM", "name" => "Bermuda", "calling_code" => "1"],
+        ["code" => "BT", "name" => "Bhutan", "calling_code" => "975"],
+        ["code" => "BO", "name" => "Bolivia", "calling_code" => "591"],
+        ["code" => "BA", "name" => "Bosnia and Herzegovina", "calling_code" => "387"],
+        ["code" => "BW", "name" => "Botswana", "calling_code" => "267"],
+        ["code" => "BR", "name" => "Brazil", "calling_code" => "55"],
+        ["code" => "IO", "name" => "British Indian Ocean Territory", "calling_code" => "246"],
+        ["code" => "VG", "name" => "British Virgin Islands", "calling_code" => "1"],
+        ["code" => "BN", "name" => "Brunei", "calling_code" => "673"],
+        ["code" => "BG", "name" => "Bulgaria", "calling_code" => "359"],
+        ["code" => "BF", "name" => "Burkina Faso", "calling_code" => "226"],
+        ["code" => "MM", "name" => "Burma Myanmar", "calling_code" => "95"],
+        ["code" => "BI", "name" => "Burundi", "calling_code" => "257"],
+        ["code" => "KH", "name" => "Cambodia", "calling_code" => "855"],
+        ["code" => "CM", "name" => "Cameroon", "calling_code" => "237"],
+        ["code" => "CA", "name" => "Canada", "calling_code" => "1"],
+        ["code" => "CV", "name" => "Cape Verde", "calling_code" => "238"],
+        ["code" => "KY", "name" => "Cayman Islands", "calling_code" => "1"],
+        ["code" => "CF", "name" => "Central African Republic", "calling_code" => "236"],
+        ["code" => "TD", "name" => "Chad", "calling_code" => "235"],
+        ["code" => "CL", "name" => "Chile", "calling_code" => "56"],
+        ["code" => "CN", "name" => "China", "calling_code" => "86"],
+        ["code" => "CO", "name" => "Colombia", "calling_code" => "57"],
+        ["code" => "KM", "name" => "Comoros", "calling_code" => "269"],
+        ["code" => "CK", "name" => "Cook Islands", "calling_code" => "682"],
+        ["code" => "CR", "name" => "Costa Rica", "calling_code" => "506"],
+        ["code" => "CI", "name" => "Côte d'Ivoire", "calling_code" => "225"],
+        ["code" => "HR", "name" => "Croatia", "calling_code" => "385"],
+        ["code" => "CU", "name" => "Cuba", "calling_code" => "53"],
+        ["code" => "CY", "name" => "Cyprus", "calling_code" => "357"],
+        ["code" => "CZ", "name" => "Czech Republic", "calling_code" => "420"],
+        ["code" => "CD", "name" => "Democratic Republic of Congo", "calling_code" => "243"],
+        ["code" => "DK", "name" => "Denmark", "calling_code" => "45"],
+        ["code" => "DJ", "name" => "Djibouti", "calling_code" => "253"],
+        ["code" => "DM", "name" => "Dominica", "calling_code" => "1"],
+        ["code" => "DO", "name" => "Dominican Republic", "calling_code" => "1"],
+        ["code" => "EC", "name" => "Ecuador", "calling_code" => "593"],
+        ["code" => "EG", "name" => "Egypt", "calling_code" => "20"],
+        ["code" => "SV", "name" => "El Salvador", "calling_code" => "503"],
+        ["code" => "GQ", "name" => "Equatorial Guinea", "calling_code" => "240"],
+        ["code" => "ER", "name" => "Eritrea", "calling_code" => "291"],
+        ["code" => "EE", "name" => "Estonia", "calling_code" => "372"],
+        ["code" => "ET", "name" => "Ethiopia", "calling_code" => "251"],
+        ["code" => "FK", "name" => "Falkland Islands", "calling_code" => "500"],
+        ["code" => "FO", "name" => "Faroe Islands", "calling_code" => "298"],
+        ["code" => "FM", "name" => "Federated States of Micronesia", "calling_code" => "691"],
+        ["code" => "FJ", "name" => "Fiji", "calling_code" => "679"],
+        ["code" => "FI", "name" => "Finland", "calling_code" => "358"],
+        ["code" => "FR", "name" => "France", "calling_code" => "33"],
+        ["code" => "GF", "name" => "French Guiana", "calling_code" => "594"],
+        ["code" => "PF", "name" => "French Polynesia", "calling_code" => "689"],
+        ["code" => "GA", "name" => "Gabon", "calling_code" => "241"],
+        ["code" => "GE", "name" => "Georgia", "calling_code" => "995"],
+        ["code" => "DE", "name" => "Germany", "calling_code" => "49"],
+        ["code" => "GH", "name" => "Ghana", "calling_code" => "233"],
+        ["code" => "GI", "name" => "Gibraltar", "calling_code" => "350"],
+        ["code" => "GR", "name" => "Greece", "calling_code" => "30"],
+        ["code" => "GL", "name" => "Greenland", "calling_code" => "299"],
+        ["code" => "GD", "name" => "Grenada", "calling_code" => "1"],
+        ["code" => "GP", "name" => "Guadeloupe", "calling_code" => "590"],
+        ["code" => "GU", "name" => "Guam", "calling_code" => "1"],
+        ["code" => "GT", "name" => "Guatemala", "calling_code" => "502"],
+        ["code" => "GN", "name" => "Guinea", "calling_code" => "224"],
+        ["code" => "GW", "name" => "Guinea-Bissau", "calling_code" => "245"],
+        ["code" => "GY", "name" => "Guyana", "calling_code" => "592"],
+        ["code" => "HT", "name" => "Haiti", "calling_code" => "509"],
+        ["code" => "HN", "name" => "Honduras", "calling_code" => "504"],
+        ["code" => "HK", "name" => "Hong Kong", "calling_code" => "852"],
+        ["code" => "HU", "name" => "Hungary", "calling_code" => "36"],
+        ["code" => "IS", "name" => "Iceland", "calling_code" => "354"],
 
-    $countries[] = array("code" => "AF", "name" => "Afghanistan", "calling_code" => "93");
-    $countries[] = array("code" => "AL", "name" => "Albania", "calling_code" => "355");
-    $countries[] = array("code" => "DZ", "name" => "Algeria", "calling_code" => "213");
-    $countries[] = array("code" => "AS", "name" => "American Samoa", "calling_code" => "1");
-    $countries[] = array("code" => "AD", "name" => "Andorra", "calling_code" => "376");
-    $countries[] = array("code" => "AO", "name" => "Angola", "calling_code" => "244");
-    $countries[] = array("code" => "AI", "name" => "Anguilla", "calling_code" => "1");
-    $countries[] = array("code" => "AG", "name" => "Antigua", "calling_code" => "1");
-    $countries[] = array("code" => "AR", "name" => "Argentina", "calling_code" => "54");
-    $countries[] = array("code" => "AM", "name" => "Armenia", "calling_code" => "374");
-    $countries[] = array("code" => "AW", "name" => "Aruba", "calling_code" => "297");
-    $countries[] = array("code" => "AU", "name" => "Australia", "calling_code" => "61");
-    $countries[] = array("code" => "AT", "name" => "Austria", "calling_code" => "43");
-    $countries[] = array("code" => "AZ", "name" => "Azerbaijan", "calling_code" => "994");
-    $countries[] = array("code" => "BH", "name" => "Bahrain", "calling_code" => "973");
-    $countries[] = array("code" => "BD", "name" => "Bangladesh", "calling_code" => "880");
-    $countries[] = array("code" => "BB", "name" => "Barbados", "calling_code" => "1");
-    $countries[] = array("code" => "BY", "name" => "Belarus", "calling_code" => "375");
-    $countries[] = array("code" => "BE", "name" => "Belgium", "calling_code" => "32");
-    $countries[] = array("code" => "BZ", "name" => "Belize", "calling_code" => "501");
-    $countries[] = array("code" => "BJ", "name" => "Benin", "calling_code" => "229");
-    $countries[] = array("code" => "BM", "name" => "Bermuda", "calling_code" => "1");
-    $countries[] = array("code" => "BT", "name" => "Bhutan", "calling_code" => "975");
-    $countries[] = array("code" => "BO", "name" => "Bolivia", "calling_code" => "591");
-    $countries[] = array("code" => "BA", "name" => "Bosnia and Herzegovina", "calling_code" => "387");
-    $countries[] = array("code" => "BW", "name" => "Botswana", "calling_code" => "267");
-    $countries[] = array("code" => "BR", "name" => "Brazil", "calling_code" => "55");
-    $countries[] = array("code" => "IO", "name" => "British Indian Ocean Territory", "calling_code" => "246");
-    $countries[] = array("code" => "VG", "name" => "British Virgin Islands", "calling_code" => "1");
-    $countries[] = array("code" => "BN", "name" => "Brunei", "calling_code" => "673");
-    $countries[] = array("code" => "BG", "name" => "Bulgaria", "calling_code" => "359");
-    $countries[] = array("code" => "BF", "name" => "Burkina Faso", "calling_code" => "226");
-    $countries[] = array("code" => "MM", "name" => "Burma Myanmar", "calling_code" => "95");
-    $countries[] = array("code" => "BI", "name" => "Burundi", "calling_code" => "257");
-    $countries[] = array("code" => "KH", "name" => "Cambodia", "calling_code" => "855");
-    $countries[] = array("code" => "CM", "name" => "Cameroon", "calling_code" => "237");
-    $countries[] = array("code" => "CA", "name" => "Canada", "calling_code" => "1");
-    $countries[] = array("code" => "CV", "name" => "Cape Verde", "calling_code" => "238");
-    $countries[] = array("code" => "KY", "name" => "Cayman Islands", "calling_code" => "1");
-    $countries[] = array("code" => "CF", "name" => "Central African Republic", "calling_code" => "236");
-    $countries[] = array("code" => "TD", "name" => "Chad", "calling_code" => "235");
-    $countries[] = array("code" => "CL", "name" => "Chile", "calling_code" => "56");
-    $countries[] = array("code" => "CN", "name" => "China", "calling_code" => "86");
-    $countries[] = array("code" => "CO", "name" => "Colombia", "calling_code" => "57");
-    $countries[] = array("code" => "KM", "name" => "Comoros", "calling_code" => "269");
-    $countries[] = array("code" => "CK", "name" => "Cook Islands", "calling_code" => "682");
-    $countries[] = array("code" => "CR", "name" => "Costa Rica", "calling_code" => "506");
-    $countries[] = array("code" => "CI", "name" => "Côte d'Ivoire", "calling_code" => "225");
-    $countries[] = array("code" => "HR", "name" => "Croatia", "calling_code" => "385");
-    $countries[] = array("code" => "CU", "name" => "Cuba", "calling_code" => "53");
-    $countries[] = array("code" => "CY", "name" => "Cyprus", "calling_code" => "357");
-    $countries[] = array("code" => "CZ", "name" => "Czech Republic", "calling_code" => "420");
-    $countries[] = array("code" => "CD", "name" => "Democratic Republic of Congo", "calling_code" => "243");
-    $countries[] = array("code" => "DK", "name" => "Denmark", "calling_code" => "45");
-    $countries[] = array("code" => "DJ", "name" => "Djibouti", "calling_code" => "253");
-    $countries[] = array("code" => "DM", "name" => "Dominica", "calling_code" => "1");
-    $countries[] = array("code" => "DO", "name" => "Dominican Republic", "calling_code" => "1");
-    $countries[] = array("code" => "EC", "name" => "Ecuador", "calling_code" => "593");
-    $countries[] = array("code" => "EG", "name" => "Egypt", "calling_code" => "20");
-    $countries[] = array("code" => "SV", "name" => "El Salvador", "calling_code" => "503");
-    $countries[] = array("code" => "GQ", "name" => "Equatorial Guinea", "calling_code" => "240");
-    $countries[] = array("code" => "ER", "name" => "Eritrea", "calling_code" => "291");
-    $countries[] = array("code" => "EE", "name" => "Estonia", "calling_code" => "372");
-    $countries[] = array("code" => "ET", "name" => "Ethiopia", "calling_code" => "251");
-    $countries[] = array("code" => "FK", "name" => "Falkland Islands", "calling_code" => "500");
-    $countries[] = array("code" => "FO", "name" => "Faroe Islands", "calling_code" => "298");
-    $countries[] = array("code" => "FM", "name" => "Federated States of Micronesia", "calling_code" => "691");
-    $countries[] = array("code" => "FJ", "name" => "Fiji", "calling_code" => "679");
-    $countries[] = array("code" => "FI", "name" => "Finland", "calling_code" => "358");
-    $countries[] = array("code" => "FR", "name" => "France", "calling_code" => "33");
-    $countries[] = array("code" => "GF", "name" => "French Guiana", "calling_code" => "594");
-    $countries[] = array("code" => "PF", "name" => "French Polynesia", "calling_code" => "689");
-    $countries[] = array("code" => "GA", "name" => "Gabon", "calling_code" => "241");
-    $countries[] = array("code" => "GE", "name" => "Georgia", "calling_code" => "995");
-    $countries[] = array("code" => "DE", "name" => "Germany", "calling_code" => "49");
-    $countries[] = array("code" => "GH", "name" => "Ghana", "calling_code" => "233");
-    $countries[] = array("code" => "GI", "name" => "Gibraltar", "calling_code" => "350");
-    $countries[] = array("code" => "GR", "name" => "Greece", "calling_code" => "30");
-    $countries[] = array("code" => "GL", "name" => "Greenland", "calling_code" => "299");
-    $countries[] = array("code" => "GD", "name" => "Grenada", "calling_code" => "1");
-    $countries[] = array("code" => "GP", "name" => "Guadeloupe", "calling_code" => "590");
-    $countries[] = array("code" => "GU", "name" => "Guam", "calling_code" => "1");
-    $countries[] = array("code" => "GT", "name" => "Guatemala", "calling_code" => "502");
-    $countries[] = array("code" => "GN", "name" => "Guinea", "calling_code" => "224");
-    $countries[] = array("code" => "GW", "name" => "Guinea-Bissau", "calling_code" => "245");
-    $countries[] = array("code" => "GY", "name" => "Guyana", "calling_code" => "592");
-    $countries[] = array("code" => "HT", "name" => "Haiti", "calling_code" => "509");
-    $countries[] = array("code" => "HN", "name" => "Honduras", "calling_code" => "504");
-    $countries[] = array("code" => "HK", "name" => "Hong Kong", "calling_code" => "852");
-    $countries[] = array("code" => "HU", "name" => "Hungary", "calling_code" => "36");
-    $countries[] = array("code" => "IS", "name" => "Iceland", "calling_code" => "354");
+        ["code" => "ID", "name" => "Indonesia", "calling_code" => "62"],
+        ["code" => "IR", "name" => "Iran", "calling_code" => "98"],
+        ["code" => "IQ", "name" => "Iraq", "calling_code" => "964"],
+        ["code" => "IE", "name" => "Ireland", "calling_code" => "353"],
+        ["code" => "IL", "name" => "Israel", "calling_code" => "972"],
+        ["code" => "IT", "name" => "Italy", "calling_code" => "39"],
+        ["code" => "JM", "name" => "Jamaica", "calling_code" => "1"],
+        ["code" => "JP", "name" => "Japan", "calling_code" => "81"],
+        ["code" => "JO", "name" => "Jordan", "calling_code" => "962"],
+        ["code" => "KZ", "name" => "Kazakhstan", "calling_code" => "7"],
+        ["code" => "KE", "name" => "Kenya", "calling_code" => "254"],
+        ["code" => "KI", "name" => "Kiribati", "calling_code" => "686"],
+        ["code" => "XK", "name" => "Kosovo", "calling_code" => "381"],
+        ["code" => "KW", "name" => "Kuwait", "calling_code" => "965"],
+        ["code" => "KG", "name" => "Kyrgyzstan", "calling_code" => "996"],
+        ["code" => "LA", "name" => "Laos", "calling_code" => "856"],
+        ["code" => "LV", "name" => "Latvia", "calling_code" => "371"],
+        ["code" => "LB", "name" => "Lebanon", "calling_code" => "961"],
+        ["code" => "LS", "name" => "Lesotho", "calling_code" => "266"],
+        ["code" => "LR", "name" => "Liberia", "calling_code" => "231"],
+        ["code" => "LY", "name" => "Libya", "calling_code" => "218"],
+        ["code" => "LI", "name" => "Liechtenstein", "calling_code" => "423"],
+        ["code" => "LT", "name" => "Lithuania", "calling_code" => "370"],
+        ["code" => "LU", "name" => "Luxembourg", "calling_code" => "352"],
+        ["code" => "MO", "name" => "Macau", "calling_code" => "853"],
+        ["code" => "MK", "name" => "Macedonia", "calling_code" => "389"],
+        ["code" => "MG", "name" => "Madagascar", "calling_code" => "261"],
+        ["code" => "MW", "name" => "Malawi", "calling_code" => "265"],
+        ["code" => "MY", "name" => "Malaysia", "calling_code" => "60"],
+        ["code" => "MV", "name" => "Maldives", "calling_code" => "960"],
+        ["code" => "ML", "name" => "Mali", "calling_code" => "223"],
+        ["code" => "MT", "name" => "Malta", "calling_code" => "356"],
+        ["code" => "MH", "name" => "Marshall Islands", "calling_code" => "692"],
+        ["code" => "MQ", "name" => "Martinique", "calling_code" => "596"],
+        ["code" => "MR", "name" => "Mauritania", "calling_code" => "222"],
+        ["code" => "MU", "name" => "Mauritius", "calling_code" => "230"],
+        ["code" => "YT", "name" => "Mayotte", "calling_code" => "262"],
+        ["code" => "MX", "name" => "Mexico", "calling_code" => "52"],
+        ["code" => "MD", "name" => "Moldova", "calling_code" => "373"],
+        ["code" => "MC", "name" => "Monaco", "calling_code" => "377"],
+        ["code" => "MN", "name" => "Mongolia", "calling_code" => "976"],
+        ["code" => "ME", "name" => "Montenegro", "calling_code" => "382"],
+        ["code" => "MS", "name" => "Montserrat", "calling_code" => "1"],
+        ["code" => "MA", "name" => "Morocco", "calling_code" => "212"],
+        ["code" => "MZ", "name" => "Mozambique", "calling_code" => "258"],
+        ["code" => "NA", "name" => "Namibia", "calling_code" => "264"],
+        ["code" => "NR", "name" => "Nauru", "calling_code" => "674"],
+        ["code" => "NP", "name" => "Nepal", "calling_code" => "977"],
+        ["code" => "NL", "name" => "Netherlands", "calling_code" => "31"],
+        ["code" => "AN", "name" => "Netherlands Antilles", "calling_code" => "599"],
+        ["code" => "NC", "name" => "New Caledonia", "calling_code" => "687"],
+        ["code" => "NZ", "name" => "New Zealand", "calling_code" => "64"],
+        ["code" => "NI", "name" => "Nicaragua", "calling_code" => "505"],
+        ["code" => "NE", "name" => "Niger", "calling_code" => "227"],
+        ["code" => "NG", "name" => "Nigeria", "calling_code" => "234"],
+        ["code" => "NU", "name" => "Niue", "calling_code" => "683"],
+        ["code" => "NF", "name" => "Norfolk Island", "calling_code" => "672"],
+        ["code" => "KP", "name" => "North Korea", "calling_code" => "850"],
+        ["code" => "MP", "name" => "Northern Mariana Islands", "calling_code" => "1"],
+        ["code" => "NO", "name" => "Norway", "calling_code" => "47"],
+        ["code" => "OM", "name" => "Oman", "calling_code" => "968"],
+        ["code" => "PK", "name" => "Pakistan", "calling_code" => "92"],
+        ["code" => "PW", "name" => "Palau", "calling_code" => "680"],
+        ["code" => "PS", "name" => "Palestine", "calling_code" => "970"],
+        ["code" => "PA", "name" => "Panama", "calling_code" => "507"],
+        ["code" => "PG", "name" => "Papua New Guinea", "calling_code" => "675"],
+        ["code" => "PY", "name" => "Paraguay", "calling_code" => "595"],
+        ["code" => "PE", "name" => "Peru", "calling_code" => "51"],
+        ["code" => "PH", "name" => "Philippines", "calling_code" => "63"],
+        ["code" => "PL", "name" => "Poland", "calling_code" => "48"],
+        ["code" => "PT", "name" => "Portugal", "calling_code" => "351"],
+        ["code" => "PR", "name" => "Puerto Rico", "calling_code" => "1"],
+        ["code" => "QA", "name" => "Qatar", "calling_code" => "974"],
+        ["code" => "CG", "name" => "Republic of the Congo", "calling_code" => "242"],
+        ["code" => "RE", "name" => "Réunion", "calling_code" => "262"],
+        ["code" => "RO", "name" => "Romania", "calling_code" => "40"],
+        ["code" => "RU", "name" => "Russia", "calling_code" => "7"],
+        ["code" => "RW", "name" => "Rwanda", "calling_code" => "250"],
+        ["code" => "BL", "name" => "Saint Barthélemy", "calling_code" => "590"],
+        ["code" => "SH", "name" => "Saint Helena", "calling_code" => "290"],
+        ["code" => "KN", "name" => "Saint Kitts and Nevis", "calling_code" => "1"],
+        ["code" => "MF", "name" => "Saint Martin", "calling_code" => "590"],
+        ["code" => "PM", "name" => "Saint Pierre and Miquelon", "calling_code" => "508"],
+        ["code" => "VC", "name" => "Saint Vincent and the Grenadines", "calling_code" => "1"],
+        ["code" => "WS", "name" => "Samoa", "calling_code" => "685"],
+        ["code" => "SM", "name" => "San Marino", "calling_code" => "378"],
+        ["code" => "ST", "name" => "São Tomé and Príncipe", "calling_code" => "239"],
+        ["code" => "SA", "name" => "Saudi Arabia", "calling_code" => "966"],
+        ["code" => "SN", "name" => "Senegal", "calling_code" => "221"],
+        ["code" => "RS", "name" => "Serbia", "calling_code" => "381"],
+        ["code" => "SC", "name" => "Seychelles", "calling_code" => "248"],
+        ["code" => "SL", "name" => "Sierra Leone", "calling_code" => "232"],
+        ["code" => "SG", "name" => "Singapore", "calling_code" => "65"],
+        ["code" => "SK", "name" => "Slovakia", "calling_code" => "421"],
+        ["code" => "SI", "name" => "Slovenia", "calling_code" => "386"],
+        ["code" => "SB", "name" => "Solomon Islands", "calling_code" => "677"],
+        ["code" => "SO", "name" => "Somalia", "calling_code" => "252"],
+        ["code" => "ZA", "name" => "South Africa", "calling_code" => "27"],
+        ["code" => "KR", "name" => "South Korea", "calling_code" => "82"],
+        ["code" => "ES", "name" => "Spain", "calling_code" => "34"],
+        ["code" => "LK", "name" => "Sri Lanka", "calling_code" => "94"],
+        ["code" => "LC", "name" => "St. Lucia", "calling_code" => "1"],
+        ["code" => "SD", "name" => "Sudan", "calling_code" => "249"],
+        ["code" => "SR", "name" => "Suriname", "calling_code" => "597"],
+        ["code" => "SZ", "name" => "Swaziland", "calling_code" => "268"],
+        ["code" => "SE", "name" => "Sweden", "calling_code" => "46"],
+        ["code" => "CH", "name" => "Switzerland", "calling_code" => "41"],
+        ["code" => "SY", "name" => "Syria", "calling_code" => "963"],
+        ["code" => "TW", "name" => "Taiwan", "calling_code" => "886"],
+        ["code" => "TJ", "name" => "Tajikistan", "calling_code" => "992"],
+        ["code" => "TZ", "name" => "Tanzania", "calling_code" => "255"],
+        ["code" => "TH", "name" => "Thailand", "calling_code" => "66"],
+        ["code" => "BS", "name" => "The Bahamas", "calling_code" => "1"],
+        ["code" => "GM", "name" => "The Gambia", "calling_code" => "220"],
+        ["code" => "TL", "name" => "Timor-Leste", "calling_code" => "670"],
+        ["code" => "TG", "name" => "Togo", "calling_code" => "228"],
+        ["code" => "TK", "name" => "Tokelau", "calling_code" => "690"],
+        ["code" => "TO", "name" => "Tonga", "calling_code" => "676"],
+        ["code" => "TT", "name" => "Trinidad and Tobago", "calling_code" => "1"],
+        ["code" => "TN", "name" => "Tunisia", "calling_code" => "216"],
+        ["code" => "TR", "name" => "Turkey", "calling_code" => "90"],
+        ["code" => "TM", "name" => "Turkmenistan", "calling_code" => "993"],
+        ["code" => "TC", "name" => "Turks and Caicos Islands", "calling_code" => "1"],
+        ["code" => "TV", "name" => "Tuvalu", "calling_code" => "688"],
+        ["code" => "UG", "name" => "Uganda", "calling_code" => "256"],
+        ["code" => "UA", "name" => "Ukraine", "calling_code" => "380"],
+        ["code" => "AE", "name" => "United Arab Emirates", "calling_code" => "971"],
+        ["code" => "GB", "name" => "United Kingdom", "calling_code" => "44"],
 
-    $countries[] = array("code" => "ID", "name" => "Indonesia", "calling_code" => "62");
-    $countries[] = array("code" => "IR", "name" => "Iran", "calling_code" => "98");
-    $countries[] = array("code" => "IQ", "name" => "Iraq", "calling_code" => "964");
-    $countries[] = array("code" => "IE", "name" => "Ireland", "calling_code" => "353");
-    $countries[] = array("code" => "IL", "name" => "Israel", "calling_code" => "972");
-    $countries[] = array("code" => "IT", "name" => "Italy", "calling_code" => "39");
-    $countries[] = array("code" => "JM", "name" => "Jamaica", "calling_code" => "1");
-    $countries[] = array("code" => "JP", "name" => "Japan", "calling_code" => "81");
-    $countries[] = array("code" => "JO", "name" => "Jordan", "calling_code" => "962");
-    $countries[] = array("code" => "KZ", "name" => "Kazakhstan", "calling_code" => "7");
-    $countries[] = array("code" => "KE", "name" => "Kenya", "calling_code" => "254");
-    $countries[] = array("code" => "KI", "name" => "Kiribati", "calling_code" => "686");
-    $countries[] = array("code" => "XK", "name" => "Kosovo", "calling_code" => "381");
-    $countries[] = array("code" => "KW", "name" => "Kuwait", "calling_code" => "965");
-    $countries[] = array("code" => "KG", "name" => "Kyrgyzstan", "calling_code" => "996");
-    $countries[] = array("code" => "LA", "name" => "Laos", "calling_code" => "856");
-    $countries[] = array("code" => "LV", "name" => "Latvia", "calling_code" => "371");
-    $countries[] = array("code" => "LB", "name" => "Lebanon", "calling_code" => "961");
-    $countries[] = array("code" => "LS", "name" => "Lesotho", "calling_code" => "266");
-    $countries[] = array("code" => "LR", "name" => "Liberia", "calling_code" => "231");
-    $countries[] = array("code" => "LY", "name" => "Libya", "calling_code" => "218");
-    $countries[] = array("code" => "LI", "name" => "Liechtenstein", "calling_code" => "423");
-    $countries[] = array("code" => "LT", "name" => "Lithuania", "calling_code" => "370");
-    $countries[] = array("code" => "LU", "name" => "Luxembourg", "calling_code" => "352");
-    $countries[] = array("code" => "MO", "name" => "Macau", "calling_code" => "853");
-    $countries[] = array("code" => "MK", "name" => "Macedonia", "calling_code" => "389");
-    $countries[] = array("code" => "MG", "name" => "Madagascar", "calling_code" => "261");
-    $countries[] = array("code" => "MW", "name" => "Malawi", "calling_code" => "265");
-    $countries[] = array("code" => "MY", "name" => "Malaysia", "calling_code" => "60");
-    $countries[] = array("code" => "MV", "name" => "Maldives", "calling_code" => "960");
-    $countries[] = array("code" => "ML", "name" => "Mali", "calling_code" => "223");
-    $countries[] = array("code" => "MT", "name" => "Malta", "calling_code" => "356");
-    $countries[] = array("code" => "MH", "name" => "Marshall Islands", "calling_code" => "692");
-    $countries[] = array("code" => "MQ", "name" => "Martinique", "calling_code" => "596");
-    $countries[] = array("code" => "MR", "name" => "Mauritania", "calling_code" => "222");
-    $countries[] = array("code" => "MU", "name" => "Mauritius", "calling_code" => "230");
-    $countries[] = array("code" => "YT", "name" => "Mayotte", "calling_code" => "262");
-    $countries[] = array("code" => "MX", "name" => "Mexico", "calling_code" => "52");
-    $countries[] = array("code" => "MD", "name" => "Moldova", "calling_code" => "373");
-    $countries[] = array("code" => "MC", "name" => "Monaco", "calling_code" => "377");
-    $countries[] = array("code" => "MN", "name" => "Mongolia", "calling_code" => "976");
-    $countries[] = array("code" => "ME", "name" => "Montenegro", "calling_code" => "382");
-    $countries[] = array("code" => "MS", "name" => "Montserrat", "calling_code" => "1");
-    $countries[] = array("code" => "MA", "name" => "Morocco", "calling_code" => "212");
-    $countries[] = array("code" => "MZ", "name" => "Mozambique", "calling_code" => "258");
-    $countries[] = array("code" => "NA", "name" => "Namibia", "calling_code" => "264");
-    $countries[] = array("code" => "NR", "name" => "Nauru", "calling_code" => "674");
-    $countries[] = array("code" => "NP", "name" => "Nepal", "calling_code" => "977");
-    $countries[] = array("code" => "NL", "name" => "Netherlands", "calling_code" => "31");
-    $countries[] = array("code" => "AN", "name" => "Netherlands Antilles", "calling_code" => "599");
-    $countries[] = array("code" => "NC", "name" => "New Caledonia", "calling_code" => "687");
-    $countries[] = array("code" => "NZ", "name" => "New Zealand", "calling_code" => "64");
-    $countries[] = array("code" => "NI", "name" => "Nicaragua", "calling_code" => "505");
-    $countries[] = array("code" => "NE", "name" => "Niger", "calling_code" => "227");
-    $countries[] = array("code" => "NG", "name" => "Nigeria", "calling_code" => "234");
-    $countries[] = array("code" => "NU", "name" => "Niue", "calling_code" => "683");
-    $countries[] = array("code" => "NF", "name" => "Norfolk Island", "calling_code" => "672");
-    $countries[] = array("code" => "KP", "name" => "North Korea", "calling_code" => "850");
-    $countries[] = array("code" => "MP", "name" => "Northern Mariana Islands", "calling_code" => "1");
-    $countries[] = array("code" => "NO", "name" => "Norway", "calling_code" => "47");
-    $countries[] = array("code" => "OM", "name" => "Oman", "calling_code" => "968");
-    $countries[] = array("code" => "PK", "name" => "Pakistan", "calling_code" => "92");
-    $countries[] = array("code" => "PW", "name" => "Palau", "calling_code" => "680");
-    $countries[] = array("code" => "PS", "name" => "Palestine", "calling_code" => "970");
-    $countries[] = array("code" => "PA", "name" => "Panama", "calling_code" => "507");
-    $countries[] = array("code" => "PG", "name" => "Papua New Guinea", "calling_code" => "675");
-    $countries[] = array("code" => "PY", "name" => "Paraguay", "calling_code" => "595");
-    $countries[] = array("code" => "PE", "name" => "Peru", "calling_code" => "51");
-    $countries[] = array("code" => "PH", "name" => "Philippines", "calling_code" => "63");
-    $countries[] = array("code" => "PL", "name" => "Poland", "calling_code" => "48");
-    $countries[] = array("code" => "PT", "name" => "Portugal", "calling_code" => "351");
-    $countries[] = array("code" => "PR", "name" => "Puerto Rico", "calling_code" => "1");
-    $countries[] = array("code" => "QA", "name" => "Qatar", "calling_code" => "974");
-    $countries[] = array("code" => "CG", "name" => "Republic of the Congo", "calling_code" => "242");
-    $countries[] = array("code" => "RE", "name" => "Réunion", "calling_code" => "262");
-    $countries[] = array("code" => "RO", "name" => "Romania", "calling_code" => "40");
-    $countries[] = array("code" => "RU", "name" => "Russia", "calling_code" => "7");
-    $countries[] = array("code" => "RW", "name" => "Rwanda", "calling_code" => "250");
-    $countries[] = array("code" => "BL", "name" => "Saint Barthélemy", "calling_code" => "590");
-    $countries[] = array("code" => "SH", "name" => "Saint Helena", "calling_code" => "290");
-    $countries[] = array("code" => "KN", "name" => "Saint Kitts and Nevis", "calling_code" => "1");
-    $countries[] = array("code" => "MF", "name" => "Saint Martin", "calling_code" => "590");
-    $countries[] = array("code" => "PM", "name" => "Saint Pierre and Miquelon", "calling_code" => "508");
-    $countries[] = array("code" => "VC", "name" => "Saint Vincent and the Grenadines", "calling_code" => "1");
-    $countries[] = array("code" => "WS", "name" => "Samoa", "calling_code" => "685");
-    $countries[] = array("code" => "SM", "name" => "San Marino", "calling_code" => "378");
-    $countries[] = array("code" => "ST", "name" => "São Tomé and Príncipe", "calling_code" => "239");
-    $countries[] = array("code" => "SA", "name" => "Saudi Arabia", "calling_code" => "966");
-    $countries[] = array("code" => "SN", "name" => "Senegal", "calling_code" => "221");
-    $countries[] = array("code" => "RS", "name" => "Serbia", "calling_code" => "381");
-    $countries[] = array("code" => "SC", "name" => "Seychelles", "calling_code" => "248");
-    $countries[] = array("code" => "SL", "name" => "Sierra Leone", "calling_code" => "232");
-    $countries[] = array("code" => "SG", "name" => "Singapore", "calling_code" => "65");
-    $countries[] = array("code" => "SK", "name" => "Slovakia", "calling_code" => "421");
-    $countries[] = array("code" => "SI", "name" => "Slovenia", "calling_code" => "386");
-    $countries[] = array("code" => "SB", "name" => "Solomon Islands", "calling_code" => "677");
-    $countries[] = array("code" => "SO", "name" => "Somalia", "calling_code" => "252");
-    $countries[] = array("code" => "ZA", "name" => "South Africa", "calling_code" => "27");
-    $countries[] = array("code" => "KR", "name" => "South Korea", "calling_code" => "82");
-    $countries[] = array("code" => "ES", "name" => "Spain", "calling_code" => "34");
-    $countries[] = array("code" => "LK", "name" => "Sri Lanka", "calling_code" => "94");
-    $countries[] = array("code" => "LC", "name" => "St. Lucia", "calling_code" => "1");
-    $countries[] = array("code" => "SD", "name" => "Sudan", "calling_code" => "249");
-    $countries[] = array("code" => "SR", "name" => "Suriname", "calling_code" => "597");
-    $countries[] = array("code" => "SZ", "name" => "Swaziland", "calling_code" => "268");
-    $countries[] = array("code" => "SE", "name" => "Sweden", "calling_code" => "46");
-    $countries[] = array("code" => "CH", "name" => "Switzerland", "calling_code" => "41");
-    $countries[] = array("code" => "SY", "name" => "Syria", "calling_code" => "963");
-    $countries[] = array("code" => "TW", "name" => "Taiwan", "calling_code" => "886");
-    $countries[] = array("code" => "TJ", "name" => "Tajikistan", "calling_code" => "992");
-    $countries[] = array("code" => "TZ", "name" => "Tanzania", "calling_code" => "255");
-    $countries[] = array("code" => "TH", "name" => "Thailand", "calling_code" => "66");
-    $countries[] = array("code" => "BS", "name" => "The Bahamas", "calling_code" => "1");
-    $countries[] = array("code" => "GM", "name" => "The Gambia", "calling_code" => "220");
-    $countries[] = array("code" => "TL", "name" => "Timor-Leste", "calling_code" => "670");
-    $countries[] = array("code" => "TG", "name" => "Togo", "calling_code" => "228");
-    $countries[] = array("code" => "TK", "name" => "Tokelau", "calling_code" => "690");
-    $countries[] = array("code" => "TO", "name" => "Tonga", "calling_code" => "676");
-    $countries[] = array("code" => "TT", "name" => "Trinidad and Tobago", "calling_code" => "1");
-    $countries[] = array("code" => "TN", "name" => "Tunisia", "calling_code" => "216");
-    $countries[] = array("code" => "TR", "name" => "Turkey", "calling_code" => "90");
-    $countries[] = array("code" => "TM", "name" => "Turkmenistan", "calling_code" => "993");
-    $countries[] = array("code" => "TC", "name" => "Turks and Caicos Islands", "calling_code" => "1");
-    $countries[] = array("code" => "TV", "name" => "Tuvalu", "calling_code" => "688");
-    $countries[] = array("code" => "UG", "name" => "Uganda", "calling_code" => "256");
-    $countries[] = array("code" => "UA", "name" => "Ukraine", "calling_code" => "380");
-    $countries[] = array("code" => "AE", "name" => "United Arab Emirates", "calling_code" => "971");
-    $countries[] = array("code" => "GB", "name" => "United Kingdom", "calling_code" => "44");
-
-    $countries[] = array("code" => "UY", "name" => "Uruguay", "calling_code" => "598");
-    $countries[] = array("code" => "VI", "name" => "US Virgin Islands", "calling_code" => "1");
-    $countries[] = array("code" => "UZ", "name" => "Uzbekistan", "calling_code" => "998");
-    $countries[] = array("code" => "VU", "name" => "Vanuatu", "calling_code" => "678");
-    $countries[] = array("code" => "VA", "name" => "Vatican City", "calling_code" => "39");
-    $countries[] = array("code" => "VE", "name" => "Venezuela", "calling_code" => "58");
-    $countries[] = array("code" => "VN", "name" => "Vietnam", "calling_code" => "84");
-    $countries[] = array("code" => "WF", "name" => "Wallis and Futuna", "calling_code" => "681");
-    $countries[] = array("code" => "YE", "name" => "Yemen", "calling_code" => "967");
-    $countries[] = array("code" => "ZM", "name" => "Zambia", "calling_code" => "260");
-    $countries[] = array("code" => "ZW", "name" => "Zimbabwe", "calling_code" => "263");
+        ["code" => "UY", "name" => "Uruguay", "calling_code" => "598"],
+        ["code" => "VI", "name" => "US Virgin Islands", "calling_code" => "1"],
+        ["code" => "UZ", "name" => "Uzbekistan", "calling_code" => "998"],
+        ["code" => "VU", "name" => "Vanuatu", "calling_code" => "678"],
+        ["code" => "VA", "name" => "Vatican City", "calling_code" => "39"],
+        ["code" => "VE", "name" => "Venezuela", "calling_code" => "58"],
+        ["code" => "VN", "name" => "Vietnam", "calling_code" => "84"],
+        ["code" => "WF", "name" => "Wallis and Futuna", "calling_code" => "681"],
+        ["code" => "YE", "name" => "Yemen", "calling_code" => "967"],
+        ["code" => "ZM", "name" => "Zambia", "calling_code" => "260"],
+        ["code" => "ZW", "name" => "Zimbabwe", "calling_code" => "263"],
+    ];
 
     return $countries;
 }
@@ -314,242 +314,244 @@ function vh_get_country_list()
 function vh_get_country_list_with_slugs()
 {
 
-    $countries = [];
-    $countries[] = array("slug" => "IN", "name" => "India", "calling_code" => "91");
-    $countries[] = array("slug" => "US", "name" => "United States", "calling_code" => "1");
+    $countries = [
+        ["slug" => "IN", "name" => "India", "calling_code" => "91"],
+        ["slug" => "US", "name" => "United States", "calling_code" => "1"],
 
-    $countries[] = array("slug" => "AF", "name" => "Afghanistan", "calling_code" => "93");
-    $countries[] = array("slug" => "AL", "name" => "Albania", "calling_code" => "355");
-    $countries[] = array("slug" => "DZ", "name" => "Algeria", "calling_code" => "213");
-    $countries[] = array("slug" => "AS", "name" => "American Samoa", "calling_code" => "1");
-    $countries[] = array("slug" => "AD", "name" => "Andorra", "calling_code" => "376");
-    $countries[] = array("slug" => "AO", "name" => "Angola", "calling_code" => "244");
-    $countries[] = array("slug" => "AI", "name" => "Anguilla", "calling_code" => "1");
-    $countries[] = array("slug" => "AG", "name" => "Antigua", "calling_code" => "1");
-    $countries[] = array("slug" => "AR", "name" => "Argentina", "calling_code" => "54");
-    $countries[] = array("slug" => "AM", "name" => "Armenia", "calling_code" => "374");
-    $countries[] = array("slug" => "AW", "name" => "Aruba", "calling_code" => "297");
-    $countries[] = array("slug" => "AU", "name" => "Australia", "calling_code" => "61");
-    $countries[] = array("slug" => "AT", "name" => "Austria", "calling_code" => "43");
-    $countries[] = array("slug" => "AZ", "name" => "Azerbaijan", "calling_code" => "994");
-    $countries[] = array("slug" => "BH", "name" => "Bahrain", "calling_code" => "973");
-    $countries[] = array("slug" => "BD", "name" => "Bangladesh", "calling_code" => "880");
-    $countries[] = array("slug" => "BB", "name" => "Barbados", "calling_code" => "1");
-    $countries[] = array("slug" => "BY", "name" => "Belarus", "calling_code" => "375");
-    $countries[] = array("slug" => "BE", "name" => "Belgium", "calling_code" => "32");
-    $countries[] = array("slug" => "BZ", "name" => "Belize", "calling_code" => "501");
-    $countries[] = array("slug" => "BJ", "name" => "Benin", "calling_code" => "229");
-    $countries[] = array("slug" => "BM", "name" => "Bermuda", "calling_code" => "1");
-    $countries[] = array("slug" => "BT", "name" => "Bhutan", "calling_code" => "975");
-    $countries[] = array("slug" => "BO", "name" => "Bolivia", "calling_code" => "591");
-    $countries[] = array("slug" => "BA", "name" => "Bosnia and Herzegovina", "calling_code" => "387");
-    $countries[] = array("slug" => "BW", "name" => "Botswana", "calling_code" => "267");
-    $countries[] = array("slug" => "BR", "name" => "Brazil", "calling_code" => "55");
-    $countries[] = array("slug" => "IO", "name" => "British Indian Ocean Territory", "calling_code" => "246");
-    $countries[] = array("slug" => "VG", "name" => "British Virgin Islands", "calling_code" => "1");
-    $countries[] = array("slug" => "BN", "name" => "Brunei", "calling_code" => "673");
-    $countries[] = array("slug" => "BG", "name" => "Bulgaria", "calling_code" => "359");
-    $countries[] = array("slug" => "BF", "name" => "Burkina Faso", "calling_code" => "226");
-    $countries[] = array("slug" => "MM", "name" => "Burma Myanmar", "calling_code" => "95");
-    $countries[] = array("slug" => "BI", "name" => "Burundi", "calling_code" => "257");
-    $countries[] = array("slug" => "KH", "name" => "Cambodia", "calling_code" => "855");
-    $countries[] = array("slug" => "CM", "name" => "Cameroon", "calling_code" => "237");
-    $countries[] = array("slug" => "CA", "name" => "Canada", "calling_code" => "1");
-    $countries[] = array("slug" => "CV", "name" => "Cape Verde", "calling_code" => "238");
-    $countries[] = array("slug" => "KY", "name" => "Cayman Islands", "calling_code" => "1");
-    $countries[] = array("slug" => "CF", "name" => "Central African Republic", "calling_code" => "236");
-    $countries[] = array("slug" => "TD", "name" => "Chad", "calling_code" => "235");
-    $countries[] = array("slug" => "CL", "name" => "Chile", "calling_code" => "56");
-    $countries[] = array("slug" => "CN", "name" => "China", "calling_code" => "86");
-    $countries[] = array("slug" => "CO", "name" => "Colombia", "calling_code" => "57");
-    $countries[] = array("slug" => "KM", "name" => "Comoros", "calling_code" => "269");
-    $countries[] = array("slug" => "CK", "name" => "Cook Islands", "calling_code" => "682");
-    $countries[] = array("slug" => "CR", "name" => "Costa Rica", "calling_code" => "506");
-    $countries[] = array("slug" => "CI", "name" => "Côte d'Ivoire", "calling_code" => "225");
-    $countries[] = array("slug" => "HR", "name" => "Croatia", "calling_code" => "385");
-    $countries[] = array("slug" => "CU", "name" => "Cuba", "calling_code" => "53");
-    $countries[] = array("slug" => "CY", "name" => "Cyprus", "calling_code" => "357");
-    $countries[] = array("slug" => "CZ", "name" => "Czech Republic", "calling_code" => "420");
-    $countries[] = array("slug" => "CD", "name" => "Democratic Republic of Congo", "calling_code" => "243");
-    $countries[] = array("slug" => "DK", "name" => "Denmark", "calling_code" => "45");
-    $countries[] = array("slug" => "DJ", "name" => "Djibouti", "calling_code" => "253");
-    $countries[] = array("slug" => "DM", "name" => "Dominica", "calling_code" => "1");
-    $countries[] = array("slug" => "DO", "name" => "Dominican Republic", "calling_code" => "1");
-    $countries[] = array("slug" => "EC", "name" => "Ecuador", "calling_code" => "593");
-    $countries[] = array("slug" => "EG", "name" => "Egypt", "calling_code" => "20");
-    $countries[] = array("slug" => "SV", "name" => "El Salvador", "calling_code" => "503");
-    $countries[] = array("slug" => "GQ", "name" => "Equatorial Guinea", "calling_code" => "240");
-    $countries[] = array("slug" => "ER", "name" => "Eritrea", "calling_code" => "291");
-    $countries[] = array("slug" => "EE", "name" => "Estonia", "calling_code" => "372");
-    $countries[] = array("slug" => "ET", "name" => "Ethiopia", "calling_code" => "251");
-    $countries[] = array("slug" => "FK", "name" => "Falkland Islands", "calling_code" => "500");
-    $countries[] = array("slug" => "FO", "name" => "Faroe Islands", "calling_code" => "298");
-    $countries[] = array("slug" => "FM", "name" => "Federated States of Micronesia", "calling_code" => "691");
-    $countries[] = array("slug" => "FJ", "name" => "Fiji", "calling_code" => "679");
-    $countries[] = array("slug" => "FI", "name" => "Finland", "calling_code" => "358");
-    $countries[] = array("slug" => "FR", "name" => "France", "calling_code" => "33");
-    $countries[] = array("slug" => "GF", "name" => "French Guiana", "calling_code" => "594");
-    $countries[] = array("slug" => "PF", "name" => "French Polynesia", "calling_code" => "689");
-    $countries[] = array("slug" => "GA", "name" => "Gabon", "calling_code" => "241");
-    $countries[] = array("slug" => "GE", "name" => "Georgia", "calling_code" => "995");
-    $countries[] = array("slug" => "DE", "name" => "Germany", "calling_code" => "49");
-    $countries[] = array("slug" => "GH", "name" => "Ghana", "calling_code" => "233");
-    $countries[] = array("slug" => "GI", "name" => "Gibraltar", "calling_code" => "350");
-    $countries[] = array("slug" => "GR", "name" => "Greece", "calling_code" => "30");
-    $countries[] = array("slug" => "GL", "name" => "Greenland", "calling_code" => "299");
-    $countries[] = array("slug" => "GD", "name" => "Grenada", "calling_code" => "1");
-    $countries[] = array("slug" => "GP", "name" => "Guadeloupe", "calling_code" => "590");
-    $countries[] = array("slug" => "GU", "name" => "Guam", "calling_code" => "1");
-    $countries[] = array("slug" => "GT", "name" => "Guatemala", "calling_code" => "502");
-    $countries[] = array("slug" => "GN", "name" => "Guinea", "calling_code" => "224");
-    $countries[] = array("slug" => "GW", "name" => "Guinea-Bissau", "calling_code" => "245");
-    $countries[] = array("slug" => "GY", "name" => "Guyana", "calling_code" => "592");
-    $countries[] = array("slug" => "HT", "name" => "Haiti", "calling_code" => "509");
-    $countries[] = array("slug" => "HN", "name" => "Honduras", "calling_code" => "504");
-    $countries[] = array("slug" => "HK", "name" => "Hong Kong", "calling_code" => "852");
-    $countries[] = array("slug" => "HU", "name" => "Hungary", "calling_code" => "36");
-    $countries[] = array("slug" => "IS", "name" => "Iceland", "calling_code" => "354");
+        ["slug" => "AF", "name" => "Afghanistan", "calling_code" => "93"],
+        ["slug" => "AL", "name" => "Albania", "calling_code" => "355"],
+        ["slug" => "DZ", "name" => "Algeria", "calling_code" => "213"],
+        ["slug" => "AS", "name" => "American Samoa", "calling_code" => "1"],
+        ["slug" => "AD", "name" => "Andorra", "calling_code" => "376"],
+        ["slug" => "AO", "name" => "Angola", "calling_code" => "244"],
+        ["slug" => "AI", "name" => "Anguilla", "calling_code" => "1"],
+        ["slug" => "AG", "name" => "Antigua", "calling_code" => "1"],
+        ["slug" => "AR", "name" => "Argentina", "calling_code" => "54"],
+        ["slug" => "AM", "name" => "Armenia", "calling_code" => "374"],
+        ["slug" => "AW", "name" => "Aruba", "calling_code" => "297"],
+        ["slug" => "AU", "name" => "Australia", "calling_code" => "61"],
+        ["slug" => "AT", "name" => "Austria", "calling_code" => "43"],
+        ["slug" => "AZ", "name" => "Azerbaijan", "calling_code" => "994"],
+        ["slug" => "BH", "name" => "Bahrain", "calling_code" => "973"],
+        ["slug" => "BD", "name" => "Bangladesh", "calling_code" => "880"],
+        ["slug" => "BB", "name" => "Barbados", "calling_code" => "1"],
+        ["slug" => "BY", "name" => "Belarus", "calling_code" => "375"],
+        ["slug" => "BE", "name" => "Belgium", "calling_code" => "32"],
+        ["slug" => "BZ", "name" => "Belize", "calling_code" => "501"],
+        ["slug" => "BJ", "name" => "Benin", "calling_code" => "229"],
+        ["slug" => "BM", "name" => "Bermuda", "calling_code" => "1"],
+        ["slug" => "BT", "name" => "Bhutan", "calling_code" => "975"],
+        ["slug" => "BO", "name" => "Bolivia", "calling_code" => "591"],
+        ["slug" => "BA", "name" => "Bosnia and Herzegovina", "calling_code" => "387"],
+        ["slug" => "BW", "name" => "Botswana", "calling_code" => "267"],
+        ["slug" => "BR", "name" => "Brazil", "calling_code" => "55"],
+        ["slug" => "IO", "name" => "British Indian Ocean Territory", "calling_code" => "246"],
+        ["slug" => "VG", "name" => "British Virgin Islands", "calling_code" => "1"],
+        ["slug" => "BN", "name" => "Brunei", "calling_code" => "673"],
+        ["slug" => "BG", "name" => "Bulgaria", "calling_code" => "359"],
+        ["slug" => "BF", "name" => "Burkina Faso", "calling_code" => "226"],
+        ["slug" => "MM", "name" => "Burma Myanmar", "calling_code" => "95"],
+        ["slug" => "BI", "name" => "Burundi", "calling_code" => "257"],
+        ["slug" => "KH", "name" => "Cambodia", "calling_code" => "855"],
+        ["slug" => "CM", "name" => "Cameroon", "calling_code" => "237"],
+        ["slug" => "CA", "name" => "Canada", "calling_code" => "1"],
+        ["slug" => "CV", "name" => "Cape Verde", "calling_code" => "238"],
+        ["slug" => "KY", "name" => "Cayman Islands", "calling_code" => "1"],
+        ["slug" => "CF", "name" => "Central African Republic", "calling_code" => "236"],
+        ["slug" => "TD", "name" => "Chad", "calling_code" => "235"],
+        ["slug" => "CL", "name" => "Chile", "calling_code" => "56"],
+        ["slug" => "CN", "name" => "China", "calling_code" => "86"],
+        ["slug" => "CO", "name" => "Colombia", "calling_code" => "57"],
+        ["slug" => "KM", "name" => "Comoros", "calling_code" => "269"],
+        ["slug" => "CK", "name" => "Cook Islands", "calling_code" => "682"],
+        ["slug" => "CR", "name" => "Costa Rica", "calling_code" => "506"],
+        ["slug" => "CI", "name" => "Côte d'Ivoire", "calling_code" => "225"],
+        ["slug" => "HR", "name" => "Croatia", "calling_code" => "385"],
+        ["slug" => "CU", "name" => "Cuba", "calling_code" => "53"],
+        ["slug" => "CY", "name" => "Cyprus", "calling_code" => "357"],
+        ["slug" => "CZ", "name" => "Czech Republic", "calling_code" => "420"],
+        ["slug" => "CD", "name" => "Democratic Republic of Congo", "calling_code" => "243"],
+        ["slug" => "DK", "name" => "Denmark", "calling_code" => "45"],
+        ["slug" => "DJ", "name" => "Djibouti", "calling_code" => "253"],
+        ["slug" => "DM", "name" => "Dominica", "calling_code" => "1"],
+        ["slug" => "DO", "name" => "Dominican Republic", "calling_code" => "1"],
+        ["slug" => "EC", "name" => "Ecuador", "calling_code" => "593"],
+        ["slug" => "EG", "name" => "Egypt", "calling_code" => "20"],
+        ["slug" => "SV", "name" => "El Salvador", "calling_code" => "503"],
+        ["slug" => "GQ", "name" => "Equatorial Guinea", "calling_code" => "240"],
+        ["slug" => "ER", "name" => "Eritrea", "calling_code" => "291"],
+        ["slug" => "EE", "name" => "Estonia", "calling_code" => "372"],
+        ["slug" => "ET", "name" => "Ethiopia", "calling_code" => "251"],
+        ["slug" => "FK", "name" => "Falkland Islands", "calling_code" => "500"],
+        ["slug" => "FO", "name" => "Faroe Islands", "calling_code" => "298"],
+        ["slug" => "FM", "name" => "Federated States of Micronesia", "calling_code" => "691"],
+        ["slug" => "FJ", "name" => "Fiji", "calling_code" => "679"],
+        ["slug" => "FI", "name" => "Finland", "calling_code" => "358"],
+        ["slug" => "FR", "name" => "France", "calling_code" => "33"],
+        ["slug" => "GF", "name" => "French Guiana", "calling_code" => "594"],
+        ["slug" => "PF", "name" => "French Polynesia", "calling_code" => "689"],
+        ["slug" => "GA", "name" => "Gabon", "calling_code" => "241"],
+        ["slug" => "GE", "name" => "Georgia", "calling_code" => "995"],
+        ["slug" => "DE", "name" => "Germany", "calling_code" => "49"],
+        ["slug" => "GH", "name" => "Ghana", "calling_code" => "233"],
+        ["slug" => "GI", "name" => "Gibraltar", "calling_code" => "350"],
+        ["slug" => "GR", "name" => "Greece", "calling_code" => "30"],
+        ["slug" => "GL", "name" => "Greenland", "calling_code" => "299"],
+        ["slug" => "GD", "name" => "Grenada", "calling_code" => "1"],
+        ["slug" => "GP", "name" => "Guadeloupe", "calling_code" => "590"],
+        ["slug" => "GU", "name" => "Guam", "calling_code" => "1"],
+        ["slug" => "GT", "name" => "Guatemala", "calling_code" => "502"],
+        ["slug" => "GN", "name" => "Guinea", "calling_code" => "224"],
+        ["slug" => "GW", "name" => "Guinea-Bissau", "calling_code" => "245"],
+        ["slug" => "GY", "name" => "Guyana", "calling_code" => "592"],
+        ["slug" => "HT", "name" => "Haiti", "calling_code" => "509"],
+        ["slug" => "HN", "name" => "Honduras", "calling_code" => "504"],
+        ["slug" => "HK", "name" => "Hong Kong", "calling_code" => "852"],
+        ["slug" => "HU", "name" => "Hungary", "calling_code" => "36"],
+        ["slug" => "IS", "name" => "Iceland", "calling_code" => "354"],
 
-    $countries[] = array("slug" => "ID", "name" => "Indonesia", "calling_code" => "62");
-    $countries[] = array("slug" => "IR", "name" => "Iran", "calling_code" => "98");
-    $countries[] = array("slug" => "IQ", "name" => "Iraq", "calling_code" => "964");
-    $countries[] = array("slug" => "IE", "name" => "Ireland", "calling_code" => "353");
-    $countries[] = array("slug" => "IL", "name" => "Israel", "calling_code" => "972");
-    $countries[] = array("slug" => "IT", "name" => "Italy", "calling_code" => "39");
-    $countries[] = array("slug" => "JM", "name" => "Jamaica", "calling_code" => "1");
-    $countries[] = array("slug" => "JP", "name" => "Japan", "calling_code" => "81");
-    $countries[] = array("slug" => "JO", "name" => "Jordan", "calling_code" => "962");
-    $countries[] = array("slug" => "KZ", "name" => "Kazakhstan", "calling_code" => "7");
-    $countries[] = array("slug" => "KE", "name" => "Kenya", "calling_code" => "254");
-    $countries[] = array("slug" => "KI", "name" => "Kiribati", "calling_code" => "686");
-    $countries[] = array("slug" => "XK", "name" => "Kosovo", "calling_code" => "381");
-    $countries[] = array("slug" => "KW", "name" => "Kuwait", "calling_code" => "965");
-    $countries[] = array("slug" => "KG", "name" => "Kyrgyzstan", "calling_code" => "996");
-    $countries[] = array("slug" => "LA", "name" => "Laos", "calling_code" => "856");
-    $countries[] = array("slug" => "LV", "name" => "Latvia", "calling_code" => "371");
-    $countries[] = array("slug" => "LB", "name" => "Lebanon", "calling_code" => "961");
-    $countries[] = array("slug" => "LS", "name" => "Lesotho", "calling_code" => "266");
-    $countries[] = array("slug" => "LR", "name" => "Liberia", "calling_code" => "231");
-    $countries[] = array("slug" => "LY", "name" => "Libya", "calling_code" => "218");
-    $countries[] = array("slug" => "LI", "name" => "Liechtenstein", "calling_code" => "423");
-    $countries[] = array("slug" => "LT", "name" => "Lithuania", "calling_code" => "370");
-    $countries[] = array("slug" => "LU", "name" => "Luxembourg", "calling_code" => "352");
-    $countries[] = array("slug" => "MO", "name" => "Macau", "calling_code" => "853");
-    $countries[] = array("slug" => "MK", "name" => "Macedonia", "calling_code" => "389");
-    $countries[] = array("slug" => "MG", "name" => "Madagascar", "calling_code" => "261");
-    $countries[] = array("slug" => "MW", "name" => "Malawi", "calling_code" => "265");
-    $countries[] = array("slug" => "MY", "name" => "Malaysia", "calling_code" => "60");
-    $countries[] = array("slug" => "MV", "name" => "Maldives", "calling_code" => "960");
-    $countries[] = array("slug" => "ML", "name" => "Mali", "calling_code" => "223");
-    $countries[] = array("slug" => "MT", "name" => "Malta", "calling_code" => "356");
-    $countries[] = array("slug" => "MH", "name" => "Marshall Islands", "calling_code" => "692");
-    $countries[] = array("slug" => "MQ", "name" => "Martinique", "calling_code" => "596");
-    $countries[] = array("slug" => "MR", "name" => "Mauritania", "calling_code" => "222");
-    $countries[] = array("slug" => "MU", "name" => "Mauritius", "calling_code" => "230");
-    $countries[] = array("slug" => "YT", "name" => "Mayotte", "calling_code" => "262");
-    $countries[] = array("slug" => "MX", "name" => "Mexico", "calling_code" => "52");
-    $countries[] = array("slug" => "MD", "name" => "Moldova", "calling_code" => "373");
-    $countries[] = array("slug" => "MC", "name" => "Monaco", "calling_code" => "377");
-    $countries[] = array("slug" => "MN", "name" => "Mongolia", "calling_code" => "976");
-    $countries[] = array("slug" => "ME", "name" => "Montenegro", "calling_code" => "382");
-    $countries[] = array("slug" => "MS", "name" => "Montserrat", "calling_code" => "1");
-    $countries[] = array("slug" => "MA", "name" => "Morocco", "calling_code" => "212");
-    $countries[] = array("slug" => "MZ", "name" => "Mozambique", "calling_code" => "258");
-    $countries[] = array("slug" => "NA", "name" => "Namibia", "calling_code" => "264");
-    $countries[] = array("slug" => "NR", "name" => "Nauru", "calling_code" => "674");
-    $countries[] = array("slug" => "NP", "name" => "Nepal", "calling_code" => "977");
-    $countries[] = array("slug" => "NL", "name" => "Netherlands", "calling_code" => "31");
-    $countries[] = array("slug" => "AN", "name" => "Netherlands Antilles", "calling_code" => "599");
-    $countries[] = array("slug" => "NC", "name" => "New Caledonia", "calling_code" => "687");
-    $countries[] = array("slug" => "NZ", "name" => "New Zealand", "calling_code" => "64");
-    $countries[] = array("slug" => "NI", "name" => "Nicaragua", "calling_code" => "505");
-    $countries[] = array("slug" => "NE", "name" => "Niger", "calling_code" => "227");
-    $countries[] = array("slug" => "NG", "name" => "Nigeria", "calling_code" => "234");
-    $countries[] = array("slug" => "NU", "name" => "Niue", "calling_code" => "683");
-    $countries[] = array("slug" => "NF", "name" => "Norfolk Island", "calling_code" => "672");
-    $countries[] = array("slug" => "KP", "name" => "North Korea", "calling_code" => "850");
-    $countries[] = array("slug" => "MP", "name" => "Northern Mariana Islands", "calling_code" => "1");
-    $countries[] = array("slug" => "NO", "name" => "Norway", "calling_code" => "47");
-    $countries[] = array("slug" => "OM", "name" => "Oman", "calling_code" => "968");
-    $countries[] = array("slug" => "PK", "name" => "Pakistan", "calling_code" => "92");
-    $countries[] = array("slug" => "PW", "name" => "Palau", "calling_code" => "680");
-    $countries[] = array("slug" => "PS", "name" => "Palestine", "calling_code" => "970");
-    $countries[] = array("slug" => "PA", "name" => "Panama", "calling_code" => "507");
-    $countries[] = array("slug" => "PG", "name" => "Papua New Guinea", "calling_code" => "675");
-    $countries[] = array("slug" => "PY", "name" => "Paraguay", "calling_code" => "595");
-    $countries[] = array("slug" => "PE", "name" => "Peru", "calling_code" => "51");
-    $countries[] = array("slug" => "PH", "name" => "Philippines", "calling_code" => "63");
-    $countries[] = array("slug" => "PL", "name" => "Poland", "calling_code" => "48");
-    $countries[] = array("slug" => "PT", "name" => "Portugal", "calling_code" => "351");
-    $countries[] = array("slug" => "PR", "name" => "Puerto Rico", "calling_code" => "1");
-    $countries[] = array("slug" => "QA", "name" => "Qatar", "calling_code" => "974");
-    $countries[] = array("slug" => "CG", "name" => "Republic of the Congo", "calling_code" => "242");
-    $countries[] = array("slug" => "RE", "name" => "Réunion", "calling_code" => "262");
-    $countries[] = array("slug" => "RO", "name" => "Romania", "calling_code" => "40");
-    $countries[] = array("slug" => "RU", "name" => "Russia", "calling_code" => "7");
-    $countries[] = array("slug" => "RW", "name" => "Rwanda", "calling_code" => "250");
-    $countries[] = array("slug" => "BL", "name" => "Saint Barthélemy", "calling_code" => "590");
-    $countries[] = array("slug" => "SH", "name" => "Saint Helena", "calling_code" => "290");
-    $countries[] = array("slug" => "KN", "name" => "Saint Kitts and Nevis", "calling_code" => "1");
-    $countries[] = array("slug" => "MF", "name" => "Saint Martin", "calling_code" => "590");
-    $countries[] = array("slug" => "PM", "name" => "Saint Pierre and Miquelon", "calling_code" => "508");
-    $countries[] = array("slug" => "VC", "name" => "Saint Vincent and the Grenadines", "calling_code" => "1");
-    $countries[] = array("slug" => "WS", "name" => "Samoa", "calling_code" => "685");
-    $countries[] = array("slug" => "SM", "name" => "San Marino", "calling_code" => "378");
-    $countries[] = array("slug" => "ST", "name" => "São Tomé and Príncipe", "calling_code" => "239");
-    $countries[] = array("slug" => "SA", "name" => "Saudi Arabia", "calling_code" => "966");
-    $countries[] = array("slug" => "SN", "name" => "Senegal", "calling_code" => "221");
-    $countries[] = array("slug" => "RS", "name" => "Serbia", "calling_code" => "381");
-    $countries[] = array("slug" => "SC", "name" => "Seychelles", "calling_code" => "248");
-    $countries[] = array("slug" => "SL", "name" => "Sierra Leone", "calling_code" => "232");
-    $countries[] = array("slug" => "SG", "name" => "Singapore", "calling_code" => "65");
-    $countries[] = array("slug" => "SK", "name" => "Slovakia", "calling_code" => "421");
-    $countries[] = array("slug" => "SI", "name" => "Slovenia", "calling_code" => "386");
-    $countries[] = array("slug" => "SB", "name" => "Solomon Islands", "calling_code" => "677");
-    $countries[] = array("slug" => "SO", "name" => "Somalia", "calling_code" => "252");
-    $countries[] = array("slug" => "ZA", "name" => "South Africa", "calling_code" => "27");
-    $countries[] = array("slug" => "KR", "name" => "South Korea", "calling_code" => "82");
-    $countries[] = array("slug" => "ES", "name" => "Spain", "calling_code" => "34");
-    $countries[] = array("slug" => "LK", "name" => "Sri Lanka", "calling_code" => "94");
-    $countries[] = array("slug" => "LC", "name" => "St. Lucia", "calling_code" => "1");
-    $countries[] = array("slug" => "SD", "name" => "Sudan", "calling_code" => "249");
-    $countries[] = array("slug" => "SR", "name" => "Suriname", "calling_code" => "597");
-    $countries[] = array("slug" => "SZ", "name" => "Swaziland", "calling_code" => "268");
-    $countries[] = array("slug" => "SE", "name" => "Sweden", "calling_code" => "46");
-    $countries[] = array("slug" => "CH", "name" => "Switzerland", "calling_code" => "41");
-    $countries[] = array("slug" => "SY", "name" => "Syria", "calling_code" => "963");
-    $countries[] = array("slug" => "TW", "name" => "Taiwan", "calling_code" => "886");
-    $countries[] = array("slug" => "TJ", "name" => "Tajikistan", "calling_code" => "992");
-    $countries[] = array("slug" => "TZ", "name" => "Tanzania", "calling_code" => "255");
-    $countries[] = array("slug" => "TH", "name" => "Thailand", "calling_code" => "66");
-    $countries[] = array("slug" => "BS", "name" => "The Bahamas", "calling_code" => "1");
-    $countries[] = array("slug" => "GM", "name" => "The Gambia", "calling_code" => "220");
-    $countries[] = array("slug" => "TL", "name" => "Timor-Leste", "calling_code" => "670");
-    $countries[] = array("slug" => "TG", "name" => "Togo", "calling_code" => "228");
-    $countries[] = array("slug" => "TK", "name" => "Tokelau", "calling_code" => "690");
-    $countries[] = array("slug" => "TO", "name" => "Tonga", "calling_code" => "676");
-    $countries[] = array("slug" => "TT", "name" => "Trinidad and Tobago", "calling_code" => "1");
-    $countries[] = array("slug" => "TN", "name" => "Tunisia", "calling_code" => "216");
-    $countries[] = array("slug" => "TR", "name" => "Turkey", "calling_code" => "90");
-    $countries[] = array("slug" => "TM", "name" => "Turkmenistan", "calling_code" => "993");
-    $countries[] = array("slug" => "TC", "name" => "Turks and Caicos Islands", "calling_code" => "1");
-    $countries[] = array("slug" => "TV", "name" => "Tuvalu", "calling_code" => "688");
-    $countries[] = array("slug" => "UG", "name" => "Uganda", "calling_code" => "256");
-    $countries[] = array("slug" => "UA", "name" => "Ukraine", "calling_code" => "380");
-    $countries[] = array("slug" => "AE", "name" => "United Arab Emirates", "calling_code" => "971");
-    $countries[] = array("slug" => "GB", "name" => "United Kingdom", "calling_code" => "44");
+        ["slug" => "ID", "name" => "Indonesia", "calling_code" => "62"],
+        ["slug" => "IR", "name" => "Iran", "calling_code" => "98"],
+        ["slug" => "IQ", "name" => "Iraq", "calling_code" => "964"],
+        ["slug" => "IE", "name" => "Ireland", "calling_code" => "353"],
+        ["slug" => "IL", "name" => "Israel", "calling_code" => "972"],
+        ["slug" => "IT", "name" => "Italy", "calling_code" => "39"],
+        ["slug" => "JM", "name" => "Jamaica", "calling_code" => "1"],
+        ["slug" => "JP", "name" => "Japan", "calling_code" => "81"],
+        ["slug" => "JO", "name" => "Jordan", "calling_code" => "962"],
+        ["slug" => "KZ", "name" => "Kazakhstan", "calling_code" => "7"],
+        ["slug" => "KE", "name" => "Kenya", "calling_code" => "254"],
+        ["slug" => "KI", "name" => "Kiribati", "calling_code" => "686"],
+        ["slug" => "XK", "name" => "Kosovo", "calling_code" => "381"],
+        ["slug" => "KW", "name" => "Kuwait", "calling_code" => "965"],
+        ["slug" => "KG", "name" => "Kyrgyzstan", "calling_code" => "996"],
+        ["slug" => "LA", "name" => "Laos", "calling_code" => "856"],
+        ["slug" => "LV", "name" => "Latvia", "calling_code" => "371"],
+        ["slug" => "LB", "name" => "Lebanon", "calling_code" => "961"],
+        ["slug" => "LS", "name" => "Lesotho", "calling_code" => "266"],
+        ["slug" => "LR", "name" => "Liberia", "calling_code" => "231"],
+        ["slug" => "LY", "name" => "Libya", "calling_code" => "218"],
+        ["slug" => "LI", "name" => "Liechtenstein", "calling_code" => "423"],
+        ["slug" => "LT", "name" => "Lithuania", "calling_code" => "370"],
+        ["slug" => "LU", "name" => "Luxembourg", "calling_code" => "352"],
+        ["slug" => "MO", "name" => "Macau", "calling_code" => "853"],
+        ["slug" => "MK", "name" => "Macedonia", "calling_code" => "389"],
+        ["slug" => "MG", "name" => "Madagascar", "calling_code" => "261"],
+        ["slug" => "MW", "name" => "Malawi", "calling_code" => "265"],
+        ["slug" => "MY", "name" => "Malaysia", "calling_code" => "60"],
+        ["slug" => "MV", "name" => "Maldives", "calling_code" => "960"],
+        ["slug" => "ML", "name" => "Mali", "calling_code" => "223"],
+        ["slug" => "MT", "name" => "Malta", "calling_code" => "356"],
+        ["slug" => "MH", "name" => "Marshall Islands", "calling_code" => "692"],
+        ["slug" => "MQ", "name" => "Martinique", "calling_code" => "596"],
+        ["slug" => "MR", "name" => "Mauritania", "calling_code" => "222"],
+        ["slug" => "MU", "name" => "Mauritius", "calling_code" => "230"],
+        ["slug" => "YT", "name" => "Mayotte", "calling_code" => "262"],
+        ["slug" => "MX", "name" => "Mexico", "calling_code" => "52"],
+        ["slug" => "MD", "name" => "Moldova", "calling_code" => "373"],
+        ["slug" => "MC", "name" => "Monaco", "calling_code" => "377"],
+        ["slug" => "MN", "name" => "Mongolia", "calling_code" => "976"],
+        ["slug" => "ME", "name" => "Montenegro", "calling_code" => "382"],
+        ["slug" => "MS", "name" => "Montserrat", "calling_code" => "1"],
+        ["slug" => "MA", "name" => "Morocco", "calling_code" => "212"],
+        ["slug" => "MZ", "name" => "Mozambique", "calling_code" => "258"],
+        ["slug" => "NA", "name" => "Namibia", "calling_code" => "264"],
+        ["slug" => "NR", "name" => "Nauru", "calling_code" => "674"],
+        ["slug" => "NP", "name" => "Nepal", "calling_code" => "977"],
+        ["slug" => "NL", "name" => "Netherlands", "calling_code" => "31"],
+        ["slug" => "AN", "name" => "Netherlands Antilles", "calling_code" => "599"],
+        ["slug" => "NC", "name" => "New Caledonia", "calling_code" => "687"],
+        ["slug" => "NZ", "name" => "New Zealand", "calling_code" => "64"],
+        ["slug" => "NI", "name" => "Nicaragua", "calling_code" => "505"],
+        ["slug" => "NE", "name" => "Niger", "calling_code" => "227"],
+        ["slug" => "NG", "name" => "Nigeria", "calling_code" => "234"],
+        ["slug" => "NU", "name" => "Niue", "calling_code" => "683"],
+        ["slug" => "NF", "name" => "Norfolk Island", "calling_code" => "672"],
+        ["slug" => "KP", "name" => "North Korea", "calling_code" => "850"],
+        ["slug" => "MP", "name" => "Northern Mariana Islands", "calling_code" => "1"],
+        ["slug" => "NO", "name" => "Norway", "calling_code" => "47"],
+        ["slug" => "OM", "name" => "Oman", "calling_code" => "968"],
+        ["slug" => "PK", "name" => "Pakistan", "calling_code" => "92"],
+        ["slug" => "PW", "name" => "Palau", "calling_code" => "680"],
+        ["slug" => "PS", "name" => "Palestine", "calling_code" => "970"],
+        ["slug" => "PA", "name" => "Panama", "calling_code" => "507"],
+        ["slug" => "PG", "name" => "Papua New Guinea", "calling_code" => "675"],
+        ["slug" => "PY", "name" => "Paraguay", "calling_code" => "595"],
+        ["slug" => "PE", "name" => "Peru", "calling_code" => "51"],
+        ["slug" => "PH", "name" => "Philippines", "calling_code" => "63"],
+        ["slug" => "PL", "name" => "Poland", "calling_code" => "48"],
+        ["slug" => "PT", "name" => "Portugal", "calling_code" => "351"],
+        ["slug" => "PR", "name" => "Puerto Rico", "calling_code" => "1"],
+        ["slug" => "QA", "name" => "Qatar", "calling_code" => "974"],
+        ["slug" => "CG", "name" => "Republic of the Congo", "calling_code" => "242"],
+        ["slug" => "RE", "name" => "Réunion", "calling_code" => "262"],
+        ["slug" => "RO", "name" => "Romania", "calling_code" => "40"],
+        ["slug" => "RU", "name" => "Russia", "calling_code" => "7"],
+        ["slug" => "RW", "name" => "Rwanda", "calling_code" => "250"],
+        ["slug" => "BL", "name" => "Saint Barthélemy", "calling_code" => "590"],
+        ["slug" => "SH", "name" => "Saint Helena", "calling_code" => "290"],
+        ["slug" => "KN", "name" => "Saint Kitts and Nevis", "calling_code" => "1"],
+        ["slug" => "MF", "name" => "Saint Martin", "calling_code" => "590"],
+        ["slug" => "PM", "name" => "Saint Pierre and Miquelon", "calling_code" => "508"],
+        ["slug" => "VC", "name" => "Saint Vincent and the Grenadines", "calling_code" => "1"],
+        ["slug" => "WS", "name" => "Samoa", "calling_code" => "685"],
+        ["slug" => "SM", "name" => "San Marino", "calling_code" => "378"],
+        ["slug" => "ST", "name" => "São Tomé and Príncipe", "calling_code" => "239"],
+        ["slug" => "SA", "name" => "Saudi Arabia", "calling_code" => "966"],
+        ["slug" => "SN", "name" => "Senegal", "calling_code" => "221"],
+        ["slug" => "RS", "name" => "Serbia", "calling_code" => "381"],
+        ["slug" => "SC", "name" => "Seychelles", "calling_code" => "248"],
+        ["slug" => "SL", "name" => "Sierra Leone", "calling_code" => "232"],
+        ["slug" => "SG", "name" => "Singapore", "calling_code" => "65"],
+        ["slug" => "SK", "name" => "Slovakia", "calling_code" => "421"],
+        ["slug" => "SI", "name" => "Slovenia", "calling_code" => "386"],
+        ["slug" => "SB", "name" => "Solomon Islands", "calling_code" => "677"],
+        ["slug" => "SO", "name" => "Somalia", "calling_code" => "252"],
+        ["slug" => "ZA", "name" => "South Africa", "calling_code" => "27"],
+        ["slug" => "KR", "name" => "South Korea", "calling_code" => "82"],
+        ["slug" => "ES", "name" => "Spain", "calling_code" => "34"],
+        ["slug" => "LK", "name" => "Sri Lanka", "calling_code" => "94"],
+        ["slug" => "LC", "name" => "St. Lucia", "calling_code" => "1"],
+        ["slug" => "SD", "name" => "Sudan", "calling_code" => "249"],
+        ["slug" => "SR", "name" => "Suriname", "calling_code" => "597"],
+        ["slug" => "SZ", "name" => "Swaziland", "calling_code" => "268"],
+        ["slug" => "SE", "name" => "Sweden", "calling_code" => "46"],
+        ["slug" => "CH", "name" => "Switzerland", "calling_code" => "41"],
+        ["slug" => "SY", "name" => "Syria", "calling_code" => "963"],
+        ["slug" => "TW", "name" => "Taiwan", "calling_code" => "886"],
+        ["slug" => "TJ", "name" => "Tajikistan", "calling_code" => "992"],
+        ["slug" => "TZ", "name" => "Tanzania", "calling_code" => "255"],
+        ["slug" => "TH", "name" => "Thailand", "calling_code" => "66"],
+        ["slug" => "BS", "name" => "The Bahamas", "calling_code" => "1"],
+        ["slug" => "GM", "name" => "The Gambia", "calling_code" => "220"],
+        ["slug" => "TL", "name" => "Timor-Leste", "calling_code" => "670"],
+        ["slug" => "TG", "name" => "Togo", "calling_code" => "228"],
+        ["slug" => "TK", "name" => "Tokelau", "calling_code" => "690"],
+        ["slug" => "TO", "name" => "Tonga", "calling_code" => "676"],
+        ["slug" => "TT", "name" => "Trinidad and Tobago", "calling_code" => "1"],
+        ["slug" => "TN", "name" => "Tunisia", "calling_code" => "216"],
+        ["slug" => "TR", "name" => "Turkey", "calling_code" => "90"],
+        ["slug" => "TM", "name" => "Turkmenistan", "calling_code" => "993"],
+        ["slug" => "TC", "name" => "Turks and Caicos Islands", "calling_code" => "1"],
+        ["slug" => "TV", "name" => "Tuvalu", "calling_code" => "688"],
+        ["slug" => "UG", "name" => "Uganda", "calling_code" => "256"],
+        ["slug" => "UA", "name" => "Ukraine", "calling_code" => "380"],
+        ["slug" => "AE", "name" => "United Arab Emirates", "calling_code" => "971"],
+        ["slug" => "GB", "name" => "United Kingdom", "calling_code" => "44"],
 
-    $countries[] = array("slug" => "UY", "name" => "Uruguay", "calling_code" => "598");
-    $countries[] = array("slug" => "VI", "name" => "US Virgin Islands", "calling_code" => "1");
-    $countries[] = array("slug" => "UZ", "name" => "Uzbekistan", "calling_code" => "998");
-    $countries[] = array("slug" => "VU", "name" => "Vanuatu", "calling_code" => "678");
-    $countries[] = array("slug" => "VA", "name" => "Vatican City", "calling_code" => "39");
-    $countries[] = array("slug" => "VE", "name" => "Venezuela", "calling_code" => "58");
-    $countries[] = array("slug" => "VN", "name" => "Vietnam", "calling_code" => "84");
-    $countries[] = array("slug" => "WF", "name" => "Wallis and Futuna", "calling_code" => "681");
-    $countries[] = array("slug" => "YE", "name" => "Yemen", "calling_code" => "967");
-    $countries[] = array("slug" => "ZM", "name" => "Zambia", "calling_code" => "260");
-    $countries[] = array("slug" => "ZW", "name" => "Zimbabwe", "calling_code" => "263");
+        ["slug" => "UY", "name" => "Uruguay", "calling_code" => "598"],
+        ["slug" => "VI", "name" => "US Virgin Islands", "calling_code" => "1"],
+        ["slug" => "UZ", "name" => "Uzbekistan", "calling_code" => "998"],
+        ["slug" => "VU", "name" => "Vanuatu", "calling_code" => "678"],
+        ["slug" => "VA", "name" => "Vatican City", "calling_code" => "39"],
+        ["slug" => "VE", "name" => "Venezuela", "calling_code" => "58"],
+        ["slug" => "VN", "name" => "Vietnam", "calling_code" => "84"],
+        ["slug" => "WF", "name" => "Wallis and Futuna", "calling_code" => "681"],
+        ["slug" => "YE", "name" => "Yemen", "calling_code" => "967"],
+        ["slug" => "ZM", "name" => "Zambia", "calling_code" => "260"],
+        ["slug" => "ZW", "name" => "Zimbabwe", "calling_code" => "263"],
+    ];
+
 
     return $countries;
 }

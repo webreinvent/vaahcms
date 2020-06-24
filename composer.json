@@ -4,7 +4,7 @@
   "keywords": ["laravel", "cms"],
   "homepage": "https://www.webreinvent.com",
   "license": "MIT",
-  "version": "0.4.4",
+  "version": "1.0.0",
   "authors": [
     {
       "name": "WebReinvent",
@@ -13,24 +13,31 @@
   ],
   "require": {
     "php": "^7.2",
-    "zanysoft/laravel-zip": "*",
-    "doctrine/dbal": "*",
     "webreinvent/laravel-nestable": "*",
-    "barryvdh/laravel-dompdf": "*",
-    "berkayk/onesignal-laravel": "*",
-    "bugsnag/bugsnag-laravel": "*",
-    "composer/composer": "^1.8",
+    "barryvdh/laravel-dompdf": "^0.8.6",
+    "berkayk/onesignal-laravel": "^1.0.5",
+    "composer/composer": "^1.10.6",
     "creativeorange/gravatar": "^1.0",
-    "intervention/image": "*",
-    "maatwebsite/excel": "*",
-    "ixudra/curl": "*",
-    "nahid/linkify": "*",
-    "php-imap/php-imap": "*",
-    "stevebauman/purify": "*",
-    "zanysoft/laravel-zip": "*",
-    "doctrine/dbal": "*"
+    "intervention/image": "^2.5",
+    "maatwebsite/excel": "^3.1.19",
+    "ixudra/curl": "^6.19.0",
+    "nahid/linkify": "^1.0.0",
+    "zanysoft/laravel-zip": "^1.0.3",
+    "doctrine/dbal": "^2.10.2"
   },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "WebReinvent\\VaahCms\\VaahCmsServiceProvider"
+            ],
+            "aliases": {
+            }
+        }
+    },
   "autoload": {
+      "classmap": [
+          "src/"
+      ],
     "psr-4": {
       "WebReinvent\\VaahCms\\": "src/"
     },

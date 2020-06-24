@@ -113,8 +113,56 @@ class VaahFile{
 
     }
     //------------------------------------------------------------
+    public static function createFile($path, $file_name, $content)
+    {
+
+        try{
+            if(!File::exists($path)) {
+                File::makeDirectory($path, 0755, true, true);
+            }
+
+            $file_path = $path.$file_name;
+
+
+
+            $file = File::put($file_path, $content);
+            $response['status'] = 'success';
+            $response['data']['file'] = $file;
+
+        }catch(\Exception $e)
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = $e->getMessage();
+        }
+
+        return $response;
+
+    }
+    //------------------------------------------------------------
+    public static function createJsonFileFromArray($array, $file_name, $path=null)
+    {
+        $file_path = null;
+
+        if(!$path)
+        {
+            $path = base_path('/');
+        }
+
+
+        if (is_array($array)) {
+
+            $content = stripslashes(json_encode($array, JSON_PRETTY_PRINT));
+
+
+            $response = static::createFile($path, $file_name, $content);
+
+            return $response;
+        }
+
+    }
 
     //------------------------------------------------------------
+
     //------------------------------------------------------------
     //------------------------------------------------------------
     //------------------------------------------------------------

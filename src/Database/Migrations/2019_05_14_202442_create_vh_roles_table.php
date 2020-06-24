@@ -15,10 +15,10 @@ class CreateVhRolesTable extends Migration
     {
         Schema::create('vh_roles', function (Blueprint $table) {
             $table->increments('id');
-
-            $table->string('name')->nullable();
-            $table->string('slug')->nullable();
-            $table->string('details')->nullable();
+            $table->uuid('uuid')->nullable();
+            $table->string('name',150)->nullable();
+            $table->string('slug',150)->nullable();
+            $table->string('details',255)->nullable();
             $table->integer('count_users')->nullable();
             $table->integer('count_permissions')->nullable();
             $table->boolean('is_active')->nullable();

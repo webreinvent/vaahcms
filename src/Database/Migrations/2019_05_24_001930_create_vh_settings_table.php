@@ -19,11 +19,15 @@ class CreateVhSettingsTable extends Migration
             $table->integer('settingable_id')->nullable();
             $table->string('settingable_type')->nullable();
 
+            $table->string('category')->nullable()->index();
+
             $table->string('label')->nullable();
             $table->string('excerpt')->nullable();
             $table->string('type')->nullable();
             $table->string('key')->nullable();
             $table->text('value')->nullable();
+            $table->json('meta')->nullable();
+
             $table->timestamps();
 
         });

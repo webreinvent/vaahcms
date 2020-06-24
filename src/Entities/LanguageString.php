@@ -171,13 +171,26 @@ class LanguageString extends Model {
     //-------------------------------------------------
     public static function getList($request)
     {
+        if($request->sync){
+            LanguageString::syncAndGenerateStrings($request);
+        }
 
-        $list = static::orderBy('created_at', 'asc');
+        $list = static::orderBy('created_at', 'desc');
 
         $list->where('vh_lang_language_id', $request->vh_lang_language_id);
-        $list->where('vh_lang_category_id', $request->vh_lang_category_id);
 
-        $list = $list->get();
+        if($request->filter && $request->filter == 'filled'){
+
+            $list->whereNotNull('content');
+        }elseif($request->filter && $request->filter == 'empty'){
+            $list->whereNull('content');
+        }
+
+        if($request->vh_lang_category_id){
+            $list->where('vh_lang_category_id', $request->vh_lang_category_id);
+        }
+
+        $list = $list->with('languageCategory')->paginate(config('vaahcms.per_page'));
 
         $response['status'] = 'success';
         $response['data']['list'] = $list;
@@ -188,7 +201,6 @@ class LanguageString extends Model {
     //-------------------------------------------------
     public static function storeList($request)
     {
-
 
         if(!is_array($request->list) || count($request->list) < 1)
         {
@@ -203,6 +215,11 @@ class LanguageString extends Model {
         {
             $string = null;
 
+            if(!$item['slug']){
+                continue;
+            }
+
+
             if(isset($item['id']))
             {
                 $string = static::find($item['id']);
@@ -214,6 +231,14 @@ class LanguageString extends Model {
 
             } else
             {
+                if(!$item['vh_lang_category_id'])
+                {
+
+                    $cat = LanguageCategory::where('slug', 'general')->first();
+
+                    $item['vh_lang_category_id'] = $cat->id;
+
+                }
 
                 //find based on slug
                 $string = static::where('slug', $item['slug'])
@@ -227,6 +252,8 @@ class LanguageString extends Model {
                 }
 
             }
+
+
 
             if(!isset($item['name']))
             {
@@ -257,7 +284,7 @@ class LanguageString extends Model {
     {
 
         $rules = array(
-            'slug' => 'required',
+            'slug' => 'required|max:150',
         );
 
         $validator = \Validator::make( $request->all(), $rules);

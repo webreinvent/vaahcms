@@ -1,0 +1,18 @@
+[
+    {
+        "test_id": "1",
+        "inputs": {
+            "email": "we@webreinvent.com",
+            "password": ""
+        },
+        "assert": "The password field is required."
+    },
+    {
+        "test_id": "2",
+        "inputs": {
+            "email": "abc@webreinvent.com",
+            "password": ""
+        },
+        "assert": "The password field is required."
+    }
+]

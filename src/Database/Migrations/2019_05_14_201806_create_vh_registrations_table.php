@@ -17,14 +17,15 @@ class CreateVhRegistrationsTable extends Migration
             $table->increments('id');
 
             $table->string('uid')->nullable();
-            $table->string('email')->nullable();
-            $table->string('username')->nullable();
+            $table->uuid('uuid')->nullable();
+            $table->string('email',150)->nullable();
+            $table->string('username',150)->nullable();
             $table->string('password')->nullable();
-            $table->string('display_name')->nullable();
-            $table->string('title', 5)->nullable();
-            $table->string('first_name')->nullable();
+            $table->string('display_name',50)->nullable();
+            $table->string('title',200)->nullable();
+            $table->string('first_name',150)->nullable();
             $table->string('middle_name')->nullable();
-            $table->string('last_name')->nullable();
+            $table->string('last_name',150)->nullable();
             $table->string('gender', 15)->nullable();
             $table->integer('country_calling_code')->nullable();
             $table->bigInteger('phone')->nullable();
