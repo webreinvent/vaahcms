@@ -114,7 +114,7 @@ class Module extends Model {
         if(is_null($settings) || !is_array($settings) || count($settings) < 1)
         {
             $response['status'] = 'failed';
-            $response['errors'][] = 'Fatal with '.$module_path.'\settings.json';
+            $response['errors'][] = 'Fatal with '.$module_path.'\Config\config.php';
             return $response;
         }
 

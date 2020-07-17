@@ -124,7 +124,7 @@ class Theme extends Model {
         if(is_null($settings) || !is_array($settings) || count($settings) < 1)
         {
             $response['status'] = 'failed';
-            $response['errors'][] = 'Fatal with '.$path.'\settings.json';
+            $response['errors'][] = 'Fatal with '.$path.'\Config\config.php';
             return $response;
         }
 

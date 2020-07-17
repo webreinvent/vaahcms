@@ -90,17 +90,11 @@ class ThemesLoader {
     protected function initTheme($directory)
     {
 
-        $settings_path = $directory."/settings.json";
+        $config_path = $directory.'/Config/config.php';
 
-        if (!\File::exists($settings_path)) {
-            return null;
-        }
+        $config = require $config_path;
 
-        $file = \File::get($settings_path);
-        $settings_path = json_decode($file);
-        $settings = (array)$settings_path;
-
-        return $settings;
+        return $config;
     }
 
 
