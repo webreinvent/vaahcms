@@ -47,14 +47,13 @@ function vh_get_all_modules_names()
 //-----------------------------------------------------------------------------------
 function vh_get_module_settings_from_path($plugin_path)
 {
-    $path_settings = $plugin_path.'/settings.json';
+    $path_settings = $plugin_path.'/Config/config.php';
 
-    if(\File::exists($path_settings))
+    $config = require $path_settings;
+
+    if($config)
     {
-        $file = File::get($path_settings);
-        $settings = json_decode($file);
-        $settings = (array)$settings;
-        return $settings;
+        return $config;
     }
 
     return null;
@@ -64,14 +63,13 @@ function vh_get_module_settings_from_name($module_name)
 {
     $path = vh_get_module_path($module_name);
 
-    $path_settings = $path.'/settings.json';
+    $path_settings = $path.'/Config/config.php';
 
-    if(\File::exists($path_settings))
+    $config = require $path_settings;
+
+    if($config)
     {
-        $file = File::get($path_settings);
-        $settings = json_decode($file);
-        $settings = (array)$settings;
-        return $settings;
+        return $config;
     }
 
     return null;

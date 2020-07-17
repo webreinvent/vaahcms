@@ -25,14 +25,13 @@ function vh_get_all_themes_paths()
 //-----------------------------------------------------------------------------------
 function vh_get_theme_settings_from_path($path)
 {
-    $path_settings = $path.'/settings.json';
+    $path_settings = $path.'/Config/config.php';
 
-    if(\File::exists($path_settings))
+    $config = require $path_settings;
+
+    if($config)
     {
-        $file = File::get($path_settings);
-        $settings = json_decode($file);
-        $settings = (array)$settings;
-        return $settings;
+        return $config;
     }
 
     return null;
@@ -42,14 +41,13 @@ function vh_get_theme_settings_from_name($name)
 {
     $path = vh_get_theme_path($name);
 
-    $path_settings = $path.'/settings.json';
+    $path_settings = $path.'/Config/config.php';
 
-    if(\File::exists($path_settings))
+    $config = require $path_settings;
+
+    if($config)
     {
-        $file = File::get($path_settings);
-        $settings = json_decode($file);
-        $settings = (array)$settings;
-        return $settings;
+        return $config;
     }
 
     return null;
