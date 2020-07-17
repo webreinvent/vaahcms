@@ -109,17 +109,11 @@ class ModulesLoader {
     protected function initModule($directory)
     {
 
-        $module_settings_path = $directory."/settings.json";
+        $config_path = $directory.'/Config/config.php';
 
-        if (!\File::exists($module_settings_path)) {
-            return null;
-        }
+        $config = require $config_path;
 
-        $file = \File::get($module_settings_path);
-        $module_settings_path = json_decode($file);
-        $settings = (array)$module_settings_path;
-
-        return $settings;
+        return $config;
     }
 
 
