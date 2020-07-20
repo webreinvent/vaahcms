@@ -222,11 +222,20 @@ class SetupController extends Controller
         if(VaahSetup::isInstalled())
         {
             $response['status'] = 'failed';
-            $response['errors'][] = 'Application';
+            $response['errors'][] = 'Application is already installed.';
+            return response()->json($response);
+        }
+
+
+        $response = VaahSetup::verifyAppUrl($request);
+
+        if($response['status'] == 'failed')
+        {
             return response()->json($response);
         }
 
         $response = VaahHelper::testDBConnection($request);
+
         return response()->json($response);
     }
     //----------------------------------------------------------
@@ -310,6 +319,14 @@ class SetupController extends Controller
                 return response()->json($response);
             }
         }*/
+
+
+        $response = VaahSetup::verifyAppUrl($request);
+
+        if($response['status'] == 'failed')
+        {
+            return response()->json($response);
+        }
 
 
         //generate env file

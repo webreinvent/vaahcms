@@ -31,6 +31,12 @@
                                     :value="item.slug"
                             >{{item.name}}</option>
                         </b-select>
+
+
+                        <b-input v-if="config.env.app_env == 'custom'"
+                            placeholder="Env File Name"
+                                 v-model="config.env.app_env_custom"></b-input>
+
                     </b-field>
 
                     <b-field label="Debug" expanded

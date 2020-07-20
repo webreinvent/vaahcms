@@ -35,7 +35,10 @@ class VaahSetup{
 
             $html = html_entity_decode($html);
 
-            if($request->has('app_env'))
+            if($request->has('app_env_custom'))
+            {
+                $file_name = '.env.'.$request->app_env_custom;
+            }else if($request->has('app_env'))
             {
                 $file_name = '.env.'.$request->app_env;
             } else if($env_file_name)
@@ -448,6 +451,64 @@ class VaahSetup{
 
     }
     //----------------------------------------------------------
+    public static function verifyAppUrl($request)
+    {
+
+        $path = base_path('/vaahcms.json');
+
+        if (!File::exists($path)) {
+            $response['status'] = 'success';
+            $response['data'][] = '';
+            if(env('APP_DEBUG'))
+            {
+                $response['hint'][] = 'vaahcms.json file does not exist';
+            }
+            return $response;
+        }
+
+        $config = [];
+        $file = File::get($path);
+        $plugin_config = json_decode($file);
+        $config = (array)$plugin_config;
+
+        if(!isset($config['environments']))
+        {
+            $response['status'] = 'success';
+            $response['data'][] = '';
+            if(env('APP_DEBUG'))
+            {
+                $response['hint'][] = 'environments are not defined yet in vaahcms.json';
+            }
+            return $response;
+        }
+
+
+        if($config['environments'])
+        {
+
+            foreach($config['environments'] as $key => $environment)
+            {
+
+                if( $environment->app_url === url("/") && $environment->env_file != '.env.'.$request->app_env)
+                {
+                    $response['status'] = 'failed';
+                    $response['errors'][] = 'Choose '.$key.' in Env. APP URL ('.$environment->env_file.') already exist in vaahcms.json';
+                    if(env('APP_DEBUG'))
+                    {
+                        $response['hint'][] = 'APP URL already exist in vaahcms.json';
+                    }
+                    return $response;
+                }
+
+            }
+        }
+
+        $response['status'] = 'success';
+        $response['data'][] = '';
+
+        return $response;
+
+    }
     //----------------------------------------------------------
     //----------------------------------------------------------
 

@@ -41,6 +41,7 @@ export default {
                 app_key: null,
                 app_debug: true,
                 app_env: null,
+                app_env_custom: null,
                 app_url: null,
                 app_timezone: null,
                 db_connection: 'mysql',

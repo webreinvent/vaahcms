@@ -101,9 +101,18 @@ export default {
         },
         //---------------------------------------------------------------------
         loadConfigurations: function () {
-            let params = this.config.env;
-            let url = this.ajax_url+'/get/configurations';
-            this.$vaah.ajax(url, params, this.loadConfigurationsAfter);
+
+            console.log('--->', this.config.env.app_env);
+
+            if(this.config.env.app_env != 'custom')
+            {
+                this.config.env.app_env_custom = "";
+                let params = this.config.env;
+                let url = this.ajax_url+'/get/configurations';
+                this.$vaah.ajax(url, params, this.loadConfigurationsAfter);
+            }
+
+
         },
         //---------------------------------------------------------------------
         loadConfigurationsAfter: function (data, res) {

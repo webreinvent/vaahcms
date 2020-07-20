@@ -80,12 +80,38 @@ function vh_user_statuses()
 function vh_environments()
 {
     $arr = [
+        'Custom',
         'Local',
         'Develop',
         'Release',
         'Hotfix',
         'Production'
     ];
+
+
+    $files = vh_get_all_files(base_path());
+
+    $env_list = [];
+
+    foreach ($files as $file)
+    {
+        if (strpos($file, '.env.') !== false) {
+            $file = str_replace(".env.", "", $file);
+
+            if($file == 'example')
+            {
+                continue;
+            }
+
+            $env_list[] = ucfirst($file);
+        }
+    }
+
+
+    if(count($env_list) > 0)
+    {
+        $arr = array_unique(array_merge($arr, $env_list));
+    }
 
     $list = vh_list_with_slugs($arr);
 
