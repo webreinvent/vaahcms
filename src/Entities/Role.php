@@ -242,6 +242,7 @@ class Role extends Model {
 
         $response['status'] = 'success';
         $response['data']['item'] = $role;
+        $response['messages'][] = 'Saved successfully.';
         return $response;
 
     }

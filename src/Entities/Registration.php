@@ -296,6 +296,7 @@ class Registration extends Model
 
         $response['status'] = 'success';
         $response['data']['item'] = $reg;
+        $response['messages'][] = 'Saved successfully.';
         return $response;
 
     }

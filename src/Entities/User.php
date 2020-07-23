@@ -779,8 +779,8 @@ class User extends Authenticatable
         Role::syncRolesWithUsers();
 
         $response['status'] = 'success';
-        $response['messages'][] = 'Saved successfully.';
         $response['data']['item'] = $reg;
+        $response['messages'][] = 'Saved successfully.';
         return $response;
 
     }
