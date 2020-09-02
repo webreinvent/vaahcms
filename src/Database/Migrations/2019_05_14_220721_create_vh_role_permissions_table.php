@@ -15,9 +15,9 @@ class CreateVhRolePermissionsTable extends Migration
     {
         Schema::create('vh_role_permissions', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('vh_role_id')->nullable();
-            $table->integer('vh_permission_id')->nullable();
-            $table->boolean('is_active')->nullable();
+            $table->integer('vh_role_id')->nullable()->index();
+            $table->integer('vh_permission_id')->nullable()->index();
+            $table->boolean('is_active')->nullable()->index();
             $table->integer('created_by')->nullable();
             $table->integer('updated_by')->nullable();
             $table->integer('deleted_by')->nullable();

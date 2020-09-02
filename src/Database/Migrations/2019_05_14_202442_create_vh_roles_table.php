@@ -17,7 +17,7 @@ class CreateVhRolesTable extends Migration
             $table->increments('id');
             $table->uuid('uuid')->nullable();
             $table->string('name',150)->nullable();
-            $table->string('slug',150)->nullable();
+            $table->string('slug',150)->nullable()->index();
             $table->string('details',255)->nullable();
             $table->integer('count_users')->nullable();
             $table->integer('count_permissions')->nullable();
