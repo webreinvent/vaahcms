@@ -209,6 +209,7 @@ class Media extends Model {
 
         $response['status'] = 'success';
         $response['data'] = $item;
+        $response['messages'][] = 'Saved successfully.';
 
         return $response;
     }

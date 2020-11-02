@@ -780,6 +780,7 @@ class User extends Authenticatable
 
         $response['status'] = 'success';
         $response['data']['item'] = $reg;
+        $response['messages'][] = 'Saved successfully.';
         return $response;
 
     }
@@ -1274,7 +1275,7 @@ class User extends Authenticatable
 
         if(isset($inputs['username']))
         {
-            $rules['username'] = 'alpha_dash|max:20';
+            $rules['username'] = 'required';
         }
 
         $validator = \Validator::make($inputs,$rules);

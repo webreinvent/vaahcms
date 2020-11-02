@@ -18,17 +18,17 @@ class CreateVhRegistrationsTable extends Migration
 
             $table->string('uid')->nullable();
             $table->uuid('uuid')->nullable();
-            $table->string('email',150)->nullable();
+            $table->string('email',150)->nullable()->index();
             $table->string('username',150)->nullable();
             $table->string('password')->nullable();
             $table->string('display_name',50)->nullable();
             $table->string('title',200)->nullable();
-            $table->string('first_name',150)->nullable();
-            $table->string('middle_name')->nullable();
-            $table->string('last_name',150)->nullable();
+            $table->string('first_name',150)->nullable()->index();
+            $table->string('middle_name')->nullable()->index();
+            $table->string('last_name',150)->nullable()->index();
             $table->string('gender', 15)->nullable();
             $table->integer('country_calling_code')->nullable();
-            $table->bigInteger('phone')->nullable();
+            $table->bigInteger('phone')->nullable()->index();
             $table->string('timezone')->nullable();
             $table->string('alternate_email')->nullable();
             $table->string('avatar_url')->nullable();
@@ -45,7 +45,7 @@ class CreateVhRegistrationsTable extends Migration
             $table->integer('invited_by')->nullable();
             $table->dateTime('invited_at')->nullable();
 
-            $table->integer('user_id')->nullable();
+            $table->integer('user_id')->nullable()->index();
             $table->dateTime('user_created_at')->nullable();
             $table->text('meta')->nullable();
 

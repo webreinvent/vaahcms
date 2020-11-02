@@ -58,7 +58,7 @@ function vh_modules_action($method, $params=null, $output_type=null)
         return [];
     }
 
-    $output['success']['data'] = [];
+    $output['success'] = [];
     $output['failed'] = [];
 
     foreach ($active_modules as $item)
