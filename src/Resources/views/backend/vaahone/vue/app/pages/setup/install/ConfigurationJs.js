@@ -102,7 +102,6 @@ export default {
         //---------------------------------------------------------------------
         loadConfigurations: function () {
 
-            console.log('--->', this.config.env.app_env);
 
             if(this.config.env.app_env != 'custom')
             {
@@ -118,15 +117,19 @@ export default {
         loadConfigurationsAfter: function (data, res) {
             if(data)
             {
-                for(let key in this.config.env)
+
+                let config = this.config;
+
+                for(let key in config.env)
                 {
                     if(data[key])
                     {
-                        this.config.env[key] = data[key];
+                        config.env[key] = data[key];
                     }
                 }
 
-                this.updateConfig();
+                this.update('config', this.config);
+
             }
         },
         //---------------------------------------------------------------------
@@ -145,7 +148,7 @@ export default {
             if(data)
             {
                 this.config.env.db_is_valid=true;
-                this.updateConfig();
+                this.update('config', this.config);
             }
         },
         //---------------------------------------------------------------------
@@ -160,7 +163,7 @@ export default {
                     {
                         this.config.env[key] = mail_config.settings[key];
                     }
-                    this.updateConfig();
+                    this.update('config', this.config);
                 }
             } else
             {
@@ -186,7 +189,7 @@ export default {
             if(data)
             {
                 this.config.env.mail_is_valid=true;
-                this.updateConfig();
+                this.update('config', this.config);
             }
         },
         //---------------------------------------------------------------------

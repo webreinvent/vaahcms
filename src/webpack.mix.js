@@ -81,6 +81,6 @@ mix.webpackConfig({
         ]
     },
     plugins: [
-        new Visualizer()
+        //new Visualizer()
     ],
 });

@@ -1,5 +1,9 @@
 APP_NAME={{$data->app_name ?? '' }}
+@if($data->app_env == 'custom')
+APP_ENV={{$data->app_env_custom ?? '' }}
+@else
 APP_ENV={{$data->app_env ?? '' }}
+@endif
 APP_KEY={{$data->app_key ?? '' }}
 @isset($data->app_debug)
 APP_DEBUG=true
