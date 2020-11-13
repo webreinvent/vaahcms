@@ -132,7 +132,7 @@ class VaahSetup{
             foreach ($files as $file)
             {
 
-                if($file == '.env.example')
+                if($file == '.env.example' || $file == '.env.example.default')
                 {
                     continue;
                 }
