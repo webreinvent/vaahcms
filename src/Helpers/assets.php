@@ -98,7 +98,7 @@ function vh_environments()
         if (strpos($file, '.env.') !== false) {
             $file = str_replace(".env.", "", $file);
 
-            if($file == 'example')
+            if($file == 'example' || $file == 'example.default')
             {
                 continue;
             }
