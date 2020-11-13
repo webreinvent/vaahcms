@@ -489,7 +489,7 @@ class SetupController extends Controller
             if($response['status'] == 'success')
             {
                 Theme::syncAll();
-                Theme::activateItem($request->slug);
+                Theme::activateItem($request->slug, true);
             }
 
             if($response['status'] == 'success' && $request->import_sample_data)
