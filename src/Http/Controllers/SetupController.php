@@ -344,7 +344,7 @@ class SetupController extends Controller
         }
 
         //publish vaahcms configurations
-        VaahSetup::publishConfig();
+        //VaahSetup::publishConfig();
 
 
         $data = [];
