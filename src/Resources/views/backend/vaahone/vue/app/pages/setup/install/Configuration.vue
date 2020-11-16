@@ -7,8 +7,6 @@
         <div class="columns">
             <div class="column is-half is-offset-one-quarter">
 
-                {{config}}
-
                 <b-field label="App URL" :label-position="labelPosition">
                     <b-input v-model="config.env.app_url"
                              disabled
