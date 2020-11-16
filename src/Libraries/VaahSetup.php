@@ -145,7 +145,7 @@ class VaahSetup{
                     {
                         $env_params = vh_env_file_to_array(base_path($file));
                         $data['environments']['default']['env_file'] = $file;
-                        $data['environments']['default']['app_url'] = $env_params['APP_URL'];
+                        $data['environments']['default']['app_url'] = 'http://localhost';
                     }
 
                 } else{
