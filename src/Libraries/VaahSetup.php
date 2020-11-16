@@ -132,7 +132,9 @@ class VaahSetup{
             foreach ($files as $file)
             {
 
-                if($file == '.env.example')
+                $env_params = [];
+
+                if($file == '.env.example' || $file == '.env.example.default')
                 {
                     continue;
                 }
@@ -143,10 +145,11 @@ class VaahSetup{
                     {
                         $env_params = vh_env_file_to_array(base_path($file));
                         $data['environments']['default']['env_file'] = $file;
-                        $data['environments']['default']['app_url'] = $env_params['APP_URL'];
+                        $data['environments']['default']['app_url'] = 'http://localhost';
                     }
+
                 } else{
-                    if (strpos($file, '.env') !== false) {
+                    if (strpos($file, '.env.') !== false) {
                         if(File::exists(base_path($file)))
                         {
                             $env_params = vh_env_file_to_array(base_path($file));
@@ -492,7 +495,7 @@ class VaahSetup{
                 if( $environment->app_url === url("/") && $environment->env_file != '.env.'.$request->app_env)
                 {
                     $response['status'] = 'failed';
-                    $response['errors'][] = 'Choose '.$key.' in Env. APP URL ('.$environment->env_file.') already exist in vaahcms.json';
+                    $response['errors'][] = 'APP_URL ('.$environment->app_url.') already exist in vaahcms.json for '.$environment->env_file.' file.';
                     if(env('APP_DEBUG'))
                     {
                         $response['hint'][] = 'APP URL already exist in vaahcms.json';

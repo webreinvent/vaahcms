@@ -389,7 +389,7 @@ class Theme extends Model {
         return $response;
     }
     //-------------------------------------------------
-    public static function activateItem($slug)
+    public static function activateItem($slug, $is_default=false)
     {
 
         $item = static::slug($slug)->first();
@@ -433,8 +433,17 @@ class Theme extends Model {
 
         }
 
+        if($is_default)
+        {
+            $item->is_default = 1;
+
+            //mark all other themes no none default
+            Theme::where('is_default', 1)->update(['is_default'=>null]);
+        }
+
         $item->is_active = 1;
         $item->is_assets_published = 1;
+
         $item->save();
 
         $response['status'] = 'success';

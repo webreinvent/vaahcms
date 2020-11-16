@@ -4,9 +4,18 @@
  * Your package config would go here
  */
 
+$config_data = [
+    'version' => '0.0.0'
+];
+
+$path =base_path('vendor/webreinvent/vaahcms/composer.json');
+
+$config_data = json_decode(file_get_contents($path), true);
+
 $settings =  [
     'app_name' => 'VaahCMS',
     'app_slug' => 'vaahcms',
+    'version' => $config_data['version'],
     'website' => 'https://vaah.dev/cms',
     'documentation' => 'https://vaah.dev/cms/docs',
     'backend_theme' => 'vaahone',
@@ -26,5 +35,6 @@ $settings =  [
         'allowed_extensions' => ["jpg", "jpeg", 'png', "gif", "csv"]
     ]
 ];
+
 
 return $settings;
