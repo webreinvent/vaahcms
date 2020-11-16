@@ -4,8 +4,13 @@
  * Your package config would go here
  */
 
-$config_data = json_decode(file_get_contents(__DIR__.'/../../composer.json'), true);
+$config_data = [
+    'version' => '0.0.0'
+];
 
+$path =base_path('vendor/webreinvent/vaahcms/composer.json');
+
+$config_data = json_decode(file_get_contents($path), true);
 
 $settings =  [
     'app_name' => 'VaahCMS',
