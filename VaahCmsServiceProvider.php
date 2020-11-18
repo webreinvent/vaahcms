@@ -158,6 +158,14 @@ class VaahCmsServiceProvider extends ServiceProvider {
 
         $this->mergeConfigFrom($configPath, 'vaahcms');
 
+
+
+        $path =__DIR__ .'/composer.json';
+
+        $config_data = json_decode(file_get_contents($path), true);
+
+        config()->set('vaahcms.version', $config_data['version']);
+
     }
 
     /**

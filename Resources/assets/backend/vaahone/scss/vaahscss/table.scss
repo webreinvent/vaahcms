@@ -1,0 +1,43 @@
+.table{
+    tr{
+        @each $name, $pair in $colors {
+
+            //@debug "----------------------";
+
+            $color: nth($pair, 1);
+            $color-invert: nth($pair, 1);
+
+            //@debug "Name: #{$name} | Color: #{$color} | Invert: #{$color-invert}";
+
+            $color: findLighterColor($color,95%);
+
+            &.is-#{$name} {
+                background-color: $color;
+                border-color: $color;
+                color: $color-invert;
+            }
+        }
+
+        &.is-selected{
+            background-color: findLighterColor($yellow, 85%);
+            border-color: findLighterColor($yellow, 85%);
+            color: $yellow-invert;
+
+            .b-checkbox.checkbox input[type=checkbox] + .check{
+                border: 2px solid #7a7a7a;
+            }
+
+        }
+
+        td{
+            word-wrap: break-word;         /* All browsers since IE 5.5+ */
+            overflow-wrap: break-word;     /* Renamed property in CSS3 draft spec */
+            word-break: break-all;
+        }
+
+    }
+
+    .icon{
+        float: left;
+    }
+}

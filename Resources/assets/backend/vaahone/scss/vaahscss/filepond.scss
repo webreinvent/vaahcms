@@ -1,0 +1,33 @@
+.filepond
+{
+
+    .filepond--wrapper{
+
+        cursor: pointer;
+        padding: 0.25em;
+        border: 1px dashed $grey-light;
+        border-radius: $radius-large;
+        .filepond--root{
+            margin-bottom: 0.5em;
+        }
+
+        .filepond--drop-label, .filepond--drop-label > label{
+            background: $white;
+            cursor: pointer;
+        }
+        &.is-disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        &:hover,
+        &.is-hovered {
+            background: findLighterColor($blue,95%);
+            border: 1px dashed $blue;
+            .filepond--drop-label, .filepond--drop-label > label{
+                background: findLighterColor($blue,95%);
+            }
+        }
+
+    }
+
+}

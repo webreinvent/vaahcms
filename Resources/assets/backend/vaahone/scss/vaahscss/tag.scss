@@ -1,0 +1,103 @@
+.tags{
+
+    &.has-addons{
+        .tag{
+
+            border: $default-border;
+
+            @each $name, $pair in $colors {
+
+                $color: nth($pair, 1);
+                //$color: findLighterColor($color, 80%);
+
+                $color: darken($color,8%);
+
+                &.is-#{$name}
+                {
+                    border: 1px solid $color ;
+                }
+
+            }
+
+            a{
+                align-items: center;
+                display: inline-flex;
+                font-size: .75rem;
+                height: 2.5em;
+                justify-content: center;
+                line-height: 1.5;
+                white-space: nowrap;
+            }
+
+        }
+    }
+
+
+
+}
+
+.tag{
+
+    border: $default-border;
+
+    @each $name, $pair in $colors {
+
+        $color: nth($pair, 1);
+        //$color: findLighterColor($color, 80%);
+
+        $color: darken($color,8%);
+
+        &.is-#{$name}
+        {
+            border: 1px solid $color ;
+        }
+
+    }
+
+
+
+
+
+    .button{
+        padding: 0;
+        margin: 0;
+        background: transparent;
+        border: none;
+        outline: none;
+        font-size: $size-small;
+        :active{
+            outline: none;
+            box-shadow: none;
+        }
+        :hover{
+            outline: none;
+            box-shadow: none;
+        }
+        :focus{
+            outline: none;
+            box-shadow: none;
+        }
+
+    }
+
+    .button:focus:not(:active), .button.is-focused:not(:active){
+        outline: none;
+        box-shadow: none;
+    }
+
+    @each $name, $pair in $colors {
+
+        $color: nth($pair, 1);
+        $color-invert: nth($pair, 2);
+
+        &.is-#{$name}
+        {
+            .button, a{
+                color: $color-invert !important;
+            }
+        }
+
+    }
+
+
+}
