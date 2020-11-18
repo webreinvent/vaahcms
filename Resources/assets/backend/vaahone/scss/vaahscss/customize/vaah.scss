@@ -1,0 +1,20 @@
+@import "initial-variables";
+
+$default-font-size: 0.875rem;
+$small-font-size: 0.875rem;
+
+$default-border-color: rgba(72, 94, 144, 0.16);
+$default-border: 1px solid $default-border-color;
+$default-border-radius: 0.25rem;
+
+@import "~buefy/src/scss/utils/_all";
+@import "~bulma/bulma";
+@import "~buefy/src/scss/buefy";
+@import "vaahnuxt/assets/scss/vaahscss/all"; //path to vaahscss
+
+
+//@import "vaahscss/all";
+
+
+
+

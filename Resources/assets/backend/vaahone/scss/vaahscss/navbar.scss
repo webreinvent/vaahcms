@@ -1,0 +1,24 @@
+.navbar{
+
+  &.has-shadow {
+    box-shadow: $default-box-shadow;
+  }
+
+}
+
+.navbar-menu{
+  margin-left: 40px;
+}
+
+$width: map-get($screens, 'tablet');
+@media (max-width: $width) {
+  .navbar{
+    .navbar-brand{
+      a{ width: 42px;
+        overflow: hidden;
+        padding-right: 0;}
+      img{ max-width: 120px;}
+    }
+
+  }
+}

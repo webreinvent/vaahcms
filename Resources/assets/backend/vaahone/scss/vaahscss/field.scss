@@ -1,0 +1,37 @@
+.field{
+
+    .help{
+        margin-left: 0.3em;
+        margin-top: 0;
+        font-size: 0.85rem;
+    }
+
+    .label{
+        font-weight: 600;
+    }
+
+
+
+    &.is-floating-label {
+        &:not(:last-child){
+            margin-bottom: 1.8em;
+        }
+        .field{
+            margin-bottom: 0;
+            &.is-grouped{
+                display: block;
+            }
+        }
+        .label
+        {
+            top:-1.35em;
+            left:0.2em;
+            font-size: .85rem;
+            &:before{
+                background-color: transparent;
+            }
+        }
+    }
+}
+
+

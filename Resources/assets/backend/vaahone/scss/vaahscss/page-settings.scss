@@ -1,0 +1,46 @@
+.form-setting{
+
+    .scripts{
+        .textarea{
+            font-size: .9rem;
+        }
+    }
+
+}
+
+.settings-notifications{
+
+
+    .tab-content{
+        .notification-lines{
+            border: $default-border;
+            .field {
+                &.has-addons{
+                    border-top: $default-border;
+                    .control{
+                        .is-static{
+                            width:100px;
+                        }
+                    }
+
+                    .button,.input,.textarea, .select, .select>select{
+
+                        border:none;
+
+
+
+                        border-radius: 0;
+                        box-shadow: none;
+                    }
+
+                    .textarea{
+                        height: 60px;
+                    }
+
+                }
+            }
+        }
+
+    }
+
+}

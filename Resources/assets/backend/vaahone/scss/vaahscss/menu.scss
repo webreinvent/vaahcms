@@ -1,0 +1,42 @@
+.menu{
+
+  &.is-extra-small{
+    .menu-list{
+      li{
+        a{
+          font-size: 0.9rem;
+          padding: 0.2em 0.75em;
+        }
+      }
+    }
+  }
+
+  &.is-light{
+
+        $primary: map-get($colors, 'primary');
+
+        $color: nth($primary, 1);
+        $link-color: nth($primary, 2);
+
+        $color-background: findLighterColor($color,95%);
+
+        a{
+
+            .icon{
+
+            }
+
+            span{
+                display: inline-flex;
+            }
+
+            &.is-active{
+                background-color: $color-background !important;
+                color: $color !important;
+            }
+        }
+
+    }
+
+
+}

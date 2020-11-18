@@ -1,0 +1,70 @@
+
+.draggable{
+
+    .dropzone{
+        min-height: 15px;
+        background-color: $white-bis;
+        padding: 0.75em;
+        border-top: $default-border-color 1px dash;
+        border-bottom: $default-border-color 1px dash;
+
+        .dropzone-field{
+            margin-bottom: 0.8em;
+        }
+
+        .dropzone-field-label{
+            min-width: 150px;
+        }
+
+        .dropzone-field-options{
+            display: none;
+        }
+
+    }
+
+    .drag{
+        cursor: move;
+        cursor: -webkit-grab;
+        cursor: -moz-grab;
+        &:hover {
+
+        }
+
+        &:active {
+            cursor: move  !important;
+            cursor: -webkit-grabbing;
+            cursor: -moz-grabbing;
+        }
+        &:disabled
+        {
+            cursor: move  !important;
+            cursor: -webkit-grabbing;
+            cursor: -moz-grabbing;
+        }
+        input[disabled]{
+            cursor: move !important;
+            cursor: -webkit-grabbing;
+            cursor: -moz-grabbing;
+        }
+    }
+
+
+    .dropzone-nested{
+
+        border: dashed $grey-light;
+        border-width: 1px 0px 0px 1px;
+        margin: 5px 5px 5px 0px;
+        padding: 5px 5px 25px 15px;
+
+
+        li:not(:last-child){
+
+            margin-bottom: 12px;
+
+        }
+
+
+    }
+
+
+}

@@ -1,0 +1,31 @@
+.container-backend{
+    margin-left: 46px;
+    .section{ padding: 1.5rem;}
+}
+
+hr{
+    margin-top: 8px;
+    margin-bottom: 8px;
+    height: 1px;
+}
+
+.clickable{
+    cursor: pointer;
+}
+
+.hide{
+    display: none;
+}
+
+$width: map-get($screens, 'widescreen');
+@media (min-width: $width) {
+    .container{
+        max-width: 100%;
+    }
+}
+$width: map-get($screens, 'tablet');
+@media (max-width: $width) {
+    .container-backend{
+        margin-left: 0px;
+    }
+}

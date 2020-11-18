@@ -1,0 +1,36 @@
+.notification{
+
+    @each $name, $pair in $colors {
+
+        //@debug "----------------------";
+
+        $color: nth($pair, 1);
+        $color-invert: nth($pair, 1);
+
+        $color: findLighterColor($color,95%);
+
+        &.is-#{$name}
+        {
+
+            &.is-light{
+                background-color: $color !important;
+                border-color: $color !important;
+                color: $color-invert !important;
+            }
+
+
+        }
+
+
+        &.is-small{
+            padding: 0.8rem 1rem;
+        }
+
+
+
+    }
+
+
+}
+
+
