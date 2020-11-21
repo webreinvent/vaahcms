@@ -103,16 +103,15 @@ class Migration extends Model {
         //run migration
         $command = 'migrate';
 
-        $params = [];
+        $params = [
+            '--force' => true,
+            '--quiet' => true,
+        ];
         if($path)
         {
             $params['--path'] = $path;
         }
 
-        if($force == true)
-        {
-            $params['--force'] = true;
-        }
 
         \Artisan::call($command, $params);
     }
@@ -121,7 +120,11 @@ class Migration extends Model {
     {
         $command = 'db:seed';
 
-        $params = [];
+        $params = [
+            '--force' => true,
+            '--quiet' => true,
+        ];
+
         if($namespace)
         {
             $params['--class'] = $namespace;
