@@ -310,6 +310,11 @@ class LanguageString extends Model {
         $languages = Language::all();
         $categories = LanguageCategory::all();
 
+
+        //delete existing language files
+        $file_path = base_path('resources/lang');
+        vh_delete_folder($file_path);
+
         foreach ($languages as $language)
         {
 
