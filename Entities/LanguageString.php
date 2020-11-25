@@ -321,6 +321,14 @@ class LanguageString extends Model {
                     ->whereNotNull('content')
                     ->get();
 
+                $folder_path = 'resources/lang/'.$language->locale_code_iso_639;
+
+                $file_name = 'vaahcms-'.$category->slug.'.php';
+
+                $file_path = base_path($folder_path.'/'.$file_name);
+
+                File::delete($file_path);
+
                 if($strings->count() > 0)
                 {
                     $inputs = [
@@ -336,16 +344,11 @@ class LanguageString extends Model {
 
                     $html = "<?php "."\n".$html;
 
-                    $folder_path = 'resources/lang/'.$language->locale_code_iso_639;
                     $folder_path_relative = base_path($folder_path);
 
                     if(!File::exists($folder_path_relative)) {
                         File::makeDirectory($folder_path_relative, 0755, true, true);
                     }
-
-                    $file_name = 'vaahcms-'.$category->slug.'.php';
-
-                    $file_path = base_path($folder_path.'/'.$file_name);
 
                     File::put($file_path, $html);
                 }
