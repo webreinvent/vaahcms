@@ -83,8 +83,7 @@ function vh_environments()
         'Custom',
         'Local',
         'Develop',
-        'Release',
-        'Hotfix',
+        'Staging',
         'Production'
     ];
 
