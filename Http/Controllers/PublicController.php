@@ -74,7 +74,7 @@ class PublicController extends Controller
     {
         $is_admin = \Auth::user()->isAdmin();
 
-//        \Auth::logout();
+        \Auth::logout();
 
         $redirect_value = Setting::where('key','redirect_after_backend_logout')->first()->value;
 
