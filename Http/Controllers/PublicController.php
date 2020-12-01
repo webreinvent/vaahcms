@@ -15,6 +15,7 @@ use WebReinvent\VaahCms\Entities\Module;
 use WebReinvent\VaahCms\Entities\ModuleMigration;
 use WebReinvent\VaahCms\Entities\Permission;
 use WebReinvent\VaahCms\Entities\Role;
+use WebReinvent\VaahCms\Entities\Setting;
 use WebReinvent\VaahCms\Entities\Theme;
 use WebReinvent\VaahCms\Entities\User;
 use WebReinvent\VaahCms\Libraries\VaahHelper;
@@ -71,7 +72,24 @@ class PublicController extends Controller
     //----------------------------------------------------------
     public function logout()
     {
-        \Auth::logout();
+        $is_admin = \Auth::user()->isAdmin();
+
+//        \Auth::logout();
+
+        $redirect_value = Setting::where('key','redirect_after_backend_logout')->first()->value;
+
+        if($is_admin){
+            if($redirect_value == 'frontend'){
+                return redirect('/');
+            }elseif($redirect_value == 'custom'){
+                $redirect_url = Setting::where('key','redirect_after_backend_logout_url')->first()->value;
+                if($redirect_url){
+                    return redirect($redirect_url);
+                }
+            }
+
+        }
+
         return redirect()->route('vh.backend');
     }
     //----------------------------------------------------------

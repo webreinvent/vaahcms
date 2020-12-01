@@ -25,6 +25,9 @@
     {"category": "global", "key": "script_before_head_close", "value": null, "type": "script", "label": "Before head tag close (</head>)" },
     {"category": "global", "key": "script_after_body_start", "value": null, "type": "script", "label": "After body tag start (<body>)" },
     {"category": "global", "key": "script_before_body_close", "value": null, "type": "script", "label": "Before body tag close (</body>)" },
+    {"category": "global", "key": "redirect_after_backend_logout", "value": "backend" },
+    {"category": "global", "key": "redirect_after_backend_logout_url", "value": "" },
+    {"category": "global", "key": "redirect_after_frontend_login", "value": "" },
     {"category": "sample", "key": "sample", "value": 0 }
 
 ]

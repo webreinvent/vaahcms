@@ -125,6 +125,23 @@
 
                             </b-field>
 
+                            <b-field label="Redirect after Frontend Login"
+                                     expanded
+                                     grouped
+                                     :label-position="labelPosition">
+                                <b-field expanded>
+                                    <b-input expanded
+                                             v-model="list.redirect_after_frontend_login"
+                                             type="text"
+                                             placeholder="Enter url"></b-input>
+                                    <p class="control">
+                                        <b-tooltip label="Copy Code Snippet" type="is-dark">
+                                            <b-button icon-left="copy"></b-button>
+                                        </b-tooltip>
+                                    </p>
+                                </b-field>
+                            </b-field>
+
 
                         </div>
 
@@ -283,6 +300,46 @@
                                              password-reveal
                                              placeholder="Enter password">
                                     </b-input>
+
+                                </b-field>
+
+
+                            </b-field>
+
+                            <b-field  expanded
+                                      label="Redirect after Backend Logout"
+                                      :label-position="labelPosition">
+
+                                <b-field expanded>
+
+                                    <b-radio-button type="is-success"
+                                                    v-model="list.redirect_after_backend_logout"
+                                                    native-value="backend">
+                                        <span>Backend</span>
+                                    </b-radio-button>
+
+                                    <b-radio-button type="is-info"
+                                                    v-model="list.redirect_after_backend_logout"
+                                                    native-value="frontend">
+                                        <span>Frontend</span>
+                                    </b-radio-button>
+
+                                    <b-radio-button type="is-primary"
+                                                    v-model="list.redirect_after_backend_logout"
+                                                    native-value="custom">
+                                        <span>Custom</span>
+                                    </b-radio-button>
+
+                                    <b-input expanded type="text"
+                                             v-if="list.redirect_after_backend_logout === 'custom'"
+                                             v-model="list.redirect_after_backend_logout_url"
+                                             placeholder="Enter url">
+                                    </b-input>
+                                    <p class="control" v-if="list.redirect_after_backend_logout === 'custom'">
+                                        <b-tooltip label="Copy Code Snippet" type="is-dark">
+                                            <b-button icon-left="copy"></b-button>
+                                        </b-tooltip>
+                                    </p>
 
                                 </b-field>
 
