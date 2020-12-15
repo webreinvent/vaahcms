@@ -42,7 +42,10 @@ class Registration extends Model
     ];
 
     //-------------------------------------------------
-
+    public function routeNotificationForMail($notification)
+    {
+        return $this->email;
+    }
     //-------------------------------------------------
     protected $appends  = [
         'name'
