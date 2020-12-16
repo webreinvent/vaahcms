@@ -39,7 +39,7 @@ class User extends Authenticatable
         "website","timezone",
         "alternate_email","avatar_url","birth",
         "country","country_code","last_login_at","last_login_ip",
-        "remember_token","api_token","api_token_used_at",
+        "remember_token", "login_otp", "api_token","api_token_used_at",
         "api_token_used_ip","is_active","activated_at","status",
         "affiliate_code","affiliate_code_used_at","reset_password_code",
         "reset_password_code_sent_at","reset_password_code_used_at",
@@ -118,6 +118,10 @@ class User extends Authenticatable
     //-------------------------------------------------
     public function setLastNameAttribute($value) {
         $this->attributes['last_name'] = ucfirst($value);
+    }
+    //-------------------------------------------------
+    public function setLoginOtpAttribute($value) {
+        $this->attributes['login_otp'] = Hash::make($value);
     }
     //-------------------------------------------------
 
@@ -553,6 +557,86 @@ class User extends Authenticatable
 
         if (Auth::attempt(['email' => $inputs['email'],
             'password' => trim($request->get('password'))
+        ], $remember))
+        {
+            $user = Auth::user();
+            $user->last_login_at = Carbon::now();
+            $user->save();
+
+            $response['status'] = 'success';
+        } else {
+            $response['status'] = 'failed';
+            $response['errors'][] = trans('vaahcms::messages.invalid_credentials');
+        }
+
+        return $response;
+    }
+    //-------------------------------------------------
+    public static function loginViaOtp($request)
+    {
+
+        //check if already logged in
+        if (Auth::check())
+        {
+            Auth::logout();
+        }
+
+        $rules = array(
+            'otp' => 'required|max:6',
+        );
+        $validator = \Validator::make($request->all(), $rules);
+
+        if ($validator->fails())
+        {
+            $response['status'] = 'failed';
+            $response['errors'] = errorsToArray($validator->errors());
+            return $response;
+        }
+
+        $inputs = $request->all();
+        $inputs['otp'] = trim($inputs['otp']);
+
+        $rules = array(
+            'email' => 'required|email',
+            'otp' => 'required',
+        );
+        $validator = \Validator::make($inputs, $rules);
+
+        if ($validator->fails())
+        {
+            $errors = errorsToArray($validator->errors());
+            $response['status'] = 'failed';
+            $response['errors'] = $errors;
+            return $response;
+        }
+
+        $remember = false;
+        if ($request->has("remember") || $request->get("remember") == "on") {
+            $remember = true;
+        }
+
+        $user = static::where('email', $inputs['email'])->first();
+
+
+        //check user is active
+        if(!$user)
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = 'No user exist';
+            return $response;
+        }
+
+
+        //check user is active
+        if($user->is_active != 1)
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = trans('vaahcms::messages.inactive_account');
+            return $response;
+        }
+
+        if (Auth::attempt(['email' => $inputs['email'],
+            'login_otp' => trim($request->get('otp'))
         ], $remember))
         {
             $user = Auth::user();
