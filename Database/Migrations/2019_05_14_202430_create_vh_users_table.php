@@ -19,6 +19,7 @@ class CreateVhUsersTable extends Migration
             $table->string('email',150)->nullable()->index();
             $table->string('username',150)->nullable();
             $table->string('password')->nullable();
+            $table->string('login_otp')->nullable();
             $table->string('display_name',50)->nullable();
             $table->string('title',200)->nullable();
             $table->string('first_name',150)->nullable()->index();
