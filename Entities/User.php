@@ -76,7 +76,15 @@ class User extends Authenticatable
         return $grav_url;
     }
     //-------------------------------------------------
-
+    public function setMetaAttribute($value)
+    {
+        $this->attributes['meta'] = json_encode($value);
+    }
+    //-------------------------------------------------
+    public function getMetaAttribute($value)
+    {
+        return json_decode($value);
+    }
     //-------------------------------------------------
     public function getNameAttribute() {
 
