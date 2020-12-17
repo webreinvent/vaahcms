@@ -4,17 +4,11 @@
  * Your package config would go here
  */
 
-$config_data = [
-    'version' => '0.0.0'
-];
-
-
-
-
 $settings =  [
     'app_name' => 'VaahCMS',
     'app_slug' => 'vaahcms',
-    'version' => $config_data['version'],
+    'version' => '0.0.0',
+    'get_config_version' => false,
     'website' => 'https://vaah.dev/cms',
     'documentation' => 'https://vaah.dev/cms/docs',
     'backend_theme' => 'vaahone',
