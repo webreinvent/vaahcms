@@ -107,19 +107,12 @@
         "via": "mail",
         "sort": 4,
         "key": "line",
-        "value": "Your reset code is following:"
-    },
-    {
-        "slug": "send-reset-password-email",
-        "via": "mail",
-        "sort": 5,
-        "key": "line",
         "value": "#!PARAM:RESET_PASSWORD_CODE!#"
     },
     {
         "slug": "send-reset-password-email",
         "via": "mail",
-        "sort": 6,
+        "sort": 5,
         "key": "action",
         "value": "Click to Reset",
         "meta": {
@@ -129,7 +122,7 @@
     {
         "slug": "send-reset-password-email",
         "via": "mail",
-        "sort": 7,
+        "sort": 6,
         "key": "line",
         "value": "If your have any queries please contact this #!ENV:APP_EMAIL!#"
     },
