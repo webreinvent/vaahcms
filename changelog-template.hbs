@@ -38,17 +38,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
     {{#commit-list commits heading='### Commits'}}
         {{#if href}}
-
             ###### [`{{shorthash}}`]({{href}})
-
             {{#if breaking}}
                 **Breaking change:**
             {{/if}}
-
-
             - {{message}}
-
-
           {{/if}}
     {{/commit-list}}
 
