@@ -228,8 +228,8 @@ class Notification extends Model {
                     $content = null;
 
                     $content = NotificationContent::where('key', $via['key'])
-                    ->where('sort', $via['sort'])
-                    ->where('via', $via['via'])->first();
+                        ->where('sort', $via['sort'])
+                        ->where('via', $via['via'])->first();
 
                     if(!$content)
                     {
