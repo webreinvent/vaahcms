@@ -66,17 +66,11 @@
         "via": "backend",
         "sort": 1,
         "key": "action",
-        "value": "Welcome to Webreinvent",
+        "value": "Welcome to VaahCMS",
         "meta": {
             "action":"#!ROUTE:VH.LOGIN!#"
         }
     },
-
-
-
-
-
-
     {
         "slug": "send-reset-password-email",
         "via": "mail",
@@ -90,7 +84,7 @@
         "sort": 1,
         "key": "from",
         "meta": {
-            "name": ""
+            "name": "noreply@vaahcms.dev"
         }
     },
     {
@@ -105,12 +99,26 @@
         "via": "mail",
         "sort": 3,
         "key": "line",
-        "value": "Your password reset has been successful! From now on, you’ll be able to use this new password to login to our site and access our video database"
+        "value": "Your reset code is following:"
     },
     {
         "slug": "send-reset-password-email",
         "via": "mail",
         "sort": 4,
+        "key": "line",
+        "value": "Your reset code is following:"
+    },
+    {
+        "slug": "send-reset-password-email",
+        "via": "mail",
+        "sort": 5,
+        "key": "line",
+        "value": "#!PARAM:RESET_PASSWORD_CODE!#"
+    },
+    {
+        "slug": "send-reset-password-email",
+        "via": "mail",
+        "sort": 6,
         "key": "action",
         "value": "Click to Reset",
         "meta": {
@@ -120,33 +128,10 @@
     {
         "slug": "send-reset-password-email",
         "via": "mail",
-        "sort": 5,
+        "sort": 7,
         "key": "line",
         "value": "If your have any queries please contact this #!ENV:APP_EMAIL!#"
     },
-    {
-        "slug": "send-reset-password-email",
-        "via": "backend",
-        "sort": 0,
-        "key": "content",
-        "value": "Your password reset has been successful! From now on, you’ll be able to use this new password to login to our site and access our video database"
-    },
-    {
-        "slug": "send-reset-password-email",
-        "via": "backend",
-        "sort": 1,
-        "key": "action",
-        "value": "Click to reset",
-        "meta": {
-            "action":"#!ROUTE:VH.RESET!#"
-        }
-    },
-
-
-
-
-
-
     {
         "slug": "send-verification-email",
         "via": "mail",
@@ -217,6 +202,26 @@
         "meta": {
             "action":"#!ROUTE:VH.VERIFICATION!#"
         }
+    },
+    {
+        "slug": "send-login-otp",
+        "via": "mail",
+        "sort": 0,
+        "key": "subject",
+        "value": "Login OTP"
+    },
+    {
+        "slug": "send-login-otp",
+        "via": "mail",
+        "sort": 1,
+        "key": "line",
+        "value": "Your one time login (OTP) password is:",
+    },
+    {
+        "slug": "send-login-otp",
+        "via": "mail",
+        "sort": 2,
+        "key": "line",
+        "value": "#!PARAM:LOGIN_OTP!#"
     }
-
 ]
