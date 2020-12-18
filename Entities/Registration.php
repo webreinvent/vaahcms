@@ -440,7 +440,7 @@ class Registration extends Model
 
         if($request->has('password'))
         {
-            $item->password = Hash::make($request->password);
+            $item->password = $request->password;
         }
 
         if($request->has('invited_by') && !$request->has('invited_at'))

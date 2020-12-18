@@ -607,8 +607,6 @@ class SetupController extends Controller
 
         $user = new User();
         $user->fill($request->all());
-        $user->uuid = Str::uuid();
-        $user->password = \Hash::make($request->password);
         $user->is_active = 1;
         $user->activated_at = \Carbon::now();
         $user->status = 'active';
