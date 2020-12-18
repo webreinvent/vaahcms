@@ -23,6 +23,7 @@ class VaahStr{
         }
 
         $string = static::translateDynamicStringsOfParams($string, $params);
+        $string = static::translateDynamicStringsOfEnv($string, $params);
         $string = static::translateDynamicStringsOfRoutes($string);
 
         return $string;
@@ -57,6 +58,25 @@ class VaahStr{
         }
 
         $string = strtr($string, $map);
+        return $string;
+    }
+    //----------------------------------------------------------
+    public static function translateDynamicStringsOfEnv($string)
+    {
+        $pair = $_ENV;
+
+        $pair = array_change_key_case($pair, CASE_UPPER);
+        $codes = $pair;
+        $pattern = '#!ENV:%s!#';
+
+        $map = array();
+        foreach($codes as $var => $value) {
+            $map[sprintf($pattern, $var)] = $value;
+        }
+
+        $string = strtr($string, $map);
+
+
         return $string;
     }
     //----------------------------------------------------------
