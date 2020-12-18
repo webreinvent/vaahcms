@@ -652,11 +652,13 @@ class User extends Authenticatable
             } else{
                 Auth::login($user);
             }
+            $user->login_otp = null;
             $user->last_login_at = Carbon::now();
             $user->last_login_ip = request()->ip();
             $user->save();
 
             $response['status'] = 'success';
+
         } else {
             $response['status'] = 'failed';
             $response['errors'][] = trans('vaahcms::messages.invalid_credentials');
@@ -727,6 +729,7 @@ class User extends Authenticatable
         }
 
         $user->password = $request->password;
+        $user->reset_password_code = null;
         $user->save();
 
         $response['status'] = 'success';
