@@ -120,8 +120,16 @@ class User extends Authenticatable
         $this->attributes['last_name'] = ucfirst($value);
     }
     //-------------------------------------------------
+    public function setPasswordAttribute($value) {
+        $this->attributes['password'] = Hash::make($value);
+    }
+    //-------------------------------------------------
     public function setLoginOtpAttribute($value) {
         $this->attributes['login_otp'] = Hash::make($value);
+    }
+    //-------------------------------------------------
+    public function setResetPasswordCodeAttribute($value) {
+        $this->attributes['reset_password_code'] = Hash::make($value);
     }
     //-------------------------------------------------
 
@@ -154,7 +162,7 @@ class User extends Authenticatable
 
     public function createdByUser()
     {
-        return $this->belongsTo('WebReinvent\VaahCms\Entities\User',
+        return $this->belongsTo(User::class,
             'created_by', 'id'
         )->select('id', 'uuid', 'first_name', 'last_name', 'email');
     }
@@ -162,7 +170,7 @@ class User extends Authenticatable
     //-------------------------------------------------
     public function updatedByUser()
     {
-        return $this->belongsTo('WebReinvent\VaahCms\Entities\User',
+        return $this->belongsTo(User::class,
             'updated_by', 'id'
         )->select('id', 'uuid', 'first_name', 'last_name', 'email');
     }
@@ -170,7 +178,7 @@ class User extends Authenticatable
     //-------------------------------------------------
     public function deletedByUser()
     {
-        return $this->belongsTo('WebReinvent\VaahCms\Entities\User',
+        return $this->belongsTo(User::class,
             'deleted_by', 'id'
         )->select('id', 'uuid', 'first_name', 'last_name', 'email');
     }
@@ -219,14 +227,9 @@ class User extends Authenticatable
         return $result;
     }
     //-------------------------------------------------
-
-    //-------------------------------------------------
-    //-------------------------------------------------
-    //-------------------------------------------------
-    //-------------------------------------------------
     public static function findByUsername($username, $columns = array('*'))
     {
-        if ( ! is_null($user = static::whereUsername($username)->first($columns))) {
+        if ( ! is_null($user = self::whereUsername($username)->first($columns))) {
             return $user;
         } else
         {
@@ -237,7 +240,7 @@ class User extends Authenticatable
     //-------------------------------------------------
     public static function findByEmail($email, $columns = array('*'))
     {
-        if ( ! is_null($user = static::whereEmail($email)->first($columns))) {
+        if ( ! is_null($user = self::whereEmail($email)->first($columns))) {
             return $user;
         }else
         {
@@ -262,7 +265,8 @@ class User extends Authenticatable
     public static function countAdministrators()
     {
         $count = User::whereHas('roles', function ($query) {
-            $query->where('vh_user_roles.is_active', '=', 1)->slug('administrator');
+            $query->where('vh_user_roles.is_active', '=', 1)
+                ->slug('administrator');
         })->isActive()->get()->count();
 
         return $count;
@@ -298,19 +302,22 @@ class User extends Authenticatable
     //-------------------------------------------------
     public static function getByRolesOnlyIds($array_role_slugs)
     {
-        $list = User::getByRoles($array_role_slugs)->pluck('id')->toArray();
+        $list = User::getByRoles($array_role_slugs)
+            ->pluck('id')->toArray();
         return $list;
     }
     //-------------------------------------------------
     public static function getByRolesOnlyEmails($array_role_slugs)
     {
-        $list = User::getByRoles($array_role_slugs)->pluck('email')->toArray();
+        $list = User::getByRoles($array_role_slugs)
+            ->pluck('email')->toArray();
         return $list;
     }
     //-------------------------------------------------
     public function permissions($slugs_only=false)
     {
-        $roles = $this->roles()->isActive()->wherePivot('is_active', 1)->get();
+        $roles = $this->roles()->isActive()
+            ->wherePivot('is_active', 1)->get();
 
 
         $permissions_list = array();
@@ -318,7 +325,8 @@ class User extends Authenticatable
 
             if($role->slug !='administrator')
             {
-                $permissions = $role->permissions()->isActive()->wherePivot('is_active', 1)->get();
+                $permissions = $role->permissions()->isActive()
+                    ->wherePivot('is_active', 1)->get();
             } else{
                 $permissions = $role->permissions()->get();
             }
@@ -341,7 +349,8 @@ class User extends Authenticatable
 
         if($slugs_only)
         {
-            $permissions_list = collect($permissions_list)->pluck('slug')->toArray();
+            $permissions_list = collect($permissions_list)
+                ->pluck('slug')->toArray();
         }
 
         return $permissions_list;
@@ -395,7 +404,8 @@ class User extends Authenticatable
         if($request->has('status') && $request->status == 'registered' && !$request->has('user_id'))
         {
             $response['status'] = 'failed';
-            $response['errors'][] = 'The registration status is "registered", hence user id is required';
+            $response['errors'][] = 'The registration status is "registered", hence user
+            id is required';
             return $response;
         }
 
@@ -467,8 +477,8 @@ class User extends Authenticatable
 
         //restricted action if this user is last admin
         $result = false;
-        $user = static::find($user_id);
-        $is_last_admin = static::isLastAdmin();
+        $user = self::find($user_id);
+        $is_last_admin = self::isLastAdmin();
 
         if($user->hasRole('administrator') && $is_last_admin)
         {
@@ -491,14 +501,12 @@ class User extends Authenticatable
         return $result;
     }
     //-------------------------------------------------
-
-    public static function login($request)
+    public static function beforeUserActionValidation($request)
     {
-
         //check if already logged in
-        if (Auth::check())
+        if (\Auth::check())
         {
-            Auth::logout();
+            \Auth::logout();
         }
 
         $rules = array(
@@ -518,7 +526,6 @@ class User extends Authenticatable
 
         $rules = array(
             'email' => 'required|email',
-            'password' => 'required',
         );
         $validator = \Validator::make($inputs, $rules);
 
@@ -530,13 +537,7 @@ class User extends Authenticatable
             return $response;
         }
 
-        $remember = false;
-        if ($request->has("remember") || $request->get("remember") == "on") {
-            $remember = true;
-        }
-
-        $user = static::where('email', $inputs['email'])->first();
-
+        $user = self::where('email', $inputs['email'])->first();
 
         //check user is active
         if(!$user)
@@ -546,13 +547,33 @@ class User extends Authenticatable
             return $response;
         }
 
-
         //check user is active
         if($user->is_active != 1)
         {
             $response['status'] = 'failed';
             $response['errors'][] = trans('vaahcms::messages.inactive_account');
             return $response;
+        }
+
+        return $user;
+    }
+    //-------------------------------------------------
+
+    public static function login($request)
+    {
+
+        $user = self::beforeUserActionValidation($request);
+
+        if(isset($user['status']) && $user['status'] == 'failed')
+        {
+            return $user;
+        }
+
+        $inputs = $request->all();
+
+        $remember = false;
+        if ($request->has("remember") || $request->get("remember") == "on") {
+            $remember = true;
         }
 
         if (Auth::attempt(['email' => $inputs['email'],
@@ -572,75 +593,67 @@ class User extends Authenticatable
         return $response;
     }
     //-------------------------------------------------
-    public static function loginViaOtp($request)
+    public static function sendLoginOtp($request): array
+    {
+        $user = self::beforeUserActionValidation($request);
+        if(isset($user['status']) && $user['status'] == 'failed')
+        {
+            return $user;
+        }
+
+        $otp_1 = mt_rand(100, 999);
+        $otp_2 = mt_rand(100, 999);
+        $otp = $otp_1.$otp_2;
+        $user->login_otp = $otp;
+        $user->save();
+
+        $notification = Notification::where('slug', 'send-login-otp')
+            ->first();
+
+        $inputs = [
+            'user_id' => $user->id,
+            'notification_id' => $user->id,
+            'login_otp' => $otp,
+        ];
+
+        $request = new Request($inputs);
+
+        return Notification::send($request);
+
+    }
+    //-------------------------------------------------
+    public static function loginViaOtp($request): array
     {
 
-        //check if already logged in
-        if (Auth::check())
+        $user = self::beforeUserActionValidation($request);
+
+        if(isset($user['status']) && $user['status'] == 'failed')
         {
-            Auth::logout();
+            return $user;
         }
 
-        $rules = array(
-            'otp' => 'required|max:6',
-        );
-        $validator = \Validator::make($request->all(), $rules);
-
-        if ($validator->fails())
+        if(count($request->login_otp) < 6
+            || is_null($user->login_otp)
+            || empty($user->login_otp)
+        )
         {
             $response['status'] = 'failed';
-            $response['errors'] = errorsToArray($validator->errors());
+            $response['errors'][] = 'Invalid OTP';
             return $response;
         }
 
-        $inputs = $request->all();
-        $inputs['otp'] = trim($inputs['otp']);
+        $login_otp = implode('', $request->login_otp);
+        $login_otp = trim($login_otp);
 
-        $rules = array(
-            'email' => 'required|email',
-            'otp' => 'required',
-        );
-        $validator = \Validator::make($inputs, $rules);
-
-        if ($validator->fails())
+        if (Hash::check($login_otp, $user->login_otp))
         {
-            $errors = errorsToArray($validator->errors());
-            $response['status'] = 'failed';
-            $response['errors'] = $errors;
-            return $response;
-        }
-
-        $remember = false;
-        if ($request->has("remember") || $request->get("remember") == "on") {
-            $remember = true;
-        }
-
-        $user = static::where('email', $inputs['email'])->first();
-
-
-        //check user is active
-        if(!$user)
-        {
-            $response['status'] = 'failed';
-            $response['errors'][] = 'No user exist';
-            return $response;
-        }
-
-
-        //check user is active
-        if($user->is_active != 1)
-        {
-            $response['status'] = 'failed';
-            $response['errors'][] = trans('vaahcms::messages.inactive_account');
-            return $response;
-        }
-
-        if (Auth::attempt(['email' => $inputs['email'],
-            'login_otp' => trim($request->get('otp'))
-        ], $remember))
-        {
-            $user = Auth::user();
+            if ($request->has("remember") || $request->get("remember") == "on") {
+                Auth::login($user, true);
+            } else{
+                Auth::login($user);
+            }
             $user->last_login_at = Carbon::now();
+            $user->last_login_ip = request()->ip();
             $user->save();
 
             $response['status'] = 'success';
@@ -648,14 +661,78 @@ class User extends Authenticatable
             $response['status'] = 'failed';
             $response['errors'][] = trans('vaahcms::messages.invalid_credentials');
         }
-
         return $response;
+
     }
     //-------------------------------------------------
-    public static function resetPasswordEmail($request)
+    public static function sendResetPasswordEmail($request): array
     {
 
+        $user = self::beforeUserActionValidation($request);
+        if(isset($user['status']) && $user['status'] == 'failed')
+        {
+            return $user;
+        }
 
+        $reset_password_code = uniqid();
+
+        $user->reset_password_code = $reset_password_code;
+        $user->save();
+
+        $notification = Notification::where('slug', 'send-reset-password-email')
+            ->first();
+
+        $inputs = [
+            'user_id' => $user->id,
+            'notification_id' => $notification->id,
+            'reset_password_code' => $reset_password_code,
+        ];
+
+        $request = new Request($inputs);
+
+
+        return Notification::send($request);
+
+    }
+    //-------------------------------------------------
+    public static function resetPassword($request): array
+    {
+
+        $user = self::beforeUserActionValidation($request);
+
+        if(isset($user['status']) && $user['status'] == 'failed')
+        {
+            return $user;
+        }
+
+        $rules = array(
+            'reset_password_code' => 'required',
+            'password' => 'required|confirmed|min:6',
+        );
+
+        $validator = \Validator::make( $request->all(), $rules);
+        if ( $validator->fails() ) {
+
+            $errors             = errorsToArray($validator->errors());
+            $response['status'] = 'failed';
+            $response['errors'] = $errors;
+            return $response;
+        }
+
+        if(!Hash::check($request->reset_password_code, $user->reset_password_code))
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = "Incorrect reset password code";
+            return $response;
+        }
+
+        $user->password = $request->password;
+        $user->save();
+
+        $response['status'] = 'success';
+        $response['data'][] = '';
+        $response['messages'][] = 'Your password has been successful reset';
+        return $response;
 
     }
     //-------------------------------------------------
@@ -729,7 +806,8 @@ class User extends Authenticatable
                 $response['errors'][] = $permission_slug.' is inactive';
                 if(env('APP_DEBUG'))
                 {
-                    $response['hint'][] = 'Enable the permission status to active from backend/admin control panel.';
+                    $response['hint'][] = 'Enable the permission status to active from
+                    backend/admin control panel.';
                 }
                 return $response;
 
@@ -754,7 +832,8 @@ class User extends Authenticatable
                     $response['data'] = [];
                     if(env('APP_DEBUG'))
                     {
-                        $response['hint'][] = 'Permission slug: '.$permission_slug.' is active for '.\Auth::user()->email;
+                        $response['hint'][] = 'Permission slug: '.$permission_slug.'
+                        is active for '.\Auth::user()->email;
                     }
                     return $response;
 
@@ -771,7 +850,8 @@ class User extends Authenticatable
             $response['errors'][] = trans("vaahcms::messages.permission_denied");
             if(env('APP_DEBUG'))
             {
-                $response['hint'][] = 'Permission slug: '.$permission_slug.' is not active for '.\Auth::user()->email;
+                $response['hint'][] = 'Permission slug: '.$permission_slug.' is not active
+                for '.\Auth::user()->email;
             }
             return $response;
 
@@ -822,7 +902,7 @@ class User extends Authenticatable
 
         $inputs = $request->new_item;
 
-        $validate = static::validation($inputs);
+        $validate = self::validation($inputs);
 
         if(isset($validate['status']) && $validate['status'] == 'failed')
         {
@@ -843,7 +923,7 @@ class User extends Authenticatable
         }
 
         // check if already exist
-        $user = static::where('email',$inputs['email'])->first();
+        $user = self::where('email',$inputs['email'])->first();
 
         if($user)
         {
@@ -885,7 +965,7 @@ class User extends Authenticatable
             Role::syncRolesWithUsers();
         }
 
-        $list = static::orderBy('created_at', 'DESC');
+        $list = self::orderBy('created_at', 'DESC');
 
         if(isset($request['trashed']) && $request['trashed'] == 'true')
         {
@@ -950,7 +1030,9 @@ class User extends Authenticatable
     public static function getItem($id)
     {
 
-        $item = static::where('id', $id)->with(['createdByUser', 'updatedByUser', 'deletedByUser'])->withTrashed();
+        $item = self::where('id', $id)->with(['createdByUser',
+            'updatedByUser', 'deletedByUser'])
+            ->withTrashed();
 
         if(!\Auth::user()->hasPermission('can-see-users-contact-details')){
             $item->exclude(['email','alternate_email', 'phone']);
@@ -1003,7 +1085,7 @@ class User extends Authenticatable
 
         $inputs = $request->all();
 
-        $validate = static::validation($inputs);
+        $validate = self::validation($inputs);
 
         if(isset($validate['status']) && $validate['status'] == 'failed')
         {
@@ -1037,11 +1119,12 @@ class User extends Authenticatable
             $item = User::find($request->id);
         } else
         {
-            $validation = static::userValidation($request);
+            $validation = self::userValidation($request);
             if(isset($validation['status']) && $validation['status'] == 'failed')
             {
                 return $validation;
-            } else if(isset($validation['status']) && $validation['status'] == 'registration-exist')
+            } else if(isset($validation['status'])
+                && $validation['status'] == 'registration-exist')
             {
                 $item = $validation['data'];
             } else
@@ -1058,7 +1141,7 @@ class User extends Authenticatable
         $item->fill($inputs);
         if($request->has('password'))
         {
-            $item->password = Hash::make($request->password);
+            $item->password = $request->password;
         }
 
         $item->save();
@@ -1113,7 +1196,7 @@ class User extends Authenticatable
                 continue ;
             }
 
-            $is_restricted = static::restrictedActions($request->action, $reg->id);
+            $is_restricted = self::restrictedActions($request->action, $reg->id);
 
             if($is_restricted)
             {
@@ -1181,7 +1264,7 @@ class User extends Authenticatable
             {
 
 
-                $is_restricted = static::restrictedActions($request->action, $item->id);
+                $is_restricted = self::restrictedActions($request->action, $item->id);
 
                 if($is_restricted)
                 {
@@ -1277,7 +1360,10 @@ class User extends Authenticatable
         $item = User::find($inputs['inputs']['id']);
 
         if($inputs['inputs']['role_id']){
-            $item->roles()->updateExistingPivot($inputs['inputs']['role_id'], array('is_active' => $inputs['data']['is_active']));
+            $item->roles()->updateExistingPivot(
+                $inputs['inputs']['role_id'],
+                array('is_active' => $inputs['data']['is_active'])
+            );
         }else{
             $item->roles()
                 ->newPivotStatement()
@@ -1325,11 +1411,11 @@ class User extends Authenticatable
 
         foreach($request->inputs as $id)
         {
-            $item = static::where('id', $id)->withTrashed()->first();
+            $item = self::where('id', $id)->withTrashed()->first();
             if($item)
             {
 
-                $is_restricted = static::restrictedActions($request->action, $item->id);
+                $is_restricted = self::restrictedActions($request->action, $item->id);
 
                 if($is_restricted)
                 {
@@ -1415,7 +1501,7 @@ class User extends Authenticatable
 
         $inputs = $request->all();
 
-        $user = static::find(\Auth::user()->id);
+        $user = self::find(\Auth::user()->id);
 
 
         if(
@@ -1423,7 +1509,7 @@ class User extends Authenticatable
             && $request->username != $user->username
         )
         {
-            $user_exist = static::where('username', $request->username)
+            $user_exist = self::where('username', $request->username)
                 ->first();
             if($user_exist)
             {
@@ -1436,7 +1522,7 @@ class User extends Authenticatable
         if($user->email != $inputs['email'] && !empty($inputs['email']))
         {
 
-            $email_exist = static::where('email', $inputs['email'])
+            $email_exist = self::where('email', $inputs['email'])
                 ->first();
 
             if($email_exist)
@@ -1502,8 +1588,8 @@ class User extends Authenticatable
                 return $response;
             }
 
-            $user = static::find(\Auth::user()->id);
-            $user->password = \Hash::make($request->new_password);
+            $user = self::find(\Auth::user()->id);
+            $user->password = $request->new_password;
             $user->save();
 
             $response['status'] = 'success';
@@ -1559,7 +1645,7 @@ class User extends Authenticatable
 
     }
     //-------------------------------------------------
-    public static function removeAvatar($request, $user_id=null)
+    public static function removeAvatar($user_id=null)
     {
 
         $data = [];
@@ -1570,8 +1656,6 @@ class User extends Authenticatable
         }
 
         $user = User::find($user_id);
-
-        $user = User::find(\Auth::user()->id);
         $user->avatar_url = null;
         $user->save();
 
