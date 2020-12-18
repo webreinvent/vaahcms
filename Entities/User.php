@@ -618,7 +618,18 @@ class User extends Authenticatable
 
         $request = new Request($inputs);
 
-        return Notification::send($request);
+        $response = Notification::send($request);
+
+        if(isset($response['status']) && $response['status'] == 'failed')
+        {
+            return $response;
+        }
+
+        $response['messages'] = [
+            trans('vaahcms-login.login_otp_sent')
+        ];
+
+        return $response;
 
     }
     //-------------------------------------------------
@@ -658,6 +669,10 @@ class User extends Authenticatable
             $user->save();
 
             $response['status'] = 'success';
+            $response['data'] = [];
+            $response['messages'] = [
+                trans('vaahcms-login.login_successful')
+            ];
 
         } else {
             $response['status'] = 'failed';
@@ -693,7 +708,18 @@ class User extends Authenticatable
         $request = new Request($inputs);
 
 
-        return Notification::send($request);
+        $response = Notification::send($request);
+
+        if(isset($response['status']) && $response['status'] == 'failed')
+        {
+            return $response;
+        }
+
+        $response['messages'] = [
+            trans('vaahcms-login.reset_code_sent')
+        ];
+
+        return $response;
 
     }
     //-------------------------------------------------
@@ -734,7 +760,8 @@ class User extends Authenticatable
 
         $response['status'] = 'success';
         $response['data'][] = '';
-        $response['messages'][] = 'Your password has been successful reset';
+        $response['messages'][] = trans('vaahcms-login.password_has_been_reset');
+
         return $response;
 
     }
