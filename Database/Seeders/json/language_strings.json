@@ -164,5 +164,25 @@
         "category": "user",
         "name": "Display Name Limit",
         "content": "The display name character is not greater than 50."
+    },
+    {
+        "category": "login",
+        "name": "Login OTP Sent",
+        "content": "One time password (OTP) is sent to your email."
+    },
+    {
+        "category": "login",
+        "name": "Login Successful",
+        "content": "You've been successfully logged in."
+    },
+    {
+        "category": "login",
+        "name": "Reset Code Sent",
+        "content": "A password reset code is sent to your email."
+    },
+    {
+        "category": "login",
+        "name": "Password Has Been Reset",
+        "content": "Your password has been reset successfully."
     }
 ]
