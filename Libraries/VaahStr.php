@@ -22,6 +22,7 @@ class VaahStr{
             $string = static::translateDynamicStringsOfUser($string, $user);
         }
 
+        $string = static::translateDynamicStringsOfParams($string, $params);
         $string = static::translateDynamicStringsOfRoutes($string);
 
         return $string;
@@ -33,6 +34,22 @@ class VaahStr{
         $pair = array_change_key_case($pair, CASE_UPPER);
         $codes = $pair;
         $pattern = '#!USER:%s!#';
+
+        $map = array();
+        foreach($codes as $var => $value) {
+            $map[sprintf($pattern, $var)] = $value;
+        }
+
+        $string = strtr($string, $map);
+        return $string;
+    }
+    //----------------------------------------------------------
+    public static function translateDynamicStringsOfParams($string, $params)
+    {
+        $pair = $params;
+        $pair = array_change_key_case($pair, CASE_UPPER);
+        $codes = $pair;
+        $pattern = '#!PARAM:%s!#';
 
         $map = array();
         foreach($codes as $var => $value) {

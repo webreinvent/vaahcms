@@ -72,7 +72,6 @@ class Notice extends Notification
                         break;
 
                     case 'greetings':
-                        echo "<pre>";
                         $mail->greeting($translated);
                         break;
 

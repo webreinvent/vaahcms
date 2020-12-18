@@ -23,6 +23,14 @@
         "via_push": 0,
         "via_backend": 1,
         "via_frontend": 0
+    },
+    {
+        "name": "Send Login OTP",
+        "via_mail": 1,
+        "via_sms": 0,
+        "via_push": 0,
+        "via_backend": 0,
+        "via_frontend": 0
     }
 
 ]
