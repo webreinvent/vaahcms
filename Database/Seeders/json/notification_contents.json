@@ -1,5 +1,4 @@
 [
-
     {
         "slug": "send-welcome-email",
         "via": "mail",
@@ -13,8 +12,9 @@
         "sort": 1,
         "key": "from",
         "meta": {
-            "name":""
-        }
+            "name": "#!ENV:MAIL_FROM_NAME!#"
+        },
+        "value": "#!ENV:MAIL_FROM_ADDRESS!#"
     },
     {
         "slug": "send-welcome-email",
@@ -84,8 +84,9 @@
         "sort": 1,
         "key": "from",
         "meta": {
-            "name": "noreply@vaahcms.dev"
-        }
+            "name": "#!ENV:MAIL_FROM_NAME!#"
+        },
+        "value": "#!ENV:MAIL_FROM_ADDRESS!#"
     },
     {
         "slug": "send-reset-password-email",
@@ -145,8 +146,9 @@
         "sort": 1,
         "key": "from",
         "meta": {
-            "name": ""
-        }
+            "name": "#!ENV:MAIL_FROM_NAME!#"
+        },
+        "value": "#!ENV:MAIL_FROM_ADDRESS!#"
     },
     {
         "slug": "send-verification-email",
@@ -214,13 +216,23 @@
         "slug": "send-login-otp",
         "via": "mail",
         "sort": 1,
-        "key": "line",
-        "value": "Your one time login (OTP) password is:",
+        "key": "from",
+        "meta": {
+            "name": "#!ENV:MAIL_FROM_NAME!#"
+        },
+        "value": "#!ENV:MAIL_FROM_ADDRESS!#"
     },
     {
         "slug": "send-login-otp",
         "via": "mail",
         "sort": 2,
+        "key": "line",
+        "value": "Your one time login (OTP) password is:"
+    },
+    {
+        "slug": "send-login-otp",
+        "via": "mail",
+        "sort": 3,
         "key": "line",
         "value": "#!PARAM:LOGIN_OTP!#"
     }

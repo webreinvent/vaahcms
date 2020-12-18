@@ -44,6 +44,7 @@ class Notice extends Notification
     public function toMail($notifiable)
     {
 
+
         $contents = $this->notify->contents()
             ->where('via', 'mail')
             ->orderBy('sort', 'asc')
@@ -64,6 +65,7 @@ class Notice extends Notification
             {
 
 
+
                 $translated = vh_translate_dynamic_strings($content->value, $this->params);
                 switch ($content->key)
                 {
@@ -76,7 +78,23 @@ class Notice extends Notification
                         break;
 
                     case 'from':
-                        $mail->from($content->value, $content->meta->name);
+                        if($content->meta && $content->meta->name)
+                        {
+                            $from_name = vh_translate_dynamic_strings($content->meta->name, $this->params);
+                        }
+
+                        $from_email = vh_translate_dynamic_strings($content->value, $this->params);
+
+                        if(isset($from_name) && isset($from_email))
+                        {
+                            $mail->from($from_email, $from_name);
+                        } else if(isset($from_email))
+                        {
+                            $mail->from($from_email);
+                        } else{
+                            $mail->from(env('MAIL_FROM_ADDRESS'));
+                        }
+
                         break;
 
                     case 'action':

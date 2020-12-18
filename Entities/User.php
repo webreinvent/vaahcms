@@ -612,7 +612,7 @@ class User extends Authenticatable
 
         $inputs = [
             'user_id' => $user->id,
-            'notification_id' => $user->id,
+            'notification_id' => $notification->id,
             'login_otp' => $otp,
         ];
 

@@ -275,6 +275,11 @@ $process->run();
 
 ```
 
+### Changelog Command:
+```shell
+auto-changelog --template changelog-template.hbs --commit-limit false
+``` 
+
 ## Support us
 
 [WebReinvent](https://www.webreinvent.com) is a web agency based in Delhi, India. You'll find an overview of all our open source projects [on github](https://github.com/webreinvent).
