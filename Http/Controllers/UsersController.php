@@ -240,7 +240,7 @@ class UsersController extends Controller
         }
 
 
-        $response = User::removeAvatar($request, $request->user_id);
+        $response = User::removeAvatar($request->user_id);
         return response()->json($response);
     }
     //----------------------------------------------------------
@@ -288,7 +288,7 @@ class UsersController extends Controller
     //----------------------------------------------------------
     public function removeProfileAvatar(Request $request)
     {
-        $response = User::removeAvatar($request);
+        $response = User::removeAvatar();
         return response()->json($response);
     }
     //----------------------------------------------------------
