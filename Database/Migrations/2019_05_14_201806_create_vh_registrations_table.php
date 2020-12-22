@@ -44,6 +44,8 @@ class CreateVhRegistrationsTable extends Migration
             $table->ipAddress('activated_ip')->nullable();
             $table->integer('invited_by')->nullable();
             $table->dateTime('invited_at')->nullable();
+            $table->string('invited_for_key')->nullable();
+            $table->integer('invited_for_value')->nullable();
 
             $table->integer('user_id')->nullable()->index();
             $table->dateTime('user_created_at')->nullable();
