@@ -70,6 +70,14 @@ class PublicController extends Controller
 
     }
     //----------------------------------------------------------
+    public function postSendResetCode(Request $request)
+    {
+        $response = User::sendResetPasswordEmail($request);
+
+        return response()->json($response);
+
+    }
+    //----------------------------------------------------------
     public function logout()
     {
         $is_admin = \Auth::user()->isAdmin();
