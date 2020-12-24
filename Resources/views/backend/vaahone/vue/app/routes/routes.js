@@ -31,6 +31,7 @@ import LayoutPublic from "./../layouts/Public";
 
 import SignIn from "./../pages/SignIn";
 import ForgotPassword from "./../pages/ForgotPassword";
+import ResetPassword from "./../pages/ResetPassword";
 
 let routes_frontend =     {
     path: '/',
@@ -60,6 +61,18 @@ let routes_frontend =     {
             path: '/forgot-password',
             name: 'forgot.password',
             component: ForgotPassword,
+            props: true,
+            meta: {
+                middleware: [
+                    GetAssets,
+                    IfNotSetup,
+                ]
+            },
+        },
+        {
+            path: '/reset-password/:code',
+            name: 'reset.password',
+            component: ResetPassword,
             props: true,
             meta: {
                 middleware: [

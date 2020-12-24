@@ -23,6 +23,15 @@ Route::group(
         Route::post( '/sendResetCode/post', 'PublicController@postSendResetCode' )
             ->name( 'vh.backend.sendResetCode.post' );
         //------------------------------------------------
+        Route::post( '/resetPassword/post', 'PublicController@postResetPassword' )
+            ->name( 'vh.backend.resetPassword.post' );
+        //------------------------------------------------
+        Route::post( '/checkResetPasswordCode/post', 'PublicController@postCheckResetPasswordCode' )
+            ->name( 'vh.backend.checkResetPasswordCode.post' );
+        //------------------------------------------------
+        Route::get( '/reset-password/{reset_password_code}', 'PublicController@resetPassword' )
+            ->name( 'vh.reset' );
+        //------------------------------------------------
         Route::get( '/logout', 'PublicController@logout' )
             ->name( 'vh.backend.logout' );
         //------------------------------------------------

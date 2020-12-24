@@ -105,7 +105,10 @@ class Notice extends Notification
                         break;
 
                     case 'action':
-                        $translated = vh_translate_dynamic_strings($content->meta->action, $this->params);
+                        $translated = vh_translate_dynamic_strings(
+                            $content->meta->action,
+                            $this->params
+                        );
                         $mail->action($content->value, $translated);
                         break;
 

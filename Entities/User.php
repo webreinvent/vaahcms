@@ -694,6 +694,7 @@ class User extends Authenticatable
         $reset_password_code = uniqid();
 
         $user->reset_password_code = $reset_password_code;
+        $user->reset_password_code_sent_at = Carbon::now();
         $user->save();
 
         $notification = Notification::where('slug', 'send-reset-password-email')
@@ -734,7 +735,7 @@ class User extends Authenticatable
         }
 
         $rules = array(
-            'reset_password_code' => 'required',
+//            'reset_password_code' => 'required',
             'password' => 'required|confirmed|min:6',
         );
 
@@ -747,12 +748,12 @@ class User extends Authenticatable
             return $response;
         }
 
-        if(!Hash::check($request->reset_password_code, $user->reset_password_code))
+        /*if(!Hash::check($request->reset_password_code, $user->reset_password_code))
         {
             $response['status'] = 'failed';
             $response['errors'][] = "Incorrect reset password code";
             return $response;
-        }
+        }*/
 
         $user->password = $request->password;
         $user->reset_password_code = null;
