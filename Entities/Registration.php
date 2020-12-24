@@ -186,7 +186,7 @@ class Registration extends Model
     //-------------------------------------------------
     public function createdByUser()
     {
-        return $this->belongsTo('WebReinvent\VaahCms\Entities\User',
+        return $this->belongsTo(User::class,
             'created_by', 'id'
         )->select('id', 'uuid', 'first_name', 'last_name', 'email');
     }
@@ -194,7 +194,7 @@ class Registration extends Model
     //-------------------------------------------------
     public function updatedByUser()
     {
-        return $this->belongsTo('WebReinvent\VaahCms\Entities\User',
+        return $this->belongsTo(User::class,
             'updated_by', 'id'
         )->select('id', 'uuid', 'first_name', 'last_name', 'email');
     }
@@ -202,11 +202,18 @@ class Registration extends Model
     //-------------------------------------------------
     public function deletedByUser()
     {
-        return $this->belongsTo('WebReinvent\VaahCms\Entities\User',
+        return $this->belongsTo(User::class,
             'deleted_by', 'id'
         )->select('id', 'uuid', 'first_name', 'last_name', 'email');
     }
 
+    //-------------------------------------------------
+    public function invitedByUser()
+    {
+        return $this->belongsTo(User::class,
+            'invited_by', 'id'
+        )->select('id', 'uuid', 'first_name', 'last_name', 'email');
+    }
     //-------------------------------------------------
     public function getTableColumns() {
         return $this->getConnection()->getSchemaBuilder()
