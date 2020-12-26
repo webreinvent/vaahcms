@@ -81,6 +81,7 @@ class SetupController extends Controller
         $data['mail_encryption_types'] = vh_mail_encryption_types();
         $data['mail_sample_settings'] = vh_mail_sample_settings();
         $data['country_calling_codes'] = vh_get_countries_calling_codes();
+        $data['env_file'] = env('ENV_FILE');
         $data['app_url'] = url("/");
 
         $response['status'] = 'success';
@@ -335,6 +336,8 @@ class SetupController extends Controller
         {
             return response()->json($response);
         }
+
+
 
         //generate vaahcms.json file
         $response = VaahSetup::createVaahCmsJsonFile($request);

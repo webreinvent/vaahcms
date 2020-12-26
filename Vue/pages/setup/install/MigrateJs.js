@@ -67,7 +67,7 @@ export default {
         async getAssets() {
             await this.$store.dispatch(namespace+'/getAssets');
             this.config.env.app_url = this.assets.app_url;
-            this.updateConfig();
+            //this.updateConfig();
         },
         //---------------------------------------------------------------------
         updateConfig: function()

@@ -41,7 +41,7 @@ class CreateVhRegistrationsTable extends Migration
             $table->integer('invited_by')->nullable()->index();
             $table->dateTime('invited_at')->nullable();
 
-            $table->morphs('belong');
+            $table->nullableMorphs('belong');
 
             //$table->string('invited_for_key')->nullable()->index();
             //$table->integer('invited_for_value')->nullable()->index();

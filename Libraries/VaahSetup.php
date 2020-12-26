@@ -505,11 +505,6 @@ class VaahSetup{
                 return $response;
             }
 
-            echo "<pre>";
-            print_r($list);
-            echo "</pre>";
-            die("<hr/>line number=123");
-
             foreach($config['environments'] as $key => $environment)
             {
                 if( $environment->app_url === url("/") && $environment->env_file != '.env.'.$request->app_env)
@@ -522,7 +517,6 @@ class VaahSetup{
                     }
                     return $response;
                 }
-
             }
         }
 

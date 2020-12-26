@@ -35,7 +35,9 @@
                             <b-step-item label="Account" icon="user-plus"></b-step-item>
                         </b-steps>
 
-
+                        <b-tag type="is-dark" v-if="assets.env_file">
+                            ACTIVE ENV FILE: <b>{{assets.env_file}}</b>
+                        </b-tag>
 
                     </div>
                 </div>

@@ -23,7 +23,7 @@ class CreateVhRolesTable extends Migration
             $table->integer('count_permissions')->nullable();
             $table->boolean('is_active')->nullable();
 
-            $table->morphs('belong');
+            $table->nullableMorphs('belong');
 
             $table->integer('created_by')->nullable();
             $table->integer('updated_by')->nullable();
