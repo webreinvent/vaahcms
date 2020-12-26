@@ -182,7 +182,10 @@ class Registration extends Model
 
 
     //-------------------------------------------------
-
+    public function belongable()
+    {
+        return $this->morphTo();
+    }
     //-------------------------------------------------
     public function createdByUser()
     {

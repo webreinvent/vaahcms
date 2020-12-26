@@ -17,14 +17,14 @@ class CreateVhNotifiedTable extends Migration
         Schema::create('vh_notified', function (Blueprint $table) {
             $table->increments('id');
 
-            $table->integer('vh_notification_id')->nullable();
-            $table->integer('vh_user_id')->nullable();
-            $table->string('via')->nullable();
+            $table->integer('vh_notification_id')->nullable()->index();
+            $table->integer('vh_user_id')->nullable()->index();
+            $table->string('via')->nullable()->index();
 
             $table->dateTime('last_attempt_at')->nullable();
-            $table->dateTime('sent_at')->nullable();
-            $table->dateTime('read_at')->nullable();
-            $table->dateTime('marked_delivered')->nullable();
+            $table->dateTime('sent_at')->nullable()->index();
+            $table->dateTime('read_at')->nullable()->index();
+            $table->dateTime('marked_delivered')->nullable()->index();
 
             $table->json('meta')->nullable();
 

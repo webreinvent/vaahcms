@@ -15,7 +15,7 @@ class CreateVhUsersTable extends Migration
     {
         Schema::create('vh_users', function (Blueprint $table) {
             $table->increments('id');
-            $table->uuid('uuid')->nullable();
+            $table->uuid('uuid')->nullable()->index();
             $table->string('email',150)->nullable()->index();
             $table->string('username',150)->nullable()->index();
             $table->string('password')->nullable()->index();
@@ -39,12 +39,12 @@ class CreateVhUsersTable extends Migration
             $table->dateTime('last_login_at')->nullable();
             $table->ipAddress('last_login_ip')->nullable();
             $table->string('remember_token')->nullable();
-            $table->string('api_token')->nullable();
+            $table->string('api_token')->nullable()->index();
             $table->dateTime('api_token_used_at')->nullable();
             $table->ipAddress('api_token_used_ip')->nullable();
-            $table->boolean('is_active')->nullable();
+            $table->boolean('is_active')->nullable()->index();
             $table->dateTime('activated_at')->nullable();
-            $table->string('status')->nullable();
+            $table->string('status')->nullable()->index();
             $table->string('affiliate_code')->nullable();
             $table->dateTime('affiliate_code_used_at')->nullable();
 

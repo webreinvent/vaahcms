@@ -17,11 +17,11 @@ class CreateVhLangStringsTable extends Migration
         Schema::create('vh_lang_strings', function (Blueprint $table) {
             $table->increments('id');
 
-            $table->integer('vh_lang_language_id')->nullable();
-            $table->integer('vh_lang_category_id')->nullable();
+            $table->integer('vh_lang_language_id')->nullable()->index();
+            $table->integer('vh_lang_category_id')->nullable()->index();
 
             $table->string('name',150)->nullable();
-            $table->string('slug',150)->nullable();
+            $table->string('slug',150)->nullable()->index();
             $table->mediumText('content')->nullable();
 
 

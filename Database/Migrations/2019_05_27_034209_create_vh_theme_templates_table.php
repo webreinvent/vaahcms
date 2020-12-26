@@ -15,10 +15,10 @@ class CreateVhThemeTemplatesTable extends Migration
     {
         Schema::create('vh_theme_templates', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('vh_theme_id')->nullable();
+            $table->integer('vh_theme_id')->nullable()->index();
             $table->string('type')->nullable();
             $table->string('name',150)->nullable();
-            $table->string('slug',150)->nullable();
+            $table->string('slug',150)->nullable()->index();
             $table->string('file_path')->nullable();
             $table->string('excerpt')->nullable();
             $table->timestamps();

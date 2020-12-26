@@ -15,13 +15,11 @@ class CreateVhRegistrationsTable extends Migration
     {
         Schema::create('vh_registrations', function (Blueprint $table) {
             $table->increments('id');
-
-            $table->string('uid')->nullable();
-            $table->uuid('uuid')->nullable();
+            $table->uuid('uuid')->nullable()->index();
             $table->string('email',150)->nullable()->index();
-            $table->string('username',150)->nullable();
+            $table->string('username',150)->nullable()->index();
             $table->string('password')->nullable();
-            $table->string('display_name',50)->nullable();
+            $table->string('display_name',50)->nullable()->index();
             $table->string('title',200)->nullable();
             $table->string('first_name',150)->nullable()->index();
             $table->string('middle_name')->nullable()->index();
@@ -35,19 +33,20 @@ class CreateVhRegistrationsTable extends Migration
             $table->date('birth')->nullable();
             $table->string('country')->nullable();
             $table->string('country_code')->nullable();
-
-            $table->string('status')->nullable();
-
-            $table->string('activation_code')->nullable();
+            $table->string('status')->nullable()->index();
+            $table->string('activation_code')->nullable()->index();
             $table->dateTime('activation_code_sent_at')->nullable();
             $table->dateTime('activated_at')->nullable();
             $table->ipAddress('activated_ip')->nullable();
-            $table->integer('invited_by')->nullable();
+            $table->integer('invited_by')->nullable()->index();
             $table->dateTime('invited_at')->nullable();
-            $table->string('invited_for_key')->nullable();
-            $table->integer('invited_for_value')->nullable();
 
-            $table->integer('user_id')->nullable()->index();
+            $table->morphs('belong');
+
+            //$table->string('invited_for_key')->nullable()->index();
+            //$table->integer('invited_for_value')->nullable()->index();
+
+            $table->integer('vh_user_id')->nullable()->index();
             $table->dateTime('user_created_at')->nullable();
             $table->text('meta')->nullable();
 

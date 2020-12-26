@@ -18,16 +18,17 @@ class CreateVhMediasTable extends Migration
             $table->increments('id');
 
             $table->string('name',150)->nullable()->index();
-            $table->uuid('uuid')->nullable();
-            $table->string('original_name')->nullable();
+            $table->string('slug',150)->nullable()->index();
+            $table->uuid('uuid')->nullable()->index();
+            $table->string('original_name')->nullable()->index();
             $table->string('mime_type')->nullable();
             $table->string('extension')->nullable();
             $table->string('path')->nullable();
             $table->string('url')->nullable();
             $table->string('url_thumbnail')->nullable();
             $table->integer('size')->nullable();
-            $table->string('title',200)->nullable();
-            $table->string('caption')->nullable();
+            $table->string('title',200)->nullable()->index();
+            $table->string('caption')->nullable()->index();
             $table->string('alt_text')->nullable();
             $table->boolean('is_hidden')->nullable();
             $table->boolean('is_downloadable')->nullable();

@@ -20,7 +20,7 @@ class CreateVhMediableTable extends Migration
             $table->string('vh_media_id')->nullable()->index();
 
             $table->integer('mediable_id')->nullable()->index();
-            $table->string('mediable_type')->nullable();
+            $table->string('mediable_type')->nullable()->index();
 
             $table->integer('created_by')->nullable();
             $table->integer('updated_by')->nullable();

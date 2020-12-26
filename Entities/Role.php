@@ -48,10 +48,15 @@ class Role extends Model {
         $query->where('vh_roles.is_active', 1);
     }
     //-------------------------------------------------
+    public function belongable()
+    {
+        return $this->morphTo();
+    }
+    //-------------------------------------------------
 
     public function createdByUser()
     {
-        return $this->belongsTo('WebReinvent\VaahCms\Entities\User',
+        return $this->belongsTo(User::class,
             'created_by', 'id'
         )->select('id', 'uuid', 'first_name', 'last_name', 'email');
     }
@@ -59,8 +64,15 @@ class Role extends Model {
     //-------------------------------------------------
     public function updatedByUser()
     {
-        return $this->belongsTo('WebReinvent\VaahCms\Entities\User',
+        return $this->belongsTo(User::class,
             'updated_by', 'id'
+        )->select('id', 'uuid', 'first_name', 'last_name', 'email');
+    }
+    //-------------------------------------------------
+    public function deletedByUser()
+    {
+        return $this->belongsTo(User::class,
+            'deleted_by', 'id'
         )->select('id', 'uuid', 'first_name', 'last_name', 'email');
     }
     //-------------------------------------------------
@@ -96,22 +108,17 @@ class Role extends Model {
     }
 
     //-------------------------------------------------
-    public function deletedByUser()
-    {
-        return $this->belongsTo('WebReinvent\VaahCms\Entities\User',
-            'deleted_by', 'id'
-        )->select('id', 'uuid', 'first_name', 'last_name', 'email');
-    }
+
     //-------------------------------------------------
     //-------------------------------------------------
     public function permissions() {
-        return $this->belongsToMany( 'WebReinvent\VaahCms\Entities\Permission',
+        return $this->belongsToMany( Permission::class,
             'vh_role_permissions', 'vh_role_id', 'vh_permission_id'
         )->withPivot('is_active');
     }
     //-------------------------------------------------
     public function users() {
-        return $this->belongsToMany( 'WebReinvent\VaahCms\Entities\User',
+        return $this->belongsToMany( User::class,
             'vh_user_roles', 'vh_role_id', 'vh_user_id'
         )->withPivot('is_active');
     }
@@ -131,15 +138,14 @@ class Role extends Model {
     //-------------------------------------------------
     public static function countPermissions($id)
     {
-
         $role = Role::withTrashed()->where('id', $id)->first();
-
         if(!$role)
         {
             return 0;
         }
-
-        return $role->permissions()->wherePivot('is_active', 1)->count();
+        return $role->permissions()
+            ->wherePivot('is_active', 1)
+            ->count();
     }
     //-------------------------------------------------
     //-------------------------------------------------
@@ -208,7 +214,6 @@ class Role extends Model {
         {
             return $validation;
         }
-
 
         // check if name exist
         $user = static::where('name',$inputs['name'])->first();
