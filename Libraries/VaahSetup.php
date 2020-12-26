@@ -489,9 +489,29 @@ class VaahSetup{
         if($config['environments'])
         {
 
+            $list = collect($config['environments'])->pluck('app_url')->toArray();
+            $count_total = $list;
+            $count_unique = array_unique($list);
+
+            if($count_unique < $count_total)
+            {
+                $response['status'] = 'failed';
+                $response['errors'][] = 'Duplicate entries with same app_url is found in vaahcms.json file.';
+                if(env('APP_DEBUG'))
+                {
+                    $response['hint'][] = 'APP URL already exist in vaahcms.json';
+                }
+
+                return $response;
+            }
+
+            echo "<pre>";
+            print_r($list);
+            echo "</pre>";
+            die("<hr/>line number=123");
+
             foreach($config['environments'] as $key => $environment)
             {
-
                 if( $environment->app_url === url("/") && $environment->env_file != '.env.'.$request->app_env)
                 {
                     $response['status'] = 'failed';
