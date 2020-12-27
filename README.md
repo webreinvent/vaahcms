@@ -134,14 +134,14 @@ php artisan vendor:publish --provider="WebReinvent\VaahCms\VaahCmsServiceProvide
 
 #### Create migrations
 ```bash
-php artisan make:migration create_vh_users_table --path=/packages/vaahcms/src/Database/Migrations
+php artisan make:migration create_vh_users_table --path=/packages/vaahcms/Database/Migrations
 ```
 
 #### Create seeds
 ```bash
-php artisan make:seeder PermissionsTableSeeder --path=/packages/vaahcms/src/Database/Seeders
-php artisan make:seeder RolesTableSeeder --path=/packages/vaahcms/src/Database/Seeders
-php artisan make:command HealthcheckCommand --path=/packages/vaahcms/src/Database/Seeders
+php artisan make:seeder PermissionsTableSeeder --path=/packages/vaahcms/Database/Seeders
+php artisan make:seeder RolesTableSeeder --path=/packages/vaahcms/Database/Seeders
+php artisan make:command HealthcheckCommand --path=/packages/vaahcms/Database/Seeders
 ```
 
 ## Minify Assets of Admin with Laravel Mix

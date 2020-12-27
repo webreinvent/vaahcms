@@ -50,6 +50,7 @@ class User extends Authenticatable
     //-------------------------------------------------
     protected $hidden = [
         'password',
+        'login_otp',
         'remember_token',
         'api_token',
         'api_token_used_at',
@@ -122,12 +123,17 @@ class User extends Authenticatable
     }
     //-------------------------------------------------
     public function setPasswordAttribute($value) {
-        $password = Hash::make($value);
-        $this->attributes['password'] = $password;
+        $this->attributes['password'] = Hash::make($value);
     }
     //-------------------------------------------------
     public function setLoginOtpAttribute($value) {
-        $this->attributes['login_otp'] = Hash::make($value);
+
+        if(is_null($value) || empty($value))
+        {
+            $this->attributes['login_otp'] = null;
+        } else{
+            $this->attributes['login_otp'] = Hash::make($value);
+        }
     }
     //-------------------------------------------------
     public function setResetPasswordCodeAttribute($value) {
@@ -680,6 +686,7 @@ class User extends Authenticatable
             } else{
                 Auth::login($user);
             }
+
             $user->login_otp = null;
             $user->last_login_at = Carbon::now();
             $user->last_login_ip = request()->ip();

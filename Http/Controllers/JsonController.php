@@ -138,11 +138,14 @@ class JsonController extends Controller
 
         $mail_username = env('MAIL_USERNAME');
         $mail_password = env('MAIL_PASSWORD');
+        $mail_from_name = env('MAIL_FROM_NAME');
+        $mail_from_email = env('MAIL_FROM_ADDRESS');
 
         if(
             isset($mail_username) && !empty($mail_username)
             && isset($mail_password) && !empty($mail_password)
-
+            && isset($mail_from_name) && !empty($mail_from_name)
+            && isset($mail_from_email) && !empty($mail_from_email)
         )
         {
             return false;
