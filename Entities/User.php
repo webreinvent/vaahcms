@@ -1,6 +1,6 @@
 <?php namespace WebReinvent\VaahCms\Entities;
 
-use Hash;
+
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Http\Request;
@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Str;
 use WebReinvent\VaahCms\Traits\CrudWithUuidObservantTrait;
@@ -121,7 +122,8 @@ class User extends Authenticatable
     }
     //-------------------------------------------------
     public function setPasswordAttribute($value) {
-        $this->attributes['password'] = Hash::make($value);
+        $password = Hash::make($value);
+        $this->attributes['password'] = $password;
     }
     //-------------------------------------------------
     public function setLoginOtpAttribute($value) {
@@ -643,7 +645,21 @@ class User extends Authenticatable
             return $user;
         }
 
-        if(count($request->login_otp) < 6
+        $rules = array(
+            'login_otp' => 'required|digits:6',
+        );
+
+        $validator = \Validator::make( $request->all(), $rules);
+        if ( $validator->fails() ) {
+
+            $errors             = errorsToArray($validator->errors());
+            $response['status'] = 'failed';
+            $response['errors'] = $errors;
+            return $response;
+        }
+
+
+        /*if(count($request->login_otp) < 6
             || is_null($user->login_otp)
             || empty($user->login_otp)
         )
@@ -653,7 +669,8 @@ class User extends Authenticatable
             return $response;
         }
 
-        $login_otp = implode('', $request->login_otp);
+        $login_otp = implode('', $request->login_otp);*/
+        $login_otp = $request->login_otp;
         $login_otp = trim($login_otp);
 
         if (Hash::check($login_otp, $user->login_otp))
@@ -670,9 +687,6 @@ class User extends Authenticatable
 
             $response['status'] = 'success';
             $response['data'] = [];
-            $response['messages'] = [
-                trans('vaahcms-login.login_successful')
-            ];
 
         } else {
             $response['status'] = 'failed';

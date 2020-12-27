@@ -4,6 +4,7 @@ import Footer from '../components/Footer';
 export default {
     computed:{
         root() {return this.$store.getters['root/state']},
+        assets() {return this.$store.getters['root/state'].assets},
         ajax_url() {return this.$store.getters['root/state'].ajax_url},
     },
     components:{
@@ -14,9 +15,15 @@ export default {
     {
         return {
             is_btn_loading: false,
-            credentials: {
+            is_btn_otp_loading: false,
+            signin: {
+                type: 'password',
                 email: null,
-                password: null
+                password: null,
+                attempts: 0,
+                login_otp:null,
+                max_attempts: 5,
+                is_password_disabled: null,
             }
         }
     },
@@ -31,7 +38,7 @@ export default {
         signIn: function () {
 
             this.is_btn_loading = true;
-            let params = this.credentials;
+            let params = this.signin;
             let url = this.ajax_url+'/signin/post';
             this.$vaah.ajax(url, params, this.signInAfter);
 
@@ -45,6 +52,22 @@ export default {
             }
         },
         //---------------------------------------------------------------------
+        generateOTP: function () {
+
+            this.is_btn_otp_loading = true;
+            let params = this.signin;
+            let url = this.ajax_url+'/signin/generate/otp';
+            this.$vaah.ajax(url, params, this.generateOTPAfter);
+
+        },
+        //---------------------------------------------------------------------
+        generateOTPAfter: function (data, res) {
+            this.is_btn_otp_loading = false;
+            if(data)
+            {
+
+            }
+        },
         //---------------------------------------------------------------------
         //---------------------------------------------------------------------
         //---------------------------------------------------------------------

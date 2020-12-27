@@ -35,6 +35,11 @@ class JsonController extends Controller
             'docs' => config('vaahcms.documentation'),
         ];
 
+        $data['settings'] = [
+            'is_mail_settings_not_set' => $this->isMailSettingsNotSet()
+        ];
+
+
         $data['server'] = [
             'host' => $request->getHost(),
             'current_year' => \Carbon::now()->format('Y'),
@@ -125,6 +130,26 @@ class JsonController extends Controller
         $response['data']['is_logged_in'] = $is_logged;
 
         return response()->json($response);
+
+    }
+    //----------------------------------------------------------
+    public function isMailSettingsNotSet()
+    {
+
+        $mail_username = env('MAIL_USERNAME');
+        $mail_password = env('MAIL_PASSWORD');
+
+        if(
+            isset($mail_username) && !empty($mail_username)
+            && isset($mail_password) && !empty($mail_password)
+
+        )
+        {
+            return false;
+        }
+
+
+        return true;
 
     }
     //----------------------------------------------------------

@@ -44,10 +44,35 @@ class PublicController extends Controller
         return redirect()->route('vh.backend');
     }
     //----------------------------------------------------------
+    public function postGenerateOTP(Request $request)
+    {
+        $response = User::sendLoginOtp($request);
+        return response()->json($response);
+    }
+    //----------------------------------------------------------
     public function postLogin(Request $request)
     {
 
-        $response = User::login($request);
+        $rules = array(
+            'type' => 'required',
+        );
+
+        $validator = \Validator::make( $request->all(), $rules);
+        if ( $validator->fails() ) {
+
+            $errors             = errorsToArray($validator->errors());
+            $response['status'] = 'failed';
+            $response['errors'] = $errors;
+            return response()->json($response);
+        }
+
+        if($request->type == 'otp')
+        {
+            $response = User::loginViaOtp($request);
+        } else
+        {
+            $response = User::login($request);
+        }
 
         if(isset($response['status']) && $response['status'] == 'failed')
         {
@@ -61,6 +86,8 @@ class PublicController extends Controller
         {
             $redirect_url = \URL::route('vh.backend');
         }
+
+        $response = [];
 
         $response['status'] = 'success';
         $response['messages'][] = 'Login Successful';
