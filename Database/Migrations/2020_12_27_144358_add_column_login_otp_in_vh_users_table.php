@@ -14,8 +14,8 @@ class AddColumnLoginOtpInVhUsersTable extends Migration
     public function up()
     {
         Schema::table('vh_users', function (Blueprint $table) {
-            $table->string('login_otp')->nullable()
-                ->index()->after('password');
+            $table->string('login_otp')->after('password')->nullable()
+                ->index();
         });
     }
 
