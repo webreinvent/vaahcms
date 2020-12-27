@@ -20,6 +20,7 @@ use WebReinvent\VaahCms\Entities\User;
 use WebReinvent\VaahCms\Libraries\VaahHelper;
 use WebReinvent\VaahCms\Libraries\VaahSetup;
 use WebReinvent\VaahCms\Notifications\TestSmtp;
+use WebReinvent\VaahLaravel\Libraries\VaahArtisan;
 
 
 class SetupController extends Controller
@@ -393,30 +394,51 @@ class SetupController extends Controller
 
         try
         {
+            $response = VaahArtisan::seed('db:wipe');
 
-            //reset migration
-            Migration::resetMigrations();
+            if(isset($response['status']) && $response['status'] == 'failed')
+            {
+                return $response;
+            }
 
             //publish all migrations of vaahcms package
             $provider = "WebReinvent\VaahCms\VaahCmsServiceProvider";
-            Migration::publishMigrations($provider);
+            $response = VaahArtisan::publishMigrations($provider);
+
+            if(isset($response['status']) && $response['status'] == 'failed')
+            {
+                return $response;
+            }
 
             //run migration
-            Migration::runMigrations(null,true);
+            $response = VaahArtisan::migrate();
+            if(isset($response['status']) && $response['status'] == 'failed')
+            {
+                return $response;
+            }
+
 
             //publish vaahcms seeds
-            Migration::publishSeeds($provider);
+            $response = VaahArtisan::publishSeeds($provider);
+            if(isset($response['status']) && $response['status'] == 'failed')
+            {
+                return $response;
+            }
+
 
             //run vaahcms seeds
-            $namespace = "WebReinvent\VaahCms\Database\Seeders\VaahCmsTableSeeder";
-            Migration::runSeeds($namespace);
+            $seed_class = "WebReinvent\VaahCms\Database\Seeders\VaahCmsTableSeeder";
+            $response = VaahArtisan::seed('db:seed', $seed_class);
+            if(isset($response['status']) && $response['status'] == 'failed')
+            {
+                return $response;
+            }
 
+            $response =[];
             $response['status'] = 'success';
             $response['messages'][] = 'Migration were successful';
             $response['data'] = $data;
-
             return response()->json($response);
-
         }
         catch(\Exception $e) {
 
@@ -611,6 +633,7 @@ class SetupController extends Controller
         $user = new User();
         $user->fill($request->all());
         $user->is_active = 1;
+        $user->password = $request->password;
         $user->activated_at = \Carbon::now();
         $user->status = 'active';
         $user->created_ip = \Request::ip();
