@@ -95,6 +95,13 @@ export default {
             return this.$vaah.hasPermission(this.permissions, slug);
         },
         //---------------------------------------------------------------------
+        paginate: function(page=1)
+        {
+            this.query_string.page = page;
+            this.update('query_string', this.query_string);
+            this.$emit('eReloadList');
+        },
+        //---------------------------------------------------------------------
         //---------------------------------------------------------------------
     }
 }

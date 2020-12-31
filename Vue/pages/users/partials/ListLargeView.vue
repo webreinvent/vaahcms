@@ -2,6 +2,15 @@
 <template>
     <div>
         <b-table :data="page.list_is_empty ? [] : page.list.data"
+                 paginated
+                 backend-pagination
+                 :total="page.list.total"
+                 :per-page="page.list.per_page"
+                 @page-change="paginate"
+                 aria-next-label="Next page"
+                 aria-previous-label="Previous page"
+                 aria-page-label="Page"
+                 aria-current-label="Current page"
                  :checkable="hasPermission('can-update-users') ? true : false"
                  :checked-rows.sync="page.bulk_action.selected_items"
                  checkbox-position="left"

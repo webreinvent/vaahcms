@@ -220,22 +220,16 @@
                                 <div class="block" style="margin-bottom: 0px;" >
 
                                     <div v-if="page.list_view">
-                                        <ListLargeView/>
+                                        <ListLargeView @eReloadList="getList"/>
                                     </div>
 
                                     <div v-else>
-                                        <ListSmallView/>
+                                        <ListSmallView @eReloadList="getList"/>
                                     </div>
 
                                 </div>
 
                                 <hr style="margin-top: 0;"/>
-
-                                <div class="block" v-if="page.list">
-                                    <vh-pagination  :limit="1" :data="page.list"
-                                                    @onPageChange="paginate">
-                                    </vh-pagination>
-                                </div>
 
                             </div>
                             <!--/list-->
