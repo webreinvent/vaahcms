@@ -93,13 +93,13 @@
                     <b-table :data="items.list.data"
                              :hoverable="true">
 
-                        <template slot-scope="props">
-                            <b-table-column field="name" label="Name" >
+                        <template >
+                            <b-table-column v-slot="props" field="name" label="Name" >
                                         {{ props.row.name }}
                             </b-table-column>
 
 
-                            <b-table-column field="email" label="Email" >
+                            <b-table-column v-slot="props" field="email" label="Email" >
                                 <b-tooltip label="Copy Email" type="is-dark">
                                     <b-button type="is-small"
                                               class="is-light"
@@ -109,25 +109,26 @@
                                 </b-tooltip>
                             </b-table-column>
 
-                            <b-table-column v-if="hasPermission('can-update-roles') || hasPermission('can-manage-roles')" field="actions" class="has-text-right" label="Has Role" numeric>
-                                <b-button v-if="props.row.pivot.is_active === 1" rounded size="is-small"
-                                          type="is-success" @click="changePermission(props.row)">
-                                    Yes
-                                </b-button>
-                                <b-button v-else rounded size="is-small" type="is-danger"
-                                          @click="changePermission(props.row)">
-                                    No
-                                </b-button>
-                            </b-table-column>
-
-                            <b-table-column v-else field="actions" class="has-text-right" label="Has Role" numeric>
-                                <b-button v-if="props.row.pivot.is_active === 1" disabled rounded size="is-small"
-                                          type="is-success" >
-                                    Yes
-                                </b-button>
-                                <b-button v-else disabled rounded size="is-small" type="is-danger">
-                                    No
-                                </b-button>
+                            <b-table-column v-slot="props" field="actions" class="has-text-right" label="Has Role" numeric>
+                                <span v-if="hasPermission('can-update-roles') || hasPermission('can-manage-roles')">
+                                    <b-button v-if="props.row.pivot.is_active === 1" rounded size="is-small"
+                                              type="is-success" @click="changePermission(props.row)">
+                                        Yes
+                                    </b-button>
+                                    <b-button v-else rounded size="is-small" type="is-danger"
+                                              @click="changePermission(props.row)">
+                                        No
+                                    </b-button>
+                                </span>
+                                <span v-else>
+                                    <b-button v-if="props.row.pivot.is_active === 1" disabled rounded size="is-small"
+                                              type="is-success" >
+                                        Yes
+                                    </b-button>
+                                    <b-button v-else disabled rounded size="is-small" type="is-danger">
+                                        No
+                                    </b-button>
+                                </span>
                             </b-table-column>
                         </template>
 
