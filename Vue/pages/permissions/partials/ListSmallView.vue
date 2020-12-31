@@ -9,16 +9,16 @@
                  :row-class="setRowClass"
         >
 
-            <template slot-scope="props">
-                <b-table-column field="id" label="ID" width="85">
+            <template>
+                <b-table-column v-slot="props" field="id" label="ID" width="85">
                     {{ props.row.id }}
                 </b-table-column>
 
-                <b-table-column field="name" label="Name">
+                <b-table-column v-slot="props" field="name" label="Name">
                     {{ props.row.name }}
                 </b-table-column>
 
-                <b-table-column field="slug" label="Slug">
+                <b-table-column v-slot="props" field="slug" label="Slug">
                     <vh-copy class="text-copyable"
                              :data="props.row.slug"
                              :label="props.row.slug"
@@ -27,17 +27,14 @@
                     </vh-copy>
                 </b-table-column>
 
-                <b-table-column v-if="hasPermission('can-read-permissions') " field="count_roles" label="Roles" >
-                    <b-tooltip label="View Role" type="is-dark">
+                <b-table-column v-slot="props"  field="count_roles" label="Roles" >
+                    <b-tooltip v-if="hasPermission('can-read-permissions') " label="View Role" type="is-dark">
                         <b-button rounded size="is-small"
                                   type="is-primary" @click="getRole(props.row)">
                             {{ props.row.count_roles }} / {{page.total_roles}}
                         </b-button>
                     </b-tooltip>
-                </b-table-column>
-
-                <b-table-column v-else field="count_roles" label="Roles" >
-                    <b-tooltip label="View Role" type="is-dark">
+                    <b-tooltip v-else label="View Role" type="is-dark">
                         <b-button rounded size="is-small"
                                   type="is-primary" disabled>
                             {{ props.row.count_roles }} / {{page.total_roles}}
@@ -46,10 +43,10 @@
                 </b-table-column>
 
 
-                <b-table-column v-if="hasPermission('can-read-permissions')"
+                <b-table-column v-slot="props"
                                 field="actions" label=""
                                 width="40">
-                    <b-tooltip label="View" type="is-dark">
+                    <b-tooltip v-if="hasPermission('can-read-permissions')" label="View" type="is-dark">
                         <b-button size="is-small"
                                   @click="setActiveItem(props.row)"
                                   icon-left="chevron-right">

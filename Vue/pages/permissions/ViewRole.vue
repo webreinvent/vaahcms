@@ -92,8 +92,8 @@
                              :hoverable="true"
                     >
 
-                        <template slot-scope="props">
-                            <b-table-column field="id" label="Role" >
+                        <template>
+                            <b-table-column v-slot="props" field="id" label="Role" >
                                 <b-tooltip label="Copy Slug" type="is-dark">
                                     <b-button type="is-small"
                                               class="is-light"
@@ -103,26 +103,27 @@
                                 </b-tooltip>
                             </b-table-column>
 
-                            <b-table-column v-if="hasPermission('can-update-permissions') || hasPermission('can-manage-permissions')"
+                            <b-table-column v-slot="props"
                                             field="name" class="has-text-centered" label="Has Permission" numeric >
-                                <b-button v-if="props.row.pivot.is_active === 1" rounded size="is-small"
-                                          type="is-success" @click="changePermission(props.row)">
-                                    Yes
-                                </b-button>
-                                <b-button v-else rounded size="is-small" type="is-danger"
-                                          @click="changePermission(props.row)">
-                                    No
-                                </b-button>
-                            </b-table-column>
-
-                            <b-table-column v-else field="name" class="has-text-centered" label="Has Permission" numeric >
-                                <b-button v-if="props.row.pivot.is_active === 1" disabled rounded size="is-small"
-                                          type="is-success">
-                                    Yes
-                                </b-button>
-                                <b-button v-else disabled rounded size="is-small" type="is-danger">
-                                    No
-                                </b-button>
+                                <span v-if="hasPermission('can-update-permissions') || hasPermission('can-manage-permissions')">
+                                     <b-button v-if="props.row.pivot.is_active === 1" rounded size="is-small"
+                                               type="is-success" @click="changePermission(props.row)">
+                                        Yes
+                                    </b-button>
+                                    <b-button v-else rounded size="is-small" type="is-danger"
+                                              @click="changePermission(props.row)">
+                                        No
+                                    </b-button>
+                                </span>
+                                <span v-else>
+                                    <b-button v-if="props.row.pivot.is_active === 1" disabled rounded size="is-small"
+                                              type="is-success">
+                                        Yes
+                                    </b-button>
+                                    <b-button v-else disabled rounded size="is-small" type="is-danger">
+                                        No
+                                    </b-button>
+                                </span>
                             </b-table-column>
                         </template>
 
