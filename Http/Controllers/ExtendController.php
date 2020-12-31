@@ -175,13 +175,39 @@ class ExtendController extends Controller
             ];
         }
 
+        if(\Auth::user()->hasPermission('has-access-of-advanced-section'))
+        {
+            $list[4] = [
+                'link' => '#',
+                'icon'=> 'stethoscope',
+                'label'=> 'Advanced',
+                'child' => [
+                    [
+                        'link' => self::$link."/advanced/logs",
+                        'label'=> 'Logs'
+                    ],
+                    [
+                        'link' => self::$link."/advanced/jobs",
+                        'label'=> 'Jobs'
+                    ],
+                    [
+                        'link' => self::$link."/advanced/failed-jobs",
+                        'label'=> 'Failed Jobs'
+                    ],
+                    [
+                        'link' => self::$link."/advanced/batches",
+                        'label'=> 'Batches'
+                    ],
+                ]
+            ];
+        }
 
 
 
 
         if(\Auth::user()->hasPermission('has-access-of-media-section'))
         {
-            $list[4] = [
+            $list[5] = [
                 'link' => '#',
                 'icon'=> 'photo-video',
                 'label'=> 'Manage',
