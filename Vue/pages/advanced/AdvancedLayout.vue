@@ -5,11 +5,7 @@
         </div>
 
         <div class="column is-10">
-            <div class="container">
-
-                <router-view></router-view>
-
-            </div>
+            <router-view></router-view>
         </div>
     </div>
 

@@ -6,22 +6,26 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\File;
 use WebReinvent\VaahLaravel\Libraries\VaahFiles;
 
 class LogsController extends Controller
 {
 
-    public $theme;
 
     //----------------------------------------------------------
     public function __construct()
     {
-        $this->theme = vh_get_backend_theme();
+
+
+
     }
 
     //----------------------------------------------------------
     public function getList(Request $request)
     {
+
+
         $permission_slug = 'has-access-of-logs-section';
 
         if(!\Auth::user()->hasPermission($permission_slug))
@@ -64,19 +68,60 @@ class LogsController extends Controller
     }
 
     //----------------------------------------------------------
-    public function getItem(Request $request, $id)
+    public function getItem(Request $request, $name)
     {
 
-        if(!\Auth::user()->hasPermission('can-read-registrations'))
+        $permission_slug = 'has-access-of-logs-section';
+
+        if(!\Auth::user()->hasPermission($permission_slug))
         {
             $response['status'] = 'failed';
             $response['errors'][] = trans("vaahcms::messages.permission_denied");
-
+            if(env('APP_DEBUG'))
+            {
+                $response['hint'][] = 'Permission slug: '.$permission_slug;
+            }
             return response()->json($response);
         }
 
-        $request->merge(['id'=>$id]);
-        $response = Registration::getItem($request);
+
+        $response['status'] = 'success';
+        $response['data'] = [];
+
+        $path = storage_path('logs/'.$name);
+
+        $response['data']['name'] = $name;
+        $response['data']['path'] = $path;
+
+        if(File::exists($path))
+        {
+
+
+            $content = File::get($path);
+
+            $pattern = "/^\[(?<date>.*)\]\s(?<env>\w+)\.(?<type>\w+):(?<message>.*)/m";
+
+            preg_match_all($pattern, $content, $matches, PREG_SET_ORDER, 0);
+
+
+            $logs = [];
+            foreach ($matches as $match) {
+                $logs[] = [
+                    'timestamp' => \Carbon::parse($match['date'])->format('Y-m-d h:i A'),
+                    'ago' => \Carbon::parse($match['date'])->diffForHumans(),
+                    'env' => $match['env'],
+                    'type' => $match['type'],
+                    'message' => trim($match['message'])
+                ];
+            }
+
+            $response['data']['content'] = $content;
+            $response['data']['logs'] = $logs;
+
+
+        }
+
+
         return response()->json($response);
     }
     //----------------------------------------------------------

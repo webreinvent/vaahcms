@@ -19,3 +19,6 @@ $button-border-color: $border !default;
 $button-border-width: $control-border-width !default;
 $button-padding-vertical: calc(0.3em - #{$button-border-width}) !default;
 $button-padding-horizontal: 0.8em !default;
+
+//_card
+$card-overflow: none !default;

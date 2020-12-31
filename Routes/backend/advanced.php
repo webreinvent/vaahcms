@@ -10,5 +10,6 @@ Route::group(
     ],
     function () {
         Route::post( '/list', 'LogsController@getList');
+        Route::post( '/item/{name}', 'LogsController@getItem');
     });
 
