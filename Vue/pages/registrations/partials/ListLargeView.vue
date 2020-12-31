@@ -9,30 +9,32 @@
                  :row-class="setRowClass"
         >
 
-            <template slot-scope="props">
-                <b-table-column field="id" label="ID" width="85">
+            <template>
+                <b-table-column v-slot="props" field="id" label="ID" width="85">
                     {{ props.row.id }}
                 </b-table-column>
 
-                <b-table-column field="name" label="Name">
+                <b-table-column v-slot="props" field="name" label="Name">
                     {{ props.row.name }}
                 </b-table-column>
 
-                <b-table-column v-if="props.row.email" field="email" label="Email">
-                    {{ props.row.email }}
+                <b-table-column v-slot="props"  field="email" label="Email">
+                    <span v-if="props.row.email">
+                        {{ props.row.email }}
+                    </span>
                 </b-table-column>
 
-                <b-table-column field="status" label="Status">
+                <b-table-column v-slot="props" field="status" label="Status">
                     <span class="tag">
                         {{ props.row.status }}
                     </span>
                 </b-table-column>
 
-                <b-table-column field="updated_at" label="Updated At" >
+                <b-table-column v-slot="props" field="updated_at" label="Updated At" >
                     {{ $vaah.fromNow(props.row.updated_at) }}
                 </b-table-column>
 
-                <b-table-column field="gender" label="Gender">
+                <b-table-column v-slot="props" field="gender" label="Gender">
                     <span>
 
                         <b-icon pack="fas"
@@ -55,11 +57,11 @@
                 </b-table-column>
 
 
-                <b-table-column v-if="hasPermission('can-read-registrations')"
+                <b-table-column v-slot="props"
                                 field="actions" label=""
                                 width="40">
 
-                    <b-tooltip label="View" type="is-dark">
+                    <b-tooltip v-if="hasPermission('can-read-registrations')" label="View" type="is-dark">
                         <b-button size="is-small"
                                   @click="setActiveItem(props.row)"
                                   icon-left="chevron-right">
