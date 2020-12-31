@@ -1,6 +1,7 @@
 <template>
 
-    <div v-if="assets.vue_notices" class="has-margin-bottom-20">
+    <div v-if="assets.vue_notices && assets.vue_notices.length >0 "
+         class="has-margin-bottom-20">
 
         <div v-for="notice in assets.vue_notices">
 

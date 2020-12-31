@@ -7,14 +7,8 @@
         <Aside :assets="assets"/>
         <!--sections-->
         <section class="section">
-
-            <div class="container">
-
                 <Notices></Notices>
-
                 <router-view></router-view>
-
-            </div>
         </section>
         <!--sections-->
 
