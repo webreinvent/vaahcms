@@ -7,8 +7,8 @@
                  :hoverable="true"
                  :row-class="setRowClass">
 
-            <template slot-scope="props">
-                <b-table-column field="name" label="Theme">
+            <template>
+                <b-table-column v-slot="props" field="name" label="Theme">
 
                     <h3 class="title is-5 has-margin-bottom-10">{{ props.row.title }}</h3>
 
@@ -23,7 +23,7 @@
                 </b-table-column>
 
 
-                <b-table-column width="100" field="actions" label="" numeric>
+                <b-table-column v-slot="props" width="100" field="actions" label="" numeric>
 
 
 
