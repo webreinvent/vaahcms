@@ -1,6 +1,7 @@
 <?php namespace WebReinvent\VaahCms\Entities;
 
 
+use App\Jobs\ProcessNotifications;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Http\Request;
@@ -615,30 +616,32 @@ class User extends Authenticatable
         $user->login_otp = $otp;
         $user->save();
 
-        $notification = Notification::where('slug', 'send-login-otp')
-            ->first();
 
         $inputs = [
-            'user_id' => $user->id,
-            'notification_id' => $notification->id,
             'login_otp' => $otp,
         ];
 
-        $request = new Request($inputs);
+        $notification = Notification::where('slug', 'send-login-otp')
+            ->first();
+
+        dispatch((new ProcessNotifications($notification, $user, $inputs))
+            ->onQueue('high'));
+
+        /*$request = new Request($inputs);
 
         $response = Notification::send($request);
 
         if(isset($response['status']) && $response['status'] == 'failed')
         {
             return $response;
-        }
+        }*/
 
+        $response['status'] = 'success';
         $response['messages'] = [
-            trans('vaahcms-login.login_otp_sent')
+            "A one time password (OTP) has been sent to your email."
         ];
 
         return $response;
-
     }
     //-------------------------------------------------
     public static function loginViaOtp($request): array

@@ -6,19 +6,18 @@
                  :checked-rows.sync="page.bulk_action.selected_items"
                  checkbox-position="left"
                  :hoverable="true"
-                 :row-class="setRowClass"
-        >
+                 :row-class="setRowClass">
 
-            <template slot-scope="props">
-                <b-table-column field="id" label="ID" width="40" numeric>
-                    {{ props.row.id }}
+            <template >
+                <b-table-column v-slot="props" field="id" label="ID" width="85" >
+                    {{ props.row }}
                 </b-table-column>
 
-                <b-table-column field="name" label="Name">
+                <b-table-column v-slot="props" field="name" label="Name">
                     {{ props.row.name }}
                 </b-table-column>
 
-                <b-table-column v-if="props.row.email" field="email" label="Email">
+                <b-table-column v-slot="props" field="email" label="Email">
                     <b-tooltip label="Copy Email" type="is-dark">
                         <vh-copy class="text-copyable"
                                  :data="props.row.email"
@@ -29,7 +28,9 @@
                     </b-tooltip>
                 </b-table-column>
 
-                <b-table-column v-if="props.row.deleted_at || ( !hasPermission('can-manage-users') && !hasPermission('can-update-users'))" field="is_active" label="Is Active">
+                <b-table-column v-slot="props" v-if="props.row.deleted_at
+                || ( !hasPermission('can-manage-users') && !hasPermission('can-update-users'))"
+                                field="is_active" label="Is Active">
 
                     <b-button v-if="props.row.is_active === 1" disabled rounded size="is-small"
                               type="is-success">
@@ -41,7 +42,9 @@
 
                 </b-table-column>
 
-                <b-table-column v-if="!props.row.deleted_at && ( hasPermission('can-manage-users') || hasPermission('can-update-users') )" field="is_active" label="Is Active">
+                <b-table-column v-slot="props" v-if="!props.row.deleted_at
+                && ( hasPermission('can-manage-users') || hasPermission('can-update-users') )"
+                                field="is_active" label="Is Active">
                     <b-tooltip label="Change Status" type="is-dark">
                         <b-button v-if="props.row.is_active === 1" rounded size="is-small"
                                   type="is-success" @click="changeStatus(props.row.id)">
@@ -54,7 +57,8 @@
                     </b-tooltip>
                 </b-table-column>
 
-                <b-table-column v-if="hasPermission('can-read-users')" field="roles" label="Roles">
+                <b-table-column v-slot="props" v-if="hasPermission('can-read-users')"
+                                field="roles" label="Roles">
                     <b-tooltip label="View Role" type="is-dark">
                         <b-button rounded size="is-small"
                                   type="is-primary" @click="getRole(props.row)">
@@ -63,14 +67,14 @@
                     </b-tooltip>
                 </b-table-column>
 
-                <b-table-column v-else field="roles" label="Roles">
+                <b-table-column v-slot="props" v-else field="roles" label="Roles">
                         <b-button rounded size="is-small"
                                   type="is-primary" disabled>
                             {{ props.row.active_roles_count }} / {{page.total_roles}}
                         </b-button>
                 </b-table-column>
 
-                <b-table-column field="status" label="Status">
+                <b-table-column v-slot="props" field="status" label="Status">
                     <b-tag v-if="props.row.status == 'active'" type="is-small" class="is-success">
                         {{ props.row.status }}
                     </b-tag>
@@ -79,16 +83,17 @@
                     </b-tag>
                 </b-table-column>
 
-                <b-table-column field="last_login_at" label="Last Login At" >
+                <b-table-column v-slot="props" field="last_login_at" label="Last Login At" >
                     {{ $vaah.fromNow(props.row.last_login_at) }}
                 </b-table-column>
 
-                <b-table-column field="created_at" label="Created At" >
+                <b-table-column v-slot="props" field="created_at" label="Created At" >
                     {{ $vaah.fromNow(props.row.created_at) }}
                 </b-table-column>
 
 
-                <b-table-column v-if="hasPermission('can-read-users')"  field="actions" label=""
+                <b-table-column v-slot="props" v-if="hasPermission('can-read-users')"
+                                field="actions" label=""
                                 width="40">
 
                     <b-tooltip label="View" type="is-dark">
@@ -97,7 +102,6 @@
                                   icon-left="chevron-right">
                         </b-button>
                     </b-tooltip>
-
 
                 </b-table-column>
 

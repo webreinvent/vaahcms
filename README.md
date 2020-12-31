@@ -95,6 +95,18 @@ public function boot()
 
 ### Commands
 
+#### Run `queue`
+```shell
+php artisan queue:work --queue=high,medium,low,default
+```
+
+How to dispatch job:
+```php
+dispatch((new ProcessNotifications($notification, $user, $inputs))
+            ->onQueue('high'));
+```
+
+
 #### Publish All Assets
 ```bash
 php artisan vendor:publish --provider="WebReinvent\VaahCms\VaahCmsServiceProvider"

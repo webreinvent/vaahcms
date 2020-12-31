@@ -10,7 +10,7 @@
         >
 
             <template slot-scope="props">
-                <b-table-column field="id" label="ID" width="40" numeric>
+                <b-table-column field="id" label="ID" width="85">
                     {{ props.row.id }}
                 </b-table-column>
 
