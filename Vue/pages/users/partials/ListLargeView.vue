@@ -10,7 +10,7 @@
 
             <template >
                 <b-table-column v-slot="props" field="id" label="ID" width="85" >
-                    {{ props.row }}
+                    {{ props.row.id }}
                 </b-table-column>
 
                 <b-table-column v-slot="props" field="name" label="Name">
@@ -28,8 +28,7 @@
                     </b-tooltip>
                 </b-table-column>
 
-                <b-table-column v-slot="props" v-if="props.row.deleted_at
-                || ( !hasPermission('can-manage-users') && !hasPermission('can-update-users'))"
+                <b-table-column v-slot="props" v-if="( !hasPermission('can-manage-users') && !hasPermission('can-update-users'))"
                                 field="is_active" label="Is Active">
 
                     <b-button v-if="props.row.is_active === 1" disabled rounded size="is-small"
@@ -42,8 +41,7 @@
 
                 </b-table-column>
 
-                <b-table-column v-slot="props" v-if="!props.row.deleted_at
-                && ( hasPermission('can-manage-users') || hasPermission('can-update-users') )"
+                <b-table-column v-slot="props" v-if="( hasPermission('can-manage-users') || hasPermission('can-update-users') )"
                                 field="is_active" label="Is Active">
                     <b-tooltip label="Change Status" type="is-dark">
                         <b-button v-if="props.row.is_active === 1" rounded size="is-small"
