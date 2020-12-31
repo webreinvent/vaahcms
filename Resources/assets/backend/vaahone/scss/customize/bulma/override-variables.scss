@@ -1,0 +1,21 @@
+/*
+|--------------------------------------------------------------------------
+| Variable overriding
+|--------------------------------------------------------------------------
+|
+| These variable removed from the respective file and added
+| here in this file. When you upgrade, you need to remove the variables
+| from the respective file to reflect in the upgraded version
+|
+*/
+
+//_control
+$control-border-width: 1px !default;
+$control-height: 2.3em !default;
+$control-line-height: 1.5 !default;
+
+//_button
+$button-border-color: $border !default;
+$button-border-width: $control-border-width !default;
+$button-padding-vertical: calc(0.3em - #{$button-border-width}) !default;
+$button-padding-horizontal: 0.8em !default;

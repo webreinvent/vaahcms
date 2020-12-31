@@ -23,11 +23,11 @@
 
 
     @if(env('APP_VAAHCMS_ENV') == 'develop')
-        <link href="http://localhost:8080/vaahone/css/vaahcms.css" rel="stylesheet" media="screen">
-        <link href="http://localhost:8080/vaahone/css/backend.css" rel="stylesheet" media="screen">
+        <link href="http://localhost:8080/vaahone/css/build.css" rel="stylesheet" media="screen">
+        <link href="http://localhost:8080/vaahone/css/style.css" rel="stylesheet" media="screen">
     @else
-        <link href="{{vh_get_backend_assets("css/vaahcms.css")}}" rel="stylesheet" media="screen">
-        <link href="{{vh_get_backend_assets("css/backend.css")}}" rel="stylesheet" media="screen">
+        <link href="{{vh_get_backend_assets("css/build.css")}}" rel="stylesheet" media="screen">
+        <link href="{{vh_get_backend_assets("css/style.css")}}" rel="stylesheet" media="screen">
     @endif
 
 

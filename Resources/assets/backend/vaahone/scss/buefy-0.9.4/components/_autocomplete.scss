@@ -1,0 +1,40 @@
+$dropdown-content-max-height: 200px !default;
+
+.autocomplete {
+    position: relative;
+    .dropdown-menu {
+        display: block;
+        min-width: 100%;
+        max-width: 100%;
+        &.is-opened-top {
+            top: auto;
+            bottom: 100%;
+        }
+    }
+    .dropdown-content {
+        overflow: auto;
+        max-height: $dropdown-content-max-height;
+    }
+    .dropdown-item {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        &.is-hovered {
+            background: $dropdown-item-hover-background-color;
+            color: $dropdown-item-hover-color;
+        }
+        &.is-disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+    }
+    &.is-small {
+        @include control-small;
+    }
+    &.is-medium{
+        @include control-medium;
+    }
+    &.is-large {
+        @include control-large;
+    }
+}

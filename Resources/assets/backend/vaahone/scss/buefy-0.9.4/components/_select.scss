@@ -1,0 +1,38 @@
+.select {
+    select {
+        // TODO Remove below when the following problem will be fixed from Bulma or Safari:
+        // https://github.com/jgthms/bulma/issues/2626
+        // https://bugs.webkit.org/show_bug.cgi?id=202055
+        text-rendering: auto !important;
+
+        padding-right: 2.5em;
+        option {
+            color: $grey-dark;
+            padding: $control-padding-vertical $control-padding-horizontal;
+        }
+        option:disabled {
+            cursor: not-allowed;
+            opacity: 0.5;
+        }
+        optgroup {
+            color: $grey-light;
+            font-weight: $weight-normal;
+            font-style: normal;
+            padding: 0.25em 0;
+        }
+
+        &[disabled] {
+            // Chrome add `opacity: 0.7` on disabled select, but not on disabled input fields.
+            // every disabled fields now have the same look.
+            opacity: 1;
+        }
+    }
+    &.is-empty select {
+        color: rgba($grey, 0.7);
+    }
+    // fix Bulma 0.8.2
+    &.is-loading::after {
+        top: calc(50% - (1em / 2));
+        right: calc((2.5em / 2) - .5em);
+    }
+}
