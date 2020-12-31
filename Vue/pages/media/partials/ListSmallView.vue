@@ -8,9 +8,9 @@
                  :hoverable="true"
                  :row-class="setRowClass">
 
-            <template slot-scope="props">
+            <template>
 
-                <b-table-column field="thumbnail" width="150" label="thumbnail" centered>
+                <b-table-column v-slot="props" field="thumbnail" width="150" label="thumbnail" centered>
 
                     <figure class="image" v-if="props.row.url_thumbnail">
                         <img style="max-width: 75px; max-height: 42px" :src="props.row.url_thumbnail">
@@ -23,23 +23,23 @@
 
                 </b-table-column>
 
-                <b-table-column field="name" label="Name">
+                <b-table-column v-slot="props" field="name" label="Name">
                     {{ props.row.name }}
                 </b-table-column>
 
-                <b-table-column field="mime" label="Mime Type">
+                <b-table-column v-slot="props" field="mime" label="Mime Type">
                     {{ props.row.mime_type }}
                 </b-table-column>
 
-                <b-table-column field="size" label="Size">
+                <b-table-column v-slot="props" field="size" label="Size">
                     {{ props.row.size_for_humans }}
                 </b-table-column>
 
-                <b-table-column field="created_at" label="Uploaded At">
+                <b-table-column v-slot="props" field="created_at" label="Uploaded At">
                     {{ $vaah.fromNow(props.row.created_at) }}
                 </b-table-column>
 
-                <b-table-column v-if="hasPermission('can-read-media')"
+                <b-table-column v-slot="props" v-if="hasPermission('can-read-media')"
                                 field="actions" label=""
                                 width="80">
 

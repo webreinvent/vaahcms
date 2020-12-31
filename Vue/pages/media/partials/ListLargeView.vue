@@ -8,10 +8,10 @@
                  :hoverable="true"
                  :row-class="setRowClass">
 
-            <template slot-scope="props">
+            <template>
 
 
-                <b-table-column field="thumbnail" width="150" label="thumbnail" centered>
+                <b-table-column v-slot="props" field="thumbnail" width="150" label="thumbnail" centered>
 
                     <figure class="image" v-if="props.row.url_thumbnail">
                         <img style="max-width: 75px; max-height: 42px" :src="props.row.url_thumbnail">
@@ -24,7 +24,7 @@
 
                 </b-table-column>
 
-                <b-table-column field="file" label="File">
+                <b-table-column v-slot="props" field="file" label="File">
 
 
                     <div class="b-table">
@@ -52,13 +52,13 @@
 
                 </b-table-column>
 
-                <b-table-column field="updated_at" label="Updated At" sortable  >
+                <b-table-column v-slot="props" field="updated_at" label="Updated At" sortable  >
                     {{ $vaah.fromNow(props.row.updated_at) }}
                 </b-table-column>
 
 
 
-                <b-table-column v-if="hasPermission('can-read-media')"
+                <b-table-column v-slot="props" v-if="hasPermission('can-read-media')"
                                 field="actions" label=""
                                 width="80">
 
