@@ -9,16 +9,16 @@
                  :row-class="setRowClass"
         >
 
-            <template slot-scope="props">
-                <b-table-column field="id" label="ID" width="85">
+            <template>
+                <b-table-column v-slot="props" field="id" label="ID" width="85">
                     {{ props.row.id }}
                 </b-table-column>
 
-                <b-table-column field="name" label="Name">
+                <b-table-column v-slot="props" field="name" label="Name">
                     {{ props.row.name }}
                 </b-table-column>
 
-                <b-table-column v-if="props.row.email" field="email" label="Email">
+                <b-table-column v-slot="props" field="email" label="Email">
                     <b-tooltip label="Copy Email" type="is-dark">
                         <vh-copy class="text-copyable"
                                  :data="props.row.email"
@@ -30,7 +30,8 @@
                 </b-table-column>
 
 
-                <b-table-column v-if="hasPermission('can-read-users')" field="roles" label="Roles">
+                <b-table-column v-slot="props" v-if="hasPermission('can-read-users')"
+                                field="roles" label="Roles">
                     <b-tooltip label="View Role" type="is-dark">
                         <b-button rounded size="is-small"
                                   type="is-primary" @click="getRole(props.row)">
@@ -41,7 +42,8 @@
 
 
 
-                <b-table-column v-if="hasPermission('can-read-users')" field="actions" label=""
+                <b-table-column v-slot="props" v-if="hasPermission('can-read-users')"
+                                field="actions" label=""
                                 width="40">
 
                     <b-tooltip label="View" type="is-dark">
