@@ -93,7 +93,7 @@ export default {
         //---------------------------------------------------------------------
         setActiveItem: function (item) {
             this.update('active_item', item);
-            this.$router.push({name: 'logs.details', params:{log:item.name}})
+            this.$router.push({name: 'logs.details', params:{name:item.name}})
         },
         //---------------------------------------------------------------------
         changeStatus: function (id) {
@@ -127,6 +127,30 @@ export default {
         {
             return this.$vaah.hasPermission(this.permissions, slug);
         },
+        //---------------------------------------------------------------------
+        deleteItem: function () {
+            this.$Progress.start();
+            let params = {};
+            let url = this.ajax_url+'/list';
+            this.$vaah.ajax(url, params, this.deleteItemAfter);
+        },
+        //---------------------------------------------------------------------
+        deleteItemAfter: function (data, res) {
+            this.$Progress.finish();
+            if(data){
+                if(data.list && data.list.length > 0)
+                {
+                    this.update('list_is_empty', false);
+                } else
+                {
+                    this.update('list_is_empty', true);
+                }
+
+                this.update('list', data.list);
+            }
+
+        },
+
         //---------------------------------------------------------------------
     }
 }
