@@ -4,15 +4,15 @@ import GetSetupStatus from './middleware/GetSetupStatus'
 //----------Middleware
 
 //----------Layout
-import LayoutPublic from "./../layouts/Public";
+import LayoutPublic from "./../layouts/Public.vue";
 //----------Layout
 
-import SetupIndex from "./../pages/setup/Index";
-import InstallIndex from "./../pages/setup/install/Index";
-import InstallConfiguration from "./../pages/setup/install/Configuration";
-import InstallMigrate from "./../pages/setup/install/Migrate";
-import InstallDependencies from "./../pages/setup/install/Dependencies";
-import InstallAccount from "./../pages/setup/install/Account";
+import SetupIndex from "./../pages/setup/Index.vue";
+import InstallIndex from "./../pages/setup/install/Index.vue";
+import InstallConfiguration from "./../pages/setup/install/Configuration.vue";
+import InstallMigrate from "./../pages/setup/install/Migrate.vue";
+import InstallDependencies from "./../pages/setup/install/Dependencies.vue";
+import InstallAccount from "./../pages/setup/install/Account.vue";
 
 let routes=[];
 

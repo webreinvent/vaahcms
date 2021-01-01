@@ -4,20 +4,20 @@ import GetBackendAssets from './middleware/GetBackendAssets'
 //----------Middleware
 
 //----------Layout
-import LayoutBackend from "./../layouts/Backend";
+import LayoutBackend from "./../layouts/Backend.vue";
 //----------Layout
 
 let routes=[];
 
-import AdvancedLayout from "./../pages/advanced/AdvancedLayout";
+import AdvancedLayout from "./../pages/advanced/AdvancedLayout.vue";
 
-import Batches from "./../pages/advanced/batches/Index";
-import Jobs from "./../pages/advanced/jobs/Index";
-import JobsFailed from "./../pages/advanced/jobs-failed/Index";
+import Batches from "./../pages/advanced/batches/Index.vue";
+import Jobs from "./../pages/advanced/jobs/Index.vue";
+import JobsFailed from "./../pages/advanced/jobs-failed/Index.vue";
 
 
-import Logs from "./../pages/advanced/logs/Index";
-import LogsItem from "./../pages/advanced/logs/Item";
+import Logs from "./../pages/advanced/logs/Index.vue";
+import LogsItem from "./../pages/advanced/logs/Item.vue";
 
 let list =     {
     path: '/vaah/',

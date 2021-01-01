@@ -4,14 +4,14 @@ import GetBackendAssets from './middleware/GetBackendAssets'
 //----------Middleware
 
 //----------Layout
-import LayoutBackend from "./../layouts/Backend";
+import LayoutBackend from "./../layouts/Backend.vue";
 //----------Layout
 
 let routes=[];
 
-import ThemeList from "./../pages/themes/List";
-import ThemeView from "./../pages/themes/View";
-import ThemeInstall from "./../pages/themes/Install";
+import ThemeList from "./../pages/themes/List.vue";
+import ThemeView from "./../pages/themes/View.vue";
+import ThemeInstall from "./../pages/themes/Install.vue";
 
 let list =     {
     path: '/vaah/themes',

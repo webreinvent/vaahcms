@@ -4,17 +4,17 @@ import GetBackendAssets from './middleware/GetBackendAssets'
 //----------Middleware
 
 //----------Layout
-import LayoutBackend from "./../layouts/Backend";
+import LayoutBackend from "./../layouts/Backend.vue";
 //----------Layout
 
 let routes=[];
 
-import RoleList from "./../pages/roles/List";
+import RoleList from "./../pages/roles/List.vue";
 import RoleCreate from "../pages/roles/Create.vue";
-import RoleView from "./../pages/roles/View";
-import RoleViewPermission from "./../pages/roles/ViewPermission";
-import RoleViewUser from "./../pages/roles/ViewUser";
-import RoleEdit from "./../pages/roles/Edit";
+import RoleView from "./../pages/roles/View.vue";
+import RoleViewPermission from "./../pages/roles/ViewPermission.vue";
+import RoleViewUser from "./../pages/roles/ViewUser.vue";
+import RoleEdit from "./../pages/roles/Edit.vue";
 
 let list =     {
     path: '/vaah/roles',

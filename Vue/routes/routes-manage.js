@@ -4,15 +4,15 @@ import GetBackendAssets from './middleware/GetBackendAssets'
 //----------Middleware
 
 //----------Layout
-import LayoutBackend from "./../layouts/Backend";
+import LayoutBackend from "./../layouts/Backend.vue";
 //----------Layout
 
 let routes=[];
 
-import MediaList from "./../pages/media/List";
+import MediaList from "./../pages/media/List.vue";
 import MediaCreate from "../pages/media/Create.vue";
-import MediaView from "./../pages/media/View";
-import MediaEdit from "./../pages/media/Edit";
+import MediaView from "./../pages/media/View.vue";
+import MediaEdit from "./../pages/media/Edit.vue";
 
 let list =     {
     path: '/vaah/manage',

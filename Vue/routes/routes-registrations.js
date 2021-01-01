@@ -4,15 +4,15 @@ import GetBackendAssets from './middleware/GetBackendAssets'
 //----------Middleware
 
 //----------Layout
-import LayoutBackend from "./../layouts/Backend";
+import LayoutBackend from "./../layouts/Backend.vue";
 //----------Layout
 
 let routes=[];
 
-import RegList from "./../pages/registrations/List";
-import RegCreate from "./../pages/registrations/Create";
-import RegView from "./../pages/registrations/View";
-import RegEdit from "./../pages/registrations/Edit";
+import RegList from "./../pages/registrations/List.vue";
+import RegCreate from "./../pages/registrations/Create.vue";
+import RegView from "./../pages/registrations/View.vue";
+import RegEdit from "./../pages/registrations/Edit.vue";
 
 let list =     {
     path: '/vaah/registrations',

@@ -4,15 +4,15 @@ import GetBackendAssets from './middleware/GetBackendAssets'
 //----------Middleware
 
 //----------Layout
-import LayoutBackend from "./../layouts/Backend";
+import LayoutBackend from "./../layouts/Backend.vue";
 //----------Layout
 
 let routes=[];
 
-import PermList from "./../pages/permissions/List";
-import PermView from "./../pages/permissions/View";
-import PermRole from "./../pages/permissions/ViewRole";
-import PermEdit from "./../pages/permissions/Edit";
+import PermList from "./../pages/permissions/List.vue";
+import PermView from "./../pages/permissions/View.vue";
+import PermRole from "./../pages/permissions/ViewRole.vue";
+import PermEdit from "./../pages/permissions/Edit.vue";
 
 let list =     {
     path: '/vaah/permissions',

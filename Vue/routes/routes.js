@@ -26,11 +26,11 @@ import GetBackendAssets from './middleware/GetBackendAssets'
 | Public Routes
 |--------------------------------------------------------------------------
 */
-import LayoutPublic from "./../layouts/Public";
+import LayoutPublic from "./../layouts/Public.vue";
 
 
-import SignIn from "./../pages/SignIn";
-import ForgotPassword from "./../pages/ForgotPassword";
+import SignIn from "./../pages/SignIn.vue";
+import ForgotPassword from "./../pages/ForgotPassword.vue";
 
 let routes_frontend =     {
     path: '/',
@@ -81,8 +81,8 @@ routes.push(routes_frontend);
 | Backend Routes
 |--------------------------------------------------------------------------
 */
-import LayoutBackend from "./../layouts/Backend";
-import Index from "./../pages/dashboard/Index";
+import LayoutBackend from "./../layouts/Backend.vue";
+import Index from "./../pages/dashboard/Index.vue";
 
 let routes_backend =     {
     path: '/vaah',
@@ -114,7 +114,7 @@ let routes_backend =     {
 routes.push(routes_backend);
 
 
-import Profile from "./../pages/profile/Index";
+import Profile from "./../pages/profile/Index.vue";
 
 
 let routes_profile =     {

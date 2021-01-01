@@ -4,17 +4,17 @@ import GetBackendAssets from './middleware/GetBackendAssets'
 //----------Middleware
 
 //----------Layout
-import LayoutBackend from "./../layouts/Backend";
+import LayoutBackend from "./../layouts/Backend.vue";
 //----------Layout
 
 let routes=[];
 
-import SettingsLayout from "./../pages/settings/SettingsLayout";
-import GeneralIndex from "./../pages/settings/general/Index";
-import LocalizationIndex from "./../pages/settings/localization/Index";
-import EnvIndex from "./../pages/settings/env/Index";
-import NotificationsIndex from "./../pages/settings/notifications/Index";
-import BackupsIndex from "./../pages/settings/backups/Index";
+import SettingsLayout from "./../pages/settings/SettingsLayout.vue";
+import GeneralIndex from "./../pages/settings/general/Index.vue";
+import LocalizationIndex from "./../pages/settings/localization/Index.vue";
+import EnvIndex from "./../pages/settings/env/Index.vue";
+import NotificationsIndex from "./../pages/settings/notifications/Index.vue";
+import BackupsIndex from "./../pages/settings/backups/Index.vue";
 
 let list =     {
     path: '/vaah/',

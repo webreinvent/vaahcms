@@ -4,16 +4,16 @@ import GetBackendAssets from './middleware/GetBackendAssets'
 //----------Middleware
 
 //----------Layout
-import LayoutBackend from "./../layouts/Backend";
+import LayoutBackend from "./../layouts/Backend.vue";
 //----------Layout
 
 let routes=[];
 
-import UserList from "./../pages/users/List";
-import UserCreate from "./../pages/users/Create";
-import UserView from "./../pages/users/View";
-import UserRole from "./../pages/users/ViewRole";
-import UserEdit from "./../pages/users/Edit";
+import UserList from "./../pages/users/List.vue";
+import UserCreate from "./../pages/users/Create.vue";
+import UserView from "./../pages/users/View.vue";
+import UserRole from "./../pages/users/ViewRole.vue";
+import UserEdit from "./../pages/users/Edit.vue";
 
 let list =     {
     path: '/vaah/users',

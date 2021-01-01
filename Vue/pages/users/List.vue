@@ -1,4 +1,3 @@
-<script src="./ListJs.js"></script>
 <template>
     <div class="form-page-v1-layout">
 
@@ -267,4 +266,4 @@
     </div>
 </template>
 
-
+<script src="./ListJs.js"></script>
