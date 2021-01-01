@@ -3,9 +3,9 @@ import GlobalComponents from '../../../vaahvue/helpers/GlobalComponents';
 
 let namespace = 'setup';
 
-import Logo from '../../../components/Logo';
-import Footer from '../../../components/Footer';
-import AutoComplete from "../../../vaahvue/reusable/AutoComplete";
+import Logo from '../../../components/Logo.vue';
+import Footer from '../../../components/Footer.vue';
+import AutoComplete from "../../../vaahvue/reusable/AutoComplete.vue";
 
 export default {
     computed:{

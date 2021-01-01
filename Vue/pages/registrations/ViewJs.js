@@ -1,8 +1,8 @@
 import GlobalComponents from '../../vaahvue/helpers/GlobalComponents'
-import TableTrView from '../../vaahvue/reusable/TableTrView'
-import TableTrActedBy from '../../vaahvue/reusable/TableTrActedBy'
-import TableTrTag from '../../vaahvue/reusable/TableTrTag'
-import TableTrStatus from './partials/TableTrStatus'
+import TableTrView from '../../vaahvue/reusable/TableTrView.vue'
+import TableTrActedBy from '../../vaahvue/reusable/TableTrActedBy.vue'
+import TableTrTag from '../../vaahvue/reusable/TableTrTag.vue'
+import TableTrStatus from './partials/TableTrStatus.vue'
 
 let namespace = 'registrations';
 

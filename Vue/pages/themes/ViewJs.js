@@ -1,9 +1,9 @@
 import GlobalComponents from '../../vaahvue/helpers/GlobalComponents'
-import TableTrView from '../../vaahvue/reusable/TableTrView'
-import TableTrActedBy from '../../vaahvue/reusable/TableTrActedBy'
-import TableTrStatus from '../../vaahvue/reusable/TableTrStatus'
-import TableTrYesNo from '../../vaahvue/reusable/TableTrYesNo'
-import TableTrUrl from '../../vaahvue/reusable/TableTrUrl'
+import TableTrView from '../../vaahvue/reusable/TableTrView.vue'
+import TableTrActedBy from '../../vaahvue/reusable/TableTrActedBy.vue'
+import TableTrStatus from '../../vaahvue/reusable/TableTrStatus.vue'
+import TableTrYesNo from '../../vaahvue/reusable/TableTrYesNo.vue'
+import TableTrUrl from '../../vaahvue/reusable/TableTrUrl.vue'
 
 let namespace = 'themes';
 

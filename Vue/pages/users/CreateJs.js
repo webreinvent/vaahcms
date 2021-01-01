@@ -1,6 +1,6 @@
 import GlobalComponents from '../../vaahvue/helpers/GlobalComponents'
-import DatePicker from '../../vaahvue/reusable/DatePicker'
-import AutoComplete from '../../vaahvue/reusable/AutoComplete'
+import DatePicker from '../../vaahvue/reusable/DatePicker.vue'
+import AutoComplete from '../../vaahvue/reusable/AutoComplete.vue'
 
 let namespace = 'users';
 

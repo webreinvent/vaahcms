@@ -1,4 +1,4 @@
-import TableTrView from '../../../vaahvue/reusable/TableTrView'
+import TableTrView from '../../../vaahvue/reusable/TableTrView.vue'
 
 let namespace = 'media';
 export default {

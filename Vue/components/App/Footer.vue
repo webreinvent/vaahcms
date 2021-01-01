@@ -12,7 +12,7 @@
 
 <script>
 
-import Copyright from "./../Copyright";
+import Copyright from "./../Copyright.vue";
 
 export default {
     computed:{

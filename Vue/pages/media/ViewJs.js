@@ -1,10 +1,10 @@
 import GlobalComponents from '../../vaahvue/helpers/GlobalComponents'
-import TableTrView from '../../vaahvue/reusable/TableTrView'
-import TableTrActedBy from '../../vaahvue/reusable/TableTrActedBy'
-import TableTrTag from '../../vaahvue/reusable/TableTrTag'
-import TableTrStatus from '../../vaahvue/reusable/TableTrStatus'
-import TableTrUrl from '../../vaahvue/reusable/TableTrUrl'
-import TableTrYesNo from '../../vaahvue/reusable/TableTrYesNo'
+import TableTrView from '../../vaahvue/reusable/TableTrView.vue'
+import TableTrActedBy from '../../vaahvue/reusable/TableTrActedBy.vue'
+import TableTrTag from '../../vaahvue/reusable/TableTrTag.vue'
+import TableTrStatus from '../../vaahvue/reusable/TableTrStatus.vue'
+import TableTrUrl from '../../vaahvue/reusable/TableTrUrl.vue'
+import TableTrYesNo from '../../vaahvue/reusable/TableTrYesNo.vue'
 
 let namespace = 'media';
 

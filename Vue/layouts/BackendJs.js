@@ -1,7 +1,7 @@
-import TopMenu from './../components/App/TopMenu'
-import Aside from './../components/App/Aside'
-import Footer from './../components/App/Footer'
-import Notices from './../components/Notices'
+import TopMenu from './../components/App/TopMenu.vue'
+import Aside from './../components/App/Aside.vue'
+import Footer from './../components/App/Footer.vue'
+import Notices from './../components/Notices.vue'
 
 export default {
     computed:{

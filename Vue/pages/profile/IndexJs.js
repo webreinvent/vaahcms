@@ -1,7 +1,7 @@
 import GlobalComponents from '../../vaahvue/helpers/GlobalComponents'
-import DatePicker from '../../vaahvue/reusable/DatePicker'
-import AutoComplete from '../../vaahvue/reusable/AutoComplete'
-import FileUploader from '../../vaahvue/reusable/FileUploader'
+import DatePicker from '../../vaahvue/reusable/DatePicker.vue'
+import AutoComplete from '../../vaahvue/reusable/AutoComplete.vue'
+import FileUploader from '../../vaahvue/reusable/FileUploader.vue'
 
 let namespace = 'profile';
 

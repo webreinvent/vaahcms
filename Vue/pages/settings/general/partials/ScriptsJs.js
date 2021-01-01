@@ -1,5 +1,5 @@
 import GlobalComponents from '../../../../vaahvue/helpers/GlobalComponents';
-import TagInputs from '../../../../vaahvue/reusable/TagInputs';
+import TagInputs from '../../../../vaahvue/reusable/TagInputs.vue';
 
 let namespace = 'general';
 

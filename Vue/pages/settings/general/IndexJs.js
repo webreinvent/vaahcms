@@ -1,11 +1,11 @@
 import GlobalComponents from '../../../vaahvue/helpers/GlobalComponents';
-import TagInputs from '../../../vaahvue/reusable/TagInputs';
+import TagInputs from '../../../vaahvue/reusable/TagInputs.vue';
 
-import SiteSettings from './partials/SiteSettings';
-import DateTime from './partials/DateTime';
-import SocialMediaLinks from './partials/SocialMediaLinks';
-import Scripts from './partials/Scripts';
-import MetaTags from './partials/MetaTags';
+import SiteSettings from './partials/SiteSettings.vue';
+import DateTime from './partials/DateTime.vue';
+import SocialMediaLinks from './partials/SocialMediaLinks.vue';
+import Scripts from './partials/Scripts.vue';
+import MetaTags from './partials/MetaTags.vue';
 
 let namespace = 'general';
 

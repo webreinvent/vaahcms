@@ -1,5 +1,4 @@
 import {VaahHelper as Vaah} from "../../vaahvue/helpers/VaahHelper";
-import AutoComplete from '../../vaahvue/reusable/AutoComplete'
 
 //---------Variables
 let base_url = document.getElementsByTagName('base')[0].getAttribute("href");

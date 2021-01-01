@@ -12,7 +12,7 @@
 </template>
 
 <script>
-    import AsideMenu from "./partials/AsideMenu";
+    import AsideMenu from "./partials/AsideMenu.vue";
 
     export default {
 

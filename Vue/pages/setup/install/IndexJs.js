@@ -2,8 +2,8 @@ import GlobalComponents from '../../../vaahvue/helpers/GlobalComponents';
 
 let namespace = 'setup';
 
-import Logo from '../../../components/Logo';
-import Footer from '../../../components/Footer';
+import Logo from '../../../components/Logo.vue';
+import Footer from '../../../components/Footer.vue';
 
 export default {
     computed:{

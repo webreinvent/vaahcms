@@ -1,6 +1,6 @@
 import GlobalComponents from '../../vaahvue/helpers/GlobalComponents';
-import ListLargeView from './partials/ListLargeView';
-import ListSmallView from './partials/ListSmallView';
+import ListLargeView from './partials/ListLargeView.vue';
+import ListSmallView from './partials/ListSmallView.vue';
 
 let namespace = 'media';
 

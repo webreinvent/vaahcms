@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import Copyright from "./Copyright";
+import Copyright from "./Copyright.vue";
 export default {
     computed:{
         root() {return this.$store.getters['root/state']},

@@ -1,7 +1,7 @@
 import GlobalComponents from '../../../vaahvue/helpers/GlobalComponents';
 
-import AutoComplete from '../../../vaahvue/reusable/AutoComplete'
-import AutoCompleteUsers from '../../../vaahvue/reusable/AutoCompleteUsers'
+import AutoComplete from '../../../vaahvue/reusable/AutoComplete.vue'
+import AutoCompleteUsers from '../../../vaahvue/reusable/AutoCompleteUsers.vue'
 
 
 let namespace = 'notifications';

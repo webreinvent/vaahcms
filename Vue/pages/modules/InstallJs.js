@@ -1,5 +1,5 @@
 import GlobalComponents from '../../vaahvue/helpers/GlobalComponents';
-import Tags from './partials/Tags';
+import Tags from './partials/Tags.vue';
 
 let namespace = 'modules';
 
