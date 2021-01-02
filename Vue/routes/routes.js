@@ -156,9 +156,11 @@ import themes from "./routes-themes";
 import users from "./routes-users";
 import advanced from "./routes-advanced";
 
+
 routes = routes.concat(
     routes, manage, modules, permissions, registrations,
     roles, settings, setup, themes, users, advanced,
+
 );
 
 export default routes;

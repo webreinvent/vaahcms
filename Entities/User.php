@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Support\Facades\Bus;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Str;
@@ -624,8 +625,15 @@ class User extends Authenticatable
         $notification = Notification::where('slug', 'send-login-otp')
             ->first();
 
-        dispatch((new ProcessNotifications($notification, $user, $inputs))
-            ->onQueue('high'));
+
+        //Making it batchable
+        $batch = Bus::batch([])->onQueue('high')->dispatch();
+        $batch->add(new ProcessNotifications($notification, $user, $inputs));
+        //$notice = new ProcessNotifications($notification, $user, $inputs)->onQueue('high');
+
+
+        /*dispatch((new ProcessNotifications($notification, $user, $inputs))
+            ->onQueue('high'));*/
 
         /*$request = new Request($inputs);
 

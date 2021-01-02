@@ -1,6 +1,7 @@
 //----------Middleware
 import IsLoggedIn from './middleware/IsLoggedIn'
 import GetBackendAssets from './middleware/GetBackendAssets'
+import GetAssets from "./middleware/GetAssets";
 //----------Middleware
 
 //----------Layout
@@ -11,13 +12,14 @@ let routes=[];
 
 import AdvancedLayout from "./../pages/advanced/AdvancedLayout.vue";
 
-import Batches from "./../pages/advanced/batches/Index.vue";
-import Jobs from "./../pages/advanced/jobs/Index.vue";
+import Batches from "./../pages/advanced/batches/List.vue";
 import JobsFailed from "./../pages/advanced/jobs-failed/Index.vue";
 
 
 import Logs from "./../pages/advanced/logs/Index.vue";
 import LogsItem from "./../pages/advanced/logs/Item.vue";
+
+import JobsList from "../pages/advanced/jobs/List";
 
 let list =     {
     path: '/vaah/',
@@ -43,7 +45,7 @@ let list =     {
             children: [
                 {
                     path: 'batches',
-                    name: 'batches.index',
+                    name: 'batches.list',
                     component: Batches,
                     props: true,
                     meta: {
@@ -55,13 +57,12 @@ let list =     {
                 },
                 {
                     path: 'jobs',
-                    name: 'jobs.index',
-                    component: Jobs,
+                    name: 'jobs.list',
+                    component: JobsList,
                     props: true,
                     meta: {
                         middleware: [
-                            IsLoggedIn,
-                            GetBackendAssets
+                            GetAssets
                         ]
                     }
                 },
@@ -79,7 +80,7 @@ let list =     {
                 },
                 {
                     path: 'logs',
-                    name: 'logs.index',
+                    name: 'logs.list',
                     component: Logs,
                     props: true,
                     meta: {

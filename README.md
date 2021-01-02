@@ -107,6 +107,14 @@ dispatch((new ProcessNotifications($notification, $user, $inputs))
 ```
 
 
+How to set jobs where you can track progress? Answer: Batches
+```php
+$batch = Bus::batch([])->onQueue('high')->dispatch();
+$batch->add(new ProcessNotifications($notification, $user, $inputs));
+```
+
+
+
 #### Publish All Assets
 ```bash
 php artisan vendor:publish --provider="WebReinvent\VaahCms\VaahCmsServiceProvider"

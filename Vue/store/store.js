@@ -17,9 +17,9 @@ import localizations from './modules/settings/localizations';
 import notifications from './modules/settings/notifications';
 import media from './modules/media';
 import logs from './modules/advanced/logs';
-import jobs from './modules/advanced/jobs';
+import jobs from './modules/store-jobs';
 import failed_jobs from './modules/advanced/failed-jobs';
-import batches from './modules/advanced/batches';
+import batches from './modules/store-job-batches';
 
 export const store = new Vuex.Store({
     modules: {

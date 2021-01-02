@@ -12,7 +12,7 @@
                      icon="hourglass-half"
                      tag="router-link"
                      :active="!!($route.path == '/vaah/advanced/jobs')"
-                     :to="{name: 'jobs.index'}">
+                     :to="{name: 'jobs.list'}">
         </b-menu-item>
 
         <b-menu-item label="Failed Jobs"
@@ -26,7 +26,7 @@
                      icon="layer-group"
                      tag="router-link"
                      :active="!!($route.path == '/vaah/advanced/batches')"
-                     :to="{name: 'batches.index'}">
+                     :to="{name: 'batches.list'}">
         </b-menu-item>
 
     </b-menu-list>
