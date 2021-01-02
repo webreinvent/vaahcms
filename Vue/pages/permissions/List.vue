@@ -239,6 +239,16 @@
                                 </div>
                                 <!--/list-->
 
+                                <div class="block" v-if="page.list">
+                                    <b-pagination  :total="page.list.total"
+                                                   :current.sync="page.list.current_page"
+                                                   :per-page="page.list.per_page"
+                                                   range-before=3
+                                                   range-after=3
+                                                   @change="paginate">
+                                    </b-pagination>
+                                </div>
+
 
                             </div>
                         </div>
