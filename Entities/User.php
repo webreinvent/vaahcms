@@ -1263,9 +1263,7 @@ class User extends Authenticatable
 
             $is_restricted = self::restrictedActions($request->action, $reg->id);
 
-//            dd($is_restricted);
-
-            if($is_restricted)
+            if($is_restricted && $reg->is_active == 1)
             {
                 continue;
             }
