@@ -1048,12 +1048,16 @@ class User extends Authenticatable
             }
         }
 
-        if(count($roles) > 0){
+        if(isset($roles) && is_array($roles) && count($roles) > 0){
 
             $list->whereHas('roles', function ($query) use ($roles){
                 $query->where('vh_user_roles.is_active', '=', 1)->whereIn('vh_roles.slug', $roles);
             });
 
+        }elseif(isset($roles) && $roles){
+            $list->whereHas('roles', function ($query) use ($roles){
+                $query->where('vh_user_roles.is_active', '=', 1)->where('vh_roles.slug', $roles);
+            });
         }
 
         if(isset($request['q']))

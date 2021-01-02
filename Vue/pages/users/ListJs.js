@@ -238,12 +238,7 @@ export default {
 
             let url = this.ajax_url+'/list';
 
-            let params = {
-                query_string:this.query_string,
-                roles:this.selected_roles
-            };
-
-            this.$vaah.ajax(url, params, this.getListAfter);
+            this.$vaah.ajaxGet(url, this.query_string, this.getListAfter);
         },
         //---------------------------------------------------------------------
         getListAfter: function (data, res) {
