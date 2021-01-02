@@ -77,7 +77,7 @@ class UsersController extends Controller
             return response()->json($response);
         }
 
-        $response = User::getList($request['query_string'],$request['roles']);
+        $response = User::getList($request);
         return response()->json($response);
     }
     //----------------------------------------------------------

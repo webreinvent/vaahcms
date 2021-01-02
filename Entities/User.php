@@ -1011,7 +1011,7 @@ class User extends Authenticatable
 
     }
     //-------------------------------------------------
-    public static function getList($request,$roles)
+    public static function getList($request)
     {
 
         if(isset($request['recount']) && $request['recount'] == true)
@@ -1040,15 +1040,15 @@ class User extends Authenticatable
             }
         }
 
-        if(isset($roles) && is_array($roles) && count($roles) > 0){
+        if(isset($request['roles']) && is_array($request['roles']) && count($request['roles']) > 0){
 
-            $list->whereHas('roles', function ($query) use ($roles){
-                $query->where('vh_user_roles.is_active', '=', 1)->whereIn('vh_roles.slug', $roles);
+            $list->whereHas('roles', function ($query) use ($request){
+                $query->where('vh_user_roles.is_active', '=', 1)->whereIn('vh_roles.slug', $request['roles']);
             });
 
-        }elseif(isset($roles) && $roles){
-            $list->whereHas('roles', function ($query) use ($roles){
-                $query->where('vh_user_roles.is_active', '=', 1)->where('vh_roles.slug', $roles);
+        }elseif(isset($request['roles']) && $request['roles']){
+            $list->whereHas('roles', function ($query) use ($request){
+                $query->where('vh_user_roles.is_active', '=', 1)->where('vh_roles.slug', $request['roles']);
             });
         }
 
