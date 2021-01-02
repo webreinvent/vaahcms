@@ -1257,12 +1257,13 @@ class User extends Authenticatable
         {
             $reg = User::where('id',$id)->withTrashed()->first();
 
-
             if($reg->deleted_at){
                 continue ;
             }
 
             $is_restricted = self::restrictedActions($request->action, $reg->id);
+
+//            dd($is_restricted);
 
             if($is_restricted)
             {
