@@ -18,7 +18,7 @@
                     <header class="card-header">
 
                         <div class="card-header-title">
-                            Roles
+                            Roles&nbsp;<span v-if="page.list && page.list.total">({{page.list.total}})</span>
                         </div>
 
                         <div class="card-header-buttons">
