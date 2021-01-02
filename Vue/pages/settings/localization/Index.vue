@@ -282,12 +282,14 @@
                                                         <Loader/>
                                                     </div>
 
-
-
-                                                    <div class="block" v-if="list && list.data">
-                                                        <vh-pagination  :limit="1" :data="list"
-                                                                        @onPageChange="paginate">
-                                                        </vh-pagination>
+                                                    <div class="block" v-if="list">
+                                                        <b-pagination  :total="list.total"
+                                                                        :current.sync="list.current_page"
+                                                                        :per-page="list.per_page"
+                                                                        range-before=3
+                                                                        range-after=3
+                                                                        @change="paginate">
+                                                        </b-pagination>
                                                     </div>
 
 

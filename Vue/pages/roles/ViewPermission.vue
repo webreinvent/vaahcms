@@ -160,6 +160,12 @@
 
 
                     <b-table :data="items.list.data"
+                             paginated
+                             backend-pagination
+                             :total="items.list.total"
+                             :current-page.sync="items.list.current_page"
+                             :per-page="items.list.per_page"
+                             @page-change="getItemPermissions"
                              :hoverable="true"
                     >
 
@@ -228,12 +234,6 @@
 
                     <hr style="margin-top: 0;"/>
 
-                </div>
-
-                <div class="block" v-if="items">
-                    <vh-pagination  :limit="1" :data="items.list"
-                                    @onPageChange="getItemPermissions">
-                    </vh-pagination>
                 </div>
             </div>
             <!--/content-->
