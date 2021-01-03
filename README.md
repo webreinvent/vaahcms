@@ -97,7 +97,7 @@ public function boot()
 
 #### Run `queue`
 ```shell
-php artisan queue:work --queue=high,medium,low,default
+php artisan queue:work --queue=high,medium,low,default --env=pradeep
 ```
 
 How to dispatch job:

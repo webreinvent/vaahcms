@@ -6,8 +6,7 @@
                  checkbox-position="left"
                  checkable
                  :hoverable="true"
-                 :row-class="setRowClass"
-        >
+                 :row-class="setRowClass">
 
             <template >
                 <b-table-column field="id" label="ID" v-slot="props">
@@ -32,11 +31,14 @@
                 </b-table-column>
 
                 <b-table-column field="failed_job_ids" label="Failed Job Ids" v-slot="props">
-                    {{ props.row.failed_job_ids }}
+
+                    <ButtonMeta :type="{'is-danger': props.row.count_failed_jobs > 0}"
+                                :label="props.row.count_failed_jobs"
+                                :value="props.row.failed_job_ids"/>
                 </b-table-column>
 
                 <b-table-column field="options" label="Options" v-slot="props">
-                    {{ props.row.options }}
+                    <ButtonMeta :value="props.row.options"/>
                 </b-table-column>
 
                 <b-table-column field="cancelled_at" label="Cancelled At" v-slot="props">

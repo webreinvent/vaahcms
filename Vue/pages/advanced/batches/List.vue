@@ -29,7 +29,9 @@
 
                         <b-tooltip label="Reload" type="is-dark">
                             <b-button type="is-text"
-                                      class="card-header-icon has-margin-top-5 has-margin-right-5"
+                                      class="card-header-icon
+                                      has-margin-top-5 has-margin-right-5"
+                                      @click="getList"
                                       icon-left="redo-alt"></b-button>
                         </b-tooltip>
 

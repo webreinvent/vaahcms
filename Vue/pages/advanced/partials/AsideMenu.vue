@@ -6,7 +6,7 @@
                      icon="clipboard-list"
                      tag="router-link"
                      :active="!!($route.path == '/vaah/advanced/logs')"
-                     :to="{name: 'logs.index'}">
+                     :to="{name: 'logs.list'}">
         </b-menu-item>
         <b-menu-item label="Jobs"
                      icon="hourglass-half"
@@ -19,7 +19,7 @@
                      icon="times-circle"
                      tag="router-link"
                      :active="!!($route.path == '/vaah/advanced/failed-jobs')"
-                     :to="{name: 'jobs.failed.index'}">
+                     :to="{name: 'jobs.failed.list'}">
         </b-menu-item>
 
         <b-menu-item label="Batches"

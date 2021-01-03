@@ -18,13 +18,11 @@
                     <header class="card-header">
 
                         <div class="card-header-title">
-                            Jobs
+                            Queue Jobs
 
                             <span v-if="page.list">
                                  &nbsp; ({{page.list.total}})
                             </span>
-
-
 
                         </div>
 
@@ -36,6 +34,13 @@
 
                     </header>
                     <!--/header-->
+
+                    <b-notification type="is-info"
+                                    :closable="false"
+                                    class="is-light is-small">
+                        This list consist of only queued/pending jobs.
+                        Completed jobs gets deleted automatically .
+                    </b-notification>
 
                     <!--content-->
                     <div class="card-content">

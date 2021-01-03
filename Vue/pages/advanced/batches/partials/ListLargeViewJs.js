@@ -1,4 +1,7 @@
+import ButtonMeta from '../../../../vaahvue/reusable/ButtonMeta'
+
 let namespace = 'batches';
+
 export default {
     computed: {
         root() {return this.$store.getters['root/state']},
@@ -8,7 +11,7 @@ export default {
         query_string() {return this.$store.getters[namespace+'/state'].query_string},
     },
     components:{
-
+        ButtonMeta,
     },
 
     data()

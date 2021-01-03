@@ -68,7 +68,7 @@ let list =     {
                 },
                 {
                     path: 'jobs-failed',
-                    name: 'jobs.failed.index',
+                    name: 'jobs.failed.list',
                     component: JobsFailed,
                     props: true,
                     meta: {

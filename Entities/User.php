@@ -627,7 +627,7 @@ class User extends Authenticatable
 
 
         //Making it batchable
-        $batch = Bus::batch([])->onQueue('high')->dispatch();
+        $batch = Bus::batch([])->onQueue('high')->name('Login OTP')->dispatch();
         $batch->add(new ProcessNotifications($notification, $user, $inputs));
         //$notice = new ProcessNotifications($notification, $user, $inputs)->onQueue('high');
 

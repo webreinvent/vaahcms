@@ -17,6 +17,12 @@ class Batch extends Model {
         'finished_at'
     ];
     //-------------------------------------------------
+    protected $casts = [
+        'cancelled_at'  => 'date:Y-m-d H:i:s',
+        'created_at'  => 'date:Y-m-d H:i:s',
+        'finished_at'  => 'date:Y-m-d H:i:s',
+    ];
+    //-------------------------------------------------
     protected $dateFormat = 'Y-m-d H:i:s';
     //-------------------------------------------------
     protected $fillable = [
@@ -24,8 +30,32 @@ class Batch extends Model {
 
     //-------------------------------------------------
     protected $appends  = [
+        'count_failed_jobs'
     ];
     //-------------------------------------------------
+    public function getFailedJobIdsAttribute($value)
+    {
+        if($value)
+        {
+            $value = json_decode($value, true);
+        }
+        return $value;
+    }
+    //-------------------------------------------------
+    public function getCountFailedJobsAttribute()
+    {
+        $value = 0;
+
+        if(
+            isset($this->failed_job_ids)
+            && !empty($this->failed_job_ids)
+            && is_array($this->failed_job_ids)
+        ){
+            $value = count($this->failed_job_ids);
+        }
+
+        return $value;
+    }
     //-------------------------------------------------
     public function getTableColumns() {
         return $this->getConnection()->getSchemaBuilder()
@@ -64,7 +94,7 @@ class Batch extends Model {
     {
 
 
-        $list = self::orderBy('id', 'desc');
+        $list = self::orderBy('created_at', 'DESC');
 
         if($request['trashed'] == 'true')
         {
