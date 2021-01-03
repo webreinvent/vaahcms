@@ -9,6 +9,14 @@
 |
 */
 
+
+/*
+|--------------------------------------------------------------------------
+| Bulma Variable
+|--------------------------------------------------------------------------
+|
+*/
+
 //_control
 $control-border-width: 1px !default;
 $control-height: 2.3em !default;
@@ -22,3 +30,15 @@ $button-padding-horizontal: 0.8em !default;
 
 //_card
 $card-overflow: none !default;
+
+
+/*
+|--------------------------------------------------------------------------
+| Buefy Variable
+|--------------------------------------------------------------------------
+|
+*/
+
+// components > _sidebar
+$sidebar-width: 200px !default;
+$sidebar-mobile-width: 55px !default;

@@ -1,30 +1,41 @@
 <template>
 
-        <b-navbar v-if="assets" class="has-shadow" :fixed-top="true">
+        <b-navbar v-if="assets" class="has-shadow"  :fixed-top="false">
             <template slot="brand">
-                <b-navbar-item  :to="{ path: '/' }">
-                    <img v-if="assets"
-                         height="30"
-                         :src="assets.urls.image+'/vaahcms-logo.svg'">
+
+                <b-navbar-item class="has-padding-left-20"
+                               @click="toggleSidebar">
+                    <b-icon
+                        pack="fas"
+                        icon="bars"
+                        size="is-small">
+                    </b-icon>
                 </b-navbar-item>
-            </template>
 
-            <template slot="start" v-if="assets.extended_views" >
+                <b-navbar-item @click="toggleSidebar">
+                    <b-icon
+                        pack="fas"
+                        icon="home"
+                        size="is-small">
+                    </b-icon>
+                </b-navbar-item>
 
-                <b-tooltip label="Visit Site"
-                           position="is-bottom">
-                    <b-navbar-item target="_blank" :href="assets.urls.public">
-
+                <b-navbar-item class="has-padding-left-10"
+                               target="_blank"
+                               :href="assets.urls.public">
+                    <b-tooltip label="Visit Site"
+                               position="is-bottom">
                         <b-icon
+                            pack="fas"
                             icon="external-link-alt"
                             size="is-small">
                         </b-icon>
+                    </b-tooltip>
+                </b-navbar-item>
 
+            </template>
 
-                    </b-navbar-item>
-                </b-tooltip>
-
-
+            <template slot="start" v-if="assets.extended_views" >
 
                 <template  v-for="menus in assets.extended_views.top_left_menu.success">
 
@@ -54,6 +65,8 @@
 
             <template slot="end" v-if="assets && assets.auth_user">
 
+                {{root.has_left_padding}}
+
                 <b-navbar-dropdown :right="true"
                                    :hoverable="true"
                                    :label="assets.auth_user.name">
@@ -80,8 +93,18 @@
 
 <script>
     export default {
-        props:['assets'],
+        computed:{
+            root() {return this.$store.getters['root/state']},
+            assets() {return this.$store.getters['root/state'].assets},
+        },
         components:{
+        },
+        data()
+        {
+            let obj = {
+            };
+
+            return obj;
         },
         mounted() {
             //----------------------------------------------------
@@ -148,6 +171,31 @@
                     }
                 });
             },
+
+            //----------------------------------------------------
+
+            //----------------------------------------------------
+            //----------------------------------------------------
+            toggleSidebar: function()
+            {
+                let payload;
+
+                if(this.root.is_sidebar_reduced)
+                {
+                    this.$vaah.updateRootState('is_sidebar_reduced', false);
+                    this.$vaah.updateRootState(
+                        'has_padding_left',
+                        this.root.expanded_padding_left);
+                } else {
+                    this.$vaah.updateRootState('is_sidebar_reduced', true);
+                    this.$vaah.updateRootState(
+                        'has_padding_left',
+                        this.root.default_padding_left);
+                }
+            }
+            //----------------------------------------------------
+            //----------------------------------------------------
+
         }
     }
 

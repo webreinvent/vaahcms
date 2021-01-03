@@ -1,5 +1,6 @@
 import TopMenu from './../components/App/TopMenu.vue'
 import Aside from './../components/App/Aside.vue'
+import Sidebar from './../components/App/Sidebar.vue'
 import Footer from './../components/App/Footer.vue'
 import Notices from './../components/Notices.vue'
 
@@ -10,7 +11,7 @@ export default {
     },
     components:{
         TopMenu,
-        Aside,
+        Sidebar,
         Footer,
         Notices,
     },
@@ -28,7 +29,7 @@ export default {
     },
     mounted() {
         //---------------------------------------------------------------------
-
+        //---------------------------------------------------------------------
     },
     methods: {
         //---------------------------------------------------------------------
