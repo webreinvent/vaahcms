@@ -20,6 +20,12 @@ class Job extends Model {
     //-------------------------------------------------
     protected $dateFormat = 'Y-m-d H:i:s';
     //-------------------------------------------------
+    protected $casts = [
+        'reserved_at'  => 'date:Y-m-d H:i:s',
+        'available_at'  => 'date:Y-m-d H:i:s',
+        'created_at'  => 'date:Y-m-d H:i:s',
+    ];
+    //-------------------------------------------------
     protected $fillable = [
     ];
 

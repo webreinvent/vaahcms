@@ -11,7 +11,9 @@
 
                 <div class="label-left">
                     <h4 class="title is-5">Site Settings</h4>
-                    <h2 class="subtitle is-6">After a successful password update, you will be redirected to the login page where you can log in with your new password.</h2>
+                    <h2 class="subtitle is-6">After a successful password update, you
+                        will be redirected to the login page where you can
+                        log in with your new password.</h2>
                 </div>
                 <div class="label-right is-hidden-mobile">
                     <b-button v-text="props.open ? 'Collapse' : 'Expand'">
@@ -35,11 +37,12 @@
                                     <b-input expanded
                                              v-model="list.site_title"
                                              type="text"></b-input>
+                                    <b-tooltip label="Copy Code Snippet" type="is-dark">
                                     <p class="control">
-                                        <b-tooltip label="Copy Code Snippet" type="is-dark">
+
                                             <b-button icon-left="copy"></b-button>
-                                        </b-tooltip>
                                     </p>
+                                    </b-tooltip>
                                 </b-field>
                             </b-field>
 
@@ -49,11 +52,11 @@
                                 <b-input maxlength="200" expanded
                                          v-model="list.site_description"
                                          type="textarea"></b-input>
+                                <b-tooltip label="Copy Code Snippet" type="is-dark">
                                 <p class="control">
-                                    <b-tooltip label="Copy Code Snippet" type="is-dark">
                                         <b-button icon-left="copy"></b-button>
-                                    </b-tooltip>
                                 </p>
+                                </b-tooltip>
                             </b-field>
 
 
@@ -91,11 +94,11 @@
                                                     v-model="list.search_engine_visibility">
                                         <span>Invisible</span>
                                     </b-radio-button>
+                                    <b-tooltip label="Copy Code Snippet" type="is-dark">
                                     <p class="control">
-                                        <b-tooltip label="Copy Code Snippet" type="is-dark">
                                             <b-button icon-left="copy"></b-button>
-                                        </b-tooltip>
                                     </p>
+                                    </b-tooltip>
                                 </b-field>
 
 
@@ -134,11 +137,11 @@
                                              v-model="list.redirect_after_frontend_login"
                                              type="text"
                                              placeholder="Enter url"></b-input>
+                                    <b-tooltip label="Copy Code Snippet" type="is-dark">
                                     <p class="control">
-                                        <b-tooltip label="Copy Code Snippet" type="is-dark">
                                             <b-button icon-left="copy"></b-button>
-                                        </b-tooltip>
                                     </p>
+                                    </b-tooltip>
                                 </b-field>
                             </b-field>
 
@@ -173,11 +176,11 @@
                                              placeholder="Type Copyright Text">
                                     </b-input>
 
+                                    <b-tooltip label="Copy Code Snippet" type="is-dark">
                                     <p class="control">
-                                        <b-tooltip label="Copy Code Snippet" type="is-dark">
                                             <b-button icon-left="copy"></b-button>
-                                        </b-tooltip>
                                     </p>
+                                    </b-tooltip>
                                 </b-field>
 
 
@@ -205,12 +208,12 @@
                                              expanded type="text"
                                              placeholder="Type Copyright Link">
                                     </b-input>
-
+                                    <b-tooltip label="Copy Code Snippet" type="is-dark">
                                     <p class="control">
-                                        <b-tooltip label="Copy Code Snippet" type="is-dark">
                                             <b-button icon-left="copy"></b-button>
-                                        </b-tooltip>
                                     </p>
+                                    </b-tooltip>
+
                                 </b-field>
 
                             </b-field>
@@ -237,12 +240,12 @@
                                              expanded type="text"
                                              placeholder="Type Copyright Year">
                                     </b-input>
-
+                                    <b-tooltip label="Copy Code Snippet" type="is-dark">
                                     <p class="control">
-                                        <b-tooltip label="Copy Code Snippet" type="is-dark">
                                             <b-button icon-left="copy"></b-button>
-                                        </b-tooltip>
                                     </p>
+                                    </b-tooltip>
+
                                 </b-field>
 
 
@@ -306,6 +309,33 @@
 
                             </b-field>
 
+
+                            <b-field  expanded
+                                      :type="inputs.laravel_queues.type"
+                                      :message="inputs.laravel_queues.message"
+                                      label="Laravel Queues"
+                                      :label-position="labelPosition">
+
+                                <b-field expanded>
+
+                                    <b-radio-button type="is-danger"
+                                                    v-model="list.laravel_queues"
+                                                    native-value="0">
+                                        <span>Disable</span>
+                                    </b-radio-button>
+
+                                    <b-radio-button type="is-success"
+                                                    v-model="list.laravel_queues"
+                                                    native-value="1">
+                                        <span>Enable</span>
+                                    </b-radio-button>
+
+                                </b-field>
+
+
+                            </b-field>
+
+
                             <b-field  expanded
                                       label="Redirect after Backend Logout"
                                       :label-position="labelPosition">
@@ -335,11 +365,12 @@
                                              v-model="list.redirect_after_backend_logout_url"
                                              placeholder="Enter url">
                                     </b-input>
+                                    <b-tooltip label="Copy Code Snippet" type="is-dark">
                                     <p class="control" v-if="list.redirect_after_backend_logout === 'custom'">
-                                        <b-tooltip label="Copy Code Snippet" type="is-dark">
                                             <b-button icon-left="copy"></b-button>
-                                        </b-tooltip>
                                     </p>
+                                    </b-tooltip>
+
 
                                 </b-field>
 

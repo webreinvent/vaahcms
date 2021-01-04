@@ -41,6 +41,10 @@ export default {
                     type: null,
                     message: null,
                 },
+                laravel_queues:{
+                    type: null,
+                    message: null,
+                },
 
             },
         };
@@ -147,6 +151,22 @@ export default {
                 {
                     this.inputs.password_protection.type = 'is-danger';
                     this.inputs.password_protection.message = "The site will only be accessing using this password.";
+                }
+            }
+        },
+
+        'list.laravel_queues': {
+            deep: true,
+            handler(new_val, old_val) {
+                if(new_val == 0)
+                {
+                    this.inputs.laravel_queues.type = null;
+                    this.inputs.laravel_queues.message = null;
+                } else
+                {
+                    this.inputs.laravel_queues.type = 'is-success';
+                    this.inputs.laravel_queues.message = "Make sure you set up the cron job for: " +
+                        "php artisan queue:work --queue=high,medium,low,default --env=env-file";
                 }
             }
         },

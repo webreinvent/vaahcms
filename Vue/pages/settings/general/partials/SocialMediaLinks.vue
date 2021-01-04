@@ -44,19 +44,22 @@
                                 </b-input>
 
 
-                                <p class="control">
-                                    <b-tooltip label="Copy Code Snippet" type="is-dark">
-                                        <b-button icon-left="copy"></b-button>
-                                    </b-tooltip>
-                                </p>
+                                <b-tooltip label="Copy Code Snippet" type="is-dark">
 
                                 <p class="control">
-                                    <b-tooltip label="Delete"
-                                               type="is-dark">
+                                        <b-button icon-left="copy"></b-button>
+                                </p>
+                                </b-tooltip>
+
+
+                                <b-tooltip label="Delete" type="is-dark">
+
+                                <p class="control">
                                         <b-button @click="removeLink(link)"
                                                   icon-left="trash"></b-button>
-                                    </b-tooltip>
                                 </p>
+                                </b-tooltip>
+
 
                             </b-field>
 

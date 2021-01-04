@@ -48,7 +48,10 @@ export default {
             this.is_btn_loading = false;
             if(data)
             {
-                this.$router.push({ name: 'dashboard.index' })
+
+                window.location.href = this.root.base_url+'/backend#/vaah';
+
+                //this.$router.push({ name: 'dashboard.index' })
             }
         },
         //---------------------------------------------------------------------

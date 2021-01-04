@@ -30,7 +30,8 @@ $pre-padding: 1.25rem 1.5rem !default;
 $pre-code-font-size: 1em !default;
 
 html {
-    background-color: $body-background-color;
+    //background-color: $body-background-color;
+    background-color: #fafafa !important;
     font-size: $body-size;
     -moz-osx-font-smoothing: grayscale;
     -webkit-font-smoothing: antialiased;

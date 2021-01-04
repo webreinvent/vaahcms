@@ -38,11 +38,11 @@
                                          placeholder="">
                                 </b-input>
 
+                                <b-tooltip label="Copy Code Snippet" type="is-dark">
                                 <p class="control">
-                                    <b-tooltip label="Copy Code Snippet" type="is-dark">
                                         <b-button icon-left="copy"></b-button>
-                                    </b-tooltip>
                                 </p>
+                                </b-tooltip>
 
 
                             </b-field>
@@ -56,11 +56,12 @@
                                          placeholder="">
                                 </b-input>
 
+                                <b-tooltip label="Copy Code Snippet" type="is-dark">
                                 <p class="control">
-                                    <b-tooltip label="Copy Code Snippet" type="is-dark">
                                         <b-button icon-left="copy"></b-button>
-                                    </b-tooltip>
                                 </p>
+                                </b-tooltip>
+
 
 
                             </b-field>
@@ -91,11 +92,12 @@
                                          placeholder="">
                                 </b-input>
 
+                                <b-tooltip label="Copy Code Snippet" type="is-dark">
                                 <p class="control">
-                                    <b-tooltip label="Copy Code Snippet" type="is-dark">
                                         <b-button icon-left="copy"></b-button>
-                                    </b-tooltip>
                                 </p>
+                                </b-tooltip>
+
 
 
                             </b-field>
@@ -109,11 +111,12 @@
                                          placeholder="">
                                 </b-input>
 
+                                <b-tooltip label="Copy Code Snippet" type="is-dark">
                                 <p class="control">
-                                    <b-tooltip label="Copy Code Snippet" type="is-dark">
                                         <b-button icon-left="copy"></b-button>
-                                    </b-tooltip>
                                 </p>
+                                </b-tooltip>
+
 
 
                             </b-field>

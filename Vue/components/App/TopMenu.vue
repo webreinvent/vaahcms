@@ -12,7 +12,8 @@
                     </b-icon>
                 </b-navbar-item>
 
-                <b-navbar-item @click="toggleSidebar">
+                <b-navbar-item tag="a"
+                               :href="root.assets.urls.dashboard">
                     <b-icon
                         pack="fas"
                         icon="home"

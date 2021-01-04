@@ -28,6 +28,7 @@
     {"category": "global", "key": "redirect_after_backend_logout", "value": "backend" },
     {"category": "global", "key": "redirect_after_backend_logout_url", "value": "" },
     {"category": "global", "key": "redirect_after_frontend_login", "value": "" },
+    {"category": "global", "key": "laravel_queues", "value": false },
     {"category": "sample", "key": "sample", "value": 0 }
 
 ]

@@ -51,11 +51,13 @@
                                     </p>
                                     <b-input expanded v-model="tag.value.content"></b-input>
 
+                                    <b-tooltip label="Delete" type="is-dark">
+
                                     <p class="control">
-                                        <b-tooltip label="Delete" type="is-dark">
                                             <b-button @click="removeTag(tag)" icon-left="trash"></b-button>
-                                        </b-tooltip>
                                     </p>
+                                    </b-tooltip>
+
 
                                 </b-field>
 
@@ -75,11 +77,12 @@
                                     <p class="control">
                                         <b-button @click="storeTags" type="is-primary">Save</b-button>
                                     </p>
+                                    <b-tooltip label="Copy Code Snippet" type="is-dark">
                                     <p class="control">
-                                        <b-tooltip label="Copy Code Snippet" type="is-dark">
                                             <b-button type="is-primary" icon-left="copy"></b-button>
-                                        </b-tooltip>
                                     </p>
+                                    </b-tooltip>
+
                                 </b-field>
 
                                 <b-field class="has-margin-left-20">

@@ -1,7 +1,7 @@
 <?php namespace WebReinvent\VaahCms\Entities;
 
 
-use App\Jobs\ProcessNotifications;
+
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Http\Request;
@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Bus;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Str;
+use WebReinvent\VaahCms\Jobs\ProcessNotifications;
 use WebReinvent\VaahCms\Traits\CrudWithUuidObservantTrait;
 
 class User extends Authenticatable
@@ -617,32 +618,21 @@ class User extends Authenticatable
         $user->login_otp = $otp;
         $user->save();
 
-
-        $inputs = [
-            'login_otp' => $otp,
-        ];
-
         $notification = Notification::where('slug', 'send-login-otp')
             ->first();
 
+        $inputs = [
+            'login_otp' => $otp,
+            'notification_id' => $notification->id,
+            'user_id' => $user->id,
+        ];
 
-        //Making it batchable
-        $batch = Bus::batch([])->onQueue('high')->name('Login OTP')->dispatch();
-        $batch->add(new ProcessNotifications($notification, $user, $inputs));
-        //$notice = new ProcessNotifications($notification, $user, $inputs)->onQueue('high');
-
-
-        /*dispatch((new ProcessNotifications($notification, $user, $inputs))
-            ->onQueue('high'));*/
-
-        /*$request = new Request($inputs);
-
-        $response = Notification::send($request);
+        $response = Notification::dispatch($notification, $user, $inputs);
 
         if(isset($response['status']) && $response['status'] == 'failed')
         {
             return $response;
-        }*/
+        }
 
         $response['status'] = 'success';
         $response['messages'] = [

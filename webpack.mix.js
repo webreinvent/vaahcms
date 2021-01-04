@@ -49,7 +49,7 @@ if (mix.inProduction()) {
     mix.setPublicPath(publish_folder);
 
     mix.sass(source_theme_folder+'/scss/build.scss', output_theme_folder+'css/');
-    //mix.sass(source_theme_folder+'/scss/style.scss', output_theme_folder+'css/');
+    mix.sass(source_theme_folder+'/scss/style.scss', output_theme_folder+'css/');
 
     //mix.js(__dirname+"/VueUI/app.js",  output_theme_folder+'/builds/ui.js');
     mix.js(__dirname+"/Vue/app.js",  output_theme_folder+'/builds/app.js');
