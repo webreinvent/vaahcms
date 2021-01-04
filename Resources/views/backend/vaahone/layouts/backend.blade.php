@@ -40,9 +40,13 @@
 @include("vaahcms::backend.vaahone.components.flash")
 
 <div class="container-backend">
+
     <div id="appExtended">
-        <topmenu :assets="assets"></topmenu>
-        <sidemenu :assets="assets"></sidemenu>
+        <Sidebar :assets="assets"></Sidebar>
+
+        <div v-bind:style="{ paddingLeft: root.has_padding_left }">
+            <TopMenu :assets="assets"></TopMenu>
+        </div>
     </div>
 
     <!--sections-->

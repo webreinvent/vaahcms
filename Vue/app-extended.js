@@ -53,11 +53,11 @@ var debug = $('#debug').attr('content');
 
 
 import TopMenu from "./components/App/TopMenu.vue";
-import Aside from "./components/App/Aside.vue";
+import Sidebar from "./components/App/Sidebar.vue";
 
-Vue.component('sidemenu', Aside);
+Vue.component('Sidebar', Sidebar);
 
-Vue.component('topmenu', TopMenu);
+Vue.component('TopMenu', TopMenu);
 
 const appExtended = new Vue({
     el: '#appExtended',

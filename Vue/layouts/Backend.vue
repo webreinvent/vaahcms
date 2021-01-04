@@ -1,15 +1,12 @@
 <template>
 
-    <div class="">
+    <div class="container-backend">
 
         <Sidebar />
 
-
         <div v-bind:style="{ paddingLeft: root.has_padding_left }">
 
-        <TopMenu :assets="assets"/>
-
-
+        <TopMenu />
 
         <!--sections-->
         <section class="section ">

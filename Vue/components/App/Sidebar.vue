@@ -20,20 +20,35 @@
 
                     </div>
                     <b-menu class="is-custom-mobile">
-                        <b-menu-list label="">
-                            <b-menu-item icon="user" label="Info"></b-menu-item>
-                            <b-menu-item active expanded icon="cog" label="Administrator">
-                                <b-menu-item icon="cog" label="Users"></b-menu-item>
-                                <b-menu-item icon="cog" label="Devices"></b-menu-item>
-                            </b-menu-item>
-                            <b-menu-item icon="user" label="My Account">
-                                <b-menu-item icon="account-box" label="Account data"></b-menu-item>
-                                <b-menu-item icon="home-account" label="Addresses"></b-menu-item>
-                            </b-menu-item>
-                        </b-menu-list>
-                        <b-menu-list>
-                            <b-menu-item label="Expo" icon="link"></b-menu-item>
-                        </b-menu-list>
+
+                        <template v-if="assets && assets.extended_views" >
+                            <template  v-for="menu in assets.extended_views.sidebar_menu.success">
+                                <b-menu-list v-for="(link, menu_key) in menu" :key="menu_key    ">
+
+                                    <b-menu-item v-if="link.child"
+                                                 :label="link.label"
+                                                 :icon="link.icon">
+
+                                        <b-menu-item v-for="(link_child, key) in link.child"
+                                                     :key="key"
+                                                     tag="a"
+                                                     :href="link_child.link"
+                                                     :label="link_child.label"
+                                                     :icon="link_child.icon">
+                                        </b-menu-item>
+
+                                    </b-menu-item>
+
+                                    <b-menu-item v-else
+                                                 tag="a"
+                                                 :href="link.link"
+                                                 :label="link.label"
+                                                 :icon="link.icon">
+                                    </b-menu-item>
+
+                                </b-menu-list>
+                            </template>
+                        </template>
 
                     </b-menu>
                 </div>
