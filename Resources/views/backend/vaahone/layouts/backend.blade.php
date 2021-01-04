@@ -54,7 +54,7 @@
         <section class="section has-padding-top-25 has-padding-left-25">
             @yield('content')
         </section>
-        
+
     </div>
     <!--sections-->
 
