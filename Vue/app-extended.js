@@ -55,34 +55,74 @@ var debug = $('#debug').attr('content');
 import TopMenu from "./components/App/TopMenu.vue";
 import Sidebar from "./components/App/Sidebar.vue";
 
-Vue.component('Sidebar', Sidebar);
 
-Vue.component('TopMenu', TopMenu);
+let assets_path = base_url+"/vaahcms/backend/themes/vaahone/assets";
+let assets_image_path = assets_path+"/images";
+
+let json_url = base_url+"/backend/json";
+let ajax_url = base_url+"/backend";
 
 const appExtended = new Vue({
     el: '#appExtended',
     components: {
+        'sidebar': Sidebar,
+        'top-menu': TopMenu,
     },
     data: {
-        assets: null,
-        base_url: base_url,
+        root:{
+
+            assets: null,
+            base_url: base_url,
+            assets_path: assets_path,
+            assets_image_path: assets_image_path,
+            current_url: current_url,
+            ajax_url: ajax_url,
+            json_url: json_url,
+            is_sidebar_reduced: true,
+            has_padding_left: '55px',
+            default_padding_left: '55px',
+            expanded_padding_left: '200px',
+            assets_is_fetching: null,
+            assets_reload: false,
+            permissions: null,
+            permissions_reload: false,
+            check_logged_in: null,
+            is_logged_in: null,
+        }
     },
     mounted() {
         this.getAssets();
+
     },
     methods:{
         //---------------------------------------------------------------------
         getAssets: function () {
             let params = {};
-            let url = this.base_url+'/backend/json/assets';
+            let url = this.root.base_url+'/backend/json/assets';
             this.$vaah.ajax(url, params, this.getAssetsAfter);
         },
         //---------------------------------------------------------------------
         getAssetsAfter: function (data, res) {
             if(data){
-                this.assets = data;
+                this.root.assets = data;
             }
         },
+        //---------------------------------------------------------------------
+        sidebarAction: function (payload)
+        {
+
+            console.log('--->payload', payload);
+
+            for (let key in payload)
+            {
+                this.root[key] = payload[key];
+            }
+
+            //this.$root.$emit('root-updated', payload)
+
+        }
+        //---------------------------------------------------------------------
+        //---------------------------------------------------------------------
         //---------------------------------------------------------------------
     }
 });

@@ -54,7 +54,7 @@ if (mix.inProduction()) {
     //mix.js(__dirname+"/VueUI/app.js",  output_theme_folder+'/builds/ui.js');
     mix.js(__dirname+"/Vue/app.js",  output_theme_folder+'/builds/app.js');
     //mix.js(__dirname+"/Vue/app.js",  output_theme_folder+'/builds/app.js').sourceMaps();
-    //mix.js(__dirname+"/Vue/app-extended.js",  output_theme_folder+'/builds/app-extended.js');
+    mix.js(__dirname+"/Vue/app-extended.js",  output_theme_folder+'/builds/app-extended.js');
 
 }
 

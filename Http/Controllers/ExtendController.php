@@ -91,6 +91,7 @@ class ExtendController extends Controller
         {
             $list[1]['child'][] =  [
                 'link' => self::$link."/registrations/",
+                'icon' => 'user-plus',
                 'label'=> 'Registration'
             ];
         }
@@ -99,6 +100,7 @@ class ExtendController extends Controller
         {
             $list[1]['child'][] =  [
                 'link' => self::$link."/users/",
+                'icon' => 'users',
                 'label'=> 'Users'
             ];
         }
@@ -107,6 +109,7 @@ class ExtendController extends Controller
         {
             $list[1]['child'][] =  [
                 'link' => self::$link."/roles/",
+                'icon' => 'user-tag',
                 'label'=> 'Roles'
             ];
         }
@@ -116,6 +119,7 @@ class ExtendController extends Controller
         {
             $list[1]['child'][] =  [
                 'link' => self::$link."/permissions/",
+                'icon' => 'key',
                 'label'=> 'Permissions'
             ];
         }
@@ -135,6 +139,7 @@ class ExtendController extends Controller
         {
             $list[2]['child'][] =  [
                 'link' => self::$link."/modules/",
+                'icon' => 'cube',
                 'label'=> 'Modules'
             ];
         }
@@ -143,6 +148,7 @@ class ExtendController extends Controller
         {
             $list[2]['child'][] =  [
                 'link' => self::$link."/themes/",
+                'icon' => 'palette',
                 'label'=> 'Themes'
             ];
         }
@@ -157,18 +163,22 @@ class ExtendController extends Controller
                 'child' => [
                     [
                         'link' => self::$link."/settings/general",
+                        'icon' => 'tools',
                         'label'=> 'General'
                     ],
                     [
                         'link' => self::$link."/settings/env-variables",
+                        'icon' => 'code',
                         'label'=> 'Env Variables'
                     ],
                     [
                         'link' => self::$link."/settings/localization",
+                        'icon' => 'language',
                         'label'=> 'Localization'
                     ],
                     [
                         'link' => self::$link."/settings/notifications",
+                        'icon' => 'bell',
                         'label'=> 'Notifications'
                     ],
                 ]
@@ -178,27 +188,10 @@ class ExtendController extends Controller
         if(\Auth::user()->hasPermission('has-access-of-advanced-section'))
         {
             $list[4] = [
-                'link' => '#',
+                'link' => self::$link."/advanced/logs",
                 'icon'=> 'stethoscope',
                 'label'=> 'Advanced',
-                'child' => [
-                    [
-                        'link' => self::$link."/advanced/logs",
-                        'label'=> 'Logs'
-                    ],
-                    [
-                        'link' => self::$link."/advanced/jobs",
-                        'label'=> 'Jobs'
-                    ],
-                    [
-                        'link' => self::$link."/advanced/failed-jobs",
-                        'label'=> 'Failed Jobs'
-                    ],
-                    [
-                        'link' => self::$link."/advanced/batches",
-                        'label'=> 'Batches'
-                    ],
-                ]
+
             ];
         }
 
@@ -214,6 +207,7 @@ class ExtendController extends Controller
                 'child' => [
                     [
                         'link' => self::$link."/manage/media",
+                        'icon' => 'file',
                         'label'=> 'Media'
                     ],
                 ]

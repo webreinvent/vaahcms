@@ -117,19 +117,17 @@ export default {
         loadConfigurationsAfter: function (data, res) {
             if(data)
             {
-
-                let config = this.config;
+                let config = this.$vaah.getNonReactiveObject(this.config);
 
                 for(let key in config.env)
                 {
-                    if(data[key])
+                    if( data[key])
                     {
                         config.env[key] = data[key];
                     }
                 }
 
-                this.update('config', this.config);
-
+                this.update('config', config);
             }
         },
         //---------------------------------------------------------------------

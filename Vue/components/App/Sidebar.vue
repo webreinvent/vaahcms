@@ -1,6 +1,6 @@
 <template>
     <div class="sidebar-page">
-        <section class="sidebar-layout">
+        <section class="sidebar-layout" v-if="root">
             <b-sidebar
                 :fullheight="true"
                 position="fixed"
@@ -9,20 +9,20 @@
                 :reduce="root.is_sidebar_reduced"
                 open
                 type="is-light">
-                <div  v-if="assets">
+                <div  v-if="root.assets">
 
                     <div class="brand" >
 
                         <p class="brand-cover" :class="{'show-logo': root.is_sidebar_reduced == false}">
                             <img
-                             :src="assets.urls.image+'/vaahcms-logo.svg'">
+                             :src="root.assets.urls.image+'/vaahcms-logo.svg'">
                         </p>
 
                     </div>
                     <b-menu class="is-custom-mobile">
 
-                        <template v-if="assets && assets.extended_views" >
-                            <template  v-for="menu in assets.extended_views.sidebar_menu.success">
+                        <template v-if="root.assets && root.assets.extended_views" >
+                            <template  v-for="menu in root.assets.extended_views.sidebar_menu.success">
                                 <b-menu-list v-for="(link, menu_key) in menu" :key="menu_key    ">
 
                                     <b-menu-item v-if="link.child"
@@ -61,9 +61,8 @@
 
 <script>
 export default {
+    props:['root'],
     computed:{
-        root() {return this.$store.getters['root/state']},
-        assets() {return this.$store.getters['root/state'].assets},
     },
     data() {
         return {
@@ -71,7 +70,11 @@ export default {
             mobile: "fullwidth",
             reduce: true
         };
-    }
+    },
+    mounted() {
+
+    },
+
 };
 </script>
 

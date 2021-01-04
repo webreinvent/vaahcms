@@ -26,7 +26,8 @@
                                   @input="loadConfigurations()"
                                   v-model="config.env.app_env">
                             <option value="">- Select an environment -</option>
-                            <option v-for="item in page.assets.environments"
+                            <option v-for="(item, key) in page.assets.environments"
+                                    :key="key"
                                     :value="item.slug"
                             >{{item.name}}</option>
                         </b-select>

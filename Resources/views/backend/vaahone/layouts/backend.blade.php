@@ -42,20 +42,20 @@
 <div class="container-backend">
 
     <div id="appExtended">
-        <Sidebar :assets="assets"></Sidebar>
-
+        <sidebar :root="root"></sidebar>
         <div v-bind:style="{ paddingLeft: root.has_padding_left }">
-            <TopMenu :assets="assets"></TopMenu>
+            <top-menu :root="root" @sidebar-action="sidebarAction"></top-menu>
         </div>
     </div>
 
     <!--sections-->
-    <section class="section">
+    <div style="padding-left: 55px;">
 
-        <div class="container">
+        <section class="section has-padding-top-25 has-padding-left-25">
             @yield('content')
-        </div>
-    </section>
+        </section>
+        
+    </div>
     <!--sections-->
 
 </div>
@@ -70,3 +70,9 @@
 
 </body>
 </html>
+<script>
+    import Section from "../../../../../VueUI/vaahnuxt/buefy/components/Section";
+    export default {
+        components: {Section}
+    }
+</script>
