@@ -8,21 +8,27 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use WebReinvent\VaahCms\Entities\User;
+
+
 
 class ProcessMails implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
 
+    public $to;
+    public $mail;
 
     /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($mail, $to)
     {
-
+        $this->mail = $mail;
+        $this->to = $to;
     }
 
     /**
@@ -32,6 +38,6 @@ class ProcessMails implements ShouldQueue
      */
     public function handle()
     {
-
+        \Mail::to($this->to)->send($this->mail);
     }
 }

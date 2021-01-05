@@ -258,12 +258,12 @@ class Notification extends Model {
 
     }
     //-------------------------------------------------
-    public static function dispatch(Notification $notification, User $user, $inputs)
+    public static function dispatch(Notification $notification, User $user, $inputs, $priority='default')
     {
 
         if(config('settings.global.laravel_queues'))
         {
-            $response = self::addInQueue($notification, $user, $inputs);
+            $response = self::addInQueue($notification, $user, $inputs, $priority);
         } else
         {
             $response = self::send($notification, $user, $inputs);
@@ -272,11 +272,11 @@ class Notification extends Model {
         return $response;
     }
     //-------------------------------------------------
-    public static function addInQueue(Notification $notification, User $user, $inputs)
+    public static function addInQueue(Notification $notification, User $user, $inputs, $priority='default')
     {
 
         dispatch((new ProcessNotifications($notification, $user, $inputs))
-            ->onQueue('high'));
+            ->onQueue($priority));
 
         $response['status'] = 'success';
         $response['data'] = [];

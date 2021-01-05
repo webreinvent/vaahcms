@@ -49,7 +49,9 @@ export default {
             if(data)
             {
 
-                window.location.href = this.root.base_url+'/backend#/vaah';
+                console.log('--->', this.root.base_url+'/backend#/vaah');
+
+                window.location = this.root.base_url+'/backend#/vaah';
 
                 //this.$router.push({ name: 'dashboard.index' })
             }

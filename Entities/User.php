@@ -2,6 +2,7 @@
 
 
 
+use App\Mail\OrderShipped;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Http\Request;
@@ -13,7 +14,10 @@ use Illuminate\Support\Facades\Bus;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Str;
+use WebReinvent\VaahCms\Jobs\ProcessMails;
 use WebReinvent\VaahCms\Jobs\ProcessNotifications;
+use WebReinvent\VaahCms\Libraries\VaahMail;
+use WebReinvent\VaahCms\Mail\TestMail;
 use WebReinvent\VaahCms\Traits\CrudWithUuidObservantTrait;
 
 class User extends Authenticatable
@@ -626,6 +630,20 @@ class User extends Authenticatable
             'notification_id' => $notification->id,
             'user_id' => $user->id,
         ];
+
+        $content = "<b>This is content</b>";
+
+        //$mail = new OrderShipped();
+        //$content$content$mail = new TestMail('Dynamic Content');
+
+
+        VaahMail::dispatchGenericMail($content, $user);
+
+        //\Mail::to($user)->send($mail);
+
+        //dispatch((new ProcessMails($mail, $user, $content)));
+
+        //\Mail::to($user)->send($mail, $user);
 
         $response = Notification::dispatch($notification, $user, $inputs);
 
