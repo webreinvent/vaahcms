@@ -24,7 +24,7 @@
 
                     <b-tooltip label="Delete All Logs" type="is-danger">
                     <b-button class="card-header-icon has-margin-top-5  has-margin-right-5"
-                              type="is-text"
+                              type="is-text" @click="deleteItem(null)"
                               icon-left="trash"></b-button>
                     </b-tooltip>
 

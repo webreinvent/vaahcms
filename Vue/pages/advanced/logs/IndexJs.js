@@ -129,26 +129,23 @@ export default {
             return this.$vaah.hasPermission(this.permissions, slug);
         },
         //---------------------------------------------------------------------
-        deleteItem: function () {
+        deleteItem: function (ids = null) {
+
             this.$Progress.start();
-            let params = {};
-            let url = this.ajax_url+'/list';
+
+            let params = {
+                inputs: ids,
+            };
+
+            let url = this.ajax_url+'/actions/bulk-delete';
             this.$vaah.ajax(url, params, this.deleteItemAfter);
+
         },
         //---------------------------------------------------------------------
         deleteItemAfter: function (data, res) {
             this.$Progress.finish();
-            if(data){
-                if(data.list && data.list.length > 0)
-                {
-                    this.update('list_is_empty', false);
-                } else
-                {
-                    this.update('list_is_empty', true);
-                }
 
-                this.update('list', data.list);
-            }
+            console.log('test--->',data);
 
         },
         //---------------------------------------------------------------------

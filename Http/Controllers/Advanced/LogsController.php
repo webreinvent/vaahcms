@@ -139,28 +139,16 @@ class LogsController extends Controller
     //----------------------------------------------------------
     public function postActions(Request $request, $action)
     {
-
-        $rules = array(
-            'inputs' => 'required',
-        );
-
-        $validator = \Validator::make( $request->all(), $rules);
-        if ( $validator->fails() ) {
-
-            $errors             = errorsToArray($validator->errors());
-            $response['status'] = 'failed';
-            $response['errors'] = $errors;
-            return response()->json($response);
-        }
-
         $response = [];
+
+        $folder_path = storage_path('logs');
 
         switch ($action)
         {
             //------------------------------------
             case 'bulk-delete':
 
-                $response = Registration::bulkDelete($request);
+                $response = VaahFiles::deleteFolder($folder_path);
 
                 break;
             //------------------------------------
