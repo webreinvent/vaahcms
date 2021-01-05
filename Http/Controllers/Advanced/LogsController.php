@@ -25,7 +25,6 @@ class LogsController extends Controller
     public function getList(Request $request)
     {
 
-
         $permission_slug = 'has-access-of-logs-section';
 
         if(!\Auth::user()->hasPermission($permission_slug))
@@ -49,11 +48,24 @@ class LogsController extends Controller
         {
             foreach ($files as $file)
             {
-                $list[] = [
-                    'id' => $i,
-                    'name' => $file,
-                    'path' => $folder_path.'\\'.$file,
-                ];
+
+                if(isset($request->q) && $request->q){
+                    if(stripos($file,$request->q) !== FALSE){
+                        $list[] = [
+                            'id' => $i,
+                            'name' => $file,
+                            'path' => $folder_path.'\\'.$file,
+                        ];
+                    }
+                }else{
+
+                    $list[] = [
+                        'id' => $i,
+                        'name' => $file,
+                        'path' => $folder_path.'\\'.$file,
+                    ];
+
+                }
 
                 $i++;
             }
