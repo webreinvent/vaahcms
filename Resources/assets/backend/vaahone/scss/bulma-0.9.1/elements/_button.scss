@@ -67,10 +67,10 @@ $button-colors: $colors !default;
   }
 
   justify-content: center;
-  padding-bottom: $button-padding-vertical;
+  padding-bottom: $button-padding-bottom;
   padding-left: $button-padding-horizontal;
   padding-right: $button-padding-horizontal;
-  padding-top: $button-padding-vertical;
+  padding-top: $button-padding-top;
   text-align: center;
   white-space: nowrap;
 

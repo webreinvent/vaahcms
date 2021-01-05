@@ -25,6 +25,7 @@ export default {
         let obj = {
             namespace:namespace,
             labelPosition: 'on-border',
+            control_size: 'is-small',
             inputs: {
                 copyright_text_custom: false,
                 copyright_link_custom: false,
