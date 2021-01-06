@@ -8,11 +8,7 @@ use Illuminate\Filesystem\Filesystem;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
-use Illuminate\Support\Facades\Notification;
-use Illuminate\Support\Str;
-use WebReinvent\VaahCms\Entities\Migration;
 use WebReinvent\VaahCms\Entities\Module;
-use WebReinvent\VaahCms\Entities\ModuleMigration;
 use WebReinvent\VaahCms\Entities\Permission;
 use WebReinvent\VaahCms\Entities\Role;
 use WebReinvent\VaahCms\Entities\Theme;
@@ -20,7 +16,7 @@ use WebReinvent\VaahCms\Entities\User;
 use WebReinvent\VaahCms\Libraries\VaahHelper;
 use WebReinvent\VaahCms\Libraries\VaahSetup;
 use WebReinvent\VaahCms\Notifications\TestSmtp;
-use WebReinvent\VaahLaravel\Libraries\VaahArtisan;
+use WebReinvent\VaahExtend\Libraries\VaahArtisan;
 
 
 class SetupController extends Controller
@@ -433,6 +429,10 @@ class SetupController extends Controller
             {
                 return $response;
             }
+
+            //publish laravel mail and notifications
+            VaahArtisan::publish(null, 'laravel-mail');
+            VaahArtisan::publish(null, 'laravel-notifications');
 
             $response =[];
             $response['status'] = 'success';

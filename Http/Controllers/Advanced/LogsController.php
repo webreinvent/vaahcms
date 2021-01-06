@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\File;
-use WebReinvent\VaahLaravel\Libraries\VaahFiles;
+use WebReinvent\VaahExtend\Libraries\VaahFiles;
 
 class LogsController extends Controller
 {

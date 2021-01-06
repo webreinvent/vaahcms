@@ -631,19 +631,6 @@ class User extends Authenticatable
             'user_id' => $user->id,
         ];
 
-        $content = "<b>This is content</b>";
-
-        //$mail = new OrderShipped();
-        //$content$content$mail = new TestMail('Dynamic Content');
-
-
-        VaahMail::dispatchGenericMail($content, $user);
-
-        //\Mail::to($user)->send($mail);
-
-        //dispatch((new ProcessMails($mail, $user, $content)));
-
-        //\Mail::to($user)->send($mail, $user);
 
         $response = Notification::dispatch($notification, $user, $inputs);
 
