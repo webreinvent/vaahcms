@@ -154,11 +154,15 @@ class VaahSetup{
                         {
                             $env_params = vh_env_file_to_array(base_path($file));
 
-                            $env = trim($env_params['APP_ENV']);
-                            $env_url = trim($env_params['APP_URL']);
+                            if(isset($env_params['APP_ENV']) && isset($env_params['APP_URL']))
+                            {
+                                $env = trim($env_params['APP_ENV']);
+                                $env_url = trim($env_params['APP_URL']);
 
-                            $data['environments'][$env]['env_file'] = trim($file);
-                            $data['environments'][$env]['app_url'] = $env_url;
+                                $data['environments'][$env]['env_file'] = trim($file);
+                                $data['environments'][$env]['app_url'] = $env_url;
+                            }
+
                         }
                     }
                 }

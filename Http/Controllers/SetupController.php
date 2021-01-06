@@ -319,6 +319,7 @@ class SetupController extends Controller
         }*/
 
 
+
         $response = VaahSetup::verifyAppUrl($request);
 
         if($response['status'] == 'failed')
