@@ -31,12 +31,12 @@ export default {
         }
     },
     mounted() {
-
+        //---------------------------------------------------------------------
+        this.$root.$on('eReloadItem', this.getItem);
         //---------------------------------------------------------------------
         document.title = "Log";
         //---------------------------------------------------------------------
         this.onLoad();
-        //---------------------------------------------------------------------
         //---------------------------------------------------------------------
     },
     methods: {
@@ -64,8 +64,6 @@ export default {
                 document.title = "Log - "+this.$route.params.name;
             }
 
-            this.item = null;
-
             let params = {};
 
             let url = this.ajax_url+'/item/'+this.$route.params.name;
@@ -77,7 +75,9 @@ export default {
             this.$Progress.finish();
             if(data){
 
-                console.log('--->', data);
+                if(!data.logs){
+                    this.$router.push({name: 'logs.list'});
+                }
 
                 this.item = data;
             }

@@ -18,13 +18,13 @@
                     <b-tooltip label="Reload" type="is-dark">
                     <b-button type="is-text"
                               class="card-header-icon has-margin-top-5 has-margin-right-5"
-                              icon-left="redo-alt"></b-button>
+                              icon-left="redo-alt" @click="onReload"></b-button>
                     </b-tooltip>
 
 
                     <b-tooltip label="Delete All Logs" type="is-danger">
                     <b-button class="card-header-icon has-margin-top-5  has-margin-right-5"
-                              type="is-text" @click="deleteItem(null)"
+                              type="is-text" @click="deleteAllItem"
                               icon-left="trash"></b-button>
                     </b-tooltip>
 
@@ -74,7 +74,7 @@
 
                                 <b-tooltip label="Delete" type="is-dark">
                                     <b-button size="is-small"
-                                              @click="setActiveItem(props.row)"
+                                              @click="deleteItem(props.row)"
                                               icon-left="trash-alt">
                                     </b-button>
                                 </b-tooltip>

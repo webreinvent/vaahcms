@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
 use WebReinvent\VaahLaravel\Libraries\VaahFiles;
 
 class LogsController extends Controller
@@ -40,38 +41,39 @@ class LogsController extends Controller
 
         $folder_path = storage_path('logs');
 
-        $files = VaahFiles::getAllFiles($folder_path);
         $list = [];
-        $i = 1;
 
-        if(count($files) > 0)
-        {
-            foreach ($files as $file)
+        if(File::isDirectory($folder_path)){
+            $files = VaahFiles::getAllFiles($folder_path);
+            $i = 1;
+
+            if(count($files) > 0)
             {
+                foreach ($files as $file)
+                {
 
-                if(isset($request->q) && $request->q){
-                    if(stripos($file,$request->q) !== FALSE){
+                    if(isset($request->q) && $request->q){
+                        if(stripos($file,$request->q) !== FALSE){
+                            $list[] = [
+                                'id' => $i,
+                                'name' => $file,
+                                'path' => $folder_path.'\\'.$file,
+                            ];
+                        }
+                    }else{
+
                         $list[] = [
                             'id' => $i,
                             'name' => $file,
                             'path' => $folder_path.'\\'.$file,
                         ];
+
                     }
-                }else{
 
-                    $list[] = [
-                        'id' => $i,
-                        'name' => $file,
-                        'path' => $folder_path.'\\'.$file,
-                    ];
-
+                    $i++;
                 }
-
-                $i++;
             }
         }
-
-
 
         $response['status'] = 'success';
         $response['data']['list'] = $list;
@@ -128,7 +130,7 @@ class LogsController extends Controller
             }
 
             $response['data']['content'] = $content;
-            $response['data']['logs'] = $logs;
+            $response['data']['logs'] = array_reverse($logs);
 
 
         }
@@ -139,6 +141,7 @@ class LogsController extends Controller
     //----------------------------------------------------------
     public function postActions(Request $request, $action)
     {
+
         $response = [];
 
         $folder_path = storage_path('logs');
@@ -146,11 +149,21 @@ class LogsController extends Controller
         switch ($action)
         {
             //------------------------------------
+            case 'bulk-delete-all':
+
+                VaahFiles::deleteFolder($folder_path);
+
+                $response['status'] = 'success';
+                $response['messages'][] = 'Successfully delete all logs';
+
+            //------------------------------------
             case 'bulk-delete':
 
-                $response = VaahFiles::deleteFolder($folder_path);
+                VaahFiles::deleteFile($request->path);
 
-                break;
+                $response['status'] = 'success';
+                $response['messages'][] = 'Successfully delete';
+
             //------------------------------------
 
         }

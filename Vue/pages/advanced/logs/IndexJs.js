@@ -129,24 +129,42 @@ export default {
             return this.$vaah.hasPermission(this.permissions, slug);
         },
         //---------------------------------------------------------------------
-        deleteItem: function (ids = null) {
+        deleteAllItem: function () {
 
             this.$Progress.start();
 
-            let params = {
-                inputs: ids,
-            };
+            let params = {};
+
+            let url = this.ajax_url+'/actions/bulk-delete-all';
+            this.$vaah.ajax(url, params, this.deleteAllItemAfter);
+
+        },
+        //---------------------------------------------------------------------
+        deleteAllItemAfter: function (data, res) {
+            this.$Progress.finish();
+
+            if(res && res.data && res.data.status && res.data.status === 'success'){
+                this.getList();
+                this.$root.$emit('eReloadItem');
+            }
+        },
+        //---------------------------------------------------------------------
+        deleteItem: function (item) {
+
+            this.$Progress.start();
 
             let url = this.ajax_url+'/actions/bulk-delete';
-            this.$vaah.ajax(url, params, this.deleteItemAfter);
+            this.$vaah.ajax(url, item, this.deleteItemAfter);
 
         },
         //---------------------------------------------------------------------
         deleteItemAfter: function (data, res) {
             this.$Progress.finish();
 
-            console.log('test--->',data);
-
+            if(res && res.data && res.data.status && res.data.status === 'success'){
+                this.getList();
+                this.$root.$emit('eReloadItem');
+            }
         },
         //---------------------------------------------------------------------
         delayedSearch: function()
@@ -160,6 +178,14 @@ export default {
             this.query_string.page = 1;
             this.update('query_string', this.query_string);
 
+        },
+
+        //---------------------------------------------------------------------
+        onReload: function()
+        {
+            this.getList();
+
+            this.$root.$emit('eReloadItem');
         },
 
         //---------------------------------------------------------------------
