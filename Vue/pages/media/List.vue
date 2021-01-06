@@ -18,7 +18,7 @@
                     <header class="card-header">
 
                         <div class="card-header-title">
-                            Media
+                            Media&nbsp;<span v-if="page.list && page.list.total">({{page.list.total}})</span>
                         </div>
 
                         <div class="card-header-buttons">
@@ -255,16 +255,18 @@
 
                                 <hr style="margin-top: 0;"/>
 
-                                <div class="block" v-if="page.list">
-                                    <vh-pagination  :limit="1" :data="page.list"
-                                                    @onPageChange="paginate">
-                                    </vh-pagination>
-                                </div>
-
                             </div>
                             <!--/list-->
 
-
+                            <div class="block" v-if="page.list">
+                                <b-pagination  :total="page.list.total"
+                                               :current.sync="page.list.current_page"
+                                               :per-page="page.list.per_page"
+                                               range-before=3
+                                               range-after=3
+                                               @change="paginate">
+                                </b-pagination>
+                            </div>
                         </div>
                     </div>
                     <!--/content-->

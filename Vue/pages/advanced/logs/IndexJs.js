@@ -11,6 +11,7 @@ export default {
         permissions() {return this.$store.getters['root/state'].permissions},
         page() {return this.$store.getters[namespace+'/state']},
         ajax_url() {return this.$store.getters[namespace+'/state'].ajax_url},
+        query_string() {return this.$store.getters[namespace+'/state'].query_string},
     },
     components:{
         ...GlobalComponents,
@@ -22,13 +23,14 @@ export default {
             namespace: namespace,
             is_list_fetched: null,
             labelPosition: 'on-border',
+            search_delay: null,
+            search_delay_time: 800,
         };
         return obj;
     },
     watch: {
     },
     mounted() {
-
         //---------------------------------------------------------------------
         document.title = "Logs";
         //---------------------------------------------------------------------
@@ -54,9 +56,8 @@ export default {
         //---------------------------------------------------------------------
         getList: function () {
             this.$Progress.start();
-            let params = {};
             let url = this.ajax_url+'/list';
-            this.$vaah.ajax(url, params, this.getListAfter);
+            this.$vaah.ajax(url, this.query_string, this.getListAfter);
         },
         //---------------------------------------------------------------------
         getListAfter: function (data, res) {
@@ -128,27 +129,63 @@ export default {
             return this.$vaah.hasPermission(this.permissions, slug);
         },
         //---------------------------------------------------------------------
-        deleteItem: function () {
+        deleteAllItem: function () {
+
             this.$Progress.start();
+
             let params = {};
-            let url = this.ajax_url+'/list';
-            this.$vaah.ajax(url, params, this.deleteItemAfter);
+
+            let url = this.ajax_url+'/actions/bulk-delete-all';
+            this.$vaah.ajax(url, params, this.deleteAllItemAfter);
+
+        },
+        //---------------------------------------------------------------------
+        deleteAllItemAfter: function (data, res) {
+            this.$Progress.finish();
+
+            if(res && res.data && res.data.status && res.data.status === 'success'){
+                this.getList();
+                this.$root.$emit('eReloadItem');
+            }
+        },
+        //---------------------------------------------------------------------
+        deleteItem: function (item) {
+
+            this.$Progress.start();
+
+            let url = this.ajax_url+'/actions/bulk-delete';
+            this.$vaah.ajax(url, item, this.deleteItemAfter);
+
         },
         //---------------------------------------------------------------------
         deleteItemAfter: function (data, res) {
             this.$Progress.finish();
-            if(data){
-                if(data.list && data.list.length > 0)
-                {
-                    this.update('list_is_empty', false);
-                } else
-                {
-                    this.update('list_is_empty', true);
-                }
 
-                this.update('list', data.list);
+            if(res && res.data && res.data.status && res.data.status === 'success'){
+                this.getList();
+                this.$root.$emit('eReloadItem');
             }
+        },
+        //---------------------------------------------------------------------
+        delayedSearch: function()
+        {
+            let self = this;
+            clearTimeout(this.search_delay);
+            this.search_delay = setTimeout(function() {
+                self.getList();
+            }, this.search_delay_time);
 
+            this.query_string.page = 1;
+            this.update('query_string', this.query_string);
+
+        },
+
+        //---------------------------------------------------------------------
+        onReload: function()
+        {
+            this.getList();
+
+            this.$root.$emit('eReloadItem');
         },
 
         //---------------------------------------------------------------------

@@ -1014,7 +1014,7 @@ class User extends Authenticatable
 
     }
     //-------------------------------------------------
-    public static function getList($request,$roles)
+    public static function getList($request)
     {
 
         if(isset($request['recount']) && $request['recount'] == true)
@@ -1043,12 +1043,16 @@ class User extends Authenticatable
             }
         }
 
-        if(count($roles) > 0){
+        if(isset($request['roles']) && is_array($request['roles']) && count($request['roles']) > 0){
 
-            $list->whereHas('roles', function ($query) use ($roles){
-                $query->where('vh_user_roles.is_active', '=', 1)->whereIn('vh_roles.slug', $roles);
+            $list->whereHas('roles', function ($query) use ($request){
+                $query->where('vh_user_roles.is_active', '=', 1)->whereIn('vh_roles.slug', $request['roles']);
             });
 
+        }elseif(isset($request['roles']) && $request['roles']){
+            $list->whereHas('roles', function ($query) use ($request){
+                $query->where('vh_user_roles.is_active', '=', 1)->where('vh_roles.slug', $request['roles']);
+            });
         }
 
         if(isset($request['q']))
@@ -1248,14 +1252,13 @@ class User extends Authenticatable
         {
             $reg = User::where('id',$id)->withTrashed()->first();
 
-
             if($reg->deleted_at){
                 continue ;
             }
 
             $is_restricted = self::restrictedActions($request->action, $reg->id);
 
-            if($is_restricted)
+            if($is_restricted && $reg->is_active == 1)
             {
                 continue;
             }

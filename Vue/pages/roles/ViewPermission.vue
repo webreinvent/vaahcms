@@ -230,11 +230,13 @@
 
                 </div>
 
-                <div class="block" v-if="items">
-                    <vh-pagination  :limit="1" :data="items.list"
-                                    @onPageChange="getItemPermissions">
-                    </vh-pagination>
-                </div>
+                <b-pagination  :total="items.list.total"
+                               :current.sync="items.list.current_page"
+                               :per-page="items.list.per_page"
+                               range-before=1
+                               range-after=1
+                               @change="getItemPermissions">
+                </b-pagination>
             </div>
             <!--/content-->
 

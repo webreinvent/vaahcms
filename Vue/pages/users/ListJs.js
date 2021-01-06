@@ -235,15 +235,9 @@ export default {
 
             this.$vaah.updateCurrentURL(this.query_string, this.$router);
 
-
             let url = this.ajax_url+'/list';
 
-            let params = {
-                query_string:this.query_string,
-                roles:this.selected_roles
-            };
-
-            this.$vaah.ajax(url, params, this.getListAfter);
+            this.$vaah.ajaxGet(url, this.query_string, this.getListAfter);
         },
         //---------------------------------------------------------------------
         getListAfter: function (data, res) {
@@ -328,9 +322,17 @@ export default {
 
             this.query_string.roles = this.selected_roles;
 
+            let query = {
+                page: this.query_string.page
+            };
+
+            this.$router.replace({ query: query }).catch(err => {});
+
             this.update('query_string',this.query_string);
 
-            this.getList();
+            let url = this.ajax_url+'/list';
+
+            this.$vaah.ajaxGet(url, this.query_string, this.getListAfter);
         },
         //---------------------------------------------------------------------
         setDateRange: function()

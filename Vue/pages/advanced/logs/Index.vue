@@ -18,13 +18,13 @@
                     <b-tooltip label="Reload" type="is-dark">
                     <b-button type="is-text"
                               class="card-header-icon has-margin-top-5 has-margin-right-5"
-                              icon-left="redo-alt"></b-button>
+                              icon-left="redo-alt" @click="onReload"></b-button>
                     </b-tooltip>
 
 
                     <b-tooltip label="Delete All Logs" type="is-danger">
                     <b-button class="card-header-icon has-margin-top-5  has-margin-right-5"
-                              type="is-text"
+                              type="is-text" @click="deleteAllItem"
                               icon-left="trash"></b-button>
                     </b-tooltip>
 
@@ -35,14 +35,20 @@
                 <div class="card-content">
 
                     <b-field>
-                        <b-input placeholder="Search..."
-                                 type="search"
+                        <b-input placeholder="Search"
+                                 type="text"
+                                 icon="search"
                                  expanded
-                                 icon="search">
+                                 @input="delayedSearch"
+                                 @keyup.enter.prevent="delayedSearch"
+                                 v-model="query_string.q">
                         </b-input>
                         <p class="control">
 
-                            <button class="button is-primary">Search</button>
+                            <button class="button is-primary"
+                                    @click="getList">
+                                Search
+                            </button>
 
                         </p>
                     </b-field>
@@ -51,9 +57,6 @@
                     <div v-if="page && page.list &&  is_list_fetched ">
                         <b-table
                             :data="page.list_is_empty ? [] : page.list"
-                            :checkable="true"
-                            :checked-rows.sync="page.bulk_action.selected_items"
-                            checkbox-position="left"
                             :hoverable="true"
                             :row-class="setRowClass">
 
@@ -71,7 +74,7 @@
 
                                 <b-tooltip label="Delete" type="is-dark">
                                     <b-button size="is-small"
-                                              @click="setActiveItem(props.row)"
+                                              @click="deleteItem(props.row)"
                                               icon-left="trash-alt">
                                     </b-button>
                                 </b-tooltip>

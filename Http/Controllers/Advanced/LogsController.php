@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
 use WebReinvent\VaahExtend\Libraries\VaahFiles;
 
 class LogsController extends Controller
@@ -25,7 +26,6 @@ class LogsController extends Controller
     public function getList(Request $request)
     {
 
-
         $permission_slug = 'has-access-of-logs-section';
 
         if(!\Auth::user()->hasPermission($permission_slug))
@@ -41,25 +41,39 @@ class LogsController extends Controller
 
         $folder_path = storage_path('logs');
 
-        $files = VaahFiles::getAllFiles($folder_path);
         $list = [];
-        $i = 1;
 
-        if(count($files) > 0)
-        {
-            foreach ($files as $file)
+        if(File::isDirectory($folder_path)){
+            $files = VaahFiles::getAllFiles($folder_path);
+            $i = 1;
+
+            if(count($files) > 0)
             {
-                $list[] = [
-                    'id' => $i,
-                    'name' => $file,
-                    'path' => $folder_path.'\\'.$file,
-                ];
+                foreach ($files as $file)
+                {
 
-                $i++;
+                    if(isset($request->q) && $request->q){
+                        if(stripos($file,$request->q) !== FALSE){
+                            $list[] = [
+                                'id' => $i,
+                                'name' => $file,
+                                'path' => $folder_path.'\\'.$file,
+                            ];
+                        }
+                    }else{
+
+                        $list[] = [
+                            'id' => $i,
+                            'name' => $file,
+                            'path' => $folder_path.'\\'.$file,
+                        ];
+
+                    }
+
+                    $i++;
+                }
             }
         }
-
-
 
         $response['status'] = 'success';
         $response['data']['list'] = $list;
@@ -116,7 +130,7 @@ class LogsController extends Controller
             }
 
             $response['data']['content'] = $content;
-            $response['data']['logs'] = $logs;
+            $response['data']['logs'] = array_reverse($logs);
 
 
         }
@@ -128,29 +142,28 @@ class LogsController extends Controller
     public function postActions(Request $request, $action)
     {
 
-        $rules = array(
-            'inputs' => 'required',
-        );
-
-        $validator = \Validator::make( $request->all(), $rules);
-        if ( $validator->fails() ) {
-
-            $errors             = errorsToArray($validator->errors());
-            $response['status'] = 'failed';
-            $response['errors'] = $errors;
-            return response()->json($response);
-        }
-
         $response = [];
+
+        $folder_path = storage_path('logs');
 
         switch ($action)
         {
             //------------------------------------
+            case 'bulk-delete-all':
+
+                VaahFiles::deleteFolder($folder_path);
+
+                $response['status'] = 'success';
+                $response['messages'][] = 'Successfully delete all logs';
+
+            //------------------------------------
             case 'bulk-delete':
 
-                $response = Registration::bulkDelete($request);
+                VaahFiles::deleteFile($request->path);
 
-                break;
+                $response['status'] = 'success';
+                $response['messages'][] = 'Successfully delete';
+
             //------------------------------------
 
         }

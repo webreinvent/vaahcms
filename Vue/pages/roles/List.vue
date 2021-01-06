@@ -18,7 +18,7 @@
                     <header class="card-header">
 
                         <div class="card-header-title">
-                            Roles
+                            Roles&nbsp;<span v-if="page.list && page.list.total">({{page.list.total}})</span>
                         </div>
 
                         <div class="card-header-buttons">
@@ -232,6 +232,16 @@
 
                             </div>
                             <!--/list-->
+
+                            <div class="block" v-if="page.list">
+                                <b-pagination  :total="page.list.total"
+                                               :current.sync="page.list.current_page"
+                                               :per-page="page.list.per_page"
+                                               range-before=3
+                                               range-after=3
+                                               @change="paginate">
+                                </b-pagination>
+                            </div>
 
 
                         </div>
