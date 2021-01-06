@@ -1,6 +1,6 @@
 <template>
 
-        <b-navbar v-if="root" class="has-shadow"  :fixed-top="false">
+        <b-navbar v-if="root && root.assets" class="has-shadow"  :fixed-top="false">
             <template slot="brand">
 
                 <b-navbar-item class="has-padding-left-20"

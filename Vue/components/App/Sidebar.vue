@@ -1,6 +1,6 @@
 <template>
     <div class="sidebar-page">
-        <section class="sidebar-layout" v-if="root">
+        <section class="sidebar-layout" v-if="root && root.assets">
             <b-sidebar
                 :fullheight="true"
                 position="fixed"
@@ -9,7 +9,7 @@
                 :reduce="root.is_sidebar_reduced"
                 open
                 type="is-light">
-                <div  v-if="root.assets">
+                <div  >
 
                     <div class="brand" >
 

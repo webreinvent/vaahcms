@@ -70,9 +70,3 @@
 
 </body>
 </html>
-<script>
-    import Section from "../../../../../VueUI/vaahnuxt/buefy/components/Section";
-    export default {
-        components: {Section}
-    }
-</script>
