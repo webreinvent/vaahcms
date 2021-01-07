@@ -34,7 +34,7 @@ class User extends Authenticatable
     //-------------------------------------------------
     protected $fillable = [
         "uuid","email","username","display_name","title",
-        "first_name","middle_name","last_name",
+        "first_name","middle_name","last_name", "password",
         "gender","country_calling_code","phone", "bio",
         "website","timezone",
         "alternate_email","avatar_url","birth",
