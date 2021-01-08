@@ -99,25 +99,26 @@ class PublicController extends Controller
     //----------------------------------------------------------
     public function logout()
     {
-        $is_admin = \Auth::user()->isAdmin();
 
-        \Auth::logout();
+        if(\Auth::check())
+        {
+            \Auth::logout();
 
-        $redirect_value = Setting::where('key','redirect_after_backend_logout')->first()->value;
+            $redirect_value = config('settings.global.redirect_after_backend_logout');
 
-        if($is_admin){
             if($redirect_value == 'frontend'){
                 return redirect('/');
             }elseif($redirect_value == 'custom'){
-                $redirect_url = Setting::where('key','redirect_after_backend_logout_url')->first()->value;
-                if($redirect_url){
-                    return redirect($redirect_url);
+                $redirect_value = config('settings.global.redirect_after_backend_logout_url');
+                if($redirect_value){
+                    return redirect($redirect_value);
                 }
             }
 
         }
 
         return redirect()->route('vh.backend');
+
     }
     //----------------------------------------------------------
     //----------------------------------------------------------
