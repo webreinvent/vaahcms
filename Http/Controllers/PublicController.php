@@ -99,26 +99,30 @@ class PublicController extends Controller
     //----------------------------------------------------------
     public function logout()
     {
-
-        if(\Auth::check())
+        if(!\Auth::check())
         {
-            \Auth::logout();
-
-            $redirect_value = config('settings.global.redirect_after_backend_logout');
-
-            if($redirect_value == 'frontend'){
-                return redirect('/');
-            }elseif($redirect_value == 'custom'){
-                $redirect_value = config('settings.global.redirect_after_backend_logout_url');
-                if($redirect_value){
-                    return redirect($redirect_value);
-                }
-            }
-
+            return redirect()->route('vh.backend');
         }
 
-        return redirect()->route('vh.backend');
+        \Auth::logout();
 
+        $redirect_value = config('settings.global.redirect_after_backend_logout');
+
+        if(!isset($redirect_value))
+        {
+            return redirect()->route('vh.backend');
+        }
+
+        $redirect_value_url = '/';
+
+        if($redirect_value != 'frontend'){
+            $redirect_value_custom = config('settings.global.redirect_after_backend_logout_url');
+            if(isset($redirect_value_custom) && !empty($redirect_value_custom))
+            {
+                $redirect_value_url = $redirect_value_custom;
+            }
+        }
+        return redirect($redirect_value_url);
     }
     //----------------------------------------------------------
     //----------------------------------------------------------
