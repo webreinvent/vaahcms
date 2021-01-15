@@ -97,6 +97,7 @@
                                 max_size="200KB"
                                 label="Upload user avatar"
                                 aspect_ratio="1:1"
+                                :upload_url="root.assets.urls.upload"
                                 @afterUpload="storeAvatar"/>
 
                             <br/>

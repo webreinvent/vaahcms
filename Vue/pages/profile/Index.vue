@@ -45,6 +45,7 @@
                                     <AvatarUploader
                                         max_size="200KB"
                                         aspect_ratio="1:1"
+                                        :upload_url="root.assets.urls.upload"
                                         @afterUpload="storeAvatar"/>
 
                                     <br/>

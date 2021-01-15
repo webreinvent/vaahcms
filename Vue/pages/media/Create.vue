@@ -89,6 +89,7 @@
 
 
                     <MediaUploader
+                        :upload_url="root.assets.urls.upload"
                         :file_name="new_item.name"
                         :show_allowed_types="false"
                         :instant_upload="true"
