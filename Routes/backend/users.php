@@ -16,7 +16,7 @@ Route::group(
         Route::post('/create', 'UsersController@postCreate')
             ->name('backend.vaah.users.create');
         //---------------------------------------------------------
-        Route::post('/list', 'UsersController@getList')
+        Route::any('/list', 'UsersController@getList')
             ->name('backend.vaah.users.list');
         //---------------------------------------------------------
         Route::get('/item/{id}', 'UsersController@getItem')

@@ -464,20 +464,14 @@ class User extends Authenticatable
 
         //restricted actions on logged in users
         $result = false;
-        if($user_id == \Auth::user()->id)
+        if($user_id === \Auth::user()->id)
         {
             switch ($action_type)
             {
                 //------------------------
-                case 'bulk-change-status':
-                    $result = true;
-                    break;
-                //------------------------
                 case 'bulk-trash':
-                    $result = true;
-                    break;
-                //------------------------
                 case 'bulk-delete':
+                case 'bulk-change-status':
                     $result = true;
                     break;
                 //------------------------
@@ -516,7 +510,7 @@ class User extends Authenticatable
         return $result;
     }
     //-------------------------------------------------
-    public static function beforeUserActionValidation($request)
+    public static function beforeUserActionValidation($request): array
     {
         //check if already logged in
         if (\Auth::check())

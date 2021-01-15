@@ -29,7 +29,7 @@ class WelcomeController extends Controller
 
         if(!$is_cms_exists)
         {
-            $errors[] = 'Install and Activate CMS Module.';
+            $errors[] = 'Install and activate a theme.';
             return view($this->theme.'::frontend.welcome')->withErrors($errors);
         }
 
@@ -38,7 +38,7 @@ class WelcomeController extends Controller
         //if CMS module is not installed or active
         if($is_theme_active < 1)
         {
-            $errors[] = 'Install and Activate at least one theme.';
+            $errors[] = 'No theme is marked as active.';
             return view($this->theme.'::frontend.welcome')->withErrors($errors);
         }
 

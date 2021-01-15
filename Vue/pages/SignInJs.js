@@ -1,5 +1,11 @@
+import GlobalComponents from '../vaahvue/helpers/GlobalComponents'
+import Loader from '../vaahvue/reusable/Loader'
+
 import Logo from '../components/Logo.vue';
 import Footer from '../components/Footer.vue';
+
+
+import { ContentLoader } from "vue-content-loader";
 
 export default {
     computed:{
@@ -8,6 +14,8 @@ export default {
         ajax_url() {return this.$store.getters['root/state'].ajax_url},
     },
     components:{
+        ContentLoader,
+        Loader,
         Logo,
         Footer,
     },
