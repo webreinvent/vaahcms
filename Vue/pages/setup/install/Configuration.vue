@@ -4,19 +4,26 @@
     <div v-if="assets">
 
         <!--columns-->
-        <div class="columns">
-            <div class="column is-half is-offset-one-quarter">
+        <div class="columns is-centered ">
+            <div class="column is-8">
 
-                <b-field label="App URL" :label-position="labelPosition">
-                    <b-input v-model="config.env.app_url"
-                             disabled
-                             name="config-app_url"
-                             dusk="config-app_url"
-                    ></b-input>
-                </b-field>
 
-                <b-field grouped>
-                    <b-field label="Env"
+
+                <div class="columns is-multiline">
+
+                    <div class="column is-12">
+                        <b-field label="App URL" :label-position="labelPosition">
+                            <b-input v-model="config.env.app_url"
+                                     disabled
+                                     name="config-app_url"
+                                     dusk="config-app_url"
+                            ></b-input>
+                        </b-field>
+                    </div>
+
+
+                    <div class="column is-4">
+                        <b-field label="Env"
                              expanded
                              :label-position="labelPosition">
                         <b-select placeholder="- Select an environment -"
@@ -34,119 +41,138 @@
 
 
                         <b-input v-if="config.env.app_env == 'custom'"
+                                 class="has-margin-top-5"
                             placeholder="Env File Name"
                                  v-model="config.env.app_env_custom"></b-input>
 
-                    </b-field>
+                        </b-field>
+                    </div>
 
-                    <b-field label="Debug" expanded
+                    <div class="column is-4">
+                        <b-field label="Debug" expanded
                              :label-position="labelPosition">
-                        <b-select placeholder="- Select debug status -"
-                                  expanded
-                                  name="config-db_connection"
-                                  dusk="config-db_connection"
-                                  v-model="config.env.app_debug">
-                            <option value="">- Select debug status -</option>
-                            <option value="true">True</option>
-                            <option value="false">False</option>
-                        </b-select>
-                    </b-field>
-
-                    <b-field label="Timezone"
-                             expanded
-                             :label-position="labelPosition">
-                        {{config.env.app_timezones}}
-                        <AutoCompleteTimeZone
-                            :options="page.assets.timezones"
-                            :open_on_focus="true"
-                            :selected_value="config.env.app_timezones"
-                            @onSelect="setTimeZone"
-                        />
-                    </b-field>
-                </b-field>
-
-                <b-field label="App/Website Name" :label-position="labelPosition">
-                    <b-input v-model="config.env.app_name"
-                             name="config-app_name"
-                             dusk="config-app_name"
-                    ></b-input>
-                </b-field>
+                            <b-select placeholder="- Select debug status -"
+                                      expanded
+                                      name="config-db_connection"
+                                      dusk="config-db_connection"
+                                      v-model="config.env.app_debug">
+                                <option value="">- Select debug status -</option>
+                                <option value="true">True</option>
+                                <option value="false">False</option>
+                            </b-select>
+                        </b-field>
+                    </div>
 
 
-                <hr>
-
-                <b-field grouped>
-
-                    <b-field label="Database Type" expanded
-                             :label-position="labelPosition">
-                        <b-select placeholder="- Select Database Type -"
-                                  expanded
-                                  name="config-db_connection"
-                                  dusk="config-db_connection"
-                                  v-model="config.env.db_connection">
-                            <option value="">- Select Database Type -</option>
-                            <option v-for="item in page.assets.database_types"
-                                    :value="item.slug"
-                            >{{item.name}}</option>
-                        </b-select>
-                    </b-field>
-
-                    <b-field label="Database Host" expanded
-                             :label-position="labelPosition">
-                        <b-input v-model="config.env.db_host"
+                    <div class="column is-4">
+                        <b-field label="Timezone"
                                  expanded
-                                 name="config-db_host"
-                                 dusk="config-db_host"
-                        ></b-input>
-                    </b-field>
+                                 :label-position="labelPosition">
+                            <AutoCompleteTimeZone
+                                :options="page.assets.timezones"
+                                :open_on_focus="true"
+                                :selected_value="config.env.app_timezone"
+                                @onSelect="setTimeZone"
+                            />
+                        </b-field>
+                    </div>
 
+                    <div class="column is-12">
+                        <b-field label="App/Website Name" :label-position="labelPosition">
+                            <b-input v-model="config.env.app_name"
+                                     name="config-app_name"
+                                     dusk="config-app_name"
+                            ></b-input>
+                        </b-field>
+                    </div>
 
+                    <div class="column is-4">
+                        <b-field label="Database Type" expanded
+                                 :label-position="labelPosition">
+                            <b-select placeholder="- Select Database Type -"
+                                      expanded
+                                      name="config-db_connection"
+                                      dusk="config-db_connection"
+                                      v-model="config.env.db_connection">
+                                <option value="">- Select Database Type -</option>
+                                <option v-for="item in page.assets.database_types"
+                                        :value="item.slug"
+                                >{{item.name}}</option>
+                            </b-select>
+                        </b-field>
+                    </div>
 
-                    <b-field label="Database Port" expanded
-                             :label-position="labelPosition">
-                        <b-input v-model="config.env.db_port"
+                    <div class="column is-4">
+                        <b-field label="Database Host" expanded
+                                 :label-position="labelPosition">
+                            <b-input v-model="config.env.db_host"
+                                     expanded
+                                     name="config-db_host"
+                                     dusk="config-db_host"
+                            ></b-input>
+                        </b-field>
+                    </div>
+
+                    <div class="column is-4">
+                        <b-field label="Database Port" expanded
+                                 :label-position="labelPosition">
+                            <b-input v-model="config.env.db_port"
+                                     expanded
+                                     name="config-db_port"
+                                     dusk="config-db_port"
+                            ></b-input>
+                        </b-field>
+                    </div>
+
+                    <div class="column is-4">
+                        <b-field label="Database Name"
                                  expanded
-                                 name="config-db_port"
-                                 dusk="config-db_port"
-                        ></b-input>
-                    </b-field>
-                </b-field>
+                                 :label-position="labelPosition">
+                            <b-input v-model="config.env.db_database"
+                                     expanded
+                                     class="has-margin-bottom-5"
+                                     name="config-db_database"
+                                     dusk="config-db_database"
+                            ></b-input>
+                        </b-field>
+                    </div>
 
-
-                <b-field grouped>
-                    <b-field label="Database Name"
-                             expanded
-                             :label-position="labelPosition">
-                        <b-input v-model="config.env.db_database"
+                    <div class="column is-4">
+                        <b-field label="Database Username"
                                  expanded
-                                 name="config-db_database"
-                                 dusk="config-db_database"
-                        ></b-input>
-                    </b-field>
+                                 class="has-margin-bottom-5"
+                                 :label-position="labelPosition">
+                            <b-input v-model="config.env.db_username"
+                                     expanded
+                                     name="config-db_username"
+                                     dusk="config-db_username"
+                            ></b-input>
+                        </b-field>
+                    </div>
 
-                    <b-field label="Database Username"
-                             expanded
-                             :label-position="labelPosition">
-                        <b-input v-model="config.env.db_username"
-                                 expanded
-                                 name="config-db_username"
-                                 dusk="config-db_username"
-                        ></b-input>
-                    </b-field>
 
-                    <b-field label="Database Username Password"
-                             expanded
-                             :label-position="labelPosition">
-                        <b-input v-model="config.env.db_password"
+                    <div class="column is-4">
+                        <b-field label="Database Username Password"
                                  expanded
-                                 password-reveal
-                                 type="password"
-                                 autocomplete="new-password"
-                                 name="config-db_password"
-                                 dusk="config-db_password"
-                        ></b-input>
-                    </b-field>
-                </b-field>
+                                 class="has-margin-bottom-5"
+                                 :label-position="labelPosition">
+                            <b-input v-model="config.env.db_password"
+                                     expanded
+                                     password-reveal
+                                     type="password"
+                                     autocomplete="new-password"
+                                     name="config-db_password"
+                                     dusk="config-db_password"
+                            ></b-input>
+                        </b-field>
+                    </div>
+
+
+
+
+
+                </div>
+
 
                 <b-button type="is-success"
                           v-if="config.env.db_is_valid"
@@ -166,116 +192,139 @@
                     Test Database Connection
                 </b-button>
 
-                <hr>
-                <b-field grouped>
-                    <b-field label="Mail Provider" expanded
-                             :label-position="labelPosition">
-                        <b-select placeholder="- Mail provider -"
-                                  expanded
-                                  name="config-mail_encryption"
-                                  dusk="config-mail_encryption"
-                                  @input="setMailConfigurations()"
-                                  v-model="config.env.mail_provider">
-                            <option value="">- Mail provider -</option>
-                            <option v-for="item in page.assets.mail_sample_settings"
-                                    :value="item.slug"
-                            >{{item.name}}</option>
-                        </b-select>
-                    </b-field>
 
-                    <b-field label="Mail Driver" expanded
-                             :label-position="labelPosition">
-                        <b-input v-model="config.env.mail_driver"
-                                 expanded
-                                 name="config-mail_driver"
-                                 dusk="config-mail_driver"
-                        ></b-input>
-                    </b-field>
-
-                    <b-field label="Mail Host" expanded
-                             :label-position="labelPosition">
-                        <b-input v-model="config.env.mail_host"
-                                 expanded
-                                 name="config-mail_host"
-                                 dusk="config-mail_host"
-                        ></b-input>
-                    </b-field>
+                <hr/><br/>
 
 
-                </b-field>
+                <div class="columns is-multiline">
 
-                <b-field grouped>
+                    <div class="column is-4">
+                        <b-field label="Mail Provider" expanded
+                                 :label-position="labelPosition">
+                            <b-select placeholder="- Mail provider -"
+                                      expanded
+                                      name="config-mail_encryption"
+                                      dusk="config-mail_encryption"
+                                      @input="setMailConfigurations()"
+                                      v-model="config.env.mail_provider">
+                                <option value="">- Mail provider -</option>
+                                <option v-for="item in page.assets.mail_sample_settings"
+                                        :value="item.slug"
+                                >{{item.name}}</option>
+                            </b-select>
+                        </b-field>
 
-
-
-                    <b-field label="Mail Port" expanded
-                             :label-position="labelPosition">
-                        <b-input v-model="config.env.mail_port"
-                                 expanded
-                                 name="config-mail_port"
-                                 dusk="config-mail_port"
-                        ></b-input>
-                    </b-field>
-
-                    <b-field label="Mail Username" expanded
-                             :label-position="labelPosition">
-                        <b-input v-model="config.env.mail_username"
-                                 expanded
-                                 name="config-mail_username"
-                                 dusk="config-mail_username"
-                        ></b-input>
-                    </b-field>
-
-                    <b-field label="Mail Username Password" expanded
-                             :label-position="labelPosition">
-                        <b-input v-model="config.env.mail_password"
-                                 expanded
-                                 type="password"
-                                 password-reveal
-                                 autocomplete="new-password"
-                                 name="config-mail_password"
-                                 dusk="config-mail_password"
-                        ></b-input>
-                    </b-field>
+                    </div>
 
 
-                </b-field>
+                    <div class="column is-4">
+                        <b-field label="Mail Driver" expanded
+                                 :label-position="labelPosition">
+                            <b-input v-model="config.env.mail_driver"
+                                     expanded
+                                     name="config-mail_driver"
+                                     dusk="config-mail_driver"
+                            ></b-input>
+                        </b-field>
+                    </div>
+
+
+                    <div class="column is-4">
+                        <b-field label="Mail Host" expanded
+                                 :label-position="labelPosition">
+                            <b-input v-model="config.env.mail_host"
+                                     expanded
+                                     name="config-mail_host"
+                                     dusk="config-mail_host"
+                            ></b-input>
+                        </b-field>
+                    </div>
 
 
 
-                <b-field grouped>
-                    <b-field label="Mail Encryption" expanded
-                             :label-position="labelPosition">
-                        <b-select placeholder="- Select an mail encryption -"
-                                  expanded
-                                  name="config-mail_encryption"
-                                  dusk="config-mail_encryption"
-                                  v-model="config.env.mail_encryption">
-                            <option value="">- Select an mail encryption -</option>
-                            <option v-for="item in page.assets.mail_encryption_types"
-                                    :value="item.slug"
-                            >{{item.name}}</option>
-                        </b-select>
-                    </b-field>
+                    <div class="column is-4">
+                        <b-field label="Mail Port" expanded
+                                 :label-position="labelPosition">
+                            <b-input v-model="config.env.mail_port"
+                                     expanded
+                                     name="config-mail_port"
+                                     dusk="config-mail_port"
+                            ></b-input>
+                        </b-field>
+                    </div>
 
-                    <b-field label="From Name" expanded
-                             :label-position="labelPosition">
-                        <b-input v-model="config.env.mail_from_name"
-                                 expanded
-                                 name="config-mail_from_name"
-                                 dusk="config-mail_from_name"
-                        ></b-input>
-                    </b-field>
-                    <b-field label="From Email Address" expanded
-                             :label-position="labelPosition">
-                        <b-input v-model="config.env.mail_from_address"
-                                 expanded
-                                 type="email"
-                                 name="config-mail_from_address"
-                                 dusk="config-mail_from_address"
-                        ></b-input>
-                    </b-field>
-                </b-field>
+
+                    <div class="column is-4">
+                        <b-field label="Mail Username" expanded
+                                 :label-position="labelPosition">
+                            <b-input v-model="config.env.mail_username"
+                                     expanded
+                                     name="config-mail_username"
+                                     dusk="config-mail_username"
+                            ></b-input>
+                        </b-field>
+                    </div>
+
+
+                    <div class="column is-4">
+                        <b-field label="Mail Username Password" expanded
+                                 :label-position="labelPosition">
+                            <b-input v-model="config.env.mail_password"
+                                     expanded
+                                     type="password"
+                                     password-reveal
+                                     autocomplete="new-password"
+                                     name="config-mail_password"
+                                     dusk="config-mail_password"
+                            ></b-input>
+                        </b-field>
+                    </div>
+
+                    <div class="column is-4">
+                        <b-field label="Mail Encryption" expanded
+                                 :label-position="labelPosition">
+                            <b-select placeholder="- Select an mail encryption -"
+                                      expanded
+                                      name="config-mail_encryption"
+                                      dusk="config-mail_encryption"
+                                      v-model="config.env.mail_encryption">
+                                <option value="">- Select an mail encryption -</option>
+                                <option v-for="item in page.assets.mail_encryption_types"
+                                        :value="item.slug"
+                                >{{item.name}}</option>
+                            </b-select>
+                        </b-field>
+                    </div>
+
+
+                    <div class="column is-4">
+                        <b-field label="From Name" expanded
+                                 :label-position="labelPosition">
+                            <b-input v-model="config.env.mail_from_name"
+                                     expanded
+                                     name="config-mail_from_name"
+                                     dusk="config-mail_from_name"
+                            ></b-input>
+                        </b-field>
+                    </div>
+
+
+                    <div class="column is-4">
+                        <b-field label="From Email Address" expanded
+                                 :label-position="labelPosition">
+                            <b-input v-model="config.env.mail_from_address"
+                                     expanded
+                                     type="email"
+                                     name="config-mail_from_address"
+                                     dusk="config-mail_from_address"
+                            ></b-input>
+                        </b-field>
+                    </div>
+
+
+
+                </div>
+
 
                 <b-button type="is-success"
                           size="is-small"
@@ -292,6 +341,7 @@
                           @click="is_modal_test_mail_active = true">
                     Test Mail Configuration
                 </b-button>
+
 
                 <!--modal-->
                 <b-modal :active.sync="is_modal_test_mail_active">
@@ -324,7 +374,7 @@
                 </b-modal>
                 <!--/modal-->
 
-                <hr>
+                <hr/><br/>
 
                 <div class="level">
                     <div class="level-left">

@@ -4,8 +4,8 @@
     <div v-if="assets">
 
         <!--columns-->
-        <div class="columns">
-            <div class="column is-half is-offset-one-quarter">
+        <div class="columns is-centered ">
+            <div class="column is-8">
 
                 <b-notification type="is-info" aria-close-label="Close notification">
                     This step will will install dependencies.

@@ -1,26 +1,25 @@
 <script src="./IndexJs.js"></script>
 <template>
 
-    <div v-if="assets">
+    <div v-if="root && root.assets && assets">
 
         <!--sections-->
-        <section class="section" v-if="status">
+        <section class="section has-margin-top-40 " >
             <div class="container">
 
                 <div class="columns">
                     <div class="column has-text-centered">
                         <div class="">
-                            <Logo height="40"/>
+                            <Logo :assets="root.assets" height="40"/>
                         </div>
 
                         <VueErrors/>
-
                         <VueMessages/>
                     </div>
                 </div>
 
                 <!--columns-->
-                <div class="columns" v-if="assets.is_installed">
+                <div v-if="assets.is_installed" class="columns" >
                     <div class="column is-half is-offset-one-quarter has-text-centered">
                         <b-notification type="is-success">
                             VaahCMS is successfully setup.
@@ -30,8 +29,10 @@
                 <!--/columns-->
 
                 <!--columns-->
-                <div class="columns" >
-                    <div class="column  is-half is-offset-one-quarter">
+                <div class="columns is-centered has-margin-top-40 has-margin-bottom-40 " >
+                    <div class="column is-8">
+
+
 
                         <div class="columns">
                             <div class="column">
@@ -48,19 +49,25 @@
                                                     </div>
 
                                                     <div class="level-right">
+                                                        <b-tooltip label="Documentation">
                                                         <b-button size="is-small"
                                                                   type="is-light"
+                                                                  tag="a"
+                                                                  href="https://vaah.dev/cms/docs/installation"
+                                                                  target="_blank"
                                                                   rounded
                                                                   class="pull-right"
-                                                                  icon-left="cog">
+                                                                  icon-left="book">
                                                         </b-button>
+                                                        </b-tooltip>
                                                     </div>
 
                                                 </div>
 
                                                 <p>
-                                                    <a href="https://vaah.dev/cms" target="_blank">VaahCMS</a> is a web application development platform shipped
-                                                    with content management system.
+                                                    <a href="https://vaah.dev/cms" target="_blank">VaahCMS</a>
+                                                    is a web application development platform shipped
+                                                    with headless content management system.
                                                 </p>
 
                                                 <p class="has-margin-top-20">

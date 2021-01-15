@@ -1,7 +1,7 @@
 <script src="./IndexJs.js"></script>
 <template>
 
-    <div v-if="assets">
+    <div v-if="root && root.assets && assets">
 
 
         <!--sections-->
@@ -11,7 +11,7 @@
 
                 <div class="columns">
                     <div class="column has-text-centered">
-                        <Logo/>
+                        <Logo :assets="root.assets" height="40"/>
 
                         <VueErrors/>
 
@@ -21,8 +21,8 @@
 
 
                 <!--columns-->
-                <div class="columns">
-                    <div class="column is-half is-offset-one-quarter has-text-centered">
+                <div class="columns is-centered ">
+                    <div class="column is-8 has-text-centered">
 
                         <h3 class="title is-3">Install VaahCMS</h3>
 
@@ -43,7 +43,7 @@
                 </div>
                 <!--/columns-->
 
-                <hr/>
+                <hr/><br/>
 
                 <router-view></router-view>
 
