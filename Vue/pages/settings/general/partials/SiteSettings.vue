@@ -39,8 +39,9 @@
                                              type="text"></b-input>
                                     <b-tooltip label="Copy Code Snippet" type="is-dark">
                                     <p class="control">
-
-                                            <b-button icon-left="copy"></b-button>
+                                            <b-button icon-left="copy"
+                                                      @click="copySetting('site_title')">
+                                            </b-button>
                                     </p>
                                     </b-tooltip>
                                 </b-field>
@@ -54,7 +55,9 @@
                                          type="textarea"></b-input>
                                 <b-tooltip label="Copy Code Snippet" type="is-dark">
                                 <p class="control">
-                                        <b-button icon-left="copy"></b-button>
+                                    <b-button icon-left="copy"
+                                              @click="copySetting('site_description')">
+                                    </b-button>
                                 </p>
                                 </b-tooltip>
                             </b-field>
@@ -72,9 +75,6 @@
                                 </b-select>
 
                             </b-field>
-
-
-
 
                             <b-field  expanded
                                       label="Search Engine Visibility"
@@ -96,7 +96,9 @@
                                     </b-radio-button>
                                     <b-tooltip label="Copy Code Snippet" type="is-dark">
                                     <p class="control">
-                                            <b-button icon-left="copy"></b-button>
+                                        <b-button icon-left="copy"
+                                                  @click="copySetting('search_engine_visibility')">
+                                        </b-button>
                                     </p>
                                     </b-tooltip>
                                 </b-field>
@@ -126,6 +128,8 @@
                                     </b-radio-button>
                                 </b-field>
 
+
+
                             </b-field>
 
                             <b-field label="Redirect after Frontend Login"
@@ -139,7 +143,9 @@
                                              placeholder="Enter url"></b-input>
                                     <b-tooltip label="Copy Code Snippet" type="is-dark">
                                     <p class="control">
-                                            <b-button icon-left="copy"></b-button>
+                                        <b-button icon-left="copy"
+                                                  @click="copySetting('redirect_after_frontend_login')">
+                                        </b-button>
                                     </p>
                                     </b-tooltip>
                                 </b-field>
@@ -178,7 +184,9 @@
 
                                     <b-tooltip label="Copy Code Snippet" type="is-dark">
                                     <p class="control">
-                                            <b-button icon-left="copy"></b-button>
+                                        <b-button icon-left="copy"
+                                                  @click="copySetting('copyright_text')">
+                                        </b-button>
                                     </p>
                                     </b-tooltip>
                                 </b-field>
@@ -210,7 +218,9 @@
                                     </b-input>
                                     <b-tooltip label="Copy Code Snippet" type="is-dark">
                                     <p class="control">
-                                            <b-button icon-left="copy"></b-button>
+                                        <b-button icon-left="copy"
+                                                  @click="copySetting('copyright_link')">
+                                        </b-button>
                                     </p>
                                     </b-tooltip>
 
@@ -242,7 +252,9 @@
                                     </b-input>
                                     <b-tooltip label="Copy Code Snippet" type="is-dark">
                                     <p class="control">
-                                            <b-button icon-left="copy"></b-button>
+                                            <b-button icon-left="copy"
+                                                      @click="copySetting('copyright_year')">
+                                            </b-button>
                                     </p>
                                     </b-tooltip>
 
@@ -367,13 +379,13 @@
                                     </b-input>
                                     <b-tooltip label="Copy Code Snippet" type="is-dark">
                                     <p class="control" v-if="list.redirect_after_backend_logout === 'custom'">
-                                            <b-button icon-left="copy"></b-button>
+                                            <b-button icon-left="copy"
+                                                      @click="copySetting('redirect_after_backend_logout')">
+                                            </b-button>
                                     </p>
                                     </b-tooltip>
 
-
                                 </b-field>
-
 
                             </b-field>
 

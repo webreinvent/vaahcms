@@ -510,7 +510,7 @@ class User extends Authenticatable
         return $result;
     }
     //-------------------------------------------------
-    public static function beforeUserActionValidation($request): array
+    public static function beforeUserActionValidation($request)
     {
         //check if already logged in
         if (\Auth::check())
