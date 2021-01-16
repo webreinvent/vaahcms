@@ -79,10 +79,21 @@
                                     </b-button>
                                 </b-tooltip>
 
-                                <b-tooltip label="View" type="is-dark">
-                                    <b-button size="is-small"
+                                <b-tooltip v-if="props.row.name && props.row.name.split('.')[1]
+                                && props.row.name.split('.')[1] === 'log'"
+                                           label="View" type="is-dark">
+                                    <b-button  size="is-small"
                                               @click="setActiveItem(props.row)"
                                               icon-left="chevron-right">
+                                    </b-button>
+                                </b-tooltip>
+
+                                <b-tooltip v-else label="Download" type="is-dark">
+
+
+                                    <b-button size="is-small"
+                                              @click="downloadFile(props.row.name)"
+                                              icon-left="download">
                                     </b-button>
                                 </b-tooltip>
 

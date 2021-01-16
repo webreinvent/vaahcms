@@ -138,6 +138,20 @@ class LogsController extends Controller
 
         return response()->json($response);
     }
+
+    //----------------------------------------------------------
+    public function downloadFile(Request $request,$file_name)
+    {
+
+        if(!$file_name || !File::exists(storage_path('logs/',$file_name))){
+            return 'No File Found.';
+        }
+
+        $file_path =  storage_path('logs/').$file_name;
+
+        return response()->file($file_path);
+
+    }
     //----------------------------------------------------------
     public function postActions(Request $request, $action)
     {

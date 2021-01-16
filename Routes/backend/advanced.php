@@ -14,6 +14,8 @@ Route::group(
         //---------------------------------------------------------
         Route::post( '/item/{name}', 'LogsController@getItem');
         //---------------------------------------------------------
+        Route::get( '/download-file/{file_name}', 'LogsController@downloadFile');
+        //---------------------------------------------------------
         Route::post( '/actions/{action_name}', 'LogsController@postActions');
 
     });
