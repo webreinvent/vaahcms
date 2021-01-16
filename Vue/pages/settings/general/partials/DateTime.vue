@@ -60,9 +60,10 @@
                                 </b-input>
 
                                 <b-tooltip label="Copy Code Snippet" type="is-dark">
-
                                 <p class="control">
-                                        <b-button icon-left="copy"></b-button>
+                                        <b-button icon-left="copy"
+                                                  @click="copySetting('date_format')"
+                                        ></b-button>
                                 </p>
                                 </b-tooltip>
 
@@ -100,7 +101,9 @@
                                 </b-input>
                                 <b-tooltip label="Copy Code Snippet" type="is-dark">
                                 <p class="control">
-                                        <b-button icon-left="copy"></b-button>
+                                    <b-button icon-left="copy"
+                                              @click="copySetting('time_format_custom')">
+                                    </b-button>
                                 </p>
                                 </b-tooltip>
 
@@ -139,7 +142,9 @@
 
                                 <b-tooltip label="Copy Code Snippet" type="is-dark">
                                 <p class="control">
-                                        <b-button icon-left="copy"></b-button>
+                                    <b-button icon-left="copy"
+                                              @click="copySetting('datetime_format')">
+                                    </b-button>
                                 </p>
                                 </b-tooltip>
 

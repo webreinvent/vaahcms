@@ -45,7 +45,7 @@ export default {
 
     },
     mounted() {
-        document.title = "Generals";
+        document.title = "General Settings";
         //---------------------------------------------------------------------
         this.onLoad();
         //---------------------------------------------------------------------

@@ -1,5 +1,6 @@
 import GlobalComponents from '../../../../vaahvue/helpers/GlobalComponents';
 import TagInputs from '../../../../vaahvue/reusable/TagInputs.vue';
+import copy from "copy-to-clipboard";
 
 let namespace = 'general';
 
@@ -191,6 +192,18 @@ export default {
         storeSiteSettingsAfter: function (data, res) {
             this.$Progress.finish();
         },
+        //---------------------------------------------------------------------
+        copySetting: function (value)
+        {
+            let setting = "config('settings.global."+value+"');";
+            copy(setting);
+            this.$buefy.toast.open({
+                message: 'Copied!',
+                type: 'is-success'
+            });
+        },
+        //---------------------------------------------------------------------
+        //---------------------------------------------------------------------
         //---------------------------------------------------------------------
     }
 }

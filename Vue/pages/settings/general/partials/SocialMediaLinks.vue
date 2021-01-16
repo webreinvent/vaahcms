@@ -47,7 +47,9 @@
                                 <b-tooltip label="Copy Code Snippet" type="is-dark">
 
                                 <p class="control">
-                                        <b-button icon-left="copy"></b-button>
+                                    <b-button icon-left="copy"
+                                              @click="copySetting(link.label)">
+                                    </b-button>
                                 </p>
                                 </b-tooltip>
 

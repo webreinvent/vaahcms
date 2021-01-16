@@ -40,7 +40,9 @@
 
                                 <b-tooltip label="Copy Code Snippet" type="is-dark">
                                 <p class="control">
-                                        <b-button icon-left="copy"></b-button>
+                                    <b-button icon-left="copy"
+                                              @click="copySetting('script_after_head_start')">
+                                    </b-button>
                                 </p>
                                 </b-tooltip>
 
@@ -58,7 +60,9 @@
 
                                 <b-tooltip label="Copy Code Snippet" type="is-dark">
                                 <p class="control">
-                                        <b-button icon-left="copy"></b-button>
+                                    <b-button icon-left="copy"
+                                              @click="copySetting('script_before_head_close')">
+                                    </b-button>
                                 </p>
                                 </b-tooltip>
 
@@ -94,7 +98,9 @@
 
                                 <b-tooltip label="Copy Code Snippet" type="is-dark">
                                 <p class="control">
-                                        <b-button icon-left="copy"></b-button>
+                                    <b-button icon-left="copy"
+                                              @click="copySetting('script_after_body_start')">
+                                    </b-button>
                                 </p>
                                 </b-tooltip>
 
@@ -113,7 +119,9 @@
 
                                 <b-tooltip label="Copy Code Snippet" type="is-dark">
                                 <p class="control">
-                                        <b-button icon-left="copy"></b-button>
+                                    <b-button icon-left="copy"
+                                              @click="copySetting('script_before_body_close')">
+                                    </b-button>
                                 </p>
                                 </b-tooltip>
 

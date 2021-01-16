@@ -66,7 +66,7 @@
 
 
 
-                            <b-field>
+                            <div class="block">
 
                                 <b-field>
                                     <p class="control">
@@ -77,9 +77,14 @@
                                     <p class="control">
                                         <b-button @click="storeTags" type="is-primary">Save</b-button>
                                     </p>
+
                                     <b-tooltip label="Copy Code Snippet" type="is-dark">
                                     <p class="control">
-                                            <b-button type="is-primary" icon-left="copy"></b-button>
+
+                                        <b-button icon-left="copy"
+                                                  type="is-primary"
+                                                  @click="copySetting('meta_tags')">
+                                        </b-button>
                                     </p>
                                     </b-tooltip>
 
@@ -102,7 +107,7 @@
                                     </p>
                                 </b-field>
 
-                            </b-field>
+                            </div>
 
 
 
