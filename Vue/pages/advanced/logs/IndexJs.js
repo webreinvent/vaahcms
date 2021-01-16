@@ -80,7 +80,7 @@ export default {
         setRowClass: function(row, index)
         {
 
-            if(this.page.active_item && row.id == this.page.active_item.id)
+            if(this.page.active_item && row.name == this.page.active_item.name)
             {
                 return 'is-selected';
             }
@@ -131,12 +131,25 @@ export default {
         //---------------------------------------------------------------------
         deleteAllItem: function () {
 
-            this.$Progress.start();
 
             let params = {};
 
             let url = this.ajax_url+'/actions/bulk-delete-all';
-            this.$vaah.ajax(url, params, this.deleteAllItemAfter);
+
+
+            this.$buefy.dialog.confirm({
+                title: 'Deleting record',
+                message: 'Are you sure you want to <b>delete</b> all the record? This action cannot be undone.',
+                confirmText: 'Delete',
+                type: 'is-danger',
+                hasIcon: true,
+                onConfirm: function () {
+                    this.$Progress.start();
+
+
+                    this.$vaah.ajax(url, params, this.deleteAllItemAfter);
+                }
+            });
 
         },
         //---------------------------------------------------------------------
@@ -151,10 +164,25 @@ export default {
         //---------------------------------------------------------------------
         deleteItem: function (item) {
 
-            this.$Progress.start();
+
 
             let url = this.ajax_url+'/actions/bulk-delete';
-            this.$vaah.ajax(url, item, this.deleteItemAfter);
+
+
+            this.$buefy.dialog.confirm({
+                title: 'Deleting record',
+                message: 'Are you sure you want to <b>delete</b> the record? This action cannot be undone.',
+                confirmText: 'Delete',
+                type: 'is-danger',
+                hasIcon: true,
+                onConfirm: function () {
+                    this.$Progress.start();
+
+                    this.$vaah.ajax(url, item, this.deleteItemAfter);
+                }
+            });
+
+
 
         },
         //---------------------------------------------------------------------
