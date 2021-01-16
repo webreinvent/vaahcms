@@ -151,7 +151,7 @@ class LogsController extends Controller
 
         $file_path =  storage_path('logs/').$file_name;
 
-        return response()->file($file_path);
+        return response()->download($file_path);
 
     }
     //----------------------------------------------------------
@@ -162,6 +162,9 @@ class LogsController extends Controller
 
         $folder_path = storage_path('logs');
 
+        $response['status'] = 'success';
+        $response['data']['message'] = 'success';
+
         switch ($action)
         {
             //------------------------------------
@@ -169,17 +172,18 @@ class LogsController extends Controller
 
                 VaahFiles::deleteFolder($folder_path);
 
-                $response['status'] = 'success';
                 $response['messages'][] = 'Successfully delete all logs';
+
+                break;
 
             //------------------------------------
             case 'bulk-delete':
 
                 VaahFiles::deleteFile($request->path);
 
-                $response['status'] = 'success';
                 $response['messages'][] = 'Successfully delete';
 
+                break;
             //------------------------------------
 
         }

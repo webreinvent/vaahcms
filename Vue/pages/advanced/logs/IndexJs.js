@@ -136,6 +136,7 @@ export default {
 
             let url = this.ajax_url+'/actions/bulk-delete-all';
 
+            let self = this;
 
             this.$buefy.dialog.confirm({
                 title: 'Deleting record',
@@ -144,23 +145,21 @@ export default {
                 type: 'is-danger',
                 hasIcon: true,
                 onConfirm: function () {
-                    this.$Progress.start();
+                    self.$Progress.start();
 
-
-                    this.$vaah.ajax(url, params, this.deleteAllItemAfter);
+                    self.$vaah.ajax(url, params, self.deleteAllItemAfter);
                 }
             });
 
         },
         //---------------------------------------------------------------------
         deleteAllItemAfter: function (data, res) {
-            this.$Progress.finish();
-
-            if(res && res.data && res.data.status && res.data.status === 'success'){
+            if(data && data.message === 'success'){
                 this.getList();
                 this.$root.$emit('eReloadItem');
             }
-        },
+
+            },
         //---------------------------------------------------------------------
         deleteItem: function (item) {
 
@@ -168,6 +167,7 @@ export default {
 
             let url = this.ajax_url+'/actions/bulk-delete';
 
+            let self = this;
 
             this.$buefy.dialog.confirm({
                 title: 'Deleting record',
@@ -176,9 +176,9 @@ export default {
                 type: 'is-danger',
                 hasIcon: true,
                 onConfirm: function () {
-                    this.$Progress.start();
+                    self.$Progress.start();
 
-                    this.$vaah.ajax(url, item, this.deleteItemAfter);
+                    self.$vaah.ajax(url, item, self.deleteItemAfter);
                 }
             });
 
@@ -187,13 +187,12 @@ export default {
         },
         //---------------------------------------------------------------------
         deleteItemAfter: function (data, res) {
-            this.$Progress.finish();
 
-            if(res && res.data && res.data.status && res.data.status === 'success'){
+            if(data && data.message === 'success'){
                 this.getList();
                 this.$root.$emit('eReloadItem');
             }
-        },
+            },
         //---------------------------------------------------------------------
         delayedSearch: function()
         {
