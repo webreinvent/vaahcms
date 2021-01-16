@@ -17,16 +17,21 @@
 
                             <div class="card-header-title">
                                 Environment Variable
-                                <small class="subtitle has-margin-left-5" v-if="env_file"> / {{env_file}}</small>
+                                <b-tag class="has-margin-left-5"
+                                       type="is-dark"
+                                       v-if="env_file"> {{env_file}}</b-tag>
                             </div>
 
                             <div class="card-header-buttons">
                                 <div class="field has-addons is-pulled-right">
+                                    <b-tooltip label="Reload" type="is-dark">
                                     <p  class="control">
                                         <b-button type="is-light"
+                                                  @click="getList"
                                                   icon-left="redo-alt">
                                         </b-button>
                                     </p>
+                                    </b-tooltip>
                                 </div>
                             </div>
 
@@ -45,8 +50,8 @@
                                     <div class="column is-8">
                                         <div class="block has-padding-10">
 
-                                            <div class="block" v-if="list.length > 0" v-for="item in list">
-
+                                            <div class="block" v-if="list.length > 0"
+                                                 v-for="item in list">
 
                                                 <b-field :label-position="labelPosition">
 
@@ -58,18 +63,19 @@
                                                                  :disabled="isDisable(item)"
                                                                  :password-reveal="showRevealButton(item)"
                                                                  v-model="item.value"></b-input>
-
+                                                        <b-tooltip label="Copy" type="is-dark">
                                                         <p class="control">
-                                                            <b-tooltip label="Copy" type="is-dark">
-                                                                <b-button icon-left="copy"></b-button>
-                                                            </b-tooltip>
+                                                                <b-button icon-left="copy"
+                                                                          @click="copy(item.value)"
+                                                                ></b-button>
                                                         </p>
+                                                        </b-tooltip>
+                                                        <b-tooltip label="Delete" type="is-danger">
                                                         <p class="control">
-                                                            <b-tooltip label="Delete" type="is-dark">
                                                                 <b-button @click="removeVariable(item)"
                                                                           icon-left="trash"></b-button>
-                                                            </b-tooltip>
                                                         </p>
+                                                        </b-tooltip>
                                                     </b-field>
 
                                                 </b-field>
@@ -103,13 +109,7 @@
                                         </div>
 
                                     </div>
-                                    <div class="column is-half">
-                                        <div class="block has-padding-10">
 
-
-                                        </div>
-
-                                    </div>
                                 </div>
 
 

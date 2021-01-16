@@ -1,4 +1,5 @@
 import GlobalComponents from '../../../vaahvue/helpers/GlobalComponents';
+import copy from "copy-to-clipboard";
 
 let base_url = document.getElementsByTagName('base')[0].getAttribute("href");
 let ajax_url = base_url+"/backend/vaah/settings/env";
@@ -284,7 +285,14 @@ export default {
             return false;
         },
         //---------------------------------------------------------------------
-
+        copy: function (value)
+        {
+            copy(value);
+            this.$buefy.toast.open({
+                message: 'Copied!',
+                type: 'is-success'
+            });
+        },
         //---------------------------------------------------------------------
     }
 }

@@ -24,7 +24,7 @@
             <div class="block has-margin-top-10 has-padding-10">
 
                 <div class="columns has-background-white-bis  columns-settings">
-                    <div class="column is-half">
+                    <div class="column ">
                         <div class="block has-padding-10">
 
 
@@ -32,7 +32,8 @@
 
                                 <b-field :label="tag.label" :label-position="labelPosition">
 
-                                    <b-select v-model="tag.value.attribute" placeholder="Select attribute">
+                                    <b-select v-model="tag.value.attribute"
+                                              placeholder="Select attribute">
                                         <option
                                             v-for="attr in assets.vh_meta_attributes"
                                             :value="attr.slug"
@@ -54,7 +55,8 @@
                                     <b-tooltip label="Delete" type="is-dark">
 
                                     <p class="control">
-                                            <b-button @click="removeTag(tag)" icon-left="trash"></b-button>
+                                            <b-button @click="removeTag(tag)"
+                                                      icon-left="trash"></b-button>
                                     </p>
                                     </b-tooltip>
 
@@ -66,7 +68,7 @@
 
 
 
-                            <div class="block">
+                            <b-field>
 
                                 <b-field>
                                     <p class="control">
@@ -75,12 +77,12 @@
                                                   icon-left="plus">Add Meta Tag</b-button>
                                     </p>
                                     <p class="control">
-                                        <b-button @click="storeTags" type="is-primary">Save</b-button>
+                                        <b-button @click="storeTags" type="is-primary">
+                                            Save
+                                        </b-button>
                                     </p>
-
                                     <b-tooltip label="Copy Code Snippet" type="is-dark">
                                     <p class="control">
-
                                         <b-button icon-left="copy"
                                                   type="is-primary"
                                                   @click="copySetting('meta_tags')">
@@ -91,7 +93,8 @@
                                 </b-field>
 
                                 <b-field class="has-margin-left-20">
-                                    <b-select v-model="tag_type" placeholder="Select Meta Tags Group">
+                                    <b-select v-model="tag_type"
+                                              placeholder="Select Meta Tags Group">
 
                                         <option value="google-webmaster">
                                             Google Webmaster
@@ -103,19 +106,13 @@
 
                                     </b-select>
                                     <p class="control">
-                                        <b-button @click="generateTags()" type="is-primary">Generate</b-button>
+                                        <b-button @click="generateTags()"
+                                                  type="is-primary">Generate</b-button>
                                     </p>
                                 </b-field>
 
-                            </div>
+                            </b-field>
 
-
-
-                        </div>
-
-                    </div>
-                    <div class="column is-half">
-                        <div class="block has-padding-10">
 
 
                         </div>
