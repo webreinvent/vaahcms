@@ -107,7 +107,9 @@ class LogsController extends Controller
         $response['data']['name'] = $name;
         $response['data']['path'] = $path;
 
-        if(File::exists($path))
+        $file_name_array = explode(".",$name);
+
+        if(File::exists($path) && $file_name_array[1] && $file_name_array[1] == 'log')
         {
 
 

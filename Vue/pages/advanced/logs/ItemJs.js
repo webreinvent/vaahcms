@@ -27,6 +27,7 @@ export default {
     },
     watch: {
         $route(to, from) {
+            this.item = null;
             this.getItem();
         }
     },
