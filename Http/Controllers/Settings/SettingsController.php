@@ -21,6 +21,15 @@ class SettingsController extends Controller
     //----------------------------------------------------------
     public function index()
     {
+
+        if(!\Auth::user()->hasPermission('has-access-of-setting-section'))
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+            return response()->json($response);
+        }
+
         return view($this->theme.'.pages.dashboard');
     }
     //----------------------------------------------------------

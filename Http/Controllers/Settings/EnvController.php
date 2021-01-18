@@ -30,6 +30,14 @@ class EnvController extends Controller
     public function getAssets(Request $request)
     {
 
+        if(!\Auth::user()->hasPermission('has-access-of-setting-section'))
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+            return response()->json($response);
+        }
+
 
         $data['is_installed'] = VaahSetup::isInstalled();
         $data['environments'] = vh_environments();
@@ -49,6 +57,14 @@ class EnvController extends Controller
     public function getList(Request $request)
     {
 
+        if(!\Auth::user()->hasPermission('has-access-of-setting-section'))
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+            return response()->json($response);
+        }
+
         $data = [];
 
         $data['env_file'] = VaahSetup::getActiveEnvFileName();
@@ -60,10 +76,30 @@ class EnvController extends Controller
         return response()->json($response);
 
     }
+    //----------------------------------------------------------
+    public function downloadFile(Request $request,$file_name)
+    {
+        if(!$file_name || !File::exists(base_path('/'.$file_name))){
+            return 'No File Found.';
+        }
+
+        $file_path =  base_path('/'.$file_name);
+
+        return response()->download($file_path);
+
+    }
 
     //----------------------------------------------------------
     public function store(Request $request)
     {
+
+        if(!\Auth::user()->hasPermission('has-access-of-setting-section'))
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+            return response()->json($response);
+        }
 
         $response = VaahSetup::generateEnvFile($request, 'list');
 
