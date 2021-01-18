@@ -18,6 +18,15 @@
 
                 </div>
 
+                <div class="card-header-title" style="flex-grow: inherit">
+                    <b-tooltip label="Download" type="is-dark">
+                        <b-button size="is-small"
+                                  @click="downloadFile(item.name)"
+                                  icon-left="download">
+                        </b-button>
+                    </b-tooltip>
+                </div>
+
             </header>
             <!--/header-->
 

@@ -45,10 +45,16 @@
                         </b-input>
                         <p class="control">
 
-                            <button class="button is-primary"
-                                    @click="getList">
-                                Search
-                            </button>
+                            <b-button type="is-primary"
+                                    icon-right="search">
+                            </b-button>
+
+                        </p>
+                        <p class="control">
+
+                            <b-button v-if="query_string.q" type="is-danger"
+                                    icon-right="minus" @click="query_string.q = ''">
+                            </b-button>
 
                         </p>
                     </b-field>

@@ -52,7 +52,7 @@ class LogsController extends Controller
                 foreach ($files as $file)
                 {
 
-                    if(isset($request->q) && $request->q){
+                    if($request->has('q') && $request->q){
                         if(stripos($file,$request->q) !== FALSE){
                             $list[] = [
                                 'id' => $i,
@@ -144,7 +144,6 @@ class LogsController extends Controller
     //----------------------------------------------------------
     public function downloadFile(Request $request,$file_name)
     {
-
         if(!$file_name || !File::exists(storage_path('logs/',$file_name))){
             return 'No File Found.';
         }
@@ -152,7 +151,6 @@ class LogsController extends Controller
         $file_path =  storage_path('logs/').$file_name;
 
         return response()->download($file_path);
-
     }
     //----------------------------------------------------------
     public function postActions(Request $request, $action)
