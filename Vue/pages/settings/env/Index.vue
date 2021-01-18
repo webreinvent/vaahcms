@@ -24,6 +24,19 @@
 
                             <div class="card-header-buttons">
                                 <div class="field has-addons is-pulled-right">
+                                    <b-tooltip label="Download" type="is-dark">
+                                        <p  class="control">
+                                            <b-button type="is-light"
+                                                      @click="downloadFile(env_file)"
+                                                      icon-left="download">
+                                            </b-button>
+                                        </p>
+                                    </b-tooltip>
+                                </div>
+                            </div>
+
+                            <div class="card-header-buttons">
+                                <div class="field has-addons is-pulled-right">
                                     <b-tooltip label="Reload" type="is-dark">
                                     <p  class="control">
                                         <b-button type="is-light"

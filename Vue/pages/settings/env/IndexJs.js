@@ -293,6 +293,12 @@ export default {
                 type: 'is-success'
             });
         },
+
+        //---------------------------------------------------------------------
+        downloadFile: function(file_name)
+        {
+            window.location.href = this.ajax_url+"/download-file/"+file_name;
+        },
         //---------------------------------------------------------------------
     }
 }

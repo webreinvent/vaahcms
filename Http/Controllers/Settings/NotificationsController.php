@@ -27,6 +27,14 @@ class NotificationsController extends Controller
     public function getAssets(Request $request)
     {
 
+        if(!\Auth::user()->hasPermission('has-access-of-setting-section'))
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+            return response()->json($response);
+        }
+
         $data['notification_variables'] = vh_action('getNotificationVariables', null, 'array');
         $data['notification_actions'] = vh_action('getNotificationActions', null, 'array');
         $data['notifications'] = Notification::getList($request);
@@ -43,6 +51,14 @@ class NotificationsController extends Controller
     //----------------------------------------------------------
     public function getList(Request $request)
     {
+
+        if(!\Auth::user()->hasPermission('has-access-of-setting-section'))
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+            return response()->json($response);
+        }
 
 
         $data = [];
@@ -61,6 +77,15 @@ class NotificationsController extends Controller
     //----------------------------------------------------------
     public function createItem(Request $request)
     {
+
+        if(!\Auth::user()->hasPermission('has-access-of-setting-section'))
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+            return response()->json($response);
+        }
+
         $rules = array(
             'name' => 'required',
         );
@@ -94,6 +119,15 @@ class NotificationsController extends Controller
 
     public function store(Request $request)
     {
+
+        if(!\Auth::user()->hasPermission('has-access-of-setting-section'))
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+            return response()->json($response);
+        }
+
         $rules = array(
             'name' => 'required',
         );
@@ -116,6 +150,15 @@ class NotificationsController extends Controller
     //----------------------------------------------------------
     public function send(Request $request)
     {
+
+        if(!\Auth::user()->hasPermission('has-access-of-setting-section'))
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+            return response()->json($response);
+        }
+
         $rules = array(
             'notification_id' => 'required',
             'user_id' => 'required',
@@ -153,6 +196,15 @@ class NotificationsController extends Controller
     //----------------------------------------------------------
     public function markAsRead(Request $request)
     {
+
+        if(!\Auth::user()->hasPermission('has-access-of-setting-section'))
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+            return response()->json($response);
+        }
+
         $rules = array(
             'id' => 'required',
         );
