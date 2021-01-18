@@ -52,7 +52,47 @@ class LogsController extends Controller
                 foreach ($files as $file)
                 {
 
-                    if($request->has('q') && $request->q){
+                    if($request->has('file_type') && $request->file_type &&  $request->file_type != 'all'){
+
+                        $file_name_array = explode(".",$file);
+
+                        if($request->file_type == 'log' && $file_name_array[1] && $file_name_array[1] == 'log'){
+
+                            if($request->has('q') && $request->q){
+                                if(stripos($file,$request->q) !== FALSE){
+                                    $list[] = [
+                                        'id' => $i,
+                                        'name' => $file,
+                                        'path' => $folder_path.'\\'.$file,
+                                    ];
+                                }
+                            }else{
+                                $list[] = [
+                                    'id' => $i,
+                                    'name' => $file,
+                                    'path' => $folder_path.'\\'.$file,
+                                ];
+                            }
+
+
+                        }elseif($request->file_type == 'other'&& $file_name_array[1] && $file_name_array[1] != 'log'){
+                            if($request->has('q') && $request->q){
+                                if(stripos($file,$request->q) !== FALSE){
+                                    $list[] = [
+                                        'id' => $i,
+                                        'name' => $file,
+                                        'path' => $folder_path.'\\'.$file,
+                                    ];
+                                }
+                            }else{
+                                $list[] = [
+                                    'id' => $i,
+                                    'name' => $file,
+                                    'path' => $folder_path.'\\'.$file,
+                                ];
+                            }
+                        }
+                    }elseif($request->has('q') && $request->q){
                         if(stripos($file,$request->q) !== FALSE){
                             $list[] = [
                                 'id' => $i,
