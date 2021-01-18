@@ -221,6 +221,17 @@ export default {
             window.location.href = this.ajax_url+"/download-file/"+file_name;
         },
 
+
+        //---------------------------------------------------------------------
+        clearSearch: function()
+        {
+            this.query_string.q = null;
+
+            this.update('query_string',this.query_string);
+
+            this.getList();
+        },
+
         //---------------------------------------------------------------------
     }
 }

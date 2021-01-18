@@ -46,14 +46,15 @@
                         <p class="control">
 
                             <b-button type="is-primary"
-                                    icon-right="search">
+                                    icon-right="search"
+                                    @click="getList">
                             </b-button>
 
                         </p>
                         <p class="control">
 
                             <b-button v-if="query_string.q" type="is-danger"
-                                    icon-right="minus" @click="query_string.q = ''">
+                                    icon-right="minus" @click="clearSearch">
                             </b-button>
 
                         </p>
