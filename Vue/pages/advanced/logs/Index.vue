@@ -36,7 +36,7 @@
 
                     <b-field>
                         <b-input placeholder="Search"
-                                 type="text"
+                                 type="search"
                                  icon="search"
                                  expanded
                                  @input="delayedSearch"
@@ -48,36 +48,6 @@
                             <b-button type="is-primary"
                                     icon-right="search"
                                     @click="getList">
-                            </b-button>
-
-                        </p>
-
-                        <p class="control">
-
-                            <b-dropdown aria-role="list" @input="getList" v-model="query_string.file_type">
-                                <template #trigger>
-                                    <b-button type="is-primary">
-                                        <span>{{query_string.file_type.charAt(0).toUpperCase()
-                                            + query_string.file_type.slice(1)}}</span>
-                                    </b-button>
-                                </template>
-
-                                <b-dropdown-item value="all">
-                                   All
-                                </b-dropdown-item>
-                                <b-dropdown-item value="log">
-                                   Log
-                                </b-dropdown-item>
-                                <b-dropdown-item value="other">
-                                   Other
-                                </b-dropdown-item>
-                            </b-dropdown>
-
-                        </p>
-                        <p class="control">
-
-                            <b-button v-if="query_string.q" type="is-danger"
-                                      icon-right="minus" @click="clearSearch">
                             </b-button>
 
                         </p>
@@ -93,8 +63,7 @@
                                 :open-on-focus="open_on_focus"
                                 icon="filter"
                                 placeholder="Filter by Extension"
-                                @input="getList"
-                                @typing="getFilteredTags">
+                                @input="getList">
                         </b-taginput>
                     </b-field>
 
