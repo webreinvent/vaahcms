@@ -52,11 +52,13 @@ class LogsController extends Controller
                 foreach ($files as $file)
                 {
 
-                    if($request->has('file_type') && $request->file_type &&  $request->file_type != 'all'){
+                    if($request->has('file_type') && $request->file_type
+                        &&  $request->file_type != 'all'){
 
                         $file_name_array = explode(".",$file);
 
-                        if($request->file_type == 'log' && $file_name_array[1] && $file_name_array[1] == 'log'){
+                        if($request->file_type == 'log' && count($file_name_array) > 1
+                            && $file_name_array[1] == 'log'){
 
                             if($request->has('q') && $request->q){
                                 if(stripos($file,$request->q) !== FALSE){
@@ -65,6 +67,7 @@ class LogsController extends Controller
                                         'name' => $file,
                                         'path' => $folder_path.'\\'.$file,
                                     ];
+                                    $i++;
                                 }
                             }else{
                                 $list[] = [
@@ -72,43 +75,62 @@ class LogsController extends Controller
                                     'name' => $file,
                                     'path' => $folder_path.'\\'.$file,
                                 ];
+
+                                $i++;
                             }
 
+                            continue;
 
-                        }elseif($request->file_type == 'other'&& $file_name_array[1] && $file_name_array[1] != 'log'){
-                            if($request->has('q') && $request->q){
-                                if(stripos($file,$request->q) !== FALSE){
-                                    $list[] = [
-                                        'id' => $i,
-                                        'name' => $file,
-                                        'path' => $folder_path.'\\'.$file,
-                                    ];
-                                }
-                            }else{
-                                $list[] = [
-                                    'id' => $i,
-                                    'name' => $file,
-                                    'path' => $folder_path.'\\'.$file,
-                                ];
-                            }
                         }
-                    }elseif($request->has('q') && $request->q){
+
+
+                        if($request->file_type == 'other' && count($file_name_array) > 1
+                            && $file_name_array[1] != 'log'){
+                            if($request->has('q') && $request->q){
+                                if(stripos($file,$request->q) !== FALSE){
+                                    $list[] = [
+                                        'id' => $i,
+                                        'name' => $file,
+                                        'path' => $folder_path.'\\'.$file,
+                                    ];
+
+                                    $i++;
+                                }
+                            }else{
+
+                                $list[] = [
+                                    'id' => $i,
+                                    'name' => $file,
+                                    'path' => $folder_path.'\\'.$file,
+                                ];
+
+                                $i++;
+                            }
+
+                            continue;
+                        }
+                        continue;
+                    }
+
+
+                    if($request->has('q') && $request->q){
                         if(stripos($file,$request->q) !== FALSE){
                             $list[] = [
                                 'id' => $i,
                                 'name' => $file,
                                 'path' => $folder_path.'\\'.$file,
                             ];
+                            $i++;
                         }
-                    }else{
-
-                        $list[] = [
-                            'id' => $i,
-                            'name' => $file,
-                            'path' => $folder_path.'\\'.$file,
-                        ];
-
+                        continue;
                     }
+
+                    $list[] = [
+                        'id' => $i,
+                        'name' => $file,
+                        'path' => $folder_path.'\\'.$file,
+                    ];
+
 
                     $i++;
                 }
@@ -116,7 +138,7 @@ class LogsController extends Controller
         }
 
         $response['status'] = 'success';
-        $response['data']['list'] = $list;
+        $response['data']['list'] = array_reverse($list);
 
         return response()->json($response);
     }
