@@ -22,18 +22,17 @@
                                        v-if="env_file"> {{env_file}}</b-tag>
                             </div>
 
-                            <div class="card-header-buttons">
-                                <div class="field has-addons is-pulled-right">
-                                    <b-tooltip label="Reload" type="is-dark">
-                                    <p  class="control">
-                                        <b-button type="is-light"
-                                                  @click="getList"
-                                                  icon-left="redo-alt">
-                                        </b-button>
-                                    </p>
-                                    </b-tooltip>
-                                </div>
-                            </div>
+                            <b-tooltip label="Download" type="is-dark">
+                                <b-button type="is-text"
+                                          class="card-header-icon has-margin-top-5 has-margin-right-5"
+                                          icon-left="download" @click="downloadFile(env_file)"></b-button>
+                            </b-tooltip>
+
+                            <b-tooltip label="Reload" type="is-dark">
+                                <b-button type="is-text"
+                                          class="card-header-icon has-margin-top-5 has-margin-right-5"
+                                          icon-left="redo-alt"  @click="getList"></b-button>
+                            </b-tooltip>
 
                         </header>
                         <!--/header-->

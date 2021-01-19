@@ -28,6 +28,14 @@ class LocalizationController extends Controller
     public function getAssets(Request $request)
     {
 
+        if(!\Auth::user()->hasPermission('has-access-of-setting-section'))
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+            return response()->json($response);
+        }
+
         $lang_list = Language::getLangList();
 
         $response['status'] = 'success';
@@ -46,12 +54,29 @@ class LocalizationController extends Controller
     //----------------------------------------------------------
     public function getList(Request $request)
     {
+
+        if(!\Auth::user()->hasPermission('has-access-of-setting-section'))
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+            return response()->json($response);
+        }
+
         $response = LanguageString::getList($request);
         return response()->json($response);
     }
     //----------------------------------------------------------
     public function generateLanguage(Request $request)
     {
+
+        if(!\Auth::user()->hasPermission('has-access-of-setting-section'))
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+            return response()->json($response);
+        }
 
         LanguageString::syncAndGenerateStrings($request);
 
@@ -66,12 +91,29 @@ class LocalizationController extends Controller
     //----------------------------------------------------------
     public function postStore(Request $request)
     {
+
+        if(!\Auth::user()->hasPermission('has-access-of-setting-section'))
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+            return response()->json($response);
+        }
+
         $response = LanguageString::storeList($request);
         return response()->json($response);
     }
     //----------------------------------------------------------
     public function storeLanguage(Request $request)
     {
+
+        if(!\Auth::user()->hasPermission('has-access-of-setting-section'))
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+            return response()->json($response);
+        }
 
         $response = Language::store($request);
 
@@ -84,6 +126,14 @@ class LocalizationController extends Controller
     public function storeCategory(Request $request)
     {
 
+        if(!\Auth::user()->hasPermission('has-access-of-setting-section'))
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+            return response()->json($response);
+        }
+
         $response = LanguageCategory::store($request);
 
         LanguageString::syncStrings($request);
@@ -94,6 +144,14 @@ class LocalizationController extends Controller
     //----------------------------------------------------------
     public function postActions(Request $request, $action)
     {
+
+        if(!\Auth::user()->hasPermission('has-access-of-setting-section'))
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+            return response()->json($response);
+        }
 
         switch ($action)
         {

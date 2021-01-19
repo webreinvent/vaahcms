@@ -59,6 +59,9 @@ Route::group(
         Route::post( '/list', 'EnvController@getList' )
             ->name( 'vh.backend.settings.env.list' );
         //------------------------------------------------
+        Route::get( '/download-file/{file_name}', 'EnvController@downloadFile')
+            ->name( 'vh.backend.settings.env.download.file' );;
+        //---------------------------------------------------------
         Route::post( '/store', 'EnvController@store' )
             ->name( 'vh.backend.settings.env.store' );
         //------------------------------------------------
