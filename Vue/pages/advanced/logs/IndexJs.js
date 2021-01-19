@@ -22,7 +22,11 @@ export default {
         let obj = {
             namespace: namespace,
             is_list_fetched: null,
-            labelPosition: 'on-border',
+            filtered_extension: ['log','csv','xml','pdf','xlsx'],
+            isSelectOnly: false,
+            tags: [],
+            allow_new: true,
+            open_on_focus: true,
             search_delay: null,
             search_delay_time: 800,
         };
@@ -80,7 +84,7 @@ export default {
         setRowClass: function(row, index)
         {
 
-            if(this.page.active_item && row.id == this.page.active_item.id)
+            if(this.page.active_item && row.name == this.page.active_item.name)
             {
                 return 'is-selected';
             }
@@ -131,41 +135,68 @@ export default {
         //---------------------------------------------------------------------
         deleteAllItem: function () {
 
-            this.$Progress.start();
 
             let params = {};
 
             let url = this.ajax_url+'/actions/bulk-delete-all';
-            this.$vaah.ajax(url, params, this.deleteAllItemAfter);
+
+            let self = this;
+
+            this.$buefy.dialog.confirm({
+                title: 'Deleting record',
+                message: 'Are you sure you want to <b>delete</b> all the record? This action cannot be undone.',
+                confirmText: 'Delete',
+                type: 'is-danger',
+                hasIcon: true,
+                onConfirm: function () {
+                    self.$Progress.start();
+
+                    self.$vaah.ajax(url, params, self.deleteAllItemAfter);
+                }
+            });
 
         },
         //---------------------------------------------------------------------
         deleteAllItemAfter: function (data, res) {
-            this.$Progress.finish();
-
-            if(res && res.data && res.data.status && res.data.status === 'success'){
+            if(data && data.message === 'success'){
                 this.getList();
                 this.$root.$emit('eReloadItem');
             }
-        },
+
+            },
         //---------------------------------------------------------------------
         deleteItem: function (item) {
 
-            this.$Progress.start();
+
 
             let url = this.ajax_url+'/actions/bulk-delete';
-            this.$vaah.ajax(url, item, this.deleteItemAfter);
+
+            let self = this;
+
+            this.$buefy.dialog.confirm({
+                title: 'Deleting record',
+                message: 'Are you sure you want to <b>delete</b> the record? This action cannot be undone.',
+                confirmText: 'Delete',
+                type: 'is-danger',
+                hasIcon: true,
+                onConfirm: function () {
+                    self.$Progress.start();
+
+                    self.$vaah.ajax(url, item, self.deleteItemAfter);
+                }
+            });
+
+
 
         },
         //---------------------------------------------------------------------
         deleteItemAfter: function (data, res) {
-            this.$Progress.finish();
 
-            if(res && res.data && res.data.status && res.data.status === 'success'){
+            if(data && data.message === 'success'){
                 this.getList();
                 this.$root.$emit('eReloadItem');
             }
-        },
+            },
         //---------------------------------------------------------------------
         delayedSearch: function()
         {
@@ -186,6 +217,23 @@ export default {
             this.getList();
 
             this.$root.$emit('eReloadItem');
+        },
+
+        //---------------------------------------------------------------------
+        downloadFile: function(file_name)
+        {
+            window.location.href = this.ajax_url+"/download-file/"+file_name;
+        },
+
+
+        //---------------------------------------------------------------------
+        clearSearch: function()
+        {
+            this.query_string.q = null;
+
+            this.update('query_string',this.query_string);
+
+            this.getList();
         },
 
         //---------------------------------------------------------------------

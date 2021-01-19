@@ -108,6 +108,7 @@ class PublicController extends Controller
 
         $redirect_value = config('settings.global.redirect_after_backend_logout');
 
+
         if(!isset($redirect_value))
         {
             return redirect()->route('vh.backend');
@@ -117,11 +118,15 @@ class PublicController extends Controller
 
         if($redirect_value != 'frontend'){
             $redirect_value_custom = config('settings.global.redirect_after_backend_logout_url');
+
+            $redirect_value_url = $redirect_value;
+
             if(isset($redirect_value_custom) && !empty($redirect_value_custom))
             {
                 $redirect_value_url = $redirect_value_custom;
             }
         }
+
         return redirect($redirect_value_url);
     }
     //----------------------------------------------------------

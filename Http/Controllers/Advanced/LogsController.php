@@ -49,34 +49,66 @@ class LogsController extends Controller
 
             if(count($files) > 0)
             {
-                foreach ($files as $file)
-                {
+                foreach ($files as $file) {
 
-                    if(isset($request->q) && $request->q){
-                        if(stripos($file,$request->q) !== FALSE){
-                            $list[] = [
-                                'id' => $i,
-                                'name' => $file,
-                                'path' => $folder_path.'\\'.$file,
-                            ];
+                    if ($request->has('file_type') && $request->file_type
+                        && count($request->file_type) > 0 ) {
+
+                        $file_name_array = explode(".", $file);
+
+                        if (count($file_name_array) > 1
+                            && in_array($file_name_array[1], $request->file_type) ) {
+
+                            if ($request->has('q') && $request->q) {
+                                if (stripos($file, $request->q) !== FALSE) {
+                                    $list[] = [
+                                        'id' => $i,
+                                        'name' => $file,
+                                        'path' => $folder_path . '\\' . $file,
+                                    ];
+                                }
+                            } else {
+                                $list[] = [
+                                    'id' => $i,
+                                    'name' => $file,
+                                    'path' => $folder_path . '\\' . $file,
+                                ];
+                            }
+
+                            $i++;
+
+
                         }
-                    }else{
+                    } elseif ($request->has('q') && $request->q) {
+                        if (stripos($file, $request->q) === FALSE) {
+                            continue;
+                        }
+                        $list[] = [
+                            'id' => $i,
+                            'name' => $file,
+                            'path' => $folder_path . '\\' . $file,
+                        ];
+
+                        $i++;
+                    } else {
 
                         $list[] = [
                             'id' => $i,
                             'name' => $file,
-                            'path' => $folder_path.'\\'.$file,
+                            'path' => $folder_path . '\\' . $file,
                         ];
+
+                        $i++;
 
                     }
 
-                    $i++;
+
                 }
             }
         }
 
         $response['status'] = 'success';
-        $response['data']['list'] = $list;
+        $response['data']['list'] = array_reverse($list);
 
         return response()->json($response);
     }
@@ -107,7 +139,9 @@ class LogsController extends Controller
         $response['data']['name'] = $name;
         $response['data']['path'] = $path;
 
-        if(File::exists($path))
+        $file_name_array = explode(".",$name);
+
+        if(File::exists($path) && $file_name_array[1] && $file_name_array[1] == 'log')
         {
 
 
@@ -138,6 +172,18 @@ class LogsController extends Controller
 
         return response()->json($response);
     }
+
+    //----------------------------------------------------------
+    public function downloadFile(Request $request,$file_name)
+    {
+        if(!$file_name || !File::exists(storage_path('logs/',$file_name))){
+            return 'No File Found.';
+        }
+
+        $file_path =  storage_path('logs/').$file_name;
+
+        return response()->download($file_path);
+    }
     //----------------------------------------------------------
     public function postActions(Request $request, $action)
     {
@@ -146,6 +192,9 @@ class LogsController extends Controller
 
         $folder_path = storage_path('logs');
 
+        $response['status'] = 'success';
+        $response['data']['message'] = 'success';
+
         switch ($action)
         {
             //------------------------------------
@@ -153,17 +202,18 @@ class LogsController extends Controller
 
                 VaahFiles::deleteFolder($folder_path);
 
-                $response['status'] = 'success';
                 $response['messages'][] = 'Successfully delete all logs';
+
+                break;
 
             //------------------------------------
             case 'bulk-delete':
 
                 VaahFiles::deleteFile($request->path);
 
-                $response['status'] = 'success';
                 $response['messages'][] = 'Successfully delete';
 
+                break;
             //------------------------------------
 
         }

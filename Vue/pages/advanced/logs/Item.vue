@@ -18,6 +18,12 @@
 
                 </div>
 
+                <b-tooltip label="Download" type="is-dark">
+                    <b-button type="is-text"
+                              class="card-header-icon has-margin-top-5 has-margin-right-5"
+                              icon-left="download" @click="downloadFile(item.name)"></b-button>
+                </b-tooltip>
+
             </header>
             <!--/header-->
 
