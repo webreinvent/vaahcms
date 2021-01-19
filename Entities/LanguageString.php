@@ -144,11 +144,16 @@ class LanguageString extends Model {
         {
             foreach ($languages as $language)
             {
+
                 $insert = [];
                 $insert['vh_lang_language_id'] = $language->id;
                 $insert['vh_lang_category_id'] = $string->vh_lang_category_id;
                 $insert['name'] = $string->name;
-                $insert['slug'] = \Str::slug($string->name, "_");
+                $insert['slug'] = $string->slug;
+
+                if(!$string->slug){
+                    $insert['slug'] = \Str::slug($string->name, "_");
+                }
 
                 $exist = static::where('vh_lang_language_id', $language->id)
                     ->where('vh_lang_category_id', $string->vh_lang_category_id)
