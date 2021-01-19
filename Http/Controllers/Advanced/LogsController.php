@@ -49,90 +49,60 @@ class LogsController extends Controller
 
             if(count($files) > 0)
             {
-                foreach ($files as $file)
-                {
+                foreach ($files as $file) {
 
-                    if($request->has('file_type') && $request->file_type
-                        &&  $request->file_type != 'all'){
+                    if ($request->has('file_type') && $request->file_type
+                        && count($request->file_type) > 0 ) {
 
-                        $file_name_array = explode(".",$file);
+                        $file_name_array = explode(".", $file);
 
-                        if($request->file_type == 'log' && count($file_name_array) > 1
-                            && $file_name_array[1] == 'log'){
+                        if (count($file_name_array) > 1
+                            && in_array($file_name_array[1], $request->file_type) ) {
 
-                            if($request->has('q') && $request->q){
-                                if(stripos($file,$request->q) !== FALSE){
+                            if ($request->has('q') && $request->q) {
+                                if (stripos($file, $request->q) !== FALSE) {
                                     $list[] = [
                                         'id' => $i,
                                         'name' => $file,
-                                        'path' => $folder_path.'\\'.$file,
+                                        'path' => $folder_path . '\\' . $file,
                                     ];
-                                    $i++;
                                 }
-                            }else{
+                            } else {
                                 $list[] = [
                                     'id' => $i,
                                     'name' => $file,
-                                    'path' => $folder_path.'\\'.$file,
+                                    'path' => $folder_path . '\\' . $file,
                                 ];
-
-                                $i++;
                             }
 
-                            continue;
-
-                        }
-
-
-                        if($request->file_type == 'other' && count($file_name_array) > 1
-                            && $file_name_array[1] != 'log'){
-                            if($request->has('q') && $request->q){
-                                if(stripos($file,$request->q) !== FALSE){
-                                    $list[] = [
-                                        'id' => $i,
-                                        'name' => $file,
-                                        'path' => $folder_path.'\\'.$file,
-                                    ];
-
-                                    $i++;
-                                }
-                            }else{
-
-                                $list[] = [
-                                    'id' => $i,
-                                    'name' => $file,
-                                    'path' => $folder_path.'\\'.$file,
-                                ];
-
-                                $i++;
-                            }
-
-                            continue;
-                        }
-                        continue;
-                    }
-
-
-                    if($request->has('q') && $request->q){
-                        if(stripos($file,$request->q) !== FALSE){
-                            $list[] = [
-                                'id' => $i,
-                                'name' => $file,
-                                'path' => $folder_path.'\\'.$file,
-                            ];
                             $i++;
+
+
                         }
-                        continue;
+                    } elseif ($request->has('q') && $request->q) {
+                        if (stripos($file, $request->q) === FALSE) {
+                            continue;
+                        }
+                        $list[] = [
+                            'id' => $i,
+                            'name' => $file,
+                            'path' => $folder_path . '\\' . $file,
+                        ];
+
+                        $i++;
+                    } else {
+
+                        $list[] = [
+                            'id' => $i,
+                            'name' => $file,
+                            'path' => $folder_path . '\\' . $file,
+                        ];
+
+                        $i++;
+
                     }
 
-                    $list[] = [
-                        'id' => $i,
-                        'name' => $file,
-                        'path' => $folder_path.'\\'.$file,
-                    ];
 
-
-                    $i++;
                 }
             }
         }

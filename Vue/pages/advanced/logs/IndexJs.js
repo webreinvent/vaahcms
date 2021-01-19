@@ -22,7 +22,11 @@ export default {
         let obj = {
             namespace: namespace,
             is_list_fetched: null,
-            labelPosition: 'on-border',
+            filtered_extension: ['log','csv','xml','pdf','xlsx'],
+            isSelectOnly: false,
+            tags: [],
+            allow_new: true,
+            open_on_focus: true,
             search_delay: null,
             search_delay_time: 800,
         };

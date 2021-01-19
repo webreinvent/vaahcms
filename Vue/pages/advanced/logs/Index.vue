@@ -84,6 +84,21 @@
                     </b-field>
 
 
+                    <b-field>
+                        <b-taginput
+                                v-model="query_string.file_type"
+                                :data="filtered_extension"
+                                autocomplete
+                                :allow-new="allow_new"
+                                :open-on-focus="open_on_focus"
+                                icon="filter"
+                                placeholder="Filter by Extension"
+                                @input="getList"
+                                @typing="getFilteredTags">
+                        </b-taginput>
+                    </b-field>
+
+
                     <div v-if="page && page.list &&  is_list_fetched ">
                         <b-table
                             :data="page.list_is_empty ? [] : page.list"

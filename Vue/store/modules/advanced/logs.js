@@ -21,7 +21,7 @@ export default {
         query_string: {
             page: 1,
             q: null,
-            file_type: 'all',
+            file_type: [],
         },
         bulk_action:{
             selected_items: [],
