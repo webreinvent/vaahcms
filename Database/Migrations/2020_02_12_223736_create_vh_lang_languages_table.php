@@ -18,7 +18,7 @@ class CreateVhLangLanguagesTable extends Migration
             $table->increments('id');
 
             $table->string('name',150)->nullable();
-            $table->string('locale_code_iso_639')->nullable();
+            $table->string('locale_code_iso_639')->nullable()->index();
             $table->boolean('right_to_left')->nullable()->default(0);
             $table->boolean('default')->nullable()->default(0);
             $table->integer('count_strings')->nullable()->default(0);

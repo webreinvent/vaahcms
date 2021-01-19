@@ -17,13 +17,13 @@ class CreateVhNotificationContentsTable extends Migration
         Schema::create('vh_notification_contents', function (Blueprint $table) {
             $table->increments('id');
 
-            $table->integer('vh_notification_id')->nullable();
+            $table->integer('vh_notification_id')->nullable()->index();
 
             $table->string('via')->nullable()->index();
 
             $table->integer('sort')->nullable();
 
-            $table->string('key')->nullable();
+            $table->string('key')->nullable()->index();
             $table->text('value')->nullable();
             $table->json('meta')->nullable();
 

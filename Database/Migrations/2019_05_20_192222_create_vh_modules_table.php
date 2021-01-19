@@ -15,9 +15,9 @@ class CreateVhModulesTable extends Migration
     {
         Schema::create('vh_modules', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name',150)->nullable();
-            $table->string('title',200)->nullable();
-            $table->string('slug',150)->nullable();
+            $table->string('name',150)->nullable()->index();
+            $table->string('title',200)->nullable()->index();
+            $table->string('slug',150)->nullable()->index();
             $table->string('thumbnail')->nullable();
             $table->string('excerpt')->nullable();
             $table->string('description')->nullable();
@@ -33,7 +33,7 @@ class CreateVhModulesTable extends Migration
             $table->boolean('is_update_available')->nullable();
             $table->boolean('is_assets_published')->nullable();
             $table->dateTime('update_checked_at')->nullable();
-            $table->boolean('is_active')->nullable();
+            $table->boolean('is_active')->nullable()->index();
 
             $table->timestamps();
             $table->softDeletes();

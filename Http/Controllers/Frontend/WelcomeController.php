@@ -44,23 +44,19 @@ class WelcomeController extends Controller
 
         $menu_item = MenuItem::getHomePage();
 
-
         if(!$menu_item)
         {
-            //check if dedicated home page is exist
-            if (view()->exists()) {
-                return view($this->theme.'::frontend.home');
+            //check if dedicated welcome page is exist
+            if (view()->exists($this->theme.'::frontend.welcome')) {
+                return view($this->theme.'::frontend.welcome');
             } else {
-                return view($this->theme.'::frontend.default');
+                return view('vaahcms::frontend.theme-welcome');
             }
         }
 
         $blade = $menu_item->content->theme->slug.'::'.$menu_item->content->template->file_path;
 
-
         return view($blade)->with('content', $menu_item->content);
-
-
     }
     //----------------------------------------------------------
 

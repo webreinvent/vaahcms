@@ -16,15 +16,15 @@ class CreateVhSettingsTable extends Migration
         Schema::create('vh_settings', function (Blueprint $table) {
             $table->increments('id');
 
-            $table->integer('settingable_id')->nullable();
-            $table->string('settingable_type')->nullable();
+            $table->integer('settingable_id')->nullable()->index();
+            $table->string('settingable_type')->nullable()->index();
 
             $table->string('category')->nullable()->index();
 
             $table->string('label')->nullable();
             $table->string('excerpt')->nullable();
-            $table->string('type')->nullable();
-            $table->string('key')->nullable();
+            $table->string('type')->nullable()->index();
+            $table->string('key')->nullable()->index();
             $table->text('value')->nullable();
             $table->json('meta')->nullable();
 
