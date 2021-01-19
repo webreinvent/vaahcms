@@ -24,7 +24,6 @@ include('backend/permissions.php');
 include('backend/users.php');
 include('backend/advanced.php');
 include('backend/jobs.php');
-include('backend/batches.php');
 
 
 

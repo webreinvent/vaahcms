@@ -112,8 +112,7 @@ class Batch extends Model {
         {
 
             $list->where(function ($q) use ($request){
-                $q->where('name', 'LIKE', '%'.$request->q.'%')
-                    ->orWhere('slug', 'LIKE', '%'.$request->q.'%');
+                $q->where('name', 'LIKE', '%'.$request->q.'%');
             });
         }
 

@@ -1,4 +1,4 @@
-<?php namespace WebReinvent\VaahCms\Http\Controllers;
+<?php namespace WebReinvent\VaahCms\Http\Controllers\Advanced;
 
 use Carbon\Carbon;
 use Illuminate\Http\Request;
