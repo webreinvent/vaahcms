@@ -79,6 +79,15 @@ class EnvController extends Controller
     //----------------------------------------------------------
     public function downloadFile(Request $request,$file_name)
     {
+
+        if(!\Auth::user()->hasPermission('has-access-of-setting-section'))
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+            return response()->json($response);
+        }
+
         if(!$file_name || !File::exists(base_path('/'.$file_name))){
             return 'No File Found.';
         }
