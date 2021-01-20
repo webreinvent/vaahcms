@@ -9,7 +9,7 @@
                  :row-class="setRowClass">
 
             <template >
-                <b-table-column field="id" label="ID" v-slot="props">
+                <b-table-column field="id" label="ID" width="10%" v-slot="props">
                     {{ props.row.id }}
                 </b-table-column>
 
@@ -17,7 +17,7 @@
                     {{ props.row.name }}
                 </b-table-column>
 
-                <b-table-column field="total_jobs" v-slot="props" cell-class="pt-4" width="20%" >
+                <b-table-column field="total_jobs" label="Progress" v-slot="props" cell-class="pt-4" width="20%" >
                     <span v-if="props.row.total_jobs > 0">
                         <b-progress size="is-small" type="is-success" format="percent"
                                     :value="(props.row.total_jobs - props.row.pending_jobs
