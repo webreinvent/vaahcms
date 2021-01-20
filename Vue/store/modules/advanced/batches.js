@@ -19,6 +19,9 @@ export default {
             page: 1,
             q: null,
             trashed: null,
+            from: null,
+            to: null,
+            date_filter_by: null,
             filter: null,
         },
 

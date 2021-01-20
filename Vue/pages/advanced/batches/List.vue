@@ -59,11 +59,11 @@
                                                 <option value="">
                                                     - Bulk Actions -
                                                 </option>
-                                                <option
-                                                        v-for="option in page.assets.bulk_actions"
-                                                        :value="option.slug"
-                                                        :key="option.slug">
-                                                    {{ option.name }}
+                                                <option value="bulk-delete">
+                                                    Delete
+                                                </option>
+                                                <option value="bulk-cancel">
+                                                    Cancel
                                                 </option>
                                             </b-select>
 
@@ -144,8 +144,6 @@
 
                                 <div class="level-left">
 
-
-
                                     <div class="level-item">
 
                                         <b-field label="">
@@ -181,24 +179,69 @@
                                 </div>
 
 
-                                <div class="level-right">
+                                <!--right-->
+                                 <div class="level-right">
 
-                                    <div class="level-item">
+                                     <div class="level-item">
 
-                                        <b-field>
-                                            <b-datepicker
-                                                    position="is-bottom-left"
-                                                    placeholder="- Select a dates -"
-                                                    v-model="selected_date"
-                                                    @input="setDateRange"
-                                                    range>
-                                            </b-datepicker>
-                                        </b-field>
+                                         <b-field>
+
+                                             <b-datepicker
+                                                     position="is-bottom-left"
+                                                     placeholder="- Select a dates -"
+                                                     v-model="selected_date"
+                                                     @input="setDateRange"
+                                                     range>
+                                             </b-datepicker>
+
+                                         </b-field>
+
+                                     </div>
+                                     <div class="level-item">
+
+                                         <b-field>
+
+                                             <b-dropdown
+                                                     v-model="query_string.date_filter_by"
+                                                    @input="setDateByFilter">
+                                                 <template #trigger="{ active }">
+                                                     <b-button type="is-primary"
+                                                             :icon-right="active ? 'chevron-up' : 'chevron-down'" >
+                                                         <span v-if="query_string.date_filter_by">
+                                                             {{ $vaah.toLabel(query_string.date_filter_by) }}
+                                                         </span>
+                                                         <span v-else>Created at</span>
+                                                     </b-button>
+                                                 </template>
 
 
-                                    </div>
+                                                 <b-dropdown-item value="created_at">
+                                                     <span>Created at</span>
+                                                 </b-dropdown-item>
 
-                                </div>
+                                                 <b-dropdown-item value="cancelled_at">
+                                                     <span>Cancelled at</span>
+                                                 </b-dropdown-item>
+
+                                                 <b-dropdown-item value="finished_at">
+                                                     <span>Finished at</span>
+                                                 </b-dropdown-item>
+                                             </b-dropdown>
+
+                                         </b-field>
+
+
+
+
+
+
+                                     </div>
+
+                                 </div>
+
+                                <!--/right-->
+
+
 
 
                             </div>

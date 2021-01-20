@@ -104,7 +104,15 @@ class Batch extends Model {
 
         if(isset($request->from) && isset($request->to))
         {
-            $list->betweenDates($request['from'],$request['to']);
+
+            $from = Carbon::parse($request->from)->timestamp;
+            $to = Carbon::parse($request->to)->timestamp;
+
+            if(isset($request->date_filter_by) && $request->date_filter_by){
+                $list->whereBetween( $request->date_filter_by, [$from, $to]);
+            }else{
+                $list->whereBetween( 'created_at', [$from, $to]);
+            }
         }
 
 
