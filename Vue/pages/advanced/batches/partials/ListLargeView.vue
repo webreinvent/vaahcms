@@ -37,7 +37,7 @@
                 <b-table-column field="stats" label="Stats" v-slot="props">
                     <b-button size="is-small"
                               @click="showModal(props.row)"
-                              :type="type"
+                              type="is-default"
                               rounded
                               icon-left="eye">
                         View
