@@ -17,7 +17,7 @@
                     {{ props.row.name }}
                 </b-table-column>
 
-                <b-table-column field="total_jobs" v-slot="props" cell-class="is-vcentered" width="20%" >
+                <b-table-column field="total_jobs" v-slot="props" cell-class="pt-4" width="20%" >
                     <span v-if="props.row.total_jobs > 0">
                         <b-progress size="is-small" type="is-success" :value="(props.row.total_jobs - props.row.pending_jobs - props.row.failed_jobs) * 100 / props.row.total_jobs" show-value></b-progress>
                     </span>
@@ -25,14 +25,6 @@
                         <b-progress size="is-small" type="is-success" :value="0" show-value></b-progress>
                     </span>
                 </b-table-column>
-
-                <!--<b-table-column field="pending_jobs" label="Pending Jobs" v-slot="props">
-                    {{ props.row.pending_jobs }}
-                </b-table-column>
-
-                <b-table-column field="failed_jobs" label="Failed Jobs" v-slot="props">
-                    {{ props.row.failed_jobs }}
-                </b-table-column>-->
 
                 <b-table-column field="stats" label="Stats" v-slot="props">
                     <b-button size="is-small"
