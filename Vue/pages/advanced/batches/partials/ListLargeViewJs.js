@@ -1,4 +1,5 @@
-import ButtonMeta from '../../../../vaahvue/reusable/ButtonMeta'
+import ButtonMeta from '../../../../vaahvue/reusable/ButtonMeta';
+import {ModalProgrammatic as Modal} from 'buefy';
 
 let namespace = 'batches';
 
@@ -139,6 +140,39 @@ export default {
             {
                 this.$Progress.finish();
             }
+        },
+        //---------------------------------------------------------------------
+        showModal: function (item) {
+
+            let props ={
+                width: 640,
+
+                scroll: 'keep',
+                content:  `<div class="card">
+                                    <div class="card-content">
+                                    <pre>
+                                        <table class="table">
+                                          <thead>
+                                            <tr>
+                                              <th>Total Jobs</th>
+                                              <th>Pending Jobs</th>
+                                              <th>Failed Jobs</th>
+                                             </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                  <td>`+item.total_jobs+`</td>
+                                                  <td>`+item.pending_jobs+`</td>
+                                                  <td>`+item.failed_jobs+`</td>
+                                                  </tr>
+                                                  </tbody>
+                                        </table>
+                                        </pre>
+                                        </div>
+                                        </div>`,
+            };
+
+            Modal.open(props);
         },
         //---------------------------------------------------------------------
         //---------------------------------------------------------------------
