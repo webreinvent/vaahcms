@@ -57,7 +57,7 @@ class LogsController extends Controller
                         $file_name_array = explode(".", $file);
 
                         if (count($file_name_array) > 1
-                            && in_array($file_name_array[1], $request->file_type) ) {
+                            && in_array('.'.$file_name_array[1], $request->file_type) ) {
 
                             if ($request->has('q') && $request->q) {
                                 if (stripos($file, $request->q) !== FALSE) {

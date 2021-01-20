@@ -61,13 +61,13 @@
                     <b-field>
                         <b-taginput
                                 v-model="query_string.file_type"
-                                :data="filtered_extension"
+                                :data="given_extension"
                                 autocomplete
                                 :allow-new="allow_new"
                                 :open-on-focus="open_on_focus"
                                 icon="filter"
                                 placeholder="Filter by Extension"
-                                @input="getList">
+                                @input="setFilter">
                         </b-taginput>
                     </b-field>
 

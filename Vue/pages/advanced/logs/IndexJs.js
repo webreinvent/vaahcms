@@ -22,7 +22,7 @@ export default {
         let obj = {
             namespace: namespace,
             is_list_fetched: null,
-            filtered_extension: ['log','csv','xml','pdf','xlsx'],
+            given_extension: ['.log','.csv','.xml','.pdf','.xlsx'],
             isSelectOnly: false,
             tags: [],
             allow_new: true,
@@ -235,7 +235,15 @@ export default {
 
             this.getList();
         },
-
         //---------------------------------------------------------------------
+        setFilter: function(text)
+        {
+            if(text && text.length > 0 && text[text.length-1].charAt(0) !== '.'){
+                let ext = text[text.length-1];
+                this.query_string.file_type.pop();
+                this.query_string.file_type.push('.'+ext);
+            }
+            this.getList();
+        },
     }
 }
