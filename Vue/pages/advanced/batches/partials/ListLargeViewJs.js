@@ -96,6 +96,51 @@ export default {
             return this.$vaah.hasPermission(this.permissions, slug);
         },
         //---------------------------------------------------------------------
+        deleteItem: function (item) {
+
+            let url = this.ajax_url+'/actions/bulk-delete';
+
+            let self = this;
+
+            let id = null;
+
+            if(item){
+                id = item.id;
+            }
+
+            let params = {
+                inputs: [id],
+                data: this.page.bulk_action.data
+            };
+
+            this.$buefy.dialog.confirm({
+                title: 'Deleting record',
+                message: 'Are you sure you want to <b>delete</b> the record? This action cannot be undone.',
+                confirmText: 'Delete',
+                type: 'is-danger',
+                hasIcon: true,
+                onConfirm: function () {
+                    self.$Progress.start();
+
+                    self.$vaah.ajax(url, params, self.deleteItemAfter);
+                }
+            });
+
+
+
+        },
+        //---------------------------------------------------------------------
+        deleteItemAfter: function (data, res) {
+
+            if(data)
+            {
+                this.$emit('eReloadList');
+            } else
+            {
+                this.$Progress.finish();
+            }
+        },
+        //---------------------------------------------------------------------
         //---------------------------------------------------------------------
         //---------------------------------------------------------------------
         //---------------------------------------------------------------------

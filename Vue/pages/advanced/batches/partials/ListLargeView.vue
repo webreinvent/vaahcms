@@ -59,7 +59,7 @@
 
                     <b-tooltip label="Delete" type="is-dark">
                         <b-button size="is-small"
-                                  @click="setActiveItem(props.row)"
+                                  @click="deleteItem(props.row)"
                                   icon-left="trash">
                         </b-button>
                     </b-tooltip>

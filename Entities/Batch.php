@@ -277,10 +277,46 @@ class Batch extends Model {
 
         foreach($request->inputs as $id)
         {
-            $item = self::where('id', $id)->withTrashed()->first();
+            $item = self::where('id', $id)->first();
             if($item)
             {
-                $item->forceDelete();
+                $item->delete();
+            }
+        }
+
+        $response['status'] = 'success';
+        $response['data'] = [];
+        $response['messages'][] = 'Action was successful';
+
+        return $response;
+
+
+    }
+    //-------------------------------------------------
+    public static function bulkCancel($request)
+    {
+
+        if(!$request->has('inputs'))
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = 'Select IDs';
+            return $response;
+        }
+
+        if(!$request->has('data'))
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = 'Select Status';
+            return $response;
+        }
+
+        foreach($request->inputs as $id)
+        {
+            $item = self::where('id', $id)->first();
+            if($item)
+            {
+                $item->cancelled_at = Carbon::now()->timestamp;
+                $item->save();
             }
         }
 

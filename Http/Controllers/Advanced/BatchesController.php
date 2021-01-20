@@ -83,28 +83,15 @@ class BatchesController extends Controller
         {
 
             //------------------------------------
-            case 'bulk-change-status':
-
-                $response = Batch::bulkStatusChange($request);
-
-                break;
-            //------------------------------------
-            case 'bulk-trash':
-
-                $response = Batch::bulkTrash($request);
-
-                break;
-            //------------------------------------
-            case 'bulk-restore':
-
-                $response = Batch::bulkRestore($request);
-
-                break;
-
-            //------------------------------------
             case 'bulk-delete':
 
                 $response = Batch::bulkDelete($request);
+
+                break;
+            //------------------------------------
+            case 'bulk-cancel':
+
+                $response = Batch::bulkCancel($request);
 
                 break;
             //------------------------------------

@@ -144,38 +144,6 @@
 
                                 <div class="level-left">
 
-                                    <div class="level-item">
-
-                                        <b-field label="">
-                                            <b-select placeholder="- Select a status -"
-                                                      v-model="query_string.filter"
-                                                      @input="getList()"
-                                            >
-                                                <option value="">
-                                                    - Select a status -
-                                                </option>
-                                                <option value=01>
-                                                    Active
-                                                </option>
-                                                <option value=10>
-                                                    Inactive
-                                                </option>
-                                            </b-select>
-                                        </b-field>
-
-
-                                    </div>
-
-                                    <div class="level-item">
-                                        <div class="field">
-                                            <b-checkbox v-model="query_string.trashed"
-                                                        @input="getList"
-                                            >
-                                                Include Trashed
-                                            </b-checkbox>
-                                        </div>
-                                    </div>
-
                                 </div>
 
 
@@ -254,11 +222,7 @@
                                 <div class="block" style="margin-bottom: 0px;" >
 
                                     <div v-if="page.list_view">
-                                        <ListLargeView/>
-                                    </div>
-
-                                    <div v-else>
-                                        <ListSmallView/>
+                                        <ListLargeView @eReloadList="getList" />
                                     </div>
 
                                 </div>
