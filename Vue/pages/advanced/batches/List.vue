@@ -62,9 +62,6 @@
                                                 <option value="bulk-delete">
                                                     Delete
                                                 </option>
-                                                <option value="bulk-cancel">
-                                                    Cancel
-                                                </option>
                                             </b-select>
 
 

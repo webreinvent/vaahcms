@@ -23,15 +23,15 @@
                     {{ props.row.connection }}
                 </b-table-column>
 
-                <b-table-column field="payload" label="Payload" v-slot="props">
+                <b-table-column field="payload" label="Payload" width="10%" v-slot="props">
                     <ButtonMeta :value="props.row.payload"/>
                 </b-table-column>
 
-                <b-table-column field="exception" label="Exception" v-slot="props">
+                <b-table-column field="exception" label="Exception" width="10%" v-slot="props">
                     <ButtonMeta :value="props.row.exception"/>
                 </b-table-column>
 
-                <b-table-column field="failed_at" label="Failed At" v-slot="props">
+                <b-table-column field="failed_at" label="Failed At" width="15%" v-slot="props">
                     {{ props.row.failed_at }}
                 </b-table-column>
 

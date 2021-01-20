@@ -162,12 +162,12 @@
                                                         <span>Created at</span>
                                                     </b-dropdown-item>
 
-                                                    <b-dropdown-item value="cancelled_at">
-                                                        <span>Cancelled at</span>
+                                                    <b-dropdown-item value="available_at">
+                                                        <span>Available at</span>
                                                     </b-dropdown-item>
 
-                                                    <b-dropdown-item value="finished_at">
-                                                        <span>Finished at</span>
+                                                    <b-dropdown-item value="reserved_at">
+                                                        <span>Reserved at</span>
                                                     </b-dropdown-item>
                                                 </b-dropdown>
                                             </p>
