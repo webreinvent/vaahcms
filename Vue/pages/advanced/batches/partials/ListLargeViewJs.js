@@ -149,9 +149,14 @@ export default {
 
                 scroll: 'keep',
                 content:  `<div class="card">
-                                    <div class="card-content">
-                                    <pre>
-                                        <table class="table">
+                                <div class='card-header'> 
+                                            <div class="card-header-title 
+                                                        has-text-primary"> 
+                                              Stats of Jobs 
+                                            </div> 
+                                          </div> 
+                                          <div class="card-content"> 
+                                            <table class="table is-bordered">
                                           <thead>
                                             <tr>
                                               <th>Total Jobs</th>
@@ -167,8 +172,8 @@ export default {
                                                   </tr>
                                                   </tbody>
                                         </table>
-                                        </pre>
-                                        </div>
+  
+                                        </div> 
                                         </div>`,
             };
 
