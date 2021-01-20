@@ -18,7 +18,7 @@
         <b-menu-item label="Failed Jobs"
                      icon="times-circle"
                      tag="router-link"
-                     :active="!!($route.path == '/vaah/advanced/failed-jobs')"
+                     :active="!!($route.path == '/vaah/advanced/jobs-failed')"
                      :to="{name: 'jobs.failed.list'}">
         </b-menu-item>
 

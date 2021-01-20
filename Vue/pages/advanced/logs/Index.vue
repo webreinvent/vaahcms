@@ -13,6 +13,10 @@
 
                     <div class="card-header-title">
                         Logs
+
+                        <span v-if="page.list">
+                                 &nbsp; ({{page.list.length}})
+                            </span>
                     </div>
 
                     <b-tooltip label="Reload" type="is-dark">
