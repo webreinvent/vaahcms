@@ -63,28 +63,10 @@
                                                 <option value="">
                                                     - Bulk Actions -
                                                 </option>
-                                                <option
-                                                        v-for="option in page.assets.bulk_actions"
-                                                        :value="option.slug"
-                                                        :key="option.slug">
-                                                    {{ option.name }}
+                                                <option value="bulk-delete">
+                                                    Delete
                                                 </option>
                                             </b-select>
-
-                                            <b-select placeholder="- Select Status -"
-                                                      v-if="page.bulk_action.action == 'bulk-change-status'"
-                                                      v-model="page.bulk_action.data.status">
-                                                <option value="">
-                                                    - Select Status -
-                                                </option>
-                                                <option value=1>
-                                                    Active
-                                                </option>
-                                                <option value=0>
-                                                    Inactive
-                                                </option>
-                                            </b-select>
-
 
                                             <p class="control">
                                                 <button class="button is-primary"
@@ -148,36 +130,6 @@
 
                                 <div class="level-left">
 
-                                    <div class="level-item">
-
-                                        <b-field label="">
-                                            <b-select placeholder="- Select a status -"
-                                                      v-model="query_string.filter"
-                                                      @input="getList()">
-                                                <option value="">
-                                                    - Select a status -
-                                                </option>
-                                                <option value=01>
-                                                    Active
-                                                </option>
-                                                <option value=10>
-                                                    Inactive
-                                                </option>
-                                            </b-select>
-                                        </b-field>
-
-                                    </div>
-
-                                    <div class="level-item">
-                                        <div class="field">
-                                            <b-checkbox v-model="query_string.trashed"
-                                                        @input="getList"
-                                            >
-                                                Include Trashed
-                                            </b-checkbox>
-                                        </div>
-                                    </div>
-
                                 </div>
 
 
@@ -195,6 +147,39 @@
                                             </b-datepicker>
                                         </b-field>
 
+                                    </div>
+                                    <div class="level-item">
+
+                                        <b-field>
+
+                                            <b-dropdown
+                                                    v-model="query_string.date_filter_by"
+                                                    @input="setDateByFilter">
+                                                <template #trigger="{ active }">
+                                                    <b-button type="is-primary"
+                                                              :icon-right="active ? 'chevron-up' : 'chevron-down'" >
+                                                         <span v-if="query_string.date_filter_by">
+                                                             {{ $vaah.toLabel(query_string.date_filter_by) }}
+                                                         </span>
+                                                        <span v-else>Created at</span>
+                                                    </b-button>
+                                                </template>
+
+
+                                                <b-dropdown-item value="created_at">
+                                                    <span>Created at</span>
+                                                </b-dropdown-item>
+
+                                                <b-dropdown-item value="available_at">
+                                                    <span>Available at</span>
+                                                </b-dropdown-item>
+
+                                                <b-dropdown-item value="reserved_at">
+                                                    <span>Reserved at</span>
+                                                </b-dropdown-item>
+                                            </b-dropdown>
+
+                                        </b-field>
 
                                     </div>
 
@@ -211,11 +196,7 @@
                                 <div class="block" style="margin-bottom: 0px;" >
 
                                     <div v-if="page.list_view">
-                                        <ListLargeView/>
-                                    </div>
-
-                                    <div v-else>
-                                        <ListSmallView/>
+                                        <ListLargeView @eReloadList="getList" />
                                     </div>
 
                                 </div>

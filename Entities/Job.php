@@ -75,7 +75,21 @@ class Job extends Model {
 
         if(isset($request->from) && isset($request->to))
         {
-            $list->betweenDates($request['from'],$request['to']);
+            $from = Carbon::parse($request->from)->timestamp;
+            $to = Carbon::parse($request->to)->timestamp;
+
+            if(isset($request->date_filter_by) && $request->date_filter_by){
+                $list->whereBetween( $request->date_filter_by, [$from, $to]);
+            }else{
+                $list->whereBetween( 'created_at', [$from, $to]);
+            }
+        }
+
+        if(isset($request->q))
+        {
+            $list->where(function ($q) use ($request){
+                $q->where('queue', 'LIKE', '%'.$request->q.'%');
+            });
         }
 
         $data['list'] = $list->paginate(config('vaahcms.per_page'));
@@ -225,10 +239,10 @@ class Job extends Model {
 
         foreach($request->inputs as $id)
         {
-            $item = self::where('id', $id)->withTrashed()->first();
+            $item = self::where('id', $id)->first();
             if($item)
             {
-                $item->forceDelete();
+                $item->delete();
             }
         }
 

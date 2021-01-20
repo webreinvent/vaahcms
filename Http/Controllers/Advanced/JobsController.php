@@ -1,4 +1,4 @@
-<?php namespace WebReinvent\VaahCms\Http\Controllers;
+<?php namespace WebReinvent\VaahCms\Http\Controllers\Advanced;
 
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -81,25 +81,6 @@ class JobsController extends Controller
 
         switch ($action)
         {
-
-            //------------------------------------
-            case 'bulk-change-status':
-
-                $response = Job::bulkStatusChange($request);
-
-                break;
-            //------------------------------------
-            case 'bulk-trash':
-
-                $response = Job::bulkTrash($request);
-
-                break;
-            //------------------------------------
-            case 'bulk-restore':
-
-                $response = Job::bulkRestore($request);
-
-                break;
 
             //------------------------------------
             case 'bulk-delete':

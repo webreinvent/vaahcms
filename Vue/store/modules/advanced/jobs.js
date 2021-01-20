@@ -20,6 +20,9 @@ export default {
             q: null,
             trashed: null,
             filter: null,
+            from: null,
+            to: null,
+            date_filter_by: null,
         },
 
     },
