@@ -24,7 +24,7 @@ Route::group(
 
 Route::group(
     [
-        'prefix' => 'backend/batches',
+        'prefix' => 'backend/vaah/advanced/batches',
         'middleware' => ['web', 'has.backend.access'],
         'namespace' => 'WebReinvent\VaahCms\Http\Controllers\Advanced',
     ],
@@ -44,7 +44,7 @@ Route::group(
 
 Route::group(
     [
-        'prefix' => 'backend/jobs',
+        'prefix' => 'backend/vaah/advanced/jobs',
         'middleware' => ['web', 'has.backend.access'],
         'namespace' => 'WebReinvent\VaahCms\Http\Controllers\Advanced',
     ],
@@ -64,7 +64,7 @@ Route::group(
 
 Route::group(
     [
-        'prefix' => 'backend/failed-jobs',
+        'prefix' => 'backend/vaah/advanced/failed-jobs',
         'middleware' => ['web', 'has.backend.access'],
         'namespace' => 'WebReinvent\VaahCms\Http\Controllers\Advanced',
     ],

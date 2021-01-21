@@ -4,7 +4,7 @@ import {VaahHelper as Vaah} from "../../../vaahvue/helpers/VaahHelper";
 let base_url = document.getElementsByTagName('base')[0].getAttribute("href");
 //---------/Variables
 
-let ajax_url = base_url+"/backend/failed-jobs";
+let ajax_url = base_url+"/backend/vaah/advanced/failed-jobs";
 
 
 export default {
