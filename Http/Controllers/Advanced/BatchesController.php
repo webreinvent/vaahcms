@@ -22,6 +22,14 @@ class BatchesController extends Controller
     public function getAssets(Request $request)
     {
 
+        if(!\Auth::user()->hasPermission('has-access-of-advanced-section'))
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+            return response()->json($response);
+        }
+
         $data = [];
         $data['permission'] = [];
 
@@ -34,6 +42,14 @@ class BatchesController extends Controller
     //----------------------------------------------------------
     public function getList(Request $request)
     {
+        if(!\Auth::user()->hasPermission('has-access-of-advanced-section'))
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+            return response()->json($response);
+        }
+
         $response = Batch::getList($request);
         return response()->json($response);
     }
@@ -43,6 +59,15 @@ class BatchesController extends Controller
     //----------------------------------------------------------
     public function postActions(Request $request, $action)
     {
+
+        if(!\Auth::user()->hasPermission('has-access-of-advanced-section'))
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+            return response()->json($response);
+        }
+
         $rules = array(
             'inputs' => 'required',
         );

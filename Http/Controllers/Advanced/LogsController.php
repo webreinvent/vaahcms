@@ -26,16 +26,11 @@ class LogsController extends Controller
     public function getList(Request $request)
     {
 
-        $permission_slug = 'has-access-of-logs-section';
-
-        if(!\Auth::user()->hasPermission($permission_slug))
+        if(!\Auth::user()->hasPermission('has-access-of-advanced-section'))
         {
             $response['status'] = 'failed';
             $response['errors'][] = trans("vaahcms::messages.permission_denied");
-            if(env('APP_DEBUG'))
-            {
-                $response['hint'][] = 'Permission slug: '.$permission_slug;
-            }
+
             return response()->json($response);
         }
 
@@ -117,16 +112,11 @@ class LogsController extends Controller
     public function getItem(Request $request, $name)
     {
 
-        $permission_slug = 'has-access-of-logs-section';
-
-        if(!\Auth::user()->hasPermission($permission_slug))
+        if(!\Auth::user()->hasPermission('has-access-of-advanced-section'))
         {
             $response['status'] = 'failed';
             $response['errors'][] = trans("vaahcms::messages.permission_denied");
-            if(env('APP_DEBUG'))
-            {
-                $response['hint'][] = 'Permission slug: '.$permission_slug;
-            }
+
             return response()->json($response);
         }
 
@@ -176,6 +166,15 @@ class LogsController extends Controller
     //----------------------------------------------------------
     public function downloadFile(Request $request,$file_name)
     {
+
+        if(!\Auth::user()->hasPermission('has-access-of-advanced-section'))
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+            return response()->json($response);
+        }
+
         if(!$file_name || !File::exists(storage_path('logs/',$file_name))){
             return 'No File Found.';
         }
@@ -187,6 +186,14 @@ class LogsController extends Controller
     //----------------------------------------------------------
     public function postActions(Request $request, $action)
     {
+
+        if(!\Auth::user()->hasPermission('has-access-of-advanced-section'))
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+            return response()->json($response);
+        }
 
         $response = [];
 
