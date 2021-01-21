@@ -48,6 +48,7 @@ export default {
     getters:{
         state(state) {return state;},
         ajax_url(state) {return state.ajax_url;},
+        active_item(state) {return state.active_item;},
         assets(state) {return state.assets;},
         filters(state) {return state.filters;},
         query_string(state) {return state.query_string;},

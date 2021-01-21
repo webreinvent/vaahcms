@@ -32,6 +32,19 @@
                                       icon-left="redo-alt"></b-button>
                         </b-tooltip>
 
+                        <b-dropdown position="is-bottom-left">
+                            <template #trigger="{ active }">
+                                <b-button class="card-header-icon has-margin-top-5  has-margin-right-5"
+                                          type="is-text" icon-right="ellipsis-v" >
+                                </b-button>
+                            </template>
+
+                            <b-dropdown-item @click="deleteAllItem">
+                                <span>Delete All</span>
+                            </b-dropdown-item>
+
+                        </b-dropdown>
+
                     </header>
                     <!--/header-->
 
@@ -169,7 +182,7 @@
                                             </b-datepicker>
 
                                             <p class="control">
-                                                <b-dropdown
+                                                <b-dropdown position="is-bottom-left"
                                                         v-model="query_string.date_filter_by"
                                                         @input="setDateByFilter">
                                                     <template #trigger="{ active }">

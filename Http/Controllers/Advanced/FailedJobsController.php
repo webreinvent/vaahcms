@@ -68,24 +68,9 @@ class FailedJobsController extends Controller
             return response()->json($response);
         }
 
-        $rules = array(
-            'inputs' => 'required',
-        );
-
-        $validator = \Validator::make( $request->all(), $rules);
-        if ( $validator->fails() ) {
-
-            $errors             = errorsToArray($validator->errors());
-            $response['status'] = 'failed';
-            $response['errors'] = $errors;
-            return response()->json($response);
-        }
-
         $response = [];
 
         $response['status'] = 'success';
-
-        $inputs = $request->all();
 
         switch ($action)
         {
@@ -94,6 +79,12 @@ class FailedJobsController extends Controller
             case 'bulk-delete':
 
                 $response = FailedJob::bulkDelete($request);
+
+                break;
+            //------------------------------------
+            case 'bulk-delete-all':
+
+                $response = FailedJob::bulkDeleteAll($request);
 
                 break;
             //------------------------------------

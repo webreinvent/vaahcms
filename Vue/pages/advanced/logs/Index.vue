@@ -25,12 +25,18 @@
                               icon-left="redo-alt" @click="onReload"></b-button>
                     </b-tooltip>
 
+                    <b-dropdown position="is-bottom-left">
+                        <template #trigger="{ active }">
+                            <b-button class="card-header-icon has-margin-top-5  has-margin-right-5"
+                                      type="is-text" icon-right="ellipsis-v" >
+                            </b-button>
+                        </template>
 
-                    <b-tooltip label="Delete All Logs" type="is-danger">
-                    <b-button class="card-header-icon has-margin-top-5  has-margin-right-5"
-                              type="is-text" @click="deleteAllItem"
-                              icon-left="trash"></b-button>
-                    </b-tooltip>
+                        <b-dropdown-item @click="deleteAllItem">
+                            <span>Delete All</span>
+                        </b-dropdown-item>
+
+                    </b-dropdown>
 
                 </header>
                 <!--/header-->

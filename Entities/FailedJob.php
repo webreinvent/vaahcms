@@ -143,6 +143,21 @@ class FailedJob extends Model {
 
     }
     //-------------------------------------------------
+
+    //-------------------------------------------------
+    public static function bulkDeleteAll($request)
+    {
+
+        self::truncate();
+
+        $response['status'] = 'success';
+        $response['data'] = [];
+        $response['messages'][] = 'Action was successful';
+
+        return $response;
+
+
+    }
     //-------------------------------------------------
     //-------------------------------------------------
 

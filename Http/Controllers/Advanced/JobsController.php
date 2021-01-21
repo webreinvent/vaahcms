@@ -66,24 +66,9 @@ class JobsController extends Controller
             return response()->json($response);
         }
 
-        $rules = array(
-            'inputs' => 'required',
-        );
-
-        $validator = \Validator::make( $request->all(), $rules);
-        if ( $validator->fails() ) {
-
-            $errors             = errorsToArray($validator->errors());
-            $response['status'] = 'failed';
-            $response['errors'] = $errors;
-            return response()->json($response);
-        }
-
         $response = [];
 
         $response['status'] = 'success';
-
-        $inputs = $request->all();
 
         switch ($action)
         {
@@ -92,6 +77,12 @@ class JobsController extends Controller
             case 'bulk-delete':
 
                 $response = Job::bulkDelete($request);
+
+                break;
+            //------------------------------------
+            case 'bulk-delete-all':
+
+                $response = Job::bulkDeleteAll($request);
 
                 break;
             //------------------------------------

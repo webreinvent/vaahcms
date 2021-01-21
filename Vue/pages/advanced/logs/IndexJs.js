@@ -10,6 +10,7 @@ export default {
         assets() {return this.$store.getters['root/state'].assets},
         permissions() {return this.$store.getters['root/state'].permissions},
         page() {return this.$store.getters[namespace+'/state']},
+        item() {return this.$store.getters[namespace+'/state'].active_item},
         ajax_url() {return this.$store.getters[namespace+'/state'].ajax_url},
         query_string() {return this.$store.getters[namespace+'/state'].query_string},
     },
@@ -23,7 +24,6 @@ export default {
             namespace: namespace,
             is_list_fetched: null,
             given_extension: ['.log','.csv','.xml','.pdf','.xlsx'],
-            isSelectOnly: false,
             tags: [],
             allow_new: true,
             open_on_focus: true,
@@ -158,16 +158,17 @@ export default {
         },
         //---------------------------------------------------------------------
         deleteAllItemAfter: function (data, res) {
+
             if(data && data.message === 'success'){
                 this.getList();
-                this.$root.$emit('eReloadItem');
+                if(this.item){
+                    this.$root.$emit('eReloadItem');
+                }
             }
 
             },
         //---------------------------------------------------------------------
         deleteItem: function (item) {
-
-
 
             let url = this.ajax_url+'/actions/bulk-delete';
 
@@ -194,7 +195,9 @@ export default {
 
             if(data && data.message === 'success'){
                 this.getList();
-                this.$root.$emit('eReloadItem');
+                if(this.item){
+                    this.$root.$emit('eReloadItem');
+                }
             }
             },
         //---------------------------------------------------------------------
