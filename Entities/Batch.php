@@ -68,24 +68,18 @@ class Batch extends Model {
     }
 
     //-------------------------------------------------
-    public function scopeBetweenDates($query, $from, $to)
+    public function scopeBetweenDates($query, $from, $to,$by = 'created_at')
     {
 
         if($from)
         {
-            $from = \Illuminate\Support\Carbon::parse($from)
-                ->startOfDay()
-                ->toDateTimeString();
+            $from = Carbon::parse($from)->timestamp;
         }
-
         if($to)
         {
-            $to = Carbon::parse($to)
-                ->endOfDay()
-                ->toDateTimeString();
+            $to = Carbon::parse($to)->timestamp;
         }
-
-        $query->whereBetween('updated_at',[$from,$to]);
+        $query->whereBetween($by,[$from,$to]);
     }
     //-------------------------------------------------
 
@@ -105,18 +99,15 @@ class Batch extends Model {
         if(isset($request->from) && $request->from
             && isset($request->to) && $request->to)
         {
-            $from = Carbon::parse($request->from)->timestamp;
-            $to = Carbon::parse($request->to)->timestamp;
-
             if(isset($request->date_filter_by) && $request->date_filter_by){
-                $list->whereBetween( $request->date_filter_by, [$from, $to]);
+                $list->betweenDates($request['from'],$request['to'],$request->date_filter_by);
             }else{
-                $list->whereBetween( 'created_at', [$from, $to]);
+                $list->betweenDates($request['from'],$request['to']);
             }
         }
 
 
-        if(isset($request->q))
+        if(isset($request->q) && $request->q)
         {
 
             $list->where(function ($q) use ($request){

@@ -65,23 +65,22 @@ class FailedJob extends Model {
                 ->endOfDay()
                 ->toDateTimeString();
         }
-        $query->whereBetween('created_at',[$from,$to]);
+        $query->whereBetween('failed_at',[$from,$to]);
     }
     //-------------------------------------------------
     public static function getList($request)
     {
-
 
         $list = self::orderBy('id', 'desc');
 
         if(isset($request->from) && $request->from
             && isset($request->to) && $request->to){
 
-            $list->whereBetween( 'failed_at', [$request->from, $request->to]);
+            $list->betweenDates($request['from'],$request['to']);
 
         }
 
-        if(isset($request->q))
+        if(isset($request->q) && $request->q)
         {
             $list->where(function ($q) use ($request){
                 $q->where('queue', 'LIKE', '%'.$request->q.'%')

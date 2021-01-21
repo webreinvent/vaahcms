@@ -128,7 +128,32 @@
                             <!--filters-->
                             <div class="level" v-if="page.show_filters">
 
-                                <div class="level-left"></div>
+                                <div class="level-left">
+                                    <b-field label="">
+                                        <p class="control">
+                                            <b-select placeholder="- Select a status -"
+                                                      v-model="query_string.status"
+                                                      @input="getList()"
+                                            >
+                                                <option value="">
+                                                    - Select a status -
+                                                </option>
+                                                <option value='default'>
+                                                    Default
+                                                </option>
+                                                <option value='high'>
+                                                    High
+                                                </option>
+                                                <option value='medium'>
+                                                    Medium
+                                                </option>
+                                                <option value='low'>
+                                                    Low
+                                                </option>
+                                            </b-select>
+                                        </p>
+                                    </b-field>
+                                </div>
 
                                 <div class="level-right">
                                     <div class="level-item ">

@@ -25,6 +25,7 @@ export default {
             page: 1,
             q: null,
             filter: null,
+            status: null,
             from: null,
             to: null,
             date_filter_by: null,

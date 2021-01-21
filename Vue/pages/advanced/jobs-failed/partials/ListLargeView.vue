@@ -15,7 +15,7 @@
                     <b-tooltip label="Copy Id" type="is-dark">
                         <vh-copy class="text-copyable"
                                  :data="props.row.id"
-                                 :label="props.row.id"
+                                 :label="props.row.id.toString()"
                                  @copied="copiedData"
                         >
                         </vh-copy>

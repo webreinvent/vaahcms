@@ -49,22 +49,18 @@ class Job extends Model {
     }
 
     //-------------------------------------------------
-    public function scopeBetweenDates($query, $from, $to)
+    public function scopeBetweenDates($query, $from, $to,$by = 'created_at')
     {
 
         if($from)
         {
-            $from = \Illuminate\Support\Carbon::parse($from)
-                ->startOfDay()
-                ->toDateTimeString();
+            $from = Carbon::parse($from)->timestamp;
         }
         if($to)
         {
-            $to = Carbon::parse($to)
-                ->endOfDay()
-                ->toDateTimeString();
+            $to = Carbon::parse($to)->timestamp;
         }
-        $query->whereBetween('created_at',[$from,$to]);
+        $query->whereBetween($by,[$from,$to]);
     }
     //-------------------------------------------------
     public static function getList($request)
@@ -75,21 +71,21 @@ class Job extends Model {
         if(isset($request->from) && $request->from
             && isset($request->to) && $request->to)
         {
-            $from = Carbon::parse($request->from)->timestamp;
-            $to = Carbon::parse($request->to)->timestamp;
-
             if(isset($request->date_filter_by) && $request->date_filter_by){
-                $list->whereBetween( $request->date_filter_by, [$from, $to]);
+                $list->betweenDates($request['from'],$request['to'],$request->date_filter_by);
             }else{
-                $list->whereBetween( 'created_at', [$from, $to]);
+                $list->betweenDates($request['from'],$request['to']);
             }
         }
 
-        if(isset($request->q))
+        if(isset($request->q) && $request->q)
         {
-            $list->where(function ($q) use ($request){
-                $q->where('queue', 'LIKE', '%'.$request->q.'%');
-            });
+            $list->where('queue', 'LIKE', '%'.$request->q.'%');
+        }
+
+        if(isset($request->status) && $request->status)
+        {
+            $list->where('queue', $request->status);
         }
 
         $data['list'] = $list->paginate(config('vaahcms.per_page'));
