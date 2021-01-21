@@ -29,7 +29,7 @@
                         <b-tooltip label="Reload" type="is-dark">
                             <b-button type="is-text"
                                       class="card-header-icon has-margin-top-5 has-margin-right-5"
-                                      icon-left="redo-alt"></b-button>
+                                      icon-left="redo-alt" @click="getList"></b-button>
                         </b-tooltip>
 
                         <b-dropdown position="is-bottom-left">
