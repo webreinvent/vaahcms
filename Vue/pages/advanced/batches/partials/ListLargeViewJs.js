@@ -86,10 +86,6 @@ export default {
 
             this.$vaah.toastSuccess(['copied']);
 
-            // alertify.success('copied');
-
-            this.$vaah.console(data, 'copied data');
-
         },
         //---------------------------------------------------------------------
         hasPermission: function(slug)
@@ -152,25 +148,34 @@ export default {
                                 <div class='card-header'> 
                                             <div class="card-header-title 
                                                         has-text-primary"> 
-                                              Stats of Jobs 
+                                              Detail 
                                             </div> 
                                           </div> 
                                           <div class="card-content"> 
-                                            <table class="table is-bordered">
-                                          <thead>
-                                            <tr>
-                                              <th>Total Jobs</th>
-                                              <th>Pending Jobs</th>
-                                              <th>Failed Jobs</th>
-                                             </tr>
-                                            </thead>
+                                            <table class="table">
+                                       
                                             <tbody>
                                                 <tr>
+                                                <th>Total Jobs</th>
+                                                <td>:</td>
                                                   <td>`+item.total_jobs+`</td>
-                                                  <td>`+item.pending_jobs+`</td>
-                                                  <td>`+item.failed_jobs+`</td>
                                                   </tr>
-                                                  </tbody>
+                                                  <tr>
+                                                  <th>Pending Jobs</th>
+                                                  <td>:</td>
+                                                  <td>`+item.pending_jobs+`</td>
+                                                  </tr>
+                                                  <tr>
+                                                   <th>Failed Jobs</th>
+                                                   <td>:</td>
+                                                  <td>`+item.failed_jobs+`</td>
+                                                </tr>
+                                                  <tr>
+                                                   <th>Options</th>
+                                                   <td>:</td>
+                                                  <td>`+JSON.stringify(item.options, null, 2)+`</td>
+                                                </tr>
+                                            </tbody>
                                         </table>
   
                                         </div> 
@@ -179,7 +184,6 @@ export default {
 
             Modal.open(props);
         },
-        //---------------------------------------------------------------------
         //---------------------------------------------------------------------
         //---------------------------------------------------------------------
         //---------------------------------------------------------------------

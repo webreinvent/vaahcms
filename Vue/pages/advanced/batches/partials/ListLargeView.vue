@@ -10,27 +10,35 @@
 
             <template >
                 <b-table-column field="id" label="ID" width="10%" v-slot="props">
-                    {{ props.row.id }}
+                    <b-tooltip label="Copy Id" type="is-dark">
+                        <vh-copy class="text-copyable"
+                                 :data="props.row.id"
+                                 :label="props.row.id"
+                                 @copied="copiedData"
+                        >
+                        </vh-copy>
+                    </b-tooltip>
                 </b-table-column>
 
-                <b-table-column field="name" label="Name" v-slot="props">
+                <b-table-column field="name" label="Name" v-slot="props" >
                     {{ props.row.name }}
+
+
+
+                    <b-progress v-if="props.row.total_jobs > 0" size="is-small" format="percent" class="mt-3">
+                        <template #bar>
+                            <b-progress-bar :value="(props.row.total_jobs - props.row.pending_jobs
+                                    - props.row.failed_jobs) * 100 / props.row.total_jobs" type="is-success" show-value></b-progress-bar>
+                            <b-progress-bar :value="props.row.failed_jobs * 100 / props.row.total_jobs" type="is-danger" show-value></b-progress-bar>
+                                <b-progress-bar :value="props.row.pending_jobs * 100 / props.row.total_jobs" type="is-light" show-value></b-progress-bar>
+                        </template>
+                    </b-progress>
+
+                    <b-progress v-else size="is-small" type="is-success" format="percent"
+                                :value="0" show-value></b-progress>
                 </b-table-column>
 
-                <b-table-column field="total_jobs" label="Progress" v-slot="props" cell-class="pt-4" width="20%" >
-                    <span v-if="props.row.total_jobs > 0">
-                        <b-progress size="is-small" type="is-success" format="percent"
-                                    :value="(props.row.total_jobs - props.row.pending_jobs
-                                    - props.row.failed_jobs) * 100 / props.row.total_jobs"
-                                    show-value></b-progress>
-                    </span>
-                    <span v-else>
-                        <b-progress size="is-small" type="is-success" format="percent"
-                                    :value="0" show-value></b-progress>
-                    </span>
-                </b-table-column>
-
-                <b-table-column field="stats" label="Stats" v-slot="props">
+                <b-table-column field="detail" label="Detail" width="10%" v-slot="props">
                     <b-button size="is-small"
                               @click="showModal(props.row)"
                               type="is-default"
@@ -40,26 +48,22 @@
                     </b-button>
                 </b-table-column>
 
-                <b-table-column field="failed_job_ids" label="Failed Job Ids" v-slot="props">
+                <b-table-column field="failed_job_ids" label="Failed Job Ids" width="12%" v-slot="props">
 
                     <ButtonMeta :type="{'is-danger': props.row.count_failed_jobs > 0}"
                                 :label="props.row.count_failed_jobs"
                                 :value="props.row.failed_job_ids"/>
                 </b-table-column>
 
-                <b-table-column field="options" label="Options" v-slot="props">
-                    <ButtonMeta :value="props.row.options"/>
-                </b-table-column>
-
-                <b-table-column field="cancelled_at" label="Cancelled At" v-slot="props">
+                <b-table-column field="cancelled_at" label="Cancelled At" width="10%" v-slot="props">
                     {{ props.row.cancelled_at }}
                 </b-table-column>
 
-                <b-table-column field="created_at" label="Created At" v-slot="props">
+                <b-table-column field="created_at" label="Created At" width="10%" v-slot="props">
                     {{ props.row.created_at }}
                 </b-table-column>
 
-                <b-table-column field="finished_at" label="Finished At" v-slot="props">
+                <b-table-column field="finished_at" label="Finished At" width="10%" v-slot="props">
                     {{ props.row.finished_at }}
                 </b-table-column>
 

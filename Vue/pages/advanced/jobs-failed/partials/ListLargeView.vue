@@ -12,7 +12,14 @@
 
             <template >
                 <b-table-column field="id" label="ID" v-slot="props">
-                    {{ props.row.id }}
+                    <b-tooltip label="Copy Id" type="is-dark">
+                        <vh-copy class="text-copyable"
+                                 :data="props.row.id"
+                                 :label="props.row.id"
+                                 @copied="copiedData"
+                        >
+                        </vh-copy>
+                    </b-tooltip>
                 </b-table-column>
 
                 <b-table-column field="queue" label="Queue" v-slot="props">
