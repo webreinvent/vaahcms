@@ -20,6 +20,7 @@
 
                 <b-tooltip label="Download" type="is-dark">
                     <b-button type="is-text"
+                              dusk="action-download"
                               class="card-header-icon has-margin-top-5 has-margin-right-5"
                               icon-left="download" @click="downloadFile(item.name)"></b-button>
                 </b-tooltip>
@@ -87,7 +88,7 @@
 
                         </b-tab-item>
 
-                        <b-tab-item label="Raw">
+                        <b-tab-item dusk="input-tab" label="Raw">
                             <small
                                 style="max-height: 768px; overflow: auto;"
                                 v-html="item.content"></small>

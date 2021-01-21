@@ -10,9 +10,10 @@
         >
 
             <template >
-                <b-table-column field="id" label="ID" width="8%" v-slot="props">
+                <b-table-column field="id" label="ID" width="80" v-slot="props">
                     <b-tooltip label="Copy Id" type="is-dark">
                         <vh-copy class="text-copyable"
+                                 dusk="action-click_to_copy"
                                  :data="props.row.id"
                                  :label="props.row.id.toString()"
                                  @copied="copiedData"
@@ -25,25 +26,25 @@
                     {{ props.row.queue }}
                 </b-table-column>
 
-                <b-table-column field="payload" label="Payload" width="10%" v-slot="props">
-                    <ButtonMeta :value="props.row.payload"/>
+                <b-table-column field="payload" label="Payload" width="100" v-slot="props">
+                    <ButtonMeta dusk="action-view_payload" :value="props.row.payload"/>
                 </b-table-column>
 
 
-                <b-table-column field="attempts" label="Attempts" width="10%" v-slot="props">
+                <b-table-column field="attempts" label="Attempts" width="100" v-slot="props">
                     {{ props.row.attempts }}
                 </b-table-column>
 
-                <b-table-column field="reserved_at" label="Reserved At" width="15%" v-slot="props">
+                <b-table-column field="reserved_at" label="Reserved At" width="150" v-slot="props">
                     {{ props.row.reserved_at }}
                 </b-table-column>
 
-                <b-table-column field="available_at" label="Available At" width="15%" v-slot="props">
+                <b-table-column field="available_at" label="Available At" width="150" v-slot="props">
                     {{ props.row.available_at }}
                 </b-table-column>
 
 
-                <b-table-column field="created_at" label="Created At" width="15%" v-slot="props">
+                <b-table-column field="created_at" label="Created At" width="150" v-slot="props">
                     {{ props.row.created_at }}
                 </b-table-column>
 
@@ -53,6 +54,7 @@
 
                     <b-tooltip label="Delete" type="is-dark">
                         <b-button size="is-small"
+                                  dusk="action-delete_item"
                                   @click="deleteItem(props.row)"
                                   icon-left="trash">
                         </b-button>

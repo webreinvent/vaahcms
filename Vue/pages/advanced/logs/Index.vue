@@ -21,18 +21,19 @@
 
                     <b-tooltip label="Reload" type="is-dark">
                     <b-button type="is-text"
+                              dusk="link-reload"
                               class="card-header-icon has-margin-top-5 has-margin-right-5"
                               icon-left="redo-alt" @click="onReload"></b-button>
                     </b-tooltip>
 
                     <b-dropdown position="is-bottom-left">
                         <template #trigger="{ active }">
-                            <b-button class="card-header-icon has-margin-top-5  has-margin-right-5"
+                            <b-button dusk="action-header_dropdown" class="card-header-icon has-margin-top-5  has-margin-right-5"
                                       type="is-text" icon-right="ellipsis-v" >
                             </b-button>
                         </template>
 
-                        <b-dropdown-item @click="deleteAllItem">
+                        <b-dropdown-item dusk="action-delete_all" @click="deleteAllItem">
                             <span>Delete All</span>
                         </b-dropdown-item>
 
@@ -45,7 +46,7 @@
                 <div class="card-content">
 
                     <b-field>
-                        <b-input placeholder="Search"
+                        <b-input dusk="input-search" placeholder="Search"
                                  type="search"
                                  icon="search"
                                  expanded
@@ -55,7 +56,7 @@
                         </b-input>
                         <p class="control">
 
-                            <b-button type="is-primary"
+                            <b-button dusk="action-search" type="is-primary"
                                     icon-right="search"
                                     @click="getList">
                             </b-button>

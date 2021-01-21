@@ -28,18 +28,19 @@
 
                         <b-tooltip label="Reload" type="is-dark">
                             <b-button type="is-text"
+                                      dusk="link-reload"
                                       class="card-header-icon has-margin-top-5 has-margin-right-5"
                                       icon-left="redo-alt" @click="getList"></b-button>
                         </b-tooltip>
 
                         <b-dropdown position="is-bottom-left">
                             <template #trigger="{ active }">
-                                <b-button class="card-header-icon has-margin-top-5  has-margin-right-5"
+                                <b-button dusk="action-header_dropdown" class="card-header-icon has-margin-top-5  has-margin-right-5"
                                           type="is-text" icon-right="ellipsis-v" >
                                 </b-button>
                             </template>
 
-                            <b-dropdown-item @click="deleteAllItem">
+                            <b-dropdown-item dusk="action-delete_all" @click="deleteAllItem">
                                 <span>Delete All</span>
                             </b-dropdown-item>
 
@@ -71,7 +72,7 @@
                                     <div  class="level-item">
                                         <b-field >
 
-                                            <b-select placeholder="- Bulk Actions -"
+                                            <b-select dusk="input-bulk_action" placeholder="- Bulk Actions -"
                                                       v-model="page.bulk_action.action">
                                                 <option value="">
                                                     - Bulk Actions -
@@ -82,7 +83,7 @@
                                             </b-select>
 
                                             <p class="control">
-                                                <button class="button is-primary"
+                                                <button dusk="action-bulk_action" class="button is-primary"
                                                         @click="actions">
                                                     Apply
                                                 </button>
@@ -101,7 +102,7 @@
 
                                         <b-field>
 
-                                            <b-input placeholder="Search"
+                                            <b-input dusk="input-search" placeholder="Search"
                                                      type="text"
                                                      icon="search"
                                                      @input="delayedSearch"
@@ -110,19 +111,19 @@
                                             </b-input>
 
                                             <p class="control">
-                                                <button class="button is-primary"
+                                                <button dusk="action-filter" class="button is-primary"
                                                         @click="getList">
                                                     Filter
                                                 </button>
                                             </p>
                                             <p class="control">
-                                                <button class="button is-primary"
+                                                <button dusk="action-reset" class="button is-primary"
                                                         @click="resetPage">
                                                     Reset
                                                 </button>
                                             </p>
                                             <p class="control">
-                                                <button class="button is-primary"
+                                                <button dusk="action-toggle_filter" class="button is-primary"
                                                         @click="toggleFilters()"
                                                         slot="trigger">
                                                     <b-icon icon="ellipsis-v"></b-icon>
@@ -144,7 +145,7 @@
                                 <div class="level-left">
                                     <b-field label="">
                                         <p class="control">
-                                            <b-select placeholder="- Select a status -"
+                                            <b-select dusk="input-status" placeholder="- Select a status -"
                                                       v-model="query_string.status"
                                                       @input="getList()"
                                             >
@@ -173,7 +174,7 @@
 
                                         <b-field>
 
-                                            <b-datepicker
+                                            <b-datepicker dusk="input-date_range"
                                                     position="is-bottom-left"
                                                     placeholder="- Select a dates -"
                                                     v-model="selected_date"
@@ -182,7 +183,7 @@
                                             </b-datepicker>
 
                                             <p class="control">
-                                                <b-dropdown position="is-bottom-left"
+                                                <b-dropdown dusk="input-date_filter_by" position="is-bottom-left"
                                                         v-model="query_string.date_filter_by"
                                                         @input="setDateByFilter">
                                                     <template #trigger="{ active }">
@@ -239,6 +240,7 @@
 
                                 <div class="block" v-if="page.list">
                                     <b-pagination  :total="page.list.total"
+                                                   dusk="input-paginate"
                                                    :current.sync="page.list.current_page"
                                                    :per-page="page.list.per_page"
                                                    range-before=3
