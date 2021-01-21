@@ -18,7 +18,7 @@
                     <header class="card-header">
 
                         <div class="card-header-title">
-                            Batches
+                            Failed Jobs
 
                             <span v-if="page.list">
                                  &nbsp; ({{page.list.total}})
@@ -26,14 +26,11 @@
 
                         </div>
 
-
                         <b-tooltip label="Reload" type="is-dark">
                             <b-button type="is-text"
                                       dusk="link-reload"
-                                      class="card-header-icon
-                                      has-margin-top-5 has-margin-right-5"
-                                      @click="getList"
-                                      icon-left="redo-alt"></b-button>
+                                      class="card-header-icon has-margin-top-5 has-margin-right-5"
+                                      icon-left="redo-alt" @click="getList"></b-button>
                         </b-tooltip>
 
                         <b-dropdown position="is-bottom-left">
@@ -77,7 +74,6 @@
                                                     Delete
                                                 </option>
                                             </b-select>
-
 
                                             <p class="control">
                                                 <button dusk="action-bulk_action" class="button is-primary"
@@ -139,13 +135,16 @@
                             <!--filters-->
                             <div class="level" v-if="page.show_filters">
 
-                                <div class="level-left"></div>
+                                <div class="level-left">
+
+                                </div>
+
 
                                 <div class="level-right">
-                                    <div class="level-item ">
+
+                                    <div class="level-item">
 
                                         <b-field>
-
                                             <b-datepicker dusk="input-date_range"
                                                     position="is-bottom-left"
                                                     placeholder="- Select a dates -"
@@ -153,44 +152,10 @@
                                                     @input="setDateRange"
                                                     range>
                                             </b-datepicker>
-
-                                            <p class="control">
-                                                <b-dropdown dusk="input-date_filter_by" position="is-bottom-left"
-                                                        v-model="query_string.date_filter_by"
-                                                        @input="setDateByFilter">
-                                                    <template #trigger="{ active }">
-                                                        <b-button type="is-primary"
-                                                                  :icon-right="active ? 'chevron-up' : 'chevron-down'" >
-                                                         <span v-if="query_string.date_filter_by">
-                                                             {{ $vaah.toLabel(query_string.date_filter_by) }}
-                                                         </span>
-                                                            <span v-else>Created at</span>
-                                                        </b-button>
-                                                    </template>
-
-
-                                                    <b-dropdown-item value="created_at">
-                                                        <span>Created at</span>
-                                                    </b-dropdown-item>
-
-                                                    <b-dropdown-item value="cancelled_at">
-                                                        <span>Cancelled at</span>
-                                                    </b-dropdown-item>
-
-                                                    <b-dropdown-item value="finished_at">
-                                                        <span>Finished at</span>
-                                                    </b-dropdown-item>
-                                                </b-dropdown>
-                                            </p>
                                         </b-field>
 
                                     </div>
                                 </div>
-
-
-
-
-
 
 
                             </div>

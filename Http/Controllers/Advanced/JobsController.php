@@ -1,4 +1,4 @@
-<?php namespace WebReinvent\VaahCms\Http\Controllers;
+<?php namespace WebReinvent\VaahCms\Http\Controllers\Advanced;
 
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -22,6 +22,14 @@ class JobsController extends Controller
     public function getAssets(Request $request)
     {
 
+        if(!\Auth::user()->hasPermission('has-access-of-advanced-section'))
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+            return response()->json($response);
+        }
+
         $data = [];
         $data['permission'] = [];
 
@@ -31,45 +39,30 @@ class JobsController extends Controller
         return response()->json($response);
     }
     //----------------------------------------------------------
-
-    //----------------------------------------------------------
-    public function postCreate(Request $request)
-    {
-        $response = Job::createItem($request);
-        return response()->json($response);
-    }
     //----------------------------------------------------------
     public function getList(Request $request)
     {
-        $response = Job::getList($request);
-        return response()->json($response);
-    }
-    //----------------------------------------------------------
-    public function getItem(Request $request, $id)
-    {
-        $response = Job::getItem($id);
-        return response()->json($response);
-    }
 
-    //----------------------------------------------------------
-    public function postStore(Request $request,$id)
-    {
-        $response = Job::postStore($request,$id);
+        if(!\Auth::user()->hasPermission('has-access-of-advanced-section'))
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+            return response()->json($response);
+        }
+
+        $response = Job::getList($request);
         return response()->json($response);
     }
     //----------------------------------------------------------
     public function postActions(Request $request, $action)
     {
-        $rules = array(
-            'inputs' => 'required',
-        );
 
-        $validator = \Validator::make( $request->all(), $rules);
-        if ( $validator->fails() ) {
-
-            $errors             = errorsToArray($validator->errors());
+        if(!\Auth::user()->hasPermission('has-access-of-advanced-section'))
+        {
             $response['status'] = 'failed';
-            $response['errors'] = $errors;
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
             return response()->json($response);
         }
 
@@ -77,34 +70,19 @@ class JobsController extends Controller
 
         $response['status'] = 'success';
 
-        $inputs = $request->all();
-
         switch ($action)
         {
-
-            //------------------------------------
-            case 'bulk-change-status':
-
-                $response = Job::bulkStatusChange($request);
-
-                break;
-            //------------------------------------
-            case 'bulk-trash':
-
-                $response = Job::bulkTrash($request);
-
-                break;
-            //------------------------------------
-            case 'bulk-restore':
-
-                $response = Job::bulkRestore($request);
-
-                break;
 
             //------------------------------------
             case 'bulk-delete':
 
                 $response = Job::bulkDelete($request);
+
+                break;
+            //------------------------------------
+            case 'bulk-delete-all':
+
+                $response = Job::bulkDeleteAll($request);
 
                 break;
             //------------------------------------

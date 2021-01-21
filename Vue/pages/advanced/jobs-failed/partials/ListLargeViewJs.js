@@ -1,7 +1,6 @@
-import ButtonMeta from '../../../../vaahvue/reusable/ButtonMeta';
-import {ModalProgrammatic as Modal} from 'buefy';
+let namespace = 'failed_jobs';
 
-let namespace = 'batches';
+import ButtonMeta from '../../../../vaahvue/reusable/ButtonMeta'
 
 export default {
     computed: {
@@ -14,7 +13,6 @@ export default {
     components:{
         ButtonMeta,
     },
-
     data()
     {
         let obj = {
@@ -62,7 +60,7 @@ export default {
         //---------------------------------------------------------------------
         setActiveItem: function (item) {
             this.update('active_item', item);
-            this.$router.push({name: 'batches.view', params:{id:item.id}})
+            this.$router.push({name: 'jobs.view', params:{id:item.id}})
         },
         //---------------------------------------------------------------------
         changeStatus: function (id) {
@@ -85,6 +83,10 @@ export default {
         copiedData: function (data) {
 
             this.$vaah.toastSuccess(['copied']);
+
+            // alertify.success('copied');
+
+            this.$vaah.console(data, 'copied data');
 
         },
         //---------------------------------------------------------------------
@@ -138,52 +140,6 @@ export default {
             }
         },
         //---------------------------------------------------------------------
-        showModal: function (item) {
-
-            let props ={
-                width: 640,
-
-                scroll: 'keep',
-                content:  `<div class="card">
-                                <div class='card-header'> 
-                                            <div class="card-header-title 
-                                                        has-text-primary"> 
-                                              Detail 
-                                            </div> 
-                                          </div> 
-                                          <div class="card-content"> 
-                                            <table class="table">
-                                       
-                                            <tbody>
-                                                <tr>
-                                                <th>Total Jobs</th>
-                                                <td>:</td>
-                                                  <td>`+item.total_jobs+`</td>
-                                                  </tr>
-                                                  <tr>
-                                                  <th>Pending Jobs</th>
-                                                  <td>:</td>
-                                                  <td>`+item.pending_jobs+`</td>
-                                                  </tr>
-                                                  <tr>
-                                                   <th>Failed Jobs</th>
-                                                   <td>:</td>
-                                                  <td>`+item.failed_jobs+`</td>
-                                                </tr>
-                                                  <tr>
-                                                   <th>Options</th>
-                                                   <td>:</td>
-                                                  <td>`+JSON.stringify(item.options, null, 2)+`</td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-  
-                                        </div> 
-                                        </div>`,
-            };
-
-            Modal.open(props);
-        },
         //---------------------------------------------------------------------
         //---------------------------------------------------------------------
         //---------------------------------------------------------------------

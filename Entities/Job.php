@@ -49,33 +49,46 @@ class Job extends Model {
     }
 
     //-------------------------------------------------
-    public function scopeBetweenDates($query, $from, $to)
+    public function scopeBetweenDates($query, $from, $to,$by = 'created_at')
     {
 
         if($from)
         {
-            $from = \Illuminate\Support\Carbon::parse($from)
-                ->startOfDay()
-                ->toDateTimeString();
+            $from = Carbon::parse($from)->timestamp;
         }
         if($to)
         {
-            $to = Carbon::parse($to)
-                ->endOfDay()
-                ->toDateTimeString();
+            $to = Carbon::parse($to)->timestamp;
         }
-        $query->whereBetween('created_at',[$from,$to]);
+        $query->whereBetween($by,[$from,$to]);
     }
     //-------------------------------------------------
     public static function getList($request)
     {
 
-
         $list = self::orderBy('id', 'desc');
 
-        if(isset($request->from) && isset($request->to))
+        if(isset($request->from) && $request->from
+            && isset($request->to) && $request->to)
         {
-            $list->betweenDates($request['from'],$request['to']);
+            if(isset($request->date_filter_by) && $request->date_filter_by){
+                $list->betweenDates($request['from'],$request['to'],$request->date_filter_by);
+            }else{
+                $list->betweenDates($request['from'],$request['to']);
+            }
+        }
+
+        if(isset($request->q) && $request->q)
+        {
+            $list->where(function ($q) use ($request){
+                $q->where('queue', 'LIKE', '%'.$request->q.'%');
+                $q->orWhere('id', 'LIKE', '%'.$request->q.'%');
+            });
+        }
+
+        if(isset($request->status) && $request->status)
+        {
+            $list->where('queue', $request->status);
         }
 
         $data['list'] = $list->paginate(config('vaahcms.per_page'));
@@ -84,126 +97,6 @@ class Job extends Model {
         $response['data'] = $data;
 
         return $response;
-    }
-    //-------------------------------------------------
-    public static function getItem($id)
-    {
-        $item = self::where('id', $id)
-        ->first();
-        $response['status'] = 'success';
-        $response['data'] = $item;
-
-        return $response;
-
-    }
-    //-------------------------------------------------
-    public static function bulkStatusChange($request)
-    {
-
-        if(!$request->has('inputs'))
-        {
-            $response['status'] = 'failed';
-            $response['errors'][] = 'Select IDs';
-            return $response;
-        }
-
-        if(!$request->has('data'))
-        {
-            $response['status'] = 'failed';
-            $response['errors'][] = 'Select Status';
-            return $response;
-        }
-
-        foreach($request->inputs as $id)
-        {
-            $item = self::where('id',$id)->withTrashed()->first();
-
-            if($item->deleted_at){
-                continue ;
-            }
-
-            if($request['data']){
-                $item->is_active = $request['data']['status'];
-            }else{
-                if($item->is_active == 1){
-                    $item->is_active = 0;
-                }else{
-                    $item->is_active = 1;
-                }
-            }
-            $item->save();
-        }
-
-        $response['status'] = 'success';
-        $response['data'] = [];
-        $response['messages'][] = 'Action was successful';
-
-        return $response;
-
-    }
-    //-------------------------------------------------
-    public static function bulkTrash($request)
-    {
-
-
-        if(!$request->has('inputs'))
-        {
-            $response['status'] = 'failed';
-            $response['errors'][] = 'Select IDs';
-            return $response;
-        }
-
-
-        foreach($request->inputs as $id)
-        {
-            $item = self::withTrashed()->where('id', $id)->first();
-            if($item)
-            {
-                $item->delete();
-            }
-        }
-
-        $response['status'] = 'success';
-        $response['data'] = [];
-        $response['messages'][] = 'Action was successful';
-
-        return $response;
-
-
-    }
-    //-------------------------------------------------
-    public static function bulkRestore($request)
-    {
-
-        if(!$request->has('inputs'))
-        {
-            $response['status'] = 'failed';
-            $response['errors'][] = 'Select IDs';
-            return $response;
-        }
-
-        if(!$request->has('data'))
-        {
-            $response['status'] = 'failed';
-            $response['errors'][] = 'Select Status';
-            return $response;
-        }
-
-        foreach($request->inputs as $id)
-        {
-            $item = self::withTrashed()->where('id', $id)->first();
-            if(isset($item) && isset($item->deleted_at))
-            {
-                $item->restore();
-            }
-        }
-
-        $response['status'] = 'success';
-        $response['data'] = [];
-        $response['messages'][] = 'Action was successful';
-
-        return $response;
-
     }
     //-------------------------------------------------
     public static function bulkDelete($request)
@@ -225,10 +118,10 @@ class Job extends Model {
 
         foreach($request->inputs as $id)
         {
-            $item = self::where('id', $id)->withTrashed()->first();
+            $item = self::where('id', $id)->first();
             if($item)
             {
-                $item->forceDelete();
+                $item->delete();
             }
         }
 
@@ -241,23 +134,17 @@ class Job extends Model {
 
     }
     //-------------------------------------------------
-
-    public static function validation($inputs)
+    public static function bulkDeleteAll($request)
     {
 
-        $rules = array(
-            'name' => 'required|max:150',
-            'slug' => 'required|max:150',
-        );
+        self::truncate();
 
-        $validator = \Validator::make( $inputs, $rules);
-        if ( $validator->fails() ) {
+        $response['status'] = 'success';
+        $response['data'] = [];
+        $response['messages'][] = 'Action was successful';
 
-            $errors             = errorsToArray($validator->errors());
-            $response['status'] = 'failed';
-            $response['errors'] = $errors;
-            return $response;
-        }
+        return $response;
+
 
     }
     //-------------------------------------------------

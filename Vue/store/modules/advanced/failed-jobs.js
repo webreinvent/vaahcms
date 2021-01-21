@@ -4,22 +4,39 @@ import {VaahHelper as Vaah} from "../../../vaahvue/helpers/VaahHelper";
 let base_url = document.getElementsByTagName('base')[0].getAttribute("href");
 //---------/Variables
 
-let ajax_url = base_url+"/backend/vaah/advanced/logs";
+let ajax_url = base_url+"/backend/vaah/advanced/failed-jobs";
 
 
 export default {
     namespaced: true,
-    //=========================================================================
     state: {
+        debug: debug,
         ajax_url: ajax_url,
-        filters: {
-            q: null,
-        },
+        assets: null,
+        assets_is_fetching: null,
+        list: null,
+        list_is_empty: false,
+        is_list_loading: false,
+        list_view: true,
+        active_item: null,
+        is_item_loading: false,
+        show_filters: false,
         query_string: {
             page: 1,
             q: null,
-            trashed: null,
             filter: null,
+            from: null,
+            to: null,
+            date_filter_by: null,
+        },
+        bulk_action:{
+            selected_items: [],
+            data: {},
+            action: null,
+        },
+        new_item:{
+            name: null,
+            slug: null,
         },
 
     },
@@ -32,18 +49,72 @@ export default {
     },
     //=========================================================================
     actions:{
-
         //-----------------------------------------------------------------
+        async getAssets({ state, commit, dispatch, getters }) {
 
+            if(!state.assets_is_fetching || !state.assets)
+            {
+                let payload = {
+                    key: 'assets_is_fetching',
+                    value: true
+                };
+                commit('updateState', payload);
+
+                let url = state.ajax_url+'/assets';
+
+                console.log('--->assets url', url);
+
+                let params = {};
+                let data = await Vaah.ajaxGet(url, params);
+                payload = {
+                    key: 'assets',
+                    value: data.data.data
+                };
+
+                commit('updateState', payload);
+            }
+
+        },
+        //-----------------------------------------------------------------
+        updateView({ state, commit, dispatch, getters }, payload) {
+            let list_view;
+            let update;
+
+            if(payload && payload.name && payload.name == 'jobs.failed.list')
+            {
+                list_view = 'large';
+
+                update = {
+                    key: 'active_item',
+                    value: null
+                };
+
+                commit('updateState', update);
+
+            }
+
+            if(payload.name == 'jobs.create'
+                || payload.name == 'jobs.view'
+                || payload.name == 'jobs.edit')
+            {
+                list_view = 'medium';
+            };
+
+            let view = {
+                key: 'list_view',
+                value: list_view
+            };
+
+            commit('updateState', view);
+
+        },
         //-----------------------------------------------------------------
     },
     //=========================================================================
     getters:{
         state(state) {return state;},
-        ajax_url(state) {return state.ajax_url;},
         assets(state) {return state.assets;},
-        filters(state) {return state.filters;},
-        query_string(state) {return state.query_string;},
+        permissions(state) {return state.permissions;},
     }
 
 }

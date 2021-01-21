@@ -10,6 +10,7 @@ export default {
         assets() {return this.$store.getters['root/state'].assets},
         permissions() {return this.$store.getters['root/state'].permissions},
         page() {return this.$store.getters[namespace+'/state']},
+        item() {return this.$store.getters[namespace+'/state'].active_item},
         ajax_url() {return this.$store.getters[namespace+'/state'].ajax_url},
     },
     components:{
@@ -21,7 +22,6 @@ export default {
         let obj = {
             namespace: namespace,
             labelPosition: 'on-border',
-            item: null,
         };
         return obj;
     },
@@ -80,7 +80,7 @@ export default {
                     this.$router.push({name: 'logs.list'});
                 }
 
-                this.item = data;
+                this.update('active_item',data);
             }
         },
 

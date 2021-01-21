@@ -6,55 +6,37 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
 
 
-class Batch extends Model {
+class FailedJob extends Model {
+
 
     //-------------------------------------------------
-    protected $table = 'job_batches';
+    protected $table = 'failed_jobs';
     //-------------------------------------------------
     protected $dates = [
-        'cancelled_at',
-        'created_at',
-        'finished_at'
-    ];
-    //-------------------------------------------------
-    protected $casts = [
-        'cancelled_at'  => 'date:Y-m-d H:i:s',
-        'created_at'  => 'date:Y-m-d H:i:s',
-        'finished_at'  => 'date:Y-m-d H:i:s',
+        'failed_at',
     ];
     //-------------------------------------------------
     protected $dateFormat = 'Y-m-d H:i:s';
+    //-------------------------------------------------
+    protected $casts = [
+        'failed_at'  => 'date:Y-m-d H:i:s',
+    ];
     //-------------------------------------------------
     protected $fillable = [
     ];
 
     //-------------------------------------------------
     protected $appends  = [
-        'count_failed_jobs'
     ];
     //-------------------------------------------------
-    public function getFailedJobIdsAttribute($value)
+    public function getPayloadAttribute($value)
     {
-        if($value)
-        {
-            $value = json_decode($value, true);
-        }
-        return $value;
+        return json_decode($value);
     }
     //-------------------------------------------------
-    public function getCountFailedJobsAttribute()
+    public function getExceptionAttribute($value)
     {
-        $value = 0;
-
-        if(
-            isset($this->failed_job_ids)
-            && !empty($this->failed_job_ids)
-            && is_array($this->failed_job_ids)
-        ){
-            $value = count($this->failed_job_ids);
-        }
-
-        return $value;
+        return json_decode($value);
     }
     //-------------------------------------------------
     public function getTableColumns() {
@@ -68,53 +50,44 @@ class Batch extends Model {
     }
 
     //-------------------------------------------------
-    public function scopeBetweenDates($query, $from, $to,$by = 'created_at')
+    public function scopeBetweenDates($query, $from, $to)
     {
 
         if($from)
         {
-            $from = Carbon::parse($from)->timestamp;
+            $from = Carbon::parse($from)
+                ->startOfDay()
+                ->toDateTimeString();
         }
         if($to)
         {
-            $to = Carbon::parse($to)->timestamp;
+            $to = Carbon::parse($to)
+                ->endOfDay()
+                ->toDateTimeString();
         }
-        $query->whereBetween($by,[$from,$to]);
+        $query->whereBetween('failed_at',[$from,$to]);
     }
-    //-------------------------------------------------
-
     //-------------------------------------------------
     public static function getList($request)
     {
 
-
-        $list = self::orderBy('created_at', 'DESC');
-
-        if($request['trashed'] == 'true')
-        {
-
-            $list->withTrashed();
-        }
+        $list = self::orderBy('id', 'desc');
 
         if(isset($request->from) && $request->from
-            && isset($request->to) && $request->to)
-        {
-            if(isset($request->date_filter_by) && $request->date_filter_by){
-                $list->betweenDates($request['from'],$request['to'],$request->date_filter_by);
-            }else{
-                $list->betweenDates($request['from'],$request['to']);
-            }
-        }
+            && isset($request->to) && $request->to){
 
+            $list->betweenDates($request['from'],$request['to']);
+
+        }
 
         if(isset($request->q) && $request->q)
         {
             $list->where(function ($q) use ($request){
-                $q->where('name', 'LIKE', '%'.$request->q.'%');
-                $q->orWhere('id', 'LIKE', '%'.$request->q.'%');
+                $q->where('queue', 'LIKE', '%'.$request->q.'%')
+                    ->orWhere('connection', 'LIKE', '%'.$request->q.'%')
+                    ->orWhere('id', 'LIKE', '%'.$request->q.'%');
             });
         }
-
 
         $data['list'] = $list->paginate(config('vaahcms.per_page'));
 
@@ -122,7 +95,16 @@ class Batch extends Model {
         $response['data'] = $data;
 
         return $response;
+    }
+    //-------------------------------------------------
+    public static function getItem($id)
+    {
+        $item = self::where('id', $id)
+        ->first();
+        $response['status'] = 'success';
+        $response['data'] = $item;
 
+        return $response;
 
     }
     //-------------------------------------------------
@@ -161,6 +143,8 @@ class Batch extends Model {
 
     }
     //-------------------------------------------------
+
+    //-------------------------------------------------
     public static function bulkDeleteAll($request)
     {
 
@@ -174,9 +158,6 @@ class Batch extends Model {
 
 
     }
-    //-------------------------------------------------
-
-    //-------------------------------------------------
     //-------------------------------------------------
     //-------------------------------------------------
 

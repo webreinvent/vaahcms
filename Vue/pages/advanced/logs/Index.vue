@@ -13,20 +13,31 @@
 
                     <div class="card-header-title">
                         Logs
+
+                        <span v-if="page.list">
+                                 &nbsp; ({{page.list.length}})
+                            </span>
                     </div>
 
                     <b-tooltip label="Reload" type="is-dark">
                     <b-button type="is-text"
+                              dusk="link-reload"
                               class="card-header-icon has-margin-top-5 has-margin-right-5"
                               icon-left="redo-alt" @click="onReload"></b-button>
                     </b-tooltip>
 
+                    <b-dropdown position="is-bottom-left">
+                        <template #trigger="{ active }">
+                            <b-button dusk="action-header_dropdown" class="card-header-icon has-margin-top-5  has-margin-right-5"
+                                      type="is-text" icon-right="ellipsis-v" >
+                            </b-button>
+                        </template>
 
-                    <b-tooltip label="Delete All Logs" type="is-danger">
-                    <b-button class="card-header-icon has-margin-top-5  has-margin-right-5"
-                              type="is-text" @click="deleteAllItem"
-                              icon-left="trash"></b-button>
-                    </b-tooltip>
+                        <b-dropdown-item dusk="action-delete_all" @click="deleteAllItem">
+                            <span>Delete All</span>
+                        </b-dropdown-item>
+
+                    </b-dropdown>
 
                 </header>
                 <!--/header-->
@@ -35,7 +46,7 @@
                 <div class="card-content">
 
                     <b-field>
-                        <b-input placeholder="Search"
+                        <b-input dusk="input-search" placeholder="Search"
                                  type="search"
                                  icon="search"
                                  expanded
@@ -45,7 +56,7 @@
                         </b-input>
                         <p class="control">
 
-                            <b-button type="is-primary"
+                            <b-button dusk="action-search" type="is-primary"
                                     icon-right="search"
                                     @click="getList">
                             </b-button>
@@ -57,13 +68,13 @@
                     <b-field>
                         <b-taginput
                                 v-model="query_string.file_type"
-                                :data="filtered_extension"
+                                :data="given_extension"
                                 autocomplete
                                 :allow-new="allow_new"
                                 :open-on-focus="open_on_focus"
                                 icon="filter"
                                 placeholder="Filter by Extension"
-                                @input="getList">
+                                @input="setFilter">
                         </b-taginput>
                     </b-field>
 

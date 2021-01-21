@@ -13,7 +13,7 @@ let routes=[];
 import AdvancedLayout from "./../pages/advanced/AdvancedLayout.vue";
 
 import Batches from "./../pages/advanced/batches/List.vue";
-import JobsFailed from "./../pages/advanced/jobs-failed/Index.vue";
+import JobsFailed from "./../pages/advanced/jobs-failed/List.vue";
 
 
 import Logs from "./../pages/advanced/logs/Index.vue";

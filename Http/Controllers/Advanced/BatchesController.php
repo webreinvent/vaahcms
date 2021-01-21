@@ -1,4 +1,4 @@
-<?php namespace WebReinvent\VaahCms\Http\Controllers;
+<?php namespace WebReinvent\VaahCms\Http\Controllers\Advanced;
 
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -22,6 +22,14 @@ class BatchesController extends Controller
     public function getAssets(Request $request)
     {
 
+        if(!\Auth::user()->hasPermission('has-access-of-advanced-section'))
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+            return response()->json($response);
+        }
+
         $data = [];
         $data['permission'] = [];
 
@@ -31,45 +39,32 @@ class BatchesController extends Controller
         return response()->json($response);
     }
     //----------------------------------------------------------
-
-    //----------------------------------------------------------
-    public function postCreate(Request $request)
-    {
-        $response = Batch::createItem($request);
-        return response()->json($response);
-    }
     //----------------------------------------------------------
     public function getList(Request $request)
     {
+        if(!\Auth::user()->hasPermission('has-access-of-advanced-section'))
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+            return response()->json($response);
+        }
+
         $response = Batch::getList($request);
         return response()->json($response);
     }
     //----------------------------------------------------------
-    public function getItem(Request $request, $id)
-    {
-        $response = Batch::getItem($id);
-        return response()->json($response);
-    }
 
     //----------------------------------------------------------
-    public function postStore(Request $request,$id)
-    {
-        $response = Batch::postStore($request,$id);
-        return response()->json($response);
-    }
     //----------------------------------------------------------
     public function postActions(Request $request, $action)
     {
-        $rules = array(
-            'inputs' => 'required',
-        );
 
-        $validator = \Validator::make( $request->all(), $rules);
-        if ( $validator->fails() ) {
-
-            $errors             = errorsToArray($validator->errors());
+        if(!\Auth::user()->hasPermission('has-access-of-advanced-section'))
+        {
             $response['status'] = 'failed';
-            $response['errors'] = $errors;
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
             return response()->json($response);
         }
 
@@ -77,29 +72,8 @@ class BatchesController extends Controller
 
         $response['status'] = 'success';
 
-        $inputs = $request->all();
-
         switch ($action)
         {
-
-            //------------------------------------
-            case 'bulk-change-status':
-
-                $response = Batch::bulkStatusChange($request);
-
-                break;
-            //------------------------------------
-            case 'bulk-trash':
-
-                $response = Batch::bulkTrash($request);
-
-                break;
-            //------------------------------------
-            case 'bulk-restore':
-
-                $response = Batch::bulkRestore($request);
-
-                break;
 
             //------------------------------------
             case 'bulk-delete':
@@ -107,6 +81,13 @@ class BatchesController extends Controller
                 $response = Batch::bulkDelete($request);
 
                 break;
+            //------------------------------------
+            case 'bulk-delete-all':
+
+                $response = Batch::bulkDeleteAll($request);
+
+                break;
+            //------------------------------------
             //------------------------------------
             //------------------------------------
 

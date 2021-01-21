@@ -319,6 +319,38 @@ export default {
 
         },
         //---------------------------------------------------------------------
+        setDateByFilter: function()
+        {
+            if(this.selected_date && this.selected_date.length > 0){
+                this.getList();
+            }
+
+        },
+        //---------------------------------------------------------------------
+        deleteAllItem: function () {
+
+
+            let params = {};
+
+            let url = this.ajax_url+'/actions/bulk-delete-all';
+
+            let self = this;
+
+            this.$buefy.dialog.confirm({
+                title: 'Deleting record',
+                message: 'Are you sure you want to <b>delete</b> all the record? This action cannot be undone.',
+                confirmText: 'Delete',
+                type: 'is-danger',
+                hasIcon: true,
+                onConfirm: function () {
+                    self.$Progress.start();
+
+                    self.$vaah.ajax(url, params, self.actionsAfter);
+                }
+            });
+
+        },
+        //---------------------------------------------------------------------
         //---------------------------------------------------------------------
     }
 }

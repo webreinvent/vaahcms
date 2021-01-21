@@ -28,9 +28,23 @@
 
                         <b-tooltip label="Reload" type="is-dark">
                             <b-button type="is-text"
+                                      dusk="link-reload"
                                       class="card-header-icon has-margin-top-5 has-margin-right-5"
-                                      icon-left="redo-alt"></b-button>
+                                      icon-left="redo-alt" @click="getList"></b-button>
                         </b-tooltip>
+
+                        <b-dropdown position="is-bottom-left">
+                            <template #trigger="{ active }">
+                                <b-button dusk="action-header_dropdown" class="card-header-icon has-margin-top-5  has-margin-right-5"
+                                          type="is-text" icon-right="ellipsis-v" >
+                                </b-button>
+                            </template>
+
+                            <b-dropdown-item dusk="action-delete_all" @click="deleteAllItem">
+                                <span>Delete All</span>
+                            </b-dropdown-item>
+
+                        </b-dropdown>
 
                     </header>
                     <!--/header-->
@@ -58,36 +72,18 @@
                                     <div  class="level-item">
                                         <b-field >
 
-                                            <b-select placeholder="- Bulk Actions -"
+                                            <b-select dusk="input-bulk_action" placeholder="- Bulk Actions -"
                                                       v-model="page.bulk_action.action">
                                                 <option value="">
                                                     - Bulk Actions -
                                                 </option>
-                                                <option
-                                                        v-for="option in page.assets.bulk_actions"
-                                                        :value="option.slug"
-                                                        :key="option.slug">
-                                                    {{ option.name }}
+                                                <option value="bulk-delete">
+                                                    Delete
                                                 </option>
                                             </b-select>
-
-                                            <b-select placeholder="- Select Status -"
-                                                      v-if="page.bulk_action.action == 'bulk-change-status'"
-                                                      v-model="page.bulk_action.data.status">
-                                                <option value="">
-                                                    - Select Status -
-                                                </option>
-                                                <option value=1>
-                                                    Active
-                                                </option>
-                                                <option value=0>
-                                                    Inactive
-                                                </option>
-                                            </b-select>
-
 
                                             <p class="control">
-                                                <button class="button is-primary"
+                                                <button dusk="action-bulk_action" class="button is-primary"
                                                         @click="actions">
                                                     Apply
                                                 </button>
@@ -106,7 +102,7 @@
 
                                         <b-field>
 
-                                            <b-input placeholder="Search"
+                                            <b-input dusk="input-search" placeholder="Search"
                                                      type="text"
                                                      icon="search"
                                                      @input="delayedSearch"
@@ -115,19 +111,19 @@
                                             </b-input>
 
                                             <p class="control">
-                                                <button class="button is-primary"
+                                                <button dusk="action-filter" class="button is-primary"
                                                         @click="getList">
                                                     Filter
                                                 </button>
                                             </p>
                                             <p class="control">
-                                                <button class="button is-primary"
+                                                <button dusk="action-reset" class="button is-primary"
                                                         @click="resetPage">
                                                     Reset
                                                 </button>
                                             </p>
                                             <p class="control">
-                                                <button class="button is-primary"
+                                                <button dusk="action-toggle_filter" class="button is-primary"
                                                         @click="toggleFilters()"
                                                         slot="trigger">
                                                     <b-icon icon="ellipsis-v"></b-icon>
@@ -147,58 +143,82 @@
                             <div class="level" v-if="page.show_filters">
 
                                 <div class="level-left">
-
-                                    <div class="level-item">
-
-                                        <b-field label="">
-                                            <b-select placeholder="- Select a status -"
-                                                      v-model="query_string.filter"
-                                                      @input="getList()">
+                                    <b-field label="">
+                                        <p class="control">
+                                            <b-select dusk="input-status" placeholder="- Select a status -"
+                                                      v-model="query_string.status"
+                                                      @input="getList()"
+                                            >
                                                 <option value="">
                                                     - Select a status -
                                                 </option>
-                                                <option value=01>
-                                                    Active
+                                                <option value='default'>
+                                                    Default
                                                 </option>
-                                                <option value=10>
-                                                    Inactive
+                                                <option value='high'>
+                                                    High
+                                                </option>
+                                                <option value='medium'>
+                                                    Medium
+                                                </option>
+                                                <option value='low'>
+                                                    Low
                                                 </option>
                                             </b-select>
-                                        </b-field>
-
-                                    </div>
-
-                                    <div class="level-item">
-                                        <div class="field">
-                                            <b-checkbox v-model="query_string.trashed"
-                                                        @input="getList"
-                                            >
-                                                Include Trashed
-                                            </b-checkbox>
-                                        </div>
-                                    </div>
-
+                                        </p>
+                                    </b-field>
                                 </div>
 
-
                                 <div class="level-right">
-
-                                    <div class="level-item">
+                                    <div class="level-item ">
 
                                         <b-field>
-                                            <b-datepicker
+
+                                            <b-datepicker dusk="input-date_range"
                                                     position="is-bottom-left"
                                                     placeholder="- Select a dates -"
                                                     v-model="selected_date"
                                                     @input="setDateRange"
                                                     range>
                                             </b-datepicker>
+
+                                            <p class="control">
+                                                <b-dropdown dusk="input-date_filter_by" position="is-bottom-left"
+                                                        v-model="query_string.date_filter_by"
+                                                        @input="setDateByFilter">
+                                                    <template #trigger="{ active }">
+                                                        <b-button type="is-primary"
+                                                                  :icon-right="active ? 'chevron-up' : 'chevron-down'" >
+                                                         <span v-if="query_string.date_filter_by">
+                                                             {{ $vaah.toLabel(query_string.date_filter_by) }}
+                                                         </span>
+                                                            <span v-else>Created at</span>
+                                                        </b-button>
+                                                    </template>
+
+
+                                                    <b-dropdown-item value="created_at">
+                                                        <span>Created at</span>
+                                                    </b-dropdown-item>
+
+                                                    <b-dropdown-item value="available_at">
+                                                        <span>Available at</span>
+                                                    </b-dropdown-item>
+
+                                                    <b-dropdown-item value="reserved_at">
+                                                        <span>Reserved at</span>
+                                                    </b-dropdown-item>
+                                                </b-dropdown>
+                                            </p>
                                         </b-field>
 
-
                                     </div>
-
                                 </div>
+
+
+
+
+
 
 
                             </div>
@@ -211,11 +231,7 @@
                                 <div class="block" style="margin-bottom: 0px;" >
 
                                     <div v-if="page.list_view">
-                                        <ListLargeView/>
-                                    </div>
-
-                                    <div v-else>
-                                        <ListSmallView/>
+                                        <ListLargeView @eReloadList="getList" />
                                     </div>
 
                                 </div>
@@ -224,6 +240,7 @@
 
                                 <div class="block" v-if="page.list">
                                     <b-pagination  :total="page.list.total"
+                                                   dusk="input-paginate"
                                                    :current.sync="page.list.current_page"
                                                    :per-page="page.list.per_page"
                                                    range-before=3

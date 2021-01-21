@@ -92,7 +92,7 @@ class Role extends Model {
 
         if($from)
         {
-            $from = \Illuminate\Support\Carbon::parse($from)
+            $from = Carbon::parse($from)
                 ->startOfDay()
                 ->toDateTimeString();
         }

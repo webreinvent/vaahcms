@@ -1,7 +1,7 @@
 import ListLargeView from './partials/ListLargeView';
 
 
-let namespace = 'batches';
+let namespace = 'failed_jobs';
 
 export default {
     computed:{
@@ -211,9 +211,6 @@ export default {
             this.update('is_list_loading', false);
             this.update('list', data.list);
 
-            this.update('total_permissions', data.totalPermission);
-            this.update('total_users', data.totalUser);
-
             if(data.list.total === 0)
             {
                 this.update('list_is_empty', true);
@@ -292,7 +289,7 @@ export default {
         //---------------------------------------------------------------------
         updateActiveItem: function () {
 
-            if(this.$route.fullPath.includes('batches/?')){
+            if(this.$route.fullPath.includes('jobs/?')){
                 this.update('active_item', null);
             }
         },
