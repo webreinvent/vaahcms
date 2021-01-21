@@ -80,7 +80,10 @@ class Job extends Model {
 
         if(isset($request->q) && $request->q)
         {
-            $list->where('queue', 'LIKE', '%'.$request->q.'%');
+            $list->where(function ($q) use ($request){
+                $q->where('queue', 'LIKE', '%'.$request->q.'%');
+                $q->orWhere('id', 'LIKE', '%'.$request->q.'%');
+            });
         }
 
         if(isset($request->status) && $request->status)

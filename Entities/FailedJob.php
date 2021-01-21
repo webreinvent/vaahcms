@@ -84,7 +84,8 @@ class FailedJob extends Model {
         {
             $list->where(function ($q) use ($request){
                 $q->where('queue', 'LIKE', '%'.$request->q.'%')
-                    ->orWhere('connection', 'LIKE', '%'.$request->q.'%');
+                    ->orWhere('connection', 'LIKE', '%'.$request->q.'%')
+                    ->orWhere('id', 'LIKE', '%'.$request->q.'%');
             });
         }
 

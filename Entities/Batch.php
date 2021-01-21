@@ -109,9 +109,9 @@ class Batch extends Model {
 
         if(isset($request->q) && $request->q)
         {
-
             $list->where(function ($q) use ($request){
                 $q->where('name', 'LIKE', '%'.$request->q.'%');
+                $q->orWhere('id', 'LIKE', '%'.$request->q.'%');
             });
         }
 
