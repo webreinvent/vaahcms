@@ -24,10 +24,10 @@ export default {
         query_string: {
             page: 1,
             q: null,
-            trashed: null,
             filter: null,
-            sort_by: null,
-            sort_order: 'desc',
+            from: null,
+            to: null,
+            date_filter_by: null,
         },
         bulk_action:{
             selected_items: [],

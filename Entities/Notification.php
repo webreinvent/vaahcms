@@ -261,6 +261,8 @@ class Notification extends Model {
     public static function dispatch(Notification $notification, User $user, $inputs, $priority='default')
     {
 
+        $response = self::addInQueue($notification, $user, $inputs, $priority);
+        die("<hr/>line number=123");
         if(config('settings.global.laravel_queues'))
         {
             $response = self::addInQueue($notification, $user, $inputs, $priority);

@@ -31,30 +31,10 @@ class JobsController extends Controller
         return response()->json($response);
     }
     //----------------------------------------------------------
-
-    //----------------------------------------------------------
-    public function postCreate(Request $request)
-    {
-        $response = Job::createItem($request);
-        return response()->json($response);
-    }
     //----------------------------------------------------------
     public function getList(Request $request)
     {
         $response = Job::getList($request);
-        return response()->json($response);
-    }
-    //----------------------------------------------------------
-    public function getItem(Request $request, $id)
-    {
-        $response = Job::getItem($id);
-        return response()->json($response);
-    }
-
-    //----------------------------------------------------------
-    public function postStore(Request $request,$id)
-    {
-        $response = Job::postStore($request,$id);
         return response()->json($response);
     }
     //----------------------------------------------------------

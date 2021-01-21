@@ -102,9 +102,9 @@ class Batch extends Model {
             $list->withTrashed();
         }
 
-        if(isset($request->from) && isset($request->to))
+        if(isset($request->from) && $request->from
+            && isset($request->to) && $request->to)
         {
-
             $from = Carbon::parse($request->from)->timestamp;
             $to = Carbon::parse($request->to)->timestamp;
 
@@ -132,129 +132,6 @@ class Batch extends Model {
 
         return $response;
 
-
-    }
-    //-------------------------------------------------
-    public static function getItem($id)
-    {
-
-        $item = self::where('id', $id)
-        ->first();
-
-        $response['status'] = 'success';
-        $response['data'] = $item;
-
-        return $response;
-
-    }
-    //-------------------------------------------------
-    //-------------------------------------------------
-    public static function bulkStatusChange($request)
-    {
-
-        if(!$request->has('inputs'))
-        {
-            $response['status'] = 'failed';
-            $response['errors'][] = 'Select IDs';
-            return $response;
-        }
-
-        if(!$request->has('data'))
-        {
-            $response['status'] = 'failed';
-            $response['errors'][] = 'Select Status';
-            return $response;
-        }
-
-        foreach($request->inputs as $id)
-        {
-            $item = self::where('id',$id)->withTrashed()->first();
-
-            if($item->deleted_at){
-                continue ;
-            }
-
-            if($request['data']){
-                $item->is_active = $request['data']['status'];
-            }else{
-                if($item->is_active == 1){
-                    $item->is_active = 0;
-                }else{
-                    $item->is_active = 1;
-                }
-            }
-            $item->save();
-        }
-
-        $response['status'] = 'success';
-        $response['data'] = [];
-        $response['messages'][] = 'Action was successful';
-
-        return $response;
-
-    }
-    //-------------------------------------------------
-    public static function bulkTrash($request)
-    {
-
-
-        if(!$request->has('inputs'))
-        {
-            $response['status'] = 'failed';
-            $response['errors'][] = 'Select IDs';
-            return $response;
-        }
-
-
-        foreach($request->inputs as $id)
-        {
-            $item = self::withTrashed()->where('id', $id)->first();
-            if($item)
-            {
-                $item->delete();
-            }
-        }
-
-        $response['status'] = 'success';
-        $response['data'] = [];
-        $response['messages'][] = 'Action was successful';
-
-        return $response;
-
-
-    }
-    //-------------------------------------------------
-    public static function bulkRestore($request)
-    {
-
-        if(!$request->has('inputs'))
-        {
-            $response['status'] = 'failed';
-            $response['errors'][] = 'Select IDs';
-            return $response;
-        }
-
-        if(!$request->has('data'))
-        {
-            $response['status'] = 'failed';
-            $response['errors'][] = 'Select Status';
-            return $response;
-        }
-
-        foreach($request->inputs as $id)
-        {
-            $item = self::withTrashed()->where('id', $id)->first();
-            if(isset($item) && isset($item->deleted_at))
-            {
-                $item->restore();
-            }
-        }
-
-        $response['status'] = 'success';
-        $response['data'] = [];
-        $response['messages'][] = 'Action was successful';
-
-        return $response;
 
     }
     //-------------------------------------------------
@@ -290,62 +167,6 @@ class Batch extends Model {
 
         return $response;
 
-
-    }
-    //-------------------------------------------------
-    public static function bulkCancel($request)
-    {
-
-        if(!$request->has('inputs'))
-        {
-            $response['status'] = 'failed';
-            $response['errors'][] = 'Select IDs';
-            return $response;
-        }
-
-        if(!$request->has('data'))
-        {
-            $response['status'] = 'failed';
-            $response['errors'][] = 'Select Status';
-            return $response;
-        }
-
-        foreach($request->inputs as $id)
-        {
-            $item = self::where('id', $id)->first();
-            if($item)
-            {
-                $item->cancelled_at = Carbon::now()->timestamp;
-                $item->save();
-            }
-        }
-
-        $response['status'] = 'success';
-        $response['data'] = [];
-        $response['messages'][] = 'Action was successful';
-
-        return $response;
-
-
-    }
-    //-------------------------------------------------
-
-    public static function validation($inputs)
-    {
-
-        $rules = array(
-            'name' => 'required|max:150',
-            'slug' => 'required|max:150',
-        );
-
-        $validator = \Validator::make( $inputs, $rules);
-        if ( $validator->fails() ) {
-
-            $errors             = errorsToArray($validator->errors());
-            $response['status'] = 'failed';
-            $response['errors'] = $errors;
-            return $response;
-        }
 
     }
     //-------------------------------------------------

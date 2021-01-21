@@ -46,8 +46,8 @@ class ProcessNotifications implements ShouldQueue
         $inputs = $this->inputs;
         $inputs['user_id'] = $this->user->id;
         $inputs['notification_id'] = $this->notification->id;
-        $request = new Request($inputs);
-        Notification::send($request);
+        //$request = new Request($inputs);
+        Notification::send($this->notification, $this->user, $this->inputs);
     }
 
 

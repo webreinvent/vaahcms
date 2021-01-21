@@ -31,13 +31,6 @@ class BatchesController extends Controller
         return response()->json($response);
     }
     //----------------------------------------------------------
-
-    //----------------------------------------------------------
-    public function postCreate(Request $request)
-    {
-        $response = Batch::createItem($request);
-        return response()->json($response);
-    }
     //----------------------------------------------------------
     public function getList(Request $request)
     {
@@ -45,18 +38,8 @@ class BatchesController extends Controller
         return response()->json($response);
     }
     //----------------------------------------------------------
-    public function getItem(Request $request, $id)
-    {
-        $response = Batch::getItem($id);
-        return response()->json($response);
-    }
 
     //----------------------------------------------------------
-    public function postStore(Request $request,$id)
-    {
-        $response = Batch::postStore($request,$id);
-        return response()->json($response);
-    }
     //----------------------------------------------------------
     public function postActions(Request $request, $action)
     {
@@ -89,11 +72,6 @@ class BatchesController extends Controller
 
                 break;
             //------------------------------------
-            case 'bulk-cancel':
-
-                $response = Batch::bulkCancel($request);
-
-                break;
             //------------------------------------
             //------------------------------------
 
