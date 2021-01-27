@@ -86,7 +86,7 @@ export default {
         //-----------------------------------------------------------------
         updateView({ state, commit, dispatch, getters }, payload) {
             let list_view = false;
-            if(payload && payload.name && payload.name == 'modules.list')
+            if(payload && payload.name && payload.name == 'themes.list')
             {
                 list_view = true;
             }

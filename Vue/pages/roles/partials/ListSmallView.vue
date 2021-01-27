@@ -19,12 +19,14 @@
                 </b-table-column>
 
                 <b-table-column v-slot="props" field="slug" label="Slug">
-                    <vh-copy class="text-copyable"
-                             :data="props.row.slug"
-                             :label="$vaah.limitString(props.row.slug, 15)"
-                             @copied="copiedData"
-                    >
-                    </vh-copy>
+                    <b-tooltip label="Copy Slug" type="is-dark">
+                        <vh-copy class="text-copyable"
+                                 :data="props.row.slug"
+                                 :label="props.row.slug"
+                                 @copied="copiedData"
+                        >
+                        </vh-copy>
+                    </b-tooltip>
                 </b-table-column>
 
                 <b-table-column v-slot="props"  field="count_permissions" label="Permission" >

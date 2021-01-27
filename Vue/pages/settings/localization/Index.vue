@@ -236,11 +236,12 @@
                                                         <template v-if="list && list.data && list.data.length > 0">
                                                             <tr  v-for="item in list.data">
                                                                 <td width="20">
-
-                                                                    <vh-copy v-if="item.language_category" :data="'{!! trans(\'vaahcms-'+item.language_category.slug+'.'+item.slug+'\') !!}'"
-                                                                             confirm_dialog="buefy">
-                                                                        <b-icon icon="copy"></b-icon>
-                                                                    </vh-copy>
+                                                                    <b-tooltip label="Copy" type="is-dark">
+                                                                        <vh-copy v-if="item.language_category" :data="'{!! trans(\'vaahcms-'+item.language_category.slug+'.'+item.slug+'\') !!}'"
+                                                                                 confirm_dialog="buefy">
+                                                                            <b-icon icon="copy"></b-icon>
+                                                                        </vh-copy>
+                                                                    </b-tooltip>
 
                                                                 </td>
                                                                 <td width="150">
@@ -260,11 +261,13 @@
                                                                     </b-input>
                                                                 </td>
                                                                 <td width="20">
-                                                                    <b-button outlined type="is-danger"
-                                                                              @click="deleteString(item)"
-                                                                              size="is-small"
-                                                                              icon-left="trash">
-                                                                    </b-button>
+                                                                    <b-tooltip label="Delete" type="is-danger">
+                                                                        <b-button outlined type="is-danger"
+                                                                                  @click="deleteString(item)"
+                                                                                  size="is-small"
+                                                                                  icon-left="trash">
+                                                                        </b-button>
+                                                                    </b-tooltip>
                                                                 </td>
                                                             </tr>
                                                         </template>

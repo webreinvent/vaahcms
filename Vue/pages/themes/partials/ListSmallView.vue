@@ -45,77 +45,86 @@
                             </b-button>
                         </p>
 
-                        <p v-if="hasPermission('can-activate-theme') && props.row.is_active"
-                           class="control">
+                        <b-tooltip label="This theme is marked as Default" v-if="props.row.is_default"
+                                   type="is-dark">
+                            <p v-if="hasPermission('can-activate-theme') && props.row.is_active"
+                               class="control">
 
-                            <b-tooltip label="This theme is marked as Default" v-if="props.row.is_default"
-                                       type="is-dark">
                                 <b-button
-                                    size="is-small"
-                                    icon-left="check"
-                                    type="is-success">
+                                        size="is-small"
+                                        icon-left="check"
+                                        type="is-success">
                                 </b-button>
-                            </b-tooltip>
 
-                            <b-tooltip label="Mark this theme as Default" v-else
-                                       type="is-dark">
+                            </p>
+                        </b-tooltip>
+
+                        <b-tooltip label="Mark this theme as Default" v-else type="is-dark">
+                            <p v-if="hasPermission('can-activate-theme') && props.row.is_active"
+                               class="control">
+
                                 <b-button
-                                    size="is-small"
-                                    type="is-success"
-                                    @click="actions('make_default', props.row)">
+                                        size="is-small"
+                                        type="is-success"
+                                        @click="actions('make_default', props.row)">
                                     Make Default
                                 </b-button>
-                            </b-tooltip>
 
-                        </p>
+                            </p>
+                        </b-tooltip>
 
-                        <p class="control" v-if="props.row.is_active && props.row.is_sample_data_available
-                         && hasPermission('can-import-sample-data-in-theme')">
-                            <b-tooltip label="Import Sample Data" type="is-dark">
+
+                        <b-tooltip v-if="props.row.is_active && props.row.is_sample_data_available
+                                    && hasPermission('can-import-sample-data-in-theme')"
+                                   label="Import Sample Data" type="is-dark">
+                            <p class="control" >
+
                                 <b-button size="is-small"
                                           icon-left="database"
                                           @click="confirmDataImport(props.row)"
                                           type="is-warning">
                                 </b-button>
-                            </b-tooltip>
-                        </p>
 
-                        <p class="control" v-if="props.row.is_update_available && hasPermission('can-update-theme')">
-                            <b-tooltip label="Download Updates" type="is-dark">
+                            </p>
+                        </b-tooltip>
+
+                        <b-tooltip  v-if="props.row.is_update_available && hasPermission('can-update-theme')"
+                                    label="Download Updates" type="is-dark">
+                            <p class="control">
+
                                 <b-button size="is-small"
                                           icon-left="cloud-download-alt"
                                           type="is-info"
                                           @click="confirmUpdate(props.row)">
                                     Update
                                 </b-button>
-                            </b-tooltip>
-                        </p>
 
-                        <p v-if="hasPermission('can-delete-theme')" class="control">
-                            <b-tooltip label="Delete" type="is-dark">
+                            </p>
+                        </b-tooltip>
+
+                        <b-tooltip v-if="hasPermission('can-delete-theme')" label="Delete" type="is-dark">
+                            <p  class="control">
+
                                 <b-button size="is-small"
                                           icon-left="trash"
                                           @click="confirmDelete(props.row)"
                                           type="is-danger">
                                 </b-button>
-                            </b-tooltip>
-                        </p>
+
+                            </p>
+                        </b-tooltip>
 
 
+                        <b-tooltip v-if="hasPermission('can-read-theme')" label="View" type="is-dark">
+                            <p  class="control">
 
-
-
-                        <p v-if="hasPermission('can-read-theme')" class="control">
-                            <b-tooltip label="View" type="is-dark">
                                 <b-button size="is-small"
                                           @click="setActiveItem(props.row)"
                                           icon-left="chevron-right">
                                 </b-button>
-                            </b-tooltip>
-                        </p>
 
-
-
+                            </p>
+                        </b-tooltip>
 
                     </b-field>
 

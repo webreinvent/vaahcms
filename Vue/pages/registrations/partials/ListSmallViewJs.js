@@ -71,6 +71,9 @@ export default {
             this.update('query_string', this.query_string);
             this.$emit('eReloadList');
         },
+        copiedData: function (data) {
+            this.$vaah.toastSuccess(['copied']);
+        },
         //---------------------------------------------------------------------
         //---------------------------------------------------------------------
     }

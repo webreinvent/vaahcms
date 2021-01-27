@@ -49,22 +49,22 @@
 
                                             <b-input v-model="variable.name"></b-input>
 
-                                            <p class="control">
-                                                <b-tooltip label="Copy" type="is-dark">
+                                            <b-tooltip label="Copy" type="is-dark">
+                                                <p class="control">
                                                     <b-button
                                                         @click="$vaah.copy(variable.name)"
                                                         icon-left="copy"></b-button>
-                                                </b-tooltip>
+                                                </p>
+                                            </b-tooltip>
 
-                                            </p>
 
-                                            <p class="control">
 
-                                                <b-tooltip :label="variable.details" type="is-dark">
+                                            <b-tooltip :label="variable.details" type="is-dark">
+                                                <p class="control">
                                                     <b-button icon-left="question-circle"></b-button>
-                                                </b-tooltip>
+                                                </p>
+                                            </b-tooltip>
 
-                                            </p>
 
                                         </b-field>
 
