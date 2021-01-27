@@ -49,11 +49,12 @@ class CreateVhRegistrationsTable extends Migration
 
             $table->ipAddress('created_ip')->nullable();
 
-            $table->integer('created_by')->nullable();
-            $table->integer('updated_by')->nullable();
-            $table->integer('deleted_by')->nullable();
+            $table->integer('created_by')->nullable()->index();
+            $table->integer('updated_by')->nullable()->index();
+            $table->integer('deleted_by')->nullable()->index();
             $table->timestamps();
             $table->softDeletes();
+            $table->index(['created_at', 'updated_at', 'deleted_at']);
         });
     }
 

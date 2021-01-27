@@ -21,6 +21,8 @@ class CreateVhThemeLocationsTable extends Migration
             $table->string('slug',150)->nullable()->index();
             $table->string('excerpt')->nullable();
             $table->timestamps();
+
+            $table->index(['created_at', 'updated_at']);
         });
     }
 

@@ -20,7 +20,7 @@ class CreateVhThemeTemplateFieldsTable extends Migration
             $table->uuid('uuid')->nullable();
             $table->integer('vh_theme_id')->nullable()->index();
             $table->integer('vh_template_id')->nullable()->index();
-            $table->integer('sort')->nullable();
+            $table->integer('sort')->nullable()->index();
 
             $table->string('name')->nullable();
             $table->string('slug')->nullable()->index();
@@ -37,6 +37,9 @@ class CreateVhThemeTemplateFieldsTable extends Migration
 
             $table->timestamps();
             $table->softDeletes();
+
+
+            $table->index(['created_at', 'updated_at', 'deleted_at']);
 
         });
     }

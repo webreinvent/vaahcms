@@ -30,6 +30,8 @@ class CreateVhSettingsTable extends Migration
 
             $table->timestamps();
 
+            $table->index(['created_at', 'updated_at']);
+
         });
     }
 

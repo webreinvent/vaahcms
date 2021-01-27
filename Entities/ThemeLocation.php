@@ -152,11 +152,13 @@ class ThemeLocation extends Model {
         $find_menus = Menu::where('vh_theme_location_id', $location->id)
             ->get();
 
+
         foreach ($find_menus as $menu)
         {
-            $result[$i] = MenuItem::with(['page'])
+            $result[$i] = MenuItem::with(['content'])
                 ->where('vh_menu_id', $menu->id)
                 ->get()->toArray();
+
 
 
             if($html == true)
@@ -183,6 +185,9 @@ class ThemeLocation extends Model {
 
 
 
+
+
+
     }
     //---------------------------------------------------------------------------
     public static function getMenuHtml($array, $type)
@@ -204,6 +209,7 @@ class ThemeLocation extends Model {
                 $html .= '</ul>';
                 break;
         }
+
 
         return $html;
     }

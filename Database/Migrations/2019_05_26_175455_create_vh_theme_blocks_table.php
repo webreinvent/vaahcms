@@ -19,6 +19,8 @@ class CreateVhThemeBlocksTable extends Migration
             $table->string('name',150)->nullable();
             $table->string('slug',150)->nullable()->index();
             $table->timestamps();
+
+            $table->index(['created_at', 'updated_at']);
         });
     }
 

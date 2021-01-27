@@ -16,12 +16,13 @@ class CreateVhThemeTemplatesTable extends Migration
         Schema::create('vh_theme_templates', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('vh_theme_id')->nullable()->index();
-            $table->string('type')->nullable();
+            $table->string('type')->nullable()->index();
             $table->string('name',150)->nullable();
             $table->string('slug',150)->nullable()->index();
-            $table->string('file_path')->nullable();
+            $table->string('file_path')->nullable()->index();
             $table->string('excerpt')->nullable();
             $table->timestamps();
+            $table->index(['created_at', 'updated_at']);
         });
     }
 

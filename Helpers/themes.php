@@ -194,31 +194,12 @@ function vh_get_page_templates($theme_slug=null)
 
 }
 //-----------------------------------------------------------------------------------
-/*
- * Values of inputs can be following
-$inputs = [
-
-
-
-]
- *
- */
-function vh_field($name, $type, $is_repeatable = false)
-{
-    $inputs = [
-        'name' => $name,
-        'type' => $type,
-        'is_repeatable' => $is_repeatable
-    ];
-
-    $content = \WebReinvent\VaahCms\Entities\ThemeTemplate::syncTemplateFieldsViaViewRendering($inputs);
-    return $content;
-}
-//-----------------------------------------------------------------------------------
 function vh_location($location_slug, $html=false, $type='bootstrap')
 {
 
     $data = \WebReinvent\VaahCms\Entities\ThemeLocation::getLocationData($location_slug, $html, $type);
+
+
     return $data;
 }
 //-----------------------------------------------------------------------------------

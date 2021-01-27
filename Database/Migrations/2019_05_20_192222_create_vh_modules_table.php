@@ -35,8 +35,12 @@ class CreateVhModulesTable extends Migration
             $table->dateTime('update_checked_at')->nullable();
             $table->boolean('is_active')->nullable()->index();
 
+            $table->integer('created_by')->nullable()->index();
+            $table->integer('updated_by')->nullable()->index();
+            $table->integer('deleted_by')->nullable()->index();
             $table->timestamps();
             $table->softDeletes();
+            $table->index(['created_at', 'updated_at', 'deleted_at']);
         });
     }
 

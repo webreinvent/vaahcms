@@ -14,18 +14,26 @@ function get_bootstrap_menu($array, $parent_id = 0, $parents = array())
     $menu_html = '';
     foreach($array as $element)
     {
+        $link = $element['content']['link'];
+        if(isset($element['is_home']) && $element['is_home'] == 1 )
+        {
+            $link = url("/");
+        }
+
         if($element['parent_id']==$parent_id)
         {
             if(in_array($element['id'],$parents))
             {
                 $menu_html .= '<li class="nav-item dropdown">';
-                $menu_html .= '<a href="'.url()->route('vh.public.page', [$element['page']['slug']]).'" 
-                class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" 
+
+
+                $menu_html .= '<a href="'.$link.'"
+                class="nav-link dropdown-toggle" data-toggle="dropdown" role="button"
                                 aria-expanded="false">'.$element['name'].'</a>';
             }
             else {
                 $menu_html .= '<li  class="nav-item">';
-                $menu_html .= '<a class="nav-link" href="'.url()->route('vh.public.page', [$element['page']['slug']]).'">' . $element['name'] . '</a>';
+                $menu_html .= '<a class="nav-link" href="'.$link.'">' . $element['name'] . '</a>';
             }
             if(in_array($element['id'],$parents))
             {
