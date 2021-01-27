@@ -65,29 +65,31 @@
                             </b-tooltip>
                         </p>
 
-                        <p v-if="hasPermission('can-delete-module')" class="control">
-                            <b-tooltip label="Delete" type="is-dark">
+                        <b-tooltip label="Delete" type="is-dark">
+                            <p v-if="hasPermission('can-delete-module')" class="control">
+
                                 <b-button size="is-small"
                                           icon-left="trash"
                                           @click="confirmDelete(props.row)"
                                           type="is-danger">
                                 </b-button>
-                            </b-tooltip>
-                        </p>
+
+                            </p>
+                        </b-tooltip>
 
 
 
 
+                        <b-tooltip label="View" type="is-dark">
+                            <p v-if="hasPermission('can-read-module')" class="control">
 
-                        <p v-if="hasPermission('can-read-module')" class="control">
-                            <b-tooltip label="View" type="is-dark">
                                 <b-button size="is-small"
                                           @click="setActiveItem(props.row)"
                                           icon-left="chevron-right">
                                 </b-button>
-                            </b-tooltip>
-                        </p>
 
+                            </p>
+                        </b-tooltip>
 
 
 

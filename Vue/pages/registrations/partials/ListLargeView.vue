@@ -18,10 +18,15 @@
                     {{ props.row.name }}
                 </b-table-column>
 
-                <b-table-column v-slot="props"  field="email" label="Email">
-                    <span v-if="props.row.email">
-                        {{ props.row.email }}
-                    </span>
+                <b-table-column v-slot="props" field="email" label="Email">
+                    <b-tooltip label="Copy Email" type="is-dark">
+                        <vh-copy class="text-copyable"
+                                 :data="props.row.email"
+                                 :label="props.row.email"
+                                 @copied="copiedData"
+                        >
+                        </vh-copy>
+                    </b-tooltip>
                 </b-table-column>
 
                 <b-table-column v-slot="props" field="status" label="Status">
