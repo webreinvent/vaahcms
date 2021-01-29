@@ -20,6 +20,8 @@ Route::group(
         Route::post( '/signin/post', 'PublicController@postLogin' )
             ->name( 'vh.backend.signin.post' );
         //------------------------------------------------
+        Route::post( '/signin/generate/otp', 'PublicController@postGenerateOTP' );
+        //------------------------------------------------
         Route::get( '/logout', 'PublicController@logout' )
             ->name( 'vh.backend.logout' );
         //------------------------------------------------

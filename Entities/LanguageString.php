@@ -144,11 +144,16 @@ class LanguageString extends Model {
         {
             foreach ($languages as $language)
             {
+
                 $insert = [];
                 $insert['vh_lang_language_id'] = $language->id;
                 $insert['vh_lang_category_id'] = $string->vh_lang_category_id;
                 $insert['name'] = $string->name;
-                $insert['slug'] = \Str::slug($string->name, "_");
+                $insert['slug'] = $string->slug;
+
+                if(!$string->slug){
+                    $insert['slug'] = \Str::slug($string->name, "_");
+                }
 
                 $exist = static::where('vh_lang_language_id', $language->id)
                     ->where('vh_lang_category_id', $string->vh_lang_category_id)
@@ -310,61 +315,98 @@ class LanguageString extends Model {
         $languages = Language::all();
         $categories = LanguageCategory::all();
 
+        self::deleteVaahCmsLangFiles();
 
-        //delete existing language files
-        $file_path = base_path('resources/lang');
-        vh_delete_folder($file_path);
-
-        foreach ($languages as $language)
+        if(count($languages) > 0)
         {
-
-            foreach ($categories as $category)
+            foreach ($languages as $language)
             {
-                $strings = static::where('vh_lang_language_id', $language->id)
-                    ->where('vh_lang_category_id', $category->id)
-                    ->whereNotNull('slug')
-                    ->whereNotNull('content')
-                    ->get();
 
-                $folder_path = 'resources/lang/'.$language->locale_code_iso_639;
-
-                $file_name = 'vaahcms-'.$category->slug.'.php';
-
-                $file_path = base_path($folder_path.'/'.$file_name);
-
-                File::delete($file_path);
-
-                if($strings->count() > 0)
+                foreach ($categories as $category)
                 {
-                    $inputs = [
-                        "language" => $language,
-                        "category" => $category,
-                        "strings" => $strings,
-                    ];
+                    $strings = static::where('vh_lang_language_id', $language->id)
+                        ->where('vh_lang_category_id', $category->id)
+                        ->whereNotNull('slug')
+                        ->whereNotNull('content')
+                        ->get();
 
-                    $html = view('vaahcms::templates.lang')
-                        ->with($inputs)
-                        ->render();
-                    $html = html_entity_decode($html);
+                    $folder_path = 'resources/lang/'.$language->locale_code_iso_639;
 
-                    $html = "<?php "."\n".$html;
+                    $file_name = 'vaahcms-'.$category->slug.'.php';
 
-                    $folder_path_relative = base_path($folder_path);
+                    $file_path = base_path($folder_path.'/'.$file_name);
 
-                    if(!File::exists($folder_path_relative)) {
-                        File::makeDirectory($folder_path_relative, 0755, true, true);
+                    File::delete($file_path);
+
+                    if($strings->count() > 0)
+                    {
+                        $inputs = [
+                            "language" => $language,
+                            "category" => $category,
+                            "strings" => $strings,
+                        ];
+
+                        $html = view('vaahcms::templates.lang')
+                            ->with($inputs)
+                            ->render();
+                        $html = html_entity_decode($html);
+
+                        $html = "<?php "."\n".$html;
+
+                        $folder_path_relative = base_path($folder_path);
+
+                        if(!File::exists($folder_path_relative)) {
+                            File::makeDirectory($folder_path_relative, 0755, true, true);
+                        }
+
+                        File::put($file_path, $html);
                     }
 
-                    File::put($file_path, $html);
-                }
 
+                }
 
             }
 
         }
 
 
+
     }
+    //-------------------------------------------------
+    public static function deleteVaahCmsLangFiles()
+    {
+
+        //delete existing language files
+        $file_path = base_path('resources/lang');
+
+        $folders = vh_get_all_files($file_path);
+
+        if(count($folders) > 0)
+        {
+            foreach ($folders as $folder)
+            {
+
+                $files = vh_get_all_files($file_path."/".$folder);
+
+                if(count($files) > 0)
+                {
+                    foreach ($files as $file)
+                    {
+                        if(strpos($file, 'vaahcms') !== false) {
+                            unlink($file_path.'/'.$folder.'/'.$file);
+                        }
+                    }
+
+
+                }
+
+            }
+        }
+
+    }
+
+    //-------------------------------------------------
+    //-------------------------------------------------
     //-------------------------------------------------
     public static function syncAndGenerateStrings($request)
     {

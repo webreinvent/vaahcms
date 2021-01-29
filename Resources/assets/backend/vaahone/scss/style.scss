@@ -1,0 +1,13 @@
+@import "./customize/bulma/initial-variables";
+@import "./customize/bulma/derived-variables";
+@import "customize/override-variables";
+@import "./customize/buefy/_variables.scss";
+
+
+//-------For Dark Mode
+
+/*
+html, .section, .hero, footer{
+    background-color: #bbb !important;
+}
+*/

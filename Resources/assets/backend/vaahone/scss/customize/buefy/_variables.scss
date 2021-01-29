@@ -1,0 +1,16 @@
+$speed-slow: 150ms !default;
+$speed-slower: 250ms !default;
+
+$primary: $primary;
+$primary-invert: findColorInvert($primary) !default;
+$primary-light: findLightColor($primary) !default;
+$primary-dark: findDarkColor($primary, 20%) !default;
+
+$info: $info;
+
+$link: $primary !default;
+$link-invert: $primary-invert !default;
+$link-visited: $grey !default;
+$link-focus-border: $primary !default;
+
+$label-weight: $weight-semibold !default;

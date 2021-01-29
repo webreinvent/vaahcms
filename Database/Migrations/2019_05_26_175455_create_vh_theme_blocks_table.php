@@ -15,10 +15,12 @@ class CreateVhThemeBlocksTable extends Migration
     {
         Schema::create('vh_theme_blocks', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('vh_theme_id')->nullable();
+            $table->integer('vh_theme_id')->nullable()->index();
             $table->string('name',150)->nullable();
-            $table->string('slug',150)->nullable();
+            $table->string('slug',150)->nullable()->index();
             $table->timestamps();
+
+            $table->index(['created_at', 'updated_at']);
         });
     }
 

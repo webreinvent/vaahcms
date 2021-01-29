@@ -15,11 +15,10 @@ class CreateVhUsersTable extends Migration
     {
         Schema::create('vh_users', function (Blueprint $table) {
             $table->increments('id');
-            $table->uuid('uuid')->nullable();
+            $table->uuid('uuid')->nullable()->index();
             $table->string('email',150)->nullable()->index();
             $table->string('username',150)->nullable()->index();
             $table->string('password')->nullable()->index();
-            $table->string('login_otp')->nullable()->index();
             $table->string('display_name',50)->nullable();
             $table->string('title',200)->nullable();
             $table->string('first_name',150)->nullable()->index();
@@ -39,12 +38,12 @@ class CreateVhUsersTable extends Migration
             $table->dateTime('last_login_at')->nullable();
             $table->ipAddress('last_login_ip')->nullable();
             $table->string('remember_token')->nullable();
-            $table->string('api_token')->nullable();
+            $table->string('api_token')->nullable()->index();
             $table->dateTime('api_token_used_at')->nullable();
             $table->ipAddress('api_token_used_ip')->nullable();
-            $table->boolean('is_active')->nullable();
+            $table->boolean('is_active')->nullable()->index();
             $table->dateTime('activated_at')->nullable();
-            $table->string('status')->nullable();
+            $table->string('status')->nullable()->index();
             $table->string('affiliate_code')->nullable();
             $table->dateTime('affiliate_code_used_at')->nullable();
 
@@ -57,11 +56,12 @@ class CreateVhUsersTable extends Migration
 
             $table->ipAddress('created_ip')->nullable();
 
-            $table->integer('created_by')->nullable();
-            $table->integer('updated_by')->nullable();
-            $table->integer('deleted_by')->nullable();
+            $table->integer('created_by')->nullable()->index();
+            $table->integer('updated_by')->nullable()->index();
+            $table->integer('deleted_by')->nullable()->index();
             $table->timestamps();
             $table->softDeletes();
+            $table->index(['created_at', 'updated_at', 'deleted_at']);
         });
     }
 

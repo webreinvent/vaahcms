@@ -28,6 +28,14 @@ class GeneralController extends Controller
     public function getAssets(Request $request)
     {
 
+        if(!\Auth::user()->hasPermission('has-access-of-setting-section'))
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+            return response()->json($response);
+        }
+
         $response['status'] = 'success';
         $response['data']['roles'] = Role::getActiveRoles();
         $response['data']['file_types'] = vh_file_types();
@@ -39,6 +47,14 @@ class GeneralController extends Controller
     //----------------------------------------------------------
     public function getList(Request $request)
     {
+
+        if(!\Auth::user()->hasPermission('has-access-of-setting-section'))
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+            return response()->json($response);
+        }
 
         $data = [];
 
@@ -57,6 +73,14 @@ class GeneralController extends Controller
     //----------------------------------------------------------
     public function storeSiteSettings(Request $request)
     {
+
+        if(!\Auth::user()->hasPermission('has-access-of-setting-section'))
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+            return response()->json($response);
+        }
 
         foreach ($request->list as $key => $value){
             $setting = Setting::where('category', 'global')
@@ -82,6 +106,15 @@ class GeneralController extends Controller
     //----------------------------------------------------------
     public function storeLinks(Request $request)
     {
+
+        if(!\Auth::user()->hasPermission('has-access-of-setting-section'))
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+            return response()->json($response);
+        }
+
         $rules = array(
             'links' => 'required',
         );
@@ -132,6 +165,15 @@ class GeneralController extends Controller
     //----------------------------------------------------------
     public function storeMetaTags(Request $request)
     {
+
+        if(!\Auth::user()->hasPermission('has-access-of-setting-section'))
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+            return response()->json($response);
+        }
+
         $rules = array(
             'tags' => 'required',
         );

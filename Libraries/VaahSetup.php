@@ -154,11 +154,15 @@ class VaahSetup{
                         {
                             $env_params = vh_env_file_to_array(base_path($file));
 
-                            $env = trim($env_params['APP_ENV']);
-                            $env_url = trim($env_params['APP_URL']);
+                            if(isset($env_params['APP_ENV']) && isset($env_params['APP_URL']))
+                            {
+                                $env = trim($env_params['APP_ENV']);
+                                $env_url = trim($env_params['APP_URL']);
 
-                            $data['environments'][$env]['env_file'] = trim($file);
-                            $data['environments'][$env]['app_url'] = $env_url;
+                                $data['environments'][$env]['env_file'] = trim($file);
+                                $data['environments'][$env]['app_url'] = $env_url;
+                            }
+
                         }
                     }
                 }
@@ -489,9 +493,24 @@ class VaahSetup{
         if($config['environments'])
         {
 
+            $list = collect($config['environments'])->pluck('app_url')->toArray();
+            $count_total = $list;
+            $count_unique = array_unique($list);
+
+            if($count_unique < $count_total)
+            {
+                $response['status'] = 'failed';
+                $response['errors'][] = 'Duplicate entries with same app_url is found in vaahcms.json file.';
+                if(env('APP_DEBUG'))
+                {
+                    $response['hint'][] = 'APP URL already exist in vaahcms.json';
+                }
+
+                return $response;
+            }
+
             foreach($config['environments'] as $key => $environment)
             {
-
                 if( $environment->app_url === url("/") && $environment->env_file != '.env.'.$request->app_env)
                 {
                     $response['status'] = 'failed';
@@ -502,7 +521,6 @@ class VaahSetup{
                     }
                     return $response;
                 }
-
             }
         }
 

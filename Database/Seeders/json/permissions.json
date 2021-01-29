@@ -310,6 +310,11 @@
         "module": "vaahcms",
         "section": "theme",
         "details": "This will allow user to read a theme."
+    },
+    {
+        "name": "Has Access Of Advanced Section",
+        "module": "vaahcms",
+        "section": "advanced",
+        "details": "This will allow user see the link of advanced section."
     }
-
 ]

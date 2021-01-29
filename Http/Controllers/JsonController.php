@@ -35,6 +35,11 @@ class JsonController extends Controller
             'docs' => config('vaahcms.documentation'),
         ];
 
+        $data['settings'] = [
+            'is_mail_settings_not_set' => $this->isMailSettingsNotSet()
+        ];
+
+
         $data['server'] = [
             'host' => $request->getHost(),
             'current_year' => \Carbon::now()->format('Y'),
@@ -98,6 +103,7 @@ class JsonController extends Controller
         $data['urls']['theme'] = vh_get_backend_theme_url();
         $data['urls']['image'] = vh_get_backend_theme_image_url();
         $data['urls']['upload'] = route('vh.backend.media.upload');
+        $data['urls']['dashboard'] = route('vh.backend')."#/vaah";
 
 
         $response['status'] = 'success';
@@ -125,6 +131,29 @@ class JsonController extends Controller
         $response['data']['is_logged_in'] = $is_logged;
 
         return response()->json($response);
+
+    }
+    //----------------------------------------------------------
+    public function isMailSettingsNotSet()
+    {
+
+        $mail_username = env('MAIL_USERNAME');
+        $mail_password = env('MAIL_PASSWORD');
+        $mail_from_name = env('MAIL_FROM_NAME');
+        $mail_from_email = env('MAIL_FROM_ADDRESS');
+
+        if(
+            isset($mail_username) && !empty($mail_username)
+            && isset($mail_password) && !empty($mail_password)
+            && isset($mail_from_name) && !empty($mail_from_name)
+            && isset($mail_from_email) && !empty($mail_from_email)
+        )
+        {
+            return false;
+        }
+
+
+        return true;
 
     }
     //----------------------------------------------------------

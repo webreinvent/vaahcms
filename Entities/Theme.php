@@ -433,7 +433,11 @@ class Theme extends Model {
 
         }
 
-        if($is_default)
+
+        // check if any theme is marked as default
+        $is_default_exist = self::where('is_default', 1)->exists();
+
+        if($is_default || !$is_default_exist)
         {
             $item->is_default = 1;
 

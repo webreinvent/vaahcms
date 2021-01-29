@@ -23,11 +23,11 @@
 
 
     @if(env('APP_VAAHCMS_ENV') == 'develop')
-        <link href="http://localhost:8080/vaahone/css/vaahcms.css" rel="stylesheet" media="screen">
-        <link href="http://localhost:8080/vaahone/css/backend.css" rel="stylesheet" media="screen">
+        <link href="http://localhost:8080/vaahone/css/build.css" rel="stylesheet" media="screen">
+        <link href="http://localhost:8080/vaahone/css/style.css" rel="stylesheet" media="screen">
     @else
-        <link href="{{vh_get_backend_assets("css/vaahcms.css")}}" rel="stylesheet" media="screen">
-        <link href="{{vh_get_backend_assets("css/backend.css")}}" rel="stylesheet" media="screen">
+        <link href="{{vh_get_backend_assets("css/build.css")}}" rel="stylesheet" media="screen">
+        <link href="{{vh_get_backend_assets("css/style.css")}}" rel="stylesheet" media="screen">
     @endif
 
 
@@ -40,18 +40,22 @@
 @include("vaahcms::backend.vaahone.components.flash")
 
 <div class="container-backend">
+
     <div id="appExtended">
-        <topmenu :assets="assets"></topmenu>
-        <sidemenu :assets="assets"></sidemenu>
+        <sidebar :root="root"></sidebar>
+        <div v-bind:style="{ paddingLeft: root.has_padding_left }">
+            <top-menu :root="root" @sidebar-action="sidebarAction"></top-menu>
+        </div>
     </div>
 
     <!--sections-->
-    <section class="section">
+    <div style="padding-left: 55px;">
 
-        <div class="container">
+        <section class="section has-padding-top-25 has-padding-left-25">
             @yield('content')
-        </div>
-    </section>
+        </section>
+
+    </div>
     <!--sections-->
 
 </div>

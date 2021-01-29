@@ -44,10 +44,35 @@ class PublicController extends Controller
         return redirect()->route('vh.backend');
     }
     //----------------------------------------------------------
+    public function postGenerateOTP(Request $request)
+    {
+        $response = User::sendLoginOtp($request);
+        return response()->json($response);
+    }
+    //----------------------------------------------------------
     public function postLogin(Request $request)
     {
 
-        $response = User::login($request);
+        $rules = array(
+            'type' => 'required',
+        );
+
+        $validator = \Validator::make( $request->all(), $rules);
+        if ( $validator->fails() ) {
+
+            $errors             = errorsToArray($validator->errors());
+            $response['status'] = 'failed';
+            $response['errors'] = $errors;
+            return response()->json($response);
+        }
+
+        if($request->type == 'otp')
+        {
+            $response = User::loginViaOtp($request);
+        } else
+        {
+            $response = User::login($request);
+        }
 
         if(isset($response['status']) && $response['status'] == 'failed')
         {
@@ -62,6 +87,8 @@ class PublicController extends Controller
             $redirect_url = \URL::route('vh.backend');
         }
 
+        $response = [];
+
         $response['status'] = 'success';
         $response['messages'][] = 'Login Successful';
         $response['data']['redirect_url'] = $redirect_url;
@@ -72,25 +99,35 @@ class PublicController extends Controller
     //----------------------------------------------------------
     public function logout()
     {
-        $is_admin = \Auth::user()->isAdmin();
+        if(!\Auth::check())
+        {
+            return redirect()->route('vh.backend');
+        }
 
         \Auth::logout();
 
-        $redirect_value = Setting::where('key','redirect_after_backend_logout')->first()->value;
+        $redirect_value = config('settings.global.redirect_after_backend_logout');
 
-        if($is_admin){
-            if($redirect_value == 'frontend'){
-                return redirect('/');
-            }elseif($redirect_value == 'custom'){
-                $redirect_url = Setting::where('key','redirect_after_backend_logout_url')->first()->value;
-                if($redirect_url){
-                    return redirect($redirect_url);
-                }
-            }
 
+        if(!isset($redirect_value))
+        {
+            return redirect()->route('vh.backend');
         }
 
-        return redirect()->route('vh.backend');
+        $redirect_value_url = '/';
+
+        if($redirect_value != 'frontend'){
+            $redirect_value_custom = config('settings.global.redirect_after_backend_logout_url');
+
+            $redirect_value_url = $redirect_value;
+
+            if(isset($redirect_value_custom) && !empty($redirect_value_custom))
+            {
+                $redirect_value_url = $redirect_value_custom;
+            }
+        }
+
+        return redirect($redirect_value_url);
     }
     //----------------------------------------------------------
     //----------------------------------------------------------

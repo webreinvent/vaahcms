@@ -87,6 +87,10 @@ class VaahCmsServiceProvider extends ServiceProvider {
             require_once($filename);
         }
 
+        foreach (glob(__DIR__.'/Mail/*.php') as $filename){
+            require_once($filename);
+        }
+
     }
 
     /**

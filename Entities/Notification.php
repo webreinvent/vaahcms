@@ -4,6 +4,7 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
+use WebReinvent\VaahCms\Jobs\ProcessNotifications;
 use WebReinvent\VaahCms\Notifications\Notice;
 use WebReinvent\VaahCms\Traits\CrudWithUuidObservantTrait;
 
@@ -257,14 +258,42 @@ class Notification extends Model {
 
     }
     //-------------------------------------------------
-    public static function send($request){
+    public static function dispatch(Notification $notification, User $user, $inputs, $priority='default')
+    {
+
+        if(config('settings.global.laravel_queues'))
+        {
+            $response = self::addInQueue($notification, $user, $inputs, $priority);
+        } else
+        {
+            $response = self::send($notification, $user, $inputs);
+        }
+
+        return $response;
+    }
+    //-------------------------------------------------
+    public static function addInQueue(Notification $notification, User $user, $inputs, $priority='default')
+    {
+
+        dispatch((new ProcessNotifications($notification, $user, $inputs))
+            ->onQueue($priority));
+
+        $response['status'] = 'success';
+        $response['data'] = [];
+        $response['messages'][] = 'Action was successful';
+
+        return $response;
+
+    }
+    //-------------------------------------------------
+    public static function send(Notification $notification, User $user, $inputs){
 
         $rules = array(
             'user_id' => 'required',
             'notification_id' => 'required',
         );
 
-        $validator = \Validator::make( $request->all(), $rules);
+        $validator = \Validator::make( $inputs, $rules);
         if ( $validator->fails() ) {
 
             $errors             = errorsToArray($validator->errors());
@@ -273,25 +302,22 @@ class Notification extends Model {
             return $response;
         }
 
-        $user = User::find($request->user_id);
-        $notification = static::find($request->notification_id);
-
 
         try{
 
             if($notification->via_mail == true)
             {
-                static::sendViaMail($notification, $user, $request->all());
+                static::sendViaMail($notification, $user, $inputs);
             }
 
             if($notification->via_backend == true)
             {
-                static::sendViaBackend($notification, $user, $request->all());
+                static::sendViaBackend($notification, $user, $inputs);
             }
 
             if($notification->via_frontend == true)
             {
-                static::sendViaFrontend($notification, $user, $request->all());
+                static::sendViaFrontend($notification, $user, $inputs);
             }
 
             $response['status'] = 'success';

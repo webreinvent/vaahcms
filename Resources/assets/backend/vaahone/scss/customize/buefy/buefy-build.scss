@@ -1,0 +1,17 @@
+@import "./../../bulma-0.9.1/utilities/functions";
+@import "./../bulma/initial-variables";
+@import "./../bulma/derived-variables";
+@import "../override-variables";
+
+//@import "./../../buefy-0.9.4/utils/_all";
+/*------------ utils/_all replacement */
+@import "./../../buefy-0.9.4/utils/_functions.scss";
+@import "_variables.scss";
+@import "./../../buefy-0.9.4/utils/_helpers.scss";
+@import "./../../buefy-0.9.4/utils/_animations.scss";
+/*------------/ END of utilities/_all replacement */
+
+
+@import "./../bulma/bulma";
+@import "./../../buefy-0.9.4/utils/variables-ext";
+@import "buefy";

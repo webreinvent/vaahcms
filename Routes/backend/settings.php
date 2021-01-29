@@ -59,6 +59,9 @@ Route::group(
         Route::post( '/list', 'EnvController@getList' )
             ->name( 'vh.backend.settings.env.list' );
         //------------------------------------------------
+        Route::get( '/download-file/{file_name}', 'EnvController@downloadFile')
+            ->name( 'vh.backend.settings.env.download.file' );;
+        //---------------------------------------------------------
         Route::post( '/store', 'EnvController@store' )
             ->name( 'vh.backend.settings.env.store' );
         //------------------------------------------------
@@ -84,17 +87,13 @@ Route::group(
         Route::post('/generateLanguage', 'LocalizationController@generateLanguage')
             ->name('backend.vaah.localization.generate_language');
         //---------------------------------------------------------
-        Route::post('/store', 'LocalizationController@postStore')
-            ->name('backend.vaah.localization.store');
+        Route::post('/store', 'LocalizationController@postStore');
         //---------------------------------------------------------
-        Route::post('/store/language', 'LocalizationController@storeLanguage')
-            ->name('backend.vaah.localization.store');
+        Route::post('/store/language', 'LocalizationController@storeLanguage');
         //---------------------------------------------------------
-        Route::post('/store/category', 'LocalizationController@storeCategory')
-            ->name('backend.vaah.localization.store');
+        Route::post('/store/category', 'LocalizationController@storeCategory');
         //---------------------------------------------------------
-        Route::post('/actions/{action_name}', 'LocalizationController@postActions')
-            ->name('backend.vaah.localization.actions');
+        Route::post('/actions/{action_name}', 'LocalizationController@postActions');
         //---------------------------------------------------------
     });
 

@@ -24,12 +24,21 @@ class WelcomeController extends Controller
     public function index()
     {
 
+
         $errors = [];
         $is_cms_exists = Module::slug('cms')->active()->exists();
 
         if(!$is_cms_exists)
         {
-            $errors[] = 'Install and Activate CMS Module.';
+            $errors[] = 'Install and activate the CMS module or Define your own routes.';
+            return view($this->theme.'::frontend.welcome')->withErrors($errors);
+        }
+
+        $is_theme_active = Theme::active()->exists();
+
+        if(!$is_theme_active)
+        {
+            $errors[] = 'Install and activate a theme.';
             return view($this->theme.'::frontend.welcome')->withErrors($errors);
         }
 
@@ -38,48 +47,25 @@ class WelcomeController extends Controller
         //if CMS module is not installed or active
         if($is_theme_active < 1)
         {
-            $errors[] = 'Install and Activate at least one theme.';
+            $errors[] = 'No theme is marked as active.';
             return view($this->theme.'::frontend.welcome')->withErrors($errors);
         }
 
         $menu_item = MenuItem::getHomePage();
 
-
         if(!$menu_item)
         {
-            //check if dedicated home page is exist
-            if (view()->exists()) {
-                return view($this->theme.'::frontend.home');
+            //check if dedicated welcome page is exist
+            if (view()->exists($this->theme.'::frontend.welcome')) {
+                return view($this->theme.'::frontend.welcome');
             } else {
-                return view($this->theme.'::frontend.default');
+                return view('vaahcms::frontend.theme-welcome');
             }
         }
 
         $blade = $menu_item->content->theme->slug.'::'.$menu_item->content->template->file_path;
 
-
-        return view($blade)->with('content', $menu_item->content);
-
-
-    }
-    //----------------------------------------------------------
-
-    public function getPage(Request $request,$slug)
-    {
-
-        $data = [];
-
-        $page = $request->page;
-
-        $template_name = 'default';
-
-        if($page->template)
-        {
-            $template_name = $page->template->slug;
-        }
-
-        return view($this->theme.'::page-templates.'.$template_name)->with('data', $page);
-
+        return view($blade)->with('data', $menu_item->content);
     }
 
     //----------------------------------------------------------

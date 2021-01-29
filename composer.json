@@ -4,7 +4,7 @@
   "keywords": ["laravel", "cms"],
   "homepage": "https://www.webreinvent.com",
   "license": "MIT",
-  "version": "1.1.6",
+  "version": "1.2.0",
   "authors": [
     {
       "name": "WebReinvent",
@@ -12,8 +12,8 @@
     }
   ],
   "require": {
-    "php": "^7.2",
-    "webreinvent/laravel-nestable": "*",
+    "php": "^7.3",
+    "webreinvent/laravel-nestable": "^0.0.2",
     "barryvdh/laravel-dompdf": "^0.8.6",
     "berkayk/onesignal-laravel": "^1.0.5",
     "composer/composer": "^1.10.6",

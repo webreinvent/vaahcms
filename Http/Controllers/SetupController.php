@@ -8,11 +8,7 @@ use Illuminate\Filesystem\Filesystem;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
-use Illuminate\Support\Facades\Notification;
-use Illuminate\Support\Str;
-use WebReinvent\VaahCms\Entities\Migration;
 use WebReinvent\VaahCms\Entities\Module;
-use WebReinvent\VaahCms\Entities\ModuleMigration;
 use WebReinvent\VaahCms\Entities\Permission;
 use WebReinvent\VaahCms\Entities\Role;
 use WebReinvent\VaahCms\Entities\Theme;
@@ -20,6 +16,7 @@ use WebReinvent\VaahCms\Entities\User;
 use WebReinvent\VaahCms\Libraries\VaahHelper;
 use WebReinvent\VaahCms\Libraries\VaahSetup;
 use WebReinvent\VaahCms\Notifications\TestSmtp;
+use WebReinvent\VaahExtend\Libraries\VaahArtisan;
 
 
 class SetupController extends Controller
@@ -81,6 +78,7 @@ class SetupController extends Controller
         $data['mail_encryption_types'] = vh_mail_encryption_types();
         $data['mail_sample_settings'] = vh_mail_sample_settings();
         $data['country_calling_codes'] = vh_get_countries_calling_codes();
+        $data['env_file'] = env('ENV_FILE');
         $data['app_url'] = url("/");
 
         $response['status'] = 'success';
@@ -321,6 +319,7 @@ class SetupController extends Controller
         }*/
 
 
+
         $response = VaahSetup::verifyAppUrl($request);
 
         if($response['status'] == 'failed')
@@ -335,6 +334,8 @@ class SetupController extends Controller
         {
             return response()->json($response);
         }
+
+
 
         //generate vaahcms.json file
         $response = VaahSetup::createVaahCmsJsonFile($request);
@@ -390,30 +391,55 @@ class SetupController extends Controller
 
         try
         {
+            $response = VaahArtisan::seed('db:wipe');
 
-            //reset migration
-            Migration::resetMigrations();
+            if(isset($response['status']) && $response['status'] == 'failed')
+            {
+                return $response;
+            }
 
             //publish all migrations of vaahcms package
             $provider = "WebReinvent\VaahCms\VaahCmsServiceProvider";
-            Migration::publishMigrations($provider);
+            $response = VaahArtisan::publishMigrations($provider);
+
+            if(isset($response['status']) && $response['status'] == 'failed')
+            {
+                return $response;
+            }
 
             //run migration
-            Migration::runMigrations(null,true);
+            $response = VaahArtisan::migrate();
+            if(isset($response['status']) && $response['status'] == 'failed')
+            {
+                return $response;
+            }
+
 
             //publish vaahcms seeds
-            Migration::publishSeeds($provider);
+            $response = VaahArtisan::publishSeeds($provider);
+            if(isset($response['status']) && $response['status'] == 'failed')
+            {
+                return $response;
+            }
+
 
             //run vaahcms seeds
-            $namespace = "WebReinvent\VaahCms\Database\Seeders\VaahCmsTableSeeder";
-            Migration::runSeeds($namespace);
+            $seed_class = "WebReinvent\VaahCms\Database\Seeders\VaahCmsTableSeeder";
+            $response = VaahArtisan::seed('db:seed', $seed_class);
+            if(isset($response['status']) && $response['status'] == 'failed')
+            {
+                return $response;
+            }
 
+            //publish laravel mail and notifications
+            VaahArtisan::publish(null, 'laravel-mail');
+            VaahArtisan::publish(null, 'laravel-notifications');
+
+            $response =[];
             $response['status'] = 'success';
             $response['messages'][] = 'Migration were successful';
             $response['data'] = $data;
-
             return response()->json($response);
-
         }
         catch(\Exception $e) {
 
@@ -608,6 +634,7 @@ class SetupController extends Controller
         $user = new User();
         $user->fill($request->all());
         $user->is_active = 1;
+        $user->password = $request->password;
         $user->activated_at = \Carbon::now();
         $user->status = 'active';
         $user->created_ip = \Request::ip();

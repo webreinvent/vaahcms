@@ -13,7 +13,7 @@ Route::group(
             ->name( 'vh.backend.roles.assets' );
         //---------------------------------------------------------
         Route::post('/create', 'RolesController@postCreate')
-            ->name('backend.vaah.registrations.create');
+            ->name('backend.vaah.role.create');
         //------------------------------------------------
         Route::get( '/list', 'RolesController@getList' )
             ->name( 'vh.backend.roles.list' );

@@ -1,6 +1,8 @@
 <?php namespace WebReinvent\VaahCms\Entities;
 
-use Hash;
+
+
+use App\Mail\OrderShipped;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Http\Request;
@@ -8,8 +10,14 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Support\Facades\Bus;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Str;
+use WebReinvent\VaahCms\Jobs\ProcessMails;
+use WebReinvent\VaahCms\Jobs\ProcessNotifications;
+use WebReinvent\VaahCms\Libraries\VaahMail;
+use WebReinvent\VaahCms\Mail\TestMail;
 use WebReinvent\VaahCms\Traits\CrudWithUuidObservantTrait;
 
 class User extends Authenticatable
@@ -49,6 +57,7 @@ class User extends Authenticatable
     //-------------------------------------------------
     protected $hidden = [
         'password',
+        'login_otp',
         'remember_token',
         'api_token',
         'api_token_used_at',
@@ -125,7 +134,13 @@ class User extends Authenticatable
     }
     //-------------------------------------------------
     public function setLoginOtpAttribute($value) {
-        $this->attributes['login_otp'] = Hash::make($value);
+
+        if(is_null($value) || empty($value))
+        {
+            $this->attributes['login_otp'] = null;
+        } else{
+            $this->attributes['login_otp'] = Hash::make($value);
+        }
     }
     //-------------------------------------------------
     public function setResetPasswordCodeAttribute($value) {
@@ -449,20 +464,14 @@ class User extends Authenticatable
 
         //restricted actions on logged in users
         $result = false;
-        if($user_id == \Auth::user()->id)
+        if($user_id === \Auth::user()->id)
         {
             switch ($action_type)
             {
                 //------------------------
-                case 'bulk-change-status':
-                    $result = true;
-                    break;
-                //------------------------
                 case 'bulk-trash':
-                    $result = true;
-                    break;
-                //------------------------
                 case 'bulk-delete':
+                case 'bulk-change-status':
                     $result = true;
                     break;
                 //------------------------
@@ -611,26 +620,25 @@ class User extends Authenticatable
             ->first();
 
         $inputs = [
-            'user_id' => $user->id,
-            'notification_id' => $notification->id,
             'login_otp' => $otp,
+            'notification_id' => $notification->id,
+            'user_id' => $user->id,
         ];
 
-        $request = new Request($inputs);
 
-        $response = Notification::send($request);
+        $response = Notification::dispatch($notification, $user, $inputs);
 
         if(isset($response['status']) && $response['status'] == 'failed')
         {
             return $response;
         }
 
+        $response['status'] = 'success';
         $response['messages'] = [
-            trans('vaahcms-login.login_otp_sent')
+            "A one time password (OTP) has been sent to your email."
         ];
 
         return $response;
-
     }
     //-------------------------------------------------
     public static function loginViaOtp($request): array
@@ -643,7 +651,21 @@ class User extends Authenticatable
             return $user;
         }
 
-        if(count($request->login_otp) < 6
+        $rules = array(
+            'login_otp' => 'required|digits:6',
+        );
+
+        $validator = \Validator::make( $request->all(), $rules);
+        if ( $validator->fails() ) {
+
+            $errors             = errorsToArray($validator->errors());
+            $response['status'] = 'failed';
+            $response['errors'] = $errors;
+            return $response;
+        }
+
+
+        /*if(count($request->login_otp) < 6
             || is_null($user->login_otp)
             || empty($user->login_otp)
         )
@@ -653,7 +675,8 @@ class User extends Authenticatable
             return $response;
         }
 
-        $login_otp = implode('', $request->login_otp);
+        $login_otp = implode('', $request->login_otp);*/
+        $login_otp = $request->login_otp;
         $login_otp = trim($login_otp);
 
         if (Hash::check($login_otp, $user->login_otp))
@@ -663,6 +686,7 @@ class User extends Authenticatable
             } else{
                 Auth::login($user);
             }
+
             $user->login_otp = null;
             $user->last_login_at = Carbon::now();
             $user->last_login_ip = request()->ip();
@@ -670,9 +694,6 @@ class User extends Authenticatable
 
             $response['status'] = 'success';
             $response['data'] = [];
-            $response['messages'] = [
-                trans('vaahcms-login.login_successful')
-            ];
 
         } else {
             $response['status'] = 'failed';
@@ -987,7 +1008,7 @@ class User extends Authenticatable
 
     }
     //-------------------------------------------------
-    public static function getList($request,$roles)
+    public static function getList($request)
     {
 
         if(isset($request['recount']) && $request['recount'] == true)
@@ -1016,12 +1037,16 @@ class User extends Authenticatable
             }
         }
 
-        if(count($roles) > 0){
+        if(isset($request['roles']) && is_array($request['roles']) && count($request['roles']) > 0){
 
-            $list->whereHas('roles', function ($query) use ($roles){
-                $query->where('vh_user_roles.is_active', '=', 1)->whereIn('vh_roles.slug', $roles);
+            $list->whereHas('roles', function ($query) use ($request){
+                $query->where('vh_user_roles.is_active', '=', 1)->whereIn('vh_roles.slug', $request['roles']);
             });
 
+        }elseif(isset($request['roles']) && $request['roles']){
+            $list->whereHas('roles', function ($query) use ($request){
+                $query->where('vh_user_roles.is_active', '=', 1)->where('vh_roles.slug', $request['roles']);
+            });
         }
 
         if(isset($request['q']))
@@ -1221,14 +1246,13 @@ class User extends Authenticatable
         {
             $reg = User::where('id',$id)->withTrashed()->first();
 
-
             if($reg->deleted_at){
                 continue ;
             }
 
             $is_restricted = self::restrictedActions($request->action, $reg->id);
 
-            if($is_restricted)
+            if($is_restricted && $reg->is_active == 1)
             {
                 continue;
             }

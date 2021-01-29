@@ -95,6 +95,26 @@ public function boot()
 
 ### Commands
 
+#### Run `queue`
+```shell
+php artisan queue:work --queue=high,medium,low,default --env=pradeep
+```
+
+How to dispatch job:
+```php
+dispatch((new ProcessNotifications($notification, $user, $inputs))
+            ->onQueue('high'));
+```
+
+
+How to set jobs where you can track progress? Answer: Batches
+```php
+$batch = Bus::batch([])->onQueue('high')->dispatch();
+$batch->add(new ProcessNotifications($notification, $user, $inputs));
+```
+
+
+
 #### Publish All Assets
 ```bash
 php artisan vendor:publish --provider="WebReinvent\VaahCms\VaahCmsServiceProvider"
@@ -134,14 +154,14 @@ php artisan vendor:publish --provider="WebReinvent\VaahCms\VaahCmsServiceProvide
 
 #### Create migrations
 ```bash
-php artisan make:migration create_vh_users_table --path=/packages/vaahcms/src/Database/Migrations
+php artisan make:migration create_vh_users_table --path=/packages/vaahcms/Database/Migrations
 ```
 
 #### Create seeds
 ```bash
-php artisan make:seeder PermissionsTableSeeder --path=/packages/vaahcms/src/Database/Seeders
-php artisan make:seeder RolesTableSeeder --path=/packages/vaahcms/src/Database/Seeders
-php artisan make:command HealthcheckCommand --path=/packages/vaahcms/src/Database/Seeders
+php artisan make:seeder PermissionsTableSeeder --path=/packages/vaahcms/Database/Seeders
+php artisan make:seeder RolesTableSeeder --path=/packages/vaahcms/Database/Seeders
+php artisan make:command HealthcheckCommand --path=/packages/vaahcms/Database/Seeders
 ```
 
 ## Minify Assets of Admin with Laravel Mix

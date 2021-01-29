@@ -1,0 +1,220 @@
+$datepicker-background-color: $dropdown-content-background-color !default;
+$datepicker-radius: $dropdown-content-radius !default;
+$datepicker-shadow: $dropdown-content-shadow !default;
+$datepicker-header-color: $grey !default;
+$datepicker-today-border: solid 1px rgba($primary, 0.5) !default;
+$datepicker-item-color: $grey-dark !default;
+$datepicker-item-disabled-color: $grey-light !default;
+$datepicker-item-hover-color: $scheme-invert !default;
+$datepicker-item-hover-background-color: $background !default;
+$datepicker-item-selected-color: $primary-invert !default;
+$datepicker-item-selected-background-color: $primary !default;
+
+.datepicker {
+    font-size: 0.875rem;
+    .dropdown,
+    .dropdown-trigger {
+        width: 100%;
+        .input[readonly] {
+            cursor: pointer;
+            box-shadow: $input-shadow;
+            &:focus,
+            &.is-focused,
+            &:active,
+            &.is-active {
+                box-shadow: $input-focus-box-shadow-size $input-focus-box-shadow-color;
+            }
+        }
+    }
+    // unset opacity when dropdow is disabled
+    .dropdown {
+        &.is-disabled {
+            opacity: 1;
+        }
+    }
+    .dropdown-content {
+        background-color: $datepicker-background-color;
+        border-radius: $datepicker-radius;
+        box-shadow: $datepicker-shadow;
+    }
+    .dropdown-item {
+        font-size: inherit;
+    }
+    .datepicker-header {
+        padding-bottom: 0.875rem;
+        margin-bottom: 0.875rem;
+        border-bottom: 1px solid $grey-lighter;
+    }
+    .datepicker-footer {
+        margin-top: 0.875rem;
+        padding-top: 0.875rem;
+        border-top: 1px solid $grey-lighter;
+    }
+    .datepicker-table {
+        display: table;
+        margin: 0 auto 0 auto;
+        .datepicker-cell {
+            text-align: center;
+            vertical-align: middle;
+            display: table-cell;
+            border-radius: $radius;
+            padding: 0.5rem 0.75rem;
+        }
+        .datepicker-header {
+            display: table-header-group;
+            .datepicker-cell {
+                color: $datepicker-header-color;
+                font-weight: $weight-semibold;
+            }
+        }
+        .datepicker-body {
+            display: table-row-group;
+            .datepicker-row {
+                display: table-row;
+            }
+            .datepicker-months {
+                display: inline-flex;
+                flex-wrap: wrap;
+                flex-direction: row;
+                width: 17rem;
+                .datepicker-cell {
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    width: 33.33%;
+                    height: 2.5rem;
+                }
+            }
+            .datepicker-cell {
+                &.is-unselectable {
+                    color: $datepicker-item-disabled-color;
+                }
+                &.is-today {
+                    border: $datepicker-today-border;
+                }
+                &.is-selectable {
+                    color: $datepicker-item-color;
+                    &:hover:not(.is-selected),
+                    &:focus:not(.is-selected) {
+                        background-color: $datepicker-item-hover-background-color;
+                        color: $datepicker-item-hover-color;
+                        cursor: pointer;
+                    }
+                    &.is-within-hovered-range {
+                        &.is-first-hovered {
+                            background-color: $grey;
+                            color: $grey-lighter;
+                            border-bottom-right-radius: 0;
+                            border-top-right-radius: 0;
+                        }
+                        &.is-within-hovered {
+                            background-color: $datepicker-item-hover-background-color;
+                            color: $datepicker-item-hover-color;
+                            border-radius: 0;
+                        }
+                        &.is-last-hovered {
+                            background-color: $grey;
+                            color: $grey-lighter;
+                            border-bottom-left-radius: 0;
+                            border-top-left-radius: 0;
+                        }
+                    }
+                }
+                &.is-selected {
+                    background-color: $datepicker-item-selected-background-color;
+                    color: $datepicker-item-selected-color;
+                    &.is-first-selected {
+                        background-color: $datepicker-item-selected-background-color;
+                        color: $datepicker-item-selected-color;
+                        border-bottom-right-radius: 0;
+                        border-top-right-radius: 0;
+                    }
+                    &.is-within-selected {
+                        background-color: rgba($datepicker-item-selected-background-color, 0.5);
+                        border-radius: 0;
+                    }
+                    &.is-last-selected {
+                        background-color: $datepicker-item-selected-background-color;
+                        color: $datepicker-item-selected-color;
+                        border-bottom-left-radius: 0;
+                        border-top-left-radius: 0;
+                    }
+                }
+                &.is-nearby:not(.is-selected) {
+                    color: $grey-light;
+                }
+                &.is-week-number {
+                    cursor: default;
+                }
+            }
+            &.has-events {
+                .datepicker-cell {
+                    padding: 0.3rem 0.75rem 0.75rem;
+                    &.has-event {
+                        position: relative;
+                        .events {
+                            bottom: .425rem;
+                            display: flex;
+                            justify-content: center;
+                            left: 0;
+                            padding: 0 .35rem;
+                            position: absolute;
+                            width: 100%;
+                            .event {
+                                @each $name, $pair in $form-colors {
+                                    $color: nth($pair, 1);
+                                    &.is-#{$name} {
+                                        background-color: $color;
+                                    }
+                                }
+                            }
+                        }
+                        &.dots .event {
+                            border-radius: 50%;
+                            height: .35em;
+                            margin: 0 .1em;
+                            width: .35em;
+                        }
+                        &.bars .event {
+                            height: .25em;
+                            width: 100%;
+                        }
+                    }
+                    &.is-selected {
+                        overflow: hidden;
+                        .events .event {
+                            // Currently datepicker only uses primary coloring
+                            // Ensure indicator is visible when selected
+                            &.is-primary {
+                                background-color: lighten($primary, 15);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    &.is-small {
+        @include control-small;
+    }
+    &.is-medium {
+        @include control-medium;
+    }
+    &.is-large {
+        @include control-large;
+    }
+    @media screen and (min-width: $desktop){
+        .footer-horizontal-timepicker {
+            border: none;
+            padding-left: 10px;
+            margin-left: 5px;
+            display: flex;
+        }
+        .dropdown-horizonal-timepicker {
+            display: flex;
+        }
+        .content-horizonal-timepicker {
+            border-right: 1px solid #dbdbdb;
+        }
+    }
+}

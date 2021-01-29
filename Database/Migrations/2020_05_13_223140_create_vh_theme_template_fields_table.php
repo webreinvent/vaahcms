@@ -18,25 +18,28 @@ class CreateVhThemeTemplateFieldsTable extends Migration
             $table->increments('id');
 
             $table->uuid('uuid')->nullable();
-            $table->integer('vh_theme_id')->nullable();
-            $table->integer('vh_template_id')->nullable();
-            $table->integer('sort')->nullable();
+            $table->integer('vh_theme_id')->nullable()->index();
+            $table->integer('vh_template_id')->nullable()->index();
+            $table->integer('sort')->nullable()->index();
 
             $table->string('name')->nullable();
-            $table->string('slug')->nullable();
+            $table->string('slug')->nullable()->index();
 
-            $table->string('type')->nullable(); // editor, json, slug
+            $table->string('type')->nullable()->index(); // editor, json, slug
 
             $table->string('content')->nullable();
             $table->string('excerpt')->nullable();
 
-            $table->boolean('is_searchable')->nullable();
-            $table->boolean('is_repeatable')->nullable();
+            $table->boolean('is_searchable')->nullable()->index();
+            $table->boolean('is_repeatable')->nullable()->index();
 
             $table->json('meta')->nullable();
 
             $table->timestamps();
             $table->softDeletes();
+
+
+            $table->index(['created_at', 'updated_at', 'deleted_at']);
 
         });
     }

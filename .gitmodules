@@ -1,0 +1,3 @@
+[submodule "Vue/vaahvue"]
+	path = Vue/vaahvue
+	url = git@github.com:webreinvent/vaahvue.git
