@@ -8,7 +8,7 @@ use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use WebReinvent\VaahCms\Entities\Migration;
 use WebReinvent\VaahCms\Entities\Module;
-use ZanySoft\Zip\Zip;
+use Macellan\Zip\Zip;
 
 class ModulesController extends Controller
 {
