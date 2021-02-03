@@ -78,6 +78,11 @@ class ThemeTemplate extends Model {
     public static function syncWithFormGroups(ThemeTemplate $template, $groups_array)
     {
 
+        if(count($groups_array) < 1)
+        {
+            return false;
+        }
+
         $stored_groups = $template->groups()->get()->pluck('id')->toArray();
 
         $input_groups = collect($groups_array)->pluck('id')->toArray();
