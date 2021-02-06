@@ -221,9 +221,17 @@ class Notification extends Model {
                 foreach ($vias as $via)
                 {
 
-                    if(is_null($via['value']) || empty($via['value']))
+                    if(!isset($via['value']) || is_null($via['value']) || empty($via['value']))
                     {
                         continue;
+                    }
+                    
+                    if($via['key'] == 'from'){
+                        $validation = self::mailValidation($via);
+                        if(isset($validation['status']) && $validation['status'] == 'failed')
+                        {
+                            return $validation;
+                        }
                     }
 
                     $content = null;
@@ -404,6 +412,28 @@ class Notification extends Model {
         return $translated;
     }
     //-------------------------------------------------
+    public static function mailValidation($inputs){
+
+        $rules = array(
+            'value' => 'nullable|email|max:150',
+        );
+
+        $messages = array(
+            'value.email' => 'The email field must be a valid email address.',
+            'value.max' => 'The email may not be greater than 150 characters.',
+        );
+
+        $validator = \Validator::make($inputs,$rules,$messages);
+
+        if ( $validator->fails() ) {
+
+            $errors             = errorsToArray($validator->errors());
+            $response['status'] = 'failed';
+            $response['errors'] = $errors;
+            return $response;
+        }
+
+    }
 
     //-------------------------------------------------
     //-------------------------------------------------
