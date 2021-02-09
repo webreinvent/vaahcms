@@ -83,7 +83,7 @@ export default {
         {
             this.update('active_item', item);
             this.fetchContent();
-            this.setAddSubjectButton();
+            this.setMailButton();
         },
         //---------------------------------------------------------------------
         create: function () {
@@ -131,7 +131,7 @@ export default {
                     if(data.list.mail.length < 1){
                         this.addMailContent();
                     }else{
-                        this.setAddSubjectButton();
+                        this.setMailButton();
                     }
 
 
@@ -281,7 +281,7 @@ export default {
 
 
             this.update('active_item', this.active_item);
-            this.setAddSubjectButton();
+            this.setMailButton();
         },
         //---------------------------------------------------------------------
         addSmsContent: function () {
@@ -447,14 +447,16 @@ export default {
 
         },
         //---------------------------------------------------------------------
-        setAddSubjectButton: function () {
+        setMailButton: function () {
 
             let self =this;
 
             self.is_add_from_disabled= false;
             self.is_add_subject_disabled= false;
 
-            $.each( self.active_item.contents.mail, function( key, mail ) {
+            if(self.active_item && self.active_item.contents
+                && self.active_item.contents.mail){
+                $.each( self.active_item.contents.mail, function( key, mail ) {
                     if(mail.key === 'from'){
                         self.is_add_from_disabled= true;
                     }
@@ -462,8 +464,8 @@ export default {
                     if(mail.key === 'subject'){
                         self.is_add_subject_disabled= true;
                     }
-            });
-
+                });
+            }
         },
         //---------------------------------------------------------------------
     }
