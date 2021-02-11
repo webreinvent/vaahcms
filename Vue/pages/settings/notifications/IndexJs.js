@@ -204,7 +204,7 @@ export default {
 
             this.update('active_item', this.active_item);
 
-            this.is_add_subject_disabled= true;
+            this.update('is_add_subject_disabled', true);
 
 
         },
@@ -231,7 +231,7 @@ export default {
 
             this.update('active_item', this.active_item);
 
-            this.is_add_from_disabled= true;
+            this.update('is_add_from_disabled', true);
 
 
         },
