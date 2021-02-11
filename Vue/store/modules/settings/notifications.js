@@ -13,6 +13,8 @@ export default {
     state: {
         ajax_url: ajax_url,
         assets: null,
+        is_add_from_disabled: false,
+        is_add_subject_disabled: false,
         assets_is_fetching: false,
         active_item:null,
     },
