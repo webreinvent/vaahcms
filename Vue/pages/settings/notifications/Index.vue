@@ -304,11 +304,11 @@
 
                                                 <div class="has-margin-top-15">
                                                     <b-button @click="addSubject()"
-                                                              :disabled="is_add_subject_disabled">
+                                                              :disabled="page.is_add_subject_disabled">
                                                         Add Subject
                                                     </b-button>
                                                     <b-button @click="addFrom()"
-                                                              :disabled="is_add_from_disabled">
+                                                              :disabled="page.is_add_from_disabled">
                                                         Add From
                                                     </b-button>
                                                     <b-button @click="addToMail('greetings')">

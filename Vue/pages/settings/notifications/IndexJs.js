@@ -29,8 +29,6 @@ export default {
             is_testing: false,
             send_to: null,
             is_sending: false,
-            is_add_from_disabled: false,
-            is_add_subject_disabled: false,
             show_new_item_form: false,
             new_item: {
                 name: null,
@@ -451,18 +449,18 @@ export default {
 
             let self =this;
 
-            self.is_add_from_disabled= false;
-            self.is_add_subject_disabled= false;
+            this.update('is_add_from_disabled', false);
+            this.update('is_add_subject_disabled', false);
 
             if(self.active_item && self.active_item.contents
                 && self.active_item.contents.mail){
                 $.each( self.active_item.contents.mail, function( key, mail ) {
                     if(mail.key === 'from'){
-                        self.is_add_from_disabled= true;
+                        self.update('is_add_from_disabled', true);
                     }
 
                     if(mail.key === 'subject'){
-                        self.is_add_subject_disabled= true;
+                        self.update('is_add_subject_disabled', true);
                     }
                 });
             }
