@@ -203,6 +203,10 @@ class ThemeLocation extends Model {
                 $html .= get_ulli_menu($menu, false);
                 $html .= '</ul>';
                 break;
+
+            case 'bulma':
+                $html = get_bulma_menu($menu, false);
+                break;
         }
 
 

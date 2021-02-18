@@ -194,7 +194,7 @@ function vh_get_page_templates($theme_slug=null)
 
 }
 //-----------------------------------------------------------------------------------
-function vh_location($location_slug, $html=false, $type='bootstrap')
+function vh_location($location_slug, $html=false, $type='bulma')
 {
 
     $data = \WebReinvent\VaahCms\Entities\ThemeLocation::getLocationData($location_slug, $html, $type);
