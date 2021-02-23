@@ -1,6 +1,8 @@
 <?php
 
 
+use VaahCms\Modules\Cms\Entities\Block;
+
 function vh_get_themes_root_path()
 {
     return config('vaahcms.themes_path');
@@ -192,6 +194,21 @@ function vh_get_page_templates($theme_slug=null)
 
     return $list;
 
+}
+//-----------------------------------------------------------------------------------
+function vh_block($block_slug = null)
+{
+    $data = Block::getBlock($block_slug);
+
+    return $data;
+}
+//-----------------------------------------------------------------------------------
+function vh_location_blocks($location_slug = null)
+{
+
+    $data = \WebReinvent\VaahCms\Entities\ThemeLocation::getLocationData($location_slug,'true');
+
+    return $data;
 }
 //-----------------------------------------------------------------------------------
 function vh_location($location_slug, $html=false, $type='bulma')
