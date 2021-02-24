@@ -194,6 +194,26 @@ function vh_get_page_templates($theme_slug=null)
 
 }
 //-----------------------------------------------------------------------------------
+function vh_block($block_slug = null)
+{
+
+    if(!class_exists('\VaahCms\Modules\Cms\Entities\Block')){
+        return false;
+    }
+
+    $data = \VaahCms\Modules\Cms\Entities\Block::getBlock($block_slug);
+
+    return $data;
+}
+//-----------------------------------------------------------------------------------
+function vh_location_blocks($location_slug = null)
+{
+
+    $data = \WebReinvent\VaahCms\Entities\ThemeLocation::getLocationData($location_slug,'true');
+
+    return $data;
+}
+//-----------------------------------------------------------------------------------
 function vh_location($location_slug, $html=false, $type='bulma')
 {
 

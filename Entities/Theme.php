@@ -268,10 +268,33 @@ class Theme extends Model {
             ->get();
     }
     //-------------------------------------------------
-    public static function getActiveThemesWithLocations()
+    public static function getActiveThemesWithMenuLocations()
     {
+        $type = 'menu';
+
         return static::where('is_active', 1)
-            ->with(['locations.menus.items.content'])
+            ->with('locations', function ($q) use ($type){
+                $q->where('type', $type);
+                $q->with('menus.items.content');
+            })
+            ->whereHas('locations', function ($q) use ($type){
+                $q->where('type', $type);
+            })
+            ->orderBy('is_default', 'desc')
+            ->get();
+    }
+    //-------------------------------------------------
+    public static function getActiveThemesWithBlockLocations()
+    {
+        $type = 'block';
+
+        return static::where('is_active', 1)
+            ->with('locations', function ($q) use ($type){
+                $q->where('type', $type);
+            })
+            ->whereHas('locations', function ($q) use ($type){
+                $q->where('type', $type);
+            })
             ->orderBy('is_default', 'desc')
             ->get();
     }
