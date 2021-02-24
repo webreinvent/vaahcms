@@ -1,8 +1,6 @@
 <?php
 
 
-use VaahCms\Modules\Cms\Entities\Block;
-
 function vh_get_themes_root_path()
 {
     return config('vaahcms.themes_path');
@@ -198,7 +196,12 @@ function vh_get_page_templates($theme_slug=null)
 //-----------------------------------------------------------------------------------
 function vh_block($block_slug = null)
 {
-    $data = Block::getBlock($block_slug);
+
+    if(!class_exists('\VaahCms\Modules\Cms\Entities\Block')){
+        return false;
+    }
+
+    $data = \VaahCms\Modules\Cms\Entities\Block::getBlock($block_slug);
 
     return $data;
 }
