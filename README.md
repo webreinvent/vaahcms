@@ -264,6 +264,14 @@ $options = (new ChromeOptions)->addArguments([
 ...
 ```
 
+
+#### How to make a release
+- Create a `release` branch from `Gitflow` from `GitKrane`
+- Update `version` in `composer.json` and `config\vaahcms.php`
+- Run `npm run production` to generate new assets
+- Commit the changes to git
+- 
+
 ## Tools
 
 - https://www.mkdocs.org - for docs 
