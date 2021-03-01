@@ -303,11 +303,23 @@
                                                 </div>
 
                                                 <div class="has-margin-top-15">
-                                                    <b-button @click="addSubject()">Add Subject</b-button>
-                                                    <b-button @click="addFrom()">Add From</b-button>
-                                                    <b-button @click="addToMail('greetings')">Add Greetings</b-button>
-                                                    <b-button @click="addToMail('line')">Add Line</b-button>
-                                                    <b-button @click="addAction()">Add Action</b-button>
+                                                    <b-button @click="addSubject()"
+                                                              :disabled="page.is_add_subject_disabled">
+                                                        Add Subject
+                                                    </b-button>
+                                                    <b-button @click="addFrom()"
+                                                              :disabled="page.is_add_from_disabled">
+                                                        Add From
+                                                    </b-button>
+                                                    <b-button @click="addToMail('greetings')">
+                                                        Add Greetings
+                                                    </b-button>
+                                                    <b-button @click="addToMail('line')">
+                                                        Add Line
+                                                    </b-button>
+                                                    <b-button @click="addAction()">
+                                                        Add Action
+                                                    </b-button>
                                                 </div>
 
 

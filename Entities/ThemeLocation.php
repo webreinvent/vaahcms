@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
+use VaahCms\Modules\Cms\Entities\Block;
 use VaahCms\Modules\Cms\Entities\FormField;
 use VaahCms\Modules\Cms\Entities\FormGroup;
 use VaahCms\Modules\Cms\Entities\Menu;
@@ -97,7 +98,7 @@ class ThemeLocation extends Model {
 
     }
     //---------------------------------------------------------------------------
-    public static function getLocationData($slug, $html=false, $type='bootstrap')
+    public static function getLocationData($slug, $html=false, $type='bulma')
     {
         $data = [];
 
@@ -120,6 +121,13 @@ class ThemeLocation extends Model {
 
             //---------------------------------------
             case 'sidebar':
+
+                break;
+
+            //---------------------------------------
+            case 'block':
+
+                $data = Block::getBlocksByLocation($location);
 
                 break;
             //---------------------------------------
@@ -202,6 +210,10 @@ class ThemeLocation extends Model {
                 $html = '<ul>';
                 $html .= get_ulli_menu($menu, false);
                 $html .= '</ul>';
+                break;
+
+            case 'bulma':
+                $html = get_bulma_menu($menu, false);
                 break;
         }
 

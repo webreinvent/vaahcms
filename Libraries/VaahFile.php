@@ -19,11 +19,6 @@ class VaahFile{
 
         $file_params = $this->getUploadFileParams($request);
 
-        echo "<pre>";
-        print_r($file_params);
-        echo "</pre>";
-        die("<hr/>line number=123");
-
         $request->merge($file_params);
 
         $rules = array(

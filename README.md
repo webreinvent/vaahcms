@@ -264,6 +264,20 @@ $options = (new ChromeOptions)->addArguments([
 ...
 ```
 
+
+#### How to make a release
+- Create a `release` branch from `Gitflow` from `GitKrane`
+- Update `version` in `composer.json` and `config\vaahcms.php`
+- Run `npm run production` to generate new assets
+- Commit the changes to git
+- Finish the `release branch`, this will merge to the code to `master` branch
+- Run `auto-changelog --template changelog-template.hbs --commit-limit false` to generate `CHANGELOG.MD` file
+- Commit and push changes
+- Visit `https://github.com/webreinvent/vaahcms/releases` and click on `Draft a new release`
+- Enter the latest version in `Tag version` & `Release title` and changes log in description.
+
+
+
 ## Tools
 
 - https://www.mkdocs.org - for docs 

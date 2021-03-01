@@ -81,6 +81,7 @@ export default {
         {
             this.update('active_item', item);
             this.fetchContent();
+            this.setMailButton();
         },
         //---------------------------------------------------------------------
         create: function () {
@@ -123,9 +124,15 @@ export default {
 
                 //this.active_item.contents = data.list;
 
-                if(this.active_item.via_mail && data.list.mail.length < 1)
+                if(this.active_item.via_mail)
                 {
-                    this.addMailContent();
+                    if(data.list.mail.length < 1){
+                        this.addMailContent();
+                    }else{
+                        this.setMailButton();
+                    }
+
+
                 }
 
                 if(this.active_item.via_sms && data.list.sms.length < 1)
@@ -197,6 +204,8 @@ export default {
 
             this.update('active_item', this.active_item);
 
+            this.update('is_add_subject_disabled', true);
+
 
         },
         //---------------------------------------------------------------------
@@ -221,6 +230,8 @@ export default {
             this.active_item.contents.mail.push(line);
 
             this.update('active_item', this.active_item);
+
+            this.update('is_add_from_disabled', true);
 
 
         },
@@ -268,6 +279,7 @@ export default {
 
 
             this.update('active_item', this.active_item);
+            this.setMailButton();
         },
         //---------------------------------------------------------------------
         addSmsContent: function () {
@@ -431,6 +443,27 @@ export default {
                 //this.update('list', data.list);
             }
 
+        },
+        //---------------------------------------------------------------------
+        setMailButton: function () {
+
+            let self =this;
+
+            this.update('is_add_from_disabled', false);
+            this.update('is_add_subject_disabled', false);
+
+            if(self.active_item && self.active_item.contents
+                && self.active_item.contents.mail){
+                $.each( self.active_item.contents.mail, function( key, mail ) {
+                    if(mail.key === 'from'){
+                        self.update('is_add_from_disabled', true);
+                    }
+
+                    if(mail.key === 'subject'){
+                        self.update('is_add_subject_disabled', true);
+                    }
+                });
+            }
         },
         //---------------------------------------------------------------------
     }
