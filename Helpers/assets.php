@@ -248,3 +248,33 @@ function vh_notification_actions()
 }
 //-----------------------------------------------------------------------------------
 //-----------------------------------------------------------------------------------
+function vh_public_urls()
+{
+    $list = [
+        [
+            'name' => '#!PUBLIC:MODULE_URL!#',
+            'value' => url('/vaahcms/modules'),
+            'detail'=>'Will be replaced with public module url.'
+        ],
+        [
+            'name' => '#!PUBLIC:THEME_URL!#',
+            'value' => url('/vaahcms/themes'),
+            'detail'=>'Will be replaced with public theme url.'
+        ],
+        [
+            'name' => '#!PUBLIC:STORAGE_URL!#',
+            'value' => url('/storage'),
+            'detail'=>'Will be replaced with public storage url.'
+        ],
+        [
+            'name' => '#!PUBLIC:BASE_URL!#',
+            'value' => url('/'),
+            'detail'=>'Will be replaced with public url.',
+        ]
+    ];
+
+    return $list;
+
+}
+//-----------------------------------------------------------------------------------
+//-----------------------------------------------------------------------------------

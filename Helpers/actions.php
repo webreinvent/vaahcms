@@ -48,8 +48,6 @@ function vh_module_action($module_name, $action, $params=null, $section='backend
 function vh_modules_action($method, $params=null, $output_type=null)
 {
 
-
-
     $active_modules = Module::getActiveModules();
 
 
@@ -265,5 +263,6 @@ function vh_translate_dynamic_strings($string, $params=[])
     $output = vh_action('translateDynamicStrings', $params, 'string' );
     return $output;
 }
+//-------------------------------------------------------------
 //-------------------------------------------------------------
 //-------------------------------------------------------------
