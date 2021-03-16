@@ -253,17 +253,17 @@ function vh_public_urls()
     $list = [
         [
             'name' => '#!PUBLIC:MODULE_URL!#',
-            'value' => url('/vaahcms/modules'),
+            'value' => config('vaahcms.modules_url'),
             'detail'=>'Will be replaced with public module url.'
         ],
         [
             'name' => '#!PUBLIC:THEME_URL!#',
-            'value' => url('/vaahcms/themes'),
+            'value' => config('vaahcms.themes_url'),
             'detail'=>'Will be replaced with public theme url.'
         ],
         [
             'name' => '#!PUBLIC:STORAGE_URL!#',
-            'value' => url('/storage'),
+            'value' => config('vaahcms.storage_url'),
             'detail'=>'Will be replaced with public storage url.'
         ],
         [
