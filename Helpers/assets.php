@@ -268,7 +268,7 @@ function vh_public_urls()
         ],
         [
             'name' => '#!PUBLIC:BASE_URL!#',
-            'value' => url('/'),
+            'value' => config('vaahcms.public_url'),
             'detail'=>'Will be replaced with public url.',
         ]
     ];

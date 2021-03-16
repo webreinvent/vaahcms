@@ -23,6 +23,7 @@ $settings =  [
     'modules_url' => url('/vaahcms/modules'),
     'themes_url' => url('/vaahcms/themes'),
     'storage_url' => url('/storage'),
+    'public_url' => url(''),
     'per_page' => 20,
     'minified' => 0,
     'api_route' => 'https://api.vaah.dev/cms/',
