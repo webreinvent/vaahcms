@@ -251,6 +251,15 @@ class ExtendController extends Controller
 
     }
     //----------------------------------------------------------
+    public function getPublicUrls()
+    {
+
+        $response['status'] = 'success';
+        $response['data'] = vh_public_urls();
+
+        return $response;
+    }
+    //----------------------------------------------------------
     //----------------------------------------------------------
 
 
