@@ -39,6 +39,14 @@ class Mediable extends Model {
 
     protected $appends  = [
     ];
+
+    //-------------------------------------------------
+
+    protected $casts = [
+        "created_at" => 'date:Y-m-d H:i:s',
+        "updated_at" => 'date:Y-m-d H:i:s',
+        "deleted_at" => 'date:Y-m-d H:i:s'
+    ];
     //-------------------------------------------------
 
     //-------------------------------------------------

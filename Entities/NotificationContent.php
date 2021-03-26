@@ -35,6 +35,14 @@ class NotificationContent extends Model {
     //-------------------------------------------------
     protected $appends  = [
     ];
+
+    //-------------------------------------------------
+
+    protected $casts = [
+        "created_at" => 'date:Y-m-d H:i:s',
+        "updated_at" => 'date:Y-m-d H:i:s',
+        "deleted_at" => 'date:Y-m-d H:i:s'
+    ];
     //-------------------------------------------------
     public function scopeKey( $query, $key ) {
         return $query->where( 'key', $key );

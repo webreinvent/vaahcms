@@ -44,6 +44,15 @@ class Theme extends Model {
     ];
 
     //-------------------------------------------------
+
+    protected $casts = [
+        "update_checked_at" => 'date:Y-m-d H:i:s',
+        "created_at" => 'date:Y-m-d H:i:s',
+        "updated_at" => 'date:Y-m-d H:i:s',
+        "deleted_at" => 'date:Y-m-d H:i:s'
+    ];
+
+    //-------------------------------------------------
     public function setSlugAttribute( $value ) {
         $this->attributes['slug'] = Str::slug( $value );
     }

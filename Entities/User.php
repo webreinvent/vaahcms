@@ -67,6 +67,19 @@ class User extends Authenticatable
 
     //-------------------------------------------------
 
+    protected $casts = [
+        "last_login_at" => 'date:Y-m-d H:i:s',
+        "api_token_used_at" => 'date:Y-m-d H:i:s',
+        "affiliate_code_used_at" => 'date:Y-m-d H:i:s',
+        "reset_password_code_sent_at" => 'date:Y-m-d H:i:s',
+        "reset_password_code_used_at" => 'date:Y-m-d H:i:s',
+        "birth" => 'date:Y-m-d H:i:s',
+        "activated_at" => 'date:Y-m-d H:i:s',
+        "created_at" => 'date:Y-m-d H:i:s',
+        "updated_at" => 'date:Y-m-d H:i:s',
+        "deleted_at" => 'date:Y-m-d H:i:s'
+    ];
+
     //-------------------------------------------------
     protected $appends  = [
         'avatar', 'name'
