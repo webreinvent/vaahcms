@@ -1,4 +1,5 @@
 import GlobalComponents from '../../vaahvue/helpers/GlobalComponents'
+import ButtonMeta from '../../vaahvue/reusable/ButtonMeta'
 
 let namespace = 'users';
 
@@ -13,6 +14,7 @@ export default {
     },
     components:{
         ...GlobalComponents,
+        ButtonMeta,
     },
     data()
     {

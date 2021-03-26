@@ -268,7 +268,11 @@ class User extends Authenticatable
     {
         return $this->belongsToMany('WebReinvent\VaahCms\Entities\Role',
             'vh_user_roles', 'vh_user_id', 'vh_role_id'
-        )->withPivot('is_active');
+        )->withPivot('is_active',
+            'created_by',
+            'created_at',
+            'updated_by',
+            'updated_at');
     }
 
     //-------------------------------------------------
@@ -1127,6 +1131,14 @@ class User extends Authenticatable
 
         $list = $list->paginate(config('vaahcms.per_page'));
 
+
+        foreach ($list as $role){
+
+            $data = self::getPivotData($role->pivot);
+
+            $role['json'] = $data;
+        }
+
         $response['data']['list'] = $list;
         $response['status'] = 'success';
 
@@ -1413,16 +1425,31 @@ class User extends Authenticatable
 
         $item = User::find($inputs['inputs']['id']);
 
+
+        $data = [
+            'is_active' => $inputs['data']['is_active'],
+            'updated_by' => Auth::user()->id,
+            'updated_at' => Carbon::now()
+        ];
+
+
         if($inputs['inputs']['role_id']){
+            $pivot = $item->roles->find($inputs['inputs']['role_id'])->pivot;
+
+            if($pivot->is_active === null && !$pivot->created_by){
+                $data['created_by'] = Auth::user()->id;
+                $data['created_at'] = Carbon::now();
+            }
+
             $item->roles()->updateExistingPivot(
                 $inputs['inputs']['role_id'],
-                array('is_active' => $inputs['data']['is_active'])
+                $data
             );
         }else{
             $item->roles()
                 ->newPivotStatement()
                 ->where('vh_user_id', '=', $item->id)
-                ->update(array('is_active' => $inputs['data']['is_active']));
+                ->update($data);
         }
 
         Role::recountRelations();
@@ -1719,6 +1746,31 @@ class User extends Authenticatable
         $response['data']['avatar_url'] = $user->avatar_url;
 
         return $response;
+
+    }
+    //-------------------------------------------------
+    public static function getPivotData($pivot)
+    {
+
+        $data = array();
+
+        if($pivot->created_by && User::find($pivot->created_by)){
+            $data['Created by'] = User::find($pivot->created_by)->name;
+        }
+
+        if($pivot->updated_by && User::find($pivot->updated_by)){
+            $data['Updated by'] = User::find($pivot->updated_by)->name;
+        }
+
+        if($pivot->created_at){
+            $data['Created at'] = date('d-m-Y h:m:s', strtotime($pivot->created_at));
+        }
+
+        if($pivot->updated_at){
+            $data['Updated at'] = date('d-m-Y h:i:s', strtotime($pivot->updated_at));
+        }
+
+        return $data;
 
     }
     //-------------------------------------------------

@@ -3,6 +3,7 @@
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use WebReinvent\VaahCms\Traits\CrudWithUuidObservantTrait;
 
@@ -114,13 +115,21 @@ class Role extends Model {
     public function permissions() {
         return $this->belongsToMany( Permission::class,
             'vh_role_permissions', 'vh_role_id', 'vh_permission_id'
-        )->withPivot('is_active');
+        )->withPivot('is_active',
+            'created_by',
+            'created_at',
+            'updated_by',
+            'updated_at');
     }
     //-------------------------------------------------
     public function users() {
         return $this->belongsToMany( User::class,
             'vh_user_roles', 'vh_role_id', 'vh_user_id'
-        )->withPivot('is_active');
+        )->withPivot('is_active',
+            'created_by',
+            'created_at',
+            'updated_by',
+            'updated_at');
     }
     //-------------------------------------------------
     public static function countUsers($id)
@@ -355,6 +364,13 @@ class Role extends Model {
 
         $list = $list->paginate(config('vaahcms.per_page'));
 
+        foreach ($list as $permission){
+
+            $data = self::getPivotData($permission->pivot);
+
+            $permission['json'] = $data;
+        }
+
 
         $response['data']['list'] = $list;
         $response['status'] = 'success';
@@ -385,6 +401,13 @@ class Role extends Model {
         $list->orderBy('pivot_is_active', 'desc');
 
         $list = $list->paginate(config('vaahcms.per_page'));
+
+        foreach ($list as $user){
+
+            $data = self::getPivotData($user->pivot);
+
+            $user['json'] = $data;
+        }
 
         $response['data']['list'] = $list;
         $response['status'] = 'success';
@@ -675,13 +698,26 @@ class Role extends Model {
 
         }
 
+        $data = [
+            'is_active' => $inputs['data']['is_active'],
+            'updated_by' => Auth::user()->id,
+            'updated_at' => \Illuminate\Support\Carbon::now()
+        ];
+
         if($inputs['inputs']['permission_id']){
-            $item->permissions()->updateExistingPivot($inputs['inputs']['permission_id'], array('is_active' => $inputs['data']['is_active']));
+            $pivot = $item->permissions->find($inputs['inputs']['permission_id'])->pivot;
+
+            if($pivot->is_active === null && !$pivot->created_by){
+                $data['created_by'] = Auth::user()->id;
+                $data['created_at'] = \Illuminate\Support\Carbon::now();
+            }
+
+            $item->permissions()->updateExistingPivot($inputs['inputs']['permission_id'], $data);
         }else{
             $item->permissions()
                 ->newPivotStatement()
                 ->where('vh_role_id', '=', $item->id)
-                ->update(array('is_active' => $inputs['data']['is_active']));
+                ->update($data);
 //            $item->permissions()->updateExistingPivot('', array('is_active' => $inputs['data']['is_active']));
         }
 
@@ -705,13 +741,29 @@ class Role extends Model {
         $inputs = $request->all();
 
         $item = Role::where('id',$inputs['inputs']['id'])->withTrashed()->first();
+
+        $data = [
+            'is_active' => $inputs['data']['is_active'],
+            'updated_by' => Auth::user()->id,
+            'updated_at' => \Illuminate\Support\Carbon::now()
+        ];
+
+
         if($inputs['inputs']['user_id']){
-            $item->users()->updateExistingPivot($inputs['inputs']['user_id'], array('is_active' => $inputs['data']['is_active']));
+
+            $pivot = $item->users->find($inputs['inputs']['user_id'])->pivot;
+
+            if($pivot->is_active === null && !$pivot->created_by){
+                $data['created_by'] = Auth::user()->id;
+                $data['created_at'] = \Illuminate\Support\Carbon::now();
+            }
+
+            $item->users()->updateExistingPivot($inputs['inputs']['user_id'], $data);
         }else{
             $item->users()
                 ->newPivotStatement()
                 ->where('vh_role_id', '=', $item->id)
-                ->update(array('is_active' => $inputs['data']['is_active']));
+                ->update($data);
         }
         Role::recountRelations();
         $response['messages'] = [];
@@ -822,6 +874,32 @@ class Role extends Model {
         return $list;
     }
     //-------------------------------------------------
+
+    //-------------------------------------------------
+    public static function getPivotData($pivot)
+    {
+
+        $data = array();
+
+        if($pivot->created_by && User::find($pivot->created_by)){
+            $data['Created by'] = User::find($pivot->created_by)->name;
+        }
+
+        if($pivot->updated_by && User::find($pivot->updated_by)){
+            $data['Updated by'] = User::find($pivot->updated_by)->name;
+        }
+
+        if($pivot->created_at){
+            $data['Created at'] = date('d-m-Y h:m:s', strtotime($pivot->created_at));
+        }
+
+        if($pivot->updated_at){
+            $data['Updated at'] = date('d-m-Y h:i:s', strtotime($pivot->updated_at));
+        }
+
+        return $data;
+
+    }
     //-------------------------------------------------
     //-------------------------------------------------
 

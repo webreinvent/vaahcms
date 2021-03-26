@@ -125,6 +125,10 @@
                                 </span>
 
                             </b-table-column>
+
+                            <b-table-column  v-slot="props"  field="name" class="has-text-centered" >
+                                <ButtonMeta dusk="action-view_payload" :value="props.row.json"/>
+                            </b-table-column>
                         </template>
 
                     </b-table>
