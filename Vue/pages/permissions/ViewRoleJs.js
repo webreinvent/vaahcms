@@ -1,5 +1,6 @@
 import GlobalComponents from '../../vaahvue/helpers/GlobalComponents'
 import ButtonMeta from '../../vaahvue/reusable/ButtonMeta'
+import {ModalProgrammatic as Modal} from "buefy";
 
 let namespace = 'permissions';
 
@@ -184,6 +185,47 @@ export default {
         hasPermission: function(slug)
         {
             return this.$vaah.hasPermission(this.permissions, slug);
+        },
+        //---------------------------------------------------------------------
+        showModal: function (item) {
+
+            let json_content = `<div class="card">
+                                    <div class='card-header'> 
+                                                <div class="card-header-title 
+                                                            has-text-primary"> 
+                                                  Detail 
+                                                </div> 
+                                              </div> 
+                                              <div class="card-content"> 
+                                                <table class="table">
+                                           
+                                                <tbody>`;
+
+
+
+            $.each(item.json, function( index, value ) {
+                json_content += `<tr>
+                                    <th>`+index+`</th>
+                                    <td>:</td>
+                                      <td>`+value+`</td>
+                                      </tr>`;
+            });
+
+
+            json_content += `</tbody>
+                            </table>
+
+                            </div>
+                            </div>`;
+
+            let props ={
+                width: 640,
+
+                scroll: 'keep',
+                content:  json_content,
+            };
+
+            Modal.open(props);
         },
         //---------------------------------------------------------------------
         //---------------------------------------------------------------------

@@ -127,9 +127,15 @@
                             </b-table-column>
 
                             <b-table-column  v-slot="props"  field="name" class="has-text-centered" >
-                                <ButtonMeta :disabled="props.row.json_length > 0 ? false : true"
-                                            dusk="action-view_payload" :value="props.row.json">
-                                </ButtonMeta>
+                                <b-button size="is-small"
+                                          :disabled="props.row.json_length <= 0"
+                                          dusk="action-view_detail"
+                                          @click="showModal(props.row)"
+                                          type="is-default"
+                                          rounded
+                                          icon-left="eye">
+                                    View
+                                </b-button>
                             </b-table-column>
                         </template>
 

@@ -1764,11 +1764,11 @@ class User extends Authenticatable
         }
 
         if($pivot->created_at){
-            $data['Created at'] = date('d-m-Y h:i:s', strtotime($pivot->created_at));
+            $data['Created at'] = date('d-m-Y H:i:s', strtotime($pivot->created_at));
         }
 
         if($pivot->updated_at){
-            $data['Updated at'] = date('d-m-Y h:i:s', strtotime($pivot->updated_at));
+            $data['Updated at'] = date('d-m-Y H:i:s', strtotime($pivot->updated_at));
         }
 
         return $data;
