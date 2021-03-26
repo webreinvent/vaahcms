@@ -76,9 +76,9 @@
             </b-notification>
 
             <!--content-->
-            <div class="card-content">
+            <div class="card-content" v-if="items && items.list">
 
-                <div class="block is-flex flex-column"  v-if="items && items.list">
+                <div class="block is-flex flex-column">
 
                     <div class="level">
                         <div class="level-left">
