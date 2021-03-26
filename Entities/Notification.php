@@ -44,6 +44,14 @@ class Notification extends Model {
     //-------------------------------------------------
     protected $appends  = [
     ];
+
+    //-------------------------------------------------
+
+    protected $casts = [
+        "created_at" => 'date:Y-m-d H:i:s',
+        "updated_at" => 'date:Y-m-d H:i:s',
+        "deleted_at" => 'date:Y-m-d H:i:s'
+    ];
     //-------------------------------------------------
     public function scopeSlug( $query, $slug ) {
         return $query->where( 'slug', $slug );
@@ -226,7 +234,7 @@ class Notification extends Model {
                     {
                         continue;
                     }
-                    
+
                     if($via['key'] == 'from'){
                         $validation = self::mailValidation($via);
                         if(isset($validation['status'])

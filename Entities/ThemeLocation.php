@@ -36,6 +36,13 @@ class ThemeLocation extends Model {
 
     //-------------------------------------------------
 
+    protected $casts = [
+        "created_at" => 'date:Y-m-d H:i:s',
+        "updated_at" => 'date:Y-m-d H:i:s',
+    ];
+
+    //-------------------------------------------------
+
     //-------------------------------------------------
     public function setSlugAttribute( $value ) {
         $this->attributes['slug'] = Str::slug( $value );

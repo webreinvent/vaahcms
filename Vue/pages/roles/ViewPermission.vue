@@ -116,7 +116,7 @@
                                             </option>
                                         </b-select>
                                     </div>
-                                    
+
                                 </b-field>
 
 
@@ -220,6 +220,18 @@
                                         Inactive
                                     </b-button>
                                 </span>
+                            </b-table-column>
+
+                            <b-table-column  v-slot="props"  field="name" class="has-text-centered" >
+                                <b-button size="is-small"
+                                          :disabled="props.row.json_length <= 0"
+                                          dusk="action-view_detail"
+                                          @click="showModal(props.row)"
+                                          type="is-default"
+                                          rounded
+                                          icon-left="eye">
+                                    View
+                                </b-button>
                             </b-table-column>
 
                         </template>

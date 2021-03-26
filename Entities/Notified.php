@@ -40,6 +40,18 @@ class Notified extends Model {
     //-------------------------------------------------
     protected $appends  = [
     ];
+
+    //-------------------------------------------------
+
+    protected $casts = [
+        "last_attempt_at" => 'date:Y-m-d H:i:s',
+        "sent_at" => 'date:Y-m-d H:i:s',
+        "read_at" => 'date:Y-m-d H:i:s',
+        "marked_delivered" => 'date:Y-m-d H:i:s',
+        "created_at" => 'date:Y-m-d H:i:s',
+        "updated_at" => 'date:Y-m-d H:i:s',
+        "deleted_at" => 'date:Y-m-d H:i:s'
+    ];
     //-------------------------------------------------
     public function setMetaAttribute($value) {
         $this->attributes['meta'] = json_encode($value);

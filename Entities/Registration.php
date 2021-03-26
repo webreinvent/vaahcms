@@ -43,6 +43,18 @@ class Registration extends Model
     ];
 
     //-------------------------------------------------
+
+    protected $casts = [
+        "activation_code_sent_at" => 'date:Y-m-d H:i:s',
+        "activated_at" => 'date:Y-m-d H:i:s',
+        "invited_at" => 'date:Y-m-d H:i:s',
+        "user_created_at" => 'date:Y-m-d H:i:s',
+        "created_at" => 'date:Y-m-d H:i:s',
+        "updated_at" => 'date:Y-m-d H:i:s',
+        "deleted_at" => 'date:Y-m-d H:i:s'
+    ];
+
+    //-------------------------------------------------
     public function routeNotificationForMail($notification)
     {
         return $this->email;
