@@ -369,6 +369,7 @@ class Role extends Model {
             $data = self::getPivotData($permission->pivot);
 
             $permission['json'] = $data;
+            $permission['json_length'] = count($data);
         }
 
 
@@ -407,6 +408,7 @@ class Role extends Model {
             $data = self::getPivotData($user->pivot);
 
             $user['json'] = $data;
+            $user['json_length'] = count($data);
         }
 
         $response['data']['list'] = $list;
@@ -890,7 +892,7 @@ class Role extends Model {
         }
 
         if($pivot->created_at){
-            $data['Created at'] = date('d-m-Y h:m:s', strtotime($pivot->created_at));
+            $data['Created at'] = date('d-m-Y h:i:s', strtotime($pivot->created_at));
         }
 
         if($pivot->updated_at){

@@ -1137,6 +1137,7 @@ class User extends Authenticatable
             $data = self::getPivotData($role->pivot);
 
             $role['json'] = $data;
+            $role['json_length'] = count($data);
         }
 
         $response['data']['list'] = $list;
@@ -1763,7 +1764,7 @@ class User extends Authenticatable
         }
 
         if($pivot->created_at){
-            $data['Created at'] = date('d-m-Y h:m:s', strtotime($pivot->created_at));
+            $data['Created at'] = date('d-m-Y h:i:s', strtotime($pivot->created_at));
         }
 
         if($pivot->updated_at){

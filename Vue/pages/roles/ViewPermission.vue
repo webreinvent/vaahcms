@@ -223,7 +223,9 @@
                             </b-table-column>
 
                             <b-table-column  v-slot="props"  field="name" class="has-text-centered" >
-                                <ButtonMeta dusk="action-view_payload" :value="props.row.json"/>
+                                <ButtonMeta :disabled="props.row.json_length > 0 ? false : true"
+                                            dusk="action-view_payload" :value="props.row.json">
+                                </ButtonMeta>
                             </b-table-column>
 
                         </template>
