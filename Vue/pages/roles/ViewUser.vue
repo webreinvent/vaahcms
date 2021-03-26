@@ -74,9 +74,9 @@
             </b-notification>
 
             <!--content-->
-            <div class="card-content">
+            <div class="card-content" v-if="items && items.list">
 
-                <div class="block"  v-if="items && items.list">
+                <div class="block">
 
                     <b-field>
                         <b-input placeholder="Search Users"
