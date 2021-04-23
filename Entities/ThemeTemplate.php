@@ -90,13 +90,14 @@ class ThemeTemplate extends Model {
             return false;
         }
 
-        $stored_groups = $template->groups()->get()->pluck('slug')->toArray();
+        $stored_groups = $template->groups()->get()->pluck('slug','id')->toArray();
 
         $input_groups = collect($groups_array)->pluck('slug')->toArray();
         $groups_to_delete = array_diff($stored_groups, $input_groups);
 
         if(count($groups_to_delete) > 0)
         {
+            $groups_to_delete = array_flip($groups_to_delete);
             FormGroup::deleteItems($groups_to_delete);
         }
 
