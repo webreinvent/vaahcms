@@ -110,6 +110,11 @@ function get_bulma_menu($menu, $parent_id = 0, $parents = array())
     foreach($array as $element)
     {
         $link = '';
+
+        if($element['uri']){
+            $link = $element['uri'];
+        }
+        
         if($element['content']){
             $link = $element['content']['link'];
         }
