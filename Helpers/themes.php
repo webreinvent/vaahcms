@@ -221,7 +221,7 @@ function vh_location($location_slug, $html=false, $type='bulma')
 {
 
     $data = \WebReinvent\VaahCms\Entities\ThemeLocation::getLocationData($location_slug, $html, $type,
-        'block');
+        'menu');
 
 
     return $data;
