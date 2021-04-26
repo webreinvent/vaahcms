@@ -115,7 +115,7 @@ class ThemeLocation extends Model {
 
         if(!$location)
         {
-            return false;
+            return 1245;
         }
 
         switch ($location->type)
@@ -156,7 +156,7 @@ class ThemeLocation extends Model {
 
         if($menus_count == 0)
         {
-            return false;
+            return 555;
         }
 
         $result = [];
