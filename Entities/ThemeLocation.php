@@ -113,9 +113,13 @@ class ThemeLocation extends Model {
             ->slug($slug)
             ->first();
 
+        if($slug === 'footer'){
+            dump($location);
+        }
+
         if(!$location)
         {
-            return 1245;
+            return false;
         }
 
         switch ($location->type)
@@ -156,7 +160,7 @@ class ThemeLocation extends Model {
 
         if($menus_count == 0)
         {
-            return 555;
+            return false;
         }
 
         $result = [];
