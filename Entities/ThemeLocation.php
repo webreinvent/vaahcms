@@ -165,7 +165,10 @@ class ThemeLocation extends Model {
 
 
         $find_menus = Menu::where('vh_theme_location_id', $location->id)
-            ->with(['items.content'])
+            ->with(['items' => function($q){
+                $q->with(['content']);
+                $q->orderBy('sort','asc');
+            }])
             ->get();
 
 
