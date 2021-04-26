@@ -105,17 +105,14 @@ class ThemeLocation extends Model {
 
     }
     //---------------------------------------------------------------------------
-    public static function getLocationData($slug, $html=false, $type='bulma')
+    public static function getLocationData($slug, $html=false, $type='bulma', $location_type = 'menu')
     {
         $data = [];
 
         $location = ThemeLocation::theme(vh_get_theme_id())
             ->slug($slug)
+            ->where('type',$location_type)
             ->first();
-
-        if($slug === 'footer'){
-            dump($location);
-        }
 
         if(!$location)
         {
