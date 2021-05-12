@@ -4,6 +4,7 @@ import TableTrActedBy from '../../vaahvue/reusable/TableTrActedBy.vue'
 import TableTrTag from '../../vaahvue/reusable/TableTrTag.vue'
 import TableTrStatus from './partials/TableTrStatus.vue'
 import TableTrUrl from "../../vaahvue/reusable/TableTrUrl.vue";
+import ButtonMeta from '../../vaahvue/reusable/ButtonMeta'
 
 let namespace = 'users';
 
@@ -22,6 +23,7 @@ export default {
         TableTrActedBy,
         TableTrTag,
         TableTrUrl,
+        ButtonMeta,
     },
     data()
     {
