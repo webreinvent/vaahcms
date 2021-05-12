@@ -21,6 +21,7 @@ class CreateVhRegistrationsTable extends Migration
             $table->string('password')->nullable();
             $table->string('display_name',50)->nullable()->index();
             $table->string('title',200)->nullable();
+            $table->string('designation',200)->nullable()->index();
             $table->string('first_name',150)->nullable()->index();
             $table->string('middle_name')->nullable()->index();
             $table->string('last_name',150)->nullable()->index();
