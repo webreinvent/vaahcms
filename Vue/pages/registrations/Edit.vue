@@ -118,6 +118,12 @@
 
 
 
+                    <b-field label="Designation" :label-position="labelPosition">
+                        <b-input v-model="item.designation"
+                                 name="register-designation" dusk="register-designation"
+                        ></b-input>
+                    </b-field>
+
                     <b-field label="First Name" :label-position="labelPosition">
                         <b-input v-model="item.first_name"
                                  name="register-first_name" dusk="register-first_name"

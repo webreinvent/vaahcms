@@ -27,8 +27,8 @@ class Registration extends Model
     protected $dateFormat = 'Y-m-d H:i:s';
     //-------------------------------------------------
     protected $fillable = [
-        "uuid", "email","username","password",
-        "display_name","title","first_name","middle_name","last_name",
+        "uuid", "email","username","password","display_name",
+        "title","designation","first_name","middle_name","last_name",
         "gender","country_calling_code","phone","timezone","alternate_email",
         "avatar_url","birth", "country","country_code", "status",
         "activation_code", "activation_code_sent_at",

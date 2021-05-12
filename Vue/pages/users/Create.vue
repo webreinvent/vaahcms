@@ -78,30 +78,30 @@
                 <div class="block">
 
                     <b-field label="Email" :label-position="labelPosition">
-                        <b-input type="email"  name="register-email" dusk="register-email"
+                        <b-input type="email"  name="user-email" dusk="user-email"
                                  v-model="new_item.email"></b-input>
                     </b-field>
 
 
                     <b-field label="Username" :label-position="labelPosition">
-                        <b-input v-model="new_item.username"  name="register-username"
-                                 dusk="register-username" ></b-input>
+                        <b-input v-model="new_item.username"  name="user-username"
+                                 dusk="user-username" ></b-input>
                     </b-field>
 
                     <b-field label="Password" :label-position="labelPosition">
                         <b-input type="password" v-model="new_item.password"
-                                 name="register-password" dusk="register-password" ></b-input>
+                                 name="user-password" dusk="user-password" ></b-input>
                     </b-field>
 
                     <b-field label="Display Name" :label-position="labelPosition">
                         <b-input v-model="new_item.display_name"
-                                 name="register-display_name" dusk="register-display_name" >
+                                 name="user-display_name" dusk="user-display_name" >
                         </b-input>
                     </b-field>
 
                     <b-field label="Title" :label-position="labelPosition">
                         <b-select placeholder="- Select a title -"
-                                  name="register-title" dusk="register-title"
+                                  name="user-title" dusk="user-title"
                                   v-model="new_item.title">
                             <option value="">- Select a title -</option>
                             <option v-for="title in page.assets.name_titles"
@@ -112,41 +112,49 @@
 
 
 
+                    <b-field label="Designation" :label-position="labelPosition">
+                        <b-input v-model="new_item.designation"
+                                 name="user-designation" dusk="user-designation"
+                        ></b-input>
+                    </b-field>
+
+
+
                     <b-field label="First Name" :label-position="labelPosition">
                         <b-input v-model="new_item.first_name"
-                                 name="register-first_name" dusk="register-first_name"
+                                 name="user-first_name" dusk="user-first_name"
                         ></b-input>
                     </b-field>
 
                     <b-field label="Middle Name" :label-position="labelPosition">
                         <b-input v-model="new_item.middle_name"
-                                 name="register-middle_name" dusk="register-middle_name"
+                                 name="user-middle_name" dusk="user-middle_name"
                         ></b-input>
                     </b-field>
 
                     <b-field label="Last Name" :label-position="labelPosition">
                         <b-input v-model="new_item.last_name"
-                                 name="register-last_name" dusk="register-last_name"
+                                 name="user-last_name" dusk="user-last_name"
                         ></b-input>
                     </b-field>
 
                     <b-field label="Gender" :label-position="labelPosition">
                         <b-radio-button v-model="new_item.gender"
-                                        name="register-gender" dusk="register-gender"
+                                        name="user-gender" dusk="user-gender"
                                         native-value="m">
                             <b-icon icon="mars"></b-icon>
                             <span>Male</span>
                         </b-radio-button>
 
                         <b-radio-button v-model="new_item.gender"
-                                        name="register-gender" dusk="register-gender"
+                                        name="user-gender" dusk="user-gender"
                                         native-value="f">
                             <b-icon icon="venus"></b-icon>
                             <span>Female</span>
                         </b-radio-button>
 
                         <b-radio-button v-model="new_item.gender"
-                                        name="register-gender" dusk="register-gender"
+                                        name="user-gender" dusk="user-gender"
                                         native-value="o">
                             <b-icon icon="transgender-alt"></b-icon>
                             <span>Other</span>
@@ -157,7 +165,7 @@
 
                     <b-field label="Country Code" :label-position="labelPosition">
                         <b-select placeholder="- Select a country code -"
-                                  name="register-country_code" dusk="register-country_code"
+                                  name="user-country_code" dusk="user-country_code"
                                   v-model="new_item.country_calling_code">
                             <option value="">- Select a country code -</option>
                             <option v-for="code in page.assets.country_calling_code"
@@ -168,7 +176,7 @@
 
                     <b-field label="Phone" :label-position="labelPosition">
                         <b-input v-model="new_item.phone"
-                                 name="register-phone" dusk="register-phone"
+                                 name="user-phone" dusk="user-phone"
                         ></b-input>
                     </b-field>
 
@@ -181,7 +189,7 @@
 
                     <b-field label="Website" :label-position="labelPosition">
                         <b-input v-model="new_item.website"
-                                 name="register-website" dusk="register-website"
+                                 name="user-website" dusk="user-website"
                         ></b-input>
                     </b-field>
 
@@ -195,7 +203,7 @@
 
                     <b-field label="Alternate Email" :label-position="labelPosition">
                         <b-input type="email" v-model="new_item.alternate_email"
-                                 name="register-alternate_email" dusk="register-alternate_email"
+                                 name="user-alternate_email" dusk="user-alternate_email"
                         ></b-input>
                     </b-field>
 

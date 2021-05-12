@@ -146,7 +146,18 @@
                                         </TableTrTag>
                                     </template>
 
+                                    <template v-else-if="label == 'meta'">
 
+                                        <tr>
+                                            <th align="right">{{label}}</th>
+                                            <td >
+                                                <span v-if="item.meta">
+                                                    <ButtonMeta dusk="action-view_payload" :value="item.meta"/>
+                                                </span>
+                                            </td>
+                                        </tr>
+
+                                    </template>
 
                                     <template v-else-if="label == 'created_by_user'
                                       || label == 'updated_by_user' || label == 'deleted_by_user' || label == 'name' ">
