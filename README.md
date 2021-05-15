@@ -1,8 +1,7 @@
-# vaahcms v1.0.0
+# VaahCMS
 > Laravel Based Rapid Development CMS
 
 Please consider starring the project to show your :heart: and support.
-
 
 
 ## Steps to Setup
@@ -14,9 +13,10 @@ composer require webreinvent/vaahcms
 
 ### Step 2) Publish Assets
 ```bash
-php artisan vendor:publish --provider="WebReinvent\VaahCms\VaahCmsServiceProvider" --tag=assets
-php artisan vendor:publish --provider="WebReinvent\VaahCms\VaahCmsServiceProvider" --tag=migrations
-php artisan vendor:publish --provider="WebReinvent\VaahCms\VaahCmsServiceProvider" --tag=seeds
+php artisan vendor:publish --provider="WebReinvent\VaahCms\VaahCmsServiceProvider" --tag=assets --force
+php artisan vendor:publish --provider="WebReinvent\VaahCms\VaahCmsServiceProvider" --tag=migrations  --force
+php artisan vendor:publish --provider="WebReinvent\VaahCms\VaahCmsServiceProvider" --tag=seeds --force
+php artisan vendor:publish --provider="WebReinvent\VaahCms\VaahCmsServiceProvider" --tag=config --force
 ```
 
 ### Step 3) Register Service Provider
