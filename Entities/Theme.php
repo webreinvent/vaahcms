@@ -767,6 +767,7 @@ class Theme extends Model {
 
             $command = 'db:seed';
             $params = [
+                '--force' => true,
                 '--class' => config('vaahcms.root_folder')."\Themes\\{$item->name}\\Database\Seeds\SampleDataTableSeeder"
             ];
 

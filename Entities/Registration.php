@@ -29,9 +29,9 @@ class Registration extends Model
     protected $fillable = [
         "uuid", "email","username","password","display_name",
         "title","designation","first_name","middle_name","last_name",
-        "gender","country_calling_code","phone","timezone","alternate_email",
-        "avatar_url","birth", "country","country_code", "status",
-        "activation_code", "activation_code_sent_at",
+        "gender","country_calling_code","phone", "bio","timezone",
+        "alternate_email","avatar_url","birth", "country","country_code",
+        "status","activation_code", "activation_code_sent_at",
         "activated_ip","invited_by", "invited_at",
         "invited_for_key", "invited_for_value", "user_id",
         "user_created_at", "created_ip", "registration_id", "meta",
@@ -435,7 +435,7 @@ class Registration extends Model
 
         $rules = array(
             'id' => 'required',
-            'email' => 'required|email|unique:vh_registrations|max:150',
+            'email' => 'required|email|max:150',
             'first_name' => 'required|max:150',
             'status' => 'required',
         );
@@ -454,7 +454,15 @@ class Registration extends Model
             return $response;
         }
 
-        $data = [];
+        //check if user already exist with the emails
+        $user = Registration::where('id','!=',$request->id)
+            ->where('email', $request->email)->first();
+        if($user)
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = 'Email is already registered.';
+            return $response;
+        }
 
         $item = Registration::where('id', $request->id)
             ->withTrashed()->first();
