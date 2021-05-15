@@ -164,6 +164,15 @@ php artisan make:seeder RolesTableSeeder --path=/packages/vaahcms/Database/Seede
 php artisan make:command HealthcheckCommand --path=/packages/vaahcms/Database/Seeders
 ```
 
+### Manual upgrade of VaahCMS
+
+- `php artisan vendor:publish --provider="WebReinvent\VaahCms\VaahCmsServiceProvider" --tag=assets --force`
+- `php artisan vendor:publish --provider="WebReinvent\VaahCms\VaahCmsServiceProvider" --tag=migrations --force`
+- `php artisan vendor:publish --provider="WebReinvent\VaahCms\VaahCmsServiceProvider" --tag=seeds --force`
+- `php artisan migrate --force`
+- `php artisan db:seed --force`
+
+
 ## Minify Assets of Admin with Laravel Mix
 
 Install following package

@@ -183,7 +183,7 @@
                     <b-field label="Bio" :label-position="labelPosition">
                         <b-input maxlength="250"
                                  v-model="new_item.bio"
-                                 name="profile-bio" dusk="profile-bio"
+                                 name="user-bio" dusk="user-bio"
                                  type="textarea"></b-input>
                     </b-field>
 
