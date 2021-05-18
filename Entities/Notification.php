@@ -229,21 +229,6 @@ class Notification extends Model {
                 foreach ($vias as $via)
                 {
 
-                    if(!isset($via['value'])
-                        || is_null($via['value']) || empty($via['value']))
-                    {
-                        continue;
-                    }
-
-                    if($via['key'] == 'from'){
-                        $validation = self::mailValidation($via);
-                        if(isset($validation['status'])
-                            && $validation['status'] == 'failed')
-                        {
-                            return $validation;
-                        }
-                    }
-
                     $content = null;
 
                     $content = NotificationContent::where('key', $via['key'])
