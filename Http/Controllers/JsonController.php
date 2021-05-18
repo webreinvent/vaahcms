@@ -37,7 +37,8 @@ class JsonController extends Controller
 
         $data['settings'] = [
             'is_mail_settings_not_set' => $this->isMailSettingsNotSet(),
-            'global' => config('settings.global'),
+            'max_attempts_of_login' => config('settings.global.maximum_number_of_login_attempts_per_session'),
+            'max_attempts_of_forgot_password' => config('settings.global.maximum_number_of_forgot_password_attempts_per_session'),
         ];
 
         $data['server'] = [
@@ -139,14 +140,14 @@ class JsonController extends Controller
 
         $mail_username = env('MAIL_USERNAME');
         $mail_password = env('MAIL_PASSWORD');
-        $mail_from_name = env('MAIL_FROM_NAME');
-        $mail_from_email = env('MAIL_FROM_ADDRESS');
+        //$mail_from_name = env('MAIL_FROM_NAME');
+        //$mail_from_email = env('MAIL_FROM_ADDRESS');
 
         if(
             isset($mail_username) && !empty($mail_username)
             && isset($mail_password) && !empty($mail_password)
-            && isset($mail_from_name) && !empty($mail_from_name)
-            && isset($mail_from_email) && !empty($mail_from_email)
+            //&& isset($mail_from_name) && !empty($mail_from_name)
+            //&& isset($mail_from_email) && !empty($mail_from_email)
         )
         {
             return false;

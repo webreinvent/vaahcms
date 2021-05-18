@@ -22,6 +22,7 @@
                                     <b-input type="email"
                                              v-model="credentials.email"
                                              placeholder="Enter Email Address"
+                                             dusk="forgot-email"
                                              maxlength="30">
                                     </b-input>
                                 </b-field>
@@ -29,14 +30,29 @@
                                 <div class="buttons is-full-width">
                                     <div class="columns is-full-width">
                                         <div class="column">
-                                            <div class="buttons">
-                                                <b-button
+                                            <div class="buttons" v-if="assets && assets.settings">
+                                                <b-tooltip v-if="assets.settings.max_attempts_of_forgot_password
+                                                    && assets.settings.max_attempts_of_forgot_password > 0
+                                                    && assets.settings.max_attempts_of_forgot_password <= root.no_of_forgot_password_attempt"
+                                                           label="You have tried maximum attempts" type="is-danger">
+                                                    <b-button
+                                                            native-type="submit"
+                                                            :disabled="true"
+                                                            :loading="is_btn_loading"
+                                                            dusk="forgot-send_code"
+                                                            type="is-primary">
+                                                        Send code
+                                                    </b-button>
+                                                </b-tooltip>
+
+                                                <b-button v-else
                                                         native-type="submit"
                                                         :loading="is_btn_loading"
-                                                        dusk="signin-signin"
+                                                        dusk="forgot-send_code"
                                                         type="is-primary">
                                                     Send code
                                                 </b-button>
+
                                             </div>
                                         </div>
                                         <div class="column has-text-right-desktop">

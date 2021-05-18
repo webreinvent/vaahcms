@@ -83,8 +83,10 @@
                                         <div class="columns is-full-width">
 
                                             <div class="column">
-                                                <div class="buttons" v-if="assets && assets.settings && assets.settings.global">
-                                                    <b-tooltip v-if="assets.settings.global.maximum_number_of_login_attempts_per_session <= root.no_of_login_attempt"
+                                                <div class="buttons" v-if="assets && assets.settings">
+                                                    <b-tooltip v-if="assets.settings.max_attempts_of_login
+                                                    && assets.settings.max_attempts_of_login > 0
+                                                    && assets.settings.max_attempts_of_login <= root.no_of_login_attempt"
                                                                label="You have tried maximum attempts" type="is-danger">
                                                         <b-button
                                                                 native-type="submit"

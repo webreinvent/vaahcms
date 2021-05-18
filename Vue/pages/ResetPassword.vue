@@ -21,6 +21,7 @@
                                 <b-field class="is-full-width has-margin-top-20">
                                     <b-input type="text"
                                              v-model="credentials.reset_password_code"
+                                             dusk="reset-code"
                                              placeholder="Enter code to reset the password">
                                     </b-input>
                                 </b-field>
@@ -28,6 +29,7 @@
                                     <b-input type="password"
                                              autocomplete="new-password"
                                              v-model="credentials.password"
+                                             dusk="reset-password"
                                              placeholder="New Password">
                                     </b-input>
                                 </b-field>
@@ -35,6 +37,7 @@
                                 <b-field class="is-full-width has-margin-top-20">
                                     <b-input type="password"
                                              v-model="credentials.password_confirmation"
+                                             dusk="reset-confirm_password"
                                              placeholder="Confirm Password">
                                     </b-input>
                                 </b-field>
@@ -42,12 +45,29 @@
                                 <div class="buttons is-full-width has-margin-top-20">
                                     <div class="columns is-full-width">
                                         <div class="column">
-                                            <div class="buttons">
-                                                <b-button native-type="submit"
+                                            <div class="buttons" v-if="assets && assets.settings">
+                                                <b-tooltip v-if="assets.settings.max_attempts_of_forgot_password
+                                                    && assets.settings.max_attempts_of_forgot_password > 0
+                                                    && assets.settings.max_attempts_of_forgot_password <= root.no_of_reset_password_attempt"
+                                                           label="You have tried maximum attempts" type="is-danger">
+                                                    <b-button native-type="submit"
+                                                              :disabled="true"
+                                                              :loading="is_btn_loading"
+                                                              dusk="reset-recover"
+                                                              type="is-primary">
+                                                        Recover
+                                                    </b-button>
+
+                                                </b-tooltip>
+
+                                                <b-button v-else
+                                                          native-type="submit"
                                                           :loading="is_btn_loading"
-                                                          dusk="signin-signin"
+                                                          dusk="reset-recover"
                                                           type="is-primary">
-                                                    Recover</b-button>
+                                                    Recover
+                                                </b-button>
+
                                             </div>
                                         </div>
                                         <div class="column has-text-right-desktop">
