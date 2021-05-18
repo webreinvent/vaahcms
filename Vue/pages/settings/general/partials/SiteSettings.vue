@@ -107,31 +107,6 @@
 
                             </b-field>
 
-
-                            <b-field  expanded
-                                      :message="inputs.maintenance_mode.message"
-                                      :type="inputs.maintenance_mode.type"
-                                      label="Maintenance Mode"
-                                      :label-position="labelPosition">
-
-                                <b-field>
-                                    <b-radio-button native-value="0"
-                                                    type="is-success"
-                                                    v-model="list.maintenance_mode">
-                                        <span>Disable</span>
-                                    </b-radio-button>
-
-                                    <b-radio-button native-value="1"
-                                                    type="is-danger"
-                                                    v-model="list.maintenance_mode">
-                                        <span>Enable</span>
-                                    </b-radio-button>
-                                </b-field>
-
-
-
-                            </b-field>
-
                             <b-field label="Redirect after Frontend Login"
                                      expanded
                                      grouped
@@ -147,6 +122,46 @@
                                                   @click="copySetting('redirect_after_frontend_login')">
                                         </b-button>
                                     </p>
+                                    </b-tooltip>
+                                </b-field>
+                            </b-field>
+
+
+
+
+                            <b-field label="Maximum number of forgot password attempts per session"
+                                     expanded
+                                     grouped
+                                     :label-position="labelPosition">
+                                <b-field expanded>
+                                    <b-input expanded
+                                             v-model="list.maximum_number_of_forgot_password_attempts_per_session"
+                                             type="number"></b-input>
+                                    <b-tooltip label="Copy Code Snippet" type="is-dark">
+                                        <p class="control">
+                                            <b-button icon-left="copy"
+                                                      @click="copySetting('maximum_number_of_forgot_password_attempts_per_session')">
+                                            </b-button>
+                                        </p>
+                                    </b-tooltip>
+                                </b-field>
+                            </b-field>
+
+
+                            <b-field label="Maximum number of login attempts per session"
+                                     expanded
+                                     grouped
+                                     :label-position="labelPosition">
+                                <b-field expanded>
+                                    <b-input expanded
+                                             v-model="list.maximum_number_of_login_attempts_per_session"
+                                             type="number"></b-input>
+                                    <b-tooltip label="Copy Code Snippet" type="is-dark">
+                                        <p class="control">
+                                            <b-button icon-left="copy"
+                                                      @click="copySetting('maximum_number_of_login_attempts_per_session')">
+                                            </b-button>
+                                        </p>
                                     </b-tooltip>
                                 </b-field>
                             </b-field>
@@ -288,6 +303,34 @@
 
                                 </b-field>
                             </div>
+
+
+
+
+
+                            <b-field  expanded
+                                      :message="inputs.maintenance_mode.message"
+                                      :type="inputs.maintenance_mode.type"
+                                      label="Maintenance Mode"
+                                      :label-position="labelPosition">
+
+                                <b-field>
+                                    <b-radio-button native-value="0"
+                                                    type="is-success"
+                                                    v-model="list.maintenance_mode">
+                                        <span>Disable</span>
+                                    </b-radio-button>
+
+                                    <b-radio-button native-value="1"
+                                                    type="is-danger"
+                                                    v-model="list.maintenance_mode">
+                                        <span>Enable</span>
+                                    </b-radio-button>
+                                </b-field>
+
+
+
+                            </b-field>
 
                             <b-field  expanded
                                       :type="inputs.password_protection.type"

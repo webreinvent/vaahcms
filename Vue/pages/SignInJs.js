@@ -42,9 +42,20 @@ export default {
 
     },
     methods: {
+
+        update: function(name, value)
+        {
+            let update = {
+                state_name: name,
+                state_value: value,
+                namespace: 'root',
+            };
+            this.$vaah.updateState(update);
+        },
         //---------------------------------------------------------------------
         signIn: function () {
-
+            this.root.no_of_login_attempt++;
+            this.update('no_of_login_attempt',this.root.no_of_login_attempt);
             this.is_btn_loading = true;
             let params = this.signin;
             let url = this.ajax_url+'/signin/post';
