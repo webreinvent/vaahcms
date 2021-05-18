@@ -36,7 +36,7 @@ export default {
         permissions: null,
         permissions_reload: false,
         check_logged_in: null,
-        is_logged_in: null,
+        no_of_login_attempt: 0,
     },
     //=========================================================================
     mutations:{

@@ -44,7 +44,7 @@ export default {
     methods: {
         //---------------------------------------------------------------------
         signIn: function () {
-
+            this.root.no_of_login_attempt++;
             this.is_btn_loading = true;
             let params = this.signin;
             let url = this.ajax_url+'/signin/post';

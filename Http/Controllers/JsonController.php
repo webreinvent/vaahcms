@@ -36,9 +36,9 @@ class JsonController extends Controller
         ];
 
         $data['settings'] = [
-            'is_mail_settings_not_set' => $this->isMailSettingsNotSet()
+            'is_mail_settings_not_set' => $this->isMailSettingsNotSet(),
+            'global' => config('settings.global'),
         ];
-
 
         $data['server'] = [
             'host' => $request->getHost(),
