@@ -14,8 +14,10 @@ export default {
     {
         return {
             is_btn_loading: false,
+            is_form_visible: false,
             credentials: {
                 email: null,
+                reset_password_code: null,
                 password: null,
                 password_confirmation: null,
             }
@@ -57,7 +59,6 @@ export default {
         //---------------------------------------------------------------------
         checkResetPasswordCode: function () {
 
-            this.is_btn_loading = true;
             let params = {
                 'code': this.$route.params.code,
             };
@@ -67,13 +68,14 @@ export default {
         },
         //---------------------------------------------------------------------
         checkResetPasswordCodeAfter: function (data, res) {
-            this.is_btn_loading = false;
             if(data)
             {
                 if(data.email){
                     this.credentials.email = data.email;
+                    this.is_form_visible = true;
                 }else if(data.redirect_url){
-                    this.$router.push({ name: 'dashboard.index' })
+                    this.$router.push({ name: 'dashboard.index' });
+
                 }
             }
         }

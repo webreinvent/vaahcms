@@ -29,14 +29,12 @@ Route::group(
         Route::post( '/checkResetPasswordCode/post', 'PublicController@postCheckResetPasswordCode' )
             ->name( 'vh.backend.checkResetPasswordCode.post' );
         //------------------------------------------------
-        Route::get( '/reset-password/{reset_password_code}', 'PublicController@resetPassword' )
-            ->name( 'vh.reset' );
-        //------------------------------------------------
         Route::post( '/signin/generate/otp', 'PublicController@postGenerateOTP' );
         //------------------------------------------------
         Route::get( '/logout', 'PublicController@logout' )
             ->name( 'vh.backend.logout' );
-        //------------------------------------------------
+        //-----------------------------------------------
+
         Route::group(
             [
                 'prefix'     => 'json',
@@ -56,6 +54,20 @@ Route::group(
 
                 //------------------------------------------------
             });
+        //------------------------------------------------
+    });
+
+Route::group(
+    [
+        'prefix'     => 'backend#',
+        'namespace'  => 'WebReinvent\VaahCms\Http\Controllers'
+    ],
+    function () {
+        //------------------------------------------------
+        //------------------------------------------------
+
+        Route::get('/reset-password/{reset_password_code}', 'PublicController@resetPassword')
+            ->name('vh.reset');
         //------------------------------------------------
     });
 

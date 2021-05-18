@@ -4,13 +4,13 @@
     <section class="section">
         <div class="login-form-layout">
 
-            <div class="container">
+            <div class="container" v-if="is_form_visible">
                 <div class="columns is-flex align-items-center justify-center">
                     <div class="column is-4">
                         <div class="login-box box is-flex flex-column
                         align-items-center has-text-centered justify-center">
 
-                            <Logo height="35"/>
+                            <Logo :assets="root.assets" height="35"/>
 
                             <div class="content has-text-centered has-margin-top-20">
                                 <h3 class="title">Reset Password?</h3>
@@ -19,7 +19,14 @@
 
                             <form class="is-full-width" @submit.prevent="onResetPassword">
                                 <b-field class="is-full-width has-margin-top-20">
+                                    <b-input type="text"
+                                             v-model="credentials.reset_password_code"
+                                             placeholder="Enter code to reset the password">
+                                    </b-input>
+                                </b-field>
+                                <b-field class="is-full-width has-margin-top-20">
                                     <b-input type="password"
+                                             autocomplete="new-password"
                                              v-model="credentials.password"
                                              placeholder="New Password">
                                     </b-input>
@@ -48,7 +55,10 @@
                                         </div>
                                     </div>
                                 </div>
+                                <hr class="has-margin-bottom-10"/>
                             </form>
+
+                            <Footer/>
 
                         </div>
 

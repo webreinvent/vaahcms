@@ -10,7 +10,7 @@
                         <div class="login-box box is-flex flex-column
                         align-items-center has-text-centered justify-center">
 
-                            <Logo height="35"/>
+                            <Logo :assets="root.assets" height="35"/>
 
                             <div class="content has-text-centered has-margin-top-20">
                                 <h3 class="title">Forgot Password?</h3>
@@ -44,7 +44,10 @@
                                         </div>
                                     </div>
                                 </div>
+                                <hr class="has-margin-bottom-10"/>
                             </form>
+
+                            <Footer/>
 
                         </div>
 
