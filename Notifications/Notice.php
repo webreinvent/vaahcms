@@ -85,10 +85,17 @@ class Notice extends Notification
 
                         $from_email = vh_translate_dynamic_strings($content->value, $this->params);
 
-                        if(isset($from_name) && isset($from_email))
+                        $from_email = trim($from_email);
+                        $from_name = trim($from_name);
+
+
+                        if(isset($from_name) && !empty($from_name)
+                            && isset($from_email) && !empty($from_email)
+                            && filter_var($from_email, FILTER_VALIDATE_EMAIL))
                         {
-                            $mail->from($from_email, $from_name);
-                        } else if(isset($from_email))
+                            $mail->from($from_email,$from_name);
+                        } else if(isset($from_email) && !empty($from_email)
+                            && filter_var($from_email, FILTER_VALIDATE_EMAIL))
                         {
                             $mail->from($from_email);
                         } else{
@@ -98,7 +105,10 @@ class Notice extends Notification
                         break;
 
                     case 'action':
-                        $translated = vh_translate_dynamic_strings($content->meta->action, $this->params);
+                        $translated = vh_translate_dynamic_strings(
+                            $content->meta->action,
+                            $this->params
+                        );
                         $mail->action($content->value, $translated);
                         break;
 

@@ -1,4 +1,4 @@
-<script src="./ForgotPasswordJs.js"></script>
+<script src="./ResetPasswordJs.js"></script>
 <template>
 
     <section class="section">
@@ -13,30 +13,34 @@
                             <Logo height="35"/>
 
                             <div class="content has-text-centered has-margin-top-20">
-                                <h3 class="title">Forgot Password?</h3>
-                                <p class="subtitle">You can recover your password from here.</p>
+                                <h3 class="title">Reset Password?</h3>
+                                <p class="subtitle">You can reset your password from here.</p>
                             </div>
 
-                            <form class="is-full-width" @submit.prevent="onSendCode()">
+                            <form class="is-full-width" @submit.prevent="onResetPassword">
                                 <b-field class="is-full-width has-margin-top-20">
-                                    <b-input type="email"
-                                             v-model="credentials.email"
-                                             placeholder="Enter Email Address"
-                                             maxlength="30">
+                                    <b-input type="password"
+                                             v-model="credentials.password"
+                                             placeholder="New Password">
                                     </b-input>
                                 </b-field>
 
-                                <div class="buttons is-full-width">
+                                <b-field class="is-full-width has-margin-top-20">
+                                    <b-input type="password"
+                                             v-model="credentials.password_confirmation"
+                                             placeholder="Confirm Password">
+                                    </b-input>
+                                </b-field>
+
+                                <div class="buttons is-full-width has-margin-top-20">
                                     <div class="columns is-full-width">
                                         <div class="column">
                                             <div class="buttons">
-                                                <b-button
-                                                        native-type="submit"
-                                                        :loading="is_btn_loading"
-                                                        dusk="signin-signin"
-                                                        type="is-primary">
-                                                    Send code
-                                                </b-button>
+                                                <b-button native-type="submit"
+                                                          :loading="is_btn_loading"
+                                                          dusk="signin-signin"
+                                                          type="is-primary">
+                                                    Recover</b-button>
                                             </div>
                                         </div>
                                         <div class="column has-text-right-desktop">

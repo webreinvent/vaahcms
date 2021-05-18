@@ -732,6 +732,7 @@ class User extends Authenticatable
         $reset_password_code = uniqid();
 
         $user->reset_password_code = $reset_password_code;
+        $user->reset_password_code_sent_at = Carbon::now();
         $user->save();
 
         $notification = Notification::where('slug', 'send-reset-password-email')
@@ -746,7 +747,7 @@ class User extends Authenticatable
         $request = new Request($inputs);
 
 
-        $response = Notification::send($request);
+        $response = Notification::send($notification,$user,$request->all());
 
         if(isset($response['status']) && $response['status'] == 'failed')
         {
