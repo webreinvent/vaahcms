@@ -44,36 +44,35 @@
                                 Activate
                             </b-button>
                         </p>
-                        <p class="control" v-if="props.row.is_active && props.row.is_sample_data_available && hasPermission('can-import-sample-data-in-module')">
-                            <b-tooltip label="Import Sample Data" type="is-dark">
+
+                        <b-tooltip label="Import Sample Data" type="is-dark">
+                            <p class="control" v-if="props.row.is_active && props.row.is_sample_data_available && hasPermission('can-import-sample-data-in-module')">
                                 <b-button size="is-small"
                                           icon-left="database"
                                           @click="confirmDataImport(props.row)"
                                           type="is-warning">
                                 </b-button>
-                            </b-tooltip>
-                        </p>
+                            </p>
+                        </b-tooltip>
 
-                        <p class="control" v-if="props.row.is_update_available && hasPermission('can-update-module')">
-                            <b-tooltip label="Download Updates" type="is-dark">
+                        <b-tooltip label="Download Updates" type="is-dark">
+                            <p class="control" v-if="props.row.is_update_available && hasPermission('can-update-module')">
                                 <b-button size="is-small"
                                           icon-left="cloud-download-alt"
                                           type="is-info"
                                           @click="confirmUpdate(props.row)">
                                     Update
                                 </b-button>
-                            </b-tooltip>
-                        </p>
+                            </p>
+                        </b-tooltip>
 
                         <b-tooltip label="Delete" type="is-dark">
                             <p v-if="hasPermission('can-delete-module')" class="control">
-
                                 <b-button size="is-small"
                                           icon-left="trash"
                                           @click="confirmDelete(props.row)"
                                           type="is-danger">
                                 </b-button>
-
                             </p>
                         </b-tooltip>
 
@@ -82,12 +81,10 @@
 
                         <b-tooltip label="View" type="is-dark">
                             <p v-if="hasPermission('can-read-module')" class="control">
-
                                 <b-button size="is-small"
                                           @click="setActiveItem(props.row)"
                                           icon-left="chevron-right">
                                 </b-button>
-
                             </p>
                         </b-tooltip>
 
