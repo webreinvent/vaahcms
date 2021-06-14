@@ -36,7 +36,13 @@
                 </b-table-column>
 
                 <b-table-column field="exception" label="Exception" width="100" v-slot="props">
-                    <ButtonMeta dusk="action-view_exception" :value="props.row.exception"/>
+                    <b-button size="is-small"
+                              @click="showModal(props.row)"
+                              type="is-default"
+                              rounded
+                              icon-left="eye">
+                        View
+                    </b-button>
                 </b-table-column>
 
                 <b-table-column field="failed_at" label="Failed At" width="150" v-slot="props">

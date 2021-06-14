@@ -1,6 +1,7 @@
 let namespace = 'failed_jobs';
 
 import ButtonMeta from '../../../../vaahvue/reusable/ButtonMeta'
+import {ModalProgrammatic as Modal} from 'buefy';
 
 export default {
     computed: {
@@ -140,6 +141,23 @@ export default {
             }
         },
         //---------------------------------------------------------------------
+        showModal: function (item) {
+
+            console.log(item);
+
+            let props ={
+                width: 640,
+
+                scroll: 'keep',
+                content:  `<div class="card">
+                                    <div class="card-content">
+                                    <pre class="is-size-6">`+item.exception+`</pre>
+                                    </div>
+                                </div>`,
+            };
+
+            Modal.open(props);
+        },
         //---------------------------------------------------------------------
         //---------------------------------------------------------------------
         //---------------------------------------------------------------------
