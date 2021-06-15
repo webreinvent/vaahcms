@@ -3,6 +3,11 @@
 
 Please consider starring the project to show your :heart: and support.
 
+### PR Templates:
+
+**Features**: <github-url>&template=feature-template.md
+**Releases**: <github-url>&template=release-template.md
+
 
 ## Steps to Setup
 
