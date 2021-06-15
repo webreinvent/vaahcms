@@ -27,6 +27,13 @@ class Setting extends Model {
     ];
 
     //-------------------------------------------------
+
+    protected $casts = [
+        "created_at" => 'date:Y-m-d H:i:s',
+        "updated_at" => 'date:Y-m-d H:i:s',
+    ];
+
+    //-------------------------------------------------
     public function getValueAttribute($value) {
 
         if(isset($this->type) && ($this->type == 'json' || $this->type == 'meta_tags'))

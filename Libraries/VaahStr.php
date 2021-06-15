@@ -15,16 +15,20 @@ class VaahStr{
     {
         $string = $params['string'];
 
+        $user = null;
+
         if(isset($params['user_id']))
         {
-            $user = User::find($params['user_id']);
-
+            $user = User::where('id',$params['user_id'])
+                ->first();
             $string = static::translateDynamicStringsOfUser($string, $user);
         }
 
+
         $string = static::translateDynamicStringsOfParams($string, $params);
-        $string = static::translateDynamicStringsOfEnv($string, $params);
-        $string = static::translateDynamicStringsOfRoutes($string);
+        $string = static::translateDynamicStringsOfEnv($string);
+        $string = static::translateDynamicStringsOfRoutes($string, $params, $user);
+        $string = static::translateDynamicStringsOfPublicUrls($string,$params);
 
         return $string;
     }
@@ -80,7 +84,7 @@ class VaahStr{
         return $string;
     }
     //----------------------------------------------------------
-    public static function translateDynamicStringsOfRoutes($string)
+    public static function translateDynamicStringsOfRoutes($string,$params,$user=null)
     {
 
 
@@ -90,12 +94,25 @@ class VaahStr{
 
         $map = [];
 
+
         if(count($matches[1]) > 0)
         {
             foreach ($matches[1] as $item)
             {
-                $route = strtolower($item);
-                $route = route($route);
+                $route_name = strtolower($item);
+
+                switch ($route_name)
+                {
+                    case 'vh.reset':
+                        $route = route($route_name,
+                            ['reset_password_code' => $user->reset_password_code]
+                        );
+                        break;
+                    default:
+                        $route = route($route_name);
+                        break;
+                }
+
                 $map['#!ROUTE:'.$item.'!#'] = $route;
             }
         }
@@ -103,6 +120,29 @@ class VaahStr{
         $string = strtr($string, $map);
 
         return $string;
+    }
+    //----------------------------------------------------------
+    public static function translateDynamicStringsOfPublicUrls($string,$params = [])
+    {
+        $extend = new \WebReinvent\VaahCms\Http\Controllers\ExtendController();
+
+        $dynamic_strings = $extend->getPublicUrls();
+
+        if($dynamic_strings && $dynamic_strings['status'] === 'success'){
+            foreach ($dynamic_strings['data'] as $dynamic_string){
+
+                if(count($params) > 0 && isset($params['has_replace_string'])
+                    && $params['has_replace_string']){
+                    $string = str_replace($dynamic_string['value'],$dynamic_string['name'],$string);
+                }else{
+                    $string = str_replace($dynamic_string['name'],$dynamic_string['value'],$string);
+                }
+
+            }
+        }
+
+        return $string;
+
     }
     //----------------------------------------------------------
 

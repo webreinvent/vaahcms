@@ -109,7 +109,15 @@ function get_bulma_menu($menu, $parent_id = 0, $parents = array())
 
     foreach($array as $element)
     {
-        $link = $element['content']['link'];
+        $link = '';
+
+        if($element['uri']){
+            $link = $element['uri'];
+        }
+        
+        if($element['content']){
+            $link = $element['content']['link'];
+        }
         $active_class = "";
         if(isset($element['is_home']) && $element['is_home'] == 1 )
         {
@@ -129,7 +137,13 @@ function get_bulma_menu($menu, $parent_id = 0, $parents = array())
                 $menu_html .= '<a class="navbar-link">'.$element['name'].'</a>';
             }
             else {
-                $menu_html .= '<a class="navbar-item" href="'.$link.'">' . $element['name'] . '</a>';
+                $menu_html .= '<a class="navbar-item"';
+
+                if($element['attr_target_blank']){
+                    $menu_html .= 'target="_blank"';
+                }
+
+                $menu_html .= 'href="'.$link.'">' . $element['name'] . '</a>';
             }
             if(in_array($element['id'],$parents))
             {

@@ -34,11 +34,6 @@ class FailedJob extends Model {
         return json_decode($value);
     }
     //-------------------------------------------------
-    public function getExceptionAttribute($value)
-    {
-        return json_decode($value);
-    }
-    //-------------------------------------------------
     public function getTableColumns() {
         return $this->getConnection()->getSchemaBuilder()
             ->getColumnListing($this->getTable());

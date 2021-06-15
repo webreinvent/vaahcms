@@ -39,6 +39,21 @@ class PublicController extends Controller
     }
 
     //----------------------------------------------------------
+    public function resetPassword(Request $request,$reset_password_code)
+    {
+
+        $reset_password_code_valid = User::where('reset_password_code',$reset_password_code)->first();
+
+        if($reset_password_code_valid){
+            $url = \url('/backend#/reset-password/'.$reset_password_code);
+
+            return Redirect::to($url);
+        }
+
+        return redirect()->route('vh.backend');
+    }
+
+    //----------------------------------------------------------
     public function redirectToLogin()
     {
         return redirect()->route('vh.backend');
@@ -94,6 +109,41 @@ class PublicController extends Controller
         $response['data']['redirect_url'] = $redirect_url;
 
         return response()->json($response);
+
+    }
+    //----------------------------------------------------------
+    public function postSendResetCode(Request $request)
+    {
+        $response = User::sendResetPasswordEmail($request);
+
+        return response()->json($response);
+
+    }
+    //----------------------------------------------------------
+    public function postResetPassword(Request $request)
+    {
+        $response = User::resetPassword($request);
+
+        return response()->json($response);
+
+    }
+    //----------------------------------------------------------
+    public function postCheckResetPasswordCode(Request $request)
+    {
+
+        $reset_password_code_valid = User::where('reset_password_code',$request->code)->first();
+
+        if($reset_password_code_valid){
+            $response['status'] = 'success';
+            $response['data']['email'] = $reset_password_code_valid->email;
+
+            return $response;
+        }
+
+        $response['status'] = 'failed';
+        $response['data']['redirect_url'] = route('vh.backend');
+
+        return $response;
 
     }
     //----------------------------------------------------------

@@ -3,6 +3,7 @@ import TableTrView from '../../vaahvue/reusable/TableTrView.vue'
 import TableTrActedBy from '../../vaahvue/reusable/TableTrActedBy.vue'
 import TableTrTag from '../../vaahvue/reusable/TableTrTag.vue'
 import TableTrStatus from './partials/TableTrStatus.vue'
+import ButtonMeta from '../../vaahvue/reusable/ButtonMeta'
 
 let namespace = 'registrations';
 
@@ -20,6 +21,7 @@ export default {
         TableTrStatus,
         TableTrTag,
         TableTrActedBy,
+        ButtonMeta
     },
     data()
     {

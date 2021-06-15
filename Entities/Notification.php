@@ -44,6 +44,14 @@ class Notification extends Model {
     //-------------------------------------------------
     protected $appends  = [
     ];
+
+    //-------------------------------------------------
+
+    protected $casts = [
+        "created_at" => 'date:Y-m-d H:i:s',
+        "updated_at" => 'date:Y-m-d H:i:s',
+        "deleted_at" => 'date:Y-m-d H:i:s'
+    ];
     //-------------------------------------------------
     public function scopeSlug( $query, $slug ) {
         return $query->where( 'slug', $slug );
@@ -220,21 +228,6 @@ class Notification extends Model {
 
                 foreach ($vias as $via)
                 {
-
-                    if(!isset($via['value'])
-                        || is_null($via['value']) || empty($via['value']))
-                    {
-                        continue;
-                    }
-                    
-                    if($via['key'] == 'from'){
-                        $validation = self::mailValidation($via);
-                        if(isset($validation['status'])
-                            && $validation['status'] == 'failed')
-                        {
-                            return $validation;
-                        }
-                    }
 
                     $content = null;
 

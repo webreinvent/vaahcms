@@ -112,6 +112,12 @@
 
 
 
+                    <b-field label="Designation" :label-position="labelPosition">
+                        <b-input v-model="new_item.designation"
+                                 name="register-designation" dusk="register-designation"
+                        ></b-input>
+                    </b-field>
+
                     <b-field label="First Name" :label-position="labelPosition">
                         <b-input v-model="new_item.first_name"
                                  name="register-first_name" dusk="register-first_name"
@@ -171,6 +177,15 @@
                                  name="register-phone" dusk="register-phone"
                         ></b-input>
                     </b-field>
+
+
+                    <b-field label="Bio" :label-position="labelPosition">
+                        <b-input maxlength="250"
+                                 v-model="new_item.bio"
+                                 name="register-bio" dusk="register-bio"
+                                 type="textarea"></b-input>
+                    </b-field>
+
 
                     <b-field label="Timezone" :label-position="labelPosition">
                         <AutoCompleteTimeZone

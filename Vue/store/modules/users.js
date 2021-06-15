@@ -43,6 +43,7 @@ export default {
             password: null,
             display_name: null,
             title: null,
+            designation: null,
             first_name: null,
             middle_name: null,
             last_name: null,

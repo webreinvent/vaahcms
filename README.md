@@ -1,8 +1,12 @@
-# vaahcms v1.0.0
+# VaahCMS
 > Laravel Based Rapid Development CMS
 
 Please consider starring the project to show your :heart: and support.
 
+### PR Templates:
+
+**Features**: <github-url>&template=feature-template.md
+**Releases**: <github-url>&template=release-template.md
 
 
 ## Steps to Setup
@@ -14,9 +18,10 @@ composer require webreinvent/vaahcms
 
 ### Step 2) Publish Assets
 ```bash
-php artisan vendor:publish --provider="WebReinvent\VaahCms\VaahCmsServiceProvider" --tag=assets
-php artisan vendor:publish --provider="WebReinvent\VaahCms\VaahCmsServiceProvider" --tag=migrations
-php artisan vendor:publish --provider="WebReinvent\VaahCms\VaahCmsServiceProvider" --tag=seeds
+php artisan vendor:publish --provider="WebReinvent\VaahCms\VaahCmsServiceProvider" --tag=assets --force
+php artisan vendor:publish --provider="WebReinvent\VaahCms\VaahCmsServiceProvider" --tag=migrations  --force
+php artisan vendor:publish --provider="WebReinvent\VaahCms\VaahCmsServiceProvider" --tag=seeds --force
+php artisan vendor:publish --provider="WebReinvent\VaahCms\VaahCmsServiceProvider" --tag=config --force
 ```
 
 ### Step 3) Register Service Provider
@@ -163,6 +168,15 @@ php artisan make:seeder PermissionsTableSeeder --path=/packages/vaahcms/Database
 php artisan make:seeder RolesTableSeeder --path=/packages/vaahcms/Database/Seeders
 php artisan make:command HealthcheckCommand --path=/packages/vaahcms/Database/Seeders
 ```
+
+### Manual upgrade of VaahCMS
+
+- `php artisan vendor:publish --provider="WebReinvent\VaahCms\VaahCmsServiceProvider" --tag=assets --force`
+- `php artisan vendor:publish --provider="WebReinvent\VaahCms\VaahCmsServiceProvider" --tag=migrations --force`
+- `php artisan vendor:publish --provider="WebReinvent\VaahCms\VaahCmsServiceProvider" --tag=seeds --force`
+- `php artisan migrate --force`
+- `php artisan db:seed --force`
+
 
 ## Minify Assets of Admin with Laravel Mix
 
