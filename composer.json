@@ -14,7 +14,7 @@
   "require": {
     "php": "^7.3|^8.0",
     "webreinvent/laravel-nestable": "^0.0.3",
-    "barryvdh/laravel-dompdf": "^0.8.6",
+    "barryvdh/laravel-dompdf": "^0.9.0",
     "berkayk/onesignal-laravel": "^1.0.5",
     "composer/composer": "^1.10.6",
     "creativeorange/gravatar": "^1.0",
