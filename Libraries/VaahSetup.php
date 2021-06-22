@@ -494,13 +494,20 @@ class VaahSetup{
         {
 
             $list = collect($config['environments'])->pluck('app_url')->toArray();
-            $count_total = $list;
-            $count_unique = array_unique($list);
+            $list = collect($config['environments'])->pluck('app_url')->toArray();
 
-            if($count_unique < $count_total)
+            $duplicates = array();
+            foreach(array_count_values($list) as $val => $c)
             {
+                if($c > 1) $duplicates[] = $val;
+            }
+
+            if(!empty($duplicates) && count($duplicates) > 0)
+            {
+                $duplicate_urls = implode( ', ', $duplicates);
+
                 $response['status'] = 'failed';
-                $response['errors'][] = 'Duplicate entries with same app_url is found in vaahcms.json file.';
+                $response['errors'][] = 'Duplicate entries for app_url(s) '.$duplicate_urls.' is/are found in vaahcms.json file.';
                 if(env('APP_DEBUG'))
                 {
                     $response['hint'][] = 'APP URL already exist in vaahcms.json';
