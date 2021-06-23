@@ -29,6 +29,7 @@ export default {
             namespace:namespace,
             labelPosition: 'on-border',
             control_size: 'is-small',
+            is_loading: false,
             inputs: {
                 copyright_text_custom: false,
                 copyright_link_custom: false,
@@ -205,6 +206,7 @@ export default {
         //---------------------------------------------------------------------
         storeSiteSettings: function () {
             this.$Progress.start();
+            this.is_loading = true;
             let params = {
                 list: this.list
             };
@@ -214,6 +216,7 @@ export default {
         //---------------------------------------------------------------------
         storeSiteSettingsAfter: function (data, res) {
             this.$Progress.finish();
+            this.is_loading = false;
         },
         //---------------------------------------------------------------------
         copySetting: function (value)
@@ -228,6 +231,7 @@ export default {
         //---------------------------------------------------------------------
         clearCache: function () {
             this.$Progress.start();
+            this.btn_is_loading = true;
             let params = {};
             let url = this.base_url+'/clear/cache';
             this.$vaah.ajax(url, params, this.clearCacheAfter);
@@ -235,7 +239,7 @@ export default {
         //---------------------------------------------------------------------
         clearCacheAfter: function (data, res) {
             this.$Progress.finish();
-
+            this.btn_is_loading = false;
             window.location.reload(true);
 
         },
