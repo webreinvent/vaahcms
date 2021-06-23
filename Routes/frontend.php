@@ -19,7 +19,7 @@ Route::group(
     ],
     function () {
         //------------------------------------------------
-        Route::post( '/clear/cache', 'WelcomeController@clearCache' )
+        Route::any( '/clear/cache', 'WelcomeController@clearCache' )
             ->name( 'vh.frontend.clear.cache' );
         //------------------------------------------------
     });
