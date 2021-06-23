@@ -15,6 +15,7 @@ export default {
         list() {return this.$store.getters[namespace+'/state'].list},
         settings() {return this.$store.getters[namespace+'/state'].settings},
         assets() {return this.$store.getters[namespace+'/state'].assets},
+        base_url() {return this.$store.getters[namespace+'/state'].base_url},
         ajax_url() {return this.$store.getters[namespace+'/state'].ajax_url},
     },
     components:{
@@ -225,6 +226,19 @@ export default {
             });
         },
         //---------------------------------------------------------------------
+        clearCache: function () {
+            this.$Progress.start();
+            let params = {};
+            let url = this.base_url+'/clear/cache';
+            this.$vaah.ajax(url, params, this.clearCacheAfter);
+        },
+        //---------------------------------------------------------------------
+        clearCacheAfter: function (data, res) {
+            this.$Progress.finish();
+
+            window.location.reload(true);
+
+        },
         //---------------------------------------------------------------------
         //---------------------------------------------------------------------
     }

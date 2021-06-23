@@ -8,6 +8,7 @@ use Illuminate\Routing\Controller;
 use VaahCms\Modules\Cms\Entities\MenuItem;
 use WebReinvent\VaahCms\Entities\Module;
 use WebReinvent\VaahCms\Entities\Theme;
+use WebReinvent\VaahExtend\Libraries\VaahArtisan;
 
 class WelcomeController extends Controller
 {
@@ -20,6 +21,39 @@ class WelcomeController extends Controller
         $this->theme = vh_get_theme_slug();
     }
 
+    //----------------------------------------------------------
+    public function clearCache(Request $request)
+    {
+        $response = VaahArtisan::clearCache();
+        if($response['status'] == 'failed')
+        {
+            return $response;
+        }
+
+        try{
+            $files = ['config.php', 'packages.php', 'services.php'];
+            $path = base_path().'/bootstrap/cache/';
+            foreach ($files as $file)
+            {
+                if(\File::exists($path.$file))
+                {
+                    \File::delete($path.$file);
+                }
+            }
+
+            $response['status'] = 'success';
+            $response['messages'][] = 'Cache was successfully deleted.';
+
+        }catch(\Exception $e)
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = $e->getMessage();
+
+        }
+
+        return $response;
+
+    }
     //----------------------------------------------------------
     public function index()
     {

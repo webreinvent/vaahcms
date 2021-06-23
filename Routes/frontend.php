@@ -14,6 +14,19 @@
 Route::group(
     [
         'prefix'     => '/',
+        'middleware' => ['web'],
+        'namespace'  => 'WebReinvent\VaahCms\Http\Controllers'
+    ],
+    function () {
+        //------------------------------------------------
+        Route::post( '/clear/cache', 'WelcomeController@clearCache' )
+            ->name( 'vh.frontend.clear.cache' );
+        //------------------------------------------------
+    });
+
+Route::group(
+    [
+        'prefix'     => '/',
         'middleware' => ['web', 'set.theme.details'],
         'namespace'  => 'WebReinvent\VaahCms\Http\Controllers\Frontend'
     ],
