@@ -1243,15 +1243,6 @@ class User extends Authenticatable
     public static function bulkStatusChange($request)
     {
 
-        if(!\Auth::user()->hasPermission('can-manage-users') &&
-            !\Auth::user()->hasPermission('can-update-users'))
-        {
-            $response['status'] = 'failed';
-            $response['errors'][] = trans("vaahcms::messages.permission_denied");
-
-            return $response;
-        }
-
         if(!$request->has('inputs'))
         {
             $response['status'] = 'failed';
@@ -1313,14 +1304,6 @@ class User extends Authenticatable
     public static function bulkTrash($request)
     {
 
-        if(!\Auth::user()->hasPermission('can-update-users'))
-        {
-            $response['status'] = 'failed';
-            $response['errors'][] = trans("vaahcms::messages.permission_denied");
-
-            return $response;
-        }
-
         if(!$request->has('inputs'))
         {
             $response['status'] = 'failed';
@@ -1369,14 +1352,6 @@ class User extends Authenticatable
     public static function bulkRestore($request)
     {
 
-        if(!\Auth::user()->hasPermission('can-update-users'))
-        {
-            $response['status'] = 'failed';
-            $response['errors'][] = trans("vaahcms::messages.permission_denied");
-
-            return $response;
-        }
-
         if(!$request->has('inputs'))
         {
             $response['status'] = 'failed';
@@ -1415,15 +1390,6 @@ class User extends Authenticatable
 
     public static function bulkChangeRoleStatus($request)
     {
-
-        if(!\Auth::user()->hasPermission('can-manage-users') &&
-            !\Auth::user()->hasPermission('can-update-users'))
-        {
-            $response['status'] = 'failed';
-            $response['errors'][] = trans("vaahcms::messages.permission_denied");
-
-            return $response;
-        }
 
         $inputs = $request->all();
 
@@ -1478,15 +1444,6 @@ class User extends Authenticatable
 
     public static function bulkDelete($request)
     {
-
-        if(!\Auth::user()->hasPermission('can-update-users') ||
-            !\Auth::user()->hasPermission('can-delete-users'))
-        {
-            $response['status'] = 'failed';
-            $response['errors'][] = trans("vaahcms::messages.permission_denied");
-
-            return $response;
-        }
 
         if(!$request->has('inputs'))
         {
