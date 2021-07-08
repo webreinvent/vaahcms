@@ -807,10 +807,10 @@ class Registration extends Model
             return $response;
         }
 
-        // check if already exist
-        $user = self::where('email',$reg['email'])->first();
+        // check if User of this Email Id is already exist
+        $user_exist = User::where('email',$reg['email'])->first();
 
-        if($user)
+        if($user_exist)
         {
             $response['status'] = 'failed';
             $response['errors'][] = "User of this Email Id is already exist.";
