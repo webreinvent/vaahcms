@@ -105,7 +105,7 @@ class RegistrationsController extends Controller
             $response['status'] = 'failed';
             $response['errors'][] = trans("vaahcms::messages.permission_denied");
 
-            return response()->json($response);
+            return $response;
         }
 
         $response = Registration::createUser($id);
@@ -152,16 +152,42 @@ class RegistrationsController extends Controller
 
             //------------------------------------
             case 'bulk-change-status':
+
+                if(!\Auth::user()->hasPermission('can-manage-registrations') &&
+                    !\Auth::user()->hasPermission('can-update-registrations'))
+                {
+                    $response['status'] = 'failed';
+                    $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+                    return $response;
+                }
+
                 $response = Registration::bulkStatusChange($request);
                 break;
             //------------------------------------
             case 'bulk-trash':
+
+                if(!\Auth::user()->hasPermission('can-update-registrations'))
+                {
+                    $response['status'] = 'failed';
+                    $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+                    return $response;
+                }
 
                 $response = Registration::bulkTrash($request);
 
                 break;
             //------------------------------------
             case 'bulk-restore':
+
+                if(!\Auth::user()->hasPermission('can-update-registrations'))
+                {
+                    $response['status'] = 'failed';
+                    $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+                    return $response;
+                }
 
                 $response = Registration::bulkRestore($request);
 
@@ -170,11 +196,29 @@ class RegistrationsController extends Controller
             //------------------------------------
             case 'bulk-delete':
 
+                if(!\Auth::user()->hasPermission('can-update-registrations') ||
+                    !\Auth::user()->hasPermission('can-delete-registrations'))
+                {
+                    $response['status'] = 'failed';
+                    $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+                    return $response;
+                }
+
                 $response = Registration::bulkDelete($request);
 
                 break;
             //------------------------------------
             case 'send-verification-mail':
+
+                if(!\Auth::user()->hasPermission('can-manage-registrations') &&
+                    !\Auth::user()->hasPermission('can-update-registrations'))
+                {
+                    $response['status'] = 'failed';
+                    $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+                    return $response;
+                }
 
                 $response = Registration::sendVerificationEmail($request);
 

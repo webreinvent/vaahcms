@@ -145,8 +145,8 @@
                                          expanded
                                          placeholder="Type slug"
                                          v-model="item.download_url"></b-input>
-                                <p class="control">
-                                    <b-tooltip label="Check url availability" type="is-dark">
+                                <b-tooltip label="Check url availability" type="is-dark">
+                                    <p class="control">
                                         <b-button v-if="downloadable_slug_available"
                                                   @click="isDownloadableSlugAvailable"
                                                   type="is-success"
@@ -154,13 +154,13 @@
                                         <b-button v-else
                                                   @click="isDownloadableSlugAvailable"
                                                   icon-left="question"></b-button>
-                                    </b-tooltip>
-                                </p>
-                                <p class="control">
-                                    <b-tooltip label="Copy Link" type="is-dark">
+                                    </p>
+                                </b-tooltip>
+                                <b-tooltip label="Copy Link" type="is-dark">
+                                    <p class="control">
                                         <b-button icon-left="copy"></b-button>
-                                    </b-tooltip>
-                                </p>
+                                    </p>
+                                </b-tooltip>
                             </b-field>
                         </b-field>
 

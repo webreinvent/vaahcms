@@ -71,9 +71,19 @@ let routes_frontend =     {
         },
         {
             path: '/reset-password/:code',
-            name: 'reset.password',
+            name: 'reset.password_with_code',
             component: ResetPassword,
-            props: true,
+            meta: {
+                middleware: [
+                    GetAssets,
+                    IfNotSetup,
+                ]
+            },
+        },
+        {
+            path: '/reset-password',
+            name: 'reset.password_without_code',
+            component: ResetPassword,
             meta: {
                 middleware: [
                     GetAssets,

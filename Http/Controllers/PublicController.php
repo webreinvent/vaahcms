@@ -128,25 +128,6 @@ class PublicController extends Controller
 
     }
     //----------------------------------------------------------
-    public function postCheckResetPasswordCode(Request $request)
-    {
-
-        $reset_password_code_valid = User::where('reset_password_code',$request->code)->first();
-
-        if($reset_password_code_valid){
-            $response['status'] = 'success';
-            $response['data']['email'] = $reset_password_code_valid->email;
-
-            return $response;
-        }
-
-        $response['status'] = 'failed';
-        $response['data']['redirect_url'] = route('vh.backend');
-
-        return $response;
-
-    }
-    //----------------------------------------------------------
     public function logout()
     {
         if(!\Auth::check())
