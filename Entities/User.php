@@ -29,6 +29,7 @@ class User extends Authenticatable
 
     //-------------------------------------------------
     protected $table = 'vh_users';
+    public $prevent_password_attr_set = false;
     //-------------------------------------------------
     protected $dates = [
         "last_login_at", "api_token_used_at",
@@ -143,7 +144,12 @@ class User extends Authenticatable
     }
     //-------------------------------------------------
     public function setPasswordAttribute($value) {
-        $this->attributes['password'] = Hash::make($value);
+        if ($this->prevent_password_attr_set) {
+            // Ignore Mutator
+            $this->attributes['password'] = $value;
+        } else {
+            $this->attributes['password'] = Hash::make($value);
+        }
     }
     //-------------------------------------------------
     public function setLoginOtpAttribute($value) {
@@ -154,10 +160,6 @@ class User extends Authenticatable
         } else{
             $this->attributes['login_otp'] = Hash::make($value);
         }
-    }
-    //-------------------------------------------------
-    public function setResetPasswordCodeAttribute($value) {
-        $this->attributes['reset_password_code'] = Hash::make($value);
     }
     //-------------------------------------------------
 
@@ -765,13 +767,6 @@ class User extends Authenticatable
     public static function resetPassword($request): array
     {
 
-        $user = self::beforeUserActionValidation($request);
-
-        if(isset($user['status']) && $user['status'] == 'failed')
-        {
-            return $user;
-        }
-
         $rules = array(
             'reset_password_code' => 'required',
             'password' => 'required|confirmed|min:6',
@@ -786,7 +781,9 @@ class User extends Authenticatable
             return $response;
         }
 
-        if(!Hash::check($request->reset_password_code, $user->reset_password_code))
+        $user = self::where('reset_password_code',$request->reset_password_code)->first();
+
+        if(!$user)
         {
             $response['status'] = 'failed';
             $response['errors'][] = "Incorrect reset password code";
@@ -1246,15 +1243,6 @@ class User extends Authenticatable
     public static function bulkStatusChange($request)
     {
 
-        if(!\Auth::user()->hasPermission('can-manage-users') &&
-            !\Auth::user()->hasPermission('can-update-users'))
-        {
-            $response['status'] = 'failed';
-            $response['errors'][] = trans("vaahcms::messages.permission_denied");
-
-            return $response;
-        }
-
         if(!$request->has('inputs'))
         {
             $response['status'] = 'failed';
@@ -1316,14 +1304,6 @@ class User extends Authenticatable
     public static function bulkTrash($request)
     {
 
-        if(!\Auth::user()->hasPermission('can-update-users'))
-        {
-            $response['status'] = 'failed';
-            $response['errors'][] = trans("vaahcms::messages.permission_denied");
-
-            return $response;
-        }
-
         if(!$request->has('inputs'))
         {
             $response['status'] = 'failed';
@@ -1372,14 +1352,6 @@ class User extends Authenticatable
     public static function bulkRestore($request)
     {
 
-        if(!\Auth::user()->hasPermission('can-update-users'))
-        {
-            $response['status'] = 'failed';
-            $response['errors'][] = trans("vaahcms::messages.permission_denied");
-
-            return $response;
-        }
-
         if(!$request->has('inputs'))
         {
             $response['status'] = 'failed';
@@ -1418,15 +1390,6 @@ class User extends Authenticatable
 
     public static function bulkChangeRoleStatus($request)
     {
-
-        if(!\Auth::user()->hasPermission('can-manage-users') &&
-            !\Auth::user()->hasPermission('can-update-users'))
-        {
-            $response['status'] = 'failed';
-            $response['errors'][] = trans("vaahcms::messages.permission_denied");
-
-            return $response;
-        }
 
         $inputs = $request->all();
 
@@ -1481,15 +1444,6 @@ class User extends Authenticatable
 
     public static function bulkDelete($request)
     {
-
-        if(!\Auth::user()->hasPermission('can-update-users') ||
-            !\Auth::user()->hasPermission('can-delete-users'))
-        {
-            $response['status'] = 'failed';
-            $response['errors'][] = trans("vaahcms::messages.permission_denied");
-
-            return $response;
-        }
 
         if(!$request->has('inputs'))
         {

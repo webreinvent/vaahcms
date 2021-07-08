@@ -151,17 +151,42 @@ class UsersController extends Controller
             //------------------------------------
             case 'bulk-change-status':
 
+                if(!\Auth::user()->hasPermission('can-manage-users') &&
+                    !\Auth::user()->hasPermission('can-update-users'))
+                {
+                    $response['status'] = 'failed';
+                    $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+                    return $response;
+                }
+
                 $response = User::bulkStatusChange($request);
 
                 break;
             //------------------------------------
             case 'bulk-trash':
 
+                if(!\Auth::user()->hasPermission('can-update-users'))
+                {
+                    $response['status'] = 'failed';
+                    $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+                    return $response;
+                }
+
                 $response = User::bulkTrash($request);
 
                 break;
             //------------------------------------
             case 'bulk-restore':
+
+                if(!\Auth::user()->hasPermission('can-update-users'))
+                {
+                    $response['status'] = 'failed';
+                    $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+                    return $response;
+                }
 
                 $response = User::bulkRestore($request);
 
@@ -170,11 +195,29 @@ class UsersController extends Controller
             //------------------------------------
             case 'bulk-delete':
 
+                if(!\Auth::user()->hasPermission('can-update-users') ||
+                    !\Auth::user()->hasPermission('can-delete-users'))
+                {
+                    $response['status'] = 'failed';
+                    $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+                    return $response;
+                }
+
                 $response = User::bulkDelete($request);
 
                 break;
             //------------------------------------
             case 'toggle_role_active_status':
+
+                if(!\Auth::user()->hasPermission('can-manage-users') &&
+                    !\Auth::user()->hasPermission('can-update-users'))
+                {
+                    $response['status'] = 'failed';
+                    $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+                    return $response;
+                }
 
                 $response = User::bulkChangeRoleStatus($request);
 

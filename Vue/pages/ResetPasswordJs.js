@@ -26,16 +26,13 @@ export default {
     },
     watch: {
         '$route.params.code':function(newValue,oldValue){
-            this.checkResetPasswordCode();
+            this.credentials.reset_password_code = newValue;
         }
-
     },
     mounted() {
 
         if(this.$route.params && this.$route.params.code){
-            this.checkResetPasswordCode();
-        }else{
-            this.$router.push({ name: 'dashboard.index' })
+            this.credentials.reset_password_code = this.$route.params.code;
         }
 
     },
@@ -66,29 +63,6 @@ export default {
             if(data)
             {
                 this.$router.push({ name: 'dashboard.index' })
-            }
-        },
-        //---------------------------------------------------------------------
-        checkResetPasswordCode: function () {
-
-            let params = {
-                'code': this.$route.params.code,
-            };
-            let url = this.ajax_url+'/checkResetPasswordCode/post';
-            this.$vaah.ajax(url, params, this.checkResetPasswordCodeAfter);
-
-        },
-        //---------------------------------------------------------------------
-        checkResetPasswordCodeAfter: function (data, res) {
-            if(data)
-            {
-                if(data.email){
-                    this.credentials.email = data.email;
-                    this.is_form_visible = true;
-                }else if(data.redirect_url){
-                    this.$router.push({ name: 'dashboard.index' });
-
-                }
             }
         }
         //---------------------------------------------------------------------

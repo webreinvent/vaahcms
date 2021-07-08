@@ -265,14 +265,6 @@ class Registration extends Model
     public static function create($request)
     {
 
-        if(!\Auth::user()->hasPermission('can-create-registrations'))
-        {
-            $response['status'] = 'failed';
-            $response['errors'][] = trans("vaahcms::messages.permission_denied");
-
-            return $response;
-        }
-
         $inputs = $request->new_item;
 
         $rules = array(
@@ -340,14 +332,6 @@ class Registration extends Model
     public static function getList($request)
     {
 
-        if(!\Auth::user()->hasPermission('has-access-of-registrations-section'))
-        {
-            $response['status'] = 'failed';
-            $response['errors'][] = trans("vaahcms::messages.permission_denied");
-
-            return $response;
-        }
-
         $list = Registration::orderBy('created_at', 'DESC');
 
         if($request->has('trashed') && $request->trashed == 'true')
@@ -393,17 +377,6 @@ class Registration extends Model
     public static function getItem($request)
     {
 
-        if(!\Auth::user()->hasPermission('can-manage-registrations') &&
-            !\Auth::user()->hasPermission('can-update-registrations') &&
-            !\Auth::user()->hasPermission('can-create-registrations') &&
-            !\Auth::user()->hasPermission('can-read-registrations'))
-        {
-            $response['status'] = 'failed';
-            $response['errors'][] = trans("vaahcms::messages.permission_denied");
-
-            return $response;
-        }
-
         $item = Registration::where('id', $request->id);
         $item->withTrashed();
         $item->with(['createdByUser', 'updatedByUser', 'deletedByUser']);
@@ -424,14 +397,6 @@ class Registration extends Model
     //-------------------------------------------------
     public static function postStore($request)
     {
-
-        if(!\Auth::user()->hasPermission('can-update-registrations'))
-        {
-            $response['status'] = 'failed';
-            $response['errors'][] = trans("vaahcms::messages.permission_denied");
-
-            return $response;
-        }
 
         $rules = array(
             'id' => 'required',
@@ -600,15 +565,6 @@ class Registration extends Model
     public static function bulkStatusChange($request)
     {
 
-        if(!\Auth::user()->hasPermission('can-manage-registrations') &&
-            !\Auth::user()->hasPermission('can-update-registrations'))
-        {
-            $response['status'] = 'failed';
-            $response['errors'][] = trans("vaahcms::messages.permission_denied");
-
-            return $response;
-        }
-
         if(!$request->has('inputs'))
         {
             $response['status'] = 'failed';
@@ -642,14 +598,6 @@ class Registration extends Model
     public static function bulkTrash($request)
     {
 
-        if(!\Auth::user()->hasPermission('can-update-registrations'))
-        {
-            $response['status'] = 'failed';
-            $response['errors'][] = trans("vaahcms::messages.permission_denied");
-
-            return $response;
-        }
-
         if(!$request->has('inputs'))
         {
             $response['status'] = 'failed';
@@ -679,14 +627,6 @@ class Registration extends Model
     public static function bulkRestore($request)
     {
 
-        if(!\Auth::user()->hasPermission('can-update-registrations'))
-        {
-            $response['status'] = 'failed';
-            $response['errors'][] = trans("vaahcms::messages.permission_denied");
-
-            return $response;
-        }
-
         if(!$request->has('inputs'))
         {
             $response['status'] = 'failed';
@@ -714,15 +654,6 @@ class Registration extends Model
     //-------------------------------------------------
     public static function bulkDelete($request)
     {
-
-        if(!\Auth::user()->hasPermission('can-update-registrations') ||
-            !\Auth::user()->hasPermission('can-delete-registrations'))
-        {
-            $response['status'] = 'failed';
-            $response['errors'][] = trans("vaahcms::messages.permission_denied");
-
-            return $response;
-        }
 
         if(!$request->has('inputs'))
         {
@@ -753,15 +684,6 @@ class Registration extends Model
     public static function sendVerificationEmail($request)
     {
 
-        if(!\Auth::user()->hasPermission('can-manage-registrations') &&
-            !\Auth::user()->hasPermission('can-update-registrations'))
-        {
-            $response['status'] = 'failed';
-            $response['errors'][] = trans("vaahcms::messages.permission_denied");
-
-            return $response;
-        }
-
         if(!$request->has('inputs'))
         {
             $response['status'] = 'failed';
@@ -791,23 +713,29 @@ class Registration extends Model
     public static function createUser($id)
     {
 
-        if(!\Auth::user()->hasPermission('can-create-users-from-registrations'))
-        {
-            $response['status'] = 'failed';
-            $response['errors'][] = trans("vaahcms::messages.permission_denied");
-
-            return $response;
-        }
-
         $reg = static::where('id',$id)->withTrashed()->first()->makeVisible('password');
 
-        if($reg->user_id){
+        if($reg->vh_user_id){
             $response['status'] = 'failed';
             $response['errors'][] = 'User already exist.';
             return $response;
         }
 
+        // check if User of this Email Id is already exist
+        $user_exist = User::where('email',$reg['email'])->first();
+
+        if($user_exist)
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = "User of this Email Id is already exist.";
+            return $response;
+        }
+
         $user = new User();
+
+        // For Ignore Password Mutator
+        $user->prevent_password_attr_set = true;
+
         $user->fill($reg->toArray());
         $user->password = $reg->password;
         $user->registration_id = $reg->id;
@@ -815,7 +743,7 @@ class Registration extends Model
         $user->is_active = 1;
         $user->save();
 
-        $reg->user_id = $user->id;
+        $reg->vh_user_id = $user->id;
         $reg->status = 'user-created';
         $reg->save();
 
