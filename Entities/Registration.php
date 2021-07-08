@@ -801,13 +801,27 @@ class Registration extends Model
 
         $reg = static::where('id',$id)->withTrashed()->first()->makeVisible('password');
 
-        if($reg->user_id){
+        if($reg->vh_user_id){
             $response['status'] = 'failed';
             $response['errors'][] = 'User already exist.';
             return $response;
         }
 
+        // check if already exist
+        $user = self::where('email',$reg['email'])->first();
+
+        if($user)
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = "User of this Email Id is already exist.";
+            return $response;
+        }
+
         $user = new User();
+
+        // For Ignore Password Mutator
+        $user->prevent_password_attr_set = true;
+
         $user->fill($reg->toArray());
         $user->password = $reg->password;
         $user->registration_id = $reg->id;
@@ -815,7 +829,7 @@ class Registration extends Model
         $user->is_active = 1;
         $user->save();
 
-        $reg->user_id = $user->id;
+        $reg->vh_user_id = $user->id;
         $reg->status = 'user-created';
         $reg->save();
 
