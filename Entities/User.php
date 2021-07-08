@@ -162,10 +162,6 @@ class User extends Authenticatable
         }
     }
     //-------------------------------------------------
-    public function setResetPasswordCodeAttribute($value) {
-        $this->attributes['reset_password_code'] = Hash::make($value);
-    }
-    //-------------------------------------------------
 
     public function scopeIsActive($query)
     {
@@ -771,13 +767,6 @@ class User extends Authenticatable
     public static function resetPassword($request): array
     {
 
-        $user = self::beforeUserActionValidation($request);
-
-        if(isset($user['status']) && $user['status'] == 'failed')
-        {
-            return $user;
-        }
-
         $rules = array(
             'reset_password_code' => 'required',
             'password' => 'required|confirmed|min:6',
@@ -792,7 +781,9 @@ class User extends Authenticatable
             return $response;
         }
 
-        if(!Hash::check($request->reset_password_code, $user->reset_password_code))
+        $user = self::where('reset_password_code',$request->reset_password_code)->first();
+
+        if(!$user)
         {
             $response['status'] = 'failed';
             $response['errors'][] = "Incorrect reset password code";

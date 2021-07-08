@@ -4,7 +4,7 @@
     <section class="section">
         <div class="login-form-layout">
 
-            <div class="container" v-if="is_form_visible">
+            <div class="container">
                 <div class="columns is-flex align-items-center justify-center">
                     <div class="column is-4">
                         <div class="login-box box is-flex flex-column

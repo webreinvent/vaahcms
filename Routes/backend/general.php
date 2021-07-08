@@ -26,9 +26,6 @@ Route::group(
         Route::post( '/resetPassword/post', 'PublicController@postResetPassword' )
             ->name( 'vh.backend.resetPassword.post' );
         //------------------------------------------------
-        Route::post( '/checkResetPasswordCode/post', 'PublicController@postCheckResetPasswordCode' )
-            ->name( 'vh.backend.checkResetPasswordCode.post' );
-        //------------------------------------------------
         Route::post( '/signin/generate/otp', 'PublicController@postGenerateOTP' );
         //------------------------------------------------
         Route::get( '/logout', 'PublicController@logout' )
