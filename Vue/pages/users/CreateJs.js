@@ -188,6 +188,7 @@ export default {
                 birth: null,
                 country: null,
                 country_code: null,
+                foreign_user_id: null,
                 status: null,
             };
             return new_item;
@@ -219,6 +220,7 @@ export default {
                 birth: null,
                 country: null,
                 country_code: null,
+                foreign_user_id: null,
                 status: null,
             };
 
