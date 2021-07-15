@@ -52,7 +52,7 @@ class User extends Authenticatable
         "api_token_used_ip","is_active","activated_at","status",
         "affiliate_code","affiliate_code_used_at","reset_password_code",
         "reset_password_code_sent_at","reset_password_code_used_at",
-        "meta","created_ip","created_by",
+        'foreign_user_id',"meta","created_ip","created_by",
         "updated_by","deleted_by"
     ];
     //-------------------------------------------------
@@ -1498,6 +1498,7 @@ class User extends Authenticatable
             'first_name' => 'required|max:150',
             'status' => 'required',
             'is_active' => 'required',
+            'foreign_user_id' => 'nullable|numeric|min:1',
 
         );
 

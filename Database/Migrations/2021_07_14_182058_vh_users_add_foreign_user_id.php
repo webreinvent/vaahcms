@@ -15,7 +15,7 @@ class VhUsersAddForeignUserId extends Migration
     {
 
         Schema::table('vh_users', function (Blueprint $table) {
-            $table->integer('foreign_user_id')->after('uuid')
+            $table->integer('foreign_user_id')->after('registration_id')
                 ->nullable()->index();
         });
     }
