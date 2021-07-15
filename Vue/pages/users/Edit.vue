@@ -233,8 +233,8 @@
                             :selected_value="item.timezone"
                             :options="page.assets.timezones"
                             :open_on_focus="true"
-                            @onSelect="setTimeZone"
-                        />
+                            @onSelect="setTimeZone">
+                        </AutoCompleteTimeZone>
                     </b-field>
 
                     <b-field label="Alternate Email" :label-position="labelPosition">
@@ -246,7 +246,8 @@
                     <b-field label="Date of Birth" :label-position="labelPosition">
                         <DatePicker
                             :selected_value="item.birth"
-                            @onSelect="setBirthDate"/>
+                            @onSelect="setBirthDate">
+                        </DatePicker>
                     </b-field>
 
                     <b-field label="Country" :label-position="labelPosition">
@@ -254,8 +255,14 @@
                             :selected_value="item.country"
                             :options="page.assets.countries"
                             :open_on_focus="true"
-                            @onSelect="setCountry"
-                        />
+                            @onSelect="setCountry">
+                        </AutoCompleteCountry>
+                    </b-field>
+
+                    <b-field label="Foreign User Id" :label-position="labelPosition">
+                        <b-input v-model="item.foreign_user_id" type="number" min="1"
+                                 name="user-foreign_user_id" dusk="user-foreign_user_id"
+                        ></b-input>
                     </b-field>
 
                     <b-field label="Status" :label-position="labelPosition">
