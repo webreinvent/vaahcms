@@ -1,12 +1,81 @@
 # VaahCMS
-> Laravel Based Rapid Development CMS
+> **[VaahCMS](https://vaah.dev/cms)** is a web application development platform shipped with headless content management system.
 
 Please consider starring the project to show your :heart: and support.
+
+Built with `laravel`, `vue`, `vuex`, `buefy` and `bulma` with structured Modules & Themes.
+
+
+---
+## Quick Start
+```shell
+npm i vaah -g
+```
+
+```shell
+vaah cms:install
+```
+
+---
+
+<div align="center">
+  <h3>
+    <a href="https://vaah.dev/cms">
+      Website
+    </a>
+    <span> | </span>
+    <a href="https://vaah.dev/cms/docs">
+      Documentation
+    </a>
+  </h3>
+</div>
+
+---
+
+## How is VaahCMS different?
+
+- It's purposed to develop large applications
+
+- Structured (**HMVC**) based modules & themes
+
+- Shipped with **headless** CMS
+  
+- Encourages to use latest technologies like `Vue`, `Vuex`
+
+- Inspired with the simplicity of WordPress
+
+## Why VaahCMS?
+
+Well, to answer that, ask a question to yourself: Do you want to develop an enterprise application with content management that doesn't come in your way? If answer is yes, VaahCMS is for you.
+
+
+
+
+
+
+## Support us
+
+[WebReinvent](https://www.webreinvent.com) is a web agency based in Delhi, India. You'll find an overview of all our open source projects [on github](https://github.com/webreinvent).
+
+## License
+
+The MIT License (MIT). Please see [License File](LICENSE) for more information.
+
+
+### Tips
+
+#### New Releases
+- composer.json version should match with your release via github then only it will be updated on `packagist`
+
 
 ### PR Templates:
 
 **Features**: <github-url>&template=feature-template.md
 **Releases**: <github-url>&template=release-template.md
+
+---
+Following 
+---
 
 
 ## Steps to Setup
@@ -328,16 +397,3 @@ $process->run();
 auto-changelog --template changelog-template.hbs --commit-limit false
 ``` 
 
-## Support us
-
-[WebReinvent](https://www.webreinvent.com) is a web agency based in Delhi, India. You'll find an overview of all our open source projects [on github](https://github.com/webreinvent).
-
-## License
-
-The MIT License (MIT). Please see [License File](LICENSE) for more information.
-
-
-### Tips
-
-#### New Releases
-- composer.json version should match with your release via github then only it will be updated on `packagist` 
