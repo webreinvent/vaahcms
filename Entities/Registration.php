@@ -734,7 +734,7 @@ class Registration extends Model
         $user = new User();
 
         // For Ignore Password Mutator
-        $user->prevent_password_attr_set = true;
+        $user->prevent_password_hashing = true;
 
         $user->fill($reg->toArray());
         $user->password = $reg->password;
