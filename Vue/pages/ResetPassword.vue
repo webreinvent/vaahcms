@@ -65,7 +65,7 @@
                                                           :loading="is_btn_loading"
                                                           dusk="reset-recover"
                                                           type="is-primary">
-                                                    Recover
+                                                    Reset Password
                                                 </b-button>
 
                                             </div>
