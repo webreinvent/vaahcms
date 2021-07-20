@@ -29,7 +29,7 @@ class User extends Authenticatable
 
     //-------------------------------------------------
     protected $table = 'vh_users';
-    public $prevent_password_attr_set = false;
+    public $prevent_password_hashing = false;
     //-------------------------------------------------
     protected $dates = [
         "last_login_at", "api_token_used_at",
@@ -144,7 +144,7 @@ class User extends Authenticatable
     }
     //-------------------------------------------------
     public function setPasswordAttribute($value) {
-        if ($this->prevent_password_attr_set) {
+        if ($this->prevent_password_hashing) {
             // Ignore Mutator
             $this->attributes['password'] = $value;
         } else {
