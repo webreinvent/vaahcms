@@ -11,6 +11,7 @@ export default {
     namespaced: true,
     //=========================================================================
     state: {
+        base_url: base_url,
         ajax_url: ajax_url,
         assets: null,
         assets_is_fetching: false,
@@ -64,6 +65,7 @@ export default {
     //=========================================================================
     getters:{
         state(state) {return state;},
+        base_url(state) {return state.base_url;},
         ajax_url(state) {return state.ajax_url;},
         assets(state) {return state.assets;},
         query_string(state) {return state.query_string;},

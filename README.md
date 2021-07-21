@@ -49,10 +49,6 @@ vaah cms:install
 Well, to answer that, ask a question to yourself: Do you want to develop an enterprise application with content management that doesn't come in your way? If answer is yes, VaahCMS is for you.
 
 
-
-
-
-
 ## Support us
 
 [WebReinvent](https://www.webreinvent.com) is a web agency based in Delhi, India. You'll find an overview of all our open source projects [on github](https://github.com/webreinvent).
@@ -68,14 +64,16 @@ The MIT License (MIT). Please see [License File](LICENSE) for more information.
 - composer.json version should match with your release via github then only it will be updated on `packagist`
 
 
+
+---
+Following details are for internal team
+---
+
 ### PR Templates:
 
 **Features**: <github-url>&template=feature-template.md
-**Releases**: <github-url>&template=release-template.md
 
----
-Following 
----
+**Releases**: <github-url>&template=release-template.md
 
 
 ## Steps to Setup

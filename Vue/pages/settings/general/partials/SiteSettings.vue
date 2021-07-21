@@ -439,7 +439,16 @@
 
                     <div class="column">
                         <div class="block has-padding-left-10 has-padding-right-10">
-                            <b-button type="is-primary" @click="storeSiteSettings" >Save Settings</b-button>
+                            <b-button type="is-primary has-margin-right-10"
+                                      :loading="is_loading"
+                                      @click="storeSiteSettings" >
+                                Save Settings
+                            </b-button>
+                            <b-button type="is-danger"
+                                      :loading="btn_is_loading"
+                                      @click="clearCache" >
+                                Clear Cache
+                            </b-button>
                         </div>
                     </div>
 

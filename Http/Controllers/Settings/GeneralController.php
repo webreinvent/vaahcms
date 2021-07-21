@@ -37,6 +37,7 @@ class GeneralController extends Controller
         }
 
         $response['status'] = 'success';
+        $response['data']['base_url'] = url('/');
         $response['data']['roles'] = Role::getActiveRoles();
         $response['data']['file_types'] = vh_file_types();
         $response['data']['vh_meta_attributes'] = vh_meta_attributes();

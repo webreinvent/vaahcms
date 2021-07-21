@@ -15,6 +15,7 @@ export default {
         list() {return this.$store.getters[namespace+'/state'].list},
         settings() {return this.$store.getters[namespace+'/state'].settings},
         assets() {return this.$store.getters[namespace+'/state'].assets},
+        base_url() {return this.$store.getters[namespace+'/state'].base_url},
         ajax_url() {return this.$store.getters[namespace+'/state'].ajax_url},
     },
     components:{
@@ -28,6 +29,7 @@ export default {
             namespace:namespace,
             labelPosition: 'on-border',
             control_size: 'is-small',
+            is_loading: false,
             inputs: {
                 copyright_text_custom: false,
                 copyright_link_custom: false,
@@ -204,6 +206,7 @@ export default {
         //---------------------------------------------------------------------
         storeSiteSettings: function () {
             this.$Progress.start();
+            this.is_loading = true;
             let params = {
                 list: this.list
             };
@@ -213,6 +216,7 @@ export default {
         //---------------------------------------------------------------------
         storeSiteSettingsAfter: function (data, res) {
             this.$Progress.finish();
+            this.is_loading = false;
         },
         //---------------------------------------------------------------------
         copySetting: function (value)
@@ -225,6 +229,20 @@ export default {
             });
         },
         //---------------------------------------------------------------------
+        clearCache: function () {
+            this.$Progress.start();
+            this.btn_is_loading = true;
+            let params = {};
+            let url = this.base_url+'/clear/cache';
+            this.$vaah.ajax(url, params, this.clearCacheAfter);
+        },
+        //---------------------------------------------------------------------
+        clearCacheAfter: function (data, res) {
+            this.$Progress.finish();
+            this.btn_is_loading = false;
+            window.location.reload(true);
+
+        },
         //---------------------------------------------------------------------
         //---------------------------------------------------------------------
     }
