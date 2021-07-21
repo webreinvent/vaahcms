@@ -748,7 +748,7 @@ class Registration extends Model
         $reg->save();
 
         $response['status'] = 'success';
-        $response['data'] = [];
+        $response['data']['user'] = $user;
         $response['messages'][] = 'User is created.';
 
         return $response;
