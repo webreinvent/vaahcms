@@ -1,31 +1,34 @@
 <!--flash message-->
 @if(Session::has('flash_error'))
-    <br clear="all"/>
-    <div class="alert alert-danger dark fade in">
-        <button aria-hidden=true data-dismiss=alert class=close type=button>X</button>
-        <p>{{ Session::get('flash_error') }}</p>
+    <div class="notification is-danger is-light">
+        <button class="delete"></button>
+        {{ Session::get('flash_error') }}
     </div>
     <br clear="all"/>
 @endif
 
+
 @if(Session::has('flash_notice'))
-    <div class="alert alert-info dark fade in">
-        <button aria-hidden=true data-dismiss=alert class=close type=button>X</button>
-        <p>{{ Session::get('flash_notice') }}</p>
+    <div class="notification is-info is-light">
+        <button class="delete"></button>
+        {{ Session::get('flash_notice') }}
     </div>
+    <br clear="all"/>
 @endif
 
 @if(Session::has('flash_warning'))
-    <div class="alert alert-warning dark fade in">
-        <button aria-hidden=true data-dismiss=alert class=close type=button>X</button>
-        <p>{{ Session::get('flash_warning') }}</p>
+    <div class="notification is-warning is-light">
+        <button class="delete"></button>
+        {{ Session::get('flash_warning') }}
     </div>
+    <br clear="all"/>
 @endif
 
 @if(Session::has('flash_success'))
-    <div class="alert alert-success dark fade in">
-        <button aria-hidden=true data-dismiss=alert class=close type=button>X</button>
-        <p>{{ Session::get('flash_success') }}</p>
+    <div class="notification is-success is-light">
+        <button class="delete"></button>
+        {{ Session::get('flash_success') }}
     </div>
+    <br clear="all"/>
 @endif
 <!--flash message-->

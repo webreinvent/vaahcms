@@ -13,7 +13,7 @@
 
 	?>
 
-    @include("vaahcms::frontend.partials.alerts")
+    @include("vaahcms::frontend.partials.errors")
     @include("vaahcms::frontend.partials.flash")
 
     @yield('content')
