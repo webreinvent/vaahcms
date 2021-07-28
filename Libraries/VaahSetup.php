@@ -492,7 +492,6 @@ class VaahSetup{
         {
 
             $list = collect($config['environments'])->pluck('app_url')->toArray();
-            $list = collect($config['environments'])->pluck('app_url')->toArray();
 
             $duplicates = array();
             foreach(array_count_values($list) as $val => $c)
