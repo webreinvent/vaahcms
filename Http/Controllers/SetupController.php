@@ -336,7 +336,7 @@ class SetupController extends Controller
         }
 
         //generate vaahcms.json file
-        if(!VaahSetup::isAppUrlExistInVaahCmsJson())
+        if(!VaahSetup::isAppUrlExistInVaahCmsJson($request))
         {
             $response = VaahSetup::createVaahCmsJsonFile($request);
             if ($response['status'] == 'failed') {

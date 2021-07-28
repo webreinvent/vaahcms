@@ -535,7 +535,7 @@ class VaahSetup{
 
     }
     //----------------------------------------------------------
-    public function isAppUrlExistInVaahCmsJson()
+    public function isAppUrlExistInVaahCmsJson($request)
     {
         $path = base_path('/vaahcms.json');
         $file = File::get($path);
