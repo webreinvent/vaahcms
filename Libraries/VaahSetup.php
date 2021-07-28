@@ -514,7 +514,7 @@ class VaahSetup{
                 return $response;
             }
 
-            foreach($config['environments'] as $key => $environment)
+            /*foreach($config['environments'] as $key => $environment)
             {
                 if( $environment->app_url === url("/") && $environment->env_file != '.env.'.$request->app_env)
                 {
@@ -526,7 +526,7 @@ class VaahSetup{
                     }
                     return $response;
                 }
-            }
+            }*/
         }
 
         $response['status'] = 'success';
@@ -536,6 +536,23 @@ class VaahSetup{
 
     }
     //----------------------------------------------------------
+    public function isAppUrlExistInVaahCmsJson()
+    {
+        $path = base_path('/vaahcms.json');
+        $file = File::get($path);
+        $plugin_config = json_decode($file);
+        $vaahcms_json = (array)$plugin_config;
+
+        foreach($vaahcms_json['environments'] as $key => $vaahcms_json_environment)
+        {
+            if( $vaahcms_json_environment->app_url === url("/") && $vaahcms_json_environment->env_file != '.env.'.$request->app_env)
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
     //----------------------------------------------------------
 
 }
