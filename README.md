@@ -1,6 +1,9 @@
+<br/>
 <p align="center">
     <img src="https://raw.githubusercontent.com/webreinvent/vaahcms/master/Resources/assets/backend/vaahone/images/vaahcms-logo.svg" width="50%" />
 </p>
+
+<br/>
 
 > **[VaahCMS](https://vaah.dev/cms)** is an open-source web application development platform shipped with headless content management system.
 
@@ -8,9 +11,6 @@
 
 `VaahCMS` built  with `laravel 8`, `vue`, `vuex`, `buefy` and `bulma` which follows **Hierarchical Model View Controller** `(HMVC)` structured for its `Modules` & `Themes`.
 
-
-
----
 ## Quick Start
 ```shell
 npm i vaah -g
@@ -28,7 +28,7 @@ vaah cms:install
       Website
     </a>
     <span> | </span>
-    <a href="https://vaah.dev/cms/docs">
+    <a href="https://docs.vaah.dev/vaahcms">
       Documentation
     </a>
   </h3>
@@ -48,9 +48,13 @@ vaah cms:install
 
 - Inspired with the simplicity of WordPress
 
+<br/>
+
 ## Why VaahCMS?
 
 Well, to answer that, ask a question to yourself: Do you want to develop an enterprise application with content management that doesn't come in your way? If answer is yes, VaahCMS is for you.
+
+<br/>
 
 ## Join us
 - Contribute and raise issues at: [github](https://github.com/webreinvent/vaahcms)
@@ -59,17 +63,22 @@ Well, to answer that, ask a question to yourself: Do you want to develop an ente
 
 We're actively seeking contributors for our [vaahcms's documentation](https://github.com/webreinvent/vaah-docs), feel free to send `pull requests`.  
 
+<br/>
+
 ## Support us
 
 Please consider starring the project to show your :heart: and support.
 
 [WebReinvent](https://webreinvent.com) is a web agency based in Delhi, India. You'll find an overview of all our open source projects [on github](https://github.com/webreinvent).
 
+
+<br/>
+
 ## License
 
 The MIT License (MIT). Please see [License File](LICENSE) for more information.
 
----
+<br/>
 
 [license-url]: LICENSE.md
 [license-image]: https://img.shields.io/github/license/webreinvent/vaahcms?style=for-the-badge
