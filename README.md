@@ -9,7 +9,7 @@
 
 <br/>
 
-`VaahCMS` built  with `laravel 8`, `vue`, `vuex`, `buefy` and `bulma` which follows **Hierarchical Model View Controller** `(HMVC)` structured for its `Modules` & `Themes`.
+**VaahCMS** is built  with `laravel 8`, `vue`, `vuex`, `buefy` and `bulma` which follows **Hierarchical Model View Controller (HMVC)** structure for its **Modules** & **Themes**.
 
 ## Quick Start
 ```shell
@@ -19,6 +19,8 @@ npm i vaah -g
 ```shell
 vaah cms:install
 ```
+
+<br/>
 
 ---
 
@@ -35,6 +37,8 @@ vaah cms:install
 </div>
 
 ---
+
+<br/>
 
 ## How is VaahCMS different?
 
