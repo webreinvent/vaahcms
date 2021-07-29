@@ -1,8 +1,13 @@
-# VaahCMS
+<p align="center">
+    <img src="https://raw.githubusercontent.com/webreinvent/vaahcms/master/Resources/assets/backend/vaahone/images/vaahcms-logo.svg" width="50%" />
+</p>
+
 > **[VaahCMS](https://vaah.dev/cms)** is an open-source web application development platform shipped with headless content management system.
 
+<br/>
 
-Built with `laravel 8`, `vue`, `vuex`, `buefy` and `bulma` with structured Modules & Themes.
+`VaahCMS` built  with `laravel 8`, `vue`, `vuex`, `buefy` and `bulma` which follows **Hierarchical Model View Controller** `(HMVC)` structured for its `Modules` & `Themes`.
+
 
 
 ---
