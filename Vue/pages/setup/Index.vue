@@ -53,7 +53,7 @@
                                                         <b-button size="is-small"
                                                                   type="is-light"
                                                                   tag="a"
-                                                                  href="https://vaah.dev/cms/docs/installation"
+                                                                  href="https://docs.vaah.dev/vaahcms/installation.html"
                                                                   target="_blank"
                                                                   rounded
                                                                   class="pull-right"
