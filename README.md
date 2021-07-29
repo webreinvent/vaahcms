@@ -1,7 +1,6 @@
 # VaahCMS
 > **[VaahCMS](https://vaah.dev/cms)** is an open-source web application development platform shipped with headless content management system.
 
-Please consider starring the project to show your :heart: and support.
 
 Built with `laravel 8`, `vue`, `vuex`, `buefy` and `bulma` with structured Modules & Themes.
 
@@ -56,6 +55,8 @@ Well, to answer that, ask a question to yourself: Do you want to develop an ente
 We're actively seeking contributors for our [vaahcms's documentation](https://github.com/webreinvent/vaah-docs), feel free to send `pull requests`.  
 
 ## Support us
+
+Please consider starring the project to show your :heart: and support.
 
 [WebReinvent](https://webreinvent.com) is a web agency based in Delhi, India. You'll find an overview of all our open source projects [on github](https://github.com/webreinvent).
 
