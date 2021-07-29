@@ -1,11 +1,11 @@
 /*!
-  * vue-router v3.5.1
+  * vue-router v3.5.2
   * (c) 2021 Evan You
   * @license MIT
   */
 
 /*!
- * FilePond 4.27.1
+ * FilePond 4.28.2
  * Licensed under MIT, https://opensource.org/licenses/MIT/
  * Please visit https://pqina.nl/filepond/ for details.
  */
@@ -29,7 +29,7 @@
  */
 
 /*!
- * FilePondPluginImageCrop 2.0.4
+ * FilePondPluginImageCrop 2.0.6
  * Licensed under MIT, https://opensource.org/licenses/MIT/
  * Please visit https://pqina.nl/filepond/ for details.
  */
@@ -41,7 +41,7 @@
  */
 
 /*!
- * FilePondPluginImagePreview 4.6.6
+ * FilePondPluginImagePreview 4.6.7
  * Licensed under MIT, https://opensource.org/licenses/MIT/
  * Please visit https://pqina.nl/filepond/ for details.
  */
@@ -72,8 +72,8 @@
  */
 
 /*!
- * Vue.js v2.6.12
- * (c) 2014-2020 Evan You
+ * Vue.js v2.6.14
+ * (c) 2014-2021 Evan You
  * Released under the MIT License.
  */
 

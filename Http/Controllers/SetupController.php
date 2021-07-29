@@ -335,18 +335,17 @@ class SetupController extends Controller
             return response()->json($response);
         }
 
-
-
         //generate vaahcms.json file
-        $response = VaahSetup::createVaahCmsJsonFile($request);
-        if($response['status'] == 'failed')
+        if(!VaahSetup::isAppUrlExistInVaahCmsJson($request))
         {
-            return response()->json($response);
+            $response = VaahSetup::createVaahCmsJsonFile($request);
+            if ($response['status'] == 'failed') {
+                return response()->json($response);
+            }
         }
 
         //publish vaahcms configurations
         VaahSetup::publishConfig();
-
 
         $data = [];
         $response = [];

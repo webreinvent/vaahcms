@@ -5,9 +5,6 @@
 
     <body class="@if(isset($data->body_class)){{$data->body_class}}@endif has-background-white-bis">
 
-    @include("vaahcms::frontend.partials.errors")
-    @include("vaahcms::frontend.partials.flash")
-
     @yield('content')
 
     @include("vaahcms::frontend.partials.scripts")

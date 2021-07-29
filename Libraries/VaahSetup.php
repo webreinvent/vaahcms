@@ -80,31 +80,29 @@ class VaahSetup{
                         "source"=> "vaahcms",
                         "download_link"=> "",
                         "title"=> "CMS module to manage your content",
-                        "thumbnail"=> "https://placehold.jp/300x160.png",
+                        "thumbnail"=> "https://img.site/p/300/160",
                         "excerpt"=> "CMS is a framework for creating, managing, and deploying customized content types and fields.",
-                        "author_name"=> "WebReinvent",
-                        "author_website"=> "https://placehold.jp/300x160.png",
-                        "version"=> "v0.0.1",
+                        "author_name"=> "Vaah",
+                        "author_website"=> "https://vaah.dev",
+                        "version"=> "v0.1.6",
                         "is_sample_data_available"=> true,
                         "import_sample_data"=> false,
-
                     ],
                     [
-                        "name"=> "BtFourPointFour",
-                        "slug"=> "BtFourPointFour",
+                        "name"=> "BulmaBlogTheme",
+                        "slug"=> "bulmablogtheme",
                         "type"=> "theme",
                         "source"=> "vaahcms",
                         "download_link"=> "",
-                        "title"=> "Bootstrap 4.4 Theme",
-                        "thumbnail"=> "https://placehold.jp/300x160.png",
-                        "excerpt"=> "Bootstrap 4.3 Theme for VaahCMS",
-                        "github_url"=> "https://placehold.jp/300x160.png",
+                        "title"=> "Bulma 0.9.2 Blog",
+                        "thumbnail"=> "https://img.site/p/300/160",
+                        "excerpt"=> "Bulma 0.9.2 Blog Theme for VaahCMS",
+                        "github_url"=> "https://github.com/webreinvent/vaahcms-theme-bulma",
                         "author_name"=> "WebReinvent",
-                        "author_website"=> "https=>//www.webreinvent.com",
-                        "version"=> "v0.0.1",
+                        "author_website"=> "https://webreinvent.com",
+                        "version"=> "v0.0.2",
                         "is_sample_data_available"=> true,
-                        "import_sample_data"=> false,
-
+                        "import_sample_data"=> true,
                     ]
                 ],
                 "environments"=>[]
@@ -494,7 +492,6 @@ class VaahSetup{
         {
 
             $list = collect($config['environments'])->pluck('app_url')->toArray();
-            $list = collect($config['environments'])->pluck('app_url')->toArray();
 
             $duplicates = array();
             foreach(array_count_values($list) as $val => $c)
@@ -516,7 +513,7 @@ class VaahSetup{
                 return $response;
             }
 
-            foreach($config['environments'] as $key => $environment)
+            /*foreach($config['environments'] as $key => $environment)
             {
                 if( $environment->app_url === url("/") && $environment->env_file != '.env.'.$request->app_env)
                 {
@@ -528,7 +525,7 @@ class VaahSetup{
                     }
                     return $response;
                 }
-            }
+            }*/
         }
 
         $response['status'] = 'success';
@@ -538,6 +535,23 @@ class VaahSetup{
 
     }
     //----------------------------------------------------------
+    public static function isAppUrlExistInVaahCmsJson($request)
+    {
+        $path = base_path('/vaahcms.json');
+        $file = File::get($path);
+        $plugin_config = json_decode($file);
+        $vaahcms_json = (array)$plugin_config;
+
+        foreach($vaahcms_json['environments'] as $key => $vaahcms_json_environment)
+        {
+            if( $vaahcms_json_environment->app_url === url("/") && $vaahcms_json_environment->env_file != '.env.'.$request->app_env)
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
     //----------------------------------------------------------
 
 }

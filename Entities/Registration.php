@@ -713,13 +713,15 @@ class Registration extends Model
     public static function createUser($id)
     {
 
-        $reg = static::where('id',$id)->withTrashed()->first()->makeVisible('password');
+        $reg = static::where('id',$id)->withTrashed()->first();
 
-        if($reg->vh_user_id){
+        if(!$reg){
             $response['status'] = 'failed';
-            $response['errors'][] = 'User already exist.';
+            $response['errors'][] = 'Registration does not exist exist.';
             return $response;
         }
+
+        $reg->makeVisible('password');
 
         // check if User of this Email Id is already exist
         $user_exist = User::where('email',$reg['email'])->first();
@@ -748,7 +750,7 @@ class Registration extends Model
         $reg->save();
 
         $response['status'] = 'success';
-        $response['data'] = [];
+        $response['data']['user'] = $user;
         $response['messages'][] = 'User is created.';
 
         return $response;

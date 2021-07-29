@@ -2,6 +2,7 @@
     <div class="sidebar-page">
         <section class="sidebar-layout" v-if="root && root.assets">
             <b-sidebar
+                :can-cancel="false"
                 :fullheight="true"
                 position="fixed"
                 :mobile="mobile"
