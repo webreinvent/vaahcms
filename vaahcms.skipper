@@ -1,1097 +1,1162 @@
 <?xml version="1.0"?>
 <skipper version="3.2.35.1761" mvc="Laravel" orm="Laravel" name="vaahcms" uuid="73f7ae3b-f3ce-4bcc-8c73-8a2072b8719c">
   <module name="\vaahcms" local-name="vaahcms" namespace="\App\Models" local-namespace="App\Models" export-format="Laravel" export-path="." uuid="31eee4f2-e505-487d-8642-b3a2c841c9ee">
-    <entity name="\App\Models\FailedJob" local-name="FailedJob" namespace="\App\Models" uuid="86e7d6d3-db56-4a9f-a237-c1b28da030d4">
-      <field name="connection" type="text" required="true" uuid="cde1fa4a-630c-441a-bbb4-e57817f24e0d"/>
-      <field name="exception" type="longText" required="true" uuid="d1751385-49fd-463b-a42d-d2a43c44a503"/>
-      <field name="failed_at" type="timestamp" default="NOW()" required="true" uuid="f8b9fc29-0059-4f1d-a875-4c519c11bdfe"/>
-      <field name="id" type="bigInteger" required="true" unique="true" primary="true" unsigned="true" auto-increment="true" uuid="5f264b54-af8c-4bf0-bf23-d96a5275e3cf"/>
-      <field name="payload" type="longText" required="true" uuid="f21efd75-55b1-4217-992b-1a634b3ea36a"/>
-      <field name="queue" type="text" required="true" uuid="89a27ad5-a16d-4338-947d-e281ef1047ff"/>
-      <field name="uuid" type="string" size="255" required="true" uuid="f32327e8-c711-4e22-a11c-a958f3239a16"/>
-      <index name="failed_jobs_uuid_unique" unique="true" uuid="339dcf5b-e537-4098-9367-da27db19b58c">
-        <index-field name="uuid" uuid="391493ca-55f4-4115-a990-f234cd60d14c"/>
-      </index>
-      <orm-attributes>
-        <attribute name="table">failed_jobs</attribute>
-      </orm-attributes>
-    </entity>
-    <entity name="\App\Models\JobBatch" local-name="JobBatch" namespace="\App\Models" uuid="315146cf-4652-4f08-8df7-b77e2b4d95cc">
-      <field name="cancelled_at" type="integer" uuid="c8398cd1-3d21-40d9-8a2d-d90af4556dd8"/>
-      <field name="created_at" type="integer" required="true" uuid="45fcd8f6-9ad9-4129-9b2c-92ff4fa291c1"/>
-      <field name="failed_job_ids" type="text" required="true" uuid="c78e1fff-103f-4b46-8827-40d3b67e7c2a"/>
-      <field name="failed_jobs" type="integer" required="true" uuid="021abe7f-a153-4e5d-bdfb-2ea69e34bee0"/>
-      <field name="finished_at" type="integer" uuid="f719ac9e-407a-4af2-a811-2fb13bf6774e"/>
-      <field name="id" type="string" size="255" required="true" unique="true" primary="true" uuid="2984b14e-1f69-4073-bbd4-0ce4312ba356"/>
-      <field name="name" type="string" size="255" required="true" uuid="0b64d969-9596-43c8-a73a-982fbc16bbb8"/>
-      <field name="options" type="mediumText" uuid="366f1d28-5f93-4f87-98b7-1a1e4af5a09c"/>
-      <field name="pending_jobs" type="integer" required="true" uuid="5448bee9-25eb-4549-8718-2e84d2e28e88"/>
-      <field name="total_jobs" type="integer" required="true" uuid="386670de-0caf-463a-b95b-07d589dccaf0"/>
-      <orm-attributes>
-        <attribute name="table">job_batches</attribute>
-      </orm-attributes>
-    </entity>
-    <entity name="\App\Models\Job" local-name="Job" namespace="\App\Models" uuid="f7b34f99-f2fa-4a02-a64d-5cd99581011a">
-      <field name="attempts" type="tinyInteger" required="true" unsigned="true" uuid="fae0e10f-e237-4b4a-b5b7-4d4ebfa69692"/>
-      <field name="available_at" type="integer" required="true" unsigned="true" uuid="e915468f-9747-435a-bd5a-8a0ee7fa72b0"/>
-      <field name="created_at" type="integer" required="true" unsigned="true" uuid="eeaffa72-024b-4ac7-8713-e3e90f2b2038"/>
-      <field name="id" type="bigInteger" required="true" unique="true" primary="true" unsigned="true" auto-increment="true" uuid="c26c4df9-f34f-4b6f-9a25-9ee22660bf52"/>
-      <field name="payload" type="longText" required="true" uuid="1f244c3f-7f75-4a87-9680-207c7c34e4d8"/>
-      <field name="queue" type="string" size="255" required="true" uuid="174fec04-f7a3-4a5d-af3c-34c86ff271f2"/>
-      <field name="reserved_at" type="integer" unsigned="true" uuid="7552992e-c208-4ed9-bb9d-0f9b5e60e0c8"/>
-      <index name="jobs_queue_index" uuid="787b394d-3048-4522-afce-912a2333a73d">
-        <index-field name="queue" uuid="c36833d8-f3de-4b14-b06c-9fba653effcb"/>
-      </index>
-      <orm-attributes>
-        <attribute name="table">jobs</attribute>
-      </orm-attributes>
-    </entity>
-    <entity name="\App\Models\VhLangCategory" local-name="VhLangCategory" namespace="\App\Models" uuid="df562131-45fd-4682-b62a-53a7d41b616a">
-      <field name="count_strings" type="integer" default="0" uuid="15d6d247-d320-4ecd-bcc9-5d14ade6c09e"/>
-      <field name="count_strings_filled" type="integer" default="0" uuid="144e008c-4023-435c-8e01-61d203810c13"/>
-      <field name="created_at" type="timestamp" uuid="bea1cd24-b6f1-49ea-b128-bf6f41fe4170"/>
-      <field name="created_by" type="integer" uuid="6ac75c13-b00d-4c29-9767-c91c41379761"/>
-      <field name="deleted_at" type="timestamp" uuid="97be6ff0-3345-4e5b-a725-ec79c85b0249"/>
-      <field name="deleted_by" type="integer" uuid="13d79601-50e5-478c-8962-9ca19c192b41"/>
-      <field name="id" type="integer" required="true" unique="true" primary="true" unsigned="true" auto-increment="true" uuid="e442e6e9-05ad-4bb5-9771-007edd0250a4"/>
-      <field name="name" type="string" size="150" uuid="0de60fb9-94a1-444c-9652-0a63efa8181e"/>
-      <field name="slug" type="string" size="150" uuid="5f931212-0609-4ed3-a6f7-ec7c016f2743"/>
-      <field name="updated_at" type="timestamp" uuid="8e730d4b-41b0-418e-b139-310c6a171272"/>
-      <field name="updated_by" type="integer" uuid="48230fdc-f4c9-4f33-8820-51678f463f94"/>
-      <index name="vh_lang_categories_created_at_updated_at_deleted_at_index" uuid="ab2ac680-f229-4070-965d-03be143cabc3">
-        <index-field name="created_at" uuid="9150f69e-056b-43c7-843d-d65a05759cba"/>
-        <index-field name="updated_at" uuid="29b73016-ed46-45e5-9fd7-0ee76fe3e2b9"/>
-        <index-field name="deleted_at" uuid="77138499-e2d6-4d18-902f-b854058776df"/>
-      </index>
-      <index name="vh_lang_categories_created_by_index" uuid="afa2f327-6e62-473e-980c-419e17e4cd04">
-        <index-field name="created_by" uuid="ea77fcf8-d833-4837-a0db-ec3ec09bba24"/>
-      </index>
-      <index name="vh_lang_categories_deleted_by_index" uuid="36ef54a5-001e-4e4c-9546-a0f6a6c60d17">
-        <index-field name="deleted_by" uuid="b49cec77-281d-41c3-9fb5-cd9af12df4a5"/>
-      </index>
-      <index name="vh_lang_categories_slug_index" uuid="a8e81c61-9982-42ee-a344-2ead970aedce">
-        <index-field name="slug" uuid="e1294703-8731-46bc-898e-10788c1bf52e"/>
-      </index>
-      <index name="vh_lang_categories_updated_by_index" uuid="7bbc884c-6b6d-4b1d-b7f2-5f09f4c5dc3c">
-        <index-field name="updated_by" uuid="14e23aae-fb5c-43e6-b22f-998152a9fa58"/>
-      </index>
-      <orm-attributes>
-        <attribute name="table">vh_lang_categories</attribute>
-      </orm-attributes>
-    </entity>
-    <entity name="\App\Models\VhLangLanguage" local-name="VhLangLanguage" namespace="\App\Models" uuid="ade6f6c8-998c-4b9c-a786-53773d3f7f5b">
-      <field name="count_strings" type="integer" default="0" uuid="085bb1cf-1202-4b1f-97cf-a62acf35cdfb"/>
-      <field name="count_strings_filled" type="integer" default="0" uuid="b0172102-9e21-4453-84dd-8bf8d00b5e5b"/>
-      <field name="created_at" type="timestamp" uuid="9ce41155-ec48-4e71-8efc-640b0be57c01"/>
-      <field name="created_by" type="integer" uuid="5b2f59d2-8673-48d9-9eb7-2d5702190aec"/>
-      <field name="default" type="boolean" default="0" uuid="8a8d627e-2ada-4738-816b-8c3b8d2cb76e"/>
-      <field name="deleted_at" type="timestamp" uuid="2c87490c-3097-4ca9-a5dc-e01385fb9c7c"/>
-      <field name="deleted_by" type="integer" uuid="961b4b52-1092-407a-ad91-1c59cbf88798"/>
-      <field name="id" type="integer" required="true" unique="true" primary="true" unsigned="true" auto-increment="true" uuid="a03d1fc3-a2e6-47b5-af38-ed7e2cc39c1b"/>
-      <field name="locale_code_iso_639" type="string" size="255" uuid="78783093-72e4-4544-b2da-730fdc57f41e"/>
-      <field name="name" type="string" size="150" uuid="576c4ae1-262f-4650-8556-e164dfd8f34e"/>
-      <field name="right_to_left" type="boolean" default="0" uuid="706a8cbf-010e-4638-b89d-d3c6bb75e3e3"/>
-      <field name="updated_at" type="timestamp" uuid="0e8ece04-e097-4f9f-98b5-63c84ce00371"/>
-      <field name="updated_by" type="integer" uuid="49bfc386-d4bb-4e19-84a5-572b8d67c3a4"/>
-      <index name="vh_lang_languages_created_at_updated_at_deleted_at_index" uuid="31b9a5d5-9bce-494c-a2a2-21064e5ba9b1">
-        <index-field name="created_at" uuid="09e72040-e294-45e8-beec-3d26ac0dca81"/>
-        <index-field name="updated_at" uuid="d84731f7-9b2b-4b87-89dd-8ec7953cf556"/>
-        <index-field name="deleted_at" uuid="e53f6bfa-226b-4188-87bb-e36e50713961"/>
-      </index>
-      <index name="vh_lang_languages_created_by_index" uuid="0d8d9f77-52e1-43e8-9652-fc9ac4cda9cd">
-        <index-field name="created_by" uuid="c441e19e-9284-4444-b33e-e9e63886214b"/>
-      </index>
-      <index name="vh_lang_languages_deleted_by_index" uuid="cedea92a-4d14-4729-be18-130ae936678c">
-        <index-field name="deleted_by" uuid="93e53f7c-656a-4f73-9b96-720c0e3b6219"/>
-      </index>
-      <index name="vh_lang_languages_locale_code_iso_639_index" uuid="8f9d401d-c708-4d80-8e75-39db9be497e8">
-        <index-field name="locale_code_iso_639" uuid="b48310e3-c453-444e-932d-beb19898c464"/>
-      </index>
-      <index name="vh_lang_languages_updated_by_index" uuid="abe77d34-fb02-462d-be86-8ce452224c53">
-        <index-field name="updated_by" uuid="c79e5b8b-bfb3-49ac-942b-25670143f07d"/>
-      </index>
-      <orm-attributes>
-        <attribute name="table">vh_lang_languages</attribute>
-      </orm-attributes>
-    </entity>
-    <entity name="\App\Models\VhLangString" local-name="VhLangString" namespace="\App\Models" uuid="52f5977c-23bc-47e7-9189-9f08b32cf725">
-      <field name="content" type="mediumText" uuid="944fd8c7-7161-4152-8310-bb676c43b4d5"/>
-      <field name="created_at" type="timestamp" uuid="f288545f-8676-4894-8a42-e8b29e82d3ee"/>
-      <field name="created_by" type="integer" uuid="240691b7-1e22-4b6a-a05d-4feca3af4ccf"/>
-      <field name="deleted_at" type="timestamp" uuid="117aa1e2-36d6-45d9-9e30-5f1c4ff49982"/>
-      <field name="deleted_by" type="integer" uuid="92db8d96-521c-465a-b147-38bd32f4cecc"/>
-      <field name="id" type="integer" required="true" unique="true" primary="true" unsigned="true" auto-increment="true" uuid="a2f1e4db-5f18-4ea3-b55b-9b8a9254f291"/>
-      <field name="name" type="string" size="150" uuid="923e95fe-150d-406d-8dc4-9552a31153d2"/>
-      <field name="slug" type="string" size="150" uuid="1e2fc258-56a7-42cc-84e1-cdb5037b5649"/>
-      <field name="updated_at" type="timestamp" uuid="f8f434d5-713c-4972-8e82-e913dee9b2b1"/>
-      <field name="updated_by" type="integer" uuid="a99391a7-1095-4742-ad17-57a244621037"/>
-      <field name="vh_lang_category_id" type="integer" uuid="c7185a0d-9f0d-4b1a-89db-a6c8c354ca14"/>
-      <field name="vh_lang_language_id" type="integer" uuid="876b4eda-f48f-419e-9034-9bb370f8aaaf"/>
-      <index name="vh_lang_strings_created_at_updated_at_deleted_at_index" uuid="73b2f2b0-2f48-4687-a319-2ba0e2fac07e">
-        <index-field name="created_at" uuid="41de78f3-7bb4-41f4-b8e1-b544bb94dc64"/>
-        <index-field name="updated_at" uuid="2931f009-72a0-4a18-b258-ec4087c16df3"/>
-        <index-field name="deleted_at" uuid="83e1de0e-78e7-4cc6-9fd6-a71b1d5e6463"/>
-      </index>
-      <index name="vh_lang_strings_created_by_index" uuid="a1f09ded-b329-4485-b3a2-96a3efa105ac">
-        <index-field name="created_by" uuid="fb8bdd30-33e9-4e4e-8ea9-3665069e57fb"/>
-      </index>
-      <index name="vh_lang_strings_deleted_by_index" uuid="540e3943-99fd-4c1d-9ae3-f9cea6fee374">
-        <index-field name="deleted_by" uuid="2197731a-dc18-419b-899b-ca7bcec55d2f"/>
-      </index>
-      <index name="vh_lang_strings_slug_index" uuid="e43871d0-76d4-45ab-87b1-7c41d220e11b">
-        <index-field name="slug" uuid="71d74e41-f541-48b2-a233-d03fa04f18a6"/>
-      </index>
-      <index name="vh_lang_strings_updated_by_index" uuid="9f1fb882-d5fd-4758-a273-1900965a9620">
-        <index-field name="updated_by" uuid="99bbb2b0-cdb2-4d38-945c-7a1ca295678c"/>
-      </index>
-      <index name="vh_lang_strings_vh_lang_category_id_index" uuid="8dbe86b5-b1c4-4c65-8ed1-778f4368f5d7">
-        <index-field name="vh_lang_category_id" uuid="8b9fa242-1948-496f-86a2-10bb22eb2b6a"/>
-      </index>
-      <index name="vh_lang_strings_vh_lang_language_id_index" uuid="ab8c4171-dd06-4c55-956a-2398135fafdc">
-        <index-field name="vh_lang_language_id" uuid="e2d2e7f1-612e-415b-a9f9-af681e6b0c8f"/>
-      </index>
-      <orm-attributes>
-        <attribute name="table">vh_lang_strings</attribute>
-      </orm-attributes>
-    </entity>
-    <entity name="\App\Models\VhMediable" local-name="VhMediable" namespace="\App\Models" uuid="c038a8ad-63db-4a36-b601-6dec34b658e2">
-      <field name="created_at" type="timestamp" uuid="6a01f89b-1b00-4214-b125-4af8c2f4d47e"/>
-      <field name="created_by" type="integer" uuid="d7c9ea57-e0eb-4373-970c-d6553074c2d8"/>
-      <field name="deleted_at" type="timestamp" uuid="6cb3ed22-7f2e-421c-b65b-c6c1bbc3d6a1"/>
-      <field name="deleted_by" type="integer" uuid="03787648-98b8-4b9f-ad64-b8aa061a5d82"/>
-      <field name="id" type="integer" required="true" unique="true" primary="true" unsigned="true" auto-increment="true" uuid="8a0b0ec5-a0c8-4d50-a2cf-73e67c873673"/>
-      <field name="mediable_id" type="integer" uuid="eb4c61e4-c471-4207-bd04-b38d3f7cd7a0"/>
-      <field name="mediable_type" type="string" size="255" uuid="474a45f8-a77b-4c8a-9d95-cfb16f107c5d"/>
-      <field name="updated_at" type="timestamp" uuid="e806c4b1-1b89-4076-9c21-36599eeed0f5"/>
-      <field name="updated_by" type="integer" uuid="0d2d9662-ec0d-4f3b-9537-aee10754237d"/>
-      <field name="vh_media_id" type="string" size="255" uuid="c9e1d285-c7c5-43d8-af66-8c0da28d20cd"/>
-      <index name="vh_mediable_created_at_updated_at_deleted_at_index" uuid="57ac2504-2006-4038-a4b9-50cf68fbd4fb">
-        <index-field name="created_at" uuid="437f7ead-cee1-44dc-ab06-7b4e12971b6e"/>
-        <index-field name="updated_at" uuid="5297af75-fe94-4f82-b9dc-d4aaecd4905b"/>
-        <index-field name="deleted_at" uuid="527606d4-ccf7-4932-918f-a1809140fdd2"/>
-      </index>
-      <index name="vh_mediable_created_by_index" uuid="ac05ad97-9426-4476-a1ef-6162bbb0ffaf">
-        <index-field name="created_by" uuid="a5003258-2681-45db-a65f-2d6d89e8d6ce"/>
-      </index>
-      <index name="vh_mediable_deleted_by_index" uuid="73d7f452-6e05-46fb-84aa-27ed073a32b4">
-        <index-field name="deleted_by" uuid="a3a4b780-5528-475c-9a9c-65bf2ea14ab7"/>
-      </index>
-      <index name="vh_mediable_mediable_id_index" uuid="07ceb184-bf86-4e8c-9601-13f6e0fa9f5b">
-        <index-field name="mediable_id" uuid="fd31c272-5fcb-4c78-bf19-50ae41e48608"/>
-      </index>
-      <index name="vh_mediable_mediable_type_index" uuid="5d29d2aa-bcf1-4073-a780-1d5ee1e8e6b1">
-        <index-field name="mediable_type" uuid="0ba52880-6682-4167-b783-d91a815e44af"/>
-      </index>
-      <index name="vh_mediable_updated_by_index" uuid="68c5c92b-67b0-4cfb-af2f-f028fc24f28d">
-        <index-field name="updated_by" uuid="0d1adf60-7ea7-414b-9cf1-253892fdbc43"/>
-      </index>
-      <index name="vh_mediable_vh_media_id_index" uuid="babebc7d-babb-4968-8a88-53109464cf95">
-        <index-field name="vh_media_id" uuid="24c6551c-b90f-419f-b0fb-f6fdedc8baff"/>
-      </index>
-      <orm-attributes>
-        <attribute name="table">vh_mediable</attribute>
-      </orm-attributes>
-    </entity>
-    <entity name="\App\Models\VhMedia" local-name="VhMedia" namespace="\App\Models" uuid="3eed6efe-6ed8-4227-8c5b-dd39225c1560">
-      <field name="alt_text" type="string" size="255" uuid="2b379eb6-ab61-4c58-b8ad-b3a16e420528"/>
-      <field name="caption" type="string" size="255" uuid="a2904fde-c99a-4f3a-bea1-f24265ea26e2"/>
-      <field name="created_at" type="timestamp" uuid="63905103-c68a-4f29-a5a0-c12e87420b44"/>
-      <field name="created_by" type="integer" uuid="5ed6fec3-6458-4576-9770-e9ed101d669c"/>
-      <field name="deleted_at" type="timestamp" uuid="46c243df-64ad-427c-bd16-265a1607cad1"/>
-      <field name="deleted_by" type="integer" uuid="fc779216-8aac-4899-b68f-669d4b4715b2"/>
-      <field name="download_requires_login" type="boolean" uuid="0551edac-b9e9-4068-9beb-03291b7bf3bc"/>
-      <field name="download_url" type="string" size="255" uuid="1dcef2e2-f087-4ec4-a90a-fdb5eef447a6"/>
-      <field name="extension" type="string" size="255" uuid="a37223cb-aea3-4f25-8fad-07b754aa00e9"/>
-      <field name="id" type="integer" required="true" unique="true" primary="true" unsigned="true" auto-increment="true" uuid="790d3271-96ba-4469-8fe3-c4ad054c804f"/>
-      <field name="is_downloadable" type="boolean" uuid="5540ce5e-8c8f-49aa-b955-76c839a5e2f3"/>
-      <field name="is_hidden" type="boolean" uuid="120cc535-dd96-4db6-b35d-ecc4bb761318"/>
-      <field name="meta" type="json" uuid="6fea8c92-cc38-472b-bb49-c40664bf8858"/>
-      <field name="mime_type" type="string" size="255" uuid="90ba4426-3545-437f-a51f-58081c19d30e"/>
-      <field name="name" type="string" size="150" uuid="6b8adbd4-2a72-4653-addf-0ade973f683f"/>
-      <field name="original_name" type="string" size="255" uuid="4ad9ed8e-6cb2-4eac-a252-4d55fef46036"/>
-      <field name="path" type="string" size="255" uuid="c3f89bba-0591-4b73-ad00-c690481242b3"/>
-      <field name="size" type="integer" uuid="99a97e90-0ac2-4164-b1b8-229bd7349bc0"/>
-      <field name="slug" type="string" size="150" uuid="ab89ba0e-c421-488f-8a2b-b75c3160a925"/>
-      <field name="title" type="string" size="200" uuid="6e1362ae-3f2b-408f-bbc1-e351863dd413"/>
-      <field name="updated_at" type="timestamp" uuid="4242eb3f-89e6-42ce-9712-8a6322841e5a"/>
-      <field name="updated_by" type="integer" uuid="04c2c629-3cdb-4060-ab1c-16332915fa52"/>
-      <field name="url" type="string" size="255" uuid="66d55468-d9af-4dac-958e-e364df2b6287"/>
-      <field name="url_thumbnail" type="string" size="255" uuid="7eadea34-c9b8-4703-84fa-f874b5a91b8b"/>
-      <field name="uuid" type="char" size="36" uuid="987eb813-e5e7-4c0b-b46a-54d611cb5ea7"/>
-      <index name="vh_medias_caption_index" uuid="e7f452b4-4c3b-42c7-ae51-e51a66993e6c">
-        <index-field name="caption" uuid="cca5a5a8-3765-42b3-a4cf-7b339cf09fc1"/>
-      </index>
-      <index name="vh_medias_created_at_updated_at_deleted_at_index" uuid="71a01d36-50c4-44b3-a34c-3a2c9284583b">
-        <index-field name="created_at" uuid="a9d5ba28-b1aa-4b7f-af03-cea81836e197"/>
-        <index-field name="updated_at" uuid="d5337d00-6891-4436-9e7d-401107f6c37f"/>
-        <index-field name="deleted_at" uuid="7041ed43-ab97-4960-b601-12c0607ac0c3"/>
-      </index>
-      <index name="vh_medias_created_by_index" uuid="fbdb1d24-259e-4fab-a15b-36d0b1ee4eed">
-        <index-field name="created_by" uuid="11518e99-5445-4965-b435-ad86a54f6c57"/>
-      </index>
-      <index name="vh_medias_deleted_by_index" uuid="35629afc-e9f3-4bf5-8147-c0e32af1dc67">
-        <index-field name="deleted_by" uuid="030ffdcf-b48d-46f5-9e66-0d72a979579e"/>
-      </index>
-      <index name="vh_medias_download_requires_login_index" uuid="4b62fdc3-0639-4862-8795-b6763b17d801">
-        <index-field name="download_requires_login" uuid="02209fd3-8233-40a2-a64a-e00b0cee1e08"/>
-      </index>
-      <index name="vh_medias_is_downloadable_index" uuid="e079ca67-d92a-49d4-a33a-a8caa7c3b87d">
-        <index-field name="is_downloadable" uuid="b8e8e665-1af9-4f42-93f2-b8afb935bd6c"/>
-      </index>
-      <index name="vh_medias_name_index" uuid="05d57f87-06ad-4083-b2eb-919011163137">
-        <index-field name="name" uuid="7a467b84-cdc2-488a-b3a9-f15ebee79fff"/>
-      </index>
-      <index name="vh_medias_original_name_index" uuid="bf85c7ce-213b-4865-bf4e-0074329d1b62">
-        <index-field name="original_name" uuid="87cfa92f-39df-4e31-b0a0-50a3fce76d9d"/>
-      </index>
-      <index name="vh_medias_slug_index" uuid="1fc0fe74-cc53-4db3-8aeb-fde9ccc01567">
-        <index-field name="slug" uuid="5498bc76-7443-40c6-989f-c225bb508b39"/>
-      </index>
-      <index name="vh_medias_title_index" uuid="bf1bdfc2-f1ba-4857-a9eb-cd5ff3194d37">
-        <index-field name="title" uuid="1cdbcc60-fd55-497c-a3fa-cc0f1050d8f4"/>
-      </index>
-      <index name="vh_medias_updated_by_index" uuid="2c02983b-6e5b-425b-931a-f129374691d8">
-        <index-field name="updated_by" uuid="85d3534b-1686-41ae-a9be-d5d61c636a68"/>
-      </index>
-      <index name="vh_medias_uuid_index" uuid="10e628a2-b4ed-417f-913e-b452f478c775">
-        <index-field name="uuid" uuid="a75bb786-8ef2-40e4-821c-c2964b36ae4d"/>
-      </index>
-      <orm-attributes>
-        <attribute name="table">vh_medias</attribute>
-      </orm-attributes>
-    </entity>
-    <entity name="\App\Models\VhMigration" local-name="VhMigration" namespace="\App\Models" uuid="d01a9c73-425a-4282-a294-594a7a5c1e05">
-      <field name="batch" type="integer" uuid="d5531b8f-e60d-45c4-a1b0-4c4e5714ab4f"/>
-      <field name="created_at" type="timestamp" uuid="38decfa4-5350-4208-ae67-ef1ca2f7172e"/>
-      <field name="id" type="integer" required="true" unique="true" primary="true" unsigned="true" auto-increment="true" uuid="d40e7dd5-9df0-4aec-86ff-81975e04a89e"/>
-      <field name="migration_id" type="integer" uuid="668df9ff-496b-42c7-9e30-c624c063f610"/>
-      <field name="migrationable_id" type="integer" uuid="b616ea9c-4c9d-4d1f-9353-301f1e52221f"/>
-      <field name="migrationable_type" type="string" size="255" uuid="4f4d060a-081f-4c58-b360-6090dc348ca0"/>
-      <field name="updated_at" type="timestamp" uuid="e450acd4-47ad-43e1-add3-219af8c2302e"/>
-      <orm-attributes>
-        <attribute name="table">vh_migrations</attribute>
-      </orm-attributes>
-    </entity>
-    <entity name="\App\Models\VhModule" local-name="VhModule" namespace="\App\Models" uuid="99a2efe3-5550-4059-8285-63beddf37de9">
-      <field name="author_name" type="string" size="255" uuid="31cc16b6-253a-4f84-b1dd-820843a007c0"/>
-      <field name="author_website" type="string" size="255" uuid="441dead6-bf82-4b51-b07f-55cf17cb0101"/>
-      <field name="created_at" type="timestamp" uuid="0ae92f27-1c17-4732-a4c1-e00554d60b6b"/>
-      <field name="created_by" type="integer" uuid="3ac8024d-514e-41e6-811b-bf82567a73b1"/>
-      <field name="db_table_prefix" type="string" size="255" uuid="f15d3ca9-c527-4b79-a278-bec9153afa81"/>
-      <field name="deleted_at" type="timestamp" uuid="b7ee64b6-57d3-4aaa-8aa4-25694ec92e9e"/>
-      <field name="deleted_by" type="integer" uuid="204be6a4-ca11-43e9-bc5b-b47e2a44712e"/>
-      <field name="description" type="string" size="255" uuid="a4358e07-4915-4dd6-953a-abf3952fc04c"/>
-      <field name="download_link" type="string" size="255" uuid="09260f31-0d16-42c6-b981-71892f3beb12"/>
-      <field name="excerpt" type="string" size="255" uuid="8dd80624-5145-446f-918a-e7e40f1adf6c"/>
-      <field name="id" type="integer" required="true" unique="true" primary="true" unsigned="true" auto-increment="true" uuid="318fccef-0909-47fa-8743-f9a79afc7970"/>
-      <field name="is_active" type="boolean" uuid="f2002b95-0b2a-4a47-95eb-cc5269c7ec8b"/>
-      <field name="is_assets_published" type="boolean" uuid="c6dd22e0-1b86-407e-920f-9be085424780"/>
-      <field name="is_migratable" type="boolean" uuid="7de05050-e0b8-4784-b46b-63e7b60cb189"/>
-      <field name="is_sample_data_available" type="boolean" uuid="dc86fff0-d7c0-4b41-978b-162a26da91fb"/>
-      <field name="is_update_available" type="boolean" uuid="f3e26182-5c93-4c57-929e-973f2f200ada"/>
-      <field name="name" type="string" size="150" uuid="c443aeec-c1e7-423f-8d4e-75ec176b6d21"/>
-      <field name="slug" type="string" size="150" uuid="98b2444c-08d3-40a5-8ec2-f4be6b0c4850"/>
-      <field name="thumbnail" type="string" size="255" uuid="0484b4ac-daa9-4713-8250-98d0f1d3504d"/>
-      <field name="title" type="string" size="200" uuid="3627f141-8ded-4d5e-aa6f-f188a3f047d1"/>
-      <field name="update_checked_at" type="dateTime" uuid="6f620720-9bd7-47da-a8b3-d816bcab894f"/>
-      <field name="updated_at" type="timestamp" uuid="2fe449d5-a3ae-4e9e-9b55-26e18f183abc"/>
-      <field name="updated_by" type="integer" uuid="0fb2ed38-8a55-40f3-8e95-2c257d4dad4c"/>
-      <field name="vaah_url" type="string" size="255" uuid="3b302eb3-8388-4410-befb-8cc9e534c728"/>
-      <field name="version" type="string" size="255" uuid="036a0727-ce1f-4a67-a52b-1009d3c80f1f"/>
-      <field name="version_number" type="integer" uuid="6a9fa664-e142-4231-85d5-62034eed4798"/>
-      <index name="vh_modules_created_at_updated_at_deleted_at_index" uuid="3351e1f0-bd19-4fde-be6d-865474e417bf">
-        <index-field name="created_at" uuid="8093e303-f1a7-4e27-aa10-4648238256bc"/>
-        <index-field name="updated_at" uuid="2ba1fdcc-9584-47be-923d-ad3e8b3473f0"/>
-        <index-field name="deleted_at" uuid="6cb3f21b-a3de-4e20-812b-a9e87a3cc6e7"/>
-      </index>
-      <index name="vh_modules_created_by_index" uuid="2890c7f7-b2d4-463f-a911-d100afd43b2e">
-        <index-field name="created_by" uuid="4bf5b06a-5ed5-4531-a3d9-47d4c5f5c017"/>
-      </index>
-      <index name="vh_modules_deleted_by_index" uuid="fda2700a-3066-4543-bf9a-fa1e70eb1459">
-        <index-field name="deleted_by" uuid="c8471e8d-baf1-40a3-a28d-b90f3dbda51c"/>
-      </index>
-      <index name="vh_modules_is_active_index" uuid="b9a9545d-cd4a-45ef-92fd-f26a26ed332e">
-        <index-field name="is_active" uuid="c0f8af6d-5050-4bfe-a8e1-a1022a7b4494"/>
-      </index>
-      <index name="vh_modules_name_index" uuid="b6c67987-84d6-4e24-92e1-799e3c9a2429">
-        <index-field name="name" uuid="128f2219-2c47-4cea-9566-b77d9c8aa5ff"/>
-      </index>
-      <index name="vh_modules_slug_index" uuid="a3df40b2-a8d3-4345-850a-043ba906cc39">
-        <index-field name="slug" uuid="c2ca0942-1f9b-4a56-87fe-6ce5389c8839"/>
-      </index>
-      <index name="vh_modules_title_index" uuid="25e388bf-5b7c-47b5-8886-3fa55999f222">
-        <index-field name="title" uuid="af48700c-76a3-46dd-a63c-b7fa4d2ff4d2"/>
-      </index>
-      <index name="vh_modules_updated_by_index" uuid="0f1d3390-1388-4185-a627-a0bc5fc6f44f">
-        <index-field name="updated_by" uuid="fe15882d-e68f-44df-8738-751290fe117a"/>
-      </index>
-      <orm-attributes>
-        <attribute name="table">vh_modules</attribute>
-      </orm-attributes>
-    </entity>
-    <entity name="\App\Models\VhNotificationContent" local-name="VhNotificationContent" namespace="\App\Models" uuid="3f028d20-6c8f-4194-9260-730fd6f6dc0c">
-      <field name="created_at" type="timestamp" uuid="8cb30c91-808a-491a-b3e4-d97fb6aa5658"/>
-      <field name="created_by" type="integer" uuid="6a8f6712-8305-4453-a063-eda7195a32fe"/>
-      <field name="deleted_at" type="timestamp" uuid="4ebde251-caaa-45aa-912c-c16f930c9421"/>
-      <field name="deleted_by" type="integer" uuid="575582b6-03b4-4ed4-8d6b-3c14b3f78321"/>
-      <field name="id" type="integer" required="true" unique="true" primary="true" unsigned="true" auto-increment="true" uuid="5eccf472-214d-4079-bb84-cd79e6ff3ad1"/>
-      <field name="key" type="string" size="255" uuid="983e293a-2695-4880-bbc5-dcf942bfa760"/>
-      <field name="meta" type="json" uuid="b3a82320-dc8c-466e-85d1-1786b11c356e"/>
-      <field name="sort" type="integer" uuid="cd90405c-f886-4701-b15a-7c82ecfc048e"/>
-      <field name="updated_at" type="timestamp" uuid="515cc1f6-7e28-4b00-b8f5-22f89f855bf2"/>
-      <field name="updated_by" type="integer" uuid="e00c1c98-622a-4320-8a31-b3584181796a"/>
-      <field name="value" type="text" uuid="cd7ca118-e9e7-407b-b272-a370e39bdafe"/>
-      <field name="vh_notification_id" type="integer" uuid="d0138bce-7bd6-43ee-91d8-a9f63239f202"/>
-      <field name="via" type="string" size="255" uuid="d9e657bb-2bf0-4b69-a5b1-f076aab8b0a2"/>
-      <index name="vh_notification_contents_created_at_updated_at_deleted_at_index" uuid="15708965-0954-43b7-b17e-70df8f82fa4d">
-        <index-field name="created_at" uuid="d98e8ee3-8f65-4b32-965b-b1281d753f62"/>
-        <index-field name="updated_at" uuid="4e5ebd19-be62-4974-8b85-24d9aa3a4090"/>
-        <index-field name="deleted_at" uuid="ccd633a2-b66e-47d1-9fa9-9a24cbef7282"/>
-      </index>
-      <index name="vh_notification_contents_created_by_index" uuid="dec1748f-932a-42eb-9b3a-d1f643b4ccae">
-        <index-field name="created_by" uuid="3f8e3ef4-3498-4413-ba14-22ecc1f2a815"/>
-      </index>
-      <index name="vh_notification_contents_deleted_by_index" uuid="d5d61875-1be3-42d8-aaf9-76bd2c083b97">
-        <index-field name="deleted_by" uuid="545e1328-ac1b-43ef-a705-22ffa37e66ae"/>
-      </index>
-      <index name="vh_notification_contents_key_index" uuid="aa3afbfe-d20c-4ab7-92b1-26e6387e0fe9">
-        <index-field name="key" uuid="0996d6a8-0bc6-4d03-8217-0ee10ccac950"/>
-      </index>
-      <index name="vh_notification_contents_updated_by_index" uuid="0bb31a54-ef00-4c98-a86f-dfe307e12435">
-        <index-field name="updated_by" uuid="b15bf264-dbda-46c0-a996-be61b42a9db5"/>
-      </index>
-      <index name="vh_notification_contents_vh_notification_id_index" uuid="f226fa46-ca57-432b-8b8d-88c17996815d">
-        <index-field name="vh_notification_id" uuid="d43195a0-77ed-48ab-ba5a-56a5c520ca4e"/>
-      </index>
-      <index name="vh_notification_contents_via_index" uuid="5952cce9-7fd9-45a9-a6bd-dc3ed5d5cb00">
-        <index-field name="via" uuid="ba7ca162-1728-42b9-a1e0-157944adf972"/>
-      </index>
-      <orm-attributes>
-        <attribute name="table">vh_notification_contents</attribute>
-      </orm-attributes>
-    </entity>
-    <entity name="\App\Models\VhNotification" local-name="VhNotification" namespace="\App\Models" uuid="d17d82d6-34b6-468e-9915-7700c4cba36d">
-      <field name="can_update_via" type="boolean" uuid="72f62f32-815f-477f-b9ff-5931b12481e8"/>
-      <field name="created_at" type="timestamp" uuid="5767350b-4d4b-4b9d-b7be-ed9459a5a010"/>
-      <field name="created_by" type="integer" uuid="cfc565ff-07cc-4d37-a091-b519d4c143c2"/>
-      <field name="deleted_at" type="timestamp" uuid="36316517-06b4-4e1e-b784-b39c9d582723"/>
-      <field name="deleted_by" type="integer" uuid="eb190a3a-de82-4cbb-a8a5-ced9d81db966"/>
-      <field name="details" type="string" size="255" uuid="b7262009-7e57-4693-8f5e-b5b74756a4a5"/>
-      <field name="id" type="integer" required="true" unique="true" primary="true" unsigned="true" auto-increment="true" uuid="25a54a09-18df-4e15-94c2-3d7adcffd2fd"/>
-      <field name="is_error" type="boolean" uuid="e97c0040-044f-4b15-8fd7-d6cc5a4d1f01"/>
-      <field name="name" type="string" size="150" uuid="0ae83b16-56d4-48db-8720-f492ed0291bc"/>
-      <field name="slug" type="string" size="150" uuid="3c51fa6a-f1b4-4314-b8da-81b269351207"/>
-      <field name="updated_at" type="timestamp" uuid="a0dcd0f3-d6d7-44eb-8f59-b09f134bdfc2"/>
-      <field name="updated_by" type="integer" uuid="058691fa-5780-4882-bfb5-89fe7bd840b9"/>
-      <field name="uuid" type="char" size="36" uuid="40f34b92-ca38-4f8f-aeba-13a825ca4cab"/>
-      <field name="via_backend" type="boolean" uuid="c20fb77e-e659-442d-82cd-cdee37d0d773"/>
-      <field name="via_frontend" type="boolean" uuid="a2312007-427d-4caa-b439-dce594e1a52f"/>
-      <field name="via_mail" type="boolean" uuid="3cc1a1c7-422a-4ea9-b0f3-655a339287dc"/>
-      <field name="via_push" type="boolean" uuid="769e306d-7dd5-4e4e-9068-41d69f4e7d76"/>
-      <field name="via_sms" type="boolean" uuid="2a8d09d2-570a-4047-afeb-36a96b20d13d"/>
-      <index name="vh_notifications_created_at_updated_at_deleted_at_index" uuid="eda55d85-7811-4ef5-bee0-38292a0935f6">
-        <index-field name="created_at" uuid="7b311ad0-954e-45b9-9770-57e0931d4ce3"/>
-        <index-field name="updated_at" uuid="2233071c-72e6-4d2e-b3f3-233af9502d54"/>
-        <index-field name="deleted_at" uuid="8e75275a-9491-4f7d-bed1-de95e20be6bc"/>
-      </index>
-      <index name="vh_notifications_created_by_index" uuid="fd2a7f11-9cb1-407e-8d45-e6878ec61f5e">
-        <index-field name="created_by" uuid="8f943343-5bb7-4dc5-8535-75cf92aca494"/>
-      </index>
-      <index name="vh_notifications_deleted_by_index" uuid="e6dea60c-d81f-4946-a325-014d2513d677">
-        <index-field name="deleted_by" uuid="6e2e226c-85cb-4b8b-b749-31c8e34680f3"/>
-      </index>
-      <index name="vh_notifications_name_index" uuid="1413ddb5-d27c-40b1-a14b-0a76acca27bc">
-        <index-field name="name" uuid="277dee72-28eb-410b-a27e-15038a3674b0"/>
-      </index>
-      <index name="vh_notifications_slug_index" uuid="f8e5bc81-0611-46e1-a611-68d844daa321">
-        <index-field name="slug" uuid="395089cb-2151-4fa9-9274-917ba3d4d264"/>
-      </index>
-      <index name="vh_notifications_updated_by_index" uuid="057c9122-6b7a-4db4-a50c-f434189cd3ec">
-        <index-field name="updated_by" uuid="4db92f26-50d6-41ca-b22f-2db620dd240d"/>
-      </index>
-      <index name="vh_notifications_via_backend_index" uuid="34a28203-f4cb-4c87-924c-cde7fee01a0a">
-        <index-field name="via_backend" uuid="b7893e32-54c7-4b49-97f8-9456bc8577e3"/>
-      </index>
-      <index name="vh_notifications_via_frontend_index" uuid="9078c223-1ed0-4cb7-b4ac-b6b551053e15">
-        <index-field name="via_frontend" uuid="a3978319-5b36-4411-a1a9-251a20cb5e5c"/>
-      </index>
-      <index name="vh_notifications_via_mail_index" uuid="b5d330d8-c445-4565-8444-a5c062cd62d0">
-        <index-field name="via_mail" uuid="224c1476-e85f-4025-96fb-7e5b273ba096"/>
-      </index>
-      <index name="vh_notifications_via_push_index" uuid="16f236fa-c1c0-49fc-8e2b-29ef23177126">
-        <index-field name="via_push" uuid="0b687463-a982-4c8f-b24c-2864d7c326ce"/>
-      </index>
-      <index name="vh_notifications_via_sms_index" uuid="762d9a7e-143a-4ae8-b279-41d50e9c2972">
-        <index-field name="via_sms" uuid="773ccc82-18a8-4c4d-b34d-fe698952937e"/>
-      </index>
-      <orm-attributes>
-        <attribute name="table">vh_notifications</attribute>
-      </orm-attributes>
-    </entity>
-    <entity name="\App\Models\VhNotified" local-name="VhNotified" namespace="\App\Models" uuid="da938fed-ee5a-4cdd-ac7c-b39c570c490e">
-      <field name="created_at" type="timestamp" uuid="6dc00351-9169-4d4e-a02f-97b19f9cb16d"/>
-      <field name="deleted_at" type="timestamp" uuid="83d19ceb-8919-4151-bec2-ae51ed23438f"/>
-      <field name="id" type="integer" required="true" unique="true" primary="true" unsigned="true" auto-increment="true" uuid="c1f91dff-fdec-4daf-a532-237f3909319c"/>
-      <field name="last_attempt_at" type="dateTime" uuid="ab51f339-47b8-438c-ba7d-ee785fa67376"/>
-      <field name="marked_delivered" type="dateTime" uuid="c625ac79-f1a9-46c7-932e-00215cccf30f"/>
-      <field name="meta" type="json" uuid="c0edaf1c-28f8-4457-9a51-98a418a9d451"/>
-      <field name="read_at" type="dateTime" uuid="22f60b47-ba22-41e1-80b6-86ea39c05477"/>
-      <field name="sent_at" type="dateTime" uuid="825da3c4-81d4-4e08-898b-7a0c6de6a80d"/>
-      <field name="updated_at" type="timestamp" uuid="892c7925-8c26-488d-af7a-18463c8b9934"/>
-      <field name="vh_notification_id" type="integer" uuid="71470fb9-b91d-436b-879d-74168cce5310"/>
-      <field name="vh_user_id" type="integer" uuid="075f31a5-134a-419f-ad64-81de50db4d6c"/>
-      <field name="via" type="string" size="255" uuid="60adabf4-f50b-4d74-b003-bb477b9994a6"/>
-      <index name="vh_notified_created_at_updated_at_deleted_at_index" uuid="837f0de1-82a6-430e-9875-92970c5ae6de">
-        <index-field name="created_at" uuid="b3dfe33d-72c0-4a64-954c-4d362fbeb9a6"/>
-        <index-field name="updated_at" uuid="ce6ff187-6d8f-4d8f-8d83-253bdab0e46c"/>
-        <index-field name="deleted_at" uuid="642d1efc-7a9f-4c30-b9e6-8e8998db593b"/>
-      </index>
-      <index name="vh_notified_marked_delivered_index" uuid="1b73b000-d3d0-4769-aa66-ec86d76be351">
-        <index-field name="marked_delivered" uuid="b76d0a80-a2d0-4b6c-9f3b-25befd6cb71d"/>
-      </index>
-      <index name="vh_notified_read_at_index" uuid="367e7efe-777f-499b-8ae8-526d7c65a12e">
-        <index-field name="read_at" uuid="eb45cba5-4b8f-4513-b55e-b156c0237537"/>
-      </index>
-      <index name="vh_notified_sent_at_index" uuid="0f3f3b8a-9721-443b-88f0-223c5d3eccf9">
-        <index-field name="sent_at" uuid="13303448-0dba-4812-a5cc-836fdcfd7a21"/>
-      </index>
-      <index name="vh_notified_vh_notification_id_index" uuid="a491b888-ebe3-4025-92f5-7b0c2da5dead">
-        <index-field name="vh_notification_id" uuid="1e8de058-6d47-4e0a-b946-e3085e63bf3b"/>
-      </index>
-      <index name="vh_notified_vh_user_id_index" uuid="c9ea4662-9719-4207-97b0-4f826096ea13">
-        <index-field name="vh_user_id" uuid="b588339e-9ef6-4e30-bc29-2ddcfa62730f"/>
-      </index>
-      <index name="vh_notified_via_index" uuid="b1d01d29-ce6c-4c2f-a65b-63fcb8659820">
-        <index-field name="via" uuid="3d9ef941-08ca-419d-8f15-6c927adfb0ff"/>
-      </index>
-      <orm-attributes>
-        <attribute name="table">vh_notified</attribute>
-      </orm-attributes>
-    </entity>
-    <entity name="\App\Models\VhPermission" local-name="VhPermission" namespace="\App\Models" uuid="fecf8cd0-40e0-43bf-ad3f-572e9f19ae7b">
-      <field name="count_roles" type="integer" uuid="31060286-c8d2-43f8-a59b-fc2228d7554a"/>
-      <field name="count_users" type="integer" uuid="912ae87f-8905-4926-8d8a-6bc75ae0adb3"/>
-      <field name="created_at" type="timestamp" uuid="7f7af769-6919-4bbe-a9bc-9b32af750bf5"/>
-      <field name="created_by" type="integer" uuid="268ef0ba-669c-4966-aa15-a98d9e108d63"/>
-      <field name="deleted_at" type="timestamp" uuid="346b2b9d-be1e-437e-8b15-d48514950bda"/>
-      <field name="deleted_by" type="integer" uuid="b4f71644-7665-4711-8088-cbc2ede82d4b"/>
-      <field name="details" type="string" size="255" uuid="e812460a-4a2b-4000-8a3a-724a0a96c138"/>
-      <field name="id" type="integer" required="true" unique="true" primary="true" unsigned="true" auto-increment="true" uuid="d5623519-baab-41f8-844f-4a27bebf59d4"/>
-      <field name="is_active" type="boolean" uuid="f1e3c3fc-0999-4f60-9ab5-74816c54e23a"/>
-      <field name="module" type="string" size="255" uuid="58cda9af-9513-462d-9078-2db36607b2be"/>
-      <field name="name" type="string" size="150" uuid="55063579-c851-40f3-bf84-b524f86559bd"/>
-      <field name="section" type="string" size="255" uuid="06a77315-49eb-41f4-b195-9fd32f6baa89"/>
-      <field name="slug" type="string" size="150" uuid="4bd9ddd9-3f6c-4ad7-baca-44de10abe829"/>
-      <field name="updated_at" type="timestamp" uuid="aedf9839-1e4e-4afe-a190-8b6c5419629f"/>
-      <field name="updated_by" type="integer" uuid="e875000b-f6ac-4b4b-91b1-bbdc8ce7301f"/>
-      <field name="uuid" type="char" size="36" uuid="21c75a51-72e4-4055-91d8-cd8d7d63d411"/>
-      <index name="vh_permissions_created_at_updated_at_deleted_at_index" uuid="7091ce95-8a65-4548-a5ac-b1fb0ff12f74">
-        <index-field name="created_at" uuid="9dadcd89-34a6-47e2-a4ae-8a1fdbead24c"/>
-        <index-field name="updated_at" uuid="aada5851-b58b-490b-b71e-3fb811032c33"/>
-        <index-field name="deleted_at" uuid="d5259496-1ced-4ab1-b0ef-700ebcc05dc7"/>
-      </index>
-      <index name="vh_permissions_created_by_index" uuid="75f76bb9-ed2b-406a-9dd9-d0ab2ce9257f">
-        <index-field name="created_by" uuid="9e0fe957-43f5-4790-8556-a6d3ac1af6be"/>
-      </index>
-      <index name="vh_permissions_deleted_by_index" uuid="775fe822-852b-44f3-9ce5-fc53f44111c9">
-        <index-field name="deleted_by" uuid="76169998-b93c-4159-84b1-f9a1bcd5ad25"/>
-      </index>
-      <index name="vh_permissions_is_active_index" uuid="dbce8f8e-6deb-4b1c-8ddc-0ac608f7e8b5">
-        <index-field name="is_active" uuid="1fb6bd0e-7f88-4b70-8080-07a300565611"/>
-      </index>
-      <index name="vh_permissions_slug_index" uuid="cca27521-00cd-495b-b340-a756c4b7153d">
-        <index-field name="slug" uuid="efb6040a-d2df-46c0-9ca8-1a7859fe45b1"/>
-      </index>
-      <index name="vh_permissions_updated_by_index" uuid="6a12e948-b34f-4a45-80f3-7a79cdeb4933">
-        <index-field name="updated_by" uuid="37399024-1e60-4f3b-92bd-a6a1fea05e35"/>
-      </index>
-      <orm-attributes>
-        <attribute name="table">vh_permissions</attribute>
-      </orm-attributes>
-    </entity>
-    <entity name="\App\Models\VhRegistration" local-name="VhRegistration" namespace="\App\Models" uuid="921bc2ec-3a60-42ce-aed9-dc628f4cf002">
-      <field name="activated_at" type="dateTime" uuid="699b9680-766b-4bcc-a8b3-a6647e7d036d"/>
-      <field name="activated_ip" type="string" size="45" uuid="75907054-4909-40e8-a308-081e776a3917"/>
-      <field name="activation_code" type="string" size="255" uuid="a087f0be-f907-4cd7-b950-0afa6c34af06"/>
-      <field name="activation_code_sent_at" type="dateTime" uuid="e6e66272-368b-4c65-87aa-72e9fa12ea1c"/>
-      <field name="alternate_email" type="string" size="255" uuid="30c13579-d1c9-47da-82e0-3f06cd28aac5"/>
-      <field name="avatar_url" type="string" size="255" uuid="d6e50687-f716-4e1a-a2aa-dec710d1e5ef"/>
-      <field name="belong_id" type="bigInteger" unsigned="true" uuid="6441257f-bc73-4315-bf33-e473d0e3c36c"/>
-      <field name="belong_type" type="string" size="255" uuid="a469e00a-8ebf-4fba-86ee-27d91f8afb64"/>
-      <field name="bio" type="mediumText" uuid="23ee0699-b0f3-48f5-a214-afbd0d6c32f3"/>
-      <field name="birth" type="date" uuid="0f3d2250-6405-4896-9a30-a036b3fd32f7"/>
-      <field name="country" type="string" size="255" uuid="1c3ec283-7f31-48a2-98e4-f7a842877794"/>
-      <field name="country_calling_code" type="integer" uuid="f7349d93-596f-4eba-bc72-3b8184b3bb77"/>
-      <field name="country_code" type="string" size="255" uuid="0f70bd91-94ec-4114-9f70-8c9cc26bbef7"/>
-      <field name="created_at" type="timestamp" uuid="11cb5ec5-5d19-4c2d-bea1-e834f16d0e74"/>
-      <field name="created_by" type="integer" uuid="c69d2b9f-d698-438b-91db-4ddeb9c96ac0"/>
-      <field name="created_ip" type="string" size="45" uuid="e2232600-6ae3-40aa-975b-fd83fc33b43e"/>
-      <field name="deleted_at" type="timestamp" uuid="22a5a55a-0d99-4ecc-a0c7-09abd17d7db4"/>
-      <field name="deleted_by" type="integer" uuid="b113da19-8972-48f4-91d3-3a9247674cb1"/>
-      <field name="designation" type="string" size="200" uuid="1b752d8d-7cc4-45fa-9b09-b48756d93bb7"/>
-      <field name="display_name" type="string" size="50" uuid="ada43603-606b-4058-a174-71a6223c82ab"/>
-      <field name="email" type="string" size="150" uuid="252a90bc-fa1e-43ff-ad5b-1e3d7ad54486"/>
-      <field name="first_name" type="string" size="150" uuid="c2c8ef0a-09e4-4ccc-be2d-987fb6e08991"/>
-      <field name="gender" type="string" size="15" uuid="d111d9c8-6800-4e52-aaa2-4c7df940c8ff"/>
-      <field name="id" type="integer" required="true" unique="true" primary="true" unsigned="true" auto-increment="true" uuid="101d9129-43a8-4ae8-bafc-aab33d15b1d0"/>
-      <field name="invited_at" type="dateTime" uuid="6257441b-7b4b-4a23-a8da-4a2b6a765899"/>
-      <field name="invited_by" type="integer" uuid="2b0ea43d-e092-411f-852c-bcdf9d343f99"/>
-      <field name="invited_for_key" type="string" size="255" uuid="54a74e25-3542-4e75-a993-a71618b21cf2"/>
-      <field name="invited_for_value" type="string" size="255" uuid="0e0540f3-6f29-45b3-9ebf-bcaad2c74fbf"/>
-      <field name="last_name" type="string" size="150" uuid="45bd087b-d629-427f-9e6d-2c65f6c136a1"/>
-      <field name="meta" type="text" uuid="e4ce1b14-36f0-46c8-9d13-d4efb68e549a"/>
-      <field name="middle_name" type="string" size="255" uuid="131fade5-e9ef-4496-a2a4-818865076a23"/>
-      <field name="password" type="string" size="255" uuid="c62aea18-6d41-4e3e-acc9-7d7931cf3333"/>
-      <field name="phone" type="bigInteger" uuid="4b8ab52c-9943-49bd-984c-d5a5646bd3bf"/>
-      <field name="status" type="string" size="255" uuid="044b6bbd-6b2e-4fb5-8089-5ab6a1dc5a27"/>
-      <field name="timezone" type="string" size="255" uuid="f7791663-038d-4286-8f8a-b9c61111243e"/>
-      <field name="title" type="string" size="200" uuid="e72882f8-ca27-4cf0-bca7-b7795655cea4"/>
-      <field name="updated_at" type="timestamp" uuid="f461b6e2-e3f0-454f-9299-0cc64ca4171f"/>
-      <field name="updated_by" type="integer" uuid="5c61f735-7c02-40f7-b201-ff1195fb0699"/>
-      <field name="user_created_at" type="dateTime" uuid="19b75e09-712d-4d1d-b131-76565b96577c"/>
-      <field name="username" type="string" size="150" uuid="75a391c3-e096-4669-b37a-890536415daf"/>
-      <field name="uuid" type="char" size="36" uuid="53b3578b-bc21-4bdf-a0ab-5803a70dc263"/>
-      <field name="vh_user_id" type="integer" uuid="326493be-3f71-4c3b-8866-ad1cb78bdc99"/>
-      <index name="vh_registrations_activation_code_index" uuid="439e8f69-5f49-42c2-a282-3add07d6fe95">
-        <index-field name="activation_code" uuid="f7ef85cd-8bd6-452b-b07d-d97a5bbf3371"/>
-      </index>
-      <index name="vh_registrations_belong_type_belong_id_index" uuid="3312e796-a3b2-42d6-b3b5-448cb773d6b2">
-        <index-field name="belong_type" uuid="6bc79afa-bb0e-49e2-9f0c-876f58c2d29c"/>
-        <index-field name="belong_id" uuid="034c901f-9f37-4103-ae15-598f9c90b68e"/>
-      </index>
-      <index name="vh_registrations_created_at_updated_at_deleted_at_index" uuid="0d10fc98-13c2-4d06-8680-5f65652da1c6">
-        <index-field name="created_at" uuid="083740c5-1ca6-4edd-a90f-6b71a8c3e3bc"/>
-        <index-field name="updated_at" uuid="5600d721-f896-4521-af1b-1905b5a95fdf"/>
-        <index-field name="deleted_at" uuid="6bde26cd-b719-46aa-a1a8-3af2f808cb4e"/>
-      </index>
-      <index name="vh_registrations_created_by_index" uuid="f1fca839-f02a-4cc5-8096-b3a18c6c78d1">
-        <index-field name="created_by" uuid="d349e748-34f9-417f-8904-b46a84f50319"/>
-      </index>
-      <index name="vh_registrations_deleted_by_index" uuid="3984b274-94be-43a3-9c56-a6753eccd136">
-        <index-field name="deleted_by" uuid="2c52f83f-57cd-40fb-be0a-4681b000e65b"/>
-      </index>
-      <index name="vh_registrations_designation_index" uuid="fd4d347b-e790-47f8-93b2-c1dca6e9bacb">
-        <index-field name="designation" uuid="a14642f5-173b-4f84-9f8e-ec21d72e5814"/>
-      </index>
-      <index name="vh_registrations_display_name_index" uuid="e2831f84-6094-4c6e-8d6f-c56a7bdfebea">
-        <index-field name="display_name" uuid="a34284da-3400-4385-b909-4eb3a1c438fc"/>
-      </index>
-      <index name="vh_registrations_email_index" uuid="4647abda-bd90-4b66-9332-5f5023c6249b">
-        <index-field name="email" uuid="d624cfdf-e9f0-4f35-85bb-8ab29a45a6be"/>
-      </index>
-      <index name="vh_registrations_first_name_index" uuid="b6fe9f33-d25c-4944-a37b-e042b35b7cab">
-        <index-field name="first_name" uuid="502c5cea-9097-41fc-9adb-679948185b65"/>
-      </index>
-      <index name="vh_registrations_invited_by_index" uuid="58e163f9-83b0-4a0f-aa04-21e464ad7496">
-        <index-field name="invited_by" uuid="79ef25d1-2b34-408f-87e1-8ca53de3bee4"/>
-      </index>
-      <index name="vh_registrations_invited_for_key_index" uuid="8db71235-1f77-4583-87cd-d6f503971860">
-        <index-field name="invited_for_key" uuid="0945526a-cc74-4898-8b14-357ed1ad19c7"/>
-      </index>
-      <index name="vh_registrations_last_name_index" uuid="5475c6a4-951e-4037-883f-2128e69fb9ee">
-        <index-field name="last_name" uuid="6c6952c4-402f-47df-9e8e-426cbd56bfae"/>
-      </index>
-      <index name="vh_registrations_middle_name_index" uuid="17822106-a42a-4d6c-b20b-2105476edc50">
-        <index-field name="middle_name" uuid="d25b6d43-543a-4dba-84a5-e868bfd0c1a9"/>
-      </index>
-      <index name="vh_registrations_phone_index" uuid="3512698a-67fe-42cb-bc07-8dfc54df6ac7">
-        <index-field name="phone" uuid="519aa6b0-38b4-4d75-93e6-6482724bf1f8"/>
-      </index>
-      <index name="vh_registrations_status_index" uuid="9e74ae06-7086-494c-8eca-db3e24e37849">
-        <index-field name="status" uuid="ddbea094-9ac6-47e9-b648-77a903ccfd35"/>
-      </index>
-      <index name="vh_registrations_updated_by_index" uuid="ac40e9c0-84b6-4e59-8471-facd807ab7e2">
-        <index-field name="updated_by" uuid="a1904ab6-6718-4bd3-a27f-503a263c86d8"/>
-      </index>
-      <index name="vh_registrations_username_index" uuid="18a3167c-820e-45d6-9098-421b9351b6c4">
-        <index-field name="username" uuid="8b64dfd8-d6e3-4a8b-98fe-135ebe9ebfd4"/>
-      </index>
-      <index name="vh_registrations_uuid_index" uuid="2d05e364-cd9e-4bb5-bf5c-97c6e0211145">
-        <index-field name="uuid" uuid="a4542647-b3e8-4df4-8ebb-ed5d11dabdca"/>
-      </index>
-      <index name="vh_registrations_vh_user_id_index" uuid="e0e99b28-a965-471c-9bf6-b61dffaf6b42">
-        <index-field name="vh_user_id" uuid="9e41fb10-7b67-4b41-bfce-d4ce1ab21523"/>
-      </index>
-      <orm-attributes>
-        <attribute name="table">vh_registrations</attribute>
-      </orm-attributes>
-    </entity>
-    <entity name="\App\Models\VhRolePermission" local-name="VhRolePermission" namespace="\App\Models" uuid="7e835788-b484-403d-b829-e063fe7d26d2">
-      <field name="created_at" type="timestamp" uuid="8db907d1-2b30-4ca6-9159-5a338581e3c4"/>
-      <field name="created_by" type="integer" uuid="8ef1c671-f29a-4751-a145-c0e25837b567"/>
-      <field name="deleted_at" type="timestamp" uuid="59ab98a7-d429-42ed-8b72-ddbc4a92ddad"/>
-      <field name="deleted_by" type="integer" uuid="a1e0bfd8-66b5-44c0-a17a-09df50430120"/>
-      <field name="id" type="integer" required="true" unique="true" primary="true" unsigned="true" auto-increment="true" uuid="e2b81190-03b3-49a7-92a6-84f2480c3782"/>
-      <field name="is_active" type="boolean" uuid="8c793aba-0619-4bec-aef6-679f6a8e63e7"/>
-      <field name="updated_at" type="timestamp" uuid="40927fb2-31d2-4662-8bb6-86c5c73cf54d"/>
-      <field name="updated_by" type="integer" uuid="7e0276bf-aadf-4b97-b2e1-7aae0c7afec6"/>
-      <field name="vh_permission_id" type="integer" uuid="575899fc-f2eb-4a85-989a-b5caaf8c85a4"/>
-      <field name="vh_role_id" type="integer" uuid="e9092e9f-4151-403e-9d26-dff0f7006bfe"/>
-      <index name="vh_role_permissions_created_at_updated_at_deleted_at_index" uuid="0a023a76-f902-4bb6-b166-ae2729fa5831">
-        <index-field name="created_at" uuid="03c94a0a-0a26-42e6-9bbc-efdd011fbfaa"/>
-        <index-field name="updated_at" uuid="8f67222a-7062-48e3-987d-5110200c4458"/>
-        <index-field name="deleted_at" uuid="31482f76-2c60-4260-89d3-31fcc7290e4c"/>
-      </index>
-      <index name="vh_role_permissions_created_by_index" uuid="afd622e6-664d-4449-a4a9-848e14e05de5">
-        <index-field name="created_by" uuid="21260785-35b5-4f2a-807f-e8f216941f30"/>
-      </index>
-      <index name="vh_role_permissions_deleted_by_index" uuid="e36593e0-46f6-4431-8a52-e80147aefbb0">
-        <index-field name="deleted_by" uuid="82ad45d0-fa46-4dee-ac1a-0a42b2e74052"/>
-      </index>
-      <index name="vh_role_permissions_is_active_index" uuid="3bd5e905-efdb-4ba2-baae-7c1e3cdac959">
-        <index-field name="is_active" uuid="1786e61a-54e9-470e-b891-e9cc22cdb46a"/>
-      </index>
-      <index name="vh_role_permissions_updated_by_index" uuid="d08a1221-a167-4e7c-973a-acd23bc4a379">
-        <index-field name="updated_by" uuid="f3b96120-c3a0-4b2a-8a7f-efa894c30125"/>
-      </index>
-      <index name="vh_role_permissions_vh_permission_id_index" uuid="637a2533-3ee6-43a7-95c1-ab5c244bf849">
-        <index-field name="vh_permission_id" uuid="bd959f97-3044-4e72-ab69-d577e6ebe3ad"/>
-      </index>
-      <index name="vh_role_permissions_vh_role_id_index" uuid="ba92a2f4-a70f-4d8c-a1f8-b91445de8c97">
-        <index-field name="vh_role_id" uuid="9c8530b0-56c5-48fd-970a-b1ce3b8cb33f"/>
-      </index>
-      <orm-attributes>
-        <attribute name="table">vh_role_permissions</attribute>
-      </orm-attributes>
-    </entity>
-    <entity name="\App\Models\VhRole" local-name="VhRole" namespace="\App\Models" uuid="e957c0b4-c015-4dcd-8a04-72188c28c629">
-      <field name="belong_id" type="bigInteger" unsigned="true" uuid="f603e919-c428-4558-be4d-6597da2801b9"/>
-      <field name="belong_type" type="string" size="255" uuid="6a3dbe94-547c-469a-bec7-7bef96737263"/>
-      <field name="count_permissions" type="integer" uuid="53c22e4a-50fc-4073-b028-2c71d11b8a5f"/>
-      <field name="count_users" type="integer" uuid="4337cd38-d03f-4af2-974c-729e6145d71e"/>
-      <field name="created_at" type="timestamp" uuid="105d1ca1-43d8-4eab-bebc-177d829dbbba"/>
-      <field name="created_by" type="integer" uuid="58314bcd-7b7f-42e6-b75f-cf288236693f"/>
-      <field name="deleted_at" type="timestamp" uuid="c421f22e-4bb0-4878-9ac4-b4b66f458bd1"/>
-      <field name="deleted_by" type="integer" uuid="af10afbe-f4a1-4418-8962-0aef029c53fb"/>
-      <field name="details" type="string" size="255" uuid="b67ba288-f374-4be2-983a-407f3d472368"/>
-      <field name="id" type="integer" required="true" unique="true" primary="true" unsigned="true" auto-increment="true" uuid="fa04855d-a07c-48c2-8285-f065c21dbb0c"/>
-      <field name="is_active" type="boolean" uuid="8acfda5b-2930-406c-acb7-37c0b2a8e53e"/>
-      <field name="name" type="string" size="150" uuid="54ea4d24-a2a2-4376-a678-333b252900c2"/>
-      <field name="slug" type="string" size="150" uuid="27f37fba-7e18-4bda-8c89-0fd1c6f244c7"/>
-      <field name="updated_at" type="timestamp" uuid="51e9c131-7f30-4cf5-b86f-4f3adb1254fd"/>
-      <field name="updated_by" type="integer" uuid="47472e34-029b-4c87-a71f-2905b6e554e4"/>
-      <field name="uuid" type="char" size="36" uuid="115e9b8c-dd38-4147-934d-9f9877bb85bf"/>
-      <index name="vh_roles_belong_type_belong_id_index" uuid="475174c1-edd5-4c37-8c99-cc4329a27cde">
-        <index-field name="belong_type" uuid="fae5253e-4dd1-4e00-b1b1-a5878747db31"/>
-        <index-field name="belong_id" uuid="48d7436d-00e7-4993-afc9-13bf25885912"/>
-      </index>
-      <index name="vh_roles_created_at_updated_at_deleted_at_index" uuid="e6399139-e8a9-4abc-864b-588633a28e62">
-        <index-field name="created_at" uuid="167d0b28-bc41-4893-ac01-46ec5b6daa22"/>
-        <index-field name="updated_at" uuid="b6dc2baa-0a5d-40f4-9381-d6d6a748dfff"/>
-        <index-field name="deleted_at" uuid="f2dd7731-e2a1-4bdb-8cca-af0b98f7dec0"/>
-      </index>
-      <index name="vh_roles_created_by_index" uuid="577c42e9-613e-49f7-a7b3-d2e27a740392">
-        <index-field name="created_by" uuid="ffdc33ab-8e37-46b0-ae9d-0b90027683f4"/>
-      </index>
-      <index name="vh_roles_deleted_by_index" uuid="5c75d677-8e66-4be9-834c-9f65783af1de">
-        <index-field name="deleted_by" uuid="250e4c20-0af1-4c0d-ab9a-afbd6a8f7918"/>
-      </index>
-      <index name="vh_roles_slug_index" uuid="e772f5fa-04de-409c-bba4-18f03e3fd7d3">
-        <index-field name="slug" uuid="da0f793c-9671-4be7-9d0d-ca29637811ae"/>
-      </index>
-      <index name="vh_roles_updated_by_index" uuid="ae91f235-b28c-4df3-9a4d-217f303f6146">
-        <index-field name="updated_by" uuid="6ecb6082-22b3-46b9-a5db-0cfe1a5b4906"/>
-      </index>
-      <orm-attributes>
-        <attribute name="table">vh_roles</attribute>
-      </orm-attributes>
-    </entity>
-    <entity name="\App\Models\VhSetting" local-name="VhSetting" namespace="\App\Models" uuid="68165a5a-e26b-4ec6-bca6-2e01e4a5c73a">
-      <field name="category" type="string" size="255" uuid="981d0cc0-b9d7-4144-a0aa-1f03bfcb37c6"/>
-      <field name="created_at" type="timestamp" uuid="4cd2b2a9-e6e3-44bb-bd59-13f2b1043bd3"/>
-      <field name="excerpt" type="string" size="255" uuid="c377e2f8-135e-4760-94e1-320efec50a8a"/>
-      <field name="id" type="integer" required="true" unique="true" primary="true" unsigned="true" auto-increment="true" uuid="165258a4-e484-4522-85bb-8f32a16797ce"/>
-      <field name="key" type="string" size="255" uuid="19dc4d8a-ea99-415e-abfb-75995d545056"/>
-      <field name="label" type="string" size="255" uuid="1a51d853-bddc-415e-ae33-0d4c1934ea02"/>
-      <field name="meta" type="json" uuid="54dc3361-29c6-41b9-a8e2-ac6c69f036d7"/>
-      <field name="settingable_id" type="integer" uuid="bca09fb6-a55f-4060-bfec-dec840aea784"/>
-      <field name="settingable_type" type="string" size="255" uuid="982bdea4-e565-4903-ad2d-ab784e01720a"/>
-      <field name="type" type="string" size="255" uuid="f2915824-7a2e-4d83-81a0-637e34db5272"/>
-      <field name="updated_at" type="timestamp" uuid="ac1a1e49-08c8-4e7d-b31c-542c85773544"/>
-      <field name="value" type="text" uuid="96116155-2d7a-4554-909e-fe71863ec224"/>
-      <index name="vh_settings_category_index" uuid="24f6aa02-bfff-4bb7-9d76-649aa126a3ad">
-        <index-field name="category" uuid="235a3a36-ab18-4df3-90f5-2b4cf83dd39a"/>
-      </index>
-      <index name="vh_settings_created_at_updated_at_index" uuid="f14cd40f-c85c-4a9d-b991-c13b95c0cba2">
-        <index-field name="created_at" uuid="53eeacc7-e26b-4243-9c61-4695aa0390d3"/>
-        <index-field name="updated_at" uuid="1c2729ee-012d-4000-9e9c-75bcfe752f58"/>
-      </index>
-      <index name="vh_settings_key_index" uuid="b5e2b128-1f71-484d-941c-2f1db39ce725">
-        <index-field name="key" uuid="1a9742ec-e3e6-4f64-aef5-7291963fecd1"/>
-      </index>
-      <index name="vh_settings_settingable_id_index" uuid="42ad4bd3-e1d4-4341-83c9-f76561b67048">
-        <index-field name="settingable_id" uuid="194420bb-ce5a-4963-a3a6-e844c4c8a736"/>
-      </index>
-      <index name="vh_settings_settingable_type_index" uuid="5aecdd77-e474-4644-a8e5-3755c1fb16ee">
-        <index-field name="settingable_type" uuid="ed7ae1b4-1b3a-478d-a9ba-227717577466"/>
-      </index>
-      <index name="vh_settings_type_index" uuid="485cc4b3-c9f7-4077-b80f-f9a5145ab816">
-        <index-field name="type" uuid="0c914684-dc36-4773-aee4-35309ddbf6c7"/>
-      </index>
-      <orm-attributes>
-        <attribute name="table">vh_settings</attribute>
-      </orm-attributes>
-    </entity>
-    <entity name="\App\Models\VhThemeBlock" local-name="VhThemeBlock" namespace="\App\Models" uuid="cdd180a1-9806-41a6-98b5-0aa86f8fb891">
-      <field name="created_at" type="timestamp" uuid="bd4827b1-7eff-4c88-bd0c-d18b6e044796"/>
-      <field name="id" type="integer" required="true" unique="true" primary="true" unsigned="true" auto-increment="true" uuid="0416041e-f77f-4ac8-85c0-2e8037b262a3"/>
-      <field name="name" type="string" size="150" uuid="6a6a1e6f-de6c-46e7-8cdb-ee5438773e68"/>
-      <field name="slug" type="string" size="150" uuid="a97d9514-726d-425d-a03e-3af86d9645b3"/>
-      <field name="updated_at" type="timestamp" uuid="6c3708a0-a4a2-418a-9541-9cff650426cb"/>
-      <field name="vh_theme_id" type="integer" uuid="838705a5-6ea6-41e4-893f-783064058f3e"/>
-      <index name="vh_theme_blocks_created_at_updated_at_index" uuid="15f75a6b-822b-42ad-b1e0-bcf1997fe1a6">
-        <index-field name="created_at" uuid="416016f8-30be-4eb6-bfb6-6973ecb118e0"/>
-        <index-field name="updated_at" uuid="b9c9c018-5c01-434f-97b4-d16448e2c4ad"/>
-      </index>
-      <index name="vh_theme_blocks_slug_index" uuid="37bf887b-1911-4a5c-9824-c674fa400247">
-        <index-field name="slug" uuid="ef4d87ac-4ecf-4fc0-9580-e5905ae37ef2"/>
-      </index>
-      <index name="vh_theme_blocks_vh_theme_id_index" uuid="39fa57a2-f06b-4d0e-a028-26a4257cf5c6">
-        <index-field name="vh_theme_id" uuid="944ff493-232d-4e49-99b0-2ed8a410edae"/>
-      </index>
-      <orm-attributes>
-        <attribute name="table">vh_theme_blocks</attribute>
-      </orm-attributes>
-    </entity>
-    <entity name="\App\Models\VhThemeLocation" local-name="VhThemeLocation" namespace="\App\Models" uuid="0b863c84-6791-4785-aa19-33b58ffa1398">
-      <field name="created_at" type="timestamp" uuid="d082c634-3612-4e23-8f91-22e4fd44d27b"/>
-      <field name="excerpt" type="string" size="255" uuid="3e87e318-5a9d-4f2c-b306-115aa10f7f73"/>
-      <field name="id" type="integer" required="true" unique="true" primary="true" unsigned="true" auto-increment="true" uuid="b0d6a1e7-fc44-4acf-9c24-d7f44272f204"/>
-      <field name="name" type="string" size="150" uuid="94eed82f-d66d-405e-8ed4-d67d0045e1d9"/>
-      <field name="slug" type="string" size="150" uuid="d3900856-f031-416a-ae28-6ee052cfd118"/>
-      <field name="type" type="string" size="255" uuid="feaeea05-0eda-4d26-9c65-1d1146ed53c2"/>
-      <field name="updated_at" type="timestamp" uuid="586fad12-bc86-47cd-a627-2941af8683db"/>
-      <field name="vh_theme_id" type="integer" uuid="c50ae400-1418-4e7b-9483-3745783a43b0"/>
-      <index name="vh_theme_locations_created_at_updated_at_index" uuid="3fd013f1-ff1f-471c-9440-04a0fc2690b5">
-        <index-field name="created_at" uuid="e37d6870-ceb6-4569-a1dc-9e682c1a0b67"/>
-        <index-field name="updated_at" uuid="a333c032-c1fc-4917-9d40-0b6aa666d27c"/>
-      </index>
-      <index name="vh_theme_locations_slug_index" uuid="a749e75b-5128-4eeb-a6aa-ac9f0ae600e3">
-        <index-field name="slug" uuid="12112094-dbdd-44c2-87b8-771e39f4a370"/>
-      </index>
-      <index name="vh_theme_locations_type_index" uuid="9145c45e-b76d-4a5a-8f11-3faf06ce56ad">
-        <index-field name="type" uuid="e9e3397e-38df-48b5-bef3-28a5e023a371"/>
-      </index>
-      <index name="vh_theme_locations_vh_theme_id_index" uuid="88baee9c-a5ff-4d23-8ec4-13725dc06e0e">
-        <index-field name="vh_theme_id" uuid="be8050a3-e751-4ba0-8eb8-30dea98c8633"/>
-      </index>
-      <orm-attributes>
-        <attribute name="table">vh_theme_locations</attribute>
-      </orm-attributes>
-    </entity>
-    <entity name="\App\Models\VhThemeTemplateField" local-name="VhThemeTemplateField" namespace="\App\Models" uuid="bba0e826-6c99-4719-bbc6-25b336fa34a2">
-      <field name="content" type="string" size="255" uuid="6bfa7fc5-48c7-43e6-819b-19b162018cc3"/>
-      <field name="created_at" type="timestamp" uuid="1007758d-eea8-4b6b-8006-9199ffe19f49"/>
-      <field name="deleted_at" type="timestamp" uuid="713c7a22-b3af-4cf7-9d5a-9ed6de4656d7"/>
-      <field name="excerpt" type="string" size="255" uuid="f56fc2ce-e452-4409-b29d-5538de0d9dc2"/>
-      <field name="id" type="integer" required="true" unique="true" primary="true" unsigned="true" auto-increment="true" uuid="cf8588ae-fd6e-4322-8cce-e464ca1de863"/>
-      <field name="is_repeatable" type="boolean" uuid="e9b4b2dc-b3aa-48d7-92f3-45e47c9bf754"/>
-      <field name="is_searchable" type="boolean" uuid="1feba33e-179b-4449-b5cf-bdea0e39effd"/>
-      <field name="meta" type="json" uuid="4150fa48-54c0-4d28-8e5f-2154b39ce4b0"/>
-      <field name="name" type="string" size="255" uuid="dab7ed26-8a0c-4767-a413-e9881cadf47f"/>
-      <field name="slug" type="string" size="255" uuid="89d96947-788b-40ce-91d0-2b3c8d1f5171"/>
-      <field name="sort" type="integer" uuid="f2a5b2ae-15bc-4698-b744-91738df1abdf"/>
-      <field name="type" type="string" size="255" uuid="74edda35-1e54-470a-8d4d-03615b14a2f6"/>
-      <field name="updated_at" type="timestamp" uuid="1be80a42-781d-4993-bc51-fa81aee35562"/>
-      <field name="uuid" type="char" size="36" uuid="49429d7a-9980-4be7-a535-dbc91c554d31"/>
-      <field name="vh_template_id" type="integer" uuid="a8ff61ec-8372-49ca-8af2-5a13f2b98f1d"/>
-      <field name="vh_theme_id" type="integer" uuid="3380104a-776a-440e-a0fb-b0dc7dd38f65"/>
-      <index name="vh_theme_template_fields_created_at_updated_at_deleted_at_index" uuid="7171d4ec-0912-4557-905a-5d7bb8af742c">
-        <index-field name="created_at" uuid="5899ae59-163b-4f07-baa7-aa04e8b2532a"/>
-        <index-field name="updated_at" uuid="c5a8d0e9-a7db-4f6a-960b-b826071ef8d5"/>
-        <index-field name="deleted_at" uuid="ecacd2bc-3b10-4a38-a419-887e5cb0f212"/>
-      </index>
-      <index name="vh_theme_template_fields_is_repeatable_index" uuid="08c44364-c517-4dd2-8c2c-3ff74d5efb08">
-        <index-field name="is_repeatable" uuid="c03d98c8-47e7-4d99-89cd-93ba799f043c"/>
-      </index>
-      <index name="vh_theme_template_fields_is_searchable_index" uuid="c2a0dc7f-3cdc-44f5-a744-75d6401cb453">
-        <index-field name="is_searchable" uuid="a3fb2e2c-4490-48ba-84c5-b8b545796445"/>
-      </index>
-      <index name="vh_theme_template_fields_slug_index" uuid="37f93c3e-b497-4f61-9011-53f20d1e955c">
-        <index-field name="slug" uuid="13ad177a-f048-49c0-b693-13b148f6362a"/>
-      </index>
-      <index name="vh_theme_template_fields_sort_index" uuid="6c071e0d-5f8c-440f-a3cc-593d07bed07a">
-        <index-field name="sort" uuid="0b90a045-ec41-4265-939e-95337a65f650"/>
-      </index>
-      <index name="vh_theme_template_fields_type_index" uuid="5b3ec520-d1b5-42fd-bd50-d5ee86a9c028">
-        <index-field name="type" uuid="44d8c0b4-8241-4f00-a026-0a1628063dd7"/>
-      </index>
-      <index name="vh_theme_template_fields_vh_template_id_index" uuid="d1a3b94a-cc07-4013-b966-56ffbf9b2e67">
-        <index-field name="vh_template_id" uuid="dce659ba-3546-418a-a1a6-ef0a579c70ec"/>
-      </index>
-      <index name="vh_theme_template_fields_vh_theme_id_index" uuid="2e7eeeed-a766-4c06-b31b-2ca65b1923d5">
-        <index-field name="vh_theme_id" uuid="72e3e85b-9b52-48f6-a002-f66e5924eda5"/>
-      </index>
-      <orm-attributes>
-        <attribute name="table">vh_theme_template_fields</attribute>
-      </orm-attributes>
-    </entity>
-    <entity name="\App\Models\VhThemeTemplate" local-name="VhThemeTemplate" namespace="\App\Models" uuid="20999ab4-2d49-4f35-a7ec-270741b83c35">
-      <field name="created_at" type="timestamp" uuid="8dc4375d-1ffa-4735-88a6-1240297b2ead"/>
-      <field name="excerpt" type="string" size="255" uuid="b12f399b-92dd-4ba1-a777-9ab6c1d1015e"/>
-      <field name="file_path" type="string" size="255" uuid="1cb6f1a8-09c2-4d48-9acd-53aff06eafeb"/>
-      <field name="id" type="integer" required="true" unique="true" primary="true" unsigned="true" auto-increment="true" uuid="72bf7334-e039-468e-a92a-59db81e78eef"/>
-      <field name="name" type="string" size="150" uuid="59ec0a5a-47db-4ea7-8f6c-62296280a0e3"/>
-      <field name="slug" type="string" size="150" uuid="fdfb432b-edf1-42c6-8049-cde9a9984476"/>
-      <field name="type" type="string" size="255" uuid="6e3cace8-2cd0-4b7b-b0c1-7072e0c61d32"/>
-      <field name="updated_at" type="timestamp" uuid="dbe66982-6fe0-476b-ae53-46391896e696"/>
-      <field name="vh_theme_id" type="integer" uuid="526ad035-f284-48f1-bf39-9e438b6f2821"/>
-      <index name="vh_theme_templates_created_at_updated_at_index" uuid="3ddbc85a-8ee0-4baa-af9b-d0fb09caa3c2">
-        <index-field name="created_at" uuid="4b346538-f0d2-45ff-9938-13a35e635c59"/>
-        <index-field name="updated_at" uuid="4d260928-2e90-4544-8751-a2e6afecf6b2"/>
-      </index>
-      <index name="vh_theme_templates_file_path_index" uuid="80a6603d-443e-42d9-bb20-a6502b203d29">
-        <index-field name="file_path" uuid="fe11d407-fa2e-411b-8da6-39f2cef9d327"/>
-      </index>
-      <index name="vh_theme_templates_slug_index" uuid="eee5cd7a-bf0d-475a-9919-099e97582727">
-        <index-field name="slug" uuid="89afcfa0-c4f7-4283-815c-cd9fe6f72459"/>
-      </index>
-      <index name="vh_theme_templates_type_index" uuid="cf34e7db-8a65-4899-95a7-9c9dee2157d0">
-        <index-field name="type" uuid="043022e3-45a6-4610-8b60-c43ced328987"/>
-      </index>
-      <index name="vh_theme_templates_vh_theme_id_index" uuid="76f263b6-ce05-4702-b4ca-0b56a5899b5f">
-        <index-field name="vh_theme_id" uuid="0ccc605b-e7e6-4c95-8bc7-d2b7a89c7c24"/>
-      </index>
-      <orm-attributes>
-        <attribute name="table">vh_theme_templates</attribute>
-      </orm-attributes>
-    </entity>
-    <entity name="\App\Models\VhTheme" local-name="VhTheme" namespace="\App\Models" uuid="f8f1d62f-b2e3-4abd-82c0-d2e6474570f1">
-      <field name="author_name" type="string" size="255" uuid="7bd29715-263e-411d-8e2f-fc2bcca0a277"/>
-      <field name="author_website" type="string" size="255" uuid="f1ebbeb5-eed0-4986-ba5c-4eb58b8a3657"/>
-      <field name="created_at" type="timestamp" uuid="16824262-869f-4ee2-8537-fd7f29af1316"/>
-      <field name="created_by" type="integer" uuid="f74967d8-877c-4afa-ae98-23aec5a44869"/>
-      <field name="db_table_prefix" type="string" size="255" uuid="78db7241-63e2-4805-b059-02a686f247e2"/>
-      <field name="deleted_at" type="timestamp" uuid="23f0ec72-9430-4ae7-a0a9-ae15a76d5411"/>
-      <field name="deleted_by" type="integer" uuid="fff656f9-0fc8-462a-805e-83a157c7af3d"/>
-      <field name="description" type="string" size="255" uuid="df892bfb-48c6-44e6-9382-14c58deb9a69"/>
-      <field name="download_link" type="string" size="255" uuid="1e0f59a3-d57f-4c0d-860e-5592c12625d4"/>
-      <field name="excerpt" type="string" size="255" uuid="817104f9-5e16-4af2-a532-86c629648892"/>
-      <field name="id" type="integer" required="true" unique="true" primary="true" unsigned="true" auto-increment="true" uuid="245e5c5f-183d-4e47-bf68-ca515e86fbef"/>
-      <field name="is_active" type="boolean" uuid="41484816-4a4e-4297-bd5f-0bef70e2f161"/>
-      <field name="is_assets_published" type="boolean" uuid="92c4bcdd-92a4-4b6c-a197-9c63d788d6dd"/>
-      <field name="is_default" type="boolean" uuid="2cfa3995-853d-4448-ba93-f7a39cdcfe0e"/>
-      <field name="is_migratable" type="boolean" uuid="a165eeeb-e0e0-4e6e-a916-51ee20ac42d9"/>
-      <field name="is_sample_data_available" type="boolean" uuid="44f847b3-aaf1-4b66-8e4e-955c3bae0f08"/>
-      <field name="is_update_available" type="boolean" uuid="0e7a8b6f-3075-4e94-9b03-d159a2123a4f"/>
-      <field name="name" type="string" size="150" uuid="7bbf27f2-57e1-481a-8a90-30a4bfd03c3e"/>
-      <field name="slug" type="string" size="150" uuid="c1ed724f-244b-457f-8bd3-26cda3cdc5be"/>
-      <field name="thumbnail" type="string" size="255" uuid="05184791-2805-4320-b3a0-4830ef60a6ca"/>
-      <field name="title" type="string" size="200" uuid="73b19f8e-dd61-4a33-be78-597432bed5a6"/>
-      <field name="update_checked_at" type="dateTime" uuid="bfce16a1-30a0-4b5c-ab67-9db0f3c6730d"/>
-      <field name="updated_at" type="timestamp" uuid="f8e43a00-9eb4-41f3-9f73-1dfb5b90099b"/>
-      <field name="updated_by" type="integer" uuid="b68ee364-d84d-4357-b00c-da83ca81170d"/>
-      <field name="vaah_url" type="string" size="255" uuid="db8abc12-bb94-41be-a5c0-ce8c92e6bab0"/>
-      <field name="version" type="string" size="255" uuid="d098664c-0e25-41f8-ad0d-da3e42377b8c"/>
-      <field name="version_number" type="integer" uuid="c4ff48c0-82c5-48c7-b590-30b93a8489c4"/>
-      <index name="vh_themes_created_at_updated_at_deleted_at_index" uuid="7788c89d-e6ca-4aed-b054-b1e02ccb91bf">
-        <index-field name="created_at" uuid="61db94a7-21cb-4a51-8217-dc67d120f3ac"/>
-        <index-field name="updated_at" uuid="4e0c72e7-4148-4404-9cb3-ca2cd8d1523f"/>
-        <index-field name="deleted_at" uuid="b528ea06-ee1c-49bd-85eb-effcdd8f0aec"/>
-      </index>
-      <index name="vh_themes_created_by_index" uuid="2c6c9baa-6e1e-4ed1-9850-93a064333bb1">
-        <index-field name="created_by" uuid="987faf64-5bf2-4a60-b06a-21defcc90591"/>
-      </index>
-      <index name="vh_themes_deleted_by_index" uuid="83af694c-28b4-4318-90f6-125886141056">
-        <index-field name="deleted_by" uuid="3b9d953d-3dfb-4c7f-b88b-18aeaa85823e"/>
-      </index>
-      <index name="vh_themes_is_active_index" uuid="04d5a575-c7b8-4b8f-8f1d-46a04c16fe89">
-        <index-field name="is_active" uuid="eb4ec3c7-6f9d-4bf0-8475-2f2743a30cfc"/>
-      </index>
-      <index name="vh_themes_is_default_index" uuid="218b9acf-82f4-4983-a28c-a934c313717b">
-        <index-field name="is_default" uuid="ccca8cfd-4d38-4276-9ea6-fe502c9cc84d"/>
-      </index>
-      <index name="vh_themes_slug_index" uuid="e6629847-6105-458c-b952-76a3c1f19d8d">
-        <index-field name="slug" uuid="38078d05-dcec-4f25-9960-91d37bee4baf"/>
-      </index>
-      <index name="vh_themes_updated_by_index" uuid="983c71f6-11ff-4133-9137-266c7d912235">
-        <index-field name="updated_by" uuid="0612c4cf-27a2-4a53-a163-9a3b727c4113"/>
-      </index>
-      <orm-attributes>
-        <attribute name="table">vh_themes</attribute>
-      </orm-attributes>
-    </entity>
-    <entity name="\App\Models\VhUserAuthorization" local-name="VhUserAuthorization" namespace="\App\Models" uuid="3df1f0f7-f357-4065-b9ec-6fc70c0b2f77">
-      <field name="authorization_id" type="string" size="255" uuid="8baa80a2-633e-4c46-8aa5-a73f7336bded"/>
-      <field name="created_at" type="timestamp" uuid="eb50a355-88b8-46a3-9273-a68d2780df1a"/>
-      <field name="created_by" type="integer" uuid="08b9333e-9ee0-441d-8325-31419e3aa623"/>
-      <field name="deleted_at" type="timestamp" uuid="8658eea0-c91d-4100-8cca-186798b5fbc9"/>
-      <field name="deleted_by" type="integer" uuid="38e21cb6-ab92-4768-b8a1-f9ce6532194e"/>
-      <field name="id" type="integer" required="true" unique="true" primary="true" unsigned="true" auto-increment="true" uuid="c3bb0bf6-9a19-4413-9844-5768aaf152cc"/>
-      <field name="last_authorization_at" type="dateTime" uuid="c7138ca5-71b6-40d0-9c8f-5deb7453de73"/>
-      <field name="meta" type="text" uuid="a6089afa-4708-42a3-bde1-9b2a0fcca6b7"/>
-      <field name="name" type="string" size="150" uuid="254c2be6-25d3-40cf-8e20-df34bd243c5d"/>
-      <field name="slug" type="string" size="150" uuid="e61cc825-34a6-4c1e-b282-581478a21811"/>
-      <field name="updated_at" type="timestamp" uuid="77f1b2fe-7e01-45b8-809e-2054c2281475"/>
-      <field name="updated_by" type="integer" uuid="fdfb8692-14e7-4798-b0c3-4bab3a28bbb0"/>
-      <field name="vh_user_id" type="integer" uuid="24977e0d-5ada-4e10-8d37-1670a79a06e0"/>
-      <index name="vh_user_authorizations_created_at_updated_at_deleted_at_index" uuid="4661b885-4602-407a-a4f8-83fbf62e1d90">
-        <index-field name="created_at" uuid="79044574-7266-47bf-b0c0-36d5ae1b1477"/>
-        <index-field name="updated_at" uuid="00e29d66-7653-479d-b133-2b037c790b36"/>
-        <index-field name="deleted_at" uuid="92f84540-6f57-4235-879e-da0f64f60385"/>
-      </index>
-      <index name="vh_user_authorizations_created_by_index" uuid="62053f2c-1839-4c73-8def-3b5fd3886ecc">
-        <index-field name="created_by" uuid="84893526-6dc2-4fab-bc2a-4dc58121ce56"/>
-      </index>
-      <index name="vh_user_authorizations_deleted_by_index" uuid="0cab30fc-6afb-4db6-b6c2-ef3d13d296dc">
-        <index-field name="deleted_by" uuid="1417be4d-5330-4869-aa30-39af8b3f65f8"/>
-      </index>
-      <index name="vh_user_authorizations_updated_by_index" uuid="f0323f98-863e-4ef4-bcd2-026aed0c2937">
-        <index-field name="updated_by" uuid="4531f8b1-b0cd-43f0-898e-0b5331cd5a41"/>
-      </index>
-      <orm-attributes>
-        <attribute name="table">vh_user_authorizations</attribute>
-      </orm-attributes>
-    </entity>
-    <entity name="\App\Models\VhUserRole" local-name="VhUserRole" namespace="\App\Models" uuid="be52d770-b9e9-4450-8ef8-008f33e79032">
-      <field name="created_at" type="timestamp" uuid="754e08c6-7fa5-43c9-8276-0314a113ee01"/>
-      <field name="created_by" type="integer" uuid="7fedf489-f90a-4a27-8fb9-132820782cde"/>
-      <field name="deleted_at" type="timestamp" uuid="ff08fed5-5c68-41cc-9654-9ce595ffa30a"/>
-      <field name="deleted_by" type="integer" uuid="fb0544f2-afe6-4e59-81fc-ce177fda4bb5"/>
-      <field name="id" type="integer" required="true" unique="true" primary="true" unsigned="true" auto-increment="true" uuid="68c35129-ad39-4567-988c-9310e448732b"/>
-      <field name="is_active" type="boolean" uuid="d93f1d13-e99a-441f-9c6f-7e00077d51e7"/>
-      <field name="updated_at" type="timestamp" uuid="8fae09db-c0ad-4532-8257-f89159c8bed5"/>
-      <field name="updated_by" type="integer" uuid="48d93fec-83cb-4e25-a556-5c24108ce402"/>
-      <field name="vh_role_id" type="integer" uuid="84145708-51e7-457e-a20d-d61648e35d32"/>
-      <field name="vh_user_id" type="integer" uuid="f39fa04f-9ff5-4f6f-8d73-b43b9dd8b799"/>
-      <index name="vh_user_roles_created_at_updated_at_deleted_at_index" uuid="fbb44db0-d23e-440c-9acf-a375c4ee6d3c">
-        <index-field name="created_at" uuid="1ff1c643-c67b-4886-9f1e-84ef32927d71"/>
-        <index-field name="updated_at" uuid="b4ff777a-3494-4db1-86b2-001228df243b"/>
-        <index-field name="deleted_at" uuid="27814180-9735-4ab8-ab3b-0fe6e92127fa"/>
-      </index>
-      <index name="vh_user_roles_created_by_index" uuid="9c04c003-1516-4c51-bfde-87c2cac630a7">
-        <index-field name="created_by" uuid="39961034-2964-4ce4-acab-90e30c4ca229"/>
-      </index>
-      <index name="vh_user_roles_deleted_by_index" uuid="94889b7c-a54d-4e22-9281-f60ebe55e409">
-        <index-field name="deleted_by" uuid="b84e7cf4-49a7-43d8-bbac-6f7b62bcfc3d"/>
-      </index>
-      <index name="vh_user_roles_is_active_index" uuid="cc52baf3-742a-4c37-aa02-be18288b159a">
-        <index-field name="is_active" uuid="634d0874-1907-4fa0-b957-38cf0229920f"/>
-      </index>
-      <index name="vh_user_roles_updated_by_index" uuid="300f6042-b99e-4aa1-9828-24be45cb15af">
-        <index-field name="updated_by" uuid="8fa83c8d-312f-4a8b-bb30-242b4931c167"/>
-      </index>
-      <index name="vh_user_roles_vh_role_id_index" uuid="02a1b42a-266a-4ab1-b3a5-5bf4a6b9a54b">
-        <index-field name="vh_role_id" uuid="73e06480-66d1-4417-9e64-778cb961dbf9"/>
-      </index>
-      <index name="vh_user_roles_vh_user_id_index" uuid="7b667798-ff38-4d10-994c-cc5c80483ded">
-        <index-field name="vh_user_id" uuid="37239108-af94-4782-8566-d46c955c4334"/>
-      </index>
-      <orm-attributes>
-        <attribute name="table">vh_user_roles</attribute>
-      </orm-attributes>
-    </entity>
-    <entity name="\App\Models\VhUser" local-name="VhUser" namespace="\App\Models" uuid="6e335a54-3adc-4f87-be5a-11c2c47ea996">
-      <field name="activated_at" type="dateTime" uuid="9af45c8b-9492-4133-bcf0-606e26e195fe"/>
-      <field name="affiliate_code" type="string" size="255" uuid="0b9eabc3-a412-43be-8d22-d6deb2f6984f"/>
-      <field name="affiliate_code_used_at" type="dateTime" uuid="0621b7d0-6af7-4ac0-a812-f633ea11d74d"/>
-      <field name="alternate_email" type="string" size="255" uuid="c9ed9500-e9fa-43a7-8a8e-099ef7555743"/>
-      <field name="api_token" type="string" size="255" uuid="f98a6782-f1d0-4a42-9a30-48992b4c6432"/>
-      <field name="api_token_used_at" type="dateTime" uuid="9a94077f-8ee7-4009-97a0-35ef78dc970e"/>
-      <field name="api_token_used_ip" type="string" size="45" uuid="de1d86d6-97a9-441b-91e5-cb7781e6e8bb"/>
-      <field name="avatar_url" type="string" size="255" uuid="e782707c-aa6d-4a2c-8540-48c8ad0931ef"/>
-      <field name="bio" type="mediumText" uuid="5ce2723b-1abc-445e-a90a-47811775d510"/>
-      <field name="birth" type="date" uuid="399f764d-58be-41dd-8214-bb162dfd11a7"/>
-      <field name="country" type="string" size="255" uuid="03fdc2f9-078c-46f2-b062-4c9b3172cf2c"/>
-      <field name="country_calling_code" type="integer" uuid="13df63c3-18a2-4295-b1b4-777b142f1e0d"/>
-      <field name="country_code" type="string" size="255" uuid="674f2828-7ba5-4d34-8e64-b004a3ab3db8"/>
-      <field name="created_at" type="timestamp" uuid="dd798a12-22b2-47eb-9bfd-e2ac0c830fba"/>
-      <field name="created_by" type="integer" uuid="9e70ec1c-3313-46b0-9767-c40ff9d74592"/>
-      <field name="created_ip" type="string" size="45" uuid="cfc536d8-3c14-40e9-8f79-2e137d459f1d"/>
-      <field name="deleted_at" type="timestamp" uuid="33f440d6-d090-4a88-afaf-13a08b2b2373"/>
-      <field name="deleted_by" type="integer" uuid="4460c083-50dd-4ed6-b9ca-492849f13685"/>
-      <field name="designation" type="string" size="200" uuid="41d8fb6a-c34f-4893-9606-d4601f2ede73"/>
-      <field name="display_name" type="string" size="50" uuid="210bc550-0056-4f39-92b7-2c8096f8e58c"/>
-      <field name="email" type="string" size="150" uuid="21ea94c8-7026-42a7-b68f-afc6e75f6425"/>
-      <field name="first_name" type="string" size="150" uuid="d892837a-b863-42e0-b969-937d69b76699"/>
-      <field name="foreign_user_id" type="integer" uuid="c8641781-51f0-49b1-a9c8-5965cd12be61"/>
-      <field name="gender" type="string" size="15" uuid="eee565e7-b3d4-47e9-9ce6-7ebb0c4cf736"/>
-      <field name="id" type="integer" required="true" unique="true" primary="true" unsigned="true" auto-increment="true" uuid="2c2c9367-2410-4494-bfac-0dc6753a64dc"/>
-      <field name="is_active" type="boolean" uuid="210624da-6e48-4cb7-91de-f44667f3aee6"/>
-      <field name="last_login_at" type="dateTime" uuid="149f49d1-0a8d-48ca-915c-92b812afaedc"/>
-      <field name="last_login_ip" type="string" size="45" uuid="ec02c85e-008c-471f-8a91-8b6cc6a4a627"/>
-      <field name="last_name" type="string" size="150" uuid="b88fe02e-df55-410d-86c6-7a3a51d9f971"/>
-      <field name="login_otp" type="string" size="255" uuid="3a3c7b86-a41d-4bc6-8975-a9377880aacc"/>
-      <field name="meta" type="text" uuid="d280d014-1685-41c8-9afa-436f8d65a14d"/>
-      <field name="middle_name" type="string" size="255" uuid="359ab9cc-b830-4c75-a458-7309994f6529"/>
-      <field name="password" type="string" size="255" uuid="c81e18b9-4104-4853-a0c8-450f592ec090"/>
-      <field name="phone" type="bigInteger" uuid="20aafc8c-1783-41a2-8c28-356e4d36c2db"/>
-      <field name="registration_id" type="integer" uuid="d3d543e1-9cff-4250-b572-614e4f2291d8"/>
-      <field name="remember_token" type="string" size="255" uuid="00cc6f1a-84ca-4bfa-9eac-20371cb3bbfd"/>
-      <field name="reset_password_code" type="string" size="255" uuid="b36b42ee-b733-4594-aa7a-e975150bf496"/>
-      <field name="reset_password_code_sent_at" type="dateTime" uuid="a7ce18e0-ea34-4d58-95cb-2c72945391ea"/>
-      <field name="reset_password_code_used_at" type="dateTime" uuid="185de07d-dbd0-4864-9941-3bb8d359e834"/>
-      <field name="status" type="string" size="255" uuid="06c0943c-2cb8-421c-97e7-b850f97ae55f"/>
-      <field name="timezone" type="string" size="255" uuid="504dd4f7-0c1d-4476-ac64-dbd9de1b68d9"/>
-      <field name="title" type="string" size="200" uuid="89b54113-9ce0-409d-bc3a-21b8351b38c2"/>
-      <field name="updated_at" type="timestamp" uuid="5b2cdfdc-4571-42a9-abd0-2d95419a8824"/>
-      <field name="updated_by" type="integer" uuid="7252fb62-59a2-4503-98ac-15b4c4079cbc"/>
-      <field name="username" type="string" size="150" uuid="97df3a13-63b2-4107-a0da-5cb0c03fea5d"/>
-      <field name="uuid" type="char" size="36" uuid="bbfb88e6-baf1-4c61-9929-aeb98a5a222d"/>
-      <field name="website" type="string" size="255" uuid="1253defb-806f-4ad5-9f26-2c10ac75ed6c"/>
-      <index name="vh_users_api_token_index" uuid="9fbba90a-b0df-4e39-9708-8f3b7b994ef6">
-        <index-field name="api_token" uuid="87a19ef0-89c1-4764-86dd-2e5e7f441b7e"/>
-      </index>
-      <index name="vh_users_created_at_updated_at_deleted_at_index" uuid="34e781b7-94f8-43b1-80f1-4ed67de41731">
-        <index-field name="created_at" uuid="7d0b8420-a5bc-4cbc-a262-e8f984e8b412"/>
-        <index-field name="updated_at" uuid="04bd47bd-1693-47ad-9faa-8e6f3484806e"/>
-        <index-field name="deleted_at" uuid="231560b0-3535-4a6d-89a1-5d73847038ea"/>
-      </index>
-      <index name="vh_users_created_by_index" uuid="8cc9bac6-bdc7-4de5-8369-c42b563ea710">
-        <index-field name="created_by" uuid="c6bc1cf4-194f-4c25-842c-d3b4cd7c83f6"/>
-      </index>
-      <index name="vh_users_deleted_by_index" uuid="7dd05287-3409-47d3-a696-ad307517bca0">
-        <index-field name="deleted_by" uuid="b4cceb7a-00ea-47b5-bcfa-f54df6f7b1e1"/>
-      </index>
-      <index name="vh_users_designation_index" uuid="38aba8d8-8334-4b7c-b12a-36253769a9a8">
-        <index-field name="designation" uuid="eb0c2e5a-1519-4654-b857-4914c806715d"/>
-      </index>
-      <index name="vh_users_email_index" uuid="a0c49807-6564-4e1e-a3b4-37b791a92a1b">
-        <index-field name="email" uuid="ee47ae24-fea6-491b-ae51-4dd5c2bba0e0"/>
-      </index>
-      <index name="vh_users_first_name_index" uuid="97653393-78ee-42c6-addf-e6d3328cc9b1">
-        <index-field name="first_name" uuid="b56add93-3079-4591-9704-c931dce7c492"/>
-      </index>
-      <index name="vh_users_foreign_user_id_index" uuid="f2c11abb-c094-4f52-8dac-56007f50bb59">
-        <index-field name="foreign_user_id" uuid="803fa009-5de4-401b-8018-814733ea3ccb"/>
-      </index>
-      <index name="vh_users_is_active_index" uuid="1de4b683-85b2-4db9-8e23-283d91fcbb07">
-        <index-field name="is_active" uuid="96bced65-4f77-4e78-b00d-860f50ddefff"/>
-      </index>
-      <index name="vh_users_last_name_index" uuid="9bad695d-b195-442c-81ac-7e644c4a3b9d">
-        <index-field name="last_name" uuid="2b3a4865-1148-4121-bccd-8be5651d9fe1"/>
-      </index>
-      <index name="vh_users_login_otp_index" uuid="cd809944-082a-4874-937e-c6628796c97b">
-        <index-field name="login_otp" uuid="f7416f90-c438-4fdc-b2b3-693506bd8f28"/>
-      </index>
-      <index name="vh_users_middle_name_index" uuid="bc643f52-1d87-4d73-b602-4e0f63d83724">
-        <index-field name="middle_name" uuid="de3e82fd-e1b3-4acd-b4bc-58dd2cfb4555"/>
-      </index>
-      <index name="vh_users_password_index" uuid="f62ef749-25a0-4393-b8bc-2470d890327e">
-        <index-field name="password" uuid="71bbcd48-d612-4e49-bb90-9cfa17fb5d8f"/>
-      </index>
-      <index name="vh_users_phone_index" uuid="1f69c946-1d59-4d70-bcec-3c9021fc7043">
-        <index-field name="phone" uuid="f1a800e2-0e53-4e08-842a-5752f9632298"/>
-      </index>
-      <index name="vh_users_registration_id_index" uuid="54446a34-9b3e-4c31-b842-03d736912c9c">
-        <index-field name="registration_id" uuid="036d5783-a492-4ccc-8461-ed7e98b0ba7a"/>
-      </index>
-      <index name="vh_users_status_index" uuid="acac74af-51c5-4d87-9a3f-5d514b37c6bd">
-        <index-field name="status" uuid="59c4b287-15e4-4569-a3ea-b05c04c02d81"/>
-      </index>
-      <index name="vh_users_updated_by_index" uuid="d1039106-8584-4743-86b9-94fea0bf7ea5">
-        <index-field name="updated_by" uuid="ca0fbcb3-3a09-426e-a2d5-2052f6fa701a"/>
-      </index>
-      <index name="vh_users_username_index" uuid="1c92ee22-4ede-4e1a-890f-a6b53be18e73">
-        <index-field name="username" uuid="8c9e5213-1857-4d43-ac29-ab11ef9b10e6"/>
-      </index>
-      <index name="vh_users_uuid_index" uuid="2fee2f81-6739-4d75-b573-51a11e454a2c">
-        <index-field name="uuid" uuid="9cb61864-4014-4c12-99b0-77cbc57fa7b9"/>
-      </index>
-      <orm-attributes>
-        <attribute name="table">vh_users</attribute>
-      </orm-attributes>
-    </entity>
+    <region namespace="\App\Models" caption="Theme" uuid="b26d2384-28c3-4aa1-a8c8-87f6737412c2">
+      <entity name="\App\Models\VhThemeBlock" local-name="VhThemeBlock" namespace="\App\Models" uuid="cdd180a1-9806-41a6-98b5-0aa86f8fb891">
+        <field name="id" type="bigInteger" required="true" unique="true" primary="true" unsigned="true" auto-increment="true" uuid="0416041e-f77f-4ac8-85c0-2e8037b262a3"/>
+        <field name="vh_theme_id" type="bigInteger" unsigned="true" uuid="838705a5-6ea6-41e4-893f-783064058f3e"/>
+        <field name="name" type="string" size="150" uuid="6a6a1e6f-de6c-46e7-8cdb-ee5438773e68"/>
+        <field name="slug" type="string" size="150" uuid="a97d9514-726d-425d-a03e-3af86d9645b3"/>
+        <field name="created_at" type="timestamp" uuid="bd4827b1-7eff-4c88-bd0c-d18b6e044796"/>
+        <field name="updated_at" type="timestamp" uuid="6c3708a0-a4a2-418a-9541-9cff650426cb"/>
+        <index name="vh_theme_blocks_created_at_updated_at_index" uuid="15f75a6b-822b-42ad-b1e0-bcf1997fe1a6">
+          <index-field name="created_at" uuid="416016f8-30be-4eb6-bfb6-6973ecb118e0"/>
+          <index-field name="updated_at" uuid="b9c9c018-5c01-434f-97b4-d16448e2c4ad"/>
+        </index>
+        <index name="vh_theme_blocks_slug_index" uuid="37bf887b-1911-4a5c-9824-c674fa400247">
+          <index-field name="slug" uuid="ef4d87ac-4ecf-4fc0-9580-e5905ae37ef2"/>
+        </index>
+        <index name="vh_theme_blocks_vh_theme_id_index" uuid="39fa57a2-f06b-4d0e-a028-26a4257cf5c6">
+          <index-field name="vh_theme_id" uuid="944ff493-232d-4e49-99b0-2ed8a410edae"/>
+        </index>
+        <orm-attributes>
+          <attribute name="table">vh_theme_blocks</attribute>
+        </orm-attributes>
+      </entity>
+      <entity name="\App\Models\VhThemeLocation" local-name="VhThemeLocation" namespace="\App\Models" uuid="0b863c84-6791-4785-aa19-33b58ffa1398">
+        <field name="id" type="bigInteger" required="true" unique="true" primary="true" unsigned="true" auto-increment="true" uuid="b0d6a1e7-fc44-4acf-9c24-d7f44272f204"/>
+        <field name="vh_theme_id" type="bigInteger" unsigned="true" uuid="c50ae400-1418-4e7b-9483-3745783a43b0"/>
+        <field name="name" type="string" size="150" uuid="94eed82f-d66d-405e-8ed4-d67d0045e1d9"/>
+        <field name="excerpt" type="string" size="255" uuid="3e87e318-5a9d-4f2c-b306-115aa10f7f73"/>
+        <field name="slug" type="string" size="150" uuid="d3900856-f031-416a-ae28-6ee052cfd118"/>
+        <field name="type" type="string" size="255" uuid="feaeea05-0eda-4d26-9c65-1d1146ed53c2"/>
+        <field name="updated_at" type="timestamp" uuid="586fad12-bc86-47cd-a627-2941af8683db"/>
+        <field name="created_at" type="timestamp" uuid="d082c634-3612-4e23-8f91-22e4fd44d27b"/>
+        <index name="vh_theme_locations_created_at_updated_at_index" uuid="3fd013f1-ff1f-471c-9440-04a0fc2690b5">
+          <index-field name="created_at" uuid="e37d6870-ceb6-4569-a1dc-9e682c1a0b67"/>
+          <index-field name="updated_at" uuid="a333c032-c1fc-4917-9d40-0b6aa666d27c"/>
+        </index>
+        <index name="vh_theme_locations_slug_index" uuid="a749e75b-5128-4eeb-a6aa-ac9f0ae600e3">
+          <index-field name="slug" uuid="12112094-dbdd-44c2-87b8-771e39f4a370"/>
+        </index>
+        <index name="vh_theme_locations_type_index" uuid="9145c45e-b76d-4a5a-8f11-3faf06ce56ad">
+          <index-field name="type" uuid="e9e3397e-38df-48b5-bef3-28a5e023a371"/>
+        </index>
+        <index name="vh_theme_locations_vh_theme_id_index" uuid="88baee9c-a5ff-4d23-8ec4-13725dc06e0e">
+          <index-field name="vh_theme_id" uuid="be8050a3-e751-4ba0-8eb8-30dea98c8633"/>
+        </index>
+        <orm-attributes>
+          <attribute name="table">vh_theme_locations</attribute>
+        </orm-attributes>
+      </entity>
+      <entity name="\App\Models\VhThemeTemplateField" local-name="VhThemeTemplateField" namespace="\App\Models" uuid="bba0e826-6c99-4719-bbc6-25b336fa34a2">
+        <field name="id" type="bigInteger" required="true" unique="true" primary="true" unsigned="true" auto-increment="true" uuid="cf8588ae-fd6e-4322-8cce-e464ca1de863"/>
+        <field name="vh_template_id" type="bigInteger" unsigned="true" uuid="a8ff61ec-8372-49ca-8af2-5a13f2b98f1d"/>
+        <field name="vh_theme_id" type="bigInteger" unsigned="true" uuid="3380104a-776a-440e-a0fb-b0dc7dd38f65"/>
+        <field name="name" type="string" size="255" uuid="dab7ed26-8a0c-4767-a413-e9881cadf47f"/>
+        <field name="content" type="string" size="255" uuid="6bfa7fc5-48c7-43e6-819b-19b162018cc3"/>
+        <field name="excerpt" type="string" size="255" uuid="f56fc2ce-e452-4409-b29d-5538de0d9dc2"/>
+        <field name="slug" type="string" size="255" uuid="89d96947-788b-40ce-91d0-2b3c8d1f5171"/>
+        <field name="is_repeatable" type="boolean" uuid="e9b4b2dc-b3aa-48d7-92f3-45e47c9bf754"/>
+        <field name="is_searchable" type="boolean" uuid="1feba33e-179b-4449-b5cf-bdea0e39effd"/>
+        <field name="meta" type="json" uuid="4150fa48-54c0-4d28-8e5f-2154b39ce4b0"/>
+        <field name="sort" type="integer" uuid="f2a5b2ae-15bc-4698-b744-91738df1abdf"/>
+        <field name="type" type="string" size="255" uuid="74edda35-1e54-470a-8d4d-03615b14a2f6"/>
+        <field name="uuid" type="char" size="36" uuid="49429d7a-9980-4be7-a535-dbc91c554d31"/>
+        <field name="created_at" type="timestamp" uuid="1007758d-eea8-4b6b-8006-9199ffe19f49"/>
+        <field name="updated_at" type="timestamp" uuid="1be80a42-781d-4993-bc51-fa81aee35562"/>
+        <field name="deleted_at" type="timestamp" uuid="713c7a22-b3af-4cf7-9d5a-9ed6de4656d7"/>
+        <index name="vh_theme_template_fields_created_at_updated_at_deleted_at_index" uuid="7171d4ec-0912-4557-905a-5d7bb8af742c">
+          <index-field name="created_at" uuid="5899ae59-163b-4f07-baa7-aa04e8b2532a"/>
+          <index-field name="updated_at" uuid="c5a8d0e9-a7db-4f6a-960b-b826071ef8d5"/>
+          <index-field name="deleted_at" uuid="ecacd2bc-3b10-4a38-a419-887e5cb0f212"/>
+        </index>
+        <index name="vh_theme_template_fields_is_repeatable_index" uuid="08c44364-c517-4dd2-8c2c-3ff74d5efb08">
+          <index-field name="is_repeatable" uuid="c03d98c8-47e7-4d99-89cd-93ba799f043c"/>
+        </index>
+        <index name="vh_theme_template_fields_is_searchable_index" uuid="c2a0dc7f-3cdc-44f5-a744-75d6401cb453">
+          <index-field name="is_searchable" uuid="a3fb2e2c-4490-48ba-84c5-b8b545796445"/>
+        </index>
+        <index name="vh_theme_template_fields_slug_index" uuid="37f93c3e-b497-4f61-9011-53f20d1e955c">
+          <index-field name="slug" uuid="13ad177a-f048-49c0-b693-13b148f6362a"/>
+        </index>
+        <index name="vh_theme_template_fields_sort_index" uuid="6c071e0d-5f8c-440f-a3cc-593d07bed07a">
+          <index-field name="sort" uuid="0b90a045-ec41-4265-939e-95337a65f650"/>
+        </index>
+        <index name="vh_theme_template_fields_type_index" uuid="5b3ec520-d1b5-42fd-bd50-d5ee86a9c028">
+          <index-field name="type" uuid="44d8c0b4-8241-4f00-a026-0a1628063dd7"/>
+        </index>
+        <index name="vh_theme_template_fields_vh_template_id_index" uuid="d1a3b94a-cc07-4013-b966-56ffbf9b2e67">
+          <index-field name="vh_template_id" uuid="dce659ba-3546-418a-a1a6-ef0a579c70ec"/>
+        </index>
+        <index name="vh_theme_template_fields_vh_theme_id_index" uuid="2e7eeeed-a766-4c06-b31b-2ca65b1923d5">
+          <index-field name="vh_theme_id" uuid="72e3e85b-9b52-48f6-a002-f66e5924eda5"/>
+        </index>
+        <orm-attributes>
+          <attribute name="table">vh_theme_template_fields</attribute>
+        </orm-attributes>
+      </entity>
+      <entity name="\App\Models\VhThemeTemplate" local-name="VhThemeTemplate" namespace="\App\Models" uuid="20999ab4-2d49-4f35-a7ec-270741b83c35">
+        <field name="id" type="bigInteger" required="true" unique="true" primary="true" unsigned="true" auto-increment="true" uuid="72bf7334-e039-468e-a92a-59db81e78eef"/>
+        <field name="vh_theme_id" type="bigInteger" unsigned="true" uuid="526ad035-f284-48f1-bf39-9e438b6f2821"/>
+        <field name="name" type="string" size="150" uuid="59ec0a5a-47db-4ea7-8f6c-62296280a0e3"/>
+        <field name="excerpt" type="string" size="255" uuid="b12f399b-92dd-4ba1-a777-9ab6c1d1015e"/>
+        <field name="slug" type="string" size="150" uuid="fdfb432b-edf1-42c6-8049-cde9a9984476"/>
+        <field name="type" type="string" size="255" uuid="6e3cace8-2cd0-4b7b-b0c1-7072e0c61d32"/>
+        <field name="file_path" type="string" size="255" uuid="1cb6f1a8-09c2-4d48-9acd-53aff06eafeb"/>
+        <field name="created_at" type="timestamp" uuid="8dc4375d-1ffa-4735-88a6-1240297b2ead"/>
+        <field name="updated_at" type="timestamp" uuid="dbe66982-6fe0-476b-ae53-46391896e696"/>
+        <index name="vh_theme_templates_created_at_updated_at_index" uuid="3ddbc85a-8ee0-4baa-af9b-d0fb09caa3c2">
+          <index-field name="created_at" uuid="4b346538-f0d2-45ff-9938-13a35e635c59"/>
+          <index-field name="updated_at" uuid="4d260928-2e90-4544-8751-a2e6afecf6b2"/>
+        </index>
+        <index name="vh_theme_templates_file_path_index" uuid="80a6603d-443e-42d9-bb20-a6502b203d29">
+          <index-field name="file_path" uuid="fe11d407-fa2e-411b-8da6-39f2cef9d327"/>
+        </index>
+        <index name="vh_theme_templates_slug_index" uuid="eee5cd7a-bf0d-475a-9919-099e97582727">
+          <index-field name="slug" uuid="89afcfa0-c4f7-4283-815c-cd9fe6f72459"/>
+        </index>
+        <index name="vh_theme_templates_type_index" uuid="cf34e7db-8a65-4899-95a7-9c9dee2157d0">
+          <index-field name="type" uuid="043022e3-45a6-4610-8b60-c43ced328987"/>
+        </index>
+        <index name="vh_theme_templates_vh_theme_id_index" uuid="76f263b6-ce05-4702-b4ca-0b56a5899b5f">
+          <index-field name="vh_theme_id" uuid="0ccc605b-e7e6-4c95-8bc7-d2b7a89c7c24"/>
+        </index>
+        <orm-attributes>
+          <attribute name="table">vh_theme_templates</attribute>
+        </orm-attributes>
+      </entity>
+      <entity name="\App\Models\VhTheme" local-name="VhTheme" namespace="\App\Models" uuid="f8f1d62f-b2e3-4abd-82c0-d2e6474570f1">
+        <field name="id" type="bigInteger" required="true" unique="true" primary="true" unsigned="true" auto-increment="true" uuid="245e5c5f-183d-4e47-bf68-ca515e86fbef"/>
+        <field name="author_name" type="string" size="255" uuid="7bd29715-263e-411d-8e2f-fc2bcca0a277"/>
+        <field name="author_website" type="string" size="255" uuid="f1ebbeb5-eed0-4986-ba5c-4eb58b8a3657"/>
+        <field name="db_table_prefix" type="string" size="255" uuid="78db7241-63e2-4805-b059-02a686f247e2"/>
+        <field name="description" type="string" size="255" uuid="df892bfb-48c6-44e6-9382-14c58deb9a69"/>
+        <field name="download_link" type="string" size="255" uuid="1e0f59a3-d57f-4c0d-860e-5592c12625d4"/>
+        <field name="excerpt" type="string" size="255" uuid="817104f9-5e16-4af2-a532-86c629648892"/>
+        <field name="is_active" type="boolean" uuid="41484816-4a4e-4297-bd5f-0bef70e2f161"/>
+        <field name="is_assets_published" type="boolean" uuid="92c4bcdd-92a4-4b6c-a197-9c63d788d6dd"/>
+        <field name="is_default" type="boolean" uuid="2cfa3995-853d-4448-ba93-f7a39cdcfe0e"/>
+        <field name="is_migratable" type="boolean" uuid="a165eeeb-e0e0-4e6e-a916-51ee20ac42d9"/>
+        <field name="is_sample_data_available" type="boolean" uuid="44f847b3-aaf1-4b66-8e4e-955c3bae0f08"/>
+        <field name="is_update_available" type="boolean" uuid="0e7a8b6f-3075-4e94-9b03-d159a2123a4f"/>
+        <field name="name" type="string" size="150" uuid="7bbf27f2-57e1-481a-8a90-30a4bfd03c3e"/>
+        <field name="slug" type="string" size="150" uuid="c1ed724f-244b-457f-8bd3-26cda3cdc5be"/>
+        <field name="thumbnail" type="string" size="255" uuid="05184791-2805-4320-b3a0-4830ef60a6ca"/>
+        <field name="title" type="string" size="200" uuid="73b19f8e-dd61-4a33-be78-597432bed5a6"/>
+        <field name="update_checked_at" type="dateTime" uuid="bfce16a1-30a0-4b5c-ab67-9db0f3c6730d"/>
+        <field name="vaah_url" type="string" size="255" uuid="db8abc12-bb94-41be-a5c0-ce8c92e6bab0"/>
+        <field name="version" type="string" size="255" uuid="d098664c-0e25-41f8-ad0d-da3e42377b8c"/>
+        <field name="version_number" type="integer" uuid="c4ff48c0-82c5-48c7-b590-30b93a8489c4"/>
+        <field name="created_at" type="timestamp" uuid="16824262-869f-4ee2-8537-fd7f29af1316"/>
+        <field name="created_by" type="integer" uuid="f74967d8-877c-4afa-ae98-23aec5a44869"/>
+        <field name="updated_at" type="timestamp" uuid="f8e43a00-9eb4-41f3-9f73-1dfb5b90099b"/>
+        <field name="updated_by" type="integer" uuid="b68ee364-d84d-4357-b00c-da83ca81170d"/>
+        <field name="deleted_at" type="timestamp" uuid="23f0ec72-9430-4ae7-a0a9-ae15a76d5411"/>
+        <field name="deleted_by" type="integer" uuid="fff656f9-0fc8-462a-805e-83a157c7af3d"/>
+        <index name="vh_themes_created_at_updated_at_deleted_at_index" uuid="7788c89d-e6ca-4aed-b054-b1e02ccb91bf">
+          <index-field name="created_at" uuid="61db94a7-21cb-4a51-8217-dc67d120f3ac"/>
+          <index-field name="updated_at" uuid="4e0c72e7-4148-4404-9cb3-ca2cd8d1523f"/>
+          <index-field name="deleted_at" uuid="b528ea06-ee1c-49bd-85eb-effcdd8f0aec"/>
+        </index>
+        <index name="vh_themes_created_by_index" uuid="2c6c9baa-6e1e-4ed1-9850-93a064333bb1">
+          <index-field name="created_by" uuid="987faf64-5bf2-4a60-b06a-21defcc90591"/>
+        </index>
+        <index name="vh_themes_deleted_by_index" uuid="83af694c-28b4-4318-90f6-125886141056">
+          <index-field name="deleted_by" uuid="3b9d953d-3dfb-4c7f-b88b-18aeaa85823e"/>
+        </index>
+        <index name="vh_themes_is_active_index" uuid="04d5a575-c7b8-4b8f-8f1d-46a04c16fe89">
+          <index-field name="is_active" uuid="eb4ec3c7-6f9d-4bf0-8475-2f2743a30cfc"/>
+        </index>
+        <index name="vh_themes_is_default_index" uuid="218b9acf-82f4-4983-a28c-a934c313717b">
+          <index-field name="is_default" uuid="ccca8cfd-4d38-4276-9ea6-fe502c9cc84d"/>
+        </index>
+        <index name="vh_themes_slug_index" uuid="e6629847-6105-458c-b952-76a3c1f19d8d">
+          <index-field name="slug" uuid="38078d05-dcec-4f25-9960-91d37bee4baf"/>
+        </index>
+        <index name="vh_themes_updated_by_index" uuid="983c71f6-11ff-4133-9137-266c7d912235">
+          <index-field name="updated_by" uuid="0612c4cf-27a2-4a53-a163-9a3b727c4113"/>
+        </index>
+        <orm-attributes>
+          <attribute name="table">vh_themes</attribute>
+        </orm-attributes>
+      </entity>
+    </region>
+    <association from="\App\Models\VhThemeBlock" to="\App\Models\VhTheme" caption="VhTheme VhThemeBlocks" owner-alias="vhThemeBlocks" inverse-alias="vhTheme" many-owner="true" many-inverse="false" uuid="0b2b96f4-54fc-414d-8d41-2c859438e284">
+      <association-field from="vh_theme_id" to="id" uuid="2cc58666-0438-4772-af0d-71c6bc6532e4"/>
+    </association>
+    <association from="\App\Models\VhThemeLocation" to="\App\Models\VhTheme" caption="VhTheme VhThemeLocations" owner-alias="vhThemeLocations" inverse-alias="vhTheme" many-owner="true" many-inverse="false" uuid="6845e128-e240-4dc3-8870-e8ffe863e633">
+      <association-field from="vh_theme_id" to="id" uuid="a73d9103-6cd9-4aad-a669-7672f7750725"/>
+    </association>
+    <association from="\App\Models\VhThemeTemplateField" to="\App\Models\VhTheme" caption="VhTheme VhThemeTemplateFields" owner-alias="vhThemeTemplateFields" inverse-alias="vhTheme" many-owner="true" many-inverse="false" uuid="5cb4e098-fdad-46eb-8ae1-ea29b9c3c5c1">
+      <association-field from="vh_theme_id" to="id" uuid="590e30ed-fc75-49c4-874d-95da59c4305a"/>
+    </association>
+    <association from="\App\Models\VhThemeTemplateField" to="\App\Models\VhThemeTemplate" caption="VhThemeTemplate VhThemeTemplateFields" owner-alias="vhThemeTemplateFields" inverse-alias="vhThemeTemplate" many-owner="true" many-inverse="false" uuid="4079ea46-dae5-4e2c-8ff4-04572bc4a3c7">
+      <association-field from="vh_template_id" to="id" uuid="e63d9ef2-5319-44c7-b96c-bd13a88015ae"/>
+    </association>
+    <association from="\App\Models\VhThemeTemplate" to="\App\Models\VhTheme" caption="VhTheme VhThemeTemplates" owner-alias="vhThemeTemplates" inverse-alias="vhTheme" many-owner="true" many-inverse="false" uuid="8614c72d-e90d-475f-aa82-fb810b95987b">
+      <association-field from="vh_theme_id" to="id" uuid="8a77eb9c-0ed1-42cd-b838-51065048770e"/>
+    </association>
+    <region namespace="\App\Models" caption="Language" uuid="447f12be-aa0f-441d-a163-aeec3c355400">
+      <entity name="\App\Models\VhLangCategory" local-name="VhLangCategory" namespace="\App\Models" uuid="df562131-45fd-4682-b62a-53a7d41b616a">
+        <field name="id" type="bigInteger" required="true" unique="true" primary="true" unsigned="true" auto-increment="true" uuid="e442e6e9-05ad-4bb5-9771-007edd0250a4"/>
+        <field name="count_strings" type="integer" default="0" uuid="15d6d247-d320-4ecd-bcc9-5d14ade6c09e"/>
+        <field name="count_strings_filled" type="integer" default="0" uuid="144e008c-4023-435c-8e01-61d203810c13"/>
+        <field name="created_at" type="timestamp" uuid="bea1cd24-b6f1-49ea-b128-bf6f41fe4170"/>
+        <field name="created_by" type="integer" uuid="6ac75c13-b00d-4c29-9767-c91c41379761"/>
+        <field name="deleted_at" type="timestamp" uuid="97be6ff0-3345-4e5b-a725-ec79c85b0249"/>
+        <field name="deleted_by" type="integer" uuid="13d79601-50e5-478c-8962-9ca19c192b41"/>
+        <field name="name" type="string" size="150" uuid="0de60fb9-94a1-444c-9652-0a63efa8181e"/>
+        <field name="slug" type="string" size="150" uuid="5f931212-0609-4ed3-a6f7-ec7c016f2743"/>
+        <field name="updated_at" type="timestamp" uuid="8e730d4b-41b0-418e-b139-310c6a171272"/>
+        <field name="updated_by" type="integer" uuid="48230fdc-f4c9-4f33-8820-51678f463f94"/>
+        <index name="vh_lang_categories_created_at_updated_at_deleted_at_index" uuid="ab2ac680-f229-4070-965d-03be143cabc3">
+          <index-field name="created_at" uuid="9150f69e-056b-43c7-843d-d65a05759cba"/>
+          <index-field name="updated_at" uuid="29b73016-ed46-45e5-9fd7-0ee76fe3e2b9"/>
+          <index-field name="deleted_at" uuid="77138499-e2d6-4d18-902f-b854058776df"/>
+        </index>
+        <index name="vh_lang_categories_created_by_index" uuid="afa2f327-6e62-473e-980c-419e17e4cd04">
+          <index-field name="created_by" uuid="ea77fcf8-d833-4837-a0db-ec3ec09bba24"/>
+        </index>
+        <index name="vh_lang_categories_deleted_by_index" uuid="36ef54a5-001e-4e4c-9546-a0f6a6c60d17">
+          <index-field name="deleted_by" uuid="b49cec77-281d-41c3-9fb5-cd9af12df4a5"/>
+        </index>
+        <index name="vh_lang_categories_slug_index" uuid="a8e81c61-9982-42ee-a344-2ead970aedce">
+          <index-field name="slug" uuid="e1294703-8731-46bc-898e-10788c1bf52e"/>
+        </index>
+        <index name="vh_lang_categories_updated_by_index" uuid="7bbc884c-6b6d-4b1d-b7f2-5f09f4c5dc3c">
+          <index-field name="updated_by" uuid="14e23aae-fb5c-43e6-b22f-998152a9fa58"/>
+        </index>
+        <orm-attributes>
+          <attribute name="table">vh_lang_categories</attribute>
+        </orm-attributes>
+      </entity>
+      <entity name="\App\Models\VhLangLanguage" local-name="VhLangLanguage" namespace="\App\Models" uuid="ade6f6c8-998c-4b9c-a786-53773d3f7f5b">
+        <field name="id" type="bigInteger" required="true" unique="true" primary="true" unsigned="true" auto-increment="true" uuid="a03d1fc3-a2e6-47b5-af38-ed7e2cc39c1b"/>
+        <field name="count_strings" type="integer" default="0" uuid="085bb1cf-1202-4b1f-97cf-a62acf35cdfb"/>
+        <field name="count_strings_filled" type="integer" default="0" uuid="b0172102-9e21-4453-84dd-8bf8d00b5e5b"/>
+        <field name="created_at" type="timestamp" uuid="9ce41155-ec48-4e71-8efc-640b0be57c01"/>
+        <field name="created_by" type="integer" uuid="5b2f59d2-8673-48d9-9eb7-2d5702190aec"/>
+        <field name="default" type="boolean" default="0" uuid="8a8d627e-2ada-4738-816b-8c3b8d2cb76e"/>
+        <field name="deleted_at" type="timestamp" uuid="2c87490c-3097-4ca9-a5dc-e01385fb9c7c"/>
+        <field name="deleted_by" type="integer" uuid="961b4b52-1092-407a-ad91-1c59cbf88798"/>
+        <field name="locale_code_iso_639" type="string" size="255" uuid="78783093-72e4-4544-b2da-730fdc57f41e"/>
+        <field name="name" type="string" size="150" uuid="576c4ae1-262f-4650-8556-e164dfd8f34e"/>
+        <field name="right_to_left" type="boolean" default="0" uuid="706a8cbf-010e-4638-b89d-d3c6bb75e3e3"/>
+        <field name="updated_at" type="timestamp" uuid="0e8ece04-e097-4f9f-98b5-63c84ce00371"/>
+        <field name="updated_by" type="integer" uuid="49bfc386-d4bb-4e19-84a5-572b8d67c3a4"/>
+        <index name="vh_lang_languages_created_at_updated_at_deleted_at_index" uuid="31b9a5d5-9bce-494c-a2a2-21064e5ba9b1">
+          <index-field name="created_at" uuid="09e72040-e294-45e8-beec-3d26ac0dca81"/>
+          <index-field name="updated_at" uuid="d84731f7-9b2b-4b87-89dd-8ec7953cf556"/>
+          <index-field name="deleted_at" uuid="e53f6bfa-226b-4188-87bb-e36e50713961"/>
+        </index>
+        <index name="vh_lang_languages_created_by_index" uuid="0d8d9f77-52e1-43e8-9652-fc9ac4cda9cd">
+          <index-field name="created_by" uuid="c441e19e-9284-4444-b33e-e9e63886214b"/>
+        </index>
+        <index name="vh_lang_languages_deleted_by_index" uuid="cedea92a-4d14-4729-be18-130ae936678c">
+          <index-field name="deleted_by" uuid="93e53f7c-656a-4f73-9b96-720c0e3b6219"/>
+        </index>
+        <index name="vh_lang_languages_locale_code_iso_639_index" uuid="8f9d401d-c708-4d80-8e75-39db9be497e8">
+          <index-field name="locale_code_iso_639" uuid="b48310e3-c453-444e-932d-beb19898c464"/>
+        </index>
+        <index name="vh_lang_languages_updated_by_index" uuid="abe77d34-fb02-462d-be86-8ce452224c53">
+          <index-field name="updated_by" uuid="c79e5b8b-bfb3-49ac-942b-25670143f07d"/>
+        </index>
+        <orm-attributes>
+          <attribute name="table">vh_lang_languages</attribute>
+        </orm-attributes>
+      </entity>
+      <entity name="\App\Models\VhLangString" local-name="VhLangString" namespace="\App\Models" uuid="52f5977c-23bc-47e7-9189-9f08b32cf725">
+        <field name="id" type="bigInteger" required="true" unique="true" primary="true" unsigned="true" auto-increment="true" uuid="a2f1e4db-5f18-4ea3-b55b-9b8a9254f291"/>
+        <field name="vh_lang_category_id" type="bigInteger" unsigned="true" uuid="c7185a0d-9f0d-4b1a-89db-a6c8c354ca14"/>
+        <field name="vh_lang_language_id" type="bigInteger" unsigned="true" uuid="876b4eda-f48f-419e-9034-9bb370f8aaaf"/>
+        <field name="content" type="mediumText" uuid="944fd8c7-7161-4152-8310-bb676c43b4d5"/>
+        <field name="created_at" type="timestamp" uuid="f288545f-8676-4894-8a42-e8b29e82d3ee"/>
+        <field name="created_by" type="integer" uuid="240691b7-1e22-4b6a-a05d-4feca3af4ccf"/>
+        <field name="deleted_at" type="timestamp" uuid="117aa1e2-36d6-45d9-9e30-5f1c4ff49982"/>
+        <field name="deleted_by" type="integer" uuid="92db8d96-521c-465a-b147-38bd32f4cecc"/>
+        <field name="name" type="string" size="150" uuid="923e95fe-150d-406d-8dc4-9552a31153d2"/>
+        <field name="slug" type="string" size="150" uuid="1e2fc258-56a7-42cc-84e1-cdb5037b5649"/>
+        <field name="updated_at" type="timestamp" uuid="f8f434d5-713c-4972-8e82-e913dee9b2b1"/>
+        <field name="updated_by" type="integer" uuid="a99391a7-1095-4742-ad17-57a244621037"/>
+        <index name="vh_lang_strings_created_at_updated_at_deleted_at_index" uuid="73b2f2b0-2f48-4687-a319-2ba0e2fac07e">
+          <index-field name="created_at" uuid="41de78f3-7bb4-41f4-b8e1-b544bb94dc64"/>
+          <index-field name="updated_at" uuid="2931f009-72a0-4a18-b258-ec4087c16df3"/>
+          <index-field name="deleted_at" uuid="83e1de0e-78e7-4cc6-9fd6-a71b1d5e6463"/>
+        </index>
+        <index name="vh_lang_strings_created_by_index" uuid="a1f09ded-b329-4485-b3a2-96a3efa105ac">
+          <index-field name="created_by" uuid="fb8bdd30-33e9-4e4e-8ea9-3665069e57fb"/>
+        </index>
+        <index name="vh_lang_strings_deleted_by_index" uuid="540e3943-99fd-4c1d-9ae3-f9cea6fee374">
+          <index-field name="deleted_by" uuid="2197731a-dc18-419b-899b-ca7bcec55d2f"/>
+        </index>
+        <index name="vh_lang_strings_slug_index" uuid="e43871d0-76d4-45ab-87b1-7c41d220e11b">
+          <index-field name="slug" uuid="71d74e41-f541-48b2-a233-d03fa04f18a6"/>
+        </index>
+        <index name="vh_lang_strings_updated_by_index" uuid="9f1fb882-d5fd-4758-a273-1900965a9620">
+          <index-field name="updated_by" uuid="99bbb2b0-cdb2-4d38-945c-7a1ca295678c"/>
+        </index>
+        <index name="vh_lang_strings_vh_lang_category_id_index" uuid="8dbe86b5-b1c4-4c65-8ed1-778f4368f5d7">
+          <index-field name="vh_lang_category_id" uuid="8b9fa242-1948-496f-86a2-10bb22eb2b6a"/>
+        </index>
+        <index name="vh_lang_strings_vh_lang_language_id_index" uuid="ab8c4171-dd06-4c55-956a-2398135fafdc">
+          <index-field name="vh_lang_language_id" uuid="e2d2e7f1-612e-415b-a9f9-af681e6b0c8f"/>
+        </index>
+        <orm-attributes>
+          <attribute name="table">vh_lang_strings</attribute>
+        </orm-attributes>
+      </entity>
+    </region>
+    <association from="\App\Models\VhLangString" to="\App\Models\VhLangLanguage" caption="VhLangLanguage VhLangStrings" owner-alias="vhLangStrings" inverse-alias="vhLangLanguage" many-owner="true" many-inverse="false" uuid="f117ad58-8c56-497b-adf2-ac64770402c8">
+      <association-field from="vh_lang_language_id" to="id" uuid="aa2c7860-252a-4c71-9800-d113b8d20209"/>
+    </association>
+    <association from="\App\Models\VhLangString" to="\App\Models\VhLangCategory" caption="VhLangCategory VhLangStrings" owner-alias="vhLangStrings" inverse-alias="vhLangCategory" many-owner="true" many-inverse="false" uuid="f6285946-c408-4598-b82e-4d551b998303">
+      <association-field from="vh_lang_category_id" to="id" uuid="481b4227-168d-41e8-957b-fdf8efa412e2"/>
+    </association>
+    <region namespace="\App\Models" caption="Notification" uuid="833fd652-633f-4e1c-8181-c4b4eceb64a7">
+      <entity name="\App\Models\VhNotificationContent" local-name="VhNotificationContent" namespace="\App\Models" uuid="3f028d20-6c8f-4194-9260-730fd6f6dc0c">
+        <field name="id" type="bigInteger" required="true" unique="true" primary="true" unsigned="true" auto-increment="true" uuid="5eccf472-214d-4079-bb84-cd79e6ff3ad1"/>
+        <field name="vh_notification_id" type="bigInteger" unsigned="true" uuid="d0138bce-7bd6-43ee-91d8-a9f63239f202"/>
+        <field name="created_at" type="timestamp" uuid="8cb30c91-808a-491a-b3e4-d97fb6aa5658"/>
+        <field name="created_by" type="integer" uuid="6a8f6712-8305-4453-a063-eda7195a32fe"/>
+        <field name="deleted_at" type="timestamp" uuid="4ebde251-caaa-45aa-912c-c16f930c9421"/>
+        <field name="deleted_by" type="integer" uuid="575582b6-03b4-4ed4-8d6b-3c14b3f78321"/>
+        <field name="key" type="string" size="255" uuid="983e293a-2695-4880-bbc5-dcf942bfa760"/>
+        <field name="meta" type="json" uuid="b3a82320-dc8c-466e-85d1-1786b11c356e"/>
+        <field name="sort" type="integer" uuid="cd90405c-f886-4701-b15a-7c82ecfc048e"/>
+        <field name="updated_at" type="timestamp" uuid="515cc1f6-7e28-4b00-b8f5-22f89f855bf2"/>
+        <field name="updated_by" type="integer" uuid="e00c1c98-622a-4320-8a31-b3584181796a"/>
+        <field name="value" type="text" uuid="cd7ca118-e9e7-407b-b272-a370e39bdafe"/>
+        <field name="via" type="string" size="255" uuid="d9e657bb-2bf0-4b69-a5b1-f076aab8b0a2"/>
+        <index name="vh_notification_contents_created_at_updated_at_deleted_at_index" uuid="15708965-0954-43b7-b17e-70df8f82fa4d">
+          <index-field name="created_at" uuid="d98e8ee3-8f65-4b32-965b-b1281d753f62"/>
+          <index-field name="updated_at" uuid="4e5ebd19-be62-4974-8b85-24d9aa3a4090"/>
+          <index-field name="deleted_at" uuid="ccd633a2-b66e-47d1-9fa9-9a24cbef7282"/>
+        </index>
+        <index name="vh_notification_contents_created_by_index" uuid="dec1748f-932a-42eb-9b3a-d1f643b4ccae">
+          <index-field name="created_by" uuid="3f8e3ef4-3498-4413-ba14-22ecc1f2a815"/>
+        </index>
+        <index name="vh_notification_contents_deleted_by_index" uuid="d5d61875-1be3-42d8-aaf9-76bd2c083b97">
+          <index-field name="deleted_by" uuid="545e1328-ac1b-43ef-a705-22ffa37e66ae"/>
+        </index>
+        <index name="vh_notification_contents_key_index" uuid="aa3afbfe-d20c-4ab7-92b1-26e6387e0fe9">
+          <index-field name="key" uuid="0996d6a8-0bc6-4d03-8217-0ee10ccac950"/>
+        </index>
+        <index name="vh_notification_contents_updated_by_index" uuid="0bb31a54-ef00-4c98-a86f-dfe307e12435">
+          <index-field name="updated_by" uuid="b15bf264-dbda-46c0-a996-be61b42a9db5"/>
+        </index>
+        <index name="vh_notification_contents_vh_notification_id_index" uuid="f226fa46-ca57-432b-8b8d-88c17996815d">
+          <index-field name="vh_notification_id" uuid="d43195a0-77ed-48ab-ba5a-56a5c520ca4e"/>
+        </index>
+        <index name="vh_notification_contents_via_index" uuid="5952cce9-7fd9-45a9-a6bd-dc3ed5d5cb00">
+          <index-field name="via" uuid="ba7ca162-1728-42b9-a1e0-157944adf972"/>
+        </index>
+        <orm-attributes>
+          <attribute name="table">vh_notification_contents</attribute>
+        </orm-attributes>
+      </entity>
+      <entity name="\App\Models\VhNotification" local-name="VhNotification" namespace="\App\Models" uuid="d17d82d6-34b6-468e-9915-7700c4cba36d">
+        <field name="id" type="bigInteger" required="true" unique="true" primary="true" unsigned="true" auto-increment="true" uuid="25a54a09-18df-4e15-94c2-3d7adcffd2fd"/>
+        <field name="can_update_via" type="boolean" uuid="72f62f32-815f-477f-b9ff-5931b12481e8"/>
+        <field name="created_at" type="timestamp" uuid="5767350b-4d4b-4b9d-b7be-ed9459a5a010"/>
+        <field name="created_by" type="integer" uuid="cfc565ff-07cc-4d37-a091-b519d4c143c2"/>
+        <field name="deleted_at" type="timestamp" uuid="36316517-06b4-4e1e-b784-b39c9d582723"/>
+        <field name="deleted_by" type="integer" uuid="eb190a3a-de82-4cbb-a8a5-ced9d81db966"/>
+        <field name="details" type="string" size="255" uuid="b7262009-7e57-4693-8f5e-b5b74756a4a5"/>
+        <field name="is_error" type="boolean" uuid="e97c0040-044f-4b15-8fd7-d6cc5a4d1f01"/>
+        <field name="name" type="string" size="150" uuid="0ae83b16-56d4-48db-8720-f492ed0291bc"/>
+        <field name="slug" type="string" size="150" uuid="3c51fa6a-f1b4-4314-b8da-81b269351207"/>
+        <field name="updated_at" type="timestamp" uuid="a0dcd0f3-d6d7-44eb-8f59-b09f134bdfc2"/>
+        <field name="updated_by" type="integer" uuid="058691fa-5780-4882-bfb5-89fe7bd840b9"/>
+        <field name="uuid" type="char" size="36" uuid="40f34b92-ca38-4f8f-aeba-13a825ca4cab"/>
+        <field name="via_backend" type="boolean" uuid="c20fb77e-e659-442d-82cd-cdee37d0d773"/>
+        <field name="via_frontend" type="boolean" uuid="a2312007-427d-4caa-b439-dce594e1a52f"/>
+        <field name="via_mail" type="boolean" uuid="3cc1a1c7-422a-4ea9-b0f3-655a339287dc"/>
+        <field name="via_push" type="boolean" uuid="769e306d-7dd5-4e4e-9068-41d69f4e7d76"/>
+        <field name="via_sms" type="boolean" uuid="2a8d09d2-570a-4047-afeb-36a96b20d13d"/>
+        <index name="vh_notifications_created_at_updated_at_deleted_at_index" uuid="eda55d85-7811-4ef5-bee0-38292a0935f6">
+          <index-field name="created_at" uuid="7b311ad0-954e-45b9-9770-57e0931d4ce3"/>
+          <index-field name="updated_at" uuid="2233071c-72e6-4d2e-b3f3-233af9502d54"/>
+          <index-field name="deleted_at" uuid="8e75275a-9491-4f7d-bed1-de95e20be6bc"/>
+        </index>
+        <index name="vh_notifications_created_by_index" uuid="fd2a7f11-9cb1-407e-8d45-e6878ec61f5e">
+          <index-field name="created_by" uuid="8f943343-5bb7-4dc5-8535-75cf92aca494"/>
+        </index>
+        <index name="vh_notifications_deleted_by_index" uuid="e6dea60c-d81f-4946-a325-014d2513d677">
+          <index-field name="deleted_by" uuid="6e2e226c-85cb-4b8b-b749-31c8e34680f3"/>
+        </index>
+        <index name="vh_notifications_name_index" uuid="1413ddb5-d27c-40b1-a14b-0a76acca27bc">
+          <index-field name="name" uuid="277dee72-28eb-410b-a27e-15038a3674b0"/>
+        </index>
+        <index name="vh_notifications_slug_index" uuid="f8e5bc81-0611-46e1-a611-68d844daa321">
+          <index-field name="slug" uuid="395089cb-2151-4fa9-9274-917ba3d4d264"/>
+        </index>
+        <index name="vh_notifications_updated_by_index" uuid="057c9122-6b7a-4db4-a50c-f434189cd3ec">
+          <index-field name="updated_by" uuid="4db92f26-50d6-41ca-b22f-2db620dd240d"/>
+        </index>
+        <index name="vh_notifications_via_backend_index" uuid="34a28203-f4cb-4c87-924c-cde7fee01a0a">
+          <index-field name="via_backend" uuid="b7893e32-54c7-4b49-97f8-9456bc8577e3"/>
+        </index>
+        <index name="vh_notifications_via_frontend_index" uuid="9078c223-1ed0-4cb7-b4ac-b6b551053e15">
+          <index-field name="via_frontend" uuid="a3978319-5b36-4411-a1a9-251a20cb5e5c"/>
+        </index>
+        <index name="vh_notifications_via_mail_index" uuid="b5d330d8-c445-4565-8444-a5c062cd62d0">
+          <index-field name="via_mail" uuid="224c1476-e85f-4025-96fb-7e5b273ba096"/>
+        </index>
+        <index name="vh_notifications_via_push_index" uuid="16f236fa-c1c0-49fc-8e2b-29ef23177126">
+          <index-field name="via_push" uuid="0b687463-a982-4c8f-b24c-2864d7c326ce"/>
+        </index>
+        <index name="vh_notifications_via_sms_index" uuid="762d9a7e-143a-4ae8-b279-41d50e9c2972">
+          <index-field name="via_sms" uuid="773ccc82-18a8-4c4d-b34d-fe698952937e"/>
+        </index>
+        <orm-attributes>
+          <attribute name="table">vh_notifications</attribute>
+        </orm-attributes>
+      </entity>
+      <entity name="\App\Models\VhNotified" local-name="VhNotified" namespace="\App\Models" uuid="da938fed-ee5a-4cdd-ac7c-b39c570c490e">
+        <field name="id" type="bigInteger" required="true" unique="true" primary="true" unsigned="true" auto-increment="true" uuid="c1f91dff-fdec-4daf-a532-237f3909319c"/>
+        <field name="vh_user_id" type="bigInteger" unsigned="true" uuid="075f31a5-134a-419f-ad64-81de50db4d6c"/>
+        <field name="vh_notification_id" type="bigInteger" unsigned="true" uuid="71470fb9-b91d-436b-879d-74168cce5310"/>
+        <field name="created_at" type="timestamp" uuid="6dc00351-9169-4d4e-a02f-97b19f9cb16d"/>
+        <field name="deleted_at" type="timestamp" uuid="83d19ceb-8919-4151-bec2-ae51ed23438f"/>
+        <field name="last_attempt_at" type="dateTime" uuid="ab51f339-47b8-438c-ba7d-ee785fa67376"/>
+        <field name="marked_delivered" type="dateTime" uuid="c625ac79-f1a9-46c7-932e-00215cccf30f"/>
+        <field name="meta" type="json" uuid="c0edaf1c-28f8-4457-9a51-98a418a9d451"/>
+        <field name="read_at" type="dateTime" uuid="22f60b47-ba22-41e1-80b6-86ea39c05477"/>
+        <field name="sent_at" type="dateTime" uuid="825da3c4-81d4-4e08-898b-7a0c6de6a80d"/>
+        <field name="updated_at" type="timestamp" uuid="892c7925-8c26-488d-af7a-18463c8b9934"/>
+        <field name="via" type="string" size="255" uuid="60adabf4-f50b-4d74-b003-bb477b9994a6"/>
+        <index name="vh_notified_created_at_updated_at_deleted_at_index" uuid="837f0de1-82a6-430e-9875-92970c5ae6de">
+          <index-field name="created_at" uuid="b3dfe33d-72c0-4a64-954c-4d362fbeb9a6"/>
+          <index-field name="updated_at" uuid="ce6ff187-6d8f-4d8f-8d83-253bdab0e46c"/>
+          <index-field name="deleted_at" uuid="642d1efc-7a9f-4c30-b9e6-8e8998db593b"/>
+        </index>
+        <index name="vh_notified_marked_delivered_index" uuid="1b73b000-d3d0-4769-aa66-ec86d76be351">
+          <index-field name="marked_delivered" uuid="b76d0a80-a2d0-4b6c-9f3b-25befd6cb71d"/>
+        </index>
+        <index name="vh_notified_read_at_index" uuid="367e7efe-777f-499b-8ae8-526d7c65a12e">
+          <index-field name="read_at" uuid="eb45cba5-4b8f-4513-b55e-b156c0237537"/>
+        </index>
+        <index name="vh_notified_sent_at_index" uuid="0f3f3b8a-9721-443b-88f0-223c5d3eccf9">
+          <index-field name="sent_at" uuid="13303448-0dba-4812-a5cc-836fdcfd7a21"/>
+        </index>
+        <index name="vh_notified_vh_notification_id_index" uuid="a491b888-ebe3-4025-92f5-7b0c2da5dead">
+          <index-field name="vh_notification_id" uuid="1e8de058-6d47-4e0a-b946-e3085e63bf3b"/>
+        </index>
+        <index name="vh_notified_vh_user_id_index" uuid="c9ea4662-9719-4207-97b0-4f826096ea13">
+          <index-field name="vh_user_id" uuid="b588339e-9ef6-4e30-bc29-2ddcfa62730f"/>
+        </index>
+        <index name="vh_notified_via_index" uuid="b1d01d29-ce6c-4c2f-a65b-63fcb8659820">
+          <index-field name="via" uuid="3d9ef941-08ca-419d-8f15-6c927adfb0ff"/>
+        </index>
+        <orm-attributes>
+          <attribute name="table">vh_notified</attribute>
+        </orm-attributes>
+      </entity>
+    </region>
+    <association from="\App\Models\VhNotificationContent" to="\App\Models\VhNotification" caption="VhNotification VhNotificationContents" owner-alias="vhNotificationContents" inverse-alias="vhNotification" many-owner="true" many-inverse="false" uuid="070853bc-3d26-4457-9530-7b6fa5813863">
+      <association-field from="vh_notification_id" to="id" uuid="22eb2942-3a7f-4907-8320-7f0eb761e598"/>
+    </association>
+    <association from="\App\Models\VhNotified" to="\App\Models\VhNotification" caption="VhNotification VhNotifieds" owner-alias="vhNotifieds" inverse-alias="vhNotification" many-owner="true" many-inverse="false" uuid="f2a47d56-90e2-4e48-a80e-686bc9198a62">
+      <association-field from="vh_notification_id" to="id" uuid="d6debfb5-4a22-49bd-b7b6-1d4e83195cad"/>
+    </association>
+    <association from="\App\Models\VhNotified" to="\App\Models\VhUser" caption="VhUser VhNotifieds" owner-alias="vhNotifieds" inverse-alias="vhUser" many-owner="true" many-inverse="false" uuid="4ccd5272-9fb6-46c8-a682-f81810439518">
+      <association-field from="vh_user_id" to="id" uuid="efa5f206-ae7e-4476-a4e0-10c4298c702f"/>
+    </association>
+    <region namespace="\App\Models" caption="Media" uuid="3d582c04-d4c1-489c-9f62-1aa33d10bef5">
+      <entity name="\App\Models\VhMediable" local-name="VhMediable" namespace="\App\Models" uuid="c038a8ad-63db-4a36-b601-6dec34b658e2">
+        <field name="id" type="bigInteger" required="true" unique="true" primary="true" unsigned="true" auto-increment="true" uuid="8a0b0ec5-a0c8-4d50-a2cf-73e67c873673"/>
+        <field name="vh_media_id" type="bigInteger" unsigned="true" uuid="c9e1d285-c7c5-43d8-af66-8c0da28d20cd"/>
+        <field name="created_at" type="timestamp" uuid="6a01f89b-1b00-4214-b125-4af8c2f4d47e"/>
+        <field name="created_by" type="integer" uuid="d7c9ea57-e0eb-4373-970c-d6553074c2d8"/>
+        <field name="deleted_at" type="timestamp" uuid="6cb3ed22-7f2e-421c-b65b-c6c1bbc3d6a1"/>
+        <field name="deleted_by" type="integer" uuid="03787648-98b8-4b9f-ad64-b8aa061a5d82"/>
+        <field name="mediable_id" type="integer" uuid="eb4c61e4-c471-4207-bd04-b38d3f7cd7a0"/>
+        <field name="mediable_type" type="string" size="255" uuid="474a45f8-a77b-4c8a-9d95-cfb16f107c5d"/>
+        <field name="updated_at" type="timestamp" uuid="e806c4b1-1b89-4076-9c21-36599eeed0f5"/>
+        <field name="updated_by" type="integer" uuid="0d2d9662-ec0d-4f3b-9537-aee10754237d"/>
+        <index name="vh_mediable_created_at_updated_at_deleted_at_index" uuid="57ac2504-2006-4038-a4b9-50cf68fbd4fb">
+          <index-field name="created_at" uuid="437f7ead-cee1-44dc-ab06-7b4e12971b6e"/>
+          <index-field name="updated_at" uuid="5297af75-fe94-4f82-b9dc-d4aaecd4905b"/>
+          <index-field name="deleted_at" uuid="527606d4-ccf7-4932-918f-a1809140fdd2"/>
+        </index>
+        <index name="vh_mediable_created_by_index" uuid="ac05ad97-9426-4476-a1ef-6162bbb0ffaf">
+          <index-field name="created_by" uuid="a5003258-2681-45db-a65f-2d6d89e8d6ce"/>
+        </index>
+        <index name="vh_mediable_deleted_by_index" uuid="73d7f452-6e05-46fb-84aa-27ed073a32b4">
+          <index-field name="deleted_by" uuid="a3a4b780-5528-475c-9a9c-65bf2ea14ab7"/>
+        </index>
+        <index name="vh_mediable_mediable_id_index" uuid="07ceb184-bf86-4e8c-9601-13f6e0fa9f5b">
+          <index-field name="mediable_id" uuid="fd31c272-5fcb-4c78-bf19-50ae41e48608"/>
+        </index>
+        <index name="vh_mediable_mediable_type_index" uuid="5d29d2aa-bcf1-4073-a780-1d5ee1e8e6b1">
+          <index-field name="mediable_type" uuid="0ba52880-6682-4167-b783-d91a815e44af"/>
+        </index>
+        <index name="vh_mediable_updated_by_index" uuid="68c5c92b-67b0-4cfb-af2f-f028fc24f28d">
+          <index-field name="updated_by" uuid="0d1adf60-7ea7-414b-9cf1-253892fdbc43"/>
+        </index>
+        <index name="vh_mediable_vh_media_id_index" uuid="babebc7d-babb-4968-8a88-53109464cf95">
+          <index-field name="vh_media_id" uuid="24c6551c-b90f-419f-b0fb-f6fdedc8baff"/>
+        </index>
+        <orm-attributes>
+          <attribute name="table">vh_mediable</attribute>
+        </orm-attributes>
+      </entity>
+      <entity name="\App\Models\VhMedia" local-name="VhMedia" namespace="\App\Models" uuid="3eed6efe-6ed8-4227-8c5b-dd39225c1560">
+        <field name="id" type="bigInteger" required="true" unique="true" primary="true" unsigned="true" auto-increment="true" uuid="790d3271-96ba-4469-8fe3-c4ad054c804f"/>
+        <field name="alt_text" type="string" size="255" uuid="2b379eb6-ab61-4c58-b8ad-b3a16e420528"/>
+        <field name="caption" type="string" size="255" uuid="a2904fde-c99a-4f3a-bea1-f24265ea26e2"/>
+        <field name="created_at" type="timestamp" uuid="63905103-c68a-4f29-a5a0-c12e87420b44"/>
+        <field name="created_by" type="integer" uuid="5ed6fec3-6458-4576-9770-e9ed101d669c"/>
+        <field name="deleted_at" type="timestamp" uuid="46c243df-64ad-427c-bd16-265a1607cad1"/>
+        <field name="deleted_by" type="integer" uuid="fc779216-8aac-4899-b68f-669d4b4715b2"/>
+        <field name="download_requires_login" type="boolean" uuid="0551edac-b9e9-4068-9beb-03291b7bf3bc"/>
+        <field name="download_url" type="string" size="255" uuid="1dcef2e2-f087-4ec4-a90a-fdb5eef447a6"/>
+        <field name="extension" type="string" size="255" uuid="a37223cb-aea3-4f25-8fad-07b754aa00e9"/>
+        <field name="is_downloadable" type="boolean" uuid="5540ce5e-8c8f-49aa-b955-76c839a5e2f3"/>
+        <field name="is_hidden" type="boolean" uuid="120cc535-dd96-4db6-b35d-ecc4bb761318"/>
+        <field name="meta" type="json" uuid="6fea8c92-cc38-472b-bb49-c40664bf8858"/>
+        <field name="mime_type" type="string" size="255" uuid="90ba4426-3545-437f-a51f-58081c19d30e"/>
+        <field name="name" type="string" size="150" uuid="6b8adbd4-2a72-4653-addf-0ade973f683f"/>
+        <field name="original_name" type="string" size="255" uuid="4ad9ed8e-6cb2-4eac-a252-4d55fef46036"/>
+        <field name="path" type="string" size="255" uuid="c3f89bba-0591-4b73-ad00-c690481242b3"/>
+        <field name="size" type="integer" uuid="99a97e90-0ac2-4164-b1b8-229bd7349bc0"/>
+        <field name="slug" type="string" size="150" uuid="ab89ba0e-c421-488f-8a2b-b75c3160a925"/>
+        <field name="title" type="string" size="200" uuid="6e1362ae-3f2b-408f-bbc1-e351863dd413"/>
+        <field name="updated_at" type="timestamp" uuid="4242eb3f-89e6-42ce-9712-8a6322841e5a"/>
+        <field name="updated_by" type="integer" uuid="04c2c629-3cdb-4060-ab1c-16332915fa52"/>
+        <field name="url" type="string" size="255" uuid="66d55468-d9af-4dac-958e-e364df2b6287"/>
+        <field name="url_thumbnail" type="string" size="255" uuid="7eadea34-c9b8-4703-84fa-f874b5a91b8b"/>
+        <field name="uuid" type="char" size="36" uuid="987eb813-e5e7-4c0b-b46a-54d611cb5ea7"/>
+        <index name="vh_medias_caption_index" uuid="e7f452b4-4c3b-42c7-ae51-e51a66993e6c">
+          <index-field name="caption" uuid="cca5a5a8-3765-42b3-a4cf-7b339cf09fc1"/>
+        </index>
+        <index name="vh_medias_created_at_updated_at_deleted_at_index" uuid="71a01d36-50c4-44b3-a34c-3a2c9284583b">
+          <index-field name="created_at" uuid="a9d5ba28-b1aa-4b7f-af03-cea81836e197"/>
+          <index-field name="updated_at" uuid="d5337d00-6891-4436-9e7d-401107f6c37f"/>
+          <index-field name="deleted_at" uuid="7041ed43-ab97-4960-b601-12c0607ac0c3"/>
+        </index>
+        <index name="vh_medias_created_by_index" uuid="fbdb1d24-259e-4fab-a15b-36d0b1ee4eed">
+          <index-field name="created_by" uuid="11518e99-5445-4965-b435-ad86a54f6c57"/>
+        </index>
+        <index name="vh_medias_deleted_by_index" uuid="35629afc-e9f3-4bf5-8147-c0e32af1dc67">
+          <index-field name="deleted_by" uuid="030ffdcf-b48d-46f5-9e66-0d72a979579e"/>
+        </index>
+        <index name="vh_medias_download_requires_login_index" uuid="4b62fdc3-0639-4862-8795-b6763b17d801">
+          <index-field name="download_requires_login" uuid="02209fd3-8233-40a2-a64a-e00b0cee1e08"/>
+        </index>
+        <index name="vh_medias_is_downloadable_index" uuid="e079ca67-d92a-49d4-a33a-a8caa7c3b87d">
+          <index-field name="is_downloadable" uuid="b8e8e665-1af9-4f42-93f2-b8afb935bd6c"/>
+        </index>
+        <index name="vh_medias_name_index" uuid="05d57f87-06ad-4083-b2eb-919011163137">
+          <index-field name="name" uuid="7a467b84-cdc2-488a-b3a9-f15ebee79fff"/>
+        </index>
+        <index name="vh_medias_original_name_index" uuid="bf85c7ce-213b-4865-bf4e-0074329d1b62">
+          <index-field name="original_name" uuid="87cfa92f-39df-4e31-b0a0-50a3fce76d9d"/>
+        </index>
+        <index name="vh_medias_slug_index" uuid="1fc0fe74-cc53-4db3-8aeb-fde9ccc01567">
+          <index-field name="slug" uuid="5498bc76-7443-40c6-989f-c225bb508b39"/>
+        </index>
+        <index name="vh_medias_title_index" uuid="bf1bdfc2-f1ba-4857-a9eb-cd5ff3194d37">
+          <index-field name="title" uuid="1cdbcc60-fd55-497c-a3fa-cc0f1050d8f4"/>
+        </index>
+        <index name="vh_medias_updated_by_index" uuid="2c02983b-6e5b-425b-931a-f129374691d8">
+          <index-field name="updated_by" uuid="85d3534b-1686-41ae-a9be-d5d61c636a68"/>
+        </index>
+        <index name="vh_medias_uuid_index" uuid="10e628a2-b4ed-417f-913e-b452f478c775">
+          <index-field name="uuid" uuid="a75bb786-8ef2-40e4-821c-c2964b36ae4d"/>
+        </index>
+        <orm-attributes>
+          <attribute name="table">vh_medias</attribute>
+        </orm-attributes>
+      </entity>
+    </region>
+    <association from="\App\Models\VhMediable" to="\App\Models\VhMedia" caption="VhMedia VhMediables" owner-alias="vhMediables" inverse-alias="vhMedia" many-owner="true" many-inverse="false" uuid="216b5623-b254-451f-b0fc-08a062080c09">
+      <association-field from="vh_media_id" to="id" uuid="88e8f010-715e-4cc4-81e8-e8ece95866f6"/>
+    </association>
+    <region namespace="\App\Models" caption="Module &amp; Setting" uuid="43051606-14d5-4516-89ac-25065093401d">
+      <entity name="\App\Models\VhModule" local-name="VhModule" namespace="\App\Models" uuid="99a2efe3-5550-4059-8285-63beddf37de9">
+        <field name="id" type="bigInteger" required="true" unique="true" primary="true" unsigned="true" auto-increment="true" uuid="318fccef-0909-47fa-8743-f9a79afc7970"/>
+        <field name="author_name" type="string" size="255" uuid="31cc16b6-253a-4f84-b1dd-820843a007c0"/>
+        <field name="author_website" type="string" size="255" uuid="441dead6-bf82-4b51-b07f-55cf17cb0101"/>
+        <field name="created_at" type="timestamp" uuid="0ae92f27-1c17-4732-a4c1-e00554d60b6b"/>
+        <field name="created_by" type="integer" uuid="3ac8024d-514e-41e6-811b-bf82567a73b1"/>
+        <field name="db_table_prefix" type="string" size="255" uuid="f15d3ca9-c527-4b79-a278-bec9153afa81"/>
+        <field name="deleted_at" type="timestamp" uuid="b7ee64b6-57d3-4aaa-8aa4-25694ec92e9e"/>
+        <field name="deleted_by" type="integer" uuid="204be6a4-ca11-43e9-bc5b-b47e2a44712e"/>
+        <field name="description" type="string" size="255" uuid="a4358e07-4915-4dd6-953a-abf3952fc04c"/>
+        <field name="download_link" type="string" size="255" uuid="09260f31-0d16-42c6-b981-71892f3beb12"/>
+        <field name="excerpt" type="string" size="255" uuid="8dd80624-5145-446f-918a-e7e40f1adf6c"/>
+        <field name="is_active" type="boolean" uuid="f2002b95-0b2a-4a47-95eb-cc5269c7ec8b"/>
+        <field name="is_assets_published" type="boolean" uuid="c6dd22e0-1b86-407e-920f-9be085424780"/>
+        <field name="is_migratable" type="boolean" uuid="7de05050-e0b8-4784-b46b-63e7b60cb189"/>
+        <field name="is_sample_data_available" type="boolean" uuid="dc86fff0-d7c0-4b41-978b-162a26da91fb"/>
+        <field name="is_update_available" type="boolean" uuid="f3e26182-5c93-4c57-929e-973f2f200ada"/>
+        <field name="name" type="string" size="150" uuid="c443aeec-c1e7-423f-8d4e-75ec176b6d21"/>
+        <field name="slug" type="string" size="150" uuid="98b2444c-08d3-40a5-8ec2-f4be6b0c4850"/>
+        <field name="thumbnail" type="string" size="255" uuid="0484b4ac-daa9-4713-8250-98d0f1d3504d"/>
+        <field name="title" type="string" size="200" uuid="3627f141-8ded-4d5e-aa6f-f188a3f047d1"/>
+        <field name="update_checked_at" type="dateTime" uuid="6f620720-9bd7-47da-a8b3-d816bcab894f"/>
+        <field name="updated_at" type="timestamp" uuid="2fe449d5-a3ae-4e9e-9b55-26e18f183abc"/>
+        <field name="updated_by" type="integer" uuid="0fb2ed38-8a55-40f3-8e95-2c257d4dad4c"/>
+        <field name="vaah_url" type="string" size="255" uuid="3b302eb3-8388-4410-befb-8cc9e534c728"/>
+        <field name="version" type="string" size="255" uuid="036a0727-ce1f-4a67-a52b-1009d3c80f1f"/>
+        <field name="version_number" type="integer" uuid="6a9fa664-e142-4231-85d5-62034eed4798"/>
+        <index name="vh_modules_created_at_updated_at_deleted_at_index" uuid="3351e1f0-bd19-4fde-be6d-865474e417bf">
+          <index-field name="created_at" uuid="8093e303-f1a7-4e27-aa10-4648238256bc"/>
+          <index-field name="updated_at" uuid="2ba1fdcc-9584-47be-923d-ad3e8b3473f0"/>
+          <index-field name="deleted_at" uuid="6cb3f21b-a3de-4e20-812b-a9e87a3cc6e7"/>
+        </index>
+        <index name="vh_modules_created_by_index" uuid="2890c7f7-b2d4-463f-a911-d100afd43b2e">
+          <index-field name="created_by" uuid="4bf5b06a-5ed5-4531-a3d9-47d4c5f5c017"/>
+        </index>
+        <index name="vh_modules_deleted_by_index" uuid="fda2700a-3066-4543-bf9a-fa1e70eb1459">
+          <index-field name="deleted_by" uuid="c8471e8d-baf1-40a3-a28d-b90f3dbda51c"/>
+        </index>
+        <index name="vh_modules_is_active_index" uuid="b9a9545d-cd4a-45ef-92fd-f26a26ed332e">
+          <index-field name="is_active" uuid="c0f8af6d-5050-4bfe-a8e1-a1022a7b4494"/>
+        </index>
+        <index name="vh_modules_name_index" uuid="b6c67987-84d6-4e24-92e1-799e3c9a2429">
+          <index-field name="name" uuid="128f2219-2c47-4cea-9566-b77d9c8aa5ff"/>
+        </index>
+        <index name="vh_modules_slug_index" uuid="a3df40b2-a8d3-4345-850a-043ba906cc39">
+          <index-field name="slug" uuid="c2ca0942-1f9b-4a56-87fe-6ce5389c8839"/>
+        </index>
+        <index name="vh_modules_title_index" uuid="25e388bf-5b7c-47b5-8886-3fa55999f222">
+          <index-field name="title" uuid="af48700c-76a3-46dd-a63c-b7fa4d2ff4d2"/>
+        </index>
+        <index name="vh_modules_updated_by_index" uuid="0f1d3390-1388-4185-a627-a0bc5fc6f44f">
+          <index-field name="updated_by" uuid="fe15882d-e68f-44df-8738-751290fe117a"/>
+        </index>
+        <orm-attributes>
+          <attribute name="table">vh_modules</attribute>
+        </orm-attributes>
+      </entity>
+      <entity name="\App\Models\VhSetting" local-name="VhSetting" namespace="\App\Models" uuid="68165a5a-e26b-4ec6-bca6-2e01e4a5c73a">
+        <field name="id" type="bigInteger" required="true" unique="true" primary="true" unsigned="true" auto-increment="true" uuid="165258a4-e484-4522-85bb-8f32a16797ce"/>
+        <field name="category" type="string" size="255" uuid="981d0cc0-b9d7-4144-a0aa-1f03bfcb37c6"/>
+        <field name="created_at" type="timestamp" uuid="4cd2b2a9-e6e3-44bb-bd59-13f2b1043bd3"/>
+        <field name="excerpt" type="string" size="255" uuid="c377e2f8-135e-4760-94e1-320efec50a8a"/>
+        <field name="key" type="string" size="255" uuid="19dc4d8a-ea99-415e-abfb-75995d545056"/>
+        <field name="label" type="string" size="255" uuid="1a51d853-bddc-415e-ae33-0d4c1934ea02"/>
+        <field name="meta" type="json" uuid="54dc3361-29c6-41b9-a8e2-ac6c69f036d7"/>
+        <field name="settingable_id" type="integer" uuid="bca09fb6-a55f-4060-bfec-dec840aea784"/>
+        <field name="settingable_type" type="string" size="255" uuid="982bdea4-e565-4903-ad2d-ab784e01720a"/>
+        <field name="type" type="string" size="255" uuid="f2915824-7a2e-4d83-81a0-637e34db5272"/>
+        <field name="updated_at" type="timestamp" uuid="ac1a1e49-08c8-4e7d-b31c-542c85773544"/>
+        <field name="value" type="text" uuid="96116155-2d7a-4554-909e-fe71863ec224"/>
+        <index name="vh_settings_category_index" uuid="24f6aa02-bfff-4bb7-9d76-649aa126a3ad">
+          <index-field name="category" uuid="235a3a36-ab18-4df3-90f5-2b4cf83dd39a"/>
+        </index>
+        <index name="vh_settings_created_at_updated_at_index" uuid="f14cd40f-c85c-4a9d-b991-c13b95c0cba2">
+          <index-field name="created_at" uuid="53eeacc7-e26b-4243-9c61-4695aa0390d3"/>
+          <index-field name="updated_at" uuid="1c2729ee-012d-4000-9e9c-75bcfe752f58"/>
+        </index>
+        <index name="vh_settings_key_index" uuid="b5e2b128-1f71-484d-941c-2f1db39ce725">
+          <index-field name="key" uuid="1a9742ec-e3e6-4f64-aef5-7291963fecd1"/>
+        </index>
+        <index name="vh_settings_settingable_id_index" uuid="42ad4bd3-e1d4-4341-83c9-f76561b67048">
+          <index-field name="settingable_id" uuid="194420bb-ce5a-4963-a3a6-e844c4c8a736"/>
+        </index>
+        <index name="vh_settings_settingable_type_index" uuid="5aecdd77-e474-4644-a8e5-3755c1fb16ee">
+          <index-field name="settingable_type" uuid="ed7ae1b4-1b3a-478d-a9ba-227717577466"/>
+        </index>
+        <index name="vh_settings_type_index" uuid="485cc4b3-c9f7-4077-b80f-f9a5145ab816">
+          <index-field name="type" uuid="0c914684-dc36-4773-aee4-35309ddbf6c7"/>
+        </index>
+        <orm-attributes>
+          <attribute name="table">vh_settings</attribute>
+        </orm-attributes>
+      </entity>
+    </region>
+    <region namespace="\App\Models" caption="User" uuid="4e0da82a-d2df-4142-91d7-177cfaa6198b">
+      <entity name="\App\Models\VhPermission" local-name="VhPermission" namespace="\App\Models" uuid="fecf8cd0-40e0-43bf-ad3f-572e9f19ae7b">
+        <field name="id" type="bigInteger" required="true" unique="true" primary="true" unsigned="true" auto-increment="true" uuid="d5623519-baab-41f8-844f-4a27bebf59d4"/>
+        <field name="count_roles" type="integer" uuid="31060286-c8d2-43f8-a59b-fc2228d7554a"/>
+        <field name="count_users" type="integer" uuid="912ae87f-8905-4926-8d8a-6bc75ae0adb3"/>
+        <field name="created_at" type="timestamp" uuid="7f7af769-6919-4bbe-a9bc-9b32af750bf5"/>
+        <field name="created_by" type="integer" uuid="268ef0ba-669c-4966-aa15-a98d9e108d63"/>
+        <field name="deleted_at" type="timestamp" uuid="346b2b9d-be1e-437e-8b15-d48514950bda"/>
+        <field name="deleted_by" type="integer" uuid="b4f71644-7665-4711-8088-cbc2ede82d4b"/>
+        <field name="details" type="string" size="255" uuid="e812460a-4a2b-4000-8a3a-724a0a96c138"/>
+        <field name="is_active" type="boolean" uuid="f1e3c3fc-0999-4f60-9ab5-74816c54e23a"/>
+        <field name="module" type="string" size="255" uuid="58cda9af-9513-462d-9078-2db36607b2be"/>
+        <field name="name" type="string" size="150" uuid="55063579-c851-40f3-bf84-b524f86559bd"/>
+        <field name="section" type="string" size="255" uuid="06a77315-49eb-41f4-b195-9fd32f6baa89"/>
+        <field name="slug" type="string" size="150" uuid="4bd9ddd9-3f6c-4ad7-baca-44de10abe829"/>
+        <field name="updated_at" type="timestamp" uuid="aedf9839-1e4e-4afe-a190-8b6c5419629f"/>
+        <field name="updated_by" type="integer" uuid="e875000b-f6ac-4b4b-91b1-bbdc8ce7301f"/>
+        <field name="uuid" type="char" size="36" uuid="21c75a51-72e4-4055-91d8-cd8d7d63d411"/>
+        <index name="vh_permissions_created_at_updated_at_deleted_at_index" uuid="7091ce95-8a65-4548-a5ac-b1fb0ff12f74">
+          <index-field name="created_at" uuid="9dadcd89-34a6-47e2-a4ae-8a1fdbead24c"/>
+          <index-field name="updated_at" uuid="aada5851-b58b-490b-b71e-3fb811032c33"/>
+          <index-field name="deleted_at" uuid="d5259496-1ced-4ab1-b0ef-700ebcc05dc7"/>
+        </index>
+        <index name="vh_permissions_created_by_index" uuid="75f76bb9-ed2b-406a-9dd9-d0ab2ce9257f">
+          <index-field name="created_by" uuid="9e0fe957-43f5-4790-8556-a6d3ac1af6be"/>
+        </index>
+        <index name="vh_permissions_deleted_by_index" uuid="775fe822-852b-44f3-9ce5-fc53f44111c9">
+          <index-field name="deleted_by" uuid="76169998-b93c-4159-84b1-f9a1bcd5ad25"/>
+        </index>
+        <index name="vh_permissions_is_active_index" uuid="dbce8f8e-6deb-4b1c-8ddc-0ac608f7e8b5">
+          <index-field name="is_active" uuid="1fb6bd0e-7f88-4b70-8080-07a300565611"/>
+        </index>
+        <index name="vh_permissions_slug_index" uuid="cca27521-00cd-495b-b340-a756c4b7153d">
+          <index-field name="slug" uuid="efb6040a-d2df-46c0-9ca8-1a7859fe45b1"/>
+        </index>
+        <index name="vh_permissions_updated_by_index" uuid="6a12e948-b34f-4a45-80f3-7a79cdeb4933">
+          <index-field name="updated_by" uuid="37399024-1e60-4f3b-92bd-a6a1fea05e35"/>
+        </index>
+        <orm-attributes>
+          <attribute name="table">vh_permissions</attribute>
+        </orm-attributes>
+      </entity>
+      <entity name="\App\Models\VhRegistration" local-name="VhRegistration" namespace="\App\Models" uuid="921bc2ec-3a60-42ce-aed9-dc628f4cf002">
+        <field name="id" type="bigInteger" required="true" unique="true" primary="true" unsigned="true" auto-increment="true" uuid="101d9129-43a8-4ae8-bafc-aab33d15b1d0"/>
+        <field name="vh_user_id" type="bigInteger" unsigned="true" uuid="326493be-3f71-4c3b-8866-ad1cb78bdc99"/>
+        <field name="activated_at" type="dateTime" uuid="699b9680-766b-4bcc-a8b3-a6647e7d036d"/>
+        <field name="activated_ip" type="string" size="45" uuid="75907054-4909-40e8-a308-081e776a3917"/>
+        <field name="activation_code" type="string" size="255" uuid="a087f0be-f907-4cd7-b950-0afa6c34af06"/>
+        <field name="activation_code_sent_at" type="dateTime" uuid="e6e66272-368b-4c65-87aa-72e9fa12ea1c"/>
+        <field name="alternate_email" type="string" size="255" uuid="30c13579-d1c9-47da-82e0-3f06cd28aac5"/>
+        <field name="avatar_url" type="string" size="255" uuid="d6e50687-f716-4e1a-a2aa-dec710d1e5ef"/>
+        <field name="belong_id" type="bigInteger" unsigned="true" uuid="6441257f-bc73-4315-bf33-e473d0e3c36c"/>
+        <field name="belong_type" type="string" size="255" uuid="a469e00a-8ebf-4fba-86ee-27d91f8afb64"/>
+        <field name="bio" type="mediumText" uuid="23ee0699-b0f3-48f5-a214-afbd0d6c32f3"/>
+        <field name="birth" type="date" uuid="0f3d2250-6405-4896-9a30-a036b3fd32f7"/>
+        <field name="country" type="string" size="255" uuid="1c3ec283-7f31-48a2-98e4-f7a842877794"/>
+        <field name="country_calling_code" type="integer" uuid="f7349d93-596f-4eba-bc72-3b8184b3bb77"/>
+        <field name="country_code" type="string" size="255" uuid="0f70bd91-94ec-4114-9f70-8c9cc26bbef7"/>
+        <field name="created_at" type="timestamp" uuid="11cb5ec5-5d19-4c2d-bea1-e834f16d0e74"/>
+        <field name="created_by" type="integer" uuid="c69d2b9f-d698-438b-91db-4ddeb9c96ac0"/>
+        <field name="created_ip" type="string" size="45" uuid="e2232600-6ae3-40aa-975b-fd83fc33b43e"/>
+        <field name="deleted_at" type="timestamp" uuid="22a5a55a-0d99-4ecc-a0c7-09abd17d7db4"/>
+        <field name="deleted_by" type="integer" uuid="b113da19-8972-48f4-91d3-3a9247674cb1"/>
+        <field name="designation" type="string" size="200" uuid="1b752d8d-7cc4-45fa-9b09-b48756d93bb7"/>
+        <field name="display_name" type="string" size="50" uuid="ada43603-606b-4058-a174-71a6223c82ab"/>
+        <field name="email" type="string" size="150" uuid="252a90bc-fa1e-43ff-ad5b-1e3d7ad54486"/>
+        <field name="first_name" type="string" size="150" uuid="c2c8ef0a-09e4-4ccc-be2d-987fb6e08991"/>
+        <field name="gender" type="string" size="15" uuid="d111d9c8-6800-4e52-aaa2-4c7df940c8ff"/>
+        <field name="invited_at" type="dateTime" uuid="6257441b-7b4b-4a23-a8da-4a2b6a765899"/>
+        <field name="invited_by" type="integer" uuid="2b0ea43d-e092-411f-852c-bcdf9d343f99"/>
+        <field name="invited_for_key" type="string" size="255" uuid="54a74e25-3542-4e75-a993-a71618b21cf2"/>
+        <field name="invited_for_value" type="string" size="255" uuid="0e0540f3-6f29-45b3-9ebf-bcaad2c74fbf"/>
+        <field name="last_name" type="string" size="150" uuid="45bd087b-d629-427f-9e6d-2c65f6c136a1"/>
+        <field name="meta" type="text" uuid="e4ce1b14-36f0-46c8-9d13-d4efb68e549a"/>
+        <field name="middle_name" type="string" size="255" uuid="131fade5-e9ef-4496-a2a4-818865076a23"/>
+        <field name="password" type="string" size="255" uuid="c62aea18-6d41-4e3e-acc9-7d7931cf3333"/>
+        <field name="phone" type="bigInteger" uuid="4b8ab52c-9943-49bd-984c-d5a5646bd3bf"/>
+        <field name="status" type="string" size="255" uuid="044b6bbd-6b2e-4fb5-8089-5ab6a1dc5a27"/>
+        <field name="timezone" type="string" size="255" uuid="f7791663-038d-4286-8f8a-b9c61111243e"/>
+        <field name="title" type="string" size="200" uuid="e72882f8-ca27-4cf0-bca7-b7795655cea4"/>
+        <field name="updated_at" type="timestamp" uuid="f461b6e2-e3f0-454f-9299-0cc64ca4171f"/>
+        <field name="updated_by" type="integer" uuid="5c61f735-7c02-40f7-b201-ff1195fb0699"/>
+        <field name="user_created_at" type="dateTime" uuid="19b75e09-712d-4d1d-b131-76565b96577c"/>
+        <field name="username" type="string" size="150" uuid="75a391c3-e096-4669-b37a-890536415daf"/>
+        <field name="uuid" type="char" size="36" uuid="53b3578b-bc21-4bdf-a0ab-5803a70dc263"/>
+        <index name="vh_registrations_activation_code_index" uuid="439e8f69-5f49-42c2-a282-3add07d6fe95">
+          <index-field name="activation_code" uuid="f7ef85cd-8bd6-452b-b07d-d97a5bbf3371"/>
+        </index>
+        <index name="vh_registrations_belong_type_belong_id_index" uuid="3312e796-a3b2-42d6-b3b5-448cb773d6b2">
+          <index-field name="belong_type" uuid="6bc79afa-bb0e-49e2-9f0c-876f58c2d29c"/>
+          <index-field name="belong_id" uuid="034c901f-9f37-4103-ae15-598f9c90b68e"/>
+        </index>
+        <index name="vh_registrations_created_at_updated_at_deleted_at_index" uuid="0d10fc98-13c2-4d06-8680-5f65652da1c6">
+          <index-field name="created_at" uuid="083740c5-1ca6-4edd-a90f-6b71a8c3e3bc"/>
+          <index-field name="updated_at" uuid="5600d721-f896-4521-af1b-1905b5a95fdf"/>
+          <index-field name="deleted_at" uuid="6bde26cd-b719-46aa-a1a8-3af2f808cb4e"/>
+        </index>
+        <index name="vh_registrations_created_by_index" uuid="f1fca839-f02a-4cc5-8096-b3a18c6c78d1">
+          <index-field name="created_by" uuid="d349e748-34f9-417f-8904-b46a84f50319"/>
+        </index>
+        <index name="vh_registrations_deleted_by_index" uuid="3984b274-94be-43a3-9c56-a6753eccd136">
+          <index-field name="deleted_by" uuid="2c52f83f-57cd-40fb-be0a-4681b000e65b"/>
+        </index>
+        <index name="vh_registrations_designation_index" uuid="fd4d347b-e790-47f8-93b2-c1dca6e9bacb">
+          <index-field name="designation" uuid="a14642f5-173b-4f84-9f8e-ec21d72e5814"/>
+        </index>
+        <index name="vh_registrations_display_name_index" uuid="e2831f84-6094-4c6e-8d6f-c56a7bdfebea">
+          <index-field name="display_name" uuid="a34284da-3400-4385-b909-4eb3a1c438fc"/>
+        </index>
+        <index name="vh_registrations_email_index" uuid="4647abda-bd90-4b66-9332-5f5023c6249b">
+          <index-field name="email" uuid="d624cfdf-e9f0-4f35-85bb-8ab29a45a6be"/>
+        </index>
+        <index name="vh_registrations_first_name_index" uuid="b6fe9f33-d25c-4944-a37b-e042b35b7cab">
+          <index-field name="first_name" uuid="502c5cea-9097-41fc-9adb-679948185b65"/>
+        </index>
+        <index name="vh_registrations_invited_by_index" uuid="58e163f9-83b0-4a0f-aa04-21e464ad7496">
+          <index-field name="invited_by" uuid="79ef25d1-2b34-408f-87e1-8ca53de3bee4"/>
+        </index>
+        <index name="vh_registrations_invited_for_key_index" uuid="8db71235-1f77-4583-87cd-d6f503971860">
+          <index-field name="invited_for_key" uuid="0945526a-cc74-4898-8b14-357ed1ad19c7"/>
+        </index>
+        <index name="vh_registrations_last_name_index" uuid="5475c6a4-951e-4037-883f-2128e69fb9ee">
+          <index-field name="last_name" uuid="6c6952c4-402f-47df-9e8e-426cbd56bfae"/>
+        </index>
+        <index name="vh_registrations_middle_name_index" uuid="17822106-a42a-4d6c-b20b-2105476edc50">
+          <index-field name="middle_name" uuid="d25b6d43-543a-4dba-84a5-e868bfd0c1a9"/>
+        </index>
+        <index name="vh_registrations_phone_index" uuid="3512698a-67fe-42cb-bc07-8dfc54df6ac7">
+          <index-field name="phone" uuid="519aa6b0-38b4-4d75-93e6-6482724bf1f8"/>
+        </index>
+        <index name="vh_registrations_status_index" uuid="9e74ae06-7086-494c-8eca-db3e24e37849">
+          <index-field name="status" uuid="ddbea094-9ac6-47e9-b648-77a903ccfd35"/>
+        </index>
+        <index name="vh_registrations_updated_by_index" uuid="ac40e9c0-84b6-4e59-8471-facd807ab7e2">
+          <index-field name="updated_by" uuid="a1904ab6-6718-4bd3-a27f-503a263c86d8"/>
+        </index>
+        <index name="vh_registrations_username_index" uuid="18a3167c-820e-45d6-9098-421b9351b6c4">
+          <index-field name="username" uuid="8b64dfd8-d6e3-4a8b-98fe-135ebe9ebfd4"/>
+        </index>
+        <index name="vh_registrations_uuid_index" uuid="2d05e364-cd9e-4bb5-bf5c-97c6e0211145">
+          <index-field name="uuid" uuid="a4542647-b3e8-4df4-8ebb-ed5d11dabdca"/>
+        </index>
+        <index name="vh_registrations_vh_user_id_index" uuid="e0e99b28-a965-471c-9bf6-b61dffaf6b42">
+          <index-field name="vh_user_id" uuid="9e41fb10-7b67-4b41-bfce-d4ce1ab21523"/>
+        </index>
+        <orm-attributes>
+          <attribute name="table">vh_registrations</attribute>
+        </orm-attributes>
+      </entity>
+      <entity name="\App\Models\VhRolePermission" local-name="VhRolePermission" namespace="\App\Models" uuid="7e835788-b484-403d-b829-e063fe7d26d2">
+        <field name="id" type="bigInteger" required="true" unique="true" primary="true" unsigned="true" auto-increment="true" uuid="e2b81190-03b3-49a7-92a6-84f2480c3782"/>
+        <field name="vh_permission_id" type="bigInteger" unsigned="true" uuid="575899fc-f2eb-4a85-989a-b5caaf8c85a4"/>
+        <field name="vh_role_id" type="bigInteger" unsigned="true" uuid="e9092e9f-4151-403e-9d26-dff0f7006bfe"/>
+        <field name="created_at" type="timestamp" uuid="8db907d1-2b30-4ca6-9159-5a338581e3c4"/>
+        <field name="created_by" type="integer" uuid="8ef1c671-f29a-4751-a145-c0e25837b567"/>
+        <field name="deleted_at" type="timestamp" uuid="59ab98a7-d429-42ed-8b72-ddbc4a92ddad"/>
+        <field name="deleted_by" type="integer" uuid="a1e0bfd8-66b5-44c0-a17a-09df50430120"/>
+        <field name="is_active" type="boolean" uuid="8c793aba-0619-4bec-aef6-679f6a8e63e7"/>
+        <field name="updated_at" type="timestamp" uuid="40927fb2-31d2-4662-8bb6-86c5c73cf54d"/>
+        <field name="updated_by" type="integer" uuid="7e0276bf-aadf-4b97-b2e1-7aae0c7afec6"/>
+        <index name="vh_role_permissions_created_at_updated_at_deleted_at_index" uuid="0a023a76-f902-4bb6-b166-ae2729fa5831">
+          <index-field name="created_at" uuid="03c94a0a-0a26-42e6-9bbc-efdd011fbfaa"/>
+          <index-field name="updated_at" uuid="8f67222a-7062-48e3-987d-5110200c4458"/>
+          <index-field name="deleted_at" uuid="31482f76-2c60-4260-89d3-31fcc7290e4c"/>
+        </index>
+        <index name="vh_role_permissions_created_by_index" uuid="afd622e6-664d-4449-a4a9-848e14e05de5">
+          <index-field name="created_by" uuid="21260785-35b5-4f2a-807f-e8f216941f30"/>
+        </index>
+        <index name="vh_role_permissions_deleted_by_index" uuid="e36593e0-46f6-4431-8a52-e80147aefbb0">
+          <index-field name="deleted_by" uuid="82ad45d0-fa46-4dee-ac1a-0a42b2e74052"/>
+        </index>
+        <index name="vh_role_permissions_is_active_index" uuid="3bd5e905-efdb-4ba2-baae-7c1e3cdac959">
+          <index-field name="is_active" uuid="1786e61a-54e9-470e-b891-e9cc22cdb46a"/>
+        </index>
+        <index name="vh_role_permissions_updated_by_index" uuid="d08a1221-a167-4e7c-973a-acd23bc4a379">
+          <index-field name="updated_by" uuid="f3b96120-c3a0-4b2a-8a7f-efa894c30125"/>
+        </index>
+        <index name="vh_role_permissions_vh_permission_id_index" uuid="637a2533-3ee6-43a7-95c1-ab5c244bf849">
+          <index-field name="vh_permission_id" uuid="bd959f97-3044-4e72-ab69-d577e6ebe3ad"/>
+        </index>
+        <index name="vh_role_permissions_vh_role_id_index" uuid="ba92a2f4-a70f-4d8c-a1f8-b91445de8c97">
+          <index-field name="vh_role_id" uuid="9c8530b0-56c5-48fd-970a-b1ce3b8cb33f"/>
+        </index>
+        <orm-attributes>
+          <attribute name="table">vh_role_permissions</attribute>
+        </orm-attributes>
+      </entity>
+      <entity name="\App\Models\VhRole" local-name="VhRole" namespace="\App\Models" uuid="e957c0b4-c015-4dcd-8a04-72188c28c629">
+        <field name="id" type="bigInteger" required="true" unique="true" primary="true" unsigned="true" auto-increment="true" uuid="fa04855d-a07c-48c2-8285-f065c21dbb0c"/>
+        <field name="belong_id" type="bigInteger" unsigned="true" uuid="f603e919-c428-4558-be4d-6597da2801b9"/>
+        <field name="belong_type" type="string" size="255" uuid="6a3dbe94-547c-469a-bec7-7bef96737263"/>
+        <field name="count_permissions" type="integer" uuid="53c22e4a-50fc-4073-b028-2c71d11b8a5f"/>
+        <field name="count_users" type="integer" uuid="4337cd38-d03f-4af2-974c-729e6145d71e"/>
+        <field name="created_at" type="timestamp" uuid="105d1ca1-43d8-4eab-bebc-177d829dbbba"/>
+        <field name="created_by" type="integer" uuid="58314bcd-7b7f-42e6-b75f-cf288236693f"/>
+        <field name="deleted_at" type="timestamp" uuid="c421f22e-4bb0-4878-9ac4-b4b66f458bd1"/>
+        <field name="deleted_by" type="integer" uuid="af10afbe-f4a1-4418-8962-0aef029c53fb"/>
+        <field name="details" type="string" size="255" uuid="b67ba288-f374-4be2-983a-407f3d472368"/>
+        <field name="is_active" type="boolean" uuid="8acfda5b-2930-406c-acb7-37c0b2a8e53e"/>
+        <field name="name" type="string" size="150" uuid="54ea4d24-a2a2-4376-a678-333b252900c2"/>
+        <field name="slug" type="string" size="150" uuid="27f37fba-7e18-4bda-8c89-0fd1c6f244c7"/>
+        <field name="updated_at" type="timestamp" uuid="51e9c131-7f30-4cf5-b86f-4f3adb1254fd"/>
+        <field name="updated_by" type="integer" uuid="47472e34-029b-4c87-a71f-2905b6e554e4"/>
+        <field name="uuid" type="char" size="36" uuid="115e9b8c-dd38-4147-934d-9f9877bb85bf"/>
+        <index name="vh_roles_belong_type_belong_id_index" uuid="475174c1-edd5-4c37-8c99-cc4329a27cde">
+          <index-field name="belong_type" uuid="fae5253e-4dd1-4e00-b1b1-a5878747db31"/>
+          <index-field name="belong_id" uuid="48d7436d-00e7-4993-afc9-13bf25885912"/>
+        </index>
+        <index name="vh_roles_created_at_updated_at_deleted_at_index" uuid="e6399139-e8a9-4abc-864b-588633a28e62">
+          <index-field name="created_at" uuid="167d0b28-bc41-4893-ac01-46ec5b6daa22"/>
+          <index-field name="updated_at" uuid="b6dc2baa-0a5d-40f4-9381-d6d6a748dfff"/>
+          <index-field name="deleted_at" uuid="f2dd7731-e2a1-4bdb-8cca-af0b98f7dec0"/>
+        </index>
+        <index name="vh_roles_created_by_index" uuid="577c42e9-613e-49f7-a7b3-d2e27a740392">
+          <index-field name="created_by" uuid="ffdc33ab-8e37-46b0-ae9d-0b90027683f4"/>
+        </index>
+        <index name="vh_roles_deleted_by_index" uuid="5c75d677-8e66-4be9-834c-9f65783af1de">
+          <index-field name="deleted_by" uuid="250e4c20-0af1-4c0d-ab9a-afbd6a8f7918"/>
+        </index>
+        <index name="vh_roles_slug_index" uuid="e772f5fa-04de-409c-bba4-18f03e3fd7d3">
+          <index-field name="slug" uuid="da0f793c-9671-4be7-9d0d-ca29637811ae"/>
+        </index>
+        <index name="vh_roles_updated_by_index" uuid="ae91f235-b28c-4df3-9a4d-217f303f6146">
+          <index-field name="updated_by" uuid="6ecb6082-22b3-46b9-a5db-0cfe1a5b4906"/>
+        </index>
+        <orm-attributes>
+          <attribute name="table">vh_roles</attribute>
+        </orm-attributes>
+      </entity>
+      <entity name="\App\Models\VhUserAuthorization" local-name="VhUserAuthorization" namespace="\App\Models" uuid="3df1f0f7-f357-4065-b9ec-6fc70c0b2f77">
+        <field name="id" type="bigInteger" required="true" unique="true" primary="true" unsigned="true" auto-increment="true" uuid="c3bb0bf6-9a19-4413-9844-5768aaf152cc"/>
+        <field name="vh_user_id" type="bigInteger" unsigned="true" uuid="24977e0d-5ada-4e10-8d37-1670a79a06e0"/>
+        <field name="authorization_id" type="string" size="255" uuid="8baa80a2-633e-4c46-8aa5-a73f7336bded"/>
+        <field name="created_at" type="timestamp" uuid="eb50a355-88b8-46a3-9273-a68d2780df1a"/>
+        <field name="created_by" type="integer" uuid="08b9333e-9ee0-441d-8325-31419e3aa623"/>
+        <field name="deleted_at" type="timestamp" uuid="8658eea0-c91d-4100-8cca-186798b5fbc9"/>
+        <field name="deleted_by" type="integer" uuid="38e21cb6-ab92-4768-b8a1-f9ce6532194e"/>
+        <field name="last_authorization_at" type="dateTime" uuid="c7138ca5-71b6-40d0-9c8f-5deb7453de73"/>
+        <field name="meta" type="text" uuid="a6089afa-4708-42a3-bde1-9b2a0fcca6b7"/>
+        <field name="name" type="string" size="150" uuid="254c2be6-25d3-40cf-8e20-df34bd243c5d"/>
+        <field name="slug" type="string" size="150" uuid="e61cc825-34a6-4c1e-b282-581478a21811"/>
+        <field name="updated_at" type="timestamp" uuid="77f1b2fe-7e01-45b8-809e-2054c2281475"/>
+        <field name="updated_by" type="integer" uuid="fdfb8692-14e7-4798-b0c3-4bab3a28bbb0"/>
+        <index name="vh_user_authorizations_created_at_updated_at_deleted_at_index" uuid="4661b885-4602-407a-a4f8-83fbf62e1d90">
+          <index-field name="created_at" uuid="79044574-7266-47bf-b0c0-36d5ae1b1477"/>
+          <index-field name="updated_at" uuid="00e29d66-7653-479d-b133-2b037c790b36"/>
+          <index-field name="deleted_at" uuid="92f84540-6f57-4235-879e-da0f64f60385"/>
+        </index>
+        <index name="vh_user_authorizations_created_by_index" uuid="62053f2c-1839-4c73-8def-3b5fd3886ecc">
+          <index-field name="created_by" uuid="84893526-6dc2-4fab-bc2a-4dc58121ce56"/>
+        </index>
+        <index name="vh_user_authorizations_deleted_by_index" uuid="0cab30fc-6afb-4db6-b6c2-ef3d13d296dc">
+          <index-field name="deleted_by" uuid="1417be4d-5330-4869-aa30-39af8b3f65f8"/>
+        </index>
+        <index name="vh_user_authorizations_updated_by_index" uuid="f0323f98-863e-4ef4-bcd2-026aed0c2937">
+          <index-field name="updated_by" uuid="4531f8b1-b0cd-43f0-898e-0b5331cd5a41"/>
+        </index>
+        <orm-attributes>
+          <attribute name="table">vh_user_authorizations</attribute>
+        </orm-attributes>
+      </entity>
+      <entity name="\App\Models\VhUserRole" local-name="VhUserRole" namespace="\App\Models" uuid="be52d770-b9e9-4450-8ef8-008f33e79032">
+        <field name="id" type="bigInteger" required="true" unique="true" primary="true" unsigned="true" auto-increment="true" uuid="68c35129-ad39-4567-988c-9310e448732b"/>
+        <field name="vh_user_id" type="bigInteger" unsigned="true" uuid="f39fa04f-9ff5-4f6f-8d73-b43b9dd8b799"/>
+        <field name="vh_role_id" type="bigInteger" unsigned="true" uuid="84145708-51e7-457e-a20d-d61648e35d32"/>
+        <field name="created_at" type="timestamp" uuid="754e08c6-7fa5-43c9-8276-0314a113ee01"/>
+        <field name="created_by" type="integer" uuid="7fedf489-f90a-4a27-8fb9-132820782cde"/>
+        <field name="deleted_at" type="timestamp" uuid="ff08fed5-5c68-41cc-9654-9ce595ffa30a"/>
+        <field name="deleted_by" type="integer" uuid="fb0544f2-afe6-4e59-81fc-ce177fda4bb5"/>
+        <field name="is_active" type="boolean" uuid="d93f1d13-e99a-441f-9c6f-7e00077d51e7"/>
+        <field name="updated_at" type="timestamp" uuid="8fae09db-c0ad-4532-8257-f89159c8bed5"/>
+        <field name="updated_by" type="integer" uuid="48d93fec-83cb-4e25-a556-5c24108ce402"/>
+        <index name="vh_user_roles_created_at_updated_at_deleted_at_index" uuid="fbb44db0-d23e-440c-9acf-a375c4ee6d3c">
+          <index-field name="created_at" uuid="1ff1c643-c67b-4886-9f1e-84ef32927d71"/>
+          <index-field name="updated_at" uuid="b4ff777a-3494-4db1-86b2-001228df243b"/>
+          <index-field name="deleted_at" uuid="27814180-9735-4ab8-ab3b-0fe6e92127fa"/>
+        </index>
+        <index name="vh_user_roles_created_by_index" uuid="9c04c003-1516-4c51-bfde-87c2cac630a7">
+          <index-field name="created_by" uuid="39961034-2964-4ce4-acab-90e30c4ca229"/>
+        </index>
+        <index name="vh_user_roles_deleted_by_index" uuid="94889b7c-a54d-4e22-9281-f60ebe55e409">
+          <index-field name="deleted_by" uuid="b84e7cf4-49a7-43d8-bbac-6f7b62bcfc3d"/>
+        </index>
+        <index name="vh_user_roles_is_active_index" uuid="cc52baf3-742a-4c37-aa02-be18288b159a">
+          <index-field name="is_active" uuid="634d0874-1907-4fa0-b957-38cf0229920f"/>
+        </index>
+        <index name="vh_user_roles_updated_by_index" uuid="300f6042-b99e-4aa1-9828-24be45cb15af">
+          <index-field name="updated_by" uuid="8fa83c8d-312f-4a8b-bb30-242b4931c167"/>
+        </index>
+        <index name="vh_user_roles_vh_role_id_index" uuid="02a1b42a-266a-4ab1-b3a5-5bf4a6b9a54b">
+          <index-field name="vh_role_id" uuid="73e06480-66d1-4417-9e64-778cb961dbf9"/>
+        </index>
+        <index name="vh_user_roles_vh_user_id_index" uuid="7b667798-ff38-4d10-994c-cc5c80483ded">
+          <index-field name="vh_user_id" uuid="37239108-af94-4782-8566-d46c955c4334"/>
+        </index>
+        <orm-attributes>
+          <attribute name="table">vh_user_roles</attribute>
+        </orm-attributes>
+      </entity>
+      <entity name="\App\Models\VhUser" local-name="VhUser" namespace="\App\Models" uuid="6e335a54-3adc-4f87-be5a-11c2c47ea996">
+        <field name="id" type="bigInteger" required="true" unique="true" primary="true" unsigned="true" auto-increment="true" uuid="2c2c9367-2410-4494-bfac-0dc6753a64dc"/>
+        <field name="activated_at" type="dateTime" uuid="9af45c8b-9492-4133-bcf0-606e26e195fe"/>
+        <field name="affiliate_code" type="string" size="255" uuid="0b9eabc3-a412-43be-8d22-d6deb2f6984f"/>
+        <field name="affiliate_code_used_at" type="dateTime" uuid="0621b7d0-6af7-4ac0-a812-f633ea11d74d"/>
+        <field name="alternate_email" type="string" size="255" uuid="c9ed9500-e9fa-43a7-8a8e-099ef7555743"/>
+        <field name="api_token" type="string" size="255" uuid="f98a6782-f1d0-4a42-9a30-48992b4c6432"/>
+        <field name="api_token_used_at" type="dateTime" uuid="9a94077f-8ee7-4009-97a0-35ef78dc970e"/>
+        <field name="api_token_used_ip" type="string" size="45" uuid="de1d86d6-97a9-441b-91e5-cb7781e6e8bb"/>
+        <field name="avatar_url" type="string" size="255" uuid="e782707c-aa6d-4a2c-8540-48c8ad0931ef"/>
+        <field name="bio" type="mediumText" uuid="5ce2723b-1abc-445e-a90a-47811775d510"/>
+        <field name="birth" type="date" uuid="399f764d-58be-41dd-8214-bb162dfd11a7"/>
+        <field name="country" type="string" size="255" uuid="03fdc2f9-078c-46f2-b062-4c9b3172cf2c"/>
+        <field name="country_calling_code" type="integer" uuid="13df63c3-18a2-4295-b1b4-777b142f1e0d"/>
+        <field name="country_code" type="string" size="255" uuid="674f2828-7ba5-4d34-8e64-b004a3ab3db8"/>
+        <field name="created_ip" type="string" size="45" uuid="cfc536d8-3c14-40e9-8f79-2e137d459f1d"/>
+        <field name="designation" type="string" size="200" uuid="41d8fb6a-c34f-4893-9606-d4601f2ede73"/>
+        <field name="display_name" type="string" size="50" uuid="210bc550-0056-4f39-92b7-2c8096f8e58c"/>
+        <field name="email" type="string" size="150" uuid="21ea94c8-7026-42a7-b68f-afc6e75f6425"/>
+        <field name="first_name" type="string" size="150" uuid="d892837a-b863-42e0-b969-937d69b76699"/>
+        <field name="foreign_user_id" type="integer" uuid="c8641781-51f0-49b1-a9c8-5965cd12be61"/>
+        <field name="gender" type="string" size="15" uuid="eee565e7-b3d4-47e9-9ce6-7ebb0c4cf736"/>
+        <field name="is_active" type="boolean" uuid="210624da-6e48-4cb7-91de-f44667f3aee6"/>
+        <field name="last_login_at" type="dateTime" uuid="149f49d1-0a8d-48ca-915c-92b812afaedc"/>
+        <field name="last_login_ip" type="string" size="45" uuid="ec02c85e-008c-471f-8a91-8b6cc6a4a627"/>
+        <field name="last_name" type="string" size="150" uuid="b88fe02e-df55-410d-86c6-7a3a51d9f971"/>
+        <field name="login_otp" type="string" size="255" uuid="3a3c7b86-a41d-4bc6-8975-a9377880aacc"/>
+        <field name="meta" type="text" uuid="d280d014-1685-41c8-9afa-436f8d65a14d"/>
+        <field name="middle_name" type="string" size="255" uuid="359ab9cc-b830-4c75-a458-7309994f6529"/>
+        <field name="password" type="string" size="255" uuid="c81e18b9-4104-4853-a0c8-450f592ec090"/>
+        <field name="phone" type="bigInteger" uuid="20aafc8c-1783-41a2-8c28-356e4d36c2db"/>
+        <field name="registration_id" type="integer" uuid="d3d543e1-9cff-4250-b572-614e4f2291d8"/>
+        <field name="remember_token" type="string" size="255" uuid="00cc6f1a-84ca-4bfa-9eac-20371cb3bbfd"/>
+        <field name="reset_password_code" type="string" size="255" uuid="b36b42ee-b733-4594-aa7a-e975150bf496"/>
+        <field name="reset_password_code_sent_at" type="dateTime" uuid="a7ce18e0-ea34-4d58-95cb-2c72945391ea"/>
+        <field name="reset_password_code_used_at" type="dateTime" uuid="185de07d-dbd0-4864-9941-3bb8d359e834"/>
+        <field name="status" type="string" size="255" uuid="06c0943c-2cb8-421c-97e7-b850f97ae55f"/>
+        <field name="timezone" type="string" size="255" uuid="504dd4f7-0c1d-4476-ac64-dbd9de1b68d9"/>
+        <field name="title" type="string" size="200" uuid="89b54113-9ce0-409d-bc3a-21b8351b38c2"/>
+        <field name="username" type="string" size="150" uuid="97df3a13-63b2-4107-a0da-5cb0c03fea5d"/>
+        <field name="uuid" type="char" size="36" uuid="bbfb88e6-baf1-4c61-9929-aeb98a5a222d"/>
+        <field name="website" type="string" size="255" uuid="1253defb-806f-4ad5-9f26-2c10ac75ed6c"/>
+        <field name="created_at" type="timestamp" uuid="dd798a12-22b2-47eb-9bfd-e2ac0c830fba"/>
+        <field name="created_by" type="integer" uuid="9e70ec1c-3313-46b0-9767-c40ff9d74592"/>
+        <field name="updated_at" type="timestamp" uuid="5b2cdfdc-4571-42a9-abd0-2d95419a8824"/>
+        <field name="updated_by" type="integer" uuid="7252fb62-59a2-4503-98ac-15b4c4079cbc"/>
+        <field name="deleted_at" type="timestamp" uuid="33f440d6-d090-4a88-afaf-13a08b2b2373"/>
+        <field name="deleted_by" type="integer" uuid="4460c083-50dd-4ed6-b9ca-492849f13685"/>
+        <index name="vh_users_api_token_index" uuid="9fbba90a-b0df-4e39-9708-8f3b7b994ef6">
+          <index-field name="api_token" uuid="87a19ef0-89c1-4764-86dd-2e5e7f441b7e"/>
+        </index>
+        <index name="vh_users_created_at_updated_at_deleted_at_index" uuid="34e781b7-94f8-43b1-80f1-4ed67de41731">
+          <index-field name="created_at" uuid="7d0b8420-a5bc-4cbc-a262-e8f984e8b412"/>
+          <index-field name="updated_at" uuid="04bd47bd-1693-47ad-9faa-8e6f3484806e"/>
+          <index-field name="deleted_at" uuid="231560b0-3535-4a6d-89a1-5d73847038ea"/>
+        </index>
+        <index name="vh_users_created_by_index" uuid="8cc9bac6-bdc7-4de5-8369-c42b563ea710">
+          <index-field name="created_by" uuid="c6bc1cf4-194f-4c25-842c-d3b4cd7c83f6"/>
+        </index>
+        <index name="vh_users_deleted_by_index" uuid="7dd05287-3409-47d3-a696-ad307517bca0">
+          <index-field name="deleted_by" uuid="b4cceb7a-00ea-47b5-bcfa-f54df6f7b1e1"/>
+        </index>
+        <index name="vh_users_designation_index" uuid="38aba8d8-8334-4b7c-b12a-36253769a9a8">
+          <index-field name="designation" uuid="eb0c2e5a-1519-4654-b857-4914c806715d"/>
+        </index>
+        <index name="vh_users_email_index" uuid="a0c49807-6564-4e1e-a3b4-37b791a92a1b">
+          <index-field name="email" uuid="ee47ae24-fea6-491b-ae51-4dd5c2bba0e0"/>
+        </index>
+        <index name="vh_users_first_name_index" uuid="97653393-78ee-42c6-addf-e6d3328cc9b1">
+          <index-field name="first_name" uuid="b56add93-3079-4591-9704-c931dce7c492"/>
+        </index>
+        <index name="vh_users_foreign_user_id_index" uuid="f2c11abb-c094-4f52-8dac-56007f50bb59">
+          <index-field name="foreign_user_id" uuid="803fa009-5de4-401b-8018-814733ea3ccb"/>
+        </index>
+        <index name="vh_users_is_active_index" uuid="1de4b683-85b2-4db9-8e23-283d91fcbb07">
+          <index-field name="is_active" uuid="96bced65-4f77-4e78-b00d-860f50ddefff"/>
+        </index>
+        <index name="vh_users_last_name_index" uuid="9bad695d-b195-442c-81ac-7e644c4a3b9d">
+          <index-field name="last_name" uuid="2b3a4865-1148-4121-bccd-8be5651d9fe1"/>
+        </index>
+        <index name="vh_users_login_otp_index" uuid="cd809944-082a-4874-937e-c6628796c97b">
+          <index-field name="login_otp" uuid="f7416f90-c438-4fdc-b2b3-693506bd8f28"/>
+        </index>
+        <index name="vh_users_middle_name_index" uuid="bc643f52-1d87-4d73-b602-4e0f63d83724">
+          <index-field name="middle_name" uuid="de3e82fd-e1b3-4acd-b4bc-58dd2cfb4555"/>
+        </index>
+        <index name="vh_users_password_index" uuid="f62ef749-25a0-4393-b8bc-2470d890327e">
+          <index-field name="password" uuid="71bbcd48-d612-4e49-bb90-9cfa17fb5d8f"/>
+        </index>
+        <index name="vh_users_phone_index" uuid="1f69c946-1d59-4d70-bcec-3c9021fc7043">
+          <index-field name="phone" uuid="f1a800e2-0e53-4e08-842a-5752f9632298"/>
+        </index>
+        <index name="vh_users_registration_id_index" uuid="54446a34-9b3e-4c31-b842-03d736912c9c">
+          <index-field name="registration_id" uuid="036d5783-a492-4ccc-8461-ed7e98b0ba7a"/>
+        </index>
+        <index name="vh_users_status_index" uuid="acac74af-51c5-4d87-9a3f-5d514b37c6bd">
+          <index-field name="status" uuid="59c4b287-15e4-4569-a3ea-b05c04c02d81"/>
+        </index>
+        <index name="vh_users_updated_by_index" uuid="d1039106-8584-4743-86b9-94fea0bf7ea5">
+          <index-field name="updated_by" uuid="ca0fbcb3-3a09-426e-a2d5-2052f6fa701a"/>
+        </index>
+        <index name="vh_users_username_index" uuid="1c92ee22-4ede-4e1a-890f-a6b53be18e73">
+          <index-field name="username" uuid="8c9e5213-1857-4d43-ac29-ab11ef9b10e6"/>
+        </index>
+        <index name="vh_users_uuid_index" uuid="2fee2f81-6739-4d75-b573-51a11e454a2c">
+          <index-field name="uuid" uuid="9cb61864-4014-4c12-99b0-77cbc57fa7b9"/>
+        </index>
+        <orm-attributes>
+          <attribute name="table">vh_users</attribute>
+        </orm-attributes>
+      </entity>
+    </region>
+    <association from="\App\Models\VhRegistration" to="\App\Models\VhUser" caption="VhUser VhRegistrations" owner-alias="vhRegistrations" inverse-alias="vhUser" many-owner="true" many-inverse="false" uuid="da6a2743-ec7f-46dc-a980-e35aa3524897">
+      <association-field from="vh_user_id" to="id" uuid="cf8e05a7-5ae5-4a39-9cc1-3ff2c97ae689"/>
+    </association>
+    <association from="\App\Models\VhRolePermission" to="\App\Models\VhRole" caption="VhRole VhRolePermissions" owner-alias="vhRolePermissions" inverse-alias="vhRole" many-owner="true" many-inverse="false" uuid="13b0b330-1dc5-4408-bccd-d091be77a86a">
+      <association-field from="vh_role_id" to="id" uuid="6eb0cc26-c58e-41e3-8ad4-2466755dd1a7"/>
+    </association>
+    <association from="\App\Models\VhRolePermission" to="\App\Models\VhPermission" caption="VhPermission VhRolePermissions" owner-alias="vhRolePermissions" inverse-alias="vhPermission" many-owner="true" many-inverse="false" uuid="252de02c-fea1-40be-9269-b8b3548a7e9e">
+      <association-field from="vh_permission_id" to="id" uuid="fb40ecfc-d0d8-4e82-a064-301f403df1d0"/>
+    </association>
+    <association from="\App\Models\VhUserAuthorization" to="\App\Models\VhUser" caption="VhUser VhUserAuthorizations" owner-alias="vhUserAuthorizations" inverse-alias="vhUser" many-owner="true" many-inverse="false" uuid="41ca633e-7134-4f74-bd9a-8421a917dc90">
+      <association-field from="vh_user_id" to="id" uuid="4b466d99-c7f4-43b5-9800-6898526a91e8"/>
+    </association>
+    <association from="\App\Models\VhUserRole" to="\App\Models\VhRole" caption="VhRole VhUserRoles" owner-alias="vhUserRoles" inverse-alias="vhRole" many-owner="true" many-inverse="false" uuid="16e74464-9148-497f-b31b-fdec7a8e5552">
+      <association-field from="vh_role_id" to="id" uuid="fb6faf67-52b8-48d9-b70f-676aae84dc36"/>
+    </association>
+    <association from="\App\Models\VhUserRole" to="\App\Models\VhUser" caption="VhUser VhUserRoles" owner-alias="vhUserRoles" inverse-alias="vhUser" many-owner="true" many-inverse="false" uuid="4330b860-3634-4217-9559-a8b4eb5672c4">
+      <association-field from="vh_user_id" to="id" uuid="fa1fffd8-493b-4d4e-af4f-cc3e5f737cb1"/>
+    </association>
+    <region namespace="\App\Models" caption="Utility" uuid="679f0da5-6a39-475c-aa90-a6d42aad2499">
+      <entity name="\App\Models\FailedJob" local-name="FailedJob" namespace="\App\Models" uuid="86e7d6d3-db56-4a9f-a237-c1b28da030d4">
+        <field name="id" type="bigInteger" required="true" unique="true" primary="true" unsigned="true" auto-increment="true" uuid="5f264b54-af8c-4bf0-bf23-d96a5275e3cf"/>
+        <field name="connection" type="text" required="true" uuid="cde1fa4a-630c-441a-bbb4-e57817f24e0d"/>
+        <field name="exception" type="longText" required="true" uuid="d1751385-49fd-463b-a42d-d2a43c44a503"/>
+        <field name="failed_at" type="timestamp" default="NOW()" required="true" uuid="f8b9fc29-0059-4f1d-a875-4c519c11bdfe"/>
+        <field name="payload" type="longText" required="true" uuid="f21efd75-55b1-4217-992b-1a634b3ea36a"/>
+        <field name="queue" type="text" required="true" uuid="89a27ad5-a16d-4338-947d-e281ef1047ff"/>
+        <field name="uuid" type="string" size="255" required="true" uuid="f32327e8-c711-4e22-a11c-a958f3239a16"/>
+        <index name="failed_jobs_uuid_unique" unique="true" uuid="339dcf5b-e537-4098-9367-da27db19b58c">
+          <index-field name="uuid" uuid="391493ca-55f4-4115-a990-f234cd60d14c"/>
+        </index>
+        <orm-attributes>
+          <attribute name="table">failed_jobs</attribute>
+        </orm-attributes>
+      </entity>
+      <entity name="\App\Models\JobBatch" local-name="JobBatch" namespace="\App\Models" uuid="315146cf-4652-4f08-8df7-b77e2b4d95cc">
+        <field name="id" type="string" size="255" required="true" unique="true" primary="true" uuid="2984b14e-1f69-4073-bbd4-0ce4312ba356"/>
+        <field name="cancelled_at" type="integer" uuid="c8398cd1-3d21-40d9-8a2d-d90af4556dd8"/>
+        <field name="created_at" type="integer" required="true" uuid="45fcd8f6-9ad9-4129-9b2c-92ff4fa291c1"/>
+        <field name="failed_job_ids" type="text" required="true" uuid="c78e1fff-103f-4b46-8827-40d3b67e7c2a"/>
+        <field name="failed_jobs" type="integer" required="true" uuid="021abe7f-a153-4e5d-bdfb-2ea69e34bee0"/>
+        <field name="finished_at" type="integer" uuid="f719ac9e-407a-4af2-a811-2fb13bf6774e"/>
+        <field name="name" type="string" size="255" required="true" uuid="0b64d969-9596-43c8-a73a-982fbc16bbb8"/>
+        <field name="options" type="mediumText" uuid="366f1d28-5f93-4f87-98b7-1a1e4af5a09c"/>
+        <field name="pending_jobs" type="integer" required="true" uuid="5448bee9-25eb-4549-8718-2e84d2e28e88"/>
+        <field name="total_jobs" type="integer" required="true" uuid="386670de-0caf-463a-b95b-07d589dccaf0"/>
+        <orm-attributes>
+          <attribute name="table">job_batches</attribute>
+        </orm-attributes>
+      </entity>
+      <entity name="\App\Models\Job" local-name="Job" namespace="\App\Models" uuid="f7b34f99-f2fa-4a02-a64d-5cd99581011a">
+        <field name="id" type="bigInteger" required="true" unique="true" primary="true" unsigned="true" auto-increment="true" uuid="c26c4df9-f34f-4b6f-9a25-9ee22660bf52"/>
+        <field name="attempts" type="tinyInteger" required="true" unsigned="true" uuid="fae0e10f-e237-4b4a-b5b7-4d4ebfa69692"/>
+        <field name="available_at" type="integer" required="true" unsigned="true" uuid="e915468f-9747-435a-bd5a-8a0ee7fa72b0"/>
+        <field name="created_at" type="integer" required="true" unsigned="true" uuid="eeaffa72-024b-4ac7-8713-e3e90f2b2038"/>
+        <field name="payload" type="longText" required="true" uuid="1f244c3f-7f75-4a87-9680-207c7c34e4d8"/>
+        <field name="queue" type="string" size="255" required="true" uuid="174fec04-f7a3-4a5d-af3c-34c86ff271f2"/>
+        <field name="reserved_at" type="integer" unsigned="true" uuid="7552992e-c208-4ed9-bb9d-0f9b5e60e0c8"/>
+        <index name="jobs_queue_index" uuid="787b394d-3048-4522-afce-912a2333a73d">
+          <index-field name="queue" uuid="c36833d8-f3de-4b14-b06c-9fba653effcb"/>
+        </index>
+        <orm-attributes>
+          <attribute name="table">jobs</attribute>
+        </orm-attributes>
+      </entity>
+      <entity name="\App\Models\VhMigration" local-name="VhMigration" namespace="\App\Models" uuid="d01a9c73-425a-4282-a294-594a7a5c1e05">
+        <field name="id" type="bigInteger" required="true" unique="true" primary="true" unsigned="true" auto-increment="true" uuid="d40e7dd5-9df0-4aec-86ff-81975e04a89e"/>
+        <field name="batch" type="integer" uuid="d5531b8f-e60d-45c4-a1b0-4c4e5714ab4f"/>
+        <field name="created_at" type="timestamp" uuid="38decfa4-5350-4208-ae67-ef1ca2f7172e"/>
+        <field name="migration_id" type="integer" uuid="668df9ff-496b-42c7-9e30-c624c063f610"/>
+        <field name="migrationable_id" type="integer" uuid="b616ea9c-4c9d-4d1f-9353-301f1e52221f"/>
+        <field name="migrationable_type" type="string" size="255" uuid="4f4d060a-081f-4c58-b360-6090dc348ca0"/>
+        <field name="updated_at" type="timestamp" uuid="e450acd4-47ad-43e1-add3-219af8c2302e"/>
+        <orm-attributes>
+          <attribute name="table">vh_migrations</attribute>
+        </orm-attributes>
+      </entity>
+    </region>
     <orm-attributes>
       <attribute name="migrations-path">database/migrations</attribute>
     </orm-attributes>
@@ -4338,33 +4403,57 @@
     </migrations>
   </module>
   <visual-data>
-    <entity uuid="0b863c84-6791-4785-aa19-33b58ffa1398" bg-color="#FFFFFF" hdr-color="#D2D2D2" position-x="293" position-y="1470" size-x="0" size-x2="119" size-y="0" size-y2="129"/>
-    <entity uuid="20999ab4-2d49-4f35-a7ec-270741b83c35" bg-color="#FFFFFF" hdr-color="#D2D2D2" position-x="763" position-y="1470" size-x="0" size-x2="119" size-y="0" size-y2="143"/>
-    <entity uuid="315146cf-4652-4f08-8df7-b77e2b4d95cc" bg-color="#FFFFFF" hdr-color="#D2D2D2" position-x="296" position-y="40" size-x="0" size-x2="113" size-y="0" size-y2="157"/>
-    <entity uuid="3df1f0f7-f357-4065-b9ec-6fc70c0b2f77" bg-color="#FFFFFF" hdr-color="#D2D2D2" position-x="1216" position-y="1470" size-x="0" size-x2="153" size-y="0" size-y2="199"/>
-    <entity uuid="3eed6efe-6ed8-4227-8c5b-dd39225c1560" bg-color="#FFFFFF" hdr-color="#D2D2D2" position-x="1680" position-y="40" size-x="0" size-x2="164" size-y="0" size-y2="367"/>
-    <entity uuid="3f028d20-6c8f-4194-9260-730fd6f6dc0c" bg-color="#FFFFFF" hdr-color="#D2D2D2" position-x="288" position-y="755" size-x="0" size-x2="129" size-y="0" size-y2="199"/>
-    <entity uuid="52f5977c-23bc-47e7-9189-9f08b32cf725" bg-color="#FFFFFF" hdr-color="#D2D2D2" position-x="1220" position-y="40" size-x="0" size-x2="145" size-y="0" size-y2="185"/>
-    <entity uuid="68165a5a-e26b-4ec6-bca6-2e01e4a5c73a" bg-color="#FFFFFF" hdr-color="#D2D2D2" position-x="1927" position-y="755" size-x="0" size-x2="141" size-y="0" size-y2="185"/>
-    <entity uuid="6e335a54-3adc-4f87-be5a-11c2c47ea996" bg-color="#FFFFFF" hdr-color="#D2D2D2" position-x="1665" position-y="1470" size-x="0" size-x2="195" size-y="0" size-y2="675"/>
-    <entity uuid="7e835788-b484-403d-b829-e063fe7d26d2" bg-color="#FFFFFF" hdr-color="#D2D2D2" position-x="1462" position-y="755" size-x="0" size-x2="130" size-y="0" size-y2="157"/>
-    <entity uuid="86e7d6d3-db56-4a9f-a237-c1b28da030d4" bg-color="#FFFFFF" hdr-color="#D2D2D2" position-x="63" position-y="40" size-x="0" size-x2="108" size-y="0" size-y2="115"/>
-    <entity uuid="921bc2ec-3a60-42ce-aed9-dc628f4cf002" bg-color="#FFFFFF" hdr-color="#D2D2D2" position-x="1209" position-y="755" size-x="0" size-x2="167" size-y="0" size-y2="605"/>
-    <entity uuid="99a2efe3-5550-4059-8285-63beddf37de9" bg-color="#FFFFFF" hdr-color="#D2D2D2" position-x="33" position-y="755" size-x="0" size-x2="168" size-y="0" size-y2="381"/>
-    <entity uuid="ade6f6c8-998c-4b9c-a786-53773d3f7f5b" bg-color="#FFFFFF" hdr-color="#D2D2D2" position-x="977" position-y="40" size-x="0" size-x2="160" size-y="0" size-y2="199"/>
-    <entity uuid="bba0e826-6c99-4719-bbc6-25b336fa34a2" bg-color="#FFFFFF" hdr-color="#D2D2D2" position-x="527" position-y="1470" size-x="0" size-x2="121" size-y="0" size-y2="241"/>
-    <entity uuid="be52d770-b9e9-4450-8ef8-008f33e79032" bg-color="#FFFFFF" hdr-color="#D2D2D2" position-x="1468" position-y="1470" size-x="0" size-x2="119" size-y="0" size-y2="157"/>
-    <entity uuid="c038a8ad-63db-4a36-b601-6dec34b658e2" bg-color="#FFFFFF" hdr-color="#D2D2D2" position-x="1460" position-y="40" size-x="0" size-x2="134" size-y="0" size-y2="157"/>
-    <entity uuid="cdd180a1-9806-41a6-98b5-0aa86f8fb891" bg-color="#FFFFFF" hdr-color="#D2D2D2" position-x="58" position-y="1470" size-x="0" size-x2="119" size-y="0" size-y2="101"/>
-    <entity uuid="d01a9c73-425a-4282-a294-594a7a5c1e05" bg-color="#FFFFFF" hdr-color="#D2D2D2" position-x="1922" position-y="40" size-x="0" size-x2="151" size-y="0" size-y2="115"/>
-    <entity uuid="d17d82d6-34b6-468e-9915-7700c4cba36d" bg-color="#FFFFFF" hdr-color="#D2D2D2" position-x="523" position-y="755" size-x="0" size-x2="128" size-y="0" size-y2="269"/>
-    <entity uuid="da938fed-ee5a-4cdd-ac7c-b39c570c490e" bg-color="#FFFFFF" hdr-color="#D2D2D2" position-x="752" position-y="755" size-x="0" size-x2="141" size-y="0" size-y2="185"/>
-    <entity uuid="df562131-45fd-4682-b62a-53a7d41b616a" bg-color="#FFFFFF" hdr-color="#D2D2D2" position-x="754" position-y="40" size-x="0" size-x2="137" size-y="0" size-y2="171"/>
-    <entity uuid="e957c0b4-c015-4dcd-8a04-72188c28c629" bg-color="#FFFFFF" hdr-color="#D2D2D2" position-x="1695" position-y="755" size-x="0" size-x2="135" size-y="0" size-y2="241"/>
-    <entity uuid="f7b34f99-f2fa-4a02-a64d-5cd99581011a" bg-color="#FFFFFF" hdr-color="#D2D2D2" position-x="533" position-y="40" size-x="0" size-x2="109" size-y="0" size-y2="115"/>
-    <entity uuid="f8f1d62f-b2e3-4abd-82c0-d2e6474570f1" bg-color="#FFFFFF" hdr-color="#D2D2D2" position-x="973" position-y="1470" size-x="0" size-x2="168" size-y="0" size-y2="395"/>
-    <entity uuid="fecf8cd0-40e0-43bf-ad3f-572e9f19ae7b" bg-color="#FFFFFF" hdr-color="#D2D2D2" position-x="998" position-y="755" size-x="0" size-x2="119" size-y="0" size-y2="241"/>
-    <module uuid="31eee4f2-e505-487d-8642-b3a2c841c9ee" bg-color="#FEEFE3" position-x="50" position-y="50" size-x="0" size-x2="2115" size-y="0" size-y2="2165"/>
-    <project uuid="73f7ae3b-f3ce-4bcc-8c73-8a2072b8719c" size-x="0" size-x2="2215" size-y="0" size-y2="2265"/>
+    <association uuid="070853bc-3d26-4457-9530-7b6fa5813863" caption1-position-x="0" caption1-position-y="0" center-position-x="0" center-position-y="0" color="#969696"/>
+    <association uuid="0b2b96f4-54fc-414d-8d41-2c859438e284" caption1-position-x="0" caption1-position-y="0" center-position-x="0" center-position-y="0" color="#969696"/>
+    <association uuid="13b0b330-1dc5-4408-bccd-d091be77a86a" caption1-position-x="0" caption1-position-y="0" center-position-x="0" center-position-y="0" color="#969696"/>
+    <association uuid="16e74464-9148-497f-b31b-fdec7a8e5552" caption1-position-x="0" caption1-position-y="0" center-position-x="0" center-position-y="0" color="#969696"/>
+    <association uuid="216b5623-b254-451f-b0fc-08a062080c09" caption1-position-x="0" caption1-position-y="0" center-position-x="0" center-position-y="0" color="#969696"/>
+    <association uuid="252de02c-fea1-40be-9269-b8b3548a7e9e" caption1-position-x="0" caption1-position-y="0" center-position-x="0" center-position-y="0" color="#969696"/>
+    <association uuid="4079ea46-dae5-4e2c-8ff4-04572bc4a3c7" caption1-position-x="0" caption1-position-y="0" center-position-x="0" center-position-y="0" color="#969696"/>
+    <association uuid="41ca633e-7134-4f74-bd9a-8421a917dc90" caption1-position-x="0" caption1-position-y="0" center-position-x="0" center-position-y="0" color="#969696"/>
+    <association uuid="4330b860-3634-4217-9559-a8b4eb5672c4" caption1-position-x="0" caption1-position-y="0" center-position-x="0" center-position-y="0" color="#969696"/>
+    <association uuid="4ccd5272-9fb6-46c8-a682-f81810439518" caption1-position-x="0" caption1-position-y="4" center-position-x="0" center-position-y="0" color="#969696" split="1"/>
+    <association uuid="5cb4e098-fdad-46eb-8ae1-ea29b9c3c5c1" caption1-position-x="0" caption1-position-y="0" center-position-x="0" center-position-y="0" color="#969696"/>
+    <association uuid="6845e128-e240-4dc3-8870-e8ffe863e633" caption1-position-x="0" caption1-position-y="0" center-position-x="0" center-position-y="0" color="#969696"/>
+    <association uuid="8614c72d-e90d-475f-aa82-fb810b95987b" caption1-position-x="0" caption1-position-y="0" center-position-x="0" center-position-y="0" color="#969696"/>
+    <association uuid="da6a2743-ec7f-46dc-a980-e35aa3524897" caption1-position-x="0" caption1-position-y="0" center-position-x="0" center-position-y="0" color="#969696"/>
+    <association uuid="f117ad58-8c56-497b-adf2-ac64770402c8" caption1-position-x="0" caption1-position-y="0" center-position-x="0" center-position-y="0" color="#969696"/>
+    <association uuid="f2a47d56-90e2-4e48-a80e-686bc9198a62" caption1-position-x="0" caption1-position-y="0" center-position-x="0" center-position-y="0" color="#969696"/>
+    <association uuid="f6285946-c408-4598-b82e-4d551b998303" caption1-position-x="0" caption1-position-y="0" center-position-x="0" center-position-y="0" color="#969696"/>
+    <entity uuid="0b863c84-6791-4785-aa19-33b58ffa1398" bg-color="#FFFFFF" hdr-color="#D2D2D2" position-x="21" position-y="40" size-x="0" size-x2="119" size-y="0" size-y2="129"/>
+    <entity uuid="20999ab4-2d49-4f35-a7ec-270741b83c35" bg-color="#FFFFFF" hdr-color="#D2D2D2" position-x="369" position-y="480" size-x="0" size-x2="119" size-y="0" size-y2="143"/>
+    <entity uuid="315146cf-4652-4f08-8df7-b77e2b4d95cc" bg-color="#FFFFFF" hdr-color="#D2D2D2" position-x="153" position-y="10" size-x="0" size-x2="113" size-y="0" size-y2="157"/>
+    <entity uuid="3df1f0f7-f357-4065-b9ec-6fc70c0b2f77" bg-color="#FFFFFF" hdr-color="#D2D2D2" position-x="80" position-y="20" size-x="0" size-x2="153" size-y="0" size-y2="199"/>
+    <entity uuid="3eed6efe-6ed8-4227-8c5b-dd39225c1560" bg-color="#FFFFFF" hdr-color="#D2D2D2" position-x="270" position-y="13" size-x="0" size-x2="164" size-y="0" size-y2="367"/>
+    <entity uuid="3f028d20-6c8f-4194-9260-730fd6f6dc0c" bg-color="#FFFFFF" hdr-color="#D2D2D2" position-x="20" position-y="29" size-x="0" size-x2="142" size-y="0" size-y2="199"/>
+    <entity uuid="52f5977c-23bc-47e7-9189-9f08b32cf725" bg-color="#FFFFFF" hdr-color="#D2D2D2" position-x="284" position-y="10" size-x="0" size-x2="158" size-y="0" size-y2="185"/>
+    <entity uuid="68165a5a-e26b-4ec6-bca6-2e01e4a5c73a" bg-color="#FFFFFF" hdr-color="#D2D2D2" position-x="287" position-y="40" size-x="0" size-x2="141" size-y="0" size-y2="185"/>
+    <entity uuid="6e335a54-3adc-4f87-be5a-11c2c47ea996" bg-color="#FFFFFF" hdr-color="#D2D2D2" position-x="25" position-y="300" size-x="0" size-x2="195" size-y="0" size-y2="675"/>
+    <entity uuid="7e835788-b484-403d-b829-e063fe7d26d2" bg-color="#FFFFFF" hdr-color="#D2D2D2" position-x="498" position-y="510" size-x="0" size-x2="142" size-y="0" size-y2="157"/>
+    <entity uuid="86e7d6d3-db56-4a9f-a237-c1b28da030d4" bg-color="#FFFFFF" hdr-color="#D2D2D2" position-x="18" position-y="40" size-x="0" size-x2="108" size-y="0" size-y2="115"/>
+    <entity uuid="921bc2ec-3a60-42ce-aed9-dc628f4cf002" bg-color="#FFFFFF" hdr-color="#D2D2D2" position-x="280" position-y="80" size-x="0" size-x2="167" size-y="0" size-y2="605"/>
+    <entity uuid="99a2efe3-5550-4059-8285-63beddf37de9" bg-color="#FFFFFF" hdr-color="#D2D2D2" position-x="79" position-y="40" size-x="0" size-x2="168" size-y="0" size-y2="381"/>
+    <entity uuid="ade6f6c8-998c-4b9c-a786-53773d3f7f5b" bg-color="#FFFFFF" hdr-color="#D2D2D2" position-x="34" position-y="260" size-x="0" size-x2="160" size-y="0" size-y2="199"/>
+    <entity uuid="bba0e826-6c99-4719-bbc6-25b336fa34a2" bg-color="#FFFFFF" hdr-color="#D2D2D2" position-x="22" position-y="380" size-x="0" size-x2="121" size-y="0" size-y2="241"/>
+    <entity uuid="be52d770-b9e9-4450-8ef8-008f33e79032" bg-color="#FFFFFF" hdr-color="#D2D2D2" position-x="294" position-y="760" size-x="0" size-x2="119" size-y="0" size-y2="157"/>
+    <entity uuid="c038a8ad-63db-4a36-b601-6dec34b658e2" bg-color="#FFFFFF" hdr-color="#D2D2D2" position-x="26" position-y="120" size-x="0" size-x2="134" size-y="0" size-y2="157"/>
+    <entity uuid="cdd180a1-9806-41a6-98b5-0aa86f8fb891" bg-color="#FFFFFF" hdr-color="#D2D2D2" position-x="20" position-y="220" size-x="0" size-x2="119" size-y="0" size-y2="101"/>
+    <entity uuid="d01a9c73-425a-4282-a294-594a7a5c1e05" bg-color="#FFFFFF" hdr-color="#D2D2D2" position-x="415" position-y="14" size-x="0" size-x2="151" size-y="0" size-y2="115"/>
+    <entity uuid="d17d82d6-34b6-468e-9915-7700c4cba36d" bg-color="#FFFFFF" hdr-color="#D2D2D2" position-x="252" position-y="29" size-x="0" size-x2="128" size-y="0" size-y2="269"/>
+    <entity uuid="da938fed-ee5a-4cdd-ac7c-b39c570c490e" bg-color="#FFFFFF" hdr-color="#D2D2D2" position-x="478" position-y="24" size-x="0" size-x2="142" size-y="0" size-y2="185"/>
+    <entity uuid="df562131-45fd-4682-b62a-53a7d41b616a" bg-color="#FFFFFF" hdr-color="#D2D2D2" position-x="297" position-y="300" size-x="0" size-x2="137" size-y="0" size-y2="171"/>
+    <entity uuid="e957c0b4-c015-4dcd-8a04-72188c28c629" bg-color="#FFFFFF" hdr-color="#D2D2D2" position-x="500" position-y="720" size-x="0" size-x2="135" size-y="0" size-y2="241"/>
+    <entity uuid="f7b34f99-f2fa-4a02-a64d-5cd99581011a" bg-color="#FFFFFF" hdr-color="#D2D2D2" position-x="286" position-y="12" size-x="0" size-x2="109" size-y="0" size-y2="115"/>
+    <entity uuid="f8f1d62f-b2e3-4abd-82c0-d2e6474570f1" bg-color="#FFFFFF" hdr-color="#D2D2D2" position-x="341" position-y="20" size-x="0" size-x2="168" size-y="0" size-y2="395"/>
+    <entity uuid="fecf8cd0-40e0-43bf-ad3f-572e9f19ae7b" bg-color="#FFFFFF" hdr-color="#D2D2D2" position-x="509" position-y="180" size-x="0" size-x2="119" size-y="0" size-y2="241"/>
+    <module uuid="31eee4f2-e505-487d-8642-b3a2c841c9ee" bg-color="#FEEFE3" position-x="17" position-y="1060" size-x="66" size-x2="2389" size-y="20" size-y2="1110"/>
+    <project uuid="73f7ae3b-f3ce-4bcc-8c73-8a2072b8719c" size-x="99" size-x2="2456" size-y="-990" size-y2="2265"/>
+    <region uuid="3d582c04-d4c1-489c-9f62-1aa33d10bef5" bg-color="#E7F3E7" position-x="1330" position-y="559" size-x="0" size-x2="466" size-y="0" size-y2="411"/>
+    <region uuid="43051606-14d5-4516-89ac-25065093401d" bg-color="#FEFCE8" position-x="43" position-y="244" size-x="0" size-x2="555" size-y="0" size-y2="480"/>
+    <region uuid="447f12be-aa0f-441d-a163-aeec3c355400" bg-color="#EAE4F1" position-x="1330" position-y="30" size-x="0" size-x2="461" size-y="0" size-y2="500"/>
+    <region uuid="4e0da82a-d2df-4142-91d7-177cfaa6198b" bg-color="#E8FADF" position-x="650" position-y="30" size-x="0" size-x2="660" size-y="0" size-y2="1000"/>
+    <region uuid="679f0da5-6a39-475c-aa90-a6d42aad2499" bg-color="#FDEBEF" position-x="44" position-y="30" size-x="0" size-x2="586" size-y="0" size-y2="194"/>
+    <region uuid="833fd652-633f-4e1c-8181-c4b4eceb64a7" bg-color="#E7F5FD" position-x="-16" position-y="741" size-x="0" size-x2="640" size-y="0" size-y2="329"/>
+    <region uuid="b26d2384-28c3-4aa1-a8c8-87f6737412c2" bg-color="#FDEBEF" position-x="1810" position-y="30" size-x="0" size-x2="529" size-y="0" size-y2="660"/>
   </visual-data>
 </skipper>
