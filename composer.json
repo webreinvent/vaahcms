@@ -23,7 +23,7 @@
     "ixudra/curl": "^6.19.0",
     "nahid/linkify": "^1.0.0",
     "macellan/laravel-zip": "^1.0",
-    "doctrine/dbal": "^2.10.2"
+    "doctrine/dbal": "^3.1"
   },
     "extra": {
         "laravel": {
