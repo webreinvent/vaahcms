@@ -14,7 +14,7 @@ class CreateVhUsersTable extends Migration
     public function up()
     {
         Schema::create('vh_users', function (Blueprint $table) {
-            $table->increments('id');
+            $table->bigIncrements('id')->unsigned();
             $table->uuid('uuid')->nullable()->index();
             $table->string('email',150)->nullable()->index();
             $table->string('username',150)->nullable()->index();
@@ -51,18 +51,26 @@ class CreateVhUsersTable extends Migration
             $table->dateTime('reset_password_code_sent_at')->nullable();
             $table->dateTime('reset_password_code_used_at')->nullable();
 
-            $table->integer('registration_id')->nullable()->index();
+            $table->bigInteger('registration_id')->unsigned()->nullable()->index();
             $table->text('meta')->nullable();
 
             $table->ipAddress('created_ip')->nullable();
 
-            $table->integer('created_by')->nullable()->index();
-            $table->integer('updated_by')->nullable()->index();
-            $table->integer('deleted_by')->nullable()->index();
+            $table->bigInteger('created_by')->unsigned()->nullable()->index();
+            $table->bigInteger('updated_by')->unsigned()->nullable()->index();
+            $table->bigInteger('deleted_by')->unsigned()->nullable()->index();
             $table->timestamps();
             $table->softDeletes();
             $table->index(['created_at', 'updated_at', 'deleted_at']);
         });
+
+
+        Schema::table('vh_users',function (Blueprint $table){
+            $table->foreign('created_by')->references('id')->on('vh_users');
+            $table->foreign('updated_by')->references('id')->on('vh_users');
+            $table->foreign('deleted_by')->references('id')->on('vh_users');
+        });
+
     }
 
     /**

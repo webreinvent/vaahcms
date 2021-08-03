@@ -14,7 +14,7 @@ class CreateVhSettingsTable extends Migration
     public function up()
     {
         Schema::create('vh_settings', function (Blueprint $table) {
-            $table->increments('id');
+            $table->bigIncrements('id')->unsigned();
 
             $table->integer('settingable_id')->nullable()->index();
             $table->string('settingable_type')->nullable()->index();

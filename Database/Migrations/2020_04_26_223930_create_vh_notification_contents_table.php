@@ -15,9 +15,10 @@ class CreateVhNotificationContentsTable extends Migration
     {
 
         Schema::create('vh_notification_contents', function (Blueprint $table) {
-            $table->increments('id');
+            $table->bigIncrements('id')->unsigned();
 
-            $table->integer('vh_notification_id')->nullable()->index();
+            $table->bigInteger('vh_notification_id')->unsigned()->nullable()->index();
+            $table->foreign('vh_notification_id')->references('id')->on('vh_notifications');
 
             $table->string('via')->nullable()->index();
 
@@ -27,9 +28,13 @@ class CreateVhNotificationContentsTable extends Migration
             $table->text('value')->nullable();
             $table->json('meta')->nullable();
 
-            $table->integer('created_by')->nullable()->index();
-            $table->integer('updated_by')->nullable()->index();
-            $table->integer('deleted_by')->nullable()->index();
+            $table->bigInteger('created_by')->unsigned()->nullable()->index();
+            $table->foreign('created_by')->references('id')->on('vh_users');
+            $table->bigInteger('updated_by')->unsigned()->nullable()->index();
+            $table->foreign('updated_by')->references('id')->on('vh_users');
+            $table->bigInteger('deleted_by')->unsigned()->nullable()->index();
+            $table->foreign('deleted_by')->references('id')->on('vh_users');
+
             $table->timestamps();
             $table->softDeletes();
             $table->index(['created_at', 'updated_at', 'deleted_at']);

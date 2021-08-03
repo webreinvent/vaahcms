@@ -15,10 +15,14 @@ class CreateVhNotifiedTable extends Migration
     {
 
         Schema::create('vh_notified', function (Blueprint $table) {
-            $table->increments('id');
+            $table->bigIncrements('id')->unsigned();
 
-            $table->integer('vh_notification_id')->nullable()->index();
-            $table->integer('vh_user_id')->nullable()->index();
+            $table->bigInteger('vh_notification_id')->unsigned()->nullable()->index();
+            $table->foreign('vh_notification_id')->references('id')->on('vh_notifications');
+
+            $table->bigInteger('vh_user_id')->unsigned()->nullable()->index();
+            $table->foreign('vh_user_id')->references('id')->on('vh_users');
+
             $table->string('via')->nullable()->index();
 
             $table->dateTime('last_attempt_at')->nullable();
