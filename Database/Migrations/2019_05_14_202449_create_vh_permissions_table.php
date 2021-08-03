@@ -14,7 +14,7 @@ class CreateVhPermissionsTable extends Migration
     public function up()
     {
         Schema::create('vh_permissions', function (Blueprint $table) {
-            $table->increments('id');
+            $table->bigIncrements('id')->unsigned();
             $table->uuid('uuid')->nullable();
             $table->string('name',150)->nullable();
             $table->string('slug',150)->nullable()->index();
@@ -27,9 +27,13 @@ class CreateVhPermissionsTable extends Migration
             $table->integer('count_roles')->nullable();
             $table->boolean('is_active')->nullable()->index();
 
-            $table->integer('created_by')->nullable()->index();
-            $table->integer('updated_by')->nullable()->index();
-            $table->integer('deleted_by')->nullable()->index();
+            $table->bigInteger('created_by')->unsigned()->nullable()->index();
+            $table->foreign('created_by')->references('id')->on('vh_users');
+            $table->bigInteger('updated_by')->unsigned()->nullable()->index();
+            $table->foreign('updated_by')->references('id')->on('vh_users');
+            $table->bigInteger('deleted_by')->unsigned()->nullable()->index();
+            $table->foreign('deleted_by')->references('id')->on('vh_users');
+
             $table->timestamps();
             $table->softDeletes();
             $table->index(['created_at', 'updated_at', 'deleted_at']);

@@ -15,7 +15,7 @@ class CreateVhThemeTemplateFieldsTable extends Migration
     {
 
         Schema::create('vh_theme_template_fields', function (Blueprint $table) {
-            $table->increments('id');
+            $table->bigIncrements('id')->unsigned();
 
             $table->uuid('uuid')->nullable();
             $table->integer('vh_theme_id')->nullable()->index();
