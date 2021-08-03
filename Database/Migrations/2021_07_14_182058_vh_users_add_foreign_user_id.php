@@ -16,7 +16,7 @@ class VhUsersAddForeignUserId extends Migration
 
         Schema::table('vh_users', function (Blueprint $table) {
             $table->bigInteger('foreign_user_id')->after('registration_id')
-                ->nullable()->index();
+                ->nullable()->index()->comment("Column can be used to map users from foreign database.");
         });
     }
 

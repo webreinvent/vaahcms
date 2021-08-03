@@ -19,7 +19,7 @@ class CreateVhUsersTable extends Migration
             $table->string('email',150)->nullable()->index();
             $table->string('username',150)->nullable()->index();
             $table->string('password')->nullable()->index();
-            $table->string('display_name',50)->nullable();
+            $table->string('display_name',50)->nullable()->comment("If filled this will be visible as user's name.");
             $table->string('title',200)->nullable();
             $table->string('first_name',150)->nullable()->index();
             $table->string('middle_name')->nullable()->index();
@@ -27,14 +27,14 @@ class CreateVhUsersTable extends Migration
             $table->string('gender', 15)->nullable();
             $table->integer('country_calling_code')->nullable();
             $table->bigInteger('phone')->nullable()->index();
-            $table->mediumText('bio')->nullable();
+            $table->mediumText('bio')->nullable()->comment("Short bio of the user.");
             $table->string('website')->nullable();
-            $table->string('timezone')->nullable();
+            $table->string('timezone')->nullable()->comment("Timezone of the user");
             $table->string('alternate_email')->nullable();
             $table->string('avatar_url')->nullable();
             $table->date('birth')->nullable();
             $table->string('country')->nullable();
-            $table->string('country_code')->nullable();
+            $table->string('country_code')->nullable()->comment("Country short code");
             $table->dateTime('last_login_at')->nullable();
             $table->ipAddress('last_login_ip')->nullable();
             $table->string('remember_token')->nullable();
