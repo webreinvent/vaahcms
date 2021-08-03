@@ -1,0 +1,854 @@
+Table "failed_jobs" {
+  "id" bigint [pk, increment]
+  "uuid" varchar(255) [not null]
+  "connection" text [not null]
+  "queue" text [not null]
+  "payload" longtext [not null]
+  "exception" longtext [not null]
+  "failed_at" timestamp [not null, default: `current_timestamp()`]
+  "constraint" failed_jobs_uuid_unique
+}
+
+Table "job_batches" {
+  "id" varchar(255) [pk, not null]
+  "name" varchar(255) [not null]
+  "total_jobs" int [not null]
+  "pending_jobs" int [not null]
+  "failed_jobs" int [not null]
+  "failed_job_ids" text [not null]
+  "options" mediumtext
+  "cancelled_at" int
+  "created_at" int [not null]
+  "finished_at" int
+}
+
+Table "jobs" {
+  "id" bigint [pk, increment]
+  "queue" varchar(255) [not null]
+  "payload" longtext [not null]
+  "attempts" tinyint [not null]
+  "reserved_at" int
+  "available_at" int [not null]
+  "created_at" int [not null]
+
+Indexes {
+  queue [name: "jobs_queue_index"]
+}
+}
+
+Table "migrations" {
+  "id" int [pk, increment]
+  "migration" varchar(255) [not null]
+  "batch" int [not null]
+}
+
+Table "vh_migrations" {
+  "id" int [pk, increment]
+  "migrationable_id" int
+  "migrationable_type" varchar(255)
+  "migration_id" int
+  "batch" int
+  "created_at" timestamp
+  "updated_at" timestamp
+}
+
+Table "vh_registrations" {
+  "id" bigint [pk, increment]
+  "uuid" char(36)
+  "email" varchar(150)
+  "username" varchar(150)
+  "password" varchar(255)
+  "display_name" varchar(50) [note: "If filled this will be visible as user's name."]
+  "title" varchar(200)
+  "designation" varchar(200)
+  "first_name" varchar(150)
+  "middle_name" varchar(255)
+  "last_name" varchar(150)
+  "gender" varchar(15)
+  "country_calling_code" int
+  "phone" bigint
+  "bio" mediumtext
+  "timezone" varchar(255)
+  "alternate_email" varchar(255)
+  "avatar_url" varchar(255)
+  "birth" date
+  "country" varchar(255)
+  "country_code" varchar(255)
+  "status" varchar(255)
+  "activation_code" varchar(255)
+  "activation_code_sent_at" datetime
+  "activated_at" datetime
+  "activated_ip" varchar(45)
+  "invited_by" bigint
+  "invited_at" datetime
+  "invited_for_key" varchar(255)
+  "invited_for_value" varchar(255)
+  "belong_type" varchar(255)
+  "belong_id" bigint
+  "vh_user_id" bigint
+  "user_created_at" datetime
+  "meta" text
+  "created_ip" varchar(45)
+  "created_by" bigint
+  "updated_by" bigint
+  "deleted_by" bigint
+  "created_at" timestamp
+  "updated_at" timestamp
+  "deleted_at" timestamp
+
+Indexes {
+  activation_code [name: "vh_registrations_activation_code_index"]
+  (belong_type, belong_id) [name: "vh_registrations_belong_type_belong_id_index"]
+  (created_at, updated_at, deleted_at) [name: "vh_registrations_created_at_updated_at_deleted_at_index"]
+  created_by [name: "vh_registrations_created_by_index"]
+  deleted_by [name: "vh_registrations_deleted_by_index"]
+  designation [name: "vh_registrations_designation_index"]
+  display_name [name: "vh_registrations_display_name_index"]
+  email [name: "vh_registrations_email_index"]
+  first_name [name: "vh_registrations_first_name_index"]
+  invited_by [name: "vh_registrations_invited_by_index"]
+  invited_for_key [name: "vh_registrations_invited_for_key_index"]
+  last_name [name: "vh_registrations_last_name_index"]
+  middle_name [name: "vh_registrations_middle_name_index"]
+  phone [name: "vh_registrations_phone_index"]
+  status [name: "vh_registrations_status_index"]
+  updated_by [name: "vh_registrations_updated_by_index"]
+  username [name: "vh_registrations_username_index"]
+  uuid [name: "vh_registrations_uuid_index"]
+  vh_user_id [name: "vh_registrations_vh_user_id_index"]
+}
+}
+
+Table "vh_settings" {
+  "id" bigint [pk, increment]
+  "settingable_id" int
+  "settingable_type" varchar(255)
+  "category" varchar(255)
+  "label" varchar(255)
+  "excerpt" varchar(255)
+  "type" varchar(255)
+  "key" varchar(255)
+  "value" text
+  "meta" longtext
+  "created_at" timestamp
+  "updated_at" timestamp
+  "constraint" meta
+
+Indexes {
+  category [name: "vh_settings_category_index"]
+  (created_at, updated_at) [name: "vh_settings_created_at_updated_at_index"]
+  key [name: "vh_settings_key_index"]
+  settingable_id [name: "vh_settings_settingable_id_index"]
+  settingable_type [name: "vh_settings_settingable_type_index"]
+  type [name: "vh_settings_type_index"]
+}
+}
+
+Table "vh_theme_blocks" {
+  "id" bigint [pk, increment]
+  "vh_theme_id" int
+  "name" varchar(150)
+  "slug" varchar(150)
+  "created_at" timestamp
+  "updated_at" timestamp
+
+Indexes {
+  (created_at, updated_at) [name: "vh_theme_blocks_created_at_updated_at_index"]
+  slug [name: "vh_theme_blocks_slug_index"]
+  vh_theme_id [name: "vh_theme_blocks_vh_theme_id_index"]
+}
+}
+
+Table "vh_theme_locations" {
+  "id" bigint [pk, increment]
+  "vh_theme_id" int
+  "type" varchar(255)
+  "name" varchar(150)
+  "slug" varchar(150)
+  "excerpt" varchar(255)
+  "created_at" timestamp
+  "updated_at" timestamp
+
+Indexes {
+  (created_at, updated_at) [name: "vh_theme_locations_created_at_updated_at_index"]
+  slug [name: "vh_theme_locations_slug_index"]
+  type [name: "vh_theme_locations_type_index"]
+  vh_theme_id [name: "vh_theme_locations_vh_theme_id_index"]
+}
+}
+
+Table "vh_theme_template_fields" {
+  "id" bigint [pk, increment]
+  "uuid" char(36)
+  "vh_theme_id" int
+  "vh_template_id" int
+  "sort" int
+  "name" varchar(255)
+  "slug" varchar(255)
+  "type" varchar(255)
+  "content" varchar(255)
+  "excerpt" varchar(255)
+  "is_searchable" tinyint(1)
+  "is_repeatable" tinyint(1)
+  "meta" longtext
+  "created_at" timestamp
+  "updated_at" timestamp
+  "deleted_at" timestamp
+  "constraint" meta
+
+Indexes {
+  (created_at, updated_at, deleted_at) [name: "vh_theme_template_fields_created_at_updated_at_deleted_at_index"]
+  is_repeatable [name: "vh_theme_template_fields_is_repeatable_index"]
+  is_searchable [name: "vh_theme_template_fields_is_searchable_index"]
+  slug [name: "vh_theme_template_fields_slug_index"]
+  sort [name: "vh_theme_template_fields_sort_index"]
+  type [name: "vh_theme_template_fields_type_index"]
+  vh_template_id [name: "vh_theme_template_fields_vh_template_id_index"]
+  vh_theme_id [name: "vh_theme_template_fields_vh_theme_id_index"]
+}
+}
+
+Table "vh_theme_templates" {
+  "id" bigint [pk, increment]
+  "vh_theme_id" int
+  "type" varchar(255)
+  "name" varchar(150)
+  "slug" varchar(150)
+  "file_path" varchar(255)
+  "excerpt" varchar(255)
+  "created_at" timestamp
+  "updated_at" timestamp
+
+Indexes {
+  (created_at, updated_at) [name: "vh_theme_templates_created_at_updated_at_index"]
+  file_path [name: "vh_theme_templates_file_path_index"]
+  slug [name: "vh_theme_templates_slug_index"]
+  type [name: "vh_theme_templates_type_index"]
+  vh_theme_id [name: "vh_theme_templates_vh_theme_id_index"]
+}
+}
+
+Table "vh_users" {
+  "id" bigint [pk, increment]
+  "uuid" char(36)
+  "email" varchar(150)
+  "username" varchar(150)
+  "password" varchar(255)
+  "login_otp" varchar(255)
+  "display_name" varchar(50)
+  "title" varchar(200)
+  "designation" varchar(200)
+  "first_name" varchar(150)
+  "middle_name" varchar(255)
+  "last_name" varchar(150)
+  "gender" varchar(15)
+  "country_calling_code" int
+  "phone" bigint
+  "bio" mediumtext
+  "website" varchar(255)
+  "timezone" varchar(255)
+  "alternate_email" varchar(255)
+  "avatar_url" varchar(255)
+  "birth" date
+  "country" varchar(255)
+  "country_code" varchar(255)
+  "last_login_at" datetime
+  "last_login_ip" varchar(45)
+  "remember_token" varchar(255)
+  "api_token" varchar(255)
+  "api_token_used_at" datetime
+  "api_token_used_ip" varchar(45)
+  "is_active" tinyint(1)
+  "activated_at" datetime
+  "status" varchar(255)
+  "affiliate_code" varchar(255)
+  "affiliate_code_used_at" datetime
+  "reset_password_code" varchar(255)
+  "reset_password_code_sent_at" datetime
+  "reset_password_code_used_at" datetime
+  "registration_id" bigint
+  "meta" text
+  "created_ip" varchar(45)
+  "created_by" bigint
+  "updated_by" bigint
+  "deleted_by" bigint
+  "created_at" timestamp
+  "updated_at" timestamp
+  "deleted_at" timestamp
+
+Indexes {
+  api_token [name: "vh_users_api_token_index"]
+  (created_at, updated_at, deleted_at) [name: "vh_users_created_at_updated_at_deleted_at_index"]
+  created_by [name: "vh_users_created_by_index"]
+  deleted_by [name: "vh_users_deleted_by_index"]
+  designation [name: "vh_users_designation_index"]
+  email [name: "vh_users_email_index"]
+  first_name [name: "vh_users_first_name_index"]
+  is_active [name: "vh_users_is_active_index"]
+  last_name [name: "vh_users_last_name_index"]
+  login_otp [name: "vh_users_login_otp_index"]
+  middle_name [name: "vh_users_middle_name_index"]
+  password [name: "vh_users_password_index"]
+  phone [name: "vh_users_phone_index"]
+  registration_id [name: "vh_users_registration_id_index"]
+  status [name: "vh_users_status_index"]
+  updated_by [name: "vh_users_updated_by_index"]
+  username [name: "vh_users_username_index"]
+  uuid [name: "vh_users_uuid_index"]
+}
+}
+
+Table "vh_lang_categories" {
+  "id" bigint [pk, increment]
+  "name" varchar(150)
+  "slug" varchar(150)
+  "count_strings" int [default: 0]
+  "count_strings_filled" int [default: 0]
+  "created_by" bigint
+  "updated_by" bigint
+  "deleted_by" bigint
+  "created_at" timestamp
+  "updated_at" timestamp
+  "deleted_at" timestamp
+
+Indexes {
+  (created_at, updated_at, deleted_at) [name: "vh_lang_categories_created_at_updated_at_deleted_at_index"]
+  created_by [name: "vh_lang_categories_created_by_index"]
+  deleted_by [name: "vh_lang_categories_deleted_by_index"]
+  slug [name: "vh_lang_categories_slug_index"]
+  updated_by [name: "vh_lang_categories_updated_by_index"]
+}
+}
+
+Table "vh_lang_languages" {
+  "id" bigint [pk, increment]
+  "name" varchar(150)
+  "locale_code_iso_639" varchar(255)
+  "right_to_left" tinyint(1) [default: 0]
+  "default" tinyint(1) [default: 0]
+  "count_strings" int [default: 0]
+  "count_strings_filled" int [default: 0]
+  "created_by" bigint
+  "updated_by" bigint
+  "deleted_by" bigint
+  "created_at" timestamp
+  "updated_at" timestamp
+  "deleted_at" timestamp
+
+Indexes {
+  (created_at, updated_at, deleted_at) [name: "vh_lang_languages_created_at_updated_at_deleted_at_index"]
+  created_by [name: "vh_lang_languages_created_by_index"]
+  deleted_by [name: "vh_lang_languages_deleted_by_index"]
+  locale_code_iso_639 [name: "vh_lang_languages_locale_code_iso_639_index"]
+  updated_by [name: "vh_lang_languages_updated_by_index"]
+}
+}
+
+Table "vh_lang_strings" {
+  "id" bigint [pk, increment]
+  "vh_lang_language_id" bigint
+  "vh_lang_category_id" bigint
+  "name" varchar(150)
+  "slug" varchar(150)
+  "content" mediumtext
+  "created_by" bigint
+  "updated_by" bigint
+  "deleted_by" bigint
+  "created_at" timestamp
+  "updated_at" timestamp
+  "deleted_at" timestamp
+
+Indexes {
+  (created_at, updated_at, deleted_at) [name: "vh_lang_strings_created_at_updated_at_deleted_at_index"]
+  created_by [name: "vh_lang_strings_created_by_index"]
+  deleted_by [name: "vh_lang_strings_deleted_by_index"]
+  slug [name: "vh_lang_strings_slug_index"]
+  updated_by [name: "vh_lang_strings_updated_by_index"]
+  vh_lang_category_id [name: "vh_lang_strings_vh_lang_category_id_index"]
+  vh_lang_language_id [name: "vh_lang_strings_vh_lang_language_id_index"]
+}
+}
+
+Table "vh_medias" {
+  "id" bigint [pk, increment]
+  "name" varchar(150)
+  "slug" varchar(150)
+  "uuid" char(36)
+  "original_name" varchar(255)
+  "mime_type" varchar(255)
+  "extension" varchar(255)
+  "path" varchar(255)
+  "url" varchar(255)
+  "url_thumbnail" varchar(255)
+  "size" int
+  "title" varchar(200)
+  "caption" varchar(255)
+  "alt_text" varchar(255)
+  "is_hidden" tinyint(1)
+  "is_downloadable" tinyint(1)
+  "download_url" varchar(255)
+  "download_requires_login" tinyint(1)
+  "meta" longtext
+  "created_by" bigint
+  "updated_by" bigint
+  "deleted_by" bigint
+  "created_at" timestamp
+  "updated_at" timestamp
+  "deleted_at" timestamp
+  "constraint" meta
+
+Indexes {
+  caption [name: "vh_medias_caption_index"]
+  (created_at, updated_at, deleted_at) [name: "vh_medias_created_at_updated_at_deleted_at_index"]
+  created_by [name: "vh_medias_created_by_index"]
+  deleted_by [name: "vh_medias_deleted_by_index"]
+  download_requires_login [name: "vh_medias_download_requires_login_index"]
+  is_downloadable [name: "vh_medias_is_downloadable_index"]
+  name [name: "vh_medias_name_index"]
+  original_name [name: "vh_medias_original_name_index"]
+  slug [name: "vh_medias_slug_index"]
+  title [name: "vh_medias_title_index"]
+  updated_by [name: "vh_medias_updated_by_index"]
+  uuid [name: "vh_medias_uuid_index"]
+}
+}
+
+Table "vh_mediable" {
+  "id" bigint [pk, increment]
+  "vh_media_id" bigint
+  "mediable_id" int
+  "mediable_type" varchar(255)
+  "created_by" bigint
+  "updated_by" bigint
+  "deleted_by" bigint
+  "created_at" timestamp
+  "updated_at" timestamp
+  "deleted_at" timestamp
+
+Indexes {
+  (created_at, updated_at, deleted_at) [name: "vh_mediable_created_at_updated_at_deleted_at_index"]
+  created_by [name: "vh_mediable_created_by_index"]
+  deleted_by [name: "vh_mediable_deleted_by_index"]
+  mediable_id [name: "vh_mediable_mediable_id_index"]
+  mediable_type [name: "vh_mediable_mediable_type_index"]
+  updated_by [name: "vh_mediable_updated_by_index"]
+  vh_media_id [name: "vh_mediable_vh_media_id_index"]
+}
+}
+
+Table "vh_modules" {
+  "id" bigint [pk, increment]
+  "name" varchar(150)
+  "title" varchar(200)
+  "slug" varchar(150)
+  "thumbnail" varchar(255)
+  "excerpt" varchar(255)
+  "description" varchar(255)
+  "download_link" varchar(255)
+  "author_name" varchar(255)
+  "author_website" varchar(255)
+  "vaah_url" varchar(255)
+  "version" varchar(255)
+  "version_number" int
+  "db_table_prefix" varchar(255)
+  "is_migratable" tinyint(1)
+  "is_sample_data_available" tinyint(1)
+  "is_update_available" tinyint(1)
+  "is_assets_published" tinyint(1)
+  "update_checked_at" datetime
+  "is_active" tinyint(1)
+  "created_by" bigint
+  "updated_by" bigint
+  "deleted_by" bigint
+  "created_at" timestamp
+  "updated_at" timestamp
+  "deleted_at" timestamp
+
+Indexes {
+  (created_at, updated_at, deleted_at) [name: "vh_modules_created_at_updated_at_deleted_at_index"]
+  created_by [name: "vh_modules_created_by_index"]
+  deleted_by [name: "vh_modules_deleted_by_index"]
+  is_active [name: "vh_modules_is_active_index"]
+  name [name: "vh_modules_name_index"]
+  slug [name: "vh_modules_slug_index"]
+  title [name: "vh_modules_title_index"]
+  updated_by [name: "vh_modules_updated_by_index"]
+}
+}
+
+Table "vh_notifications" {
+  "id" bigint [pk, increment]
+  "uuid" char(36)
+  "name" varchar(150)
+  "slug" varchar(150)
+  "details" varchar(255)
+  "via_mail" tinyint(1)
+  "via_sms" tinyint(1)
+  "via_push" tinyint(1)
+  "via_frontend" tinyint(1)
+  "via_backend" tinyint(1)
+  "is_error" tinyint(1)
+  "can_update_via" tinyint(1)
+  "created_by" bigint
+  "updated_by" bigint
+  "deleted_by" bigint
+  "created_at" timestamp
+  "updated_at" timestamp
+  "deleted_at" timestamp
+
+Indexes {
+  (created_at, updated_at, deleted_at) [name: "vh_notifications_created_at_updated_at_deleted_at_index"]
+  created_by [name: "vh_notifications_created_by_index"]
+  deleted_by [name: "vh_notifications_deleted_by_index"]
+  name [name: "vh_notifications_name_index"]
+  slug [name: "vh_notifications_slug_index"]
+  updated_by [name: "vh_notifications_updated_by_index"]
+  via_backend [name: "vh_notifications_via_backend_index"]
+  via_frontend [name: "vh_notifications_via_frontend_index"]
+  via_mail [name: "vh_notifications_via_mail_index"]
+  via_push [name: "vh_notifications_via_push_index"]
+  via_sms [name: "vh_notifications_via_sms_index"]
+}
+}
+
+Table "vh_notification_contents" {
+  "id" bigint [pk, increment]
+  "vh_notification_id" bigint
+  "via" varchar(255)
+  "sort" int
+  "key" varchar(255)
+  "value" text
+  "meta" longtext
+  "created_by" bigint
+  "updated_by" bigint
+  "deleted_by" bigint
+  "created_at" timestamp
+  "updated_at" timestamp
+  "deleted_at" timestamp
+  "constraint" meta
+
+Indexes {
+  (created_at, updated_at, deleted_at) [name: "vh_notification_contents_created_at_updated_at_deleted_at_index"]
+  created_by [name: "vh_notification_contents_created_by_index"]
+  deleted_by [name: "vh_notification_contents_deleted_by_index"]
+  key [name: "vh_notification_contents_key_index"]
+  updated_by [name: "vh_notification_contents_updated_by_index"]
+  vh_notification_id [name: "vh_notification_contents_vh_notification_id_index"]
+  via [name: "vh_notification_contents_via_index"]
+}
+}
+
+Table "vh_notified" {
+  "id" bigint [pk, increment]
+  "vh_notification_id" bigint
+  "vh_user_id" bigint
+  "via" varchar(255)
+  "last_attempt_at" datetime
+  "sent_at" datetime
+  "read_at" datetime
+  "marked_delivered" datetime
+  "meta" longtext
+  "created_at" timestamp
+  "updated_at" timestamp
+  "deleted_at" timestamp
+  "constraint" meta
+
+Indexes {
+  (created_at, updated_at, deleted_at) [name: "vh_notified_created_at_updated_at_deleted_at_index"]
+  marked_delivered [name: "vh_notified_marked_delivered_index"]
+  read_at [name: "vh_notified_read_at_index"]
+  sent_at [name: "vh_notified_sent_at_index"]
+  vh_notification_id [name: "vh_notified_vh_notification_id_index"]
+  vh_user_id [name: "vh_notified_vh_user_id_index"]
+  via [name: "vh_notified_via_index"]
+}
+}
+
+Table "vh_permissions" {
+  "id" bigint [pk, increment]
+  "uuid" char(36)
+  "name" varchar(150)
+  "slug" varchar(150)
+  "module" varchar(255)
+  "section" varchar(255)
+  "details" varchar(255)
+  "count_users" int
+  "count_roles" int
+  "is_active" tinyint(1)
+  "created_by" bigint
+  "updated_by" bigint
+  "deleted_by" bigint
+  "created_at" timestamp
+  "updated_at" timestamp
+  "deleted_at" timestamp
+
+Indexes {
+  (created_at, updated_at, deleted_at) [name: "vh_permissions_created_at_updated_at_deleted_at_index"]
+  created_by [name: "vh_permissions_created_by_index"]
+  deleted_by [name: "vh_permissions_deleted_by_index"]
+  is_active [name: "vh_permissions_is_active_index"]
+  slug [name: "vh_permissions_slug_index"]
+  updated_by [name: "vh_permissions_updated_by_index"]
+}
+}
+
+Table "vh_roles" {
+  "id" bigint [pk, increment]
+  "uuid" char(36)
+  "name" varchar(150)
+  "slug" varchar(150)
+  "details" varchar(255)
+  "count_users" int
+  "count_permissions" int
+  "is_active" tinyint(1)
+  "belong_type" varchar(255)
+  "belong_id" bigint
+  "created_by" bigint
+  "updated_by" bigint
+  "deleted_by" bigint
+  "created_at" timestamp
+  "updated_at" timestamp
+  "deleted_at" timestamp
+
+Indexes {
+  (belong_type, belong_id) [name: "vh_roles_belong_type_belong_id_index"]
+  (created_at, updated_at, deleted_at) [name: "vh_roles_created_at_updated_at_deleted_at_index"]
+  created_by [name: "vh_roles_created_by_index"]
+  deleted_by [name: "vh_roles_deleted_by_index"]
+  slug [name: "vh_roles_slug_index"]
+  updated_by [name: "vh_roles_updated_by_index"]
+}
+}
+
+Table "vh_role_permissions" {
+  "id" bigint [pk, increment]
+  "vh_role_id" bigint
+  "vh_permission_id" bigint
+  "is_active" tinyint(1)
+  "created_by" bigint
+  "updated_by" bigint
+  "deleted_by" bigint
+  "created_at" timestamp
+  "updated_at" timestamp
+  "deleted_at" timestamp
+
+Indexes {
+  (created_at, updated_at, deleted_at) [name: "vh_role_permissions_created_at_updated_at_deleted_at_index"]
+  created_by [name: "vh_role_permissions_created_by_index"]
+  deleted_by [name: "vh_role_permissions_deleted_by_index"]
+  is_active [name: "vh_role_permissions_is_active_index"]
+  updated_by [name: "vh_role_permissions_updated_by_index"]
+  vh_permission_id [name: "vh_role_permissions_vh_permission_id_index"]
+  vh_role_id [name: "vh_role_permissions_vh_role_id_index"]
+}
+}
+
+Table "vh_themes" {
+  "id" bigint [pk, increment]
+  "name" varchar(150)
+  "title" varchar(200)
+  "slug" varchar(150)
+  "thumbnail" varchar(255)
+  "excerpt" varchar(255)
+  "description" varchar(255)
+  "download_link" varchar(255)
+  "author_name" varchar(255)
+  "author_website" varchar(255)
+  "vaah_url" varchar(255)
+  "version" varchar(255)
+  "version_number" int
+  "db_table_prefix" varchar(255)
+  "is_migratable" tinyint(1)
+  "is_default" tinyint(1)
+  "is_sample_data_available" tinyint(1)
+  "is_update_available" tinyint(1)
+  "is_assets_published" tinyint(1)
+  "update_checked_at" datetime
+  "is_active" tinyint(1)
+  "created_by" bigint
+  "updated_by" bigint
+  "deleted_by" bigint
+  "created_at" timestamp
+  "updated_at" timestamp
+  "deleted_at" timestamp
+
+Indexes {
+  (created_at, updated_at, deleted_at) [name: "vh_themes_created_at_updated_at_deleted_at_index"]
+  created_by [name: "vh_themes_created_by_index"]
+  deleted_by [name: "vh_themes_deleted_by_index"]
+  is_active [name: "vh_themes_is_active_index"]
+  is_default [name: "vh_themes_is_default_index"]
+  slug [name: "vh_themes_slug_index"]
+  updated_by [name: "vh_themes_updated_by_index"]
+}
+}
+
+Table "vh_user_authorizations" {
+  "id" bigint [pk, increment]
+  "vh_user_id" bigint
+  "name" varchar(150)
+  "slug" varchar(150)
+  "authorization_id" varchar(255)
+  "last_authorization_at" datetime
+  "meta" text
+  "created_by" bigint
+  "updated_by" bigint
+  "deleted_by" bigint
+  "created_at" timestamp
+  "updated_at" timestamp
+  "deleted_at" timestamp
+
+Indexes {
+  (created_at, updated_at, deleted_at) [name: "vh_user_authorizations_created_at_updated_at_deleted_at_index"]
+  created_by [name: "vh_user_authorizations_created_by_index"]
+  deleted_by [name: "vh_user_authorizations_deleted_by_index"]
+  updated_by [name: "vh_user_authorizations_updated_by_index"]
+}
+}
+
+Table "vh_user_roles" {
+  "id" bigint [pk, increment]
+  "vh_user_id" bigint
+  "vh_role_id" bigint
+  "is_active" tinyint(1)
+  "created_by" bigint
+  "updated_by" bigint
+  "deleted_by" bigint
+  "created_at" timestamp
+  "updated_at" timestamp
+  "deleted_at" timestamp
+
+Indexes {
+  (created_at, updated_at, deleted_at) [name: "vh_user_roles_created_at_updated_at_deleted_at_index"]
+  created_by [name: "vh_user_roles_created_by_index"]
+  deleted_by [name: "vh_user_roles_deleted_by_index"]
+  is_active [name: "vh_user_roles_is_active_index"]
+  updated_by [name: "vh_user_roles_updated_by_index"]
+  vh_role_id [name: "vh_user_roles_vh_role_id_index"]
+  vh_user_id [name: "vh_user_roles_vh_user_id_index"]
+}
+}
+
+Ref:"vh_registrations"."id" < "vh_users"."registration_id"
+
+Ref:"vh_users"."id" < "vh_users"."created_by"
+
+Ref:"vh_users"."id" < "vh_users"."updated_by"
+
+Ref:"vh_users"."id" < "vh_users"."deleted_by"
+
+Ref:"vh_users"."id" < "vh_lang_categories"."created_by"
+
+Ref:"vh_users"."id" < "vh_lang_categories"."updated_by"
+
+Ref:"vh_users"."id" < "vh_lang_categories"."deleted_by"
+
+Ref:"vh_users"."id" < "vh_lang_languages"."created_by"
+
+Ref:"vh_users"."id" < "vh_lang_languages"."updated_by"
+
+Ref:"vh_users"."id" < "vh_lang_languages"."deleted_by"
+
+Ref:"vh_lang_languages"."id" < "vh_lang_strings"."vh_lang_language_id"
+
+Ref:"vh_lang_categories"."id" < "vh_lang_strings"."vh_lang_category_id"
+
+Ref:"vh_users"."id" < "vh_lang_strings"."created_by"
+
+Ref:"vh_users"."id" < "vh_lang_strings"."updated_by"
+
+Ref:"vh_users"."id" < "vh_lang_strings"."deleted_by"
+
+Ref:"vh_users"."id" < "vh_medias"."created_by"
+
+Ref:"vh_users"."id" < "vh_medias"."updated_by"
+
+Ref:"vh_users"."id" < "vh_medias"."deleted_by"
+
+Ref:"vh_medias"."id" < "vh_mediable"."vh_media_id"
+
+Ref:"vh_users"."id" < "vh_mediable"."created_by"
+
+Ref:"vh_users"."id" < "vh_mediable"."updated_by"
+
+Ref:"vh_users"."id" < "vh_mediable"."deleted_by"
+
+Ref:"vh_users"."id" < "vh_modules"."created_by"
+
+Ref:"vh_users"."id" < "vh_modules"."updated_by"
+
+Ref:"vh_users"."id" < "vh_modules"."deleted_by"
+
+Ref:"vh_users"."id" < "vh_notifications"."created_by"
+
+Ref:"vh_users"."id" < "vh_notifications"."updated_by"
+
+Ref:"vh_users"."id" < "vh_notifications"."deleted_by"
+
+Ref:"vh_notifications"."id" < "vh_notification_contents"."vh_notification_id"
+
+Ref:"vh_users"."id" < "vh_notification_contents"."created_by"
+
+Ref:"vh_users"."id" < "vh_notification_contents"."updated_by"
+
+Ref:"vh_users"."id" < "vh_notification_contents"."deleted_by"
+
+Ref:"vh_notifications"."id" < "vh_notified"."vh_notification_id"
+
+Ref:"vh_users"."id" < "vh_notified"."vh_user_id"
+
+Ref:"vh_users"."id" < "vh_permissions"."created_by"
+
+Ref:"vh_users"."id" < "vh_permissions"."updated_by"
+
+Ref:"vh_users"."id" < "vh_permissions"."deleted_by"
+
+Ref:"vh_users"."id" < "vh_registrations"."created_by"
+
+Ref:"vh_users"."id" < "vh_registrations"."deleted_by"
+
+Ref:"vh_users"."id" < "vh_registrations"."invited_by"
+
+Ref:"vh_users"."id" < "vh_registrations"."updated_by"
+
+Ref:"vh_users"."id" < "vh_registrations"."vh_user_id"
+
+Ref:"vh_users"."id" < "vh_roles"."created_by"
+
+Ref:"vh_users"."id" < "vh_roles"."updated_by"
+
+Ref:"vh_users"."id" < "vh_roles"."deleted_by"
+
+Ref:"vh_roles"."id" < "vh_role_permissions"."vh_role_id"
+
+Ref:"vh_permissions"."id" < "vh_role_permissions"."vh_permission_id"
+
+Ref:"vh_users"."id" < "vh_role_permissions"."created_by"
+
+Ref:"vh_users"."id" < "vh_role_permissions"."updated_by"
+
+Ref:"vh_users"."id" < "vh_role_permissions"."deleted_by"
+
+Ref:"vh_users"."id" < "vh_themes"."created_by"
+
+Ref:"vh_users"."id" < "vh_themes"."updated_by"
+
+Ref:"vh_users"."id" < "vh_themes"."deleted_by"
+
+Ref:"vh_users"."id" < "vh_user_authorizations"."vh_user_id"
+
+Ref:"vh_users"."id" < "vh_user_authorizations"."created_by"
+
+Ref:"vh_users"."id" < "vh_user_authorizations"."updated_by"
+
+Ref:"vh_users"."id" < "vh_user_authorizations"."deleted_by"
+
+Ref:"vh_users"."id" < "vh_user_roles"."vh_user_id"
+
+Ref:"vh_roles"."id" < "vh_user_roles"."vh_role_id"
+
+Ref:"vh_users"."id" < "vh_user_roles"."created_by"
+
+Ref:"vh_users"."id" < "vh_user_roles"."updated_by"
+
+Ref:"vh_users"."id" < "vh_user_roles"."deleted_by"

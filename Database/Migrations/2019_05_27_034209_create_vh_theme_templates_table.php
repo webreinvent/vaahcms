@@ -14,7 +14,7 @@ class CreateVhThemeTemplatesTable extends Migration
     public function up()
     {
         Schema::create('vh_theme_templates', function (Blueprint $table) {
-            $table->increments('id');
+            $table->bigIncrements('id')->unsigned();
             $table->integer('vh_theme_id')->nullable()->index();
             $table->string('type')->nullable()->index();
             $table->string('name',150)->nullable();
