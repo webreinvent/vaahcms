@@ -62,7 +62,7 @@ Well, to answer that, ask a question to yourself: Do you want to develop an ente
 
 ## Join us
 - Contribute and raise issues at: [GitHub](https://github.com/webreinvent/vaahcms)
-- Joint us at: [Slack](https://join.slack.com/t/vaah/shared_invite/zt-tlop66za-yKKtiuMZ5S4lAYUQ6gtfMw)
+- Join us at: [Slack](https://join.slack.com/t/vaah/shared_invite/zt-tlop66za-yKKtiuMZ5S4lAYUQ6gtfMw)
 - See roadmap at: [Trello](https://trello.com/b/MI18Rbs5/vaahcms)
 
 We're actively seeking contributors for our [vaahcms's documentation](https://github.com/webreinvent/vaah-docs), feel free to send `pull requests`.  
