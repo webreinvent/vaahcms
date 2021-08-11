@@ -36,6 +36,8 @@ class LogsController extends Controller
 
         $folder_path = storage_path('logs');
 
+        $folder_path = str_replace("\\", "/", $folder_path);
+
         $list = [];
 
         if(File::isDirectory($folder_path)){
@@ -59,14 +61,14 @@ class LogsController extends Controller
                                     $list[] = [
                                         'id' => $i,
                                         'name' => $file,
-                                        'path' => $folder_path . '\\' . $file,
+                                        'path' => $folder_path . '/' . $file,
                                     ];
                                 }
                             } else {
                                 $list[] = [
                                     'id' => $i,
                                     'name' => $file,
-                                    'path' => $folder_path . '\\' . $file,
+                                    'path' => $folder_path . '/' . $file,
                                 ];
                             }
 
@@ -81,7 +83,7 @@ class LogsController extends Controller
                         $list[] = [
                             'id' => $i,
                             'name' => $file,
-                            'path' => $folder_path . '\\' . $file,
+                            'path' => $folder_path . '/' . $file,
                         ];
 
                         $i++;
@@ -90,7 +92,7 @@ class LogsController extends Controller
                         $list[] = [
                             'id' => $i,
                             'name' => $file,
-                            'path' => $folder_path . '\\' . $file,
+                            'path' => $folder_path . '/' . $file,
                         ];
 
                         $i++;
