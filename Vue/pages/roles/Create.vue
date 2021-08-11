@@ -109,6 +109,16 @@
                         </b-radio-button>
                     </b-field>
 
+                    <b-field label="Type" :label-position="labelPosition">
+                        <b-select placeholder="- Select a type -"
+                                  name="role-type" dusk="role-type"
+                                  v-model="new_item.type">
+                            <option value="">- Select a type -</option>
+                            <option value="backend">Backend</option>
+                            <option value="frontend">Frontend</option>
+                        </b-select>
+                    </b-field>
+
 
                 </div>
             </div>

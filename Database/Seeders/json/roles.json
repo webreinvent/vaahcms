@@ -10,6 +10,11 @@
     },
     {
         "name": "Registered",
+        "type": "frontend",
+        "details": "Users who have registered roles can access only public website."
+    },
+    {
+        "name": "test",
         "details": "Users who have registered roles can access only public website."
     }
 

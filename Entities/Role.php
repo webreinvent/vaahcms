@@ -27,6 +27,7 @@ class Role extends Model {
         'uuid',
         'name',
         'slug',
+        'type',
         'details',
         'count_users',
         'count_permissions',
@@ -478,6 +479,7 @@ class Role extends Model {
         $update->slug = Str::slug($input['slug']);
         $update->details = $input['details'];
         $update->is_active = $input['is_active'];
+        $update->type = $input['type'];
 
         $update->save();
 

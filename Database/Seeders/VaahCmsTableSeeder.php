@@ -78,7 +78,6 @@ class VaahCmsTableSeeder extends Seeder
                 ->where($primary_key, $item[$primary_key])
                 ->first();
 
-
             if(!$record)
             {
                 DB::table($table)->insert($item);
