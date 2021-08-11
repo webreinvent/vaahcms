@@ -29,6 +29,11 @@
                     </b-tooltip>
                 </b-table-column>
 
+
+                <b-table-column v-slot="props" field="type" label="Type">
+                    {{ props.row.type }}
+                </b-table-column>
+
                 <b-table-column v-slot="props" field="status" label="Is Active">
 
                     <span v-if="props.row.deleted_at || ( !hasPermission('can-manage-roles') && !hasPermission('can-update-roles'))">

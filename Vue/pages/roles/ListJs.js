@@ -322,6 +322,14 @@ export default {
 
         },
         //---------------------------------------------------------------------
+        setFilter: function () {
+
+            this.getList();
+
+            this.query_string.page = 1;
+            this.update('query_string', this.query_string);
+
+        },
         //---------------------------------------------------------------------
     }
 }

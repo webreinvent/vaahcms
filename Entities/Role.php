@@ -53,6 +53,10 @@ class Role extends Model {
         return $query->where( 'slug', $slug );
     }
     //-------------------------------------------------
+    public function scopeType( $query, $type ) {
+        return $query->where( 'type', $type );
+    }
+    //-------------------------------------------------
     public function scopeIsActive($query)
     {
         $query->where('vh_roles.is_active', 1);
@@ -295,14 +299,20 @@ class Role extends Model {
             $list->betweenDates($request['from'],$request['to']);
         }
 
-        if($request['filter'] && $request['filter'] == '1')
-        {
+        if(isset($request->filter) && $request['filter']){
 
-            $list->where('is_active',$request['filter']);
-        }elseif($request['filter'] == '10'){
+            if($request['filter'] == 'active')
+            {
+                $list->where('is_active',1);
+            }elseif($request['filter'] == 'inactive'){
 
-            $list->whereNull('is_active')->orWhere('is_active',0);
+                $list->whereNull('is_active')->orWhere('is_active',0);
+            }else{
+                $list->where('type',$request['filter']);
+            }
         }
+
+
 
         if(isset($request->q))
         {

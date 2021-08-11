@@ -156,20 +156,32 @@
                                     <div class="level-item">
 
                                         <b-field label="">
-                                            <b-select placeholder="- Select a status -"
+                                            <b-select placeholder="- Select a filter -"
                                                       v-model="query_string.filter"
-                                                      @input="getList()"
+                                                      @input="setFilter()"
                                             >
                                                 <option value="">
-                                                    - Select a status -
+                                                    - Select a filter -
                                                 </option>
-                                                <option value=01>
-                                                    Active
-                                                </option>
-                                                <option value=10>
-                                                    Inactive
-                                                </option>
+                                                <optgroup label="Status">
+                                                    <option value="active">
+                                                        Active
+                                                    </option>
+                                                    <option value="inactive">
+                                                        Inactive
+                                                    </option>
+                                                </optgroup>
+
+                                                <optgroup label="Type">
+                                                    <option value="backend">
+                                                        Backend
+                                                    </option>
+                                                    <option value="frontend">
+                                                        Frontend
+                                                    </option>
+                                                </optgroup>
                                             </b-select>
+
                                         </b-field>
 
 
