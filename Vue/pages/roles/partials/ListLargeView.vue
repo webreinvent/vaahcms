@@ -29,7 +29,15 @@
                     </b-tooltip>
                 </b-table-column>
 
-                <b-table-column v-slot="props" field="status" label="Is Active">
+
+                <b-table-column v-slot="props" width="100"
+                                field="type" label="Type">
+                    <b-tag >{{ props.row.type }}</b-tag>
+
+                </b-table-column>
+
+                <b-table-column v-slot="props" width="100"
+                                field="status" label="Is Active">
 
                     <span v-if="props.row.deleted_at || ( !hasPermission('can-manage-roles') && !hasPermission('can-update-roles'))">
                         <b-button v-if="props.row.is_active === 1" disabled rounded size="is-small"
@@ -57,7 +65,8 @@
 
                 </b-table-column>
 
-                <b-table-column v-slot="props"  field="count_permissions" label="Permission" >
+                <b-table-column v-slot="props" width="100"
+                                field="count_permissions" label="Permission" >
                     <b-tooltip v-if="hasPermission('can-read-roles') " label="View Permission" type="is-dark">
                         <b-button rounded size="is-small"
                                   type="is-primary" @click="getRolePermission(props.row)">
@@ -72,7 +81,7 @@
                 </b-table-column>
 
 
-                <b-table-column  v-slot="props"
+                <b-table-column  v-slot="props" width="100"
                                     field="count_users" label="Users">
                     <b-tooltip v-if="hasPermission('can-read-roles') " label="View User" type="is-dark">
                         <b-button rounded size="is-small"
@@ -88,7 +97,8 @@
 
                 </b-table-column>
 
-                <b-table-column v-slot="props"  field="updated_at" label="Updated At">
+                <b-table-column v-slot="props" width="100"
+                                field="updated_at" label="Updated At">
                     {{ $vaah.fromNow(props.row.updated_at) }}
                 </b-table-column>
 

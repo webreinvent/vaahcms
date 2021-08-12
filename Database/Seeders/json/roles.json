@@ -2,14 +2,17 @@
 
     {
         "name": "Administrator",
+        "type": "backend",
         "details": "Users who have admin roles has all the permission access and manage the data.Somebody who has access to all the administration features within a single site"
     },
     {
         "name": "Manager",
+        "type": "backend",
         "details": "Users who have manage roles can assign a role to user."
     },
     {
         "name": "Registered",
+        "type": "frontend",
         "details": "Users who have registered roles can access only public website."
     }
 

@@ -122,6 +122,11 @@
                                                        :label="label"/>
                                     </template>
 
+                                    <template v-else-if="label == 'type'">
+                                        <TableTrStatus :value="value"
+                                                       :label="label"/>
+                                    </template>
+
                                     <template v-else-if="label == 'count_permissions'">
                                         <TableTrStatus :value="value"
                                                        :label="label"/>
