@@ -119,9 +119,9 @@
                                     <span>Y-m-d H:i:s</span>
                                 </b-radio-button>
 
-                                <b-radio-button native-value="F j, Y h:i A"
+                                <b-radio-button native-value="Y-m-d h:i A"
                                                 v-model="list.datetime_format">
-                                    <span>F j, Y h:i A</span>
+                                    <span>Y-m-d h:i A</span>
                                 </b-radio-button>
 
                                 <b-radio-button native-value="d-M-Y H:i"
