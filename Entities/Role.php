@@ -27,6 +27,7 @@ class Role extends Model {
         'uuid',
         'name',
         'slug',
+        'type',
         'details',
         'count_users',
         'count_permissions',
@@ -48,8 +49,25 @@ class Role extends Model {
         "deleted_at" => 'date:Y-m-d H:i:s'
     ];
     //-------------------------------------------------
+    public function __construct(array $attributes = [])
+    {
+        $date_time_format = config('settings.global.datetime_format');
+        if(is_array($this->casts) && isset($date_time_format))
+        {
+            foreach ($this->casts as $date_key => $format)
+            {
+                $this->casts[$date_key] = 'date:'.$date_time_format;
+            }
+        }
+        parent::__construct($attributes);
+    }
+    //-------------------------------------------------
     public function scopeSlug( $query, $slug ) {
         return $query->where( 'slug', $slug );
+    }
+    //-------------------------------------------------
+    public function scopeType( $query, $type ) {
+        return $query->where( 'type', $type );
     }
     //-------------------------------------------------
     public function scopeIsActive($query)
@@ -294,14 +312,20 @@ class Role extends Model {
             $list->betweenDates($request['from'],$request['to']);
         }
 
-        if($request['filter'] && $request['filter'] == '1')
-        {
+        if(isset($request->filter) && $request['filter']){
 
-            $list->where('is_active',$request['filter']);
-        }elseif($request['filter'] == '10'){
+            if($request['filter'] == 'active')
+            {
+                $list->where('is_active',1);
+            }elseif($request['filter'] == 'inactive'){
 
-            $list->whereNull('is_active')->orWhere('is_active',0);
+                $list->whereNull('is_active')->orWhere('is_active',0);
+            }else{
+                $list->where('type',$request['filter']);
+            }
         }
+
+
 
         if(isset($request->q))
         {
@@ -478,6 +502,7 @@ class Role extends Model {
         $update->slug = Str::slug($input['slug']);
         $update->details = $input['details'];
         $update->is_active = $input['is_active'];
+        $update->type = $input['type'];
 
         $update->save();
 
@@ -878,9 +903,15 @@ class Role extends Model {
 
     }
     //-------------------------------------------------
-    public static function getActiveRoles()
+    public static function getActiveRoles($type = null)
     {
-        $list = static::where('is_active', 1)->get();
+        $list = static::where('is_active', 1);
+
+        if($type){
+            $list->where('type',$type);
+        }
+
+        $list = $list->get();
         return $list;
     }
     //-------------------------------------------------
