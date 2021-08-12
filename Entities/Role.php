@@ -890,9 +890,15 @@ class Role extends Model {
 
     }
     //-------------------------------------------------
-    public static function getActiveRoles()
+    public static function getActiveRoles($type = null)
     {
-        $list = static::where('is_active', 1)->get();
+        $list = static::where('is_active', 1);
+
+        if($type){
+            $list->where('type',$type);
+        }
+
+        $list = $list->get();
         return $list;
     }
     //-------------------------------------------------
