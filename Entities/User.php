@@ -85,6 +85,19 @@ class User extends Authenticatable
     protected $appends  = [
         'avatar', 'name'
     ];
+    //-------------------------------------------------
+    public function __construct(array $attributes = [])
+    {
+        $date_time_format = config('settings.global.datetime_format');
+        if(is_array($this->casts) && isset($date_time_format))
+        {
+            foreach ($this->casts as $date_key => $format)
+            {
+                $this->casts[$date_key] = 'date:'.$date_time_format;
+            }
+        }
+        parent::__construct($attributes);
+    }
 
     //-------------------------------------------------
     public function getAvatarAttribute() {
@@ -1089,7 +1102,6 @@ class User extends Authenticatable
         $response['status'] = 'success';
         $response['data']['list'] = $list;
         $response['data']['totalRole'] = $countRole;
-        $response['fsfsf']['totalRole'] = $request;
 
         return $response;
 

@@ -29,6 +29,19 @@ class FailedJob extends Model {
     protected $appends  = [
     ];
     //-------------------------------------------------
+    public function __construct(array $attributes = [])
+    {
+        $date_time_format = config('settings.global.datetime_format');
+        if(is_array($this->casts) && isset($date_time_format))
+        {
+            foreach ($this->casts as $date_key => $format)
+            {
+                $this->casts[$date_key] = 'date:'.$date_time_format;
+            }
+        }
+        parent::__construct($attributes);
+    }
+    //-------------------------------------------------
     public function getPayloadAttribute($value)
     {
         return json_decode($value);

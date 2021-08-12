@@ -44,6 +44,19 @@ class NotificationContent extends Model {
         "deleted_at" => 'date:Y-m-d H:i:s'
     ];
     //-------------------------------------------------
+    public function __construct(array $attributes = [])
+    {
+        $date_time_format = config('settings.global.datetime_format');
+        if(is_array($this->casts) && isset($date_time_format))
+        {
+            foreach ($this->casts as $date_key => $format)
+            {
+                $this->casts[$date_key] = 'date:'.$date_time_format;
+            }
+        }
+        parent::__construct($attributes);
+    }
+    //-------------------------------------------------
     public function scopeKey( $query, $key ) {
         return $query->where( 'key', $key );
     }
