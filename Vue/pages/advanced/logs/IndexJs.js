@@ -29,6 +29,7 @@ export default {
             open_on_focus: true,
             search_delay: null,
             search_delay_time: 800,
+            reload_list_time: 60000, // reload in 60 seconds
         };
         return obj;
     },
@@ -40,6 +41,11 @@ export default {
         //---------------------------------------------------------------------
         this.onLoad();
         //---------------------------------------------------------------------
+        let self = this;
+        setInterval(
+            function() {
+                self.getList();
+            }, self.reload_list_time);
         //---------------------------------------------------------------------
     },
     methods: {
