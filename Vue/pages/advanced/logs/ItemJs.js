@@ -89,6 +89,23 @@ export default {
         {
             window.location.href = this.ajax_url+"/download-file/"+file_name;
         },
+
+        //---------------------------------------------------------------------
+        clearFile: function(item)
+        {
+            this.$Progress.start();
+            let url = this.ajax_url+'/actions/clear-file';
+
+            this.$vaah.ajax(url, item, this.clearFileAfter);
+        },
+
+        //---------------------------------------------------------------------
+        clearFileAfter: function(data, res)
+        {
+            if(data && data.message === 'success'){
+                this.getItem();
+            }
+        },
         //---------------------------------------------------------------------
 
         //---------------------------------------------------------------------

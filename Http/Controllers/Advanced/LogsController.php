@@ -2,12 +2,9 @@
 
 namespace WebReinvent\VaahCms\Http\Controllers\Advanced;
 
-use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\Storage;
 use WebReinvent\VaahExtend\Libraries\VaahFiles;
 
 class LogsController extends Controller
@@ -126,7 +123,11 @@ class LogsController extends Controller
         $response['status'] = 'success';
         $response['data'] = [];
 
-        $path = storage_path('logs/'.$name);
+        $folder_path = storage_path('logs');
+
+        $folder_path = str_replace("\\", "/", $folder_path);
+
+        $path = $folder_path.'/'.$name;
 
         $response['data']['name'] = $name;
         $response['data']['path'] = $path;
@@ -221,6 +222,15 @@ class LogsController extends Controller
                 VaahFiles::deleteFile($request->path);
 
                 $response['messages'][] = 'Successfully delete';
+
+                break;
+
+            //------------------------------------
+            case 'clear-file':
+
+                VaahFiles::writeFile($request->path, '');
+                
+                $response['messages'][] = 'Successfully clear';
 
                 break;
             //------------------------------------
