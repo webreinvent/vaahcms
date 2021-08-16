@@ -18,6 +18,13 @@
 
                 </div>
 
+                <b-tooltip label="Clear" type="is-dark">
+                    <b-button type="is-text"
+                              dusk="action-clear"
+                              class="card-header-icon has-margin-top-5 has-margin-right-5"
+                              icon-left="eraser" @click="clearFile(item)"></b-button>
+                </b-tooltip>
+
                 <b-tooltip label="Download" type="is-dark">
                     <b-button type="is-text"
                               dusk="action-download"
