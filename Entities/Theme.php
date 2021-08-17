@@ -355,7 +355,12 @@ class Theme extends Model {
                 }])
                 ->first();
 
-            $result['template'] = $theme->templates[0];
+            if($theme && isset($theme->templates[0]))
+            {
+                $result['template'] = $theme->templates[0];
+            }
+
+            $result['template'] = [];
 
         }
 
