@@ -538,6 +538,11 @@ class VaahSetup{
     public static function isAppUrlExistInVaahCmsJson($request)
     {
         $path = base_path('/vaahcms.json');
+
+        if(!File::exists($path)){
+            return false;
+        }
+
         $file = File::get($path);
         $plugin_config = json_decode($file);
         $vaahcms_json = (array)$plugin_config;
