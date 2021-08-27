@@ -210,6 +210,11 @@ class ExtendController extends Controller
                         'icon' => 'file',
                         'label'=> 'Media'
                     ],
+                    [
+                        'link' => self::$link."/manage/taxonomies",
+                        'icon' => 'at',
+                        'label'=> 'Taxonomies'
+                    ]
                 ]
             ];
         }
