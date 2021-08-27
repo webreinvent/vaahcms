@@ -67,32 +67,32 @@ class TaxonomiesController extends Controller
     //----------------------------------------------------------
 
     //----------------------------------------------------------
-    public function postCreate(Request $request, $sub_domain)
+    public function postCreate(Request $request)
     {
         $response = Taxonomy::createItem($request);
         return response()->json($response);
     }
     //----------------------------------------------------------
-    public function getList(Request $request, $sub_domain)
+    public function getList(Request $request)
     {
         $response = Taxonomy::getList($request);
         return response()->json($response);
     }
     //----------------------------------------------------------
-    public function getItem(Request $request, $sub_domain, $id)
+    public function getItem(Request $request, $id)
     {
         $response = Taxonomy::getItem($id);
         return response()->json($response);
     }
 
     //----------------------------------------------------------
-    public function postStore(Request $request, $sub_domain,$id)
+    public function postStore(Request $request,$id)
     {
         $response = Taxonomy::postStore($request,$id);
         return response()->json($response);
     }
     //----------------------------------------------------------
-    public function postActions(Request $request, $sub_domain, $action)
+    public function postActions(Request $request, $action)
     {
         $rules = array(
             'inputs' => 'required',
@@ -150,7 +150,7 @@ class TaxonomiesController extends Controller
 
     }
     //----------------------------------------------------------
-    public function getCountries(Request $request, $sub_domain, $query=null)
+    public function getCountries(Request $request, $query=null)
     {
 
         $list = Taxonomy::where(function($q) use ($query){
@@ -166,7 +166,7 @@ class TaxonomiesController extends Controller
 
     }
     //----------------------------------------------------------
-    public function getCountryById(Request $request, $sub_domain, $id)
+    public function getCountryById(Request $request, $id)
     {
         return Taxonomy::find($id);
     }
