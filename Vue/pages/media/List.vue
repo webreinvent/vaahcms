@@ -68,28 +68,13 @@
                                                 <option value="">
                                                     - Bulk Actions -
                                                 </option>
-                                                <option
+                                                <option v-if="option.slug !== 'bulk-change-status'"
                                                     v-for="option in page.assets.bulk_actions"
                                                     :value="option.slug"
                                                     :key="option.slug">
                                                     {{ option.name }}
                                                 </option>
                                             </b-select>
-
-                                            <b-select placeholder="- Select Status -"
-                                                      v-if="page.bulk_action.action == 'bulk-change-status'"
-                                                      v-model="page.bulk_action.data.status">
-                                                <option value="">
-                                                    - Select Status -
-                                                </option>
-                                                <option
-                                                    v-for="option in page.assets.registration_statuses"
-                                                    :value="option.slug"
-                                                    :key="option.slug">
-                                                    {{ option.name }}
-                                                </option>
-                                            </b-select>
-
 
                                             <p class="control">
                                                 <button class="button is-primary"
@@ -152,18 +137,6 @@
                             <div class="level" v-if="page.show_filters">
 
                                 <div class="level-left">
-
-                                    <div class="level-item">
-
-                                        <b-field label="">
-                                            <b-select placeholder="- Select a status -"
-                                                      v-model="query_string.status"
-                                                      @input="getList()">
-                                            </b-select>
-                                        </b-field>
-
-
-                                    </div>
 
                                     <div class="level-item">
 
