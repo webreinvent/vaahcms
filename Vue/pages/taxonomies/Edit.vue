@@ -104,6 +104,7 @@
 
                     <b-field label="Name" :label-position="labelPosition">
                         <b-input name="taxonomies-name" dusk="taxonomies-name"
+                                 @input="onInputName"
                                  v-model="item.name"></b-input>
                     </b-field>
 

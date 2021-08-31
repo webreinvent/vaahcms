@@ -115,8 +115,11 @@
                                   name="role-type" dusk="role-type"
                                   v-model="item.type">
                             <option value="">- Select a type -</option>
-                            <option value="backend">Backend</option>
-                            <option value="frontend">Frontend</option>
+                            <option v-for="option in page.assets.types"
+                                    :value="option.slug"
+                                    :key="option.slug">
+                                {{ option.name }}
+                            </option>
                         </b-select>
                     </b-field>
 

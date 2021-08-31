@@ -54,7 +54,7 @@ class Taxonomy extends Model {
 
     public function createdByUser()
     {
-        return $this->belongsTo(OhoUser::class,
+        return $this->belongsTo(User::class,
             'created_by', 'id'
         )->select('id', 'uuid', 'first_name', 'last_name', 'email');
     }
@@ -62,7 +62,7 @@ class Taxonomy extends Model {
     //-------------------------------------------------
     public function updatedByUser()
     {
-        return $this->belongsTo(OhoUser::class,
+        return $this->belongsTo(User::class,
             'updated_by', 'id'
         )->select('id', 'uuid', 'first_name', 'last_name', 'email');
     }
@@ -70,7 +70,7 @@ class Taxonomy extends Model {
     //-------------------------------------------------
     public function deletedByUser()
     {
-        return $this->belongsTo(OhoUser::class,
+        return $this->belongsTo(User::class,
             'deleted_by', 'id'
         )->select('id', 'uuid', 'first_name', 'last_name', 'email');
     }

@@ -22,6 +22,7 @@ class VaahCmsTableSeeder extends Seeder
         $this->seedSettings();
         $this->seedNotifications();
         $this->seedNotificationContent();
+        $this->seedTaxonomies();
 
     }
     //------------------------------------------------------------
@@ -92,6 +93,12 @@ class VaahCmsTableSeeder extends Seeder
     {
         $list = $this->getListFromJson("permissions.json");
         $this->storeSeedsWithUuid('vh_permissions', $list);
+    }
+    //---------------------------------------------------------------
+    public function seedTaxonomies()
+    {
+        $list = $this->getListFromJson("taxonomies.json");
+        $this->storeSeedsWithUuid('vh_taxonomies', $list);
     }
     //---------------------------------------------------------------
     public function seedRoles()

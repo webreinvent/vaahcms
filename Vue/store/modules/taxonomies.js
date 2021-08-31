@@ -88,10 +88,10 @@ export default {
         },
         //-----------------------------------------------------------------
         updateView({ state, commit, dispatch, getters }, payload) {
-            let list_view = false;
+            let list_view = 'small';
             if(payload && payload.name && payload.name == 'taxonomies.list')
             {
-                list_view = true;
+                list_view = 'large';
             }
             let view = {
                 key: 'list_view',

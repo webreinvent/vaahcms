@@ -120,6 +120,7 @@ class ThemeLocation extends Model {
     //---------------------------------------------------------------------------
     public static function getLocationData($slug, $html=false, $type='bulma', $location_type = 'menu')
     {
+
         $data = [];
 
         $location = ThemeLocation::theme(vh_get_theme_id())
@@ -177,7 +178,6 @@ class ThemeLocation extends Model {
         $menu_html = "";
         $i = 0;
 
-
         $find_menus = Menu::where('vh_theme_location_id', $location->id)
             ->with(['items' => function($q){
                 $q->with(['content']);
@@ -185,10 +185,9 @@ class ThemeLocation extends Model {
             }])
             ->get();
 
-
         foreach ($find_menus as $menu)
         {
-            $result[$i] = $menu->toArray();
+            $result[$i] = $menu;
 
             if($html == true)
             {

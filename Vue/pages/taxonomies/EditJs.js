@@ -28,19 +28,7 @@ export default {
     watch: {
         $route(to, from) {
             this.updateView()
-        },
-        'item.name': {
-            deep: true,
-            handler(new_val, old_val) {
-
-                if(new_val)
-                {
-                    this.item.slug = this.$vaah.strToSlug(new_val);
-                    this.updateItem();
-                }
-
-            }
-        },
+        }
     },
     mounted() {
         //----------------------------------------------------
@@ -86,6 +74,9 @@ export default {
         },
         //---------------------------------------------------------------------
         getItem: function () {
+
+            console.log(1245);
+
             this.$Progress.start();
             this.params = {};
             let url = this.ajax_url+'/item/'+this.$route.params.id;
@@ -205,6 +196,15 @@ export default {
                 new_item[key] = this.item[key];
             }
             this.update('new_item', new_item);
+        },
+        //---------------------------------------------------------------------
+        onInputName: function (name) {
+
+            if(name)
+            {
+                this.item.slug = this.$vaah.strToSlug(name);
+                this.updateItem();
+            }
         }
         //---------------------------------------------------------------------
     }

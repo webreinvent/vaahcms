@@ -173,11 +173,11 @@
                                                 </optgroup>
 
                                                 <optgroup label="Type">
-                                                    <option value="backend">
-                                                        Backend
-                                                    </option>
-                                                    <option value="frontend">
-                                                        Frontend
+                                                    <option
+                                                            v-for="option in page.assets.types"
+                                                            :value="option.slug"
+                                                            :key="option.slug">
+                                                        {{ option.name }}
                                                     </option>
                                                 </optgroup>
                                             </b-select>

@@ -1,0 +1,24 @@
+[
+
+    {
+        "type": "Roles",
+        "name": "Backend"
+    },
+    {
+        "type": "Roles",
+        "name": "Frontend"
+    },
+    {
+        "type": "Registrations",
+        "name": "Email Verification Pending"
+    },
+    {
+        "type": "Registrations",
+        "name": "Email Verified"
+    },
+    {
+        "type": "Registrations",
+        "name": "User Created"
+    }
+
+]

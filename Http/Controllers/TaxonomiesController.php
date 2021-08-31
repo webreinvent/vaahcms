@@ -48,15 +48,10 @@ class TaxonomiesController extends Controller
         $data['bulk_actions'] = vh_general_bulk_actions();
 
         $data['types'] = [
+            'Registrations',
+            'Roles',
             'Cities',
-            'Countries',
-            'Currencies',
-            'Industries',
-            'Lead Sources',
-            'Lead Statuses',
-            'Thread Label',
-            'Company Sources',
-            'Contact Sources'
+            'Countries'
         ];
 
         $response['status'] = 'success';
