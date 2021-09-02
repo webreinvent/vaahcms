@@ -111,6 +111,14 @@
                                         </TableTrActedBy>
                                     </template>
 
+                                    <template v-else-if="label == 'vh_taxonomy_type_id'">
+                                        <TableTrView :value="item['type'].name"
+                                                     label="Type"
+                                                     :is_copiable="isCopiable(label)"
+                                                     :is_upper_case="isUpperCase(label)">
+                                        </TableTrView>
+                                    </template>
+
                                     <template v-else-if="label == 'meta'">
 
                                         <tr>
@@ -145,7 +153,8 @@
                                       || label == 'password' || label == 'display_name'
                                       || label == 'id' || label == 'display_name'
                                       || label == 'name' || label == 'thumbnail'
-                                      || label == 'parent' || label == 'parent_id' ">
+                                      || label == 'parent' || label == 'parent_id'
+                                      || label == 'type' ">
 
                                     </template>
 

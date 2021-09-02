@@ -29,7 +29,7 @@ function () {
      Route::post('/actions/{action_name}', 'TaxonomiesController@postActions')
     ->name('vh.backend.leads.taxonomies.actions');
      //---------------------------------------------------------
-     Route::get( '/json/countries/{name?}', 'TaxonomiesController@getCountries' )
+     Route::get('/json/parents/{id}/{name?}', 'TaxonomiesController@getParents' )
     ->name( 'vh.backend.leads.taxonomies.countries' );
     //------------------------------------------------
     Route::get( 'json/getCountryById/{id}', 'TaxonomiesController@getCountryById' )

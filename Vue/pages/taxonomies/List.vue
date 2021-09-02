@@ -1,6 +1,6 @@
 <script src="./ListJs.js"></script>
 <template>
-    <div class="container">
+    <div class="form-page-v1-layout">
 
         <div class="columns">
 
@@ -182,9 +182,9 @@
                                                 <optgroup label="Type">
                                                     <option
                                                             v-for="(option, index) in page.assets.types"
-                                                            :value="option"
+                                                            :value="option.slug"
                                                             :key="index">
-                                                        {{ option }}
+                                                        {{ option.name }}
                                                     </option>
                                                 </optgroup>
                                             </b-select>

@@ -86,20 +86,20 @@
 
                     <b-field label="Type" :label-position="labelPosition">
                         <b-select placeholder="Select a Type"
-                                  v-model="item.type"
+                                  v-model="item.type.slug"
                                   name="taxonomies-type"
                                   dusk="taxonomies-type">
                             <option
                                     v-for="(option, index) in page.assets.types"
-                                    :value="option"
+                                    :value="option.slug"
                                     :key="index">
-                                {{ option }}
+                                {{ option.name }}
                             </option>
                         </b-select>
                     </b-field>
 
-                    <b-field v-if="item.type === 'Cities'" label="Country" :label-position="labelPosition">
-                        <AutoCompleteCountries v-model="item.parent"></AutoCompleteCountries>
+                    <b-field v-if="item.type.slug === 'cities'" label="Country" :label-position="labelPosition">
+<!--                        <AutoCompleteCountries v-model="item.parent"></AutoCompleteCountries>-->
                     </b-field>
 
                     <b-field label="Name" :label-position="labelPosition">

@@ -6,13 +6,13 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
 use WebReinvent\VaahCms\Traits\CrudWithUuidObservantTrait;
 
-class Taxonomy extends Model {
+class TaxonomyType extends Model {
 
     use SoftDeletes;
     use CrudWithUuidObservantTrait;
 
     //-------------------------------------------------
-    protected $table = 'vh_taxonomies';
+    protected $table = 'vh_taxonomy_types';
     //-------------------------------------------------
     protected $dates = [
         'created_at',
@@ -29,10 +29,8 @@ class Taxonomy extends Model {
     protected $dateFormat = 'Y-m-d H:i:s';
     //-------------------------------------------------
     protected $fillable = [
-        'uuid','parent_id','vh_taxonomy_type_id',
-        'name','slug', 'excerpt','details',
-        'seo_title','seo_description','seo_keywords',
-        'notes','is_active','meta',
+        'uuid','parent_id','name','slug'
+        ,'is_active','meta',
         'created_by','updated_by','deleted_by',
     ];
 
@@ -76,19 +74,19 @@ class Taxonomy extends Model {
     }
 
     //-------------------------------------------------
-    public function type()
-    {
-        return $this->belongsTo(TaxonomyType::class,
-            'vh_taxonomy_type_id', 'id'
-        );
-    }
-
-    //-------------------------------------------------
     public function parent()
     {
         return $this->belongsTo(self::class,
             'parent_id', 'id'
         )->select('id', 'name', 'slug');
+    }
+
+    //-------------------------------------------------
+    public function children()
+    {
+        return $this->hasMany(self::class,
+            'parent_id', 'id'
+        )->select('id', 'name as label','slug','parent_id');
     }
     //-------------------------------------------------
     public function getTableColumns() {
@@ -159,13 +157,10 @@ class Taxonomy extends Model {
             return $response;
         }
 
-        if($inputs['parent'] && (is_array($inputs['parent']) || is_object($inputs['parent']))){
+        if($inputs['type'] === 'Cities' && $inputs['parent']
+            && (is_array($inputs['parent']) || is_object($inputs['parent']))){
             $inputs['parent_id'] = $inputs['parent']['id'];
         }
-
-        /*$tax_type = TaxonomyType::getFirstOrCreate($inputs['type']);
-
-        $inputs['vh_taxonomy_type_id'] = $tax_type->id;*/
 
         $item = new self();
         $item->fill($inputs);
@@ -183,7 +178,7 @@ class Taxonomy extends Model {
     {
 
 
-        $list = self::orderBy('id', 'desc')->with(['parent','type']);
+        $list = self::orderBy('id', 'desc')->with(['parent']);
 
         if($request['trashed'] == 'true')
         {
@@ -204,9 +199,7 @@ class Taxonomy extends Model {
             }elseif($request['filter'] == '10'){
                 $list->whereNull('is_active');
             }else{
-                $list->whereHas('type',function ($q) use ($request){
-                    $q->where('slug',$request['filter']);
-                });
+                $list->where('type',$request['filter']);
             }
         }
 
@@ -234,11 +227,7 @@ class Taxonomy extends Model {
     {
 
         $item = self::where('id', $id)
-        ->with(['createdByUser',
-            'updatedByUser',
-            'deletedByUser',
-            'parent',
-            'type'])
+        ->with(['createdByUser', 'updatedByUser', 'deletedByUser', 'parent'])
         ->withTrashed()
         ->first();
 
@@ -287,7 +276,7 @@ class Taxonomy extends Model {
 
         $input['parent_id'] = null;
 
-        if($input['type']['slug'] === 'cities' && $input['parent']
+        if($input['type'] === 'Cities' && $input['parent']
             && (is_array($input['parent']) || is_object($input['parent']))){
             $input['parent_id'] = $input['parent']['id'];
 
@@ -467,7 +456,7 @@ class Taxonomy extends Model {
     {
 
         $rules = array(
-            'vh_taxonomy_type_id' => 'required',
+            'type' => 'required',
             'parent' => 'required_if:type,==,Cities',
             'name' => 'required|max:150',
             'slug' => 'required|max:150',
@@ -475,8 +464,7 @@ class Taxonomy extends Model {
 
 
         $messages = array(
-            'parent.required_if' => 'The country field is required.',
-            'vh_taxonomy_type_id.required' => 'The type field is required.'
+            'parent.required_if' => 'The country field is required.'
         );
 
         $validator = \Validator::make( $inputs, $rules, $messages);
@@ -496,19 +484,17 @@ class Taxonomy extends Model {
         return $item;
     }
     //-------------------------------------------------
-    public static function getFirstOrCreate($type, $name)
+    public static function getFirstOrCreate($slug)
     {
-        $item = Taxonomy::where('type', $type)
-            ->where('name', $name)
+        $item = self::where('slug', $slug)
             ->whereNotNull('is_active')
             ->first();
 
         if(!$item)
         {
-            $item = new Taxonomy();
-            $item->type = $type;
-            $item->name = $name;
-            $item->slug = Str::slug($name);
+            $item = new self();
+            $item->name = Str::title($slug);
+            $item->slug = $slug;
             $item->is_active = 1;
             $item->save();
         }
@@ -518,16 +504,8 @@ class Taxonomy extends Model {
     //-------------------------------------------------
     public static function getTaxonomyByType($type)
     {
-        $tax_type = TaxonomyType::getFirstOrCreate($type);
-
-        $item =array();
-
-        if(!$tax_type){
-            return $item;
-        }
-
         $item = self::whereNotNull('is_active')
-            ->where('vh_taxonomy_type_id',$tax_type->id)
+            ->where('type',$type)
             ->get();
         return $item;
     }

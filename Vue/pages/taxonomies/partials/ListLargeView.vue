@@ -28,7 +28,12 @@
                 </b-table-column>
 
                 <b-table-column field="type" label="Type" v-slot="props">
-                    {{ props.row.type }}
+                    <span v-if="props.row.type">
+                        {{ props.row.type.name }}
+                    </span>
+                    <span v-else>
+                        -
+                    </span>
                 </b-table-column>
 
                 <b-table-column v-slot="props" width="10%" field="is_active" label="Is Active">

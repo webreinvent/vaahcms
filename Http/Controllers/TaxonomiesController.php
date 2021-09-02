@@ -8,6 +8,7 @@ use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Str;
 use WebReinvent\VaahCms\Entities\Taxonomy;
+use WebReinvent\VaahCms\Entities\TaxonomyType;
 
 class TaxonomiesController extends Controller
 {
@@ -25,15 +26,16 @@ class TaxonomiesController extends Controller
         $data = [];
 
 
-        $country_exist = Taxonomy::where('type','Countries')
-            ->whereNotNull('is_active')->exists();
+        $countries = Taxonomy::getTaxonomyByType('countries');
 
-        if(!$country_exist){
+        if(count($countries) === 0){
             $country_list = \VaahCountry::getListWithSlug();
+
+            $tax_type = TaxonomyType::getFirstOrCreate('countries');
 
             foreach ($country_list as $item){
                 $add = new Taxonomy();
-                $add->type = "Countries";
+                $add->vh_taxonomy_type_id = $tax_type->id;
                 $add->name = $item['name'];
                 $add->slug = $item['slug'];
                 $add->is_active = '1';
@@ -47,12 +49,9 @@ class TaxonomiesController extends Controller
 
         $data['bulk_actions'] = vh_general_bulk_actions();
 
-        $data['types'] = [
-            'Registrations',
-            'Roles',
-            'Cities',
-            'Countries'
-        ];
+        $data['types'] = TaxonomyType::whereNotNull('is_active')
+            ->whereNull('parent_id')->with(['children'])
+            ->select('id', 'name as label', 'slug')->get();
 
         $response['status'] = 'success';
         $response['data'] = $data;
@@ -145,13 +144,12 @@ class TaxonomiesController extends Controller
 
     }
     //----------------------------------------------------------
-    public function getCountries(Request $request, $query=null)
+    public function getParents(Request $request,$id, $name=null)
     {
-
-        $list = Taxonomy::where(function($q) use ($query){
-            $q->where('name', 'LIKE', '%'.$query.'%')
-                ->orWhere('slug', 'LIKE', '%'.$query.'%');
-        })->where('type','Countries')
+        $list = Taxonomy::where(function($q) use ($name){
+            $q->where('name', 'LIKE', '%'.$name.'%')
+                ->orWhere('slug', 'LIKE', '%'.$name.'%');
+        })->where('vh_taxonomy_type_id', $id)
             ->whereNotNull('is_active')
             ->take(10)
             ->orderBy('created_at', 'desc')

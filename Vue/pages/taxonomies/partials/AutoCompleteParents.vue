@@ -45,6 +45,10 @@
                 type: String|Number|Array|Object,
                 default: null
             },
+            parent_id: {
+                type: String|Number,
+                default: null
+            },
             type: {
                 type: String,
                 default: null,
@@ -105,7 +109,7 @@
                 this.data = [];
                 this.isFetching = true;
 
-                let url = this.ajax_url+'/json/countries/';
+                let url = this.ajax_url+'/json/parents/'+this.parent_id+'/';
                 url += name;
 
                 this.axios.get(url).then((response) => {

@@ -78,6 +78,20 @@
                 <div class="block">
 
                     <b-field label="Type" :label-position="labelPosition">
+                        <tree-select v-model="new_item.vh_taxonomy_type_id"
+                                     placeholder="Select a Type"
+                                     @select="onSelectType"
+                                     :clearable="false"
+                                     :multiple="false" :options="page.assets.types" >
+
+                        </tree-select>
+
+                        <p class="control">
+                            <b-button class="button is-primary">Add</b-button>
+                        </p>
+                    </b-field>
+
+                    <!--<b-field label="Type" :label-position="labelPosition">
                         <b-select placeholder="Select a Type"
                                   v-model="new_item.type"
                                   name="taxonomies-type"
@@ -86,13 +100,17 @@
                                     v-for="(option, index) in page.assets.types"
                                     :value="option"
                                     :key="index">
-                                {{ option }}
+                                {{ option.name }}
                             </option>
                         </b-select>
-                    </b-field>
+                    </b-field>-->
+                    {{new_item.type_parent_id}}
 
-                    <b-field v-if="new_item.type === 'Cities'" label="Country" :label-position="labelPosition">
-                        <AutoCompleteCountries v-model="new_item.parent"></AutoCompleteCountries>
+                    <b-field v-if="type_parent_id"
+                             label="Parent" :label-position="labelPosition">
+                        <AutoCompleteParents :parent_id="type_parent_id"
+                                             v-model="new_item.parent">
+                        </AutoCompleteParents>
                     </b-field>
 
                     <b-field label="Name" :label-position="labelPosition">

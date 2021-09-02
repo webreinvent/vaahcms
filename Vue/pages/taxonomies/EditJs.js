@@ -1,6 +1,6 @@
 let namespace = 'taxonomies';
 
-import AutoCompleteCountries from './partials/AutoCompleteCountries';
+import AutoCompleteParents from './partials/AutoCompleteParents';
 
 export default {
     props: ['id'],
@@ -11,7 +11,7 @@ export default {
         item() {return this.$store.getters[namespace+'/state'].active_item},
     },
     components:{
-        AutoCompleteCountries
+        AutoCompleteParents
     },
     data()
     {

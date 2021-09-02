@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class VhTaxonomies extends Migration
+class VhTaxonomyTypes extends Migration
 {
     /**
      * Run the migrations.
@@ -13,23 +13,13 @@ class VhTaxonomies extends Migration
      */
     public function up()
     {
-        Schema::create('vh_taxonomies', function (Blueprint $table) {
+        Schema::create('vh_taxonomy_types', function (Blueprint $table) {
 
             $table->increments('id');
             $table->uuid('uuid')->nullable()->index();
             $table->integer('parent_id')->nullable()->index();
-            $table->integer('vh_taxonomy_type_id')->nullable()->index();
-            $table->foreign('vh_taxonomy_type_id')->references('id')->on('vh_taxonomy_types');
             $table->string('name')->nullable()->index();
             $table->string('slug')->nullable()->index();
-
-            $table->mediumText('excerpt')->nullable();
-            $table->mediumText('details')->nullable();
-            $table->text('notes')->nullable();
-
-            $table->string('seo_title')->nullable();
-            $table->string('seo_description')->nullable();
-            $table->string('seo_keywords')->nullable();
 
             $table->boolean('is_active')->nullable()->index();
 
@@ -48,8 +38,8 @@ class VhTaxonomies extends Migration
 
         });
 
-        Schema::table('vh_taxonomies',function (Blueprint $table){
-            $table->foreign('parent_id')->references('id')->on('vh_taxonomies');
+        Schema::table('vh_taxonomy_types',function (Blueprint $table){
+            $table->foreign('parent_id')->references('id')->on('vh_taxonomy_types');
         });
     }
 
@@ -60,6 +50,6 @@ class VhTaxonomies extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('vh_taxonomies');
+        Schema::dropIfExists('vh_taxonomy_types');
     }
 }

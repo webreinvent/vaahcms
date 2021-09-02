@@ -1,5 +1,9 @@
 let namespace = 'taxonomies';
-import AutoCompleteCountries from './partials/AutoCompleteCountries';
+import AutoCompleteParents from './partials/AutoCompleteParents';
+// import the component
+import TreeSelect from '@riophae/vue-treeselect'
+// import the styles
+import '@riophae/vue-treeselect/dist/vue-treeselect.css'
 
 
 export default {
@@ -12,12 +16,14 @@ export default {
         new_item_errors() {return this.$store.getters[namespace+'/state'].new_item_errors},
     },
     components:{
-        AutoCompleteCountries
+        AutoCompleteParents,
+        TreeSelect
     },
     data()
     {
         return {
             namespace: namespace,
+            type_parent_id: null,
             is_content_loading: false,
             is_btn_loading: null,
             labelPosition: 'on-border',
@@ -25,7 +31,7 @@ export default {
             country_list: [],
             isFetching: false,
             local_action: null,
-            country_name: null,
+            country_name: null
         }
     },
     watch: {
@@ -162,7 +168,7 @@ export default {
         getNewItem: function()
         {
             let new_item = {
-                type: null,
+                vh_taxonomy_type_id: null,
                 parent: null,
                 name: null,
                 slug: null,
@@ -181,7 +187,7 @@ export default {
         fillNewItem: function () {
 
             let new_item = {
-                type: null,
+                vh_taxonomy_type_id: null,
                 parent: null,
                 name: null,
                 slug: null,
@@ -199,6 +205,24 @@ export default {
         hasPermission: function(slug)
         {
             return this.$vaah.hasPermission(this.permissions, slug);
+        },
+        //---------------------------------------------------------------------
+        onSelectType: function(type)
+        {
+            console.log(type);
+
+            if(type.parent_id){
+                this.type_parent_id = type.parent_id;
+            }else{
+                this.type_parent_id = null;
+            }
+        },
+        //---------------------------------------------------------------------
+        onClearType: function(type)
+        {
+            console.log(type);
+            // this.type_parent_id = null;
+
         },
         //---------------------------------------------------------------------
         //---------------------------------------------------------------------
