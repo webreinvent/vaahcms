@@ -58,7 +58,7 @@ export default {
         //-----------------------------------------------------------------
         async getAssets({ state, commit, dispatch, getters }) {
 
-            if(state.assets_is_fetching === false && !state.assets)
+            if(state.assets_is_fetching === false || !state.assets)
             {
                 let payload = {
                     key: 'assets_is_fetching',

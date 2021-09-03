@@ -287,7 +287,7 @@ class Taxonomy extends Model {
 
         $input['parent_id'] = null;
 
-        if($input['type']['slug'] === 'cities' && $input['parent']
+        if($input['parent']
             && (is_array($input['parent']) || is_object($input['parent']))){
             $input['parent_id'] = $input['parent']['id'];
 

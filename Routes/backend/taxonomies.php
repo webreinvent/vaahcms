@@ -35,4 +35,10 @@ function () {
     Route::get( 'json/getCountryById/{id}', 'TaxonomiesController@getCountryById' )
         ->name( 'vh.backend.leads.taxonomies.getCountryById' );
             //------------------------------------------------
+    Route::post( 'createTaxonomyType', 'TaxonomiesController@createTaxonomyType' )
+        ->name( 'vh.backend.leads.taxonomies.createTaxonomyType' );
+            //------------------------------------------------
+    Route::post( 'deleteTaxonomyType', 'TaxonomiesController@deleteTaxonomyType' )
+        ->name( 'vh.backend.leads.taxonomies.deleteTaxonomyType' );
+            //------------------------------------------------
 });

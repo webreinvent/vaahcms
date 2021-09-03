@@ -85,21 +85,26 @@
                 <div class="block">
 
                     <b-field label="Type" :label-position="labelPosition">
-                        <b-select placeholder="Select a Type"
-                                  v-model="item.type.slug"
-                                  name="taxonomies-type"
-                                  dusk="taxonomies-type">
-                            <option
-                                    v-for="(option, index) in page.assets.types"
-                                    :value="option.slug"
-                                    :key="index">
-                                {{ option.name }}
-                            </option>
-                        </b-select>
+                        <tree-select v-model="item.vh_taxonomy_type_id"
+                                     placeholder="Select a Type"
+                                     @select="onSelectType"
+                                     :clearable="false"
+                                     :multiple="false" :options="page.assets.types" >
+
+                        </tree-select>
+                        <p class="control">
+                            <b-button @click="is_type_modal_active = true"
+                                      class="button is-primary">
+                                Add
+                            </b-button>
+                        </p>
                     </b-field>
 
-                    <b-field v-if="item.type.slug === 'cities'" label="Country" :label-position="labelPosition">
-<!--                        <AutoCompleteCountries v-model="item.parent"></AutoCompleteCountries>-->
+                    <b-field v-if="type_parent_id"
+                             label="Parent" :label-position="labelPosition">
+                        <AutoCompleteParents :parent_id="type_parent_id"
+                                             v-model="item.parent">
+                        </AutoCompleteParents>
                     </b-field>
 
                     <b-field label="Name" :label-position="labelPosition">
@@ -142,7 +147,47 @@
             <!--/content-->
 
 
+            <div class="modal"  :class="is_type_modal_active?'is-active':''">
+                <div class="modal-background"></div>
+                <div class="modal-content" style="width: 640px !important;">
 
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-header-title">
+                                Taxonomy Types
+                            </div>
+                            <div class="card-header-icon">
+                                <b-field>
+
+                                    <tree-select style="width: 52%" v-model="taxo_type.parent_id"
+                                                 placeholder="Select a Parent"
+                                                 @select="onSelectType"
+                                                 :clearable="false"
+                                                 :multiple="false" :options="page.assets.types" >
+
+                                    </tree-select>
+
+                                    <b-input name="taxonomies-type-name" dusk="taxonomies-type-name"
+                                             v-model="taxo_type.name"></b-input>
+
+                                    <p class="control">
+                                        <b-button @click="addType" class="button is-primary">Add</b-button>
+                                    </p>
+                                </b-field>
+                            </div>
+
+                        </div>
+                        <div class="card-content">
+                            <TreeView :value="page.assets.types" :ajax_url="ajax_url"></TreeView>
+                        </div>
+
+                    </div>
+
+                </div>
+                <button class="modal-close is-large"
+                        @click="is_type_modal_active = false"
+                        aria-label="close"></button>
+            </div>
 
 
         </div>

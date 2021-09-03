@@ -51,7 +51,18 @@ class TaxonomiesController extends Controller
 
         $data['types'] = TaxonomyType::whereNotNull('is_active')
             ->whereNull('parent_id')->with(['children'])
-            ->select('id', 'name as label', 'slug')->get();
+            ->select('id', 'name as label', 'name', 'slug')->get();
+
+        foreach ($data['types'] as $type){
+            $type['dragDisabled'] = true;
+            $type['addTreeNodeDisabled'] = true;
+            $type['addLeafNodeDisabled'] = true;
+            $type['editNodeDisabled'] = true;
+        }
+
+        $data['all_active_types'] = TaxonomyType::whereNotNull('is_active')
+            ->with(['parent'])->select('id', 'name', 'slug', 'parent_id')
+            ->get();
 
         $response['status'] = 'success';
         $response['data'] = $data;
@@ -162,6 +173,64 @@ class TaxonomiesController extends Controller
     public function getCountryById(Request $request, $id)
     {
         return Taxonomy::find($id);
+    }
+    //----------------------------------------------------------
+    public function createTaxonomyType(Request $request)
+    {
+        if(!$request->has('name') || !$request->name){
+            $response['status'] = 'failed';
+            $response['errors'][] = 'The name field is required.';
+            return $response;
+        }
+
+        $item = TaxonomyType::where('name',$request->name)
+            ->withTrashed()->first();
+
+        if($item)
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = "This name is already exist.";
+            return $response;
+        }
+
+        $add = new TaxonomyType();
+        $add->fill($request->all());
+        $add->slug = Str::slug($request->name);
+        $add->is_active = true;
+        $add->save();
+
+        $response['status'] = 'success';
+        $response['messages'][] = 'Successfully Added.';
+        return $response;
+    }
+    //----------------------------------------------------------
+    public function deleteTaxonomyType(Request $request)
+    {
+
+        $item = TaxonomyType::where('id',$request->id)->with(['children'])
+            ->withTrashed()->first();
+
+        if(count($item->children) > 0){
+            self::deleteChildren($item->children);
+        }
+
+        $item->forceDelete();
+
+        $response['status'] = 'success';
+        $response['messages'][] = 'Successfully Deleted.';
+        return $response;
+    }
+    //----------------------------------------------------------
+    public function deleteChildren($types)
+    {
+        foreach ($types as $type){
+            if(count($type->children) > 0){
+                self::deleteChildren($type->children);
+            }
+
+            $type->forceDelete();
+        }
+
     }
     //----------------------------------------------------------
     //----------------------------------------------------------

@@ -87,24 +87,9 @@
                         </tree-select>
 
                         <p class="control">
-                            <b-button class="button is-primary">Add</b-button>
+                            <b-button @click="isCardModalActive = true" class="button is-primary">Add</b-button>
                         </p>
                     </b-field>
-
-                    <!--<b-field label="Type" :label-position="labelPosition">
-                        <b-select placeholder="Select a Type"
-                                  v-model="new_item.type"
-                                  name="taxonomies-type"
-                                  dusk="taxonomies-type">
-                            <option
-                                    v-for="(option, index) in page.assets.types"
-                                    :value="option"
-                                    :key="index">
-                                {{ option.name }}
-                            </option>
-                        </b-select>
-                    </b-field>-->
-                    {{new_item.type_parent_id}}
 
                     <b-field v-if="type_parent_id"
                              label="Parent" :label-position="labelPosition">
@@ -152,9 +137,47 @@
             <!--/content-->
 
 
+            <div class="modal"  :class="isCardModalActive?'is-active':''">
+                <div class="modal-background"></div>
+                <div class="modal-content" style="width: 640px !important;">
 
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-header-title">
+                                Taxonomy Types
+                            </div>
+                            <div class="card-header-icon">
+                                <b-field>
 
+                                    <tree-select style="width: 52%" v-model="taxo_type.parent_id"
+                                                 placeholder="Select a Parent"
+                                                 @select="onSelectType"
+                                                 :clearable="false"
+                                                 :multiple="false" :options="page.assets.types" >
 
+                                    </tree-select>
+
+                                    <b-input name="taxonomies-type-name" dusk="taxonomies-type-name"
+                                             v-model="taxo_type.name"></b-input>
+
+                                    <p class="control">
+                                        <b-button @click="addType" class="button is-primary">Add</b-button>
+                                    </p>
+                                </b-field>
+                            </div>
+
+                        </div>
+                        <div class="card-content">
+                            <TreeView :value="page.assets.types" :ajax_url="ajax_url"></TreeView>
+                        </div>
+
+                    </div>
+
+                </div>
+                <button class="modal-close is-large"
+                        @click="isCardModalActive = false"
+                        aria-label="close"></button>
+            </div>
         </div>
 
 

@@ -43,12 +43,17 @@ Vue.config.async = false;
 
 import vaah from './vaahvue/helpers/VaahHelper';
 
+import VueTreeList from 'vue-tree-list'
+
+
+
 //---------Helpers
 Vue.use(VueAxios, axios);
 Vue.use(VueRouter);
 Vue.use(Vuex);
 Vue.use(VueFuse);
 Vue.use(vaah);
+Vue.use(VueTreeList);
 //---------/Helpers
 
 

@@ -1,5 +1,6 @@
 let namespace = 'taxonomies';
 import AutoCompleteParents from './partials/AutoCompleteParents';
+import TreeView from './partials/TreeView';
 // import the component
 import TreeSelect from '@riophae/vue-treeselect'
 // import the styles
@@ -17,6 +18,7 @@ export default {
     },
     components:{
         AutoCompleteParents,
+        TreeView,
         TreeSelect
     },
     data()
@@ -24,10 +26,15 @@ export default {
         return {
             namespace: namespace,
             type_parent_id: null,
+            isCardModalActive: false,
             is_content_loading: false,
             is_btn_loading: null,
             labelPosition: 'on-border',
             params: {},
+            taxo_type: {
+                parent_id:null,
+                name:null
+            },
             country_list: [],
             isFetching: false,
             local_action: null,
@@ -215,15 +222,37 @@ export default {
                 this.type_parent_id = type.parent_id;
             }else{
                 this.type_parent_id = null;
+                this.new_item.parent = null;
             }
         },
         //---------------------------------------------------------------------
-        onClearType: function(type)
+        addType: function()
         {
-            console.log(type);
-            // this.type_parent_id = null;
+            this.$Progress.start();
 
+            this.params = this.taxo_type;
+
+            let url = this.ajax_url+'/createTaxonomyType';
+            this.$vaah.ajax(url, this.params, this.addTypeAfter);
         },
+        //---------------------------------------------------------------------
+        addTypeAfter: function(data, res)
+        {
+            this.$Progress.finish();
+
+            if(res.data.status === 'success'){
+
+                this.taxo_type= {
+                    parent_id:null,
+                    name:null
+                };
+
+                this.update('assets_is_fetching', false);
+
+                this.getAssets();
+
+            }
+        }
         //---------------------------------------------------------------------
         //---------------------------------------------------------------------
         //---------------------------------------------------------------------

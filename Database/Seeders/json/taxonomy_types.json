@@ -1,24 +1,19 @@
 [
 
     {
-        "type": "Roles",
-        "name": "Backend"
+        "name": "Countries"
+    },
+
+    {
+        "name": "Cities",
+        "parent_slug": "countries"
+    },
+
+    {
+        "name": "Roles"
     },
     {
-        "type": "Roles",
-        "name": "Frontend"
-    },
-    {
-        "type": "Registrations",
-        "name": "Email Verification Pending"
-    },
-    {
-        "type": "Registrations",
-        "name": "Email Verified"
-    },
-    {
-        "type": "Registrations",
-        "name": "User Created"
+        "name": "Registrations"
     }
 
 ]

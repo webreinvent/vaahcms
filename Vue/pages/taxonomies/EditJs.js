@@ -1,6 +1,8 @@
 let namespace = 'taxonomies';
-
 import AutoCompleteParents from './partials/AutoCompleteParents';
+import TreeView from './partials/TreeView';
+// import the component
+import TreeSelect from '@riophae/vue-treeselect'
 
 export default {
     props: ['id'],
@@ -11,16 +13,24 @@ export default {
         item() {return this.$store.getters[namespace+'/state'].active_item},
     },
     components:{
-        AutoCompleteParents
+        AutoCompleteParents,
+        TreeSelect,
+        TreeView
     },
     data()
     {
         return {
             namespace: namespace,
             is_content_loading: false,
+            is_type_modal_active: false,
             is_btn_loading: null,
+            type_parent_id: null,
             labelPosition: 'on-border',
             params: {},
+            taxo_type: {
+                parent_id:null,
+                name:null
+            },
             local_action: null,
             title: null,
         }
@@ -64,6 +74,14 @@ export default {
         {
             this.is_content_loading = true;
 
+            if(this.item){
+                this.title = this.item.name;
+
+                if(this.item.parent){
+                    this.type_parent_id = this.item.parent.id;
+                }
+            }
+
             this.updateView();
             this.getAssets();
             this.getItem();
@@ -74,9 +92,6 @@ export default {
         },
         //---------------------------------------------------------------------
         getItem: function () {
-
-            console.log(1245);
-
             this.$Progress.start();
             this.params = {};
             let url = this.ajax_url+'/item/'+this.$route.params.id;
@@ -90,6 +105,11 @@ export default {
             if(data)
             {
                 this.title = data.name;
+
+                if(data.parent){
+                    this.type_parent_id = data.parent.id;
+                }
+
                 this.update('active_item', data);
             } else
             {
@@ -204,6 +224,45 @@ export default {
             {
                 this.item.slug = this.$vaah.strToSlug(name);
                 this.updateItem();
+            }
+        },
+
+        //---------------------------------------------------------------------
+        onSelectType: function(type)
+        {
+            if(type.parent_id){
+                this.type_parent_id = type.parent_id;
+            }else{
+                this.type_parent_id = null;
+                this.item.parent = null;
+            }
+        },
+        //---------------------------------------------------------------------
+        addType: function()
+        {
+            this.$Progress.start();
+
+            this.params = this.taxo_type;
+
+            let url = this.ajax_url+'/createTaxonomyType';
+            this.$vaah.ajax(url, this.params, this.addTypeAfter);
+        },
+        //---------------------------------------------------------------------
+        addTypeAfter: function(data, res)
+        {
+            this.$Progress.finish();
+
+            if(res.data.status === 'success'){
+
+                this.taxo_type= {
+                    parent_id:null,
+                    name:null
+                };
+
+                this.update('assets_is_fetching', false);
+
+                this.getAssets();
+
             }
         }
         //---------------------------------------------------------------------
