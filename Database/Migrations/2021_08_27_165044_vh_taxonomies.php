@@ -17,8 +17,8 @@ class VhTaxonomies extends Migration
 
             $table->increments('id');
             $table->uuid('uuid')->nullable()->index();
-            $table->integer('parent_id')->nullable()->index();
-            $table->integer('vh_taxonomy_type_id')->nullable()->index();
+            $table->integer('parent_id')->unsigned()->nullable()->index();
+            $table->integer('vh_taxonomy_type_id')->unsigned()->nullable()->index();
             $table->foreign('vh_taxonomy_type_id')->references('id')->on('vh_taxonomy_types');
             $table->string('name')->nullable()->index();
             $table->string('slug')->nullable()->index();

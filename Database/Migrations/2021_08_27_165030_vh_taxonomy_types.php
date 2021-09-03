@@ -38,9 +38,9 @@ class VhTaxonomyTypes extends Migration
 
         });
 
-        Schema::table('vh_taxonomy_types',function (Blueprint $table){
+        /*Schema::table('vh_taxonomy_types',function (Blueprint $table){
             $table->foreign('parent_id')->references('id')->on('vh_taxonomy_types');
-        });
+        });*/
     }
 
     /**

@@ -1,23 +1,23 @@
 [
 
     {
-        "type_slug": "roles",
+        "type": "Roles",
         "name": "Backend"
     },
     {
-        "type_slug": "roles",
+        "type": "Roles",
         "name": "Frontend"
     },
     {
-        "type_slug": "registrations",
+        "type": "Registrations",
         "name": "Email Verification Pending"
     },
     {
-        "type_slug": "registrations",
+        "type": "Registrations",
         "name": "Email Verified"
     },
     {
-        "type_slug": "registrations",
+        "type": "Registrations",
         "name": "User Created"
     }
 
