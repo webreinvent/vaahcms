@@ -230,12 +230,21 @@ export default {
         //---------------------------------------------------------------------
         onSelectType: function(type)
         {
+            this.item.parent = null;
             if(type.parent_id){
                 this.type_parent_id = type.parent_id;
             }else{
                 this.type_parent_id = null;
-                this.item.parent = null;
+
             }
+        },
+
+        //---------------------------------------------------------------------
+        onInput: function(n)
+        {
+            this.type_parent_id = null;
+            this.item.parent = null;
+
         },
         //---------------------------------------------------------------------
         addType: function()

@@ -53,13 +53,6 @@ class TaxonomiesController extends Controller
             ->whereNull('parent_id')->with(['children'])
             ->select('id', 'name as label', 'name', 'slug')->get();
 
-        foreach ($data['types'] as $type){
-            $type['dragDisabled'] = true;
-            $type['addTreeNodeDisabled'] = true;
-            $type['addLeafNodeDisabled'] = true;
-            $type['editNodeDisabled'] = true;
-        }
-
         $data['all_active_types'] = TaxonomyType::whereNotNull('is_active')
             ->with(['parent'])->select('id', 'name', 'slug', 'parent_id')
             ->get();

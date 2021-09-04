@@ -88,6 +88,7 @@
                         <tree-select v-model="item.vh_taxonomy_type_id"
                                      placeholder="Select a Type"
                                      @select="onSelectType"
+                                     @search-change="onInput"
                                      :clearable="false"
                                      :multiple="false" :options="page.assets.types" >
 
@@ -162,6 +163,7 @@
                                     <tree-select style="width: 52%" v-model="taxo_type.parent_id"
                                                  placeholder="Select a Parent"
                                                  @select="onSelectType"
+                                                 @input="onInput"
                                                  :clearable="false"
                                                  :multiple="false" :options="page.assets.types" >
 

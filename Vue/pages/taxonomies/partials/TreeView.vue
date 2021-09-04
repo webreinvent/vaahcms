@@ -4,7 +4,6 @@
         <vue-tree-list
                 @delete-node="onDel"
                 :model="data"
-                :dragDisabled="false"
                 v-bind:default-expanded="false"
         >
             <template v-slot:leafNameDisplay="slotProps">
@@ -18,8 +17,6 @@
             <span class="icon" slot="addTreeNodeIcon">📂</span>
             <span class="icon" slot="editNodeIcon">📃</span>
             <span class="icon" slot="delNodeIcon">✂️</span>
-            <span class="icon" slot="leafNodeIcon">🍃</span>
-            <span class="icon" slot="treeNodeIcon">🌲</span>
         </vue-tree-list>
     </div>
 </template>
@@ -93,4 +90,16 @@
         }
     }
 </script>
+
+<style>
+    span[title="Add Tree Node"]{
+        display: none;
+    }
+    span[title="Add Leaf Node"]{
+        display: none;
+    }
+    span[title="edit"]{
+        display: none;
+    }
+</style>
 
