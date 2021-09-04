@@ -226,6 +226,18 @@ class TaxonomiesController extends Controller
 
     }
     //----------------------------------------------------------
+    public function getTaxonomyType()
+    {
+        $list = TaxonomyType::whereNotNull('is_active')
+            ->whereNull('parent_id')->with(['children'])
+            ->select('id', 'name as label', 'name', 'slug')->get();
+
+        $response['success']        = 'success';
+        $response['data']['list']   = $list;
+        return $response;
+
+    }
+    //----------------------------------------------------------
     //----------------------------------------------------------
 
 

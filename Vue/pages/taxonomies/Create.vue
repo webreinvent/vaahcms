@@ -168,7 +168,11 @@
 
                         </div>
                         <div class="card-content">
-                            <TreeView :value="page.assets.types" :ajax_url="ajax_url"></TreeView>
+                            <TreeView ref="text_view"
+                                      :ajax_delete_url="ajax_url+'/deleteTaxonomyType'"
+                                      :ajax_list_url="ajax_url+'/getTaxonomyType'">
+
+                            </TreeView>
                         </div>
 
                     </div>

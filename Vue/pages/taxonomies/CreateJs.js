@@ -1,6 +1,6 @@
 let namespace = 'taxonomies';
 import AutoCompleteParents from './partials/AutoCompleteParents';
-import TreeView from './partials/TreeView';
+import TreeView from '../../vaahvue/reusable/TreeView'
 // import the component
 import TreeSelect from '@riophae/vue-treeselect'
 // import the styles
@@ -241,6 +241,8 @@ export default {
             this.$Progress.finish();
 
             if(res.data.status === 'success'){
+
+                this.$refs.text_view.getList();
 
                 this.taxo_type= {
                     parent_id:null,

@@ -1,6 +1,6 @@
 let namespace = 'taxonomies';
 import AutoCompleteParents from './partials/AutoCompleteParents';
-import TreeView from './partials/TreeView';
+import TreeView from '../../vaahvue/reusable/TreeView'
 // import the component
 import TreeSelect from '@riophae/vue-treeselect'
 

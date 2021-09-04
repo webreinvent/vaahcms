@@ -8,28 +8,28 @@ Route::group(
 ],
 function () {
      //---------------------------------------------------------
-     Route::get('/', 'TaxonomiesController@getIndex')
+    Route::get('/', 'TaxonomiesController@getIndex')
     ->name('vh.backend.leads.taxonomies');
      //---------------------------------------------------------
-     Route::any('/assets', 'TaxonomiesController@getAssets')
+    Route::any('/assets', 'TaxonomiesController@getAssets')
     ->name('vh.backend.leads.taxonomies.assets');
      //---------------------------------------------------------
-     Route::post('/create', 'TaxonomiesController@postCreate')
+    Route::post('/create', 'TaxonomiesController@postCreate')
     ->name('vh.backend.leads.taxonomies.create');
      //---------------------------------------------------------
-     Route::any('/list', 'TaxonomiesController@getList')
+    Route::any('/list', 'TaxonomiesController@getList')
     ->name('vh.backend.leads.taxonomies.list');
      //---------------------------------------------------------
-     Route::any('/item/{uuid}', 'TaxonomiesController@getItem')
+    Route::any('/item/{uuid}', 'TaxonomiesController@getItem')
     ->name('vh.backend.leads.taxonomies.item');
      //---------------------------------------------------------
-     Route::post('/store/{uuid}', 'TaxonomiesController@postStore')
+    Route::post('/store/{uuid}', 'TaxonomiesController@postStore')
     ->name('vh.backend.leads.taxonomies.store');
      //---------------------------------------------------------
-     Route::post('/actions/{action_name}', 'TaxonomiesController@postActions')
+    Route::post('/actions/{action_name}', 'TaxonomiesController@postActions')
     ->name('vh.backend.leads.taxonomies.actions');
      //---------------------------------------------------------
-     Route::get('/json/parents/{id}/{name?}', 'TaxonomiesController@getParents' )
+    Route::get('/json/parents/{id}/{name?}', 'TaxonomiesController@getParents' )
     ->name( 'vh.backend.leads.taxonomies.countries' );
     //------------------------------------------------
     Route::get( 'json/getCountryById/{id}', 'TaxonomiesController@getCountryById' )
@@ -40,5 +40,8 @@ function () {
             //------------------------------------------------
     Route::post( 'deleteTaxonomyType', 'TaxonomiesController@deleteTaxonomyType' )
         ->name( 'vh.backend.leads.taxonomies.deleteTaxonomyType' );
+            //------------------------------------------------
+    Route::get( 'getTaxonomyType', 'TaxonomiesController@getTaxonomyType' )
+        ->name( 'vh.backend.leads.taxonomies.getTaxonomyType' );
             //------------------------------------------------
 });

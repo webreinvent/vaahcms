@@ -212,7 +212,7 @@ class ExtendController extends Controller
                     ],
                     [
                         'link' => self::$link."/manage/taxonomies",
-                        'icon' => 'at',
+                        'icon' => 'project-diagram',
                         'label'=> 'Taxonomies'
                     ]
                 ]

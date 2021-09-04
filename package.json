@@ -49,6 +49,7 @@
         "jquery": "^3.5.1",
         "laravel-vue-pagination": "^2.3.1",
         "moment": "^2.24.0",
+        "moment-timezone": "^0.5.33",
         "slugify": "^1.3.6",
         "tiptap": "^1.27.0",
         "tiptap-extensions": "^1.29.0",
