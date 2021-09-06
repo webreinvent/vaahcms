@@ -86,7 +86,7 @@ class TaxonomyType extends Model {
     {
         return $this->hasMany(self::class,
             'parent_id', 'id'
-        )->with(['children'])->select('id',  'name as label','name','slug','parent_id');
+        )->with(['children'])->select('id', 'name', 'slug', 'parent_id');
     }
     //-------------------------------------------------
     public function getTableColumns() {

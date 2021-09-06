@@ -53,10 +53,6 @@ class TaxonomiesController extends Controller
             ->whereNull('parent_id')->with(['children'])
             ->select('id', 'name as label', 'name', 'slug')->get();
 
-        $data['all_active_types'] = TaxonomyType::whereNotNull('is_active')
-            ->with(['parent'])->select('id', 'name', 'slug', 'parent_id')
-            ->get();
-
         $response['status'] = 'success';
         $response['data'] = $data;
 

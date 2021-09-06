@@ -91,6 +91,17 @@ class Taxonomy extends Model {
         )->select('id', 'name', 'slug');
     }
     //-------------------------------------------------
+
+
+    //-------------------------------------------------
+    public function children()
+    {
+        return $this->hasMany(self::class,
+            'parent_id', 'id'
+        )->with(['children'])->select('id',  'name as label','name','slug','parent_id');
+    }
+    //---
+    //-------------------------------------------------
     public function getTableColumns() {
         return $this->getConnection()->getSchemaBuilder()
             ->getColumnListing($this->getTable());
@@ -528,6 +539,24 @@ class Taxonomy extends Model {
 
         $item = self::whereNotNull('is_active')
             ->where('vh_taxonomy_type_id',$tax_type->id)
+            ->get();
+        return $item;
+    }
+    //-------------------------------------------------
+    public static function getTaxonomyByTypeInTreeFormat($type)
+    {
+        $tax_type = TaxonomyType::getFirstOrCreate($type);
+
+        $item =array();
+
+        if(!$tax_type){
+            return $item;
+        }
+
+        $item = self::whereNotNull('is_active')
+            ->with(['children'])
+            ->where('vh_taxonomy_type_id',$tax_type->id)
+            ->select('id',  'name as label','name','slug','parent_id')
             ->get();
         return $item;
     }
