@@ -5,12 +5,14 @@
  */
 
 $settings =  [
-    'app_name' => 'VaahCMS',
-    'app_slug' => 'vaahcms',
-    'version' => '1.2.4',
+    'app_name' => env('APP_NAME'),
+    'app_version' => env('APP_VERSION'),
+    'app_url' => env('APP_URL'),
     'get_config_version' => false,
+    'cms' => 'VaahCMS',
+    'cms_version' => '1.2.5',
     'website' => 'https://vaah.dev/cms',
-    'documentation' => 'https://vaah.dev/cms/docs',
+    'documentation' => 'https://docs.vaah.dev/vaahcms/',
     'backend_theme' => 'vaahone',
     'frontend_theme' => 'vaahone',
     'frontend_theme_template' => 'vaahone',

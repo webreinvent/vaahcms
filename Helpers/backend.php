@@ -94,12 +94,12 @@ function vh_load_backend_js()
 //-----------------------------------------------------------------------------------
 function vh_get_backend_assets($file_path)
 {
-    return vh_get_backend_theme_url()."/".$file_path."?v=".config('vaahcms.version');
+    return vh_get_backend_theme_url()."/".$file_path."?v=".config('vaahcms.cms_version');
 }
 //-----------------------------------------------------------------------------------
 function vh_get_backend_asset_url($asset_url)
 {
-    return $asset_url."?v=".config('vaahcms.version');
+    return $asset_url."?v=".config('vaahcms.cms_version');
 }
 //-----------------------------------------------------------------------------------
 //-----------------------------------------------------------------------------------

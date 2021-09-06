@@ -3,7 +3,7 @@
 <head>
 
     <title><?php if(isset($data->title)) { echo $data->title; } else {
-            echo config('vaahcms.app_name')." v".config('vaahcms.version');
+            echo config('vaahcms.app_name')." v".config('vaahcms.app_version');
         } ?></title>
 
     <meta charset="UTF-8">

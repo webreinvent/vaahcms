@@ -28,9 +28,12 @@ class JsonController extends Controller
     {
 
         $data['vaahcms'] = [
-            'name' => config('vaahcms.app_name'),
-            'slug' => config('vaahcms.app_slug'),
-            'version' => config('vaahcms.version'),
+            'app_name' => config('vaahcms.app_name'),
+            'app_version' => config('vaahcms.app_version'),
+            'app_url' => config('vaahcms.app_url'),
+            'cms' => config('vaahcms.cms'),
+            'cms_version' => config('vaahcms.cms_version'),
+            'url' => url("/"),
             'website' => config('vaahcms.website'),
             'docs' => config('vaahcms.documentation'),
         ];

@@ -160,7 +160,7 @@ class VaahCmsServiceProvider extends ServiceProvider {
         {
             $path =__DIR__ .'/composer.json';
             $config_data = json_decode(file_get_contents($path), true);
-            config()->set('vaahcms.version', $config_data['version']);
+            config()->set('vaahcms.cms_version', $config_data['cms_version']);
         }
 
     }
