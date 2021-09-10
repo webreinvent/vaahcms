@@ -88,8 +88,8 @@
                         <tree-select v-model="item.vh_taxonomy_type_id"
                                      placeholder="Select a Type"
                                      @select="onSelectType"
-                                     @search-change="onInput"
                                      :clearable="false"
+                                     :normalizer="normalizer"
                                      :multiple="false" :options="page.assets.types" >
 
                         </tree-select>
@@ -163,8 +163,8 @@
                                     <tree-select style="width: 52%" v-model="taxo_type.parent_id"
                                                  placeholder="Select a Parent"
                                                  @select="onSelectType"
-                                                 @input="onInput"
                                                  :clearable="false"
+                                                 :normalizer="normalizer"
                                                  :multiple="false" :options="page.assets.types" >
 
                                     </tree-select>
@@ -180,7 +180,11 @@
 
                         </div>
                         <div class="card-content">
-                            <TreeView :value="page.assets.types" :ajax_url="ajax_url"></TreeView>
+                            <TreeView ref="text_view"
+                                      :ajax_delete_url="ajax_url+'/deleteTaxonomyType'"
+                                      :ajax_list_url="ajax_url+'/getTaxonomyType'">
+
+                            </TreeView>
                         </div>
 
                     </div>
