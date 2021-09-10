@@ -510,6 +510,14 @@ class TaxonomyType extends Model {
         return $item;
     }
     //-------------------------------------------------
+    public static function getListInTreeFormat()
+    {
+        $item = self::whereNotNull('is_active')
+            ->whereNull('parent_id')->with(['children'])
+            ->select('id', 'name', 'slug')->get();
+        return $item;
+    }
+    //-------------------------------------------------
     //-------------------------------------------------
     //-------------------------------------------------
 

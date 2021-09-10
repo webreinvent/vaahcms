@@ -1,4 +1,3 @@
-let namespace = 'taxonomies';
 import AutoCompleteParents from './partials/AutoCompleteParents';
 import TreeView from '../../vaahvue/reusable/TreeView'
 // import the component
@@ -6,6 +5,7 @@ import TreeSelect from '@riophae/vue-treeselect'
 // import the styles
 import '@riophae/vue-treeselect/dist/vue-treeselect.css'
 
+let namespace = 'taxonomies';
 
 export default {
     computed:{
@@ -57,6 +57,17 @@ export default {
 
             }
         },
+        'new_item.vh_taxonomy_type_id': {
+            deep: true,
+            handler(new_val, old_val) {
+
+                if(!new_val){
+                    this.type_parent_id = null;
+                    this.new_item.parent = null;
+                }
+
+            }
+        }
     },
     mounted() {
 
@@ -254,8 +265,23 @@ export default {
                 this.getAssets();
 
             }
-        }
+        },
         //---------------------------------------------------------------------
+
+
+        //---------------------------------------------------------------------
+        normalizer: function (node) {
+
+            let data = {
+                label: node.name,
+            };
+
+            if(node.children && node.children.length === 0){
+                delete node.children;
+            }
+
+            return data;
+        },
         //---------------------------------------------------------------------
         //---------------------------------------------------------------------
         //---------------------------------------------------------------------

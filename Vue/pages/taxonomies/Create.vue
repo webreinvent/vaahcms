@@ -82,6 +82,7 @@
                                      placeholder="Select a Type"
                                      @select="onSelectType"
                                      :clearable="false"
+                                     :normalizer="normalizer"
                                      :multiple="false" :options="page.assets.types" >
 
                         </tree-select>
@@ -153,6 +154,7 @@
                                                  placeholder="Select a Parent"
                                                  @select="onSelectType"
                                                  :clearable="false"
+                                                 :normalizer="normalizer"
                                                  :multiple="false" :options="page.assets.types" >
 
                                     </tree-select>

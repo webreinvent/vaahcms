@@ -4,6 +4,7 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
+use VaahCms\Modules\Cms\Entities\ContentFormField;
 use WebReinvent\VaahCms\Traits\CrudWithUuidObservantTrait;
 
 class Taxonomy extends Model {
@@ -92,6 +93,14 @@ class Taxonomy extends Model {
     }
     //-------------------------------------------------
 
+    //-------------------------------------------------
+    public function contentFormRelations()
+    {
+        return $this->morphToMany(ContentFormField::class,
+            'relatable',
+            'vh_cms_content_form_relations',
+            null,'vh_cms_content_form_field_id');
+    }
 
     //-------------------------------------------------
     public function children()
