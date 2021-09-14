@@ -22,7 +22,8 @@ class VaahSeeder{
     }
     //----------------------------------------------------------
     public static function storeSeedsWithUuid($table, $list, $primary_key='slug',
-                                              $create_slug=true, $create_slug_from='name')
+                                              $create_slug=true, $create_slug_from='name',
+                                              $has_active=true)
     {
         foreach ($list as $item)
         {
@@ -32,6 +33,10 @@ class VaahSeeder{
             }
 
             $item['uuid'] = Str::uuid();
+
+            if($has_active){
+                $item['is_active'] = 1;
+            }
 
             $record = DB::table($table)
                 ->where($primary_key, $item[$primary_key])

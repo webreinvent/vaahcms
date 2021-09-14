@@ -62,7 +62,11 @@ class VaahCmsTableSeeder extends Seeder
         }
     }
     //---------------------------------------------------------------
-    public function storeSeedsWithUuid($table, $list,$has_active=true, $primary_key='slug', $create_slug=true, $create_slug_from='name')
+    public function storeSeedsWithUuid($table, $list,
+                                       $has_active=true,
+                                       $primary_key='slug',
+                                       $create_slug=true,
+                                       $create_slug_from='name')
     {
         foreach ($list as $item)
         {
