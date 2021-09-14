@@ -20,6 +20,7 @@
                         </p>
 
                     </div>
+
                     <b-menu class="is-custom-mobile">
 
                         <template v-if="root.assets && root.assets.extended_views" >
@@ -30,13 +31,30 @@
                                                  :label="link.label"
                                                  :icon="link.icon">
 
-                                        <b-menu-item v-for="(link_child, key) in link.child"
-                                                     :key="key"
-                                                     tag="a"
-                                                     :href="link_child.link"
-                                                     :label="link_child.label"
-                                                     :icon="link_child.icon">
-                                        </b-menu-item>
+                                        <template v-for="(link_child, key) in link.child">
+                                            <b-menu-item v-if="link_child.child"
+                                                         :key="key"
+                                                         :label="link_child.label"
+                                                         :icon="link_child.icon">
+
+                                                <b-menu-item  v-for="(link_sub_child, index) in link_child.child"
+                                                              :key="index"
+                                                              tag="a"
+                                                              :href="link_sub_child.link"
+                                                              :label="link_sub_child.label"
+                                                              :icon="link_sub_child.icon">
+                                                </b-menu-item>
+
+                                            </b-menu-item>
+
+                                            <b-menu-item v-else
+                                                         :key="key"
+                                                         tag="a"
+                                                         :href="link_child.link"
+                                                         :label="link_child.label"
+                                                         :icon="link_child.icon">
+                                            </b-menu-item>
+                                        </template>
 
                                     </b-menu-item>
 

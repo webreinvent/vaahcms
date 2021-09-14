@@ -16,6 +16,7 @@ import general from './modules/settings/general';
 import localizations from './modules/settings/localizations';
 import notifications from './modules/settings/notifications';
 import media from './modules/media';
+import taxonomies from './modules/taxonomies';
 import logs from './modules/advanced/logs';
 import jobs from './modules/advanced/jobs';
 import failed_jobs from './modules/advanced/failed-jobs';
@@ -36,6 +37,7 @@ export const store = new Vuex.Store({
         localizations: localizations,
         notifications: notifications,
         media: media,
+        taxonomies: taxonomies,
         logs: logs,
         jobs: jobs,
         failed_jobs: failed_jobs,

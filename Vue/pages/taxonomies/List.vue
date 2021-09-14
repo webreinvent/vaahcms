@@ -5,7 +5,7 @@
         <div class="columns">
 
             <!--left-->
-            <div class="column" :class="{'is-8': !page.list_view}">
+            <div class="column" :class="{'is-6': !page.list_view}">
 
                 <div class="block" v-if="is_content_loading">
                     <Loader/>
@@ -18,28 +18,33 @@
                     <header class="card-header">
 
                         <div class="card-header-title">
-                            Media&nbsp;<span v-if="page.list && page.list.total">({{page.list.total}})</span>
+                            Taxonomies
+
+                            <span v-if="page.list">
+                                 &nbsp; ({{page.list.total}})
+                            </span>
+
+
                         </div>
+
 
                         <div class="card-header-buttons">
                             <div class="field has-addons is-pulled-right">
-                                <p v-if="hasPermission('can-create-media')" class="control">
+                                <p   class="control">
                                     <b-button tag="router-link"
                                               type="is-light"
-                                              :to="{name: 'media.create'}"
+                                              :to="{name: 'taxonomies.create'}"
                                               icon-left="plus">
                                         Create
                                     </b-button>
                                 </p>
 
                                 <p class="control">
-
-                                    <b-button @click="reload()"
-                                              type="is-light"
+                                    <b-button type="is-light"
+                                              @click="sync()"
                                               :loading="is_btn_loading"
                                               icon-left="redo-alt">
                                     </b-button>
-
                                 </p>
                             </div>
                         </div>
@@ -59,22 +64,37 @@
                             <div class="level">
 
                                 <!--left-->
-                                <div class="level-left" v-if="hasPermission('can-update-media')">
-                                    <div  class="level-item">
-                                        <b-field>
+                                <div class="level-left" >
+                                    <div  class="level-item" v-if="page.list_view === 'large'">
+                                        <b-field >
 
                                             <b-select placeholder="- Bulk Actions -"
                                                       v-model="page.bulk_action.action">
                                                 <option value="">
                                                     - Bulk Actions -
                                                 </option>
-                                                <option v-if="option.slug !== 'bulk-change-status'"
-                                                    v-for="option in page.assets.bulk_actions"
-                                                    :value="option.slug"
-                                                    :key="option.slug">
+                                                <option
+                                                        v-for="option in page.assets.bulk_actions"
+                                                        :value="option.slug"
+                                                        :key="option.slug">
                                                     {{ option.name }}
                                                 </option>
                                             </b-select>
+
+                                            <b-select placeholder="- Select Status -"
+                                                      v-if="page.bulk_action.action == 'bulk-change-status'"
+                                                      v-model="page.bulk_action.data.status">
+                                                <option value="">
+                                                    - Select Status -
+                                                </option>
+                                                <option value=1>
+                                                    Active
+                                                </option>
+                                                <option value=0>
+                                                    Inactive
+                                                </option>
+                                            </b-select>
+
 
                                             <p class="control">
                                                 <button class="button is-primary"
@@ -116,7 +136,7 @@
                                                     Reset
                                                 </button>
                                             </p>
-                                            <p class="control">
+                                            <p class="control" v-if="page.list_view === 'large'">
                                                 <button class="button is-primary"
                                                         @click="toggleFilters()"
                                                         slot="trigger">
@@ -134,43 +154,49 @@
                             <!--/actions-->
 
                             <!--filters-->
-                            <div class="level" v-if="page.show_filters">
+                            <div class="level" v-if="page.show_filters && page.list_view === 'large'" >
 
                                 <div class="level-left">
 
+
+
                                     <div class="level-item">
 
-                                        <b-select @input="setQueryString" placeholder="- Select a month -"
-                                                  v-model="selected_month">
-                                            <option value="">
-                                                - Select a month -
-                                            </option>
-                                            <option
-                                                v-for="option in page.assets.date.month"
-                                                :value="option.month"
-                                                :key="option.month">
-                                                {{  option.month.charAt(0).toUpperCase() + option.month.slice(1) }}
-                                            </option>
-                                        </b-select>
+                                        <b-field label="">
+
+                                            <b-select placeholder="- Select a filter -"
+                                                      v-model="query_string.filter"
+                                                      @input="getList()">
+                                                <option value="">
+                                                    - Select a filter -
+                                                </option>
+                                                <option value=01>
+                                                    Active
+                                                </option>
+                                                <option value=10>
+                                                    Inactive
+                                                </option>
+
+                                            </b-select>
+                                        </b-field>
 
 
                                     </div>
 
                                     <div class="level-item">
 
-                                        <b-select @input="setQueryString" placeholder="- Select a year -"
-                                                  v-model="selected_year">
-                                            <option value="">
-                                                - Select a year -
-                                            </option>
-                                            <option
-                                                v-for="option in page.assets.date.year"
-                                                :value="option.year"
-                                                :key="option.year">
-                                                {{  option.year }}
-                                            </option>
-                                        </b-select>
+                                        <tree-select style="width: 250px"
+                                                     v-model="query_string.types"
+                                                     placeholder="- Select Types -"
+                                                     @select="getList()"
+                                                     @deselect="getList()"
+                                                     :clearable="false"
+                                                     :normalizer="normalizer"
+                                                     :multiple="true"
+                                                     :flat="true"
+                                                     :options="page.assets.types">
 
+                                        </tree-select>
 
                                     </div>
 
@@ -186,17 +212,18 @@
 
                                 </div>
 
+
                                 <div class="level-right">
 
                                     <div class="level-item">
 
                                         <b-field>
                                             <b-datepicker
-                                                position="is-bottom-left"
-                                                placeholder="- Select a dates -"
-                                                v-model="selected_date"
-                                                @input="setDateRange"
-                                                range>
+                                                    position="is-bottom-left"
+                                                    placeholder="- Select a dates -"
+                                                    v-model="selected_date"
+                                                    @input="setDateRange"
+                                                    range>
                                             </b-datepicker>
                                         </b-field>
 
@@ -215,31 +242,32 @@
 
                                 <div class="block" style="margin-bottom: 0px;" >
 
-                                    <div v-if="page.list_view">
-
-                                        <ListLargeView/>
+                                    <div v-if="page.list_view === 'large'">
+                                        <ListLargeView @eReloadList="getList"/>
                                     </div>
 
                                     <div v-else>
-                                        <ListSmallView/>
+                                        <ListSmallView @eReloadList="getList"/>
                                     </div>
 
                                 </div>
 
                                 <hr style="margin-top: 0;"/>
 
+                                <div class="block" v-if="page.list">
+                                    <b-pagination  :total="page.list.total"
+                                                   :current.sync="page.list.current_page"
+                                                   :per-page="page.list.per_page"
+                                                   range-before=3
+                                                   range-after=3
+                                                   @change="paginate">
+                                    </b-pagination>
+                                </div>
+
                             </div>
                             <!--/list-->
 
-                            <div class="block" v-if="page.list">
-                                <b-pagination  :total="page.list.total"
-                                               :current.sync="page.list.current_page"
-                                               :per-page="page.list.per_page"
-                                               range-before=3
-                                               range-after=3
-                                               @change="paginate">
-                                </b-pagination>
-                            </div>
+
                         </div>
                     </div>
                     <!--/content-->
