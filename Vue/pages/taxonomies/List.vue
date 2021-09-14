@@ -170,26 +170,33 @@
                                                 <option value="">
                                                     - Select a filter -
                                                 </option>
-                                                <optgroup label="Status">
-                                                    <option value=01>
-                                                        Active
-                                                    </option>
-                                                    <option value=10>
-                                                        Inactive
-                                                    </option>
-                                                </optgroup>
+                                                <option value=01>
+                                                    Active
+                                                </option>
+                                                <option value=10>
+                                                    Inactive
+                                                </option>
 
-                                                <optgroup label="Type">
-                                                    <option
-                                                            v-for="(option, index) in page.assets.types"
-                                                            :value="option.slug"
-                                                            :key="index">
-                                                        {{ option.name }}
-                                                    </option>
-                                                </optgroup>
                                             </b-select>
                                         </b-field>
 
+
+                                    </div>
+
+                                    <div class="level-item">
+
+                                        <tree-select style="width: 250px"
+                                                     v-model="query_string.types"
+                                                     placeholder="- Select Types -"
+                                                     @select="getList()"
+                                                     @deselect="getList()"
+                                                     :clearable="false"
+                                                     :normalizer="normalizer"
+                                                     :multiple="true"
+                                                     :flat="true"
+                                                     :options="page.assets.types">
+
+                                        </tree-select>
 
                                     </div>
 

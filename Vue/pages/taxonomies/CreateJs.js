@@ -227,8 +227,6 @@ export default {
         //---------------------------------------------------------------------
         onSelectType: function(type)
         {
-            console.log(type);
-
             if(type.parent_id){
                 this.type_parent_id = type.parent_id;
             }else{

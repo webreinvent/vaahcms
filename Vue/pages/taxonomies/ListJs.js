@@ -1,6 +1,10 @@
 import ListLargeView from './partials/ListLargeView';
 import ListSmallView from './partials/ListSmallView';
 
+import TreeSelect from '@riophae/vue-treeselect'
+// import the styles
+import '@riophae/vue-treeselect/dist/vue-treeselect.css'
+
 let namespace = 'taxonomies';
 
 export default {
@@ -14,6 +18,7 @@ export default {
     components:{
         ListLargeView,
         ListSmallView,
+        TreeSelect,
     },
     data()
     {
@@ -318,6 +323,36 @@ export default {
 
         },
         //---------------------------------------------------------------------
+
+        //---------------------------------------------------------------------
+        onSelectType: function(type)
+        {
+            /*console.log(type);
+
+            if(type.parent_id){
+                this.type_parent_id = type.parent_id;
+            }else{
+                this.type_parent_id = null;
+                this.new_item.parent = null;
+            }*/
+        },
+        //---------------------------------------------------------------------
+
+
+        //---------------------------------------------------------------------
+        normalizer: function (node) {
+
+            let data = {
+                label: node.name,
+                id: node.id.toString(),
+            };
+
+            if(node.children && node.children.length === 0){
+                delete node.children;
+            }
+
+            return data;
+        },
         //---------------------------------------------------------------------
     }
 }

@@ -221,13 +221,20 @@ class Taxonomy extends Model {
             if($request['filter'] == '1')
             {
                 $list->whereNotNull('is_active');
-            }elseif($request['filter'] == '10'){
-                $list->whereNull('is_active');
             }else{
-                $list->whereHas('type',function ($q) use ($request){
-                    $q->where('slug',$request['filter']);
-                });
+                $list->whereNull('is_active');
             }
+        }
+
+        if(isset($request['types']) &&  $request['types'])
+        {
+
+            if(is_string($request['types'])){
+                $request['types'] = [$request['types']];
+            }
+
+            $list->whereIn('vh_taxonomy_type_id',$request['types']);
+
         }
 
         if(isset($request->q))
