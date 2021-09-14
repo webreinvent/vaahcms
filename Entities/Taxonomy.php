@@ -52,6 +52,17 @@ class Taxonomy extends Model {
     {
         return json_decode($value);
     }
+    //-------------------------------------------------
+    public function setSeoKeywordsAttribute($value)
+    {
+        $this->attributes['seo_keywords'] = implode(",",$value);
+    }
+    //-------------------------------------------------
+    public function getSeoKeywordsAttribute($value)
+    {
+        return explode(",",$value);
+    }
+    //-------------------------------------------------
 
     public function createdByUser()
     {

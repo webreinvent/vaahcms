@@ -125,6 +125,29 @@
                                  type="textarea"></b-input>
                     </b-field>
 
+                    <b-field label="Seo title" :label-position="labelPosition">
+                        <b-input name="taxonomies-seo-title" dusk="taxonomies-seo-title"
+                                 v-model="item.seo_title"></b-input>
+                    </b-field>
+
+                    <b-field label="Seo Keywords" :label-position="labelPosition">
+                        <b-taginput
+                                v-model="item.seo_keywords"
+                                name="taxonomies-seo-keywords" dusk="taxonomies-seo-keywords"
+                                ellipsis
+                                icon="tag"
+                                placeholder="Add a keyword"
+                                aria-close-label="Delete this keyword">
+                        </b-taginput>
+                    </b-field>
+
+                    <b-field label="Seo Description" :label-position="labelPosition">
+                        <b-input maxlength="250" v-model="item.seo_description"
+                                 name="taxonomies-seo-description"
+                                 dusk="taxonomies-seo-description"
+                                 type="textarea"></b-input>
+                    </b-field>
+
                     <b-field label="Is Active" :label-position="labelPosition">
                         <b-radio-button name="taxonomies-is_active" dusk="taxonomies-is_active"
                                         v-model="item.is_active"
