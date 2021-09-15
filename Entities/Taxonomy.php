@@ -60,6 +60,9 @@ class Taxonomy extends Model {
     //-------------------------------------------------
     public function getSeoKeywordsAttribute($value)
     {
+        if(!$value){
+            return null;
+        }
         return explode(",",$value);
     }
     //-------------------------------------------------
