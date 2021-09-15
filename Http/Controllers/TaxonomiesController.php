@@ -222,14 +222,64 @@ class TaxonomiesController extends Controller
 
     }
     //----------------------------------------------------------
-    public function getTaxonomyType()
+    public function updateTaxonomyType(Request $request)
     {
-        $list = TaxonomyType::whereNotNull('is_active')
-            ->whereNull('parent_id')->with(['children'])
-            ->select('id', 'name as label', 'name', 'slug')->get();
 
-        $response['success']        = 'success';
-        $response['data']['list']   = $list;
+        if(!$request->newName){
+            $response['status']       = 'failed';
+            $response['errors'][]     = 'Name is required.';
+            return $response;
+        }
+
+
+        $name_exist = TaxonomyType::where('id','!=',$request->id)
+            ->where('name',$request->newName)->first();
+
+        if($name_exist){
+            $response['status']       = 'failed';
+            $response['errors'][]     = 'Name already exist.';
+            return $response;
+        }
+
+
+        $slug_exist = TaxonomyType::where('id','!=',$request->id)
+            ->where('slug',Str::slug($request->newName))->first();
+
+        if($slug_exist){
+            $response['status']       = 'failed';
+            $response['errors'][]     = 'Slug already exist.';
+            return $response;
+        }
+
+        $list = TaxonomyType::where('id',$request->id)->first();
+
+        $list->name = $request->newName;
+        $list->slug = Str::slug($request->newName);
+        $list->save();
+
+        $response['status']       = 'success';
+        $response['messages'][]   = 'Updated Successfully.';
+        return $response;
+
+    }
+    //----------------------------------------------------------
+    public function updateTaxonomyTypePosition(Request $request)
+    {
+
+        $parent_id = null;
+
+        if($request->parent_id && $request->parent_id != 0){
+
+            $parent_id = $request->parent_id;
+        }
+        
+        $item = TaxonomyType::where('id',$request->id)->first();
+
+        $item->parent_id = $parent_id;
+        $item->save();
+
+        $response['status']       = 'success';
+        $response['messages'][]   = 'Updated Successfully.';
         return $response;
 
     }

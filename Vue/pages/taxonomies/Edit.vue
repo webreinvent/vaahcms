@@ -94,9 +94,9 @@
 
                         </tree-select>
                         <p class="control">
-                            <b-button @click="is_type_modal_active = true"
+                            <b-button @click="page.is_type_modal_active = true"
                                       class="button is-primary">
-                                Add
+                                Manage
                             </b-button>
                         </p>
                     </b-field>
@@ -170,53 +170,7 @@
             </div>
             <!--/content-->
 
-
-            <div class="modal"  :class="is_type_modal_active?'is-active':''">
-                <div class="modal-background"></div>
-                <div class="modal-content" style="width: 640px !important;">
-
-                    <div class="card">
-                        <div class="card-header">
-                            <div class="card-header-title">
-                                Taxonomy Types
-                            </div>
-                            <div class="card-header-icon">
-                                <b-field>
-
-                                    <tree-select style="width: 52%" v-model="taxo_type.parent_id"
-                                                 placeholder="Select a Parent"
-                                                 @select="onSelectType"
-                                                 :clearable="false"
-                                                 :normalizer="normalizer"
-                                                 :multiple="false" :options="page.assets.types" >
-
-                                    </tree-select>
-
-                                    <b-input name="taxonomies-type-name" dusk="taxonomies-type-name"
-                                             v-model="taxo_type.name"></b-input>
-
-                                    <p class="control">
-                                        <b-button @click="addType" class="button is-primary">Add</b-button>
-                                    </p>
-                                </b-field>
-                            </div>
-
-                        </div>
-                        <div class="card-content">
-                            <TreeView ref="text_view"
-                                      :ajax_delete_url="ajax_url+'/deleteTaxonomyType'"
-                                      :ajax_list_url="ajax_url+'/getTaxonomyType'">
-
-                            </TreeView>
-                        </div>
-
-                    </div>
-
-                </div>
-                <button class="modal-close is-large"
-                        @click="is_type_modal_active = false"
-                        aria-label="close"></button>
-            </div>
+            <TreeView></TreeView>
 
 
         </div>

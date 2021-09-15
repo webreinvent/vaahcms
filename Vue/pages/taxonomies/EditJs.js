@@ -1,6 +1,6 @@
 let namespace = 'taxonomies';
 import AutoCompleteParents from './partials/AutoCompleteParents';
-import TreeView from '../../vaahvue/reusable/TreeView'
+import TreeView from './partials/ModalTreeView'
 // import the component
 import TreeSelect from '@riophae/vue-treeselect'
 import '@riophae/vue-treeselect/dist/vue-treeselect.css'
@@ -28,10 +28,6 @@ export default {
             type_parent_id: null,
             labelPosition: 'on-border',
             params: {},
-            taxo_type: {
-                parent_id:null,
-                name:null
-            },
             local_action: null,
             title: null,
         }
