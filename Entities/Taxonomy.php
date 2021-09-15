@@ -55,7 +55,11 @@ class Taxonomy extends Model {
     //-------------------------------------------------
     public function setSeoKeywordsAttribute($value)
     {
-        $this->attributes['seo_keywords'] = implode(",",$value);
+        if(!$value || count($value) === 0){
+            $this->attributes['seo_keywords'] = null;
+        }else{
+            $this->attributes['seo_keywords'] = implode(",",$value);
+        }
     }
     //-------------------------------------------------
     public function getSeoKeywordsAttribute($value)

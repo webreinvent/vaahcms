@@ -272,7 +272,7 @@ class TaxonomiesController extends Controller
 
             $parent_id = $request->parent_id;
         }
-        
+
         $item = TaxonomyType::where('id',$request->id)->first();
 
         $item->parent_id = $parent_id;

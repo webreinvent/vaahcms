@@ -30,6 +30,12 @@
                 <b-table-column field="type" label="Type" v-slot="props">
                     <span v-if="props.row.type">
                         {{ props.row.type.name }}
+                        <b-tooltip label="Manage Type" type="is-dark">
+                            <b-button size="is-small"
+                                      @click="page.is_type_modal_active = true"
+                                      icon-left="pencil-alt">
+                            </b-button>
+                        </b-tooltip>
                     </span>
                     <span v-else>
                         -
@@ -56,7 +62,14 @@
 
                 <b-table-column field="actions" label=""
                                 v-slot="props"
-                                width="40">
+                                width="80">
+
+                    <b-tooltip label="Edit" type="is-dark">
+                        <b-button size="is-small"
+                                  @click="setActiveItem(props.row,'taxonomies.edit')"
+                                  icon-left="edit">
+                        </b-button>
+                    </b-tooltip>
 
                     <b-tooltip label="View" type="is-dark">
                         <b-button size="is-small"

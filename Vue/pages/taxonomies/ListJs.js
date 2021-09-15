@@ -1,5 +1,6 @@
 import ListLargeView from './partials/ListLargeView';
 import ListSmallView from './partials/ListSmallView';
+import ModalTreeView from './partials/ModalTreeView'
 
 import TreeSelect from '@riophae/vue-treeselect'
 // import the styles
@@ -18,6 +19,7 @@ export default {
     components:{
         ListLargeView,
         ListSmallView,
+        ModalTreeView,
         TreeSelect,
     },
     data()

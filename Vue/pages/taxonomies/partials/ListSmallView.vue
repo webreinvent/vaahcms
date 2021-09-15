@@ -40,7 +40,14 @@
 
                 <b-table-column field="actions" label=""
                                 v-slot="props"
-                                width="40">
+                                width="80">
+
+                    <b-tooltip label="Edit" type="is-dark">
+                        <b-button size="is-small"
+                                  @click="setActiveItem(props.row,'taxonomies.edit')"
+                                  icon-left="edit">
+                        </b-button>
+                    </b-tooltip>
 
                     <b-tooltip label="View" type="is-dark">
                         <b-button size="is-small"

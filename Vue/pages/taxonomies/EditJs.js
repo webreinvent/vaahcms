@@ -1,6 +1,5 @@
 let namespace = 'taxonomies';
 import AutoCompleteParents from './partials/AutoCompleteParents';
-import TreeView from './partials/ModalTreeView'
 // import the component
 import TreeSelect from '@riophae/vue-treeselect'
 import '@riophae/vue-treeselect/dist/vue-treeselect.css'
@@ -16,7 +15,6 @@ export default {
     components:{
         AutoCompleteParents,
         TreeSelect,
-        TreeView
     },
     data()
     {
@@ -249,34 +247,6 @@ export default {
 
         },
         //---------------------------------------------------------------------
-        addType: function()
-        {
-            this.$Progress.start();
-
-            this.params = this.taxo_type;
-
-            let url = this.ajax_url+'/createTaxonomyType';
-            this.$vaah.ajax(url, this.params, this.addTypeAfter);
-        },
-        //---------------------------------------------------------------------
-        addTypeAfter: function(data, res)
-        {
-            this.$Progress.finish();
-
-            if(res.data.status === 'success'){
-
-                this.taxo_type= {
-                    parent_id:null,
-                    name:null
-                };
-
-                this.update('assets_is_fetching', false);
-
-                this.getAssets();
-
-            }
-        },
-        //---------------------------------------------------------------------
 
 
         //---------------------------------------------------------------------
@@ -293,5 +263,11 @@ export default {
             return data;
         },
         //---------------------------------------------------------------------
+
+        //---------------------------------------------------------------------
+        resetActiveItem: function () {
+            this.update('active_item', null);
+            this.$router.push({name:'taxonomies.list'});
+        },
     }
 }

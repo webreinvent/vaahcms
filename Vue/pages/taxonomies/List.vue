@@ -281,6 +281,8 @@
 
             <router-view @eReloadList="getList"></router-view>
 
+            <ModalTreeView @eReloadList="getList"></ModalTreeView>
+
         </div>
 
     </div>

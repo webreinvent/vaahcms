@@ -198,6 +198,8 @@
 
                     this.$store.dispatch(namespace+'/reloadAssets');
 
+                    this.$emit('eReloadList');
+
                 }else{
                     this.data = new Tree(
                         this.page.assets.types
