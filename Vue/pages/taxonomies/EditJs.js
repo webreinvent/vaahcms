@@ -165,12 +165,6 @@ export default {
                     this.saveAndClone()
                 }
 
-                if(this.local_action === 'save')
-                {
-                    this.$router.push({name: 'taxonomies.view', params:{id:this.id}});
-                    this.$root.$emit('eReloadTaxonomyItem');
-                }
-
             }
 
         },
