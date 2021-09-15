@@ -201,10 +201,6 @@ class Taxonomy extends Model {
             $inputs['parent_id'] = $inputs['parent']['id'];
         }
 
-        /*$tax_type = TaxonomyType::getFirstOrCreate($inputs['type']);
-
-        $inputs['vh_taxonomy_type_id'] = $tax_type->id;*/
-
         $item = new self();
         $item->fill($inputs);
         $item->slug = Str::slug($inputs['slug']);
@@ -543,7 +539,15 @@ class Taxonomy extends Model {
     //-------------------------------------------------
     public static function getFirstOrCreate($type, $name)
     {
-        $item = Taxonomy::where('type', $type)
+        $tax_type = TaxonomyType::getFirstOrCreate($type);
+
+        $item =array();
+
+        if(!$tax_type){
+            return $item;
+        }
+
+        $item = Taxonomy::where('vh_taxonomy_type_id', $tax_type->id)
             ->where('name', $name)
             ->whereNotNull('is_active')
             ->first();
@@ -551,7 +555,7 @@ class Taxonomy extends Model {
         if(!$item)
         {
             $item = new Taxonomy();
-            $item->type = $type;
+            $item->vh_taxonomy_type_id = $tax_type->id;
             $item->name = $name;
             $item->slug = Str::slug($name);
             $item->is_active = 1;

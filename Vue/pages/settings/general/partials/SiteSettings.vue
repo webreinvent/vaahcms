@@ -97,7 +97,7 @@
                                     <b-tooltip label="Copy Code Snippet" type="is-dark">
                                     <p class="control">
                                         <b-button icon-left="copy"
-                                                  @click="copySetting('search_engine_visibility')">
+                                                  @click="copySetting('vh_search_engine_visibility()',true)">
                                         </b-button>
                                     </p>
                                     </b-tooltip>
