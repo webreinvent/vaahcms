@@ -224,9 +224,9 @@ export default {
             let setting = null;
 
             if(is_method){
-                setting = value;
+                setting = "{!! "+value+" !!}";
             }else{
-                setting = "config('settings.global."+value+"');";
+                setting = "{!! config('settings.global."+value+"'); !!}";
             }
 
             copy(setting);

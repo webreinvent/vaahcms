@@ -59,7 +59,14 @@
 
                             </b-dropdown>
 
+                        </p>
 
+                        <p class="control">
+                            <b-button type="is-light"
+                                      tag="router-link"
+                                      :to="{name:'taxonomies.view', params:{id: item.id}}"
+                                      icon-left="eye">
+                            </b-button>
                         </p>
 
                         <p class="control">

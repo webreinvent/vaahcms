@@ -195,7 +195,7 @@ export default {
         //---------------------------------------------------------------------
         copySetting: function (value)
         {
-            let setting = "config('settings.global."+value+"');";
+            let setting = "{!! config('settings.global."+value+"'); !!}";
             copy(setting);
             this.$buefy.toast.open({
                 message: 'Copied!',
