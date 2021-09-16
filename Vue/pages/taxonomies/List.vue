@@ -188,14 +188,13 @@
                                         <tree-select style="width: 250px"
                                                      v-model="query_string.types"
                                                      placeholder="- Select Types -"
-                                                     @select="getList()"
-                                                     @deselect="getList()"
+                                                     @select="setTypes()"
+                                                     @deselect="setTypes()"
                                                      :clearable="false"
                                                      :normalizer="normalizer"
                                                      :multiple="true"
                                                      :flat="true"
                                                      :options="page.assets.types">
-
                                         </tree-select>
 
                                     </div>

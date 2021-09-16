@@ -32,7 +32,7 @@ export default {
             q: null,
             trashed: null,
             filter: null,
-            types: null,
+            types: [],
         },
         bulk_action:{
             selected_items: [],

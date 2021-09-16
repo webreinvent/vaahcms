@@ -1,6 +1,6 @@
 <template>
 
-    <div class="modal"
+    <div class="modal" v-if="page.assets && page.assets.types"
          :class="page.is_type_modal_active?'is-active':''">
         <div class="modal-background"></div>
         <div class="modal-content" style="width: 640px !important;">
