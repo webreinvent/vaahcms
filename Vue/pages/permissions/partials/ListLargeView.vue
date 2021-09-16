@@ -80,9 +80,18 @@
 
 
                 <b-table-column v-slot="props" field="actions" label=""
-                                width="40">
+                                width="80">
 
-                    <b-tooltip v-if="hasPermission('can-read-permissions')"  label="View" type="is-dark">
+                    <b-tooltip v-if="hasPermission('can-update-permissions')"
+                               label="Edit" type="is-dark">
+                        <b-button size="is-small"
+                                  @click="setActiveItem(props.row,'perm.edit')"
+                                  icon-left="edit">
+                        </b-button>
+                    </b-tooltip>
+
+                    <b-tooltip v-if="hasPermission('can-read-permissions')"
+                               label="View" type="is-dark">
                         <b-button size="is-small"
                                   @click="setActiveItem(props.row)"
                                   icon-left="chevron-right">

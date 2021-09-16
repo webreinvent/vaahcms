@@ -105,7 +105,15 @@
 
                 <b-table-column v-slot="props"
                                 field="actions" label=""
-                                width="40">
+                                width="80">
+
+                    <b-tooltip v-if="hasPermission('can-update-roles')"
+                               label="Edit" type="is-dark">
+                        <b-button size="is-small"
+                                  @click="setActiveItem(props.row,'role.edit')"
+                                  icon-left="edit">
+                        </b-button>
+                    </b-tooltip>
 
                     <b-tooltip v-if="hasPermission('can-read-roles')" label="View" type="is-dark">
                         <b-button size="is-small"

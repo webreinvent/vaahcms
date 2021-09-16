@@ -132,5 +132,10 @@ export default {
             this.$router.push({name:'perm.list'});
         },
         //---------------------------------------------------------------------
+        resetActiveItem: function () {
+            this.update('active_item', null);
+            this.$router.push({name:'perm.list'});
+        },
+        //---------------------------------------------------------------------
     }
 }

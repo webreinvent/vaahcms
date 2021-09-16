@@ -63,9 +63,16 @@
                         </p>
 
                         <p class="control">
-                            <b-button tag="router-link"
-                                      type="is-light"
-                                      :to="{name: 'reg.view', params:{id:item.id}}"
+                            <b-button type="is-light"
+                                      tag="router-link"
+                                      :to="{name:'reg.view', params:{id: item.id}}"
+                                      icon-left="eye">
+                            </b-button>
+                        </p>
+
+                        <p class="control">
+                            <b-button type="is-light"
+                                      @click="resetActiveItem()"
                                       icon-left="times">
                             </b-button>
                         </p>
@@ -100,6 +107,13 @@
                                  name="register-password" dusk="register-password" ></b-input>
                     </b-field>
 
+                    <b-field label="Date of Birth"
+                             :label-position="labelPosition">
+                        <DatePicker :selected_value="item.birth"
+                                    @onSelect="setBirthDate">
+                        </DatePicker>
+                    </b-field>
+
                     <b-field label="Display Name" :label-position="labelPosition">
                         <b-input v-model="item.display_name"
                                  name="register-display_name" dusk="register-display_name" >
@@ -115,8 +129,6 @@
                             >{{title.name}}</option>
                         </b-select>
                     </b-field>
-
-
 
                     <b-field label="Designation" :label-position="labelPosition">
                         <b-input v-model="item.designation"
@@ -196,7 +208,8 @@
                             :options="page.assets.timezones"
                             :open_on_focus="true"
                             @onSelect="setTimeZone"
-                        />
+                        >
+                        </AutoCompleteTimeZone>
                     </b-field>
 
                     <b-field label="Alternate Email" :label-position="labelPosition">
@@ -205,19 +218,13 @@
                         ></b-input>
                     </b-field>
 
-                    <b-field label="Date of Birth" :label-position="labelPosition">
-                        <DatePicker
-                            :selected_value="item.birth"
-                            @onSelect="setBirthDate"/>
-                    </b-field>
-
                     <b-field label="Country" :label-position="labelPosition">
                         <AutoCompleteCountry
                             :selected_value="item.country"
                             :options="page.assets.countries"
                             :open_on_focus="true"
-                            @onSelect="setCountry"
-                        />
+                            @onSelect="setCountry">
+                        </AutoCompleteCountry>
                     </b-field>
 
                     <b-field label="Status" :label-position="labelPosition">

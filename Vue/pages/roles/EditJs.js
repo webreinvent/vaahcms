@@ -174,6 +174,11 @@ export default {
             this.update('new_item', new_item);
         },
         //---------------------------------------------------------------------
+        resetActiveItem: function () {
+            this.update('active_item', null);
+            this.$router.push({name:'role.list'});
+        },
+        //---------------------------------------------------------------------
         fillNewItem: function () {
 
             let new_item = {

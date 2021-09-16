@@ -207,6 +207,11 @@ export default {
             this.update('new_item', new_item);
         },
         //---------------------------------------------------------------------
+        resetActiveItem: function () {
+            this.update('active_item', null);
+            this.$router.push({name:'user.list'});
+        },
+        //---------------------------------------------------------------------
         setStatus: function()
         {
            if(this.item.is_active == '1'){
