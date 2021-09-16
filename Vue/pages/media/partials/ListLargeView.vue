@@ -60,7 +60,7 @@
 
                 <b-table-column v-slot="props" v-if="hasPermission('can-read-media')"
                                 field="actions" label=""
-                                width="80">
+                                width="120">
 
                     <b-tooltip label="Open" type="is-dark">
                         <b-button size="is-small"
@@ -68,6 +68,14 @@
                                   target="_blank"
                                   :href="props.row.url"
                                   icon-left="external-link-alt">
+                        </b-button>
+                    </b-tooltip>
+
+                    <b-tooltip v-if="hasPermission('can-update-media')"
+                               label="Edit" type="is-dark">
+                        <b-button size="is-small"
+                                  @click="setActiveItem(props.row,'media.edit')"
+                                  icon-left="edit">
                         </b-button>
                     </b-tooltip>
 

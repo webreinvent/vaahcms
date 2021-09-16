@@ -63,9 +63,16 @@
                         </p>
 
                         <p class="control">
-                            <b-button tag="router-link"
-                                      type="is-light"
-                                      :to="{name: 'media.view', params:{id:item.id}}"
+                            <b-button type="is-light"
+                                      tag="router-link"
+                                      :to="{name:'media.view', params:{id: item.id}}"
+                                      icon-left="eye">
+                            </b-button>
+                        </p>
+
+                        <p class="control">
+                            <b-button type="is-light"
+                                      @click="resetActiveItem()"
                                       icon-left="times">
                             </b-button>
                         </p>
@@ -133,7 +140,7 @@
 
                     </b-field>
 
-                    <div v-if="item.is_downloadable">
+                    <div v-if="item.is_downloadable && item.download_url">
 
                         <b-field label="Download URL"
                                  :message="assets.download_url+item.download_url"

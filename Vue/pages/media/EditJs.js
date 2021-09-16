@@ -33,8 +33,10 @@ export default {
         'item.download_url': {
             deep: true,
             handler(new_val, old_val) {
-                let slug = this.$vaah.strToSlug(new_val);
-                this.item.download_url =  slug;
+                if(new_val){
+                    let slug = this.$vaah.strToSlug(new_val);
+                    this.item.download_url =  slug;
+                }
                 this.downloadable_slug_available =  null;
             }
         },
@@ -222,6 +224,11 @@ export default {
         {
             let new_item = this.getNewItem();
             this.update('new_item', new_item);
+        },
+        //---------------------------------------------------------------------
+        resetActiveItem: function () {
+            this.update('active_item', null);
+            this.$router.push({name:'media.list'});
         },
         //---------------------------------------------------------------------
         fillNewItem: function () {
