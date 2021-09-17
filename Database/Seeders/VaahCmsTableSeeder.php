@@ -247,7 +247,8 @@ class VaahCmsTableSeeder extends Seeder
                 ->first();
 
             $exist = \DB::table( 'vh_notification_contents' )
-                ->where( 'vh_notification_id', $notification->id )->where('sort',  $item['sort'])
+                ->where( 'vh_notification_id', $notification->id )
+                ->where('sort',  $item['sort'])
                 ->where('via',  $item['via'])
                 ->first();
 
@@ -264,7 +265,10 @@ class VaahCmsTableSeeder extends Seeder
             {
                 DB::table('vh_notification_contents')->insert($item);
             } else{
-                DB::table('vh_notification_contents')->where('sort',  $item['sort'])
+                DB::table('vh_notification_contents')
+                    ->where( 'vh_notification_id', $notification->id )
+                    ->where('sort',  $item['sort'])
+                    ->where('via',  $item['via'])
                     ->update($item);
             }
         }
