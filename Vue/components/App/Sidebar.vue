@@ -2,6 +2,7 @@
     <div class="sidebar-page">
         <section class="sidebar-layout" v-if="root && root.assets">
             <b-sidebar
+                    ref="vh_sidebar"
                 :can-cancel="false"
                 :fullheight="true"
                 position="fixed"
@@ -10,10 +11,9 @@
                 :reduce="root.is_sidebar_reduced"
                 open
                 type="is-light">
-                <div  >
+                <template>
 
                     <div class="brand" >
-
                         <p class="brand-cover" :class="{'show-logo': root.is_sidebar_reduced == false}">
                             <img
                              :src="root.assets.urls.image+'/vaahcms-logo.svg'">
@@ -28,14 +28,26 @@
                                 <b-menu-list v-for="(link, menu_key) in menu" :key="menu_key    ">
 
                                     <b-menu-item v-if="link.child"
-                                                 :label="link.label"
                                                  :icon="link.icon">
+
+                                        <template #label="props">
+                                            <span>
+                                                {{link.label}}
+                                                <b-icon class="is-pulled-right" :icon="props.expanded ? 'chevron-down' : 'chevron-up'"></b-icon>
+                                            </span>
+                                        </template>
 
                                         <template v-for="(link_child, key) in link.child">
                                             <b-menu-item v-if="link_child.child"
                                                          :key="key"
-                                                         :label="link_child.label"
                                                          :icon="link_child.icon">
+
+                                                <template #label="props">
+                                                    <span>
+                                                        {{link_child.label}}
+                                                        <b-icon class="is-pulled-right" :icon="props.expanded ? 'chevron-down' : 'chevron-up'"></b-icon>
+                                                    </span>
+                                                </template>
 
                                                 <b-menu-item  v-for="(link_sub_child, index) in link_child.child"
                                                               :key="index"
@@ -70,7 +82,7 @@
                         </template>
 
                     </b-menu>
-                </div>
+                </template>
             </b-sidebar>
 
 
