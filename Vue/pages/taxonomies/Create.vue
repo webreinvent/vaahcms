@@ -15,7 +15,7 @@
                 <div class="card-header-buttons">
 
                     <div class="field has-addons is-pulled-right">
-                        <p class="control">
+                        <p v-if="hasPermission('can-create-taxonomies')" class="control">
                             <b-button icon-left="edit"
                                       type="is-light"
                                       :loading="is_btn_loading"
@@ -24,7 +24,7 @@
                             </b-button>
                         </p>
 
-                        <p class="control">
+                        <p v-if="hasPermission('can-create-taxonomies')" class="control">
 
 
                             <b-dropdown aria-role="list" position="is-bottom-left">
@@ -87,7 +87,8 @@
 
                         </tree-select>
 
-                        <p class="control">
+                        <p v-if="hasPermission('can-manage-taxonomy-types')"
+                           class="control">
                             <b-button @click="page.is_type_modal_active = true"
                                       class="button is-primary">Manage</b-button>
                         </p>

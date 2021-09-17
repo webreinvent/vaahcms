@@ -24,7 +24,8 @@
                             <b-input name="taxonomies-type-name" dusk="taxonomies-type-name"
                                      v-model="taxo_type.name"></b-input>
 
-                            <p class="control">
+                            <p v-if="hasPermission('can-manage-taxonomy-types')"
+                               class="control">
                                 <b-button @click="addType" class="button is-primary">Add</b-button>
                             </p>
                         </b-field>
@@ -100,6 +101,7 @@
     export default {
         computed:{
             root() {return this.$store.getters['root/state']},
+            permissions() {return this.$store.getters['root/state'].permissions},
             page() {return this.$store.getters[namespace+'/state']},
             ajax_url() {return this.$store.getters[namespace+'/state'].ajax_url},
             item() {return this.$store.getters[namespace+'/state'].active_item},
@@ -275,6 +277,11 @@
                 }
 
                 return data;
+            },
+            //---------------------------------------------------------------------
+            hasPermission: function(slug)
+            {
+                return this.$vaah.hasPermission(this.permissions, slug);
             },
         }
     }

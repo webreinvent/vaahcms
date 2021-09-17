@@ -19,7 +19,7 @@
                                 <small><b>#{{item.id}}</b></small>
                             </b-button>
                         </p>
-                        <p class="control">
+                        <p v-if="hasPermission('can-update-taxonomies')" class="control">
                             <b-button icon-left="edit"
                                       type="is-light"
                                       tag="router-link"
@@ -28,7 +28,7 @@
                             </b-button>
                         </p>
 
-                        <p class="control">
+                        <p v-if="hasPermission('can-update-taxonomies')" class="control">
                             <b-dropdown aria-role="list" position="is-bottom-left">
                                 <button class="button is-light" slot="trigger">
                                     <b-icon icon="caret-down"></b-icon>

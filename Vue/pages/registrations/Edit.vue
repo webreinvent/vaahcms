@@ -107,13 +107,6 @@
                                  name="register-password" dusk="register-password" ></b-input>
                     </b-field>
 
-                    <b-field label="Date of Birth"
-                             :label-position="labelPosition">
-                        <DatePicker :selected_value="item.birth"
-                                    @onSelect="setBirthDate">
-                        </DatePicker>
-                    </b-field>
-
                     <b-field label="Display Name" :label-position="labelPosition">
                         <b-input v-model="item.display_name"
                                  name="register-display_name" dusk="register-display_name" >
@@ -216,6 +209,13 @@
                         <b-input type="email" v-model="item.alternate_email"
                                  name="register-alternate_email" dusk="register-alternate_email"
                         ></b-input>
+                    </b-field>
+
+                    <b-field label="Date of Birth"
+                             :label-position="labelPosition">
+                        <DatePicker :selected_value="item.birth"
+                                    @onSelect="setBirthDate">
+                        </DatePicker>
                     </b-field>
 
                     <b-field label="Country" :label-position="labelPosition">

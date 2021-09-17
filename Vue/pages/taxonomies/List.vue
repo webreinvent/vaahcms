@@ -30,7 +30,7 @@
 
                         <div class="card-header-buttons">
                             <div class="field has-addons is-pulled-right">
-                                <p   class="control">
+                                <p v-if="hasPermission('can-create-taxonomies')"  class="control">
                                     <b-button tag="router-link"
                                               type="is-light"
                                               :to="{name: 'taxonomies.create'}"
@@ -65,7 +65,8 @@
 
                                 <!--left-->
                                 <div class="level-left" >
-                                    <div  class="level-item" v-if="page.list_view === 'large'">
+                                    <div  class="level-item" v-if="page.list_view === 'large'
+                                    && hasPermission('can-update-taxonomies')">
                                         <b-field >
 
                                             <b-select placeholder="- Bulk Actions -"

@@ -100,7 +100,8 @@
 
                         </tree-select>
                         <p class="control">
-                            <b-button @click="page.is_type_modal_active = true"
+                            <b-button v-if="hasPermission('can-manage-taxonomy-types')"
+                                      @click="page.is_type_modal_active = true"
                                       class="button is-primary">
                                 Manage
                             </b-button>
