@@ -122,13 +122,6 @@
                     <hr/>
                     <br/>
 
-                    <b-field label="Date of Birth" :label-position="labelPosition">
-                        <DatePicker
-                                :selected_value="item.birth"
-                                @onSelect="setBirthDate">
-                        </DatePicker>
-                    </b-field>
-
                     <b-field label="Email" :label-position="labelPosition">
                         <b-input type="email"  name="user-email" dusk="user-email"
                                  v-model="item.email"></b-input>
@@ -255,6 +248,13 @@
                         <b-input type="email" v-model="item.alternate_email"
                                  name="user-alternate_email" dusk="user-alternate_email"
                         ></b-input>
+                    </b-field>
+
+                    <b-field label="Date of Birth" :label-position="labelPosition">
+                        <DatePicker
+                                :selected_value="item.birth"
+                                @onSelect="setBirthDate">
+                        </DatePicker>
                     </b-field>
 
                     <b-field label="Country" :label-position="labelPosition">
