@@ -1,6 +1,7 @@
 <?php namespace WebReinvent\VaahCms\Entities;
 
 use Carbon\Carbon;
+use DateTimeInterface;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
@@ -21,11 +22,6 @@ class Taxonomy extends Model {
         'deleted_at'
     ];
     //-------------------------------------------------
-    protected $casts = [
-        'created_at'  => 'date:Y-m-d H:i:s',
-        'updated_at'  => 'date:Y-m-d H:i:s',
-        'deleted_at'  => 'date:Y-m-d H:i:s',
-    ];
     //-------------------------------------------------
     protected $dateFormat = 'Y-m-d H:i:s';
     //-------------------------------------------------
@@ -42,6 +38,15 @@ class Taxonomy extends Model {
     ];
     //-------------------------------------------------
 
+
+    //-------------------------------------------------
+    protected function serializeDate(DateTimeInterface $date)
+    {
+        $date_time_format = config('settings.global.datetime_format');
+
+        return $date->format($date_time_format);
+
+    }
     //-------------------------------------------------
     public function setMetaAttribute($value)
     {
@@ -55,11 +60,18 @@ class Taxonomy extends Model {
     //-------------------------------------------------
     public function setSeoKeywordsAttribute($value)
     {
-        $this->attributes['seo_keywords'] = implode(",",$value);
+        if(!$value || count($value) === 0){
+            $this->attributes['seo_keywords'] = null;
+        }else{
+            $this->attributes['seo_keywords'] = implode(",",$value);
+        }
     }
     //-------------------------------------------------
     public function getSeoKeywordsAttribute($value)
     {
+        if(!$value){
+            return null;
+        }
         return explode(",",$value);
     }
     //-------------------------------------------------
@@ -193,10 +205,6 @@ class Taxonomy extends Model {
         if($inputs['parent'] && (is_array($inputs['parent']) || is_object($inputs['parent']))){
             $inputs['parent_id'] = $inputs['parent']['id'];
         }
-
-        /*$tax_type = TaxonomyType::getFirstOrCreate($inputs['type']);
-
-        $inputs['vh_taxonomy_type_id'] = $tax_type->id;*/
 
         $item = new self();
         $item->fill($inputs);
@@ -536,7 +544,15 @@ class Taxonomy extends Model {
     //-------------------------------------------------
     public static function getFirstOrCreate($type, $name)
     {
-        $item = Taxonomy::where('type', $type)
+        $tax_type = TaxonomyType::getFirstOrCreate($type);
+
+        $item =array();
+
+        if(!$tax_type){
+            return $item;
+        }
+
+        $item = Taxonomy::where('vh_taxonomy_type_id', $tax_type->id)
             ->where('name', $name)
             ->whereNotNull('is_active')
             ->first();
@@ -544,7 +560,7 @@ class Taxonomy extends Model {
         if(!$item)
         {
             $item = new Taxonomy();
-            $item->type = $type;
+            $item->vh_taxonomy_type_id = $tax_type->id;
             $item->name = $name;
             $item->slug = Str::slug($name);
             $item->is_active = 1;

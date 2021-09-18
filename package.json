@@ -33,7 +33,7 @@
         "@fortawesome/vue-fontawesome": "^0.1.6",
         "@riophae/vue-treeselect": "^0.4.0",
         "axios": "^0.21.0",
-        "buefy": "0.9.5",
+        "buefy": "0.9.10",
         "bulma-helpers": "^0.4.0",
         "compass-mixins": "^0.12.10",
         "copy-to-clipboard": "^3.3.1",

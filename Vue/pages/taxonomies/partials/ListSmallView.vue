@@ -24,14 +24,30 @@
                     </vh-copy>
                 </b-table-column>
 
-                <b-table-column v-slot="props" width="20%" field="is_active" label="Is Active">
+                <b-table-column v-slot="props" v-if="( !hasPermission('can-manage-taxonomies')
+                && !hasPermission('can-update-taxonomies'))"
+                                field="is_active" label="Is Active">
+
+                    <b-button v-if="props.row.is_active === 1" disabled rounded size="is-small"
+                              type="is-success">
+                        Yes
+                    </b-button>
+                    <b-button v-else rounded size="is-small" disabled type="is-danger">
+                        No
+                    </b-button>
+
+                </b-table-column>
+
+                <b-table-column v-slot="props" v-if="( hasPermission('can-manage-taxonomies')
+                || hasPermission('can-update-taxonomies') )"
+                                field="is_active" label="Is Active">
                     <b-tooltip label="Change Status" type="is-dark">
                         <b-button v-if="props.row.is_active === 1" rounded size="is-small"
-                                  type="is-success" :disabled="props.row.deleted_at ? true : false" @click="changeStatus(props.row.id)">
+                                  type="is-success" @click="changeStatus(props.row.id)">
                             Yes
                         </b-button>
                         <b-button v-else rounded size="is-small" type="is-danger"
-                                  :disabled="props.row.deleted_at ? true : false" @click="changeStatus(props.row.id)">
+                                  @click="changeStatus(props.row.id)">
                             No
                         </b-button>
                     </b-tooltip>
@@ -40,10 +56,18 @@
 
                 <b-table-column field="actions" label=""
                                 v-slot="props"
-                                width="40">
+                                width="80">
+
+                    <b-tooltip v-if="hasPermission('can-update-taxonomies')"
+                               label="Edit" type="is-dark">
+                        <b-button size="is-small"
+                                  @click="setActiveItem(props.row,'taxonomies.edit')"
+                                  icon-left="edit">
+                        </b-button>
+                    </b-tooltip>
 
                     <b-tooltip label="View" type="is-dark">
-                        <b-button size="is-small"
+                        <b-button v-if="hasPermission('can-read-taxonomies')" size="is-small"
                                   @click="setActiveItem(props.row)"
                                   icon-left="chevron-right">
                         </b-button>

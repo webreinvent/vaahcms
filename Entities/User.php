@@ -3,6 +3,7 @@
 
 
 use App\Mail\OrderShipped;
+use DateTimeInterface;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Http\Request;
@@ -67,36 +68,19 @@ class User extends Authenticatable
     ];
 
     //-------------------------------------------------
-
-    protected $casts = [
-        "last_login_at" => 'date:Y-m-d H:i:s',
-        "api_token_used_at" => 'date:Y-m-d H:i:s',
-        "affiliate_code_used_at" => 'date:Y-m-d H:i:s',
-        "reset_password_code_sent_at" => 'date:Y-m-d H:i:s',
-        "reset_password_code_used_at" => 'date:Y-m-d H:i:s',
-        "birth" => 'date:Y-m-d H:i:s',
-        "activated_at" => 'date:Y-m-d H:i:s',
-        "created_at" => 'date:Y-m-d H:i:s',
-        "updated_at" => 'date:Y-m-d H:i:s',
-        "deleted_at" => 'date:Y-m-d H:i:s'
-    ];
-
-    //-------------------------------------------------
     protected $appends  = [
         'avatar', 'name'
     ];
     //-------------------------------------------------
-    public function __construct(array $attributes = [])
+
+
+    //-------------------------------------------------
+    protected function serializeDate(DateTimeInterface $date)
     {
         $date_time_format = config('settings.global.datetime_format');
-        if(is_array($this->casts) && isset($date_time_format))
-        {
-            foreach ($this->casts as $date_key => $format)
-            {
-                $this->casts[$date_key] = 'date:'.$date_time_format;
-            }
-        }
-        parent::__construct($attributes);
+
+        return $date->format($date_time_format);
+
     }
 
     //-------------------------------------------------

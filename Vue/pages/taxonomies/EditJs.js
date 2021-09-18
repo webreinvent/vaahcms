@@ -1,6 +1,5 @@
 let namespace = 'taxonomies';
 import AutoCompleteParents from './partials/AutoCompleteParents';
-import TreeView from '../../vaahvue/reusable/TreeView'
 // import the component
 import TreeSelect from '@riophae/vue-treeselect'
 import '@riophae/vue-treeselect/dist/vue-treeselect.css'
@@ -9,6 +8,7 @@ export default {
     props: ['id'],
     computed:{
         root() {return this.$store.getters['root/state']},
+        permissions() {return this.$store.getters['root/state'].permissions},
         page() {return this.$store.getters[namespace+'/state']},
         ajax_url() {return this.$store.getters[namespace+'/state'].ajax_url},
         item() {return this.$store.getters[namespace+'/state'].active_item},
@@ -16,7 +16,6 @@ export default {
     components:{
         AutoCompleteParents,
         TreeSelect,
-        TreeView
     },
     data()
     {
@@ -28,10 +27,6 @@ export default {
             type_parent_id: null,
             labelPosition: 'on-border',
             params: {},
-            taxo_type: {
-                parent_id:null,
-                name:null
-            },
             local_action: null,
             title: null,
         }
@@ -165,12 +160,6 @@ export default {
                     this.saveAndClone()
                 }
 
-                if(this.local_action === 'save')
-                {
-                    this.$router.push({name: 'taxonomies.view', params:{id:this.id}});
-                    this.$root.$emit('eReloadTaxonomyItem');
-                }
-
             }
 
         },
@@ -259,34 +248,6 @@ export default {
 
         },
         //---------------------------------------------------------------------
-        addType: function()
-        {
-            this.$Progress.start();
-
-            this.params = this.taxo_type;
-
-            let url = this.ajax_url+'/createTaxonomyType';
-            this.$vaah.ajax(url, this.params, this.addTypeAfter);
-        },
-        //---------------------------------------------------------------------
-        addTypeAfter: function(data, res)
-        {
-            this.$Progress.finish();
-
-            if(res.data.status === 'success'){
-
-                this.taxo_type= {
-                    parent_id:null,
-                    name:null
-                };
-
-                this.update('assets_is_fetching', false);
-
-                this.getAssets();
-
-            }
-        },
-        //---------------------------------------------------------------------
 
 
         //---------------------------------------------------------------------
@@ -303,5 +264,16 @@ export default {
             return data;
         },
         //---------------------------------------------------------------------
+
+        //---------------------------------------------------------------------
+        resetActiveItem: function () {
+            this.update('active_item', null);
+            this.$router.push({name:'taxonomies.list'});
+        },
+        //---------------------------------------------------------------------
+        hasPermission: function(slug)
+        {
+            return this.$vaah.hasPermission(this.permissions, slug);
+        },
     }
 }

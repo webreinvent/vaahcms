@@ -24,6 +24,7 @@ export default {
         },
         is_list_loading: false,
         is_item_loading: false,
+        is_type_modal_active: false,
         list_view: true,
         show_filters: false,
         query_string: {
@@ -31,7 +32,7 @@ export default {
             q: null,
             trashed: null,
             filter: null,
-            types: null,
+            types: [],
         },
         bulk_action:{
             selected_items: [],
@@ -59,7 +60,8 @@ export default {
         //-----------------------------------------------------------------
         async getAssets({ state, commit, dispatch, getters }) {
 
-            if(state.assets_is_fetching === false || !state.assets)
+            if(state.assets_is_fetching === false || !state.assets ||
+                state.assets_reload === true)
             {
                 let payload = {
                     key: 'assets_is_fetching',
@@ -92,7 +94,17 @@ export default {
             }
             commit('updateState', view);
         },
+        //-----------------------------------------------------------------\
+
         //-----------------------------------------------------------------
+        reloadAssets: function ({ state, commit, dispatch, getters }) {
+            let payload = {
+                key: 'assets_reload',
+                value: true
+            };
+            commit('updateState', payload);
+            dispatch('getAssets');
+        },
     },
     //=========================================================================
     getters:{

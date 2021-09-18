@@ -62,7 +62,11 @@ class VaahCmsTableSeeder extends Seeder
         }
     }
     //---------------------------------------------------------------
-    public function storeSeedsWithUuid($table, $list,$has_active=true, $primary_key='slug', $create_slug=true, $create_slug_from='name')
+    public function storeSeedsWithUuid($table, $list,
+                                       $has_active=true,
+                                       $primary_key='slug',
+                                       $create_slug=true,
+                                       $create_slug_from='name')
     {
         foreach ($list as $item)
         {
@@ -243,7 +247,8 @@ class VaahCmsTableSeeder extends Seeder
                 ->first();
 
             $exist = \DB::table( 'vh_notification_contents' )
-                ->where( 'vh_notification_id', $notification->id )->where('sort',  $item['sort'])
+                ->where( 'vh_notification_id', $notification->id )
+                ->where('sort',  $item['sort'])
                 ->where('via',  $item['via'])
                 ->first();
 
@@ -260,7 +265,10 @@ class VaahCmsTableSeeder extends Seeder
             {
                 DB::table('vh_notification_contents')->insert($item);
             } else{
-                DB::table('vh_notification_contents')->where('sort',  $item['sort'])
+                DB::table('vh_notification_contents')
+                    ->where( 'vh_notification_id', $notification->id )
+                    ->where('sort',  $item['sort'])
+                    ->where('via',  $item['via'])
                     ->update($item);
             }
         }

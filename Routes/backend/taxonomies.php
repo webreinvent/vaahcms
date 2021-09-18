@@ -41,7 +41,10 @@ function () {
     Route::post( 'deleteTaxonomyType', 'TaxonomiesController@deleteTaxonomyType' )
         ->name( 'vh.backend.leads.taxonomies.deleteTaxonomyType' );
             //------------------------------------------------
-    Route::get( 'getTaxonomyType', 'TaxonomiesController@getTaxonomyType' )
-        ->name( 'vh.backend.leads.taxonomies.getTaxonomyType' );
+    Route::post( 'updateTaxonomyType', 'TaxonomiesController@updateTaxonomyType' )
+        ->name( 'vh.backend.leads.taxonomies.updateTaxonomyType' );
+            //------------------------------------------------
+    Route::post( 'updateTaxonomyTypePosition', 'TaxonomiesController@updateTaxonomyTypePosition' )
+        ->name( 'vh.backend.leads.taxonomies.updateTaxonomyTypePosition' );
             //------------------------------------------------
 });

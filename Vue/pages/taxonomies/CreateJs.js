@@ -1,5 +1,4 @@
 import AutoCompleteParents from './partials/AutoCompleteParents';
-import TreeView from '../../vaahvue/reusable/TreeView'
 // import the component
 import TreeSelect from '@riophae/vue-treeselect'
 // import the styles
@@ -18,7 +17,6 @@ export default {
     },
     components:{
         AutoCompleteParents,
-        TreeView,
         TreeSelect
     },
     data()

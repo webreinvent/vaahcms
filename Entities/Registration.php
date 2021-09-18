@@ -1,5 +1,6 @@
 <?php namespace WebReinvent\VaahCms\Entities;
 
+use Carbon\Traits\Timestamp;
 use Hash;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
@@ -8,6 +9,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Str;
 use WebReinvent\VaahCms\Traits\CrudWithUuidObservantTrait;
+use DateTimeInterface;
 
 
 class Registration extends Model
@@ -44,29 +46,6 @@ class Registration extends Model
 
     //-------------------------------------------------
 
-    protected $casts = [
-        "activation_code_sent_at" => 'date:Y-m-d H:i:s',
-        "activated_at" => 'date:Y-m-d H:i:s',
-        "invited_at" => 'date:Y-m-d H:i:s',
-        "user_created_at" => 'date:Y-m-d H:i:s',
-        "created_at" => 'date:Y-m-d H:i:s',
-        "updated_at" => 'date:Y-m-d H:i:s',
-        "deleted_at" => 'date:Y-m-d H:i:s'
-    ];
-    //-------------------------------------------------
-    public function __construct(array $attributes = [])
-    {
-        $date_time_format = config('settings.global.datetime_format');
-        if(is_array($this->casts) && isset($date_time_format))
-        {
-            foreach ($this->casts as $date_key => $format)
-            {
-                $this->casts[$date_key] = 'date:'.$date_time_format;
-            }
-        }
-        parent::__construct($attributes);
-    }
-
     //-------------------------------------------------
     public function routeNotificationForMail($notification)
     {
@@ -78,7 +57,13 @@ class Registration extends Model
     ];
 
     //-------------------------------------------------
+    protected function serializeDate(DateTimeInterface $date)
+    {
+        $date_time_format = config('settings.global.datetime_format');
 
+        return $date->format($date_time_format);
+
+    }
     //-------------------------------------------------
     public function setFirstNameAttribute($value)
     {

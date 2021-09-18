@@ -113,9 +113,6 @@ export default {
                 if(this.local_action === 'save-and-close')
                 {
                     this.saveAndClose()
-                }else{
-                    this.$router.push({name: 'perm.view', params:{id:this.id}});
-                    this.$root.$emit('eReloadItem');
                 }
 
             }
@@ -128,6 +125,11 @@ export default {
         },
         //---------------------------------------------------------------------
         saveAndClose: function () {
+            this.update('active_item', null);
+            this.$router.push({name:'perm.list'});
+        },
+        //---------------------------------------------------------------------
+        resetActiveItem: function () {
             this.update('active_item', null);
             this.$router.push({name:'perm.list'});
         },

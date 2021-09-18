@@ -1,5 +1,6 @@
 import ListLargeView from './partials/ListLargeView';
 import ListSmallView from './partials/ListSmallView';
+import ModalTreeView from './partials/ModalTreeView'
 
 import TreeSelect from '@riophae/vue-treeselect'
 // import the styles
@@ -18,6 +19,7 @@ export default {
     components:{
         ListLargeView,
         ListSmallView,
+        ModalTreeView,
         TreeSelect,
     },
     data()
@@ -85,7 +87,16 @@ export default {
             {
                 for(let key in query)
                 {
-                    this.query_string[key] = query[key];
+                    if(key === 'types'){
+                        if(typeof query[key] === 'string'){
+                            this.query_string[key] = [query[key]];
+                        }else{
+                            this.query_string[key] = query[key];
+                        }
+                    }else{
+                        this.query_string[key] = query[key];
+                    }
+
                 }
             }
             this.update('query_string', this.query_string);
@@ -161,9 +172,12 @@ export default {
         {
             for(let key in this.query_string)
             {
-                if(key == 'page')
+                if(key === 'page')
                 {
                     this.query_string[key] = 1;
+                }else if(key === 'types')
+                {
+                    this.query_string[key] = [];
                 } else
                 {
                     this.query_string[key] = null;
@@ -204,11 +218,24 @@ export default {
         },
         //---------------------------------------------------------------------
         //---------------------------------------------------------------------
+        setTypes: function () {
+            this.update('query_string',this.query_string);
+
+            this.getList();
+        },
+        //---------------------------------------------------------------------
         getList: function () {
             this.$Progress.start();
             this.$vaah.updateCurrentURL(this.query_string, this.$router);
-            let url = this.ajax_url+'/list';
-            this.$vaah.ajaxGet(url, this.query_string, this.getListAfter);
+
+
+
+            this.$nextTick(function () {
+                let url = this.ajax_url+'/list';
+                this.$vaah.ajaxGet(url, this.query_string, this.getListAfter);
+            });
+
+
         },
         //---------------------------------------------------------------------
         getListAfter: function (data, res) {

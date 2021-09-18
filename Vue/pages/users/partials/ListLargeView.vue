@@ -2,7 +2,7 @@
 <template>
     <div>
         <b-table :data="page.list_is_empty ? [] : page.list.data"
-                 :checkable="hasPermission('can-update-users') ? true : false"
+                 :checkable="hasPermission('can-update-users')"
                  :checked-rows.sync="page.bulk_action.selected_items"
                  checkbox-position="left"
                  :hoverable="true"
@@ -90,11 +90,20 @@
                 </b-table-column>
 
 
-                <b-table-column v-slot="props" v-if="hasPermission('can-read-users')"
+                <b-table-column v-slot="props"
                                 field="actions" label=""
-                                width="40">
+                                width="80">
 
-                    <b-tooltip label="View" type="is-dark">
+                    <b-tooltip v-if="hasPermission('can-update-users')"
+                               label="Edit" type="is-dark">
+                        <b-button size="is-small"
+                                  @click="setActiveItem(props.row,'user.edit')"
+                                  icon-left="edit">
+                        </b-button>
+                    </b-tooltip>
+
+                    <b-tooltip v-if="hasPermission('can-read-users')"
+                               label="View" type="is-dark">
                         <b-button size="is-small"
                                   @click="setActiveItem(props.row)"
                                   icon-left="chevron-right">

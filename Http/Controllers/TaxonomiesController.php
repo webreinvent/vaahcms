@@ -23,6 +23,14 @@ class TaxonomiesController extends Controller
     public function getAssets(Request $request)
     {
 
+        if(!\Auth::user()->hasPermission('has-access-of-taxonomies-section'))
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+            return response()->json($response);
+        }
+
         $data = [];
 
 
@@ -63,18 +71,44 @@ class TaxonomiesController extends Controller
     //----------------------------------------------------------
     public function postCreate(Request $request)
     {
+
+        if(!\Auth::user()->hasPermission('can-create-taxonomies'))
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+            return response()->json($response);
+        }
+
         $response = Taxonomy::createItem($request);
         return response()->json($response);
     }
     //----------------------------------------------------------
     public function getList(Request $request)
     {
+
+        if(!\Auth::user()->hasPermission('has-access-of-taxonomies-section'))
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+            return response()->json($response);
+        }
+
         $response = Taxonomy::getList($request);
         return response()->json($response);
     }
     //----------------------------------------------------------
     public function getItem(Request $request, $id)
     {
+        if(!\Auth::user()->hasPermission('can-read-taxonomies'))
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+            return response()->json($response);
+        }
+
         $response = Taxonomy::getItem($id);
         return response()->json($response);
     }
@@ -82,6 +116,14 @@ class TaxonomiesController extends Controller
     //----------------------------------------------------------
     public function postStore(Request $request,$id)
     {
+        if(!\Auth::user()->hasPermission('can-update-taxonomies'))
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+            return response()->json($response);
+        }
+
         $response = Taxonomy::postStore($request,$id);
         return response()->json($response);
     }
@@ -113,11 +155,28 @@ class TaxonomiesController extends Controller
             //------------------------------------
             case 'bulk-change-status':
 
+                if(!\Auth::user()->hasPermission('can-manage-taxonomies') &&
+                    !\Auth::user()->hasPermission('can-update-taxonomies'))
+                {
+                    $response['status'] = 'failed';
+                    $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+                    return $response;
+                }
+
                 $response = Taxonomy::bulkStatusChange($request);
 
                 break;
             //------------------------------------
             case 'bulk-trash':
+
+                if(!\Auth::user()->hasPermission('can-update-taxonomies'))
+                {
+                    $response['status'] = 'failed';
+                    $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+                    return $response;
+                }
 
                 $response = Taxonomy::bulkTrash($request);
 
@@ -125,12 +184,29 @@ class TaxonomiesController extends Controller
             //------------------------------------
             case 'bulk-restore':
 
+                if(!\Auth::user()->hasPermission('can-update-taxonomies'))
+                {
+                    $response['status'] = 'failed';
+                    $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+                    return $response;
+                }
+
                 $response = Taxonomy::bulkRestore($request);
 
                 break;
 
             //------------------------------------
             case 'bulk-delete':
+
+                if(!\Auth::user()->hasPermission('can-update-taxonomies') ||
+                    !\Auth::user()->hasPermission('can-delete-taxonomies'))
+                {
+                    $response['status'] = 'failed';
+                    $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+                    return $response;
+                }
 
                 $response = Taxonomy::bulkDelete($request);
 
@@ -166,6 +242,15 @@ class TaxonomiesController extends Controller
     //----------------------------------------------------------
     public function createTaxonomyType(Request $request)
     {
+
+        if(!\Auth::user()->hasPermission('can-manage-taxonomy-type'))
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+            return $response;
+        }
+
         if(!$request->has('name') || !$request->name){
             $response['status'] = 'failed';
             $response['errors'][] = 'The name field is required.';
@@ -195,6 +280,13 @@ class TaxonomiesController extends Controller
     //----------------------------------------------------------
     public function deleteTaxonomyType(Request $request)
     {
+        if(!\Auth::user()->hasPermission('can-manage-taxonomy-type'))
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+            return $response;
+        }
 
         $item = TaxonomyType::where('id',$request->id)->with(['children'])
             ->withTrashed()->first();
@@ -222,14 +314,80 @@ class TaxonomiesController extends Controller
 
     }
     //----------------------------------------------------------
-    public function getTaxonomyType()
+    public function updateTaxonomyType(Request $request)
     {
-        $list = TaxonomyType::whereNotNull('is_active')
-            ->whereNull('parent_id')->with(['children'])
-            ->select('id', 'name as label', 'name', 'slug')->get();
 
-        $response['success']        = 'success';
-        $response['data']['list']   = $list;
+        if(!\Auth::user()->hasPermission('can-manage-taxonomy-type'))
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+            return $response;
+        }
+
+        if(!$request->newName){
+            $response['status']       = 'failed';
+            $response['errors'][]     = 'Name is required.';
+            return $response;
+        }
+
+
+        $name_exist = TaxonomyType::where('id','!=',$request->id)
+            ->where('name',$request->newName)->first();
+
+        if($name_exist){
+            $response['status']       = 'failed';
+            $response['errors'][]     = 'Name already exist.';
+            return $response;
+        }
+
+
+        $slug_exist = TaxonomyType::where('id','!=',$request->id)
+            ->where('slug',Str::slug($request->newName))->first();
+
+        if($slug_exist){
+            $response['status']       = 'failed';
+            $response['errors'][]     = 'Slug already exist.';
+            return $response;
+        }
+
+        $list = TaxonomyType::where('id',$request->id)->first();
+
+        $list->name = $request->newName;
+        $list->slug = Str::slug($request->newName);
+        $list->save();
+
+        $response['status']       = 'success';
+        $response['messages'][]   = 'Updated Successfully.';
+        return $response;
+
+    }
+    //----------------------------------------------------------
+    public function updateTaxonomyTypePosition(Request $request)
+    {
+
+        if(!\Auth::user()->hasPermission('can-manage-taxonomy-type'))
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+            return $response;
+        }
+
+        $parent_id = null;
+
+        if($request->parent_id && $request->parent_id != 0){
+
+            $parent_id = $request->parent_id;
+        }
+
+        $item = TaxonomyType::where('id',$request->id)->first();
+
+        $item->parent_id = $parent_id;
+        $item->save();
+
+        $response['status']       = 'success';
+        $response['messages'][]   = 'Updated Successfully.';
         return $response;
 
     }

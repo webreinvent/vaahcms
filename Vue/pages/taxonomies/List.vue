@@ -30,7 +30,7 @@
 
                         <div class="card-header-buttons">
                             <div class="field has-addons is-pulled-right">
-                                <p   class="control">
+                                <p v-if="hasPermission('can-create-taxonomies')"  class="control">
                                     <b-button tag="router-link"
                                               type="is-light"
                                               :to="{name: 'taxonomies.create'}"
@@ -65,7 +65,8 @@
 
                                 <!--left-->
                                 <div class="level-left" >
-                                    <div  class="level-item" v-if="page.list_view === 'large'">
+                                    <div  class="level-item" v-if="page.list_view === 'large'
+                                    && hasPermission('can-update-taxonomies')">
                                         <b-field >
 
                                             <b-select placeholder="- Bulk Actions -"
@@ -188,14 +189,13 @@
                                         <tree-select style="width: 250px"
                                                      v-model="query_string.types"
                                                      placeholder="- Select Types -"
-                                                     @select="getList()"
-                                                     @deselect="getList()"
+                                                     @select="setTypes()"
+                                                     @deselect="setTypes()"
                                                      :clearable="false"
                                                      :normalizer="normalizer"
                                                      :multiple="true"
                                                      :flat="true"
                                                      :options="page.assets.types">
-
                                         </tree-select>
 
                                     </div>
@@ -280,6 +280,8 @@
             <!--/left-->
 
             <router-view @eReloadList="getList"></router-view>
+
+            <ModalTreeView @eReloadList="getList"></ModalTreeView>
 
         </div>
 

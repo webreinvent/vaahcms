@@ -2,6 +2,7 @@
 
 namespace WebReinvent\VaahCms\Http\Controllers;
 
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
@@ -26,6 +27,8 @@ class JsonController extends Controller
     //----------------------------------------------------------
     public function getPublicAssets(Request $request)
     {
+
+        $data['timezone'] = config('app.timezone');
 
         $data['vaahcms'] = [
             'name' => config('vaahcms.app_name'),

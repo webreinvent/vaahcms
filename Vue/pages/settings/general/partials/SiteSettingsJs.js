@@ -219,9 +219,16 @@ export default {
             this.is_loading = false;
         },
         //---------------------------------------------------------------------
-        copySetting: function (value)
+        copySetting: function (value,is_method = false)
         {
-            let setting = "config('settings.global."+value+"');";
+            let setting = null;
+
+            if(is_method){
+                setting = "{!! "+value+" !!}";
+            }else{
+                setting = "{!! config('settings.global."+value+"'); !!}";
+            }
+
             copy(setting);
             this.$buefy.toast.open({
                 message: 'Copied!',
