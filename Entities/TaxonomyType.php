@@ -1,6 +1,7 @@
 <?php namespace WebReinvent\VaahCms\Entities;
 
 use Carbon\Carbon;
+use DateTimeInterface;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
@@ -20,11 +21,6 @@ class TaxonomyType extends Model {
         'deleted_at'
     ];
     //-------------------------------------------------
-    protected $casts = [
-        'created_at'  => 'date:Y-m-d H:i:s',
-        'updated_at'  => 'date:Y-m-d H:i:s',
-        'deleted_at'  => 'date:Y-m-d H:i:s',
-    ];
     //-------------------------------------------------
     protected $dateFormat = 'Y-m-d H:i:s';
     //-------------------------------------------------
@@ -39,6 +35,15 @@ class TaxonomyType extends Model {
     ];
     //-------------------------------------------------
 
+
+    //-------------------------------------------------
+    protected function serializeDate(DateTimeInterface $date)
+    {
+        $date_time_format = config('settings.global.datetime_format');
+
+        return $date->format($date_time_format);
+
+    }
     //-------------------------------------------------
     public function setMetaAttribute($value)
     {

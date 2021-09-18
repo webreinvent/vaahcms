@@ -1,6 +1,7 @@
 <?php namespace WebReinvent\VaahCms\Entities;
 
 use Carbon\Carbon;
+use DateTimeInterface;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
@@ -20,11 +21,6 @@ class Job extends Model {
     //-------------------------------------------------
     protected $dateFormat = 'Y-m-d H:i:s';
     //-------------------------------------------------
-    protected $casts = [
-        'reserved_at'  => 'date:Y-m-d H:i:s',
-        'available_at'  => 'date:Y-m-d H:i:s',
-        'created_at'  => 'date:Y-m-d H:i:s',
-    ];
     //-------------------------------------------------
     protected $fillable = [
     ];
@@ -33,17 +29,15 @@ class Job extends Model {
     protected $appends  = [
     ];
     //-------------------------------------------------
-    public function __construct(array $attributes = [])
+
+
+    //-------------------------------------------------
+    protected function serializeDate(DateTimeInterface $date)
     {
         $date_time_format = config('settings.global.datetime_format');
-        if(is_array($this->casts) && isset($date_time_format))
-        {
-            foreach ($this->casts as $date_key => $format)
-            {
-                $this->casts[$date_key] = 'date:'.$date_time_format;
-            }
-        }
-        parent::__construct($attributes);
+
+        return $date->format($date_time_format);
+
     }
     //-------------------------------------------------
     public function getPayloadAttribute($value)
