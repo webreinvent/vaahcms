@@ -72,3 +72,14 @@ function vh_is_json($string)
     return (json_last_error() == JSON_ERROR_NONE);
 }
 //-------------------------------------------------------------
+function vh_find_in_array_by_key_value($array,$key,$value)
+{
+    foreach ($array as $item){
+        if($item[$key] == $value){
+            return $item;
+        }
+    }
+
+    return null;
+}
+//-------------------------------------------------------------

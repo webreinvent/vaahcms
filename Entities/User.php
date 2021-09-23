@@ -3,6 +3,7 @@
 
 
 use App\Mail\OrderShipped;
+use DateTimeInterface;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Http\Request;
@@ -67,24 +68,20 @@ class User extends Authenticatable
     ];
 
     //-------------------------------------------------
-
-    protected $casts = [
-        "last_login_at" => 'date:Y-m-d H:i:s',
-        "api_token_used_at" => 'date:Y-m-d H:i:s',
-        "affiliate_code_used_at" => 'date:Y-m-d H:i:s',
-        "reset_password_code_sent_at" => 'date:Y-m-d H:i:s',
-        "reset_password_code_used_at" => 'date:Y-m-d H:i:s',
-        "birth" => 'date:Y-m-d H:i:s',
-        "activated_at" => 'date:Y-m-d H:i:s',
-        "created_at" => 'date:Y-m-d H:i:s',
-        "updated_at" => 'date:Y-m-d H:i:s',
-        "deleted_at" => 'date:Y-m-d H:i:s'
-    ];
-
-    //-------------------------------------------------
     protected $appends  = [
         'avatar', 'name'
     ];
+    //-------------------------------------------------
+
+
+    //-------------------------------------------------
+    protected function serializeDate(DateTimeInterface $date)
+    {
+        $date_time_format = config('settings.global.datetime_format');
+
+        return $date->format($date_time_format);
+
+    }
 
     //-------------------------------------------------
     public function getAvatarAttribute() {
@@ -1089,7 +1086,6 @@ class User extends Authenticatable
         $response['status'] = 'success';
         $response['data']['list'] = $list;
         $response['data']['totalRole'] = $countRole;
-        $response['fsfsf']['totalRole'] = $request;
 
         return $response;
 

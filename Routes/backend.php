@@ -17,6 +17,7 @@ include('backend/settings.php');
 include('backend/modules.php');
 include('backend/themes.php');
 include('backend/media.php');
+include('backend/taxonomies.php');
 include('backend/registrations.php');
 include('backend/profile.php');
 include('backend/roles.php');

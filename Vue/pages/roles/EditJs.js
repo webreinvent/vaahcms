@@ -125,12 +125,6 @@ export default {
                     this.saveAndClone()
                 }
 
-                if(this.local_action === 'save')
-                {
-                    this.$router.push({name: 'role.view', params:{id:this.id}});
-                    this.$root.$emit('eReloadItem');
-                }
-
             }
 
         },
@@ -172,6 +166,11 @@ export default {
         {
             let new_item = this.getNewItem();
             this.update('new_item', new_item);
+        },
+        //---------------------------------------------------------------------
+        resetActiveItem: function () {
+            this.update('active_item', null);
+            this.$router.push({name:'role.list'});
         },
         //---------------------------------------------------------------------
         fillNewItem: function () {

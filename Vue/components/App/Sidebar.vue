@@ -2,6 +2,7 @@
     <div class="sidebar-page">
         <section class="sidebar-layout" v-if="root && root.assets">
             <b-sidebar
+                    ref="vh_sidebar"
                 :can-cancel="false"
                 :fullheight="true"
                 position="fixed"
@@ -10,16 +11,16 @@
                 :reduce="root.is_sidebar_reduced"
                 open
                 type="is-light">
-                <div  >
+                <template>
 
                     <div class="brand" >
-
                         <p class="brand-cover" :class="{'show-logo': root.is_sidebar_reduced == false}">
                             <img
                              :src="root.assets.urls.image+'/vaahcms-logo.svg'">
                         </p>
 
                     </div>
+
                     <b-menu class="is-custom-mobile">
 
                         <template v-if="root.assets && root.assets.extended_views" >
@@ -27,16 +28,45 @@
                                 <b-menu-list v-for="(link, menu_key) in menu" :key="menu_key    ">
 
                                     <b-menu-item v-if="link.child"
-                                                 :label="link.label"
                                                  :icon="link.icon">
 
-                                        <b-menu-item v-for="(link_child, key) in link.child"
-                                                     :key="key"
-                                                     tag="a"
-                                                     :href="link_child.link"
-                                                     :label="link_child.label"
-                                                     :icon="link_child.icon">
-                                        </b-menu-item>
+                                        <template #label="props">
+                                            <span>
+                                                {{link.label}}
+                                                <b-icon class="is-pulled-right" :icon="props.expanded ? 'chevron-down' : 'chevron-up'"></b-icon>
+                                            </span>
+                                        </template>
+
+                                        <template v-for="(link_child, key) in link.child">
+                                            <b-menu-item v-if="link_child.child"
+                                                         :key="key"
+                                                         :icon="link_child.icon">
+
+                                                <template #label="props">
+                                                    <span>
+                                                        {{link_child.label}}
+                                                        <b-icon class="is-pulled-right" :icon="props.expanded ? 'chevron-down' : 'chevron-up'"></b-icon>
+                                                    </span>
+                                                </template>
+
+                                                <b-menu-item  v-for="(link_sub_child, index) in link_child.child"
+                                                              :key="index"
+                                                              tag="a"
+                                                              :href="link_sub_child.link"
+                                                              :label="link_sub_child.label"
+                                                              :icon="link_sub_child.icon">
+                                                </b-menu-item>
+
+                                            </b-menu-item>
+
+                                            <b-menu-item v-else
+                                                         :key="key"
+                                                         tag="a"
+                                                         :href="link_child.link"
+                                                         :label="link_child.label"
+                                                         :icon="link_child.icon">
+                                            </b-menu-item>
+                                        </template>
 
                                     </b-menu-item>
 
@@ -52,7 +82,7 @@
                         </template>
 
                     </b-menu>
-                </div>
+                </template>
             </b-sidebar>
 
 

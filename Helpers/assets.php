@@ -278,3 +278,46 @@ function vh_public_urls()
 }
 //-----------------------------------------------------------------------------------
 //-----------------------------------------------------------------------------------
+function vh_content_relations()
+{
+
+    $modules = \WebReinvent\VaahCms\Entities\Module::whereNotNull('is_active')
+        ->get();
+
+    $response = array();
+
+    foreach ($modules as $module){
+        $response = array_merge($response,vh_module_action($module->name,
+            'ExtendController@getCmsContentRelations'));
+
+    }
+
+
+    return $response;
+
+}
+//-----------------------------------------------------------------------------------
+//-----------------------------------------------------------------------------------
+function vh_content_relations_by_name($name = 'null',array $relations = [])
+{
+
+    if (!$name){
+        return null;
+    }
+
+    if(count($relations) === 0 ){
+        $relations =  vh_content_relations();
+    }
+
+    foreach ($relations as $rel){
+        if($rel['name'] === $name){
+            return $rel;
+        }
+    }
+
+
+    return null;
+
+}
+//-----------------------------------------------------------------------------------
+//-----------------------------------------------------------------------------------

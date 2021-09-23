@@ -8,6 +8,7 @@ use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Hash;
 use WebReinvent\VaahCms\Entities\Registration;
+use WebReinvent\VaahCms\Entities\Taxonomy;
 
 class RegistrationsController extends Controller
 {
@@ -35,7 +36,7 @@ class RegistrationsController extends Controller
         $data['countries'] = vh_get_country_list();
         $data['timezones'] = vh_get_timezones();
         $data['country_code'] = vh_get_country_list();
-        $data['registration_statuses'] = vh_registration_statuses();
+        $data['registration_statuses'] = Taxonomy::getTaxonomyByType('registrations');
         $data['bulk_actions'] = vh_general_bulk_actions();
         $data['name_titles'] = vh_name_titles();
 

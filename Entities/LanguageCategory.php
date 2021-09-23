@@ -1,6 +1,7 @@
 <?php namespace WebReinvent\VaahCms\Entities;
 
 use Carbon\Carbon;
+use DateTimeInterface;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
@@ -38,11 +39,17 @@ class LanguageCategory extends Model {
 
     //-------------------------------------------------
 
-    protected $casts = [
-        "created_at" => 'date:Y-m-d H:i:s',
-        "updated_at" => 'date:Y-m-d H:i:s',
-        "deleted_at" => 'date:Y-m-d H:i:s'
-    ];
+    //-------------------------------------------------
+
+
+    //-------------------------------------------------
+    protected function serializeDate(DateTimeInterface $date)
+    {
+        $date_time_format = config('settings.global.datetime_format');
+
+        return $date->format($date_time_format);
+
+    }
     //-------------------------------------------------
     public function setSlugAttribute( $value ) {
         $this->attributes['slug'] = Str::slug( $value );

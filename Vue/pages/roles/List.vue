@@ -57,8 +57,9 @@
                             <div class="level">
 
                                 <!--left-->
-                                <div class="level-left" v-if="hasPermission('can-update-roles')">
-                                    <div  class="level-item">
+                                <div class="level-left">
+                                    <div v-if="hasPermission('can-update-roles')"
+                                         class="level-item">
                                         <b-field >
 
                                             <b-select placeholder="- Bulk Actions -"
@@ -156,20 +157,32 @@
                                     <div class="level-item">
 
                                         <b-field label="">
-                                            <b-select placeholder="- Select a status -"
+                                            <b-select placeholder="- Select a filter -"
                                                       v-model="query_string.filter"
-                                                      @input="getList()"
+                                                      @input="setFilter()"
                                             >
                                                 <option value="">
-                                                    - Select a status -
+                                                    - Select a filter -
                                                 </option>
-                                                <option value=01>
-                                                    Active
-                                                </option>
-                                                <option value=10>
-                                                    Inactive
-                                                </option>
+                                                <optgroup label="Status">
+                                                    <option value="active">
+                                                        Active
+                                                    </option>
+                                                    <option value="inactive">
+                                                        Inactive
+                                                    </option>
+                                                </optgroup>
+
+                                                <optgroup label="Type">
+                                                    <option
+                                                            v-for="option in page.assets.types"
+                                                            :value="option.slug"
+                                                            :key="option.slug">
+                                                        {{ option.name }}
+                                                    </option>
+                                                </optgroup>
                                             </b-select>
+
                                         </b-field>
 
 

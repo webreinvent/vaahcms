@@ -8,6 +8,7 @@ use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use WebReinvent\VaahCms\Entities\Permission;
 use WebReinvent\VaahCms\Entities\Role;
+use WebReinvent\VaahCms\Entities\Taxonomy;
 
 class RolesController extends Controller
 {
@@ -42,6 +43,7 @@ class RolesController extends Controller
         $data['bulk_actions'] = vh_general_bulk_actions();
         $data['name_titles'] = vh_name_titles();
         $data['module'] = $module;
+        $data['types'] = Taxonomy::getTaxonomyByType('roles');
 
         $response['status'] = 'success';
         $response['data'] = $data;

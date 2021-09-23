@@ -161,6 +161,7 @@ export default {
                 name: null,
                 slug: null,
                 is_active: null,
+                type: null,
                 details: null,
             };
             return new_item;
@@ -178,6 +179,7 @@ export default {
                 name: null,
                 slug: null,
                 is_active: null,
+                type: null,
                 details: null,
             };
 

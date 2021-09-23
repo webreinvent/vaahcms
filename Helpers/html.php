@@ -107,6 +107,7 @@ function get_bulma_menu($menu, $parent_id = 0, $parents = array())
 
     $menu_html = '';
 
+
     foreach($array as $element)
     {
         $link = '';
@@ -114,10 +115,11 @@ function get_bulma_menu($menu, $parent_id = 0, $parents = array())
         if($element['uri']){
             $link = $element['uri'];
         }
-        
+
         if($element['content']){
             $link = $element['content']['link'];
         }
+
         $active_class = "";
         if(isset($element['is_home']) && $element['is_home'] == 1 )
         {

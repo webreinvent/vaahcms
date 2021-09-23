@@ -3,6 +3,7 @@
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
+use WebReinvent\VaahCms\Libraries\VaahSeeder;
 
 class VaahCmsTableSeeder extends Seeder
 {
@@ -22,6 +23,8 @@ class VaahCmsTableSeeder extends Seeder
         $this->seedSettings();
         $this->seedNotifications();
         $this->seedNotificationContent();
+        $this->seedTaxonomyTypes();
+        $this->seedTaxonomies();
 
     }
     //------------------------------------------------------------
@@ -59,7 +62,11 @@ class VaahCmsTableSeeder extends Seeder
         }
     }
     //---------------------------------------------------------------
-    public function storeSeedsWithUuid($table, $list,$has_active=true, $primary_key='slug', $create_slug=true, $create_slug_from='name')
+    public function storeSeedsWithUuid($table, $list,
+                                       $has_active=true,
+                                       $primary_key='slug',
+                                       $create_slug=true,
+                                       $create_slug_from='name')
     {
         foreach ($list as $item)
         {
@@ -78,7 +85,6 @@ class VaahCmsTableSeeder extends Seeder
                 ->where($primary_key, $item[$primary_key])
                 ->first();
 
-
             if(!$record)
             {
                 DB::table($table)->insert($item);
@@ -91,14 +97,26 @@ class VaahCmsTableSeeder extends Seeder
     //---------------------------------------------------------------
     public function seedPermissions()
     {
-        $list = $this->getListFromJson("permissions.json");
-        $this->storeSeedsWithUuid('vh_permissions', $list);
+        $json_file_path = __DIR__."/json/permissions.json";
+        VaahSeeder::permissions($json_file_path);
+    }
+    //---------------------------------------------------------------
+    public function seedTaxonomies()
+    {
+        $json_file_path = __DIR__."/json/taxonomies.json";
+        VaahSeeder::taxonomies($json_file_path);
+    }
+    //---------------------------------------------------------------
+    public function seedTaxonomyTypes()
+    {
+        $json_file_path = __DIR__."/json/taxonomy_types.json";
+        VaahSeeder::taxonomyTypes($json_file_path);
     }
     //---------------------------------------------------------------
     public function seedRoles()
     {
-        $list = $this->getListFromJson("roles.json");
-        $this->storeSeedsWithUuid('vh_roles', $list);
+        $json_file_path = __DIR__."/json/roles.json";
+        VaahSeeder::roles($json_file_path);
     }
     //---------------------------------------------------------------
     public function seedLanguages()
@@ -229,7 +247,8 @@ class VaahCmsTableSeeder extends Seeder
                 ->first();
 
             $exist = \DB::table( 'vh_notification_contents' )
-                ->where( 'vh_notification_id', $notification->id )->where('sort',  $item['sort'])
+                ->where( 'vh_notification_id', $notification->id )
+                ->where('sort',  $item['sort'])
                 ->where('via',  $item['via'])
                 ->first();
 
@@ -246,7 +265,10 @@ class VaahCmsTableSeeder extends Seeder
             {
                 DB::table('vh_notification_contents')->insert($item);
             } else{
-                DB::table('vh_notification_contents')->where('sort',  $item['sort'])
+                DB::table('vh_notification_contents')
+                    ->where( 'vh_notification_id', $notification->id )
+                    ->where('sort',  $item['sort'])
+                    ->where('via',  $item['via'])
                     ->update($item);
             }
         }

@@ -1,5 +1,6 @@
 <?php namespace WebReinvent\VaahCms\Entities;
 
+use DateTimeInterface;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 use VaahCms\Modules\Cms\Entities\Block;
@@ -36,10 +37,16 @@ class ThemeLocation extends Model {
 
     //-------------------------------------------------
 
-    protected $casts = [
-        "created_at" => 'date:Y-m-d H:i:s',
-        "updated_at" => 'date:Y-m-d H:i:s',
-    ];
+
+
+    //-------------------------------------------------
+    protected function serializeDate(DateTimeInterface $date)
+    {
+        $date_time_format = config('settings.global.datetime_format');
+
+        return $date->format($date_time_format);
+
+    }
 
     //-------------------------------------------------
 
@@ -107,6 +114,7 @@ class ThemeLocation extends Model {
     //---------------------------------------------------------------------------
     public static function getLocationData($slug, $html=false, $type='bulma', $location_type = 'menu')
     {
+
         $data = [];
 
         $location = ThemeLocation::theme(vh_get_theme_id())
@@ -164,7 +172,6 @@ class ThemeLocation extends Model {
         $menu_html = "";
         $i = 0;
 
-
         $find_menus = Menu::where('vh_theme_location_id', $location->id)
             ->with(['items' => function($q){
                 $q->with(['content']);
@@ -172,10 +179,9 @@ class ThemeLocation extends Model {
             }])
             ->get();
 
-
         foreach ($find_menus as $menu)
         {
-            $result[$i] = $menu->toArray();
+            $result[$i] = $menu;
 
             if($html == true)
             {

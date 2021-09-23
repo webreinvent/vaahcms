@@ -1,5 +1,6 @@
 <?php namespace WebReinvent\VaahCms\Entities;
 
+use DateTimeInterface;
 use Illuminate\Database\Eloquent\Model;
 
 class Setting extends Model {
@@ -28,10 +29,16 @@ class Setting extends Model {
 
     //-------------------------------------------------
 
-    protected $casts = [
-        "created_at" => 'date:Y-m-d H:i:s',
-        "updated_at" => 'date:Y-m-d H:i:s',
-    ];
+
+
+    //-------------------------------------------------
+    protected function serializeDate(DateTimeInterface $date)
+    {
+        $date_time_format = config('settings.global.datetime_format');
+
+        return $date->format($date_time_format);
+
+    }
 
     //-------------------------------------------------
     public function getValueAttribute($value) {

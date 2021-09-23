@@ -63,9 +63,16 @@
                         </p>
 
                         <p class="control">
-                            <b-button tag="router-link"
-                                      type="is-light"
-                                      :to="{name: 'user.view', params:{id:item.id}}"
+                            <b-button type="is-light"
+                                      tag="router-link"
+                                      :to="{name:'user.view', params:{id: item.id}}"
+                                      icon-left="eye">
+                            </b-button>
+                        </p>
+
+                        <p class="control">
+                            <b-button type="is-light"
+                                      @click="resetActiveItem()"
                                       icon-left="times">
                             </b-button>
                         </p>
@@ -98,7 +105,8 @@
                                 label="Upload user avatar"
                                 aspect_ratio="1:1"
                                 :upload_url="root.assets.urls.upload"
-                                @afterUpload="storeAvatar"/>
+                                @afterUpload="storeAvatar">
+                            </AvatarUploader>
 
                             <br/>
                             <b-button type="is-primary"
@@ -118,7 +126,6 @@
                         <b-input type="email"  name="user-email" dusk="user-email"
                                  v-model="item.email"></b-input>
                     </b-field>
-
 
                     <b-field label="Username" :label-position="labelPosition">
                         <b-input v-model="item.username"  name="user-username"
@@ -245,8 +252,8 @@
 
                     <b-field label="Date of Birth" :label-position="labelPosition">
                         <DatePicker
-                            :selected_value="item.birth"
-                            @onSelect="setBirthDate">
+                                :selected_value="item.birth"
+                                @onSelect="setBirthDate">
                         </DatePicker>
                     </b-field>
 

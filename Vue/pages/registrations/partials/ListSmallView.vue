@@ -37,7 +37,15 @@
 
 
                 <b-table-column v-slot="props" field="actions" label=""
-                                width="40">
+                                width="80">
+
+                    <b-tooltip v-if="hasPermission('can-update-registrations')"
+                               label="Edit" type="is-dark">
+                        <b-button size="is-small"
+                                  @click="setActiveItem(props.row,'reg.edit')"
+                                  icon-left="edit">
+                        </b-button>
+                    </b-tooltip>
 
                     <b-tooltip v-if="hasPermission('can-read-registrations')" label="View" type="is-dark">
                         <b-button size="is-small"

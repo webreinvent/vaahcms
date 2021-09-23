@@ -13,6 +13,10 @@ import MediaList from "./../pages/media/List.vue";
 import MediaCreate from "../pages/media/Create.vue";
 import MediaView from "./../pages/media/View.vue";
 import MediaEdit from "./../pages/media/Edit.vue";
+import TaxonomiesList from "./../pages/taxonomies/List";
+import TaxonomiesCreate from "../pages/taxonomies/Create";
+import TaxonomiesView from "./../pages/taxonomies/View";
+import TaxonomiesEdit from "./../pages/taxonomies/Edit";
 
 let list =     {
     path: '/vaah/manage',
@@ -74,9 +78,61 @@ let list =     {
                     },
                 }
             ]
+        },
+        {
+            path: 'taxonomies',
+            name: 'taxonomies.list',
+            component: TaxonomiesList,
+            props: true,
+            meta: {
+                middleware: [
+                    IsLoggedIn,
+                    GetBackendAssets
+                ]
+            },
+            children: [
+                {
+                    path: 'create',
+                    name: 'taxonomies.create',
+                    component: TaxonomiesCreate,
+                    props: true,
+                    meta: {
+                        middleware: [
+                            IsLoggedIn,
+                            GetBackendAssets
+                        ]
+                    },
+                },
+                {
+                    path: 'view/:id',
+                    name: 'taxonomies.view',
+                    component: TaxonomiesView,
+                    props: true,
+                    meta: {
+                        middleware: [
+                            IsLoggedIn,
+                            GetBackendAssets
+                        ]
+                    },
+                },
+                {
+                    path: 'edit/:id',
+                    name: 'taxonomies.edit',
+                    component: TaxonomiesEdit,
+                    props: true,
+                    meta: {
+                        middleware: [
+                            IsLoggedIn,
+                            GetBackendAssets
+                        ]
+                    },
+                }
+
+            ]
         }
 
-    ]
+    ],
+
 };
 
 routes.push(list);

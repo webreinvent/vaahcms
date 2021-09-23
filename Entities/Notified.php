@@ -1,6 +1,7 @@
 <?php namespace WebReinvent\VaahCms\Entities;
 
 use Carbon\Carbon;
+use DateTimeInterface;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
@@ -43,15 +44,16 @@ class Notified extends Model {
 
     //-------------------------------------------------
 
-    protected $casts = [
-        "last_attempt_at" => 'date:Y-m-d H:i:s',
-        "sent_at" => 'date:Y-m-d H:i:s',
-        "read_at" => 'date:Y-m-d H:i:s',
-        "marked_delivered" => 'date:Y-m-d H:i:s',
-        "created_at" => 'date:Y-m-d H:i:s',
-        "updated_at" => 'date:Y-m-d H:i:s',
-        "deleted_at" => 'date:Y-m-d H:i:s'
-    ];
+
+
+    //-------------------------------------------------
+    protected function serializeDate(DateTimeInterface $date)
+    {
+        $date_time_format = config('settings.global.datetime_format');
+
+        return $date->format($date_time_format);
+
+    }
     //-------------------------------------------------
     public function setMetaAttribute($value) {
         $this->attributes['meta'] = json_encode($value);

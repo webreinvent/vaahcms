@@ -63,9 +63,16 @@
                         </p>
 
                         <p class="control">
-                            <b-button tag="router-link"
-                                      type="is-light"
-                                      :to="{name: 'role.view', params:{id:item.id}}"
+                            <b-button type="is-light"
+                                      tag="router-link"
+                                      :to="{name:'role.view', params:{id: item.id}}"
+                                      icon-left="eye">
+                            </b-button>
+                        </p>
+
+                        <p class="control">
+                            <b-button type="is-light"
+                                      @click="resetActiveItem()"
                                       icon-left="times">
                             </b-button>
                         </p>
@@ -108,6 +115,19 @@
                                         :native-value=0>
                             <span>No</span>
                         </b-radio-button>
+                    </b-field>
+
+                    <b-field label="Type" :label-position="labelPosition">
+                        <b-select placeholder="- Select a type -"
+                                  name="role-type" dusk="role-type"
+                                  v-model="item.type">
+                            <option value="">- Select a type -</option>
+                            <option v-for="option in page.assets.types"
+                                    :value="option.slug"
+                                    :key="option.slug">
+                                {{ option.name }}
+                            </option>
+                        </b-select>
                     </b-field>
 
 

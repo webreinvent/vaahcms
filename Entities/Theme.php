@@ -1,5 +1,6 @@
 <?php namespace WebReinvent\VaahCms\Entities;
 
+use DateTimeInterface;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\File;
@@ -45,12 +46,16 @@ class Theme extends Model {
 
     //-------------------------------------------------
 
-    protected $casts = [
-        "update_checked_at" => 'date:Y-m-d H:i:s',
-        "created_at" => 'date:Y-m-d H:i:s',
-        "updated_at" => 'date:Y-m-d H:i:s',
-        "deleted_at" => 'date:Y-m-d H:i:s'
-    ];
+
+
+    //-------------------------------------------------
+    protected function serializeDate(DateTimeInterface $date)
+    {
+        $date_time_format = config('settings.global.datetime_format');
+
+        return $date->format($date_time_format);
+
+    }
 
     //-------------------------------------------------
     public function setSlugAttribute( $value ) {
@@ -342,7 +347,12 @@ class Theme extends Model {
                 }])
                 ->first();
 
-            $result['template'] = $theme->templates[0];
+            if($theme && isset($theme->templates[0]))
+            {
+                $result['template'] = $theme->templates[0];
+            }
+
+            $result['template'] = [];
 
         }
 

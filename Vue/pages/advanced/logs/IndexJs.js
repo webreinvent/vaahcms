@@ -29,6 +29,7 @@ export default {
             open_on_focus: true,
             search_delay: null,
             search_delay_time: 800,
+            reload_list_time: 60000, // reload in 60 seconds
         };
         return obj;
     },
@@ -40,6 +41,11 @@ export default {
         //---------------------------------------------------------------------
         this.onLoad();
         //---------------------------------------------------------------------
+        let self = this;
+        setInterval(
+            function() {
+                self.getList();
+            }, self.reload_list_time);
         //---------------------------------------------------------------------
     },
     methods: {
@@ -99,22 +105,6 @@ export default {
         setActiveItem: function (item) {
             this.update('active_item', item);
             this.$router.push({name: 'logs.details', params:{name:item.name}})
-        },
-        //---------------------------------------------------------------------
-        changeStatus: function (id) {
-            this.$Progress.start();
-            let url = this.ajax_url+'/actions/bulk-change-status';
-            let params = {
-                inputs: [id],
-                data: null
-            };
-            this.$vaah.ajax(url, params, this.changeStatusAfter);
-        },
-        //---------------------------------------------------------------------
-        changeStatusAfter: function (data,res) {
-            this.$emit('eReloadList');
-            this.update('is_list_loading', false);
-
         },
 
         //---------------------------------------------------------------------

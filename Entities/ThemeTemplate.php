@@ -1,5 +1,6 @@
 <?php namespace WebReinvent\VaahCms\Entities;
 
+use DateTimeInterface;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 use VaahCms\Modules\Cms\Entities\Content;
@@ -38,10 +39,16 @@ class ThemeTemplate extends Model {
 
     //-------------------------------------------------
 
-    protected $casts = [
-        "created_at" => 'date:Y-m-d H:i:s',
-        "updated_at" => 'date:Y-m-d H:i:s'
-    ];
+
+
+    //-------------------------------------------------
+    protected function serializeDate(DateTimeInterface $date)
+    {
+        $date_time_format = config('settings.global.datetime_format');
+
+        return $date->format($date_time_format);
+
+    }
 
     //-------------------------------------------------
 

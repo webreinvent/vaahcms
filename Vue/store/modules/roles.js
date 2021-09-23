@@ -41,6 +41,7 @@ export default {
             name: null,
             slug: null,
             is_active: null,
+            type: null,
             details: null,
         },
     },
