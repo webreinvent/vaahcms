@@ -23,6 +23,7 @@ export default {
         let obj = {
             namespace: namespace,
             is_list_fetched: null,
+            interval: null,
             given_extension: ['.log','.csv','.xml','.pdf','.xlsx'],
             tags: [],
             allow_new: true,
@@ -42,7 +43,7 @@ export default {
         this.onLoad();
         //---------------------------------------------------------------------
         let self = this;
-        setInterval(
+        this.interval = setInterval(
             function() {
                 self.getList();
             }, self.reload_list_time);
@@ -238,5 +239,8 @@ export default {
             }
             this.getList();
         },
+    },
+    beforeDestroy: function(){
+        clearInterval(this.interval);
     }
 }
