@@ -15,7 +15,7 @@
                     <div class="card" :class="item.link?'is-clickable':''"
                          @click="goToLink(item.link)">
                         <div class="card-content" :class="item.card_classes">
-                            <div class="media">
+                            <div class="media is-vcentered">
                                 <div class="media-left" :class="item.text_classes">
                                     <b-icon
                                             :icon="item.icon"
@@ -23,8 +23,9 @@
                                     </b-icon>
                                 </div>
                                 <div class="media-content has-text-centered">
-                                    <p class="title is-4" :class="item.text_classes">
-                                        {{item.count}}
+                                    <p class="title is-4"
+                                       :class="item.text_classes">
+                                        {{ typeof item.count !== 'boolean'?item.count:' '}}
                                     </p>
                                     <p class="subtitle is-6" :class="item.text_classes">
                                         {{ $vaah.toLabel(key).toUpperCase()}}
@@ -48,24 +49,8 @@
 </template>
 
 <style>
-
-    .dashboard .is-vcentered {
-            align-items: center;
-        }
-
-    .dashboard .svg-inline--fa {
-            width: auto !important;
-        }
-
-    .dashboard .icon.is-large {
-            height: 7rem;
-            width: 7rem;
-            position: absolute;
-            color: #d3d3d3a1;
-            top: 22px;
-            left: 93px;
-        }
-
-
+    .is-vcentered {
+        align-items: center;
+    }
 </style>
 
