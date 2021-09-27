@@ -12,7 +12,8 @@
 
                 <div v-for="(item,key) in list" class="column is-3">
 
-                    <div class="card">
+                    <div class="card" :class="item.link?'is-clickable':''"
+                         @click="goToLink(item.link)">
                         <div class="card-content" :class="item.card_classes">
                             <div class="media">
                                 <div class="media-left" :class="item.text_classes">
