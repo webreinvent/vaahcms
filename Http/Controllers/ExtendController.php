@@ -6,6 +6,7 @@ namespace WebReinvent\VaahCms\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Auth;
 use WebReinvent\VaahCms\Entities\FailedJob;
 use WebReinvent\VaahCms\Entities\Job;
 use WebReinvent\VaahCms\Entities\Module;
@@ -274,59 +275,75 @@ class ExtendController extends Controller
     {
         $data = [
 
-            "total_users" => [
+            [
+                "image" => Auth::user()->avatar,
+                "label" => 'Hello, '.Auth::user()->name,
+                "card_classes" => "has-background-primary-light",
+                "link" => self::$link."/users/view/".Auth::user()->id
+            ],
+            [
                 "count" => User::count(),
+                "label" => 'Total Users',
                 "icon" => "users",
                 "card_classes" => "has-background-primary-light",
                 "link" => self::$link."/users/"
             ],
-
-            "active_users" => [
+            [
                 "count" => User::where('is_active',1)->count(),
+                "label" => 'Active Users',
                 "icon" => "user-check",
                 "card_classes" => "has-background-grey-lighter",
                 "link" => self::$link."/users/?status=01"
             ],
-            "today_login" => [
+            [
                 "count" => User::whereDate('last_login_at', \Carbon::today())->count(),
+                "label" => 'Today Login',
                 "icon" => "user-edit",
                 "card_classes" => "has-background-warning-light"
             ],
-            "total_roles" => [
+            [
                 "count" => Role::count(),
+                "label" => 'Total Roles',
                 "icon" => "user-tag",
                 "card_classes" => "has-background-danger-light",
                 "link" => self::$link."/roles/"
             ],
-            "total_admins" => [
+            [
                 "count" => User::whereHas('roles', function ($query)
                 {
                     $query->where('slug', 'administrator');
                     $query->where('vh_user_roles.is_active', 1);
                 })->count(),
+                "label" => 'Total Admins',
                 "icon" => "users-cog",
                 "card_classes" => "has-background-warning-light",
                 "link" => self::$link."/users/?roles=administrator"
             ],
-            "total_jobs" => [
+            [
                 "count" => Job::count(),
+                "label" => 'Total Jobs',
                 "icon" => "briefcase",
                 "card_classes" => "has-background-danger-light",
                 "link" => self::$link."/advanced/jobs"
             ],
-            "failed_jobs" => [
+            [
                 "count" => FailedJob::count(),
+                "label" => 'Failed Jobs',
                 "icon" => "file-medical-alt",
                 "card_classes" => "has-background-primary-light",
                 "link" => self::$link."/advanced/jobs-failed"
-            ],
-            'laravel-'.\Carbon::now()->format('Y-m-d').'.log' => [
-                "count" => vh_file_exist(str_replace("\\", "/", storage_path('logs').'\\laravel-'.\Carbon::now()->format('Y-m-d').'.log')),
-                "icon" => "clipboard-list",
-                "card_classes" => "has-background-grey-lighter",
-                "link" => self::$link."/advanced/logs/details/laravel-".\Carbon::now()->format('Y-m-d').'.log'
             ]
         ];
+
+        if(vh_file_exist(str_replace("\\", "/", storage_path('logs').'\\laravel-'.\Carbon::now()->format('Y-m-d').'.log'))){
+            $data[] = [
+                "count" => 'Log',
+                "icon" => "clipboard-list",
+                "card_classes" => "has-background-grey-lighter",
+                "has_title" => false,
+                "link" => self::$link."/advanced/logs/details/laravel-".\Carbon::now()->format('Y-m-d').'.log'
+            ];
+        }
 
         $response['status'] = 'success';
         $response['data'] = $data;

@@ -22,6 +22,7 @@ export default {
             is_content_loading: false,
             is_btn_loading: false,
             assets: null,
+            interval: null,
             selected_date: null,
             search_delay: null,
             search_delay_time: 800,
@@ -49,7 +50,7 @@ export default {
         this.onLoad();
         //----------------------------------------------------
         let self = this;
-        setInterval(
+        this.interval = setInterval(
             function() {
                 self.getList();
             }, self.reload_list_time);
@@ -360,5 +361,8 @@ export default {
         },
         //---------------------------------------------------------------------
         //---------------------------------------------------------------------
+    },
+    beforeDestroy: function(){
+        clearInterval(this.interval);
     }
 }
