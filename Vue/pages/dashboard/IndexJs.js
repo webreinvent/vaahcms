@@ -1,6 +1,7 @@
 import Logo from '../../components/Logo.vue';
 import Footer from '../../components/Footer.vue';
 
+
 export default {
     computed:{
         root() {return this.$store.getters['root/state']},
