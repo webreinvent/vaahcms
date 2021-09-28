@@ -285,8 +285,9 @@ class ExtendController extends Controller
 
             [
                 "image" => Auth::user()->avatar,
+                "column" => 'is-6',
                 "label" => 'Hello, '.Auth::user()->name,
-                "card_classes" => "has-background-primary-light",
+                "card_classes" => "has-background-warning-light",
                 "link" => self::$link."/users/view/".Auth::user()->id
             ],
             [
@@ -300,7 +301,7 @@ class ExtendController extends Controller
                 "count" => User::where('is_active',1)->count(),
                 "label" => 'Active Users',
                 "icon" => "user-check",
-                "card_classes" => "has-background-grey-lighter",
+                "card_classes" => "has-background-warning-lighter",
                 "link" => self::$link."/users/?status=01"
             ],
             [
@@ -347,7 +348,7 @@ class ExtendController extends Controller
             $data[] = [
                 "count" => 'Log',
                 "icon" => "clipboard-list",
-                "card_classes" => "has-background-grey-lighter",
+                "card_classes" => "has-background-warning-light",
                 "has_title" => false,
                 "link" => self::$link."/advanced/logs/details/laravel-".\Carbon::now()->format('Y-m-d').'.log'
             ];

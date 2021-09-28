@@ -10,27 +10,35 @@
 
             <template v-for="list in root.assets.dashboard.success">
 
-                <div v-for="(item,key) in list" class="column is-one-fifth" style="display: grid">
+                <div v-for="(item,key) in list" class="column"
+                     :class="item.column?item.column:'is-3'" style="display: grid">
 
-                    <div class="card" style="border-radius: 0.75rem"
-                         :class="item.link?'is-clickable ':''"
+                    <div class="card"
+                         :class="item.link?'is-clickable '+item.card_classes:''"
                          @click="goToLink(item.link)">
 
-                        <header v-if="item.icon"
+                        <!--<header v-if="item.icon"
                                 class="card-header has-text-centered is-block">
                             <b-icon :icon="item.icon"
                                     size="is-large">
                             </b-icon>
-                        </header>
+                        </header>-->
 
                         <div class="card-content">
 
 
                             <div class="content has-text-centered">
+
+                                <b-icon v-if="item.icon"
+                                        :icon="item.icon"
+                                        size="is-large">
+                                </b-icon>
+
                                 <span v-if="item.image" class="image is-96x96 is-inline-flex">
                                     <img class="is-rounded" :src="item.image">
                                 </span>
-                                <span v-if="item.count" class="is-size-2 has-text-weight-bold">
+                                <span v-if="item.count"
+                                      style="font-size: 4.5rem;font-weight: 500;position: relative">
                                    {{item.count}}
                                 </span>
                                 <hr v-if="item.label"  />
@@ -93,8 +101,24 @@
 </template>
 
 <style>
-    .is-vcentered {
-        align-items: center;
-    }
+
+    .dashboard .is-vcentered {
+            align-items: center;
+        }
+
+    .dashboard .svg-inline--fa {
+            width: auto !important;
+        }
+
+    .dashboard .icon.is-large {
+            height: 7rem;
+            width: 7rem;
+            position: absolute;
+            color: #d3d3d3a1;
+            top: 22px;
+            left: 93px;
+        }
+
+
 </style>
 
