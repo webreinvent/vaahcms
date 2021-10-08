@@ -47,11 +47,11 @@ Route::group(
                 //------------------------------------------------
                 Route::any( '/', 'RolesController@getList' );
                 //------------------------------------------------
-                Route::any( '/{column}/{value}', 'UsersController@getItem' );
+                Route::any( '/{column}/{value}', 'RolesController@getItem' );
                 //------------------------------------------------
-                Route::any( '/{column}/{value}/roles', 'UsersController@getItemRoles' );
+                Route::any( '/{column}/{value}/users', 'RolesController@getItemUsers' );
                 //------------------------------------------------
-                Route::any( '/{column}/{value}/permissions', 'UsersController@getItemPermissions' );
+                Route::any( '/{column}/{value}/permissions', 'RolesController@getItemPermissions' );
                 //------------------------------------------------
             });
 
@@ -63,11 +63,11 @@ Route::group(
                 //------------------------------------------------
                 Route::any( '/', 'PermissionsController@getList' );
                 //------------------------------------------------
-                Route::any( '/{column}/{value}', 'UsersController@getItem' );
+                Route::any( '/{column}/{value}', 'PermissionsController@getItem' );
                 //------------------------------------------------
-                Route::any( '/{column}/{value}/roles', 'UsersController@getItemRoles' );
+                Route::any( '/{column}/{value}/roles', 'PermissionsController@getItemRoles' );
                 //------------------------------------------------
-                Route::any( '/{column}/{value}/permissions', 'UsersController@getItemPermissions' );
+                Route::any( '/{column}/{value}/permissions', 'PermissionsController@getItemPermissions' );
                 //------------------------------------------------
             });
 
@@ -79,11 +79,11 @@ Route::group(
                 //------------------------------------------------
                 Route::any( '/', 'RegistrationsController@getList' );
                 //------------------------------------------------
-                Route::any( '/{column}/{value}', 'UsersController@getItem' );
+                Route::any( '/{column}/{value}', 'RegistrationsController@getItem' );
                 //------------------------------------------------
-                Route::any( '/{column}/{value}/roles', 'UsersController@getItemRoles' );
+                Route::any( '/{column}/{value}/roles', 'RegistrationsController@getItemRoles' );
                 //------------------------------------------------
-                Route::any( '/{column}/{value}/permissions', 'UsersController@getItemPermissions' );
+                Route::any( '/{column}/{value}/permissions', 'RegistrationsController@getItemPermissions' );
                 //------------------------------------------------
             });
 
@@ -95,11 +95,11 @@ Route::group(
                 //------------------------------------------------
                 Route::any( '/', 'TaxonomiesController@getList' );
                 //------------------------------------------------
-                Route::any( '/{column}/{value}', 'UsersController@getItem' );
+                Route::any( '/{column}/{value}', 'TaxonomiesController@getItem' );
                 //------------------------------------------------
-                Route::any( '/{column}/{value}/roles', 'UsersController@getItemRoles' );
+                Route::any( '/{column}/{value}/roles', 'TaxonomiesController@getItemRoles' );
                 //------------------------------------------------
-                Route::any( '/{column}/{value}/permissions', 'UsersController@getItemPermissions' );
+                Route::any( '/{column}/{value}/permissions', 'TaxonomiesController@getItemPermissions' );
                 //------------------------------------------------
             });
     });

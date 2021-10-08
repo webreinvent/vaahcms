@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Hash;
+use WebReinvent\VaahCms\Entities\Permission;
 use WebReinvent\VaahCms\Entities\Registration;
 use WebReinvent\VaahCms\Entities\Role;
 use WebReinvent\VaahCms\Entities\User;
@@ -28,7 +29,7 @@ class RolesController extends Controller
     //----------------------------------------------------------
     public function getItem(Request $request, $column, $value)
     {
-        $item = User::where($column, $value)->with(['createdByUser',
+        $item = Role::where($column, $value)->with(['createdByUser',
             'updatedByUser', 'deletedByUser'])
             ->withTrashed();
 
@@ -39,39 +40,41 @@ class RolesController extends Controller
         return response()->json($response);
     }
     //----------------------------------------------------------
-    public function getItemRoles(Request $request, $column, $value)
+    public function getItemUsers(Request $request, $column, $value)
     {
 
-        $item = User::withTrashed()->where($column, $value)->first();
+        $item = Role::withTrashed()->where($column, $value)->first();
 
-        $response['data']['user'] = $item;
+        if(!$item){
+            $response['status']     = 'failed';
+            $response['errors']     = 'Role not found.';
+            return $response;
+        }
 
+        $response['data']['role'] = $item;
+
+        $list = User::whereHas('roles', function($r) use($item,$request){
+            $r->where('vh_user_roles.is_active', 1);
+            $r->where('vh_roles.id',$item->id);
+        });
 
         if($request->has("q"))
         {
-            $list = $item->roles()->where(function ($q) use ($request){
+            $list->where(function ($q) use ($request){
                 $q->where('name', 'LIKE', '%'.$request->q.'%')
                     ->orWhere('slug', 'LIKE', '%'.$request->q.'%');
             });
-        } else
-        {
-            $list = $item->roles();
         }
 
-        $list->orderBy('pivot_is_active', 'desc');
-
-        $list = $list->paginate(config('vaahcms.per_page'));
-
-
-        foreach ($list as $role){
-
-            $data = User::getPivotData($role->pivot);
-
-            $role['json'] = $data;
-            $role['json_length'] = count($data);
+        if(isset($request['per_page'])
+            && $request['per_page']
+            && is_numeric($request['per_page'])){
+            $list = $list->paginate($request['per_page']);
+        }else{
+            $list = $list->paginate(config('vaahcms.per_page'));
         }
 
-        $response['data']['roles'] = $list;
+        $response['data']['users'] = $list;
         $response['status'] = 'success';
 
         return response()->json($response);
@@ -81,37 +84,36 @@ class RolesController extends Controller
     public function getItemPermissions(Request $request, $column, $value)
     {
 
-        $item = User::withTrashed()->where($column, $value)->first();
+        $item = Role::withTrashed()->where($column, $value)->first();
 
-        $response['data']['user'] = $item;
+        if(!$item){
+            $response['status']     = 'failed';
+            $response['errors']     = 'Role not found.';
+            return $response;
+        }
 
+        $response['data']['role'] = $item;
+
+        $list = Permission::whereHas('roles', function($r) use($item,$request){
+            $r->where('vh_role_permissions.is_active', 1);
+            $r->where('vh_roles.id',$item->id);
+        });
 
         if($request->has("q"))
         {
-
-            $list = $item->permissions();
-
-            /*$list = $item->permissions()->where(function ($q) use ($request){
+            $list->where(function ($q) use ($request){
                 $q->where('name', 'LIKE', '%'.$request->q.'%')
                     ->orWhere('slug', 'LIKE', '%'.$request->q.'%');
-            });*/
-        } else
-        {
-            $list = $item->permissions();
+            });
         }
 
-        /*$list->orderBy('pivot_is_active', 'desc');
-
-        $list = $list->paginate(config('vaahcms.per_page'));
-
-
-        foreach ($list as $role){
-
-            $data = User::getPivotData($role->pivot);
-
-            $role['json'] = $data;
-            $role['json_length'] = count($data);
-        }*/
+        if(isset($request['per_page'])
+            && $request['per_page']
+            && is_numeric($request['per_page'])){
+            $list = $list->paginate($request['per_page']);
+        }else{
+            $list = $list->paginate(config('vaahcms.per_page'));
+        }
 
         $response['data']['permissions'] = $list;
         $response['status'] = 'success';
