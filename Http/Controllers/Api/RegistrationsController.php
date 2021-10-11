@@ -22,13 +22,53 @@ class RegistrationsController extends Controller
     //----------------------------------------------------------
     public function getList(Request $request)
     {
-        $response = Registration::getList($request);
+        $list = Registration::orderBy('created_at', 'DESC');
+
+        if($request->has('trashed') && $request->trashed == 'true')
+        {
+            $list->withTrashed();
+        }
+
+        if(isset($request->from) && isset($request->to))
+        {
+            $list->betweenDates($request['from'],$request['to']);
+        }
+
+        if($request->has('status') && !empty( $request->status))
+        {
+            $list->where('status', $request->status);
+        }
+
+        if($request->has("q"))
+        {
+            $list->where(function ($q) use ($request){
+                $q->where('first_name', 'LIKE', '%'.$request->q.'%')
+                    ->orWhere('last_name', 'LIKE', '%'.$request->q.'%')
+                    ->orWhere('middle_name', 'LIKE', '%'.$request->q.'%')
+                    ->orWhere('display_name', 'LIKE', '%'.$request->q.'%')
+                    ->orWhere(\DB::raw('concat(first_name," ",middle_name," ",last_name)'), 'like', '%'.$request['q'].'%')
+                    ->orWhere(\DB::raw('concat(first_name," ",last_name)'), 'like', '%'.$request['q'].'%')
+                    ->orWhere('email', 'LIKE', '%'.$request->q.'%')
+                    ->orWhere('id', '=', $request->q);
+            });
+        }
+
+        if(isset($request['per_page'])
+            && $request['per_page']
+            && is_numeric($request['per_page'])){
+            $list = $list->paginate($request['per_page']);
+        }else{
+            $list = $list->paginate(config('vaahcms.per_page'));
+        }
+
+        $response['status'] = 'success';
+        $response['data']['list'] = $list;
         return response()->json($response);
     }
     //----------------------------------------------------------
     public function getItem(Request $request, $column, $value)
     {
-        $item = User::where($column, $value)->with(['createdByUser',
+        $item = Registration::where($column, $value)->with(['createdByUser',
             'updatedByUser', 'deletedByUser'])
             ->withTrashed();
 
@@ -39,84 +79,20 @@ class RegistrationsController extends Controller
         return response()->json($response);
     }
     //----------------------------------------------------------
-    public function getItemRoles(Request $request, $column, $value)
+    public function createUser(Request $request, $column, $value)
     {
 
-        $item = User::withTrashed()->where($column, $value)->first();
+        $item = Registration::withTrashed()->where($column, $value)->first();
 
-        $response['data']['user'] = $item;
-
-
-        if($request->has("q"))
-        {
-            $list = $item->roles()->where(function ($q) use ($request){
-                $q->where('name', 'LIKE', '%'.$request->q.'%')
-                    ->orWhere('slug', 'LIKE', '%'.$request->q.'%');
-            });
-        } else
-        {
-            $list = $item->roles();
+        if(!$item){
+            $response['status']     = 'failed';
+            $response['errors']     = 'Registration not found.';
+            return $response;
         }
 
-        $list->orderBy('pivot_is_active', 'desc');
-
-        $list = $list->paginate(config('vaahcms.per_page'));
-
-
-        foreach ($list as $role){
-
-            $data = User::getPivotData($role->pivot);
-
-            $role['json'] = $data;
-            $role['json_length'] = count($data);
-        }
-
-        $response['data']['roles'] = $list;
-        $response['status'] = 'success';
-
+        $response = Registration::createUser($item->id);
         return response()->json($response);
-    }
 
-    //----------------------------------------------------------
-    public function getItemPermissions(Request $request, $column, $value)
-    {
-
-        $item = User::withTrashed()->where($column, $value)->first();
-
-        $response['data']['user'] = $item;
-
-
-        if($request->has("q"))
-        {
-
-            $list = $item->permissions();
-
-            /*$list = $item->permissions()->where(function ($q) use ($request){
-                $q->where('name', 'LIKE', '%'.$request->q.'%')
-                    ->orWhere('slug', 'LIKE', '%'.$request->q.'%');
-            });*/
-        } else
-        {
-            $list = $item->permissions();
-        }
-
-        /*$list->orderBy('pivot_is_active', 'desc');
-
-        $list = $list->paginate(config('vaahcms.per_page'));
-
-
-        foreach ($list as $role){
-
-            $data = User::getPivotData($role->pivot);
-
-            $role['json'] = $data;
-            $role['json_length'] = count($data);
-        }*/
-
-        $response['data']['permissions'] = $list;
-        $response['status'] = 'success';
-
-        return response()->json($response);
     }
 
 

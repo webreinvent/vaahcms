@@ -67,7 +67,7 @@ Route::group(
                 //------------------------------------------------
                 Route::any( '/{column}/{value}/roles', 'PermissionsController@getItemRoles' );
                 //------------------------------------------------
-                Route::any( '/{column}/{value}/permissions', 'PermissionsController@getItemPermissions' );
+                Route::any( '/{column}/{value}/users', 'PermissionsController@getItemUsers' );
                 //------------------------------------------------
             });
 
@@ -81,9 +81,7 @@ Route::group(
                 //------------------------------------------------
                 Route::any( '/{column}/{value}', 'RegistrationsController@getItem' );
                 //------------------------------------------------
-                Route::any( '/{column}/{value}/roles', 'RegistrationsController@getItemRoles' );
-                //------------------------------------------------
-                Route::any( '/{column}/{value}/permissions', 'RegistrationsController@getItemPermissions' );
+                Route::any( '/{column}/{value}/create-user', 'RegistrationsController@createUser' );
                 //------------------------------------------------
             });
 
