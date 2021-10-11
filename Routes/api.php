@@ -94,11 +94,6 @@ Route::group(
                 Route::any( '/', 'TaxonomiesController@getList' );
                 //------------------------------------------------
                 Route::any( '/{column}/{value}', 'TaxonomiesController@getItem' );
-                //------------------------------------------------
-                Route::any( '/{column}/{value}/roles', 'TaxonomiesController@getItemRoles' );
-                //------------------------------------------------
-                Route::any( '/{column}/{value}/permissions', 'TaxonomiesController@getItemPermissions' );
-                //------------------------------------------------
             });
     });
 
