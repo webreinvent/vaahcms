@@ -31,9 +31,13 @@ class RolesController extends Controller
     {
         $item = Role::where($column, $value)->with(['createdByUser',
             'updatedByUser', 'deletedByUser'])
-            ->withTrashed();
+            ->withTrashed()->first();
 
-        $item = $item->first();
+        if(!$item){
+            $response['status']     = 'failed';
+            $response['errors']     = 'Role not found.';
+            return $response;
+        }
 
         $response['status'] = 'success';
         $response['data'] = $item;

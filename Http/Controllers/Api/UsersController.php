@@ -92,9 +92,13 @@ class UsersController extends Controller
     {
         $item = User::where($column, $value)->with(['createdByUser',
             'updatedByUser', 'deletedByUser'])
-            ->withTrashed();
+            ->withTrashed()->first();
 
-        $item = $item->first();
+        if(!$item){
+            $response['status']     = 'failed';
+            $response['errors']     = 'User not found.';
+            return $response;
+        }
 
         $response['status'] = 'success';
         $response['data'] = $item;
@@ -106,8 +110,13 @@ class UsersController extends Controller
 
         $item = User::withTrashed()->where($column, $value)->first();
 
-        $response['data']['user'] = $item;
+        if(!$item){
+            $response['status']     = 'failed';
+            $response['errors']     = 'User not found.';
+            return $response;
+        }
 
+        $response['data']['user'] = $item;
 
         if($request->has("q"))
         {

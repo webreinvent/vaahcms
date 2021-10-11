@@ -70,9 +70,13 @@ class RegistrationsController extends Controller
     {
         $item = Registration::where($column, $value)->with(['createdByUser',
             'updatedByUser', 'deletedByUser'])
-            ->withTrashed();
+            ->withTrashed()->first();
 
-        $item = $item->first();
+        if(!$item){
+            $response['status']     = 'failed';
+            $response['errors']     = 'Registration not found.';
+            return $response;
+        }
 
         $response['status'] = 'success';
         $response['data'] = $item;

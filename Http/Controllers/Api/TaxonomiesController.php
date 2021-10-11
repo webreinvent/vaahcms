@@ -29,96 +29,19 @@ class TaxonomiesController extends Controller
     //----------------------------------------------------------
     public function getItem(Request $request, $column, $value)
     {
-        $item = User::where($column, $value)->with(['createdByUser',
+        $item = Taxonomy::where($column, $value)->with(['createdByUser',
             'updatedByUser', 'deletedByUser'])
-            ->withTrashed();
+            ->withTrashed()->first();
 
-        $item = $item->first();
+        if(!$item){
+            $response['status']     = 'failed';
+            $response['errors']     = 'Taxonomy not found.';
+            return $response;
+        }
 
         $response['status'] = 'success';
         $response['data'] = $item;
         return response()->json($response);
     }
     //----------------------------------------------------------
-    public function getItemRoles(Request $request, $column, $value)
-    {
-
-        $item = User::withTrashed()->where($column, $value)->first();
-
-        $response['data']['user'] = $item;
-
-
-        if($request->has("q"))
-        {
-            $list = $item->roles()->where(function ($q) use ($request){
-                $q->where('name', 'LIKE', '%'.$request->q.'%')
-                    ->orWhere('slug', 'LIKE', '%'.$request->q.'%');
-            });
-        } else
-        {
-            $list = $item->roles();
-        }
-
-        $list->orderBy('pivot_is_active', 'desc');
-
-        $list = $list->paginate(config('vaahcms.per_page'));
-
-
-        foreach ($list as $role){
-
-            $data = User::getPivotData($role->pivot);
-
-            $role['json'] = $data;
-            $role['json_length'] = count($data);
-        }
-
-        $response['data']['roles'] = $list;
-        $response['status'] = 'success';
-
-        return response()->json($response);
-    }
-
-    //----------------------------------------------------------
-    public function getItemPermissions(Request $request, $column, $value)
-    {
-
-        $item = User::withTrashed()->where($column, $value)->first();
-
-        $response['data']['user'] = $item;
-
-
-        if($request->has("q"))
-        {
-
-            $list = $item->permissions();
-
-            /*$list = $item->permissions()->where(function ($q) use ($request){
-                $q->where('name', 'LIKE', '%'.$request->q.'%')
-                    ->orWhere('slug', 'LIKE', '%'.$request->q.'%');
-            });*/
-        } else
-        {
-            $list = $item->permissions();
-        }
-
-        /*$list->orderBy('pivot_is_active', 'desc');
-
-        $list = $list->paginate(config('vaahcms.per_page'));
-
-
-        foreach ($list as $role){
-
-            $data = User::getPivotData($role->pivot);
-
-            $role['json'] = $data;
-            $role['json_length'] = count($data);
-        }*/
-
-        $response['data']['permissions'] = $list;
-        $response['status'] = 'success';
-
-        return response()->json($response);
-    }
-
-
 }
