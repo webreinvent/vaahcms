@@ -22,47 +22,8 @@ class RegistrationsController extends Controller
     //----------------------------------------------------------
     public function getList(Request $request)
     {
-        $list = Registration::orderBy('created_at', 'DESC');
-
-        if($request->has('trashed') && $request->trashed == 'true')
-        {
-            $list->withTrashed();
-        }
-
-        if(isset($request->from) && isset($request->to))
-        {
-            $list->betweenDates($request['from'],$request['to']);
-        }
-
-        if($request->has('status') && !empty( $request->status))
-        {
-            $list->where('status', $request->status);
-        }
-
-        if($request->has("q"))
-        {
-            $list->where(function ($q) use ($request){
-                $q->where('first_name', 'LIKE', '%'.$request->q.'%')
-                    ->orWhere('last_name', 'LIKE', '%'.$request->q.'%')
-                    ->orWhere('middle_name', 'LIKE', '%'.$request->q.'%')
-                    ->orWhere('display_name', 'LIKE', '%'.$request->q.'%')
-                    ->orWhere(\DB::raw('concat(first_name," ",middle_name," ",last_name)'), 'like', '%'.$request['q'].'%')
-                    ->orWhere(\DB::raw('concat(first_name," ",last_name)'), 'like', '%'.$request['q'].'%')
-                    ->orWhere('email', 'LIKE', '%'.$request->q.'%')
-                    ->orWhere('id', '=', $request->q);
-            });
-        }
-
-        if(isset($request['per_page'])
-            && $request['per_page']
-            && is_numeric($request['per_page'])){
-            $list = $list->paginate($request['per_page']);
-        }else{
-            $list = $list->paginate(config('vaahcms.per_page'));
-        }
-
-        $response['status'] = 'success';
-        $response['data']['list'] = $list;
+        $request['is_api'] = true;
+        $response = Registration::getList($request);
         return response()->json($response);
     }
     //----------------------------------------------------------

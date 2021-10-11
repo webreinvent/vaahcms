@@ -1077,13 +1077,21 @@ class User extends Authenticatable
 
 
 
-        if(!\Auth::user()->hasPermission('can-see-users-contact-details')){
+        if((!isset($request['is_api'])
+            || !$request['is_api']) && !\Auth::user()->hasPermission('can-see-users-contact-details')){
             $list->exclude(['email','alternate_email', 'phone']);
         }
 
         $list->withCount(['activeRoles']);
 
-        $list = $list->paginate(config('vaahcms.per_page'));
+        if(isset($request['per_page'])
+            && $request['per_page']
+            && is_numeric($request['per_page'])){
+            $list = $list->paginate($request['per_page']);
+        }else{
+            $list = $list->paginate(config('vaahcms.per_page'));
+        }
+
         $countRole = Role::all()->count();
 
         $response['status'] = 'success';
