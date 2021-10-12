@@ -96,7 +96,24 @@ class Registration extends Model
     }
     //-------------------------------------------------
     public function getNameAttribute() {
-        return $this->first_name." ".$this->last_name;
+        if($this->display_name)
+        {
+            return $this->display_name;
+        }
+
+        $name = $this->first_name;
+
+        if($this->middle_name)
+        {
+            $name .= " ".$this->middle_name;
+        }
+
+        if($this->last_name)
+        {
+            $name .= " ".$this->last_name;
+        }
+
+        return $name;
     }
     //-------------------------------------------------
 
@@ -359,6 +376,9 @@ class Registration extends Model
                 $q->where('first_name', 'LIKE', '%'.$request->q.'%')
                     ->orWhere('last_name', 'LIKE', '%'.$request->q.'%')
                     ->orWhere('middle_name', 'LIKE', '%'.$request->q.'%')
+                    ->orWhere('display_name', 'LIKE', '%'.$request['q'].'%')
+                    ->orWhere(\DB::raw('concat(first_name," ",middle_name," ",last_name)'), 'like', '%'.$request['q'].'%')
+                    ->orWhere(\DB::raw('concat(first_name," ",last_name)'), 'like', '%'.$request['q'].'%')
                     ->orWhere('email', 'LIKE', '%'.$request->q.'%')
                     ->orWhere('id', '=', $request->q);
             });
