@@ -22,7 +22,6 @@ class RegistrationsController extends Controller
     //----------------------------------------------------------
     public function getList(Request $request)
     {
-        $request['is_api'] = true;
         $response = Registration::getList($request);
         return response()->json($response);
     }

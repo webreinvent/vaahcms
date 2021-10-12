@@ -35,7 +35,11 @@ Route::group(
                 //------------------------------------------------
                 Route::any( '/{column}/{value}/roles', 'UsersController@getItemRoles' );
                 //------------------------------------------------
+                Route::any( '/{column}/{value}/roles/{role_slug}', 'UsersController@getItemRoles' );
+                //------------------------------------------------
                 Route::any( '/{column}/{value}/permissions', 'UsersController@getItemPermissions' );
+                //------------------------------------------------
+                Route::any( '/{column}/{value}/permissions/{permission_slug}', 'UsersController@getItemPermissions' );
                 //------------------------------------------------
             });
 
@@ -50,6 +54,7 @@ Route::group(
                 Route::any( '/{column}/{value}', 'RolesController@getItem' );
                 //------------------------------------------------
                 Route::any( '/{column}/{value}/users', 'RolesController@getItemUsers' );
+
                 //------------------------------------------------
                 Route::any( '/{column}/{value}/permissions', 'RolesController@getItemPermissions' );
                 //------------------------------------------------
@@ -79,7 +84,13 @@ Route::group(
                 //------------------------------------------------
                 Route::any( '/', 'RegistrationsController@getList' );
                 //------------------------------------------------
+                Route::any( '/create', 'RegistrationsController@getList' );
+                //------------------------------------------------
                 Route::any( '/{column}/{value}', 'RegistrationsController@getItem' );
+                //------------------------------------------------
+                Route::any( '/{column}/{value}/update', 'RegistrationsController@createUser' );
+                //------------------------------------------------
+                Route::any( '/{column}/{value}/delete', 'RegistrationsController@createUser' );
                 //------------------------------------------------
                 Route::any( '/{column}/{value}/create-user', 'RegistrationsController@createUser' );
                 //------------------------------------------------

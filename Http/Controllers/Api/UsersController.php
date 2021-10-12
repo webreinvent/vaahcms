@@ -23,7 +23,6 @@ class UsersController extends Controller
     //----------------------------------------------------------
     public function getList(Request $request)
     {
-        $request['is_api'] = true;
         $response = User::getList($request);
         return response()->json($response);
     }

@@ -1076,9 +1076,7 @@ class User extends Authenticatable
         }
 
 
-
-        if((!isset($request['is_api'])
-            || !$request['is_api']) && !\Auth::user()->hasPermission('can-see-users-contact-details')){
+        if(!\Auth::user()->hasPermission('can-see-users-contact-details')){
             $list->exclude(['email','alternate_email', 'phone']);
         }
 
