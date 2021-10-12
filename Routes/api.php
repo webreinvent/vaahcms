@@ -37,6 +37,8 @@ Route::group(
                 //------------------------------------------------
                 Route::any( '/{column}/{value}/update', 'UsersController@update' );
                 //------------------------------------------------
+                Route::any( '/{column}/{value}/delete', 'UsersController@delete' );
+                //------------------------------------------------
                 Route::any( '/{column}/{value}/roles', 'UsersController@getItemRoles' );
                 //------------------------------------------------
                 Route::any( '/{column}/{value}/roles/{role_slug}', 'UsersController@getItemRoles' );
@@ -60,6 +62,8 @@ Route::group(
                 Route::any( '/{column}/{value}', 'RolesController@getItem' );
                 //------------------------------------------------
                 Route::any( '/{column}/{value}/update', 'RolesController@update' );
+                //------------------------------------------------
+                Route::any( '/{column}/{value}/delete', 'RolesController@delete' );
                 //------------------------------------------------
                 Route::any( '/{column}/{value}/users', 'RolesController@getItemUsers' );
 
@@ -98,7 +102,7 @@ Route::group(
                 //------------------------------------------------
                 Route::any( '/{column}/{value}/update', 'RegistrationsController@update' );
                 //------------------------------------------------
-                Route::any( '/{column}/{value}/delete', 'RegistrationsController@createUser' );
+                Route::any( '/{column}/{value}/delete', 'RegistrationsController@delete' );
                 //------------------------------------------------
                 Route::any( '/{column}/{value}/create-user', 'RegistrationsController@createUser' );
                 //------------------------------------------------
@@ -117,6 +121,8 @@ Route::group(
                 Route::any( '/{column}/{value}', 'TaxonomiesController@getItem' );
                 //------------------------------------------------
                 Route::any( '/{column}/{value}/update', 'UsersController@update' );
+                //------------------------------------------------
+                Route::any( '/{column}/{value}/delete', 'UsersController@delete' );
             });
     });
 

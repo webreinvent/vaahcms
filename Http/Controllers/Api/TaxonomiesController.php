@@ -70,4 +70,21 @@ class TaxonomiesController extends Controller
         return response()->json($response);
     }
     //----------------------------------------------------------
+    public function delete(Request $request, $column, $value)
+    {
+
+        $item = Taxonomy::where($column, $value)->first();
+
+        if(!$item){
+            $response['status']     = 'failed';
+            $response['errors']     = 'Role not found.';
+            return $response;
+        }
+
+        $request['inputs'] = [$item->id];
+
+        $response = Taxonomy::bulkTrash($request);
+        return response()->json($response);
+    }
+    //----------------------------------------------------------
 }

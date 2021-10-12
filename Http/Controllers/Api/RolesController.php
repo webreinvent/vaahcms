@@ -41,7 +41,7 @@ class RolesController extends Controller
 
         if(!$item){
             $response['status']     = 'failed';
-            $response['errors']     = 'Registration not found.';
+            $response['errors']     = 'Role not found.';
             return $response;
         }
 
@@ -50,6 +50,23 @@ class RolesController extends Controller
         $data->item = $request->all();
 
         $response = Role::postStore($data,$item->id);
+        return response()->json($response);
+    }
+    //----------------------------------------------------------
+    public function delete(Request $request, $column, $value)
+    {
+
+        $item = Role::where($column, $value)->first();
+
+        if(!$item){
+            $response['status']     = 'failed';
+            $response['errors']     = 'Role not found.';
+            return $response;
+        }
+
+        $request['inputs'] = [$item->id];
+
+        $response = Role::bulkTrash($request);
         return response()->json($response);
     }
     //----------------------------------------------------------

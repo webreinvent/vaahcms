@@ -68,6 +68,24 @@ class UsersController extends Controller
         return response()->json($response);
     }
     //----------------------------------------------------------
+    public function delete(Request $request, $column, $value)
+    {
+
+        $item = User::where($column, $value)->first();
+
+        if(!$item){
+            $response['status']     = 'failed';
+            $response['errors']     = 'User not found.';
+            return $response;
+        }
+
+        $request['inputs'] = [$item->id];
+        $request['action'] = 'bulk-change-status';
+
+        $response = User::bulkTrash($request);
+        return response()->json($response);
+    }
+    //----------------------------------------------------------
     public function getItemRoles(Request $request, $column, $value)
     {
 

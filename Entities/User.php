@@ -1316,13 +1316,6 @@ class User extends Authenticatable
             return $response;
         }
 
-        if(!$request->has('data'))
-        {
-            $response['status'] = 'failed';
-            $response['errors'][] = 'Select Status';
-            return $response;
-        }
-
         foreach($request->inputs as $id)
         {
             $item = User::find($id);

@@ -143,8 +143,6 @@ class UsersController extends Controller
 
         $request->merge(['action'=>$action]);
 
-        $inputs = $request->all();
-
         switch ($action)
         {
 
