@@ -51,4 +51,23 @@ class TaxonomiesController extends Controller
         return response()->json($response);
     }
     //----------------------------------------------------------
+    public function update(Request $request, $column, $value)
+    {
+
+        $item = Taxonomy::where($column, $value)->first();
+
+        if(!$item){
+            $response['status']     = 'failed';
+            $response['errors']     = 'Registration not found.';
+            return $response;
+        }
+
+
+        $data = new \stdClass();
+        $data->item = $request->all();
+
+        $response = Taxonomy::postStore($data,$item->id);
+        return response()->json($response);
+    }
+    //----------------------------------------------------------
 }

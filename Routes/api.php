@@ -35,6 +35,8 @@ Route::group(
                 //------------------------------------------------
                 Route::any( '/{column}/{value}', 'UsersController@getItem' );
                 //------------------------------------------------
+                Route::any( '/{column}/{value}/update', 'UsersController@update' );
+                //------------------------------------------------
                 Route::any( '/{column}/{value}/roles', 'UsersController@getItemRoles' );
                 //------------------------------------------------
                 Route::any( '/{column}/{value}/roles/{role_slug}', 'UsersController@getItemRoles' );
@@ -56,6 +58,8 @@ Route::group(
                 Route::any( '/', 'RolesController@getList' );
                 //------------------------------------------------
                 Route::any( '/{column}/{value}', 'RolesController@getItem' );
+                //------------------------------------------------
+                Route::any( '/{column}/{value}/update', 'RolesController@update' );
                 //------------------------------------------------
                 Route::any( '/{column}/{value}/users', 'RolesController@getItemUsers' );
 
@@ -92,7 +96,7 @@ Route::group(
                 //------------------------------------------------
                 Route::any( '/{column}/{value}', 'RegistrationsController@getItem' );
                 //------------------------------------------------
-                Route::any( '/{column}/{value}/update', 'RegistrationsController@createUser' );
+                Route::any( '/{column}/{value}/update', 'RegistrationsController@update' );
                 //------------------------------------------------
                 Route::any( '/{column}/{value}/delete', 'RegistrationsController@createUser' );
                 //------------------------------------------------
@@ -111,6 +115,8 @@ Route::group(
                 Route::any( '/', 'TaxonomiesController@getList' );
                 //------------------------------------------------
                 Route::any( '/{column}/{value}', 'TaxonomiesController@getItem' );
+                //------------------------------------------------
+                Route::any( '/{column}/{value}/update', 'UsersController@update' );
             });
     });
 

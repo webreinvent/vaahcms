@@ -34,6 +34,25 @@ class RolesController extends Controller
         return response()->json($response);
     }
     //----------------------------------------------------------
+    public function update(Request $request, $column, $value)
+    {
+
+        $item = Role::where($column, $value)->first();
+
+        if(!$item){
+            $response['status']     = 'failed';
+            $response['errors']     = 'Registration not found.';
+            return $response;
+        }
+
+
+        $data = new \stdClass();
+        $data->item = $request->all();
+
+        $response = Role::postStore($data,$item->id);
+        return response()->json($response);
+    }
+    //----------------------------------------------------------
     public function getItem(Request $request, $column, $value)
     {
         $item = Role::where($column, $value)->with(['createdByUser',

@@ -51,6 +51,23 @@ class UsersController extends Controller
         return response()->json($response);
     }
     //----------------------------------------------------------
+    public function update(Request $request, $column, $value)
+    {
+
+        $item = User::where($column, $value)->first();
+
+        if(!$item){
+            $response['status']     = 'failed';
+            $response['errors']     = 'Registration not found.';
+            return $response;
+        }
+
+        $request['id'] = $item->id;
+
+        $response = User::postStore($request);
+        return response()->json($response);
+    }
+    //----------------------------------------------------------
     public function getItemRoles(Request $request, $column, $value)
     {
 

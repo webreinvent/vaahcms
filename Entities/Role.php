@@ -449,7 +449,6 @@ class Role extends Model {
     //-------------------------------------------------
     public static function postStore($request,$id)
     {
-
         if(!\Auth::user()->hasPermission('can-update-roles'))
         {
             $response['status'] = 'failed';
@@ -460,7 +459,6 @@ class Role extends Model {
 
 
         $input = $request->item;
-
 
         $validation = static::validation($input);
         if(isset($validation['status']) && $validation['status'] == 'failed')
