@@ -29,6 +29,8 @@ Route::group(
             ],
             function () {
                 //------------------------------------------------
+                Route::any( '/create', 'UsersController@create' );
+                //------------------------------------------------
                 Route::any( '/', 'UsersController@getList' );
                 //------------------------------------------------
                 Route::any( '/{column}/{value}', 'UsersController@getItem' );
@@ -48,6 +50,8 @@ Route::group(
                 'prefix'     => '/roles',
             ],
             function () {
+                //------------------------------------------------
+                Route::any( '/create', 'RolesController@create' );
                 //------------------------------------------------
                 Route::any( '/', 'RolesController@getList' );
                 //------------------------------------------------
@@ -82,9 +86,9 @@ Route::group(
             ],
             function () {
                 //------------------------------------------------
-                Route::any( '/', 'RegistrationsController@getList' );
+                Route::any( '/create', 'RegistrationsController@create' );
                 //------------------------------------------------
-                Route::any( '/create', 'RegistrationsController@getList' );
+                Route::any( '/', 'RegistrationsController@getList' );
                 //------------------------------------------------
                 Route::any( '/{column}/{value}', 'RegistrationsController@getItem' );
                 //------------------------------------------------
@@ -101,6 +105,8 @@ Route::group(
                 'prefix'     => '/taxonomies',
             ],
             function () {
+                //------------------------------------------------
+                Route::any( '/create', 'TaxonomiesController@create' );
                 //------------------------------------------------
                 Route::any( '/', 'TaxonomiesController@getList' );
                 //------------------------------------------------

@@ -20,6 +20,13 @@ class UsersController extends Controller
     {
     }
     //----------------------------------------------------------
+    public function create(Request $request)
+    {
+        $data = new \stdClass();
+        $data->new_item = $request->all();
+        $response = User::create($data);
+        return response()->json($response);
+    }
     //----------------------------------------------------------
     public function getList(Request $request)
     {

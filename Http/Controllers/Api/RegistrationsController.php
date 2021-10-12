@@ -20,6 +20,14 @@ class RegistrationsController extends Controller
     }
     //----------------------------------------------------------
     //----------------------------------------------------------
+    public function create(Request $request)
+    {
+        $data = new \stdClass();
+        $data->new_item = $request->all();
+        $response = Registration::create($data);
+        return response()->json($response);
+    }
+    //----------------------------------------------------------
     public function getList(Request $request)
     {
         $response = Registration::getList($request);

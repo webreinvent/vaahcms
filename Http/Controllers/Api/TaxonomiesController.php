@@ -20,6 +20,13 @@ class TaxonomiesController extends Controller
     {
     }
     //----------------------------------------------------------
+    public function create(Request $request)
+    {
+        $data = new \stdClass();
+        $data->new_item = $request->all();
+        $response = Taxonomy::createItem($data);
+        return response()->json($response);
+    }
     //----------------------------------------------------------
     public function getList(Request $request)
     {
