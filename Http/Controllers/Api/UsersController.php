@@ -86,7 +86,7 @@ class UsersController extends Controller
         return response()->json($response);
     }
     //----------------------------------------------------------
-    public function getItemRoles(Request $request, $column, $value)
+    public function getItemRoles(Request $request, $column, $value, $role_slug = null)
     {
 
         $item = User::withTrashed()->where($column, $value)->first();
@@ -97,7 +97,20 @@ class UsersController extends Controller
             return $response;
         }
 
+        if($role_slug){
+
+            $response['status'] = 'success';
+            $response['data'] = false;
+
+            if($item->hasRole($role_slug)){
+                $response['data'] = true;
+            }
+
+            return response()->json($response);
+        }
+
         $response['data']['user'] = $item;
+
 
         if($request->has("q"))
         {
@@ -135,7 +148,9 @@ class UsersController extends Controller
     }
 
     //----------------------------------------------------------
-    public function getItemPermissions(Request $request, $column, $value)
+    public function getItemPermissions(Request $request,
+                                       $column, $value,
+                                       $permission_slug = null)
     {
 
         $item = User::withTrashed()->where($column, $value)->first();
@@ -144,6 +159,18 @@ class UsersController extends Controller
             $response['status']     = 'failed';
             $response['errors']     = 'User not found.';
             return $response;
+        }
+
+        if($permission_slug){
+
+            $response['status'] = 'success';
+            $response['data'] = false;
+
+            if($item->hasPermission($permission_slug)){
+                $response['data'] = true;
+            }
+
+            return response()->json($response);
         }
 
         $response['data']['user'] = $item;
