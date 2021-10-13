@@ -58,6 +58,237 @@ vaah cms:install
 
 Well, to answer that, ask a question to yourself: Do you want to develop an enterprise application with content management that doesn't come in your way? If answer is yes, VaahCMS is for you.
 
+
+
+## API
+
+#### Registration : -
+
+- Create
+
+##### URL
+```php
+GET/POST <public-url>/api/registrations/create
+```
+
+##### Request samples
+```php
+parameter = [
+
+    'api_token'                 => 'xxxxxxxxxxx',  // for authentication
+    "email",                    // required
+    "username",
+    "password",                 // required
+    "display_name",
+    "title",
+    "designation",
+    "first_name",               // required
+    "middle_name",
+    "last_name",
+    "gender",                   // m for male , f for female , o for Other 
+    "country_calling_code",
+    "phone", 
+    "bio",
+    "timezone",
+    "alternate_email",
+    "avatar_url",
+    "birth", 
+    "country",
+    "country_code",
+    "status",                  // user-created , email-verified , email-verification-pending
+    "activation_code",
+    "activation_code_sent_at",
+    "activated_ip",
+    "invited_by",
+    "invited_at",
+    "invited_for_key", 
+    "invited_for_value", 
+    "user_id",
+    "user_created_at", 
+    "created_ip",
+    "registration_id", 
+    "meta"                     // json format
+];
+```
+
+##### Response samples
+```php
+{
+    "status": "success",
+    "data": {
+        "item": {
+            .............
+            .............
+        }
+    },
+    "messages": [
+        "Saved successfully."
+    ]
+}
+```
+- Get a List
+
+##### URL
+```php
+GET/POST <public-url>/api/registrations
+```
+
+##### Request samples
+```php
+parameter = [
+
+    'api_token'                 => 'xxxxxxxxxxx',  // for authentication
+    'q'                         => 'search_item', 
+    'from'                      => 'search_item', 
+    'to'                        => 'search_item', 
+    'status'                    => 'search_item', 
+    'per_page'                  => 20,
+    'trashed'                   => false,          // true, false        
+];
+```
+
+##### Response samples
+```php
+{
+    "status": "success",
+    "data": {
+        "list": {
+            "current_page": 1,
+            "data": [
+                ..............
+                ..............
+                ..............
+                ..............
+            ],
+            "first_page_url": "<public-url>/api/registrations?page=1",
+            "from": 1,
+            "last_page": 1,
+            "last_page_url": "<public-url>/api/registrations?page=1",
+            "links": [
+                {
+                    "url": null,
+                    "label": "&laquo; Previous",
+                    "active": false
+                },
+                {
+                    "url": "<public-url>/api/registrations?page=1",
+                    "label": "1",
+                    "active": true
+                },
+                {
+                    "url": null,
+                    "label": "Next &raquo;",
+                    "active": false
+                }
+            ],
+            "next_page_url": null,
+            "path": "<public-url>/api/registrations",
+            "per_page": 20,
+            "prev_page_url": null,
+            "to": 2,
+            "total": 2
+        }
+    }
+}
+```
+- Get Item
+
+##### URL
+```php
+GET/POST <public-url>/api/registrations/{column}/{value}
+```
+
+##### Response samples
+```php
+{
+    "status": "success",
+    "data": {
+        .............
+        .............
+        .............
+    }
+}
+```
+- Update
+
+##### URL
+```php
+GET/POST <public-url>/api/registrations/{column}/{value}/update
+```
+
+##### Request samples
+```php
+parameter = [
+
+    'api_token'                 => 'xxxxxxxxxxx',  // for authentication
+    "email",                    // required
+    "username",
+    "password",                 // required
+    "display_name",
+    "title",
+    "designation",
+    "first_name",               // required
+    "middle_name",
+    "last_name",
+    "gender",                   // m for male , f for female , o for Other 
+    "country_calling_code",
+    "phone", 
+    "bio",
+    "timezone",
+    "alternate_email",
+    "avatar_url",
+    "birth", 
+    "country",
+    "country_code",
+    "status",                  // required - user-created , email-verified , email-verification-pending
+    "activation_code",
+    "activation_code_sent_at",
+    "activated_ip",
+    "invited_by",
+    "invited_at",
+    "invited_for_key", 
+    "invited_for_value", 
+    "user_id",
+    "user_created_at", 
+    "created_ip",
+    "registration_id", 
+    "meta"                     // json format
+];
+```
+
+##### Response samples
+```php
+{
+    "status": "success",
+    "messages": [
+        "Saved"
+    ],
+    "data": {
+        ...........
+        ...........
+        ...........
+    }
+}
+```
+- Delete
+
+##### URL
+```php
+GET/POST <public-url>/api/registrations/{column}/{value}/delete
+```
+
+##### Response samples
+```php
+{
+    "status": "success",
+    "data": [],
+    "messages": [
+        "Action was successful"
+    ]
+}
+```
+
+
 <br/>
 
 ## Join us

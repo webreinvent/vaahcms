@@ -54,7 +54,8 @@ class RegistrationsController extends Controller
     public function update(Request $request, $column, $value)
     {
 
-        $item = Registration::where($column, $value)->first();
+        $item =  Registration::where($column, $value)
+            ->withTrashed()->first();
 
         if(!$item){
             $response['status']     = 'failed';

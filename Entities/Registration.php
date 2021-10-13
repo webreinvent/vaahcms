@@ -482,7 +482,7 @@ class Registration extends Model
 
         if(!$request->has('activation_code'))
         {
-            $item->activation_code = str_random(40);
+            $item->activation_code = Str::random(40);
         }
 
         if($request->has('user_id') && !$request->has('activated_at'))
