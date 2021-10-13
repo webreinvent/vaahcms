@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Hash;
 use WebReinvent\VaahCms\Entities\Registration;
 use WebReinvent\VaahCms\Entities\Role;
 use WebReinvent\VaahCms\Entities\Taxonomy;
+use WebReinvent\VaahCms\Entities\TaxonomyType;
 use WebReinvent\VaahCms\Entities\User;
 
 class TaxonomiesController extends Controller
@@ -22,6 +23,34 @@ class TaxonomiesController extends Controller
     //----------------------------------------------------------
     public function create(Request $request)
     {
+
+        if($request->has('type_slug') && $request->type_slug){
+            $type = TaxonomyType::where('slug',$request->type_slug)->first();
+
+            if(!$type){
+                $response['status'] = 'failed';
+                $response['errors'][] = "Type slug not found.";
+                return $response;
+            }
+
+            $request['type'] = $type->id;
+
+            if($request->has('parent_slug') && $request->parent_slug){
+                $parent = Taxonomy::where('slug',$request->parent_slug)
+                    ->where('type',$type->parent_id)->first();
+
+                if(!$parent){
+                    $response['status'] = 'failed';
+                    $response['errors'][] = "Parent slug not found.";
+                    return $response;
+                }
+
+                $request['parent'] = $parent;
+
+            }
+
+        }
+
         $data = new \stdClass();
         $data->new_item = $request->all();
         $response = Taxonomy::createItem($data);
@@ -60,6 +89,35 @@ class TaxonomiesController extends Controller
             $response['status']     = 'failed';
             $response['errors']     = 'Registration not found.';
             return $response;
+        }
+
+        $request['id'] = $item->id;
+
+        if($request->has('type_slug') && $request->type_slug){
+            $type = TaxonomyType::where('slug',$request->type_slug)->first();
+
+            if(!$type){
+                $response['status'] = 'failed';
+                $response['errors'][] = "Type slug not found.";
+                return $response;
+            }
+
+            $request['type'] = $type->id;
+
+            if($request->has('parent_slug') && $request->parent_slug){
+                $parent = Taxonomy::where('slug',$request->parent_slug)
+                    ->where('type',$type->parent_id)->first();
+
+                if(!$parent){
+                    $response['status'] = 'failed';
+                    $response['errors'][] = "Parent slug not found.";
+                    return $response;
+                }
+
+                $request['parent'] = $parent;
+
+            }
+
         }
 
 

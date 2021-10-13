@@ -45,6 +45,7 @@ class RolesController extends Controller
             return $response;
         }
 
+        $request['id'] = $item->id;
 
         $data = new \stdClass();
         $data->item = $request->all();
