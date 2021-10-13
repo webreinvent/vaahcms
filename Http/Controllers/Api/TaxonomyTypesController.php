@@ -23,6 +23,20 @@ class TaxonomyTypesController extends Controller
     //----------------------------------------------------------
     public function create(Request $request)
     {
+
+        if($request->has('parent_slug') && $request->parent_slug){
+            $parent = TaxonomyType::where('slug',$request->parent_slug)->first();
+
+            if(!$parent){
+                $response['status'] = 'failed';
+                $response['errors'][] = "Parent slug not found.";
+                return $response;
+            }
+
+            $request['parent_id'] = $parent->id;
+
+        }
+
         $data = new \stdClass();
         $data->new_item = $request->all();
         $response = TaxonomyType::createItem($data);
@@ -39,7 +53,17 @@ class TaxonomyTypesController extends Controller
     {
         $item = TaxonomyType::where($column, $value)->with(['createdByUser',
             'updatedByUser', 'deletedByUser'])
-            ->withTrashed()->first();
+            ->withTrashed();
+
+        if($request->has('with_parent') && $request->with_parent){
+            $item->with(['parent']);
+        }
+
+        if($request->has('with_children') && $request->with_children){
+            $item->with(['children'])->whereNull('parent_id');
+        }
+
+        $item = $item->first();
 
         if(!$item){
             $response['status']     = 'failed';
@@ -59,10 +83,24 @@ class TaxonomyTypesController extends Controller
 
         if(!$item){
             $response['status']     = 'failed';
-            $response['errors']     = 'Registration not found.';
+            $response['errors']     = 'Taxonomy\'s Type not found.';
             return $response;
         }
 
+        if($request->has('parent_slug') && $request->parent_slug){
+            $parent = TaxonomyType::where('slug',$request->parent_slug)->first();
+
+            if(!$parent){
+                $response['status'] = 'failed';
+                $response['errors'][] = "Parent slug not found.";
+                return $response;
+            }
+
+            $request['parent_id'] = $parent->id;
+
+        }
+
+        $request['id'] = $item->id;
 
         $data = new \stdClass();
         $data->item = $request->all();
@@ -78,7 +116,7 @@ class TaxonomyTypesController extends Controller
 
         if(!$item){
             $response['status']     = 'failed';
-            $response['errors']     = 'Role not found.';
+            $response['errors']     = 'Taxonomy\'s Type not found.';
             return $response;
         }
 

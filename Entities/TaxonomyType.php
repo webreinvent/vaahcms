@@ -162,14 +162,10 @@ class TaxonomyType extends Model {
             return $response;
         }
 
-        if($inputs['type'] === 'Cities' && $inputs['parent']
-            && (is_array($inputs['parent']) || is_object($inputs['parent']))){
-            $inputs['parent_id'] = $inputs['parent']['id'];
-        }
-
         $item = new self();
         $item->fill($inputs);
         $item->slug = Str::slug($inputs['slug']);
+        $item->is_active = 1;
         $item->save();
 
         $response['status'] = 'success';
@@ -198,18 +194,6 @@ class TaxonomyType extends Model {
         if(isset($request->from) && isset($request->to))
         {
             $list->betweenDates($request['from'],$request['to']);
-        }
-
-        if(isset($request['filter']) &&  $request['filter'])
-        {
-            if($request['filter'] == '1')
-            {
-                $list->whereNotNull('is_active');
-            }elseif($request['filter'] == '10'){
-                $list->whereNull('is_active');
-            }else{
-                $list->where('type',$request['filter']);
-            }
         }
 
         if(isset($request->q))
@@ -280,20 +264,6 @@ class TaxonomyType extends Model {
         {
             $response['status'] = 'failed';
             $response['errors'][] = "This slug is already exist.";
-            return $response;
-        }
-
-        $input['parent_id'] = null;
-
-        if($input['type'] === 'Cities' && $input['parent']
-            && (is_array($input['parent']) || is_object($input['parent']))){
-            $input['parent_id'] = $input['parent']['id'];
-
-        }
-
-        if($input['id'] == $input['parent_id']){
-            $response['status'] = 'failed';
-            $response['errors'][] = "You can not select yourself as a country.";
             return $response;
         }
 
@@ -465,8 +435,6 @@ class TaxonomyType extends Model {
     {
 
         $rules = array(
-            'type' => 'required',
-            'parent' => 'required_if:type,==,Cities',
             'name' => 'required|max:150',
             'slug' => 'required|max:150',
         );
