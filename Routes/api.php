@@ -25,13 +25,33 @@ Route::group(
 
         Route::group(
             [
+                'prefix'     => '/registrations',
+            ],
+            function () {
+                //------------------------------------------------
+                Route::any( '/', 'RegistrationsController@getList' );
+                //------------------------------------------------
+                Route::any( '/create', 'RegistrationsController@create' );
+                //------------------------------------------------
+                Route::any( '/{column}/{value}', 'RegistrationsController@getItem' );
+                //------------------------------------------------
+                Route::any( '/{column}/{value}/update', 'RegistrationsController@update' );
+                //------------------------------------------------
+                Route::any( '/{column}/{value}/delete', 'RegistrationsController@delete' );
+                //------------------------------------------------
+                Route::any( '/{column}/{value}/create-user', 'RegistrationsController@createUser' );
+                //------------------------------------------------
+            });
+
+        Route::group(
+            [
                 'prefix'     => '/users',
             ],
             function () {
                 //------------------------------------------------
-                Route::any( '/create', 'UsersController@create' );
-                //------------------------------------------------
                 Route::any( '/', 'UsersController@getList' );
+                //------------------------------------------------
+                Route::any( '/create', 'UsersController@create' );
                 //------------------------------------------------
                 Route::any( '/{column}/{value}', 'UsersController@getItem' );
                 //------------------------------------------------
@@ -55,9 +75,9 @@ Route::group(
             ],
             function () {
                 //------------------------------------------------
-                Route::any( '/create', 'RolesController@create' );
-                //------------------------------------------------
                 Route::any( '/', 'RolesController@getList' );
+                //------------------------------------------------
+                Route::any( '/create', 'RolesController@create' );
                 //------------------------------------------------
                 Route::any( '/{column}/{value}', 'RolesController@getItem' );
                 //------------------------------------------------
@@ -90,39 +110,38 @@ Route::group(
 
         Route::group(
             [
-                'prefix'     => '/registrations',
-            ],
-            function () {
-                //------------------------------------------------
-                Route::any( '/create', 'RegistrationsController@create' );
-                //------------------------------------------------
-                Route::any( '/', 'RegistrationsController@getList' );
-                //------------------------------------------------
-                Route::any( '/{column}/{value}', 'RegistrationsController@getItem' );
-                //------------------------------------------------
-                Route::any( '/{column}/{value}/update', 'RegistrationsController@update' );
-                //------------------------------------------------
-                Route::any( '/{column}/{value}/delete', 'RegistrationsController@delete' );
-                //------------------------------------------------
-                Route::any( '/{column}/{value}/create-user', 'RegistrationsController@createUser' );
-                //------------------------------------------------
-            });
-
-        Route::group(
-            [
                 'prefix'     => '/taxonomies',
             ],
             function () {
                 //------------------------------------------------
-                Route::any( '/create', 'TaxonomiesController@create' );
-                //------------------------------------------------
                 Route::any( '/', 'TaxonomiesController@getList' );
+                //------------------------------------------------
+                Route::any( '/create', 'TaxonomiesController@create' );
                 //------------------------------------------------
                 Route::any( '/{column}/{value}', 'TaxonomiesController@getItem' );
                 //------------------------------------------------
-                Route::any( '/{column}/{value}/update', 'UsersController@update' );
+                Route::any( '/{column}/{value}/update', 'TaxonomiesController@update' );
                 //------------------------------------------------
-                Route::any( '/{column}/{value}/delete', 'UsersController@delete' );
+                Route::any( '/{column}/{value}/delete', 'TaxonomiesController@delete' );
+
+            });
+
+
+        Route::group(
+            [
+                'prefix'     => '/taxonomy-types',
+            ],
+            function () {
+                //------------------------------------------------
+                Route::any( '/', 'TaxonomyTypesController@getList' );
+                //------------------------------------------------
+                Route::any( '/create', 'TaxonomyTypesController@create' );
+                //------------------------------------------------
+                Route::any( '/{column}/{value}', 'TaxonomyTypesController@getItem' );
+                //------------------------------------------------
+                Route::any( '/{column}/{value}/update', 'TaxonomyTypesController@update' );
+                //------------------------------------------------
+                Route::any( '/{column}/{value}/delete', 'TaxonomyTypesController@delete' );
             });
     });
 

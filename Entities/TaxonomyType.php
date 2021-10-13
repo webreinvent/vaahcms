@@ -191,6 +191,10 @@ class TaxonomyType extends Model {
             $list->withTrashed();
         }
 
+        if(isset($request->with_children) && $request->with_children){
+            $list->with(['children'])->whereNull('parent_id');
+        }
+
         if(isset($request->from) && isset($request->to))
         {
             $list->betweenDates($request['from'],$request['to']);

@@ -165,16 +165,16 @@
 
                                         <b-field label="">
 
-                                            <b-select placeholder="- Select a filter -"
-                                                      v-model="query_string.filter"
+                                            <b-select placeholder="- Select a status -"
+                                                      v-model="query_string.status"
                                                       @input="getList()">
                                                 <option value="">
-                                                    - Select a filter -
+                                                    - Select a status -
                                                 </option>
-                                                <option value=01>
+                                                <option value='active'>
                                                     Active
                                                 </option>
-                                                <option value=10>
+                                                <option value='inactive'>
                                                     Inactive
                                                 </option>
 

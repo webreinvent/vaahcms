@@ -235,9 +235,9 @@ class Taxonomy extends Model {
             $list->betweenDates($request['from'],$request['to']);
         }
 
-        if(isset($request['filter']) &&  $request['filter'])
+        if(isset($request['status']) &&  $request['status'])
         {
-            if($request['filter'] == '1')
+            if($request['status'] == 'active')
             {
                 $list->whereNotNull('is_active');
             }else{
