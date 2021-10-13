@@ -234,10 +234,10 @@ class Permission extends Model {
 
         if(isset($request['filter']) &&  $request['filter'])
         {
-            if($request['filter'] == '1')
+            if($request['filter'] == 'active')
             {
-                $list->where('is_active',$request['filter']);
-            }elseif($request['filter'] == '10'){
+                $list->where('is_active',1);
+            }elseif($request['filter'] == 'inactive'){
                 $list->whereNull('is_active')->orWhere('is_active',0);
             }else{
                 if(isset($request['section']) &&  $request['section']){

@@ -1040,11 +1040,11 @@ class User extends Authenticatable
             $list->betweenDates($request['from'],$request['to']);
         }
 
-        if(isset($request['status'])){
-            if($request['status'] == '1')
+        if(isset($request['status']) && $request['status']){
+            if($request['status'] == 'active')
             {
-                $list->where('is_active',$request['status']);
-            }elseif($request['status'] == '10'){
+                $list->where('is_active',1);
+            }else{
                 $list->whereNull('is_active')->orWhere('is_active',0);
             }
         }
