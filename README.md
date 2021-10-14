@@ -967,6 +967,220 @@ GET/POST <public-url>/api/roles/{column}/{value}/permissions
 }
 ```
 
+#### Permission : -
+
+- Get a List
+
+##### URL
+```php
+GET/POST <public-url>/api/permissions
+```
+
+##### Request samples
+```php
+parameter = [
+
+    'api_token'                 => 'xxxxxxxxxxx',   // for authentication
+    'q'                         => 'search_item', 
+    'from'                      =>  DateTime', 
+    'to'                        =>  DateTime, 
+    'filter'                    => 'active / inactive / {module_name}', 
+    'section'                   => '',     // if filter = {module_name}
+    'per_page'                  =>  20,
+    'trashed'                   =>  false,          // true, false        
+];
+```
+
+##### Response samples
+```php
+{
+    "status": "success",
+    "data": {
+        "list": {
+            "current_page": 1,
+            "data": [
+                ..............
+                ..............
+                ..............
+                ..............
+            ],
+            "first_page_url": "<public-url>/api/permissions?page=1",
+            "from": 1,
+            "last_page": 1,
+            "last_page_url": "<public-url>/api/permissions?page=1",
+            "links": [
+                {
+                    "url": null,
+                    "label": "&laquo; Previous",
+                    "active": false
+                },
+                {
+                    "url": "<public-url>/api/permissions?page=1",
+                    "label": "1",
+                    "active": true
+                },
+                {
+                    "url": null,
+                    "label": "Next &raquo;",
+                    "active": false
+                }
+            ],
+            "next_page_url": null,
+            "path": "<public-url>/api/permissions",
+            "per_page": 20,
+            "prev_page_url": null,
+            "to": 2,
+            "total": 2
+        }
+    }
+}
+```
+- Get Item
+
+##### URL
+```php
+GET/POST <public-url>/api/permissions/{column}/{value}
+```
+
+##### Response samples
+```php
+{
+    "status": "success",
+    "data": {
+        .............
+        .............
+        .............
+    }
+}
+```
+- Delete
+
+##### URL
+```php
+GET/POST <public-url>/api/roles/{column}/{value}/delete
+```
+
+##### Response samples
+```php
+{
+    "status": "success",
+    "data": [],
+    "messages": [
+        "Action was successful"
+    ]
+}
+```
+- Get Role's Users
+
+##### URL
+```php
+GET/POST <public-url>/api/permissions/{column}/{value}/users
+```
+
+##### Response samples
+```php
+{
+    "data": {
+        "role": {
+            .............
+            .............
+            .............
+        },
+        "users": {
+            "current_page": 1,
+            "data": [
+                ..............
+                ..............
+                ..............
+            ],
+            "first_page_url": "http://localhost/vikram/vaahcms-dev-env/public/api/permissions/id/2/users?page=1",
+            "from": 1,
+            "last_page": 1,
+            "last_page_url": "http://localhost/vikram/vaahcms-dev-env/public/api/permissions/id/2/users?page=1",
+            "links": [
+                {
+                    "url": null,
+                    "label": "&laquo; Previous",
+                    "active": false
+                },
+                {
+                    "url": "http://localhost/vikram/vaahcms-dev-env/public/api/permissions/id/2/users?page=1",
+                    "label": "1",
+                    "active": true
+                },
+                {
+                    "url": null,
+                    "label": "Next &raquo;",
+                    "active": false
+                }
+            ],
+            "next_page_url": null,
+            "path": "http://localhost/vikram/vaahcms-dev-env/public/api/permissions/id/2/users",
+            "per_page": 20,
+            "prev_page_url": null,
+            "to": 3,
+            "total": 3
+        }
+    },
+    "status": "success"
+}
+```
+- Get Permission's Roles
+
+##### URL
+```php
+GET/POST <public-url>/api/permissions/{column}/{value}/roles
+```
+
+##### Response samples
+```php
+{
+    "data": {
+        "role": {
+            .............
+            .............
+            .............
+        },
+        "permissions": {
+            "current_page": 1,
+            "data": [
+                ..............
+                ..............
+                ..............
+            ],
+            "first_page_url": "http://localhost/vikram/vaahcms-dev-env/public/api/permissions/{column}/{value}/roles?page=1",
+            "from": 1,
+            "last_page": 1,
+            "last_page_url": "http://localhost/vikram/vaahcms-dev-env/public/api/permissions/{column}/{value}/roles?page=1",
+            "links": [
+                {
+                    "url": null,
+                    "label": "&laquo; Previous",
+                    "active": false
+                },
+                {
+                    "url": "http://localhost/vikram/vaahcms-dev-env/public/api/permissions/{column}/{value}/roles?page=1",
+                    "label": "1",
+                    "active": true
+                },
+                {
+                    "url": null,
+                    "label": "Next &raquo;",
+                    "active": false
+                }
+            ],
+            "next_page_url": null,
+            "path": "http://localhost/vikram/vaahcms-dev-env/public/api/permissions/{column}/{value}/roles",
+            "per_page": 20,
+            "prev_page_url": null,
+            "to": 3,
+            "total": 3
+        }
+    },
+    "status": "success"
+}
+```
+
 
 <br/>
 
