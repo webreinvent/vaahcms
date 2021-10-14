@@ -198,6 +198,15 @@ parameter = [
 GET/POST <public-url>/api/registrations/{column}/{value}
 ```
 
+##### Request samples
+```php
+parameter = [
+
+   'api_token'                 => 'xxxxxxxxxxx',   // for authentication
+   'trashed'                   => false,          // true, false  
+];
+```
+
 ##### Response samples
 ```php
 {
@@ -450,6 +459,15 @@ parameter = [
 GET/POST <public-url>/api/users/{column}/{value}
 ```
 
+##### Request samples
+```php
+parameter = [
+
+   'api_token'                 => 'xxxxxxxxxxx',   // for authentication
+   'trashed'                   => false,          // true, false  
+];
+```
+
 ##### Response samples
 ```php
 {
@@ -552,6 +570,16 @@ GET/POST <public-url>/api/users/{column}/{value}/delete
 GET/POST <public-url>/api/users/{column}/{value}/roles
 ```
 
+##### Request samples
+```php
+parameter = [
+
+    'api_token'                 => 'xxxxxxxxxxx',   // for authentication
+    'q'                         => 'search_item', 
+    'per_page'                  =>  20,
+];
+```
+
 ##### Response samples
 ```php
 {
@@ -619,6 +647,16 @@ GET/POST <public-url>/api/users/{column}/{value}/roles/{role_slug}
 ##### URL
 ```php
 GET/POST <public-url>/api/users/{column}/{value}/permissions
+```
+
+##### Request samples
+```php
+parameter = [
+
+    'api_token'                 => 'xxxxxxxxxxx',   // for authentication
+    'q'                         => 'search_item', 
+    'per_page'                  =>  20,
+];
 ```
 
 ##### Response samples
@@ -794,6 +832,15 @@ parameter = [
 GET/POST <public-url>/api/roles/{column}/{value}
 ```
 
+##### Request samples
+```php
+parameter = [
+
+   'api_token'                 => 'xxxxxxxxxxx',   // for authentication
+   'trashed'                   => false,          // true, false  
+];
+```
+
 ##### Response samples
 ```php
 {
@@ -863,6 +910,16 @@ GET/POST <public-url>/api/roles/{column}/{value}/delete
 GET/POST <public-url>/api/roles/{column}/{value}/users
 ```
 
+##### Request samples
+```php
+parameter = [
+
+    'api_token'                 => 'xxxxxxxxxxx',   // for authentication
+    'q'                         => 'search_item', 
+    'per_page'                  =>  20,
+];
+```
+
 ##### Response samples
 ```php
 {
@@ -879,10 +936,10 @@ GET/POST <public-url>/api/roles/{column}/{value}/users
                 ..............
                 ..............
             ],
-            "first_page_url": "http://localhost/vikram/vaahcms-dev-env/public/api/roles/id/2/roles?page=1",
+            "first_page_url": "http://localhost/vikram/vaahcms-dev-env/public/api/roles/id/2/users?page=1",
             "from": 1,
             "last_page": 1,
-            "last_page_url": "http://localhost/vikram/vaahcms-dev-env/public/api/roles/id/2/roles?page=1",
+            "last_page_url": "http://localhost/vikram/vaahcms-dev-env/public/api/roles/id/2/users?page=1",
             "links": [
                 {
                     "url": null,
@@ -890,7 +947,7 @@ GET/POST <public-url>/api/roles/{column}/{value}/users
                     "active": false
                 },
                 {
-                    "url": "http://localhost/vikram/vaahcms-dev-env/public/api/roles/id/2/roles?page=1",
+                    "url": "http://localhost/vikram/vaahcms-dev-env/public/api/roles/id/2/users?page=1",
                     "label": "1",
                     "active": true
                 },
@@ -901,7 +958,7 @@ GET/POST <public-url>/api/roles/{column}/{value}/users
                 }
             ],
             "next_page_url": null,
-            "path": "http://localhost/vikram/vaahcms-dev-env/public/api/roles/id/2/roles",
+            "path": "http://localhost/vikram/vaahcms-dev-env/public/api/roles/id/2/users",
             "per_page": 20,
             "prev_page_url": null,
             "to": 3,
@@ -916,6 +973,16 @@ GET/POST <public-url>/api/roles/{column}/{value}/users
 ##### URL
 ```php
 GET/POST <public-url>/api/roles/{column}/{value}/permissions
+```
+
+##### Request samples
+```php
+parameter = [
+
+    'api_token'                 => 'xxxxxxxxxxx',   // for authentication
+    'q'                         => 'search_item', 
+    'per_page'                  =>  20,
+];
 ```
 
 ##### Response samples
@@ -1042,6 +1109,15 @@ parameter = [
 GET/POST <public-url>/api/permissions/{column}/{value}
 ```
 
+##### Request samples
+```php
+parameter = [
+
+   'api_token'                 => 'xxxxxxxxxxx',   // for authentication
+   'trashed'                   => false,          // true, false  
+];
+```
+
 ##### Response samples
 ```php
 {
@@ -1075,6 +1151,16 @@ GET/POST <public-url>/api/roles/{column}/{value}/delete
 ##### URL
 ```php
 GET/POST <public-url>/api/permissions/{column}/{value}/users
+```
+
+##### Request samples
+```php
+parameter = [
+
+    'api_token'                 => 'xxxxxxxxxxx',   // for authentication
+    'q'                         => 'search_item', 
+    'per_page'                  =>  20,
+];
 ```
 
 ##### Response samples
@@ -1130,6 +1216,16 @@ GET/POST <public-url>/api/permissions/{column}/{value}/users
 ##### URL
 ```php
 GET/POST <public-url>/api/permissions/{column}/{value}/roles
+```
+
+##### Request samples
+```php
+parameter = [
+
+    'api_token'                 => 'xxxxxxxxxxx',   // for authentication
+    'q'                         => 'search_item', 
+    'per_page'                  =>  20,
+];
 ```
 
 ##### Response samples
@@ -1290,6 +1386,15 @@ parameter = [
 ##### URL
 ```php
 GET/POST <public-url>/api/taxonomies/{column}/{value}
+```
+
+##### Request samples
+```php
+parameter = [
+
+   'api_token'                 => 'xxxxxxxxxxx',   // for authentication
+   'trashed'                   => false,          // true, false  
+];
 ```
 
 ##### Response samples
@@ -1461,6 +1566,15 @@ parameter = [
 ##### URL
 ```php
 GET/POST <public-url>/api/taxonomy-types/{column}/{value}
+```
+
+##### Request samples
+```php
+parameter = [
+
+   'api_token'                 => 'xxxxxxxxxxx',   // for authentication
+   'trashed'                   => false,          // true, false  
+];
 ```
 
 ##### Response samples

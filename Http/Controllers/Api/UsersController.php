@@ -37,8 +37,14 @@ class UsersController extends Controller
     public function getItem(Request $request, $column, $value)
     {
         $item = User::where($column, $value)->with(['createdByUser',
-            'updatedByUser', 'deletedByUser'])
-            ->withTrashed()->first();
+            'updatedByUser', 'deletedByUser']);
+
+        if($request['trashed'] == 'true')
+        {
+            $item->withTrashed();
+        }
+
+        $item = $item->first();
 
         if(!$item){
             $response['status']     = 'failed';

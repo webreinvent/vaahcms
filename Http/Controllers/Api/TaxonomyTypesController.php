@@ -52,8 +52,7 @@ class TaxonomyTypesController extends Controller
     public function getItem(Request $request, $column, $value)
     {
         $item = TaxonomyType::where($column, $value)->with(['createdByUser',
-            'updatedByUser', 'deletedByUser'])
-            ->withTrashed();
+            'updatedByUser', 'deletedByUser']);
 
         if($request->has('with_parent') && $request->with_parent){
             $item->with(['parent']);
@@ -61,6 +60,11 @@ class TaxonomyTypesController extends Controller
 
         if($request->has('with_children') && $request->with_children){
             $item->with(['children'])->whereNull('parent_id');
+        }
+
+        if($request['trashed'] == 'true')
+        {
+            $item->withTrashed();
         }
 
         $item = $item->first();
