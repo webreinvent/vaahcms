@@ -1181,6 +1181,349 @@ GET/POST <public-url>/api/permissions/{column}/{value}/roles
 }
 ```
 
+#### Taxonomy : -
+
+- Create
+
+##### URL
+```php
+GET/POST <public-url>/api/taxonomies/create
+```
+
+##### Request samples
+```php
+parameter = [
+
+    'api_token'                 => 'xxxxxxxxxxx',  // for authentication
+    "name",                     // required
+    "slug",                     // required
+    "type",                     // required   {type_slug}
+    "parent",                   // {parent_slug}
+];
+```
+
+##### Response samples
+```php
+{
+    "status": "success",
+    "data": {
+        "item": {
+           ..........
+           ..........
+           ..........
+        }
+    },
+    "messages": [
+        "Saved successfully."
+    ]
+}
+```
+
+- Get a List
+
+##### URL
+```php
+GET/POST <public-url>/api/taxonomies
+```
+
+##### Request samples
+```php
+parameter = [
+
+    'api_token'                 => 'xxxxxxxxxxx',   // for authentication
+    'q'                         => 'search_item', 
+    'from'                      =>  DateTime', 
+    'to'                        =>  DateTime, 
+    'status'                    => 'active / inactive', 
+    'types'                    =>  []   {type_slugs}
+    'per_page'                  =>  20,
+    'trashed'                   =>  false,          // true, false        
+];
+```
+
+##### Response samples
+```php
+{
+    "status": "success",
+    "data": {
+        "list": {
+            "current_page": 1,
+            "data": [
+                ..............
+                ..............
+                ..............
+                ..............
+            ],
+            "first_page_url": "<public-url>/api/taxonomies?page=1",
+            "from": 1,
+            "last_page": 1,
+            "last_page_url": "<public-url>/api/taxonomies?page=1",
+            "links": [
+                {
+                    "url": null,
+                    "label": "&laquo; Previous",
+                    "active": false
+                },
+                {
+                    "url": "<public-url>/api/taxonomies?page=1",
+                    "label": "1",
+                    "active": true
+                },
+                {
+                    "url": null,
+                    "label": "Next &raquo;",
+                    "active": false
+                }
+            ],
+            "next_page_url": null,
+            "path": "<public-url>/api/taxonomies",
+            "per_page": 20,
+            "prev_page_url": null,
+            "to": 2,
+            "total": 2
+        }
+    }
+}
+```
+- Get Item
+
+##### URL
+```php
+GET/POST <public-url>/api/taxonomies/{column}/{value}
+```
+
+##### Response samples
+```php
+{
+    "status": "success",
+    "data": {
+        .............
+        .............
+        .............
+    }
+}
+```
+- Update
+
+##### URL
+```php
+GET/POST <public-url>/api/taxonomies/{column}/{value}/update
+```
+
+##### Request samples
+```php
+parameter = [
+
+    'api_token'                 => 'xxxxxxxxxxx',  // for authentication
+    "name",                     // required
+    "slug",                     // required
+    "type",                     // required   {type_slug}
+    "parent",                   // {parent_slug}
+];
+```
+
+##### Response samples
+```php
+{
+    "status": "success",
+    "messages": [
+        "Saved"
+    ],
+    "data": {
+        ...........
+        ...........
+        ...........
+    }
+}
+```
+- Delete
+
+##### URL
+```php
+GET/POST <public-url>/api/taxonomies/{column}/{value}/delete
+```
+
+##### Response samples
+```php
+{
+    "status": "success",
+    "data": [],
+    "messages": [
+        "Action was successful"
+    ]
+}
+```
+
+#### Taxonomy Type : -
+
+- Create
+
+##### URL
+```php
+GET/POST <public-url>/api/taxonomy-types/create
+```
+
+##### Request samples
+```php
+parameter = [
+
+    'api_token'                 => 'xxxxxxxxxxx',  // for authentication
+    "name",                     // required
+    "slug",                     // required
+    "parent",                   // {parent_slug}
+];
+```
+
+##### Response samples
+```php
+{
+    "status": "success",
+    "data": {
+        "item": {
+           ..........
+           ..........
+           ..........
+        }
+    },
+    "messages": [
+        "Saved successfully."
+    ]
+}
+```
+
+- Get a List
+
+##### URL
+```php
+GET/POST <public-url>/api/taxonomy-types
+```
+
+##### Request samples
+```php
+parameter = [
+
+    'api_token'                 => 'xxxxxxxxxxx',   // for authentication
+    'q'                         => 'search_item', 
+    'from'                      =>  DateTime', 
+    'to'                        =>  DateTime, 
+    'per_page'                  =>  20,
+    'trashed'                   =>  false,          // true, false        
+    'with_children'             =>  false,          // true, false        
+];
+```
+
+##### Response samples
+```php
+{
+    "status": "success",
+    "data": {
+        "list": {
+            "current_page": 1,
+            "data": [
+                ..............
+                ..............
+                ..............
+                ..............
+            ],
+            "first_page_url": "<public-url>/api/taxonomy-types?page=1",
+            "from": 1,
+            "last_page": 1,
+            "last_page_url": "<public-url>/api/taxonomy-types?page=1",
+            "links": [
+                {
+                    "url": null,
+                    "label": "&laquo; Previous",
+                    "active": false
+                },
+                {
+                    "url": "<public-url>/api/taxonomy-types?page=1",
+                    "label": "1",
+                    "active": true
+                },
+                {
+                    "url": null,
+                    "label": "Next &raquo;",
+                    "active": false
+                }
+            ],
+            "next_page_url": null,
+            "path": "<public-url>/api/taxonomy-types",
+            "per_page": 20,
+            "prev_page_url": null,
+            "to": 2,
+            "total": 2
+        }
+    }
+}
+```
+- Get Item
+
+##### URL
+```php
+GET/POST <public-url>/api/taxonomy-types/{column}/{value}
+```
+
+##### Response samples
+```php
+{
+    "status": "success",
+    "data": {
+        .............
+        .............
+        .............
+    }
+}
+```
+- Update
+
+##### URL
+```php
+GET/POST <public-url>/api/taxonomy-types/{column}/{value}/update
+```
+
+##### Request samples
+```php
+parameter = [
+
+    'api_token'                 => 'xxxxxxxxxxx',  // for authentication
+    "name",                     // required
+    "slug",                     // required
+    "parent",                   // {parent_slug}
+];
+```
+
+##### Response samples
+```php
+{
+    "status": "success",
+    "messages": [
+        "Saved"
+    ],
+    "data": {
+        ...........
+        ...........
+        ...........
+    }
+}
+```
+- Delete
+
+##### URL
+```php
+GET/POST <public-url>/api/taxonomy-types/{column}/{value}/delete
+```
+
+##### Response samples
+```php
+{
+    "status": "success",
+    "data": [],
+    "messages": [
+        "Action was successful"
+    ]
+}
+```
+
 
 <br/>
 

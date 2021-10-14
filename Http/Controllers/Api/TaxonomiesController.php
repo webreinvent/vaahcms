@@ -24,24 +24,24 @@ class TaxonomiesController extends Controller
     public function create(Request $request)
     {
 
-        if($request->has('type_slug') && $request->type_slug){
-            $type = TaxonomyType::where('slug',$request->type_slug)->first();
+        if($request->has('type') && $request->type){
+            $type = TaxonomyType::where('slug',$request->type)->first();
 
             if(!$type){
                 $response['status'] = 'failed';
-                $response['errors'][] = "Type slug not found.";
+                $response['errors'][] = "Type not found.";
                 return $response;
             }
 
             $request['type'] = $type->id;
 
-            if($request->has('parent_slug') && $request->parent_slug){
-                $parent = Taxonomy::where('slug',$request->parent_slug)
+            if($request->has('parent') && $request->parent){
+                $parent = Taxonomy::where('slug',$request->parent)
                     ->where('type',$type->parent_id)->first();
 
                 if(!$parent){
                     $response['status'] = 'failed';
-                    $response['errors'][] = "Parent slug not found.";
+                    $response['errors'][] = "Parent not found.";
                     return $response;
                 }
 
@@ -93,8 +93,8 @@ class TaxonomiesController extends Controller
 
         $request['id'] = $item->id;
 
-        if($request->has('type_slug') && $request->type_slug){
-            $type = TaxonomyType::where('slug',$request->type_slug)->first();
+        if($request->has('type') && $request->type){
+            $type = TaxonomyType::where('slug',$request->type)->first();
 
             if(!$type){
                 $response['status'] = 'failed';
@@ -104,7 +104,7 @@ class TaxonomiesController extends Controller
 
             $request['type'] = $type->id;
 
-            if($request->has('parent_slug') && $request->parent_slug){
+            if($request->has('parent') && $request->parent){
                 $parent = Taxonomy::where('slug',$request->parent_slug)
                     ->where('type',$type->parent_id)->first();
 

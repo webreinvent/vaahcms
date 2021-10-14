@@ -24,8 +24,8 @@ class TaxonomyTypesController extends Controller
     public function create(Request $request)
     {
 
-        if($request->has('parent_slug') && $request->parent_slug){
-            $parent = TaxonomyType::where('slug',$request->parent_slug)->first();
+        if($request->has('parent') && $request->parent){
+            $parent = TaxonomyType::where('slug',$request->parent)->first();
 
             if(!$parent){
                 $response['status'] = 'failed';
@@ -87,8 +87,8 @@ class TaxonomyTypesController extends Controller
             return $response;
         }
 
-        if($request->has('parent_slug') && $request->parent_slug){
-            $parent = TaxonomyType::where('slug',$request->parent_slug)->first();
+        if($request->has('parent') && $request->parent){
+            $parent = TaxonomyType::where('slug',$request->parent)->first();
 
             if(!$parent){
                 $response['status'] = 'failed';
