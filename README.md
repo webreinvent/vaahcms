@@ -486,25 +486,31 @@ parameter = [
     "country_calling_code",
     "phone", 
     "bio",
+    "website",
     "timezone",
     "alternate_email",
     "avatar_url",
     "birth", 
     "country",
     "country_code",
+    "last_login_at",
+    "last_login_ip",
+    "remember_token",
+    "login_otp",
+    "api_token",
+    "api_token_used_at",
+    "api_token_used_ip",
+    "is_active",
+    "activated_at",
     "status",                  // required - user-created , email-verified , email-verification-pending
-    "activation_code",
-    "activation_code_sent_at",
-    "activated_ip",
-    "invited_by",
-    "invited_at",
-    "invited_for_key", 
-    "invited_for_value", 
-    "user_id",
-    "user_created_at", 
-    "created_ip",
-    "registration_id", 
+    "affiliate_code",
+    "affiliate_code_used_at",
+    "reset_password_code",
+    "reset_password_code_sent_at",
+    "reset_password_code_used_at",
+    "foreign_user_id",
     "meta"                     // json format
+    "created_ip"
 ];
 ```
 
@@ -537,6 +543,144 @@ GET/POST <public-url>/api/users/{column}/{value}/delete
     "messages": [
         "Action was successful"
     ]
+}
+```
+- Get User's Roles
+
+##### URL
+```php
+GET/POST <public-url>/api/users/{column}/{value}/roles
+```
+
+##### Response samples
+```php
+{
+    "data": {
+        "user": {
+            .............
+            .............
+            .............
+        },
+        "roles": {
+            "current_page": 1,
+            "data": [
+                ..............
+                ..............
+                ..............
+            ],
+            "first_page_url": "http://localhost/vikram/vaahcms-dev-env/public/api/users/id/2/roles?page=1",
+            "from": 1,
+            "last_page": 1,
+            "last_page_url": "http://localhost/vikram/vaahcms-dev-env/public/api/users/id/2/roles?page=1",
+            "links": [
+                {
+                    "url": null,
+                    "label": "&laquo; Previous",
+                    "active": false
+                },
+                {
+                    "url": "http://localhost/vikram/vaahcms-dev-env/public/api/users/id/2/roles?page=1",
+                    "label": "1",
+                    "active": true
+                },
+                {
+                    "url": null,
+                    "label": "Next &raquo;",
+                    "active": false
+                }
+            ],
+            "next_page_url": null,
+            "path": "http://localhost/vikram/vaahcms-dev-env/public/api/users/id/2/roles",
+            "per_page": 20,
+            "prev_page_url": null,
+            "to": 3,
+            "total": 3
+        }
+    },
+    "status": "success"
+}
+```
+- User has Role
+
+##### URL
+```php
+GET/POST <public-url>/api/users/{column}/{value}/roles/{role_slug}
+```
+
+##### Response samples
+```php
+{
+    "data": true/false,
+    "status": "success"
+}
+```
+- Get User's Permissions
+
+##### URL
+```php
+GET/POST <public-url>/api/users/{column}/{value}/permissions
+```
+
+##### Response samples
+```php
+{
+    "data": {
+        "user": {
+            .............
+            .............
+            .............
+        },
+        "permissions": {
+            "current_page": 1,
+            "data": [
+                ..............
+                ..............
+                ..............
+            ],
+            "first_page_url": "http://localhost/vikram/vaahcms-dev-env/public/api/users/{column}/{value}/permissions?page=1",
+            "from": 1,
+            "last_page": 1,
+            "last_page_url": "http://localhost/vikram/vaahcms-dev-env/public/api/users/{column}/{value}/permissions?page=1",
+            "links": [
+                {
+                    "url": null,
+                    "label": "&laquo; Previous",
+                    "active": false
+                },
+                {
+                    "url": "http://localhost/vikram/vaahcms-dev-env/public/api/users/{column}/{value}/permissions?page=1",
+                    "label": "1",
+                    "active": true
+                },
+                {
+                    "url": null,
+                    "label": "Next &raquo;",
+                    "active": false
+                }
+            ],
+            "next_page_url": null,
+            "path": "http://localhost/vikram/vaahcms-dev-env/public/api/users/{column}/{value}/permissions",
+            "per_page": 20,
+            "prev_page_url": null,
+            "to": 3,
+            "total": 3
+        }
+    },
+    "status": "success"
+}
+```
+- User has Permission
+
+##### URL
+```php
+GET/POST <public-url>/api/users/{column}/{value}/permissions/{permission_slug}
+```
+
+##### Response samples
+```php
+{
+    "data": true/false,
+    "status": "success"
 }
 ```
 
