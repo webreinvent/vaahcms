@@ -1040,11 +1040,11 @@ class User extends Authenticatable
             $list->betweenDates($request['from'],$request['to']);
         }
 
-        if(isset($request['status'])){
-            if($request['status'] == '1')
+        if(isset($request['status']) && $request['status']){
+            if($request['status'] == 'active')
             {
-                $list->where('is_active',$request['status']);
-            }elseif($request['status'] == '10'){
+                $list->where('is_active',1);
+            }else{
                 $list->whereNull('is_active')->orWhere('is_active',0);
             }
         }
@@ -1067,11 +1067,13 @@ class User extends Authenticatable
                 $q->where('first_name', 'LIKE', '%'.$request['q'].'%')
                     ->orWhere('last_name', 'LIKE', '%'.$request['q'].'%')
                     ->orWhere('middle_name', 'LIKE', '%'.$request['q'].'%')
+                    ->orWhere('display_name', 'LIKE', '%'.$request['q'].'%')
+                    ->orWhere(\DB::raw('concat(first_name," ",middle_name," ",last_name)'), 'like', '%'.$request['q'].'%')
+                    ->orWhere(\DB::raw('concat(first_name," ",last_name)'), 'like', '%'.$request['q'].'%')
                     ->orWhere('email', 'LIKE', '%'.$request['q'].'%')
                     ->orWhere('id', '=', $request['q']);
             });
         }
-
 
 
         if(!\Auth::user()->hasPermission('can-see-users-contact-details')){
@@ -1080,7 +1082,14 @@ class User extends Authenticatable
 
         $list->withCount(['activeRoles']);
 
-        $list = $list->paginate(config('vaahcms.per_page'));
+        if(isset($request['per_page'])
+            && $request['per_page']
+            && is_numeric($request['per_page'])){
+            $list = $list->paginate($request['per_page']);
+        }else{
+            $list = $list->paginate(config('vaahcms.per_page'));
+        }
+
         $countRole = Role::all()->count();
 
         $response['status'] = 'success';
@@ -1304,13 +1313,6 @@ class User extends Authenticatable
         {
             $response['status'] = 'failed';
             $response['errors'][] = 'Select IDs';
-            return $response;
-        }
-
-        if(!$request->has('data'))
-        {
-            $response['status'] = 'failed';
-            $response['errors'][] = 'Select Status';
             return $response;
         }
 

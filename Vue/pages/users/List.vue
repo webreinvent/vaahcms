@@ -166,10 +166,10 @@
                                                     <option value="">
                                                         - Select a status -
                                                     </option>
-                                                    <option value=01>
+                                                    <option value="active">
                                                         Active
                                                     </option>
-                                                    <option value=10>
+                                                    <option value="inactive">
                                                         Inactive
                                                     </option>
                                                 </b-select>
