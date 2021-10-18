@@ -31,7 +31,7 @@ export default {
             page: 1,
             q: null,
             trashed: null,
-            filter: null,
+            status: null,
             types: [],
         },
         bulk_action:{

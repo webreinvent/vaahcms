@@ -141,10 +141,10 @@
                                                     - Select a filter -
                                                 </option>
                                                 <optgroup label="Status">
-                                                    <option value=01>
+                                                    <option value="active">
                                                         Active
                                                     </option>
-                                                    <option value=10>
+                                                    <option value="inactive">
                                                         Inactive
                                                     </option>
                                                 </optgroup>

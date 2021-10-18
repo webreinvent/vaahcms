@@ -449,7 +449,6 @@ class Role extends Model {
     //-------------------------------------------------
     public static function postStore($request,$id)
     {
-
         if(!\Auth::user()->hasPermission('can-update-roles'))
         {
             $response['status'] = 'failed';
@@ -460,7 +459,6 @@ class Role extends Model {
 
 
         $input = $request->item;
-
 
         $validation = static::validation($input);
         if(isset($validation['status']) && $validation['status'] == 'failed')
@@ -511,15 +509,6 @@ class Role extends Model {
     public static function bulkStatusChange($request)
     {
 
-        if(!\Auth::user()->hasPermission('can-manage-roles') &&
-            !\Auth::user()->hasPermission('can-update-roles'))
-        {
-            $response['status'] = 'failed';
-            $response['errors'][] = trans("vaahcms::messages.permission_denied");
-
-            return $response;
-        }
-
         if(!$request->has('inputs'))
         {
             $response['status'] = 'failed';
@@ -566,14 +555,6 @@ class Role extends Model {
     public static function bulkTrash($request)
     {
 
-        if(!\Auth::user()->hasPermission('can-update-roles'))
-        {
-            $response['status'] = 'failed';
-            $response['errors'][] = trans("vaahcms::messages.permission_denied");
-
-            return $response;
-        }
-
         if(!$request->has('inputs'))
         {
             $response['status'] = 'failed';
@@ -604,14 +585,6 @@ class Role extends Model {
     //-------------------------------------------------
     public static function bulkRestore($request)
     {
-
-        if(!\Auth::user()->hasPermission('can-update-roles'))
-        {
-            $response['status'] = 'failed';
-            $response['errors'][] = trans("vaahcms::messages.permission_denied");
-
-            return $response;
-        }
 
         if(!$request->has('inputs'))
         {
@@ -646,23 +619,6 @@ class Role extends Model {
     //-------------------------------------------------
     public static function bulkDelete($request)
     {
-
-        if(!\Auth::user()->hasPermission('can-update-roles') ||
-            !\Auth::user()->hasPermission('can-delete-roles'))
-        {
-            $response['status'] = 'failed';
-            $response['errors'][] = trans("vaahcms::messages.permission_denied");
-
-            return $response;
-        }
-
-        if(!\Auth::user()->hasPermission('can-update-roles'))
-        {
-            $response['status'] = 'failed';
-            $response['errors'][] = trans("vaahcms::messages.permission_denied");
-
-            return $response;
-        }
 
         if(!$request->has('inputs'))
         {
@@ -704,15 +660,6 @@ class Role extends Model {
     //-------------------------------------------------
     public static function bulkChangePermissionStatus($request)
     {
-
-        if(!\Auth::user()->hasPermission('can-manage-roles') &&
-            !\Auth::user()->hasPermission('can-update-roles'))
-        {
-            $response['status'] = 'failed';
-            $response['errors'][] = trans("vaahcms::messages.permission_denied");
-
-            return $response;
-        }
 
         $inputs = $request->all();
 
@@ -757,15 +704,6 @@ class Role extends Model {
     public static function bulkChangeUserStatus($request)
     {
 
-        if(!\Auth::user()->hasPermission('can-manage-roles') &&
-            !\Auth::user()->hasPermission('can-update-roles'))
-        {
-            $response['status'] = 'failed';
-            $response['errors'][] = trans("vaahcms::messages.permission_denied");
-
-            return $response;
-        }
-
         $inputs = $request->all();
 
         $item = Role::where('id',$inputs['inputs']['id'])->withTrashed()->first();
@@ -799,15 +737,6 @@ class Role extends Model {
     //-------------------------------------------------
     public static function bulkPermissionStatusChange($request)
     {
-
-        if(!\Auth::user()->hasPermission('can-manage-roles') &&
-            !\Auth::user()->hasPermission('can-update-roles'))
-        {
-            $response['status'] = 'failed';
-            $response['errors'][] = trans("vaahcms::messages.permission_denied");
-
-            return $response;
-        }
 
         if(!$request->has('inputs'))
         {
