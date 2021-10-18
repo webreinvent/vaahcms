@@ -400,11 +400,11 @@ parameter = [
 
     'api_token'                 => 'xxxxxxxxxxx',  // for authentication
     'q'                         => 'search_item', 
-    'from'                      => 'search_item', 
-    'to'                        => 'search_item', 
-    'status'                    => 'search_item', 
-    'per_page'                  => 20,
-    'trashed'                   => false,          // true, false        
+    'from'                      =>  Y-m-d, 
+    'to'                        =>  Y-m-d, 
+    'status'                    => 'active / inactive', 
+    'per_page'                  =>  20,
+    'trashed'                   =>  false,          // true, false        
 ];
 ```
 
@@ -1146,7 +1146,7 @@ GET/POST <public-url>/api/roles/{column}/{value}/delete
     ]
 }
 ```
-- Get Role's Users
+- Get Permissions Users
 
 ##### URL
 ```php
