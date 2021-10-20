@@ -36,7 +36,11 @@ export default {
             this.updateView()
         },
         id(new_val, old_val) {
-            this.getItem();
+
+            if(new_val && new_val != old_val){
+                this.getItem();
+            }
+
         }
     },
     mounted() {
@@ -105,7 +109,6 @@ export default {
             {
                 this.title = data.name;
 
-                this.type_parent_id = null;
                 if(data.type){
                     this.type_parent_id = data.type.parent_id;
                 }
