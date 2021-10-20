@@ -69,7 +69,23 @@ class ModulesLoader {
     public function findModules()
     {
 
-        foreach ($this->files->directories($this->getPath()) as $module)
+        $arr = $this->files->directories($this->getPath());
+
+        foreach ($arr as $key => $module)
+        {
+
+            if (strpos($module, 'Modules\Cms') !== false) {
+
+                $temp = $module;
+                unset($arr[$key]);
+
+                array_push($arr, $temp);
+
+            }
+
+        }
+
+        foreach ($arr as $module)
         {
 
             if (is_null($class = $this->initModule($module)))
