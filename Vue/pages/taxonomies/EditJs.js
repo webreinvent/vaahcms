@@ -35,16 +35,8 @@ export default {
         $route(to, from) {
             this.updateView()
         },
-        'item.vh_taxonomy_type_id': {
-            deep: true,
-            handler(new_val, old_val) {
-
-                if(!new_val){
-                    this.type_parent_id = null;
-                    this.item.parent = null;
-                }
-
-            }
+        id(new_val, old_val) {
+            this.getItem();
         }
     },
     mounted() {
@@ -113,6 +105,7 @@ export default {
             {
                 this.title = data.name;
 
+                this.type_parent_id = null;
                 if(data.type){
                     this.type_parent_id = data.type.parent_id;
                 }
