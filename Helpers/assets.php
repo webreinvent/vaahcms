@@ -280,21 +280,19 @@ function vh_public_urls()
 //-----------------------------------------------------------------------------------
 function vh_content_relations()
 {
+    $relation = vh_action('getCmsContentRelations');
 
-    $modules = \WebReinvent\VaahCms\Entities\Module::whereNotNull('is_active')
-        ->get();
+    $arr = array();
 
-    $response = array();
-
-    foreach ($modules as $module){
-        $response = array_merge($response,vh_module_action($module->name,
-            'ExtendController@getCmsContentRelations'));
-
+    if($relation['success']){
+        foreach ($relation['success'] as $data){
+            foreach ($data as $item){
+                $arr[] = $item;
+            }
+        }
     }
 
-
-    return $response;
-
+    return $arr;
 }
 //-----------------------------------------------------------------------------------
 //-----------------------------------------------------------------------------------

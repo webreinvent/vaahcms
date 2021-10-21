@@ -182,6 +182,7 @@ class Taxonomy extends Model {
 
         // check if name exist
         $item = self::where('name',$inputs['name'])
+            ->where('vh_taxonomy_type_id',$inputs['vh_taxonomy_type_id'])
             ->withTrashed()->first();
 
         if($item)
@@ -193,6 +194,7 @@ class Taxonomy extends Model {
 
         // check if slug exist
         $item = self::where('slug',$inputs['slug'])
+            ->where('vh_taxonomy_type_id',$inputs['vh_taxonomy_type_id'])
             ->withTrashed()->first();
 
         if($item)
@@ -310,6 +312,7 @@ class Taxonomy extends Model {
 
         // check if name exist
         $user = self::where('id','!=',$input['id'])
+            ->where('vh_taxonomy_type_id',$input['vh_taxonomy_type_id'])
         ->where('name',$input['name'])->withTrashed()->first();
 
         if($user)
@@ -322,6 +325,7 @@ class Taxonomy extends Model {
 
         // check if slug exist
         $user = self::where('id','!=',$input['id'])
+            ->where('vh_taxonomy_type_id',$input['vh_taxonomy_type_id'])
         ->where('slug',$input['slug'])->withTrashed()->first();
 
         if($user)

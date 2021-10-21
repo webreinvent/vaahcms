@@ -35,16 +35,12 @@ export default {
         $route(to, from) {
             this.updateView()
         },
-        'item.vh_taxonomy_type_id': {
-            deep: true,
-            handler(new_val, old_val) {
+        id(new_val, old_val) {
 
-                if(!new_val){
-                    this.type_parent_id = null;
-                    this.item.parent = null;
-                }
-
+            if(new_val && new_val != old_val){
+                this.getItem();
             }
+
         }
     },
     mounted() {
