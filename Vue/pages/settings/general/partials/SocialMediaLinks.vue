@@ -48,7 +48,7 @@
 
                                 <p class="control">
                                     <b-button icon-left="copy"
-                                              @click="copySetting(link.label)">
+                                              @click="copySetting(link.key)">
                                     </b-button>
                                 </p>
                                 </b-tooltip>
