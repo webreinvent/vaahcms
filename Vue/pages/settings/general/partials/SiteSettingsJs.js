@@ -30,6 +30,7 @@ export default {
             labelPosition: 'on-border',
             control_size: 'is-small',
             is_loading: false,
+            btn_is_loading: false,
             inputs: {
                 copyright_text_custom: false,
                 copyright_link_custom: false,
