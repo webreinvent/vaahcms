@@ -131,6 +131,18 @@ class GeneralController extends Controller
 
         $data = [];
 
+        $stored_link = Setting::where('category', 'global')
+            ->where('type', 'link')
+            ->get()->pluck('id')->toArray();
+
+        $input_links = collect($request->links)->pluck('id')->toArray();
+
+        $links_to_delete = array_diff($stored_link, $input_links);
+
+        if(count($links_to_delete)){
+            Setting::whereIn('id',$links_to_delete)->delete();
+        }
+
         foreach ($request->links as $link)
         {
 
