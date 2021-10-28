@@ -23,6 +23,7 @@ export default {
             labelPosition: 'on-border',
             assets:null,
             update_available: false,
+            release: null,
             remote_version: null,
         };
 
@@ -93,6 +94,8 @@ export default {
                 return false;
             }
 
+            this.release = res.data;
+
             let local = semver.clean(this.root.assets.vaahcms.version)
             this.remote_version = semver.clean(res.data.tag_name)
 
@@ -103,14 +106,14 @@ export default {
 
             this.update_available=true;
 
-            if(c)
+            /*if(c)
             {
                 this.update_available=true;
             } else{
                 this.update_available=false;
             }
 
-            this.storeUpdateCheck();
+            this.storeUpdateCheck();*/
 
         },
         //---------------------------------------------------------------------

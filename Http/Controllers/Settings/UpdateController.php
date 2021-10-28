@@ -68,6 +68,8 @@ class UpdateController extends Controller
             $stored_settings->save();
         }
 
+
+
         $response['status'] = 'success';
         $response['data'][] = '';
         return $response;
