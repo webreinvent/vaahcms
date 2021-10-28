@@ -23,8 +23,16 @@ export default {
             labelPosition: 'on-border',
             assets:null,
             update_available: false,
+            is_button_active: false,
             release: null,
             remote_version: null,
+            status: {
+                download_latest_version: null,
+                publish_assets: null,
+                clear_cache: null,
+                page_refresh: null,
+            },
+
         };
 
         return obj;
@@ -78,7 +86,7 @@ export default {
         checkForUpdate: function () {
             this.$Progress.start();
             let params = {};
-            let url = 'https://api.github.com/repos/webreinvent/vaahcms/releases/latest';
+            let url = 'https://api.github.com/repos/webreinvent/vaahcms/releases/51763184';
             this.$vaah.ajaxGet(url, params, this.checkForUpdateAfter);
         },
         //---------------------------------------------------------------------
@@ -90,14 +98,14 @@ export default {
 
             if(!res || !res.data || !res.data.tag_name)
             {
-                this.$vaah.toastErrors(['Something went wrong.'])
+                this.$vaah.toastErrors(['Something went wrong.']);
                 return false;
             }
 
             this.release = res.data;
 
-            let local = semver.clean(this.root.assets.vaahcms.version)
-            this.remote_version = semver.clean(res.data.tag_name)
+            let local = semver.clean(this.root.assets.vaahcms.version);
+            this.remote_version = semver.clean(res.data.tag_name);
 
             console.log('local--->', local);
             console.log('remote--->', this.remote_version);
@@ -106,14 +114,14 @@ export default {
 
             this.update_available=true;
 
-            /*if(c)
+            if(c)
             {
                 this.update_available=true;
             } else{
                 this.update_available=false;
             }
 
-            this.storeUpdateCheck();*/
+            this.storeUpdateCheck();
 
         },
         //---------------------------------------------------------------------
@@ -129,6 +137,41 @@ export default {
         //---------------------------------------------------------------------
         storeUpdateCheckAfter: function (data, res) {
             this.$Progress.finish();
+        },
+        //---------------------------------------------------------------------
+        onUpdate: function (data, res) {
+            this.$Progress.start();
+            this.status.download_latest_version = 'pending';
+            let url = this.ajax_url+'/upgrade';
+            this.$vaah.ajax(url, {}, this.onUpdateAfter);
+        },
+        //---------------------------------------------------------------------
+        onUpdateAfter: function (data, res) {
+            if(res && res.data && res.data.status){
+                this.status.download_latest_version = res.data.status;
+
+                if(res.data.status === 'success'){
+                    this.status.publish_assets = 'pending';
+                    let url = this.ajax_url+'/publish';
+                    this.$vaah.ajax(url, {}, this.onPublishAfter);
+                }
+            }
+
+
+        },
+        //---------------------------------------------------------------------
+        onPublishAfter: function (data, res) {
+            if(res && res.data && res.data.status){
+                this.status.publish_assets = res.data.status;
+
+                /*if(res.data.status === 'success'){
+                    this.status.publish_assets = 'pending';
+                    let url = this.ajax_url+'/upgrade';
+                    this.$vaah.ajax(url, {}, this.onPublishAfter);
+                }*/
+            }
+
+
         },
         //---------------------------------------------------------------------
         //---------------------------------------------------------------------

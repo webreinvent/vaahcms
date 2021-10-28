@@ -34,47 +34,103 @@
                         </header>
                         <!--/header-->
 
-                        <b-notification v-if="update_available" type="is-info is-light">
+                        <b-notification v-if="release && update_available" type="is-info is-light">
+
+
                             A newer version <b>{{remote_version}}</b> of VaahCMS is available.
 
                             <hr/>
 
                             <b>New Updates:</b>
 
-
                             <div v-html="release.body"></div>
-
-
-
 
                             <p>
                                 <b-field>
-                                    <b-checkbox>Have you taken the backup of your files & database?</b-checkbox>
+                                    <b-checkbox v-model="is_button_active">
+                                        Have you taken the backup of your files & database?
+                                    </b-checkbox>
                                 </b-field>
                             </p>
 
-                            <p><b-button>Update Now</b-button></p>
+                            <p><b-button :disabled="!is_button_active" @click="onUpdate">
+                                Update No
+                            </b-button></p>
 
                             <ol>
 
                                 <li> Download latest version
 
-                                    <b-icon
+                                    <b-icon v-if="status.download_latest_version === 'success'"
                                         pack="fas"
                                         icon="check"
                                         >
                                     </b-icon>
 
+                                    <b-icon v-else-if="status.download_latest_version === 'pending'"
+                                            pack="fas"
+                                            icon="sync-alt"
+                                            custom-class="fa-spin">
+                                    </b-icon>
+
+                                    <b-icon v-else-if="status.download_latest_version === 'failed'"
+                                            pack="fas"
+                                            icon="times">
+                                    </b-icon>
+
                                 </li>
                                 <li> Publish assets
-                                    <b-icon
-                                        pack="fas"
-                                        icon="sync-alt"
-                                        custom-class="fa-spin">
+                                    <b-icon v-if="status.publish_assets === 'success'"
+                                            pack="fas"
+                                            icon="check"
+                                    >
+                                    </b-icon>
+
+                                    <b-icon v-else-if="status.publish_assets === 'pending'"
+                                            pack="fas"
+                                            icon="sync-alt"
+                                            custom-class="fa-spin">
+                                    </b-icon>
+
+                                    <b-icon v-else-if="status.publish_assets === 'failed'"
+                                            pack="fas"
+                                            icon="times">
                                     </b-icon>
                                 </li>
                                 <li> Clear Cache</li>
+                                <b-icon v-if="status.clear_cache === 'success'"
+                                        pack="fas"
+                                        icon="check"
+                                >
+                                </b-icon>
+
+                                <b-icon v-else-if="status.clear_cache === 'pending'"
+                                        pack="fas"
+                                        icon="sync-alt"
+                                        custom-class="fa-spin">
+                                </b-icon>
+
+                                <b-icon v-else-if="status.clear_cache === 'failed'"
+                                        pack="fas"
+                                        icon="times">
+                                </b-icon>
                                 <li> Reload</li>
+                                <b-icon v-if="status.page_refresh === 'pending'"
+                                        pack="fas"
+                                        icon="check"
+                                >
+                                </b-icon>
+
+                                <b-icon v-else-if="status.page_refresh === 'success'"
+                                        pack="fas"
+                                        icon="sync-alt"
+                                        custom-class="fa-spin">
+                                </b-icon>
+
+                                <b-icon v-else-if="status.page_refresh === 'failed'"
+                                        pack="fas"
+                                        icon="times">
+                                </b-icon>
 
                             </ol>
 
@@ -83,9 +139,13 @@
 
                         </b-notification>
 
-                        <div class="card-content">
-                            Current version of VaahCMS is v1.4.5
+                        <div v-if="root.assets
+                            && root.assets.vaahcms
+                            && root.assets.vaahcms.version"
+                             class="card-content">
 
+
+                            Current version of VaahCMS is v{{root.assets.vaahcms.version}}
 
 
 
