@@ -163,3 +163,36 @@ Route::group(
         //------------------------------------------------
         //------------------------------------------------
     });
+
+
+
+/*
+|--------------------------------------------------------------------------
+| Update
+|--------------------------------------------------------------------------
+|
+| These routes can be accessed only if VaahCMS is installed.
+|
+*/
+Route::group(
+    [
+        'prefix'     => 'backend/vaah/settings/update',
+        'middleware' => ['web', 'app.is.installed', 'has.backend.access'],
+        'namespace'  => 'WebReinvent\VaahCms\Http\Controllers\Settings'
+    ],
+    function () {
+        //------------------------------------------------
+        //------------------------------------------------
+        Route::any( '/store', 'UpdateController@storeUpdate' )
+            ->name( 'vh.update.store' );
+        //------------------------------------------------
+        Route::any( '/upgrade', 'UpdateController@upgrade' )
+            ->name( 'vh.update.upgrade' );
+        //------------------------------------------------
+        Route::any( '/publish', 'UpdateController@publish' )
+            ->name( 'vh.update.publish' );
+        //------------------------------------------------
+        Route::any( '/cache', 'UpdateController@clearCache' )
+            ->name( 'vh.update.cache' );
+        //------------------------------------------------
+    });

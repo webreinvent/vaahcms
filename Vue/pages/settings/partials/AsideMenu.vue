@@ -29,6 +29,13 @@
                      :to="{name: 'notifications.index'}">
         </b-menu-item>
 
+        <b-menu-item label="Update"
+                     icon="download"
+                     tag="router-link"
+                     :active="!!($route.path == '/vaah/settings/update')"
+                     :to="{name: 'update.index'}">
+        </b-menu-item>
+
         <b-menu-item label="Reset"
                      icon="retweet"
                      tag="router-link"

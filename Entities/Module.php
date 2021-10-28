@@ -5,7 +5,8 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
-use Macellan\Zip\Zip;
+use ZanySoft\Zip\Zip;
+
 
 class Module extends Model {
 
