@@ -189,11 +189,10 @@ export default {
             if(res && res.data && res.data.status){
                 this.status.clear_cache = res.data.status;
 
-                /*if(res.data.status === 'success'){
-                    this.status.clear_cache = 'pending';
-                    let url = this.ajax_url+'/cache';
-                    this.$vaah.ajax(url, {}, this.onClearCacheAfter);
-                }*/
+                if(res.data.status === 'success'){
+                    this.status.page_refresh = 'pending';
+                    location.reload();
+                }
             }
         },
         //---------------------------------------------------------------------
