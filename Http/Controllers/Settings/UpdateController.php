@@ -94,10 +94,10 @@ class UpdateController extends Controller
         }
 
         try{
-            $data = shell_exec('cd '.base_path().' && composer update');
+            $data = shell_exec('cd '.base_path().' && composer update --ignore-platform-reqs');
             $response['status'] = 'success';
             $response['data'] = $data;
-            $response['messages'][] = 'Action was successful';
+            //$response['messages'][] = 'Action was successful';
             return $response;
         }catch(\Exception $e)
         {
@@ -159,10 +159,6 @@ class UpdateController extends Controller
             {
                 return $response;
             }
-
-            //publish laravel mail and notifications
-            VaahArtisan::publish(null, 'laravel-mail');
-            VaahArtisan::publish(null, 'laravel-notifications');
 
             $response['status'] = 'success';
             $response['messages'][] = 'Action was successful';

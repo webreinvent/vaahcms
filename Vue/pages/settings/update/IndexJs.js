@@ -24,6 +24,8 @@ export default {
             assets:null,
             update_available: false,
             is_button_active: false,
+            is_update_step_visible: false,
+            is_checkbox_active: true,
             release: null,
             remote_version: null,
             status: {
@@ -142,7 +144,11 @@ export default {
         //---------------------------------------------------------------------
         onUpdate: function (data, res) {
             this.$Progress.start();
+            this.is_checkbox_active = false;
+            this.is_button_active = false;
+            this.is_update_step_visible = true;
             this.status.download_latest_version = 'pending';
+
             let url = this.ajax_url+'/upgrade';
             this.$vaah.ajax(url, {}, this.onUpdateAfter);
         },
