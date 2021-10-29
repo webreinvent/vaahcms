@@ -7,7 +7,10 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
+use WebReinvent\VaahCms\Entities\Notification;
+use WebReinvent\VaahCms\Entities\Notified;
 use WebReinvent\VaahCms\Entities\Role;
 use WebReinvent\VaahCms\Entities\Setting;
 use WebReinvent\VaahCms\Libraries\VaahBackup;
@@ -67,6 +70,8 @@ class UpdateController extends Controller
             $stored_settings->fill($setting);
             $stored_settings->save();
         }
+
+        self::createBackendNotificationForUpdate($request);
 
 
 
@@ -184,6 +189,11 @@ class UpdateController extends Controller
 
         try{
             $response = VaahArtisan::clearCache();
+
+            $notification = Notification::where('slug','send-update-message')->first();
+
+            Notified::where('vh_notification_id',$notification->id)->forceDelete();
+
             $response['messages'][] = "Cache Successfully Removed";
             return $response;
         }catch(\Exception $e)
@@ -192,6 +202,64 @@ class UpdateController extends Controller
             $response['errors'][] = $e->getMessage();
             return $response;
         }
+
+    }
+    //----------------------------------------------------------
+    public function createBackendNotificationForUpdate($request)
+    {
+
+        $notification = Notification::where('slug','send-update-message')->first();
+
+        if(!$notification){
+            $notification = new Notification();
+            $notification->slug = 'send-update-message';
+            $notification->name = 'Send Update Message';
+            $notification->via_backend = '1';
+            $notification->save();
+        }
+
+
+        $data = [
+            [
+                'via' => 'backend',
+                'sort' => 0,
+                'vh_notification_id' => $notification->id,
+                'key' => 'content',
+                'value' => 'A newer version '.$request->remote_version.' of VaahCMS is available.',
+                'meta' => null
+            ],
+            [
+                'via' => 'backend',
+                'sort' => 1,
+                'vh_notification_id' => $notification->id,
+                'key' => 'action',
+                'value' => 'Go to Update',
+                'meta' => '{"action":"'.route('vh.backend').'#/vaah/settings/update"}'
+            ]
+
+        ];
+
+        $notification->contents()->forceDelete();
+
+        $notification->contents()->insert($data);
+
+        $translated = Notification::getTranslatedContent('backend', $notification,  []);
+
+        if($notification->is_error)
+        {
+            $translated['is_error'] = true;
+        }
+
+        $notify = new Notified();
+        $notify->vh_notification_id = $notification->id;
+        $notify->vh_user_id = Auth::user()->id;
+        $notify->via = 'backend';
+        $notify->meta = $translated;
+
+        $notify->save();
+
+
+        dd($data);
 
     }
     //----------------------------------------------------------
