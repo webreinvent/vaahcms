@@ -192,6 +192,9 @@ Route::group(
         Route::any( '/publish', 'UpdateController@publish' )
             ->name( 'vh.update.publish' );
         //------------------------------------------------
+        Route::any( '/run/migrations', 'UpdateController@runMigrations' )
+            ->name( 'vh.update.run.migrations' );
+        //------------------------------------------------
         Route::any( '/cache', 'UpdateController@clearCache' )
             ->name( 'vh.update.cache' );
         //------------------------------------------------

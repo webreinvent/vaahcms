@@ -29,6 +29,7 @@ export default {
             status: {
                 download_latest_version: null,
                 publish_assets: null,
+                migration_and_seeds: null,
                 clear_cache: null,
                 page_refresh: null,
             },
@@ -164,14 +165,36 @@ export default {
             if(res && res.data && res.data.status){
                 this.status.publish_assets = res.data.status;
 
+                if(res.data.status === 'success'){
+                    this.status.migration_and_seeds = 'pending';
+                    let url = this.ajax_url+'/run/migrations';
+                    this.$vaah.ajax(url, {}, this.onMigrationAndSeedsAfter);
+                }
+            }
+        },
+        //---------------------------------------------------------------------
+        onMigrationAndSeedsAfter: function (data, res) {
+            if(res && res.data && res.data.status){
+                this.status.migration_and_seeds = res.data.status;
+
+                if(res.data.status === 'success'){
+                    this.status.clear_cache = 'pending';
+                    let url = this.ajax_url+'/cache';
+                    this.$vaah.ajax(url, {}, this.onClearCacheAfter);
+                }
+            }
+        },
+        //---------------------------------------------------------------------
+        onClearCacheAfter: function (data, res) {
+            if(res && res.data && res.data.status){
+                this.status.clear_cache = res.data.status;
+
                 /*if(res.data.status === 'success'){
-                    this.status.publish_assets = 'pending';
-                    let url = this.ajax_url+'/upgrade';
-                    this.$vaah.ajax(url, {}, this.onPublishAfter);
+                    this.status.clear_cache = 'pending';
+                    let url = this.ajax_url+'/cache';
+                    this.$vaah.ajax(url, {}, this.onClearCacheAfter);
                 }*/
             }
-
-
         },
         //---------------------------------------------------------------------
         //---------------------------------------------------------------------

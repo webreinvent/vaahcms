@@ -1,4 +1,5 @@
 <script src="./IndexJs.js"></script>
+
 <template>
     <div class="form-page-v1-layout">
 
@@ -43,7 +44,9 @@
 
                             <b>New Updates:</b>
 
-                            <div v-html="release.body"></div>
+                            <div class="content" v-html="release.body">
+
+                            </div>
 
                             <p>
                                 <b-field>
@@ -54,7 +57,7 @@
                             </p>
 
                             <p><b-button :disabled="!is_button_active" @click="onUpdate">
-                                Update No
+                                Update Now
                             </b-button></p>
 
                             <ol>
@@ -64,6 +67,7 @@
                                     <b-icon v-if="status.download_latest_version === 'success'"
                                         pack="fas"
                                         icon="check"
+                                        type="is-success"
                                         >
                                     </b-icon>
 
@@ -75,7 +79,9 @@
 
                                     <b-icon v-else-if="status.download_latest_version === 'failed'"
                                             pack="fas"
-                                            icon="times">
+                                            icon="times"
+                                            type="is-danger"
+                                    >
                                     </b-icon>
 
                                 </li>
@@ -83,6 +89,7 @@
                                     <b-icon v-if="status.publish_assets === 'success'"
                                             pack="fas"
                                             icon="check"
+                                            type="is-success"
                                     >
                                     </b-icon>
 
@@ -94,13 +101,35 @@
 
                                     <b-icon v-else-if="status.publish_assets === 'failed'"
                                             pack="fas"
-                                            icon="times">
+                                            icon="times"
+                                            type="is-danger">
                                     </b-icon>
                                 </li>
-                                <li> Clear Cache</li>
+                                <li> Run Migrations and Seeds
+                                    <b-icon v-if="status.migration_and_seeds === 'success'"
+                                            pack="fas"
+                                            icon="check"
+                                            type="is-success"
+                                    >
+                                    </b-icon>
+
+                                    <b-icon v-else-if="status.migration_and_seeds === 'pending'"
+                                            pack="fas"
+                                            icon="sync-alt"
+                                            custom-class="fa-spin">
+                                    </b-icon>
+
+                                    <b-icon v-else-if="status.migration_and_seeds === 'failed'"
+                                            pack="fas"
+                                            icon="times"
+                                            type="is-danger">
+                                    </b-icon>
+                                </li>
+                                <li> Clear Cache
                                 <b-icon v-if="status.clear_cache === 'success'"
                                         pack="fas"
                                         icon="check"
+                                        type="is-success"
                                 >
                                 </b-icon>
 
@@ -112,12 +141,15 @@
 
                                 <b-icon v-else-if="status.clear_cache === 'failed'"
                                         pack="fas"
-                                        icon="times">
+                                        icon="times"
+                                        type="is-danger">
                                 </b-icon>
-                                <li> Reload</li>
+                                </li>
+                                <li> Reload
                                 <b-icon v-if="status.page_refresh === 'pending'"
                                         pack="fas"
                                         icon="check"
+                                        type="is-success"
                                 >
                                 </b-icon>
 
@@ -129,8 +161,10 @@
 
                                 <b-icon v-else-if="status.page_refresh === 'failed'"
                                         pack="fas"
-                                        icon="times">
+                                        icon="times"
+                                        type="is-danger">
                                 </b-icon>
+                                </li>
 
                             </ol>
 

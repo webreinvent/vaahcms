@@ -126,6 +126,51 @@ class UpdateController extends Controller
 
     }
     //----------------------------------------------------------
+    public function runMigrations()
+    {
+
+        if(!\Auth::user()->hasPermission('has-access-of-setting-section'))
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+            return response()->json($response);
+        }
+
+        try{
+            $provider = "WebReinvent\VaahCms\VaahCmsServiceProvider";
+
+            //run migration
+            $response = VaahArtisan::migrate();
+            if(isset($response['status']) && $response['status'] == 'failed')
+            {
+                return $response;
+            }
+
+            //run vaahcms seeds
+            $seed_class = "WebReinvent\VaahCms\Database\Seeders\VaahCmsTableSeeder";
+            $response = VaahArtisan::seed('db:seed', $seed_class);
+            if(isset($response['status']) && $response['status'] == 'failed')
+            {
+                return $response;
+            }
+
+            //publish laravel mail and notifications
+            VaahArtisan::publish(null, 'laravel-mail');
+            VaahArtisan::publish(null, 'laravel-notifications');
+
+            $response['status'] = 'success';
+            $response['messages'][] = 'Action was successful';
+            return $response;
+        }catch(\Exception $e)
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = $e->getMessage();
+            return $response;
+        }
+
+    }
+    //----------------------------------------------------------
     public function clearCache()
     {
 
