@@ -154,7 +154,7 @@ export default {
 
             this.is_btn_loading = true;
 
-            this.getList(true);
+            this.getList(this.query_string.page,true);
 
         },//---------------------------------------------------------------------
         generateLanguage: function () {
@@ -171,14 +171,6 @@ export default {
         generateLanguageAfter: function (data) {
 
             this.is_btn_loading = false;
-
-        },
-        //---------------------------------------------------------------------
-        topSync: function () {
-
-            this.is_top_btn_loading = true;
-
-            this.getList(true);
 
         },
         //---------------------------------------------------------------------
