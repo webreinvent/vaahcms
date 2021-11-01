@@ -24,6 +24,7 @@ export default {
             assets:null,
             update_available: false,
             is_button_active: false,
+            backup_database: false,
             is_update_step_visible: false,
             is_checkbox_active: true,
             release: null,
