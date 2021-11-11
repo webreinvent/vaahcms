@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use WebReinvent\VaahCms\Entities\Notification;
+use WebReinvent\VaahCms\Entities\NotificationContent;
 use WebReinvent\VaahCms\Entities\Notified;
 use WebReinvent\VaahCms\Entities\Role;
 use WebReinvent\VaahCms\Entities\Setting;
@@ -71,9 +72,9 @@ class UpdateController extends Controller
             $stored_settings->save();
         }
 
-        self::createBackendNotificationForUpdate($request);
-
-
+        if($request->has('update_available') && $request->update_available){
+            self::createBackendNotificationForUpdate($request);
+        }
 
         $response['status'] = 'success';
         $response['data'][] = '';
@@ -120,7 +121,8 @@ class UpdateController extends Controller
         }
 
         try{
-            $response = VaahArtisan::publish("WebReinvent\VaahCms\VaahCmsServiceProvider");
+            VaahArtisan::publish("WebReinvent\VaahCms\VaahCmsServiceProvider");
+            $response['status'] = 'success';
             return $response;
         }catch(\Exception $e)
         {
@@ -143,8 +145,6 @@ class UpdateController extends Controller
         }
 
         try{
-            $provider = "WebReinvent\VaahCms\VaahCmsServiceProvider";
-
             //run migration
             $response = VaahArtisan::migrate();
             if(isset($response['status']) && $response['status'] == 'failed')
@@ -160,9 +160,8 @@ class UpdateController extends Controller
                 return $response;
             }
 
-            $response['status'] = 'success';
-            $response['messages'][] = 'Action was successful';
-            return $response;
+            $res['status'] = 'success';
+            return $res;
         }catch(\Exception $e)
         {
             $response['status'] = 'failed';
@@ -184,13 +183,13 @@ class UpdateController extends Controller
         }
 
         try{
-            $response = VaahArtisan::clearCache();
+            VaahArtisan::clearCache();
 
             $notification = Notification::where('slug','send-update-message')->first();
 
             Notified::where('vh_notification_id',$notification->id)->forceDelete();
 
-            $response['messages'][] = "Cache Successfully Removed";
+            $response['status'] = "success";
             return $response;
         }catch(\Exception $e)
         {
@@ -214,48 +213,41 @@ class UpdateController extends Controller
             $notification->save();
         }
 
+        $message = 'A newer version '.$request->remote_version.' of VaahCMS is available.';
+        $label = 'Go to Update';
+        $link = route('vh.backend').'#/vaah/settings/update';
 
-        $data = [
-            [
-                'via' => 'backend',
-                'sort' => 0,
-                'vh_notification_id' => $notification->id,
-                'key' => 'content',
-                'value' => 'A newer version '.$request->remote_version.' of VaahCMS is available.',
-                'meta' => null
-            ],
-            [
-                'via' => 'backend',
-                'sort' => 1,
-                'vh_notification_id' => $notification->id,
-                'key' => 'action',
-                'value' => 'Go to Update',
-                'meta' => '{"action":"'.route('vh.backend').'#/vaah/settings/update"}'
-            ]
-
-        ];
-
-        $notification->contents()->forceDelete();
-
-        $notification->contents()->insert($data);
-
-        $translated = Notification::getTranslatedContent('backend', $notification,  []);
-
-        if($notification->is_error)
-        {
-            $translated['is_error'] = true;
+        if($request->has('manual_update') && $request->manual_update){
+            $message = $message . ' This is a major release. You have to do manual upgrade to update VaahCms.';
         }
 
-        $notify = new Notified();
-        $notify->vh_notification_id = $notification->id;
-        $notify->vh_user_id = Auth::user()->id;
-        $notify->via = 'backend';
-        $notify->meta = $translated;
 
-        $notify->save();
+        $translated = [
+            "message" => $message,
+            "action" => [
+                "label" => $label,
+                "link" => $link
+            ],
+        ];
 
+        $notified = Notified::where('vh_notification_id',$notification->id)
+            ->where('via','backend')
+            ->where('vh_user_id',Auth::user()->id)->first();
 
-        dd($data);
+        if(!$notified){
+            $notified = new Notified();
+            $notified->vh_notification_id = $notification->id;
+            $notified->vh_user_id = Auth::user()->id;
+            $notified->via = 'backend';
+        }
+
+        $notified->meta = $translated;
+        $notified->last_attempt_at = null;
+        $notified->sent_at = null;
+        $notified->read_at = null;
+        $notified->marked_delivered = null;
+
+        $notified->save();
 
     }
     //----------------------------------------------------------

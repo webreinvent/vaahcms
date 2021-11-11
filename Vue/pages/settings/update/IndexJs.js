@@ -23,6 +23,8 @@ export default {
             labelPosition: 'on-border',
             assets:null,
             update_available: false,
+            manual_update: false,
+            backend_update: false,
             is_button_active: false,
             backup_database: false,
             is_update_step_visible: false,
@@ -97,6 +99,10 @@ export default {
         checkForUpdateAfter: function (data, res) {
             this.$Progress.finish();
 
+            this.update_available=false;
+            this.manual_update=false;
+            this.backend_update=false;
+
             console.log('--->', res);
             console.log('--->', res.data.tag_name);
 
@@ -114,15 +120,16 @@ export default {
             console.log('local--->', local);
             console.log('remote--->', this.remote_version);
 
-            let c = semver.gt(this.remote_version, local );
+            let diff = semver.diff(this.remote_version, local );
 
-            this.update_available=true;
-
-            if(c)
-            {
+            if(diff){
                 this.update_available=true;
-            } else{
-                this.update_available=false;
+                if(diff === 'major'){
+                    this.manual_update=true;
+                }else{
+                    this.backend_update=true;
+
+                }
             }
 
             this.storeUpdateCheck();
@@ -134,6 +141,7 @@ export default {
             let params = {
                 remote_version: this.remote_version,
                 update_available: this.update_available,
+                manual_update: this.manual_update,
             };
             let url = this.ajax_url+'/store';
             this.$vaah.ajax(url, params, this.storeUpdateCheckAfter);

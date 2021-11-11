@@ -35,155 +35,187 @@
                         </header>
                         <!--/header-->
 
-                        <b-notification v-model="update_available" v-if="release" type="is-info is-light">
+                        <b-notification v-model="backend_update" type="is-info is-light">
 
-                            A newer version <b>{{remote_version}}</b> of VaahCMS is available.
+                            <div v-if="release">
+                                A newer version <b>{{remote_version}}</b> of VaahCMS is available.
 
-                            <hr/>
+                                <hr/>
 
-                            <b>New Updates:</b>
+                                <b>New Updates:</b>
 
-                            <div class="content">
+                                <div class="content">
 
-                                {{release.body}}
-                            </div>
+                                    {{release.body}}
+                                </div>
 
-                            <div class="mt-5">
-                                <b-field :label-position="labelPosition">
-                                    <b-radio-button :disabled="!is_checkbox_active"
-                                                    @input="is_button_active = true"
-                                                    v-model="backup_database"
-                                                    size="is-small"
-                                                    :native-value=true>
-                                        <span>Yes</span>
-                                    </b-radio-button>
+                                <div class="mt-5">
+                                    <b-field :label-position="labelPosition">
+                                        <b-radio-button :disabled="!is_checkbox_active"
+                                                        @input="is_button_active = true"
+                                                        v-model="backup_database"
+                                                        size="is-small"
+                                                        :native-value=true>
+                                            <span>Yes</span>
+                                        </b-radio-button>
 
-                                    <b-radio-button :disabled="!is_checkbox_active"
-                                                    @input="is_button_active = false"
+                                        <b-radio-button :disabled="!is_checkbox_active"
+                                                        @input="is_button_active = false"
+                                                        type="is-danger"
+                                                        size="is-small"
+                                                        v-model="backup_database"
+                                                        :native-value=false>
+                                            <span>No</span>
+                                        </b-radio-button>
+                                        <div class="has-text-weight-bold ml-2 mt-1 ">
+                                            Have you taken the backup of your files & database?
+                                        </div>
+                                    </b-field>
+
+                                    <b-button :disabled="!is_button_active" @click="onUpdate">
+                                        Update Now
+                                    </b-button>
+                                </div>
+
+                                <div v-if="is_update_step_visible" class="ml-3 mt-4">
+                                    <ol>
+
+                                        <li> Download latest version (It can take up to 3 to 5 minutes)
+
+                                            <b-icon v-if="status.download_latest_version === 'success'"
+                                                    pack="fas"
+                                                    icon="check"
+                                                    type="is-success"
+                                            >
+                                            </b-icon>
+
+                                            <b-icon v-else-if="status.download_latest_version === 'pending'"
+                                                    pack="fas"
+                                                    icon="sync-alt"
+                                                    custom-class="fa-spin">
+                                            </b-icon>
+
+                                            <b-icon v-else-if="status.download_latest_version === 'failed'"
+                                                    pack="fas"
+                                                    icon="times"
                                                     type="is-danger"
-                                                    size="is-small"
-                                                    v-model="backup_database"
-                                                    :native-value=false>
-                                        <span>No</span>
-                                    </b-radio-button>
-                                    <div class="has-text-weight-bold ml-2 mt-1 ">
-                                        Have you taken the backup of your files & database?
-                                    </div>
-                                </b-field>
+                                            >
+                                            </b-icon>
 
-                                <b-button :disabled="!is_button_active" @click="onUpdate">
-                                    Update Now
-                                </b-button>
+                                        </li>
+                                        <li> Publish assets
+                                            <b-icon v-if="status.publish_assets === 'success'"
+                                                    pack="fas"
+                                                    icon="check"
+                                                    type="is-success"
+                                            >
+                                            </b-icon>
+
+                                            <b-icon v-else-if="status.publish_assets === 'pending'"
+                                                    pack="fas"
+                                                    icon="sync-alt"
+                                                    custom-class="fa-spin">
+                                            </b-icon>
+
+                                            <b-icon v-else-if="status.publish_assets === 'failed'"
+                                                    pack="fas"
+                                                    icon="times"
+                                                    type="is-danger">
+                                            </b-icon>
+                                        </li>
+                                        <li> Run Migrations and Seeds
+                                            <b-icon v-if="status.migration_and_seeds === 'success'"
+                                                    pack="fas"
+                                                    icon="check"
+                                                    type="is-success"
+                                            >
+                                            </b-icon>
+
+                                            <b-icon v-else-if="status.migration_and_seeds === 'pending'"
+                                                    pack="fas"
+                                                    icon="sync-alt"
+                                                    custom-class="fa-spin">
+                                            </b-icon>
+
+                                            <b-icon v-else-if="status.migration_and_seeds === 'failed'"
+                                                    pack="fas"
+                                                    icon="times"
+                                                    type="is-danger">
+                                            </b-icon>
+                                        </li>
+                                        <li> Clear Cache
+                                            <b-icon v-if="status.clear_cache === 'success'"
+                                                    pack="fas"
+                                                    icon="check"
+                                                    type="is-success"
+                                            >
+                                            </b-icon>
+
+                                            <b-icon v-else-if="status.clear_cache === 'pending'"
+                                                    pack="fas"
+                                                    icon="sync-alt"
+                                                    custom-class="fa-spin">
+                                            </b-icon>
+
+                                            <b-icon v-else-if="status.clear_cache === 'failed'"
+                                                    pack="fas"
+                                                    icon="times"
+                                                    type="is-danger">
+                                            </b-icon>
+                                        </li>
+                                        <li> Reload
+                                            <b-icon v-if="status.page_refresh === 'pending'"
+                                                    pack="fas"
+                                                    icon="check"
+                                                    type="is-success"
+                                            >
+                                            </b-icon>
+
+                                            <b-icon v-else-if="status.page_refresh === 'success'"
+                                                    pack="fas"
+                                                    icon="sync-alt"
+                                                    custom-class="fa-spin">
+                                            </b-icon>
+
+                                            <b-icon v-else-if="status.page_refresh === 'failed'"
+                                                    pack="fas"
+                                                    icon="times"
+                                                    type="is-danger">
+                                            </b-icon>
+                                        </li>
+
+                                    </ol>
+                                </div>
                             </div>
 
-                            <div v-if="is_update_step_visible" class="ml-3 mt-4">
-                                <ol>
+                        </b-notification>
 
-                                    <li> Download latest version (It can take up to 3 to 5 minutes)
+                        <b-notification v-model="manual_update" type="is-danger is-light">
 
-                                        <b-icon v-if="status.download_latest_version === 'success'"
-                                                pack="fas"
-                                                icon="check"
-                                                type="is-success"
-                                        >
-                                        </b-icon>
+                            <div v-if="release">
+                                A newer version <b>{{remote_version}}</b> of VaahCMS is available.
+                                This is a <b>major release</b>. You have to do manual upgrade to update VaahCms.
 
-                                        <b-icon v-else-if="status.download_latest_version === 'pending'"
-                                                pack="fas"
-                                                icon="sync-alt"
-                                                custom-class="fa-spin">
-                                        </b-icon>
+                                <hr/>
 
-                                        <b-icon v-else-if="status.download_latest_version === 'failed'"
-                                                pack="fas"
-                                                icon="times"
-                                                type="is-danger"
-                                        >
-                                        </b-icon>
+                                <b>New Updates:</b>
 
-                                    </li>
-                                    <li> Publish assets
-                                        <b-icon v-if="status.publish_assets === 'success'"
-                                                pack="fas"
-                                                icon="check"
-                                                type="is-success"
-                                        >
-                                        </b-icon>
+                                <div class="content">
 
-                                        <b-icon v-else-if="status.publish_assets === 'pending'"
-                                                pack="fas"
-                                                icon="sync-alt"
-                                                custom-class="fa-spin">
-                                        </b-icon>
+                                    {{release.body}}
+                                </div>
 
-                                        <b-icon v-else-if="status.publish_assets === 'failed'"
-                                                pack="fas"
-                                                icon="times"
-                                                type="is-danger">
-                                        </b-icon>
-                                    </li>
-                                    <li> Run Migrations and Seeds
-                                        <b-icon v-if="status.migration_and_seeds === 'success'"
-                                                pack="fas"
-                                                icon="check"
-                                                type="is-success"
-                                        >
-                                        </b-icon>
-
-                                        <b-icon v-else-if="status.migration_and_seeds === 'pending'"
-                                                pack="fas"
-                                                icon="sync-alt"
-                                                custom-class="fa-spin">
-                                        </b-icon>
-
-                                        <b-icon v-else-if="status.migration_and_seeds === 'failed'"
-                                                pack="fas"
-                                                icon="times"
-                                                type="is-danger">
-                                        </b-icon>
-                                    </li>
-                                    <li> Clear Cache
-                                        <b-icon v-if="status.clear_cache === 'success'"
-                                                pack="fas"
-                                                icon="check"
-                                                type="is-success"
-                                        >
-                                        </b-icon>
-
-                                        <b-icon v-else-if="status.clear_cache === 'pending'"
-                                                pack="fas"
-                                                icon="sync-alt"
-                                                custom-class="fa-spin">
-                                        </b-icon>
-
-                                        <b-icon v-else-if="status.clear_cache === 'failed'"
-                                                pack="fas"
-                                                icon="times"
-                                                type="is-danger">
-                                        </b-icon>
-                                    </li>
-                                    <li> Reload
-                                        <b-icon v-if="status.page_refresh === 'pending'"
-                                                pack="fas"
-                                                icon="check"
-                                                type="is-success"
-                                        >
-                                        </b-icon>
-
-                                        <b-icon v-else-if="status.page_refresh === 'success'"
-                                                pack="fas"
-                                                icon="sync-alt"
-                                                custom-class="fa-spin">
-                                        </b-icon>
-
-                                        <b-icon v-else-if="status.page_refresh === 'failed'"
-                                                pack="fas"
-                                                icon="times"
-                                                type="is-danger">
-                                        </b-icon>
-                                    </li>
-
+                                <b>Steps of Manually Upgrade</b>
+                                <ol class="ml-4">
+                                    <li>Go to Root path</li>
+                                    <li>Update <b>version</b> in Composer.json</li>
+                                    <li>Run <b>Composer Update</b></li>
+                                    <li>Publish assets</li>
+                                    <li>Run Migrations and Seeds</li>
+                                    <li>Clear Cache</li>
                                 </ol>
+
+
                             </div>
 
                         </b-notification>
