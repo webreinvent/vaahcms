@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 use WebReinvent\VaahCms\Entities\Notification;
 use WebReinvent\VaahCms\Entities\Notified;
+use WebReinvent\VaahCms\Entities\User;
 use WebReinvent\VaahCms\Notifications\Notice;
 
 
@@ -188,7 +189,8 @@ class NotificationsController extends Controller
         */
 
 
-        $response = Notification::send($request);
+        $response = Notification::send(Notification::find($request->notification_id),
+            User::find($request->user_id), $request->all());
 
         return response()->json($response);
 
