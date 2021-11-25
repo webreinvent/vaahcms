@@ -901,10 +901,10 @@ class User extends Authenticatable
 
     }
     //-------------------------------------------------
-    public function hasRole($role_slug)
+    public function hasRole($role_slug,$type = "backend")
     {
         foreach ($this->roles()->wherePivot('is_active', 1)->get() as $role) {
-            if ($role->slug == $role_slug)
+            if ($role->slug == $role_slug && $role->type == $type)
             {
                 return true;
             }
