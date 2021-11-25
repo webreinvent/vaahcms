@@ -240,7 +240,8 @@ class Role extends Model {
         }
 
         // check if name exist
-        $user = static::where('name',$inputs['name'])->first();
+        $user = static::where('name',$inputs['name'])
+            ->where('type',$inputs['type'])->first();
 
         if($user)
         {
@@ -251,7 +252,8 @@ class Role extends Model {
 
 
         // check if slug exist
-        $user = static::where('slug',$inputs['slug'])->first();
+        $user = static::where('slug',$inputs['slug'])
+            ->where('type',$inputs['type'])->first();
 
         if($user)
         {
@@ -459,7 +461,9 @@ class Role extends Model {
         }
 
         // check if name exist
-        $user = static::where('id','!=',$input['id'])->where('name',$input['name'])->first();
+        $user = static::where('id','!=',$input['id'])
+            ->where('type',$input['type'])
+            ->where('name',$input['name'])->first();
 
         if($user)
         {
@@ -470,7 +474,9 @@ class Role extends Model {
 
 
         // check if slug exist
-        $user = static::where('id','!=',$input['id'])->where('slug',$input['slug'])->first();
+        $user = static::where('id','!=',$input['id'])
+            ->where('type',$input['type'])
+            ->where('slug',$input['slug'])->first();
 
         if($user)
         {
