@@ -23,7 +23,7 @@ class VaahSeeder{
     //----------------------------------------------------------
     public static function storeSeedsWithUuid($table, $list, $primary_key='slug',
                                               $create_slug=true, $create_slug_from='name',
-                                              $has_active=true)
+                                              $has_active=true, $has_type=false)
     {
         foreach ($list as $item)
         {
@@ -38,9 +38,18 @@ class VaahSeeder{
                 $item['is_active'] = 1;
             }
 
+            if(!isset($item['type']) || !$item['type']) {
+                $item['type'] = "backend";
+            }
+
             $record = DB::table($table)
-                ->where($primary_key, $item[$primary_key])
-                ->first();
+                ->where($primary_key, $item[$primary_key]);
+
+            if($has_type){
+                $record->where('type', $item['type']);
+            }
+
+            $record = $record->first();
 
             if(isset($item['meta']))
             {
@@ -179,7 +188,8 @@ class VaahSeeder{
     public static function roles($json_file_path){
 
         $list = self::getListFromJson($json_file_path);
-        self::storeSeedsWithUuid('vh_roles', $list);
+        self::storeSeedsWithUuid('vh_roles', $list,'slug',
+            true, 'name', true, true);
     }
     //----------------------------------------------------------
     public static function permissions($json_file_path){
