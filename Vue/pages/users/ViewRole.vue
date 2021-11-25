@@ -103,7 +103,12 @@
                                 </b-tooltip>
                             </b-table-column>
 
-                            <b-table-column  v-slot="props"  field="name" class="has-text-centered" label="Has Permission" numeric >
+                            <b-table-column  v-slot="props" field="id" label="Type" >
+                                <b-tag>{{ props.row.type }}</b-tag>
+                            </b-table-column>
+
+                            <b-table-column  v-slot="props"  field="name"
+                                             class="has-text-centered" label="Has Permission" numeric >
                                 <span v-if="hasPermission('can-update-users') || hasPermission('can-manage-users')">
                                     <b-button v-if="props.row.pivot.is_active === 1" rounded size="is-small"
                                               type="is-success" @click="changePermission(props.row)">
