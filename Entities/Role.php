@@ -205,15 +205,15 @@ class Role extends Model {
         }
 
 
-        //enable all roles for admin users
-        $admin_role = Role::slug('super-administrator')->first();
-        $admin_users = $admin_role->users()->wherePivot('is_active', 1)
+        //enable all roles for super admin users
+        $super_admin_role = Role::slug('super-administrator')->first();
+        $super_admin_users = $super_admin_role->users()->wherePivot('is_active', 1)
             ->get()
             ->pluck('id')
             ->toArray();
-        $pivotData = array_fill(0, count($admin_users), ['is_active' => 1]);
-        $syncData  = array_combine($admin_users, $pivotData);
-        $admin_role->users()->syncWithoutDetaching($syncData);
+        $pivotData = array_fill(0, count($super_admin_users), ['is_active' => 1]);
+        $syncData  = array_combine($super_admin_users, $pivotData);
+        $super_admin_role->users()->syncWithoutDetaching($syncData);
 
 
         return true;
@@ -659,7 +659,7 @@ class Role extends Model {
         if($item->id == 1)
         {
             $response['status'] = 'failed';
-            $response['errors'][] = 'Admin permission can not be changed';
+            $response['errors'][] = 'Super Admin permission can not be changed';
             return response()->json($response);
 
         }
