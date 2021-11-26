@@ -293,7 +293,7 @@ class User extends Authenticatable
         return $this->roles()->wherePivot('is_active', 1);
     }
     //-------------------------------------------------
-    public static function countAdministrators()
+    public static function countSuperAdministrators()
     {
         $count = User::whereHas('roles', function ($query) {
             $query->where('vh_user_roles.is_active', '=', 1)
@@ -390,7 +390,7 @@ class User extends Authenticatable
     //-------------------------------------------------
 
     //-------------------------------------------------
-    public static function rulesAdminCreate()
+    public static function rulesSuperAdminCreate()
     {
         $rules = [
             'name' => 'required|string|max:255',
@@ -464,10 +464,10 @@ class User extends Authenticatable
 
     }
     //-------------------------------------------------
-    public static function isLastAdmin()
+    public static function isLastSuperAdmin()
     {
-        $count_admin = User::countAdministrators();
-        if($count_admin < 2)
+        $count = User::countSuperAdministrators();
+        if($count < 2)
         {
             return true;
         }
@@ -500,12 +500,12 @@ class User extends Authenticatable
         }
 
 
-        //restricted action if this user is last admin
+        //restricted action if this user is last super admin
         $result = false;
         $user = self::find($user_id);
-        $is_last_admin = self::isLastAdmin();
+        $is_last_super_admin = self::isLastSuperAdmin();
 
-        if($user->hasRole('super-administrator') && $is_last_admin)
+        if($user->hasRole('super-administrator') && $is_last_super_admin)
         {
             switch ($action_type)
             {
@@ -823,7 +823,7 @@ class User extends Authenticatable
     //-------------------------------------------------
 
     //-------------------------------------------------
-    public function isAdmin()
+    public function isSuperAdmin()
     {
         return $this->hasRole('super-administrator');
     }
@@ -832,7 +832,7 @@ class User extends Authenticatable
     public function hasPermission($permission_slug, $details=false)
     {
 
-        if ($this->isAdmin()) {
+        if ($this->isSuperAdmin()) {
 
             if($details)
             {
@@ -840,7 +840,7 @@ class User extends Authenticatable
                 if(env('APP_DEBUG'))
                 {
                     $response['data']['permission'] = 'Permission slug: '.$permission_slug;
-                    $response['hint'][] = 'Admin has all permission by default.';
+                    $response['hint'][] = 'Super Admin has all permission by default.';
                 }
                 return $response;
 
@@ -949,13 +949,13 @@ class User extends Authenticatable
     public static function notifyAdmins($subject, $message)
     {
         $users = new User();
-        $admins = $users->listByRole('super-administrator');
+        $super_admins = $users->listByRole('super-administrator');
 
         $notification = new \stdClass();
         $notification->subject = $subject;
         $notification->message = $message;
 
-        Notification::send($admins, new NotifyAdmin($notification));
+        Notification::send($super_admins, new NotifyAdmin($notification));
     }
     //-------------------------------------------------
     public static function getUsersForAssets()
@@ -1417,7 +1417,7 @@ class User extends Authenticatable
         if($inputs['inputs']['id'] == 1 && $inputs['inputs']['role_id'] == 1)
         {
             $response['status'] = 'failed';
-            $response['errors'][] = 'First user will always be an administrator';
+            $response['errors'][] = 'First user will always be an super administrator';
             return response()->json($response);
         }
 

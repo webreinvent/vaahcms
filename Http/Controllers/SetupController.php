@@ -109,7 +109,7 @@ class SetupController extends Controller
             $data['stage'] = 'migrated';
         }
 
-        if(VaahSetup::isAdminCreated())
+        if(VaahSetup::isSuperAdminCreated())
         {
             $data['stage'] = 'installed';
 
@@ -576,9 +576,9 @@ class SetupController extends Controller
             return response()->json($response);
         }
 
-        $any_admin_exist = User::countAdministrators();
+        $any_super_admin_exist = User::countSuperAdministrators();
 
-        if($any_admin_exist > 0)
+        if($any_super_admin_exist > 0)
         {
             $response['status'] = 'success';
             $response['messages'][] = trans("vaahcms::messages.setup_completed");
@@ -619,11 +619,9 @@ class SetupController extends Controller
             return response()->json($response);
         }
 
-        $data = [];
+        $any_super_admin_exist = User::countSuperAdministrators();
 
-        $any_admin_exist = User::countAdministrators();
-
-        if($any_admin_exist > 0)
+        if($any_super_admin_exist > 0)
         {
             $response['status'] = 'failed';
             $response['errors'][] = trans("vaahcms::messages.permission_denied");
