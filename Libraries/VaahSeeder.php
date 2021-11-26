@@ -3,6 +3,7 @@ namespace WebReinvent\VaahCms\Libraries;
 
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
+use WebReinvent\VaahCms\Entities\Permission;
 
 
 class VaahSeeder{
@@ -182,9 +183,53 @@ class VaahSeeder{
         self::storeSeedsWithUuid('vh_roles', $list);
     }
     //----------------------------------------------------------
-    public static function permissions($json_file_path){
+    public static function permissions($json_file_path,$app_path = null){
         $list = self::getListFromJson($json_file_path);
-        self::storeSeedsWithUuid('vh_permissions', $list);
+
+        $app_data = [];
+
+        if($app_path){
+            $filtered_path = str_replace("\Database\Seeds","",$app_path);
+            $app_data = vh_get_module_settings_from_path($filtered_path);
+        }
+
+        foreach ($list as $item)
+        {
+            if(!isset($item['slug']) || !$item['slug'])
+            {
+                $item['slug'] = Str::slug($item['name']);
+            }
+
+            if(count($app_data) > 0){
+                if(isset($app_data['name']) && $app_data['name']){
+                    $item['name'] = $app_data['name'].'-'.$item['name'];
+                    $item['slug'] = Str::slug($app_data['name']).'-'.$item['slug'];
+                }
+
+            }
+
+            $item['uuid'] = Str::uuid();
+
+            if(!isset($item['is_active']) || !$item['is_active']){
+                $item['is_active'] = 1;
+            }
+
+            $record = Permission::where('slug', $item['slug'])
+                ->first();
+
+            if(isset($item['meta']))
+            {
+                $item['meta'] = json_encode($item['meta']);
+            }
+
+            if(!$record)
+            {
+                Permission::insert($item);
+            } else{
+                Permission::where('slug', $item['slug'])
+                    ->update($item);
+            }
+        }
     }
     //----------------------------------------------------------
     public static function taxonomyTypes($json_file_path){
