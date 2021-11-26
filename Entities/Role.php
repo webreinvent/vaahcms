@@ -305,16 +305,12 @@ class Role extends Model {
             $list->betweenDates($request['from'],$request['to']);
         }
 
-        if(isset($request->filter) && $request['filter']){
-
-            if($request['filter'] == 'active')
+        if(isset($request['status']) && $request['status']){
+            if($request['status'] == 'active')
             {
                 $list->where('is_active',1);
-            }elseif($request['filter'] == 'inactive'){
-
-                $list->whereNull('is_active')->orWhere('is_active',0);
             }else{
-                $list->where('type',$request['filter']);
+                $list->whereNull('is_active')->orWhere('is_active',0);
             }
         }
 
