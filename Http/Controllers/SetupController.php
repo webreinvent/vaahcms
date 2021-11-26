@@ -115,7 +115,7 @@ class SetupController extends Controller
 
             if(\Auth::check())
             {
-                if(\Auth::user()->hasRole('administrator'))
+                if(\Auth::user()->hasRole('super-administrator'))
                 {
                     $data['is_user_administrator'] = true;
                 }
@@ -161,7 +161,7 @@ class SetupController extends Controller
             return response()->json($response);
         }
 
-        if(!\Auth::user()->hasRole('administrator'))
+        if(!\Auth::user()->hasRole('super-administrator'))
         {
             $response['status'] = 'failed';
             $response['errors'][] = 'Permission denied. You must be logged in from Administrator account.';
@@ -639,12 +639,12 @@ class SetupController extends Controller
         $user->created_ip = \Request::ip();
         $user->save();
 
-        $role = Role::where('slug', 'administrator')->first();
+        $role = Role::where('slug', 'super-administrator')->first();
 
         if(!$role)
         {
             $response['status'] = 'failed';
-            $response['errors'][] = \Lang::get('vaahcms::messages.not_exist', ['key' => 'role slug', 'value' => 'administrator']);;
+            $response['errors'][] = \Lang::get('vaahcms::messages.not_exist', ['key' => 'role slug', 'value' => 'super-administrator']);;
             return response()->json($response);
         }
 

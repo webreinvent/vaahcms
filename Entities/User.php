@@ -297,7 +297,7 @@ class User extends Authenticatable
     {
         $count = User::whereHas('roles', function ($query) {
             $query->where('vh_user_roles.is_active', '=', 1)
-                ->slug('administrator');
+                ->slug('super-administrator');
         })->isActive()->get()->count();
 
         return $count;
@@ -354,7 +354,7 @@ class User extends Authenticatable
         $permissions_list = array();
         foreach ($roles as $role) {
 
-            if($role->slug !='administrator')
+            if($role->slug !='super-administrator')
             {
                 $permissions = $role->permissions()->isActive()
                     ->wherePivot('is_active', 1)->get();
@@ -364,7 +364,7 @@ class User extends Authenticatable
 
             foreach ($permissions as $permission) {
 
-                if($role->slug =='administrator')
+                if($role->slug =='super-administrator')
                 {
                     $permissions_list[$permission->id] = $permission->toArray();
 
@@ -505,7 +505,7 @@ class User extends Authenticatable
         $user = self::find($user_id);
         $is_last_admin = self::isLastAdmin();
 
-        if($user->hasRole('administrator') && $is_last_admin)
+        if($user->hasRole('super-administrator') && $is_last_admin)
         {
             switch ($action_type)
             {
@@ -825,7 +825,7 @@ class User extends Authenticatable
     //-------------------------------------------------
     public function isAdmin()
     {
-        return $this->hasRole('administrator');
+        return $this->hasRole('super-administrator');
     }
 
     //-------------------------------------------------
@@ -949,7 +949,7 @@ class User extends Authenticatable
     public static function notifyAdmins($subject, $message)
     {
         $users = new User();
-        $admins = $users->listByRole('administrator');
+        $admins = $users->listByRole('super-administrator');
 
         $notification = new \stdClass();
         $notification->subject = $subject;

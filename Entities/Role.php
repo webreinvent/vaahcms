@@ -206,7 +206,7 @@ class Role extends Model {
 
 
         //enable all roles for admin users
-        $admin_role = Role::slug('administrator')->first();
+        $admin_role = Role::slug('super-administrator')->first();
         $admin_users = $admin_role->users()->wherePivot('is_active', 1)
             ->get()
             ->pluck('id')
