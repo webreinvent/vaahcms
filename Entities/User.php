@@ -580,6 +580,15 @@ class User extends Authenticatable
             return $response;
         }
 
+        if(!$user->hasPermission('can-login-in-backend'))
+        {
+
+            $response['status'] = 'failed';
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+            return $response;
+        }
+
         return $user;
     }
     //-------------------------------------------------
@@ -605,6 +614,7 @@ class User extends Authenticatable
             'password' => trim($request->get('password'))
         ], $remember))
         {
+
             $user = Auth::user();
             $user->last_login_at = Carbon::now();
             $user->save();
