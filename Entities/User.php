@@ -1200,6 +1200,18 @@ class User extends Authenticatable
 
         if($request->has('id'))
         {
+
+            // check if already exist
+            $user = self::where('id', '!=', $inputs['id'])
+                ->where('email',$inputs['email'])->first();
+
+            if($user)
+            {
+                $response['status'] = 'failed';
+                $response['errors'][] = "This email is already registered.";
+                return $response;
+            }
+
             $item = User::find($request->id);
         } else
         {
