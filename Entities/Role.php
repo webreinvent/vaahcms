@@ -59,10 +59,6 @@ class Role extends Model {
         return $query->where( 'slug', $slug );
     }
     //-------------------------------------------------
-    public function scopeType( $query, $type ) {
-        return $query->where( 'type', $type );
-    }
-    //-------------------------------------------------
     public function scopeIsActive($query)
     {
         $query->where('vh_roles.is_active', 1);
@@ -489,7 +485,6 @@ class Role extends Model {
         $update->slug = Str::slug($input['slug']);
         $update->details = $input['details'];
         $update->is_active = $input['is_active'];
-        $update->type = $input['type'];
 
         $update->save();
 
@@ -821,15 +816,10 @@ class Role extends Model {
 
     }
     //-------------------------------------------------
-    public static function getActiveRoles($type = null)
+    public static function getActiveRoles()
     {
-        $list = static::where('is_active', 1);
+        $list = static::where('is_active', 1)->get();
 
-        if($type){
-            $list->where('type',$type);
-        }
-
-        $list = $list->get();
         return $list;
     }
     //-------------------------------------------------
