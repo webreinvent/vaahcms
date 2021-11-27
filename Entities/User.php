@@ -1413,12 +1413,14 @@ class User extends Authenticatable
 
         $inputs = $request->all();
 
+        $role = Role::find($inputs['inputs']['role_id']);
 
-        if($inputs['inputs']['id'] == 1 && $inputs['inputs']['role_id'] == 1)
+        if($inputs['inputs']['id'] == 1 && $role->slug == 'super-administrator'
+            && $inputs['data']['is_active'] == 0)
         {
             $response['status'] = 'failed';
             $response['errors'][] = 'First user will always be an super administrator';
-            return response()->json($response);
+            return $response;
         }
 
         $item = User::find($inputs['inputs']['id']);

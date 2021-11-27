@@ -180,7 +180,8 @@ class Permission extends Model {
         {
             foreach ($roles as $role)
             {
-                if($role->id == 1)
+
+                if($role->slug == 'super-administrator')
                 {
                     $pivotData = array_fill(0, count($permissions), ['is_active' => 1]);
                     $syncData  = array_combine($permissions, $pivotData);
