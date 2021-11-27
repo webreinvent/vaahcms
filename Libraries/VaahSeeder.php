@@ -183,14 +183,24 @@ class VaahSeeder{
         self::storeSeedsWithUuid('vh_roles', $list);
     }
     //----------------------------------------------------------
-    public static function permissions($json_file_path,$app_path = null){
+    public static function permissions($json_file_path, $prefix = null){
         $list = self::getListFromJson($json_file_path);
 
-        $app_data = [];
+        $pre_name = null;
 
-        if($app_path){
-            $filtered_path = str_replace("\Database\Seeds","",$app_path);
-            $app_data = vh_get_module_settings_from_path($filtered_path);
+        if($prefix)
+        {
+            $pre_name = $prefix;
+
+        }else{
+
+            $pre_name = get_string_between($json_file_path,
+                "\VaahCms\Modules\\","\Database\Seeds");
+
+            if(!$pre_name){
+                $pre_name = get_string_between($json_file_path,
+                    "\VaahCms\Themes\\","\Database\Seeds");
+            }
         }
 
         foreach ($list as $item)
@@ -200,11 +210,10 @@ class VaahSeeder{
                 $item['slug'] = Str::slug($item['name']);
             }
 
-            if(count($app_data) > 0){
-                if(isset($app_data['name']) && $app_data['name']){
-                    $item['name'] = $app_data['name'].'-'.$item['name'];
-                    $item['slug'] = Str::slug($app_data['name']).'-'.$item['slug'];
-                }
+            if($pre_name){
+
+                $item['name'] = $pre_name.': '.$item['name'];
+                $item['slug'] = Str::slug($pre_name).'-'.$item['slug'];
 
             }
 
