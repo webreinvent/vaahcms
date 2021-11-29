@@ -580,15 +580,6 @@ class User extends Authenticatable
             return $response;
         }
 
-        if(!$user->hasPermission('can-login-in-backend'))
-        {
-
-            $response['status'] = 'failed';
-            $response['errors'][] = trans("vaahcms::messages.permission_denied");
-
-            return $response;
-        }
-
         return $user;
     }
     //-------------------------------------------------
@@ -601,6 +592,15 @@ class User extends Authenticatable
         if(isset($user['status']) && $user['status'] == 'failed')
         {
             return $user;
+        }
+
+        if(!$user->hasPermission('can-login-in-backend'))
+        {
+
+            $response['status'] = 'failed';
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+            return $response;
         }
 
         $inputs = $request->all();
@@ -634,6 +634,15 @@ class User extends Authenticatable
         if(isset($user['status']) && $user['status'] == 'failed')
         {
             return $user;
+        }
+
+        if(!$user->hasPermission('can-login-in-backend'))
+        {
+
+            $response['status'] = 'failed';
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+            return $response;
         }
 
         $otp_1 = mt_rand(100, 999);
@@ -675,6 +684,15 @@ class User extends Authenticatable
         if(isset($user['status']) && $user['status'] == 'failed')
         {
             return $user;
+        }
+
+        if(!$user->hasPermission('can-login-in-backend'))
+        {
+
+            $response['status'] = 'failed';
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+            return $response;
         }
 
         $rules = array(
@@ -736,6 +754,15 @@ class User extends Authenticatable
         if(isset($user['status']) && $user['status'] == 'failed')
         {
             return $user;
+        }
+
+        if(!$user->hasPermission('can-login-in-backend'))
+        {
+
+            $response['status'] = 'failed';
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+            return $response;
         }
 
         $reset_password_code = uniqid();
