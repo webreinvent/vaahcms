@@ -20,6 +20,13 @@
         "section": "backend",
         "details": "This will allow user to login in the backend."
     },
+
+    {
+        "name": "Can Login In Frontend",
+        "module": "vaahcms",
+        "section": "frontend",
+        "details": "This will allow user to login in the frontend."
+    },
     {
         "name": "Has Access Of Users Section",
         "module": "vaahcms",

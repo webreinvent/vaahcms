@@ -19,7 +19,7 @@
                 </b-table-column>
 
                 <b-table-column v-slot="props" field="slug" label="Slug">
-                    <b-tooltip label="Copy Email" type="is-dark">
+                    <b-tooltip label="Copy Slug" type="is-dark">
                         <vh-copy class="text-copyable"
                                  :data="props.row.slug"
                                  :label="props.row.slug+' '+icon_copy"

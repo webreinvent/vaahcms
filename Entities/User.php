@@ -293,11 +293,11 @@ class User extends Authenticatable
         return $this->roles()->wherePivot('is_active', 1);
     }
     //-------------------------------------------------
-    public static function countAdministrators()
+    public static function countSuperAdministrators()
     {
         $count = User::whereHas('roles', function ($query) {
             $query->where('vh_user_roles.is_active', '=', 1)
-                ->slug('administrator');
+                ->slug('super-administrator');
         })->isActive()->get()->count();
 
         return $count;
@@ -354,7 +354,7 @@ class User extends Authenticatable
         $permissions_list = array();
         foreach ($roles as $role) {
 
-            if($role->slug !='administrator')
+            if($role->slug !='super-administrator')
             {
                 $permissions = $role->permissions()->isActive()
                     ->wherePivot('is_active', 1)->get();
@@ -364,7 +364,7 @@ class User extends Authenticatable
 
             foreach ($permissions as $permission) {
 
-                if($role->slug =='administrator')
+                if($role->slug =='super-administrator')
                 {
                     $permissions_list[$permission->id] = $permission->toArray();
 
@@ -390,7 +390,7 @@ class User extends Authenticatable
     //-------------------------------------------------
 
     //-------------------------------------------------
-    public static function rulesAdminCreate()
+    public static function rulesSuperAdminCreate()
     {
         $rules = [
             'name' => 'required|string|max:255',
@@ -464,10 +464,10 @@ class User extends Authenticatable
 
     }
     //-------------------------------------------------
-    public static function isLastAdmin()
+    public static function isLastSuperAdmin()
     {
-        $count_admin = User::countAdministrators();
-        if($count_admin < 2)
+        $count = User::countSuperAdministrators();
+        if($count < 2)
         {
             return true;
         }
@@ -500,12 +500,12 @@ class User extends Authenticatable
         }
 
 
-        //restricted action if this user is last admin
+        //restricted action if this user is last super admin
         $result = false;
         $user = self::find($user_id);
-        $is_last_admin = self::isLastAdmin();
+        $is_last_super_admin = self::isLastSuperAdmin();
 
-        if($user->hasRole('administrator') && $is_last_admin)
+        if($user->hasRole('super-administrator') && $is_last_super_admin)
         {
             switch ($action_type)
             {
@@ -594,6 +594,15 @@ class User extends Authenticatable
             return $user;
         }
 
+        if(!$user->hasPermission('can-login-in-backend'))
+        {
+
+            $response['status'] = 'failed';
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+            return $response;
+        }
+
         $inputs = $request->all();
 
         $remember = false;
@@ -605,6 +614,7 @@ class User extends Authenticatable
             'password' => trim($request->get('password'))
         ], $remember))
         {
+
             $user = Auth::user();
             $user->last_login_at = Carbon::now();
             $user->save();
@@ -624,6 +634,15 @@ class User extends Authenticatable
         if(isset($user['status']) && $user['status'] == 'failed')
         {
             return $user;
+        }
+
+        if(!$user->hasPermission('can-login-in-backend'))
+        {
+
+            $response['status'] = 'failed';
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+            return $response;
         }
 
         $otp_1 = mt_rand(100, 999);
@@ -665,6 +684,15 @@ class User extends Authenticatable
         if(isset($user['status']) && $user['status'] == 'failed')
         {
             return $user;
+        }
+
+        if(!$user->hasPermission('can-login-in-backend'))
+        {
+
+            $response['status'] = 'failed';
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+            return $response;
         }
 
         $rules = array(
@@ -726,6 +754,15 @@ class User extends Authenticatable
         if(isset($user['status']) && $user['status'] == 'failed')
         {
             return $user;
+        }
+
+        if(!$user->hasPermission('can-login-in-backend'))
+        {
+
+            $response['status'] = 'failed';
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+            return $response;
         }
 
         $reset_password_code = uniqid();
@@ -813,16 +850,16 @@ class User extends Authenticatable
     //-------------------------------------------------
 
     //-------------------------------------------------
-    public function isAdmin()
+    public function isSuperAdmin()
     {
-        return $this->hasRole('administrator');
+        return $this->hasRole('super-administrator');
     }
 
     //-------------------------------------------------
     public function hasPermission($permission_slug, $details=false)
     {
 
-        if ($this->isAdmin()) {
+        if ($this->isSuperAdmin()) {
 
             if($details)
             {
@@ -830,7 +867,7 @@ class User extends Authenticatable
                 if(env('APP_DEBUG'))
                 {
                     $response['data']['permission'] = 'Permission slug: '.$permission_slug;
-                    $response['hint'][] = 'Admin has all permission by default.';
+                    $response['hint'][] = 'Super Admin has all permission by default.';
                 }
                 return $response;
 
@@ -939,13 +976,13 @@ class User extends Authenticatable
     public static function notifyAdmins($subject, $message)
     {
         $users = new User();
-        $admins = $users->listByRole('administrator');
+        $super_admins = $users->listByRole('super-administrator');
 
         $notification = new \stdClass();
         $notification->subject = $subject;
         $notification->message = $message;
 
-        Notification::send($admins, new NotifyAdmin($notification));
+        Notification::send($super_admins, new NotifyAdmin($notification));
     }
     //-------------------------------------------------
     public static function getUsersForAssets()
@@ -1200,6 +1237,18 @@ class User extends Authenticatable
 
         if($request->has('id'))
         {
+
+            // check if already exist
+            $user = self::where('id', '!=', $inputs['id'])
+                ->where('email',$inputs['email'])->first();
+
+            if($user)
+            {
+                $response['status'] = 'failed';
+                $response['errors'][] = "This email is already registered.";
+                return $response;
+            }
+
             $item = User::find($request->id);
         } else
         {
@@ -1391,12 +1440,14 @@ class User extends Authenticatable
 
         $inputs = $request->all();
 
+        $role = Role::find($inputs['inputs']['role_id']);
 
-        if($inputs['inputs']['id'] == 1 && $inputs['inputs']['role_id'] == 1)
+        if($inputs['inputs']['id'] == 1 && $role->slug == 'super-administrator'
+            && $inputs['data']['is_active'] == 0)
         {
             $response['status'] = 'failed';
-            $response['errors'][] = 'First user will always be an administrator';
-            return response()->json($response);
+            $response['errors'][] = 'First user will always be an super administrator';
+            return $response;
         }
 
         $item = User::find($inputs['inputs']['id']);
