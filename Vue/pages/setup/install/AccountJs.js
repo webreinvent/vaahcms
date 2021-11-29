@@ -108,7 +108,7 @@ export default {
         validateAccountCreation: function () {
             if(!this.config.is_account_created)
             {
-                this.$vaah.toastErrors(['Create the Administrator Account'])
+                this.$vaah.toastErrors(['Create the Super Administrator Account'])
             } else
             {
                 this.resetConfig();

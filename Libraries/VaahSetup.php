@@ -229,7 +229,7 @@ class VaahSetup{
             $data['stage'] = 'migrated';
         }
 
-        if(static::isAdminCreated())
+        if(static::isSuperAdminCreated())
         {
             $data['stage'] = 'installed';
         }
@@ -243,7 +243,7 @@ class VaahSetup{
 
     }
     //----------------------------------------------------------
-    public static function isAdminCreated()
+    public static function isSuperAdminCreated()
     {
         $db_connected = static::isDBConnected();
         $db_migrated = static::isDBMigrated();
@@ -253,7 +253,7 @@ class VaahSetup{
             return false;
         }
 
-        $count = User::countAdministrators();
+        $count = User::countSuperAdministrators();
 
         if($count > 0)
         {
