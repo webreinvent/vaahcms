@@ -26,6 +26,7 @@ export default {
             is_btn_otp_loading: false,
             signin: {
                 type: 'password',
+                username: null,
                 email: null,
                 password: null,
                 attempts: 0,
