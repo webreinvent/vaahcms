@@ -80,7 +80,9 @@ class RegistrationsController extends Controller
             return response()->json($response);
         }
 
-        $response = Registration::getList($request);
+        $excluded_columns = User::getUserSettings(true,true);
+        
+        $response = Registration::getList($request,$excluded_columns);
         return response()->json($response);
     }
 
@@ -96,8 +98,10 @@ class RegistrationsController extends Controller
             return response()->json($response);
         }
 
+        $excluded_columns = User::getUserSettings(true,true);
+
         $request->merge(['id'=>$id]);
-        $response = Registration::getItem($request);
+        $response = Registration::getItem($request,$excluded_columns);
         return response()->json($response);
     }
     //----------------------------------------------------------

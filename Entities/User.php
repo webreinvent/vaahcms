@@ -1878,7 +1878,8 @@ class User extends Authenticatable
 
     }
     //-------------------------------------------------
-    public static function getUserSettings($return_hidden_columns = false)
+    public static function getUserSettings($return_hidden_column_name = false,
+                                           $return_permission_columns = false)
     {
 
         $settings = Setting::where('category','user_setting')
@@ -1887,10 +1888,12 @@ class User extends Authenticatable
         $list = array();
 
         foreach ($settings as $key => $setting){
-            if(!$return_hidden_columns){
+            if(!$return_hidden_column_name){
                 $list[$setting->key] = $setting->value;
-            }else{
-                if($setting->value->is_hidden){
+            }elseif($setting->value->is_hidden){
+                if(!$return_permission_columns){
+                    $list[$key] = $setting->key;
+                }elseif($setting->value->for_permission){
                     $list[$key] = $setting->key;
                 }
             }

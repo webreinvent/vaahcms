@@ -308,6 +308,16 @@ class Registration extends Model
             return $response;
         }
 
+        // check if username already exist
+        $user = self::where('username',$inputs['username'])->first();
+
+        if($user)
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = "This username is already registered.";
+            return $response;
+        }
+
         // check if user already exist
         $user = User::where('email',$inputs['email'])->first();
 
@@ -345,7 +355,7 @@ class Registration extends Model
 
     }
     //-------------------------------------------------
-    public static function getList($request)
+    public static function getList($request,$excluded_columns = [])
     {
 
         $list = Registration::orderBy('created_at', 'DESC');
@@ -379,9 +389,12 @@ class Registration extends Model
             });
         }
 
-        if(!\Auth::user()->hasPermission('can-see-registrations-contact-details')){
-            $list->exclude(['email','alternate_email', 'phone']);
+        if(!\Auth::user()->hasPermission('can-see-users-contact-details')){
+            $list->exclude(array_merge(['email','alternate_email', 'phone'],$excluded_columns));
+        }else{
+            $list->exclude($excluded_columns);
         }
+
 
         if(isset($request['per_page'])
             && $request['per_page']
@@ -398,15 +411,17 @@ class Registration extends Model
 
     }
     //-------------------------------------------------
-    public static function getItem($request)
+    public static function getItem($request,$excluded_columns = [])
     {
 
         $item = Registration::where('id', $request->id);
         $item->withTrashed();
         $item->with(['createdByUser', 'updatedByUser', 'deletedByUser']);
 
-        if(!\Auth::user()->hasPermission('can-see-registrations-contact-details')){
-            $item->exclude(['email','alternate_email', 'phone']);
+        if(!\Auth::user()->hasPermission('can-see-users-contact-details')){
+            $item->exclude(array_merge(['email','alternate_email', 'phone'],$excluded_columns));
+        }else{
+            $item->exclude($excluded_columns);
         }
 
         $item = $item->first();
@@ -449,7 +464,18 @@ class Registration extends Model
         if($user)
         {
             $response['status'] = 'failed';
-            $response['errors'][] = 'Email is already registered.';
+            $response['errors'][] = 'This email is already registered.';
+            return $response;
+        }
+
+        // check if already exist
+        $user = self::where('id', '!=', $request->id)
+            ->where('username',$request->username)->first();
+
+        if($user)
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = "This username is already registered.";
             return $response;
         }
 
