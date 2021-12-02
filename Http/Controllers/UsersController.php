@@ -94,9 +94,9 @@ class UsersController extends Controller
             return response()->json($response);
         }
 
-        $exclude_columns = User::getUserSettings(true);
+        $excluded_columns = User::getUserSettings(true);
 
-        $response = User::getItem($id,$exclude_columns);
+        $response = User::getItem($id,$excluded_columns);
         return response()->json($response);
     }
     //----------------------------------------------------------

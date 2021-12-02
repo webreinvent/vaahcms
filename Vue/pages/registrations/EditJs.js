@@ -243,7 +243,7 @@ export default {
             if(this.page.assets.user_settings
                 && this.page.assets.user_settings[key]
                 && this.page.assets.user_settings[key].is_hidden
-                && this.page.assets.user_settings[key].for_permission){
+                && this.page.assets.user_settings[key].for_registration){
                 return this.page.assets.user_settings[key].is_hidden
             }
 

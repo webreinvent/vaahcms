@@ -44,16 +44,8 @@
                                                     :data="is_empty ? [] : list"
                                                     :mobile-cards="has_mobile_cards">
 
-                                                <b-table-column field="for_permission" width="120"
-                                                                label="For Permission" numeric
-                                                                :td-attrs="columnTdAttrs" v-slot="props">
-                                                    <b-checkbox  @input="store(props.row)"
-                                                                 :native-value=true
-                                                                 v-model="props.row.value.for_permission">
-                                                    </b-checkbox>
-                                                </b-table-column>
 
-                                                <b-table-column field="column_name" label="Column Name"
+                                                <b-table-column field="field_name" label="Field Name"
                                                                 :td-attrs="columnTdAttrs" v-slot="props">
                                                     {{ $vaah.toLabel(props.row.key) }}
                                                 </b-table-column>
@@ -78,6 +70,15 @@
                                                         <span>No</span>
                                                     </b-radio-button>
                                                     </b-field>
+                                                </b-table-column>
+
+                                                <b-table-column field="apply_for_registration" width="120"
+                                                                label="Apply for Registration" numeric
+                                                                :td-attrs="columnTdAttrs" v-slot="props">
+                                                    <b-checkbox  @input="store(props.row)"
+                                                                 :native-value=true
+                                                                 v-model="props.row.value.for_registration">
+                                                    </b-checkbox>
                                                 </b-table-column>
 
 
