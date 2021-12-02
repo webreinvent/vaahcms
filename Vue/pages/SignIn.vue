@@ -45,7 +45,7 @@
                                              class="is-full-width has-margin-top-20">
                                         <b-input v-model="signin.email"
                                                  placeholder="Enter Email Address or Username"
-                                                 dusk="signin-username_or_email">
+                                                 dusk="signin-email_or_username">
                                         </b-input>
                                     </b-field>
 
@@ -54,7 +54,7 @@
                                         <b-input type="email"
                                                  v-model="signin.email"
                                                  placeholder="Enter Email Address"
-                                                 dusk="signin-username_or_email">
+                                                 dusk="signin-email">
                                         </b-input>
                                     </b-field>
 
