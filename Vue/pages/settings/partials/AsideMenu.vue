@@ -8,6 +8,12 @@
                      :active="!!($route.path == '/vaah/settings/general')"
                      :to="{name: 'general.index'}">
         </b-menu-item>
+        <b-menu-item label="User Settings"
+                     icon="users-cog"
+                     tag="router-link"
+                     :active="!!($route.path == '/vaah/settings/user-settings')"
+                     :to="{name: 'user-setting.index'}">
+        </b-menu-item>
         <b-menu-item label="Env Variables"
                      icon="lock"
                      tag="router-link"
