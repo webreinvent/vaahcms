@@ -81,7 +81,7 @@ class RegistrationsController extends Controller
         }
 
         $excluded_columns = User::getUserSettings(true,true);
-        
+
         $response = Registration::getList($request,$excluded_columns);
         return response()->json($response);
     }

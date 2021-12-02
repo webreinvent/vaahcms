@@ -19,12 +19,6 @@
                                 User Settings
                             </div>
 
-                            <b-tooltip label="Download" type="is-dark">
-                                <b-button type="is-text"
-                                          class="card-header-icon has-margin-top-5 has-margin-right-5"
-                                          icon-left="download" @click="downloadFile(env_file)"></b-button>
-                            </b-tooltip>
-
                             <b-tooltip label="Reload" type="is-dark">
                                 <b-button type="is-text"
                                           class="card-header-icon has-margin-top-5 has-margin-right-5"
