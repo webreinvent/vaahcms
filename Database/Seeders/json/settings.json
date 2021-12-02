@@ -31,6 +31,21 @@
     {"category": "global", "key": "maximum_number_of_forgot_password_attempts_per_session", "value": "3" },
     {"category": "global", "key": "maximum_number_of_login_attempts_per_session", "value": "3" },
     {"category": "global", "key": "laravel_queues", "value": false },
-    {"category": "sample", "key": "sample", "value": 0 }
-
+    {"category": "sample", "key": "sample", "value": 0 },
+    {"category": "user_setting", "type":"json", "key": "username", "value": {"is_hidden": false, "for_permission": false} },
+    {"category": "user_setting", "type":"json", "key": "display_name", "value": {"is_hidden": false, "for_permission": false} },
+    {"category": "user_setting", "type":"json", "key": "title", "value": {"is_hidden": false, "for_permission": false} },
+    {"category": "user_setting", "type":"json", "key": "designation", "value": {"is_hidden": false, "for_permission": false} },
+    {"category": "user_setting", "type":"json", "key": "middle_name", "value": {"is_hidden": false, "for_permission": false} },
+    {"category": "user_setting", "type":"json", "key": "last_name", "value": {"is_hidden": false, "for_permission": false} },
+    {"category": "user_setting", "type":"json", "key": "gender", "value": {"is_hidden": false, "for_permission": false} },
+    {"category": "user_setting", "type":"json", "key": "country_calling_code", "value": {"is_hidden": false, "for_permission": false} },
+    {"category": "user_setting", "type":"json", "key": "phone", "value": {"is_hidden": false, "for_permission": false} },
+    {"category": "user_setting", "type":"json", "key": "bio", "value": {"is_hidden": false, "for_permission": false} },
+    {"category": "user_setting", "type":"json", "key": "website", "value": {"is_hidden": false, "for_permission": false} },
+    {"category": "user_setting", "type":"json", "key": "timezone", "value": {"is_hidden": false, "for_permission": false} },
+    {"category": "user_setting", "type":"json", "key": "alternate_email", "value": {"is_hidden": false, "for_permission": false} },
+    {"category": "user_setting", "type":"json", "key": "birth", "value": {"is_hidden": false, "for_permission": false} },
+    {"category": "user_setting", "type":"json", "key": "country", "value": {"is_hidden": false, "for_permission": false} },
+    {"category": "user_setting", "type":"json", "key": "foreign_user_id", "value": {"is_hidden": false, "for_permission": false} }
 ]

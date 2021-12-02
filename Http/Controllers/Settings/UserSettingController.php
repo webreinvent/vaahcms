@@ -59,18 +59,11 @@ class UserSettingController extends Controller
             return response()->json($response);
         }
 
-        $data = [];
-
-        foreach (User::$setting_column as $key => $column){
-            $data['list'][$key] = [
-                'name' => $column,
-                'is_hidden' => 0,
-                'for_permission' => false,
-            ];
-        }
+        $list = Setting::where('category','user_setting')
+            ->select('id','key','type','value')->get();
 
         $response['status'] = 'success';
-        $response['data'] = $data;
+        $response['data']['list'] = $list;
 
         return response()->json($response);
 
@@ -109,13 +102,12 @@ class UserSettingController extends Controller
             return response()->json($response);
         }
 
-        $response = VaahSetup::generateEnvFile($request, 'list');
+        $input = $request->item;
 
-        if($response['status'] && $response['status'] == 'success')
-        {
-            VaahHelper::clearCache();
-            $response['data']['redirect_url'] = route('vh.backend');
-        }
+        Setting::where('id',$input['id'])->update($input);
+
+        $response['status'] = 'success';
+        $response['messages'][] = 'Updated';
 
         return response()->json($response);
 

@@ -53,13 +53,15 @@
                                                 <b-table-column field="for_permission" width="120"
                                                                 label="For Permission" numeric
                                                                 :td-attrs="columnTdAttrs" v-slot="props">
-                                                    <b-checkbox v-model="props.row.for_permission">
+                                                    <b-checkbox  @input="store(props.row)"
+                                                                 :native-value=true
+                                                                 v-model="props.row.value.for_permission">
                                                     </b-checkbox>
                                                 </b-table-column>
 
                                                 <b-table-column field="column_name" label="Column Name"
                                                                 :td-attrs="columnTdAttrs" v-slot="props">
-                                                    {{ $vaah.toLabel(props.row.name) }}
+                                                    {{ $vaah.toLabel(props.row.key) }}
                                                 </b-table-column>
 
                                                 <b-table-column field="is_hidden" width="120"
@@ -67,15 +69,18 @@
                                                     <b-field>
                                                     <b-radio-button name="user-is_hidden"
                                                                     dusk="user-is_hidden"
-                                                                    v-model="props.row.is_hidden"
-                                                                    :native-value=1>
+                                                                    @input="store(props.row)"
+                                                                    v-model="props.row.value.is_hidden"
+                                                                    :native-value=true>
                                                         <span>Yes</span>
                                                     </b-radio-button>
 
                                                     <b-radio-button type="is-danger"
-                                                                    name="user-is_hidden" dusk="user-is_hidden"
-                                                                    v-model="props.row.is_hidden"
-                                                                    :native-value=0>
+                                                                    name="user-is_hidden"
+                                                                    dusk="user-is_hidden"
+                                                                    @input="store(props.row)"
+                                                                    v-model="props.row.value.is_hidden"
+                                                                    :native-value=false>
                                                         <span>No</span>
                                                     </b-radio-button>
                                                     </b-field>

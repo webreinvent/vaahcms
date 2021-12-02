@@ -197,18 +197,13 @@ export default {
             })
         },
         //---------------------------------------------------------------------
-        store: function () {
-
-            let valid = this.validate();
-
-            if(!valid)
-            {
-                return false;
-            }
+        store: function (item) {
 
             this.$Progress.start();
 
-            let params = this.list;
+            let params = {
+                item : item
+            };
 
             let url = this.ajax_url+'/store';
             this.$vaah.ajax(url, params, this.storeAfter);
@@ -216,10 +211,6 @@ export default {
         //---------------------------------------------------------------------
         storeAfter: function (data, res) {
             this.$Progress.finish();
-            if(data)
-            {
-                window.location.href = data.redirect_url;
-            }
         },
         //---------------------------------------------------------------------
         isDisable: function (item) {

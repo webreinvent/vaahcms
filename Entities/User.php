@@ -57,14 +57,6 @@ class User extends Authenticatable
         "updated_by","deleted_by"
     ];
     //-------------------------------------------------
-    public static $setting_column = [
-        "username","display_name","title","designation",
-        "middle_name","last_name", "gender","country_calling_code",
-        "phone", "bio", "website","timezone",
-        "alternate_email","birth",
-        "country",'foreign_user_id'
-    ];
-    //-------------------------------------------------
     protected $hidden = [
         'password',
         'login_otp',
