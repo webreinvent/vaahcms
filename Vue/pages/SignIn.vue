@@ -43,7 +43,7 @@
 
                                     <b-field v-if="signin.type != 'otp'"
                                              class="is-full-width has-margin-top-20">
-                                        <b-input v-model="signin.username"
+                                        <b-input v-model="signin.email"
                                                  placeholder="Enter Email Address or Username"
                                                  dusk="signin-username_or_email">
                                         </b-input>

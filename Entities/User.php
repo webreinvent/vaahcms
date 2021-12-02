@@ -583,11 +583,64 @@ class User extends Authenticatable
         return $user;
     }
     //-------------------------------------------------
+    public static function beforeUserLoginValidation($request)
+    {
+        //check if already logged in
+        if (\Auth::check())
+        {
+            \Auth::logout();
+        }
+
+        $inputs = $request->all();
+        $inputs['email'] = trim($inputs['email']);
+
+        $rules = array(
+            'email' => 'required|max:150',
+        );
+        $messages = array(
+            'email.required' => 'The email or username field is required.',
+            'email.max' => 'The email or username may not be greater than 150 characters.',
+        );
+        $validator = \Validator::make($inputs, $rules, $messages);
+
+        if ($validator->fails())
+        {
+            $errors = errorsToArray($validator->errors());
+            $response['status'] = 'failed';
+            $response['errors'] = $errors;
+            return $response;
+        }
+
+        $user = self::where('email', $inputs['email'])->first();
+
+        //check user is active
+        if(!$user){
+            $user = self::where('username', $inputs['email'])->first();
+        }
+
+        if(!$user)
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = 'No user exist';
+            return $response;
+        }
+
+        //check user is active
+        if($user->is_active != 1)
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = trans('vaahcms::messages.inactive_account');
+            return $response;
+        }
+
+        return $user;
+    }
+    //-------------------------------------------------
 
     public static function login($request)
     {
 
-        $user = self::beforeUserActionValidation($request);
+        $user = self::beforeUserLoginValidation($request);
 
         if(isset($user['status']) && $user['status'] == 'failed')
         {
@@ -615,6 +668,14 @@ class User extends Authenticatable
         ], $remember))
         {
 
+            $user = Auth::user();
+            $user->last_login_at = Carbon::now();
+            $user->save();
+
+            $response['status'] = 'success';
+        }elseif(Auth::attempt(['username' => $inputs['email'],
+            'password' => trim($request->get('password'))
+        ], $remember)){
             $user = Auth::user();
             $user->last_login_at = Carbon::now();
             $user->save();
@@ -1032,6 +1093,16 @@ class User extends Authenticatable
             return $response;
         }
 
+        // check if username already exist
+        $user = self::where('username',$inputs['username'])->first();
+
+        if($user)
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = "This username is already registered.";
+            return $response;
+        }
+
         if(!isset($inputs['username']))
         {
             $inputs['username'] = Str::slug($inputs['email']);
@@ -1246,6 +1317,16 @@ class User extends Authenticatable
             {
                 $response['status'] = 'failed';
                 $response['errors'][] = "This email is already registered.";
+                return $response;
+            }
+            // check if already exist
+            $user = self::where('id', '!=', $inputs['id'])
+                ->where('username',$inputs['username'])->first();
+
+            if($user)
+            {
+                $response['status'] = 'failed';
+                $response['errors'][] = "This username is already registered.";
                 return $response;
             }
 
