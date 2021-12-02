@@ -68,27 +68,6 @@ class UserSettingController extends Controller
         return response()->json($response);
 
     }
-    //----------------------------------------------------------
-    public function downloadFile(Request $request,$file_name)
-    {
-
-        if(!\Auth::user()->hasPermission('has-access-of-setting-section'))
-        {
-            $response['status'] = 'failed';
-            $response['errors'][] = trans("vaahcms::messages.permission_denied");
-
-            return response()->json($response);
-        }
-
-        if(!$file_name || !File::exists(base_path('/'.$file_name))){
-            return 'No File Found.';
-        }
-
-        $file_path =  base_path('/'.$file_name);
-
-        return response()->download($file_path);
-
-    }
 
     //----------------------------------------------------------
     public function store(Request $request)

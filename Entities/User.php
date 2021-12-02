@@ -1128,7 +1128,7 @@ class User extends Authenticatable
 
     }
     //-------------------------------------------------
-    public static function getList($request)
+    public static function getList($request,$excluded_columns = [])
     {
 
         if(isset($request['recount']) && $request['recount'] == true)
@@ -1185,7 +1185,9 @@ class User extends Authenticatable
 
 
         if(!\Auth::user()->hasPermission('can-see-users-contact-details')){
-            $list->exclude(['email','alternate_email', 'phone']);
+            $list->exclude(array_merge(['email','alternate_email', 'phone'],$excluded_columns));
+        }else{
+            $list->exclude($excluded_columns);
         }
 
         $list->withCount(['activeRoles']);
@@ -1210,7 +1212,7 @@ class User extends Authenticatable
 
     //-------------------------------------------------
 
-    public static function getItem($id)
+    public static function getItem($id,$excluded_columns = [])
     {
 
         $item = self::where('id', $id)->with(['createdByUser',
@@ -1218,7 +1220,9 @@ class User extends Authenticatable
             ->withTrashed();
 
         if(!\Auth::user()->hasPermission('can-see-users-contact-details')){
-            $item->exclude(['email','alternate_email', 'phone']);
+            $item->exclude(array_merge(['email','alternate_email', 'phone'],$excluded_columns));
+        }else{
+            $item->exclude($excluded_columns);
         }
 
         $item = $item->first();
@@ -1871,6 +1875,29 @@ class User extends Authenticatable
         }
 
         return $data;
+
+    }
+    //-------------------------------------------------
+    public static function getUserSettings($return_hidden_columns = false)
+    {
+
+        $settings = Setting::where('category','user_setting')
+            ->select('id','key','type','value')->get();
+
+        $list = array();
+
+        foreach ($settings as $key => $setting){
+            if(!$return_hidden_columns){
+                $list[$setting->key] = $setting->value;
+            }else{
+                if($setting->value->is_hidden){
+                    $list[$key] = $setting->key;
+                }
+            }
+
+        }
+
+        return $list;
 
     }
     //-------------------------------------------------

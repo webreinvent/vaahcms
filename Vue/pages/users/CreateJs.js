@@ -255,6 +255,17 @@ export default {
             return this.$vaah.hasPermission(this.permissions, slug);
         },
         //---------------------------------------------------------------------
+        isHidden: function(key)
+        {
+            if(this.page.assets.user_settings
+                && this.page.assets.user_settings[key]
+                && this.page.assets.user_settings[key].is_hidden){
+                return this.page.assets.user_settings[key].is_hidden
+            }
+
+            return false;
+        },
+        //---------------------------------------------------------------------
         //---------------------------------------------------------------------
         //---------------------------------------------------------------------
         //---------------------------------------------------------------------

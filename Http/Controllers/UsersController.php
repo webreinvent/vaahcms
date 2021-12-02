@@ -43,6 +43,7 @@ class UsersController extends Controller
         $data['bulk_actions'] = vh_general_bulk_actions();
         $data['name_titles'] = vh_name_titles();
         $data['role'] = $role;
+        $data['user_settings'] = User::getUserSettings();
 
         $response['status'] = 'success';
         $response['data'] = $data;
@@ -77,7 +78,9 @@ class UsersController extends Controller
             return response()->json($response);
         }
 
-        $response = User::getList($request);
+        $excluded_columns = User::getUserSettings(true);
+
+        $response = User::getList($request,$excluded_columns);
         return response()->json($response);
     }
     //----------------------------------------------------------
@@ -91,7 +94,9 @@ class UsersController extends Controller
             return response()->json($response);
         }
 
-        $response = User::getItem($id);
+        $exclude_columns = User::getUserSettings(true);
+
+        $response = User::getItem($id,$exclude_columns);
         return response()->json($response);
     }
     //----------------------------------------------------------

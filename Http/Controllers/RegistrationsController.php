@@ -9,6 +9,7 @@ use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Hash;
 use WebReinvent\VaahCms\Entities\Registration;
 use WebReinvent\VaahCms\Entities\Taxonomy;
+use WebReinvent\VaahCms\Entities\User;
 
 class RegistrationsController extends Controller
 {
@@ -39,6 +40,7 @@ class RegistrationsController extends Controller
         $data['registration_statuses'] = Taxonomy::getTaxonomyByType('registrations');
         $data['bulk_actions'] = vh_general_bulk_actions();
         $data['name_titles'] = vh_name_titles();
+        $data['user_settings'] = User::getUserSettings();
 
         $response['status'] = 'success';
         $response['data'] = $data;

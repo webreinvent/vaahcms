@@ -84,9 +84,6 @@ Route::group(
         Route::post( '/list', 'UserSettingController@getList' )
             ->name( 'vh.backend.settings.env.list' );
         //------------------------------------------------
-        Route::get( '/download-file/{file_name}', 'UserSettingController@downloadFile')
-            ->name( 'vh.backend.settings.env.download.file' );;
-        //---------------------------------------------------------
         Route::post( '/store', 'UserSettingController@store' )
             ->name( 'vh.backend.settings.env.store' );
         //------------------------------------------------
