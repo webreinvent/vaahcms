@@ -1883,6 +1883,7 @@ class User extends Authenticatable
     {
 
         $settings = Setting::where('category','user_setting')
+            ->where('label','field')
             ->select('id','key','type','value')->get();
 
         $list = array();

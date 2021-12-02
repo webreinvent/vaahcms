@@ -21,11 +21,17 @@ export default {
             labelPosition: 'on-border',
             assets:null,
             list: [],
+            field_list: [],
+            custom_field_list: [],
             reveal: false,
             reveal_password: false,
             reveal_text: 'Reveal Values',
             is_empty: false,
-            has_mobile_cards: true
+            has_mobile_cards: true,
+            field:{
+                name:null,
+                type:null
+            }
         };
 
         return obj;
@@ -88,8 +94,9 @@ export default {
         //---------------------------------------------------------------------
         getListAfter: function (data, res) {
             this.$Progress.finish();
-            if(data){
-                this.list = data.list;
+            if(data && data.list){
+                this.field_list = data.list.fields;
+                this.custom_field_list = data.list.custom_fields;
             }
         },
         //---------------------------------------------------------------------
@@ -131,9 +138,9 @@ export default {
         //---------------------------------------------------------------------
         columnTdAttrs(row, column) {
 
-            if (column.label === 'For Permission') {
+            if (column.label === 'Apply for Registration') {
                 return {
-                    class: 'is-vcentered',
+                    class: 'is-vcentered has-text-centered',
                     style: {'padding-top': '12px'}
                 }
             }
@@ -141,7 +148,21 @@ export default {
             return {
                 class: 'is-vcentered',
             }
-        }
+        },
+        //---------------------------------------------------------------------
+        expandAll: function () {
+
+            $('.collapse-content').each(function (index, item) {
+                $(item).slideDown();
+            });
+
+        },
+        //---------------------------------------------------------------------
+        collapseAll: function () {
+            $('.collapse-content').each(function (index, item) {
+                $(item).slideUp();
+            });
+        },
         //---------------------------------------------------------------------
     }
 }

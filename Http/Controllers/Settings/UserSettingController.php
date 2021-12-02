@@ -59,11 +59,17 @@ class UserSettingController extends Controller
             return response()->json($response);
         }
 
-        $list = Setting::where('category','user_setting')
-            ->select('id','key','type','value')->get();
+        $fields = Setting::where('category','user_setting')
+            ->where('label','field')
+            ->select('id','key','label','type','value')->get();
+
+        $custom_fields = Setting::where('category','user_setting')
+            ->where('label','custom_field')
+            ->select('id','key','label','type','value')->get();
 
         $response['status'] = 'success';
-        $response['data']['list'] = $list;
+        $response['data']['list']['fields'] = $fields;
+        $response['data']['list']['custom_fields'] = $custom_fields;
 
         return response()->json($response);
 
