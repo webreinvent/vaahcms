@@ -2,7 +2,7 @@
     <div class="sidebar-page">
         <section class="sidebar-layout" v-if="root && root.assets">
             <b-sidebar
-                    ref="vh_sidebar"
+                ref="vh_sidebar"
                 :can-cancel="false"
                 :fullheight="true"
                 position="fixed"
@@ -24,11 +24,12 @@
                     <b-menu class="is-custom-mobile">
 
                         <template v-if="root.assets && root.assets.extended_views" >
-                            <template  v-for="menu in root.assets.extended_views.sidebar_menu.success">
+                            <template  v-for="(menu , menu_label) in root.assets.extended_views.sidebar_menu.success">
                                 <b-menu-list v-for="(link, menu_key) in menu" :key="menu_key    ">
 
                                     <b-menu-item v-if="link.child"
-                                                 :icon="link.icon">
+                                                 :icon="link.icon"
+                                                 :data-wdio="getDataWdio(link,menu_label)">
 
                                         <template #label="props">
                                             <span>
@@ -40,7 +41,8 @@
                                         <template v-for="(link_child, key) in link.child">
                                             <b-menu-item v-if="link_child.child"
                                                          :key="key"
-                                                         :icon="link_child.icon">
+                                                         :icon="link_child.icon"
+                                                         :data-wdio="getDataWdio(link_child,menu_label)">
 
                                                 <template #label="props">
                                                     <span>
@@ -54,7 +56,8 @@
                                                               tag="a"
                                                               :href="link_sub_child.link"
                                                               :label="link_sub_child.label"
-                                                              :icon="link_sub_child.icon">
+                                                              :icon="link_sub_child.icon"
+                                                              :data-wdio="getDataWdio(link_sub_child,menu_label)">
                                                 </b-menu-item>
 
                                             </b-menu-item>
@@ -64,7 +67,8 @@
                                                          tag="a"
                                                          :href="link_child.link"
                                                          :label="link_child.label"
-                                                         :icon="link_child.icon">
+                                                         :icon="link_child.icon"
+                                                         :data-wdio="getDataWdio(link_child,menu_label)">
                                             </b-menu-item>
                                         </template>
 
@@ -74,7 +78,8 @@
                                                  tag="a"
                                                  :href="link.link"
                                                  :label="link.label"
-                                                 :icon="link.icon">
+                                                 :icon="link.icon"
+                                                 :data-wdio="getDataWdio(link,menu_label)">
                                     </b-menu-item>
 
                                 </b-menu-list>
@@ -105,6 +110,17 @@ export default {
     mounted() {
 
     },
+    methods: {
+        getDataWdio: function (item,label) {
+            let value = label+'-menu-'+this.$vaah.strToSlug(item.label);
+
+            if(item.data_wdio){
+                value = item.data_wdio;
+            }
+
+            return value;
+        },
+    }
 
 };
 </script>
