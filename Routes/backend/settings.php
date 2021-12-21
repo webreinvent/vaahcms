@@ -84,6 +84,9 @@ Route::group(
         Route::post( '/list', 'UserSettingController@getList' )
             ->name( 'vh.backend.settings.env.list' );
         //------------------------------------------------
+        Route::post( '/field/store', 'UserSettingController@storeField' )
+            ->name( 'vh.backend.settings.env.store.field' );
+        //------------------------------------------------
         Route::post( '/custom-field/store', 'UserSettingController@storeCustomField' )
             ->name( 'vh.backend.settings.env.store.custom-field' );
         //------------------------------------------------
