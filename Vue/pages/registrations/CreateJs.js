@@ -187,6 +187,7 @@ export default {
                 country: null,
                 country_code: null,
                 status: null,
+                meta: {}
             };
             return new_item;
         },
@@ -218,6 +219,7 @@ export default {
                 country: null,
                 country_code: null,
                 status: null,
+                meta: {}
             };
 
             for(let key in new_item)
@@ -234,11 +236,10 @@ export default {
         //---------------------------------------------------------------------
         isHidden: function(key)
         {
-            if(this.page.assets.user_settings
-                && this.page.assets.user_settings[key]
-                && this.page.assets.user_settings[key].is_hidden
-                && this.page.assets.user_settings[key].for_registration){
-                return this.page.assets.user_settings[key].is_hidden
+            if(this.page.assets.fields
+                && this.page.assets.fields[key]
+                && this.page.assets.fields[key].for_registration){
+                return this.page.assets.fields[key].is_hidden
             }
 
             return false;

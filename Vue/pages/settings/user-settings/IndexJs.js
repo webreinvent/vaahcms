@@ -1,5 +1,6 @@
 import GlobalComponents from '../../../vaahvue/helpers/GlobalComponents';
 import copy from "copy-to-clipboard";
+import draggable from 'vuedraggable';
 
 let base_url = document.getElementsByTagName('base')[0].getAttribute("href");
 let ajax_url = base_url+"/backend/vaah/settings/user-setting";
@@ -13,12 +14,14 @@ export default {
     },
     components:{
         ...GlobalComponents,
+        draggable
     },
     data()
     {
         let obj = {
             ajax_url: ajax_url,
             labelPosition: 'on-border',
+            is_btn_loading: false,
             assets:null,
             list: [],
             field_list: [],
@@ -104,15 +107,19 @@ export default {
 
             this.$Progress.start();
 
+            this.is_btn_loading = true;
+
             let params = {
-                item : item
+                item : this.custom_field_list
             };
 
-            let url = this.ajax_url+'/store';
+            let url = this.ajax_url+'/custom-field/store';
             this.$vaah.ajax(url, params, this.storeAfter);
         },
         //---------------------------------------------------------------------
         storeAfter: function (data, res) {
+            this.getList();
+            this.is_btn_loading = false;
             this.$Progress.finish();
         },
         //---------------------------------------------------------------------
@@ -162,6 +169,43 @@ export default {
             $('.collapse-content').each(function (index, item) {
                 $(item).slideUp();
             });
+        },
+        //---------------------------------------------------------------------
+        toggleFieldOptions: function (event) {
+
+            let el = event.target;
+
+            console.log('--->', el);
+
+            let target = $(el).closest('.dropzone-field').find('.dropzone-field-options');
+
+
+            console.log('--->', target);
+            target.toggle();
+
+        },
+        //---------------------------------------------------------------------
+        deleteGroupField: function (index) {
+            this.custom_field_list.splice(index, 1);
+        },
+        //---------------------------------------------------------------------
+        addCustomField: function () {
+
+            let new_item = {
+                "id": null,
+                "key": null,
+                "category": "user_setting",
+                "label": "custom_field",
+                "excerpt": null,
+                "type": "json",
+                "value": {
+                    "is_hidden": false,
+                    "for_registration": false,
+                    "type": this.field.type,
+                }
+            };
+
+            this.custom_field_list.push(new_item);
         },
         //---------------------------------------------------------------------
     }

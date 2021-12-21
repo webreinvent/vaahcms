@@ -103,7 +103,12 @@ class User extends Authenticatable
     //-------------------------------------------------
     public function getMetaAttribute($value)
     {
-        return json_decode($value);
+        if($value && $value!='null'){
+            return json_decode($value);
+        }else{
+            return json_decode('{}');
+        }
+
     }
     //-------------------------------------------------
     public function getNameAttribute() {
@@ -1879,12 +1884,17 @@ class User extends Authenticatable
     }
     //-------------------------------------------------
     public static function getUserSettings($return_hidden_column_name = false,
-                                           $return_registration_columns = false)
+                                           $return_registration_columns = false, $field_type = 'field')
     {
 
         $settings = Setting::where('category','user_setting')
-            ->where('label','field')
-            ->select('id','key','type','value')->get();
+            ->where('label',$field_type);
+
+        if($field_type != 'field'){
+            $settings->orderBy('meta','asc');
+        }
+
+        $settings = $settings->select('id','key','type','value','meta')->get();
 
         $list = array();
 

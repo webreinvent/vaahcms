@@ -301,10 +301,21 @@ export default {
         //---------------------------------------------------------------------
         isHidden: function(key)
         {
-            if(this.page.assets.user_settings
-                && this.page.assets.user_settings[key]
-                && this.page.assets.user_settings[key].is_hidden){
-                return this.page.assets.user_settings[key].is_hidden
+            if(this.page.assets.fields
+                && this.page.assets.fields[key]
+                && this.page.assets.fields[key].is_hidden){
+                return this.page.assets.fields[key].is_hidden
+            }
+
+            return false;
+        },
+        //---------------------------------------------------------------------
+        isHiddenCustomField: function(key)
+        {
+            if(this.page.assets.custom_fields
+                && this.page.assets.custom_fields[key]
+                && this.page.assets.custom_fields[key].is_hidden){
+                return this.page.assets.custom_fields[key].is_hidden
             }
 
             return false;

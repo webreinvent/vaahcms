@@ -65,7 +65,8 @@ class UserSettingController extends Controller
 
         $custom_fields = Setting::where('category','user_setting')
             ->where('label','custom_field')
-            ->select('id','key','label','type','value')->get();
+            ->select('id','key','label','type','value')
+            ->orderBy('meta','asc')->get();
 
         $response['status'] = 'success';
         $response['data']['list']['fields'] = $fields;
@@ -76,7 +77,7 @@ class UserSettingController extends Controller
     }
 
     //----------------------------------------------------------
-    public function store(Request $request)
+    public function storeCustomField(Request $request)
     {
 
         if(!\Auth::user()->hasPermission('has-access-of-setting-section'))
@@ -87,9 +88,57 @@ class UserSettingController extends Controller
             return response()->json($response);
         }
 
-        $input = $request->item;
+        $inputs = $request->item;
 
-        Setting::where('id',$input['id'])->update($input);
+
+        $rules = array(
+            '*.key' => 'required',
+        );
+
+        $validator = \Validator::make( $inputs, $rules);
+        if ( $validator->fails() ) {
+
+            $errors             = errorsToArray($validator->errors());
+            $response['status'] = 'failed';
+            $response['errors'] = $errors;
+            return $response;
+        }
+
+        $stored_groups = Setting::where('category','user_setting')
+            ->where('label','custom_field')->get()->pluck('key','id')->toArray();
+
+        $input_groups = collect($inputs)->pluck('key')->toArray();
+
+        $groups_to_delete = array_diff($stored_groups, $input_groups);
+
+
+
+        if(count($groups_to_delete) > 0)
+        {
+            $groups_to_delete = array_flip($groups_to_delete);
+
+//            dd($stored_groups,$input_groups,$groups_to_delete);
+
+            foreach ($groups_to_delete as $id)
+            {
+                Setting::where('id', $id)->forceDelete();
+            }
+
+        }
+
+        foreach ($inputs as $key => $input){
+            $input['meta'] = $key;
+
+            if($input['id']){
+                $item =  Setting::where('id',$input['id'])->first();
+            }else{
+                $item =  new Setting();
+            }
+
+            $item->fill($input);
+
+            $item->save();
+        }
 
         $response['status'] = 'success';
         $response['messages'][] = 'Updated';

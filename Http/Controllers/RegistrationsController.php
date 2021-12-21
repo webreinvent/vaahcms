@@ -41,6 +41,8 @@ class RegistrationsController extends Controller
         $data['bulk_actions'] = vh_general_bulk_actions();
         $data['name_titles'] = vh_name_titles();
         $data['user_settings'] = User::getUserSettings();
+        $data['custom_fields'] = User::getUserSettings(false,
+            false,'custom_field');
 
         $response['status'] = 'success';
         $response['data'] = $data;

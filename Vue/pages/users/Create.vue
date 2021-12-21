@@ -258,12 +258,23 @@
                             <span>Yes</span>
                         </b-radio-button>
 
-                        <b-radio-button type="is-danger" @input="setStatus()" name="user-is_active" dusk="user-is_active"
+                        <b-radio-button type="is-danger" @input="setStatus()"
+                                        name="user-is_active" dusk="user-is_active"
                                         v-model="new_item.is_active"
                                         :native-value=0>
                             <span>No</span>
                         </b-radio-button>
                     </b-field>
+
+                    <template v-for="(custom_field , name) in page.assets.custom_fields">
+
+                        <b-field v-if="!custom_field.is_hidden"
+                                 :label="$vaah.toLabel(name)" :label-position="labelPosition">
+                            <b-input v-model="new_item.meta[name]" :type="custom_field.type"
+                                     :name="'user-meta_'+name" :dusk="'user-meta_'+name"
+                            ></b-input>
+                        </b-field>
+                    </template>
 
 
                 </div>

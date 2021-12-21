@@ -318,6 +318,20 @@
                         </b-radio-button>
                     </b-field>
 
+                    {{ item.meta }}
+
+
+                    <template v-for="(custom_field , name) in page.assets.custom_fields">
+
+                        <!--                        {{ custom_field }} {{ type }}-->
+                        <b-field v-if="!custom_field.is_hidden"
+                                 :label="$vaah.toLabel(name)" :label-position="labelPosition">
+                            <b-input v-model="item.meta[name]" :type="custom_field.type"
+                                     :name="'user-meta_'+name" :dusk="'user-meta_'+name"
+                            ></b-input>
+                        </b-field>
+                    </template>
+
 
                 </div>
             </div>
