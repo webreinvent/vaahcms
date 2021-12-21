@@ -103,7 +103,27 @@ export default {
             }
         },
         //---------------------------------------------------------------------
-        store: function (item) {
+        storeField: function (item) {
+
+            this.$Progress.start();
+
+            this.is_btn_loading = true;
+
+            let params = {
+                item : item
+            };
+
+            let url = this.ajax_url+'/field/store';
+            this.$vaah.ajax(url, params, this.storeFieldAfter);
+        },
+        //---------------------------------------------------------------------
+        storeFieldAfter: function (data, res) {
+            this.getList();
+            this.is_btn_loading = false;
+            this.$Progress.finish();
+        },
+        //---------------------------------------------------------------------
+        storeCustomField: function () {
 
             this.$Progress.start();
 
@@ -114,10 +134,10 @@ export default {
             };
 
             let url = this.ajax_url+'/custom-field/store';
-            this.$vaah.ajax(url, params, this.storeAfter);
+            this.$vaah.ajax(url, params, this.storeCustomFieldAfter);
         },
         //---------------------------------------------------------------------
-        storeAfter: function (data, res) {
+        storeCustomFieldAfter: function (data, res) {
             this.getList();
             this.is_btn_loading = false;
             this.$Progress.finish();

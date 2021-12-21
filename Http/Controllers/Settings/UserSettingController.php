@@ -146,6 +146,29 @@ class UserSettingController extends Controller
         return response()->json($response);
 
     }
+
+    //----------------------------------------------------------
+    public function storeField(Request $request)
+    {
+
+        if(!\Auth::user()->hasPermission('has-access-of-setting-section'))
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+            return response()->json($response);
+        }
+
+        $input = $request->item;
+
+        Setting::where('id',$input['id'])->update($input);
+
+        $response['status'] = 'success';
+        $response['data']['item'] = $input;
+
+        return response()->json($response);
+
+    }
     //----------------------------------------------------------
     //----------------------------------------------------------
 

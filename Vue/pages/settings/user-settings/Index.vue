@@ -82,7 +82,7 @@
                                                             <b-field>
                                                                 <b-radio-button name="user-is_hidden"
                                                                                 dusk="user-is_hidden"
-                                                                                @input="store(props.row)"
+                                                                                @input="storeField(props.row)"
                                                                                 v-model="props.row.value.is_hidden"
                                                                                 :native-value=true>
                                                                     <span>Yes</span>
@@ -91,7 +91,7 @@
                                                                 <b-radio-button type="is-danger"
                                                                                 name="user-is_hidden"
                                                                                 dusk="user-is_hidden"
-                                                                                @input="store(props.row)"
+                                                                                @input="storeField(props.row)"
                                                                                 v-model="props.row.value.is_hidden"
                                                                                 :native-value=false>
                                                                     <span>No</span>
@@ -102,7 +102,7 @@
                                                         <b-table-column field="apply_for_registration" width="120"
                                                                         label="Apply for Registration"
                                                                         :td-attrs="columnTdAttrs" v-slot="props">
-                                                            <b-checkbox  @input="store(props.row)"
+                                                            <b-checkbox  @input="storeField(props.row)"
                                                                          :native-value=true
                                                                          v-model="props.row.value.for_registration">
                                                             </b-checkbox>
@@ -182,7 +182,7 @@
                                                                     </b-field>
                                                                     <div class="card dropzone-field-options">
 
-                                                                        <table class="table" style="background-color: #ffffff">
+                                                                        <table class="custom-table table">
 
                                                                             <tr >
                                                                                 <td width="180" >
@@ -259,7 +259,7 @@
                                                             <b-button icon-left="save"
                                                                       type="is-primary"
                                                                       :loading="is_btn_loading"
-                                                                      @click="store()">
+                                                                      @click="storeCustomField()">
                                                                 Save
                                                             </b-button>
                                                         </div>
@@ -291,6 +291,9 @@
 <style>
     .table{
         background-color: #fafafa !important;
+    }
+    .custom-table{
+        background-color: #ffffff !important;
     }
 </style>
 
