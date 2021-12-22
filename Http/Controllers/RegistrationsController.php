@@ -41,7 +41,7 @@ class RegistrationsController extends Controller
         $data['registration_statuses'] = Taxonomy::getTaxonomyByType('registrations');
         $data['bulk_actions'] = vh_general_bulk_actions();
         $data['name_titles'] = vh_name_titles();
-        $data['user_settings'] = User::getUserSettings();
+        $data['fields'] = User::getUserSettings();
         $data['custom_fields'] = Setting::where('category','user_setting')
             ->where('label','custom_fields')->first();
 

@@ -244,7 +244,7 @@
 
                         <b-field v-if="!custom_field.is_hidden && custom_field.to_registration"
                                  :label="$vaah.toLabel(custom_field.name)" :label-position="labelPosition">
-                            <b-input v-model="new_item.meta[custom_field.name]"
+                            <b-input v-model="new_item.meta[custom_field.slug]"
                                      :type="custom_field.type"
                                      :min="custom_field.min"
                                      :max="custom_field.max"

@@ -82,7 +82,6 @@
                                  v-model="new_item.email"></b-input>
                     </b-field>
 
-
                     <b-field v-if="!isHidden('username')" label="Username" :label-position="labelPosition">
                         <b-input v-model="new_item.username"  name="user-username"
                                  dusk="user-username" ></b-input>
@@ -113,7 +112,8 @@
 
 
 
-                    <b-field v-if="!isHidden('designation')" label="Designation" :label-position="labelPosition">
+                    <b-field v-if="!isHidden('designation')" label="Designation"
+                             :label-position="labelPosition">
                         <b-input v-model="new_item.designation"
                                  name="user-designation" dusk="user-designation"
                         ></b-input>
@@ -271,7 +271,7 @@
 
                         <b-field v-if="!custom_field.is_hidden"
                                  :label="$vaah.toLabel(custom_field.name)" :label-position="labelPosition">
-                            <b-input v-model="new_item.meta[custom_field.name]"
+                            <b-input v-model="new_item.meta[custom_field.slug]"
                                      :type="custom_field.type"
                                      :min="custom_field.min"
                                      :max="custom_field.max"

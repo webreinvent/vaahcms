@@ -156,7 +156,8 @@
                                                                                 {{ $vaah.toLabel(field.type) }}
                                                                             </span>
                                                                         </p>
-                                                                        <b-input v-model="field.name" expanded placeholder="Field Name">
+                                                                        <b-input v-model="field.name" @input="onInputFieldName(field)" expanded
+                                                                                 placeholder="Field Name">
                                                                         </b-input>
 
                                                                         <b-tooltip label="Field Option" type="is-dark">

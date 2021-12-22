@@ -310,17 +310,6 @@ export default {
             return false;
         },
         //---------------------------------------------------------------------
-        isHiddenCustomField: function(key)
-        {
-            if(this.page.assets.custom_fields
-                && this.page.assets.custom_fields[key]
-                && this.page.assets.custom_fields[key].is_hidden){
-                return this.page.assets.custom_fields[key].is_hidden
-            }
-
-            return false;
-        },
-        //---------------------------------------------------------------------
         //---------------------------------------------------------------------
         //---------------------------------------------------------------------
     }
