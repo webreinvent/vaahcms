@@ -19,6 +19,7 @@
                                     <template  v-for="(link, menu_key) in menu">
                                         <li v-if="link.child">
                                             <a :data-wdio="getDataWdio(link,menu_label)"
+                                               :class="active_menus.includes(link.label) ? 'is-active' : ''"
                                                @click="toggleMenu(link.label)" class="icon-text">
                                                 <b-icon
                                                         :icon="link.icon"
@@ -35,7 +36,9 @@
                                                 <template v-for="(link_child, key) in link.child">
                                                     <li v-if="link_child.child">
                                                         <a :data-wdio="getDataWdio(link_child,menu_label)"
-                                                           @click="toggleMenu(link_child.label,link.label)" class="icon-text">
+                                                           :class="active_menus.includes(link_child.label) ? 'is-active' : ''"
+                                                           @click="toggleMenu(link_child.label,link.label)"
+                                                           class="icon-text">
                                                             <b-icon
                                                                     :icon="link_child.icon"
                                                                     size="is-small">
@@ -89,7 +92,8 @@
                                         </li>
                                         <li v-else>
                                             <a :href="link.link"
-                                               :data-wdio="getDataWdio(link,menu_label)" class="icon-text">
+
+                                               data-wdio="getDataWdio(link,menu_label)" class="icon-text">
                                                 <b-icon
                                                         :icon="link.icon"
                                                         size="is-small">
@@ -100,6 +104,8 @@
                                             <!---->
 
                                         </li>
+
+<!--                                        :class="link.link.includes($route.fullPath)?'is-active':''"-->
                                     </template>
                                 </ul>
                             </template>
@@ -128,6 +134,7 @@ export default {
     },
     mounted() {
 
+        console.log(window.location.href);
     },
     methods: {
         getDataWdio: function (item,label) {

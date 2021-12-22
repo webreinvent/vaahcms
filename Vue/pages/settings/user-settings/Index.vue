@@ -137,7 +137,8 @@
 
                                                 <div class="card-content has-background-white-bis">
 
-                                                    <div v-if="custom_field_list.value.length > 0" class="draggable">
+                                                    <div v-if="custom_field_list && custom_field_list.value
+                                                    && custom_field_list.value.length > 0" class="draggable">
                                                         <draggable class="dropzone" :list="custom_field_list.value"
                                                                    :group="{name:'fields'}">
                                                             <div v-if="custom_field_list.value.length>0"
