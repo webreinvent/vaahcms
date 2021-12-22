@@ -200,6 +200,57 @@
                                                                                 </td>
                                                                             </tr>
 
+                                                                            <tr v-if="field['is_password_reveal'] !== undefined">
+                                                                                <td width="180" >
+                                                                                    Is Password Reveal
+                                                                                </td>
+                                                                                <td>
+                                                                                    <b-switch v-model="field.is_password_reveal" :true-value=true
+                                                                                              type="is-success">
+                                                                                    </b-switch>
+                                                                                </td>
+                                                                            </tr>
+
+                                                                            <tr v-if="field['minlength'] !== undefined">
+                                                                                <td>
+                                                                                    Min-Length
+                                                                                </td>
+                                                                                <td>
+                                                                                    <b-input v-model="field.minlength"
+                                                                                             type="number"></b-input>
+                                                                                </td>
+                                                                            </tr>
+
+                                                                            <tr v-if="field['maxlength'] !== undefined">
+                                                                                <td>
+                                                                                    Max-Length
+                                                                                </td>
+                                                                                <td>
+                                                                                    <b-input v-model="field.maxlength"
+                                                                                             type="number"></b-input>
+                                                                                </td>
+                                                                            </tr>
+
+                                                                            <tr v-if="field['min'] !== undefined">
+                                                                                <td>
+                                                                                    Min
+                                                                                </td>
+                                                                                <td>
+                                                                                    <b-input v-model="field.min"
+                                                                                             type="number"></b-input>
+                                                                                </td>
+                                                                            </tr>
+
+                                                                            <tr v-if="field['max'] !== undefined">
+                                                                                <td>
+                                                                                    Max
+                                                                                </td>
+                                                                                <td>
+                                                                                    <b-input v-model="field.max"
+                                                                                             type="number"></b-input>
+                                                                                </td>
+                                                                            </tr>
+
                                                                             <tr>
                                                                                 <td >
                                                                                     Excerpt

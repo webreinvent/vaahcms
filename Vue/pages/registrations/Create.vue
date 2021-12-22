@@ -246,6 +246,11 @@
                                  :label="$vaah.toLabel(custom_field.name)" :label-position="labelPosition">
                             <b-input v-model="new_item.meta[custom_field.name]"
                                      :type="custom_field.type"
+                                     :min="custom_field.min"
+                                     :max="custom_field.max"
+                                     :minlength="custom_field.minlength"
+                                     :maxlength="custom_field.maxlength"
+                                     :password-reveal="custom_field.is_password_reveal"
                                      :name="'register-meta_'+custom_field.name"
                                      :dusk="'register-meta_'+custom_field.name"
                             ></b-input>

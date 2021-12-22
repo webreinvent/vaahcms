@@ -146,6 +146,10 @@ export default {
         //---------------------------------------------------------------------
         storeCustomFieldAfter: function (data, res) {
 
+            if(res.data.status === 'success'){
+                this.getList();
+            }
+
             this.is_btn_loading = false;
             this.$Progress.finish();
 
@@ -233,6 +237,22 @@ export default {
                 "is_hidden": false,
                 "to_registration": false,
             };
+
+            if(this.field_type === 'textarea'
+                || this.field_type === 'text'
+                || this.field_type === 'email'){
+                new_item.maxlength = null;
+                new_item.minlength = null;
+            }
+
+            if(this.field_type === 'password'){
+                new_item.is_password_reveal = null;
+            }
+
+            if(this.field_type === 'number'){
+                new_item.min = null;
+                new_item.max = null;
+            }
 
             this.custom_field_list.value.push(new_item);
         },
