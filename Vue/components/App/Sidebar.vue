@@ -23,7 +23,7 @@
                                             <a :data-wdio="getDataWdio(link,menu_label)"
                                                :class="{ 'is-active' : active_menus.includes(link.label)}"
                                                @click="toggleMenu(link.label)" class="icon-text">
-                                                <b-icon
+                                                <b-icon v-if="link.icon"
                                                         :icon="link.icon"
                                                         size="is-small">
                                                 </b-icon>
@@ -38,10 +38,10 @@
                                                 <template v-for="(link_child, key) in link.child">
                                                     <li v-if="link_child.child">
                                                         <a :data-wdio="getDataWdio(link_child,menu_label)"
-                                                           :class="{ 'is-active' : active_menus.includes(link.label)}"
+                                                           :class="{ 'is-active' : active_menus.includes(link_child.label)}"
                                                            @click="toggleMenu(link_child.label,link.label)"
                                                            class="icon-text">
-                                                            <b-icon
+                                                            <b-icon v-if="link_child.icon"
                                                                     :icon="link_child.icon"
                                                                     size="is-small">
                                                             </b-icon>
@@ -52,7 +52,7 @@
                                                         </a>
 
                                                         <ul class="menu-list"
-                                                            :class="{ 'is-hidden' : !active_menus.includes(link.label)}">
+                                                            :class="{ 'is-hidden' : !active_menus.includes(link_child.label)}">
                                                             <template v-for="(link_sub_child, index) in link_child.child">
                                                                 <li>
                                                                     <a :href="link_sub_child.link"
@@ -76,7 +76,7 @@
                                                     <li v-else>
                                                         <a :href="link_child.link"
                                                            :data-wdio="getDataWdio(link_child,menu_label)" class="icon-text">
-                                                            <b-icon
+                                                            <b-icon v-if="link.icon"
                                                                     :icon="link_child.icon"
                                                                     size="is-small">
                                                             </b-icon>

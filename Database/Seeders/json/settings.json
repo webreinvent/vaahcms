@@ -32,7 +32,6 @@
     {"category": "global", "key": "maximum_number_of_login_attempts_per_session", "value": "3" },
     {"category": "global", "key": "laravel_queues", "value": false },
     {"category": "sample", "key": "sample", "value": 0 },
-    {"category": "user_setting", "label":"field", "type":"json", "key": "username", "value": {"is_hidden": false, "to_registration": false} },
     {"category": "user_setting", "label":"field", "type":"json", "key": "display_name", "value": {"is_hidden": false, "to_registration": false} },
     {"category": "user_setting", "label":"field", "type":"json", "key": "title", "value": {"is_hidden": false, "to_registration": false} },
     {"category": "user_setting", "label":"field", "type":"json", "key": "designation", "value": {"is_hidden": false, "to_registration": false} },

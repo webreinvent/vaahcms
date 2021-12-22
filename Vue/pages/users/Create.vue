@@ -82,7 +82,7 @@
                                  v-model="new_item.email"></b-input>
                     </b-field>
 
-                    <b-field v-if="!isHidden('username')" label="Username" :label-position="labelPosition">
+                    <b-field label="Username" :label-position="labelPosition">
                         <b-input v-model="new_item.username"  name="user-username"
                                  dusk="user-username" ></b-input>
                     </b-field>

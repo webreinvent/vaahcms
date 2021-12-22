@@ -83,7 +83,7 @@
                     </b-field>
 
 
-                    <b-field v-if="!isHidden('username')"
+                    <b-field
                              label="Username" :label-position="labelPosition">
                         <b-input v-model="new_item.username"  name="register-username"
                                  dusk="register-username" ></b-input>

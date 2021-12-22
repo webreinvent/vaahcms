@@ -77,11 +77,12 @@
                                                             {{ $vaah.toLabel(props.row.key) }}
                                                         </b-table-column>
 
-                                                        <b-table-column field="is_hidden" width="120"
-                                                                        label="Is Hidden" v-slot="props">
+                                                        <b-table-column field="is_hidden" width="60"
+                                                                        label="Is Hidden" v-slot="props" centered >
                                                             <b-field>
-                                                                <b-radio-button name="user-is_hidden"
-                                                                                dusk="user-is_hidden"
+                                                                <b-radio-button name="field-is_hidden"
+                                                                                dusk="field-is_hidden"
+                                                                                size="is-small"
                                                                                 @input="storeField(props.row)"
                                                                                 v-model="props.row.value.is_hidden"
                                                                                 :native-value=true>
@@ -89,8 +90,9 @@
                                                                 </b-radio-button>
 
                                                                 <b-radio-button type="is-danger"
-                                                                                name="user-is_hidden"
-                                                                                dusk="user-is_hidden"
+                                                                                name="field-is_hidden"
+                                                                                dusk="field-is_hidden"
+                                                                                size="is-small"
                                                                                 @input="storeField(props.row)"
                                                                                 v-model="props.row.value.is_hidden"
                                                                                 :native-value=false>
@@ -99,8 +101,8 @@
                                                             </b-field>
                                                         </b-table-column>
 
-                                                        <b-table-column field="apply_to_registrations" width="100"
-                                                                        label="Apply to Registrations"
+                                                        <b-table-column field="apply_to_registrations" width="120"
+                                                                        label="Apply to Registrations" centered
                                                                         :td-attrs="columnTdAttrs" v-slot="props">
                                                             <b-checkbox  @input="storeField(props.row)"
                                                                          :native-value=true
@@ -134,6 +136,12 @@
                                                     </div>
 
                                                 </div>
+
+                                                <article class="message is-info">
+                                                    <div class="message-body">
+                                                        The input of these fields will store in <strong>meta</strong> column.
+                                                    </div>
+                                                </article>
 
                                                 <div class="card-content has-background-white-bis">
 
