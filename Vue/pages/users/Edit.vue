@@ -319,10 +319,11 @@
                     </b-field>
 
 
-                    <template v-if="page.assets.custom_fields"
-                              v-for="(custom_field) in page.assets.custom_fields.value">
+                    <template v-if="page.assets.custom_fields && page.assets.custom_fields.value">
 
-                        <b-field v-if="!custom_field.is_hidden"
+                        <b-field v-for="(custom_field,key) in page.assets.custom_fields.value"
+                                 :key="key"
+                                 v-if="!custom_field.is_hidden"
                                  :label="$vaah.toLabel(custom_field.name)" :label-position="labelPosition">
                             <b-input v-model="item.meta[custom_field.slug]"
                                      :type="custom_field.type"
