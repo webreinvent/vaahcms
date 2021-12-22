@@ -1,96 +1,114 @@
 <template>
     <div class="sidebar-page">
         <section class="sidebar-layout" v-if="root && root.assets">
-            <b-sidebar
-                ref="vh_sidebar"
-                :can-cancel="false"
-                :fullheight="true"
-                position="fixed"
-                :mobile="mobile"
-                :expand-on-hover="expandOnHover"
-                :reduce="root.is_sidebar_reduced"
-                open
-                type="is-light">
-                <template>
-
-                    <div class="brand" >
-                        <p class="brand-cover" :class="{'show-logo': root.is_sidebar_reduced == false}">
-                            <img
-                             :src="root.assets.urls.image+'/vaahcms-logo.svg'">
+            <div class="b-sidebar">
+                <!---->
+                <div class="sidebar-content is-light is-fixed
+                is-fullheight is-mini is-mini-expand
+                is-fullwidth-mobile">
+                    <div class="brand">
+                        <p class="brand-cover">
+                            <img src="http://localhost/vikram/vaahcms-dev-env/public/vaahcms/backend/vaahone/images/vaahcms-logo.svg">
                         </p>
-
                     </div>
-
-                    <b-menu class="is-custom-mobile">
+                    <div class="menu is-custom-mobile">
 
                         <template v-if="root.assets && root.assets.extended_views" >
                             <template  v-for="(menu , menu_label) in root.assets.extended_views.sidebar_menu.success">
-                                <b-menu-list v-for="(link, menu_key) in menu" :key="menu_key    ">
+                                <ul  class="menu-list">
+                                    <template  v-for="(link, menu_key) in menu">
+                                        <li v-if="link.child">
+                                            <a :data-wdio="getDataWdio(link,menu_label)"
+                                               @click="toggleMenu(link.label)" class="icon-text">
+                                                <b-icon
+                                                        :icon="link.icon"
+                                                        size="is-small">
+                                                </b-icon>
+                                                <span> {{ link.label }}
+                                                    <b-icon class="is-pulled-right"
+                                                            :icon="active_menus.includes(link.label) ? 'chevron-down' : 'chevron-up'"></b-icon>
+                                                </span>
+                                            </a>
 
-                                    <b-menu-item v-if="link.child"
-                                                 :icon="link.icon"
-                                                 :data-wdio="getDataWdio(link,menu_label)">
+                                            <ul class="menu-list"
+                                                :class="!active_menus.includes(link.label)?'is-hidden':''">
+                                                <template v-for="(link_child, key) in link.child">
+                                                    <li v-if="link_child.child">
+                                                        <a :data-wdio="getDataWdio(link_child,menu_label)"
+                                                           @click="toggleMenu(link_child.label,link.label)" class="icon-text">
+                                                            <b-icon
+                                                                    :icon="link_child.icon"
+                                                                    size="is-small">
+                                                            </b-icon>
+                                                            <span> {{ link_child.label }}
+                                                                <b-icon class="is-pulled-right"
+                                                                        :icon="active_menus.includes(link_child.label) ? 'chevron-down' : 'chevron-up'"></b-icon>
+                                                            </span>
+                                                        </a>
 
-                                        <template #label="props">
-                                            <span>
-                                                {{link.label}}
-                                                <b-icon class="is-pulled-right" :icon="props.expanded ? 'chevron-down' : 'chevron-up'"></b-icon>
-                                            </span>
-                                        </template>
+                                                        <ul class="menu-list"
+                                                            :class="!active_menus.includes(link_child.label)?'is-hidden':''">
+                                                            <template v-for="(link_sub_child, index) in link_child.child">
+                                                                <li>
+                                                                    <a :href="link_sub_child.link"
+                                                                       :data-wdio="getDataWdio(link_sub_child,menu_label)" class="icon-text">
+                                                                        <b-icon v-if="link_sub_child.icon"
+                                                                                :icon="link_sub_child.icon"
+                                                                                size="is-small">
+                                                                        </b-icon>
+                                                                        <span> {{ link_sub_child.label }} </span>
+                                                                    </a>
 
-                                        <template v-for="(link_child, key) in link.child">
-                                            <b-menu-item v-if="link_child.child"
-                                                         :key="key"
-                                                         :icon="link_child.icon"
-                                                         :data-wdio="getDataWdio(link_child,menu_label)">
+                                                                    <!---->
 
-                                                <template #label="props">
-                                                    <span>
-                                                        {{link_child.label}}
-                                                        <b-icon class="is-pulled-right" :icon="props.expanded ? 'chevron-down' : 'chevron-up'"></b-icon>
-                                                    </span>
+                                                                </li>
+                                                            </template>
+                                                        </ul>
+
+                                                        <!---->
+
+                                                    </li>
+                                                    <li v-else>
+                                                        <a :href="link_child.link"
+                                                           :data-wdio="getDataWdio(link_child,menu_label)" class="icon-text">
+                                                            <b-icon
+                                                                    :icon="link_child.icon"
+                                                                    size="is-small">
+                                                            </b-icon>
+                                                            <span> {{ link_child.label }} </span>
+                                                        </a>
+
+                                                        <!---->
+
+                                                    </li>
                                                 </template>
+                                            </ul>
 
-                                                <b-menu-item  v-for="(link_sub_child, index) in link_child.child"
-                                                              :key="index"
-                                                              tag="a"
-                                                              :href="link_sub_child.link"
-                                                              :label="link_sub_child.label"
-                                                              :icon="link_sub_child.icon"
-                                                              :data-wdio="getDataWdio(link_sub_child,menu_label)">
-                                                </b-menu-item>
+                                            <!---->
 
-                                            </b-menu-item>
+                                        </li>
+                                        <li v-else>
+                                            <a :href="link.link"
+                                               :data-wdio="getDataWdio(link,menu_label)" class="icon-text">
+                                                <b-icon
+                                                        :icon="link.icon"
+                                                        size="is-small">
+                                                </b-icon>
+                                                <span> {{ link.label }} </span>
+                                            </a>
 
-                                            <b-menu-item v-else
-                                                         :key="key"
-                                                         tag="a"
-                                                         :href="link_child.link"
-                                                         :label="link_child.label"
-                                                         :icon="link_child.icon"
-                                                         :data-wdio="getDataWdio(link_child,menu_label)">
-                                            </b-menu-item>
-                                        </template>
+                                            <!---->
 
-                                    </b-menu-item>
-
-                                    <b-menu-item v-else
-                                                 tag="a"
-                                                 :href="link.link"
-                                                 :label="link.label"
-                                                 :icon="link.icon"
-                                                 :data-wdio="getDataWdio(link,menu_label)">
-                                    </b-menu-item>
-
-                                </b-menu-list>
+                                        </li>
+                                    </template>
+                                </ul>
                             </template>
                         </template>
 
-                    </b-menu>
-                </template>
-            </b-sidebar>
 
-
+                    </div>
+                </div>
+            </div>
         </section>
     </div>
 </template>
@@ -104,6 +122,7 @@ export default {
         return {
             expandOnHover: true,
             mobile: "fullwidth",
+            active_menus:[],
             reduce: true
         };
     },
@@ -119,6 +138,20 @@ export default {
             }
 
             return value;
+        },
+        toggleMenu: function (label,parent_label = null) {
+
+            if(this.active_menus.includes(label)){
+
+                var index = this.active_menus.indexOf(label);
+                if (index !== -1) {
+                    this.active_menus.splice(index, 1);
+                }
+
+            }else{
+                this.active_menus = [label,parent_label];
+            }
+
         },
     }
 

@@ -166,6 +166,11 @@ class ExtendController extends Controller
                         'label'=> 'General'
                     ],
                     [
+                        'link' => self::$link."/settings/user-settings",
+                        'icon' => 'users-cog',
+                        'label'=> 'User Settings'
+                    ],
+                    [
                         'link' => self::$link."/settings/env-variables",
                         'icon' => 'code',
                         'label'=> 'Env Variables'
