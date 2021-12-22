@@ -68,11 +68,10 @@ class ExtendController extends Controller
             $list[0] = [
                 'link' => self::$link,
                 'icon' => 'tachometer-alt',
-                'label'=> 'Dashboard'
+                'label'=> 'Dashboard',
+                'data_wdio' => "data_wdio_test"
             ];
         }
-
-
 
 
         if(\Auth::user()->hasPermission('has-access-of-registrations-section') ||

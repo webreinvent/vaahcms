@@ -251,12 +251,15 @@
                         </b-select>
                     </b-field>
 
-                    <template v-for="(custom_field , name) in page.assets.custom_fields">
+                    <template v-if="page.assets.custom_fields"
+                              v-for="(custom_field) in page.assets.custom_fields.value">
 
-                        <b-field v-if="!custom_field.is_hidden && custom_field.for_registration"
-                                 :label="$vaah.toLabel(name)" :label-position="labelPosition">
-                            <b-input v-model="item.meta[name]" :type="custom_field.type"
-                                     :name="'register-meta_'+name" :dusk="'register-meta_'+name"
+                        <b-field v-if="!custom_field.is_hidden && custom_field.to_registration"
+                                 :label="$vaah.toLabel(custom_field.name)" :label-position="labelPosition">
+                            <b-input v-model="item.meta[custom_field.name]"
+                                     :type="custom_field.type"
+                                     :name="'register-meta_'+custom_field.name"
+                                     :dusk="'register-meta_'+custom_field.name"
                             ></b-input>
                         </b-field>
                     </template>

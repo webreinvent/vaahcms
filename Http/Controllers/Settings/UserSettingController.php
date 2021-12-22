@@ -64,9 +64,9 @@ class UserSettingController extends Controller
             ->select('id','key','label','type','value')->get();
 
         $custom_fields = Setting::where('category','user_setting')
-            ->where('label','custom_field')
+            ->where('label','custom_fields')
             ->select('id','key','label','type','value')
-            ->orderBy('meta','asc')->get();
+            ->first();
 
         $response['status'] = 'success';
         $response['data']['list']['fields'] = $fields;
@@ -92,7 +92,7 @@ class UserSettingController extends Controller
 
 
         $rules = array(
-            '*.key' => 'required',
+            'value.*.name' => 'required',
         );
 
         $validator = \Validator::make( $inputs, $rules);
@@ -104,39 +104,13 @@ class UserSettingController extends Controller
             return $response;
         }
 
-        $stored_groups = Setting::where('category','user_setting')
-            ->where('label','custom_field')->get()->pluck('key','id')->toArray();
+        $input = $request->item;
 
-        $input_groups = collect($inputs)->pluck('key')->toArray();
-
-        $groups_to_delete = array_diff($stored_groups, $input_groups);
-
-
-
-        if(count($groups_to_delete) > 0)
-        {
-            $groups_to_delete = array_flip($groups_to_delete);
-
-//            dd($stored_groups,$input_groups,$groups_to_delete);
-
-            foreach ($groups_to_delete as $id)
-            {
-                Setting::where('id', $id)->forceDelete();
-            }
-
-        }
-
-        foreach ($inputs as $key => $input){
-            $input['meta'] = $key;
-
-            if($input['id']){
-                $item =  Setting::where('id',$input['id'])->first();
-            }else{
-                $item =  new Setting();
-            }
-
+        if($input['id']){
+            Setting::where('id',$input['id'])->update($input);
+        }else{
+            $item = new Setting();
             $item->fill($input);
-
             $item->save();
         }
 

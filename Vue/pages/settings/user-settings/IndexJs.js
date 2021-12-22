@@ -34,7 +34,8 @@ export default {
             field:{
                 name:null,
                 type:null
-            }
+            },
+            field_type: null
         };
 
         return obj;
@@ -99,7 +100,13 @@ export default {
             this.$Progress.finish();
             if(data && data.list){
                 this.field_list = data.list.fields;
-                this.custom_field_list = data.list.custom_fields;
+
+                if(data.list.custom_fields){
+                    this.custom_field_list = data.list.custom_fields;
+                }else{
+                    this.custom_field_list = this.getNewItem();
+                }
+
             }
         },
         //---------------------------------------------------------------------
@@ -138,9 +145,10 @@ export default {
         },
         //---------------------------------------------------------------------
         storeCustomFieldAfter: function (data, res) {
-            this.getList();
+
             this.is_btn_loading = false;
             this.$Progress.finish();
+
         },
         //---------------------------------------------------------------------
         isDisable: function (item) {
@@ -206,26 +214,41 @@ export default {
         },
         //---------------------------------------------------------------------
         deleteGroupField: function (index) {
-            this.custom_field_list.splice(index, 1);
+            this.custom_field_list.value.splice(index, 1);
         },
         //---------------------------------------------------------------------
         addCustomField: function () {
 
+
+            if(!this.field_type){
+                this.$vaah.toastErrors(['Select field Type first.']);
+                return false;
+            }
+
             let new_item = {
+                "name": null,
+                "slug": null,
+                "type": this.field_type,
+                "excerpt": null,
+                "is_hidden": false,
+                "to_registration": false,
+            };
+
+            this.custom_field_list.value.push(new_item);
+        },
+        //---------------------------------------------------------------------
+        getNewItem: function () {
+
+            return {
                 "id": null,
                 "key": null,
                 "category": "user_setting",
-                "label": "custom_field",
+                "label": "custom_fields",
                 "excerpt": null,
                 "type": "json",
-                "value": {
-                    "is_hidden": false,
-                    "for_registration": false,
-                    "type": this.field.type,
-                }
+                "value": []
             };
 
-            this.custom_field_list.push(new_item);
         },
         //---------------------------------------------------------------------
     }

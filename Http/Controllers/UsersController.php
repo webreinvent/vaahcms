@@ -9,6 +9,7 @@ use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Hash;
 use WebReinvent\VaahCms\Entities\Registration;
 use WebReinvent\VaahCms\Entities\Role;
+use WebReinvent\VaahCms\Entities\Setting;
 use WebReinvent\VaahCms\Entities\User;
 
 class UsersController extends Controller
@@ -44,8 +45,8 @@ class UsersController extends Controller
         $data['name_titles'] = vh_name_titles();
         $data['role'] = $role;
         $data['fields'] = User::getUserSettings();
-        $data['custom_fields'] = User::getUserSettings(false,
-            false,'custom_field');
+        $data['custom_fields'] = Setting::where('category','user_setting')
+            ->where('label','custom_fields')->first();
 
         $response['status'] = 'success';
         $response['data'] = $data;

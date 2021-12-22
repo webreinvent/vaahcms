@@ -99,12 +99,12 @@
                                                             </b-field>
                                                         </b-table-column>
 
-                                                        <b-table-column field="apply_for_registration" width="120"
-                                                                        label="Apply for Registration"
+                                                        <b-table-column field="apply_to_registrations" width="100"
+                                                                        label="Apply to Registrations"
                                                                         :td-attrs="columnTdAttrs" v-slot="props">
                                                             <b-checkbox  @input="storeField(props.row)"
                                                                          :native-value=true
-                                                                         v-model="props.row.value.for_registration">
+                                                                         v-model="props.row.value.to_registration">
                                                             </b-checkbox>
                                                         </b-table-column>
 
@@ -140,10 +140,10 @@
 <!--                                                    {{ custom_field_list }}-->
 
                                                     <div class="draggable" >
-                                                        <draggable class="dropzone" :list="custom_field_list"
+                                                        <draggable class="dropzone" :list="custom_field_list.value"
                                                                    :group="{name:'fields'}">
-                                                            <div v-if="custom_field_list.length>0"
-                                                                 v-for="(field, f_index) in custom_field_list"
+                                                            <div v-if="custom_field_list.value.length>0"
+                                                                 v-for="(field, f_index) in custom_field_list.value"
                                                                  :key="f_index">
                                                                 <div class="dropzone-field">
                                                                     <b-field class="is-marginless" >
@@ -151,19 +151,13 @@
                                                                             <span class="button is-static">:::</span>
                                                                         </p>
 
-                                                                        <p class="control " v-if="field.value">
+                                                                        <p class="control">
                                                                             <span class="button dropzone-field-label is-static">
-                                                                                {{ $vaah.toLabel(field.value.type) }}
+                                                                                {{ $vaah.toLabel(field.type) }}
                                                                             </span>
                                                                         </p>
-                                                                        <b-input v-model="field.key" expanded placeholder="Field Name">
+                                                                        <b-input v-model="field.name" expanded placeholder="Field Name">
                                                                         </b-input>
-                                                                        <b-tooltip label="Copy Name" type="is-dark">
-                                                                            <p class="control">
-                                                                                <b-button @click="$vaah.copy(field.key)"
-                                                                                >#{{field.id}}</b-button>
-                                                                            </p>
-                                                                        </b-tooltip>
 
                                                                         <b-tooltip label="Field Option" type="is-dark">
                                                                             <p class="control">
@@ -189,7 +183,7 @@
                                                                                     Is hidden
                                                                                 </td>
                                                                                 <td>
-                                                                                    <b-switch v-model="field.value.is_hidden" :true-value=true
+                                                                                    <b-switch v-model="field.is_hidden" :true-value=true
                                                                                               type="is-success">
                                                                                     </b-switch>
                                                                                 </td>
@@ -200,7 +194,7 @@
                                                                                     Apply to Registration
                                                                                 </td>
                                                                                 <td>
-                                                                                    <b-switch v-model="field.value.for_registration" :true-value=true
+                                                                                    <b-switch v-model="field.to_registration" :true-value=true
                                                                                               type="is-success">
                                                                                     </b-switch>
                                                                                 </td>
@@ -235,7 +229,7 @@
 
                                                                 <b-field>
                                                                     <p class="control">
-                                                                        <b-select v-model="field.type"
+                                                                        <b-select v-model="field_type"
                                                                                   placeholder="Select a type">
                                                                             <option value="text">Text</option>
                                                                             <option value="email">Email</option>

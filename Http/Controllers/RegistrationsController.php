@@ -8,6 +8,7 @@ use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Hash;
 use WebReinvent\VaahCms\Entities\Registration;
+use WebReinvent\VaahCms\Entities\Setting;
 use WebReinvent\VaahCms\Entities\Taxonomy;
 use WebReinvent\VaahCms\Entities\User;
 
@@ -41,8 +42,8 @@ class RegistrationsController extends Controller
         $data['bulk_actions'] = vh_general_bulk_actions();
         $data['name_titles'] = vh_name_titles();
         $data['user_settings'] = User::getUserSettings();
-        $data['custom_fields'] = User::getUserSettings(false,
-            false,'custom_field');
+        $data['custom_fields'] = Setting::where('category','user_setting')
+            ->where('label','custom_fields')->first();
 
         $response['status'] = 'success';
         $response['data'] = $data;

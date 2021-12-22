@@ -1884,15 +1884,11 @@ class User extends Authenticatable
     }
     //-------------------------------------------------
     public static function getUserSettings($return_hidden_column_name = false,
-                                           $return_registration_columns = false, $field_type = 'field')
+                                           $return_registration_columns = false)
     {
 
         $settings = Setting::where('category','user_setting')
-            ->where('label',$field_type);
-
-        if($field_type != 'field'){
-            $settings->orderBy('meta','asc');
-        }
+            ->where('label','field');
 
         $settings = $settings->select('id','key','type','value','meta')->get();
 
@@ -1905,8 +1901,8 @@ class User extends Authenticatable
                 && $setting->value->is_hidden){
                 if(!$return_registration_columns){
                     $list[$key] = $setting->key;
-                }elseif(isset($setting->value->for_registration)
-                    && $setting->value->for_registration){
+                }elseif(isset($setting->value->to_registration)
+                    && $setting->value->to_registration){
                     $list[$key] = $setting->key;
                 }
             }

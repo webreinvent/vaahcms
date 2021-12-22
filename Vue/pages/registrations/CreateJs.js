@@ -238,7 +238,7 @@ export default {
         {
             if(this.page.assets.fields
                 && this.page.assets.fields[key]
-                && this.page.assets.fields[key].for_registration){
+                && this.page.assets.fields[key].to_registration){
                 return this.page.assets.fields[key].is_hidden
             }
 

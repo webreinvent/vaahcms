@@ -112,7 +112,7 @@ export default {
     },
     methods: {
         getDataWdio: function (item,label) {
-            let value = label+'-menu-'+this.$vaah.strToSlug(item.label);
+            let value = label+'-sidebar-'+this.$vaah.strToSlug(item.label);
 
             if(item.data_wdio){
                 value = item.data_wdio;
