@@ -4,10 +4,12 @@
             <div class="b-sidebar">
                 <!---->
                 <div class="sidebar-content is-light is-fixed
-                is-fullheight is-mini is-mini-expand
-                is-fullwidth-mobile">
+                    is-fullheight  is-mini-expand
+                    is-fullwidth-mobile"
+                     :class="{ 'is-mini' : root.is_sidebar_reduced }">
                     <div class="brand">
-                        <p class="brand-cover">
+                        <p class="brand-cover"
+                           :class="{ 'show-logo' : !root.is_sidebar_reduced }">
                             <img src="http://localhost/vikram/vaahcms-dev-env/public/vaahcms/backend/vaahone/images/vaahcms-logo.svg">
                         </p>
                     </div>
@@ -19,7 +21,7 @@
                                     <template  v-for="(link, menu_key) in menu">
                                         <li v-if="link.child">
                                             <a :data-wdio="getDataWdio(link,menu_label)"
-                                               :class="active_menus.includes(link.label) ? 'is-active' : ''"
+                                               :class="{ 'is-active' : active_menus.includes(link.label)}"
                                                @click="toggleMenu(link.label)" class="icon-text">
                                                 <b-icon
                                                         :icon="link.icon"
@@ -32,11 +34,11 @@
                                             </a>
 
                                             <ul class="menu-list"
-                                                :class="!active_menus.includes(link.label)?'is-hidden':''">
+                                                :class="{ 'is-hidden' : !active_menus.includes(link.label)}">
                                                 <template v-for="(link_child, key) in link.child">
                                                     <li v-if="link_child.child">
                                                         <a :data-wdio="getDataWdio(link_child,menu_label)"
-                                                           :class="active_menus.includes(link_child.label) ? 'is-active' : ''"
+                                                           :class="{ 'is-active' : active_menus.includes(link.label)}"
                                                            @click="toggleMenu(link_child.label,link.label)"
                                                            class="icon-text">
                                                             <b-icon
@@ -50,7 +52,7 @@
                                                         </a>
 
                                                         <ul class="menu-list"
-                                                            :class="!active_menus.includes(link_child.label)?'is-hidden':''">
+                                                            :class="{ 'is-hidden' : !active_menus.includes(link.label)}">
                                                             <template v-for="(link_sub_child, index) in link_child.child">
                                                                 <li>
                                                                     <a :href="link_sub_child.link"
@@ -94,8 +96,7 @@
                                             <a :href="link.link"
 
                                                data-wdio="getDataWdio(link,menu_label)" class="icon-text">
-                                                <b-icon
-                                                        :icon="link.icon"
+                                                <b-icon :icon="link.icon"
                                                         size="is-small">
                                                 </b-icon>
                                                 <span> {{ link.label }} </span>
