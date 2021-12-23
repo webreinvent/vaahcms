@@ -134,7 +134,7 @@ class Job extends Model {
 
         $response['status'] = 'success';
         $response['data'] = [];
-        $response['messages'][] = trans('vaahcms-general.action_successful');
+        $response['messages'][] = 'Action was successful';
 
         return $response;
 
@@ -148,7 +148,7 @@ class Job extends Model {
 
         $response['status'] = 'success';
         $response['data'] = [];
-        $response['messages'][] = trans('vaahcms-general.action_successful');
+        $response['messages'][] = 'Action was successful';
 
         return $response;
 

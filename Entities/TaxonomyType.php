@@ -170,7 +170,7 @@ class TaxonomyType extends Model {
 
         $response['status'] = 'success';
         $response['data']['item'] = $item;
-        $response['messages'][] = trans('vaahcms-general.saved_successfully');
+        $response['messages'][] = 'Saved successfully.';
         return $response;
 
     }
@@ -325,7 +325,7 @@ class TaxonomyType extends Model {
 
         $response['status'] = 'success';
         $response['data'] = [];
-        $response['messages'][] = trans('vaahcms-general.action_successful');
+        $response['messages'][] = 'Action was successful';
 
         return $response;
 
@@ -354,7 +354,7 @@ class TaxonomyType extends Model {
 
         $response['status'] = 'success';
         $response['data'] = [];
-        $response['messages'][] = trans('vaahcms-general.action_successful');
+        $response['messages'][] = 'Action was successful';
 
         return $response;
 
@@ -389,7 +389,7 @@ class TaxonomyType extends Model {
 
         $response['status'] = 'success';
         $response['data'] = [];
-        $response['messages'][] = trans('vaahcms-general.action_successful');
+        $response['messages'][] = 'Action was successful';
 
         return $response;
 
@@ -423,7 +423,7 @@ class TaxonomyType extends Model {
 
         $response['status'] = 'success';
         $response['data'] = [];
-        $response['messages'][] = trans('vaahcms-general.action_successful');
+        $response['messages'][] = 'Action was successful';
 
         return $response;
 

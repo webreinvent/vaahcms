@@ -72,31 +72,6 @@ Route::group(
 
 Route::group(
     [
-        'prefix'     => 'backend/vaah/settings/user-setting',
-        'middleware' => ['web','has.backend.access'],
-        'namespace'  => 'WebReinvent\VaahCms\Http\Controllers\Settings'
-    ],
-    function () {
-        //------------------------------------------------
-        Route::post( '/assets', 'UserSettingController@getAssets' )
-            ->name( 'vh.backend.settings.env.assets' );
-        //------------------------------------------------
-        Route::post( '/list', 'UserSettingController@getList' )
-            ->name( 'vh.backend.settings.env.list' );
-        //------------------------------------------------
-        Route::post( '/field/store', 'UserSettingController@storeField' )
-            ->name( 'vh.backend.settings.env.store.field' );
-        //------------------------------------------------
-        Route::post( '/custom-field/store', 'UserSettingController@storeCustomField' )
-            ->name( 'vh.backend.settings.env.store.custom-field' );
-        //------------------------------------------------
-        //------------------------------------------------
-        //------------------------------------------------
-    });
-
-
-Route::group(
-    [
         'prefix'     => 'backend/vaah/settings/localization',
         'middleware' => ['web','has.backend.access'],
         'namespace'  => 'WebReinvent\VaahCms\Http\Controllers\Settings'

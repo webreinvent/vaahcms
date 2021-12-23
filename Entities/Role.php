@@ -59,6 +59,10 @@ class Role extends Model {
         return $query->where( 'slug', $slug );
     }
     //-------------------------------------------------
+    public function scopeType( $query, $type ) {
+        return $query->where( 'type', $type );
+    }
+    //-------------------------------------------------
     public function scopeIsActive($query)
     {
         $query->where('vh_roles.is_active', 1);
@@ -205,15 +209,15 @@ class Role extends Model {
         }
 
 
-        //enable all roles for super admin users
-        $super_admin_role = Role::slug('super-administrator')->first();
-        $super_admin_users = $super_admin_role->users()->wherePivot('is_active', 1)
+        //enable all roles for admin users
+        $admin_role = Role::slug('administrator')->first();
+        $admin_users = $admin_role->users()->wherePivot('is_active', 1)
             ->get()
             ->pluck('id')
             ->toArray();
-        $pivotData = array_fill(0, count($super_admin_users), ['is_active' => 1]);
-        $syncData  = array_combine($super_admin_users, $pivotData);
-        $super_admin_role->users()->syncWithoutDetaching($syncData);
+        $pivotData = array_fill(0, count($admin_users), ['is_active' => 1]);
+        $syncData  = array_combine($admin_users, $pivotData);
+        $admin_role->users()->syncWithoutDetaching($syncData);
 
 
         return true;
@@ -273,7 +277,7 @@ class Role extends Model {
 
         $response['status'] = 'success';
         $response['data']['item'] = $role;
-        $response['messages'][] = trans('vaahcms-general.saved_successfully');
+        $response['messages'][] = 'Saved successfully.';
         return $response;
 
     }
@@ -303,12 +307,16 @@ class Role extends Model {
             $list->betweenDates($request['from'],$request['to']);
         }
 
-        if(isset($request['status']) && $request['status']){
-            if($request['status'] == 'active')
+        if(isset($request->filter) && $request['filter']){
+
+            if($request['filter'] == 'active')
             {
                 $list->where('is_active',1);
-            }else{
+            }elseif($request['filter'] == 'inactive'){
+
                 $list->whereNull('is_active')->orWhere('is_active',0);
+            }else{
+                $list->where('type',$request['filter']);
             }
         }
 
@@ -491,6 +499,7 @@ class Role extends Model {
         $update->slug = Str::slug($input['slug']);
         $update->details = $input['details'];
         $update->is_active = $input['is_active'];
+        $update->type = $input['type'];
 
         $update->save();
 
@@ -542,7 +551,7 @@ class Role extends Model {
 
         $response['status'] = 'success';
         $response['data'] = [];
-        $response['messages'][] = trans('vaahcms-general.action_successful');
+        $response['messages'][] = 'Action was successful';
 
         return $response;
 
@@ -573,7 +582,7 @@ class Role extends Model {
 
         $response['status'] = 'success';
         $response['data'] = [];
-        $response['messages'][] = trans('vaahcms-general.action_successful');
+        $response['messages'][] = 'Action was successful';
 
         return $response;
 
@@ -608,7 +617,7 @@ class Role extends Model {
 
         $response['status'] = 'success';
         $response['data'] = [];
-        $response['messages'][] = trans('vaahcms-general.action_successful');
+        $response['messages'][] = 'Action was successful';
 
         return $response;
 
@@ -648,7 +657,7 @@ class Role extends Model {
 
         $response['status'] = 'success';
         $response['data'] = [];
-        $response['messages'][] = trans('vaahcms-general.action_successful');
+        $response['messages'][] = 'Action was successful';
 
         return $response;
 
@@ -665,7 +674,7 @@ class Role extends Model {
         if($item->id == 1)
         {
             $response['status'] = 'failed';
-            $response['errors'][] = 'Super Admin permission can not be changed';
+            $response['errors'][] = 'Admin permission can not be changed';
             return response()->json($response);
 
         }
@@ -822,10 +831,15 @@ class Role extends Model {
 
     }
     //-------------------------------------------------
-    public static function getActiveRoles()
+    public static function getActiveRoles($type = null)
     {
-        $list = static::where('is_active', 1)->get();
+        $list = static::where('is_active', 1);
 
+        if($type){
+            $list->where('type',$type);
+        }
+
+        $list = $list->get();
         return $list;
     }
     //-------------------------------------------------

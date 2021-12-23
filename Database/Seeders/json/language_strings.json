@@ -60,22 +60,6 @@
         "name": "Status Required",
         "content": "The status is required."
     },
-    {
-        "category": "general",
-        "name": "Saved successfully",
-        "content": "Saved successfully."
-    },
-    {
-        "category": "general",
-        "name": "Action successful",
-        "content": "Action was successful"
-    },
-
-    {
-        "category": "general",
-        "name": "No module installed",
-        "content": "No module installed/downloaded"
-    },
 
 
 
@@ -83,21 +67,6 @@
         "category": "localization",
         "name": "Locale Code ISO 639 Required",
         "content": "The locale code iso 639 field is required."
-    },
-    {
-        "category": "localization",
-        "name": "Locale Code already exist",
-        "content": "Locale Code already exist"
-    },
-    {
-        "category": "localization",
-        "name": "Record already exist",
-        "content": "Record already exist"
-    },
-    {
-        "category": "localization",
-        "name": "one string required",
-        "content": "At least one string is required"
     },
 
 
@@ -127,70 +96,10 @@
         "name": "Is Downloadable Required",
         "content": "The is downloadable option is required."
     },
-    {
-        "category": "media",
-        "name": "Download url associate",
-        "content": "Download url is associated with other media."
-    },
 
 
 
 
-    {
-        "category": "user",
-        "name": "Logged in to update profile",
-        "content": "You must be logged in to update your profile"
-    },
-    {
-        "category": "user",
-        "name": "Confirm password not match",
-        "content": "Confirm password does not match"
-    },
-    {
-        "category": "user",
-        "name": "Current password incorrect",
-        "content": "Current password is incorrect"
-    },
-    {
-        "category": "user",
-        "name": "Email associate with other user",
-        "content": "Email is associated with other user."
-    },
-    {
-        "category": "user",
-        "name": "Username already taken",
-        "content": "Username already taken"
-    },
-    {
-        "category": "user",
-        "name": "Registration Status is Registered",
-        "content": "The registration status is \"registered\", hence user id is required"
-    },
-    {
-        "category": "user",
-        "name": "First user super administrator",
-        "content": "First user will always be an super administrator"
-    },
-    {
-        "category": "user",
-        "name": "Email Already Registered",
-        "content": "Email is already registered."
-    },
-    {
-        "category": "user",
-        "name": "Username Already Registered",
-        "content": "Username is already registered."
-    },
-    {
-        "category": "user",
-        "name": "Phone Already Registered",
-        "content": "Phone number is already registered."
-    },
-    {
-        "category": "user",
-        "name": "No user exist",
-        "content": "No user exist"
-    },
     {
         "category": "user",
         "name": "First Name Required",
@@ -257,11 +166,6 @@
         "content": "The display name character is not greater than 50."
     },
     {
-        "category": "user",
-        "name": "Registration created when user not exist",
-        "content": "Registration can be created only when user does not exist"
-    },
-    {
         "category": "login",
         "name": "Login OTP Sent",
         "content": "One time password (OTP) is sent to your email."
@@ -280,25 +184,5 @@
         "category": "login",
         "name": "Password Has Been Reset",
         "content": "Your password has been reset successfully."
-    },
-    {
-        "category": "login",
-        "name": "Email or Username Required",
-        "content": "The email or username field is required."
-    },
-    {
-        "category": "login",
-        "name": "Email or Username Limit",
-        "content": "The email or username may not be greater than 150 characters."
-    },
-    {
-        "category": "login",
-        "name": "OTP Sent",
-        "content": "A one time password (OTP) has been sent to your email."
-    },
-    {
-        "category": "login",
-        "name": "Incorrect reset password code",
-        "content": "Incorrect reset password code"
     }
 ]

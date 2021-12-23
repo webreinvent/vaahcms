@@ -1,32 +1,19 @@
 [
 
     {
-        "name": "Super Administrator",
-        "details": "Users who have admin roles has all the permission access and manage the data."
-    },
-    {
         "name": "Administrator",
-        "details": "Somebody who has access to all the administration features within a single site"
+        "type": "backend",
+        "details": "Users who have admin roles has all the permission access and manage the data.Somebody who has access to all the administration features within a single site"
     },
     {
         "name": "Manager",
+        "type": "backend",
         "details": "Users who have manage roles can assign a role to user."
     },
     {
-        "name": "Editor",
-        "details": "Somebody who can publish and manage posts including the posts of other users."
-    },
-    {
-        "name": "Contributor",
-        "details": "Somebody who can write and manage their own posts but cannot publish them."
-    },
-    {
         "name": "Registered",
-        "details": "Users who have registered roles can log in to the front end interface."
-    },
-    {
-        "name": "Guest",
-        "details": "Users who have guest roles can access only public website."
+        "type": "frontend",
+        "details": "Users who have registered roles can access only public website."
     }
 
 ]

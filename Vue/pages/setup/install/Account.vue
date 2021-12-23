@@ -8,7 +8,7 @@
             <div class="column is-8">
 
                 <b-notification type="is-info" aria-close-label="Close notification">
-                    Create first account, this account will have super administrator role and will have all the permissions.
+                    Create first account, this account will have administrator role and will have all the permissions.
                 </b-notification>
 
                 <div class="columns is-multiline">

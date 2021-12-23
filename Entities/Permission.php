@@ -180,8 +180,7 @@ class Permission extends Model {
         {
             foreach ($roles as $role)
             {
-
-                if($role->slug == 'super-administrator')
+                if($role->id == 1)
                 {
                     $pivotData = array_fill(0, count($permissions), ['is_active' => 1]);
                     $syncData  = array_combine($permissions, $pivotData);
@@ -419,7 +418,7 @@ class Permission extends Model {
 
         $response['status'] = 'success';
         $response['data'] = [];
-        $response['messages'][] = trans('vaahcms-general.action_successful');
+        $response['messages'][] = 'Action was successful';
 
         return $response;
     }
@@ -465,7 +464,7 @@ class Permission extends Model {
 
         $response['status'] = 'success';
         $response['data'] = [];
-        $response['messages'][] = trans('vaahcms-general.action_successful');
+        $response['messages'][] = 'Action was successful';
 
         return $response;
 
@@ -505,7 +504,7 @@ class Permission extends Model {
 
         $response['status'] = 'success';
         $response['data'] = [];
-        $response['messages'][] = trans('vaahcms-general.action_successful');
+        $response['messages'][] = 'Action was successful';
 
         return $response;
 
@@ -548,7 +547,7 @@ class Permission extends Model {
 
         $response['status'] = 'success';
         $response['data'] = [];
-        $response['messages'][] = trans('vaahcms-general.action_successful');
+        $response['messages'][] = 'Action was successful';
 
         return $response;
 
@@ -618,7 +617,7 @@ class Permission extends Model {
         );
 
         $messages = [
-            'is_active.required' => trans('vaahcms-general.is_active_required')
+            'is_active.required' => 'The is active field is required.'
         ];
 
         $validator = \Validator::make( $inputs, $rules, $messages);

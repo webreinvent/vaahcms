@@ -193,7 +193,6 @@ export default {
                 country: null,
                 country_code: null,
                 status: null,
-                meta: {}
             };
             return new_item;
         },
@@ -230,7 +229,6 @@ export default {
                     country: null,
                     country_code: null,
                     status: null,
-                    meta: {}
                 };
 
             for(let key in new_item)
@@ -238,19 +236,7 @@ export default {
                 new_item[key] = this.item[key];
             }
             this.update('new_item', new_item);
-        },
-        //---------------------------------------------------------------------
-        isHidden: function(key)
-        {
-            if(this.page.assets.fields
-                && this.page.assets.fields[key]
-                && this.page.assets.fields[key].is_hidden
-                && this.page.assets.fields[key].to_registration){
-                return this.page.assets.fields[key].is_hidden
-            }
-
-            return false;
-        },
+        }
         //---------------------------------------------------------------------
     }
 }

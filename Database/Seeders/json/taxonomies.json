@@ -1,6 +1,14 @@
 [
 
     {
+        "type_slug": "roles",
+        "name": "Backend"
+    },
+    {
+        "type_slug": "roles",
+        "name": "Frontend"
+    },
+    {
         "type_slug": "registrations",
         "name": "Email Verification Pending"
     },

@@ -61,7 +61,6 @@ export default {
             foreign_user_id: null,
             status: null,
             is_active: null,
-            meta: {}
         },
     },
     //=========================================================================

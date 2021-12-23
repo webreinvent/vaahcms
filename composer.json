@@ -4,7 +4,7 @@
   "keywords": ["vaahcms", "headless", "hmvc", "laravel", "cms", "vue", "vuex"],
   "homepage": "https://webreinvent.com",
   "license": "MIT",
-  "version": "1.5.8",
+  "version": "1.5.6",
   "authors": [
     {
       "name": "WebReinvent",
@@ -22,7 +22,7 @@
     "maatwebsite/excel": "^3.1.19",
     "ixudra/curl": "^6.19.0",
     "nahid/linkify": "^1.0.0",
-    "zanysoft/laravel-zip": "^1.0",
+    "macellan/laravel-zip": "^1.0",
     "doctrine/dbal": "^3.1"
   },
     "extra": {

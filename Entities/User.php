@@ -103,12 +103,7 @@ class User extends Authenticatable
     //-------------------------------------------------
     public function getMetaAttribute($value)
     {
-        if($value && $value!='null'){
-            return json_decode($value);
-        }else{
-            return json_decode('{}');
-        }
-
+        return json_decode($value);
     }
     //-------------------------------------------------
     public function getNameAttribute() {
@@ -298,11 +293,11 @@ class User extends Authenticatable
         return $this->roles()->wherePivot('is_active', 1);
     }
     //-------------------------------------------------
-    public static function countSuperAdministrators()
+    public static function countAdministrators()
     {
         $count = User::whereHas('roles', function ($query) {
             $query->where('vh_user_roles.is_active', '=', 1)
-                ->slug('super-administrator');
+                ->slug('administrator');
         })->isActive()->get()->count();
 
         return $count;
@@ -359,7 +354,7 @@ class User extends Authenticatable
         $permissions_list = array();
         foreach ($roles as $role) {
 
-            if($role->slug !='super-administrator')
+            if($role->slug !='administrator')
             {
                 $permissions = $role->permissions()->isActive()
                     ->wherePivot('is_active', 1)->get();
@@ -369,7 +364,7 @@ class User extends Authenticatable
 
             foreach ($permissions as $permission) {
 
-                if($role->slug =='super-administrator')
+                if($role->slug =='administrator')
                 {
                     $permissions_list[$permission->id] = $permission->toArray();
 
@@ -395,7 +390,7 @@ class User extends Authenticatable
     //-------------------------------------------------
 
     //-------------------------------------------------
-    public static function rulesSuperAdminCreate()
+    public static function rulesAdminCreate()
     {
         $rules = [
             'name' => 'required|string|max:255',
@@ -417,7 +412,7 @@ class User extends Authenticatable
         if($user)
         {
             $response['status'] = 'failed';
-            $response['errors'][] = trans('vaahcms-user.email_already_registered');
+            $response['errors'][] = 'Email is already registered.';
             return $response;
         }
 
@@ -431,7 +426,7 @@ class User extends Authenticatable
             if($user)
             {
                 $response['status'] = 'failed';
-                $response['errors'][] = trans('vaahcms-user.phone_already_registered');
+                $response['errors'][] = 'Phone number is already registered.';
                 return $response;
             }
         }
@@ -440,7 +435,8 @@ class User extends Authenticatable
         if($request->has('status') && $request->status == 'registered' && !$request->has('user_id'))
         {
             $response['status'] = 'failed';
-            $response['errors'][] = trans('vaahcms-user.registration_status_is_registered');
+            $response['errors'][] = 'The registration status is "registered", hence user
+            id is required';
             return $response;
         }
 
@@ -468,10 +464,10 @@ class User extends Authenticatable
 
     }
     //-------------------------------------------------
-    public static function isLastSuperAdmin()
+    public static function isLastAdmin()
     {
-        $count = User::countSuperAdministrators();
-        if($count < 2)
+        $count_admin = User::countAdministrators();
+        if($count_admin < 2)
         {
             return true;
         }
@@ -504,12 +500,12 @@ class User extends Authenticatable
         }
 
 
-        //restricted action if this user is last super admin
+        //restricted action if this user is last admin
         $result = false;
         $user = self::find($user_id);
-        $is_last_super_admin = self::isLastSuperAdmin();
+        $is_last_admin = self::isLastAdmin();
 
-        if($user->hasRole('super-administrator') && $is_last_super_admin)
+        if($user->hasRole('administrator') && $is_last_admin)
         {
             switch ($action_type)
             {
@@ -572,60 +568,7 @@ class User extends Authenticatable
         if(!$user)
         {
             $response['status'] = 'failed';
-            $response['errors'][] = trans('vaahcms-user.no_user_exist');
-            return $response;
-        }
-
-        //check user is active
-        if($user->is_active != 1)
-        {
-            $response['status'] = 'failed';
-            $response['errors'][] = trans('vaahcms::messages.inactive_account');
-            return $response;
-        }
-
-        return $user;
-    }
-    //-------------------------------------------------
-    public static function beforeUserLoginValidation($request)
-    {
-        //check if already logged in
-        if (\Auth::check())
-        {
-            \Auth::logout();
-        }
-
-        $inputs = $request->all();
-        $inputs['email'] = trim($inputs['email']);
-
-        $rules = array(
-            'email' => 'required|max:150',
-        );
-        $messages = array(
-            'email.required' => trans('vaahcms-login.email_or_username_required'),
-            'email.max' => trans('vaahcms-login.email_or_username_limit'),
-        );
-        $validator = \Validator::make($inputs, $rules, $messages);
-
-        if ($validator->fails())
-        {
-            $errors = errorsToArray($validator->errors());
-            $response['status'] = 'failed';
-            $response['errors'] = $errors;
-            return $response;
-        }
-
-        $user = self::where('email', $inputs['email'])->first();
-
-        //check user is active
-        if(!$user){
-            $user = self::where('username', $inputs['email'])->first();
-        }
-
-        if(!$user)
-        {
-            $response['status'] = 'failed';
-            $response['errors'][] = trans('vaahcms-user.no_user_exist');
+            $response['errors'][] = 'No user exist';
             return $response;
         }
 
@@ -644,20 +587,11 @@ class User extends Authenticatable
     public static function login($request)
     {
 
-        $user = self::beforeUserLoginValidation($request);
+        $user = self::beforeUserActionValidation($request);
 
         if(isset($user['status']) && $user['status'] == 'failed')
         {
             return $user;
-        }
-
-        if(!$user->hasPermission('can-login-in-backend'))
-        {
-
-            $response['status'] = 'failed';
-            $response['errors'][] = trans("vaahcms::messages.permission_denied");
-
-            return $response;
         }
 
         $inputs = $request->all();
@@ -671,15 +605,6 @@ class User extends Authenticatable
             'password' => trim($request->get('password'))
         ], $remember))
         {
-
-            $user = Auth::user();
-            $user->last_login_at = Carbon::now();
-            $user->save();
-
-            $response['status'] = 'success';
-        }elseif(Auth::attempt(['username' => $inputs['email'],
-            'password' => trim($request->get('password'))
-        ], $remember)){
             $user = Auth::user();
             $user->last_login_at = Carbon::now();
             $user->save();
@@ -699,15 +624,6 @@ class User extends Authenticatable
         if(isset($user['status']) && $user['status'] == 'failed')
         {
             return $user;
-        }
-
-        if(!$user->hasPermission('can-login-in-backend'))
-        {
-
-            $response['status'] = 'failed';
-            $response['errors'][] = trans("vaahcms::messages.permission_denied");
-
-            return $response;
         }
 
         $otp_1 = mt_rand(100, 999);
@@ -735,7 +651,7 @@ class User extends Authenticatable
 
         $response['status'] = 'success';
         $response['messages'] = [
-            trans('vaahcms-login.otp_sent')
+            "A one time password (OTP) has been sent to your email."
         ];
 
         return $response;
@@ -749,15 +665,6 @@ class User extends Authenticatable
         if(isset($user['status']) && $user['status'] == 'failed')
         {
             return $user;
-        }
-
-        if(!$user->hasPermission('can-login-in-backend'))
-        {
-
-            $response['status'] = 'failed';
-            $response['errors'][] = trans("vaahcms::messages.permission_denied");
-
-            return $response;
         }
 
         $rules = array(
@@ -821,15 +728,6 @@ class User extends Authenticatable
             return $user;
         }
 
-        if(!$user->hasPermission('can-login-in-backend'))
-        {
-
-            $response['status'] = 'failed';
-            $response['errors'][] = trans("vaahcms::messages.permission_denied");
-
-            return $response;
-        }
-
         $reset_password_code = uniqid();
 
         $user->reset_password_code = $reset_password_code;
@@ -885,7 +783,7 @@ class User extends Authenticatable
         if(!$user)
         {
             $response['status'] = 'failed';
-            $response['errors'][] = trans('vaahcms-login.incorrect_reset_password_code');
+            $response['errors'][] = "Incorrect reset password code";
             return $response;
         }
 
@@ -915,16 +813,16 @@ class User extends Authenticatable
     //-------------------------------------------------
 
     //-------------------------------------------------
-    public function isSuperAdmin()
+    public function isAdmin()
     {
-        return $this->hasRole('super-administrator');
+        return $this->hasRole('administrator');
     }
 
     //-------------------------------------------------
     public function hasPermission($permission_slug, $details=false)
     {
 
-        if ($this->isSuperAdmin()) {
+        if ($this->isAdmin()) {
 
             if($details)
             {
@@ -932,7 +830,7 @@ class User extends Authenticatable
                 if(env('APP_DEBUG'))
                 {
                     $response['data']['permission'] = 'Permission slug: '.$permission_slug;
-                    $response['hint'][] = 'Super Admin has all permission by default.';
+                    $response['hint'][] = 'Admin has all permission by default.';
                 }
                 return $response;
 
@@ -1041,13 +939,13 @@ class User extends Authenticatable
     public static function notifyAdmins($subject, $message)
     {
         $users = new User();
-        $super_admins = $users->listByRole('super-administrator');
+        $admins = $users->listByRole('administrator');
 
         $notification = new \stdClass();
         $notification->subject = $subject;
         $notification->message = $message;
 
-        Notification::send($super_admins, new NotifyAdmin($notification));
+        Notification::send($admins, new NotifyAdmin($notification));
     }
     //-------------------------------------------------
     public static function getUsersForAssets()
@@ -1093,17 +991,7 @@ class User extends Authenticatable
         if($user)
         {
             $response['status'] = 'failed';
-            $response['errors'][] = trans('vaahcms-user.email_already_registered');
-            return $response;
-        }
-
-        // check if username already exist
-        $user = self::where('username',$inputs['username'])->first();
-
-        if($user)
-        {
-            $response['status'] = 'failed';
-            $response['errors'][] = trans('vaahcms-user.username_already_registered');
+            $response['errors'][] = "This email is already registered.";
             return $response;
         }
 
@@ -1127,12 +1015,12 @@ class User extends Authenticatable
 
         $response['status'] = 'success';
         $response['data']['item'] = $reg;
-        $response['messages'][] = trans('vaahcms-general.saved_successfully');
+        $response['messages'][] = 'Saved successfully.';
         return $response;
 
     }
     //-------------------------------------------------
-    public static function getList($request,$excluded_columns = [])
+    public static function getList($request)
     {
 
         if(isset($request['recount']) && $request['recount'] == true)
@@ -1189,9 +1077,7 @@ class User extends Authenticatable
 
 
         if(!\Auth::user()->hasPermission('can-see-users-contact-details')){
-            $list->exclude(array_merge(['email','alternate_email', 'phone'],$excluded_columns));
-        }else{
-            $list->exclude($excluded_columns);
+            $list->exclude(['email','alternate_email', 'phone']);
         }
 
         $list->withCount(['activeRoles']);
@@ -1216,7 +1102,7 @@ class User extends Authenticatable
 
     //-------------------------------------------------
 
-    public static function getItem($id,$excluded_columns = [])
+    public static function getItem($id)
     {
 
         $item = self::where('id', $id)->with(['createdByUser',
@@ -1224,9 +1110,7 @@ class User extends Authenticatable
             ->withTrashed();
 
         if(!\Auth::user()->hasPermission('can-see-users-contact-details')){
-            $item->exclude(array_merge(['email','alternate_email', 'phone'],$excluded_columns));
-        }else{
-            $item->exclude($excluded_columns);
+            $item->exclude(['email','alternate_email', 'phone']);
         }
 
         $item = $item->first();
@@ -1324,17 +1208,7 @@ class User extends Authenticatable
             if($user)
             {
                 $response['status'] = 'failed';
-                $response['errors'][] = trans('vaahcms-user.email_already_registered');
-                return $response;
-            }
-            // check if already exist
-            $user = self::where('id', '!=', $inputs['id'])
-                ->where('username',$inputs['username'])->first();
-
-            if($user)
-            {
-                $response['status'] = 'failed';
-                $response['errors'][] = trans('vaahcms-user.username_already_registered');
+                $response['errors'][] = "This email is already registered.";
                 return $response;
             }
 
@@ -1437,7 +1311,7 @@ class User extends Authenticatable
 
         $response['status'] = 'success';
         $response['data'] = [];
-        $response['messages'][] = trans('vaahcms-general.action_successful');
+        $response['messages'][] = 'Action was successful';
 
         return $response;
 
@@ -1478,7 +1352,7 @@ class User extends Authenticatable
 
         $response['status'] = 'success';
         $response['data'] = [];
-        $response['messages'][] = trans('vaahcms-general.action_successful');
+        $response['messages'][] = 'Action was successful';
 
         return $response;
 
@@ -1516,7 +1390,7 @@ class User extends Authenticatable
 
         $response['status'] = 'success';
         $response['data'] = [];
-        $response['messages'][] = trans('vaahcms-general.action_successful');
+        $response['messages'][] = 'Action was successful';
 
         return $response;
 
@@ -1529,14 +1403,12 @@ class User extends Authenticatable
 
         $inputs = $request->all();
 
-        $role = Role::find($inputs['inputs']['role_id']);
 
-        if($inputs['inputs']['id'] == 1 && $role->slug == 'super-administrator'
-            && $inputs['data']['is_active'] == 0)
+        if($inputs['inputs']['id'] == 1 && $inputs['inputs']['role_id'] == 1)
         {
             $response['status'] = 'failed';
-            $response['errors'][] = trans('vaahcms-user.first_user_super_administrator');
-            return $response;
+            $response['errors'][] = 'First user will always be an administrator';
+            return response()->json($response);
         }
 
         $item = User::find($inputs['inputs']['id']);
@@ -1619,7 +1491,7 @@ class User extends Authenticatable
 
         $response['status'] = 'success';
         $response['data'] = [];
-        $response['messages'][] = trans('vaahcms-general.action_successful');
+        $response['messages'][] = 'Action was successful';
 
         return $response;
 
@@ -1683,7 +1555,7 @@ class User extends Authenticatable
         if(!\Auth::check())
         {
             $response['status'] = 'failed';
-            $response['errors'][] = trans('vaahcms-user.logged_in_to_update_profile');
+            $response['errors'][] = 'You must be logged in to update your profile';
             return $response;
         }
 
@@ -1703,7 +1575,7 @@ class User extends Authenticatable
             if($user_exist)
             {
                 $response['status'] = 'failed';
-                $response['errors'][] = trans('vaahcms-user.username_already_taken');
+                $response['errors'][] = 'Username already taken';
                 return $response;
             }
         }
@@ -1717,7 +1589,7 @@ class User extends Authenticatable
             if($email_exist)
             {
                 $response['status'] = 'failed';
-                $response['errors'][] = trans('vaahcms-user.email_associate_with_other_user');
+                $response['errors'][] = 'Email is associated with other user.';
                 return $response;
             }
 
@@ -1734,7 +1606,7 @@ class User extends Authenticatable
 
         $response['status'] = 'success';
         $response['data'][] = '';
-        $response['messages'][] = trans('vaahcms-general.action_successful');
+        $response['messages'][] = 'Action was successful';
         return $response;
 
 
@@ -1761,7 +1633,7 @@ class User extends Authenticatable
         if($request->new_password != $request->confirm_password)
         {
             $response['status'] = 'failed';
-            $response['errors'][] = trans('vaahcms-user.confirm_password_not_match');
+            $response['errors'][] = 'Confirm password does not match';
             return $response;
         }
 
@@ -1773,7 +1645,7 @@ class User extends Authenticatable
             if(!$check)
             {
                 $response['status'] = 'failed';
-                $response['errors'][] = trans('vaahcms-user.current_password_incorrect');
+                $response['errors'][] = 'Current password is incorrect';
                 return $response;
             }
 
@@ -1783,7 +1655,7 @@ class User extends Authenticatable
 
             $response['status'] = 'success';
             $response['data'][] = '';
-            $response['messages'][] = trans('vaahcms-general.action_successful');
+            $response['messages'][] = 'Action was successful';
 
             return $response;
 
@@ -1879,36 +1751,6 @@ class User extends Authenticatable
         }
 
         return $data;
-
-    }
-    //-------------------------------------------------
-    public static function getUserSettings($return_hidden_column_name = false,
-                                           $return_registration_columns = false)
-    {
-
-        $settings = Setting::where('category','user_setting')
-            ->where('label','field');
-
-        $settings = $settings->select('id','key','type','value','meta')->get();
-
-        $list = array();
-
-        foreach ($settings as $key => $setting){
-            if(!$return_hidden_column_name){
-                $list[$setting->key] = $setting->value;
-            }elseif(isset($setting->value->is_hidden)
-                && $setting->value->is_hidden){
-                if(!$return_registration_columns){
-                    $list[$key] = $setting->key;
-                }elseif(isset($setting->value->to_registration)
-                    && $setting->value->to_registration){
-                    $list[$key] = $setting->key;
-                }
-            }
-
-        }
-
-        return $list;
 
     }
     //-------------------------------------------------

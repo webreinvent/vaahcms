@@ -226,7 +226,7 @@ class LanguageString extends Model {
         {
 
             $response['status'] = 'failed';
-            $response['messages'][] = trans('vaahcms-localization.one_string_required');
+            $response['messages'][] = 'At least one string is required';
             return $response;
 
         }
@@ -294,7 +294,7 @@ class LanguageString extends Model {
 
         $response['status'] = 'success';
         $response['data'][] = '';
-        $response['messages'][] = trans('vaahcms-general.action_successful');
+        $response['messages'][] = 'Action was successful';
         return $response;
 
 

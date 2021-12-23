@@ -3,7 +3,6 @@
 namespace WebReinvent\VaahCms\Http\Controllers;
 
 use Carbon\Carbon;
-use Illuminate\Foundation\Application;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
@@ -30,12 +29,6 @@ class JsonController extends Controller
     {
 
         $data['timezone'] = config('app.timezone');
-
-        $data['versions'] = [
-            'laravel_version' => Application::VERSION,
-            'php_version' => PHP_VERSION,
-            'vaahcms_version' => config('vaahcms.version')
-        ];
 
         $data['vaahcms'] = [
             'name' => config('vaahcms.app_name'),

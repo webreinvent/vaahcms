@@ -3,19 +3,13 @@
 <b-menu class="is-light">
     <b-menu-list label="Settings">
         <b-menu-item label="General"
-                     icon="tools"
+                     icon="cog"
                      tag="router-link"
                      :active="!!($route.path == '/vaah/settings/general')"
                      :to="{name: 'general.index'}">
         </b-menu-item>
-        <b-menu-item label="User Settings"
-                     icon="users-cog"
-                     tag="router-link"
-                     :active="!!($route.path == '/vaah/settings/user-settings')"
-                     :to="{name: 'user-setting.index'}">
-        </b-menu-item>
         <b-menu-item label="Env Variables"
-                     icon="code"
+                     icon="lock"
                      tag="router-link"
                      :active="!!($route.path == '/vaah/settings/env-variables')"
                      :to="{name: 'env.index'}">

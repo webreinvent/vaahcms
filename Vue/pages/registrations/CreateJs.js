@@ -187,7 +187,6 @@ export default {
                 country: null,
                 country_code: null,
                 status: null,
-                meta: {}
             };
             return new_item;
         },
@@ -219,7 +218,6 @@ export default {
                 country: null,
                 country_code: null,
                 status: null,
-                meta: {}
             };
 
             for(let key in new_item)
@@ -232,23 +230,6 @@ export default {
         hasPermission: function(slug)
         {
             return this.$vaah.hasPermission(this.permissions, slug);
-        },
-        //---------------------------------------------------------------------
-        isHidden: function(key)
-        {
-
-            console.log(this.page.assets);
-
-            if(this.page.assets.fields
-                && this.page.assets.fields[key]
-                && this.page.assets.fields[key].to_registration){
-
-                console.log(this.page.assets.fields[key]);
-
-                return this.page.assets.fields[key].is_hidden
-            }
-
-            return false;
         },
         //---------------------------------------------------------------------
         //---------------------------------------------------------------------

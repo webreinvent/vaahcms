@@ -289,7 +289,7 @@ class Notification extends Model {
 
         $response['status'] = 'success';
         $response['data'] = [];
-        $response['messages'][] = trans('vaahcms-general.action_successful');
+        $response['messages'][] = 'Action was successful';
 
         return $response;
 
@@ -331,7 +331,7 @@ class Notification extends Model {
 
             $response['status'] = 'success';
             $response['data'] = [];
-            $response['messages'][] = trans('vaahcms-general.action_successful');
+            $response['messages'][] = 'Action was successful';
 
         }catch(\Exception $e)
         {

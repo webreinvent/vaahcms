@@ -109,13 +109,13 @@ class SetupController extends Controller
             $data['stage'] = 'migrated';
         }
 
-        if(VaahSetup::isSuperAdminCreated())
+        if(VaahSetup::isAdminCreated())
         {
             $data['stage'] = 'installed';
 
             if(\Auth::check())
             {
-                if(\Auth::user()->hasRole('super-administrator'))
+                if(\Auth::user()->hasRole('administrator'))
                 {
                     $data['is_user_administrator'] = true;
                 }
@@ -161,7 +161,7 @@ class SetupController extends Controller
             return response()->json($response);
         }
 
-        if(!\Auth::user()->hasRole('super-administrator'))
+        if(!\Auth::user()->hasRole('administrator'))
         {
             $response['status'] = 'failed';
             $response['errors'][] = 'Permission denied. You must be logged in from Administrator account.';
@@ -576,9 +576,9 @@ class SetupController extends Controller
             return response()->json($response);
         }
 
-        $any_super_admin_exist = User::countSuperAdministrators();
+        $any_admin_exist = User::countAdministrators();
 
-        if($any_super_admin_exist > 0)
+        if($any_admin_exist > 0)
         {
             $response['status'] = 'success';
             $response['messages'][] = trans("vaahcms::messages.setup_completed");
@@ -619,9 +619,11 @@ class SetupController extends Controller
             return response()->json($response);
         }
 
-        $any_super_admin_exist = User::countSuperAdministrators();
+        $data = [];
 
-        if($any_super_admin_exist > 0)
+        $any_admin_exist = User::countAdministrators();
+
+        if($any_admin_exist > 0)
         {
             $response['status'] = 'failed';
             $response['errors'][] = trans("vaahcms::messages.permission_denied");
@@ -637,12 +639,12 @@ class SetupController extends Controller
         $user->created_ip = \Request::ip();
         $user->save();
 
-        $role = Role::where('slug', 'super-administrator')->first();
+        $role = Role::where('slug', 'administrator')->first();
 
         if(!$role)
         {
             $response['status'] = 'failed';
-            $response['errors'][] = \Lang::get('vaahcms::messages.not_exist', ['key' => 'role slug', 'value' => 'super-administrator']);;
+            $response['errors'][] = \Lang::get('vaahcms::messages.not_exist', ['key' => 'role slug', 'value' => 'administrator']);;
             return response()->json($response);
         }
 

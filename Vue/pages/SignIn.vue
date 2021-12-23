@@ -41,21 +41,11 @@
                                         </b-radio>
                                     </div>
 
-                                    <b-field v-if="signin.type != 'otp'"
-                                             class="is-full-width has-margin-top-20">
-                                        <b-input type="text"
+                                    <b-field class="is-full-width has-margin-top-20">
+                                        <b-input type="email"
                                                  v-model="signin.email"
-                                                 placeholder="Enter Email or Username"
-                                                 dusk="signin-email_or_username">
-                                        </b-input>
-                                    </b-field>
-
-                                    <b-field v-if="signin.type == 'otp'"
-                                             class="is-full-width has-margin-top-20">
-                                        <b-input type="text"
-                                                 v-model="signin.email"
-                                                 placeholder="Enter Email"
-                                                 dusk="signin-email">
+                                                 placeholder="Enter Email Address"
+                                                 dusk="signin-username_or_email">
                                         </b-input>
                                     </b-field>
 

@@ -58,7 +58,7 @@ class VaahMail{
 
         $response['status'] = 'success';
         $response['data'] = [];
-        $response['messages'][] = trans('vaahcms-general.action_successful');
+        $response['messages'][] = 'Action was successful';
 
         return $response;
 
@@ -71,7 +71,7 @@ class VaahMail{
 
             $response['status'] = 'success';
             $response['data'] = [];
-            $response['messages'][] = trans('vaahcms-general.action_successful');
+            $response['messages'][] = 'Action was successful';
         }catch(\Exception $e)
         {
             $response['status'] = 'failed';

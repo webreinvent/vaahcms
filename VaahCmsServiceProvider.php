@@ -121,7 +121,7 @@ class VaahCmsServiceProvider extends ServiceProvider {
         $this->app->register(FacadesServiceProvider::class);
         $this->app->register(ThemesServiceProvider::class);
         $this->app->register(ModulesServiceProvider::class);
-        $this->app->register(\ZanySoft\Zip\ZipServiceProvider::class);
+        $this->app->register(\Macellan\Zip\ZipServiceProvider::class);
         $this->app->register(\Intervention\Image\ImageServiceProvider::class);
         $this->app->register(\Creativeorange\Gravatar\GravatarServiceProvider::class);
 
@@ -137,7 +137,7 @@ class VaahCmsServiceProvider extends ServiceProvider {
 
         $loader->alias('VaahExcel', VaahExcelFacade::class);
         $loader->alias('VaahFile', VaahFileFacade::class);
-        $loader->alias('Zip', \ZanySoft\Zip\ZipServiceProvider::class);
+        $loader->alias('Zip', \Macellan\Zip\ZipFacade::class);
         $loader->alias('Carbon', \Carbon\Carbon::class);
         $loader->alias('Image', \Intervention\Image\Facades\Image::class);
         $loader->alias('Gravatar', 'Creativeorange\Gravatar\Facades\Gravatar');

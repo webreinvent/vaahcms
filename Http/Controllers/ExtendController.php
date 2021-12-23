@@ -68,9 +68,11 @@ class ExtendController extends Controller
             $list[0] = [
                 'link' => self::$link,
                 'icon' => 'tachometer-alt',
-                'label'=> 'Dashboard',
+                'label'=> 'Dashboard'
             ];
         }
+
+
 
 
         if(\Auth::user()->hasPermission('has-access-of-registrations-section') ||
@@ -163,11 +165,6 @@ class ExtendController extends Controller
                         'link' => self::$link."/settings/general",
                         'icon' => 'tools',
                         'label'=> 'General'
-                    ],
-                    [
-                        'link' => self::$link."/settings/user-settings",
-                        'icon' => 'users-cog',
-                        'label'=> 'User Settings'
                     ],
                     [
                         'link' => self::$link."/settings/env-variables",

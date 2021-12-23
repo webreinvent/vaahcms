@@ -29,6 +29,13 @@
                     </b-tooltip>
                 </b-table-column>
 
+
+                <b-table-column v-slot="props" width="100"
+                                field="type" label="Type">
+                    <b-tag >{{ props.row.type }}</b-tag>
+
+                </b-table-column>
+
                 <b-table-column v-slot="props" width="100"
                                 field="status" label="Is Active">
 

@@ -21,7 +21,7 @@
                                 <b-field class="is-full-width has-margin-top-20">
                                     <b-input type="email"
                                              v-model="credentials.email"
-                                             placeholder="Enter Email"
+                                             placeholder="Enter Email Address"
                                              dusk="forgot-email"
                                              maxlength="30">
                                     </b-input>
