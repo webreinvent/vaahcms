@@ -7,7 +7,7 @@
 $settings =  [
     'app_name' => 'VaahCMS',
     'app_slug' => 'vaahcms',
-    'version' => '1.5.6',
+    'version' => '1.5.9',
     'get_config_version' => false,
     'website' => 'https://vaah.dev/cms',
     'documentation' => 'https://docs.vaah.dev/vaahcms',
@@ -29,7 +29,7 @@ $settings =  [
     'api_route' => 'https://api.vaah.dev/cms/',
     'debug' => 1,
     'uploads' => [
-        'allowed_extensions' => ["jpg", "jpeg", 'png', "gif", "csv"]
+        'allowed_extensions' => ["jpg", "jpeg", 'png', "gif", "csv", "docs", "pdf"]
     ]
 ];
 

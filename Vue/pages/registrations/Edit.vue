@@ -97,7 +97,8 @@
                     </b-field>
 
 
-                    <b-field label="Username" :label-position="labelPosition">
+                    <b-field
+                             label="Username" :label-position="labelPosition">
                         <b-input v-model="item.username"  name="register-username"
                                  dusk="register-username" ></b-input>
                     </b-field>
@@ -107,13 +108,15 @@
                                  name="register-password" dusk="register-password" ></b-input>
                     </b-field>
 
-                    <b-field label="Display Name" :label-position="labelPosition">
+                    <b-field v-if="!isHidden('display_name')"
+                             label="Display Name" :label-position="labelPosition">
                         <b-input v-model="item.display_name"
                                  name="register-display_name" dusk="register-display_name" >
                         </b-input>
                     </b-field>
 
-                    <b-field label="Title" :label-position="labelPosition">
+                    <b-field v-if="!isHidden('title')"
+                             label="Title" :label-position="labelPosition">
                         <b-select placeholder="Select a title"
                                   name="register-title" dusk="register-title"
                                   v-model="item.title">
@@ -123,7 +126,8 @@
                         </b-select>
                     </b-field>
 
-                    <b-field label="Designation" :label-position="labelPosition">
+                    <b-field v-if="!isHidden('designation')"
+                             label="Designation" :label-position="labelPosition">
                         <b-input v-model="item.designation"
                                  name="register-designation" dusk="register-designation"
                         ></b-input>
@@ -135,19 +139,22 @@
                         ></b-input>
                     </b-field>
 
-                    <b-field label="Middle Name" :label-position="labelPosition">
+                    <b-field v-if="!isHidden('middle_name')"
+                             label="Middle Name" :label-position="labelPosition">
                         <b-input v-model="item.middle_name"
                                  name="register-middle_name" dusk="register-middle_name"
                         ></b-input>
                     </b-field>
 
-                    <b-field label="Last Name" :label-position="labelPosition">
+                    <b-field v-if="!isHidden('last_name')"
+                             label="Last Name" :label-position="labelPosition">
                         <b-input v-model="item.last_name"
                                  name="register-last_name" dusk="register-last_name"
                         ></b-input>
                     </b-field>
 
-                    <b-field label="Gender" :label-position="labelPosition">
+                    <b-field v-if="!isHidden('gender')"
+                             label="Gender" :label-position="labelPosition">
                         <b-radio-button v-model="item.gender"
                                         name="register-gender" dusk="register-gender"
                                         native-value="m">
@@ -172,7 +179,8 @@
 
                     </b-field>
 
-                    <b-field label="Country Code" :label-position="labelPosition">
+                    <b-field v-if="!isHidden('country_calling_code')"
+                             label="Country Code" :label-position="labelPosition">
                         <b-select placeholder="Select a country code"
                                   name="register-country_code" dusk="register-country_code"
                                   v-model="item.country_calling_code">
@@ -182,20 +190,23 @@
                         </b-select>
                     </b-field>
 
-                    <b-field label="Phone" :label-position="labelPosition">
+                    <b-field v-if="!isHidden('phone')"
+                             label="Phone" :label-position="labelPosition">
                         <b-input v-model="item.phone"
                                  name="register-phone" dusk="register-phone"
                         ></b-input>
                     </b-field>
 
-                    <b-field label="Bio" :label-position="labelPosition">
+                    <b-field v-if="!isHidden('bio')"
+                             label="Bio" :label-position="labelPosition">
                         <b-input maxlength="250"
                                  v-model="item.bio"
                                  name="register-bio" dusk="register-bio"
                                  type="textarea"></b-input>
                     </b-field>
 
-                    <b-field label="Timezone" :label-position="labelPosition">
+                    <b-field v-if="!isHidden('timezone')"
+                             label="Timezone" :label-position="labelPosition">
                         <AutoCompleteTimeZone
                             :selected_value="item.timezone"
                             :options="page.assets.timezones"
@@ -205,20 +216,23 @@
                         </AutoCompleteTimeZone>
                     </b-field>
 
-                    <b-field label="Alternate Email" :label-position="labelPosition">
+                    <b-field v-if="!isHidden('alternate_email')"
+                             label="Alternate Email" :label-position="labelPosition">
                         <b-input type="email" v-model="item.alternate_email"
                                  name="register-alternate_email" dusk="register-alternate_email"
                         ></b-input>
                     </b-field>
 
-                    <b-field label="Date of Birth"
+                    <b-field v-if="!isHidden('birth')"
+                             label="Date of Birth"
                              :label-position="labelPosition">
                         <DatePicker :selected_value="item.birth"
                                     @onSelect="setBirthDate">
                         </DatePicker>
                     </b-field>
 
-                    <b-field label="Country" :label-position="labelPosition">
+                    <b-field v-if="!isHidden('country')"
+                             label="Country" :label-position="labelPosition">
                         <AutoCompleteCountry
                             :selected_value="item.country"
                             :options="page.assets.countries"
@@ -236,6 +250,25 @@
                             >{{status.name}}</option>
                         </b-select>
                     </b-field>
+
+                    <template v-if="page.assets.custom_fields && page.assets.custom_fields.value">
+
+                        <b-field v-for="(custom_field,key) in page.assets.custom_fields.value"
+                                 :key="key"
+                                 v-if="!custom_field.is_hidden && custom_field.to_registration"
+                                 :label="$vaah.toLabel(custom_field.name)" :label-position="labelPosition">
+                            <b-input v-model="item.meta[custom_field.slug]"
+                                     :type="custom_field.type"
+                                     :min="custom_field.min"
+                                     :max="custom_field.max"
+                                     :minlength="custom_field.minlength"
+                                     :maxlength="custom_field.maxlength"
+                                     :password-reveal="custom_field.is_password_reveal"
+                                     :name="'register-meta_'+custom_field.name"
+                                     :dusk="'register-meta_'+custom_field.name"
+                            ></b-input>
+                        </b-field>
+                    </template>
 
 
                 </div>

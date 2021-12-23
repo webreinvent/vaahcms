@@ -190,6 +190,7 @@ export default {
                 country_code: null,
                 foreign_user_id: null,
                 status: null,
+                meta: {}
             };
             return new_item;
         },
@@ -222,6 +223,7 @@ export default {
                 country_code: null,
                 foreign_user_id: null,
                 status: null,
+                meta: {}
             };
 
             for(let key in new_item)
@@ -254,6 +256,16 @@ export default {
         {
             return this.$vaah.hasPermission(this.permissions, slug);
         },
+        //---------------------------------------------------------------------
+        isHidden: function(key)
+        {
+            if(this.page.assets.fields
+                && this.page.assets.fields[key]){
+                return this.page.assets.fields[key].is_hidden
+            }
+
+            return false;
+        }
         //---------------------------------------------------------------------
         //---------------------------------------------------------------------
         //---------------------------------------------------------------------

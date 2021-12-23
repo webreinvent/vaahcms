@@ -3,6 +3,7 @@ namespace WebReinvent\VaahCms\Libraries;
 
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
+use WebReinvent\VaahCms\Entities\Permission;
 
 
 class VaahSeeder{
@@ -182,9 +183,62 @@ class VaahSeeder{
         self::storeSeedsWithUuid('vh_roles', $list);
     }
     //----------------------------------------------------------
-    public static function permissions($json_file_path){
+    public static function permissions($json_file_path, $prefix = null){
         $list = self::getListFromJson($json_file_path);
-        self::storeSeedsWithUuid('vh_permissions', $list);
+
+        $pre_name = null;
+
+        if($prefix)
+        {
+            $pre_name = $prefix;
+
+        }else{
+
+            $pre_name = get_string_between($json_file_path,
+                "\VaahCms\Modules\\","\Database\Seeds");
+
+            if(!$pre_name){
+                $pre_name = get_string_between($json_file_path,
+                    "\VaahCms\Themes\\","\Database\Seeds");
+            }
+        }
+
+        foreach ($list as $item)
+        {
+            if(!isset($item['slug']) || !$item['slug'])
+            {
+                $item['slug'] = Str::slug($item['name']);
+            }
+
+            if($pre_name){
+
+                $item['name'] = $pre_name.': '.$item['name'];
+                $item['slug'] = Str::slug($pre_name).'-'.$item['slug'];
+
+            }
+
+            $item['uuid'] = Str::uuid();
+
+            if(!isset($item['is_active']) || !$item['is_active']){
+                $item['is_active'] = 1;
+            }
+
+            $record = Permission::where('slug', $item['slug'])
+                ->first();
+
+            if(isset($item['meta']))
+            {
+                $item['meta'] = json_encode($item['meta']);
+            }
+
+            if(!$record)
+            {
+                Permission::insert($item);
+            } else{
+                Permission::where('slug', $item['slug'])
+                    ->update($item);
+            }
+        }
     }
     //----------------------------------------------------------
     public static function taxonomyTypes($json_file_path){

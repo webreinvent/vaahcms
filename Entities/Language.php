@@ -192,7 +192,7 @@ class Language extends Model {
             if($item)
             {
                 $response['status'] = 'failed';
-                $response['errors'][] = 'Locale Code already exist';
+                $response['errors'][] = trans('vaahcms-localization.locale_code_already_exist');
                 return $response;
             }
 

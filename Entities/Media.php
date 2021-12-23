@@ -212,7 +212,7 @@ class Media extends Model {
             if($download_url_exist)
             {
                 $response['status'] = 'failed';
-                $response['errors'][] = 'Download url is associated with other media.';
+                $response['errors'][] = trans('vaahcms-media.download_url_associate');
                 return $response;
             }
         }
@@ -224,7 +224,7 @@ class Media extends Model {
 
         $response['status'] = 'success';
         $response['data'] = $item;
-        $response['messages'][] = 'Saved successfully.';
+        $response['messages'][] = trans('vaahcms-general.saved_successfully');
 
         return $response;
     }
@@ -337,7 +337,7 @@ class Media extends Model {
             if($download_url_exist)
             {
                 $response['status'] = 'failed';
-                $response['errors'][] = 'Download url is associated with other media.';
+                $response['errors'][] = trans('vaahcms-media.download_url_associate');
                 return $response;
             }
         }
@@ -387,7 +387,7 @@ class Media extends Model {
 
         $response['status'] = 'success';
         $response['data'] = [];
-        $response['messages'][] = 'Action was successful';
+        $response['messages'][] = trans('vaahcms-general.action_successful');
 
         return $response;
     }
@@ -431,7 +431,7 @@ class Media extends Model {
 
         $response['status'] = 'success';
         $response['data'] = [];
-        $response['messages'][] = 'Action was successful';
+        $response['messages'][] = trans('vaahcms-general.action_successful');
 
         return $response;
 
@@ -461,7 +461,7 @@ class Media extends Model {
 
         $response['status'] = 'success';
         $response['data'] = [];
-        $response['messages'][] = 'Action was successful';
+        $response['messages'][] = trans('vaahcms-general.action_successful');
 
         return $response;
 
@@ -497,7 +497,7 @@ class Media extends Model {
 
         $response['status'] = 'success';
         $response['data'] = [];
-        $response['messages'][] = 'Action was successful';
+        $response['messages'][] = trans('vaahcms-general.action_successful');
 
         return $response;
 

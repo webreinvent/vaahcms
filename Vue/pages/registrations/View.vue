@@ -149,7 +149,7 @@
                                     <template v-else-if="label == 'meta'">
 
                                         <tr>
-                                            <th align="right">{{label}}</th>
+                                            <th align="right">{{$vaah.toLabel(label)}}</th>
                                             <td >
                                                 <span v-if="item.meta">
                                                     <ButtonMeta dusk="action-view_payload" :value="item.meta"/>
