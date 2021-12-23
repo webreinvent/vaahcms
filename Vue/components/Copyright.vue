@@ -9,9 +9,9 @@
         </p>
 
         <p class="has-text-centered" v-if="assets">
-            <a target="_blank">Laravel</a>
+            <a class="is-not-clickable" target="_blank">Laravel</a>
             v{{root.assets.versions.laravel_version}}
-            | <a target="_blank">PhP</a>
+            | <a class="is-not-clickable" target="_blank">PhP</a>
             v{{root.assets.versions.php_version}}
         </p>
     </div>
@@ -27,3 +27,9 @@
     }
 
 </script>
+
+<style>
+    .is-not-clickable{
+        cursor: auto !important;
+    }
+</style>
