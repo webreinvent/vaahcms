@@ -29,7 +29,7 @@ $settings =  [
     'api_route' => 'https://api.vaah.dev/cms/',
     'debug' => 1,
     'uploads' => [
-        'allowed_extensions' => ["jpg", "jpeg", 'png', "gif", "csv"]
+        'allowed_extensions' => ["jpg", "jpeg", 'png', "gif", "csv", "docs", "pdf"]
     ]
 ];
 
