@@ -417,7 +417,7 @@ class User extends Authenticatable
         if($user)
         {
             $response['status'] = 'failed';
-            $response['errors'][] = 'Email is already registered.';
+            $response['errors'][] = trans('vaahcms-user.email_already_registered');
             return $response;
         }
 
@@ -431,7 +431,7 @@ class User extends Authenticatable
             if($user)
             {
                 $response['status'] = 'failed';
-                $response['errors'][] = 'Phone number is already registered.';
+                $response['errors'][] = trans('vaahcms-user.phone_already_registered');
                 return $response;
             }
         }
@@ -440,8 +440,7 @@ class User extends Authenticatable
         if($request->has('status') && $request->status == 'registered' && !$request->has('user_id'))
         {
             $response['status'] = 'failed';
-            $response['errors'][] = 'The registration status is "registered", hence user
-            id is required';
+            $response['errors'][] = trans('vaahcms-user.registration_status_is_registered');
             return $response;
         }
 
@@ -573,7 +572,7 @@ class User extends Authenticatable
         if(!$user)
         {
             $response['status'] = 'failed';
-            $response['errors'][] = 'No user exist';
+            $response['errors'][] = trans('vaahcms-user.no_user_exist');
             return $response;
         }
 
@@ -603,8 +602,8 @@ class User extends Authenticatable
             'email' => 'required|max:150',
         );
         $messages = array(
-            'email.required' => 'The email or username field is required.',
-            'email.max' => 'The email or username may not be greater than 150 characters.',
+            'email.required' => trans('vaahcms-login.email_or_username_required'),
+            'email.max' => trans('vaahcms-login.email_or_username_limit'),
         );
         $validator = \Validator::make($inputs, $rules, $messages);
 
@@ -626,7 +625,7 @@ class User extends Authenticatable
         if(!$user)
         {
             $response['status'] = 'failed';
-            $response['errors'][] = 'No user exist';
+            $response['errors'][] = trans('vaahcms-user.no_user_exist');
             return $response;
         }
 
@@ -736,7 +735,7 @@ class User extends Authenticatable
 
         $response['status'] = 'success';
         $response['messages'] = [
-            "A one time password (OTP) has been sent to your email."
+            trans('vaahcms-login.otp_sent')
         ];
 
         return $response;
@@ -886,7 +885,7 @@ class User extends Authenticatable
         if(!$user)
         {
             $response['status'] = 'failed';
-            $response['errors'][] = "Incorrect reset password code";
+            $response['errors'][] = trans('vaahcms-login.incorrect_reset_password_code');
             return $response;
         }
 
@@ -1094,7 +1093,7 @@ class User extends Authenticatable
         if($user)
         {
             $response['status'] = 'failed';
-            $response['errors'][] = "This email is already registered.";
+            $response['errors'][] = trans('vaahcms-user.email_already_registered');
             return $response;
         }
 
@@ -1104,7 +1103,7 @@ class User extends Authenticatable
         if($user)
         {
             $response['status'] = 'failed';
-            $response['errors'][] = "This username is already registered.";
+            $response['errors'][] = trans('vaahcms-user.username_already_registered');
             return $response;
         }
 
@@ -1128,7 +1127,7 @@ class User extends Authenticatable
 
         $response['status'] = 'success';
         $response['data']['item'] = $reg;
-        $response['messages'][] = 'Saved successfully.';
+        $response['messages'][] = trans('vaahcms-general.saved_successfully');
         return $response;
 
     }
@@ -1325,7 +1324,7 @@ class User extends Authenticatable
             if($user)
             {
                 $response['status'] = 'failed';
-                $response['errors'][] = "This email is already registered.";
+                $response['errors'][] = trans('vaahcms-user.email_already_registered');
                 return $response;
             }
             // check if already exist
@@ -1335,7 +1334,7 @@ class User extends Authenticatable
             if($user)
             {
                 $response['status'] = 'failed';
-                $response['errors'][] = "This username is already registered.";
+                $response['errors'][] = trans('vaahcms-user.username_already_registered');
                 return $response;
             }
 
@@ -1438,7 +1437,7 @@ class User extends Authenticatable
 
         $response['status'] = 'success';
         $response['data'] = [];
-        $response['messages'][] = 'Action was successful';
+        $response['messages'][] = trans('vaahcms-general.action_successful');
 
         return $response;
 
@@ -1479,7 +1478,7 @@ class User extends Authenticatable
 
         $response['status'] = 'success';
         $response['data'] = [];
-        $response['messages'][] = 'Action was successful';
+        $response['messages'][] = trans('vaahcms-general.action_successful');
 
         return $response;
 
@@ -1517,7 +1516,7 @@ class User extends Authenticatable
 
         $response['status'] = 'success';
         $response['data'] = [];
-        $response['messages'][] = 'Action was successful';
+        $response['messages'][] = trans('vaahcms-general.action_successful');
 
         return $response;
 
@@ -1536,7 +1535,7 @@ class User extends Authenticatable
             && $inputs['data']['is_active'] == 0)
         {
             $response['status'] = 'failed';
-            $response['errors'][] = 'First user will always be an super administrator';
+            $response['errors'][] = trans('vaahcms-user.first_user_super_administrator');
             return $response;
         }
 
@@ -1620,7 +1619,7 @@ class User extends Authenticatable
 
         $response['status'] = 'success';
         $response['data'] = [];
-        $response['messages'][] = 'Action was successful';
+        $response['messages'][] = trans('vaahcms-general.action_successful');
 
         return $response;
 
@@ -1684,7 +1683,7 @@ class User extends Authenticatable
         if(!\Auth::check())
         {
             $response['status'] = 'failed';
-            $response['errors'][] = 'You must be logged in to update your profile';
+            $response['errors'][] = trans('vaahcms-user.logged_in_to_update_profile');
             return $response;
         }
 
@@ -1704,7 +1703,7 @@ class User extends Authenticatable
             if($user_exist)
             {
                 $response['status'] = 'failed';
-                $response['errors'][] = 'Username already taken';
+                $response['errors'][] = trans('vaahcms-user.username_already_taken');
                 return $response;
             }
         }
@@ -1718,7 +1717,7 @@ class User extends Authenticatable
             if($email_exist)
             {
                 $response['status'] = 'failed';
-                $response['errors'][] = 'Email is associated with other user.';
+                $response['errors'][] = trans('vaahcms-user.email_associate_with_other_user');
                 return $response;
             }
 
@@ -1735,7 +1734,7 @@ class User extends Authenticatable
 
         $response['status'] = 'success';
         $response['data'][] = '';
-        $response['messages'][] = 'Action was successful';
+        $response['messages'][] = trans('vaahcms-general.action_successful');
         return $response;
 
 
@@ -1762,7 +1761,7 @@ class User extends Authenticatable
         if($request->new_password != $request->confirm_password)
         {
             $response['status'] = 'failed';
-            $response['errors'][] = 'Confirm password does not match';
+            $response['errors'][] = trans('vaahcms-user.confirm_password_not_match');
             return $response;
         }
 
@@ -1774,7 +1773,7 @@ class User extends Authenticatable
             if(!$check)
             {
                 $response['status'] = 'failed';
-                $response['errors'][] = 'Current password is incorrect';
+                $response['errors'][] = trans('vaahcms-user.current_password_incorrect');
                 return $response;
             }
 
@@ -1784,7 +1783,7 @@ class User extends Authenticatable
 
             $response['status'] = 'success';
             $response['data'][] = '';
-            $response['messages'][] = 'Action was successful';
+            $response['messages'][] = trans('vaahcms-general.action_successful');
 
             return $response;
 

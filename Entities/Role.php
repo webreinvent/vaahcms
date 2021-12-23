@@ -271,7 +271,7 @@ class Role extends Model {
 
         $response['status'] = 'success';
         $response['data']['item'] = $role;
-        $response['messages'][] = 'Saved successfully.';
+        $response['messages'][] = trans('vaahcms-general.saved_successfully');
         return $response;
 
     }
@@ -536,7 +536,7 @@ class Role extends Model {
 
         $response['status'] = 'success';
         $response['data'] = [];
-        $response['messages'][] = 'Action was successful';
+        $response['messages'][] = trans('vaahcms-general.action_successful');
 
         return $response;
 
@@ -567,7 +567,7 @@ class Role extends Model {
 
         $response['status'] = 'success';
         $response['data'] = [];
-        $response['messages'][] = 'Action was successful';
+        $response['messages'][] = trans('vaahcms-general.action_successful');
 
         return $response;
 
@@ -602,7 +602,7 @@ class Role extends Model {
 
         $response['status'] = 'success';
         $response['data'] = [];
-        $response['messages'][] = 'Action was successful';
+        $response['messages'][] = trans('vaahcms-general.action_successful');
 
         return $response;
 
@@ -642,7 +642,7 @@ class Role extends Model {
 
         $response['status'] = 'success';
         $response['data'] = [];
-        $response['messages'][] = 'Action was successful';
+        $response['messages'][] = trans('vaahcms-general.action_successful');
 
         return $response;
 

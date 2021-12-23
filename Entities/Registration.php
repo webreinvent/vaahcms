@@ -308,7 +308,7 @@ class Registration extends Model
         if($user)
         {
             $response['status'] = 'failed';
-            $response['errors'][] = "This email is already registered.";
+            $response['errors'][] = trans('vaahcms-user.email_already_registered');
             return $response;
         }
 
@@ -318,7 +318,7 @@ class Registration extends Model
         if($user)
         {
             $response['status'] = 'failed';
-            $response['errors'][] = "This username is already registered.";
+            $response['errors'][] = trans('vaahcms-user.username_already_registered');
             return $response;
         }
 
@@ -331,7 +331,7 @@ class Registration extends Model
             $response['errors'][] = 'User already exist';
             if(env('APP_DEBUG'))
             {
-                $response['hint'][] = 'Registration can be created only when user does not exist';
+                $response['hint'][] = trans('vaahcms-user.registration_created_when_user_not_exist');
             }
             return $response;
         }
@@ -354,7 +354,7 @@ class Registration extends Model
 
         $response['status'] = 'success';
         $response['data']['item'] = $reg;
-        $response['messages'][] = 'Saved successfully.';
+        $response['messages'][] = trans('vaahcms-general.saved_successfully');
         return $response;
 
     }
@@ -479,7 +479,7 @@ class Registration extends Model
         if($user)
         {
             $response['status'] = 'failed';
-            $response['errors'][] = "This username is already registered.";
+            $response['errors'][] = trans('vaahcms-user.username_already_registered');
             return $response;
         }
 
@@ -642,7 +642,7 @@ class Registration extends Model
 
         $response['status'] = 'success';
         $response['data'] = [];
-        $response['messages'][] = 'Action was successful';
+        $response['messages'][] = trans('vaahcms-general.action_successful');
 
         return $response;
 
@@ -671,7 +671,7 @@ class Registration extends Model
 
         $response['status'] = 'success';
         $response['data'] = [];
-        $response['messages'][] = 'Action was successful';
+        $response['messages'][] = trans('vaahcms-general.action_successful');
 
         return $response;
 
@@ -699,7 +699,7 @@ class Registration extends Model
 
         $response['status'] = 'success';
         $response['data'] = [];
-        $response['messages'][] = 'Action was successful';
+        $response['messages'][] = trans('vaahcms-general.action_successful');
 
         return $response;
 
@@ -728,7 +728,7 @@ class Registration extends Model
 
         $response['status'] = 'success';
         $response['data'] = [];
-        $response['messages'][] = 'Action was successful';
+        $response['messages'][] = trans('vaahcms-general.action_successful');
 
         return $response;
 
@@ -758,7 +758,7 @@ class Registration extends Model
 
         $response['status'] = 'success';
         $response['data'] = [];
-        $response['messages'][] = 'Action was successful';
+        $response['messages'][] = trans('vaahcms-general.action_successful');
 
         return $response;
 

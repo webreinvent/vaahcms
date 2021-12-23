@@ -511,7 +511,7 @@ class Theme extends Model {
         $item->save();
         $response['status'] = 'success';
         $response['data'][] = '';
-        $response['messages'][] = 'Action was successful';
+        $response['messages'][] = trans('vaahcms-general.action_successful');
         if(env('APP_DEBUG'))
         {
             $response['hint'][] = '';
@@ -530,7 +530,7 @@ class Theme extends Model {
         $item->save();
         $response['status'] = 'success';
         $response['data'][] = '';
-        $response['messages'][] = 'Action was successful';
+        $response['messages'][] = trans('vaahcms-general.action_successful');
         if(env('APP_DEBUG'))
         {
             $response['hint'][] = '';
@@ -592,7 +592,7 @@ class Theme extends Model {
 
             $response['status'] = 'success';
             $response['data'][] = '';
-            $response['messages'][] = 'Action was successful';
+            $response['messages'][] = trans('vaahcms-general.action_successful');
             if(env('APP_DEBUG'))
             {
                 $response['hint'][] = '';
@@ -863,7 +863,7 @@ class Theme extends Model {
 
         $response['status'] = 'success';
         $response['data'] = [];
-        $response['messages'][] = 'Action was successful';
+        $response['messages'][] = trans('vaahcms-general.action_successful');
 
         return $response;
 

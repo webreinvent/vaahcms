@@ -236,7 +236,7 @@ class Module extends Model {
         if(count($list) < 1)
         {
             $response['status'] = 'failed';
-            $response['errors'][] = 'No module installed/downloaded';
+            $response['errors'][] = trans('vaahcms-general.no_module_installed');
             return $response;
         }
 
@@ -437,7 +437,7 @@ class Module extends Model {
         $item->save();
         $response['status'] = 'success';
         $response['data'][] = '';
-        $response['messages'][] = 'Action was successful';
+        $response['messages'][] = trans('vaahcms-general.action_successful');
         if(env('APP_DEBUG'))
         {
             $response['hint'][] = '';
@@ -499,7 +499,7 @@ class Module extends Model {
 
             $response['status'] = 'success';
             $response['data'][] = '';
-            $response['messages'][] = 'Action was successful';
+            $response['messages'][] = trans('vaahcms-general.action_successful');
             if(env('APP_DEBUG'))
             {
                 $response['hint'][] = '';
@@ -788,7 +788,7 @@ class Module extends Model {
 
         $response['status'] = 'success';
         $response['data'] = [];
-        $response['messages'][] = 'Action was successful';
+        $response['messages'][] = trans('vaahcms-general.action_successful');
 
         return $response;
 
