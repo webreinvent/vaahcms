@@ -299,6 +299,17 @@ export default {
 
         },
         //---------------------------------------------------------------------
+        isHidden: function(key)
+        {
+            if(this.page.assets.fields
+                && this.page.assets.fields[key]
+                && this.page.assets.fields[key].is_hidden){
+                return this.page.assets.fields[key].is_hidden
+            }
+
+            return false;
+        },
+        //---------------------------------------------------------------------
         //---------------------------------------------------------------------
         //---------------------------------------------------------------------
     }

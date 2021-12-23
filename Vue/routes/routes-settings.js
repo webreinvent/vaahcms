@@ -12,6 +12,7 @@ let routes=[];
 import SettingsLayout from "./../pages/settings/SettingsLayout.vue";
 import GeneralIndex from "./../pages/settings/general/Index.vue";
 import LocalizationIndex from "./../pages/settings/localization/Index.vue";
+import UserSettingIndex from "./../pages/settings/user-settings/Index.vue";
 import EnvIndex from "./../pages/settings/env/Index.vue";
 import NotificationsIndex from "./../pages/settings/notifications/Index.vue";
 import BackupsIndex from "./../pages/settings/backups/Index.vue";
@@ -54,6 +55,18 @@ let list =     {
                     path: 'env-variables',
                     name: 'env.index',
                     component: EnvIndex,
+                    props: true,
+                    meta: {
+                        middleware: [
+                            IsLoggedIn,
+                            GetBackendAssets
+                        ]
+                    }
+                },
+                {
+                    path: 'user-settings',
+                    name: 'user-setting.index',
+                    component: UserSettingIndex,
                     props: true,
                     meta: {
                         middleware: [

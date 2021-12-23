@@ -9,6 +9,7 @@ use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Hash;
 use WebReinvent\VaahCms\Entities\Registration;
 use WebReinvent\VaahCms\Entities\Role;
+use WebReinvent\VaahCms\Entities\Setting;
 use WebReinvent\VaahCms\Entities\User;
 
 class UsersController extends Controller
@@ -43,6 +44,9 @@ class UsersController extends Controller
         $data['bulk_actions'] = vh_general_bulk_actions();
         $data['name_titles'] = vh_name_titles();
         $data['role'] = $role;
+        $data['fields'] = User::getUserSettings();
+        $data['custom_fields'] = Setting::where('category','user_setting')
+            ->where('label','custom_fields')->first();
 
         $response['status'] = 'success';
         $response['data'] = $data;
@@ -77,7 +81,9 @@ class UsersController extends Controller
             return response()->json($response);
         }
 
-        $response = User::getList($request);
+        $excluded_columns = User::getUserSettings(true);
+
+        $response = User::getList($request,$excluded_columns);
         return response()->json($response);
     }
     //----------------------------------------------------------
@@ -91,7 +97,9 @@ class UsersController extends Controller
             return response()->json($response);
         }
 
-        $response = User::getItem($id);
+        $excluded_columns = User::getUserSettings(true);
+
+        $response = User::getItem($id,$excluded_columns);
         return response()->json($response);
     }
     //----------------------------------------------------------
