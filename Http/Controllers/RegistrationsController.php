@@ -8,7 +8,9 @@ use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Hash;
 use WebReinvent\VaahCms\Entities\Registration;
+use WebReinvent\VaahCms\Entities\Setting;
 use WebReinvent\VaahCms\Entities\Taxonomy;
+use WebReinvent\VaahCms\Entities\User;
 
 class RegistrationsController extends Controller
 {
@@ -39,6 +41,9 @@ class RegistrationsController extends Controller
         $data['registration_statuses'] = Taxonomy::getTaxonomyByType('registrations');
         $data['bulk_actions'] = vh_general_bulk_actions();
         $data['name_titles'] = vh_name_titles();
+        $data['fields'] = User::getUserSettings();
+        $data['custom_fields'] = Setting::where('category','user_setting')
+            ->where('label','custom_fields')->first();
 
         $response['status'] = 'success';
         $response['data'] = $data;
@@ -78,7 +83,9 @@ class RegistrationsController extends Controller
             return response()->json($response);
         }
 
-        $response = Registration::getList($request);
+        $excluded_columns = User::getUserSettings(true,true);
+
+        $response = Registration::getList($request,$excluded_columns);
         return response()->json($response);
     }
 
@@ -94,8 +101,10 @@ class RegistrationsController extends Controller
             return response()->json($response);
         }
 
+        $excluded_columns = User::getUserSettings(true,true);
+
         $request->merge(['id'=>$id]);
-        $response = Registration::getItem($request);
+        $response = Registration::getItem($request,$excluded_columns);
         return response()->json($response);
     }
     //----------------------------------------------------------

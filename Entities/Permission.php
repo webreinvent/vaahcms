@@ -419,7 +419,7 @@ class Permission extends Model {
 
         $response['status'] = 'success';
         $response['data'] = [];
-        $response['messages'][] = 'Action was successful';
+        $response['messages'][] = trans('vaahcms-general.action_successful');
 
         return $response;
     }
@@ -465,7 +465,7 @@ class Permission extends Model {
 
         $response['status'] = 'success';
         $response['data'] = [];
-        $response['messages'][] = 'Action was successful';
+        $response['messages'][] = trans('vaahcms-general.action_successful');
 
         return $response;
 
@@ -505,7 +505,7 @@ class Permission extends Model {
 
         $response['status'] = 'success';
         $response['data'] = [];
-        $response['messages'][] = 'Action was successful';
+        $response['messages'][] = trans('vaahcms-general.action_successful');
 
         return $response;
 
@@ -548,7 +548,7 @@ class Permission extends Model {
 
         $response['status'] = 'success';
         $response['data'] = [];
-        $response['messages'][] = 'Action was successful';
+        $response['messages'][] = trans('vaahcms-general.action_successful');
 
         return $response;
 
@@ -618,7 +618,7 @@ class Permission extends Model {
         );
 
         $messages = [
-            'is_active.required' => 'The is active field is required.'
+            'is_active.required' => trans('vaahcms-general.is_active_required')
         ];
 
         $validator = \Validator::make( $inputs, $rules, $messages);

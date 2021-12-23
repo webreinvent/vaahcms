@@ -191,7 +191,7 @@ class LanguageCategory extends Model {
             if($item)
             {
                 $response['status'] = 'failed';
-                $response['errors'][] = 'Record already exist';
+                $response['errors'][] = trans('vaahcms-localization.record_already_exist');
                 return $response;
             }
 
