@@ -69,7 +69,6 @@ class ExtendController extends Controller
                 'link' => self::$link,
                 'icon' => 'tachometer-alt',
                 'label'=> 'Dashboard',
-                'data_wdio' => "data_wdio_test"
             ];
         }
 

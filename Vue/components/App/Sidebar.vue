@@ -94,8 +94,7 @@
                                         </li>
                                         <li v-else>
                                             <a :href="link.link"
-
-                                               data-wdio="getDataWdio(link,menu_label)" class="icon-text">
+                                               :data-wdio="getDataWdio(link,menu_label)" class="icon-text">
                                                 <b-icon :icon="link.icon"
                                                         size="is-small">
                                                 </b-icon>
