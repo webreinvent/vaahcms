@@ -186,6 +186,9 @@ export default {
                     this.status.publish_assets = 'pending';
                     let url = this.ajax_url+'/publish';
                     this.$vaah.ajax(url, {}, this.onPublishAfter);
+                }else{
+                    this.$Progress.finish();
+                    this.status.download_latest_version = 'failed';
                 }
             }
 
@@ -200,6 +203,9 @@ export default {
                     this.status.migration_and_seeds = 'pending';
                     let url = this.ajax_url+'/run/migrations';
                     this.$vaah.ajax(url, {}, this.onMigrationAndSeedsAfter);
+                }else{
+                    this.$Progress.finish();
+                    this.status.publish_assets = 'failed';
                 }
             }
         },
@@ -212,6 +218,9 @@ export default {
                     this.status.clear_cache = 'pending';
                     let url = this.ajax_url+'/cache';
                     this.$vaah.ajax(url, {}, this.onClearCacheAfter);
+                }else{
+                    this.$Progress.finish();
+                    this.status.migration_and_seeds = 'failed';
                 }
             }
         },
@@ -223,6 +232,9 @@ export default {
                 if(res.data.status === 'success'){
                     this.status.page_refresh = 'pending';
                     location.reload();
+                }else{
+                    this.$Progress.finish();
+                    this.status.clear_cache = 'failed';
                 }
             }
         },
