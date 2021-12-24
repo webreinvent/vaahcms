@@ -221,7 +221,7 @@
 
                         </b-notification>
 
-                        <div v-if="root.assets
+                        <!--<div v-if="root.assets
                             && root.assets.vaahcms
                             && root.assets.vaahcms.version"
                              class="card-content has-text-centered is-size-6
@@ -232,6 +232,16 @@
 
 
 
+                        </div>-->
+
+                        <div v-if="root.assets
+                            && root.assets.vaahcms
+                            && root.assets.vaahcms.version"
+                             class="card-content has-text-centered">
+                            <p class="subtitle is-5">Current version of</p>
+                            <p class="title is-4"><code>VaahCMS</code> is <code>v{{root.assets.vaahcms.version}}</code></p>
+                            <p v-if="is_up_to_data"><span class="subtitle is-5 has-text-success">Current version of this VaahCMS is the latest version</span>
+                            </p>
                         </div>
 
 

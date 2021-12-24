@@ -20,7 +20,7 @@ export default {
     {
         let obj = {
             ajax_url: ajax_url,
-            update_message:'Current version of VaahCMS is',
+            is_up_to_data:false,
             labelPosition: 'on-border',
             assets:null,
             is_check_update_loading: false,
@@ -126,7 +126,7 @@ export default {
 
             let diff = semver.diff(this.remote_version, local );
 
-            this.update_message= 'Current version of VaahCMS is';
+            this.is_up_to_data= false;
 
             if(diff){
                 this.update_available=true;
@@ -137,7 +137,7 @@ export default {
 
                 }
             }else{
-                this.update_message= 'You are running a latest version of VaahCms';
+                this.is_up_to_data= true;
             }
 
             this.storeUpdateCheck();
