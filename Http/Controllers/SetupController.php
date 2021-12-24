@@ -17,6 +17,8 @@ use WebReinvent\VaahCms\Libraries\VaahHelper;
 use WebReinvent\VaahCms\Libraries\VaahSetup;
 use WebReinvent\VaahCms\Notifications\TestSmtp;
 use WebReinvent\VaahExtend\Libraries\VaahArtisan;
+use Composer\Console\Application;
+use Symfony\Component\Console\Input\ArrayInput;
 
 
 class SetupController extends Controller
@@ -684,6 +686,8 @@ class SetupController extends Controller
 
         return true;
     }
+    //----------------------------------------------------------
+
     //----------------------------------------------------------
 
 

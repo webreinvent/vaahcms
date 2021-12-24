@@ -316,7 +316,7 @@ class Notification extends Model {
 
             if($notification->via_mail == true)
             {
-                static::sendViaMail($notification, $user, $inputs);
+//                static::sendViaMail($notification, $user, $inputs);
             }
 
             if($notification->via_backend == true)
@@ -374,15 +374,13 @@ class Notification extends Model {
         $user->notify(new Notice($notification, $params));
     }
     //-------------------------------------------------
-    public static function getTranslatedContent($vai, Notification $notification, $params=[])
+    public static function getTranslatedContent($via, Notification $notification, $params=[])
     {
 
         $contents = $notification->contents()
-            ->where('via', $vai)
+            ->where('via', $via)
             ->orderBy('sort', 'asc')
             ->get();
-
-
 
         $translated = [];
 
@@ -400,7 +398,6 @@ class Notification extends Model {
                         break;
 
                     case 'action':
-
                         $translated['action']['label'] = $content->value;
                         $translate = vh_translate_dynamic_strings($content->meta->action, []);
                         $translated['action']['link'] = $translate;

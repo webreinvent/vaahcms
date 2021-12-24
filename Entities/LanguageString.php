@@ -191,7 +191,7 @@ class LanguageString extends Model {
     //-------------------------------------------------
     public static function getList($request)
     {
-        if($request->sync){
+        if($request->sync && $request->sync != 'false'){
             LanguageString::syncAndGenerateStrings($request);
         }
 
