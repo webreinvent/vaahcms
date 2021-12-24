@@ -20,8 +20,10 @@ export default {
     {
         let obj = {
             ajax_url: ajax_url,
+            update_message:'Current version of VaahCMS is',
             labelPosition: 'on-border',
             assets:null,
+            is_check_update_loading: false,
             update_available: false,
             manual_update: false,
             backend_update: false,
@@ -91,14 +93,16 @@ export default {
         //---------------------------------------------------------------------
         checkForUpdate: function () {
             this.$Progress.start();
+            this.is_check_update_loading = true;
             let params = {};
-            let url = 'https://api.github.com/repos/webreinvent/vaahcms/releases/51763184';
+            let url = 'https://api.github.com/repos/webreinvent/vaahcms/releases/latest'; //51763184
             this.$vaah.ajaxGet(url, params, this.checkForUpdateAfter);
         },
         //---------------------------------------------------------------------
         checkForUpdateAfter: function (data, res) {
             this.$Progress.finish();
 
+            this.is_check_update_loading = false;
             this.update_available=false;
             this.manual_update=false;
             this.backend_update=false;
@@ -122,6 +126,8 @@ export default {
 
             let diff = semver.diff(this.remote_version, local );
 
+            this.update_message= 'Current version of VaahCMS is';
+
             if(diff){
                 this.update_available=true;
                 if(diff === 'major'){
@@ -130,6 +136,8 @@ export default {
                     this.backend_update=true;
 
                 }
+            }else{
+                this.update_message= 'You are running a latest version of VaahCms';
             }
 
             this.storeUpdateCheck();

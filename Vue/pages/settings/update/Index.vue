@@ -25,6 +25,7 @@
                                     <p  class="control">
                                         <b-button type="is-light"
                                                   @click="checkForUpdate()"
+                                                  :loading="is_check_update_loading"
                                                   icon-left="sync">
                                             Check for Update
                                         </b-button>
@@ -227,7 +228,7 @@
                              has-text-weight-bold has-text-danger">
 
 
-                            Current version of VaahCMS is v{{root.assets.vaahcms.version}}
+                            {{ update_message }} v{{root.assets.vaahcms.version}}
 
 
 
