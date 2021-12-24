@@ -16,6 +16,7 @@ import UserSettingIndex from "./../pages/settings/user-settings/Index.vue";
 import EnvIndex from "./../pages/settings/env/Index.vue";
 import NotificationsIndex from "./../pages/settings/notifications/Index.vue";
 import BackupsIndex from "./../pages/settings/backups/Index.vue";
+import UpdateIndex from "./../pages/settings/update/Index";
 
 let list =     {
     path: '/vaah/',
@@ -91,6 +92,18 @@ let list =     {
                     path: 'notifications',
                     name: 'notifications.index',
                     component: NotificationsIndex,
+                    props: true,
+                    meta: {
+                        middleware: [
+                            IsLoggedIn,
+                            GetBackendAssets
+                        ]
+                    }
+                },
+                {
+                    path: 'update',
+                    name: 'update.index',
+                    component: UpdateIndex,
                     props: true,
                     meta: {
                         middleware: [

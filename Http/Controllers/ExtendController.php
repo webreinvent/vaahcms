@@ -184,6 +184,11 @@ class ExtendController extends Controller
                         'icon' => 'bell',
                         'label'=> 'Notifications'
                     ],
+                    [
+                        'link' => self::$link."/settings/update",
+                        'icon' => 'download',
+                        'label'=> 'Update'
+                    ],
                 ]
             ];
         }

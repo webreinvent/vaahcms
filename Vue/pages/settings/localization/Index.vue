@@ -43,7 +43,7 @@
                                     </p>
                                     <p  class="control">
                                         <b-button type="is-light"
-                                                  @click="topSync()"
+                                                  @click="sync()"
                                                   :loading="is_top_btn_loading"
                                                   icon-left="redo-alt">
                                             Sync

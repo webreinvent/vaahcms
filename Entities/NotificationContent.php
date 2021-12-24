@@ -55,11 +55,19 @@ class NotificationContent extends Model {
     }
     //-------------------------------------------------
     public function setMetaAttribute($value) {
-        $this->attributes['meta'] = json_encode($value);
+        if($value){
+            $this->attributes['meta'] = json_encode($value);
+        }else{
+            $this->attributes['meta'] = null;
+        }
     }
     //-------------------------------------------------
     public function getMetaAttribute($value) {
-        return json_decode($value);
+        if($value)
+        {
+            return json_decode($value);
+        }
+        return null;
     }
     //-------------------------------------------------
     public function getTableColumns() {
