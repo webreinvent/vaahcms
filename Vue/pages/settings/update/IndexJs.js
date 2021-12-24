@@ -175,6 +175,14 @@ export default {
                 this.status.download_latest_version = res.data.status;
 
                 if(res.data.status === 'success'){
+
+                    if(!data){
+                        this.$Progress.finish();
+                        this.status.download_latest_version = 'failed';
+                        this.$vaah.toastErrors(['Go to Root path','Run <b>Composer Update</b>']);
+                        return false;
+                    }
+
                     this.status.publish_assets = 'pending';
                     let url = this.ajax_url+'/publish';
                     this.$vaah.ajax(url, {}, this.onPublishAfter);
