@@ -209,7 +209,7 @@
                                 <b>Steps of Manually Upgrade</b>
                                 <ol class="ml-4">
                                     <li>Go to Root path</li>
-                                    <li>Update <b>version</b> in Composer.json</li>
+                                    <li>Verify <b>version</b> of <b>webreinvent/vaahcms</b> in Composer.json</li>
                                     <li>Run <b>Composer Update</b></li>
                                     <li>Publish assets</li>
                                     <li>Run Migrations and Seeds</li>
