@@ -2,9 +2,16 @@
 <html lang="en">
 <head>
 
-    <title><?php if(isset($data->title)) { echo $data->title; } else {
+    <title>
+        <?php
+        if(isset($data->title)) { echo $data->title; }
+        elseif(env('VAAHCMS_VERSION')) {
+            echo config('vaahcms.app_name')." v".env('VAAHCMS_VERSION');
+        }else{
             echo config('vaahcms.app_name')." v".config('vaahcms.version');
-        } ?></title>
+        }
+        ?>
+    </title>
 
     <meta charset="UTF-8">
 
