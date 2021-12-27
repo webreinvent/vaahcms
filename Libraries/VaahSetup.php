@@ -357,13 +357,13 @@ class VaahSetup{
 
             if($list_type == 'key_value')
             {
-                $result[$key] = $value;
+                $result[$key] = trim($value);
             }
 
             if($list_type == 'list')
             {
                 $result[$i]['key'] = $key;
-                $result[$i]['value'] = $value;
+                $result[$i]['value'] = trim($value);
             }
 
             $i++;

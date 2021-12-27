@@ -31,16 +31,22 @@ class JsonController extends Controller
 
         $data['timezone'] = config('app.timezone');
 
+        $v_version = config('vaahcms.version');
+
+        if(env('VAAHCMS_VERSION')){
+            $v_version = env('VAAHCMS_VERSION');
+        }
+
         $data['versions'] = [
             'laravel_version' => Application::VERSION,
             'php_version' => PHP_VERSION,
-            'vaahcms_version' => config('vaahcms.version')
+            'vaahcms_version' => $v_version
         ];
 
         $data['vaahcms'] = [
             'name' => config('vaahcms.app_name'),
             'slug' => config('vaahcms.app_slug'),
-            'version' => config('vaahcms.version'),
+            'version' => $v_version,
             'website' => config('vaahcms.website'),
             'docs' => config('vaahcms.documentation'),
         ];

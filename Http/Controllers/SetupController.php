@@ -324,6 +324,15 @@ class SetupController extends Controller
             return response()->json($response);
         }
 
+        $reflector = new \ReflectionClass(\WebReinvent\VaahCms\VaahCmsServiceProvider::class);
+
+        $ref_path = str_replace("VaahCmsServiceProvider.php","",$reflector->getFileName());
+
+        $path =$ref_path .'composer.json';
+
+        $config_data = json_decode(file_get_contents($path), true);
+
+        $request->request->add(['vaahcms_version' => $config_data['version']]);
 
         //generate env file
         $response = VaahSetup::generateEnvFile($request);
@@ -680,6 +689,40 @@ class SetupController extends Controller
         }
 
         return true;
+    }
+    //----------------------------------------------------------
+    public function clearCache()
+    {
+
+        try{
+            VaahArtisan::clearCache();
+
+            $response['status'] = "success";
+            return $response;
+        }catch(\Exception $e)
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = $e->getMessage();
+            return $response;
+        }
+    }
+    //----------------------------------------------------------
+    public function publishAssets()
+    {
+
+        try{
+            //publish assets
+            VaahSetup::publishAssets();
+
+            $response['status'] = "success";
+            $response['messages'][] = "Assets published.";
+            return $response;
+        }catch(\Exception $e)
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = $e->getMessage();
+            return $response;
+        }
     }
     //----------------------------------------------------------
 
