@@ -324,6 +324,7 @@ class SetupController extends Controller
             return response()->json($response);
         }
 
+        $request->request->add(['vaahcms_version' => config('vaahcms.version')]);
 
         //generate env file
         $response = VaahSetup::generateEnvFile($request);
