@@ -87,6 +87,32 @@ export default {
             }
         },
         //---------------------------------------------------------------------
+
+        //---------------------------------------------------------------------
+        clearCache: function () {
+            this.$Progress.start();
+            let params = {};
+            let url = this.ajax_url+'/clear/cache';
+            this.$vaah.ajax(url, params, this.clearCacheAfter);
+        },
+        //---------------------------------------------------------------------
+        clearCacheAfter: function (data, res) {
+            this.$Progress.finish();
+            if(res && res.data && res.data.status && res.data.status === 'success' ){
+                window.location.reload(true);
+            }
+        },
+        //---------------------------------------------------------------------
+        publishAssets: function () {
+            this.$Progress.start();
+            let params = {};
+            let url = this.ajax_url+'/publish/assets';
+            this.$vaah.ajax(url, params, this.publishAssetsAfter);
+        },
+        //---------------------------------------------------------------------
+        publishAssetsAfter: function (data, res) {
+            this.$Progress.finish();
+        },
         //---------------------------------------------------------------------
     }
 }

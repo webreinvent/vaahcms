@@ -106,6 +106,12 @@ Route::group(
         Route::post( '/reset/confirm', 'SetupController@resetConfirm' )
             ->name( 'vh.setup.reset.confirm' );
         //------------------------------------------------
+        Route::any( '/clear/cache', 'SetupController@clearCache' )
+            ->name( 'vh.setup.clear.cache' );
+        //------------------------------------------------
+        Route::any( '/publish/assets', 'SetupController@publishAssets' )
+            ->name( 'vh.setup.publish.assets' );
+        //------------------------------------------------
         //------------------------------------------------
     });
 

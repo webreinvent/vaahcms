@@ -682,6 +682,40 @@ class SetupController extends Controller
         return true;
     }
     //----------------------------------------------------------
+    public function clearCache()
+    {
+
+        try{
+            VaahArtisan::clearCache();
+
+            $response['status'] = "success";
+            return $response;
+        }catch(\Exception $e)
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = $e->getMessage();
+            return $response;
+        }
+    }
+    //----------------------------------------------------------
+    public function publishAssets()
+    {
+
+        try{
+            //publish assets
+            VaahSetup::publishAssets();
+
+            $response['status'] = "success";
+            $response['messages'][] = "Assets published.";
+            return $response;
+        }catch(\Exception $e)
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = $e->getMessage();
+            return $response;
+        }
+    }
+    //----------------------------------------------------------
 
     //----------------------------------------------------------
 

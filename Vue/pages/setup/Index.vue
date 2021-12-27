@@ -70,22 +70,59 @@
                                                     with headless content management system.
                                                 </p>
 
-                                                <p class="has-margin-top-20">
 
-                                                    <b-button v-if="status.stage=='installed'"
-                                                              icon-left="server"
-                                                              disabled>
-                                                        Install
-                                                    </b-button>
-                                                    <b-button v-else
-                                                              icon-left="server"
-                                                              tag="router-link"
-                                                              :to="{name:'setup.install.configuration'}"
-                                                              type="is-primary" >
-                                                        Install
-                                                    </b-button>
 
-                                                </p>
+                                                <div class="level">
+                                                    <!-- Left side -->
+                                                    <div class="level-left">
+                                                        <div class="level-item">
+                                                            <p class="has-margin-top-20">
+
+                                                                <b-button v-if="status.stage=='installed'"
+                                                                          icon-left="server"
+                                                                          disabled>
+                                                                    Install
+                                                                </b-button>
+                                                                <b-button v-else
+                                                                          icon-left="server"
+                                                                          tag="router-link"
+                                                                          :to="{name:'setup.install.configuration'}"
+                                                                          type="is-primary" >
+                                                                    Install
+                                                                </b-button>
+
+                                                            </p>
+                                                        </div>
+                                                    </div>
+
+                                                    <!-- Right side -->
+                                                    <div class="level-right">
+                                                        <div class="level-item">
+                                                            <p class="has-margin-top-20">
+
+                                                                <b-dropdown :triggers="['hover']" aria-role="list">
+                                                                    <template #trigger>
+                                                                        <b-button
+                                                                                label="Advanced Options"
+                                                                                type="is-info"
+                                                                                icon-right="chevron-down" />
+                                                                    </template>
+
+
+                                                                    <b-dropdown-item aria-role="listitem"
+                                                                                     @click="publishAssets">
+                                                                        Publish Assets
+                                                                    </b-dropdown-item>
+                                                                    <b-dropdown-item aria-role="listitem"
+                                                                                     @click="clearCache">
+                                                                        Clear Cache
+                                                                    </b-dropdown-item>
+                                                                </b-dropdown>
+
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                </div>
 
                                             </div>
                                         </div>
