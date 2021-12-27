@@ -324,7 +324,15 @@ class SetupController extends Controller
             return response()->json($response);
         }
 
-        $request->request->add(['vaahcms_version' => config('vaahcms.version')]);
+        $reflector = new \ReflectionClass(\WebReinvent\VaahCms\VaahCmsServiceProvider::class);
+
+        $ref_path = str_replace("VaahCmsServiceProvider.php","",$reflector->getFileName());
+
+        $path =$ref_path .'composer.json';
+
+        $config_data = json_decode(file_get_contents($path), true);
+
+        $request->request->add(['vaahcms_version' => $config_data['version']]);
 
         //generate env file
         $response = VaahSetup::generateEnvFile($request);
