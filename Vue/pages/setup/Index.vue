@@ -49,6 +49,19 @@
                                                     </div>
 
                                                     <div class="level-right">
+
+                                                        <b-tooltip class="mr-1"
+                                                                   v-if="root.assets.auth_user"
+                                                                   label="Dashboard">
+                                                            <b-button size="is-small"
+                                                                      type="is-light"
+                                                                      tag="router-link"
+                                                                      :to="{name: 'dashboard.index'}"
+                                                                      rounded
+                                                                      class="pull-right"
+                                                                      icon-left="tachometer-alt">
+                                                            </b-button>
+                                                        </b-tooltip>
                                                         <b-tooltip label="Documentation">
                                                         <b-button size="is-small"
                                                                   type="is-light"
@@ -105,7 +118,7 @@
                                                                     <template #trigger>
                                                                         <b-button
                                                                                 label="Advanced Options"
-                                                                                type="is-info"
+                                                                                type="is-light"
                                                                                 icon-right="chevron-down" />
                                                                     </template>
 
