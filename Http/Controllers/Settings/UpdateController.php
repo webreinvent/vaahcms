@@ -142,8 +142,8 @@ class UpdateController extends Controller
                 return $response;
             }
 
-            $response['status'] = 'success';
-            return $response;
+            $res['status'] = 'success';
+            return $res;
         }catch(\Exception $e)
         {
             $response['status'] = 'failed';
