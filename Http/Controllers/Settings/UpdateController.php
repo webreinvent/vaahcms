@@ -15,6 +15,7 @@ use WebReinvent\VaahCms\Entities\Notified;
 use WebReinvent\VaahCms\Entities\Role;
 use WebReinvent\VaahCms\Entities\Setting;
 use WebReinvent\VaahCms\Libraries\VaahBackup;
+use WebReinvent\VaahCms\Libraries\VaahSetup;
 use WebReinvent\VaahExtend\Libraries\VaahArtisan;
 
 
@@ -121,7 +122,26 @@ class UpdateController extends Controller
         }
 
         try{
-            VaahArtisan::publish("WebReinvent\VaahCms\VaahCmsServiceProvider");
+
+            //publish assets
+            VaahSetup::publishAssets();
+
+            //publish all migrations of vaahcms package
+            $provider = "WebReinvent\VaahCms\VaahCmsServiceProvider";
+            $response = VaahArtisan::publishMigrations($provider);
+
+            if(isset($response['status']) && $response['status'] == 'failed')
+            {
+                return $response;
+            }
+
+            //publish vaahcms seeds
+            $response = VaahArtisan::publishSeeds($provider);
+            if(isset($response['status']) && $response['status'] == 'failed')
+            {
+                return $response;
+            }
+
             $response['status'] = 'success';
             return $response;
         }catch(\Exception $e)
