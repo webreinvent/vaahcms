@@ -126,6 +126,9 @@ class UpdateController extends Controller
             //publish assets
             VaahSetup::publishAssets();
 
+            //publish vaahcms configurations
+            VaahSetup::publishConfig();
+
             //publish all migrations of vaahcms package
             $provider = "WebReinvent\VaahCms\VaahCmsServiceProvider";
             $response = VaahArtisan::publishMigrations($provider);
@@ -165,6 +168,9 @@ class UpdateController extends Controller
         }
 
         try{
+
+            self::setVaahCmsVersionInEnv();
+
             //run migration
             $response = VaahArtisan::migrate();
             if(isset($response['status']) && $response['status'] == 'failed')
@@ -268,6 +274,33 @@ class UpdateController extends Controller
         $notified->marked_delivered = null;
 
         $notified->save();
+
+    }
+    //----------------------------------------------------------
+    public static function setVaahCmsVersionInEnv()
+    {
+
+        $env_list = VaahSetup::getEnvFileVariables(null, 'list');
+
+        $env_config_exist = false;
+
+        foreach ($env_list as $key => $item){
+            if($item['key'] === 'VAAHCMS_VERSION'){
+                $env_config_exist = true;
+                $env_list[$key]['value'] = config('vaahcms.version');
+            }
+        }
+
+        if(!$env_config_exist){
+            $env_list[] = [
+                'key' => 'VAAHCMS_VERSION',
+                'value' => config('vaahcms.version')
+            ];
+        }
+
+        $request = new Request($env_list);
+
+        VaahSetup::generateEnvFile($request, 'list');
 
     }
     //----------------------------------------------------------
