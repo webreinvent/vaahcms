@@ -29,7 +29,7 @@
                 <!--/columns-->
 
                 <!--columns-->
-                <div class="columns is-centered has-margin-top-40 has-margin-bottom-40 " >
+                <div v-if="status" class="columns is-centered has-margin-top-40 has-margin-bottom-40 " >
                     <div class="column is-8">
 
 
@@ -78,7 +78,8 @@
                                                         <div class="level-item">
                                                             <p class="has-margin-top-20">
 
-                                                                <b-button v-if="status.stage=='installed'"
+                                                                <b-button v-if="status.stage
+                                                                && status.stage=='installed'"
                                                                           icon-left="server"
                                                                           disabled>
                                                                     Install
