@@ -4,7 +4,7 @@
   "keywords": ["vaahcms", "headless", "hmvc", "laravel", "cms", "vue", "vuex"],
   "homepage": "https://webreinvent.com",
   "license": "MIT",
-  "version": "1.6.1",
+  "version": "1.6.2",
   "authors": [
     {
       "name": "WebReinvent",
