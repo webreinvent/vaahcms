@@ -34,9 +34,9 @@ if (mix.inProduction()) {
     mix.sass(source_theme_folder+'/scss/style.scss', output_theme_folder+'css/');
 
 
-    mix.js(__dirname+"/VueUI/app.js",  output_theme_folder+'/builds/ui.js');
-    mix.js(__dirname+"/Vue/app.js",  output_theme_folder+'/builds/app.js');
-    mix.js(__dirname+"/Vue/app-extended.js",  output_theme_folder+'/builds/app-extended.js');
+    mix.js(__dirname+"/VueUI/app.js",  output_theme_folder+'/builds/ui.js').vue();
+    mix.js(__dirname+"/Vue/app.js",  output_theme_folder+'/builds/app.js').vue();
+    mix.js(__dirname+"/Vue/app-extended.js",  output_theme_folder+'/builds/app-extended.js').vue();
 
 
 } else {
@@ -51,16 +51,33 @@ if (mix.inProduction()) {
     mix.sass(source_theme_folder+'/scss/build.scss', output_theme_folder+'css/');
     mix.sass(source_theme_folder+'/scss/style.scss', output_theme_folder+'css/');
 
-    mix.js(__dirname+"/VueUI/app.js",  output_theme_folder+'/builds/ui.js');
-    mix.js(__dirname+"/Vue/app.js",  output_theme_folder+'/builds/app.js');
+    mix.js(__dirname+"/VueUI/app.js",  output_theme_folder+'/builds/ui.js').vue();
+    mix.js(__dirname+"/Vue/app.js",  output_theme_folder+'/builds/app.js').vue();
     //mix.js(__dirname+"/Vue/app.js",  output_theme_folder+'/builds/app.js').sourceMaps();
-    mix.js(__dirname+"/Vue/app-extended.js",  output_theme_folder+'/builds/app-extended.js');
+    mix.js(__dirname+"/Vue/app-extended.js",  output_theme_folder+'/builds/app-extended.js').vue();
 
 }
 
 mix.webpackConfig({
     //devtool: 'eval-source-map',
+
+    module:{
+        rules: [
+            {
+                test: /\.s[ac]ss$/i,
+                use: [
+                    {
+                        loader: 'sass-loader',
+                        options: {
+                            implementation: require('node-sass')
+                        }
+                    }
+                ]
+            }
+        ]
+    },
     watchOptions: {
+
         aggregateTimeout: 2000,
         poll: 1000,
         ignored: [
