@@ -1,5 +1,10 @@
+<<<<<<< refs/remotes/origin/develop
 //window.Vue = require('vue');
 import Vue from 'vue';
+=======
+import Vue from 'vue'
+window.Vue = Vue;
+>>>>>>> Added: Dashboard HTML
 
 window.$ = require('jquery');
 window.JQuery = require('jquery');
