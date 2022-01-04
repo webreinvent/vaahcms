@@ -11,3 +11,45 @@ html, .section, .hero, footer{
     background-color: #bbb !important;
 }
 */
+
+.menu-item{
+    li{
+        margin-bottom: .75rem;
+        a{
+            display: flex;
+            align-items: center;
+        }
+        .icon{
+
+            &.is-small{
+                margin-right: .75rem;
+            }
+        }
+    }
+}
+.card{
+    &.has-icons-left{
+    .rounded-circle{
+        border-radius: 100%;
+        width: 44px;
+        height: 44px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 10px;
+
+    }
+        p{
+            font-weight: 500;
+        }
+    }
+    &.has-border-right{
+        justify-content: space-around;
+        .hr{
+            border-right: thin solid #eee;
+            border-image: linear-gradient(to bottom,#fff 0,#fff 15%,#eee 50%,#fff 85%,#fff 100%);
+            border-image-slice: 1;
+        }
+
+    }
+}
