@@ -318,8 +318,8 @@ has- has-padding-right-25 has-padding-top-20 has-padding-bottom-20">
                                  <div class="media">
                                      <div class="media-content">
                                          <span class="tag is-link is-small">New</span>
-                                         <h6 class="title is-6 is-inline">
-                                             View [fronted.partials.alerts] not found.
+                                         <h6 class="is-inline title is-6">
+                                             <a href="#">View [fronted.partials.alerts] not found.</a>
                                          </h6>
 
                                          <p>
@@ -337,7 +337,7 @@ has- has-padding-right-25 has-padding-top-20 has-padding-bottom-20">
                                 <div class="media">
                                     <div class="media-content">
                                         <h6 class="title is-6 has-margin-bottom-5">
-                                            View [fronted.partials.alerts] not found.
+                                            <a href="#">View [fronted.partials.alerts] not found.</a>
                                         </h6>
                                         <p>
                                             (view: Lorem ipsum dolor sit amet, consectetur
