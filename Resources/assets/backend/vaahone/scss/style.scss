@@ -78,6 +78,22 @@ html, .section, .hero, footer{
             &:last-child{
                 border-bottom: none;
             }
+            .media-content {
+                .title {
+                    a {
+                        color: $grey-dark;
+
+                        &:hover {
+                            color: $blue;
+                        }
+                    }
+
+                }
+
+
+            }
+
+
         }
     }
 }
