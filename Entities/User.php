@@ -641,7 +641,7 @@ class User extends Authenticatable
     }
     //-------------------------------------------------
 
-    public static function login($request)
+    public static function login($request, $permission_slug)
     {
 
         $user = self::beforeUserLoginValidation($request);
@@ -651,7 +651,7 @@ class User extends Authenticatable
             return $user;
         }
 
-        if(!$user->hasPermission('can-login-in-backend'))
+        if(isset($permission_slug) && !$user->hasPermission($permission_slug))
         {
 
             $response['status'] = 'failed';
