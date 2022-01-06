@@ -1,11 +1,5 @@
 /*!
-  * vue-router v3.5.2
-  * (c) 2021 Evan You
-  * @license MIT
-  */
-
-/*!
- * FilePond 4.29.0
+ * FilePond 4.30.3
  * Licensed under MIT, https://opensource.org/licenses/MIT/
  * Please visit https://pqina.nl/filepond/ for details.
  */
@@ -17,7 +11,7 @@
  */
 
 /*!
- * FilePondPluginFileValidateSize 2.2.4
+ * FilePondPluginFileValidateSize 2.2.5
  * Licensed under MIT, https://opensource.org/licenses/MIT/
  * Please visit https://pqina.nl/filepond/ for details.
  */
@@ -41,23 +35,8 @@
  */
 
 /*!
- * FilePondPluginImagePreview 4.6.8
- * Licensed under MIT, https://opensource.org/licenses/MIT/
- * Please visit https://pqina.nl/filepond/ for details.
- */
-
-/*!
  * Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com
  * License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License)
- */
-
-/*!
- * Fuse.js v3.4.6 - Lightweight fuzzy-search (http://fusejs.io)
- * 
- * Copyright (c) 2012-2017 Kirollos Risk (http://kiro.me)
- * All Rights Reserved. Apache Software License 2.0
- * 
- * http://www.apache.org/licenses/LICENSE-2.0
  */
 
 /*!
@@ -132,4 +111,4 @@
 
 //! moment.js locale configuration
 
-//! version : 0.5.33
+//! version : 0.5.34

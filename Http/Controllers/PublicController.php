@@ -61,7 +61,7 @@ class PublicController extends Controller
     //----------------------------------------------------------
     public function postGenerateOTP(Request $request)
     {
-        $response = User::sendLoginOtp($request);
+        $response = User::sendLoginOtp($request, 'can-login-in-backend');
         return response()->json($response);
     }
     //----------------------------------------------------------
@@ -83,7 +83,7 @@ class PublicController extends Controller
 
         if($request->type == 'otp')
         {
-            $response = User::loginViaOtp($request);
+            $response = User::loginViaOtp($request, 'can-login-in-backend');
         } else
         {
             $response = User::login($request);

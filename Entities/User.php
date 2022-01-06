@@ -693,7 +693,7 @@ class User extends Authenticatable
         return $response;
     }
     //-------------------------------------------------
-    public static function sendLoginOtp($request): array
+    public static function sendLoginOtp($request, $permission_slug=null): array
     {
         $user = self::beforeUserActionValidation($request);
         if(isset($user['status']) && $user['status'] == 'failed')
@@ -701,12 +701,10 @@ class User extends Authenticatable
             return $user;
         }
 
-        if(!$user->hasPermission('can-login-in-backend'))
+        if(isset($permission_slug) && !$user->hasPermission($permission_slug))
         {
-
             $response['status'] = 'failed';
             $response['errors'][] = trans("vaahcms::messages.permission_denied");
-
             return $response;
         }
 
@@ -741,7 +739,7 @@ class User extends Authenticatable
         return $response;
     }
     //-------------------------------------------------
-    public static function loginViaOtp($request): array
+    public static function loginViaOtp($request, $permission_slug=null): array
     {
 
         $user = self::beforeUserActionValidation($request);
@@ -751,7 +749,7 @@ class User extends Authenticatable
             return $user;
         }
 
-        if(!$user->hasPermission('can-login-in-backend'))
+        if(isset($permission_slug) && !$user->hasPermission($permission_slug))
         {
 
             $response['status'] = 'failed';
