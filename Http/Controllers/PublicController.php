@@ -116,7 +116,7 @@ class PublicController extends Controller
     //----------------------------------------------------------
     public function postSendResetCode(Request $request)
     {
-        $response = User::sendResetPasswordEmail($request);
+        $response = User::sendResetPasswordEmail($request, 'can-login-in-backend');
 
         return response()->json($response);
 

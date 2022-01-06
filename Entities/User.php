@@ -810,7 +810,7 @@ class User extends Authenticatable
 
     }
     //-------------------------------------------------
-    public static function sendResetPasswordEmail($request): array
+    public static function sendResetPasswordEmail($request, $permission_slug=null): array
     {
 
         $user = self::beforeUserActionValidation($request);
@@ -819,7 +819,7 @@ class User extends Authenticatable
             return $user;
         }
 
-        if(!$user->hasPermission('can-login-in-backend'))
+        if(isset($permission_slug) && !$user->hasPermission($permission_slug))
         {
 
             $response['status'] = 'failed';
