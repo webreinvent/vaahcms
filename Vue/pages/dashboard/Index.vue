@@ -211,9 +211,9 @@ has- has-padding-right-25 has-padding-top-20 has-padding-bottom-20">
                         </div>
                     </div>
                 </div>
-                <div class="column is-4">
-                    <div class="card">
-                        <div class="block has-padding-15 is-bottom-marginless">
+                <div class="column is-4 sidebar-right">
+                    <div class="card has-margin-left-10-desktop is-clipped">
+                        <div class="block has-padding-15 is-bottom-marginless is-grouped  has-background-white-bis">
                             <a href="#" class="has-padding-right-15">
                                 <b-icon
                                     icon="redo-alt"
@@ -231,7 +231,7 @@ has- has-padding-right-25 has-padding-top-20 has-padding-bottom-20">
                         </div>
 
                         <b-collapse
-                            class="card"
+                            class="card is-radiusless has-notification"
                             animation="slide"
                             aria-id="contentIdForA11y3">
                             <template #trigger="props">
@@ -255,7 +255,6 @@ has- has-padding-right-25 has-padding-top-20 has-padding-bottom-20">
                                 <div class="content">
                                     Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nec iaculis
                                     mauris.
-                                    <a>#buefy</a>.
                                 </div>
                             </div>
                             <footer class="card-footer">
@@ -268,15 +267,19 @@ has- has-padding-right-25 has-padding-top-20 has-padding-bottom-20">
                                 </a>
                                 <a href="#" class="card-footer-item">
                                     <b-icon
-                                        icon="check"
-                                        size="is-small">
+                                        icon="check-circle"
+                                        size="is-small"
+                                        class="has-text-success"
+                                    >
                                     </b-icon>
                                     Sent N/A
                                 </a>
                                 <a href="#" class="card-footer-item">
                                     <b-icon
                                         icon="ban"
-                                        size="is-small">
+                                        size="is-small"
+                                        class="has-text-danger"
+                                        >
                                     </b-icon>
                                     Failed N/A
                                 </a>
@@ -285,47 +288,60 @@ has- has-padding-right-25 has-padding-top-20 has-padding-bottom-20">
                                 <div class="notification is-small is-info is-light">
                                     Setup your SMTP details to send your emails <a>View Setting</a>
                                 </div>
+
+
                             </div>
 
                         </b-collapse>
 
+                        <b-collapse
+                            class="card is-radiusless has-listing"
+                            animation="slide"
+                            aria-id="contentIdForA11y3">
+                            <template #trigger="props">
+                                <div
+                                    class="card-header"
+                                    role="button"
+                                    aria-controls="contentIdForA11y3">
+                                    <p class="card-header-title">
+                                        Laravel Logs
+                                    </p>
+                                    <a class="card-header-icon">
+                                        <b-icon
+                                            size="is-small"
+                                            :icon="props.open ? 'chevron-down' : 'chevron-up'">
+                                        </b-icon>
+                                    </a>
+                                </div>
+                            </template>
+                             <div class="card-content">
+                                 <div class="media">
+                                     <div class="media-content">
+                                         <span class="tag is-link is-small">New</span>
+                                         <h6 class="title is-6 is-inline">
+                                             View [fronted.partials.alerts] not found.
+                                         </h6>
 
-                        <div class="card">
-                            <header class="card-header">
-                                <p class="card-header-title">Laravel Logs</p>
-                                <button class="card-header-icon" aria-label="more options">
-                    <span class="icon">
-                      <i class="fas fa-angle-down" aria-hidden="true"></i>
-                    </span>
-                                </button>
-                            </header>
+                                         <p>
+                                             (Lorem ipsum dolor sit amet, consectetur adipisicing
+                                             elit. Animi atque consequatur
+                                         </p>
+                                         <small class="has-text-grey-light has-margin-top-5 is-block">
+                                             2021-12-24 01:15 / 5days ago
+                                         </small>
+                                     </div>
+                                 </div>
+                             </div>
+
                             <div class="card-content">
                                 <div class="media">
                                     <div class="media-content">
-                                        <span class="tag is-link is-small">New</span>
-                                        <h6 class="title is-6 is-inline">
-                                            View [fronted.partials.alerts] not found.
-                                        </h6>
-                                        (Lorem ipsum dolor sit amet, consectetur adipisicing
-                                        <p>
-                                            elit. Animi atque consequatur cumque doloribus incidunt
-                                            laboriosam quae qui, sunt ullam ut.)
-                                        </p>
-                                        <small class="has-text-grey-light has-margin-top-5 is-block">
-                                            2021-12-24 01:15 / 5days ago
-                                        </small>
-                                    </div>
-                                </div>
-                                <div class="media">
-                                    <div class="media-content">
-                                        <h6 class="title is-6">
+                                        <h6 class="title is-6 has-margin-bottom-5">
                                             View [fronted.partials.alerts] not found.
                                         </h6>
                                         <p>
                                             (view: Lorem ipsum dolor sit amet, consectetur
-                                            adipisicing elit. Doloribus explicabo optio rem unde.
-                                            Deserunt facere mollitia sint? Corporis eius ipsum rem
-                                            vero.)
+                                            adipisicing elit. Doloribus explicabo optio
                                         </p>
                                         <small class="has-text-grey-light  has-margin-top-5 is-block">
                                             2021-12-24 01:15 / 5days ago
@@ -334,7 +350,10 @@ has- has-padding-right-25 has-padding-top-20 has-padding-bottom-20">
                                 </div>
                                 <a href="#">View all recent logs</a>
                             </div>
-                        </div>
+
+                        </b-collapse>
+
+
                     </div>
                 </div>
             </div>
