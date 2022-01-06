@@ -316,7 +316,7 @@ class Notification extends Model {
 
             if($notification->via_mail == true)
             {
-//                static::sendViaMail($notification, $user, $inputs);
+                static::sendViaMail($notification, $user, $inputs);
             }
 
             if($notification->via_backend == true)
