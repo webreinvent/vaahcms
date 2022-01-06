@@ -64,7 +64,8 @@ function vh_modules_action($method, $params=null, $output_type=null)
 
         $res = vh_module_action($item->name, 'ExtendController@'.$method);
 
-        if($res['status'] == 'failed')
+
+        if(isset($res['status']) && $res['status'] == 'failed')
         {
             $output['failed'][$item->slug] = $res;
 
