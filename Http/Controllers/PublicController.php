@@ -81,12 +81,14 @@ class PublicController extends Controller
             return response()->json($response);
         }
 
+        $permission_to_check = 'can-login-in-backend';
+
         if($request->type == 'otp')
         {
-            $response = User::loginViaOtp($request, 'can-login-in-backend');
+            $response = User::loginViaOtp($request, $permission_to_check);
         } else
         {
-            $response = User::login($request);
+            $response = User::login($request, $permission_to_check);
         }
 
         if(isset($response['status']) && $response['status'] == 'failed')
@@ -114,7 +116,7 @@ class PublicController extends Controller
     //----------------------------------------------------------
     public function postSendResetCode(Request $request)
     {
-        $response = User::sendResetPasswordEmail($request);
+        $response = User::sendResetPasswordEmail($request, 'can-login-in-backend');
 
         return response()->json($response);
 
