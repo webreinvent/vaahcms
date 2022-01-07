@@ -152,7 +152,7 @@
 
 
                     <div class="column is-4">
-                        <b-field label="Database Username Password"
+                        <b-field label="Database Password"
                                  expanded
                                  class="has-margin-bottom-5"
                                  :label-position="labelPosition">
