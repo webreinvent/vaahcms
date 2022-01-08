@@ -23,8 +23,10 @@
                                         <div class="column">
                                             <h4 class="title is-6">Get Started</h4>
 
-                                            <b-button type="is-primary" class="has-margin-bottom-5 has-padding-left-25
-has- has-padding-right-25 has-padding-top-20 has-padding-bottom-20">
+                                            <b-button type="is-primary"
+                                                      class="has-margin-bottom-5 has-padding-left-25
+                                                             has-padding-right-25 has-padding-top-20
+                                                             has-padding-bottom-20">
                                                 Activate Theme
                                             </b-button>
                                             <p>or,<a href="#">create your own theme</a></p>
