@@ -74,7 +74,7 @@ class ModulesLoader {
         foreach ($arr as $key => $module)
         {
 
-            if (strpos($module, 'Modules\Cms') !== false) {
+            if (strpos($module, 'Modules/Cms') !== false) {
 
                 $temp = $module;
                 unset($arr[$key]);
