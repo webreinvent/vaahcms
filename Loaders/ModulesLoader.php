@@ -74,7 +74,11 @@ class ModulesLoader {
         foreach ($arr as $key => $module)
         {
 
-            if (strpos($module, 'Modules/Cms') !== false) {
+            /*
+             * This will handle windows and linux OS
+             */
+            if ((strpos($module, 'Modules\Cms') !== false
+                || strpos($module, 'Modules/Cms') !== false)) {
 
                 $temp = $module;
                 unset($arr[$key]);
