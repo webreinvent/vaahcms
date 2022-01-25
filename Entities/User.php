@@ -641,7 +641,7 @@ class User extends Authenticatable
     }
     //-------------------------------------------------
 
-    public static function login($request, $permission_slug)
+    public static function login($request, $permission_slug = null)
     {
 
         $user = self::beforeUserLoginValidation($request);
