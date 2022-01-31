@@ -17,19 +17,32 @@ class ProcessMails implements ShouldQueue
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
 
-    public $to;
     public $mail;
+    public $to;
+    public $from_email;
+    public $from_name;
+    public $cc;
+    public $bcc;
 
     /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct($mail, $to)
+    public function __construct($mail, $to, $cc=null, $bcc=null)
     {
         $this->mail = $mail;
         $this->to = $to;
+        $this->cc = $cc;
+        $this->bcc = $bcc;
+
     }
+
+    //----------------------------------------------------------
+
+
+
+    //----------------------------------------------------------
 
     /**
      * Execute the job.
@@ -38,6 +51,9 @@ class ProcessMails implements ShouldQueue
      */
     public function handle()
     {
-        \Mail::to($this->to)->send($this->mail);
+        \Mail::to($this->to)
+            ->cc($this->cc)
+            ->bcc($this->bcc)
+            ->send($this->mail);
     }
 }
