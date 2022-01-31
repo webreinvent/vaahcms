@@ -11,16 +11,22 @@ class GenericMail extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $content;
+    public $subject;
+    public $message;
+    public $from_name;
+    public $from_email;
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($content)
+    public function __construct($subject, $message, $from_email=null, $from_name=null)
     {
-        $this->content = $content;
+        $this->subject = $subject;
+        $this->message = $message;
+        $this->from_email = $from_email;
+        $this->from_name = $from_name;
     }
 
     /**
@@ -30,6 +36,10 @@ class GenericMail extends Mailable
      */
     public function build()
     {
-        return $this->markdown('vaahcms::mails.default');
+
+        return $this->subject($this->subject)
+            ->from($this->from_email, $this->from_name)
+            ->markdown('vaahcms::mails.default')
+            ->with(['message' => $this->message]);
     }
 }

@@ -9,7 +9,9 @@
 
     {{-- Body --}}
     @slot('subcopy')
-        {{ Illuminate\Mail\Markdown::parse($content) }}
+        @isset($message)
+        {{ Illuminate\Mail\Markdown::parse($message) }}
+        @endisset
     @endslot
 
     {{-- Footer --}}

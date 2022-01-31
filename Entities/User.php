@@ -331,7 +331,8 @@ class User extends Authenticatable
                 }
             }
 
-        })->with(['roles'])->active()->get();
+        })->with(['roles'])->where('is_active', 1)
+            ->get();
 
         return $list;
     }
@@ -641,7 +642,7 @@ class User extends Authenticatable
     }
     //-------------------------------------------------
 
-    public static function login($request, $permission_slug)
+    public static function login($request, $permission_slug = null)
     {
 
         $user = self::beforeUserLoginValidation($request);
@@ -1036,16 +1037,25 @@ class User extends Authenticatable
         return $user->thumbnail;
     }
     //-------------------------------------------------
-    public static function notifyAdmins($subject, $message)
+    public static function notifySuperAdmins($subject, $message)
     {
-        $users = new User();
-        $super_admins = $users->listByRole('super-administrator');
+        $users = self::getByRoles(['super-administrator']);
 
-        $notification = new \stdClass();
-        $notification->subject = $subject;
-        $notification->message = $message;
+        if(count($users) < 0)
+        {
+            return false;
+        }
 
-        Notification::send($super_admins, new NotifyAdmin($notification));
+        $to = [];
+
+        foreach ($users as $user)
+        {
+            $item = ['email' => $user->email, 'name' => $user->name];
+            $to[] = $item;
+        }
+
+        VaahMail::dispatchGenericMail($subject, $message, $to);
+
     }
     //-------------------------------------------------
     public static function getUsersForAssets()
@@ -1909,5 +1919,10 @@ class User extends Authenticatable
         return $list;
 
     }
+    //-------------------------------------------------
+
+    //-------------------------------------------------
+    //-------------------------------------------------
+    //-------------------------------------------------
     //-------------------------------------------------
 }
