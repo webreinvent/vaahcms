@@ -270,15 +270,6 @@ class Module extends Model {
         foreach($list as $module_path)
         {
             $res = Module::syncModule($module_path);
-
-            /*if($res['status'] == 'failed')
-            {
-                echo "<pre>";
-                print_r($res);
-                echo "</pre>";
-                die("<hr/>line number=123");
-
-            }*/
         }
 
     }
