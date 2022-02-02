@@ -39,9 +39,6 @@ class SetupController extends Controller
         //publish assets
         VaahSetup::publishAssets();
 
-        //public laravel mail
-        VaahArtisan::publish(null, "laravel-mail");
-
         //check .env file exist or not
         if(!file_exists(base_path('.env')))
         {
