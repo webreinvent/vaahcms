@@ -10,7 +10,7 @@
                     <div class="columns is-multiline">
                         <div class="column is-12">
                             <div class="card">
-                                <div class="card-content">
+                                <div v-if="assets.dashboard.success.vaahcms" class="card-content">
                                     <h2 class="title is-5">
                                         Welcome to Vaah<span class="has-text-weight-bold"
                                     >cms</span
@@ -23,94 +23,58 @@
                                         <div class="column">
                                             <h4 class="title is-6">Get Started</h4>
 
-                                            <b-button type="is-primary"
+                                            <b-button  type="is-primary"
+                                                       @click="goToLink(root.current_url+'#/vaah/themes/')"
                                                       class="has-margin-bottom-5 has-padding-left-25
                                                              has-padding-right-25 has-padding-top-20
                                                              has-padding-bottom-20">
-                                                Activate Theme
+                                                <span v-if="assets.dashboard.success.vaahcms.has_activated_theme">
+                                                    Go to Theme
+                                                </span>
+                                                <span v-else>
+                                                    Activate Theme
+                                                </span>
                                             </b-button>
-                                            <p>or,<a href="#">create your own theme</a></p>
+                                            <p>or,<a href="https://docs.vaah.dev/vaahcms/theme/introduction.html">create your own theme</a></p>
                                         </div>
                                         <div class="column">
                                             <h4 class="title is-6">Next Steps</h4>
                                             <ul class="menu-item">
-                                                <li>
-                                                    <a href="#">
-                                                        <b-icon
-                                                            icon="edit"
-                                                            size="is-small">
-                                                        </b-icon>
-                                                        Edit your front page</a>
-                                                </li>
-                                                <li>
 
-                                                    <a href="#">
-                                                        <b-icon
-                                                            icon="plus"
-                                                            size="is-small">
-                                                        </b-icon>
-                                                        Add additional pages</a>
-                                                </li>
-                                                <li>
+                                                <template v-for="module in assets.dashboard.success">
 
-                                                    <a href="#">
-                                                        <b-icon
-                                                            icon="rss"
-                                                            size="is-small">
-                                                        </b-icon>
-                                                        Add a blog post
-                                                    </a>
-                                                </li>
-                                                <li>
+                                                    <template v-for="n_item in module.next_steps">
+                                                        <li>
+                                                            <a @click="goToLink(n_item.link)">
+                                                                <b-icon
+                                                                        :icon="n_item.icon"
+                                                                        size="is-small">
+                                                                </b-icon>
+                                                                {{ n_item.name }}</a>
+                                                        </li>
+                                                    </template>
 
-                                                    <a href="#">
-                                                        <b-icon
-                                                            icon="tv"
-                                                            size="is-small">
-                                                        </b-icon>
-                                                        View your site
-                                                    </a>
-                                                </li>
+                                                </template>
                                             </ul>
                                         </div>
                                         <div class="column">
                                             <h4 class="title is-6">More Actions</h4>
                                             <ul class="menu-item">
-                                                <li>
-                                                    <a href="#">
-                                                        <b-icon
-                                                            icon="th-large"
-                                                            size="is-small">
-                                                        </b-icon>
-                                                        Manage widgets</a>
-                                                </li>
-                                                <li>
 
-                                                    <a href="#">
-                                                        <b-icon
-                                                            icon="bars"
-                                                            size="is-small">
-                                                        </b-icon>
-                                                        Manage menus</a>
-                                                </li>
-                                                <li>
+                                                <template v-for="module in assets.dashboard.success">
 
-                                                    <a href="#">
-                                                        <b-icon
-                                                            icon="comment-alt"
-                                                            size="is-small">
-                                                        </b-icon>
-                                                        Turn comments on or off</a>
-                                                </li>
-                                                <li>
+                                                    <template v-for="n_item in module.actions">
+                                                        <li>
+                                                            <a @click="goToLink(n_item.link)">
+                                                                <b-icon
+                                                                        :icon="n_item.icon"
+                                                                        size="is-small">
+                                                                </b-icon>
+                                                                {{ n_item.name }}</a>
+                                                        </li>
+                                                    </template>
 
-                                                    <a href="#">
-                                                        <b-icon
-                                                            icon="graduation-cap"
-                                                            size="is-small">
-                                                        </b-icon>
-                                                        Learn more about getting started</a>
-                                                </li>
+                                                </template>
                                             </ul>
                                         </div>
                                     </div>

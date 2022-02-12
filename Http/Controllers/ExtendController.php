@@ -12,6 +12,7 @@ use WebReinvent\VaahCms\Entities\Job;
 use WebReinvent\VaahCms\Entities\Module;
 use WebReinvent\VaahCms\Entities\Permission;
 use WebReinvent\VaahCms\Entities\Role;
+use WebReinvent\VaahCms\Entities\Theme;
 use WebReinvent\VaahCms\Entities\User;
 use WebReinvent\VaahCms\Http\Controllers\Advanced\LogsController;
 use WebReinvent\VaahCms\Libraries\VaahStr;
@@ -376,6 +377,28 @@ class ExtendController extends Controller
                 'name' => 'Getting Started',
                 'icon' => 'play-circle',
                 'link' => 'https://docs.vaah.dev/vaahcms/installation.html'
+            ]
+        ];
+
+
+        $data['has_activated_theme'] = Theme::where('is_active',1)->exists();
+
+
+
+        $data['next_steps'] = [
+            [
+                'name' => 'View your Site',
+                'icon' => 'tv',
+                'link' => url('/')
+            ]
+        ];
+
+
+        $data['actions'] = [
+            [
+                'name' => 'Manage your Module',
+                'icon' => 'cube',
+                'link' => self::$link."/modules"
             ]
         ];
 
