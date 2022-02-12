@@ -5,6 +5,7 @@ import Footer from '../../components/Footer.vue';
 export default {
     computed:{
         root() {return this.$store.getters['root/state']},
+        assets() {return this.$store.getters['root/state'].assets},
         ajax_url() {return this.$store.getters['root/state'].ajax_url},
     },
     components:{

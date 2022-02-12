@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use WebReinvent\VaahCms\Entities\FailedJob;
 use WebReinvent\VaahCms\Entities\Job;
 use WebReinvent\VaahCms\Entities\Module;
+use WebReinvent\VaahCms\Entities\Permission;
 use WebReinvent\VaahCms\Entities\Role;
 use WebReinvent\VaahCms\Entities\User;
 use WebReinvent\VaahCms\Http\Controllers\Advanced\LogsController;
@@ -279,9 +280,108 @@ class ExtendController extends Controller
         return $response;
     }
     //----------------------------------------------------------
-    public function getDashboardCards()
+    public function getDashboardItems()
     {
-        $data = [
+
+        $data = array();
+
+        $data['card'] = [
+            "title" => "Users and Roles",
+            "list" => [
+                [
+                    "count" => User::count(),
+                    "label" => 'Total User',
+                    "icon" => "user",
+                    "type" => "info",
+                    "link" => self::$link."/users/"
+                ],
+                [
+                    "count" => Role::count(),
+                    "label" => 'Total Role',
+                    "icon" => "user",
+                    "type" => "danger",
+                    "link" => self::$link."/roles/"
+                ],
+                [
+                    "count" => Permission::count(),
+                    "label" => 'Total Permission',
+                    "icon" => "user",
+                    "type" => "warning",
+                    "link" => self::$link."/permissions/"
+                ],
+                [
+                    "count" => User::where('is_active',1)->count(),
+                    "label" => 'Active Users',
+                    "icon" => "user",
+                    "type" => "success",
+                    "link" => self::$link."/users?status=active"
+                ]
+            ]
+
+        ];
+
+
+        $logs = new LogsController();
+
+        $log_list = $logs->getList(new Request());
+
+        if(isset($log_list->original) && $log_list->original['status'] == 'success'){
+            $log_list = $log_list->original['data']['list'];
+        }
+
+
+        $data['expanded_item'] = [
+            [
+                'title' => 'Jobs',
+                'type' => 'content',
+                'description' => 'Tasks that is kept in the queue to be performed one after another. 
+                Queues allow you to defer the processing of a time consuming task, 
+                such as sending an e-mail, until a later time which drastically 
+                speeds up web requests to your application.',
+                'footer' => [
+                    [
+                        'name' => 'Pending',
+                        'count' => Job::count(),
+                        'type' => 'info',
+                        'icon' => 'envelope',
+                        'link' => self::$link."/advanced/jobs/",
+                    ],
+                    [
+                        'name' => 'Failed',
+                        'count' => FailedJob::count(),
+                        'type' => 'danger',
+                        'icon' => 'ban',
+                        'link' => self::$link."/advanced/jobs-failed/",
+                    ]
+                ]
+            ],
+            [
+                'title' => 'Laravel Logs',
+                'type' => 'list',
+                'list' => $log_list,
+                'list_limit' => 4,
+                'link_text' => "View all recent logs",
+                'link' => self::$link."/advanced/logs/",
+            ]
+        ];
+
+
+        $data['expanded_header_links'] = [
+            [
+                'name' => 'Check Updates',
+                'icon' => 'redo-alt',
+                'link' => self::$link."/settings/update"
+            ],
+            [
+                'name' => 'Getting Started',
+                'icon' => 'play-circle',
+                'link' => 'https://docs.vaah.dev/vaahcms/installation.html'
+            ]
+        ];
+
+
+
+        /*$data = [
 
             [
                 "image" => Auth::user()->avatar,
@@ -352,7 +452,7 @@ class ExtendController extends Controller
                 "has_title" => false,
                 "link" => self::$link."/advanced/logs/details/laravel-".\Carbon::now()->format('Y-m-d').'.log'
             ];
-        }
+        }*/
 
         $response['status'] = 'success';
         $response['data'] = $data;

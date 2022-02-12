@@ -2,9 +2,9 @@
 <template>
 
     <!--sections-->
-    <div class="block dashboard">
+    <div v-if="assets" class="block dashboard">
 
-        <section class="section is-paddingless">
+        <section v-if="assets.dashboard && assets.dashboard.success" class="section is-paddingless">
             <div class="columns">
                 <div class="column is-8">
                     <div class="columns is-multiline">
@@ -118,340 +118,281 @@
                             </div>
                         </div>
 
-                        <div class="column is-12">
-                            <div class="columns">
-                                <div class="column">
-                                    <h4 class="title is-5 has-margin-top-15">Users and Roles</h4>
-                                </div>
-                            </div>
+                        <template v-if="assets.dashboard.success"
+                                  v-for="module in assets.dashboard.success">
 
-                            <div class="columns">
-                                <div class="column is-9">
-                                    <div
-                                        class="card is-flex has-border-right">
-                                        <div class="card is-shadowless has-icons-left">
-                                            <div class="card-content">
-                                                <div class="has-text-info">
-                                                    <div
-                                                        class="has-background-info-light rounded-circle"
-                                                    >
+                            <template v-if="module.card">
 
-                                                        <b-icon
-                                                            icon="user"
-                                                            size="is-small">
-                                                        </b-icon>
-                                                    </div>
-                                                    <p>Total User</p>
-                                                </div>
-                                                <h5 class="title has-margin-top-5">178</h5>
-                                                <a href="">View Details</a>
-                                            </div>
-                                        </div>
-                                        <div class="hr"></div>
-                                        <div class="card is-shadowless has-icons-left">
-                                            <div class="card-content">
-                                                <div class="has-text-danger">
-                                                    <div
-                                                        class="has-background-danger-light rounded-circle"
-                                                    >
-
-                                                        <b-icon
-                                                            icon="user"
-                                                            size="is-small">
-                                                        </b-icon>
-                                                    </div>
-                                                    <p>Total Roles</p>
-                                                </div>
-                                                <h5 class="title has-margin-top-5">178</h5>
-                                                <a href="">View Details</a>
-                                            </div>
-                                        </div>
-                                        <div class="hr"></div>
-                                        <div class="card is-shadowless has-icons-left">
-                                            <div class="card-content">
-                                                <div class="has-text-warning">
-                                                    <div
-                                                        class="has-background-warning-light rounded-circle"
-                                                    >
-
-                                                        <b-icon
-                                                            icon="user"
-                                                            size="is-small">
-                                                        </b-icon>
-                                                    </div>
-                                                    <p>Total Permissions</p>
-                                                </div>
-                                                <h5 class="title has-margin-top-5">178</h5>
-                                                <a href="">View Details</a>
-                                            </div>
-                                        </div>
-
-
-                                    </div>
-                                </div>
-                                <div class="column">
-                                    <div class="card  has-icons-left">
-                                        <div class="card-content">
-                                            <div class="has-text-success">
-                                                <div
-                                                    class="has-background-success-light rounded-circle"
-                                                >
-
-                                                    <b-icon
-                                                        icon="user"
-                                                        size="is-small">
-                                                    </b-icon>
-                                                </div>
-                                                <p class="has-text-success">Active Users</p>
-                                            </div>
-                                            <h5 class="title has-margin-top-5 has-text-success">178</h5>
-                                            <a href="">View Details</a>
+                                <div class="column is-12">
+                                    <div class="columns">
+                                        <div class="column">
+                                            <h4 class="title is-5 has-margin-top-15">{{ module.card.title }}</h4>
                                         </div>
                                     </div>
+
+                                    <div  class="columns">
+
+
+                                        <div class="column is-9">
+                                            <div
+                                                    class="card is-flex has-border-right">
+
+
+                                                <template v-if="(key+1)%4 !== 0"
+                                                          v-for="(item,key) in module.card.list">
+                                                    <div class="card is-shadowless has-icons-left">
+                                                        <div class="card-content">
+                                                            <div :class="'has-text-'+item.type">
+                                                                <div :class="'has-background-'+item.type+'-light'"
+                                                                     class="rounded-circle"
+                                                                >
+
+                                                                    <b-icon
+                                                                            :icon="item.icon"
+                                                                            size="is-small">
+                                                                    </b-icon>
+                                                                </div>
+                                                                <p>{{ item.label }}</p>
+                                                            </div>
+                                                            <h5 class="title has-margin-top-5">{{ item.count }}</h5>
+                                                            <a @click="goToLink(item.link)">View Details</a>
+                                                        </div>
+                                                    </div>
+                                                    <div v-if="(key+1)%3 !== 0" class="hr"></div>
+                                                </template>
+
+
+
+                                                <!--<div class="card is-shadowless has-icons-left">
+                                                    <div class="card-content">
+                                                        <div class="has-text-danger">
+                                                            <div
+                                                                class="has-background-danger-light rounded-circle"
+                                                            >
+
+                                                                <b-icon
+                                                                    icon="user"
+                                                                    size="is-small">
+                                                                </b-icon>
+                                                            </div>
+                                                            <p>Total Roles</p>
+                                                        </div>
+                                                        <h5 class="title has-margin-top-5">178</h5>
+                                                        <a href="">View Details</a>
+                                                    </div>
+                                                </div>
+                                                <div class="hr"></div>
+                                                <div class="card is-shadowless has-icons-left">
+                                                    <div class="card-content">
+                                                        <div class="has-text-warning">
+                                                            <div
+                                                                class="has-background-warning-light rounded-circle"
+                                                            >
+
+                                                                <b-icon
+                                                                    icon="user"
+                                                                    size="is-small">
+                                                                </b-icon>
+                                                            </div>
+                                                            <p>Total Permissions</p>
+                                                        </div>
+                                                        <h5 class="title has-margin-top-5">178</h5>
+                                                        <a href="">View Details</a>
+                                                    </div>
+                                                </div>-->
+
+
+                                            </div>
+                                        </div>
+                                        <div class="column">
+
+                                            <template v-if="(key+1)%4 === 0"
+                                                      v-for="(item,key) in module.card.list">
+                                                <div class="card is-shadowless has-icons-left">
+                                                    <div class="card-content">
+                                                        <div :class="'has-text-'+item.type">
+                                                            <div :class="'has-background-'+item.type+'-light'"
+                                                                 class="rounded-circle"
+                                                            >
+
+                                                                <b-icon
+                                                                        :icon="item.icon"
+                                                                        size="is-small">
+                                                                </b-icon>
+                                                            </div>
+                                                            <p>{{ item.label }}</p>
+                                                        </div>
+                                                        <h5 class="title has-margin-top-5">{{ item.count }}</h5>
+                                                        <a @click="goToLink(item.link)">View Details</a>
+                                                    </div>
+                                                </div>
+                                            </template>
+
+                                           <!-- <div class="card  has-icons-left">
+                                                <div class="card-content">
+                                                    <div class="has-text-success">
+                                                        <div
+                                                                class="has-background-success-light rounded-circle"
+                                                        >
+
+                                                            <b-icon
+                                                                    icon="user"
+                                                                    size="is-small">
+                                                            </b-icon>
+                                                        </div>
+                                                        <p class="has-text-success">Active Users</p>
+                                                    </div>
+                                                    <h5 class="title has-margin-top-5 has-text-success">178</h5>
+                                                    <a href="">View Details</a>
+                                                </div>
+                                            </div>-->
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
+
+
+                            </template>
+                        </template>
+
+
                     </div>
                 </div>
                 <div class="column is-4 sidebar-right">
                     <div class="card has-margin-left-10-desktop is-clipped">
                         <div class="block has-padding-15 is-bottom-marginless is-grouped  has-background-white-bis">
-                            <a href="#" class="has-padding-right-15">
-                                <b-icon
-                                    icon="redo-alt"
-                                    size="is-small">
-                                </b-icon>
-                                Recent Updates
-                            </a>
-                            <a href="#">
-                                <b-icon
-                                    icon="play-circle"
-                                    size="is-small">
-                                </b-icon>
-                                Getting Started
-                            </a>
+                            <template v-if="assets.dashboard.success"
+                                      v-for="module in assets.dashboard.success">
+
+                                <template v-if="module.expanded_header_links"
+                                          v-for="(h_item,key) in module.expanded_header_links">
+                                    <a @click="goToLink(h_item.link)" class="has-padding-right-15">
+                                        <b-icon
+                                                :icon="h_item.icon"
+                                                size="is-small">
+                                        </b-icon>
+                                        {{ h_item.name }}
+                                    </a>
+                                </template>
+                            </template>
                         </div>
 
-                        <b-collapse
-                            class="card is-radiusless has-notification"
-                            animation="slide"
-                            aria-id="contentIdForA11y3">
-                            <template #trigger="props">
-                                <div
-                                    class="card-header"
-                                    role="button"
-                                    aria-controls="contentIdForA11y3">
-                                    <p class="card-header-title">
-                                        Jobs and Mail SMTP
-                                    </p>
-                                    <a class="card-header-icon">
-                                        <b-icon
-                                            size="is-small"
-                                            :icon="props.open ? 'chevron-down' : 'chevron-up'">
-                                        </b-icon>
-                                    </a>
-                                </div>
+                        <template v-if="assets.dashboard.success"
+                                  v-for="module in assets.dashboard.success">
+
+                            <template v-if="module.expanded_item">
+
+                                <template v-for="item in module.expanded_item">
+                                    <b-collapse
+                                            class="card is-radiusless has-listing"
+                                            animation="slide"
+                                            aria-id="contentIdForA11y3">
+                                        <template #trigger="props">
+                                            <div
+                                                    class="card-header"
+                                                    role="button"
+                                                    aria-controls="contentIdForA11y3">
+                                                <p class="card-header-title">
+                                                    {{ item.title }}
+                                                </p>
+                                                <a class="card-header-icon">
+                                                    <b-icon
+                                                            size="is-small"
+                                                            :icon="props.open ? 'chevron-down' : 'chevron-up'">
+                                                    </b-icon>
+                                                </a>
+                                            </div>
+                                        </template>
+                                    <!--    <div class="card-content">
+                                            <div class="media">
+                                                <div class="media-content">
+                                                    <span class="tag is-link is-small">New</span>
+                                                    <h6 class="is-inline title is-6">
+                                                        <a href="#">View [fronted.partials.alerts] not found.</a>
+                                                    </h6>
+
+                                                    <p>
+                                                        (Lorem ipsum dolor sit amet, consectetur adipisicing
+                                                        elit. Animi atque consequatur
+                                                    </p>
+                                                    <small class="has-text-grey-light has-margin-top-5 is-block">
+                                                        2021-12-24 01:15 / 5days ago
+                                                    </small>
+                                                </div>
+                                            </div>
+                                        </div>-->
+
+                                        <template v-if="item.type === 'list'">
+                                            <div v-if="l_index < item.list_limit"
+                                                 v-for="(log,l_index) in item.list"
+                                                 class="card-content">
+                                                <div class="media">
+                                                    <div class="media-content">
+                                                        <h6 class="title is-6 has-margin-bottom-5">
+                                                            <a @click="goToLink(item.link+'details/'+log.name)">{{ log.name }}</a>
+                                                        </h6>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+
+                                            <div class="card-footer">
+                                                <div class="card-footer-item" >
+                                                    <a @click="goToLink(item.link)">{{ item.link_text }}</a>
+                                                </div>
+
+                                            </div>
+                                        </template>
+
+
+                                        <template v-if="item.type === 'content'">
+
+                                            <div class="card-content">
+                                                <div class="content">
+                                                   {{ item.description }}
+                                                </div>
+                                            </div>
+                                            <footer class="card-footer">
+                                                <template v-for="f_item in item.footer">
+                                                    <a @click="goToLink(f_item.link)" class="card-footer-item">
+                                                        <b-icon
+                                                                :icon="f_item.icon"
+                                                                size="is-small"
+                                                                :class="'has-text-'+f_item.type">
+                                                        </b-icon>
+                                                       {{ f_item.name }}  {{ f_item.count }}
+                                                    </a>
+                                                </template>
+                                            </footer>
+                                           <!-- <div class="card-content">
+                                                <div class="notification is-small is-info is-light">
+                                                    Setup your SMTP details to send your emails <a>View Setting</a>
+                                                </div>
+
+
+                                            </div>-->
+                                        </template>
+
+
+
+
+
+
+
+                                    </b-collapse>
+                                </template>
+
                             </template>
 
-                            <div class="card-content">
-                                <div class="content">
-                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nec iaculis
-                                    mauris.
-                                </div>
-                            </div>
-                            <footer class="card-footer">
-                                <a href="#" class="card-footer-item">
-                                    <b-icon
-                                        icon="envelope"
-                                        size="is-small">
-                                    </b-icon>
-                                    158 total
-                                </a>
-                                <a href="#" class="card-footer-item">
-                                    <b-icon
-                                        icon="check-circle"
-                                        size="is-small"
-                                        class="has-text-success"
-                                    >
-                                    </b-icon>
-                                    Sent N/A
-                                </a>
-                                <a href="#" class="card-footer-item">
-                                    <b-icon
-                                        icon="ban"
-                                        size="is-small"
-                                        class="has-text-danger"
-                                        >
-                                    </b-icon>
-                                    Failed N/A
-                                </a>
-                            </footer>
-                            <div class="card-content">
-                                <div class="notification is-small is-info is-light">
-                                    Setup your SMTP details to send your emails <a>View Setting</a>
-                                </div>
+                        </template>
 
 
-                            </div>
 
-                        </b-collapse>
-
-                        <b-collapse
-                            class="card is-radiusless has-listing"
-                            animation="slide"
-                            aria-id="contentIdForA11y3">
-                            <template #trigger="props">
-                                <div
-                                    class="card-header"
-                                    role="button"
-                                    aria-controls="contentIdForA11y3">
-                                    <p class="card-header-title">
-                                        Laravel Logs
-                                    </p>
-                                    <a class="card-header-icon">
-                                        <b-icon
-                                            size="is-small"
-                                            :icon="props.open ? 'chevron-down' : 'chevron-up'">
-                                        </b-icon>
-                                    </a>
-                                </div>
-                            </template>
-                             <div class="card-content">
-                                 <div class="media">
-                                     <div class="media-content">
-                                         <span class="tag is-link is-small">New</span>
-                                         <h6 class="is-inline title is-6">
-                                             <a href="#">View [fronted.partials.alerts] not found.</a>
-                                         </h6>
-
-                                         <p>
-                                             (Lorem ipsum dolor sit amet, consectetur adipisicing
-                                             elit. Animi atque consequatur
-                                         </p>
-                                         <small class="has-text-grey-light has-margin-top-5 is-block">
-                                             2021-12-24 01:15 / 5days ago
-                                         </small>
-                                     </div>
-                                 </div>
-                             </div>
-
-                            <div class="card-content">
-                                <div class="media">
-                                    <div class="media-content">
-                                        <h6 class="title is-6 has-margin-bottom-5">
-                                            <a href="#">View [fronted.partials.alerts] not found.</a>
-                                        </h6>
-                                        <p>
-                                            (view: Lorem ipsum dolor sit amet, consectetur
-                                            adipisicing elit. Doloribus explicabo optio
-                                        </p>
-                                        <small class="has-text-grey-light  has-margin-top-5 is-block">
-                                            2021-12-24 01:15 / 5days ago
-                                        </small>
-                                    </div>
-                                </div>
-                                <a href="#">View all recent logs</a>
-                            </div>
-
-                        </b-collapse>
 
 
                     </div>
                 </div>
             </div>
         </section>
-
-
-        <h1 class="title">Dashboard v3</h1>
-
-
-        <div class="columns is-multiline">
-
-            <template v-for="list in root.assets.dashboard.success">
-
-                <div v-for="(item,key) in list" class="column"
-                     :class="item.column?item.column:'is-3'" style="display: grid">
-
-                    <div class="card"
-                         :class="item.link?'is-clickable '+item.card_classes:''"
-                         @click="goToLink(item.link)">
-
-                        <!--<header v-if="item.icon"
-                                class="card-header has-text-centered is-block">
-                            <b-icon :icon="item.icon"
-                                    size="is-large">
-                            </b-icon>
-                        </header>-->
-
-                        <div class="card-content">
-
-
-                            <div class="content has-text-centered">
-
-                                <b-icon v-if="item.icon"
-                                        :icon="item.icon"
-                                        size="is-large">
-                                </b-icon>
-
-                                <span v-if="item.image" class="image is-96x96 is-inline-flex">
-                                    <img class="is-rounded" :src="item.image">
-                                </span>
-                                <span v-if="item.count"
-                                      style="font-size: 4.5rem;font-weight: 500;position: relative">
-                                   {{item.count}}
-                                </span>
-                                <hr v-if="item.label"/>
-                                <span v-if="item.label" class="has-text-weight-bold">
-                                   {{item.label}}
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- <div class="card" :class="item.card_classes">
-                         <header class="card-header">
-                             <p class="card-header-title has-text-centered is-block">
-                                 {{ $vaah.toLabel(key).toUpperCase()}}
-                             </p>
-                         </header>
-
-                         <div class="card-content">
-
-                             <div class="content is-size-1 has-text-centered has-text-weight-bold">
-                                 {{ typeof item.count !== 'boolean'?item.count:' '}}
-                             </div>
-                         </div>
-                     </div>-->
-
-                    <!-- <div class="card" :class="item.link?'is-clickable':''"
-                          @click="goToLink(item.link)">
-                         <div class="card-content" :class="item.card_classes">
-                             <div class="media is-vcentered">
-                                 <div class="media-left" :class="item.text_classes">
-                                     <b-icon
-                                             :icon="item.icon"
-                                             size="is-large">
-                                     </b-icon>
-                                 </div>
-                                 <div class="media-content has-text-centered">
-                                     <p class="title is-4"
-                                        :class="item.text_classes">
-                                         {{ typeof item.count !== 'boolean'?item.count:' '}}
-                                     </p>
-                                     <p class="subtitle is-6" :class="item.text_classes">
-                                         {{ $vaah.toLabel(key).toUpperCase()}}
-                                     </p>
-                                 </div>
-                             </div>
-                         </div>
-                     </div>-->
-
-                </div>
-
-            </template>
-
-
-        </div>
 
     </div>
     <!--sections-->
