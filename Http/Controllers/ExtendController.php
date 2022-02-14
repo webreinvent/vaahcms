@@ -325,12 +325,14 @@ class ExtendController extends Controller
         $log_list = [];
 
 
-        $logs = new LogsController();
+        if(Auth::check()){
+            $logs = new LogsController();
 
-        $log_list = $logs->getList(new Request());
+            $log_list = $logs->getList(new Request());
 
-        if(isset($log_list->original) && $log_list->original['status'] == 'success'){
-            $log_list = $log_list->original['data']['list'];
+            if(isset($log_list->original) && $log_list->original['status'] == 'success'){
+                $log_list = $log_list->original['data']['list'];
+            }
         }
 
 
@@ -405,7 +407,7 @@ class ExtendController extends Controller
                 'link' => self::$link."/modules"
             ]
         ];
-        
+
         $response['status'] = 'success';
         $response['data'] = $data;
 
