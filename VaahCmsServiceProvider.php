@@ -70,7 +70,6 @@ class VaahCmsServiceProvider extends ServiceProvider {
         $router->aliasMiddleware('app.is.not.installed', \WebReinvent\VaahCms\Http\Middleware\IsNotInstalled::class);
         $router->aliasMiddleware('has.backend.access', \WebReinvent\VaahCms\Http\Middleware\HasBackendAccess::class);
         $router->aliasMiddleware('set.theme.details', \WebReinvent\VaahCms\Http\Middleware\SetThemeDetails::class);
-        $router->aliasMiddleware('set.template.details', \WebReinvent\VaahCms\Http\Middleware\SetTemplateDetails::class);
 
 
     }

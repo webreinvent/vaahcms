@@ -100,6 +100,10 @@ Route::group(
             });
 
         //------------------------------------------------
+
+        Route::get( '/dashboard/getItem', 'DashboardController@getItem' )
+            ->name( 'vh.backend.dashboard.item' );
+        //------------------------------------------------
     });
 
 

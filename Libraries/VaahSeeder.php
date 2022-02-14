@@ -195,11 +195,13 @@ class VaahSeeder{
         }else{
 
             $pre_name = get_string_between($json_file_path,
-                "\VaahCms\Modules\\","\Database\Seeds");
+                DIRECTORY_SEPARATOR.'VaahCms'.DIRECTORY_SEPARATOR.'Modules'.DIRECTORY_SEPARATOR,
+                DIRECTORY_SEPARATOR.'Database'.DIRECTORY_SEPARATOR.'Seeds');
 
             if(!$pre_name){
                 $pre_name = get_string_between($json_file_path,
-                    "\VaahCms\Themes\\","\Database\Seeds");
+                DIRECTORY_SEPARATOR.'VaahCms'.DIRECTORY_SEPARATOR.'Themes'.DIRECTORY_SEPARATOR,
+                DIRECTORY_SEPARATOR.'Database'.DIRECTORY_SEPARATOR.'Seeds');
             }
         }
 
