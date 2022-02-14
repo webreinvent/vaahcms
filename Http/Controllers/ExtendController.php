@@ -325,22 +325,23 @@ class ExtendController extends Controller
         $log_list = [];
 
 
-        /*$logs = new LogsController();
+        $logs = new LogsController();
 
         $log_list = $logs->getList(new Request());
 
         if(isset($log_list->original) && $log_list->original['status'] == 'success'){
             $log_list = $log_list->original['data']['list'];
-        }*/
+        }
 
 
         $data['expanded_item'] = [
             [
                 'title' => 'Jobs',
                 'type' => 'content',
-                'description' => 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. 
-                Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s,
-                 when an unknown printer took a galley of type and scrambled it to make a type specimen book.',
+                'description' => 'Tasks that is kept in the queue to be performed one after another. 
+                Queues allow you to defer the processing of a time consuming task, 
+                such as sending an e-mail, until a later time which drastically 
+                speeds up web requests to your application.',
                 'footer' => [
                     [
                         'name' => 'Pending',
@@ -365,6 +366,7 @@ class ExtendController extends Controller
                 'list_limit' => 5,
                 'link_text' => "View all recent logs",
                 'link' => self::$link."/advanced/logs/",
+                'empty_response_note' => "No Error Log Found",
             ]
         ];
 
@@ -403,82 +405,7 @@ class ExtendController extends Controller
                 'link' => self::$link."/modules"
             ]
         ];
-
-
-
-        /*$data = [
-
-            [
-                "image" => Auth::user()->avatar,
-                "column" => 'is-6',
-                "label" => 'Hello, '.Auth::user()->name,
-                "card_classes" => "has-background-warning-light",
-                "link" => self::$link."/users/view/".Auth::user()->id
-            ],
-            [
-                "count" => User::count(),
-                "label" => 'Total Users',
-                "icon" => "users",
-                "card_classes" => "has-background-primary-light",
-                "link" => self::$link."/users/"
-            ],
-            [
-                "count" => User::where('is_active',1)->count(),
-                "label" => 'Active Users',
-                "icon" => "user-check",
-                "card_classes" => "has-background-warning-lighter",
-                "link" => self::$link."/users/?status=01"
-            ],
-            [
-                "count" => User::whereDate('last_login_at', \Carbon::today())->count(),
-                "label" => 'Today Login',
-                "icon" => "user-edit",
-                "card_classes" => "has-background-warning-light"
-            ],
-            [
-                "count" => Role::count(),
-                "label" => 'Total Roles',
-                "icon" => "user-tag",
-                "card_classes" => "has-background-danger-light",
-                "link" => self::$link."/roles/"
-            ],
-            [
-                "count" => User::whereHas('roles', function ($query)
-                {
-                    $query->where('slug', 'administrator');
-                    $query->where('vh_user_roles.is_active', 1);
-                })->count(),
-                "label" => 'Total Admins',
-                "icon" => "users-cog",
-                "card_classes" => "has-background-warning-light",
-                "link" => self::$link."/users/?roles=administrator"
-            ],
-            [
-                "count" => Job::count(),
-                "label" => 'Total Jobs',
-                "icon" => "briefcase",
-                "card_classes" => "has-background-danger-light",
-                "link" => self::$link."/advanced/jobs"
-            ],
-            [
-                "count" => FailedJob::count(),
-                "label" => 'Failed Jobs',
-                "icon" => "file-medical-alt",
-                "card_classes" => "has-background-primary-light",
-                "link" => self::$link."/advanced/jobs-failed"
-            ]
-        ];
-
-        if(vh_file_exist(str_replace("\\", "/", storage_path('logs').'\\laravel-'.\Carbon::now()->format('Y-m-d').'.log'))){
-            $data[] = [
-                "count" => 'Log',
-                "icon" => "clipboard-list",
-                "card_classes" => "has-background-warning-light",
-                "has_title" => false,
-                "link" => self::$link."/advanced/logs/details/laravel-".\Carbon::now()->format('Y-m-d').'.log'
-            ];
-        }*/
-
+        
         $response['status'] = 'success';
         $response['data'] = $data;
 

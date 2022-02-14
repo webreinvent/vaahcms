@@ -292,14 +292,27 @@
                                                 <div class="media">
                                                     <div class="media-content">
                                                         <h6 class="title is-6 has-margin-bottom-5">
-                                                            <a @click="goToLink(item.link+'details/'+log.name)">{{ log.name }}</a>
+                                                            {{ log.name }}
                                                         </h6>
+                                                    </div>
+                                                    <div class="media-right">
+                                                        <p >
+                                                            <a @click="goToLink(item.link+'details/'+log.name)">View</a>
+                                                        </p>
                                                     </div>
                                                 </div>
 
                                             </div>
 
-                                            <div class="card-footer">
+                                            <div v-if="item.list.length === 0">
+                                                <div class="card-content">
+                                                    <div class="notification is-small is-success is-light">
+                                                        {{ item.empty_response_note }}
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div v-if="item.list.length > item.list_limit" class="card-footer">
                                                 <div class="card-footer-item" >
                                                     <a @click="goToLink(item.link)">{{ item.link_text }}</a>
                                                 </div>
@@ -317,15 +330,24 @@
                                             </div>
                                             <footer class="card-footer">
                                                 <template v-for="f_item in item.footer">
-                                                    <a @click="goToLink(f_item.link)" class="card-footer-item">
+                                                    <a @click="goToLink(f_item.link)"
+                                                       class="card-footer-item">
                                                         <b-icon
                                                                 :icon="f_item.icon"
                                                                 size="is-small"
                                                                 :class="'has-text-'+f_item.type">
                                                         </b-icon>
-                                                       {{ f_item.name }}  {{ f_item.count }}
+                                                        &nbsp;{{ f_item.count }} {{ f_item.name }}
                                                     </a>
                                                 </template>
+
+                                                <!--<a href="#" class="card-footer-item">
+                                                    <b-icon
+                                                            icon="envelope"
+                                                            size="is-small">
+                                                    </b-icon>
+                                                    158 total
+                                                </a>-->
                                             </footer>
                                            <!-- <div class="card-content">
                                                 <div class="notification is-small is-info is-light">
