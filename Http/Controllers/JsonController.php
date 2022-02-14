@@ -28,9 +28,7 @@ class JsonController extends Controller
     //----------------------------------------------------------
     public function getPublicAssets(Request $request)
     {
-
-        $data['dashboard'] = vh_action('getDashboardItems');
-
+        
         $data['timezone'] = config('app.timezone');
 
         $v_version = config('vaahcms.version');

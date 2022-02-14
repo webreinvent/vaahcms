@@ -2,15 +2,15 @@
 <template>
 
     <!--sections-->
-    <div v-if="assets" class="block dashboard">
+    <div v-if="root && root.dashboard_item" class="block dashboard">
 
-        <section v-if="assets.dashboard && assets.dashboard.success" class="section is-paddingless">
+        <section v-if="root.dashboard_item.success" class="section is-paddingless">
             <div class="columns">
                 <div class="column is-8">
                     <div class="columns is-multiline">
                         <div class="column is-12">
                             <div class="card">
-                                <div v-if="assets.dashboard.success.vaahcms" class="card-content">
+                                <div v-if="root.dashboard_item.success.vaahcms" class="card-content">
                                     <h2 class="title is-5">
                                         Welcome to Vaah<span class="has-text-weight-bold"
                                     >cms</span
@@ -28,7 +28,7 @@
                                                       class="has-margin-bottom-5 has-padding-left-25
                                                              has-padding-right-25 has-padding-top-20
                                                              has-padding-bottom-20">
-                                                <span v-if="assets.dashboard.success.vaahcms.has_activated_theme">
+                                                <span v-if="root.dashboard_item.success.vaahcms.has_activated_theme">
                                                     Go to Theme
                                                 </span>
                                                 <span v-else>
@@ -41,11 +41,11 @@
                                             <h4 class="title is-6">Next Steps</h4>
                                             <ul class="menu-item">
 
-                                                <template v-for="module in assets.dashboard.success">
+                                                <template v-for="module in root.dashboard_item.success">
 
                                                     <template v-for="n_item in module.next_steps">
                                                         <li>
-                                                            <a @click="goToLink(n_item.link)">
+                                                            <a @click="goToLink(n_item.link,n_item.open_in_new_tab?n_item.open_in_new_tab:null)">
                                                                 <b-icon
                                                                         :icon="n_item.icon"
                                                                         size="is-small">
@@ -61,11 +61,11 @@
                                             <h4 class="title is-6">More Actions</h4>
                                             <ul class="menu-item">
 
-                                                <template v-for="module in assets.dashboard.success">
+                                                <template v-for="module in root.dashboard_item.success">
 
                                                     <template v-for="n_item in module.actions">
                                                         <li>
-                                                            <a @click="goToLink(n_item.link)">
+                                                            <a @click="goToLink(n_item.link,n_item.open_in_new_tab?n_item.open_in_new_tab:null)">
                                                                 <b-icon
                                                                         :icon="n_item.icon"
                                                                         size="is-small">
@@ -82,8 +82,8 @@
                             </div>
                         </div>
 
-                        <template v-if="assets.dashboard.success"
-                                  v-for="module in assets.dashboard.success">
+                        <template v-if="root.dashboard_item.success"
+                                  v-for="module in root.dashboard_item.success">
 
                             <template v-if="module.card">
 
@@ -191,25 +191,6 @@
                                                     </div>
                                                 </div>
                                             </template>
-
-                                           <!-- <div class="card  has-icons-left">
-                                                <div class="card-content">
-                                                    <div class="has-text-success">
-                                                        <div
-                                                                class="has-background-success-light rounded-circle"
-                                                        >
-
-                                                            <b-icon
-                                                                    icon="user"
-                                                                    size="is-small">
-                                                            </b-icon>
-                                                        </div>
-                                                        <p class="has-text-success">Active Users</p>
-                                                    </div>
-                                                    <h5 class="title has-margin-top-5 has-text-success">178</h5>
-                                                    <a href="">View Details</a>
-                                                </div>
-                                            </div>-->
                                         </div>
                                     </div>
                                 </div>
@@ -224,12 +205,13 @@
                 <div class="column is-4 sidebar-right">
                     <div class="card has-margin-left-10-desktop is-clipped">
                         <div class="block has-padding-15 is-bottom-marginless is-grouped  has-background-white-bis">
-                            <template v-if="assets.dashboard.success"
-                                      v-for="module in assets.dashboard.success">
+                            <template v-if="root.dashboard_item.success"
+                                      v-for="module in root.dashboard_item.success">
 
                                 <template v-if="module.expanded_header_links"
                                           v-for="(h_item,key) in module.expanded_header_links">
-                                    <a @click="goToLink(h_item.link)" class="has-padding-right-15">
+                                    <a @click="goToLink(h_item.link,h_item.open_in_new_tab?h_item.open_in_new_tab:null)"
+                                       class="has-padding-right-15">
                                         <b-icon
                                                 :icon="h_item.icon"
                                                 size="is-small">
@@ -240,8 +222,8 @@
                             </template>
                         </div>
 
-                        <template v-if="assets.dashboard.success"
-                                  v-for="module in assets.dashboard.success">
+                        <template v-if="root.dashboard_item.success"
+                                  v-for="module in root.dashboard_item.success">
 
                             <template v-if="module.expanded_item">
 
@@ -266,24 +248,6 @@
                                                 </a>
                                             </div>
                                         </template>
-                                    <!--    <div class="card-content">
-                                            <div class="media">
-                                                <div class="media-content">
-                                                    <span class="tag is-link is-small">New</span>
-                                                    <h6 class="is-inline title is-6">
-                                                        <a href="#">View [fronted.partials.alerts] not found.</a>
-                                                    </h6>
-
-                                                    <p>
-                                                        (Lorem ipsum dolor sit amet, consectetur adipisicing
-                                                        elit. Animi atque consequatur
-                                                    </p>
-                                                    <small class="has-text-grey-light has-margin-top-5 is-block">
-                                                        2021-12-24 01:15 / 5days ago
-                                                    </small>
-                                                </div>
-                                            </div>
-                                        </div>-->
 
                                         <template v-if="item.type === 'list'">
                                             <div v-if="l_index < item.list_limit"
@@ -291,8 +255,11 @@
                                                  class="card-content">
                                                 <div class="media">
                                                     <div class="media-content">
-                                                        <h6 class="title is-6 has-margin-bottom-5">
-                                                            {{ log.name }}
+                                                        <h6 class="title is-6 has-margin-bottom-5 has-text-weight-light	">
+                                                            <a @click="goToLink(item.link+'details/'+log.name)">
+                                                                {{ log.name }}
+                                                            </a>
+
                                                         </h6>
                                                     </div>
                                                     <div class="media-right">
@@ -321,7 +288,20 @@
                                         </template>
 
 
+
+
                                         <template v-if="item.type === 'content'">
+
+                                            <div v-if="!item.is_job_enabled" class="card-content">
+                                                <div class="notification is-small is-danger is-light">
+                                                    Enable <b>Laravel Queues</b> to run your jobs
+                                                    <a @click="goToLink(root.current_url+'#/vaah/settings/general')">
+                                                        View Setting
+                                                    </a>
+                                                </div>
+
+
+                                            </div>
 
                                             <div class="card-content">
                                                 <div class="content">
@@ -341,21 +321,7 @@
                                                     </a>
                                                 </template>
 
-                                                <!--<a href="#" class="card-footer-item">
-                                                    <b-icon
-                                                            icon="envelope"
-                                                            size="is-small">
-                                                    </b-icon>
-                                                    158 total
-                                                </a>-->
                                             </footer>
-                                           <!-- <div class="card-content">
-                                                <div class="notification is-small is-info is-light">
-                                                    Setup your SMTP details to send your emails <a>View Setting</a>
-                                                </div>
-
-
-                                            </div>-->
                                         </template>
 
 

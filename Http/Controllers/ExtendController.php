@@ -12,6 +12,7 @@ use WebReinvent\VaahCms\Entities\Job;
 use WebReinvent\VaahCms\Entities\Module;
 use WebReinvent\VaahCms\Entities\Permission;
 use WebReinvent\VaahCms\Entities\Role;
+use WebReinvent\VaahCms\Entities\Setting;
 use WebReinvent\VaahCms\Entities\Theme;
 use WebReinvent\VaahCms\Entities\User;
 use WebReinvent\VaahCms\Http\Controllers\Advanced\LogsController;
@@ -292,28 +293,28 @@ class ExtendController extends Controller
                 [
                     "count" => User::count(),
                     "label" => 'Total User',
-                    "icon" => "user",
+                    "icon" => "users",
                     "type" => "info",
                     "link" => self::$link."/users/"
                 ],
                 [
                     "count" => Role::count(),
                     "label" => 'Total Role',
-                    "icon" => "user",
-                    "type" => "danger",
+                    "icon" => "user-tag",
+                    "type" => "info",
                     "link" => self::$link."/roles/"
                 ],
                 [
                     "count" => Permission::count(),
                     "label" => 'Total Permission',
-                    "icon" => "user",
-                    "type" => "warning",
+                    "icon" => "key",
+                    "type" => "info",
                     "link" => self::$link."/permissions/"
                 ],
                 [
                     "count" => User::where('is_active',1)->count(),
                     "label" => 'Active Users',
-                    "icon" => "user",
+                    "icon" => "user-check",
                     "type" => "success",
                     "link" => self::$link."/users?status=active"
                 ]
@@ -335,6 +336,14 @@ class ExtendController extends Controller
             }
         }
 
+        $is_job_enabled = false;
+
+        $queue_Setting = Setting::where('key','laravel_queues')->first();
+
+        if($queue_Setting && $queue_Setting->value == 1){
+            $is_job_enabled = true;
+        }
+
 
         $data['expanded_item'] = [
             [
@@ -344,6 +353,7 @@ class ExtendController extends Controller
                 Queues allow you to defer the processing of a time consuming task, 
                 such as sending an e-mail, until a later time which drastically 
                 speeds up web requests to your application.',
+                'is_job_enabled' => $is_job_enabled,
                 'footer' => [
                     [
                         'name' => 'Pending',
@@ -382,6 +392,7 @@ class ExtendController extends Controller
             [
                 'name' => 'Getting Started',
                 'icon' => 'play-circle',
+                'open_in_new_tab' => true,
                 'link' => 'https://docs.vaah.dev/vaahcms/installation.html'
             ]
         ];

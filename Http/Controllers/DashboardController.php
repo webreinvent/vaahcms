@@ -36,6 +36,15 @@ class DashboardController extends Controller
 
     }
     //----------------------------------------------------------
+    public function getItem(Request $request)
+    {
+        $response['status'] = 'success';
+        $response['data']['item'] = vh_action('getDashboardItems');
+
+        return response()->json($response);
+
+    }
+    //----------------------------------------------------------
 
 
 }

@@ -27,8 +27,45 @@ export default {
     },
     mounted() {
 
+        document.title = "Dashboard";
+        //----------------------------------------------------
+        this.onLoad();
+
     },
     methods: {
+
+        //---------------------------------------------------------------------
+        update: function(name, value)
+        {
+            let update = {
+                state_name: name,
+                state_value: value,
+                namespace: 'root',
+            };
+            this.$vaah.updateState(update);
+        },
+        //---------------------------------------------------------------------
+        onLoad: function()
+        {
+            this.getItem();
+        },
+        //---------------------------------------------------------------------
+        getItem: function () {
+
+            let params = {};
+
+            let url = this.ajax_url+'/dashboard/getItem';
+            this.$vaah.ajaxGet(url, params, this.getItemAfter);
+
+        },
+        //---------------------------------------------------------------------
+        getItemAfter: function (data, res) {
+            if(data)
+            {
+                console.log('--->', data);
+                this.update('dashboard_item',data.item);
+            }
+        },
         //---------------------------------------------------------------------
         signIn: function () {
 
@@ -47,13 +84,18 @@ export default {
             }
         },
         //---------------------------------------------------------------------
-        goToLink: function (link) {
+        goToLink: function (link,target = false) {
 
             if(!link){
                 return false;
             }
 
-            window.location.href = link;
+            if(target){
+                window.open(link, '_blank');
+            }else{
+                window.location.href = link;
+            }
+
         },
         //---------------------------------------------------------------------
         //---------------------------------------------------------------------
