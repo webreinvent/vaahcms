@@ -6,7 +6,16 @@ namespace WebReinvent\VaahCms\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Auth;
+use WebReinvent\VaahCms\Entities\FailedJob;
+use WebReinvent\VaahCms\Entities\Job;
 use WebReinvent\VaahCms\Entities\Module;
+use WebReinvent\VaahCms\Entities\Permission;
+use WebReinvent\VaahCms\Entities\Role;
+use WebReinvent\VaahCms\Entities\Setting;
+use WebReinvent\VaahCms\Entities\Theme;
+use WebReinvent\VaahCms\Entities\User;
+use WebReinvent\VaahCms\Http\Controllers\Advanced\LogsController;
 use WebReinvent\VaahCms\Libraries\VaahStr;
 
 class ExtendController extends Controller
@@ -269,6 +278,149 @@ class ExtendController extends Controller
 
         $response['status'] = 'success';
         $response['data'] = vh_public_urls();
+
+        return $response;
+    }
+    //----------------------------------------------------------
+    public function getDashboardItems()
+    {
+
+        $data = array();
+
+        $data['card'] = [
+            "title" => "Users and Roles",
+            "list" => [
+                [
+                    "count" => User::count(),
+                    "label" => 'Total User',
+                    "icon" => "users",
+                    "type" => "info",
+                    "link" => self::$link."/users/"
+                ],
+                [
+                    "count" => Role::count(),
+                    "label" => 'Total Role',
+                    "icon" => "user-tag",
+                    "type" => "info",
+                    "link" => self::$link."/roles/"
+                ],
+                [
+                    "count" => Permission::count(),
+                    "label" => 'Total Permission',
+                    "icon" => "key",
+                    "type" => "info",
+                    "link" => self::$link."/permissions/"
+                ],
+                [
+                    "count" => User::where('is_active',1)->count(),
+                    "label" => 'Active Users',
+                    "icon" => "user-check",
+                    "type" => "success",
+                    "link" => self::$link."/users?status=active"
+                ]
+            ]
+
+        ];
+
+
+        $log_list = [];
+
+
+        if(Auth::check()){
+            $logs = new LogsController();
+
+            $log_list = $logs->getList(new Request());
+
+            if(isset($log_list->original) && $log_list->original['status'] == 'success'){
+                $log_list = $log_list->original['data']['list'];
+            }
+        }
+
+        $is_job_enabled = false;
+
+        $queue_Setting = Setting::where('key','laravel_queues')->first();
+
+        if($queue_Setting && $queue_Setting->value == 1){
+            $is_job_enabled = true;
+        }
+
+
+        $data['expanded_item'] = [
+            [
+                'title' => 'Jobs',
+                'type' => 'content',
+                'description' => 'Tasks that is kept in the queue to be performed one after another. 
+                Queues allow you to defer the processing of a time consuming task, 
+                such as sending an e-mail, until a later time which drastically 
+                speeds up web requests to your application.',
+                'is_job_enabled' => $is_job_enabled,
+                'footer' => [
+                    [
+                        'name' => 'Pending',
+                        'count' => Job::count(),
+                        'type' => 'info',
+                        'icon' => 'envelope',
+                        'link' => self::$link."/advanced/jobs/",
+                    ],
+                    [
+                        'name' => 'Failed',
+                        'count' => FailedJob::count(),
+                        'type' => 'danger',
+                        'icon' => 'ban',
+                        'link' => self::$link."/advanced/jobs-failed/",
+                    ]
+                ]
+            ],
+            [
+                'title' => 'Laravel Logs',
+                'type' => 'list',
+                'list' => $log_list,
+                'list_limit' => 5,
+                'link_text' => "View all recent logs",
+                'link' => self::$link."/advanced/logs/",
+                'empty_response_note' => "No Error Log Found",
+            ]
+        ];
+
+
+        $data['expanded_header_links'] = [
+            [
+                'name' => 'Check Updates',
+                'icon' => 'redo-alt',
+                'link' => self::$link."/settings/update"
+            ],
+            [
+                'name' => 'Getting Started',
+                'icon' => 'play-circle',
+                'open_in_new_tab' => true,
+                'link' => 'https://docs.vaah.dev/vaahcms/installation.html'
+            ]
+        ];
+
+
+        $data['has_activated_theme'] = Theme::where('is_active',1)->exists();
+
+
+
+        $data['next_steps'] = [
+            [
+                'name' => 'View your Site',
+                'icon' => 'tv',
+                'link' => url('/')
+            ]
+        ];
+
+
+        $data['actions'] = [
+            [
+                'name' => 'Manage your Module',
+                'icon' => 'cube',
+                'link' => self::$link."/modules"
+            ]
+        ];
+
+        $response['status'] = 'success';
+        $response['data'] = $data;
 
         return $response;
     }

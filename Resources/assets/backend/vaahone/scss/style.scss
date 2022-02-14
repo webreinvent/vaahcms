@@ -11,3 +11,116 @@ html, .section, .hero, footer{
     background-color: #bbb !important;
 }
 */
+
+.menu-item{
+    li{
+        margin-bottom: .75rem;
+        a{
+            display: flex;
+            align-items: center;
+        }
+        .icon{
+
+            &.is-small{
+                margin-right: .75rem;
+            }
+        }
+    }
+}
+.card{
+    &.has-icons-left{
+    .rounded-circle{
+        border-radius: 100%;
+        width: 44px;
+        height: 44px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 10px;
+
+    }
+        p{
+            font-weight: 500;
+        }
+    }
+    &.has-border-right{
+        justify-content: space-evenly;
+
+        .hr{
+            border-right: thin solid $grey-lighter;
+            border-image: linear-gradient(to bottom,#fff 0,#fff 15%,$border-light 50%,#fff 85%,#fff 100%);
+            border-image-slice: 1;
+
+        }
+
+    }
+
+    &.has-notification{
+        .card-footer{
+            border-bottom: 1px solid $border-light;
+            a{
+                color: $grey-dark;
+                &:hover{
+                    color: $blue;
+                }
+                .icon{
+                    margin-right:.4rem;
+                }
+            }
+        }
+        .notification{
+            border-radius: 4px;
+        }
+    }
+    &.has-listing{
+        .card-content{
+            border-bottom: 1px solid $border-light;
+            &:last-child{
+                border-bottom: none;
+            }
+            .media-content {
+                .title {
+                    a {
+                        color: $grey-dark;
+
+                        &:hover {
+                            color: $blue;
+                        }
+                    }
+
+                }
+
+
+            }
+
+
+        }
+    }
+}
+.sidebar-right{
+    .card-content{
+        padding: 1rem 1.5rem;
+    }
+}
+
+
+.block{
+    &.is-grouped{
+        a{
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            margin-right: .75rem;
+            padding-right: .7rem;
+            border-right: 1px solid $border-light;
+            &:last-child{
+                margin-right: 0;
+                margin-left: 0;
+                border-right: none;
+            }
+            .icon{
+                margin-right: .5rem;
+            }
+        }
+    }
+}

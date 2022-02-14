@@ -20,6 +20,7 @@ export default {
     state: {
         debug: debug,
         route: null,
+        dashboard_item: null,
         base_url: base_url,
         assets_path: assets_path,
         assets_image_path: assets_image_path,
