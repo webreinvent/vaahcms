@@ -322,23 +322,25 @@ class ExtendController extends Controller
         ];
 
 
-        $logs = new LogsController();
+        $log_list = [];
+
+
+        /*$logs = new LogsController();
 
         $log_list = $logs->getList(new Request());
 
         if(isset($log_list->original) && $log_list->original['status'] == 'success'){
             $log_list = $log_list->original['data']['list'];
-        }
+        }*/
 
 
         $data['expanded_item'] = [
             [
                 'title' => 'Jobs',
                 'type' => 'content',
-                'description' => 'Tasks that is kept in the queue to be performed one after another. 
-                Queues allow you to defer the processing of a time consuming task, 
-                such as sending an e-mail, until a later time which drastically 
-                speeds up web requests to your application.',
+                'description' => 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. 
+                Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s,
+                 when an unknown printer took a galley of type and scrambled it to make a type specimen book.',
                 'footer' => [
                     [
                         'name' => 'Pending',
@@ -360,7 +362,7 @@ class ExtendController extends Controller
                 'title' => 'Laravel Logs',
                 'type' => 'list',
                 'list' => $log_list,
-                'list_limit' => 4,
+                'list_limit' => 5,
                 'link_text' => "View all recent logs",
                 'link' => self::$link."/advanced/logs/",
             ]
