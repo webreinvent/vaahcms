@@ -12,6 +12,12 @@ html, .section, .hero, footer{
 }
 */
 
+.icon {
+    svg {
+        height: 1em !important;
+    }
+}
+
 .menu-item{
     li{
         margin-bottom: .75rem;
