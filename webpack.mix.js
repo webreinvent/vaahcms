@@ -4,7 +4,7 @@ const fs_extra = require('fs-extra');
 let Visualizer = require('webpack-visualizer-plugin');
 
 
-let theme_name = 'vaahtwo';
+let theme_name = 'vaahone';
 let publish_folder;
 let output_theme_folder;
 let source_theme_folder;
@@ -36,7 +36,7 @@ if (mix.inProduction()) {
     mix.sass(source_theme_folder+'/scss/style.scss', output_theme_folder+'css/');
 
 
-    mix.js(__dirname+"/VueUI/app.js",  output_theme_folder+'/builds/ui.js').vue();
+    //mix.js(__dirname+"/VueUI/app.js",  output_theme_folder+'/builds/ui.js').vue();
     mix.js(__dirname+"/Vue/app.js",  output_theme_folder+'/builds/app.js').vue();
     mix.js(__dirname+"/Vue/app-extended.js",  output_theme_folder+'/builds/app-extended.js').vue();
 

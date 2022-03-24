@@ -1,8 +1,4 @@
-@import "./customize/bulma/initial-variables";
-@import "./customize/bulma/derived-variables";
-@import "customize/override-variables";
-@import "./customize/buefy/_variables.scss";
-
+@import "./customize/variables";
 
 //-------For Dark Mode
 
@@ -102,6 +98,14 @@ html, .section, .hero, footer{
 
         }
     }
+
+    .card-header-buttons{
+        .field{
+            margin-top: 6px;
+            margin-right: 6px;
+        }
+    }
+
 }
 .sidebar-right{
     .card-content{
