@@ -1,0 +1,21 @@
+@import "../utilities/mixins";
+
+@import "../../customize/variables";
+
+
+.is-radiusless {
+  border-radius: 0 !important;
+}
+
+.is-shadowless {
+  box-shadow: none !important;
+}
+
+.is-clickable {
+  cursor: pointer !important;
+  pointer-events: all !important;
+}
+
+.is-unselectable {
+  @extend %unselectable;
+}

@@ -4,7 +4,7 @@ const fs_extra = require('fs-extra');
 let Visualizer = require('webpack-visualizer-plugin');
 
 
-
+let theme_name = 'vaahtwo';
 let publish_folder;
 let output_theme_folder;
 let source_theme_folder;
@@ -24,8 +24,10 @@ if (mix.inProduction()) {
     console.log('---------------------');
 
     publish_folder = './Resources/assets/backend/';
-    output_theme_folder = "./vaahone/";
-    source_theme_folder = "Resources/assets/backend/vaahone";
+
+    output_theme_folder = "./"+theme_name+"/";
+    source_theme_folder = "Resources/assets/backend/"+theme_name;
+
     source_vue_folder = __dirname+'/Vue';
 
     mix.setPublicPath(publish_folder);
@@ -42,16 +44,17 @@ if (mix.inProduction()) {
 } else {
 
     publish_folder = './../../public/vaahcms/backend/';
-    output_theme_folder = "./vaahone/";
-    source_theme_folder = "Resources/assets/backend/vaahone";
-    source_vue_folder = __dirname+'/Resources/views/backend/vaahone/vue';
+    output_theme_folder = "./"+theme_name+"/";
+    source_theme_folder = "Resources/assets/backend/"+theme_name;
+    source_vue_folder = __dirname+'/Resources/views/backend/'+theme_name+'/vue';
 
     mix.setPublicPath(publish_folder);
 
     mix.sass(source_theme_folder+'/scss/build.scss', output_theme_folder+'css/');
     mix.sass(source_theme_folder+'/scss/style.scss', output_theme_folder+'css/');
 
-    mix.js(__dirname+"/VueUI/app.js",  output_theme_folder+'/builds/ui.js').vue();
+    //mix.js(__dirname+"/VueUI/app.js",  output_theme_folder+'/builds/ui.js').vue();
+
     mix.js(__dirname+"/Vue/app.js",  output_theme_folder+'/builds/app.js').vue();
     //mix.js(__dirname+"/Vue/app.js",  output_theme_folder+'/builds/app.js').sourceMaps();
     mix.js(__dirname+"/Vue/app-extended.js",  output_theme_folder+'/builds/app-extended.js').vue();

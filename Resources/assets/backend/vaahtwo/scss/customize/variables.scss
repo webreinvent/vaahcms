@@ -1,0 +1,10 @@
+$primary: hsl(229, 77%, 61%) !default; // #4E6AE8
+
+$success: hsl(101, 67%, 54%) !default; // #6ED83C
+$info: 	hsl(202, 89%, 60%) !default; // #3DB1F4
+$warning: hsl(51, 97%, 62%) !default; // #FCE041
+$danger: hsl(15, 100%, 58%) !default; // #FF5E28
+
+@import "./bulma";
+@import "./buefy";
+

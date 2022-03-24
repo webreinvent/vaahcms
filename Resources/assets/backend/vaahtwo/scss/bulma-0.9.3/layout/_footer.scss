@@ -1,0 +1,13 @@
+@import "../utilities/derived-variables";
+
+@import "../../customize/variables";
+
+
+.footer {
+  background-color: $footer-background-color;
+  padding: $footer-padding;
+
+  @if $footer-color {
+    color: $footer-color;
+  }
+}
