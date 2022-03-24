@@ -22,6 +22,9 @@ Route::group(
         Route::any( '/clear/cache', 'WelcomeController@clearCache' )
             ->name( 'vh.frontend.clear.cache' );
         //------------------------------------------------
+        Route::any( '/faker', 'WelcomeController@getFaker' )
+            ->name( 'vh.faker' );
+        //------------------------------------------------
     });
 
 Route::group(
@@ -58,3 +61,5 @@ Route::group(
             ->name( 'vh.frontend.media.download' );
         //------------------------------------------------
     });
+
+
