@@ -1,0 +1,12 @@
+@import "../utilities/mixins";
+
+@import "../../customize/variables";
+
+
+.is-overlay {
+  @extend %overlay;
+}
+
+.is-relative {
+  position: relative !important;
+}

@@ -1,0 +1,111 @@
+@import "../utilities/mixins";
+
+@import "../../customize/variables";
+
+
+.modal {
+  @extend %overlay;
+
+  align-items: center;
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  overflow: hidden;
+  position: fixed;
+  z-index: $modal-z;
+
+  // Modifiers
+  &.is-active {
+    display: flex;
+  }
+}
+
+.modal-background {
+  @extend %overlay;
+
+  background-color: $modal-background-background-color;
+}
+
+.modal-content,
+.modal-card {
+  margin: 0 $modal-content-margin-mobile;
+  max-height: calc(100vh - #{$modal-content-spacing-mobile});
+  overflow: auto;
+  position: relative;
+  width: 100%;
+
+  // Responsiveness
+  @include from($modal-breakpoint) {
+    margin: 0 auto;
+    max-height: calc(100vh - #{$modal-content-spacing-tablet});
+    width: $modal-content-width;
+  }
+}
+
+.modal-close {
+  @extend %delete;
+
+  background: none;
+  height: $modal-close-dimensions;
+  position: fixed;
+
+  @include ltr-position($modal-close-right);
+
+  top: $modal-close-top;
+  width: $modal-close-dimensions;
+}
+
+.modal-card {
+  display: flex;
+  flex-direction: column;
+  max-height: calc(100vh - #{$modal-card-spacing});
+  overflow: hidden;
+  -ms-overflow-y: visible;
+}
+
+.modal-card-head,
+.modal-card-foot {
+  align-items: center;
+  background-color: $modal-card-head-background-color;
+  display: flex;
+  flex-shrink: 0;
+  justify-content: flex-start;
+  padding: $modal-card-head-padding;
+  position: relative;
+}
+
+.modal-card-head {
+  border-bottom: $modal-card-head-border-bottom;
+  border-top-left-radius: $modal-card-head-radius;
+  border-top-right-radius: $modal-card-head-radius;
+}
+
+.modal-card-title {
+  color: $modal-card-title-color;
+  flex-grow: 1;
+  flex-shrink: 0;
+  font-size: $modal-card-title-size;
+  line-height: $modal-card-title-line-height;
+}
+
+.modal-card-foot {
+  border-bottom-left-radius: $modal-card-foot-radius;
+  border-bottom-right-radius: $modal-card-foot-radius;
+  border-top: $modal-card-foot-border-top;
+
+  .button {
+    &:not(:last-child) {
+      @include ltr-property("margin", 0.5em);
+    }
+  }
+}
+
+.modal-card-body {
+  @include overflow-touch;
+
+  background-color: $modal-card-body-background-color;
+  flex-grow: 1;
+  flex-shrink: 1;
+  overflow: auto;
+  padding: $modal-card-body-padding;
+}

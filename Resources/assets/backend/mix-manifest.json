@@ -1,7 +1,6 @@
 {
-    "/vaahone/builds/ui.js": "/vaahone/builds/ui.js",
     "/vaahone/builds/app.js": "/vaahone/builds/app.js",
     "/vaahone/builds/app-extended.js": "/vaahone/builds/app-extended.js",
-    "/vaahone/css/build.css": "/vaahone/css/build.css",
-    "/vaahone/css/style.css": "/vaahone/css/style.css"
+    "/vaahone/css/style.css": "/vaahone/css/style.css",
+    "/vaahone/css/build.css": "/vaahone/css/build.css"
 }

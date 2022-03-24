@@ -1,0 +1,77 @@
+@import "../utilities/mixins";
+
+
+
+@import "../../customize/variables";
+
+
+.media {
+  align-items: flex-start;
+  display: flex;
+  text-align: inherit;
+
+  .content:not(:last-child) {
+    margin-bottom: $media-content-spacing;
+  }
+
+  .media {
+    border-top: $media-border-size solid $media-border-color;
+    display: flex;
+    padding-top: $media-level-1-spacing;
+
+    .content:not(:last-child),
+    .control:not(:last-child) {
+      margin-bottom: $media-level-1-content-spacing;
+    }
+
+    .media {
+      padding-top: $media-level-2-spacing;
+
+      & + .media {
+        margin-top: $media-level-2-spacing;
+      }
+    }
+  }
+
+  & + .media {
+    border-top: $media-border-size solid $media-border-color;
+    margin-top: $media-spacing;
+    padding-top: $media-spacing;
+  }
+
+  // Sizes
+  &.is-large {
+    & + .media {
+      margin-top: $media-spacing-large;
+      padding-top: $media-spacing-large;
+    }
+  }
+}
+
+.media-left,
+.media-right {
+  flex-basis: auto;
+  flex-grow: 0;
+  flex-shrink: 0;
+}
+
+.media-left {
+  @include ltr-property("margin", $media-spacing);
+}
+
+.media-right {
+  @include ltr-property("margin", $media-spacing, false);
+}
+
+.media-content {
+  flex-basis: auto;
+  flex-grow: 1;
+  flex-shrink: 1;
+  text-align: inherit;
+}
+
+@include mobile {
+  .media-content {
+    overflow-x: auto;
+  }
+}

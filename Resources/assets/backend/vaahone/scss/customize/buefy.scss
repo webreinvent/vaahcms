@@ -1,0 +1,238 @@
+//=======[ buefy-0.9.19 ]
+
+//-------[ _variables ]
+$speed-slow: 150ms !default;
+$speed-slower: 250ms !default;
+
+$primary: $primary !default;
+$primary-invert: findColorInvert($primary) !default;
+$primary-light: findLightColor($primary) !default;
+$primary-dark: findDarkColor($primary) !default;
+
+$info: $info !default;
+
+$link: $primary !default;
+$link-invert: $primary-invert !default;
+$link-visited: $grey !default;
+$link-focus-border: $primary !default;
+
+$label-weight: $weight-semibold !default;
+
+
+//-------[ _autocomplete ]
+$dropdown-content-max-height: 200px !default;
+
+//-------[ _carousel ]
+$carousel-min-height: 120px !default;
+
+$carousel-arrow-background: $scheme-main !default;
+$carousel-arrow-color: $primary !default;
+$carousel-arrow-icon-spaced: 1.5rem !default;
+$carousel-arrow-top: 50% !default;
+
+$carousel-indicator-background: rgba($scheme-invert, 0.50) !default;
+$carousel-indicator-border: $scheme-main !default;
+$carousel-indicator-color: $primary !default;
+$carousel-indicator-spaced: .5rem !default;
+
+$carousel-overlay-background: rgba($scheme-invert, 0.86) !default;
+$carousel-overlay-z: 40 !default;
+
+//-------[ _checkbox ]
+$checkbox-active-background-color: $primary !default;
+$checkbox-background-color: transparent !default;
+$checkbox-border-color: $grey !default;
+$checkbox-border-radius: $radius !default;
+$checkbox-border-width: 2px !default;
+$checkbox-checkmark-color: $primary-invert !default;
+$checkbox-size: 1.25em !default;
+$checkbox-colors: $form-colors !default;
+
+//-------[ _clockpicker ]
+$transition-swing: cubic-bezier(.25,.8,.50,1);
+
+$time-font-size: 60px;
+$period-font-size: 16px;
+$number-font-size: 18px;
+
+$indicator-size: 40px;
+$hand-endpoint-size: 12px;
+
+$padding-outer: 12px;
+$padding-inner: 5px;
+
+//-------[ _collapse ]
+
+//-------[ colorpicker ]
+$colorpicker-radius: $dropdown-content-radius !default;
+$colorpicker-hue-selected-stroke: $primary !default;
+
+//-------[ _datepicker ]
+$datepicker-background-color: $dropdown-content-background-color !default;
+$datepicker-radius: $dropdown-content-radius !default;
+$datepicker-shadow: $dropdown-content-shadow !default;
+$datepicker-header-color: $grey !default;
+$datepicker-today-border: solid 1px rgba($primary, 0.5) !default;
+$datepicker-item-color: $grey-dark !default;
+$datepicker-item-disabled-color: $grey-light !default;
+$datepicker-item-hover-color: $scheme-invert !default;
+$datepicker-item-hover-background-color: $background !default;
+$datepicker-item-selected-color: $primary-invert !default;
+$datepicker-item-selected-background-color: $primary !default;
+
+
+//-------[ _dropdown ]
+$dropdown-mobile-breakpoint: $desktop !default;
+$dropdown-background-color: rgba($scheme-invert, 0.86) !default;
+$dropdown-disabled-opacity: 0.5 !default;
+
+//-------[ _form ]
+$floating-in-height: 3.25em !default;
+
+
+//-------[ _icon ]
+$icon-svg-width: auto !default;
+$icon-svg-height: auto !default;
+
+
+//-------[ _image ]
+$image-placeholder-blur-enabled: true !default;
+$image-placeholder-blur: 10px !default;
+
+
+//-------[ _loading ]
+$loading-background-legacy: #7f7f7f !default;
+$loading-background: rgba(255,255,255,0.5) !default;
+$loading-icon-size: 3em !default;
+$loading-full-page-icon-size: 5em !default;
+
+
+//-------[ _menu ]
+//-------[ _message ]
+//-------[ _modal ]
+//-------[ _navbar ]
+
+//-------[ _notices ]
+$notices-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.12), 0 0 6px rgba(0, 0, 0, 0.04) !default;
+
+$toast-border-radius: 2em !default;
+$toast-opacity: 0.92 !default;
+$toast-box-shadow: $notices-box-shadow !default;
+
+$snackbar-background-color: $dark !default;
+$snackbar-color: $dark-invert !default;
+$snackbar-border-radius: $radius !default;
+$snackbar-button-text-transform: uppercase !default;
+$snackbar-box-shadow: $notices-box-shadow !default;
+
+
+//-------[ _notification ]
+//-------[ _numberinput ]
+//-------[ _pagination ]
+//-------[ _progress ]
+
+//-------[ _radio ]
+$radio-active-background-color: $primary !default;
+$radio-size: 1.25em !default;
+$radio-colors: $form-colors !default;
+
+
+//-------[ _rate ]
+$rate-color: $grey-lighter !default;
+$rate-color-active: darken($warning, 5%) !default;
+$rate-spaced: 0.25rem !default;
+$rate-text-spaced: 0.35rem !default;
+
+
+//-------[ _select ]
+
+//-------[ _skeleton ]
+$skeleton-color: $grey-lighter !default;
+$skeleton-background: linear-gradient(90deg, $skeleton-color 25%, rgba($skeleton-color, 0.5) 50%, $skeleton-color 75%) !default;
+$skeleton-border-radius: $radius !default;
+$skeleton-duration: 1.5s !default;
+$skeleton-margin-top: .5rem !default;
+
+//-------[ _sidebar ]
+$sidebar-background: $modal-background-background-color !default;
+$sidebar-box-shadow: 5px 0px 13px 3px rgba($black, 0.1) !default;
+$sidebar-width: 260px !default;
+$sidebar-mobile-width: 55px !default;
+$sidebar-mobile-breakpoint: $tablet !default;
+$sidebar-colors: $navbar-colors !default;
+
+
+//-------[ _slider ]
+$slider-radius: $radius !default;
+$slider-track-background: $grey-lighter !default;
+$slider-track-radius: $radius !default;
+$slider-track-border: 0px solid $grey !default;
+$slider-track-shadow: 0px 0px 0px $grey !default;
+$slider-thumb-background: $scheme-main !default;
+$slider-thumb-radius: $radius !default;
+$slider-thumb-border: 1px solid $grey-light !default;
+$slider-thumb-shadow: none !default;
+$slider-thumb-to-track-ratio: 2 !default;
+$slider-tick-to-track-ratio: 0.5 !default;
+$slider-tick-width: 3px !default;
+$slider-tick-radius: $radius !default;
+$slider-tick-background: $grey-light !default;
+$slider-mark-size: 0.75rem !default;
+$slider-colors: $colors !default;
+
+//-------[ _steps ]
+$steps-items-focused-outline: none !default;
+$steps-details-background-color: $body-background-color !default;
+$steps-maker-default-color: $grey-light !default;
+$steps-marker-default-border: .2em solid #fff !default;
+$steps-default-color: $grey-lighter !default;
+$steps-previous-color: $primary !default;
+$steps-active-color: $primary !default;
+$steps-divider-height: .2em !default;
+$steps-vertical-padding: 1em 0 !default;
+$steps-mobile-max-width: $tablet !default;
+$steps-colors: $colors !default;
+
+//-------[ _switch ]
+$switch-width-number: 2.75 !default;
+$switch-width: $switch-width-number * 1em !default;
+$switch-padding: 0.2em !default;
+$switch-active-background-color: $primary !default;
+$switch-colors: $form-colors !default;
+
+//-------[ _table ]
+$table-sticky-header-height: 300px !default;
+
+//-------[ _tabs ]
+$tabs-focused-outline: none !default;
+$tabs-items-focused-outline: none !default;
+$tabs-link-focus-active-border-bottom-color: $tabs-link-active-border-bottom-color !default;
+$tabs-link-focus-border-bottom-color: $tabs-link-hover-border-bottom-color !default;
+$tabs-boxed-link-focus-active-background-color: $tabs-boxed-link-active-background-color !default;
+$tabs-boxed-link-focus-background-color: $tabs-boxed-link-hover-background-color !default;
+$tabs-boxed-link-focus-active-border-bottom-color: $tabs-boxed-link-active-border-bottom-color !default;
+$tabs-boxed-link-focus-border-bottom-color: $tabs-boxed-link-hover-border-bottom-color !default;
+$tabs-toggle-link-focus-active-background-color: $tabs-toggle-link-active-background-color !default;
+$tabs-toggle-link-focus-background-color: $tabs-toggle-link-hover-background-color !default;
+$tabs-toggle-link-focus-active-border-color: $tabs-toggle-link-active-border-color !default;
+$tabs-toggle-link-focus-border-color: $tabs-toggle-link-hover-border-color !default;
+
+
+//-------[ _tag ]
+
+//-------[ _taginput ]
+$taginput-height: calc(2em - 1px) !default;
+
+//-------[ _timepicker ]
+
+//-------[ _tooltip ]
+$tooltip-arrow-size: 5px !default;
+$tooltip-arrow-margin: 2px !default;
+$tooltip-multiline-sizes: (
+        small: 180px,
+        medium: 240px,
+        large: 300px
+) !default;
+$tooltip-colors: $colors !default;
+
+//-------[ _upload ]

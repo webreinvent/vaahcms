@@ -22,6 +22,15 @@ import FilePondPluginImageCrop from 'filepond-plugin-image-crop';
 import FilePondPluginFileRename from 'filepond-plugin-file-rename';
 import FilePondPluginFileValidateSize from 'filepond-plugin-file-validate-size';
 
+// Import FilePond styles
+import "filepond/dist/filepond.min.css";
+
+// Import FilePond plugins
+// Please note that you need to install these plugins separately
+
+// Import image preview plugin styles
+import "filepond-plugin-image-preview/dist/filepond-plugin-image-preview.min.css";
+
 import VaahVuePagination from 'vaah-vue-pagination'
 import VaahVueClickToCopy from 'vaah-vue-clicktocopy'
 //---------/Package imports
