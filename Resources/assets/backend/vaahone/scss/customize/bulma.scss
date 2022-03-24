@@ -1,0 +1,858 @@
+//-------[ _initial-variables ]
+// Colors
+
+// Semantic Colors
+$yellow: $yellow;
+$green: $green;
+$cyan: $cyan;
+$blue: $blue;
+$red: $red;
+
+$black: hsl(0, 0%, 4%) !default;
+$black-bis: hsl(0, 0%, 7%) !default;
+$black-ter: hsl(0, 0%, 14%) !default;
+
+$grey-darker: hsl(0, 0%, 21%) !default;
+$grey-dark: hsl(0, 0%, 29%) !default;
+$grey: hsl(0, 0%, 48%) !default;
+$grey-light: hsl(0, 0%, 71%) !default;
+$grey-lighter: hsl(0, 0%, 86%) !default;
+$grey-lightest: hsl(0, 0%, 93%) !default;
+
+$white-ter: hsl(0, 0%, 96%) !default;
+$white-bis: hsl(0, 0%, 98%) !default;
+$white: hsl(0, 0%, 100%) !default;
+
+$orange: hsl(14, 100%, 53%) !default;
+
+$turquoise: hsl(171, 100%, 41%) !default;
+
+
+$purple: hsl(271, 100%, 71%) !default;
+
+
+// Typography
+$family-monospace: monospace !default;
+$render-mode: optimizeLegibility !default;
+
+
+
+$weight-light: 300 !default;
+$weight-normal: 400 !default;
+$weight-medium: 500 !default;
+$weight-semibold: 600 !default;
+$weight-bold: 700 !default;
+
+// Spacing
+
+$block-spacing: 1.5rem !default;
+
+// Responsiveness
+
+// The container horizontal gap, which acts as the offset for breakpoints
+$gap: 32px !default;
+
+// 960, 1152, and 1344 have been chosen because they are divisible by both 12 and 16
+$tablet: 769px !default;
+
+// 960px container + 4rem
+$desktop: 960px + 2 * $gap !default;
+
+// 1152px container + 4rem
+$widescreen: 1152px + 2 * $gap !default;
+$widescreen-enabled: true !default;
+
+// 1344px container + 4rem
+$fullhd: 1344px + 2 * $gap !default;
+$fullhd-enabled: true !default;
+
+// Miscellaneous
+
+$easing: ease-out !default;
+$radius-small: 2px !default;
+$radius: 4px !default;
+$radius-large: 6px !default;
+$radius-rounded: 9999px !default;
+$speed: 86ms !default;
+
+// Flags
+
+$variable-columns: true !default;
+$rtl: false !default;
+
+//-------[ derived-variables ]
+
+$primary: $blue !default;
+
+$success: $green !default;
+$info: $cyan !default;
+$warning: $yellow !default;
+$danger: $red !default;
+
+$light: $white-ter !default;
+$dark: $grey-darker !default;
+
+// Invert colors
+
+$orange-invert: findColorInvert($orange) !default;
+$yellow-invert: findColorInvert($yellow) !default;
+$green-invert: findColorInvert($green) !default;
+$turquoise-invert: findColorInvert($turquoise) !default;
+$cyan-invert: findColorInvert($cyan) !default;
+$blue-invert: findColorInvert($blue) !default;
+$purple-invert: findColorInvert($purple) !default;
+$red-invert: findColorInvert($red) !default;
+
+$primary-invert: findColorInvert($primary) !default;
+$primary-light: findLightColor($primary) !default;
+$primary-dark: findDarkColor($primary) !default;
+$info-invert: findColorInvert($info) !default;
+$info-light: findLightColor($info) !default;
+$info-dark: findDarkColor($info) !default;
+$success-invert: findColorInvert($success) !default;
+$success-light: findLightColor($success) !default;
+$success-dark: findDarkColor($success) !default;
+$warning-invert: findColorInvert($warning) !default;
+$warning-light: findLightColor($warning) !default;
+$warning-dark: findDarkColor($warning) !default;
+$danger-invert: findColorInvert($danger) !default;
+$danger-light: findLightColor($danger) !default;
+$danger-dark: findDarkColor($danger) !default;
+$light-invert: findColorInvert($light) !default;
+$dark-invert: findColorInvert($dark) !default;
+
+// General colors
+
+$scheme-main: $white !default;
+$scheme-main-bis: $white-bis !default;
+$scheme-main-ter: $white-ter !default;
+$scheme-invert: $black !default;
+$scheme-invert-bis: $black-bis !default;
+$scheme-invert-ter: $black-ter !default;
+
+$background: $white-ter !default;
+
+$border: $grey-lighter !default;
+$border-hover: $grey-light !default;
+$border-light: $grey-lightest !default;
+$border-light-hover: $grey-light !default;
+
+// Text colors
+
+$text: $grey-dark !default;
+$text-invert: findColorInvert($text) !default;
+$text-light: $grey !default;
+$text-strong: $grey-darker !default;
+
+// Code colors
+
+$code: darken($red, 15%) !default;
+$code-background: $background !default;
+
+$pre: $text !default;
+$pre-background: $background !default;
+
+// Link colors
+
+$link: $blue !default;
+$link-invert: findColorInvert($link) !default;
+$link-light: findLightColor($link) !default;
+$link-dark: findDarkColor($link) !default;
+$link-visited: $purple !default;
+
+$link-hover: $grey-darker !default;
+$link-hover-border: $grey-light !default;
+
+$link-focus: $grey-darker !default;
+$link-focus-border: $blue !default;
+
+$link-active: $grey-darker !default;
+$link-active-border: $grey-dark !default;
+
+// Typography
+
+$family-primary: $family-sans-serif !default;
+$family-secondary: $family-sans-serif !default;
+$family-code: $family-monospace !default;
+
+$size-small: $size-7 !default;
+$size-normal: $size-6 !default;
+$size-medium: $size-5 !default;
+$size-large: $size-4 !default;
+
+// Effects
+
+$shadow: 0 0.5em 1em -0.125em rgba($scheme-invert, 0.1), 0 0px 0 1px rgba($scheme-invert, 0.02) !default;
+
+// Lists and maps
+$custom-colors: null !default;
+$custom-shades: null !default;
+
+$colors: mergeColorMaps(("white": ($white, $black), "black": ($black, $white), "light": ($light, $light-invert), "dark": ($dark, $dark-invert), "primary": ($primary, $primary-invert, $primary-light, $primary-dark), "link": ($link, $link-invert, $link-light, $link-dark), "info": ($info, $info-invert, $info-light, $info-dark), "success": ($success, $success-invert, $success-light, $success-dark), "warning": ($warning, $warning-invert, $warning-light, $warning-dark), "danger": ($danger, $danger-invert, $danger-light, $danger-dark)), $custom-colors) !default;
+
+$shades: mergeColorMaps(("black-bis": $black-bis, "black-ter": $black-ter, "grey-darker": $grey-darker, "grey-dark": $grey-dark, "grey": $grey, "grey-light": $grey-light, "grey-lighter": $grey-lighter, "white-ter": $white-ter, "white-bis": $white-bis), $custom-shades) !default;
+
+$sizes: $size-1 $size-2 $size-3 $size-4 $size-5 $size-6 $size-7 !default;
+
+
+//-------[ buefy-0.9.8/utils/_variables ]
+$speed-slow: 150ms !default;
+$speed-slower: 250ms !default;
+
+$primary: #7957d5 !default;
+$primary-invert: findColorInvert(#7957d5) !default;
+$primary-light: findLightColor(#7957d5) !default;
+$primary-dark: findDarkColor(#7957d5) !default;
+
+$info: #167df0 !default;
+
+$link: $primary !default;
+$link-invert: $primary-invert !default;
+$link-visited: $grey !default;
+$link-focus-border: $primary !default;
+
+$label-weight: $weight-semibold !default;
+
+
+
+
+//-------[ controls ]
+
+$control-radius: $radius !default;
+$control-radius-small: $radius-small !default;
+
+$control-border-width: 1px !default;
+
+$control-height: 2.3em !default;
+$control-line-height: 1.5 !default;
+
+$control-padding-vertical: calc(0.5em - #{$control-border-width}) !default;
+$control-padding-horizontal: calc(0.75em - #{$control-border-width}) !default;
+
+
+//-------[ generic ]
+
+
+$body-background-color: $scheme-main !default;
+$body-size: $size-6 !default;
+$body-min-width: 300px !default;
+$body-rendering: optimizeLegibility !default;
+$body-family: $family-primary !default;
+$body-overflow-x: hidden !default;
+$body-overflow-y: scroll !default;
+
+$body-color: $text !default;
+$body-font-size: 1em !default;
+$body-weight: $weight-normal !default;
+$body-line-height: 1.5 !default;
+
+$code-family: $family-code !default;
+$code-padding: 0.25em 0.5em 0.25em !default;
+$code-weight: normal !default;
+$code-size: 0.875em !default;
+
+$small-font-size: 0.875em !default;
+
+$hr-background-color: $background !default;
+$hr-height: 2px !default;
+$hr-margin: 1.5rem 0 !default;
+
+$strong-color: $text-strong !default;
+$strong-weight: $weight-bold !default;
+
+$pre-font-size: 0.875em !default;
+$pre-padding: 1.25rem 1.5rem !default;
+$pre-code-font-size: 1em !default;
+
+
+
+//-------[ box ]
+
+$box-color: $text !default;
+$box-background-color: $scheme-main !default;
+$box-radius: $radius-large !default;
+$box-shadow: $shadow !default;
+$box-padding: 1.25rem !default;
+
+$box-link-hover-shadow: 0 0.5em 1em -0.125em rgba($scheme-invert, 0.1), 0 0 0 1px $link !default;
+$box-link-active-shadow: inset 0 1px 2px rgba($scheme-invert, 0.2), 0 0 0 1px $link !default;
+
+
+//-------[ button ]
+
+$button-color: $text-strong !default;
+$button-background-color: $scheme-main !default;
+$button-family: false !default;
+
+$button-border-color: $border !default;
+$button-border-width: $control-border-width !default;
+
+$button-padding-vertical: calc(0.5em - #{$button-border-width}) !default;
+$button-padding-horizontal: 1em !default;
+
+$button-hover-color: $link-hover !default;
+$button-hover-border-color: $link-hover-border !default;
+
+$button-focus-color: $link-focus !default;
+$button-focus-border-color: $link-focus-border !default;
+$button-focus-box-shadow-size: 0 0 0 0.125em !default;
+$button-focus-box-shadow-color: bulmaRgba($link, 0.25) !default;
+
+$button-active-color: $link-active !default;
+$button-active-border-color: $link-active-border !default;
+
+$button-text-color: $text !default;
+$button-text-decoration: underline !default;
+$button-text-hover-background-color: $background !default;
+$button-text-hover-color: $text-strong !default;
+
+$button-ghost-background: none !default;
+$button-ghost-border-color: transparent !default;
+$button-ghost-color: $link !default;
+$button-ghost-decoration: none !default;
+$button-ghost-hover-color: $link !default;
+$button-ghost-hover-decoration: underline !default;
+
+$button-disabled-background-color: $scheme-main !default;
+$button-disabled-border-color: $border !default;
+$button-disabled-shadow: none !default;
+$button-disabled-opacity: 0.5 !default;
+
+$button-static-color: $text-light !default;
+$button-static-background-color: $scheme-main-ter !default;
+$button-static-border-color: $border !default;
+
+$button-colors: $colors !default;
+
+
+//-------[ container ]
+
+$container-offset: 2 * $gap !default;
+$container-max-width: $fullhd !default;
+
+//-------[ content ]
+
+$content-heading-color: $text-strong !default;
+$content-heading-weight: $weight-semibold !default;
+$content-heading-line-height: 1.125 !default;
+
+$content-blockquote-background-color: $background !default;
+$content-blockquote-border-left: 5px solid $border !default;
+$content-blockquote-padding: 1.25em 1.5em !default;
+
+$content-pre-padding: 1.25em 1.5em !default;
+
+$content-table-cell-border: 1px solid $border !default;
+$content-table-cell-border-width: 0 0 1px !default;
+$content-table-cell-padding: 0.5em 0.75em !default;
+$content-table-cell-heading-color: $text-strong !default;
+$content-table-head-cell-border-width: 0 0 2px !default;
+$content-table-head-cell-color: $text-strong !default;
+$content-table-foot-cell-border-width: 2px 0 0 !default;
+$content-table-foot-cell-color: $text-strong !default;
+
+
+
+//-------[ icon ]
+
+$icon-dimensions: 1.5rem !default;
+$icon-dimensions-small: 1rem !default;
+$icon-dimensions-medium: 2rem !default;
+$icon-dimensions-large: 3rem !default;
+$icon-text-spacing: 0.25em !default;
+
+
+//-------[ image ]
+
+$dimensions: 16 24 32 48 64 96 128 !default;
+
+//-------[ notification ]
+
+$notification-background-color: $background !default;
+$notification-code-background-color: $scheme-main !default;
+$notification-radius: $radius !default;
+$notification-padding: 1.25rem 2.5rem 1.25rem 1.5rem !default;
+$notification-padding-ltr: 1.25rem 2.5rem 1.25rem 1.5rem !default;
+$notification-padding-rtl: 1.25rem 1.5rem 1.25rem 2.5rem !default;
+
+$notification-colors: $colors !default;
+
+
+
+//-------[ progress ]
+
+$progress-bar-background-color: $border-light !default;
+$progress-value-background-color: $text !default;
+$progress-border-radius: $radius-rounded !default;
+
+$progress-indeterminate-duration: 1.5s !default;
+
+$progress-colors: $colors !default;
+
+
+
+//-------[ table ]
+
+$table-color: $text-strong !default;
+$table-background-color: $scheme-main !default;
+
+$table-cell-border: 1px solid $border !default;
+$table-cell-border-width: 0 0 1px !default;
+$table-cell-padding: 0.5em 0.75em !default;
+$table-cell-heading-color: $text-strong !default;
+
+$table-head-cell-border-width: 0 0 2px !default;
+$table-head-cell-color: $text-strong !default;
+$table-foot-cell-border-width: 2px 0 0 !default;
+$table-foot-cell-color: $text-strong !default;
+
+$table-head-background-color: transparent !default;
+$table-body-background-color: transparent !default;
+$table-foot-background-color: transparent !default;
+
+$table-row-hover-background-color: $scheme-main-bis !default;
+
+$table-row-active-background-color: $primary !default;
+$table-row-active-color: $primary-invert !default;
+
+$table-striped-row-even-background-color: $scheme-main-bis !default;
+$table-striped-row-even-hover-background-color: $scheme-main-ter !default;
+
+$table-colors: $colors !default;
+
+
+
+//-------[ tag ]
+
+$tag-background-color: $background !default;
+$tag-color: $text !default;
+$tag-radius: $radius !default;
+$tag-delete-margin: 1px !default;
+
+$tag-colors: $colors !default;
+
+//-------[ title ]
+
+$title-color: $text-strong !default;
+$title-family: false !default;
+$title-size: $size-3 !default;
+$title-weight: $weight-semibold !default;
+$title-line-height: 1.125 !default;
+$title-strong-color: inherit !default;
+$title-strong-weight: inherit !default;
+$title-sub-size: 0.75em !default;
+$title-sup-size: 0.75em !default;
+
+$subtitle-color: $text !default;
+$subtitle-family: false !default;
+$subtitle-size: $size-5 !default;
+$subtitle-weight: $weight-normal !default;
+$subtitle-line-height: 1.25 !default;
+$subtitle-strong-color: $text-strong !default;
+$subtitle-strong-weight: $weight-semibold !default;
+$subtitle-negative-margin: -1.25rem !default;
+
+//-------[ shared ]
+$form-colors: $colors !default;
+
+$input-color: $text-strong !default;
+$input-background-color: $scheme-main !default;
+$input-border-color: $border !default;
+$input-height: $control-height !default;
+$input-shadow: inset 0 0.0625em 0.125em rgba($scheme-invert, 0.05) !default;
+$input-placeholder-color: bulmaRgba($input-color, 0.3) !default;
+
+$input-hover-color: $text-strong !default;
+$input-hover-border-color: $border-hover !default;
+
+$input-focus-color: $text-strong !default;
+$input-focus-border-color: $link !default;
+$input-focus-box-shadow-size: 0 0 0 0.125em !default;
+$input-focus-box-shadow-color: bulmaRgba($link, 0.25) !default;
+
+$input-disabled-color: $text-light !default;
+$input-disabled-background-color: $background !default;
+$input-disabled-border-color: $background !default;
+$input-disabled-placeholder-color: bulmaRgba($input-disabled-color, 0.3) !default;
+
+$input-arrow: $link !default;
+
+$input-icon-color: $border !default;
+$input-icon-active-color: $text !default;
+
+$input-radius: $radius !default;
+
+//-------[ input-textarea ]
+$textarea-padding: $control-padding-horizontal !default;
+$textarea-max-height: 40em !default;
+$textarea-min-height: 8em !default;
+
+$textarea-colors: $form-colors !default;
+
+//-------[ select ]
+$select-colors: $form-colors !default;
+
+
+//-------[ file ]
+$file-border-color: $border !default;
+$file-radius: $radius !default;
+
+$file-cta-background-color: $scheme-main-ter !default;
+$file-cta-color: $text !default;
+$file-cta-hover-color: $text-strong !default;
+$file-cta-active-color: $text-strong !default;
+
+$file-name-border-color: $border !default;
+$file-name-border-style: solid !default;
+$file-name-border-width: 1px 1px 1px 0 !default;
+$file-name-max-width: 16em !default;
+
+$file-colors: $form-colors !default;
+
+
+//-------[ tools ]
+$label-color: $text-strong !default;
+$label-weight: $weight-bold !default;
+
+$help-size: $size-small !default;
+
+$label-colors: $form-colors !default;
+
+//-------[ breadcrumb ]
+$breadcrumb-item-color: $link !default;
+$breadcrumb-item-hover-color: $link-hover !default;
+$breadcrumb-item-active-color: $text-strong !default;
+
+$breadcrumb-item-padding-vertical: 0 !default;
+$breadcrumb-item-padding-horizontal: 0.75em !default;
+
+$breadcrumb-item-separator-color: $border-hover !default;
+
+//-------[ card ]
+$card-color: $text !default;
+$card-background-color: $scheme-main !default;
+$card-shadow: $shadow !default;
+$card-radius: 0.25rem !default;
+
+$card-header-background-color: transparent !default;
+$card-header-color: $text-strong !default;
+$card-header-padding: 0.75rem 1rem !default;
+$card-header-shadow: 0 0.125em 0.25em rgba($scheme-invert, 0.1) !default;
+$card-header-weight: $weight-bold !default;
+
+$card-content-background-color: transparent !default;
+$card-content-padding: 1.5rem !default;
+
+$card-footer-background-color: transparent !default;
+$card-footer-border-top: 1px solid $border-light !default;
+$card-footer-padding: 0.75rem !default;
+
+$card-media-margin: $block-spacing !default;
+
+//-------[ dropdown ]
+
+$dropdown-menu-min-width: 12rem !default;
+
+$dropdown-content-background-color: $scheme-main !default;
+$dropdown-content-arrow: $link !default;
+$dropdown-content-offset: 4px !default;
+$dropdown-content-padding-bottom: 0.5rem !default;
+$dropdown-content-padding-top: 0.5rem !default;
+$dropdown-content-radius: $radius !default;
+$dropdown-content-shadow: $shadow !default;
+$dropdown-content-z: 20 !default;
+
+$dropdown-item-color: $text !default;
+$dropdown-item-hover-color: $scheme-invert !default;
+$dropdown-item-hover-background-color: $background !default;
+$dropdown-item-active-color: $link-invert !default;
+$dropdown-item-active-background-color: $link !default;
+
+$dropdown-divider-background-color: $border-light !default;
+
+
+//-------[ level ]
+$level-item-spacing: $block-spacing * 0.5 !default;
+
+//-------[ media ]
+$media-border-color: bulmaRgba($border, 0.5) !default;
+$media-border-size: 1px !default;
+$media-spacing: 1rem !default;
+$media-spacing-large: 1.5rem !default;
+$media-content-spacing: 0.75rem !default;
+$media-level-1-spacing: 0.75rem !default;
+$media-level-1-content-spacing: 0.5rem !default;
+$media-level-2-spacing: 0.5rem !default;
+
+//-------[ menu ]
+
+$menu-item-color: $text !default;
+$menu-item-radius: $radius-small !default;
+$menu-item-hover-color: $text-strong !default;
+$menu-item-hover-background-color: $background !default;
+$menu-item-active-color: $link-invert !default;
+$menu-item-active-background-color: $link !default;
+
+$menu-list-border-left: 1px solid $border !default;
+$menu-list-line-height: 1.25 !default;
+$menu-list-link-padding: 0.5em 0.75em !default;
+$menu-nested-list-margin: 0.75em !default;
+$menu-nested-list-padding-left: 0.75em !default;
+
+$menu-label-color: $text-light !default;
+$menu-label-font-size: 0.75em !default;
+$menu-label-letter-spacing: 0.1em !default;
+$menu-label-spacing: 1em !default;
+
+//-------[ message ]
+$message-background-color: $background !default;
+$message-radius: $radius !default;
+
+$message-header-background-color: $text !default;
+$message-header-color: $text-invert !default;
+$message-header-weight: $weight-bold !default;
+$message-header-padding: 0.75em 1em !default;
+$message-header-radius: $radius !default;
+
+$message-body-border-color: $border !default;
+$message-body-border-width: 0 0 0 4px !default;
+$message-body-color: $text !default;
+$message-body-padding: 1.25em 1.5em !default;
+$message-body-radius: $radius !default;
+
+$message-body-pre-background-color: $scheme-main !default;
+$message-body-pre-code-background-color: transparent !default;
+
+$message-header-body-border-width: 0 !default;
+$message-colors: $colors !default;
+
+//-------[ modal ]
+
+$modal-z: 40 !default;
+
+$modal-background-background-color: bulmaRgba($scheme-invert, 0.86) !default;
+
+$modal-content-width: 640px !default;
+$modal-content-margin-mobile: 20px !default;
+$modal-content-spacing-mobile: 160px !default;
+$modal-content-spacing-tablet: 40px !default;
+
+$modal-close-dimensions: 40px !default;
+$modal-close-right: 20px !default;
+$modal-close-top: 20px !default;
+
+$modal-card-spacing: 40px !default;
+
+$modal-card-head-background-color: $background !default;
+$modal-card-head-border-bottom: 1px solid $border !default;
+$modal-card-head-padding: 20px !default;
+$modal-card-head-radius: $radius-large !default;
+
+$modal-card-title-color: $text-strong !default;
+$modal-card-title-line-height: 1 !default;
+$modal-card-title-size: $size-4 !default;
+
+$modal-card-foot-radius: $radius-large !default;
+$modal-card-foot-border-top: 1px solid $border !default;
+
+$modal-card-body-background-color: $scheme-main !default;
+$modal-card-body-padding: 20px !default;
+
+$modal-breakpoint: $tablet !default;
+
+
+//-------[ navbar ]
+
+$navbar-background-color: $scheme-main !default;
+$navbar-box-shadow-size: 0 2px 0 0 !default;
+$navbar-box-shadow-color: $background !default;
+$navbar-height: 3.25rem !default;
+$navbar-padding-vertical: 1rem !default;
+$navbar-padding-horizontal: 2rem !default;
+$navbar-z: 30 !default;
+$navbar-fixed-z: 30 !default;
+
+$navbar-item-color: $text !default;
+$navbar-item-hover-color: $link !default;
+$navbar-item-hover-background-color: $scheme-main-bis !default;
+$navbar-item-active-color: $scheme-invert !default;
+$navbar-item-active-background-color: transparent !default;
+$navbar-item-img-max-height: 1.75rem !default;
+
+$navbar-burger-color: $navbar-item-color !default;
+
+$navbar-tab-hover-background-color: transparent !default;
+$navbar-tab-hover-border-bottom-color: $link !default;
+$navbar-tab-active-color: $link !default;
+$navbar-tab-active-background-color: transparent !default;
+$navbar-tab-active-border-bottom-color: $link !default;
+$navbar-tab-active-border-bottom-style: solid !default;
+$navbar-tab-active-border-bottom-width: 3px !default;
+
+$navbar-dropdown-background-color: $scheme-main !default;
+$navbar-dropdown-border-top: 2px solid $border !default;
+$navbar-dropdown-offset: -4px !default;
+$navbar-dropdown-arrow: $link !default;
+$navbar-dropdown-radius: $radius-large !default;
+$navbar-dropdown-z: 20 !default;
+
+$navbar-dropdown-boxed-radius: $radius-large !default;
+$navbar-dropdown-boxed-shadow: 0 8px 8px bulmaRgba($scheme-invert, 0.1), 0 0 0 1px bulmaRgba($scheme-invert, 0.1) !default;
+
+$navbar-dropdown-item-hover-color: $scheme-invert !default;
+$navbar-dropdown-item-hover-background-color: $background !default;
+$navbar-dropdown-item-active-color: $link !default;
+$navbar-dropdown-item-active-background-color: $background !default;
+
+$navbar-divider-background-color: $background !default;
+$navbar-divider-height: 2px !default;
+
+$navbar-bottom-box-shadow-size: 0 -2px 0 0 !default;
+
+$navbar-breakpoint: $desktop !default;
+
+$navbar-colors: $colors !default;
+
+//-------[ pagination ]
+
+
+$pagination-color: $text-strong !default;
+$pagination-border-color: $border !default;
+$pagination-margin: -0.25rem !default;
+$pagination-min-width: $control-height !default;
+
+$pagination-item-font-size: 1em !default;
+$pagination-item-margin: 0.25rem !default;
+$pagination-item-padding-left: 0.5em !default;
+$pagination-item-padding-right: 0.5em !default;
+
+$pagination-nav-padding-left: 0.75em !default;
+$pagination-nav-padding-right: 0.75em !default;
+
+$pagination-hover-color: $link-hover !default;
+$pagination-hover-border-color: $link-hover-border !default;
+
+$pagination-focus-color: $link-focus !default;
+$pagination-focus-border-color: $link-focus-border !default;
+
+$pagination-active-color: $link-active !default;
+$pagination-active-border-color: $link-active-border !default;
+
+$pagination-disabled-color: $text-light !default;
+$pagination-disabled-background-color: $border !default;
+$pagination-disabled-border-color: $border !default;
+
+$pagination-current-color: $link-invert !default;
+$pagination-current-background-color: $link !default;
+$pagination-current-border-color: $link !default;
+
+$pagination-ellipsis-color: $grey-light !default;
+
+$pagination-shadow-inset: inset 0 1px 2px rgba($scheme-invert, 0.2) !default;
+
+
+//-------[ panel ]
+
+$panel-margin: $block-spacing !default;
+$panel-item-border: 1px solid $border-light !default;
+$panel-radius: $radius-large !default;
+$panel-shadow: $shadow !default;
+
+$panel-heading-background-color: $border-light !default;
+$panel-heading-color: $text-strong !default;
+$panel-heading-line-height: 1.25 !default;
+$panel-heading-padding: 0.75em 1em !default;
+$panel-heading-radius: $radius !default;
+$panel-heading-size: 1.25em !default;
+$panel-heading-weight: $weight-bold !default;
+
+$panel-tabs-font-size: 0.875em !default;
+$panel-tab-border-bottom: 1px solid $border !default;
+$panel-tab-active-border-bottom-color: $link-active-border !default;
+$panel-tab-active-color: $link-active !default;
+
+$panel-list-item-color: $text !default;
+$panel-list-item-hover-color: $link !default;
+
+$panel-block-color: $text-strong !default;
+$panel-block-hover-background-color: $background !default;
+$panel-block-active-border-left-color: $link !default;
+$panel-block-active-color: $link-active !default;
+$panel-block-active-icon-color: $link !default;
+
+$panel-icon-color: $text-light !default;
+$panel-colors: $colors !default;
+
+
+//-------[ tabs ]
+
+$tabs-border-bottom-color: $border !default;
+$tabs-border-bottom-style: solid !default;
+$tabs-border-bottom-width: 1px !default;
+$tabs-link-color: $text !default;
+$tabs-link-hover-border-bottom-color: $text-strong !default;
+$tabs-link-hover-color: $text-strong !default;
+$tabs-link-active-border-bottom-color: $link !default;
+$tabs-link-active-color: $link !default;
+$tabs-link-padding: 0.5em 1em !default;
+
+$tabs-boxed-link-radius: $radius !default;
+$tabs-boxed-link-hover-background-color: $background !default;
+$tabs-boxed-link-hover-border-bottom-color: $border !default;
+
+$tabs-boxed-link-active-background-color: $scheme-main !default;
+$tabs-boxed-link-active-border-color: $border !default;
+$tabs-boxed-link-active-border-bottom-color: transparent !default;
+
+$tabs-toggle-link-border-color: $border !default;
+$tabs-toggle-link-border-style: solid !default;
+$tabs-toggle-link-border-width: 1px !default;
+$tabs-toggle-link-hover-background-color: $background !default;
+$tabs-toggle-link-hover-border-color: $border-hover !default;
+$tabs-toggle-link-radius: $radius !default;
+$tabs-toggle-link-active-background-color: $link !default;
+$tabs-toggle-link-active-border-color: $link !default;
+$tabs-toggle-link-active-color: $link-invert !default;
+
+
+
+//-------[ columns ]
+$column-gap: 0.75rem !default;
+
+
+//-------[ tiles ]
+$tile-spacing: 0.75rem !default;
+
+//-------[ spacing ]
+$spacing-shortcuts: ("margin": "m", "padding": "p") !default;
+$spacing-directions: ("top": "t", "right": "r", "bottom": "b", "left": "l") !default;
+$spacing-horizontal: "x" !default;
+$spacing-vertical: "y" !default;
+$spacing-values: ("0": 0, "1": 0.25rem, "2": 0.5rem, "3": 0.75rem, "4": 1rem, "5": 1.5rem, "6": 3rem, "auto": auto) !default;
+
+
+
+//-------[ hero ]
+
+$hero-body-padding: 3rem 1.5rem !default;
+$hero-body-padding-tablet: 3rem 3rem !default;
+$hero-body-padding-small: 1.5rem !default;
+$hero-body-padding-medium: 9rem 4.5rem !default;
+$hero-body-padding-large: 18rem 6rem !default;
+
+$hero-colors: $colors !default;
+
+
+//-------[ section ]
+
+$section-padding: 3rem 1.5rem !default;
+$section-padding-desktop: 3rem 3rem !default;
+$section-padding-medium: 9rem 4.5rem !default;
+$section-padding-large: 18rem 6rem !default;
+
+
+//-------[ footer ]
+
+$footer-background-color: $scheme-main-bis !default;
+$footer-color: false !default;
+$footer-padding: 3rem 1.5rem 6rem !default;

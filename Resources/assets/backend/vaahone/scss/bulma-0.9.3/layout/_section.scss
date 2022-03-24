@@ -1,0 +1,22 @@
+@import "../utilities/mixins";
+
+
+@import "../../customize/variables";
+
+.section {
+  padding: $section-padding;
+
+  // Responsiveness
+  @include desktop {
+    padding: $section-padding-desktop;
+
+    // Sizes
+    &.is-medium {
+      padding: $section-padding-medium;
+    }
+
+    &.is-large {
+      padding: $section-padding-large;
+    }
+  }
+}

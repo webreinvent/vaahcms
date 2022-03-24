@@ -1,0 +1,27 @@
+@import "../utilities/mixins";
+
+
+@import "../../customize/variables";
+
+
+.box {
+  @extend %block;
+
+  background-color: $box-background-color;
+  border-radius: $box-radius;
+  box-shadow: $box-shadow;
+  color: $box-color;
+  display: block;
+  padding: $box-padding;
+}
+
+a.box {
+  &:hover,
+  &:focus {
+    box-shadow: $box-link-hover-shadow;
+  }
+
+  &:active {
+    box-shadow: $box-link-active-shadow;
+  }
+}

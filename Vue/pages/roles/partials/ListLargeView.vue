@@ -90,7 +90,7 @@
 
                 </b-table-column>
 
-                <b-table-column v-slot="props" width="100"
+                <b-table-column v-slot="props" width="120"
                                 field="updated_at" label="Updated At">
                     {{ $vaah.fromNow(props.row.updated_at) }}
                 </b-table-column>
