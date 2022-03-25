@@ -23,7 +23,7 @@ export default {
             is_btn_loading: false,
             assets: null,
             interval: null,
-            selected_date: null,
+            selected_date: [],
             search_delay: null,
             search_delay_time: 800,
             reload_list_time: 60000, // reload in 60 seconds
@@ -157,7 +157,7 @@ export default {
         //---------------------------------------------------------------------
         resetSelectedDate: function()
         {
-            this.selected_date = null;
+            this.selected_date = [];
         },
         //---------------------------------------------------------------------
         resetQueryString: function()

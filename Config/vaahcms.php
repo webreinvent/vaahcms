@@ -24,6 +24,7 @@ $settings =  [
     'themes_url' => env('APP_URL').'/vaahcms/themes',
     'storage_url' => env('APP_URL').'/storage',
     'public_url' => env('APP_URL'),
+    'backend_logo_url' => env('APP_URL').'/vaahcms/backend/vaahone/images/vaahcms-logo.svg',
     'per_page' => 20,
     'minified' => 0,
     'api_route' => 'https://api.vaah.dev/cms/',
