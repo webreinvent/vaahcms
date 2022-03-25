@@ -10,7 +10,7 @@
                     <div class="brand">
                         <p class="brand-cover"
                            :class="{ 'show-logo' : !root.is_sidebar_reduced }">
-                            <img :src="root.assets.urls.image+'/vaahcms-logo.svg'">
+                            <img :src="root.assets.urls.backend_logo">
                         </p>
                     </div>
                     <div class="menu is-custom-mobile">
