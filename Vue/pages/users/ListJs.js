@@ -25,7 +25,7 @@ export default {
             is_btn_loading: false,
             selected_roles: [],
             assets: null,
-            selected_date: null,
+            selected_date: [],
             search_delay: null,
             search_delay_time: 800,
             ids: []
@@ -150,7 +150,7 @@ export default {
         //---------------------------------------------------------------------
         resetSelectedDate: function()
         {
-            this.selected_date = null;
+            this.selected_date = [];
         },
         //---------------------------------------------------------------------
         setDateFilter: function()

@@ -29,7 +29,7 @@ export default {
             is_content_loading: false,
             is_btn_loading: false,
             assets: null,
-            selected_date: null,
+            selected_date: [],
             search_delay: null,
             search_delay_time: 800,
             ids: [],
@@ -166,7 +166,7 @@ export default {
         //---------------------------------------------------------------------
         resetSelectedDate: function()
         {
-            this.selected_date = null;
+            this.selected_date = [];
         },
         //---------------------------------------------------------------------
         resetQueryString: function()

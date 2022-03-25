@@ -28,7 +28,7 @@ class JsonController extends Controller
     //----------------------------------------------------------
     public function getPublicAssets(Request $request)
     {
-        
+
         $data['timezone'] = config('app.timezone');
 
         $v_version = config('vaahcms.version');
@@ -121,6 +121,9 @@ class JsonController extends Controller
         $data['urls']['image'] = vh_get_backend_theme_image_url();
         $data['urls']['upload'] = route('vh.backend.media.upload');
         $data['urls']['dashboard'] = route('vh.backend')."#/vaah";
+
+
+        $data['backend_logo_url'] = config('vaahcms.backend_logo_url');
 
 
         $response['status'] = 'success';

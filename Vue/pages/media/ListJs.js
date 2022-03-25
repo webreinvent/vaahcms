@@ -25,7 +25,7 @@ export default {
             is_content_loading: false,
             is_btn_loading: false,
             today: null,
-            selected_date: null,
+            selected_date: [],
             selected_year: null,
             selected_month: null,
             assets: null,
@@ -133,7 +133,7 @@ export default {
         //---------------------------------------------------------------------
         resetSelectedDate: function()
         {
-            this.selected_date = null;
+            this.selected_date = [];
         },
         //---------------------------------------------------------------------
         resetSelectedMonthYear: function()
