@@ -16,6 +16,13 @@
 
     <meta name="current-url" id="current_url" content="{{ url()->current() }}">
     <meta name="debug" id="debug" content="{{config('vaahcms.debug')}}">
+    @if(env('APP_TIMEZONE'))
+    <meta name="timezone" id="app_timezone" content="{{env('APP_TIMEZONE')}}">
+    @endif
+
+    @if(env('SENTRY_DSN'))
+    <meta name="sentry-dns" id="sentry_dns" content="{{env('SENTRY_DSN')}}">
+    @endif
 
     <base href="{{\URL::to('/')}}">
 
