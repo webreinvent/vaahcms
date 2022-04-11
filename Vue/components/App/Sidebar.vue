@@ -3,15 +3,18 @@
         <section class="sidebar-layout" v-if="root && root.assets">
             <div class="b-sidebar">
                 <!---->
-                <div class="sidebar-content is-light is-fixed
-                    is-fullheight  is-mini-expand
-                    is-fullwidth-mobile"
-                     :class="{ 'is-mini' : root.is_sidebar_reduced }">
+                <div id="sidebar" class="sidebar-content is-light is-fixed
+                    is-fullheight "
+                     :class="{ 'is-mini is-mini-mobile' : root.is_sidebar_reduced}">
                     <div class="brand">
                         <p class="brand-cover"
                            :class="{ 'show-logo' : !root.is_sidebar_reduced }">
                             <img :src="root.assets.backend_logo_url">
                         </p>
+
+                        <a class="is-hidden-desktop" @click="toggleSidebar">
+                            <b-icon icon="bars"></b-icon>
+                        </a>
                     </div>
                     <div class="menu is-custom-mobile">
 
@@ -127,7 +130,7 @@ export default {
     data() {
         return {
             expandOnHover: true,
-            mobile: "fullwidth",
+            mobile: false,
             active_menus:[],
             reduce: true
         };
@@ -160,6 +163,24 @@ export default {
             }
 
         },
+        toggleSidebar: function()
+        {
+            if(this.root.is_sidebar_reduced)
+            {
+                if(window.screen.width > 1203){
+                    this.root.is_sidebar_reduced = false;
+                    this.root.has_padding_left = this.root.expanded_padding_left;
+                }
+                else {
+                    this.root.is_sidebar_reduced = false;
+                    this.root.has_padding_left = this.root.default_padding_left;
+                }
+            } else {
+                this.root.is_sidebar_reduced = true;
+                this.root.has_padding_left = this.root.default_padding_left;
+
+            }
+        }
     }
 
 };
@@ -174,6 +195,9 @@ export default {
         text-align: center;
         border-bottom: 1px solid #dddeee;
         margin-bottom: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
         .brand-cover{
             padding-left: 10px;
             padding-top: 7px;
