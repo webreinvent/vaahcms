@@ -2,7 +2,7 @@
 
     <div class="container-backend">
 
-        <Sidebar :root="root"/>
+        <Sidebar :root="root" @sidebar-action="sidebarAction" />
 
         <div v-bind:style="{ paddingLeft: root.has_padding_left }">
 
