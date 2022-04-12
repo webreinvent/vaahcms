@@ -123,10 +123,19 @@
 
                 if(this.root.is_sidebar_reduced)
                 {
-                    payload = {
-                        'is_sidebar_reduced': false,
-                        'has_padding_left': this.root.expanded_padding_left
+                    if(window.screen.width > 1203){
+                        payload = {
+                            'is_sidebar_reduced': false,
+                            'has_padding_left': this.root.expanded_padding_left
+                        }
                     }
+                    else {
+                        payload = {
+                            'is_sidebar_reduced': false,
+                            'has_padding_left': this.root.default_padding_left
+                        }
+                    }
+
 
                 } else {
 

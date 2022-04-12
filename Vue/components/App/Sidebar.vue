@@ -3,15 +3,18 @@
         <section class="sidebar-layout" v-if="root && root.assets">
             <div class="b-sidebar">
                 <!---->
-                <div class="sidebar-content is-light is-fixed
-                    is-fullheight  is-mini-expand
-                    is-fullwidth-mobile"
-                     :class="{ 'is-mini' : root.is_sidebar_reduced }">
+                <div id="sidebar" class="sidebar-content is-light is-fixed
+                    is-fullheight"
+                     :class="{ 'is-mini is-mini-mobile' : root.is_sidebar_reduced}">
                     <div class="brand">
                         <p class="brand-cover"
                            :class="{ 'show-logo' : !root.is_sidebar_reduced }">
                             <img :src="root.assets.backend_logo_url">
                         </p>
+
+                        <a class="is-hidden-desktop" @click="toggleSidebar">
+                            <b-icon icon="bars"></b-icon>
+                        </a>
                     </div>
                     <div class="menu is-custom-mobile">
 
@@ -127,7 +130,7 @@ export default {
     data() {
         return {
             expandOnHover: true,
-            mobile: "fullwidth",
+            mobile: false,
             active_menus:[],
             reduce: true
         };
@@ -160,12 +163,48 @@ export default {
             }
 
         },
+        toggleSidebar: function()
+        {
+            let payload;
+
+            if(this.root.is_sidebar_reduced)
+            {
+                if(window.screen.width > 1203){
+                    payload = {
+                        'is_sidebar_reduced': false,
+                        'has_padding_left': this.root.expanded_padding_left
+                    }
+                }
+                else {
+                    payload = {
+                        'is_sidebar_reduced': false,
+                        'has_padding_left': this.root.default_padding_left
+                    }
+                }
+
+
+            } else {
+
+                payload = {
+                    'is_sidebar_reduced': true,
+                    'has_padding_left': this.root.default_padding_left
+                }
+
+            }
+
+            console.log('--->payload', payload);
+
+
+            this.$emit('sidebar-action', payload)
+
+        }
     }
 
 };
 </script>
 
 <style lang="scss">
+
 
 .b-sidebar{
 
@@ -174,6 +213,9 @@ export default {
         text-align: center;
         border-bottom: 1px solid #dddeee;
         margin-bottom: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
         .brand-cover{
             padding-left: 10px;
             padding-top: 7px;
@@ -188,19 +230,6 @@ export default {
         }
 
     }
-
-    :hover{
-        .brand{
-            .brand-cover{
-                padding-left: 0px !important;
-                transition: 0.4s all ease;
-                img{
-                    clip-path: inset(0% 0% 0% 0%);
-                }
-            }
-        }
-    }
-
 
     .show-logo{
             padding-left: 0px !important;
@@ -267,9 +296,22 @@ export default {
     }
 }
 @media screen and (min-width: 1024px) {
+
     .b-sidebar {
         .sidebar-content {
             &.is-mini {
+                &:hover{
+                    width: 260px;
+                    .menu-list{
+                        li{
+                            a{
+                                span:nth-child(2) {
+                                    display: inline-block !important;
+                                }
+                            }
+                        }
+                    }
+                }
 
                 &:not(.is-mini-expand),
                 &.is-mini-expand:not(:hover) {
@@ -292,6 +334,17 @@ export default {
                     }
                     .menu-label:not(:last-child) {
                         margin-bottom: 0;
+                    }
+                }
+            }
+        }
+        :hover{
+            .brand{
+                .brand-cover{
+                    padding-left: 0px !important;
+                    transition: 0.4s all ease;
+                    img{
+                        clip-path: inset(0% 0% 0% 0%);
                     }
                 }
             }
