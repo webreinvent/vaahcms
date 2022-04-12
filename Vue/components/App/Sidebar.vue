@@ -4,7 +4,7 @@
             <div class="b-sidebar">
                 <!---->
                 <div id="sidebar" class="sidebar-content is-light is-fixed
-                    is-fullheight "
+                    is-fullheight"
                      :class="{ 'is-mini is-mini-mobile' : root.is_sidebar_reduced}">
                     <div class="brand">
                         <p class="brand-cover"
@@ -165,21 +165,38 @@ export default {
         },
         toggleSidebar: function()
         {
+            let payload;
+
             if(this.root.is_sidebar_reduced)
             {
                 if(window.screen.width > 1203){
-                    this.root.is_sidebar_reduced = false;
-                    this.root.has_padding_left = this.root.expanded_padding_left;
+                    payload = {
+                        'is_sidebar_reduced': false,
+                        'has_padding_left': this.root.expanded_padding_left
+                    }
                 }
                 else {
-                    this.root.is_sidebar_reduced = false;
-                    this.root.has_padding_left = this.root.default_padding_left;
+                    payload = {
+                        'is_sidebar_reduced': false,
+                        'has_padding_left': this.root.default_padding_left
+                    }
                 }
+
+
             } else {
-                this.root.is_sidebar_reduced = true;
-                this.root.has_padding_left = this.root.default_padding_left;
+
+                payload = {
+                    'is_sidebar_reduced': true,
+                    'has_padding_left': this.root.default_padding_left
+                }
 
             }
+
+            console.log('--->payload', payload);
+
+
+            this.$emit('sidebar-action', payload)
+
         }
     }
 
@@ -187,6 +204,7 @@ export default {
 </script>
 
 <style lang="scss">
+
 
 .b-sidebar{
 
@@ -212,19 +230,6 @@ export default {
         }
 
     }
-
-    :hover{
-        .brand{
-            .brand-cover{
-                padding-left: 0px !important;
-                transition: 0.4s all ease;
-                img{
-                    clip-path: inset(0% 0% 0% 0%);
-                }
-            }
-        }
-    }
-
 
     .show-logo{
             padding-left: 0px !important;
@@ -291,9 +296,22 @@ export default {
     }
 }
 @media screen and (min-width: 1024px) {
+
     .b-sidebar {
         .sidebar-content {
             &.is-mini {
+                &:hover{
+                    width: 260px;
+                    .menu-list{
+                        li{
+                            a{
+                                span:nth-child(2) {
+                                    display: inline-block !important;
+                                }
+                            }
+                        }
+                    }
+                }
 
                 &:not(.is-mini-expand),
                 &.is-mini-expand:not(:hover) {
@@ -316,6 +334,17 @@ export default {
                     }
                     .menu-label:not(:last-child) {
                         margin-bottom: 0;
+                    }
+                }
+            }
+        }
+        :hover{
+            .brand{
+                .brand-cover{
+                    padding-left: 0px !important;
+                    transition: 0.4s all ease;
+                    img{
+                        clip-path: inset(0% 0% 0% 0%);
                     }
                 }
             }
