@@ -82,7 +82,7 @@ const appExtended = new Vue({
             is_sidebar_reduced: true,
             has_padding_left: '55px',
             default_padding_left: '55px',
-            expanded_padding_left: '200px',
+            expanded_padding_left: '260px',
             assets_is_fetching: null,
             assets_reload: false,
             permissions: null,

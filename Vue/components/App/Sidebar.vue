@@ -138,6 +138,9 @@ export default {
     mounted() {
 
         console.log(window.location.href);
+
+        this.$root.$on('sidebar-action', this.sidebarAction)
+
     },
     methods: {
         getDataWdio: function (item,label) {
@@ -195,9 +198,23 @@ export default {
             console.log('--->payload', payload);
 
 
-            this.$emit('sidebar-action', payload)
+            this.$root.$emit('sidebar-action', payload)
+
+        },
+        //-------------------------------------------------------------
+        sidebarAction: function (payload)
+        {
+            console.log('--->sidebarAction', payload);
+
+            for (let key in payload)
+            {
+                this.root[key] = payload[key];
+            }
+
+            document.getElementById('container-main').style.paddingLeft = payload['has_padding_left'];
 
         }
+        //-------------------------------------------------------------
     }
 
 };
