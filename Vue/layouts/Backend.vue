@@ -2,11 +2,11 @@
 
     <div class="container-backend">
 
-        <Sidebar :root="root" @sidebar-action="sidebarAction" />
+        <Sidebar :root="root" />
 
-        <div v-bind:style="{ paddingLeft: root.has_padding_left }">
+        <div id="container-main" v-bind:style="{ paddingLeft: root.has_padding_left }">
 
-        <TopMenu :root="root" @sidebar-action="sidebarAction" />
+        <TopMenu :root="root"  />
 
         <!--sections-->
         <section class="section has-padding-top-25 has-padding-left-25">

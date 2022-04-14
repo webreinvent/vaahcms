@@ -49,14 +49,17 @@
 <div class="container-backend">
 
     <div id="appExtended">
+
         <sidebar :root="root"></sidebar>
         <div v-bind:style="{ paddingLeft: root.has_padding_left }">
             <top-menu :root="root" @sidebar-action="sidebarAction"></top-menu>
         </div>
+
     </div>
 
+
     <!--sections-->
-    <div style="padding-left: 55px;">
+    <div id="container-main" style="padding-left: 55px;">
 
         <section class="section has-padding-top-25 has-padding-left-25">
             @yield('content')

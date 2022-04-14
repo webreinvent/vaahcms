@@ -4,6 +4,8 @@
             <template slot="brand">
 
                 <b-navbar-item class="has-padding-left-20"
+                               id="topbar"
+                               v-bind:data-padding="root.has_padding_left"
                                @click="toggleSidebar">
                     <b-icon
                         pack="fas"
@@ -149,7 +151,7 @@
                 console.log('--->payload', payload);
 
 
-                this.$emit('sidebar-action', payload)
+                this.$root.$emit('sidebar-action', payload)
 
             }
             //----------------------------------------------------
