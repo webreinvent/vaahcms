@@ -399,7 +399,7 @@ class Notification extends Model {
 
                     case 'action':
                         $translated['action']['label'] = $content->value;
-                        $translate = vh_translate_dynamic_strings($content->meta->action, []);
+                        $translate = vh_translate_dynamic_strings($content->meta->action, $params);
                         $translated['action']['link'] = $translate;
 
                         break;
