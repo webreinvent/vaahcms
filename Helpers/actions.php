@@ -74,7 +74,14 @@ function vh_modules_action($method, $params=null, $output_type=null)
         {
 
             if($output_type == 'array'){
-                $output['success']['data'] = array_merge($output['success']['data'], $res['data']);
+
+                if(isset($output['success']['data'])){
+                    $output['success']['data'] = array_merge($output['success']['data'], $res['data']);
+                }else{
+                    $output['success']['data'] = $res['data'];
+                }
+
+
             }else if($output_type == 'string'){
                 $output['success']['data'] = $res['data'];
             }else if($output_type == 'concatenate_string'){
