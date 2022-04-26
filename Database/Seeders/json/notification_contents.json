@@ -52,7 +52,7 @@
         "via": "mail",
         "sort": 6,
         "key": "line",
-        "value": "If your have any queries please contact this #!ENV:APP_EMAIL!#"
+        "value": "If your have any queries please contact this #!ENV:MAIL_FROM_ADDRESS!#"
     },
     {
         "slug": "send-welcome-email",
@@ -124,7 +124,7 @@
         "via": "mail",
         "sort": 6,
         "key": "line",
-        "value": "If your have any queries please contact this #!ENV:APP_EMAIL!#"
+        "value": "If your have any queries please contact this #!ENV:MAIL_FROM_ADDRESS!#"
     },
     {
         "slug": "send-verification-email",
@@ -155,7 +155,7 @@
         "via": "mail",
         "sort": 3,
         "key": "line",
-        "value": "We’re sending you this email so that you can verify your account and get started with using CMDLineIT right away!"
+        "value": "We’re sending you this email so that you can verify your account and get started with using VaahCms right away!"
     },
     {
         "slug": "send-verification-email",
@@ -179,14 +179,14 @@
         "via": "mail",
         "sort": 6,
         "key": "line",
-        "value": "If your have any queries please contact this #!ENV:APP_EMAIL!#"
+        "value": "If your have any queries please contact this #!ENV:MAIL_FROM_ADDRESS!#"
     },
     {
         "slug": "send-verification-email",
         "via": "backend",
         "sort": 0,
         "key": "content",
-        "value": "We’re sending you this email so that you can verify your account and get started with using CMDLineIT right away!"
+        "value": "We’re sending you this email so that you can verify your account and get started with using VaahCms right away!"
     },
     {
         "slug": "send-verification-email",

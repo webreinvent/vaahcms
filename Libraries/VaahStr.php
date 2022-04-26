@@ -87,19 +87,38 @@ class VaahStr{
     public static function translateDynamicStringsOfRoutes($string,$params,$user=null)
     {
 
-
         $pattern = '/#!ROUTE:(.*?)!#/';
 
         preg_match_all($pattern, $string, $matches);
 
         $map = [];
 
-
         if(count($matches[1]) > 0)
         {
             foreach ($matches[1] as $item)
             {
-                $route_name = strtolower($item);
+
+                $item_array = explode(':',$item);
+
+                $route_name = null;
+
+                $param = [];
+
+                foreach ($item_array as $key => $value){
+
+                    if($key === 0){
+                        $route_name = strtolower($value);
+                    }else{
+
+                        $lower_value = strtolower($value);
+
+                        if(isset($params[$lower_value])){
+                            $param[$lower_value] = $params[$lower_value];
+                        }
+
+                    }
+
+                }
 
                 switch ($route_name)
                 {
@@ -109,11 +128,13 @@ class VaahStr{
                         );
                         break;
                     default:
-                        $route = route($route_name);
+                        $route = route($route_name,$param);
                         break;
                 }
 
                 $map['#!ROUTE:'.$item.'!#'] = $route;
+
+
             }
         }
 

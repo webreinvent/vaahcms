@@ -238,6 +238,7 @@ class Notification extends Model {
                     $content = null;
 
                     $content = NotificationContent::where('key', $via['key'])
+                        ->where('vh_notification_id', $via['vh_notification_id'])
                         ->where('sort', $via['sort'])
                         ->where('via', $via['via'])->first();
 
@@ -399,7 +400,7 @@ class Notification extends Model {
 
                     case 'action':
                         $translated['action']['label'] = $content->value;
-                        $translate = vh_translate_dynamic_strings($content->meta->action, []);
+                        $translate = vh_translate_dynamic_strings($content->meta->action, $params);
                         $translated['action']['link'] = $translate;
 
                         break;
