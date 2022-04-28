@@ -47,6 +47,7 @@ class VhSettingsAddColumns extends Migration
     public function down()
     {
         Schema::table('vh_settings', function (Blueprint $table) {
+            $table->dropColumn('vh_user_id');
             $table->dropColumn('created_by');
             $table->dropColumn('updated_by');
             $table->dropColumn('deleted_by');
