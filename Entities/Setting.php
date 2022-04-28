@@ -2,9 +2,13 @@
 
 use DateTimeInterface;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use WebReinvent\VaahCms\Traits\CrudWithUuidObservantTrait;
 
 class Setting extends Model {
 
+    use SoftDeletes;
+    use CrudWithUuidObservantTrait;
     //-------------------------------------------------
     protected $table = 'vh_settings';
     //-------------------------------------------------
