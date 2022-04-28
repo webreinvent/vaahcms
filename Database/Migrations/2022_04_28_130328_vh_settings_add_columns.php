@@ -15,7 +15,11 @@ class VhSettingsAddColumns extends Migration
     {
 
         Schema::table('vh_settings', function (Blueprint $table) {
-            $table->bigInteger('created_by')->after('meta')
+            $table->bigInteger('vh_user_id')->after('meta')
+                ->unsigned()->nullable()->index();
+            $table->foreign('vh_user_id')
+                ->references('id')->on('vh_users');
+            $table->bigInteger('created_by')->after('vh_user_id')
                 ->unsigned()->nullable()->index();
             $table->foreign('created_by')
                 ->references('id')->on('vh_users');
