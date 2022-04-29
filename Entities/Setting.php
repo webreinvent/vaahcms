@@ -86,7 +86,7 @@ class Setting extends Model {
     }
 
     //-------------------------------------------------
-    public function User()
+    public function user()
     {
         return $this->belongsTo(User::class,
             'vh_user_id', 'id'
