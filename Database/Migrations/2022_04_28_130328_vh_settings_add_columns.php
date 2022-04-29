@@ -17,7 +17,7 @@ class VhSettingsAddColumns extends Migration
         Schema::table('vh_settings', function (Blueprint $table) {
 
             $table->uuid('uuid')->nullable()->index();
-            
+
             $table->bigInteger('vh_user_id')->after('meta')
                 ->unsigned()->nullable()->index();
             $table->foreign('vh_user_id')
