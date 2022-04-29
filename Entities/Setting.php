@@ -2,29 +2,30 @@
 
 use DateTimeInterface;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use WebReinvent\VaahCms\Traits\CrudWithUuidObservantTrait;
 
 class Setting extends Model {
 
+    use SoftDeletes;
+    use CrudWithUuidObservantTrait;
     //-------------------------------------------------
     protected $table = 'vh_settings';
     //-------------------------------------------------
     protected $dates = [
         'created_at',
         'updated_at',
+        'deleted_at"',
     ];
     //-------------------------------------------------
     protected $dateFormat = 'Y-m-d H:i:s';
     //-------------------------------------------------
     protected $fillable = [
-        'settingable_id',
-        'settingable_type',
-        'category',
-        'label',
-        'excerpt',
-        'type',
-        'key',
-        'value',
-        'meta',
+        'settingable_id', 'settingable_type',
+        'category', 'label', 'excerpt',
+        'type', 'key', 'value', 'meta',
+        'vh_user_id',"created_by",
+        "updated_by","deleted_by"
     ];
 
     //-------------------------------------------------
@@ -58,6 +59,38 @@ class Setting extends Model {
         } else{
             $this->attributes['value'] = $value;
         }
+    }
+    //-------------------------------------------------
+
+    public function createdByUser()
+    {
+        return $this->belongsTo(User::class,
+            'created_by', 'id'
+        )->select('id', 'uuid', 'first_name', 'last_name', 'email');
+    }
+
+    //-------------------------------------------------
+    public function updatedByUser()
+    {
+        return $this->belongsTo(User::class,
+            'updated_by', 'id'
+        )->select('id', 'uuid', 'first_name', 'last_name', 'email');
+    }
+
+    //-------------------------------------------------
+    public function deletedByUser()
+    {
+        return $this->belongsTo(User::class,
+            'deleted_by', 'id'
+        )->select('id', 'uuid', 'first_name', 'last_name', 'email');
+    }
+
+    //-------------------------------------------------
+    public function user()
+    {
+        return $this->belongsTo(User::class,
+            'vh_user_id', 'id'
+        )->select('id', 'uuid', 'first_name', 'last_name', 'email');
     }
     //-------------------------------------------------
     public function scopeKey( $query, $key ) {
