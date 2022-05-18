@@ -11,19 +11,19 @@ function vh_get_backend_theme()
 //-----------------------------------------------------------------------------------
 function vh_get_assets_base_url()
 {
-    return \URL::asset("/");
+    return url("/");
 }
 //-----------------------------------------------------------------------------------
 function vh_get_backend_assets_url()
 {
-    return \URL::asset('/vaahcms/backend/');
+    return url('/vaahcms/backend/');
 }
 //-----------------------------------------------------------------------------------
 function vh_get_backend_theme_url()
 {
 
     $path = ('/vaahcms/backend/'.config('vaahcms.backend_theme'));
-    $url = \URL::asset($path);
+    $url = url($path);
 
     return $url;
 
@@ -33,7 +33,7 @@ function vh_get_backend_theme_image_url()
 {
 
     $path = ('/vaahcms/backend/'.config('vaahcms.backend_theme').'/images/');
-    $url = \URL::asset($path);
+    $url = url($path);
 
     return $url;
 
