@@ -64,10 +64,10 @@ class VaahCmsServiceProvider extends ServiceProvider {
     /**
      *
      */
-    private function registerMiddleware($router, \Illuminate\Contracts\Http\Kernel $kernel) {
+    private function registerMiddleware($router) {
 
         //global middleware
-        $kernel->prependMiddleware(IsHttps::class);
+        $router->pushMiddlewareToGroup('web', IsHttps::class);
 
 
         //register middleware
