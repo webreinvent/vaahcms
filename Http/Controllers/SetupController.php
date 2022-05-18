@@ -190,6 +190,7 @@ class SetupController extends Controller
             \Auth::logout();
 
             //remove all database database tables
+            \Schema::disableForeignKeyConstraints();
             \Artisan::call('migrate:reset', ['--force' => true]);
 
             //clear cache
@@ -199,6 +200,8 @@ class SetupController extends Controller
 
             $response['status'] = 'success';
             $response['data'][] = '';
+
+            \Schema::enableForeignKeyConstraints();
 
         }catch(\Exception $e)
         {
