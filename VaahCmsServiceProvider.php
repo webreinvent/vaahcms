@@ -5,6 +5,7 @@ use Illuminate\Support\ServiceProvider;
 use WebReinvent\VaahCms\Entities\Setting;
 use WebReinvent\VaahCms\Facades\VaahExcelFacade;
 use WebReinvent\VaahCms\Facades\VaahFileFacade;
+use WebReinvent\VaahCms\Http\Middleware\IsHttps;
 use WebReinvent\VaahCms\Libraries\VaahSetup;
 use WebReinvent\VaahCms\Providers\FacadesServiceProvider;
 use WebReinvent\VaahCms\Providers\ModulesServiceProvider;
@@ -64,6 +65,10 @@ class VaahCmsServiceProvider extends ServiceProvider {
      *
      */
     private function registerMiddleware($router) {
+
+        //global middleware
+        $router->pushMiddlewareToGroup('web', IsHttps::class);
+
 
         //register middleware
         $router->aliasMiddleware('app.is.installed', \WebReinvent\VaahCms\Http\Middleware\IsInstalled::class);
