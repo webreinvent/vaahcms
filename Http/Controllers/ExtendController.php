@@ -198,6 +198,11 @@ class ExtendController extends Controller
                         'icon' => 'download',
                         'label'=> 'Update'
                     ],
+                    [
+                        'link' => self::$link."/setup",
+                        'icon' => 'retweet',
+                        'label'=> 'Reset'
+                    ],
                 ]
             ];
         }
@@ -349,9 +354,9 @@ class ExtendController extends Controller
             [
                 'title' => 'Jobs',
                 'type' => 'content',
-                'description' => 'Tasks that is kept in the queue to be performed one after another. 
-                Queues allow you to defer the processing of a time consuming task, 
-                such as sending an e-mail, until a later time which drastically 
+                'description' => 'Tasks that is kept in the queue to be performed one after another.
+                Queues allow you to defer the processing of a time consuming task,
+                such as sending an e-mail, until a later time which drastically
                 speeds up web requests to your application.',
                 'is_job_enabled' => $is_job_enabled,
                 'footer' => [
