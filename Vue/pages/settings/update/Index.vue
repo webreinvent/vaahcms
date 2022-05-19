@@ -1,7 +1,14 @@
 <script src="./IndexJs.js"></script>
 
+<style>
+.xterm{
+    padding: 10px;
+}
+</style>
+
 <template>
     <div class="form-page-v1-layout">
+
 
         <div class="container" >
 
@@ -79,113 +86,136 @@
                                 </div>
 
                                 <div v-if="is_update_step_visible" class="ml-3 mt-4">
-                                    <ol>
 
-                                        <li> Download latest version (It can take up to 3 to 5 minutes)
+                                    <div class="columns">
 
-                                            <b-icon v-if="status.download_latest_version === 'success'"
-                                                    pack="fas"
-                                                    icon="check"
-                                                    type="is-success"
-                                            >
-                                            </b-icon>
+                                        <div class="column is-3">
+                                            <ol>
 
-                                            <b-icon v-else-if="status.download_latest_version === 'pending'"
-                                                    pack="fas"
-                                                    icon="sync-alt"
-                                                    custom-class="fa-spin">
-                                            </b-icon>
+                                                <li> Download latest version (It can take up to 3 to 5 minutes)
 
-                                            <b-icon v-else-if="status.download_latest_version === 'failed'"
-                                                    pack="fas"
-                                                    icon="times"
-                                                    type="is-danger"
-                                            >
-                                            </b-icon>
+                                                    <b-icon v-if="status.download_latest_version === 'success'"
+                                                            pack="fas"
+                                                            icon="check"
+                                                            type="is-success"
+                                                    >
+                                                    </b-icon>
 
-                                        </li>
-                                        <li> Publish assets
-                                            <b-icon v-if="status.publish_assets === 'success'"
-                                                    pack="fas"
-                                                    icon="check"
-                                                    type="is-success"
-                                            >
-                                            </b-icon>
+                                                    <b-icon v-else-if="status.download_latest_version === 'pending'"
+                                                            pack="fas"
+                                                            icon="sync-alt"
+                                                            custom-class="fa-spin">
+                                                    </b-icon>
 
-                                            <b-icon v-else-if="status.publish_assets === 'pending'"
-                                                    pack="fas"
-                                                    icon="sync-alt"
-                                                    custom-class="fa-spin">
-                                            </b-icon>
+                                                    <b-icon v-else-if="status.download_latest_version === 'failed'"
+                                                            pack="fas"
+                                                            icon="times"
+                                                            type="is-danger"
+                                                    >
+                                                    </b-icon>
 
-                                            <b-icon v-else-if="status.publish_assets === 'failed'"
-                                                    pack="fas"
-                                                    icon="times"
-                                                    type="is-danger">
-                                            </b-icon>
-                                        </li>
-                                        <li> Run Migrations and Seeds
-                                            <b-icon v-if="status.migration_and_seeds === 'success'"
-                                                    pack="fas"
-                                                    icon="check"
-                                                    type="is-success"
-                                            >
-                                            </b-icon>
+                                                </li>
+                                                <li> Publish assets
+                                                    <b-icon v-if="status.publish_assets === 'success'"
+                                                            pack="fas"
+                                                            icon="check"
+                                                            type="is-success"
+                                                    >
+                                                    </b-icon>
 
-                                            <b-icon v-else-if="status.migration_and_seeds === 'pending'"
-                                                    pack="fas"
-                                                    icon="sync-alt"
-                                                    custom-class="fa-spin">
-                                            </b-icon>
+                                                    <b-icon v-else-if="status.publish_assets === 'pending'"
+                                                            pack="fas"
+                                                            icon="sync-alt"
+                                                            custom-class="fa-spin">
+                                                    </b-icon>
 
-                                            <b-icon v-else-if="status.migration_and_seeds === 'failed'"
-                                                    pack="fas"
-                                                    icon="times"
-                                                    type="is-danger">
-                                            </b-icon>
-                                        </li>
-                                        <li> Clear Cache
-                                            <b-icon v-if="status.clear_cache === 'success'"
-                                                    pack="fas"
-                                                    icon="check"
-                                                    type="is-success"
-                                            >
-                                            </b-icon>
+                                                    <b-icon v-else-if="status.publish_assets === 'failed'"
+                                                            pack="fas"
+                                                            icon="times"
+                                                            type="is-danger">
+                                                    </b-icon>
+                                                </li>
+                                                <li> Run Migrations and Seeds
+                                                    <b-icon v-if="status.migration_and_seeds === 'success'"
+                                                            pack="fas"
+                                                            icon="check"
+                                                            type="is-success"
+                                                    >
+                                                    </b-icon>
 
-                                            <b-icon v-else-if="status.clear_cache === 'pending'"
-                                                    pack="fas"
-                                                    icon="sync-alt"
-                                                    custom-class="fa-spin">
-                                            </b-icon>
+                                                    <b-icon v-else-if="status.migration_and_seeds === 'pending'"
+                                                            pack="fas"
+                                                            icon="sync-alt"
+                                                            custom-class="fa-spin">
+                                                    </b-icon>
 
-                                            <b-icon v-else-if="status.clear_cache === 'failed'"
-                                                    pack="fas"
-                                                    icon="times"
-                                                    type="is-danger">
-                                            </b-icon>
-                                        </li>
-                                        <li> Reload
-                                            <b-icon v-if="status.page_refresh === 'pending'"
-                                                    pack="fas"
-                                                    icon="check"
-                                                    type="is-success"
-                                            >
-                                            </b-icon>
+                                                    <b-icon v-else-if="status.migration_and_seeds === 'failed'"
+                                                            pack="fas"
+                                                            icon="times"
+                                                            type="is-danger">
+                                                    </b-icon>
+                                                </li>
+                                                <li> Clear Cache
+                                                    <b-icon v-if="status.clear_cache === 'success'"
+                                                            pack="fas"
+                                                            icon="check"
+                                                            type="is-success"
+                                                    >
+                                                    </b-icon>
 
-                                            <b-icon v-else-if="status.page_refresh === 'success'"
-                                                    pack="fas"
-                                                    icon="sync-alt"
-                                                    custom-class="fa-spin">
-                                            </b-icon>
+                                                    <b-icon v-else-if="status.clear_cache === 'pending'"
+                                                            pack="fas"
+                                                            icon="sync-alt"
+                                                            custom-class="fa-spin">
+                                                    </b-icon>
 
-                                            <b-icon v-else-if="status.page_refresh === 'failed'"
-                                                    pack="fas"
-                                                    icon="times"
-                                                    type="is-danger">
-                                            </b-icon>
-                                        </li>
+                                                    <b-icon v-else-if="status.clear_cache === 'failed'"
+                                                            pack="fas"
+                                                            icon="times"
+                                                            type="is-danger">
+                                                    </b-icon>
+                                                </li>
+<!--                                                <li> Reload
+                                                    <b-icon v-if="status.page_refresh === 'pending'"
+                                                            pack="fas"
+                                                            icon="check"
+                                                            type="is-success"
+                                                    >
+                                                    </b-icon>
 
-                                    </ol>
+                                                    <b-icon v-else-if="status.page_refresh === 'success'"
+                                                            pack="fas"
+                                                            icon="sync-alt"
+                                                            custom-class="fa-spin">
+                                                    </b-icon>
+
+                                                    <b-icon v-else-if="status.page_refresh === 'failed'"
+                                                            pack="fas"
+                                                            icon="times"
+                                                            type="is-danger">
+                                                    </b-icon>
+                                                </li>-->
+
+                                            </ol>
+
+                                            <br/>
+
+                                            <b-button type="is-success"
+                                                      @click="reloadPage()">
+                                                Reload
+                                            </b-button>
+
+                                        </div>
+
+                                        <div class="column">
+                                            <div id="terminal"></div>
+                                        </div>
+
+                                    </div>
+
+
+
+
                                 </div>
                             </div>
 

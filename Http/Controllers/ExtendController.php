@@ -21,6 +21,7 @@ use WebReinvent\VaahCms\Libraries\VaahStr;
 class ExtendController extends Controller
 {
 
+    public static $base;
     public static $link;
 
     //----------------------------------------------------------
@@ -30,6 +31,7 @@ class ExtendController extends Controller
         $vue_prefix = "vaah";
         $link = $base_url.$vue_prefix;
 
+        self::$base = $base_url;
         self::$link = $link;
     }
 
@@ -198,6 +200,11 @@ class ExtendController extends Controller
                         'icon' => 'download',
                         'label'=> 'Update'
                     ],
+                    [
+                        'link' => self::$base."setup",
+                        'icon' => 'retweet',
+                        'label'=> 'Reset'
+                    ],
                 ]
             ];
         }
@@ -349,9 +356,9 @@ class ExtendController extends Controller
             [
                 'title' => 'Jobs',
                 'type' => 'content',
-                'description' => 'Tasks that is kept in the queue to be performed one after another. 
-                Queues allow you to defer the processing of a time consuming task, 
-                such as sending an e-mail, until a later time which drastically 
+                'description' => 'Tasks that is kept in the queue to be performed one after another.
+                Queues allow you to defer the processing of a time consuming task,
+                such as sending an e-mail, until a later time which drastically
                 speeds up web requests to your application.',
                 'is_job_enabled' => $is_job_enabled,
                 'footer' => [
