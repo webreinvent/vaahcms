@@ -36,6 +36,7 @@ class ThemesServiceProvider extends ServiceProvider
     public function registerThemeServiceProviders()
     {
 
+        return true;
 
         if (!\Schema::hasTable('vh_themes')) {
             return false;
