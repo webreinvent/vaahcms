@@ -190,8 +190,9 @@ class SetupController extends Controller
             \Auth::logout();
 
             //remove all database database tables
-            \Schema::disableForeignKeyConstraints();
-            \Artisan::call('migrate:reset', ['--force' => true]);
+            \Schema::enableForeignKeyConstraints();
+            \Artisan::call('migrate:fresh', ['--force' => true]);
+            \Schema::enableForeignKeyConstraints();
 
             //clear cache
             VaahHelper::clearCache();
@@ -201,7 +202,7 @@ class SetupController extends Controller
             $response['status'] = 'success';
             $response['data'][] = '';
 
-            \Schema::enableForeignKeyConstraints();
+
 
         }catch(\Exception $e)
         {
