@@ -206,23 +206,31 @@ export default {
             this.is_update_step_visible = true;
             this.status.download_latest_version = 'pending';
 
+            let self = this;
 
-            this.$term = new Terminal({convertEol: true})
-            this.$fitAddon = new FitAddon()
-            this.$term.loadAddon(this.$fitAddon)
-            this.$term.loadAddon(new WebLinksAddon())
-            this.$term.loadAddon(new Unicode11Addon())
-            this.$term.unicode.activeVersion = '11'
-            this.$term.open(document.getElementById('terminal'));
-            this.$fitAddon.fit();
+            this.$nextTick(() => {
+                self.$term = new Terminal({convertEol: true})
+                self.$fitAddon = new FitAddon()
+                self.$term.loadAddon(this.$fitAddon)
+                self.$term.loadAddon(new WebLinksAddon())
+                self.$term.loadAddon(new Unicode11Addon())
+                self.$term.unicode.activeVersion = '11'
+                self.$term.open(document.getElementById('terminal'));
+                self.$fitAddon.fit();
 
 
-            this.$term.writeln('Step 1/4 : Updating dependencies');
-            this.$term.writeln('-----------------------------------------');
-            this.$term.writeln('composer update');
+                self.$term.writeln('Step 1/4 : Updating dependencies');
+                self.$term.writeln('-----------------------------------------');
+                self.$term.writeln('composer update');
 
-            let url = this.ajax_url+'/upgrade';
-            this.$vaah.ajax(url, {}, this.onUpdateAfter);
+                let url = self.ajax_url+'/upgrade';
+                self.$vaah.ajax(url, {}, this.onUpdateAfter);
+            });
+
+
+
+
+
         },
         //---------------------------------------------------------------------
         onUpdateAfter: function (data, res) {
