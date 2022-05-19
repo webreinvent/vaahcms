@@ -190,7 +190,7 @@ class SetupController extends Controller
             \Auth::logout();
 
             //remove all database database tables
-            \Schema::enableForeignKeyConstraints();
+            \Schema::disableForeignKeyConstraints();
             \Artisan::call('migrate:fresh', ['--force' => true]);
             \Schema::enableForeignKeyConstraints();
 
