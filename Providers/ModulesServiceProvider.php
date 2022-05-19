@@ -36,8 +36,6 @@ class ModulesServiceProvider extends ServiceProvider
     public function registerModuleServiceProviders()
     {
 
-        return true;
-
         if (!\Schema::hasTable('vh_modules')) {
             return false;
         }
