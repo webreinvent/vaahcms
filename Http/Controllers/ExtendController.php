@@ -21,6 +21,7 @@ use WebReinvent\VaahCms\Libraries\VaahStr;
 class ExtendController extends Controller
 {
 
+    public static $base;
     public static $link;
 
     //----------------------------------------------------------
@@ -30,6 +31,7 @@ class ExtendController extends Controller
         $vue_prefix = "vaah";
         $link = $base_url.$vue_prefix;
 
+        self::$base = $base_url;
         self::$link = $link;
     }
 
@@ -199,7 +201,7 @@ class ExtendController extends Controller
                         'label'=> 'Update'
                     ],
                     [
-                        'link' => self::$link."/setup",
+                        'link' => self::$base."setup",
                         'icon' => 'retweet',
                         'label'=> 'Reset'
                     ],
