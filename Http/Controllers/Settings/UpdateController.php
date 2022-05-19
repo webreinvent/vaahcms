@@ -325,7 +325,7 @@ class UpdateController extends Controller
 
         if($executor == 'composer')
         {
-            $this->process->setEnv(['COMPOSER_HOME' => base_path('/vendor/bin/composer')]);
+            $this->process->setEnv(['COMPOSER_HOME' => base_path('vendor/bin/composer')]);
             $this->process->setWorkingDirectory(base_path('/'));
         }
         $this->process->run();
