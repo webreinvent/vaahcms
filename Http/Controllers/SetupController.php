@@ -191,7 +191,7 @@ class SetupController extends Controller
 
             //remove all database database tables
             \Schema::disableForeignKeyConstraints();
-            \Artisan::call('migrate:reset', ['--force' => true]);
+            \Artisan::call('migrate:fresh', ['--force' => true]);
             \Schema::enableForeignKeyConstraints();
 
             //clear cache
