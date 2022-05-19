@@ -9,6 +9,8 @@ use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
+use Symfony\Component\Console\Helper\ProgressBar;
+use Symfony\Component\Process\Process;
 use WebReinvent\VaahCms\Entities\Notification;
 use WebReinvent\VaahCms\Entities\NotificationContent;
 use WebReinvent\VaahCms\Entities\Notified;
@@ -21,6 +23,8 @@ use WebReinvent\VaahExtend\Libraries\VaahArtisan;
 
 class UpdateController extends Controller
 {
+
+    public $process;
 
     //----------------------------------------------------------
     public function __construct()
@@ -96,18 +100,13 @@ class UpdateController extends Controller
         }
 
         try{
-            $data = shell_exec('cd '.base_path().' && composer update --ignore-platform-reqs');
-            $response['status'] = 'success';
-            $response['data'] = $data;
-            //$response['messages'][] = 'Action was successful';
-            return $response;
+            return $this->runCommand("composer", "update");
         }catch(\Exception $e)
         {
             $response['status'] = 'failed';
             $response['errors'][] = $e->getMessage();
             return $response;
         }
-
     }
     //----------------------------------------------------------
     public function publish()
@@ -312,6 +311,39 @@ class UpdateController extends Controller
 
     }
     //----------------------------------------------------------
+    /*
+     * $executor like "composer", "php", "npm" etc
+     * $command lik "install", "upgrade", "update"
+     */
+    public function runCommand($executor, $command)
+    {
+
+        $buffer = null;
+        $output = null;
+
+        $this->process = new Process([$executor, $command]);
+
+        if($executor == 'composer')
+        {
+            $this->process->setEnv(['COMPOSER_HOME' => base_path('/vendor/bin/composer')]);
+            $this->process->setWorkingDirectory(base_path('/'));
+        }
+        $this->process->run();
+
+        if (!$this->process->isSuccessful()) {
+            $response['status'] = "failed";
+            $output .= $this->process->getErrorOutput();
+        } else{
+            $response['status'] = "success";
+            $output .= $this->process->getOutput();
+        }
+
+
+        $response['data']['buffer'] = $buffer;
+        $response['data']['output'] = $output;
+
+        return $response;
+    }
     //----------------------------------------------------------
 
 

@@ -1,6 +1,14 @@
 import GlobalComponents from '../../../vaahvue/helpers/GlobalComponents';
 import copy from "copy-to-clipboard";
 
+//----Terminal
+import 'xterm/css/xterm.css'
+import { Terminal } from 'xterm'
+import { FitAddon } from 'xterm-addon-fit'
+import { WebLinksAddon } from 'xterm-addon-web-links'
+import { Unicode11Addon } from 'xterm-addon-unicode11'
+//----/Terminal
+
 import semver from "semver";
 
 let base_url = document.getElementsByTagName('base')[0].getAttribute("href");
@@ -55,6 +63,9 @@ export default {
         //---------------------------------------------------------------------
         this.onLoad();
         //---------------------------------------------------------------------
+
+
+        //---------------------------------------------------------------------
     },
     methods: {
         //---------------------------------------------------------------------
@@ -73,7 +84,36 @@ export default {
 
         },
         //---------------------------------------------------------------------
+        getCommand: function () {
+            this.$Progress.start();
+            let params = {};
+            let url = this.ajax_url+'/command';
+            this.$vaah.ajax(url, params, this.getCommandAfter);
+        },
+        //---------------------------------------------------------------------
+        getCommandAfter: function (data, res) {
+            this.$Progress.finish();
+            if(data){
+                console.log('--->', data);
+                this.$term.write(data.output);
+            }
+        },
 
+        //---------------------------------------------------------------------
+        getCommandProgress: function () {
+            this.$Progress.start();
+            let params = {};
+            let url = this.ajax_url+'/command/progress';
+            this.$vaah.ajax(url, params, this.getCommandProgressAfter);
+        },
+        //---------------------------------------------------------------------
+        getCommandProgressAfter: function (data, res) {
+            this.$Progress.finish();
+            if(data){
+                console.log('--->', data);
+                this.$term.write(data.output);
+            }
+        },
         //---------------------------------------------------------------------
         getAssets: function () {
             this.$Progress.start();
@@ -166,6 +206,21 @@ export default {
             this.is_update_step_visible = true;
             this.status.download_latest_version = 'pending';
 
+
+            this.$term = new Terminal({convertEol: true})
+            this.$fitAddon = new FitAddon()
+            this.$term.loadAddon(this.$fitAddon)
+            this.$term.loadAddon(new WebLinksAddon())
+            this.$term.loadAddon(new Unicode11Addon())
+            this.$term.unicode.activeVersion = '11'
+            this.$term.open(document.getElementById('terminal'));
+            this.$fitAddon.fit();
+
+
+            this.$term.writeln('Step 1/4 : Updating dependencies');
+            this.$term.writeln('-----------------------------------------');
+            this.$term.writeln('composer update');
+
             let url = this.ajax_url+'/upgrade';
             this.$vaah.ajax(url, {}, this.onUpdateAfter);
         },
@@ -173,6 +228,11 @@ export default {
         onUpdateAfter: function (data, res) {
             if(res && res.data && res.data.status){
                 this.status.download_latest_version = res.data.status;
+
+                if(data.output)
+                {
+                    this.$term.writeln(data.output);
+                }
 
                 if(res.data.status === 'success'){
 
@@ -182,6 +242,17 @@ export default {
                         this.$vaah.toastErrors(['Go to Root path','Run <b>Composer Update</b>']);
                         return false;
                     }
+
+
+                    this.$term.writeln('\nStep 2/4 : Public Publishable Assets');
+                    this.$term.writeln('-----------------------------------------');
+                    this.$term.writeln("\nphp artisan vendor:publish --provider=\"WebReinvent\\VaahCms\\VaahCmsServiceProvider\" --tag=assets --force");
+
+                    this.$term.writeln("\nphp artisan vendor:publish --provider=\"WebReinvent\\VaahCms\\VaahCmsServiceProvider\" --tag=migrations  --force");
+
+                    this.$term.writeln("\nphp artisan vendor:publish --provider=\"WebReinvent\\VaahCms\\VaahCmsServiceProvider\" --tag=migrations  --force");
+
+                    this.$term.writeln("\nphp artisan vendor:publish --provider=\"WebReinvent\\VaahCms\\VaahCmsServiceProvider\" --tag=seeds --force");
 
                     this.status.publish_assets = 'pending';
                     let url = this.ajax_url+'/publish';
@@ -200,6 +271,13 @@ export default {
                 this.status.publish_assets = res.data.status;
 
                 if(res.data.status === 'success'){
+
+
+                    this.$term.writeln('\nStep 3/4 : Running migrations & Seeds');
+                    this.$term.writeln('-----------------------------------------');
+                    this.$term.writeln("php artisan migrate");
+                    this.$term.writeln("php artisan db:seed");
+
                     this.status.migration_and_seeds = 'pending';
                     let url = this.ajax_url+'/run/migrations';
                     this.$vaah.ajax(url, {}, this.onMigrationAndSeedsAfter);
@@ -215,6 +293,17 @@ export default {
                 this.status.migration_and_seeds = res.data.status;
 
                 if(res.data.status === 'success'){
+
+                    this.$term.writeln('\nStep 4/4 : Clear Cache');
+                    this.$term.writeln('-----------------------------------------');
+                    this.$term.writeln("php artisan cache:clear");
+                    this.$term.writeln("php artisan route:clear");
+                    this.$term.writeln("php artisan config:clear");
+                    this.$term.writeln("php artisan view:clear \n");
+                    this.$term.writeln('\u001b[32m' +"-----------------------------------------------------");
+                    this.$term.writeln(" Update was successful! Click on Reload button.");
+                    this.$term.writeln("-----------------------------------------------------");
+
                     this.status.clear_cache = 'pending';
                     let url = this.ajax_url+'/cache';
                     this.$vaah.ajax(url, {}, this.onClearCacheAfter);
@@ -222,6 +311,7 @@ export default {
                     this.$Progress.finish();
                     this.status.migration_and_seeds = 'failed';
                 }
+
             }
         },
         //---------------------------------------------------------------------
@@ -231,7 +321,7 @@ export default {
 
                 if(res.data.status === 'success'){
                     this.status.page_refresh = 'pending';
-                    location.reload();
+                    //location.reload();
                 }else{
                     this.$Progress.finish();
                     this.status.clear_cache = 'failed';
@@ -239,6 +329,12 @@ export default {
             }
         },
         //---------------------------------------------------------------------
+
+        reloadPage: function ()
+        {
+            location.reload();
+        }
+
         //---------------------------------------------------------------------
     }
 }
