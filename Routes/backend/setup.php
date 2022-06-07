@@ -3,6 +3,7 @@
 Route::group(
     [
         'prefix'     => 'vaahcms/setup',
+        'middleware' => ['web'],
         'namespace'  => 'WebReinvent\VaahCms\Http\Controllers'
     ],
     function () {
