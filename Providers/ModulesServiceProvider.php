@@ -4,6 +4,7 @@ namespace WebReinvent\VaahCms\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use WebReinvent\VaahCms\Entities\Module;
+use WebReinvent\VaahCms\Libraries\VaahSetup;
 use WebReinvent\VaahCms\Loaders\ModulesLoader;
 
 
@@ -50,24 +51,22 @@ class ModulesServiceProvider extends ServiceProvider
         $module_manager = $this->app->make('ModulesLoader');
 
         // Register Service Providers of all the active modules in a loop
-        foreach ($module_manager->findModules() as $module)
-        {
+        if(VaahSetup::isDBConnected() && VaahSetup::isDBMigrated()) {
+            foreach ($module_manager->findModules() as $module) {
 
-            $db_module = Module::where('slug', $module['slug'])->first();
+                $db_module = Module::where('slug', $module['slug'])->first();
 
-            if(!$db_module)
-            {
-                continue;
-            }
+                if (!$db_module) {
+                    continue;
+                }
 
-            if($db_module->is_active != 1 )
-            {
-                continue;
-            }
+                if ($db_module->is_active != 1) {
+                    continue;
+                }
 
-            foreach ($module['providers'] as $provider)
-            {
-                $this->app->register($provider);
+                foreach ($module['providers'] as $provider) {
+                    $this->app->register($provider);
+                }
             }
         }
     }

@@ -3,6 +3,7 @@
 namespace WebReinvent\VaahCms\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use WebReinvent\VaahCms\Libraries\VaahSetup;
 use WebReinvent\VaahCms\Loaders\ThemesLoader;
 use WebReinvent\VaahCms\Entities\Theme;
 
@@ -50,29 +51,37 @@ class ThemesServiceProvider extends ServiceProvider
 
         $theme_manager = $this->app->make('ThemesLoader');
 
+
         // Register Service Providers of all the active modules in a loop
-        foreach ($theme_manager->findList() as $theme)
+        if(VaahSetup::isDBConnected() && VaahSetup::isDBMigrated())
         {
-
-            $db_theme = Theme::where('slug', $theme['slug'])->first();
-
-            if(!$db_theme)
+            foreach ($theme_manager->findList() as $theme)
             {
-                continue;
-            }
 
-            if($db_theme->is_active != 1 )
-            {
-                continue;
-            }
+                $db_theme = Theme::where('slug', $theme['slug'])->first();
+
+                if(!$db_theme)
+                {
+                    continue;
+                }
+
+                if($db_theme->is_active != 1 )
+                {
+                    continue;
+                }
 
 
 
-            foreach ($theme['providers'] as $provider)
-            {
-                $this->app->register($provider);
+                foreach ($theme['providers'] as $provider)
+                {
+                    $this->app->register($provider);
+                }
             }
         }
+
+
+
+
     }
     //----------------------------------------------------
 
