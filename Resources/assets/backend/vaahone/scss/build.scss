@@ -5,7 +5,13 @@
 
 @import "./bulma-0.9.3/bulma";
 @import "./buefy-0.9.19/utils/variables-ext";
-@import "./buefy-0.9.19/buefy";
-@import "./oruga-bulma-0.2.6/bulma";
+
+.buefy{
+    @import "./buefy-0.9.19/buefy";
+}
+
+.oruga {
+    @import "./oruga-bulma-0.2.6/bulma";
+}
 
 @import "./bulma-helpers/bulma-helpers";

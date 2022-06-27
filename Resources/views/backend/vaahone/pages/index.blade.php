@@ -17,7 +17,7 @@
 
 @section('content')
 
-    <div id="app">
+    <div id="app" class="buefy">
 
         <router-view></router-view>
 

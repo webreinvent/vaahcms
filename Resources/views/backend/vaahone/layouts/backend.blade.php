@@ -43,12 +43,13 @@
 </head>
 <body class="@if(isset($data->body_class)){{$data->body_class}}@endif has-background-white-bis">
 
+
 @include("vaahcms::backend.vaahone.components.errors")
 @include("vaahcms::backend.vaahone.components.flash")
 
-<div class="container-backend">
+<div class="container-backend ">
 
-    <div id="appExtended">
+    <div id="appExtended" class="buefy" >
 
         <sidebar :root="root"></sidebar>
         <div v-bind:style="{ paddingLeft: root.has_padding_left }">
@@ -56,8 +57,7 @@
         </div>
 
     </div>
-
-
+    
     <!--sections-->
     <div id="container-main" style="padding-left: 55px;">
 
