@@ -78,7 +78,6 @@ export default {
                 }
             }
         },
-
         'list.copyright_link': {
             deep: true,
             handler(new_val, old_val) {
@@ -252,6 +251,15 @@ export default {
 
         },
         //---------------------------------------------------------------------
+        onSelectFileType: function (data) {
+            this.list.upload_allowed_files = data;
+            this.updateList();
+        },
+        //---------------------------------------------------------------------
+        onSelectRegistrationRoles: function (data) {
+            this.list.registration_roles = data;
+            this.updateList();
+        },
         //---------------------------------------------------------------------
     }
 }
