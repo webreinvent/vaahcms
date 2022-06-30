@@ -284,7 +284,10 @@
                                           :label-position="labelPosition">
 
                                     <TagRolesOnRegistration :options="assets.roles"
+                                                            :allow_new="true"
+                                                            v-model="list.registration_roles"
                                                             :selected_value="list.registration_roles"
+                                                            @onSelect="onSelectRegistrationRoles"
                                                             :open_on_focus="true"/>
 
                                 </b-field>
@@ -298,7 +301,9 @@
 
                                     <TagFileTypes :options="assets.file_types"
                                                   :allow_new="true"
+                                                  v-model="list.upload_allowed_files"
                                                   :selected_value="list.upload_allowed_files"
+                                                  @onSelect="onSelectFileType"
                                                   :open_on_focus="true"/>
 
                                 </b-field>
