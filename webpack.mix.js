@@ -63,22 +63,6 @@ if (mix.inProduction()) {
 
 mix.webpackConfig({
     //devtool: 'eval-source-map',
-
-    module:{
-        rules: [
-            {
-                test: /\.s[ac]ss$/i,
-                use: [
-                    {
-                        loader: 'sass-loader',
-                        options: {
-                            implementation: require('node-sass')
-                        }
-                    }
-                ]
-            }
-        ]
-    },
     watchOptions: {
 
         aggregateTimeout: 2000,

@@ -43,13 +43,14 @@
 </head>
 <body class="@if(isset($data->body_class)){{$data->body_class}}@endif has-background-white-bis">
 
-
-@include("vaahcms::backend.vaahone.components.errors")
-@include("vaahcms::backend.vaahone.components.flash")
+<div class="bulma">
+    @include("vaahcms::backend.vaahone.components.errors")
+    @include("vaahcms::backend.vaahone.components.flash")
+</div>
 
 <div class="container-backend ">
 
-    <div id="appExtended" class="buefy" >
+    <div id="appExtended" class="bulma" >
 
         <sidebar :root="root"></sidebar>
         <div v-bind:style="{ paddingLeft: root.has_padding_left }">
@@ -57,13 +58,13 @@
         </div>
 
     </div>
-    
+
     <!--sections-->
     <div id="container-main" style="padding-left: 55px;">
 
-        <section class="section has-padding-top-25 has-padding-left-25">
+        <div id="container-apps">
             @yield('content')
-        </section>
+        </div>
 
     </div>
     <!--sections-->

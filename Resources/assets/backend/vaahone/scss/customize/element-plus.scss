@@ -1,0 +1,34 @@
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.el-card__header{
+    padding: 10px;
+}
+
+.el-menu-item{
+    height: 35px;
+}
+
+.el-drawer__header{
+    padding: 20px 20px 0px 20px;
+    margin-bottom: 0px;
+}
+
+
+.notification-success{
+    color: var(--el-color-success);
+    background-color: var(--el-color-success-light-9);
+    border-color: var(--el-color-success-light-5);
+    border-width: 1px;
+}
+
+.notification-error{
+    color: var(--el-color-danger);
+    background-color: var(--el-color-danger-light-9);
+    border-color: var(--el-color-danger-light-5);
+    border-width: 1px;
+}
+
