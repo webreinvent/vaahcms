@@ -7,12 +7,15 @@ use Illuminate\Foundation\Application;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\File;
 use VaahCms\Modules\Cms\Entities\MenuItem;
 use VaahCms\Modules\Cms\Entities\Page;
 use WebReinvent\VaahCms\Entities\Module;
 use WebReinvent\VaahCms\Entities\Notified;
 use WebReinvent\VaahCms\Entities\Theme;
 use WebReinvent\VaahCms\Entities\User;
+use WebReinvent\VaahExtend\Libraries\VaahFiles;
 
 class JsonController extends Controller
 {
@@ -50,6 +53,7 @@ class JsonController extends Controller
             'website' => config('vaahcms.website'),
             'docs' => config('vaahcms.documentation'),
         ];
+
 
         $data['settings'] = [
             'is_mail_settings_not_set' => $this->isMailSettingsNotSet(),
@@ -124,6 +128,29 @@ class JsonController extends Controller
 
 
         $data['backend_logo_url'] = config('vaahcms.backend_logo_url');
+
+        $folder_path = storage_path('logs');
+        $folder_path = str_replace("\\", "/", $folder_path);
+        $count_log_files="";
+        if(File::isDirectory($folder_path)) {
+            $files = VaahFiles::getAllFiles($folder_path);
+            $count_log_files=count($files);
+        }
+
+        $job_count = DB::table('jobs')->count();
+
+        $failed_jobs_count=DB::table('failed_jobs')->count();
+
+        $job_batches_count=DB::table('job_batches')->count();
+
+        $data['advance'] = [
+            'job_count' =>  $job_count,
+            'failed_jobs_count' => $failed_jobs_count,
+            'job_batches_count' => $job_batches_count,
+            'count_log_files' => $count_log_files,
+        ];
+
+
 
 
         $response['status'] = 'success';
