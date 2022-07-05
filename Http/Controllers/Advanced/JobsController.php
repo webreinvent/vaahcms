@@ -1,5 +1,6 @@
 <?php namespace WebReinvent\VaahCms\Http\Controllers\Advanced;
 
+use App\Jobs\ProcessPodcast;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -21,6 +22,8 @@ class JobsController extends Controller
 
     public function getAssets(Request $request)
     {
+
+        ProcessPodcast::dispatch();
 
         if(!\Auth::user()->hasPermission('has-access-of-advanced-section'))
         {
