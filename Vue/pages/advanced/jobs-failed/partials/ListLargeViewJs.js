@@ -44,6 +44,11 @@ export default {
             this.$vaah.updateState(update);
         },
         //---------------------------------------------------------------------
+        setdisplayName:function (value)
+        {
+            return value.split('\\').pop();
+        },
+        //---------------------------------------------------------------------
         setRowClass: function(row, index)
         {
 

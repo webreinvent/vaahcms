@@ -31,6 +31,14 @@
                     {{ props.row.connection }}
                 </b-table-column>
 
+                <b-table-column field="display_name" label="Display Name" v-slot="props">
+                    <b-tag type="is-success" rounded >
+                        <span v-if="props.row.payload.displayName">
+                            {{setdisplayName(props.row.payload.displayName)}}
+                        </span>
+                    </b-tag>
+                </b-table-column>
+
                 <b-table-column field="payload" label="Payload" width="100" v-slot="props">
                     <ButtonMeta dusk="action-view_payload" :value="props.row.payload"/>
                 </b-table-column>
