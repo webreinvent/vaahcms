@@ -6,8 +6,6 @@
 @import "./bulma-0.9.3/base/_all";
 
 .bulma{
-
-
     @import "./bulma-0.9.3/bulma";
     @import "./buefy-0.9.19/utils/variables-ext";
 
@@ -16,9 +14,5 @@
     @import "./buefy-0.9.19/buefy";
 }
 
-.element-plus {
-    @import "./element-plus-2.2.6/index.scss";
-    @import "./customize/element-plus.scss";
-}
 
 
