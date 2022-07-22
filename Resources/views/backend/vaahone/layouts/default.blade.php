@@ -43,9 +43,10 @@
 </head>
 <body class="@if(isset($data->body_class)){{$data->body_class}}@endif has-background-white-bis">
 
-@include("vaahcms::backend.vaahone.components.errors")
-@include("vaahcms::backend.vaahone.components.flash")
-
+<div class="bulma">
+    @include("vaahcms::backend.vaahone.components.errors")
+    @include("vaahcms::backend.vaahone.components.flash")
+</div>
 
 @yield('content')
 

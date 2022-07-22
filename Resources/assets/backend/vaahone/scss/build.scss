@@ -3,15 +3,16 @@
 @import "./buefy-0.9.19/utils/_all";
 @import "./oruga-bulma-0.2.6/components/utils/_all";
 
-@import "./bulma-0.9.3/bulma";
-@import "./buefy-0.9.19/utils/variables-ext";
+@import "./bulma-0.9.3/base/_all";
 
-.buefy{
+.bulma{
+    @import "./bulma-0.9.3/bulma";
+    @import "./buefy-0.9.19/utils/variables-ext";
+
+    @import "./bulma-helpers/bulma-helpers";
+
     @import "./buefy-0.9.19/buefy";
 }
 
-.oruga {
-    @import "./oruga-bulma-0.2.6/bulma";
-}
 
-@import "./bulma-helpers/bulma-helpers";
+
