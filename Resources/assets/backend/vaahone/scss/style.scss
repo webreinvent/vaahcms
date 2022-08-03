@@ -101,10 +101,11 @@ html, .section, .hero, footer{
     }
 
     .card-header-buttons{
-        .field{
-            margin-top: 6px;
-            margin-right: 6px;
-        }
+        align-items: center;
+        cursor: pointer;
+        display: flex;
+        justify-content: center;
+        padding: 0.75rem;
     }
 
 }
@@ -136,4 +137,13 @@ html, .section, .hero, footer{
     }
 }
 
-
+.draggable{
+    .dropzone{
+        .dropzone-field-label{
+            min-width: 150px;
+        }
+    }
+    .drag{
+        cursor: grab;
+    }
+}
