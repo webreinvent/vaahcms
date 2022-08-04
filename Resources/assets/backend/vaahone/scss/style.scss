@@ -147,3 +147,29 @@ html, .section, .hero, footer{
         cursor: grab;
     }
 }
+.settings-notifications{
+    .tab-content{
+        .notification-lines{
+            border: 1px solid rgba(72,94,144,.16);
+            .field{
+                &.has-addons{
+                    border-top: 1px solid rgba(72,94,144,.16);
+                    .control{
+                        .is-static{
+                            width: 100px;
+                        }
+                    }
+                    .textarea,.button,.input{
+                        border: none;
+                        border-radius: 0;
+                        box-shadow: none;
+
+                    }
+                    .textarea{
+                    height: 60px;
+                    }
+                }
+            }
+        }
+    }
+}

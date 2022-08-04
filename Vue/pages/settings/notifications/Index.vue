@@ -533,9 +533,7 @@
 
                                     </section>
 
-                                        <hr/>
-
-                                        <div class="columns">
+                                        <div class="columns has-margin-top-10">
 
                                             <div class="column is-3">
                                                 <b-field>
