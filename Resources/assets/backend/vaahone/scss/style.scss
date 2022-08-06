@@ -8,6 +8,9 @@ html, .section, .hero, footer{
     background-color: #bbb !important;
 }
 */
+.has-background-white-bis{
+    background-color: $white-bis;
+}
 .bulma{
 
 
@@ -140,10 +143,19 @@ html, .section, .hero, footer{
     }
 
     .draggable{
+        .dropzone-nested{
+            border:dashed #b5b5b5;border-width:1px 0 0 1px;margin:5px 5px 5px 0;padding:5px 5px 25px 15px;
+            li{
+            &:not(:last-child){
+                margin-bottom:12px
+            }
+        }
+        }
         .dropzone{
             .dropzone-field-label{
                 min-width: 150px;
             }
+
         }
         .drag{
             cursor: grab;
