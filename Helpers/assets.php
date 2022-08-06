@@ -367,3 +367,19 @@ function vh_config_js()
 }
 //-----------------------------------------------------------------------------------
 //-----------------------------------------------------------------------------------
+function vh_backend_logo()
+{
+
+    if(config('vaahcms.backend_logo_url')){
+
+        if (!filter_var(config('vaahcms.backend_logo_url'), FILTER_VALIDATE_URL) === false) {
+            return config('vaahcms.backend_logo_url');
+        } else {
+            return url(config('vaahcms.backend_logo_url'));
+        }
+
+    }
+
+}
+//-----------------------------------------------------------------------------------
+//-----------------------------------------------------------------------------------

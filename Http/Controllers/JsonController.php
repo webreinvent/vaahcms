@@ -123,7 +123,7 @@ class JsonController extends Controller
         $data['urls']['dashboard'] = route('vh.backend')."#/vaah";
 
 
-        $data['backend_logo_url'] = config('vaahcms.backend_logo_url');
+        $data['backend_logo_url'] = vh_backend_logo();
 
 
         $response['status'] = 'success';
