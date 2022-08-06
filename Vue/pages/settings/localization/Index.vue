@@ -232,7 +232,7 @@
                                                     </div>
                                                     <!--/filters-->
 
-                                                    <table v-if="list" class="table">
+                                                    <table v-if="list" class="table is-full-width">
                                                         <template v-if="list && list.data && list.data.length > 0">
                                                             <tr  v-for="item in list.data">
                                                                 <td width="20">
