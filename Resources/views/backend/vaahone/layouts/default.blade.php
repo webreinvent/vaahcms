@@ -37,9 +37,9 @@
         <link href="{{vh_get_backend_assets("css/style.css")}}" rel="stylesheet" media="screen">
     @endif
 
-    @yield('vaahcms_extend_backend_css')
-
     {!! vh_config_css() !!}
+
+    @yield('vaahcms_extend_backend_css')
 
 
 </head>
@@ -52,10 +52,9 @@
 
 @yield('content')
 
+{!! vh_config_js() !!}
 
 @yield('vaahcms_extend_backend_js')
-
-{!! vh_config_js() !!}
 
 </body>
 </html>
