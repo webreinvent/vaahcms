@@ -37,8 +37,10 @@
         <link href="{{vh_get_backend_assets("css/style.css")}}" rel="stylesheet" media="screen">
     @endif
 
+    {!! vh_config_css() !!}
 
     @yield('vaahcms_extend_backend_css')
+
 
 </head>
 <body class="@if(isset($data->body_class)){{$data->body_class}}@endif has-background-white-bis">
@@ -71,6 +73,8 @@
 
 </div>
 
+{!! vh_config_js() !!}
+
 @yield('vaahcms_extend_backend_js')
 
 @if(env('APP_VAAHCMS_ENV') == 'develop')
@@ -78,6 +82,8 @@
 @else
     <script src="{{vh_get_backend_assets("builds/app-extended.js")}}" defer></script>
 @endif
+
+
 
 </body>
 </html>
