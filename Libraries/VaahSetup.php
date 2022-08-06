@@ -35,10 +35,10 @@ class VaahSetup{
 
             $html = html_entity_decode($html);
 
-            if($request->has('app_env_custom'))
+            if($request->has('app_env_custom') && $request->app_env_custom)
             {
                 $file_name = '.env.'.$request->app_env_custom;
-            }else if($request->has('app_env'))
+            }else if($request->has('app_env') && $request->app_env)
             {
                 $file_name = '.env.'.$request->app_env;
             } else if($env_file_name)
