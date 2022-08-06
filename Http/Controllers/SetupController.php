@@ -35,7 +35,7 @@ class SetupController extends Controller
     //----------------------------------------------------------
     public function index()
     {
-        request()->session()->flush();
+        \Session::flush();
 
         //publish assets
         VaahSetup::publishAssets();
