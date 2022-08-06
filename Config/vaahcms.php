@@ -31,6 +31,12 @@ $settings =  [
     'debug' => 1,
     'uploads' => [
         'allowed_extensions' => ["jpg", "jpeg", 'png', "gif", "csv", "docs", "pdf"]
+    ],
+    'css' => [
+        // url
+    ],
+    'js' => [
+        // url
     ]
 ];
 
