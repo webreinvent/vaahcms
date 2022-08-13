@@ -122,7 +122,10 @@
                                     <div v-if="page.active_item">
 
                                         <h3 class="title is-4">
-                                            {{page.active_item.name}}
+                                            <b-button v-if="assets.help_urls && assets.help_urls.send_notification" tag="a"
+                                                      :href="assets.help_urls.send_notification"
+                                                      target="_blank"
+                                                      icon-left="question-circle"></b-button>
                                             <b-tooltip label="Copy Slug" type="is-dark">
                                                 <b-button @click="$vaah.copy(page.active_item.slug)">
                                                     <b-icon class="is-clickable icon is-small"
@@ -130,6 +133,8 @@
                                                     </b-icon>
                                                 </b-button>
                                             </b-tooltip>
+                                            {{page.active_item.name}}
+
                                         </h3>
 
 
