@@ -206,8 +206,8 @@ export default {
             } else
             {
                 this.config.active_step = 1;
-                this.$router.push({name: 'setup.install.migrate'})
-                //window.location = data.redirect_url;
+                location.assign(this.root.base_url+"/backend#/install/migrate");
+                window.location.reload();
             }
 
         },
