@@ -32,6 +32,14 @@
                               icon-left="download" @click="downloadFile(item.name)"></b-button>
                 </b-tooltip>
 
+                <b-tooltip label="Close" type="is-dark">
+                    <b-button type="is-text"
+                              dusk="action-close"
+                              class="card-header-icon has-margin-top-5 has-margin-right-5"
+                              icon-left="times" @click="resetActiveItem()"></b-button>
+                </b-tooltip>
+
+
             </header>
             <!--/header-->
 
