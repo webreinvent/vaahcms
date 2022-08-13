@@ -124,11 +124,11 @@
                                         <h3 class="title is-4">
                                             {{page.active_item.name}}
                                             <b-tooltip label="Copy Slug" type="is-dark">
-                                                <span   @click="$vaah.copy(page.active_item.slug)">
-                                                      <b-icon class="is-clickable icon is-small"
-                                                              icon="copy">
-                                                      </b-icon>
-                                                </span>
+                                                <b-button @click="$vaah.copy(page.active_item.slug)">
+                                                    <b-icon class="is-clickable icon is-small"
+                                                            icon="copy">
+                                                    </b-icon>
+                                                </b-button>
                                             </b-tooltip>
                                         </h3>
 
