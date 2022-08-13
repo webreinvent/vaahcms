@@ -38,11 +38,11 @@
                                              v-model="list.site_title"
                                              type="text"></b-input>
                                     <b-tooltip label="Copy Code Snippet" type="is-dark">
-                                    <p class="control">
+                                        <p class="control">
                                             <b-button icon-left="copy"
                                                       @click="copySetting('site_title')">
                                             </b-button>
-                                    </p>
+                                        </p>
                                     </b-tooltip>
                                 </b-field>
                             </b-field>
@@ -54,11 +54,11 @@
                                          v-model="list.site_description"
                                          type="textarea"></b-input>
                                 <b-tooltip label="Copy Code Snippet" type="is-dark">
-                                <p class="control">
-                                    <b-button icon-left="copy"
-                                              @click="copySetting('site_description')">
-                                    </b-button>
-                                </p>
+                                    <p class="control">
+                                        <b-button icon-left="copy"
+                                                  @click="copySetting('site_description')">
+                                        </b-button>
+                                    </p>
                                 </b-tooltip>
                             </b-field>
 
@@ -95,11 +95,11 @@
                                         <span>Invisible</span>
                                     </b-radio-button>
                                     <b-tooltip label="Copy Code Snippet" type="is-dark">
-                                    <p class="control">
-                                        <b-button icon-left="copy"
-                                                  @click="copySetting('vh_search_engine_visibility()',true)">
-                                        </b-button>
-                                    </p>
+                                        <p class="control">
+                                            <b-button icon-left="copy"
+                                                      @click="copySetting('vh_search_engine_visibility()',true)">
+                                            </b-button>
+                                        </p>
                                     </b-tooltip>
                                 </b-field>
 
@@ -117,11 +117,11 @@
                                              type="text"
                                              placeholder="Enter url"></b-input>
                                     <b-tooltip label="Copy Code Snippet" type="is-dark">
-                                    <p class="control">
-                                        <b-button icon-left="copy"
-                                                  @click="copySetting('redirect_after_frontend_login')">
-                                        </b-button>
-                                    </p>
+                                        <p class="control">
+                                            <b-button icon-left="copy"
+                                                      @click="copySetting('redirect_after_frontend_login')">
+                                            </b-button>
+                                        </p>
                                     </b-tooltip>
                                 </b-field>
                             </b-field>
@@ -186,8 +186,8 @@
                                         <span>Use App Name</span>
                                     </b-radio-button>
                                     <b-radio-button
-                                        v-model="inputs.copyright_text_custom"
-                                        native-value="1">
+                                            v-model="inputs.copyright_text_custom"
+                                            native-value="1">
                                         <span>Custom</span>
                                     </b-radio-button>
 
@@ -198,11 +198,11 @@
                                     </b-input>
 
                                     <b-tooltip label="Copy Code Snippet" type="is-dark">
-                                    <p class="control">
-                                        <b-button icon-left="copy"
-                                                  @click="copySetting('copyright_text')">
-                                        </b-button>
-                                    </p>
+                                        <p class="control">
+                                            <b-button icon-left="copy"
+                                                      @click="copySetting('copyright_text')">
+                                            </b-button>
+                                        </p>
                                     </b-tooltip>
                                 </b-field>
 
@@ -221,8 +221,8 @@
                                         <span>Use App Url</span>
                                     </b-radio-button>
                                     <b-radio-button
-                                        v-model="inputs.copyright_link_custom"
-                                        native-value="true">
+                                            v-model="inputs.copyright_link_custom"
+                                            native-value="true">
                                         <span>Custom</span>
                                     </b-radio-button>
 
@@ -232,11 +232,11 @@
                                              placeholder="Type Copyright Link">
                                     </b-input>
                                     <b-tooltip label="Copy Code Snippet" type="is-dark">
-                                    <p class="control">
-                                        <b-button icon-left="copy"
-                                                  @click="copySetting('copyright_link')">
-                                        </b-button>
-                                    </p>
+                                        <p class="control">
+                                            <b-button icon-left="copy"
+                                                      @click="copySetting('copyright_link')">
+                                            </b-button>
+                                        </p>
                                     </b-tooltip>
 
                                 </b-field>
@@ -255,8 +255,8 @@
                                         <span>Use Current Year</span>
                                     </b-radio-button>
                                     <b-radio-button
-                                        v-model="inputs.copyright_year_custom"
-                                        native-value="true">
+                                            v-model="inputs.copyright_year_custom"
+                                            native-value="true">
                                         <span>Custom</span>
                                     </b-radio-button>
 
@@ -266,11 +266,11 @@
                                              placeholder="Type Copyright Year">
                                     </b-input>
                                     <b-tooltip label="Copy Code Snippet" type="is-dark">
-                                    <p class="control">
+                                        <p class="control">
                                             <b-button icon-left="copy"
                                                       @click="copySetting('copyright_year')">
                                             </b-button>
-                                    </p>
+                                        </p>
                                     </b-tooltip>
 
                                 </b-field>
@@ -284,7 +284,10 @@
                                           :label-position="labelPosition">
 
                                     <TagRolesOnRegistration :options="assets.roles"
+                                                            :allow_new="true"
+                                                            v-model="list.registration_roles"
                                                             :selected_value="list.registration_roles"
+                                                            @onSelect="onSelectRegistrationRoles"
                                                             :open_on_focus="true"/>
 
                                 </b-field>
@@ -298,7 +301,9 @@
 
                                     <TagFileTypes :options="assets.file_types"
                                                   :allow_new="true"
+                                                  v-model="list.upload_allowed_files"
                                                   :selected_value="list.upload_allowed_files"
+                                                  @onSelect="onSelectFileType"
                                                   :open_on_focus="true"/>
 
                                 </b-field>
@@ -421,11 +426,11 @@
                                              placeholder="Enter url">
                                     </b-input>
                                     <b-tooltip label="Copy Code Snippet" type="is-dark">
-                                    <p class="control" v-if="list.redirect_after_backend_logout === 'custom'">
+                                        <p class="control" v-if="list.redirect_after_backend_logout === 'custom'">
                                             <b-button icon-left="copy"
                                                       @click="copySetting('redirect_after_backend_logout')">
                                             </b-button>
-                                    </p>
+                                        </p>
                                     </b-tooltip>
 
                                 </b-field>
