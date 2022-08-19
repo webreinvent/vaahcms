@@ -48,6 +48,11 @@
 <div class="bulma">
     @include("vaahcms::backend.vaahone.components.errors")
     @include("vaahcms::backend.vaahone.components.flash")
+
+    <div id="buefy-snackbar">
+
+    </div>
+
 </div>
 
 @yield('content')
