@@ -83,6 +83,7 @@ export default {
                 message: 'This will <b>delete</b> all existing migration from  <b>database/migrations</b> folder.',
                 confirmText: 'Proceed',
                 type: 'is-danger',
+                container: '.bulma',
                 hasIcon: true,
                 onConfirm: function () {
                     self.runMigrations();

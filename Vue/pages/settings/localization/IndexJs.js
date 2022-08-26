@@ -262,6 +262,7 @@ export default {
                     message: 'Are you sure you want to <b>Add</b> the Language String? This new string will added to general category.',
                     confirmText: 'Add',
                     type: 'is-danger',
+                    container: '.bulma',
                     hasIcon: true,
                     onConfirm: function () {
                         self.$Progress.start();

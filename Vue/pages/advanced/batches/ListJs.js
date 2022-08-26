@@ -349,6 +349,7 @@ export default {
                 message: 'Are you sure you want to <b>delete</b> all the record? This action cannot be undone.',
                 confirmText: 'Delete',
                 type: 'is-danger',
+                container: '.bulma',
                 hasIcon: true,
                 onConfirm: function () {
                     self.$Progress.start();

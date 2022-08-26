@@ -170,6 +170,7 @@ export default {
                 message: 'Are you sure you want to <b>delete</b> the record? This action cannot be undone.',
                 confirmText: 'Delete',
                 type: 'is-danger',
+                container: '.bulma',
                 hasIcon: true,
                 onConfirm: function () {
                     self.actions('bulk-delete');
