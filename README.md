@@ -8,7 +8,7 @@
 > **[VaahCMS](https://vaah.dev/cms)** is an open-source web application development platform shipped with headless content management system.
 
 
-> **In Progress:**  Migrating to **Vue 3** Composition API and **PrimeVue UI** Components.
+> **In Progress:**  Migrating to **Laravel 9**, **Vue 3** Composition API and **PrimeVue UI** Components.
 
 <br/>
 
