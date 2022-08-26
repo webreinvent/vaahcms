@@ -89,6 +89,7 @@ export default {
                 message: 'This will <b>delete</b> all files & database of the module  <b>'+module.name+'</b>. This action cannot be undone.',
                 confirmText: 'Proceed',
                 type: 'is-danger',
+                container: '.bulma',
                 hasIcon: true,
                 onConfirm: function () {
                     self.delete(module);
@@ -157,6 +158,7 @@ export default {
                 message: 'This will <b>import</b> sample/dummy data of the module <b>'+module.name+'</b>. This action cannot be undone.',
                 confirmText: 'Proceed',
                 type: 'is-warning',
+                container: '.bulma',
                 hasIcon: true,
                 onConfirm: function () {
                     self.importSampleData(module);
@@ -191,6 +193,7 @@ export default {
                 message: 'It is recommended to create a backup before this action. This will <b>download</b> the updates for module <b>'+module.name+'</b>. This action cannot be undone.',
                 confirmText: 'Proceed',
                 type: 'is-info',
+                container: '.bulma',
                 hasIcon: true,
                 onConfirm: function () {
                     self.getModuleDetails(module);
