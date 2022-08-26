@@ -8,7 +8,7 @@
 > **[VaahCMS](https://vaah.dev/cms)** is an open-source web application development platform shipped with headless content management system.
 
 
-> **In Progress:**  Migrating to **Vue 3** Composition API and **PrimeVue UI** Components.
+> **In Progress:**  Migrating to **Laravel 9**, **Vue 3** Composition API and **PrimeVue UI** Components.
 
 <br/>
 
@@ -43,11 +43,13 @@ npx vaah cms:install
 
 - Structured (**HMVC**) based modules & themes
 
+- Isolated Vue Apps for each Module & Theme
+
 - Shipped with **headless** CMS
   
 - Encourages to use latest technologies like `Vue`, `Vuex`, `Buefy`
 
-- Inspired with the simplicity of WordPress
+- CMS Module is inspired from the simplicity of WordPress
 
 <br/>
 
@@ -58,7 +60,7 @@ Well, to answer that, ask a question to yourself: Do you want to develop an ente
 ## Join us
 - Contribute and raise issues at: [GitHub](https://github.com/webreinvent/vaahcms)
 - Join us at: [Slack](https://join.slack.com/t/vaah/shared_invite/zt-wgvx75rr-tuAhGtjRweCR~DEVSTFcSQ)
-- See roadmap at: [Trello](https://trello.com/b/MI18Rbs5/vaahcms)
+- Learn more at: [VaahCMS Official Website](https://vaah.dev/cms)
 
 We're actively seeking contributors for our [vaahcms's documentation](https://github.com/webreinvent/vaah-docs), feel free to send `pull requests`.  
 
