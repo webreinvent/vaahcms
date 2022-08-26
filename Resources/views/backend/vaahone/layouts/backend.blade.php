@@ -16,9 +16,8 @@
 
     <meta name="current-url" id="current_url" content="{{ url()->current() }}">
     <meta name="debug" id="debug" content="{{config('vaahcms.debug')}}">
-    @if(env('APP_TIMEZONE'))
-        <meta name="timezone" id="app_timezone" content="{{env('APP_TIMEZONE')}}">
-    @endif
+    <meta name="timezone" id="app_timezone" content="{{env('APP_TIMEZONE')??'UTC'}}">
+
 
     @if(env('SENTRY_DSN'))
     <meta name="sentry-dns" id="sentry_dns" content="{{env('SENTRY_DSN')}}">
@@ -43,9 +42,9 @@
 
 
 </head>
-<body class="@if(isset($data->body_class)){{$data->body_class}}@endif has-background-white-bis">
+<body class="@if(isset($data->body_class)){{$data->body_class}}@endif bulma has-background-white-bis">
 
-<div class="bulma">
+<div class="">
     @include("vaahcms::backend.vaahone.components.errors")
     @include("vaahcms::backend.vaahone.components.flash")
 
