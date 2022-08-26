@@ -190,6 +190,7 @@ export default {
                 message: 'Invalid value(s) can break the application, are you sure to proceed?. You will be <b>logout</b> and redirected to login page.',
                 confirmText: 'Proceed',
                 type: 'is-danger',
+                container: '.bulma',
                 hasIcon: true,
                 onConfirm: function () {
                     self.store();

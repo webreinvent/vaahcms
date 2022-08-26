@@ -205,6 +205,7 @@ export default {
                 message: 'Are you sure you want to <b>change</b> the status? This action will impact all roles that assign to this permission.',
                 confirmText: 'Change',
                 type: 'is-danger',
+                container: '.bulma',
                 hasIcon: true,
                 onConfirm: function () {
                     self.$Progress.start();
