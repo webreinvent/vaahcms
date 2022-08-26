@@ -108,6 +108,12 @@
 
                 <div class="block" >
 
+                    <div v-if="item.avatar" class="has-text-centered has-padding-5">
+                        <span class="image is-64x64" style="margin: 0 auto">
+                                                <img class="is-rounded"
+                                                     :src="item.avatar">
+                                            </span>
+                    </div>
 
                     <div class="b-table">
 
@@ -116,17 +122,7 @@
 
                                 <tbody>
 
-                                <tr v-if="item.avatar">
-                                    <th align="right" class="is-vcentered"></th>
-                                    <td colspan="2" class="">
-                                        <div class="block has-text-centered">
-                                        <span class="image is-64x64">
-                                            <img class="is-rounded"
-                                                 :src="item.avatar">
-                                        </span>
-                                        </div>
-                                    </td>
-                                </tr>
+
 
                                 <template v-for="(value, label) in item">
 

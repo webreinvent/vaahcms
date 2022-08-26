@@ -1,5 +1,5 @@
 /*!
- * FilePond 4.30.3
+ * FilePond 4.30.4
  * Licensed under MIT, https://opensource.org/licenses/MIT/
  * Please visit https://pqina.nl/filepond/ for details.
  */
@@ -91,6 +91,8 @@
  * (c) 2021 Evan You
  * @license MIT
  */
+
+/*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */
 
 /**!
  * Sortable 1.10.2

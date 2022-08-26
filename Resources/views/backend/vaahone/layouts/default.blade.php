@@ -23,6 +23,9 @@
 
     <meta name="current-url" id="current_url" content="{{ url()->current() }}">
     <meta name="debug" id="debug" content="{{config('vaahcms.debug')}}">
+    @if(env('APP_TIMEZONE'))
+        <meta name="timezone" id="app_timezone" content="{{env('APP_TIMEZONE')}}">
+    @endif
 
     <base href="{{\URL::to('/')}}">
 
@@ -37,18 +40,27 @@
         <link href="{{vh_get_backend_assets("css/style.css")}}" rel="stylesheet" media="screen">
     @endif
 
+    {!! vh_config_css() !!}
 
     @yield('vaahcms_extend_backend_css')
+
 
 </head>
 <body class="@if(isset($data->body_class)){{$data->body_class}}@endif has-background-white-bis">
 
-@include("vaahcms::backend.vaahone.components.errors")
-@include("vaahcms::backend.vaahone.components.flash")
+<div class="bulma">
+    @include("vaahcms::backend.vaahone.components.errors")
+    @include("vaahcms::backend.vaahone.components.flash")
 
+    <div id="buefy-snackbar">
+
+    </div>
+
+</div>
 
 @yield('content')
 
+{!! vh_config_js() !!}
 
 @yield('vaahcms_extend_backend_js')
 

@@ -41,6 +41,9 @@ class NotificationsController extends Controller
         $data['notifications'] = Notification::getList($request);
         $data['from'] = env('MAIL_FROM_NAME');
         $data['from_email'] = env('MAIL_FROM_ADDRESS');
+        $data['help_urls'] = [
+            'send_notification' => 'https://docs.vaah.dev/vaahcms/basic/setting/notifications.html#sending-without-laravel-queues'
+        ];
 
         $data['app_url'] = url("/");
 

@@ -7,7 +7,7 @@
 $settings =  [
     'app_name' => 'VaahCMS',
     'app_slug' => 'vaahcms',
-    'version' => '1.7.11',
+    'version' => '1.7.12',
     'get_config_version' => false,
     'website' => 'https://vaah.dev/cms',
     'documentation' => 'https://docs.vaah.dev/vaahcms',
@@ -24,13 +24,19 @@ $settings =  [
     'themes_url' => env('APP_URL').'/vaahcms/themes',
     'storage_url' => env('APP_URL').'/storage',
     'public_url' => env('APP_URL'),
-    'backend_logo_url' => env('APP_URL').'/vaahcms/backend/vaahone/images/vaahcms-logo.svg',
+    'backend_logo_url' => 'vaahcms/backend/vaahone/images/vaahcms-logo.svg', // vh_backend_logo()
     'per_page' => 20,
     'minified' => 0,
     'api_route' => 'https://api.vaah.dev/cms/',
     'debug' => 1,
     'uploads' => [
         'allowed_extensions' => ["jpg", "jpeg", 'png', "gif", "csv", "docs", "pdf"]
+    ],
+    'css' => [
+        // you can use relative or absolute url
+    ],
+    'js' => [
+        // you can use relative or absolute url
     ]
 ];
 

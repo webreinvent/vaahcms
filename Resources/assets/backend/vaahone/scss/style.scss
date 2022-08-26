@@ -8,130 +8,191 @@ html, .section, .hero, footer{
     background-color: #bbb !important;
 }
 */
-
-.icon {
-    svg {
-        height: 1em !important;
-    }
+.has-background-white-bis{
+    background-color: $white-bis;
 }
+.bulma{
 
-.menu-item{
-    li{
-        margin-bottom: .75rem;
-        a{
-            display: flex;
-            align-items: center;
-        }
-        .icon{
-
-            &.is-small{
-                margin-right: .75rem;
-            }
+    table{
+        table-layout: fixed;
+        th,td{
+            word-wrap: break-word;
         }
     }
-}
-.card{
-    &.has-icons-left{
-    .rounded-circle{
-        border-radius: 100%;
-        width: 44px;
-        height: 44px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        margin-bottom: 10px;
 
-    }
-        p{
-            font-weight: 500;
+    .icon {
+        svg {
+            height: 1em !important;
         }
     }
-    &.has-border-right{
-        justify-content: space-evenly;
 
-        .hr{
-            border-right: thin solid $grey-lighter;
-            border-image: linear-gradient(to bottom,#fff 0,#fff 15%,$border-light 50%,#fff 85%,#fff 100%);
-            border-image-slice: 1;
-
-        }
-
-    }
-
-    &.has-notification{
-        .card-footer{
-            border-bottom: 1px solid $border-light;
+    .menu-item{
+        li{
+            margin-bottom: .75rem;
             a{
-                color: $grey-dark;
-                &:hover{
-                    color: $blue;
-                }
-                .icon{
-                    margin-right:.4rem;
-                }
-            }
-        }
-        .notification{
-            border-radius: 4px;
-        }
-    }
-    &.has-listing{
-        .card-content{
-            border-bottom: 1px solid $border-light;
-            &:last-child{
-                border-bottom: none;
-            }
-            .media-content {
-                .title {
-                    a {
-                        color: $grey-dark;
-
-                        &:hover {
-                            color: $blue;
-                        }
-                    }
-
-                }
-
-
-            }
-
-
-        }
-    }
-
-    .card-header-buttons{
-        .field{
-            margin-top: 6px;
-            margin-right: 6px;
-        }
-    }
-
-}
-.sidebar-right{
-    .card-content{
-        padding: 1rem 1.5rem;
-    }
-}
-
-
-.block{
-    &.is-grouped{
-        a{
-            font-weight: 500;
-            display: inline-flex;
-            align-items: center;
-            margin-right: .75rem;
-            padding-right: .7rem;
-            border-right: 1px solid $border-light;
-            &:last-child{
-                margin-right: 0;
-                margin-left: 0;
-                border-right: none;
+                display: flex;
+                align-items: center;
             }
             .icon{
-                margin-right: .5rem;
+
+                &.is-small{
+                    margin-right: .75rem;
+                }
             }
         }
     }
+    .card{
+        &.has-icons-left{
+            .rounded-circle{
+                border-radius: 100%;
+                width: 44px;
+                height: 44px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                margin-bottom: 10px;
+
+            }
+            p{
+                font-weight: 500;
+            }
+        }
+        &.has-border-right{
+            justify-content: space-evenly;
+
+            .hr{
+                border-right: thin solid $grey-lighter;
+                border-image: linear-gradient(to bottom,#fff 0,#fff 15%,$border-light 50%,#fff 85%,#fff 100%);
+                border-image-slice: 1;
+
+            }
+
+        }
+
+        &.has-notification{
+            .card-footer{
+                border-bottom: 1px solid $border-light;
+                a{
+                    color: $grey-dark;
+                    &:hover{
+                        color: $blue;
+                    }
+                    .icon{
+                        margin-right:.4rem;
+                    }
+                }
+            }
+            .notification{
+                border-radius: 4px;
+            }
+        }
+        &.has-listing{
+            .card-content{
+                border-bottom: 1px solid $border-light;
+                &:last-child{
+                    border-bottom: none;
+                }
+                .media-content {
+                    .title {
+                        a {
+                            color: $grey-dark;
+
+                            &:hover {
+                                color: $blue;
+                            }
+                        }
+
+                    }
+
+
+                }
+
+
+            }
+        }
+
+        .card-header-buttons{
+            align-items: center;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            padding: 0.75rem;
+        }
+
+    }
+    .sidebar-right{
+        .card-content{
+            padding: 1rem 1.5rem;
+        }
+    }
+
+
+    .block{
+        &.is-grouped{
+            a{
+                font-weight: 500;
+                display: inline-flex;
+                align-items: center;
+                margin-right: .75rem;
+                padding-right: .7rem;
+                border-right: 1px solid $border-light;
+                &:last-child{
+                    margin-right: 0;
+                    margin-left: 0;
+                    border-right: none;
+                }
+                .icon{
+                    margin-right: .5rem;
+                }
+            }
+        }
+    }
+
+    .draggable{
+        .dropzone-nested{
+            border:dashed #b5b5b5;border-width:1px 0 0 1px;margin:5px 5px 5px 0;padding:5px 5px 25px 15px;
+            li{
+            &:not(:last-child){
+                margin-bottom:12px
+            }
+        }
+        }
+        .dropzone{
+            .dropzone-field-label{
+                min-width: 150px;
+            }
+
+        }
+        .drag{
+            cursor: grab;
+        }
+    }
+    .settings-notifications{
+        .tab-content{
+            .notification-lines{
+                border: 1px solid rgba(72,94,144,.16);
+                .field{
+                    &.has-addons{
+                        border-top: 1px solid rgba(72,94,144,.16);
+                        .control{
+                            .is-static{
+                                width: 100px;
+                            }
+                        }
+                        .textarea,.button,.input{
+                            border: none;
+                            border-radius: 0;
+                            box-shadow: none;
+
+                        }
+                        .textarea{
+                            height: 60px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+
 }

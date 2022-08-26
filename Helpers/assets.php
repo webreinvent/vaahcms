@@ -319,3 +319,67 @@ function vh_content_relations_by_name($name = 'null',array $relations = [])
 }
 //-----------------------------------------------------------------------------------
 //-----------------------------------------------------------------------------------
+function vh_config_css()
+{
+
+    $value = "";
+
+    if(config('vaahcms.css') && is_array(config('vaahcms.css'))){
+
+        foreach (config('vaahcms.css') as $css){
+
+            if (!filter_var($css, FILTER_VALIDATE_URL) === false) {
+                $value .= '<link href="'.$css.'" rel="stylesheet" media="screen">'."\n";
+            } else {
+                $value .= '<link href="'.url($css).'" rel="stylesheet" media="screen">'."\n";
+            }
+
+        }
+
+    }
+
+    return $value;
+
+}
+//-----------------------------------------------------------------------------------
+//-----------------------------------------------------------------------------------
+function vh_config_js()
+{
+
+    $value = "";
+
+    if(config('vaahcms.js') && is_array(config('vaahcms.js'))){
+
+        foreach (config('vaahcms.js') as $js){
+
+            if (!filter_var($js, FILTER_VALIDATE_URL) === false) {
+                $value .= '<script src="'.$js.'" ></script>'."\n";
+            } else {
+                $value .= '<script src="'.url($js).'" ></script>'."\n";
+            }
+
+        }
+
+    }
+
+    return $value;
+
+}
+//-----------------------------------------------------------------------------------
+//-----------------------------------------------------------------------------------
+function vh_backend_logo()
+{
+
+    if(config('vaahcms.backend_logo_url')){
+
+        if (!filter_var(config('vaahcms.backend_logo_url'), FILTER_VALIDATE_URL) === false) {
+            return config('vaahcms.backend_logo_url');
+        } else {
+            return url(config('vaahcms.backend_logo_url'));
+        }
+
+    }
+
+}
+//-----------------------------------------------------------------------------------
+//-----------------------------------------------------------------------------------

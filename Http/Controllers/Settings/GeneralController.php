@@ -75,6 +75,7 @@ class GeneralController extends Controller
     public function storeSiteSettings(Request $request)
     {
 
+
         if(!\Auth::user()->hasPermission('has-access-of-setting-section'))
         {
             $response['status'] = 'failed';
@@ -90,13 +91,17 @@ class GeneralController extends Controller
             if(!$setting)
             {
                 $setting = new Setting();
+                $setting->key = $key;
+                $setting->value = $value;
+                $setting->category = 'global';
+                $setting->save();
             }
-            $setting->key = $key;
-            $setting->value = $value;
-            $setting->category = 'global';
-            $setting->save();
+            else{
+                Setting::where('category', 'global')
+                    ->where('key', $key)
+                    ->update(['value' => $value]);
+            }
         }
-
         $response['status'] = 'success';
         $response['data'][] = '';
         $response['messages'][] = 'Settings successful saved';
