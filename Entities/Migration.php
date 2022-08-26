@@ -42,8 +42,9 @@ class Migration extends Model {
         return $this->morphTo();
     }
     //-------------------------------------------------
-    public static function syncModuleMigrations($module_id=null)
+    public static function syncModuleMigrations($module_id=null,$batch_num)
     {
+
         $migrations = \DB::table('migrations')->count();
 
         if($migrations < 1)
@@ -55,7 +56,7 @@ class Migration extends Model {
          * Ignoring batch 1 because this will be setup batch for vaahcms
          */
         $migrations = \DB::table('migrations')
-            ->where('batch', '!=', 1)
+            ->where('batch', $batch_num)
             ->get();
 
         $module = Module::find($module_id);
@@ -77,7 +78,7 @@ class Migration extends Model {
         return true;
     }
     //-------------------------------------------------
-    public static function syncThemeMigrations($theme_id=null)
+    public static function syncThemeMigrations($theme_id=null,$batch_num)
     {
         $migrations = \DB::table('migrations')->count();
 
@@ -90,7 +91,7 @@ class Migration extends Model {
          * Ignoring batch 1 because this will be setup batch for vaahcms
          */
         $migrations = \DB::table('migrations')
-            ->where('batch', '!=', 1)
+            ->where('batch', $batch_num)
             ->get();
 
         $theme = Theme::find($theme_id);

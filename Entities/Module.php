@@ -394,9 +394,17 @@ class Module extends Model {
             $module_path = config('vaahcms.modules_path').$module->name;
             $path = vh_module_migrations_path($module->name);
 
+            $max_batch = \DB::table('migrations')
+                ->max('batch');
+
             Migration::runMigrations($path);
 
-            Migration::syncModuleMigrations($module->id);
+            $current_max_batch = \DB::table('migrations')
+                ->max('batch');
+
+            if($current_max_batch > $max_batch){
+                Migration::syncModuleMigrations($module->id,$current_max_batch);
+            }
 
             $seeds_namespace = vh_module_database_seeder($module->name);
             Migration::runSeeds($seeds_namespace);
