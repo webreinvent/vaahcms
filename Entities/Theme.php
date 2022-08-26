@@ -464,9 +464,19 @@ class Theme extends Model {
 
             $path = vh_theme_migrations_path($item->name);
 
+            $max_batch = \DB::table('migrations')
+                ->max('batch');
+
             Migration::runMigrations($path);
 
-            Migration::syncThemeMigrations($item->id);
+            $current_max_batch = \DB::table('migrations')
+                ->max('batch');
+
+            if($current_max_batch > $max_batch){
+                Migration::syncThemeMigrations($item->id,$current_max_batch);
+            }
+
+
 
             $seeds_namespace = vh_theme_database_seeder($item->name);
             Migration::runSeeds($seeds_namespace);
