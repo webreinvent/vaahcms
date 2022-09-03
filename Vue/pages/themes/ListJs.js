@@ -320,15 +320,48 @@ export default {
 
             let self = this;
 
-            let temp_array = this.remove_action_reload_queue;
+            let activate_array = this.remove_action_reload_queue.activate;
 
-            temp_array.forEach(function(key) {
-                let index_1 = self.action_reload.indexOf(key);
+            activate_array.forEach(function(key) {
+                let index_1 = self.action_reload['activate'].indexOf(key);
 
-                self.action_reload.splice(index_1, 1);
-                let index_2 = self.remove_action_reload_queue.indexOf(key);
+                self.action_reload['activate'].splice(index_1, 1);
+                let index_2 = self.remove_action_reload_queue['activate'].indexOf(key);
 
-                self.remove_action_reload_queue.splice(index_2, 1);
+                self.remove_action_reload_queue['activate'].splice(index_2, 1);
+            });
+
+            let deactivate_array = this.remove_action_reload_queue.deactivate;
+
+            deactivate_array.forEach(function(key) {
+                let index_1 = self.action_reload['deactivate'].indexOf(key);
+
+                self.action_reload['deactivate'].splice(index_1, 1);
+                let index_2 = self.remove_action_reload_queue['deactivate'].indexOf(key);
+
+                self.remove_action_reload_queue['deactivate'].splice(index_2, 1);
+            });
+
+            let make_default_array = this.remove_action_reload_queue.make_default;
+
+            make_default_array.forEach(function(key) {
+                let index_1 = self.action_reload['make_default'].indexOf(key);
+
+                self.action_reload['make_default'].splice(index_1, 1);
+                let index_2 = self.remove_action_reload_queue['make_default'].indexOf(key);
+
+                self.remove_action_reload_queue['make_default'].splice(index_2, 1);
+            });
+
+            let import_sample_data_array = this.remove_action_reload_queue.import_sample_data;
+
+            import_sample_data_array.forEach(function(key) {
+                let index_1 = self.action_reload['import_sample_data'].indexOf(key);
+
+                self.action_reload['import_sample_data'].splice(index_1, 1);
+                let index_2 = self.remove_action_reload_queue['import_sample_data'].indexOf(key);
+
+                self.remove_action_reload_queue['import_sample_data'].splice(index_2, 1);
             });
 
             this.update('action_reload', self.action_reload);

@@ -132,7 +132,7 @@ export default {
         actions: function (action, module) {
             this.action_reload.push(module.slug);
             this.update('action_reload', this.action_reload);
-            
+
             this.$Progress.start();
             this.update('selected_item', module);
             let params = {

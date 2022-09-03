@@ -131,7 +131,7 @@ export default {
         //---------------------------------------------------------------------
         actions: function (action, theme) {
 
-            this.action_reload.push(theme.slug);
+            this.action_reload[action].push(theme.slug);
 
             this.update('action_reload', this.action_reload);
 
@@ -155,7 +155,7 @@ export default {
 
                 if(data.theme_slug){
 
-                    this.remove_action_reload_queue.push(data.theme_slug);
+                    this.remove_action_reload_queue[data.theme_action].push(data.theme_slug);
                     this.update('remove_action_reload_queue', this.remove_action_reload_queue);
 
                 }
@@ -181,6 +181,11 @@ export default {
         },
         //---------------------------------------------------------------------
         importSampleData: function (theme) {
+
+            this.action_reload['import_sample_data'].push(theme.slug);
+
+            this.update('action_reload', this.action_reload);
+
             this.$Progress.start();
             let params = {
                 action: 'import_sample_data',
@@ -195,6 +200,13 @@ export default {
             if(data)
             {
                 this.$emit('eReloadList');
+
+                if(data.theme_slug){
+
+                    this.remove_action_reload_queue[data.theme_action].push(data.theme_slug);
+                    this.update('remove_action_reload_queue', this.remove_action_reload_queue);
+
+                }
             }
 
         },

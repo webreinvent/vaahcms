@@ -34,14 +34,14 @@
                             <b-button v-if="props.row.is_active && hasPermission('can-deactivate-theme')"
                                       size="is-small"
                                       type="is-warning"
-                                      :loading="action_reload.includes(props.row.slug)"
+                                      :loading="action_reload.deactivate.includes(props.row.slug)"
                                       @click="actions('deactivate', props.row)">
                                 Deactivate
                             </b-button>
 
                             <b-button v-if="!props.row.is_active && hasPermission('can-activate-theme')" size="is-small"
                                       type="is-success"
-                                      :loading="action_reload.includes(props.row.slug)"
+                                      :loading="action_reload.activate.includes(props.row.slug)"
                                       @click="actions('activate', props.row)">
                                 Activate
                             </b-button>

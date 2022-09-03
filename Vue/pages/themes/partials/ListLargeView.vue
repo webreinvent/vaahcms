@@ -1,6 +1,7 @@
 <script src="./ListLargeViewJs.js"></script>
 <template>
     <div v-if="page.list">
+
         <b-table :data="page.list_is_empty ? [] : page.list.data"
                  :checkable="hasPermission('can-update-theme') ? true : false"
                  :checked-rows.sync="page.bulk_action.selected_items"
@@ -32,14 +33,14 @@
                             <b-button v-if="props.row.is_active && hasPermission('can-deactivate-theme')"
                                       size="is-small"
                                       type="is-warning"
-                                      :loading="action_reload.includes(props.row.slug)"
+                                      :loading="action_reload.deactivate.includes(props.row.slug)"
                                       @click="actions('deactivate', props.row)">
                                 Deactivate
                             </b-button>
 
                             <b-button v-if="!props.row.is_active && hasPermission('can-activate-theme')" size="is-small"
                                       type="is-success"
-                                      :loading="action_reload.includes(props.row.slug)"
+                                      :loading="action_reload.activate.includes(props.row.slug)"
                                       @click="actions('activate', props.row)">
                                 Activate
                             </b-button>
@@ -67,6 +68,7 @@
                                 <b-button
                                         size="is-small"
                                         type="is-success"
+                                        :loading="action_reload.make_default.includes(props.row.slug)"
                                         @click="actions('make_default', props.row)">
                                     Make Default
                                 </b-button>
@@ -82,6 +84,7 @@
 
                                 <b-button size="is-small"
                                           icon-left="database"
+                                          :loading="action_reload.import_sample_data.includes(props.row.slug)"
                                           @click="confirmDataImport(props.row)"
                                           type="is-warning">
                                 </b-button>

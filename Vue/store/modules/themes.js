@@ -50,8 +50,18 @@ export default {
                 filter: null,
             },
         },
-        action_reload: [],
-        remove_action_reload_queue: [],
+        action_reload: {
+            'activate': [],
+            'deactivate': [],
+            'make_default': [],
+            'import_sample_data': [],
+        },
+        remove_action_reload_queue: {
+            'activate': [],
+            'deactivate': [],
+            'make_default': [],
+            'import_sample_data': [],
+        },
     },
     //=========================================================================
     mutations:{

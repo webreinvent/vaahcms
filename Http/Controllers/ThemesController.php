@@ -283,6 +283,7 @@ class ThemesController extends Controller
         }
 
         $response['data']['theme_slug'] = $theme->slug;
+        $response['data']['theme_action'] = $request->action;
 
         return response()->json($response);
     }
