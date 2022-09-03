@@ -51,6 +51,20 @@
                 reload_list_time: 60000, // reload in 60 seconds
             }
         },
+        watch:{
+
+            'root.reload_advanced_count_list': {
+                deep: true,
+                handler: function (new_val, old_val) {
+
+                    if(new_val)
+                    {
+                        this.getCountList();
+                    }
+
+                }
+            }
+        },
         mounted() {
 
             this.onLoad();
@@ -66,6 +80,15 @@
 
         },
         methods: {
+            update: function(name, value, namespace = this.namespace)
+            {
+                let update = {
+                    state_name: name,
+                    state_value: value,
+                    namespace: namespace,
+                };
+                this.$vaah.updateState(update);
+            },
             //---------------------------------------------------------------------
             onLoad: function()
             {
@@ -85,7 +108,7 @@
                 if(data){
                     this.advanced_count = data;
                 }
-
+                this.update('reload_advanced_count_list', false,'root');
             },
             //---------------------------------------------------------------------
             //---------------------------------------------------------------------

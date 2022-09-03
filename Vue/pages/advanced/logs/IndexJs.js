@@ -50,12 +50,12 @@ export default {
         //---------------------------------------------------------------------
     },
     methods: {
-        update: function(name, value)
+        update: function(name, value, namespace = this.namespace)
         {
             let update = {
                 state_name: name,
                 state_value: value,
-                namespace: this.namespace,
+                namespace: namespace,
             };
             this.$vaah.updateState(update);
         },
@@ -84,7 +84,10 @@ export default {
                 }
 
                 this.update('list', data.list);
+
             }
+
+            this.update('reload_advanced_count_list', true,'root');
 
         },
         //---------------------------------------------------------------------

@@ -58,7 +58,7 @@ export default {
     methods: {
         //---------------------------------------------------------------------
         //---------------------------------------------------------------------
-        update: function(name, value)
+        update: function(name, value, namespace = this.namespace)
         {
             let update = {
                 state_name: name,
@@ -233,6 +233,7 @@ export default {
 
             this.is_btn_loading = false;
             this.$Progress.finish();
+            this.update('reload_advanced_count_list', true,'root');
 
         },
         //---------------------------------------------------------------------

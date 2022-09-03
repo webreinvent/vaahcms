@@ -28,6 +28,7 @@ export default {
         ajax_url: ajax_url,
         json_url: json_url,
         assets: null,
+        reload_advanced_count_list: false,
         is_sidebar_reduced: true,
         has_padding_left: '55px',
         default_padding_left: '55px',
