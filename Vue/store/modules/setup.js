@@ -42,7 +42,7 @@ export default {
                 app_env: null,
                 app_env_custom: null,
                 app_url: null,
-                app_timezone: null,
+                app_timezone: 'UTC',
                 db_connection: 'mysql',
                 db_host: '127.0.0.1',
                 db_port: 3306,
