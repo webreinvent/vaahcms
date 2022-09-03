@@ -9,10 +9,14 @@ use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use VaahCms\Modules\Cms\Entities\MenuItem;
 use VaahCms\Modules\Cms\Entities\Page;
+use WebReinvent\VaahCms\Entities\Batch;
+use WebReinvent\VaahCms\Entities\FailedJob;
+use WebReinvent\VaahCms\Entities\Job;
 use WebReinvent\VaahCms\Entities\Module;
 use WebReinvent\VaahCms\Entities\Notified;
 use WebReinvent\VaahCms\Entities\Theme;
 use WebReinvent\VaahCms\Entities\User;
+use WebReinvent\VaahCms\Http\Controllers\Advanced\LogsController;
 
 class JsonController extends Controller
 {
@@ -236,6 +240,31 @@ class JsonController extends Controller
             ->orderBy('created_at', 'desc')->get();
 
         return $list;
+
+    }
+    //----------------------------------------------------------
+    public function getAdvancedCountList(Request $request)
+    {
+
+        $logs = new LogsController();
+
+        $log_list = $logs->getList(new Request());
+
+        if(isset($log_list->original) && $log_list->original['status'] == 'success'){
+            $log_list = $log_list->original['data']['list'];
+        }
+
+        $list = [
+            'logs' => count($log_list),
+            'jobs' => Job::count(),
+            'failed_jobs' => FailedJob::count(),
+            'batches' => Batch::count(),
+        ];
+
+        $response['status'] = 'success';
+        $response['data'] = $list;
+
+        return $response;
 
     }
     //----------------------------------------------------------

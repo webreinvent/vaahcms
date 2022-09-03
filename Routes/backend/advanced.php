@@ -81,3 +81,17 @@ Route::group(
         //---------------------------------------------------------
     });
 
+
+Route::group(
+    [
+        'prefix' => 'backend/vaah/advanced',
+        'middleware' => ['web', 'has.backend.access'],
+        'namespace' => 'WebReinvent\VaahCms\Http\Controllers',
+    ],
+    function () {
+        //---------------------------------------------------------
+        Route::any('/getCountList', 'JsonController@getAdvancedCountList')
+            ->name('vh.backend.jobs.jobs.assets');
+        //---------------------------------------------------------
+    });
+
