@@ -321,7 +321,7 @@ export default {
 
             let self = this;
 
-            let temp_array = this.remove_action_reload_queue
+            let temp_array = this.remove_action_reload_queue;
 
             temp_array.forEach(function(key) {
                 let index_1 = self.action_reload.indexOf(key);

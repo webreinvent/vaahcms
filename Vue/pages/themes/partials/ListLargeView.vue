@@ -26,20 +26,20 @@
                 <b-table-column v-slot="props"  width="100" field="actions" label="" numeric>
 
 
-
-
                     <b-field class="float-right" style="float: right;">
 
                         <p v-if="hasPermission('can-activate-theme') || hasPermission('can-deactivate-theme')" class="control">
                             <b-button v-if="props.row.is_active && hasPermission('can-deactivate-theme')"
                                       size="is-small"
                                       type="is-warning"
+                                      :loading="action_reload.includes(props.row.slug)"
                                       @click="actions('deactivate', props.row)">
                                 Deactivate
                             </b-button>
 
                             <b-button v-if="!props.row.is_active && hasPermission('can-activate-theme')" size="is-small"
                                       type="is-success"
+                                      :loading="action_reload.includes(props.row.slug)"
                                       @click="actions('activate', props.row)">
                                 Activate
                             </b-button>

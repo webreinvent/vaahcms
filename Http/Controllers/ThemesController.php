@@ -282,6 +282,8 @@ class ThemesController extends Controller
 
         }
 
+        $response['data']['theme_slug'] = $theme->slug;
+
         return response()->json($response);
     }
 

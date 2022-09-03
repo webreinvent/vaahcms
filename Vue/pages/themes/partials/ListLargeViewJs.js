@@ -9,6 +9,8 @@ export default {
         assets() {return this.$store.getters[namespace+'/state'].assets},
         ajax_url() {return this.$store.getters[namespace+'/state'].ajax_url},
         query_string() {return this.$store.getters[namespace+'/state'].query_string},
+        action_reload() {return this.$store.getters[namespace+'/state'].action_reload},
+        remove_action_reload_queue() {return this.$store.getters[namespace+'/state'].remove_action_reload_queue},
     },
     components:{
         Tags,
@@ -128,6 +130,11 @@ export default {
         },
         //---------------------------------------------------------------------
         actions: function (action, theme) {
+
+            this.action_reload.push(theme.slug);
+
+            this.update('action_reload', this.action_reload);
+
             this.$Progress.start();
             this.update('selected_item', theme);
             let params = {
@@ -145,6 +152,13 @@ export default {
                 this.update('selected_item', null);
                 this.getRootAssets();
                 this.$emit('eReloadList');
+
+                if(data.theme_slug){
+
+                    this.remove_action_reload_queue.push(data.theme_slug);
+                    this.update('remove_action_reload_queue', this.remove_action_reload_queue);
+
+                }
             }
 
         },

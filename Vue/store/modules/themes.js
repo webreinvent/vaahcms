@@ -49,7 +49,9 @@ export default {
                 trashed: null,
                 filter: null,
             },
-        }
+        },
+        action_reload: [],
+        remove_action_reload_queue: [],
     },
     //=========================================================================
     mutations:{
