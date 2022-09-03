@@ -272,6 +272,8 @@ class ModulesController extends Controller
 
         }
 
+        $response['data']['module_slug'] = $module->slug;
+
         return response()->json($response);
     }
 

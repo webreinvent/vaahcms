@@ -1,6 +1,7 @@
 <script src="./ListLargeViewJs.js"></script>
 <template>
     <div v-if="page.list">
+
         <b-table :data="page.list_is_empty ? [] : page.list.data"
                  :checkable="hasPermission('can-update-module') ? true : false"
                  :checked-rows.sync="page.bulk_action.selected_items"
@@ -26,20 +27,20 @@
                 <b-table-column v-slot="props"  width="100" field="actions" label="" numeric>
 
 
-
-
                     <b-field class="float-right" style="float: right;">
 
                         <p v-if="hasPermission('can-activate-module') || hasPermission('can-deactivate-module')" class="control">
                             <b-button v-if="props.row.is_active && hasPermission('can-deactivate-module')"
                                       size="is-small"
                                       type="is-warning"
+                                      :loading="action_reload.includes(props.row.slug)"
                                       @click="actions('deactivate', props.row)">
                                 Deactivate
                             </b-button>
 
                             <b-button v-if="!props.row.is_active && hasPermission('can-activate-module')" size="is-small"
                                       type="is-success"
+                                      :loading="action_reload.includes(props.row.slug)"
                                       @click="actions('activate', props.row)">
                                 Activate
                             </b-button>

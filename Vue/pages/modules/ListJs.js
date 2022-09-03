@@ -12,6 +12,8 @@ export default {
         assets() {return this.$store.getters[namespace+'/state'].assets},
         ajax_url() {return this.$store.getters[namespace+'/state'].ajax_url},
         query_string() {return this.$store.getters[namespace+'/state'].query_string},
+        action_reload() {return this.$store.getters[namespace+'/state'].action_reload},
+        remove_action_reload_queue() {return this.$store.getters[namespace+'/state'].remove_action_reload_queue},
     },
     components:{
         ...GlobalComponents,
@@ -116,6 +118,8 @@ export default {
                 this.update('query_string', this.page.query_string);
                 this.$vaah.updateCurrentURL(this.page.query_string, this.$router);
             }
+
+            this.removeActionReloadFromQueue();
 
         },
         //---------------------------------------------------------------------
@@ -312,6 +316,27 @@ export default {
             }
         },
 
+        //---------------------------------------------------------------------
+        removeActionReloadFromQueue: function () {
+
+            let self = this;
+
+            let temp_array = this.remove_action_reload_queue
+
+            temp_array.forEach(function(key) {
+                let index_1 = self.action_reload.indexOf(key);
+
+                self.action_reload.splice(index_1, 1);
+                let index_2 = self.remove_action_reload_queue.indexOf(key);
+
+                self.remove_action_reload_queue.splice(index_2, 1);
+            });
+
+            this.update('action_reload', self.action_reload);
+            this.update('remove_action_reload_queue', self.remove_action_reload_queue);
+
+
+        },
         //---------------------------------------------------------------------
     }
 }
