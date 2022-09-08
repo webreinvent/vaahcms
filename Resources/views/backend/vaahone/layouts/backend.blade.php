@@ -34,6 +34,7 @@
     @else
         <link href="{{vh_get_backend_assets("css/build.css")}}" rel="stylesheet" media="screen">
         <link href="{{vh_get_backend_assets("css/style.css")}}" rel="stylesheet" media="screen">
+        <link href="{{vh_get_backend_assets("css/build.css", 'vaahprime')}}" rel="stylesheet" media="screen">
     @endif
 
     {!! vh_config_css() !!}

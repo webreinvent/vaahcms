@@ -19,10 +19,14 @@ function vh_get_backend_assets_url()
     return url('/vaahcms/backend/');
 }
 //-----------------------------------------------------------------------------------
-function vh_get_backend_theme_url()
+function vh_get_backend_theme_url($theme=null)
 {
+    if(!$theme)
+    {
+        $theme = config('vaahcms.backend_theme');
+    }
 
-    $path = ('/vaahcms/backend/'.config('vaahcms.backend_theme'));
+    $path = ('/vaahcms/backend/'.$theme);
     $url = url($path);
 
     return $url;
@@ -92,9 +96,9 @@ function vh_load_backend_js()
 //-----------------------------------------------------------------------------------
 
 //-----------------------------------------------------------------------------------
-function vh_get_backend_assets($file_path)
+function vh_get_backend_assets($file_path, $theme=null)
 {
-    return vh_get_backend_theme_url()."/".$file_path."?v=".config('vaahcms.version');
+    return vh_get_backend_theme_url($theme)."/".$file_path."?v=".config('vaahcms.version');
 }
 //-----------------------------------------------------------------------------------
 function vh_get_backend_asset_url($asset_url)

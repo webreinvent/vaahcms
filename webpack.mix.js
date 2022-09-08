@@ -47,7 +47,7 @@ if (mix.inProduction()) {
      * vaahprime
      */
     theme_name = 'vaahprime';
-    output_theme_folder = "./"+theme_name+"/";
+    output_theme_folder = "Resources/assets/backend/"+theme_name+"/";
     source_theme_folder = "Resources/assets/backend/"+theme_name;
     mix.combine([
         source_theme_folder+'/css/bootstrap4-light-blue/theme.css',
