@@ -57,8 +57,6 @@ if (mix.inProduction()) {
     ], output_theme_folder+'css/build.css');
 
 
-
-
 } else {
 
     publish_folder = './../../public/vaahcms/backend/';
