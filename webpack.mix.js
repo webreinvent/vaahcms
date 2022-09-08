@@ -24,21 +24,37 @@ if (mix.inProduction()) {
     console.log('---------------------');
 
     publish_folder = './Resources/assets/backend/';
-
-    output_theme_folder = "./"+theme_name+"/";
-    source_theme_folder = "Resources/assets/backend/"+theme_name;
-
-    source_vue_folder = __dirname+'/Vue';
-
     mix.setPublicPath(publish_folder);
 
+    /**
+     * vaahone css
+     */
+    output_theme_folder = "./"+theme_name+"/";
+    source_theme_folder = "Resources/assets/backend/"+theme_name;
     mix.sass(source_theme_folder+'/scss/build.scss', output_theme_folder+'css/');
     mix.sass(source_theme_folder+'/scss/style.scss', output_theme_folder+'css/');
 
-
+    /**
+     * vaahone js
+     */
+    source_vue_folder = __dirname+'/Vue';
     //mix.js(__dirname+"/VueUI/app.js",  output_theme_folder+'/builds/ui.js').vue();
     mix.js(__dirname+"/Vue/app.js",  output_theme_folder+'/builds/app.js').vue();
     mix.js(__dirname+"/Vue/app-extended.js",  output_theme_folder+'/builds/app-extended.js').vue();
+
+
+    /**
+     * vaahprime
+     */
+    theme_name = 'vaahprime';
+    output_theme_folder = "Resources/assets/backend/"+theme_name+"/";
+    source_theme_folder = "Resources/assets/backend/"+theme_name;
+    mix.combine([
+        source_theme_folder+'/css/bootstrap4-light-blue/theme.css',
+        source_theme_folder+'/css/primevue.min.css',
+        source_theme_folder+'/css/primeflex-3.1.2/primeflex.css',
+        source_theme_folder+'/css/primeicons.css',
+    ], output_theme_folder+'css/build.css');
 
 
 } else {

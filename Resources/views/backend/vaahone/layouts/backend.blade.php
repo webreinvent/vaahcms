@@ -2,9 +2,16 @@
 <html lang="en">
 <head>
 
-    <title><?php if(isset($data->title)) { echo $data->title; } else {
+    <title>
+        <?php
+        if(isset($data->title)) { echo $data->title; }
+        elseif(env('VAAHCMS_VERSION')) {
+            echo config('vaahcms.app_name')." v".env('VAAHCMS_VERSION');
+        }else{
             echo config('vaahcms.app_name')." v".config('vaahcms.version');
-        } ?></title>
+        }
+        ?>
+    </title>
 
     <meta charset="UTF-8">
 
@@ -34,6 +41,8 @@
     @else
         <link href="{{vh_get_backend_assets("css/build.css")}}" rel="stylesheet" media="screen">
         <link href="{{vh_get_backend_assets("css/style.css")}}" rel="stylesheet" media="screen">
+        <link href="{{vh_get_backend_assets("css/build.css", 'vaahprime')}}" rel="stylesheet" media="screen">
+        <link href="{{vh_get_backend_assets("fontawesome-6.2.0/css/all.min.css", 'common')}}" rel="stylesheet" media="screen">
     @endif
 
     {!! vh_config_css() !!}

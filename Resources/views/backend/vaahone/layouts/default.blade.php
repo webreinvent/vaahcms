@@ -25,6 +25,9 @@
     <meta name="debug" id="debug" content="{{config('vaahcms.debug')}}">
     <meta name="timezone" id="app_timezone" content="{{env('APP_TIMEZONE')??'UTC'}}">
 
+    @if(env('SENTRY_DSN'))
+        <meta name="sentry-dns" id="sentry_dns" content="{{env('SENTRY_DSN')}}">
+    @endif
 
     <base href="{{\URL::to('/')}}">
 
@@ -37,6 +40,8 @@
     @else
         <link href="{{vh_get_backend_assets("css/build.css")}}" rel="stylesheet" media="screen">
         <link href="{{vh_get_backend_assets("css/style.css")}}" rel="stylesheet" media="screen">
+        <link href="{{vh_get_backend_assets("css/build.css", 'vaahprime')}}" rel="stylesheet" media="screen">
+        <link href="{{vh_get_backend_assets("fontawesome-6.2.0/css/all.min.css", 'common')}}" rel="stylesheet" media="screen">
     @endif
 
     {!! vh_config_css() !!}
