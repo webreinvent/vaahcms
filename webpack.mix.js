@@ -54,6 +54,7 @@ if (mix.inProduction()) {
         source_theme_folder+'/css/primevue.min.css',
         source_theme_folder+'/css/primeflex-3.1.2/primeflex.css',
         source_theme_folder+'/css/primeicons.css',
+        source_theme_folder+'/css/style.css',
     ], output_theme_folder+'css/build.css');
 
 
