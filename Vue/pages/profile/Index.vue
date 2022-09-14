@@ -225,6 +225,14 @@
                                         @onSelect="setCountry"
                                     />
                                 </b-field>
+                                
+                                <b-field>
+                                    <b-checkbox v-model="profile.is_mfa_enabled"
+                                                true-value=1
+                                                false-value=0>
+                                        Enable Multi-Factor Authentication
+                                    </b-checkbox>
+                                </b-field>
 
                                 <b-button type="is-primary" @click="storeProfile()">
                                     Save Profile
