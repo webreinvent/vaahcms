@@ -66,6 +66,10 @@
                             <MetaTags/>
                             <!--/repeatable-->
 
+                            <!--repeatable-->
+                            <MultiFactorAuth/>
+                            <!--/repeatable-->
+
 
                         </div>
                         <!--/content-->
