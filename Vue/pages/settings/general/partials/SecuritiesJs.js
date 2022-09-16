@@ -155,6 +155,10 @@ export default {
     },
     mounted() {
         //---------------------------------------------------------------------
+
+        if(!this.list.mfa_methods){
+            this.list.mfa_methods = [];
+        }
         //---------------------------------------------------------------------
     },
     methods: {
@@ -180,16 +184,16 @@ export default {
         },
 
         //---------------------------------------------------------------------
-        storeSiteSettings: function () {
+        storeSecuritySettings: function () {
             this.$Progress.start();
             let params = {
                 list: this.list
             };
             let url = this.ajax_url+'/store/site/settings';
-            this.$vaah.ajax(url, params, this.storeSiteSettingsAfter);
+            this.$vaah.ajax(url, params, this.storeSecuritySettingsAfter);
         },
         //---------------------------------------------------------------------
-        storeSiteSettingsAfter: function (data, res) {
+        storeSecuritySettingsAfter: function (data, res) {
             this.$Progress.finish();
         },
         //---------------------------------------------------------------------

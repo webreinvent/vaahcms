@@ -201,8 +201,8 @@
                                         :selected_value="profile.timezone"
                                         :options="page.assets.timezones"
                                         :open_on_focus="true"
-                                        @onSelect="setTimeZone"
-                                    />
+                                        @onSelect="setTimeZone">
+                                    </AutoCompleteTimeZone>
                                 </b-field>
 
                                 <b-field label="Alternate Email" :label-position="labelPosition">
@@ -214,7 +214,8 @@
                                 <b-field label="Date of Birth" :label-position="labelPosition">
                                     <DatePicker
                                         :selected_value="profile.birth"
-                                        @onSelect="setBirthDate"/>
+                                        @onSelect="setBirthDate">
+                                    </DatePicker>
                                 </b-field>
 
                                 <b-field label="Country" :label-position="labelPosition">
@@ -222,16 +223,8 @@
                                         :selected_value="profile.country"
                                         :options="page.assets.countries"
                                         :open_on_focus="true"
-                                        @onSelect="setCountry"
-                                    />
-                                </b-field>
-                                
-                                <b-field>
-                                    <b-checkbox v-model="profile.is_mfa_enabled"
-                                                true-value=1
-                                                false-value=0>
-                                        Enable Multi-Factor Authentication
-                                    </b-checkbox>
+                                        @onSelect="setCountry">
+                                    </AutoCompleteCountry>
                                 </b-field>
 
                                 <b-button type="is-primary" @click="storeProfile()">
@@ -246,6 +239,51 @@
 
                 </div>
             </div>
+            <!--/repeatable-->
+
+
+
+            <!--repeatable-->
+
+            <template v-if="root_assets.mfa_status === 'user-will-have-option'
+            && root_assets.mfa_methods.length > 0">
+
+                <div class="columns">
+                    <div class="column is-8 is-offset-2 " >
+                        <hr/>
+                    </div>
+                </div>
+
+                <div class="columns">
+                    <div class="column is-3 is-offset-2" >
+                        <h4 class="title is-5">Multi-Factor Authentication</h4>
+                        <h2 class="subtitle is-6">Multi-factor Authentication (MFA) is an authentication method that
+                            requires the user to provide two or more verification factors to gain access to a resource.</h2>
+                    </div>
+                    <div class="column is-5">
+
+                        <div class="card">
+                            <div class="card-content">
+
+                                <template v-for="method in root_assets.mfa_methods">
+                                    <b-field>
+                                        <b-checkbox v-model="profile.mfa_methods"
+                                                    :true-value="method">
+                                            {{ $vaah.toLabel(method) }}
+                                        </b-checkbox>
+                                    </b-field>
+                                </template>
+
+                                <b-button type="is-primary" @click="storeProfile">Save MFA</b-button>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+
+            </template>
             <!--/repeatable-->
 
 
