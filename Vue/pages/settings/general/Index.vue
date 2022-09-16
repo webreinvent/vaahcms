@@ -50,6 +50,10 @@
                             <!--/site_settings-->
 
                             <!--repeatable-->
+                            <Securities/>
+                            <!--/repeatable-->
+
+                            <!--repeatable-->
                             <DateTime/>
                             <!--/repeatable-->
 
@@ -64,10 +68,6 @@
 
                             <!--repeatable-->
                             <MetaTags/>
-                            <!--/repeatable-->
-
-                            <!--repeatable-->
-                            <MultiFactorAuth/>
                             <!--/repeatable-->
 
 
