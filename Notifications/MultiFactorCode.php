@@ -7,7 +7,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class TestSmtp extends Notification
+class MultiFactorCode extends Notification
 {
     use Queueable;
 
@@ -41,10 +41,10 @@ class TestSmtp extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-            ->subject('Mail Configuration - Successful.')
-            ->line('This is a test email for your mail configuration.')
-            ->line('Your mail configurations are correct and working.')
-            ->line('Thank you for using VaahCMS!');
+            ->line('Your two factor code is '.$notifiable->mfa_code)
+            ->action('Verify Here', route('vh.backend').'#/verify')
+            ->line('The code will expire in 10 minutes')
+            ->line('If you have not tried to login, ignore this message.');
     }
 
     /**

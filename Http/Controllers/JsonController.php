@@ -43,9 +43,6 @@ class JsonController extends Controller
             'vaahcms_version' => $v_version
         ];
 
-        $data['mfa_methods'] = config('settings.global.mfa_methods');
-        $data['mfa_status'] = config('settings.global.mfa_status');
-
         $data['vaahcms'] = [
             'name' => config('vaahcms.app_name'),
             'slug' => config('vaahcms.app_slug'),

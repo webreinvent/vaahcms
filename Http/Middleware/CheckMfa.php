@@ -4,10 +4,11 @@ namespace WebReinvent\VaahCms\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
+use Session;
 use Illuminate\Support\Facades\Auth;
 use WebReinvent\VaahCms\Entities\Theme;
 
-class SetThemeDetails
+class CheckMfa
 {
     /**
      * Handle an incoming request.
@@ -18,33 +19,43 @@ class SetThemeDetails
      */
     public function handle(Request $request, Closure $next)
     {
+        if(auth()->check()){
 
-    	$theme_slug = config('vaahcms.public_theme');
+            $user = auth()->user();
 
-        //for controller
-        $request->theme_slug = $theme_slug;
+            if($user->mfa_code)
+            {
 
-        //for view
-        \View::share('theme_slug', $theme_slug);
+                if($user->mfa_code_expired_at->lt(now()))
+                {
+                    auth()->logout();
 
-    	$active_theme = Theme::active()->first();
+                    return redirect()->route('vh.backend');
+                }
 
-    	if($active_theme)
-        {
+                if(config('settings.global.is_mfa_enabled') == 1){
 
-            //for controller
-            $request->theme_slug = $active_theme->slug;
-            $request->theme = $active_theme;
+                    if(config('settings.global.mfa_enable_type') == 'all-users'){
 
-            \Session::put('theme', $active_theme);
+                        return redirect()->route('vh.backend').'#/verify';
+                    }
+
+                    if(config('settings.global.mfa_enable_type') == 'user-will-have-option'
+                        && Auth::user()->is_mfa_enabled){
+                        return redirect()->route('vh.backend');
+                    }
+
+                }
 
 
-            //for view
-            \View::share('theme_slug', $active_theme->slug);
-            \View::share('theme', $active_theme);
+            }
+
 
         }
 
+
+
         return $next($request);
+
     }
 }

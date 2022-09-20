@@ -19,6 +19,7 @@ use WebReinvent\VaahCms\Jobs\ProcessMails;
 use WebReinvent\VaahCms\Jobs\ProcessNotifications;
 use WebReinvent\VaahCms\Libraries\VaahMail;
 use WebReinvent\VaahCms\Mail\TestMail;
+use WebReinvent\VaahCms\Notifications\MultiFactorCode;
 use WebReinvent\VaahCms\Traits\CrudWithUuidObservantTrait;
 
 class User extends Authenticatable
@@ -34,7 +35,7 @@ class User extends Authenticatable
     //-------------------------------------------------
     protected $dates = [
         "last_login_at", "api_token_used_at",
-        "affiliate_code_used_at", "reset_password_code_sent_at",
+        "affiliate_code_used_at","mfa_code_expired_at", "reset_password_code_sent_at",
         "reset_password_code_used_at",
         "birth", "activated_at",
         "created_at","updated_at","deleted_at"
@@ -48,10 +49,11 @@ class User extends Authenticatable
         "gender","country_calling_code","phone", "bio",
         "website","timezone",
         "alternate_email","avatar_url","birth",
-        "country","country_code","is_mfa_enabled","last_login_at","last_login_ip",
+        "country","country_code","last_login_at","last_login_ip",
         "remember_token", "login_otp", "api_token","api_token_used_at",
         "api_token_used_ip","is_active","activated_at","status",
-        "affiliate_code","affiliate_code_used_at","reset_password_code",
+        "affiliate_code","affiliate_code_used_at","mfa_code_expired_at",
+        "reset_password_code",'mfa_methods',"mfa_code",
         "reset_password_code_sent_at","reset_password_code_used_at",
         'foreign_user_id',"meta","created_ip","created_by",
         "updated_by","deleted_by"
@@ -102,6 +104,21 @@ class User extends Authenticatable
     }
     //-------------------------------------------------
     public function getMetaAttribute($value)
+    {
+        if($value && $value!='null'){
+            return json_decode($value);
+        }else{
+            return json_decode('{}');
+        }
+
+    }
+    //-------------------------------------------------
+    public function setMfaMethodsAttribute($value)
+    {
+        $this->attributes['mfa_methods'] = json_encode($value);
+    }
+    //-------------------------------------------------
+    public function getMfaMethodsAttribute($value)
     {
         if($value && $value!='null'){
             return json_decode($value);
@@ -235,7 +252,8 @@ class User extends Authenticatable
             'alternate_email', 'avatar_url', 'birth', 'country',
             'last_login_at', 'last_login_ip', 'api_token', 'api_token_used_at',
             'api_token_used_ip', 'is_active', 'activated_at', 'status',
-            'affiliate_code', 'affiliate_code_used_at', 'created_by', 'updated_by',
+            'affiliate_code', 'affiliate_code_used_at','mfa_code_expired_at',
+            'mfa_code','created_by', 'updated_by',
             'deleted_by', 'created_at', 'updated_at',
             'deleted_at'
         ];
@@ -675,9 +693,13 @@ class User extends Authenticatable
 
             $user = Auth::user();
             $user->last_login_at = Carbon::now();
+
             $user->save();
 
+            $mfa_response = $user->verifyMfa();
+
             $response['status'] = 'success';
+            $response['data']['verify_url'] = $mfa_response;
         }elseif(Auth::attempt(['username' => $inputs['email'],
             'password' => trim($request->get('password'))
         ], $remember)){
@@ -685,7 +707,10 @@ class User extends Authenticatable
             $user->last_login_at = Carbon::now();
             $user->save();
 
+            $mfa_response = $user->verifyMfa();
+
             $response['status'] = 'success';
+            $response['data']['verify_url'] = $mfa_response;
         } else {
             $response['status'] = 'failed';
             $response['errors'][] = trans('vaahcms::messages.invalid_credentials');
@@ -1917,6 +1942,32 @@ class User extends Authenticatable
         }
 
         return $list;
+
+    }
+    //-------------------------------------------------
+    public function verifyMfa()
+    {
+
+        $this->mfa_code = null;
+        $this->mfa_code_expired_at = null;
+
+        if(config('settings.global.mfa_status') != 'disable'){
+
+            if(config('settings.global.mfa_status') == 'user-will-have-option'
+                && (!is_array($this->mfa_methods)
+                    || (is_array($this->mfa_methods) && count($this->mfa_methods) == 0))){
+
+                return false;
+            }
+
+            $this->mfa_code = rand(100000, 999999);
+            $this->mfa_code_expired_at = now()->addMinutes(10);
+            $this->save();
+
+            $this->notify(new MultiFactorCode());
+
+            return route('vh.backend').'#/verify';
+        }
 
     }
     //-------------------------------------------------

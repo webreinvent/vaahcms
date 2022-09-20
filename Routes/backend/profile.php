@@ -3,7 +3,7 @@ Route::group(
     [
         'prefix' => 'backend/vaah/profile',
         'namespace'  => 'WebReinvent\VaahCms\Http\Controllers',
-        'middleware' => ['web', 'has.backend.access'],
+        'middleware' => ['web', 'has.backend.access','check.mfa'],
     ],
     function () {
         //---------------------------------------------------------

@@ -245,8 +245,8 @@
 
             <!--repeatable-->
 
-            <template v-if="root_assets.mfa_status === 'user-will-have-option'
-            && root_assets.mfa_methods.length > 0">
+            <template v-if="page.mfa_status === 'user-will-have-option'
+            && page.mfa_method_array.length > 0">
 
                 <div class="columns">
                     <div class="column is-8 is-offset-2 " >
@@ -265,10 +265,10 @@
                         <div class="card">
                             <div class="card-content">
 
-                                <template v-for="method in root_assets.mfa_methods">
+                                <template v-for="method in page.mfa_method_array">
                                     <b-field>
                                         <b-checkbox v-model="profile.mfa_methods"
-                                                    :true-value="method">
+                                                    :native-value="method">
                                             {{ $vaah.toLabel(method) }}
                                         </b-checkbox>
                                     </b-field>

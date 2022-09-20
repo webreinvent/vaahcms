@@ -14,7 +14,7 @@ class AddMfaColumnsToVhUsersTable extends Migration
     public function up()
     {
         Schema::table('vh_users', function (Blueprint $table) {
-            $table->string('mfa_methods')->after('country_code')
+            $table->text('mfa_methods')->after('country_code')
                 ->nullable();
             $table->string('mfa_code',50)->after('status')
                 ->nullable();
