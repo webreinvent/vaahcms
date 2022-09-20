@@ -109,7 +109,13 @@ export default {
             this.is_content_loading = false;
             if(data)
             {
+                if(!data.profile.mfa_methods || (typeof data.profile.mfa_methods === 'object'
+                    && Object.keys(data.profile.mfa_methods).length === 0)){
+                    data.profile.mfa_methods = [];
+                }
                 this.update('profile', data.profile);
+                this.update('mfa_method_array', data.mfa_methods);
+                this.update('mfa_status', data.mfa_status);
             }
         },
         //---------------------------------------------------------------------

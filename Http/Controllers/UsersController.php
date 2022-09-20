@@ -425,24 +425,14 @@ class UsersController extends Controller
 
         try{
 
-            $data['profile'] = User::find(\Auth::user()->id);
+        $data['mfa_methods'] = config('settings.global.mfa_methods');
+        $data['mfa_status'] = config('settings.global.mfa_status');
 
-            $response['status'] = 'success';
-            $response['data'] = $data;
-            if(env('APP_DEBUG'))
-            {
-                $response['hint'][] = '';
-            }
-
-        }catch (\Exception $e){
-            $response = [];
-            $response['status'] = 'failed';
-            if(env('APP_DEBUG')){
-                $response['errors'][] = $e->getMessage();
-                $response['hint'] = $e->getTrace();
-            } else{
-                $response['errors'][] = 'Something went wrong.';
-            }
+        $response['status'] = 'success';
+        $response['data'] = $data;
+        if(env('APP_DEBUG'))
+        {
+            $response['hint'][] = '';
         }
 
         return response()->json($response);

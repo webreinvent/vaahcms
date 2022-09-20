@@ -24,14 +24,8 @@ export default {
         return {
             is_btn_loading: false,
             is_btn_otp_loading: false,
-            signin: {
-                type: 'password',
-                email: null,
-                password: null,
-                attempts: 0,
-                login_otp:null,
-                max_attempts: 5,
-                is_password_disabled: null,
+            verify_item: {
+                code: ''
             }
         }
     },
@@ -53,26 +47,25 @@ export default {
             this.$vaah.updateState(update);
         },
         //---------------------------------------------------------------------
-        signIn: function () {
+        verify: function () {
             this.root.no_of_login_attempt++;
             this.update('no_of_login_attempt',this.root.no_of_login_attempt);
             this.is_btn_loading = true;
-            let params = this.signin;
-            let url = this.ajax_url+'/signin/post';
-            this.$vaah.ajax(url, params, this.signInAfter);
+            let params = this.verify_item;
+            let url = this.ajax_url+'/verify/post';
+            this.$vaah.ajax(url, params, this.verifyAfter);
 
         },
         //---------------------------------------------------------------------
-        signInAfter: function (data, res) {
+        verifyAfter: function (data, res) {
             this.is_btn_loading = false;
             if(data)
             {
 
-                console.log('--->', this.root.base_url+'/backend#/vaah');
+                if(data.redirect_url){
+                    window.location = data.redirect_url;
+                }
 
-                window.location = this.root.base_url+'/backend#/vaah';
-
-                //this.$router.push({ name: 'dashboard.index' })
             }
         },
         //---------------------------------------------------------------------

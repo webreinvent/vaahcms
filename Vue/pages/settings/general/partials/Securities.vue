@@ -70,8 +70,9 @@
                                     </b-checkbox>
                                 </b-field>
                                 <b-field>
-                                    <b-checkbox disabled v-model="list.mfa_methods"
-                                             native-value="sma-otp-verification">
+                                    <b-checkbox :disabled="list.mfa_status === 'disable'"
+                                                v-model="list.mfa_methods"
+                                             native-value="sms-otp-verification">
                                         Sms OTP Verification
                                     </b-checkbox>
                                 </b-field>
