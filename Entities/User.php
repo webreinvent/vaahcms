@@ -5,6 +5,7 @@
 use App\Mail\OrderShipped;
 use DateTimeInterface;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\Response;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -12,6 +13,7 @@ use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Support\Facades\Bus;
+use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Str;
@@ -698,10 +700,8 @@ class User extends Authenticatable
 
             $user->save();
 
-            $mfa_response = $user->verifyMfa();
 
             $response['status'] = 'success';
-            $response['data']['verify_url'] = $mfa_response;
         }elseif(Auth::attempt(['username' => $inputs['email'],
             'password' => trim($request->get('password'))
         ], $remember)){
@@ -709,10 +709,7 @@ class User extends Authenticatable
             $user->last_login_at = Carbon::now();
             $user->save();
 
-            $mfa_response = $user->verifyMfa();
-
             $response['status'] = 'success';
-            $response['data']['verify_url'] = $mfa_response;
         } else {
             $response['status'] = 'failed';
             $response['errors'][] = trans('vaahcms::messages.invalid_credentials');
@@ -1949,29 +1946,56 @@ class User extends Authenticatable
 
     }
     //-------------------------------------------------
-    public function verifyMfa()
+    public function verifySecurityAuthentication()
     {
 
         $this->mfa_code = null;
         $this->mfa_code_expired_at = null;
+        $this->save();
 
-        if(config('settings.global.mfa_status') != 'disable'){
+        $has_security = true;
 
-            if(config('settings.global.mfa_status') == 'user-will-have-option'
-                && (!is_array($this->mfa_methods)
-                    || (is_array($this->mfa_methods) && count($this->mfa_methods) == 0))){
-
-                return false;
-            }
-
-            $this->mfa_code = rand(100000, 999999);
-            $this->mfa_code_expired_at = now()->addMinutes(10);
-            $this->save();
-
-            $this->notify(new MultiFactorCode());
-
-            return route('vh.backend').'#/verify';
+        if(config('settings.global.mfa_status') === 'disable'){
+            $has_security = false;
         }
+
+        if(config('settings.global.mfa_status') == 'user-will-have-option'
+            && (!is_array($this->mfa_methods)
+                || (is_array($this->mfa_methods) && count($this->mfa_methods) == 0))){
+
+            $has_security = false;
+        }
+
+//        /*$response = new Response('Set Cookie');
+//        $response->withCookie(cookie('app_name', env('APP_NAME'), 500000));*/
+//
+//        dd(get_browser());
+//
+////        Cookie::queue('app_name', env('APP_NAME'), 500000);
+//
+//        dd(Cookie::get('app_name'));
+//
+//        if(config('settings.global.is_new_device_verification_enabled') == 1){
+//
+//            if(Cookie::get('app_name')
+//                && Cookie::get('app_name') == env('APP_NAME')){
+//
+//                $has_security = false;
+//            }
+//
+//        }
+
+        if(!$has_security){
+            return false;
+        }
+
+        $this->mfa_code = rand(100000, 999999);
+        $this->mfa_code_expired_at = now()->addMinutes(10);
+        $this->save();
+
+        $this->notify(new MultiFactorCode());
+
+        return route('vh.backend').'#/verify';
 
     }
     //-------------------------------------------------

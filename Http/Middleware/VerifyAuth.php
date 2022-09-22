@@ -8,7 +8,7 @@ use Session;
 use Illuminate\Support\Facades\Auth;
 use WebReinvent\VaahCms\Entities\Theme;
 
-class CheckMfa
+class VerifyAuth
 {
     /**
      * Handle an incoming request.
@@ -19,41 +19,48 @@ class CheckMfa
      */
     public function handle(Request $request, Closure $next)
     {
+
+        dd($request);
+
         if(auth()->check()){
 
             $user = auth()->user();
+
 
             if($user->mfa_code)
             {
 
                 if($user->mfa_code_expired_at->lt(now()))
                 {
+
                     auth()->logout();
 
                     return redirect()->route('vh.backend');
                 }
 
-                if(config('settings.global.is_mfa_enabled') == 1){
+                if(config('settings.global.mfa_status') !== 'disable'){
 
-                    if(config('settings.global.mfa_enable_type') == 'all-users'){
+                    if(config('settings.global.mfa_status') == 'all-users'){
 
-                        return redirect()->route('vh.backend').'#/verify';
+                        auth()->logout();
+
+                        return redirect()->route('vh.backend');
                     }
 
-                    if(config('settings.global.mfa_enable_type') == 'user-will-have-option'
-                        && Auth::user()->is_mfa_enabled){
+                    if(config('settings.global.mfa_status') == 'user-will-have-option'
+                        && is_array($user->mfa_methods) && count($user->mfa_methods) >= 0){
+
+                        auth()->logout();
+
                         return redirect()->route('vh.backend');
+
                     }
 
                 }
 
-
             }
 
-
         }
-
-
 
         return $next($request);
 
