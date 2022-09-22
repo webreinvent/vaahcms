@@ -1951,7 +1951,11 @@ class User extends Authenticatable
 
         $has_security = true;
 
-        if(config('settings.global.mfa_status') === 'disable'){
+        $response['status'] = 'failed';
+        $response['data'] = null;
+
+        if(!config('settings.global.mfa_status')
+            || config('settings.global.mfa_status') === 'disable'){
             $has_security = false;
         }
 
@@ -1982,7 +1986,7 @@ class User extends Authenticatable
 //        }
 
         if(!$has_security){
-            return false;
+            return $response;
         }
 
         $this->mfa_code = rand(100000, 999999);
@@ -1991,7 +1995,9 @@ class User extends Authenticatable
 
         $this->notify(new MultiFactorCode());
 
-        return route('vh.backend').'#/verify';
+        $response['status'] = 'success';
+
+        return $response;
 
     }
     //-------------------------------------------------

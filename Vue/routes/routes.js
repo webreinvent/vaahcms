@@ -32,7 +32,6 @@ import LayoutPublic from "./../layouts/Public.vue";
 import SignIn from "./../pages/SignIn.vue";
 import ForgotPassword from "./../pages/ForgotPassword.vue";
 import ResetPassword from "./../pages/ResetPassword";
-import MultiFactorAuthenticate from "./../pages/MultiFactorAuthenticate";
 
 let routes_frontend =     {
     path: '/',
@@ -49,19 +48,6 @@ let routes_frontend =     {
             path: '/',
             name: 'sign.in',
             component: SignIn,
-            props: true,
-            meta: {
-                middleware: [
-                    GetAssets,
-                    SetAssetsToReload,
-                    IfNotSetup,
-                ]
-            },
-        },
-        {
-            path: '/verify',
-            name: 'verify',
-            component: MultiFactorAuthenticate,
             props: true,
             meta: {
                 middleware: [
