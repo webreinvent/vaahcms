@@ -12,7 +12,7 @@ Route::group(
         //------------------------------------------------
         //------------------------------------------------
         Route::get( '/', 'PublicController@login' )
-            ->name( 'vh.backend' );
+            ->name( 'vh.backend' )->middleware('verify.auth');
         //------------------------------------------------
         Route::get( '/login', 'PublicController@redirectToLogin' )
             ->name( 'vh.backend.login' );
@@ -31,6 +31,9 @@ Route::group(
         Route::get( '/logout', 'PublicController@logout' )
             ->name( 'vh.backend.logout' );
         //-----------------------------------------------
+        Route::post( '/verify/post', 'PublicController@postVerify' )
+            ->name( 'vh.backend.verify.post' );
+        //------------------------------------------------
 
         Route::group(
             [

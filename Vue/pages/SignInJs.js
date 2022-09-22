@@ -68,11 +68,18 @@ export default {
             if(data)
             {
 
-                console.log('--->', this.root.base_url+'/backend#/vaah');
 
-                window.location = this.root.base_url+'/backend#/vaah';
+                if(data.verify_url){
+                    window.location = data.verify_url;
+                }else{
+                    console.log('--->', this.root.base_url+'/backend#/vaah');
 
-                //this.$router.push({ name: 'dashboard.index' })
+                    window.location = this.root.base_url+'/backend#/vaah';
+
+                    //this.$router.push({ name: 'dashboard.index' })
+                }
+
+
             }
         },
         //---------------------------------------------------------------------

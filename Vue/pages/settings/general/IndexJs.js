@@ -5,6 +5,7 @@ import SiteSettings from './partials/SiteSettings.vue';
 import DateTime from './partials/DateTime.vue';
 import SocialMediaLinks from './partials/SocialMediaLinks.vue';
 import Scripts from './partials/Scripts.vue';
+import Securities from './partials/Securities.vue';
 import MetaTags from './partials/MetaTags.vue';
 
 let namespace = 'general';
@@ -29,6 +30,7 @@ export default {
         DateTime,
         SocialMediaLinks,
         Scripts,
+        Securities,
         MetaTags,
     },
     data()
