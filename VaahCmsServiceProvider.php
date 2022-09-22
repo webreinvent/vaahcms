@@ -75,7 +75,7 @@ class VaahCmsServiceProvider extends ServiceProvider {
         $router->aliasMiddleware('app.is.not.installed', \WebReinvent\VaahCms\Http\Middleware\IsNotInstalled::class);
         $router->aliasMiddleware('has.backend.access', \WebReinvent\VaahCms\Http\Middleware\HasBackendAccess::class);
         $router->aliasMiddleware('set.theme.details', \WebReinvent\VaahCms\Http\Middleware\SetThemeDetails::class);
-        $router->aliasMiddleware('check.mfa', \WebReinvent\VaahCms\Http\Middleware\CheckMfa::class);
+        $router->aliasMiddleware('verify.auth', \WebReinvent\VaahCms\Http\Middleware\VerifyAuth::class);
 
 
     }

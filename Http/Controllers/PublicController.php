@@ -105,19 +105,13 @@ class PublicController extends Controller
             $redirect_url = \URL::route('vh.backend');
         }
 
-        $verify_url = null;
-
-        if(isset($response['data']['verify_url']) && $response['data']['verify_url'])
-        {
-            $verify_url = $response['data']['verify_url'];
-        }
 
         $response = [];
 
         $response['status'] = 'success';
         $response['messages'][] = 'Login Successful';
         $response['data']['redirect_url'] = $redirect_url;
-        $response['data']['verify_url'] = $verify_url;
+        $response['data']['verify_url'] = Auth::user()->verifySecurityAuthentication();
 
         return response()->json($response);
 
