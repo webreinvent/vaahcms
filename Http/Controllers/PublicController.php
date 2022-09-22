@@ -106,12 +106,13 @@ class PublicController extends Controller
         }
 
 
+
         $response = [];
 
         $response['status'] = 'success';
         $response['messages'][] = 'Login Successful';
         $response['data']['redirect_url'] = $redirect_url;
-        $response['data']['verify_url'] = Auth::user()->verifySecurityAuthentication();
+        $response['data']['verification_response'] = Auth::user()->verifySecurityAuthentication();
 
         return response()->json($response);
 
@@ -120,11 +121,23 @@ class PublicController extends Controller
     public function postVerify(Request $request)
     {
 
+        $inputs = [
+            'otp_code' => null
+        ];
+
+        if(is_array($request->verify_otp))
+        {
+            $inputs = [
+                'otp_code' => implode("", $request->verify_otp)
+            ];
+
+        }
+
         $rules = array(
-            'code' => 'required|integer',
+            'otp_code' => 'required|integer',
         );
 
-        $validator = \Validator::make( $request->all(), $rules);
+        $validator = \Validator::make( $inputs, $rules);
         if ( $validator->fails() ) {
 
             $errors             = errorsToArray($validator->errors());
@@ -136,14 +149,14 @@ class PublicController extends Controller
 
         $user = auth()->user();
 
-        if(!$user->mfa_code && !$user->mfa_code_expired_at){
+        if($user && !$user->mfa_code && !$user->mfa_code_expired_at){
             $response['status'] = 'success';
             $response['messages'][] = 'Login Successful';
             $response['data']['redirect_url'] = route('vh.backend').'#/vaah';
             return $response;
         }
 
-        if($user->mfa_code_expired_at && $user->mfa_code_expired_at->lt(now()))
+        if($user && $user->mfa_code_expired_at && $user->mfa_code_expired_at->lt(now()))
         {
             $user->mfa_code = null;
             $user->mfa_code_expired_at = null;
@@ -158,7 +171,7 @@ class PublicController extends Controller
         }
 
 
-        if($request->input('code') == $user->mfa_code)
+        if($user && $inputs['otp_code'] == $user->mfa_code)
         {
             $user->mfa_code = null;
             $user->mfa_code_expired_at = null;
