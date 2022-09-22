@@ -19,9 +19,7 @@ class VerifyAuth
      */
     public function handle(Request $request, Closure $next)
     {
-
-        dd($request);
-
+        
         if(auth()->check()){
 
             $user = auth()->user();
