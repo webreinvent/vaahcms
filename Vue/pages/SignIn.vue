@@ -18,13 +18,117 @@
 
                                 <Logo :assets="root.assets" height="35"/>
 
-                                <div class="content has-text-centered has-margin-top-20">
+                                <div v-if="is_verification_form_visible" class="content has-text-centered has-margin-top-20">
+                                    <h3 class="title">Multi-Factor Authentication</h3>
+                                    <p class="subtitle">You have received an email which contains two factor code.</p>
+                                </div>
+
+                                <div v-else class="content has-text-centered has-margin-top-20">
                                     <h3 class="title">Sign In</h3>
                                     <p class="subtitle">Please Sign In to continue</p>
                                 </div>
 
                                 <!--form-->
-                                <form class="is-full-width" @submit.prevent="signIn()">
+                                <form v-if="is_verification_form_visible" class="is-full-width"
+                                      @submit.prevent="verifyPost()">
+                                    <hr class="has-margin-bottom-10"/>
+
+                                    <b-field label="Enter OTP" grouped>
+                                        <b-field>
+                                            <b-input style="width:3em;"
+                                                     id="otp_0"
+                                                     maxlength="1"
+                                                     :has-counter="false"
+                                                     v-model="verification.otp_0"
+                                                     class="has-text-centered"
+                                                     @paste.native="onOtpPaste"
+                                                     @focus="$event.target.select()"
+                                                     @keyup.native="moveToElement($event, 'otp_1', null)"
+                                            ></b-input>
+                                        </b-field>
+                                        <b-field>
+                                            <b-input style="width:3em;"
+                                                     id="otp_1"
+                                                     maxlength="1"
+                                                     :has-counter="false"
+                                                     v-model="verification.otp_1"
+                                                     class="has-text-centered"
+                                                     @focus="$event.target.select()"
+                                                     @keyup.native="moveToElement($event, 'otp_2', 'otp_0')"
+                                            ></b-input>
+                                        </b-field>
+                                        <b-field>
+                                            <b-input style="width:3em;"
+                                                     id="otp_2"
+                                                     maxlength="1"
+                                                     :has-counter="false"
+                                                     v-model="verification.otp_2"
+                                                     class="has-text-centered"
+                                                     @focus="$event.target.select()"
+                                                     @keyup.native="moveToElement($event, 'otp_3', 'otp_1')"
+                                            ></b-input>
+                                        </b-field>
+                                        <b-field>
+                                            <b-input style="width:3em;"
+                                                     id="otp_3"
+                                                     maxlength="1"
+                                                     :has-counter="false"
+                                                     v-model="verification.otp_3"
+                                                     class="has-text-centered"
+                                                     @focus="$event.target.select()"
+                                                     @keyup.native="moveToElement($event, 'otp_4', 'otp_2')"
+                                            ></b-input>
+                                        </b-field>
+                                        <b-field>
+                                            <b-input style="width:3em;"
+                                                     id="otp_4"
+                                                     maxlength="1"
+                                                     :has-counter="false"
+                                                     v-model="verification.otp_4"
+                                                     class="has-text-centered"
+                                                     @focus="$event.target.select()"
+                                                     @keyup.native="moveToElement($event, 'otp_5', 'otp_3')">
+                                            </b-input>
+                                        </b-field>
+                                        <b-field>
+                                            <b-input style="width:3em;"
+                                                     id="otp_5"
+                                                     maxlength="1"
+                                                     :has-counter="false"
+                                                     v-model="verification.otp_5"
+                                                     class="has-text-centered"
+                                                     @focus="$event.target.select()"
+                                                     @keyup.native="moveToElement($event, null, 'otp_4')">
+                                            </b-input>
+                                        </b-field>
+
+                                    </b-field>
+
+
+                                    <div class="buttons is-full-width has-margin-top-20">
+                                        <div class="columns is-full-width">
+
+                                            <div class="column">
+                                                <div class="buttons">
+                                                    <b-button
+                                                            native-type="submit"
+                                                            :loading="is_verification_btn_otp_loading"
+                                                            dusk="signin-signin"
+                                                            type="is-primary">Submit OTP</b-button>
+                                                </div>
+                                            </div>
+
+                                            <div class="column has-text-right-desktop">
+                                                <router-link :to="{name:'sign.in'}">Sign In</router-link>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <hr class="has-margin-bottom-10"/>
+                                </form>
+                                <!--/form-->
+
+                                <!--form-->
+                                <form v-else class="is-full-width" @submit.prevent="signIn()">
                                     <hr class="has-margin-bottom-10"/>
                                     <div class="field">
                                         <b-radio v-model="signin.type"
