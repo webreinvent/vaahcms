@@ -23,14 +23,14 @@ if (mix.inProduction()) {
     console.log('IN PRODUCTION MODE');
     console.log('---------------------');
 
-    publish_folder = './Resources/assets/backend/';
+    publish_folder = './../../Resources/assets/backend/';
     mix.setPublicPath(publish_folder);
 
     /**
      * vaahone css
      */
     output_theme_folder = "./"+theme_name+"/";
-    source_theme_folder = "Resources/assets/backend/"+theme_name;
+    source_theme_folder = "./../../Resources/assets/backend/"+theme_name;
     mix.sass(source_theme_folder+'/scss/build.scss', output_theme_folder+'css/');
     mix.sass(source_theme_folder+'/scss/style.scss', output_theme_folder+'css/');
 
@@ -47,8 +47,8 @@ if (mix.inProduction()) {
      * vaahprime
      */
     theme_name = 'vaahprime';
-    output_theme_folder = "Resources/assets/backend/"+theme_name+"/";
-    source_theme_folder = "Resources/assets/backend/"+theme_name;
+    output_theme_folder = "./../../Resources/assets/backend/"+theme_name+"/";
+    source_theme_folder = "./../../Resources/assets/backend/"+theme_name;
     mix.combine([
         source_theme_folder+'/css/bootstrap4-light-blue/theme.css',
         source_theme_folder+'/css/primevue.min.css',
@@ -60,9 +60,9 @@ if (mix.inProduction()) {
 
 } else {
 
-    publish_folder = './../../public/vaahcms/backend/';
+    publish_folder = './../../../../public/vaahcms/backend/';
     output_theme_folder = "./"+theme_name+"/";
-    source_theme_folder = "Resources/assets/backend/"+theme_name;
+    source_theme_folder = "./../../Resources/assets/backend/"+theme_name;
     source_vue_folder = __dirname+'/Resources/views/backend/'+theme_name+'/vue';
 
     mix.setPublicPath(publish_folder);
