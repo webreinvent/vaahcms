@@ -37,7 +37,8 @@ class User extends Authenticatable
     //-------------------------------------------------
     protected $dates = [
         "last_login_at", "api_token_used_at",
-        "affiliate_code_used_at","mfa_code_expired_at", "reset_password_code_sent_at",
+        "affiliate_code_used_at","security_code_expired_at",
+        "reset_password_code_sent_at",
         "reset_password_code_used_at",
         "birth", "activated_at",
         "created_at","updated_at","deleted_at"
@@ -54,8 +55,8 @@ class User extends Authenticatable
         "country","country_code","last_login_at","last_login_ip",
         "remember_token", "login_otp", "api_token","api_token_used_at",
         "api_token_used_ip","is_active","activated_at","status",
-        "affiliate_code","affiliate_code_used_at","mfa_code_expired_at",
-        "reset_password_code",'mfa_methods',"mfa_code",
+        "affiliate_code","affiliate_code_used_at","security_code_expired_at",
+        "reset_password_code",'mfa_methods',"security_code",
         "reset_password_code_sent_at","reset_password_code_used_at",
         'foreign_user_id',"meta","created_ip","created_by",
         "updated_by","deleted_by"
@@ -254,8 +255,8 @@ class User extends Authenticatable
             'alternate_email', 'avatar_url', 'birth', 'country',
             'last_login_at', 'last_login_ip', 'api_token', 'api_token_used_at',
             'api_token_used_ip', 'is_active', 'activated_at', 'status',
-            'affiliate_code', 'affiliate_code_used_at','mfa_code_expired_at',
-            'mfa_code','created_by', 'updated_by',
+            'affiliate_code', 'affiliate_code_used_at','security_code_expired_at',
+            'security_code','created_by', 'updated_by',
             'deleted_by', 'created_at', 'updated_at',
             'deleted_at'
         ];
@@ -1949,8 +1950,8 @@ class User extends Authenticatable
     public function verifySecurityAuthentication()
     {
 
-        $this->mfa_code = null;
-        $this->mfa_code_expired_at = null;
+        $this->security_code = null;
+        $this->security_code_expired_at = null;
         $this->save();
 
         $has_security = true;
@@ -1993,8 +1994,8 @@ class User extends Authenticatable
             return $response;
         }
 
-        $this->mfa_code = rand(100000, 999999);
-        $this->mfa_code_expired_at = now()->addMinutes(10);
+        $this->security_code = rand(100000, 999999);
+        $this->security_code_expired_at = now()->addMinutes(10);
         $this->save();
 
         $this->notify(new MultiFactorCode());

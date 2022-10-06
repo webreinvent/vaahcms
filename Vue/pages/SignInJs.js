@@ -175,7 +175,7 @@ export default {
                     {
                         otp_index = 'otp_'+index;
                         otp_val = otp_arr[index];
-                        this.login.login_otp[otp_index] = otp_val;
+                        this.verification[otp_index] = otp_val;
                     }
                 }
             }

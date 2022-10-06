@@ -41,7 +41,7 @@ class MultiFactorCode extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-            ->line('Your two factor code is '.$notifiable->mfa_code)
+            ->line('Your two factor code is '.$notifiable->security_code)
             ->action('Verify Here', route('vh.backend').'#/verify')
             ->line('The code will expire in 10 minutes')
             ->line('If you have not tried to login, ignore this message.');
