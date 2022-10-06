@@ -149,17 +149,17 @@ class PublicController extends Controller
 
         $user = auth()->user();
 
-        if($user && !$user->mfa_code && !$user->mfa_code_expired_at){
+        if($user && !$user->security_code && !$user->security_code_expired_at){
             $response['status'] = 'success';
             $response['messages'][] = 'Login Successful';
             $response['data']['redirect_url'] = route('vh.backend').'#/vaah';
             return $response;
         }
 
-        if($user && $user->mfa_code_expired_at && $user->mfa_code_expired_at->lt(now()))
+        if($user && $user->security_code_expired_at && $user->security_code_expired_at->lt(now()))
         {
-            $user->mfa_code = null;
-            $user->mfa_code_expired_at = null;
+            $user->security_code = null;
+            $user->security_code_expired_at = null;
             $user->save();
             auth()->logout();
 
@@ -171,10 +171,10 @@ class PublicController extends Controller
         }
 
 
-        if($user && $inputs['otp_code'] == $user->mfa_code)
+        if($user && $inputs['otp_code'] == $user->security_code)
         {
-            $user->mfa_code = null;
-            $user->mfa_code_expired_at = null;
+            $user->security_code = null;
+            $user->security_code_expired_at = null;
             $user->save();
 
             $response['status'] = 'success';

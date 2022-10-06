@@ -19,16 +19,16 @@ class VerifyAuth
      */
     public function handle(Request $request, Closure $next)
     {
-        
+
         if(auth()->check()){
 
             $user = auth()->user();
 
 
-            if($user->mfa_code)
+            if($user->security_code)
             {
 
-                if($user->mfa_code_expired_at->lt(now()))
+                if($user->security_code_expired_at->lt(now()))
                 {
 
                     auth()->logout();

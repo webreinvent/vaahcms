@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddMfaColumnsToVhUsersTable extends Migration
+class AddSecurityColumnsToVhUsersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -16,9 +16,9 @@ class AddMfaColumnsToVhUsersTable extends Migration
         Schema::table('vh_users', function (Blueprint $table) {
             $table->text('mfa_methods')->after('country_code')
                 ->nullable();
-            $table->string('mfa_code',50)->after('status')
+            $table->string('security_code',50)->after('status')
                 ->nullable();
-            $table->dateTime('mfa_code_expired_at')->after('mfa_code')
+            $table->dateTime('security_code_expired_at')->after('security_code')
                 ->nullable();
         });
     }
@@ -32,8 +32,8 @@ class AddMfaColumnsToVhUsersTable extends Migration
     {
         Schema::table('vh_users', function (Blueprint $table) {
             $table->dropColumn('mfa_methods');
-            $table->dropColumn('mfa_code');
-            $table->dropColumn('mfa_code_expired_at');
+            $table->dropColumn('security_code');
+            $table->dropColumn('security_code_expired_at');
         });
     }
 }
