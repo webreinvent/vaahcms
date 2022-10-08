@@ -4,7 +4,7 @@ const fs_extra = require('fs-extra');
 let Visualizer = require('webpack-visualizer-plugin');
 
 
-let theme_name = 'vaahone';
+let theme_path = './../../Resources/assets/backend/vaahone/';
 let publish_folder;
 let output_theme_folder;
 let source_theme_folder;
@@ -29,24 +29,21 @@ if (mix.inProduction()) {
     /**
      * vaahone css
      */
-    output_theme_folder = "./"+theme_name+"/";
-    source_theme_folder = "./../../Resources/assets/backend/"+theme_name;
-    mix.sass(source_theme_folder+'/scss/build.scss', output_theme_folder+'css/');
-    mix.sass(source_theme_folder+'/scss/style.scss', output_theme_folder+'css/');
+    mix.sass(theme_path+'/scss/build.scss', theme_path+'css/');
+    mix.sass(theme_path+'/scss/style.scss', theme_path+'css/');
 
     /**
      * vaahone js
      */
-    source_vue_folder = __dirname+'/Vue';
     //mix.js(__dirname+"/VueUI/app.js",  output_theme_folder+'/builds/ui.js').vue();
-    mix.js(__dirname+"/Vue/app.js",  output_theme_folder+'/builds/app.js').vue();
-    mix.js(__dirname+"/Vue/app-extended.js",  output_theme_folder+'/builds/app-extended.js').vue();
+    mix.js(__dirname+"/app.js",  theme_path+'/builds/app.js').vue();
+    mix.js(__dirname+"/app-extended.js",  theme_path+'/builds/app-extended.js').vue();
 
 
     /**
      * vaahprime
      */
-    theme_name = 'vaahprime';
+    /*theme_name = 'vaahprime';
     output_theme_folder = "./../../Resources/assets/backend/"+theme_name+"/";
     source_theme_folder = "./../../Resources/assets/backend/"+theme_name;
     mix.combine([
@@ -55,15 +52,15 @@ if (mix.inProduction()) {
         source_theme_folder+'/css/primeflex-3.1.2/primeflex.css',
         source_theme_folder+'/css/primeicons.css',
         source_theme_folder+'/css/style.css',
-    ], output_theme_folder+'css/build.css');
+    ], output_theme_folder+'css/build.css');*/
 
 
 } else {
 
-    publish_folder = './../../../../public/vaahcms/backend/';
+    /*publish_folder = './../../../../public/vaahcms/backend/';
     output_theme_folder = "./"+theme_name+"/";
     source_theme_folder = "./../../Resources/assets/backend/"+theme_name;
-    source_vue_folder = __dirname+'/Resources/views/backend/'+theme_name+'/vue';
+    source_vue_folder = __dirname+'/../../Resources/views/backend/'+theme_name+'/vue';*/
 
     mix.setPublicPath(publish_folder);
 
@@ -72,9 +69,9 @@ if (mix.inProduction()) {
 
     //mix.js(__dirname+"/VueUI/app.js",  output_theme_folder+'/builds/ui.js').vue();
 
-    mix.js(__dirname+"/Vue/app.js",  output_theme_folder+'/builds/app.js').vue();
+    mix.js(__dirname+"/app.js",  output_theme_folder+'/builds/app.js').vue();
     //mix.js(__dirname+"/Vue/app.js",  output_theme_folder+'/builds/app.js').sourceMaps();
-    mix.js(__dirname+"/Vue/app-extended.js",  output_theme_folder+'/builds/app-extended.js').vue();
+    mix.js(__dirname+"/app-extended.js",  output_theme_folder+'/builds/app-extended.js').vue();
 
 }
 
