@@ -24,7 +24,6 @@ occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim 
 
 ### Users
 
-![Types_Of_Users](~@assets/types_of_users.png)
 
 
 There are three types of users which are mentioned below with their type of usages:
@@ -73,10 +72,10 @@ liqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi u
 
 ## Solution with UFD
 
-![RxConnect UFD](~@assets/RxConnect-UFD-Front End.png)
+![UFD]()
 
 
 ## DB Schema
 
-![DB Schema For RxConnect](~@assets/db_schema.png)
+![DB Schema]()
 

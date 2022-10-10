@@ -52,7 +52,6 @@ module.exports = {
           title: 'Guide',
           collapsable: false,
           children: [
-            '',
             'project_introduction',
             'glossary',
             'technologies_used',
