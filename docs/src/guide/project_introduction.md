@@ -1,4 +1,4 @@
-# <project-title>
+# project-title
 
 [[toc]]
 

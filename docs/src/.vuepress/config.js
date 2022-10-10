@@ -57,6 +57,7 @@ module.exports = {
             'technologies_used',
             'how_it_works',
             'login_and_registrations',
+            'page_template',
           ]
         }
       ],
