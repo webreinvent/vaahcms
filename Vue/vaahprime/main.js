@@ -1,6 +1,3 @@
-import './../../Resources/assets/backend/common/fontawesome-6.2.0/css/all.css'
-import './../../Resources/assets/backend/vaahprime/css/build.css'
-
 
 import {createApp, markRaw} from 'vue';
 import { createPinia, PiniaVuePlugin  } from 'pinia'

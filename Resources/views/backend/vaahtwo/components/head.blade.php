@@ -19,8 +19,22 @@
 
     <link href="https://fonts.googleapis.com/css?family=IBM+Plex+Sans:300,400,500,600,700&display=swap" rel="stylesheet">
 
-    @if(env('APP_VAAHCMS_ENV') != 'develop')
-        <link href="{{vh_get_backend_assets("builds/index.css", 'vaahprime')}}" rel="stylesheet" media="screen">
+    <link href="{{vh_get_backend_assets("fontawesome-6.2.0/css/all.min.css", 'common')}}" rel="stylesheet" media="screen">
+
+    @if(env('APP_VAAHCMS_ENV') == 'develop')
+        <!--CSS Support for Bulma & Buefy-->
+        <link href="http://localhost:8080/vaahone/css/build.css" rel="stylesheet" media="screen">
+        <link href="http://localhost:8080/vaahone/css/style.css" rel="stylesheet" media="screen">
+
+        <!--CSS Support for PrimeVue-->
+        <link href="http://localhost:8080/vaahprime/css/build.css" rel="stylesheet" media="screen">
+    @else
+        <!--CSS Support for Bulma & Buefy-->
+        <link href="{{vh_get_backend_assets("css/build.css", 'vaahone')}}" rel="stylesheet" media="screen">
+        <link href="{{vh_get_backend_assets("css/style.css", 'vaahone')}}" rel="stylesheet" media="screen">
+
+        <!--CSS Support for PrimeVue-->
+        <link href="{{vh_get_backend_assets("css/build.css", 'vaahprime')}}" rel="stylesheet" media="screen">
     @endif
 
     {!! vh_config_css() !!}

@@ -2,7 +2,8 @@
     "name": "vaahcms",
     "scripts": {
         "dev": "vite --host --port 2323",
-        "assets": "vite --host --port 2323",
+        "assets hot": "mix watch --hot",
+        "assets": "mix --production",
         "build": "vite build",
         "preview": "vite preview --port 2323"
     },
@@ -18,7 +19,10 @@
     "devDependencies": {
         "@vitejs/plugin-vue": "^3.1.2",
         "@vue/compiler-sfc": "^3.2.40",
+        "laravel-mix": "^6.0.6",
+        "resolve-url-loader": "^5.0.0",
         "sass": "^1.55.0",
+        "sass-loader": "^12.6.0",
         "unplugin-auto-import": "^0.11.2",
         "unplugin-vue-components": "^0.22.8",
         "vite": "^3.1.6"
