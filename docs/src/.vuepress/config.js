@@ -58,6 +58,8 @@ module.exports = {
             'how_it_works',
             'login_and_registrations',
             'page_template',
+            'component_template',
+            'seeder_template'
           ]
         }
       ],
