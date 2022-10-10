@@ -41,7 +41,7 @@
     @else
         <link href="{{vh_get_backend_assets("css/build.css")}}" rel="stylesheet" media="screen">
         <link href="{{vh_get_backend_assets("css/style.css")}}" rel="stylesheet" media="screen">
-        <link href="{{vh_get_backend_assets("css/build.css", 'vaahprime')}}" rel="stylesheet" media="screen">
+        <link href="{{vh_get_backend_assets("css/build.css", 'vaahtwo')}}" rel="stylesheet" media="screen">
         <link href="{{vh_get_backend_assets("fontawesome-6.2.0/css/all.min.css", 'common')}}" rel="stylesheet" media="screen">
     @endif
 

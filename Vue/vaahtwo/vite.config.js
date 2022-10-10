@@ -26,7 +26,7 @@ export default defineConfig({
             name: 'MyApp',
 
         },*/
-        outDir: 'Resources/assets/build/',
+        outDir: './../../Resources/assets/backend/vaahtwo/build/',
         rollupOptions: {
             output: {
                 entryFileNames: `[name].js`,

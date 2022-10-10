@@ -1,9 +1,9 @@
 {
     "name": "vaahcms",
     "scripts": {
-        "dev": "vite --host --port 4000",
         "assets hot": "mix watch --hot",
-        "assets": "mix --production",
+        "assets production": "mix --production",
+        "dev": "vite --host --port 4000",
         "build": "vite build",
         "preview": "vite preview --port 4000"
     },

@@ -27,14 +27,14 @@
         <link href="http://localhost:4001/vaahone/css/style.css" rel="stylesheet" media="screen">
 
         <!--CSS Support for PrimeVue-->
-        <link href="http://localhost:4001/vaahprime/css/build.css" rel="stylesheet" media="screen">
+        <link href="http://localhost:4001/vaahtwo/css/build.css" rel="stylesheet" media="screen">
     @else
         <!--CSS Support for Bulma & Buefy-->
         <link href="{{vh_get_backend_assets("css/build.css", 'vaahone')}}" rel="stylesheet" media="screen">
         <link href="{{vh_get_backend_assets("css/style.css", 'vaahone')}}" rel="stylesheet" media="screen">
 
         <!--CSS Support for PrimeVue-->
-        <link href="{{vh_get_backend_assets("css/build.css", 'vaahprime')}}" rel="stylesheet" media="screen">
+        <link href="{{vh_get_backend_assets("css/build.css", 'vaahtwo')}}" rel="stylesheet" media="screen">
     @endif
 
     {!! vh_config_css() !!}

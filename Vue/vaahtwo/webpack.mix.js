@@ -1,7 +1,7 @@
 const mix = require('laravel-mix');
 
 
-let theme_name = 'vaahprime';
+let theme_name = 'vaahtwo';
 let theme_path = './../../Resources/assets/backend/'+theme_name+'/';
 let publish_folder;
 
