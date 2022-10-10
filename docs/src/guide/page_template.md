@@ -1,4 +1,4 @@
-# Page-Name
+# Page Template
 [[toc]]
 
 

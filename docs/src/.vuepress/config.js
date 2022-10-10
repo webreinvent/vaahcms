@@ -57,9 +57,27 @@ module.exports = {
             'technologies_used',
             'how_it_works',
             'login_and_registrations',
-            'page_template',
+          ]
+        },
+        {
+          title: 'Pages',
+          collapsable: false,
+          children: [
+            'page_template'
+          ]
+        },
+        {
+          title: 'Components',
+          collapsable: false,
+          children: [
             'component_template',
-            'seeder_template'
+          ]
+        },
+        {
+          title: 'Seeders',
+          collapsable: false,
+          children: [
+            'seeder_template',
           ]
         }
       ],

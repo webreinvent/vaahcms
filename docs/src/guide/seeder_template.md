@@ -1,4 +1,4 @@
-# Table Seeder Name
+# Table Seeder Template
 
 [[toc]]
 
