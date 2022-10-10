@@ -53,12 +53,11 @@ module.exports = {
           collapsable: false,
           children: [
             '',
-            'project-introduction',
+            'project_introduction',
             'glossary',
             'technologies_used',
             'how_it_works',
             'login_and_registrations',
-            'order_lenses',
           ]
         }
       ],
