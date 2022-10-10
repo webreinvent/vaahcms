@@ -4,7 +4,7 @@ module.exports = {
   /**
    * Ref：https://v1.vuepress.vuejs.org/config/#title
    */
-  title: 'Vuepress Docs Boilerplate',
+  title: 'Project Docs Boilerplate',
   /**
    * Ref：https://v1.vuepress.vuejs.org/config/#description
    */
@@ -53,7 +53,12 @@ module.exports = {
           collapsable: false,
           children: [
             '',
-            'using-vue',
+            'project-introduction',
+            'glossary',
+            'technologies_used',
+            'how_it_works',
+            'login_and_registrations',
+            'order_lenses',
           ]
         }
       ],
