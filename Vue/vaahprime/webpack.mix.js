@@ -61,6 +61,14 @@ if (mix.inProduction()) {
 
 }
 
+
+mix.options({
+    hmrOptions: {
+        host: 'localhost',
+        port: 4001,
+},
+});
+
 mix.webpackConfig({
     //devtool: 'eval-source-map',
     watchOptions: {

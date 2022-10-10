@@ -1,9 +1,11 @@
 {
     "name": "vaahcms",
     "scripts": {
-        "dev": "vite --host --port 2323",
+        "dev": "vite --host --port 4000",
+        "assets hot": "mix watch --hot",
+        "assets": "mix --production",
         "build": "vite build",
-        "preview": "vite preview --port 2323"
+        "preview": "vite preview --port 4000"
     },
     "dependencies": {
         "axios": "^1.1.2",
