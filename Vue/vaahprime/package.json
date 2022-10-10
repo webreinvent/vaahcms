@@ -2,8 +2,6 @@
     "name": "vaahcms",
     "scripts": {
         "dev": "vite --host --port 2323",
-        "assets hot": "mix watch --hot",
-        "assets": "mix --production",
         "build": "vite build",
         "preview": "vite preview --port 2323"
     },

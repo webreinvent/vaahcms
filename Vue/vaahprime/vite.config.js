@@ -5,7 +5,7 @@ import {fileURLToPath, URL} from 'url'
 import {defineConfig} from 'vite'
 import vue from '@vitejs/plugin-vue'
 
-const pathSrc = path.resolve(__dirname, './')
+const pathSrc = path.resolve(__dirname, 'Vue')
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -14,16 +14,10 @@ export default defineConfig({
     ],
     resolve: {
         alias: {
-            '@': fileURLToPath(new URL('./', import.meta.url))
+            //'@': fileURLToPath(new URL('./', import.meta.url))
         }
     },
-    css: {
-        preprocessorOptions: {
-            scss: {
-                additionalData: `@import "./../../Resources/assets/backend/common/fontawesome-6.2.0/css/all.css";`
-            }
-        }
-    },
+
     build: {
         chunkSizeWarningLimit: 1600,
         target: "esnext",
@@ -32,7 +26,7 @@ export default defineConfig({
             name: 'MyApp',
 
         },*/
-        outDir: './../../Resources/assets/backend/vaahprime/builds/',
+        outDir: 'Resources/assets/build/',
         rollupOptions: {
             output: {
                 entryFileNames: `[name].js`,
@@ -44,7 +38,7 @@ export default defineConfig({
     },
     server: {
         watch: { usePolling: true, },
-        port: 2323,
+        port: 9087,
         hmr:{
             protocol: 'ws',
             host: 'localhost',
