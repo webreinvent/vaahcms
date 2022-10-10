@@ -1,3 +1,7 @@
+import './../../Resources/assets/backend/common/fontawesome-6.2.0/css/all.css'
+import './../../Resources/assets/backend/vaahprime/css/build.css'
+
+
 import {createApp, markRaw} from 'vue';
 import { createPinia, PiniaVuePlugin  } from 'pinia'
 
@@ -222,7 +226,7 @@ app.component('VirtualScroller', VirtualScroller);
 //-------------/PrimeVue Use
 
 
-app.mount('#appVaah')
+app.mount('#themeAppVaahTwo')
 
 
 export { app }
