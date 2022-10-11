@@ -4,7 +4,7 @@ let routes_list= [];
 import Dashboard from '../pages/dashboard/Dashboard.vue'
 
 routes_list = {
-    path: '/',
+    path: '/dashboard',
     name: 'dashboard',
     component: Dashboard,
     props: true,

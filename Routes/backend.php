@@ -12,11 +12,8 @@
 */
 
 
-include('backend/v2.php');
-
 include('backend/general.php');
 include('backend/ui.php');
-
 include('backend/setup.php');
 include('backend/settings.php');
 include('backend/modules.php');
