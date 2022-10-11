@@ -6,9 +6,10 @@ let theme_path = './../../Resources/assets/backend/'+theme_name+'/';
 let publish_folder;
 
 
-let mode = process.env.mode;
+let mode = process.argv[5];
 
-console.log('mode--->', mode);
+console.log('--->', mode);
+
 
 if (mix.inProduction()) {
 /*
@@ -42,7 +43,6 @@ if (mix.inProduction()) {
 
 
 } else if(mode !== 'publish') {
-
     publish_folder = './../../Resources/assets/backend/';
     mix.setPublicPath(publish_folder);
 
@@ -54,26 +54,22 @@ if (mix.inProduction()) {
         theme_path+'/css/style.css',
     ], theme_path+'css/build.css');
 
-    /**
-     * vaahone css
-     */
+     // vaahone css
     theme_name = 'vaahone';
     theme_path = './../../Resources/assets/backend/'+theme_name+'/';
 
-
     mix.sass(theme_path+'/scss/build.scss', theme_path+'css/');
     mix.sass(theme_path+'/scss/style.scss', theme_path+'css/');
-
 }
 
 
+console.log('mode--->', mode);
+
 if(mode === 'publish')
 {
-    publish_folder = __dirname+'/../../../../public/vaahcms/';
-    mix.setPublicPath(publish_folder);
-
     let source_path = './../../Resources/assets/backend/';
-    mix.copy(source_path, 'backend');
+    let output_path = __dirname+'/../../../../public/vaahcms/backend'
+    mix.copy(source_path, output_path);
 }
 
 
