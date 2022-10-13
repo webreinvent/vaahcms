@@ -192,6 +192,19 @@ class PublicController extends Controller
 
     }
     //----------------------------------------------------------
+    public function signinResendSecurityOtp(Request $request)
+    {
+
+        Auth::user()->verifySecurityAuthentication();
+
+        $response = [];
+
+        $response['status'] = 'success';
+        $response['data'] = '{}';
+
+        return response()->json($response);
+    }
+    //----------------------------------------------------------
     public function postSendResetCode(Request $request)
     {
         $response = User::sendResetPasswordEmail($request, 'can-login-in-backend');

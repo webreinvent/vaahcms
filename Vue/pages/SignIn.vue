@@ -105,23 +105,30 @@
                                     </b-field>
 
 
-                                    <div class="buttons is-full-width has-margin-top-20">
-                                        <div class="columns is-full-width">
+                                    <div class="level has-margin-top-20">
 
-                                            <div class="column">
-                                                <div class="buttons">
-                                                    <b-button
-                                                            native-type="submit"
-                                                            :loading="is_verification_btn_otp_loading"
-                                                            dusk="signin-signin"
-                                                            type="is-primary">Submit OTP</b-button>
-                                                </div>
-                                            </div>
-
-                                            <div class="column has-text-right-desktop">
-                                                <router-link :to="{name:'sign.in'}">Sign In</router-link>
-                                            </div>
+                                        <!--left-->
+                                        <div class="level-left" >
+                                            <b-button
+                                                    native-type="submit"
+                                                    :loading="is_verification_btn_otp_loading"
+                                                    dusk="signin-signin"
+                                                    type="is-primary">Submit OTP</b-button>
                                         </div>
+
+                                        <div class="level-right">
+                                            <b-button
+                                                    @click="resendSecurityOtp"
+                                                    type="is-primary"
+                                                    :disabled="security_timer > 0"
+                                                    :loading="is_resend_otp_btn_loading">
+                                                Resend OTP
+                                                <span v-if="security_timer > 0">
+                                            in {{ security_timer  }} Seconds..
+                                        </span>
+                                            </b-button>
+                                        </div>
+
                                     </div>
                                     <hr class="has-margin-bottom-10"/>
                                 </form>

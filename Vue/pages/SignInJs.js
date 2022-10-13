@@ -26,6 +26,8 @@ export default {
             is_btn_otp_loading: false,
             is_verification_btn_otp_loading: false,
             is_verification_form_visible: false,
+            is_resend_otp_btn_loading: false,
+            security_timer: 0,
             verification: {
                 otp_0: null,
                 otp_1: null,
@@ -46,7 +48,18 @@ export default {
         }
     },
     watch: {
+        security_timer: {
+            handler(value) {
 
+                if (value > 0) {
+                    setTimeout(() => {
+                        this.security_timer--;
+                    }, 1000);
+                }
+
+            },
+            immediate: true // This ensures the watcher is triggered upon creation
+        }
     },
     mounted() {
 
@@ -81,6 +94,7 @@ export default {
 
                 if(data.verification_response && data.verification_response.status
                     && data.verification_response.status === 'success'){
+                    this.security_timer = 30;
                     this.is_verification_form_visible = true;
                 }else{
                     window.location = this.root.base_url+'/backend#/vaah';
@@ -125,7 +139,28 @@ export default {
             {
 
             }
-        },//---------------------------------------------
+        },
+        //---------------------------------------------------------------------
+        resendSecurityOtp: function (e) {
+            e.preventDefault();
+            this.is_resend_otp_btn_loading = true;
+            var url = this.ajax_url+'/resendSecurityOtp/post';
+            var params = {};
+            this.$vaah.ajax(url, params, this.resendSecurityOtpAfter);
+        },
+        //---------------------------------------------------------------------
+        resendSecurityOtpAfter: function (data) {
+
+            this.security_timer = 30;
+
+            if(data)
+            {
+                this.is_resend_otp_btn_loading = false;
+            }
+
+        },
+
+        //---------------------------------------------------------------------
         moveToElement: function (event, next_el_id, previous_el_id) {
 
             console.log('--->event.key', event.key);

@@ -28,6 +28,9 @@ Route::group(
         //------------------------------------------------
         Route::post( '/signin/generate/otp', 'PublicController@postGenerateOTP' );
         //------------------------------------------------
+        Route::post( '/resendSecurityOtp/post', 'PublicController@signinResendSecurityOtp' )
+            ->name( 'vh.backend.resendSecurityOtp.post' );
+        //------------------------------------------------
         Route::get( '/logout', 'PublicController@logout' )
             ->name( 'vh.backend.logout' );
         //-----------------------------------------------
