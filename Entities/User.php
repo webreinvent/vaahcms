@@ -19,6 +19,7 @@ use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Str;
 use WebReinvent\VaahCms\Jobs\ProcessMails;
 use WebReinvent\VaahCms\Jobs\ProcessNotifications;
+use WebReinvent\VaahCms\Jobs\SecurityOtpJob;
 use WebReinvent\VaahCms\Libraries\VaahMail;
 use WebReinvent\VaahCms\Mail\TestMail;
 use WebReinvent\VaahCms\Notifications\MultiFactorCode;
@@ -1967,25 +1968,6 @@ class User extends Authenticatable
             $has_security = false;
         }
 
-//        /*$response = new Response('Set Cookie');
-//        $response->withCookie(cookie('app_name', env('APP_NAME'), 500000));*/
-//
-//        dd(get_browser());
-//
-////        Cookie::queue('app_name', env('APP_NAME'), 500000);
-//
-//        dd(Cookie::get('app_name'));
-//
-//        if(config('settings.global.is_new_device_verification_enabled') == 1){
-//
-//            if(Cookie::get('app_name')
-//                && Cookie::get('app_name') == env('APP_NAME')){
-//
-//                $has_security = false;
-//            }
-//
-//        }
-
         if(!$has_security){
             return $response;
         }
@@ -1994,7 +1976,7 @@ class User extends Authenticatable
         $this->security_code_expired_at = now()->addMinutes(10);
         $this->save();
 
-        $this->notify(new MultiFactorCode());
+        dispatch(new SecurityOtpJob($this->toArray()));
 
         $response['status'] = 'success';
 
