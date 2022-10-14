@@ -36,22 +36,55 @@ const items = ref([
     {
         label:'Settings',
         icon:'pi pi-fw pi-pencil',
-        items:[
+        items: [
             {
-                label:'Left',
-                icon:'pi pi-fw pi-align-left'
+                label: 'General',
+                icon: 'pi pi-cog',
+                command: () => {
+                    this.$router.push('settings/general-settings');
+                }
             },
             {
-                label:'Right',
-                icon:'pi pi-fw pi-align-right'
+                label: 'User Settings',
+                icon: 'pi pi-user',
+                command: () => {
+                    this.$router.push('settings/user-settings');
+                }
             },
             {
-                label:'Center',
-                icon:'pi pi-fw pi-align-center'
+                label: 'ENV Variables',
+                icon: 'pi pi-cog',
+                command: () => {
+                    this.$router.push('settings/env-variables-settings');
+                }
             },
             {
-                label:'Justify',
-                icon:'pi pi-fw pi-align-justify'
+                label: 'Localization',
+                icon: 'pi pi-code',
+                command: () => {
+                    this.$router.push('settings/localization-settings');
+                }
+            },
+            {
+                label: 'Notification',
+                icon: 'pi pi-bell',
+                command: () => {
+                    this.$router.push('settings/notification-settings');
+                }
+            },
+            {
+                label: 'Update',
+                icon: 'pi pi-download',
+                command: () => {
+                    this.$router.push('settings/update-settings');
+                }
+            },
+            {
+                label: 'Reset',
+                icon: 'pi pi-refresh',
+                command: () => {
+                    this.$router.push('settings/account');
+                }
             },
         ]
     },
