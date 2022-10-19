@@ -23,6 +23,7 @@ import Setup from "../pages/ui/Setup.vue";
 import PublicPages from "../pages/ui/PublicPages.vue";
 import PrivatePages from "../pages/ui/PrivatePages.vue";
 import Users from "../pages/ui/Users.vue";
+import Extend from "../pages/ui/Extend.vue";
 
 routes_list = [{
     path: '/ui',
@@ -127,6 +128,11 @@ routes_list = [{
                 path:'users',
                 name: Users,
                 component: Users
+            },
+            {
+                path: 'extend',
+                name:Extend,
+                component: Extend
             }
         ]
     }];

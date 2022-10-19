@@ -61,6 +61,10 @@ const pages = ref([
     {
         label:'Users',
         to:'/private/users'
+    },
+    {
+        label:'Extend',
+        to:'/private/extend'
     }
 ])
 

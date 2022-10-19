@@ -12,7 +12,7 @@
 
 <script>
 import UsersForm from "../../components/partials/UsersForm.vue";
-import UserDetials from "../../components/partials/UserDetials.vue";
+import UserDetials from "../../components/partials/UserDetails.vue";
 export default {
     name: "Users",
     components: {UserDetials, UsersForm},

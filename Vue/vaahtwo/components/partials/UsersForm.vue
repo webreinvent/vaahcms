@@ -14,92 +14,101 @@
                 </div>
             </template>
             <template #content>
-       <span class="p-float-label">
-           <InputText id="email" class="w-full"></InputText>
-           <label for="email">Email</label>
-       </span>
-                <span class="p-float-label">
-           <InputText id="username" class="w-full"></InputText>
-           <label for="username">Username</label>
-       </span>
-                <span class="p-float-label">
-             <Password v-model="value1" :feedback="false" id="password" class="w-full" inputClass="w-full"/>
-            <label for="password">Password</label>
-       </span>
-                <span class="p-float-label">
-           <InputText id="display-name" class="w-full"></InputText>
-           <label for="display-name">Display Name</label>
-       </span>
-                <span class="p-float-label">
-           <InputText id="designation" class="w-full"></InputText>
-           <label for="designation">Designation</label>
-       </span>
-                <span class="p-float-label">
-           <InputText id="first-name" class="w-full"></InputText>
-           <label for="first-name">First Name</label>
-       </span>
-                <span class="p-float-label">
-           <InputText id="middle-name" class="w-full"></InputText>
-           <label for="middle-name">Middle Name</label>
-       </span>
-                <span class="p-float-label">
-           <InputText id="last-name" class="w-full"></InputText>
-           <label for="last-name">Last Name</label>
-       </span>
-                <span class="p-float-label">
-                 <SelectButton v-model="gender" :options="gender_options" optionLabel="label" dataKey="value"
-                               aria-labelledby="custom">
-                    <template #option="slotProps">
-                        <i :class="'pi ' + slotProps.option.icon" class="mr-2"></i>
-                        <p>{{slotProps.option.label}}</p>
-                    </template>
-                </SelectButton>
-                <label for="gender"></label>
-            </span>
-                <span class="p-float-label">
-                <AutoComplete v-model="selectedCountry1" :suggestions="filteredCountries" id="country-code"
-                              @complete="searchCountry($event)" optionLabel="name"
-                              class="w-full"
-                              input-class="p-inputtext-sm w-full"/>
-                    <label for="country-code">Country Code</label>
-            </span>
-                <span class="p-float-label">
-           <InputText id="phone" class="w-full"></InputText>
-           <label for="phone">Phone</label>
-       </span>
-                <span class="p-float-label">
-           <Textarea id="bio" class="w-full"></Textarea>
-           <label for="bio">Bio</label>
-       </span>
-                <span class="p-float-label">
-           <InputText id="website" class="w-full"></InputText>
-           <label for="website">Website</label>
-       </span>
-                <span class="p-float-label">
-                <AutoComplete v-model="selectedCountry1" :suggestions="filteredCountries" id="timezone"
-                              @complete="searchCountry($event)" optionLabel="name"
-                              class="w-full"
-                              input-class="p-inputtext-sm w-full"/>
-                    <label for="timezone">Timezone</label>
-            </span>
-                <span class="p-float-label">
-           <InputText id="alternate-email" class="w-full"></InputText>
-           <label for="alternate-email">Alternate Email</label>
-       </span>
-                <span class="p-float-label">
-                    <Calendar id="dob" inputId="basic" v-model="date1" autocomplete="off" class="w-full"/>
-                    <label for="dob">Date of birth</label>
-                </span>
-                <span class="p-float-label">
-                <AutoComplete v-model="selectedCountry1" :suggestions="filteredCountries" id="country"
-                              @complete="searchCountry($event)" optionLabel="name"
-                              class="w-full"
-                              input-class="p-inputtext-sm w-full"/>
-                    <label for="country">Country</label>
-            </span>
-                <span class="p-float-label">
-                     <SelectButton v-model="is_active" :options="is_active_options" option-value="value" option-label="label"  aria-labelledby="single" id="is-active"/>
-            </span>
+                    <div class="field mb-4 flex justify-content-between align-items-center">
+                        <img src="https://img.site/p/100/100/BDC3C8/solid-box" alt="" width="64" height="64" style="border-radius: 50%">
+                        <FileUpload mode="basic" name="demo[]" url="./upload.php" accept="image/*" :maxFileSize="1000000" @upload="onUpload" />
+                    </div>
+                   <span class="p-float-label">
+                       <InputText id="email" class="w-full"></InputText>
+                       <label for="email">Email</label>
+                   </span>
+                    <span class="p-float-label">
+                        <InputText id="username" class="w-full"></InputText>
+                        <label for="username">Username</label>
+                    </span>
+                    <span class="p-float-label">
+                        <Password v-model="value1" :feedback="false" id="password" class="w-full" inputClass="w-full"/>
+                        <label for="password">Password</label>
+                    </span>
+                    <span class="p-float-label">
+                        <InputText id="display-name" class="w-full"></InputText>
+                        <label for="display-name">Display Name</label>
+                    </span>
+                    <span class="p-float-label">
+                         <Dropdown v-model="selectedCity1" :options="cities" optionLabel="name" optionValue="code" id="country-code" class="w-full"/>
+                         <label for="country-code">Designation</label>
+                    </span>
+                    <span class="p-float-label">
+                          <InputText id="designation" class="w-full"></InputText>
+                          <label for="designation">Designation</label>
+                    </span>
+                    <span class="p-float-label">
+                           <InputText id="first-name" class="w-full"></InputText>
+                           <label for="first-name">First Name</label>
+                    </span>
+                    <span class="p-float-label">
+                            <InputText id="middle-name" class="w-full"></InputText>
+                            <label for="middle-name">Middle Name</label>
+                    </span>
+                    <span class="p-float-label">
+                            <InputText id="last-name" class="w-full"></InputText>
+                            <label for="last-name">Last Name</label>
+                    </span>
+                    <span class="p-float-label">
+                             <SelectButton v-model="gender" :options="gender_options" optionLabel="label" dataKey="value"
+                                           aria-labelledby="custom">
+                                <template #option="slotProps">
+                                    <i :class="'pi ' + slotProps.option.icon" class="mr-2"></i>
+                                    <p>{{slotProps.option.label}}</p>
+                                </template>
+                            </SelectButton>
+                            <label for="gender"></label>
+                    </span>
+                    <span class="p-float-label">
+                           <Dropdown v-model="selectedCity1" :options="cities" optionLabel="name" optionValue="code" id="country-code" class="w-full"/>
+                           <label for="country-code">Country Code</label>
+                    </span>
+                    <span class="p-float-label">
+                            <InputText id="phone" class="w-full"></InputText>
+                            <label for="phone">Phone</label>
+                    </span>
+                    <span class="p-float-label">
+                           <Textarea id="bio" class="w-full"></Textarea>
+                           <label for="bio">Bio</label>
+                    </span>
+                    <span class="p-float-label">
+                           <InputText id="website" class="w-full"></InputText>
+                           <label for="website">Website</label>
+                    </span>
+                    <span class="p-float-label">
+                            <AutoComplete v-model="selectedCountry1" :suggestions="filteredCountries" id="timezone"
+                                          @complete="searchCountry($event)" optionLabel="name"
+                                          class="w-full"
+                                          input-class="p-inputtext-sm w-full"/>
+                            <label for="timezone">Timezone</label>
+                    </span>
+                    <span class="p-float-label">
+                           <InputText id="alternate-email" class="w-full"></InputText>
+                           <label for="alternate-email">Alternate Email</label>
+                    </span>
+                    <span class="p-float-label">
+                        <Calendar id="dob" inputId="basic" v-model="date1" autocomplete="off" class="w-full"/>
+                        <label for="dob">Date of birth</label>
+                    </span>
+                    <span class="p-float-label">
+                        <AutoComplete v-model="selectedCountry1" :suggestions="filteredCountries" id="country"
+                                  @complete="searchCountry($event)" optionLabel="name"
+                                  class="w-full"
+                                  input-class="p-inputtext-sm w-full"/>
+                        <label for="country">Country</label>
+                    </span>
+                    <span class="p-float-label">
+                         <Dropdown v-model="selectedCity1" :options="cities" optionLabel="name" optionValue="code" id="country-code" class="w-full"/>
+                         <label for="country-code">Status</label>
+                    </span>
+                    <span class="p-float-label">
+                         <SelectButton v-model="is_active" :options="is_active_options" option-value="value" option-label="label"  aria-labelledby="single" id="is-active"/>
+                    </span>
             </template>
         </Card>
     </div>
