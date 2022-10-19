@@ -2,7 +2,7 @@
 <div>
   <Card>
     <template #header>
-      <h4 class="pt-3 px-4 font-semibold text-lg">User Settings</h4>
+      <h4 class=" font-semibold text-lg">User Settings</h4>
     </template>
     <template #content>
       <Accordion :multiple="true" :activeIndex="activeIndex" id="accordionTabContainer">

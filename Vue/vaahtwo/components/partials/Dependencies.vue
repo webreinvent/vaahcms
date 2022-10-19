@@ -93,10 +93,10 @@ export default {
   },
   methods:{
     goBack(){
-      this.$router.push("/install/migrate")
+      this.$router.push("/ui/public/install/migrate")
     },
     goToNextStep(){
-      this.$router.push("/install/account")
+      this.$router.push("/ui/public/install/account")
     },
   }
 

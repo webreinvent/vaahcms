@@ -70,7 +70,7 @@
 </template>
 
 <script>
-import countriesData from "../assets/data/country.json";
+import countriesData from "../../assets/data/country.json";
 import {FilterService,FilterMatchMode} from 'primevue/api';
 export default {
   name: "Account",

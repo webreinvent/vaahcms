@@ -7,7 +7,7 @@
   </div>
   <ConfirmDialog group="templating" class="is-small" :style="{width: '400px'}" :breakpoints="{'600px': '100vw'}">
     <template #message="slotProps">
-      <div class="flex p-4">
+      <div class="flex">
         <i :class="slotProps.message.icon" style="font-size: 1.5rem"></i>
         <p class="pl-2 text-xs">{{slotProps.message.message}}</p>
       </div>
@@ -20,10 +20,10 @@ export default {
   name: "Migrate",
   methods: {
     goBack(){
-      this.$router.push("/install/configuration")
+      this.$router.push("/ui/public/install/configuration")
     },
     goToNextStep(){
-      this.$router.push("/install/dependencies")
+      this.$router.push("/ui/public/install/dependencies")
     },
     showTemplate() {
       console.log('test'),

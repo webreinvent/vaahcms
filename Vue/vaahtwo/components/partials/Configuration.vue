@@ -195,7 +195,7 @@ export default {
   },
   methods:{
     goToNextStep(){
-      this.$router.push("/install/migrate");
+      this.$router.push({path:'/public/install/migrate'});
     },
   }
 

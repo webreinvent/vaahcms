@@ -1,7 +1,7 @@
 <template>
   <Card>
     <template #header>
-      <div class="pt-3 px-4 flex justify-content-between align-items-center">
+      <div class="flex justify-content-between align-items-center">
         <div>
           <h5 class="font-semibold text-lg inline mr-2">Environment Variables</h5>
           <Tag class="mr-2">

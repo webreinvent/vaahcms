@@ -1,79 +1,111 @@
 <template>
-<Card>
+<Card class="notification-settings">
   <template #header>
-    <div class="pt-3 px-4 flex justify-content-between align-items-center">
-      <h4 class="font-semibold text-lg">Notification</h4>
-      <Button icon="pi pi-plus" label="Add"></Button>
+    <div class="flex justify-content-between align-items-center">
+        <h4 class="font-semibold text-lg">Notification</h4>
+        <Button icon="pi pi-plus" label="Add"></Button>
     </div>
   </template>
   <template #content>
     <div class="grid" v-if="!show">
-      <div class="col">
-        <a @click="showNotificationSettings">Send Login OTP</a>
-      </div>
+        <div class="col">
+            <DataTable :value="notifications" stripedRows responsiveLayout="scroll" class="p-datatable-sm" showGridlines>
+                <Column header="Notification Title">
+                    <template #body="slotProps">
+                        <p>{{slotProps.data.title}}</p>
+                    </template>
+                </Column>
+                <Column header="Edit">
+                    <template #body="slotProps">
+                        <Button icon="pi pi-pencil" @click="showNotificationSettings(slotProps.index)" class="p-button-rounded p-button-sm"></Button>
+                    </template>
+                </Column>
+            </DataTable>
+        </div>
     </div>
     <div class="grid" v-else>
+        <div class="col-12 mb-3">
+            <div class="flex align-items-center justify-content-between">
+                <h4 class="font-semibold text-xl">{{activeNotification.title}}</h4>
+                <Button class="p-button-outlined" label="Go back" icon="pi pi-arrow-left" icon-class="text-xs" v-if="show" @click="hideNotificationSettings"></Button>
+            </div>
+        </div>
       <div class="col-3 pr-3">
-          <Button @click="showNotificationSettings">Back</Button>
-        <div class="p-inputgroup mb-3" v-for="item in notificationVariables">
-          <InputText :model-value="item" readonly></InputText>
-          <Button icon="pi pi-copy"></Button>
-          <Button icon="pi pi-question-circle" class="p-button-secondary"></Button>
+          <h5 class="text-lg font-semibold mb-4">Variables</h5>
+          <div class="p-inputgroup mb-3">
+              <AutoComplete placeholder="Search"></AutoComplete>
+          </div>
+        <div class="notification-variables">
+            <div class="p-inputgroup mb-3" v-for="item in activeNotification.variables">
+                <InputText :model-value="item" readonly></InputText>
+                <Button icon="pi pi-copy"></Button>
+                <Button icon="pi pi-question-circle" class="p-button-secondary"></Button>
+            </div>
         </div>
       </div>
       <div class="col-9 pl-3 p-fluid">
-        <AutoComplete v-model="selectedCountry1" :suggestions="filteredCountries" @complete="searchCountry($event)" placeholder="Search" optionLabel="name"/>
-        <h5 class="text-lg font-semibold my-4">Contact us notification</h5>
+        <h5 class="text-lg font-semibold mb-4">Notification Options</h5>
         <div class="grid justify-content-between">
-          <div class="col-5 flex justify-content-between">
-            <span>
+          <div class="col-5">
+              <h5 class="text-sm font-semibold mb-2">Deliver via</h5>
+            <div class="flex justify-content-between">
+                <span>
               <h5 class="font-semibold text-xs">Mail</h5>
               <InputSwitch v-model="checked" />
             </span>
-            <span>
+                <span>
               <h5 class="font-semibold text-xs">SMS</h5>
               <InputSwitch v-model="checked" />
             </span>
-            <span>
+                <span>
               <h5 class="font-semibold text-xs">Push</h5>
               <InputSwitch v-model="checked" />
             </span>
-            <span>
+                <span>
               <h5 class="font-semibold text-xs">Frontend</h5>
               <InputSwitch v-model="checked" />
             </span>
-            <span>
+                <span>
               <h5 class="font-semibold text-xs">Backend</h5>
               <InputSwitch v-model="checked" />
             </span>
+            </div>
           </div>
-          <div class="col-5 justify-content-end flex">
+          <div class="col-6 justify-content-end flex">
            <span class="text-right">
-              <h5 class="font-semibold text-xs">Is this an error notifications?</h5>
-              <InputSwitch v-model="checked" />
+              <h5 class="font-semibold text-xs">Error notifications</h5>
+              <InputSwitch v-model="checked"/>
            </span>
           </div>
           <div class="col-12">
             <TabView ref="tabview1">
-              <TabPanel header="Mail">
+              <TabPanel header="Mail" content-class="p-0">
                 <div>
-                  <h5 class="text-left p-1">Subject</h5>
-                  <div class="p-inputgroup">
-                    <InputText></InputText>
-                  </div>
+                    <h5 class="text-left p-1">Subject</h5>
+                    <div class="p-inputgroup">
+                        <InputText placeholder="Enter Subject"></InputText>
+                    </div>
+                    <h5 class="text-left p-1">From</h5>
+                    <div class="p-inputgroup">
+                        <InputText placeholder="Enter From"></InputText>
+                    </div>
                   <h5 class="text-left p-1">Line</h5>
                   <div class="p-inputgroup">
-                    <Textarea v-model="value" :autoResize="true" class="w-full" />
+                    <Textarea v-model="value" :autoResize="true" class="w-full" placeholder="Content with variables"/>
                     <Button icon="pi pi-trash" class=""/>
                   </div>
-                  <h5 class="text-left p-1">Line</h5>
-                  <div class="p-inputgroup">
-                    <Textarea v-model="value" :autoResize="true" class="w-full" />
-                    <Button icon="pi pi-trash" class=""/>
-                  </div>
+                    <h5 class="text-left p-1">Greetings</h5>
+                    <div class="p-inputgroup">
+                        <InputText placeholder="Content with variables"></InputText>
+                    </div>
+                    <h5 class="text-left p-1">Action</h5>
+                    <div class="p-inputgroup">
+                        <InputText placeholder="Enter action label"></InputText>
+                        <Dropdown placeholder="Choose an action"></Dropdown>
+                    </div>
                   <div class="flex mt-5">
                     <Button icon="" label="Add Subject" class="w-auto mr-2" disabled></Button>
-                    <Button icon="" label="Add Form" class="w-auto mr-2"></Button>
+                    <Button icon="" label="Add From" class="w-auto mr-2"></Button>
                     <Button icon="" label="Add Greetings" class="w-auto mr-2"></Button>
                     <Button icon="" label="Add Line" class="w-auto mr-2"></Button>
                     <Button icon="" label="Add Action" class="w-auto"></Button>
@@ -81,21 +113,21 @@
                 </div>
               </TabPanel>
               <TabPanel header="Backend">
-                <div class="col-12">
+                <div class="col-12 px-0">
                   <h5 class="text-left p-1">Message</h5>
                   <div class="p-inputgroup">
                     <Textarea v-model="value" :autoResize="true" class="w-full" />
                     <Button icon="pi pi-copy" class=""/>
                   </div>
                 </div>
-                <div class="col-12">
+                <div class="col-12 px-0">
                   <h5 class="text-left p-1">Action</h5>
                   <div class="p-inputgroup">
                     <InputText placeholder="Enter action label"></InputText>
                     <Dropdown placeholder="Choose an action"></Dropdown>
                   </div>
                 </div>
-                <div class="col-12">
+                <div class="col-12 mt-4">
                   <Button label="Save" icon="pi pi-save" class="w-auto mr-3"></Button>
                   <Button label="Test" icon="pi pi-reply" class="w-auto"></Button>
                 </div>
@@ -119,9 +151,31 @@ export default {
       countries: null,
       selectedCountry1: null,
       filteredCountries: null,
-      notificationVariables:['#!USER:NAME!#','#!USER:DISPLAY_NAME!#','#!USER:EMAIL!#','#!USER:PHONE!#'],
       checked:true,
-        show:false
+        show:false,
+        notifications: [
+            {
+                title:'Send Login OTP',
+                variables:['#!USER:NAME!#','#!USER:DISPLAY_NAME!#','#!USER:EMAIL!#','#!USER:PHONE!#'],
+            },
+            {
+                title:'Send Reset Password email',
+                variables:['#!USER:NAME!#','#!USER:DISPLAY_NAME!#','#!USER:EMAIL!#','#!USER:PHONE!#'],
+            },
+            {
+                title:'Send Update Message',
+                variables:['#!USER:NAME!#','#!USER:DISPLAY_NAME!#','#!USER:EMAIL!#','#!USER:PHONE!#'],
+            },
+            {
+                title:'Send Verification Email',
+                variables:['#!USER:NAME!#','#!USER:DISPLAY_NAME!#','#!USER:EMAIL!#','#!USER:PHONE!#'],
+            },
+            {
+                title:'Send Welcome Email',
+                variables:['#!USER:NAME!#','#!USER:DISPLAY_NAME!#','#!USER:EMAIL!#','#!USER:PHONE!#','#!USER:NAME!#','#!USER:DISPLAY_NAME!#','#!USER:EMAIL!#','#!USER:PHONE!#','#!USER:NAME!#','#!USER:DISPLAY_NAME!#','#!USER:EMAIL!#','#!USER:PHONE!#','#!USER:NAME!#','#!USER:DISPLAY_NAME!#','#!USER:EMAIL!#','#!USER:PHONE!#'],
+            },
+        ],
+        activeNotification:null
     }
   },
   mounted() {
@@ -140,13 +194,39 @@ export default {
         }
       }, 250);
     },
-    showNotificationSettings(){
-        this.show = !this.show;
+    showNotificationSettings(index){
+        console.log(index);
+        this.activeNotification = this.notifications[index];
+        this.show = true;
+    },
+    hideNotificationSettings(){
+        this.show  = false;
+        this.activeNotification = null;
     }
   }
 }
 </script>
 
-<style scoped>
-
+<style lang="scss">
+.notification-settings{
+    .p-tabview .p-tabview-panels{
+        padding: 0;
+    }
+    .notification-variables{
+        max-height: 50vh;
+        overflow-y: auto;
+        &::-webkit-scrollbar {
+            width: 5px;
+        }
+        &::-webkit-scrollbar-track {
+            width:5px;
+            box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+        }
+        &::-webkit-scrollbar-thumb {
+            background-color: darkgrey;
+            outline: 1px solid slategrey;
+            width: 5px;
+        }
+    }
+}
 </style>

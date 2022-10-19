@@ -1,73 +1,8 @@
 <template>
   <div>
-    <!--<Accordion :activeIndex="0">
-      <AccordionTab >
-        <template #header>
-          <div class="flex justify-content-between align-items-center w-full">
-            <span>General Settings</span>
-            <div>
-              <Button label="Expand all" class="p-button-sm"></Button>
-            </div>
-          </div>
-        </template>
-        <Accordion :multiple="true" :activeIndex="[0]">
-          <AccordionTab>
-            <template #header>
-              <div class="w-full">
-                <div class="flex justify-content-between align-items-center">
-                  <div>
-                    <h5>Site Settings</h5>
-                    <p class="text-color-secondary">After a successful password update, you will be redirected to the login page where you can log in with your new password.</p>
-                  </div>
-                  <Button label="Expand" class="p-button-sm"></Button>
-                </div>
-
-              </div>
-            </template>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-          </AccordionTab>
-          <AccordionTab>
-            <template #header>
-              <div class="w-full">
-                <h5>Date & Time</h5>
-                <p class="text-color-secondary">Global date and time settings.</p>
-              </div>
-            </template>
-            <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Consectetur, adipisci velit, sed quia non numquam eius modi.</p>
-          </AccordionTab>
-          <AccordionTab>
-            <template #header>
-              <div class="w-full">
-                <h5>Social Media & Links</h5>
-                <p class="text-color-secondary">Static links management.</p>
-              </div>
-            </template>
-            <p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus.</p>
-          </AccordionTab>
-          <AccordionTab>
-            <template #header>
-              <div class="w-full">
-                <h5>Scripts</h5>
-                <p class="text-color-secondary">Add scripts of Google Analytics and other tracking scripts.</p>
-              </div>
-            </template>
-            <p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-          </AccordionTab>
-          <AccordionTab>
-            <template #header>
-              <div class="w-full">
-                <h5>Meta Tags</h5>
-                <p class="text-color-secondary">Global meta tags.</p>
-              </div>
-            </template>
-            <p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-          </AccordionTab>
-        </Accordion>
-      </AccordionTab>
-    </Accordion>-->
     <Card>
       <template #header>
-        <div class="flex justify-content-between align-items-center w-full px-4 pt-3">
+        <div class="flex justify-content-between align-items-center w-full">
           <h2 class="font-semibold text-lg">General Settings</h2>
           <div>
             <Button label="Expand all" class="p-button-sm mr-2" @click="expandAll"></Button>
@@ -394,7 +329,7 @@ export default {
       dateTimeFormat: 'Y-m-d H:i:s',
       socialMediaLinks: [{title:'Facebook',icon:'pi-facebook'}, {title:'Twitter',icon:'pi-twitter'}, {title:'Linkedin',icon:'pi-linkedin'}, {title:'Youtube',icon:'pi-youtube'}, {title:'Instagram',icon:'pi-instagram'}, {title:'Github',icon:'pi-github'}],
       addLink: null,
-      showLinkInput: false,
+      showLinkInput: true,
     }
   },
 
@@ -414,7 +349,7 @@ export default {
       } else if (this.showLinkInput && this.addLink !== "" && this.addLink !== null) {
         this.socialMediaLinks.push({title:this.addLink,icon:'pi-link'});
         this.addLink = null;
-        return this.showLinkInput = false;
+        return this.showLinkInput = true;
       }
     }
   }

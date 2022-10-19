@@ -1,7 +1,7 @@
 <template>
 <Card>
   <template #header>
-    <div class="pt-3 px-4 flex justify-content-between align-items-center">
+    <div class="flex justify-content-between align-items-center">
       <h5 class="font-semibold text-lg">Localization</h5>
       <div class="p-inputgroup justify-content-end">
         <Button icon="pi pi-plus" label="Add Language"></Button>
@@ -13,14 +13,12 @@
   </template>
   <template #content>
     <div class="grid justify-content-between">
-      <div class="col-3">
-        <Dropdown v-model="selectedCity1" :options="cities" optionLabel="name" optionValue="code" placeholder="Select a Language" />
+      <div class="col-4 align-items-center flex">
+          <Dropdown v-model="selectedLanguage" :options="languages" optionLabel="label" optionValue="value" placeholder="Select a Language" />
       </div>
       <div class="p-inputgroup col-4">
-        <Dropdown v-model="selectedCity1" :options="cities" optionLabel="name" optionValue="code" placeholder="Select a Category" />
-        <Dropdown v-model="selectedCity2" :options="cities" optionLabel="name" optionValue="code" placeholder="Select a Filter" />
-        <Button label="Show" @click=""></Button>
-        <Button icon="pi pi-ellipsis-v" @click=""></Button>
+        <Dropdown v-model="selectedCategory" :options="categories" optionLabel="label" optionValue="value" placeholder="Select a Category" />
+        <Dropdown v-model="selectedFilter" :options="filterOptions" optionLabel="label" optionValue="value" placeholder="Select a Filter" />
       </div>
     </div>
     <div class="grid mt-4">
@@ -59,7 +57,53 @@ export default {
           slug:'slug_limit',
           value:'The slug character is not greater than 150.'
         }
-      ]
+      ],
+        checked1:false,
+        selectedFilter:'filled',
+        filterOptions:[
+            {
+                label:'Empty Values',
+                value:'empty'
+            },
+            {
+                label:'Filled Values',
+                value:'filled'
+            }
+        ],
+        selectedCategory:null,
+        categories:[
+            {
+                label:'Account Setting',
+                value:'account-setting'
+            },
+            {
+                label:'Change Password',
+                value:'change-password'
+            },
+            {
+                label:'Frontend Reset Password',
+                value:'frontend-reset-password'
+            },
+            {
+                label:'Frontend Sign In',
+                value:'frontend-signin'
+            }
+        ],
+        selectedLanguage:'en',
+        languages:[
+            {
+                label:'English',
+                value:'en'
+            },
+            {
+                label:'Spanish',
+                value:'sp'
+            },
+            {
+                label:'Russian',
+                value:'rs'
+            }
+        ]
     }
   }
 }

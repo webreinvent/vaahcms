@@ -16,7 +16,7 @@ useVaah.setConfirm(confirm);
 
 
 <template>
-    <div  style="margin: 20px;">
+    <div>
 
         <ProgressBar style="z-index: 10000000; position: fixed; top: 1px; width: 100%; left: 0px; height: 2px;"
                      v-if="useVaah.show_progress_bar"

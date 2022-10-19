@@ -1,7 +1,7 @@
 <template>
 <Card>
   <template #header>
-    <div class="pt-3 px-4 flex justify-content-between align-items-center">
+    <div class="flex justify-content-between align-items-center">
       <h5 class="font-semibold text-lg white-space-nowrap">Update VaahCMS</h5>
       <div class="p-inputgroup justify-content-end">
         <Button icon="pi pi-refresh" label="Check for Update"></Button>
