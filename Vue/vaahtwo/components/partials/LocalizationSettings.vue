@@ -22,10 +22,10 @@
       </div>
     </div>
     <div class="grid mt-4">
-      <div class="col-12 md:col-4" v-for="(item,index) in localizationVariables">
+      <div class="col-12 md:col-6" v-for="(item,index) in localizationVariables">
         <h5 class="text-left p-1">{{item.slug}}</h5>
         <div class="p-inputgroup">
-          <InputText :model-value="item.value"></InputText>
+          <Textarea :model-value="item.value"></Textarea>
           <Button icon="pi pi-copy" class=""/>
           <Button icon="pi pi-trash" class="p-button-danger"/>
         </div>
@@ -92,15 +92,15 @@ export default {
         selectedLanguage:'en',
         languages:[
             {
-                label:'English',
+                label:'English (110/110)',
                 value:'en'
             },
             {
-                label:'Spanish',
+                label:'Spanish (110/110)',
                 value:'sp'
             },
             {
-                label:'Russian',
+                label:'Russian (110/110)',
                 value:'rs'
             }
         ]

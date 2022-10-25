@@ -11,8 +11,9 @@
             </router-link>
         </template>
         <template #end>
-            <Dropdown v-model="selectedItem" :options="dropdownItems" optionLabel="name" optionValue="link" placeholder="">
-            </Dropdown>
+            <Button icon="pi pi-bars" @click="toggle"></Button>
+            <TieredMenu :model="menu_options" ref="menu" :popup="true">
+            </TieredMenu>
         </template>
     </Menubar>
 </template>
@@ -43,6 +44,20 @@ export default {
                 }
             ],
             selectedItem:'/user',
+            menu_options:[
+                {
+                    label:'Profile',
+                    icon:'pi pi-fw pi-user',
+                    command: () =>{
+                    }
+                },
+                {
+                    label:'Logout',
+                    icon:'pi pi-fw pi-sign-out',
+                     command: () =>{
+                    }
+                }
+            ],
             dropdownItems:[
                 {
                     name: 'User',
@@ -58,6 +73,11 @@ export default {
                 }
 
             ]
+        }
+    },
+    methods:{
+        toggle(event) {
+            this.$refs.menu.toggle(event);
         }
     }
 }

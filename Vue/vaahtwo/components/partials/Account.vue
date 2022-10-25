@@ -86,7 +86,7 @@ export default {
   },
   methods: {
     goBack(){
-      this.$router.push("/install/migrate")
+      this.$router.push("/public/install/dependencies")
     },
     searchCountry(event) {
       setTimeout(() => {

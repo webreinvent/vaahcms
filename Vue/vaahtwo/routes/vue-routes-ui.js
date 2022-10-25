@@ -1,11 +1,10 @@
 
-
-
 let routes= [];
 let routes_list= [];
 
 import Index from '../pages/ui/Index.vue'
 import Signin from '../pages/ui/Signin.vue'
+import SignUp from "../pages/ui/SignUp.vue";
 import Settings from "../pages/ui/Settings.vue";
 import GeneralSettings from "../components/partials/GeneralSettings.vue";
 import UserSettings from "../components/partials/UserSettings.vue";
@@ -24,6 +23,10 @@ import PublicPages from "../pages/ui/PublicPages.vue";
 import PrivatePages from "../pages/ui/PrivatePages.vue";
 import Users from "../pages/ui/Users.vue";
 import Extend from "../pages/ui/Extend.vue";
+import Taxonomies from "../pages/ui/Taxonomies.vue";
+import Dashboard from "../pages/ui/Dashboard.vue";
+import Media from "../pages/ui/Media.vue";
+import MultiFactorAuth from "../pages/ui/MultiFactorAuth.vue";
 
 routes_list = [{
     path: '/ui',
@@ -41,6 +44,18 @@ routes_list = [{
                 name: 'Signin',
                 component: Signin,
                 props: true,
+            },
+            {
+              path: 'multi-factor-auth',
+              name: MultiFactorAuth,
+              component: MultiFactorAuth,
+              props: true
+            },
+            {
+                path: 'signup',
+                name: 'Signup',
+                component: SignUp,
+                props: true
             },
             {
                 path: 'forgot-password',
@@ -133,6 +148,21 @@ routes_list = [{
                 path: 'extend',
                 name:Extend,
                 component: Extend
+            },
+            {
+                path: 'taxonomies',
+                name: Taxonomies,
+                component: Taxonomies
+            },
+            {
+                path:'dashboard',
+                name: Dashboard,
+                component: Dashboard,
+            },
+            {
+                path: 'media',
+                name:Media,
+                component: Media
             }
         ]
     }];

@@ -80,8 +80,11 @@
                 <div class="grid">
                   <div class="col-12">
                     <h5 class="text-left p-1">Copyright Text</h5>
+                      <div class="flex align-items-center mb-4">
+                          <InputSwitch v-model="copyrightText" class="mr-3"></InputSwitch>
+                          <span>Custom Name</span>
+                      </div>
                     <div class="p-inputgroup">
-                      <SelectButton v-model="copyrightText" :options="copyrightTextOptions" aria-labelledby="single"/>
                       <InputText placeholder="Enter Copyright Text" :disabled="copyrightText !== 'Custom'"></InputText>
                       <Button icon="pi pi-copy" class=""/>
                     </div>
@@ -280,14 +283,75 @@
               </div>
             </template>
             <div class="grid">
-              <div class="col-12 md:col-6">
+              <div class="col-12">
                 <h5 class="text-left p-1">Meta Tag</h5>
-                <div class="p-inputgroup">
-
-                </div>
+                  <div class="p-inputgroup">
+                      <Dropdown input-class=""></Dropdown>
+                      <InputText></InputText>
+                      <Button label="Content" disabled=""></Button>
+                      <InputText></InputText>
+                  </div>
               </div>
+                <div class="col-12 md:col-3">
+                    <div class="p-inputgroup">
+                        <Button icon="pi pi-plus" label="Add Meta Tag"></Button>
+                        <Button label="Save"></Button>
+                        <Button icon="pi pi-copy"></Button>
+                    </div>
+                </div>
+                <div class="col-12 md:col-3">
+                    <div class="p-inputgroup">
+                        <Dropdown v-model="metaOption" :options="metaOptions" option-label="label" option-value="value"></Dropdown>
+                        <Button label="Generate"></Button>
+                    </div>
+                </div>
             </div>
           </AccordionTab>
+            <AccordionTab>
+                <template #header>
+                    <div class="w-full">
+                        <h5 class="font-semibold text-sm">Securities</h5>
+                        <p class="text-color-secondary text-xs">Enable and choose multiple methods of authentication</p>
+                    </div>
+                </template>
+                <div class="grid">
+                    <div class="col-12">
+                        <h4 class="font-semibold text-sm">Multi-Factor Authentication</h4>
+                        <p class="text-color-secondary text-xs font-semibold">Require a email OTP, sms OTP or authenticator app verification when you login with password.</p>
+                    </div>
+                    <div class="col-12">
+                        <div class="field">
+                            <div class="field-radiobutton">
+                                <RadioButton inputId="city1" name="city" value="Chicago" v-model="city" />
+                                <label for="city1">Disable</label>
+                            </div>
+                            <div class="field-radiobutton">
+                                <RadioButton inputId="city2" name="city" value="Los Angeles" v-model="city" />
+                                <label for="city2">Enable for all users</label>
+                            </div>
+                            <div class="field-radiobutton">
+                                <RadioButton inputId="city3" name="city" value="New York" v-model="city" />
+                                <label for="city3">Users will have option to enable it</label>
+                            </div>
+                        </div>
+                        <div class="field">
+                            <h5 class="mb-3 font-semibold text-sm">MFA Methods</h5>
+                            <div class="field-checkbox">
+                                <Checkbox inputId="binary" v-model="checked" :binary="true" />
+                                <label for="binary">Email OTP Verification</label>
+                            </div>
+                            <div class="field-checkbox">
+                                <Checkbox inputId="binary" v-model="checked" :binary="true" />
+                                <label for="binary">SMS OTP Verification</label>
+                            </div>
+                            <div class="field-checkbox">
+                                <Checkbox inputId="binary" v-model="checked" :binary="true" />
+                                <label for="binary">Authenticator App (only user can enable this)</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </AccordionTab>
         </Accordion>
       </template>
     </Card>
@@ -330,6 +394,18 @@ export default {
       socialMediaLinks: [{title:'Facebook',icon:'pi-facebook'}, {title:'Twitter',icon:'pi-twitter'}, {title:'Linkedin',icon:'pi-linkedin'}, {title:'Youtube',icon:'pi-youtube'}, {title:'Instagram',icon:'pi-instagram'}, {title:'Github',icon:'pi-github'}],
       addLink: null,
       showLinkInput: true,
+        metaOption:null,
+      metaOptions: [
+          {
+              label:'Google Webmaster',
+              value:'google-webmaster'
+          },
+          {
+              label:'Open Graph (Facebook)',
+              value: 'open-graph-fb'
+          }
+      ],
+
     }
   },
 

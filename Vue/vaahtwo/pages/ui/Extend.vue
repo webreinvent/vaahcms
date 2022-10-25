@@ -14,7 +14,17 @@
             </template>
             <template #content>
                 <div class="grid">
-                    <div class="col-12" style="border-radius: 10px">
+                    <div class="col-4 mb-5">
+                        <Dropdown placeholder="Select a filter"></Dropdown>
+                    </div>
+                    <div class="col-5 col-offset-3 mb-5">
+                        <div class="p-inputgroup">
+                            <InputText placeholder="Search"></InputText>
+                            <Button label="Filter"></Button>
+                            <Button label="Reset"></Button>
+                        </div>
+                    </div>
+                    <div class="col-12">
                        <div class="grid">
                            <div class="col-12 md:col-5">
                                <h5 class="font-semibold text-xl inline">Theme for Jalapeno</h5>
@@ -35,6 +45,29 @@
                                </div>
                            </div>
                        </div>
+                    </div>
+                    <Divider />
+                    <div class="col-12">
+                        <div class="grid">
+                            <div class="col-12 md:col-9">
+                                <h5 class="font-semibold text-xl inline">Theme for Jalapeno</h5>
+                                <Tag value="Default" severity="success" class="ml-2" rounded></Tag>
+                                <p class="text-sm text-gray-600 mt-1">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Deserunt, sit.</p>
+                                <div class="flex mt-3">
+                                    <Tag value="Name: Jalapeno" class="mr-2 bg-blue-50 text-blue-600 font-semibold"></Tag>
+                                    <Tag value="Version: 1.1.10" class="mr-2 bg-blue-50 text-blue-600 font-semibold"></Tag>
+                                    <Tag value="Developed by: WebReinvent" class="mr-2 bg-blue-50 text-blue-600 font-semibold"></Tag>
+                                </div>
+                            </div>
+                            <div class="col-12 md:col-3">
+                                <div class="flex justify-content-end">
+                                    <Button label="Deactivate" class="mr-2 p-button-sm"></Button>
+                                    <Button icon="pi pi-ellipsis-v" class="p-button-link" @click="toggle"></Button>
+                                </div>
+                                <TieredMenu :model="menu_options" ref="menu" :popup="true">
+                                </TieredMenu>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </template>
@@ -102,7 +135,21 @@ export default {
     name: "Extend",
     data(){
         return{
-            show_themes:false
+            show_themes:false,
+            menu_options:[
+                {
+                    label:'Import Data',
+                    icon:'pi pi-fw pi-server'
+                },
+                {
+                    label:'Delete',
+                    icon:'pi pi-fw pi-trash'
+                },
+                {
+                    label:'Remove Default',
+                    icon:'pi pi-fw pi-times'
+                }
+            ]
         }
     },
     methods:{
@@ -111,6 +158,9 @@ export default {
         },
         hideThemes() {
             this.show_themes = false;
+        },
+        toggle(event) {
+            this.$refs.menu.toggle(event);
         }
     }
 }

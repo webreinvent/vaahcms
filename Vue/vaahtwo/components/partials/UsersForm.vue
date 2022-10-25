@@ -1,5 +1,5 @@
 <template>
-    <div class="user-form">
+    <div class="user-form form">
         <Card>
             <template #header>
                 <div class="flex justify-content-between align-items-center">
@@ -58,7 +58,6 @@
                              <SelectButton v-model="gender" :options="gender_options" optionLabel="label" dataKey="value"
                                            aria-labelledby="custom">
                                 <template #option="slotProps">
-                                    <i :class="'pi ' + slotProps.option.icon" class="mr-2"></i>
                                     <p>{{slotProps.option.label}}</p>
                                 </template>
                             </SelectButton>
@@ -123,17 +122,14 @@ export default {
             gender_options: [
                 {
                     label: 'Male',
-                    icon: 'pi-user',
                     value: 'male'
                 },
                 {
                     label: 'Female',
-                    icon: 'pi-user',
                     value: 'female'
                 },
                 {
                     label: 'Others',
-                    icon: 'pi-user',
                     value: 'others'
                 }
             ],
@@ -173,7 +169,7 @@ export default {
 </script>
 
 <style lang="scss">
-.user-form {
+.form {
     .p-card {
         .p-card-content {
             .p-float-label {

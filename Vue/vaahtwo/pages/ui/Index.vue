@@ -43,8 +43,20 @@ const pages = ref([
         to:'/public/signin'
     },
     {
+        label:'Signup',
+        to:'/public/signup'
+    },
+    {
+        label:'Multi factor authentication',
+        to:'/public/multi-factor-auth'
+    },
+    {
         label:'Forgot Password',
         to:'/public/forgot-password'
+    },
+    {
+        label:'Dashboard',
+        to:'/private/dashboard'
     },
     {
         label:'Install VaahCMS',
@@ -65,6 +77,14 @@ const pages = ref([
     {
         label:'Extend',
         to:'/private/extend'
+    },
+    {
+        label:'Taxonomies',
+        to:'/private/taxonomies'
+    },
+    {
+        label: 'Media',
+        to: '/private/media'
     }
 ])
 
