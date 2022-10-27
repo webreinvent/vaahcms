@@ -109,7 +109,7 @@
                 </div>
             </AccordionTab>
             <AccordionTab header="Laravel logs (1)">
-                <div class="flex justify-content-between" style="color: red">
+                <div class="flex justify-content-between">
                     <p class="text-sm text-red-700">
                         laravel-2022-10-12.log
                     </p>

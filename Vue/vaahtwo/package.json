@@ -12,6 +12,7 @@
         "axios": "^1.1.2",
         "moment-timezone": "^0.5.37",
         "pinia": "^2.0.22",
+        "primeflex": "^3.2.1",
         "primevue": "^3.17.0",
         "qs": "^6.11.0",
         "vue": "^3.2.40",

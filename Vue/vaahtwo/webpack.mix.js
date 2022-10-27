@@ -27,7 +27,7 @@ if (mix.inProduction()) {
     mix.combine([
         theme_path+'/css/bootstrap4-light-blue/theme.css',
         theme_path+'/css/primevue.min.css',
-        theme_path+'/css/primeflex-3.1.2/primeflex.css',
+        theme_path+'/css/primeflex-3.2.1/primeflex.css',
         theme_path+'/css/primeicons.css',
         theme_path+'/css/style.css',
     ], theme_path+'css/build.css');
@@ -49,7 +49,7 @@ if (mix.inProduction()) {
     mix.combine([
         theme_path+'/css/bootstrap4-light-blue/theme.css',
         theme_path+'/css/primevue.min.css',
-        theme_path+'/css/primeflex-3.1.2/primeflex.css',
+        theme_path+'/css/primeflex-3.2.1/primeflex.css',
         theme_path+'/css/primeicons.css',
         theme_path+'/css/style.css',
     ], theme_path+'css/build.css');
