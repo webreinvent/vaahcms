@@ -97,7 +97,7 @@
                                     <p class="text-xs text-gray-600 ml-2 mb-1">Is this a downloadable media?</p>
                                     <SelectButton :v-model="downloadOption" :options="download_options" option-value="value" option-label="label"></SelectButton>
                                 </span>
-                                <Button label="Save" class="p-button-sm p-button-link"></Button>
+                                <Button label="Save" class="p-button-sm" icon="pi pi-save"></Button>
                             </div>
                         </div>
                     </AccordionTab>
@@ -137,7 +137,7 @@
                                     <p class="text-xs text-gray-600 ml-2 mb-1">Is this a downloadable media?</p>
                                     <SelectButton :v-model="downloadOption" :options="download_options" option-value="value" option-label="label"></SelectButton>
                                 </span>
-                                <Button label="Save" class="p-button-sm p-button-link"></Button>
+                                <Button label="Save" class="p-button-sm" icon="pi pi-save"></Button>
                             </div>
                         </div>
                     </AccordionTab>
@@ -177,7 +177,7 @@
                                     <p class="text-xs text-gray-600 ml-2 mb-1">Is this a downloadable media?</p>
                                     <SelectButton :v-model="downloadOption" :options="download_options" option-value="value" option-label="label"></SelectButton>
                                 </span>
-                                <Button label="Save" class="p-button-sm p-button-link"></Button>
+                                <Button label="Save" class="p-button-sm" icon="pi pi-save"></Button>
                             </div>
                         </div>
                     </AccordionTab>

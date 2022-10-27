@@ -78,6 +78,20 @@
               </div>
               <div class="col-12 md:col-6 pl-4">
                 <div class="grid">
+                    <div class="col-12">
+                        <h5 class="text-left p-1 font-semibold mb-3">Copyright Text</h5>
+                        <div class="p-inputgroup">
+                            <div class="field-radiobutton mr-2">
+                                <RadioButton inputId="copyright-app-name" name="city" value="app-name" v-model="copyrightText" />
+                                <label for="copyright-app-name">Use App Name</label>
+                            </div>
+                            <div class="field-radiobutton">
+                                <RadioButton inputId="copyright-custom" name="city" value="custom" v-model="copyrightText" />
+                                <label for="copyright-custom">Custom</label>
+                            </div>
+                        </div>
+                        <InputText class="w-full" v-if="copyrightText === 'custom'"></InputText>
+                    </div>
                   <div class="col-12">
                     <h5 class="text-left p-1">Copyright Text</h5>
                       <div class="flex align-items-center mb-4">
@@ -89,6 +103,11 @@
                       <Button icon="pi pi-copy" class=""/>
                     </div>
                   </div>
+                    <div class="col-12">
+                        <h5 class="text-left p-1">Copyright Text</h5>
+                        <SelectButton v-model="copyrightText" :options="copyrightTextOptions" optionLabel="label" option-value="value" class="mb-3"/>
+                        <InputText class="w-full" :modelValue="copyrightText" :disabled="copyrightText !== 'custom'"></InputText>
+                    </div>
                   <div class="col-12">
                     <h5 class="text-left p-1">Copyright Link</h5>
                     <div class="p-inputgroup">
@@ -369,8 +388,16 @@ export default {
       selectedLanguage: 'English',
       visibility: 'Visible',
       visibitlityOptions: ['Visible', 'Invisible'],
-      copyrightText: 'Use App Name',
-      copyrightTextOptions: ['Use App Name', 'Custom'],
+      copyrightText: 'app-name',
+      copyrightTextOptions: [{
+          label:'Use App Name',
+          value:'app-name'
+        },
+          {
+              label:'Custom',
+              value: 'custom'
+          }
+      ],
       copyrightLink: 'Use App Url',
       copyrightLinkOptions: ['Use App Url', 'Custom'],
       copyrightYear: 'Use Current Year',

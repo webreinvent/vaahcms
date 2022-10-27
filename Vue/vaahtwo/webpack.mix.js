@@ -25,7 +25,8 @@ if (mix.inProduction()) {
     mix.setPublicPath(publish_folder);
 
     mix.combine([
-        theme_path+'/css/bootstrap4-light-blue/theme.css',
+       // theme_path+'/css/lara-light-theme/theme.css',
+        theme_path+'/css/tailwind-light/theme.css',
         theme_path+'/css/primevue.min.css',
         theme_path+'/css/primeflex-3.2.1/primeflex.css',
         theme_path+'/css/primeicons.css',
@@ -47,7 +48,8 @@ if (mix.inProduction()) {
     mix.setPublicPath(publish_folder);
 
     mix.combine([
-        theme_path+'/css/bootstrap4-light-blue/theme.css',
+        //theme_path+'/css/lara-light-theme/theme.css',
+        theme_path+'/css/tailwind-light/theme.css',
         theme_path+'/css/primevue.min.css',
         theme_path+'/css/primeflex-3.2.1/primeflex.css',
         theme_path+'/css/primeicons.css',

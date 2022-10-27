@@ -105,12 +105,12 @@
                 <div class="flex justify-content-evenly align-items-center align-items-center">
                     <a href="" class="text-center"><i class="pi pi-envelope mr-2"></i>4 Pending</a>
                     <Divider layout="vertical"></Divider>
-                    <a href="" class="text-center"><i class="pi pi-ban mr-2" style="color: red"></i>0 Failed</a>
+                    <a href="" class="text-center"><i class="pi pi-ban mr-2 text-red-500"></i>0 Failed</a>
                 </div>
             </AccordionTab>
             <AccordionTab header="Laravel logs (1)">
                 <div class="flex justify-content-between">
-                    <p class="text-sm text-red-700">
+                    <p class="text-sm text-red-500">
                         laravel-2022-10-12.log
                     </p>
                     <a href="" class="text-sm">View</a>

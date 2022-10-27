@@ -4,22 +4,26 @@
             <template #item="{item}">
                 <div class="p-panelmenu-panel">
                     <div class="p-component p-panelmenu-header p-highlight">
-                        <a id="pv_id_4_header_1" class="p-panelmenu-header-link" tabindex="0" aria-expanded="true" aria-controls="pv_id_4_content_1"  @click="expandNode(item)">
-                            <span class="p-panelmenu-icon pi pi-chevron-down" :id="'arrow-icon' + item.id" v-if="item.items"></span>
-                            <span class="p-menuitem-icon" :class="item.icon"></span>
-                            <span class="p-menuitem-text">{{item.label}}</span>
-                        </a>
+                       <div class="p-panelmenu-header-content">
+                           <a id="pv_id_4_header_1" class="p-panelmenu-header-link" tabindex="0" aria-expanded="true" aria-controls="pv_id_4_content_1"  @click="expandNode(item)">
+                               <span class="p-panelmenu-icon pi pi-chevron-down" :id="'arrow-icon' + item.id" v-if="item.items"></span>
+                               <span class="p-menuitem-icon" :class="item.icon"></span>
+                               <span class="p-menuitem-text">{{item.label}}</span>
+                           </a>
+                       </div>
                     </div>
                     <div :id="'p-panelmenu-content' + item.id" class="p-toggleable-content" role="region" aria-labelledby="pv_id_4_header_1" v-if="item.items">
                         <div class="p-panelmenu-content">
                             <ul class="p-submenu-list p-panelmenu-root-submenu" role="tree">
                                 <li role="none" class="p-menuitem" v-for="sub_item in item.items">
-                                   <router-link :to='sub_item.to'>
-                                       <a class="p-menuitem-link router-link-active" role="treeitem" aria-expanded="false">
-                                           <span class="p-menuitem-icon" :class="sub_item.icon"></span>
-                                           <span class="p-menuitem-text">{{sub_item.label}}</span>
-                                       </a>
-                                   </router-link>
+                                  <div class="p-menuitem-content">
+                                      <router-link :to='sub_item.to'>
+                                          <a class="p-menuitem-link router-link-active" role="treeitem" aria-expanded="false">
+                                              <span class="p-menuitem-icon" :class="sub_item.icon"></span>
+                                              <span class="p-menuitem-text">{{sub_item.label}}</span>
+                                          </a>
+                                      </router-link>
+                                  </div>
                                 </li>
                             </ul>
                         </div>
