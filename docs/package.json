@@ -1,0 +1,19 @@
+{
+  "name": "vaahcms",
+  "version": "0.0.1",
+  "description": "vaah docs",
+  "main": "index.js",
+  "authors": {
+    "name": "",
+    "email": ""
+  },
+  "repository": "/vaahcms",
+  "scripts": {
+    "dev": "vuepress dev src",
+    "build": "vuepress build src"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "vuepress": "^1.5.3"
+  }
+}

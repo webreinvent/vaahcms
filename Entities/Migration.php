@@ -42,7 +42,7 @@ class Migration extends Model {
         return $this->morphTo();
     }
     //-------------------------------------------------
-    public static function syncModuleMigrations($module_id=null,$batch_num)
+    public static function syncModuleMigrations($module_id,$batch_num)
     {
 
         $migrations = \DB::table('migrations')->count();
@@ -78,7 +78,7 @@ class Migration extends Model {
         return true;
     }
     //-------------------------------------------------
-    public static function syncThemeMigrations($theme_id=null,$batch_num)
+    public static function syncThemeMigrations($theme_id,$batch_num)
     {
         $migrations = \DB::table('migrations')->count();
 

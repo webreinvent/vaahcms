@@ -8,6 +8,7 @@ use Illuminate\Filesystem\Filesystem;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Str;
 use WebReinvent\VaahCms\Entities\Migration;
@@ -104,11 +105,88 @@ class PublicController extends Controller
             $redirect_url = \URL::route('vh.backend');
         }
 
+
+
         $response = [];
 
         $response['status'] = 'success';
         $response['messages'][] = 'Login Successful';
         $response['data']['redirect_url'] = $redirect_url;
+        $response['data']['verification_response'] = Auth::user()->verifySecurityAuthentication();
+
+        return response()->json($response);
+
+    }
+    //----------------------------------------------------------
+    public function postVerify(Request $request)
+    {
+
+        $inputs = [
+            'otp_code' => null
+        ];
+
+        if(is_array($request->verify_otp))
+        {
+            $inputs = [
+                'otp_code' => implode("", $request->verify_otp)
+            ];
+
+        }
+
+        $rules = array(
+            'otp_code' => 'required|integer',
+        );
+
+        $validator = \Validator::make( $inputs, $rules);
+        if ( $validator->fails() ) {
+
+            $errors             = errorsToArray($validator->errors());
+            $response['status'] = 'failed';
+            $response['errors'] = $errors;
+            return response()->json($response);
+        }
+
+
+        $user = auth()->user();
+
+        if($user && !$user->mfa_code && !$user->mfa_code_expired_at){
+            $response['status'] = 'success';
+            $response['messages'][] = 'Login Successful';
+            $response['data']['redirect_url'] = route('vh.backend').'#/vaah';
+            return $response;
+        }
+
+        if($user && $user->mfa_code_expired_at && $user->mfa_code_expired_at->lt(now()))
+        {
+            $user->mfa_code = null;
+            $user->mfa_code_expired_at = null;
+            $user->save();
+            auth()->logout();
+
+            $response['status'] = 'failed';
+            $response['errors'][] = 'The code has expired. Please login again.';
+            $response['data']['redirect_url'] = route('vh.backend');
+
+            return response()->json($response);
+        }
+
+
+        if($user && $inputs['otp_code'] == $user->mfa_code)
+        {
+            $user->mfa_code = null;
+            $user->mfa_code_expired_at = null;
+            $user->save();
+
+            $response['status'] = 'success';
+            $response['messages'][] = 'Login Successful';
+            $response['data']['redirect_url'] = route('vh.backend').'#/vaah';
+
+        }else{
+            $response['status'] = 'failed';
+            $response['errors'][] = 'Code is not correct.';
+        }
+
+
 
         return response()->json($response);
 
