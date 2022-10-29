@@ -20,13 +20,20 @@
     <link href="https://fonts.googleapis.com/css?family=IBM+Plex+Sans:300,400,500,600,700&display=swap" rel="stylesheet">
 
 
-    @if(env('APP_VAAHCMS_ENV') == 'develop')
-        <link href="http://localhost:8080/vaahone/css/build.css" rel="stylesheet" media="screen">
-        <link href="http://localhost:8080/vaahone/css/style.css" rel="stylesheet" media="screen">
+    @if(env('VAAHCMS_ASSETS') == 'develop')
+        <!--CSS Support for Bulma & Buefy-->
+        <link href="http://localhost:4001/vaahone/css/build.css" rel="stylesheet" media="screen">
+        <link href="http://localhost:4001/vaahone/css/style.css" rel="stylesheet" media="screen">
+
+        <!--CSS Support for PrimeVue-->
+        <link href="http://localhost:4001/vaahtwo/build/build.css" rel="stylesheet" media="screen">
     @else
-        <link href="{{vh_get_backend_assets("css/build.css")}}" rel="stylesheet" media="screen">
-        <link href="{{vh_get_backend_assets("css/style.css")}}" rel="stylesheet" media="screen">
-        <link href="{{vh_get_backend_assets("css/build.css", 'vaahprime')}}" rel="stylesheet" media="screen">
+        <!--CSS Support for Bulma & Buefy-->
+        <link href="{{vh_get_backend_assets("css/build.css", 'vaahone')}}" rel="stylesheet" media="screen">
+        <link href="{{vh_get_backend_assets("css/style.css", 'vaahone')}}" rel="stylesheet" media="screen">
+
+        <!--CSS Support for PrimeVue-->
+        <link href="{{vh_get_backend_assets("build/build.css", 'vaahtwo')}}" rel="stylesheet" media="screen">
     @endif
 
 
