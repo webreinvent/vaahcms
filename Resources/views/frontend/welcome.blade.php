@@ -1,8 +1,8 @@
 @extends("vaahcms::frontend.layouts.simple")
 
-<!--sections-->
-<section class="section">
-    <div class="container has-text-centered ">
+@section('content')
+<div class="grid mt-5">
+    <div class="col-6 col-offset-3 text-center ">
 
         <!--columns-->
         <div class="columns is-centered">
@@ -39,6 +39,6 @@
         <!--/columns-->
 
     </div>
-</section>
-<!--sections-->
+</div>
+@endsection
 

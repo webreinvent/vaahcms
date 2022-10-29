@@ -23,7 +23,12 @@ class UiController extends Controller
     {
         return view($this->theme.'.pages.ui.index');
     }
-
+    //----------------------------------------------------------
+    public function v2ui()
+    {
+        $this->theme = 'vaahcms::backend.vaahtwo';
+        return view($this->theme.'.pages.ui');
+    }
     //----------------------------------------------------------
 
 
