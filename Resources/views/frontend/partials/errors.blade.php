@@ -1,16 +1,12 @@
 @if (isset($errors) && count($errors) > 0)
     <!--sections-->
-    <section class="section">
-        <div class="container">
+    <div class="errors">
+        @foreach ($errors->all() as $error)
+            <div class="bg-red-300">
+                {{$error}}
+            </div>
 
-            @foreach ($errors->all() as $error)
-                <div class="notification is-danger is-light">
-                    {{$error}}
-                </div>
-
-            @endforeach
-
-        </div>
-    </section>
+        @endforeach
+    </div>
     <!--sections-->
 @endif

@@ -12,6 +12,7 @@ use WebReinvent\VaahCms\Entities\Theme;
 use WebReinvent\VaahCms\Entities\User;
 use WebReinvent\VaahExtend\Libraries\VaahArtisan;
 use Faker\Factory;
+use WebReinvent\VaahExtend\Libraries\VaahDB;
 
 class WelcomeController extends Controller
 {
@@ -21,7 +22,7 @@ class WelcomeController extends Controller
     //----------------------------------------------------------
     public function __construct()
     {
-        $this->theme = vh_get_theme_slug();
+
     }
 
     //----------------------------------------------------------
@@ -58,17 +59,28 @@ class WelcomeController extends Controller
 
     }
     //----------------------------------------------------------
-    public function index()
+    public function index(Request $request)
     {
 
-
         $errors = [];
+        if(!VaahDB::isConnected())
+        {
+            $errors[] = 'Install and activate the CMS module or Define your own routes.';
+            return view($request->theme_slug.'::frontend.welcome')->withErrors($errors);
+        }
+
+        if(!VaahDB::isTableExist('vh_modules'))
+        {
+            $errors[] = 'Install and activate the CMS module or Define your own routes.';
+            return view($request->theme_slug.'::frontend.welcome')->withErrors($errors);
+        }
+
         $is_cms_exists = Module::slug('cms')->active()->exists();
 
         if(!$is_cms_exists)
         {
             $errors[] = 'Install and activate the CMS module or Define your own routes.';
-            return view($this->theme.'::frontend.welcome')->withErrors($errors);
+            return view($request->theme_slug.'::frontend.welcome')->withErrors($errors);
         }
 
         $is_theme_active = Theme::active()->exists();
