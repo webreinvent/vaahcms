@@ -1,7 +1,7 @@
 <script setup>
 import {onMounted, reactive} from "vue";
 
-import Aside from '../components/Aside.vue';
+import Aside from '../molecules/Aside.vue';
 
 import { useRootStore } from '../stores/root'
 const rootStore = useRootStore();

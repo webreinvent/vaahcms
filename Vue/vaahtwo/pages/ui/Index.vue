@@ -34,8 +34,8 @@
 import draggable from 'vuedraggable';
 import { VueTreeList, Tree, TreeNode } from 'vue-tree-list';
 import {ref} from "vue";
-import Sidebar from "../../components/partials/Sidebar.vue";
-import Topnav from "../../components/partials/Topnav.vue";
+import Sidebar from "../../organisms/Sidebar.vue";
+import Topnav from "../../organisms/Topnav.vue";
 
 const enabled = ref(true);
 
