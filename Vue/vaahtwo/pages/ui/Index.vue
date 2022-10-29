@@ -12,30 +12,71 @@
                 <RouterView></RouterView>
             </div>
         </div>-->
-        <div class="grid">
-            <div class="col-6 col-offset-3 mt-6">
-                <DataTable :value="pages" stripedRows responsiveLayout="scroll" class="p-datatable-sm" showGridlines>
-                    <Column header="Pages">
-                        <template #body="slotProps">
-                            <p>{{slotProps.data.label}}</p>
-                        </template>
-                    </Column>
-                    <Column header="Link">
-                        <template #body="slotProps">
-                            <router-link :to="slotProps.data.to" class="mr-2" >
-                             <Button icon="pi pi-link" class="p-button-rounded p-button-sm"></Button>
-                            </router-link>
-                        </template>
-                    </Column>
-                </DataTable>
-            </div>
-        </div>
+        <draggable
+            :list="list"
+            :disabled="!enabled"
+            item-key="name"
+            class="list-group"
+            ghost-class="ghost"
+            @start="dragging = true"
+            @end="dragging = false"
+        >
+            <template #item="{ element }">
+                <div class="list-group-item" :class="{ 'not-draggable': !enabled }">
+                    {{ element.name }}
+                </div>
+            </template>
+        </draggable>
+        <router-view></router-view>
     </div>
 </template>
 <script setup>
+import draggable from 'vuedraggable';
+import { VueTreeList, Tree, TreeNode } from 'vue-tree-list';
 import {ref} from "vue";
 import Sidebar from "../../components/partials/Sidebar.vue";
 import Topnav from "../../components/partials/Topnav.vue";
+
+const enabled = ref(true);
+
+const list = ref([
+    { name: "John", id: 0 },
+    { name: "Joao", id: 1 },
+    { name: "Jean", id: 2 }
+]);
+const dragging = ref(false);
+
+const myArray = ref([
+    {
+        name: 'Node 1',
+        id: 1,
+        pid: 0,
+        dragDisabled: true,
+        addTreeNodeDisabled: true,
+        addLeafNodeDisabled: true,
+        editNodeDisabled: true,
+        delNodeDisabled: true,
+        children: [
+            {
+                name: 'Node 1-2',
+                id: 2,
+                isLeaf: true,
+                pid: 1
+            }
+        ]
+    },
+    {
+        name: 'Node 2',
+        id: 3,
+        pid: 0,
+        disabled: true
+    },
+    {
+        name: 'Node 3',
+        id: 4,
+        pid: 0
+    }
+])
 
 const pages = ref([
     {
@@ -131,7 +172,7 @@ const pages = ref([
 }
 .sidebar{
     position: fixed;
-    top: 51px;
+    top: 65px;
     left: 0;
     width: 200px;
     z-index: 100;

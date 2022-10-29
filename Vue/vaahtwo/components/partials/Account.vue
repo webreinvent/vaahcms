@@ -86,7 +86,7 @@ export default {
   },
   methods: {
     goBack(){
-      this.$router.push("/public/install/dependencies")
+      this.$router.push("/ui/public/install/dependencies")
     },
     searchCountry(event) {
       setTimeout(() => {

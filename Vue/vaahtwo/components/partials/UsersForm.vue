@@ -72,7 +72,7 @@
                             <label for="phone">Phone</label>
                     </span>
                     <span class="p-float-label">
-                           <Textarea id="bio" class="w-full"></Textarea>
+                         <Editor :v-model="bio" editorStyle="height: 320px"/>
                            <label for="bio">Bio</label>
                     </span>
                     <span class="p-float-label">
@@ -106,7 +106,11 @@
                          <label for="country-code">Status</label>
                     </span>
                     <span class="p-float-label">
-                         <SelectButton v-model="is_active" :options="is_active_options" option-value="value" option-label="label"  aria-labelledby="single" id="is-active"/>
+                        <SelectButton v-model="is_active" :options="is_active_options" optionLabel="brand">
+                            <template #option="slotProps">
+                                <span class="text-sm">{{slotProps.option.label}}</span>
+                            </template>
+                        </SelectButton>
                     </span>
             </template>
         </Card>
@@ -118,6 +122,7 @@ export default {
     name: "UsersForm",
     data() {
         return {
+            bio:"",
             gender: null,
             gender_options: [
                 {
