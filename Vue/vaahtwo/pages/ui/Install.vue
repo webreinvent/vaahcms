@@ -35,22 +35,22 @@ export default {
                 {
                     label: 'Configuration',
                     icon: 'pi pi-fw pi-cog',
-                    to: '/public/install/configuration'
+                    to: '/ui/public/install/configuration'
                 },
                 {
                     label: 'Migrate',
                     icon: 'pi pi-fw pi-database',
-                    to: '/public/install/migrate'
+                    to: '/ui/public/install/migrate'
                 },
                 {
                     label: 'Dependencies',
                     icon: 'pi pi-fw pi-server',
-                    to: '/public/install/dependencies'
+                    to: '/ui/public/install/dependencies'
                 },
                 {
                     label: 'Account',
                     icon: 'pi pi-fw pi-user-plus',
-                    to: '/public/install/account'
+                    to: '/ui/public/install/account'
                 }
             ],
             formObject: {}

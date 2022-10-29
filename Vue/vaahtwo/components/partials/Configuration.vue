@@ -15,21 +15,21 @@
       <div class="col-12 md:col-4">
         <h5 class="text-left p-1 title is-6">ENV</h5>
         <div class="p-inputgroup">
-          <Dropdown v-model="selectedCity1" :options="cities" optionLabel="name" optionValue="code" placeholder="Select a City" class="p-inputtext-sm"/>
+          <Dropdown v-model="selectedCity1" :options="cities" optionLabel="name" optionValue="code" placeholder="Select Env" class="p-inputtext-sm"/>
         </div>
       </div>
 
       <div class="col-12 md:col-4">
         <h5 class="text-left p-1 title is-6">Debug</h5>
         <div class="p-inputgroup">
-          <Dropdown v-model="selectedCity1" :options="cities" optionLabel="name" optionValue="code" placeholder="Select a City" class="p-inputtext-sm"/>
+          <Dropdown v-model="selectedCity1" :options="cities" optionLabel="name" optionValue="code" placeholder="Select Debug" class="p-inputtext-sm"/>
         </div>
       </div>
 
       <div class="col-12 md:col-4">
         <h5 class="text-left p-1 title is-6">Timezone</h5>
         <div class="p-inputgroup">
-          <Dropdown v-model="selectedCity1" :options="cities" optionLabel="name" optionValue="code" placeholder="Select a City" class="p-inputtext-sm"/>
+          <Dropdown v-model="selectedCity1" :options="cities" optionLabel="name" optionValue="code" placeholder="Select Timezone" class="p-inputtext-sm"/>
         </div>
       </div>
     </div>
@@ -48,7 +48,7 @@
       <div class="col-12 md:col-4">
         <h5 class="text-left p-1 title is-6">Database Type</h5>
         <div class="p-inputgroup">
-          <Dropdown v-model="selectedCity1" :options="cities" optionLabel="name" optionValue="code" placeholder="Select a City" class="p-inputtext-sm"/>
+          <Dropdown v-model="selectedCity1" :options="cities" optionLabel="name" optionValue="code" placeholder="Database Type" class="p-inputtext-sm"/>
         </div>
       </div>
 
@@ -71,21 +71,21 @@
       <div class="col-12 md:col-4">
         <h5 class="text-left p-1 title is-6">Database Name</h5>
         <div class="p-inputgroup">
-          <Dropdown v-model="selectedCity1" :options="cities" optionLabel="name" optionValue="code" placeholder="Select a City" class="p-inputtext-sm"/>
+          <Dropdown v-model="selectedCity1" :options="cities" optionLabel="name" optionValue="code" placeholder="Select Database Name" class="p-inputtext-sm"/>
         </div>
       </div>
 
       <div class="col-12 md:col-4">
         <h5 class="text-left p-1 title is-6">Database Username</h5>
         <div class="p-inputgroup">
-          <InputText placeholder="Database Host" class="p-inputtext-sm"/>
+          <InputText placeholder="Database Username" class="p-inputtext-sm"/>
         </div>
       </div>
 
       <div class="col-12 md:col-4">
         <h5 class="text-left p-1 title is-6">Database Password</h5>
         <div class="p-inputgroup">
-          <Password :feedback="false" toggleMask input-class="w-full p-inputtext-sm" />
+          <Password :feedback="false" toggleMask input-class="w-full p-inputtext-sm" placeholder="Database Password"/>
         </div>
       </div>
     </div>
@@ -96,21 +96,21 @@
       <div class="col-12 md:col-4">
         <h5 class="text-left p-1 title is-6">Mail Provider</h5>
         <div class="p-inputgroup">
-          <Dropdown v-model="selectedCity1" :options="cities" optionLabel="name" optionValue="code" placeholder="Select a City" class="p-inputtext-sm"/>
+          <Dropdown v-model="selectedCity1" :options="cities" optionLabel="name" optionValue="code" placeholder="Select Mail Provider" class="p-inputtext-sm"/>
         </div>
       </div>
 
       <div class="col-12 md:col-4">
         <h5 class="text-left p-1 title is-6">Mail Driver</h5>
         <div class="p-inputgroup">
-          <InputText placeholder="Database Host" class="p-inputtext-sm"/>
+          <InputText placeholder="Mail Driver" class="p-inputtext-sm"/>
         </div>
       </div>
 
       <div class="col-12 md:col-4">
         <h5 class="text-left p-1 title is-6">Mail Host</h5>
         <div class="p-inputgroup">
-          <InputText placeholder="Database Port" class="p-inputtext-sm"/>
+          <InputText placeholder="Mail Host" class="p-inputtext-sm"/>
         </div>
       </div>
     </div>
@@ -119,21 +119,21 @@
       <div class="col-12 md:col-4">
         <h5 class="text-left p-1 title is-6">Mail Port</h5>
         <div class="p-inputgroup">
-          <Dropdown v-model="selectedCity1" :options="cities" optionLabel="name" optionValue="code" placeholder="Select a City" class="p-inputtext-sm"/>
+          <Dropdown v-model="selectedCity1" :options="cities" optionLabel="name" optionValue="code" placeholder="Mail Port" class="p-inputtext-sm"/>
         </div>
       </div>
 
       <div class="col-12 md:col-4">
         <h5 class="text-left p-1 title is-6">Mail Username</h5>
         <div class="p-inputgroup">
-          <InputText placeholder="Database Host" class="p-inputtext-sm"/>
+          <InputText placeholder="Mail Username" class="p-inputtext-sm"/>
         </div>
       </div>
 
       <div class="col-12 md:col-4">
         <h5 class="text-left p-1 title is-6">Mail Password</h5>
         <div class="p-inputgroup">
-          <Password :feedback="false" toggleMask input-class="w-full p-inputtext-sm"/>
+          <Password :feedback="false" toggleMask input-class="w-full p-inputtext-sm" placeholder="Mail Password"/>
         </div>
       </div>
     </div>
@@ -142,21 +142,21 @@
       <div class="col-12 md:col-4">
         <h5 class="text-left p-1 title is-6">Mail Encryption</h5>
         <div class="p-inputgroup">
-          <Dropdown v-model="selectedCity1" :options="cities" optionLabel="name" optionValue="code" placeholder="Select a City" class="p-inputtext-sm"/>
+          <Dropdown v-model="selectedCity1" :options="cities" optionLabel="name" optionValue="code" placeholder="Select Mail Encryption" class="p-inputtext-sm"/>
         </div>
       </div>
 
       <div class="col-12 md:col-4">
         <h5 class="text-left p-1 title is-6">From Name</h5>
         <div class="p-inputgroup">
-          <InputText placeholder="Database Host" class="p-inputtext-sm"/>
+          <InputText placeholder="From Name" class="p-inputtext-sm"/>
         </div>
       </div>
 
       <div class="col-12 md:col-4">
         <h5 class="text-left p-1 title is-6">From Email</h5>
         <div class="p-inputgroup">
-          <InputText placeholder="Database Port" class="p-inputtext-sm"/>
+          <InputText placeholder="From Email" class="p-inputtext-sm"/>
         </div>
       </div>
     </div>
@@ -195,7 +195,7 @@ export default {
   },
   methods:{
     goToNextStep(){
-      this.$router.push({path:'/public/install/migrate'});
+      this.$router.push({path:'/ui/public/install/migrate'});
     },
   }
 

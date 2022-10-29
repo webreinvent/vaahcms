@@ -65,14 +65,14 @@
         </template>
       </Card>
     </div>
-    <div class="col-12 md:col">
+    <div class="col-12">
       <ProgressBar :value="value" class="mt-4 mb-5" mode="indeterminate"/>
       <div class="my-3">
         <Button icon="pi pi-download" label="Download & install Dependencies" class="p-button-sm mr-2 is-small"/>
         <Button label="Skip" class="btn-dark p-button-sm is-small"/>
       </div>
     </div>
-    <div class="col-12 md:col">
+    <div class="col-12">
       <div class="flex justify-content-between">
         <Button label="Back" class="p-button-sm" @click="goBack"></Button>
         <Button label="Save & Next" class="p-button-sm" @click="goToNextStep"></Button>
@@ -93,10 +93,10 @@ export default {
   },
   methods:{
     goBack(){
-      this.$router.push("/public/install/migrate")
+      this.$router.push("/ui/public/install/migrate")
     },
     goToNextStep(){
-      this.$router.push("/public/install/account")
+      this.$router.push("/ui/public/install/account")
     },
   }
 

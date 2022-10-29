@@ -15,7 +15,7 @@
         <meta name="sentry-dns" id="sentry_dns" content="{{env('SENTRY_DSN')}}">
     @endif
 
-    <base href="{{\URL::to('backend')}}">
+    <base href="{{\URL::to('/backend')}}">
 
     <link href="https://fonts.googleapis.com/css?family=IBM+Plex+Sans:300,400,500,600,700&display=swap" rel="stylesheet">
 

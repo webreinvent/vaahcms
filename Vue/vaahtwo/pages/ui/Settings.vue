@@ -22,49 +22,49 @@ export default {
                             label: 'General',
                             icon: 'pi pi-cog',
                             command: () => {
-                                this.$router.push({ path: '/private/settings/general-settings' });
+                                this.$router.push({ path: '/ui/private/settings/general-settings' });
                             }
                         },
                         {
                             label: 'User Settings',
                             icon: 'pi pi-user',
                             command: () => {
-                                this.$router.push({ path: '/private/settings/user-settings' });
+                                this.$router.push({ path: '/ui/private/settings/user-settings' });
                             }
                         },
                         {
                             label: 'ENV Variables',
                             icon: 'pi pi-cog',
                             command: () => {
-                                this.$router.push({ path: '/private/settings/env-variables-settings' });
+                                this.$router.push({ path: '/ui/private/settings/env-variables-settings' });
                             }
                         },
                         {
                             label: 'Localization',
                             icon: 'pi pi-code',
                             command: () => {
-                                this.$router.push({ path: '/private/settings/localization-settings' });
+                                this.$router.push({ path: '/ui/private/settings/localization-settings' });
                             }
                         },
                         {
                             label: 'Notification',
                             icon: 'pi pi-bell',
                             command: () => {
-                                this.$router.push({ path: '/private/settings/notification-settings' });
+                                this.$router.push({ path: '/ui/private/settings/notification-settings' });
                             }
                         },
                         {
                             label: 'Update',
                             icon: 'pi pi-download',
                             command: () => {
-                                this.$router.push({ path: '/private/settings/update-settings' });
+                                this.$router.push({ path: '/ui/private/settings/update-settings' });
                             }
                         },
                         {
                             label: 'Reset',
                             icon: 'pi pi-refresh',
                             command: () => {
-                                this.$router.push({ path: '/private/settings/account' });
+                                this.$router.push({ path: '/ui/private/settings/account' });
                             }
                         },
                     ]},

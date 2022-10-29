@@ -20,10 +20,10 @@ export default {
   name: "Migrate",
   methods: {
     goBack(){
-      this.$router.push("/public/install/configuration")
+      this.$router.push("/ui/public/install/configuration")
     },
     goToNextStep(){
-      this.$router.push("/public/install/dependencies")
+      this.$router.push("/ui/public/install/dependencies")
     },
     showTemplate() {
       console.log('test'),

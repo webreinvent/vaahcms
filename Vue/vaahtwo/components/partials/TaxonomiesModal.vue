@@ -6,7 +6,7 @@
         <Button label="Add"></Button>
     </div>
     <div>
-        <Tree :value="nodes">
+        <!--<Tree :value="nodes">
             <template #default="slotProps">
                 <div class="flex justify-content-between">
                     <b class="mr-3">{{slotProps.node.label}} <small class="font-weight-normal">({{slotProps.node.children.length}})</small></b>
@@ -25,14 +25,35 @@
                     </span>
                 </div>
             </template>
-        </Tree>
+        </Tree>-->
+    </div>
+    <div>
+        <draggable
+            :list="list"
+            :disabled="!enabled"
+            item-key="name"
+            class="list-group"
+            ghost-class="ghost"
+            @start="dragging = true"
+            @end="dragging = false"
+        >
+            <template #item="{ element }">
+                <div class="list-group-item" :class="{ 'not-draggable': !enabled }">
+                    {{ element.name }}
+                </div>
+            </template>
+        </draggable>
     </div>
 </div>
 </template>
 
 <script>
+import draggable from 'vuedraggable'
 export default {
     name: "TaxonomiesModal",
+    components: {
+        draggable,
+    },
     data(){
         return{
             selectedKey2: null,
@@ -56,7 +77,45 @@ export default {
                         {key: '1-2', label: 'Components Events', data: 'https://vuejs.org/guide/components/events.html#component-events', type: 'url'}
                     ]
                 }
-            ]
+            ],
+            myArray:[
+                {
+                    name: 'Node 1',
+                    id: 1,
+                    pid: 0,
+                    dragDisabled: true,
+                    addTreeNodeDisabled: true,
+                    addLeafNodeDisabled: true,
+                    editNodeDisabled: true,
+                    delNodeDisabled: true,
+                    children: [
+                        {
+                            name: 'Node 1-2',
+                            id: 2,
+                            isLeaf: true,
+                            pid: 1
+                        }
+                    ]
+                },
+                {
+                    name: 'Node 2',
+                    id: 3,
+                    pid: 0,
+                    disabled: true
+                },
+                {
+                    name: 'Node 3',
+                    id: 4,
+                    pid: 0
+                }
+            ],
+            list:[
+                { name: "John", id: 0 },
+                { name: "Joao", id: 1 },
+                { name: "Jean", id: 2 }
+            ],
+            dragging:false,
+            enabled:false
         }
     },
     methods:{

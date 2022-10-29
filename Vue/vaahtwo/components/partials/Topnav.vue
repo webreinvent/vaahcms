@@ -35,12 +35,12 @@ export default {
                 {
                     to:'/',
                     title:'',
-                    icon:'pi-home'
+                    icon:'pi pi-home'
                 },
                 {
                     to:'/',
                     title:'',
-                    icon:'pi-link'
+                    icon:'pi pi-link'
                 }
             ],
             selectedItem:'/user',

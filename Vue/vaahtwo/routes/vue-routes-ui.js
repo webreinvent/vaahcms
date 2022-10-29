@@ -1,4 +1,5 @@
 
+
 let routes= [];
 let routes_list= [];
 
@@ -27,145 +28,155 @@ import Taxonomies from "../pages/ui/Taxonomies.vue";
 import Dashboard from "../pages/ui/Dashboard.vue";
 import Media from "../pages/ui/Media.vue";
 import MultiFactorAuth from "../pages/ui/MultiFactorAuth.vue";
+import Pages from "../pages/ui/Pages.vue";
 
 routes_list = [{
     path: '/ui',
     name: 'ui.index',
     component: Index,
     props: true,
-},
-    {
-        path: '/public',
-        component: PublicPages,
-        name: PublicPages,
-        children: [
-            {
-                path: 'signin',
-                name: 'Signin',
-                component: Signin,
-                props: true,
-            },
-            {
-              path: 'multi-factor-auth',
-              name: MultiFactorAuth,
-              component: MultiFactorAuth,
-              props: true
-            },
-            {
-                path: 'signup',
-                name: 'Signup',
-                component: SignUp,
-                props: true
-            },
-            {
-                path: 'forgot-password',
-                name: ForgotPassword,
-                component: ForgotPassword,
-                props: true
-            },
-            {
-                path:'install',
-                name: Install,
-                component: Install,
-                children: [
-                    {
-                        path: 'configuration',
-                        name:Configuration,
-                        component: Configuration
-                    },
-                    {
-                        path:'migrate',
-                        name:Migrate,
-                        component: Migrate
-                    },
-                    {
-                        path:'dependencies',
-                        name:Dependencies,
-                        component:Dependencies
-                    },
-                    {
-                        path:'account',
-                        name:Account,
-                        component: Account
-                    }
-                ]
-            },
-            {
-                path: 'setup',
-                name: Setup,
-                component: Setup
-            },
-        ]
-    },
-    {
-        path: '/private',
-        name:PrivatePages,
-        component: PrivatePages,
-        children: [
-            {
-                path: 'settings',
-                name: 'Settings',
-                component: Settings,
-                children:[
-                    {
-                        path:'general-settings',
-                        name:GeneralSettings,
-                        component: GeneralSettings
-                    },
-                    {
-                        path:'user-settings',
-                        name:UserSettings,
-                        component: UserSettings
-                    },
-                    {
-                        path:'env-variables-settings',
-                        name:EnvVariableSettings,
-                        component: EnvVariableSettings
-                    },
-                    {
-                        path:'notification-settings',
-                        name:NotificationSettings,
-                        component: NotificationSettings
-                    },
-                    {
-                        path:'localization-settings',
-                        name:LocalizationSettings,
-                        component: LocalizationSettings
-                    },
-                    {
-                        path:'update-settings',
-                        name:UpdateSettings,
-                        component: UpdateSettings
-                    }
-                ]
-            },
-            {
-                path:'users',
-                name: Users,
-                component: Users
-            },
-            {
-                path: 'extend',
-                name:Extend,
-                component: Extend
-            },
-            {
-                path: 'taxonomies',
-                name: Taxonomies,
-                component: Taxonomies
-            },
-            {
-                path:'dashboard',
-                name: Dashboard,
-                component: Dashboard,
-            },
-            {
-                path: 'media',
-                name:Media,
-                component: Media
-            }
-        ]
-    }];
+    children:[
+        {
+            path:"",
+            name:Pages,
+            component: Pages
+        },
+        {
+            path: 'public',
+            component: PublicPages,
+            name: PublicPages,
+            children: [
+                {
+                    path: 'signin',
+                    name: 'Signin',
+                    component: Signin,
+                    props: true,
+                },
+                {
+                    path: 'multi-factor-auth',
+                    name: MultiFactorAuth,
+                    component: MultiFactorAuth,
+                    props: true
+                },
+                {
+                    path: 'signup',
+                    name: 'Signup',
+                    component: SignUp,
+                    props: true
+                },
+                {
+                    path: 'forgot-password',
+                    name: ForgotPassword,
+                    component: ForgotPassword,
+                    props: true
+                },
+                {
+                    path:'install',
+                    name: Install,
+                    component: Install,
+                    children: [
+                        {
+                            path: 'configuration',
+                            name:Configuration,
+                            component: Configuration
+                        },
+                        {
+                            path:'migrate',
+                            name:Migrate,
+                            component: Migrate
+                        },
+                        {
+                            path:'dependencies',
+                            name:Dependencies,
+                            component:Dependencies
+                        },
+                        {
+                            path:'account',
+                            name:Account,
+                            component: Account
+                        }
+                    ]
+                },
+                {
+                    path: 'setup',
+                    name: Setup,
+                    component: Setup
+                },
+            ]
+        },
+        {
+            path: 'private',
+            name:PrivatePages,
+            component: PrivatePages,
+            children: [
+                {
+                    path: 'settings',
+                    name: 'Settings',
+                    component: Settings,
+                    children:[
+                        {
+                            path:'general-settings',
+                            name:GeneralSettings,
+                            component: GeneralSettings
+                        },
+                        {
+                            path:'user-settings',
+                            name:UserSettings,
+                            component: UserSettings
+                        },
+                        {
+                            path:'env-variables-settings',
+                            name:EnvVariableSettings,
+                            component: EnvVariableSettings
+                        },
+                        {
+                            path:'notification-settings',
+                            name:NotificationSettings,
+                            component: NotificationSettings
+                        },
+                        {
+                            path:'localization-settings',
+                            name:LocalizationSettings,
+                            component: LocalizationSettings
+                        },
+                        {
+                            path:'update-settings',
+                            name:UpdateSettings,
+                            component: UpdateSettings
+                        }
+                    ]
+                },
+                {
+                    path:'users',
+                    name: Users,
+                    component: Users
+                },
+                {
+                    path: 'extend',
+                    name:Extend,
+                    component: Extend
+                },
+                {
+                    path: 'taxonomies',
+                    name: Taxonomies,
+                    component: Taxonomies
+                },
+                {
+                    path:'dashboard',
+                    name: Dashboard,
+                    component: Dashboard,
+                },
+                {
+                    path: 'media',
+                    name:Media,
+                    component: Media
+                }
+            ]
+        }
+    ]
+}
+]
+
 
 routes.push(...routes_list);
 
