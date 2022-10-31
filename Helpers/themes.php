@@ -113,33 +113,33 @@ function vh_get_vaahcms_theme()
 //-----------------------------------------------------------------------------------
 function vh_get_theme_from_slug($theme_slug=null)
 {
-    $theme = config('vaahcms.frontend_theme');
+    $theme_slug = config('vaahcms.frontend_theme');
 
-    if(!$theme)
+    if(!$theme_slug)
     {
-        $theme = config('vaahcms.backend_theme');
+        $theme_slug = config('vaahcms.backend_theme');
     }
 
     if(!\WebReinvent\VaahExtend\Libraries\VaahDB::isConnected())
     {
-        return $theme;
+        return $theme_slug;
     }
 
     if(!\WebReinvent\VaahExtend\Libraries\VaahDB::isTableExist('vh_themes'))
     {
-        return $theme;
+        return $theme_slug;
     }
 
-    $theme = \WebReinvent\VaahCms\Entities\Theme::whereNotNull('is_active')
+    $db_theme = \WebReinvent\VaahCms\Entities\Theme::whereNotNull('is_active')
         ->whereNotNull('is_default')
         ->first();
 
-    if(!$theme)
+    if(!$db_theme)
     {
-        return $theme;
+        return $theme_slug;
     }
 
-    return $theme->slug;
+    return $db_theme->slug;
 }
 //-----------------------------------------------------------------------------------
 function vh_get_theme_id($theme_slug=null)
