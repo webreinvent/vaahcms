@@ -92,39 +92,35 @@
                         </div>
                         <InputText class="w-full" v-if="copyrightText === 'custom'"></InputText>
                     </div>
-                  <div class="col-12">
-                    <h5 class="text-left p-1">Copyright Text</h5>
-                      <div class="flex align-items-center mb-4">
-                          <InputSwitch v-model="copyrightText" class="mr-3"></InputSwitch>
-                          <span>Custom Name</span>
-                      </div>
-                    <div class="p-inputgroup">
-                      <InputText placeholder="Enter Copyright Text" :disabled="copyrightText !== 'Custom'"></InputText>
-                      <Button icon="pi pi-copy" class=""/>
-                    </div>
-                  </div>
                     <div class="col-12">
-                        <h5 class="text-left p-1">Copyright Text</h5>
-                        <SelectButton v-model="copyrightText" :options="copyrightTextOptions" optionLabel="label" option-value="value" class="mb-3"/>
-                        <InputText class="w-full" :modelValue="copyrightText" :disabled="copyrightText !== 'custom'"></InputText>
+                        <h5 class="text-left p-1 font-semibold mb-3">Copyright Link</h5>
+                        <div class="p-inputgroup">
+                            <div class="field-radiobutton mr-2">
+                                <RadioButton inputId="copyright-link" name="city" value="app-name" v-model="copyrightLink" />
+                                <label for="copyright-link">Use App Url</label>
+                            </div>
+                            <div class="field-radiobutton">
+                                <RadioButton inputId="copyright-custom" name="city" value="custom" v-model="copyrightLink" />
+                                <label for="copyright-custom">Custom</label>
+                            </div>
+                        </div>
+                        <InputText class="w-full" v-if="copyrightLink === 'custom'"></InputText>
                     </div>
-                  <div class="col-12">
-                    <h5 class="text-left p-1">Copyright Link</h5>
-                    <div class="p-inputgroup">
-                      <SelectButton v-model="copyrightLink" :options="copyrightLinkOptions" aria-labelledby="single"/>
-                      <InputText placeholder="Enter Copyright Link" :disabled="copyrightLink !== 'Custom'"></InputText>
-                      <Button icon="pi pi-copy" class=""/>
+                    <div class="col-12">
+                        <h5 class="text-left p-1 font-semibold mb-3">Copyright Year</h5>
+                        <div class="p-inputgroup">
+                            <div class="field-radiobutton mr-2">
+                                <RadioButton inputId="copyright-year" name="city" value="app-name" v-model="copyrightYear" />
+                                <label for="copyright-year">Use Current year</label>
+                            </div>
+                            <div class="field-radiobutton">
+                                <RadioButton inputId="copyright-custom" name="city" value="custom" v-model="copyrightYear" />
+                                <label for="copyright-custom">Custom</label>
+                            </div>
+                        </div>
+                        <Calendar inputId="yearpicker" v-model="date10" view="year" dateFormat="yy"  v-if="copyrightYear === 'custom'" input-class="w-full" class="w-full"
+                                  placeholder="Choose Copyright Year" />
                     </div>
-                  </div>
-                  <div class="col-12">
-                    <h5 class="text-left p-1">Copyright Year</h5>
-                    <div class="p-inputgroup">
-                      <SelectButton v-model="copyrightYear" :options="copyrightYearOptions" aria-labelledby="single"/>
-                      <Calendar inputId="yearpicker" v-model="date10" view="year" dateFormat="yy"
-                                placeholder="Choose Copyright Year" :disabled="copyrightYear !== 'Custom'"/>
-                      <Button icon="pi pi-copy" class=""/>
-                    </div>
-                  </div>
                   <div class="col-6">
                     <h5 class="text-left p-1">Max number of forgot password attempts</h5>
                     <div class="p-inputgroup">
@@ -399,9 +395,27 @@ export default {
           }
       ],
       copyrightLink: 'Use App Url',
-      copyrightLinkOptions: ['Use App Url', 'Custom'],
+      copyrightLinkOptions: [
+          {
+              label:'Use App Url',
+              value:'app-url'
+          },
+          {
+              label:'Custom',
+              value: 'custom'
+          }
+      ],
       copyrightYear: 'Use Current Year',
-      copyrightYearOptions: ['Use Current Year', 'Custom'],
+      copyrightYearOptions: [
+          {
+              label:'Use Current Year',
+              value:'current-year'
+          },
+          {
+              label:'Custom',
+              value: 'custom'
+          }
+      ],
       maintenanceMode: 'Disable',
       maintenanceModeOptions: ['Disable', 'Enable'],
       passwordProtection: 'Disable',

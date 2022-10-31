@@ -1,8 +1,5 @@
 <template>
     <div class="grid">
-        <div class="col-12">
-            <tree-view :initial-model="tree2Data" :model-defaults="modelDefaults"></tree-view>
-        </div>
         <div class="col-6 col-offset-3 mt-6">
             <DataTable :value="pages" stripedRows responsiveLayout="scroll" class="p-datatable-sm" showGridlines>
                 <Column header="Pages">
@@ -23,12 +20,8 @@
 </template>
 
 <script>
-import { TreeView } from "@grapoza/vue-tree";
 export default {
     name: "Pages",
-    components: {
-        TreeView
-    },
     data(){
         return{
             pages :[

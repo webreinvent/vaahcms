@@ -107,7 +107,7 @@ import VirtualScroller from 'primevue/virtualscroller';
 
 
 //-------------APP
-import App from './templates/App.vue'
+import App from "./layouts/App.vue"
 import router from './routes/router'
 
 const app = createApp(App);
