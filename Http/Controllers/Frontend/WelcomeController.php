@@ -62,6 +62,11 @@ class WelcomeController extends Controller
     public function index(Request $request)
     {
 
+        if(app()->runningInConsole())
+        {
+            return true;
+        }
+
         $errors = [];
 
         $message = 'Install VaahCMS and activate the CMS module or define your own routes.';
