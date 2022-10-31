@@ -28,31 +28,29 @@
         </Tree>-->
     </div>
     <div>
-        <draggable
-            :list="list"
-            :disabled="!enabled"
-            item-key="name"
-            class="list-group"
-            ghost-class="ghost"
-            @start="dragging = true"
-            @end="dragging = false"
-        >
-            <template #item="{ element }">
-                <div class="list-group-item" :class="{ 'not-draggable': !enabled }">
-                    {{ element.name }}
-                </div>
+        <tree-view :initial-model="tvModel" :model-defaults="modelDefaults">
+            <template v-slot:text="{ model, customClasses }">
+                <span>{{ model.label }}
+                    <span v-if="model.children.length > 0" class="font-semibold">
+                       ({{model.children.length}})
+                    </span>
+                    <a><i class="pi pi-pencil ml-4 mr-2"></i></a>
+                    <a><i class="pi pi-trash"></i></a>
+                </span>
             </template>
-        </draggable>
+        </tree-view>
     </div>
 </div>
 </template>
 
 <script>
 import draggable from 'vuedraggable'
+import { TreeView } from "@grapoza/vue-tree";
 export default {
     name: "TaxonomiesModal",
     components: {
         draggable,
+        TreeView
     },
     data(){
         return{
@@ -109,13 +107,84 @@ export default {
                     pid: 0
                 }
             ],
-            list:[
-                { name: "John", id: 0 },
-                { name: "Joao", id: 1 },
-                { name: "Jean", id: 2 }
+            tvModel: [
+                {
+                    id: 'dragdrop2-node1',
+                    label: 'Countries',
+                    children: [],
+                },
+                {
+                    id: 'dragdrop2-node2',
+                    label: 'Registrations',
+                    children: [
+                        {
+                            id: 'dragdrop2-subnode1',
+                            label: 'Registrations one',
+                            children: []
+                        },
+                        {
+                            id: 'dragdrop2-subnode2',
+                            label: 'Registrations two',
+                            children: [
+                                {
+                                    id: 'dragdrop2-subsubnode1',
+                                    label: 'Registrations sub 1',
+                                    children: []
+                                },
+                                {
+                                    id: 'dragdrop2-subsubnode2',
+                                    label: 'Registrations sub 1',
+                                    children: []
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    id: 'dragdrop2-node3',
+                    label: 'Roles',
+                    children: [
+                        {
+                            id: 'dragdrop2-subnode1',
+                            label: 'Roles One',
+                            children: []
+                        },
+                        {
+                            id: 'dragdrop2-subnode2',
+                            label: 'Roles Two',
+                            children: [
+                                {
+                                    id: 'dragdrop2-subsubnode1',
+                                    label: 'Roles sub 1',
+                                    children: []
+                                },
+                                {
+                                    id: 'dragdrop2-subsubnode2',
+                                    label: 'Roles sub 2',
+                                    children: []
+                                }
+                            ]
+                        }
+                    ]
+                }
             ],
-            dragging:false,
-            enabled:false
+            modelDefaults:{
+                expanderTitle: 'Expand this node',
+                draggable: true,
+                allowDrop: true,
+                state: {
+                    expanded: false
+                },
+                customizations: {
+                    classes: {
+                        treeViewNodeSelfExpander: 'action-button',
+                        treeViewNodeSelfExpandedIndicator: 'pi  pi-chevron-right',
+                        treeViewNodeSelfAction: 'action-button',
+                        treeViewNodeSelfAddChildIcon: 'pi pi-plus',
+                        treeViewNodeSelfDeleteIcon: 'pi pi-minus'
+                    }
+                }
+            }
         }
     },
     methods:{
@@ -129,8 +198,16 @@ export default {
 }
 </script>
 
-<style scoped lang="scss">
+<style lang="scss">
 .p-treenode-label{
     width: 100% !important;
+}
+.action-button{
+    border: none;
+    background: transparent;
+    i{
+        font-size: 10px;
+        font-weight: 700;
+    }
 }
 </style>

@@ -1,5 +1,8 @@
 <template>
     <div class="grid">
+        <div class="col-12">
+            <tree-view :initial-model="tree2Data" :model-defaults="modelDefaults"></tree-view>
+        </div>
         <div class="col-6 col-offset-3 mt-6">
             <DataTable :value="pages" stripedRows responsiveLayout="scroll" class="p-datatable-sm" showGridlines>
                 <Column header="Pages">
@@ -20,8 +23,12 @@
 </template>
 
 <script>
+import { TreeView } from "@grapoza/vue-tree";
 export default {
     name: "Pages",
+    components: {
+        TreeView
+    },
     data(){
         return{
             pages :[
@@ -73,12 +80,65 @@ export default {
                     label: 'Media',
                     to: '/ui/private/media'
                 }
-            ]
+            ],
+            dataModel: [
+                {
+                    id: "numberOrString",
+                    label: "Root Node",
+                    children: [
+                        {id: 1, label: "Child Node"},
+                        {id: "node2", label: "Second Child"}
+                    ]
+                }
+            ],
+            tree2Data: [
+                {
+                    id: 'dragdrop2-node1',
+                    label: 'Node One',
+                    children: [],
+                    treeNodeSpec: {
+                        addChildCallback: function () { return Promise.resolve({ id: '' + Math.random(), label: 'Added' }); }
+                    }
+                },
+                {
+                    id: 'dragdrop2-node2',
+                    label: 'Node Two',
+                    children: [
+                        {
+                            id: 'dragdrop2-subnode1',
+                            label: 'Subnode One',
+                            children: []
+                        },
+                        {
+                            id: 'dragdrop2-subnode2',
+                            label: 'Subnode Two',
+                            children: [
+                                {
+                                    id: 'dragdrop2-subsubnode1',
+                                    label: 'Sub-Subnode 1',
+                                    children: []
+                                },
+                                {
+                                    id: 'dragdrop2-subsubnode2',
+                                    label: 'Sub-Subnode 2',
+                                    children: []
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ],
+            modelDefaults:{expanderTitle: 'Expand this node',
+                draggable: true,
+                allowDrop: true,
+                state: {
+                    expanded: true
+                }}
         }
-    }
+    },
 }
 </script>
 
-<style scoped>
+<style lang="scss">
 
 </style>

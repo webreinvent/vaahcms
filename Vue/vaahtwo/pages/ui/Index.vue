@@ -12,30 +12,61 @@
                 <RouterView></RouterView>
             </div>
         </div>-->
-        <draggable
-            :list="list"
-            :disabled="!enabled"
-            item-key="name"
-            class="list-group"
-            ghost-class="ghost"
-            @start="dragging = true"
-            @end="dragging = false"
-        >
-            <template #item="{ element }">
-                <div class="list-group-item" :class="{ 'not-draggable': !enabled }">
-                    {{ element.name }}
-                </div>
-            </template>
-        </draggable>
+        <tree-view :initial-model="tvModel.tree2Data" :model-defaults="modelDefaults"></tree-view>
         <router-view></router-view>
     </div>
 </template>
 <script setup>
-import draggable from 'vuedraggable';
-import { VueTreeList, Tree, TreeNode } from 'vue-tree-list';
 import {ref} from "vue";
-import Sidebar from "../../components/partials/Sidebar.vue";
-import Topnav from "../../components/partials/Topnav.vue";
+import { TreeView } from "@grapoza/vue-tree";
+
+const modelDefaults = ref({
+    expanderTitle: 'Expand this node',
+    draggable: true,
+    allowDrop: true,
+    state: {
+        expanded: true
+    }
+});
+
+const tvModel = ref(
+    [
+    {
+        id: 'dragdrop2-node1',
+        label: 'Node One',
+        children: [],
+        treeNodeSpec: {
+            addChildCallback: function () { return Promise.resolve({ id: '' + Math.random(), label: 'Added' }); }
+        }
+    },
+    {
+        id: 'dragdrop2-node2',
+        label: 'Node Two',
+        children: [
+            {
+                id: 'dragdrop2-subnode1',
+                label: 'Subnode One',
+                children: []
+            },
+            {
+                id: 'dragdrop2-subnode2',
+                label: 'Subnode Two',
+                children: [
+                    {
+                        id: 'dragdrop2-subsubnode1',
+                        label: 'Sub-Subnode 1',
+                        children: []
+                    },
+                    {
+                        id: 'dragdrop2-subsubnode2',
+                        label: 'Sub-Subnode 2',
+                        children: []
+                    }
+                ]
+            }
+        ]
+    }
+]);
 
 const enabled = ref(true);
 
