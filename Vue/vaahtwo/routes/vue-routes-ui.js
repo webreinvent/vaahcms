@@ -1,3 +1,4 @@
+import ContentTypes from "../pages/ui/ContentTypes.vue";
 
 
 let routes= [];
@@ -170,6 +171,11 @@ routes_list = [{
                     path: 'media',
                     name:Media,
                     component: Media
+                },
+                {
+                    name:'ContentTypes',
+                    path: 'content',
+                    component: ContentTypes
                 }
             ]
         }
