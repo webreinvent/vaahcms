@@ -11,8 +11,8 @@
 </template>
 
 <script>
-import UsersForm from "../../organisms/UsersForm.vue";
-import UserDetails from "../../organisms/UserDetails.vue";
+import UsersForm from "../../components/organisms/UsersForm.vue";
+import UserDetails from "../../components/organisms/UserDetails.vue";
 export default {
     name: "Users",
     components: {UserDetails, UsersForm},
