@@ -12,6 +12,7 @@ use WebReinvent\VaahCms\Entities\Theme;
 use WebReinvent\VaahCms\Entities\User;
 use WebReinvent\VaahExtend\Libraries\VaahArtisan;
 use Faker\Factory;
+use WebReinvent\VaahExtend\Libraries\VaahDB;
 
 class WelcomeController extends Controller
 {
@@ -21,7 +22,7 @@ class WelcomeController extends Controller
     //----------------------------------------------------------
     public function __construct()
     {
-        $this->theme = vh_get_theme_slug();
+
     }
 
     //----------------------------------------------------------
@@ -58,24 +59,43 @@ class WelcomeController extends Controller
 
     }
     //----------------------------------------------------------
-    public function index()
+    public function index(Request $request)
     {
 
+        if(app()->runningInConsole())
+        {
+            return true;
+        }
 
         $errors = [];
+
+        $message = 'Install VaahCMS and activate the CMS module or define your own routes.';
+
+        if(!VaahDB::isConnected())
+        {
+            $errors[] = $message;
+            return view($request->theme_slug.'::frontend.welcome')->withErrors($errors);
+        }
+
+        if(!VaahDB::isTableExist('vh_modules'))
+        {
+            $errors[] = $message;
+            return view($request->theme_slug.'::frontend.welcome')->withErrors($errors);
+        }
+
         $is_cms_exists = Module::slug('cms')->active()->exists();
 
         if(!$is_cms_exists)
         {
-            $errors[] = 'Install and activate the CMS module or Define your own routes.';
-            return view($this->theme.'::frontend.welcome')->withErrors($errors);
+            $errors[] = $message;
+            return view($request->theme_slug.'::frontend.welcome')->withErrors($errors);
         }
 
         $is_theme_active = Theme::active()->exists();
 
         if(!$is_theme_active)
         {
-            $errors[] = 'Install and activate a theme.';
+            $errors[] = 'Install a theme and activate it.';
             return view($this->theme.'::frontend.welcome')->withErrors($errors);
         }
 
@@ -92,12 +112,15 @@ class WelcomeController extends Controller
 
         if(!$menu_item)
         {
-            //check if dedicated welcome page is exist
-            if (view()->exists($this->theme.'::frontend.welcome')) {
-                return view($this->theme.'::frontend.welcome');
-            } else {
-                return view('vaahcms::frontend.theme-welcome');
+            //if dedicated welcome files does not exist in activated theme
+            if (!view()->exists($this->theme.'::frontend.welcome')) {
+                $errors[] = 'Activated theme does not have any welcome (frontend/welcome.blade.php) file.';
+                $errors[] = 'Please read theme documentation.';
+                return view(config('vaahcms.backend_theme').'::frontend.theme-welcome')
+                    ->withErrors($errors);
             }
+
+            return view($this->theme.'::frontend.welcome');
         }
 
         $blade = $menu_item->content->theme->slug.'::'.$menu_item->content->template->file_path;

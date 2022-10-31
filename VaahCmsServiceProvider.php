@@ -240,8 +240,8 @@ class VaahCmsServiceProvider extends ServiceProvider {
      */
     private function registerRoutes() {
 
-        include __DIR__.'/Routes/backend.php';
         include __DIR__.'/Routes/frontend.php';
+        include __DIR__.'/Routes/backend.php';
         include __DIR__.'/Routes/api.php';
 
     }

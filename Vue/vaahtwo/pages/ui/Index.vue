@@ -18,6 +18,8 @@
 </template>
 <script setup>
 import {ref} from "vue";
+import Sidebar from "../../organisms/Sidebar.vue";
+import Topnav from "../../organisms/Topnav.vue";
 import { TreeView } from "@grapoza/vue-tree";
 
 const modelDefaults = ref({

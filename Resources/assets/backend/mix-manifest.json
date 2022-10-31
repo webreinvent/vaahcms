@@ -1,5 +1,6 @@
 {
     "/vaahone/css/style.css": "/vaahone/css/style.css",
     "/vaahone/css/build.css": "/vaahone/css/build.css",
-    "/vaahtwo/css/build.css": "/vaahtwo/css/build.css"
+    "/vaahtwo/css/style.css": "/vaahtwo/css/style.css",
+    "/vaahtwo/build/build.css": "/vaahtwo/build/build.css"
 }

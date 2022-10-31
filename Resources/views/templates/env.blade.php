@@ -10,9 +10,11 @@ APP_DEBUG=true
 @endisset
 APP_URL={{$data->app_url ?? '' }}
 APP_TIMEZONE={{$data->app_timezone ?? '' }}
-VAAHCMS_VERSION={{$data->vaahcms_version ?? '' }}
 
-APP_VAAHCMS_ENV={{$data->app_vaahcms_env ?? '' }}
+#VAAHCMS_VERSION={{$data->vaahcms_version ?? '' }}
+
+#VAAHCMS_VUE_APP={{$data->app_vaahcms_env ?? '' }}
+#VAAHCMS_ASSETS={{$data->app_vaahcms_env ?? '' }}
 
 LOG_CHANNEL=stack
 

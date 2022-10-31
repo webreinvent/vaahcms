@@ -1,3 +1,4 @@
+.bulma{
 @import "./bulma-0.9.3/utilities/functions";
 @import "./bulma-0.9.3/utilities/initial-variables";
 @import "./buefy-0.9.19/utils/_all";
@@ -5,7 +6,7 @@
 
 @import "./bulma-0.9.3/base/_all";
 
-.bulma{
+
     @import "./bulma-0.9.3/bulma";
     @import "./buefy-0.9.19/utils/variables-ext";
 
