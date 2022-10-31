@@ -61,7 +61,7 @@
 </template>
 
 <script>
-import TaxonomiesModal from "../../organisms/TaxonomiesModal.vue";
+import TaxonomiesModal from "../../components/organisms/TaxonomiesModal.vue";
 import { h } from 'vue';
 
 import Button from 'primevue/button';

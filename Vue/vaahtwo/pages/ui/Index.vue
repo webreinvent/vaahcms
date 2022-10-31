@@ -1,82 +1,12 @@
 
 <template>
     <div>
-        <!--<div style="position: fixed; top:0; left: 33%; z-index:100;">
-            <Menubar :model="items">
-            </Menubar>
-        </div>-->
-        <!--<Topnav></Topnav>
-        <Sidebar></Sidebar>
-        <div class="grid main-container">
-            <div class="col-12 mt-6 mx-auto">
-                <RouterView></RouterView>
-            </div>
-        </div>-->
-        <draggable
-            :list="list"
-            :disabled="!enabled"
-            item-key="name"
-            class="list-group"
-            ghost-class="ghost"
-            @start="dragging = true"
-            @end="dragging = false"
-        >
-            <template #item="{ element }">
-                <div class="list-group-item" :class="{ 'not-draggable': !enabled }">
-                    {{ element.name }}
-                </div>
-            </template>
-        </draggable>
         <router-view></router-view>
     </div>
 </template>
 <script setup>
-import draggable from 'vuedraggable';
-import { VueTreeList, Tree, TreeNode } from 'vue-tree-list';
 import {ref} from "vue";
-import Sidebar from "../../organisms/Sidebar.vue";
-import Topnav from "../../organisms/Topnav.vue";
 
-const enabled = ref(true);
-
-const list = ref([
-    { name: "John", id: 0 },
-    { name: "Joao", id: 1 },
-    { name: "Jean", id: 2 }
-]);
-const dragging = ref(false);
-
-const myArray = ref([
-    {
-        name: 'Node 1',
-        id: 1,
-        pid: 0,
-        dragDisabled: true,
-        addTreeNodeDisabled: true,
-        addLeafNodeDisabled: true,
-        editNodeDisabled: true,
-        delNodeDisabled: true,
-        children: [
-            {
-                name: 'Node 1-2',
-                id: 2,
-                isLeaf: true,
-                pid: 1
-            }
-        ]
-    },
-    {
-        name: 'Node 2',
-        id: 3,
-        pid: 0,
-        disabled: true
-    },
-    {
-        name: 'Node 3',
-        id: 4,
-        pid: 0
-    }
-])
 
 const pages = ref([
     {
