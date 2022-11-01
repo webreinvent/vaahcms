@@ -81,7 +81,7 @@ const pages = ref([
 }
 .main-container{
     width: calc(100% - 210px);
-    margin: 55px 5px 0 auto;
+    margin: 70px 5px 0 auto;
 }
 .top-nav-fixed{
     width: 100%;

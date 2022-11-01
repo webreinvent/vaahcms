@@ -30,6 +30,7 @@ import Dashboard from "../pages/ui/Dashboard.vue";
 import Media from "../pages/ui/Media.vue";
 import MultiFactorAuth from "../pages/ui/MultiFactorAuth.vue";
 import Pages from "../pages/ui/Pages.vue";
+import MenuContent from "../pages/ui/MenuContent.vue";
 
 routes_list = [{
     path: '/ui',
@@ -176,6 +177,11 @@ routes_list = [{
                     name:'ContentTypes',
                     path: 'content',
                     component: ContentTypes
+                },
+                {
+                    path: 'menu',
+                    name: MenuContent,
+                    component: MenuContent
                 }
             ]
         }
