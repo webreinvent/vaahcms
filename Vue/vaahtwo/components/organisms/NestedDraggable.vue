@@ -1,6 +1,6 @@
 <template>
     <draggable
-        class="dragArea"
+        class="dragArea drag-list"
         tag="ul"
         :list="tasks"
         :group="{ name: 'g1' }"
@@ -58,7 +58,5 @@ export default {
 
 <style scoped>
 .dragArea {
-    min-height: 50px;
-    outline: 1px dashed;
 }
 </style>

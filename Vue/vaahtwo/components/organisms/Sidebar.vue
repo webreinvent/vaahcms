@@ -41,13 +41,13 @@
                             </a>
                         </div>
                     </div>
-                    <div id="p-panelmenu-content" class="p-toggleable-content" role="region" aria-labelledby="pv_id_4_0_header" style="display: none;">
+                    <div :id="'p-panelmenu-content' + item.id" class="p-toggleable-content" role="region" aria-labelledby="pv_id_4_0_header" style="display: none;">
                         <div class="p-panelmenu-content">
-                            <ul class="p-submenu-list p-panelmenu-root-list" id="pv_id_4_0_list" role="tree" tabindex="-1" v-for="sub_item in item.items">
-                                <li id="pv_id_4_0_0" class="p-menuitem" role="treeitem" aria-label="New" aria-expanded="false" aria-level="1" aria-setsize="3" aria-posinset="1">
+                            <ul class="p-submenu-list" id="pv_id_4_0_list" role="tree" tabindex="-1" v-for="sub_item in item.items">
+                                <li class="p-menuitem" role="treeitem" aria-label="New" aria-expanded="false" aria-level="1" aria-setsize="3" aria-posinset="1">
                                     <div class="p-menuitem-content">
                                        <router-link :to="sub_item.to">
-                                           <a class="p-menuitem-link" tabindex="-1" aria-hidden="true">
+                                           <a class="p-menuitem-link router-link-active" tabindex="-1">
                                                <span class="p-submenu-icon pi pi-fw pi-chevron-right"></span>
                                                <span class="p-menuitem-icon pi pi-fw" :class="sub_item.icon"></span>
                                                <span class="p-menuitem-text">{{sub_item.label}}</span>
@@ -138,43 +138,43 @@ export default {
                         key: false,
                         label: 'General',
                         icon: 'pi pi-fw pi-cog',
-                        to:'/private/settings/general-settings'
+                        to:'/ui/private/settings/general-settings'
                     },
                         {
                             key: false,
                             label: 'User',
                             icon: 'pi pi-fw pi-user',
-                            to:'/private/settings/user-settings'
+                            to:'/ui/private/settings/user-settings'
                         },
                         {
                             key: false,
                             label: 'Env Variables',
                             icon: 'pi pi-fw pi-cog',
-                            to:'/private/settings/env-variables-settings'
+                            to:'/ui/private/settings/env-variables-settings'
                         },
                         {
                             key: false,
                             label: 'Localization',
                             icon: 'pi pi-fw pi-code',
-                            to:'/private/settings/localization-settings'
+                            to:'/ui/private/settings/localization-settings'
                         },
                         {
                             key: false,
                             label: 'Notification',
                             icon: 'pi pi-fw pi-bell',
-                            to:'/private/settings/notification-settings'
+                            to:'/ui/private/settings/notification-settings'
                         },
                         {
                             key: false,
                             label: 'Update',
                             icon: 'pi pi-fw pi-download',
-                            to:'/private/settings/update-settings'
+                            to:'/ui/private/settings/update-settings'
                         },
                         {
                             key: false,
                             label: 'Reset',
                             icon: 'pi pi-fw pi-refresh',
-                            to:'/private/settings/'
+                            to:'/ui/private/settings/'
                         }
                     ]
                 },
@@ -239,7 +239,7 @@ export default {
                    document.getElementById('arrow-icon' + item.id).classList.add('pi-chevron-down')
                }
            });
-        }
+        },
     }
 }
 </script>

@@ -62,7 +62,7 @@ const pages = ref([
 
 
 </script>
-<style lang="scss">
+<!--<style lang="scss">
 .p-component-overlay-enter{
     z-index: 1100 !important;
 }
@@ -125,4 +125,4 @@ const pages = ref([
         border-radius:0;
     }
 }
-</style>
+</style>-->

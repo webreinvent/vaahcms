@@ -54,7 +54,7 @@
                     <FileUpload mode="basic" name="demo[]" url="./upload.php" accept="image/*" :maxFileSize="1000000" @upload="onUpload" class="w-full"/>
                 </div>
                 <div class="flex justify-content-between align-items-center mb-5">
-                    <h6 class="font-semibold">Media List (3)</h6>
+                    <h6 class="font-semibold text-sm">Media List (3)</h6>
                     <span>
                                 <Button icon="pi pi-plus" class="p-button-sm mr-2" @click="handleAccordion('expand')"></Button>
                                 <Button icon="pi pi-minus" class="p-button-sm" @click="handleAccordion('collapse')"></Button>

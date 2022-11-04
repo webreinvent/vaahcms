@@ -34,11 +34,11 @@
                </div>
             </div>
             <div class="field flex justify-content-between align-items-center">
-                <router-link to="/public/multi-factor-auth">
+                <router-link to="/ui/public/multi-factor-auth">
 
                 <Button label="Sign In" class="p-button-sm" />
                 </router-link>
-                <router-link to="">
+                <router-link to="/ui/public/forgot-password">
                     <Button label="Forgot Password?" class="p-button-text p-button-sm"/>
                 </router-link>
             </div>
