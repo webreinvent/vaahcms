@@ -147,11 +147,11 @@ export default {
 </script>
 
 <style lang="scss">
-.draggable-menu{
+/*.draggable-menu{
     ul{
         &:not(:first-child){
             margin: 0 10px 5px 10px;
         }
     }
-}
+}*/
 </style>

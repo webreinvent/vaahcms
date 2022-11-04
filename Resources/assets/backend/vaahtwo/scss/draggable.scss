@@ -1,0 +1,8 @@
+.draggable-menu{
+    background: red;
+    ul{
+        &:not(:first-child){
+            margin: 0 10px 5px 10px;
+        }
+    }
+}

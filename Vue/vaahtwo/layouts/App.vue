@@ -31,7 +31,6 @@ useVaah.setConfirm(confirm);
                          v-html="slotProps.message.detail">
                     </div>
                 </div>
-
             </template>
         </Toast>
 
