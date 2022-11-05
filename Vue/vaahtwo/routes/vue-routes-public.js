@@ -4,6 +4,7 @@ let routes_list= [];
 import LayoutPublic from '../layouts/Public.vue'
 import Signin from '../pages/public/Signin.vue'
 import Setup from '../pages/public/setup/Index.vue'
+import SetupInstall from '../pages/public/setup/intall/Index.vue'
 
 
 routes_list = [
@@ -22,6 +23,12 @@ routes_list = [
                 path: '/setup',
                 name: 'setup',
                 component: Setup,
+                props: true,
+            },
+            {
+                path: '/setup/install',
+                name: 'setup.install',
+                component: SetupInstall,
                 props: true,
             },
         ]

@@ -4,18 +4,21 @@ import {onMounted, reactive} from "vue";
 
 import { useSetupStore } from '../../../stores/setup'
 const store = useSetupStore();
+import { useRootStore } from '../../../stores/root'
+const root = useRootStore();
 
 
 onMounted(async () => {
     await store.getAssets();
+    await store.getStatus();
 });
 </script>
 
 <template>
-    <div class="setup text-center">
+    <div v-if="store && store.assets && root && root.assets" class="setup text-center">
         <img src="http://irisrishu.com/vaahcms/backend/vaahone/images/vaahcms-logo.svg" alt="" class="w-1 mb-5">
         <div class="grid justify-content-center">
-            <div class="col-12">
+            <div v-if="store.assets.is_installed" class="col-12">
                 <Message severity="success">VaahCMS is successfully setup</Message>
             </div>
             <div class="col-6">
@@ -24,22 +27,37 @@ onMounted(async () => {
                         <div class="flex justify-content-between align-items-center">
                             <h4 class="text-xl font-semi-bold">Install</h4>
                             <div class="icons flex">
-                                <div class="m-1">
-                                    <i class="bg-gray-200 p-2 border-round-3xl pi pi-server" v-tooltip.top="'Dashboard'"></i>
+                                <div v-if="root.assets.auth_user" class="m-1">
+                                    <i class="bg-gray-200 p-2 border-round-3xl pi pi-server"
+                                       v-tooltip.top="'Dashboard'">
+
+                                    </i>
                                 </div>
                                 <div class="m-1">
-                                    <i class="bg-gray-200 p-2 border-round-3xl pi pi-book" v-tooltip.top="'Documentation'"></i>
+                                    <a href="https://docs.vaah.dev/vaahcms/installation.html" target="_blank">
+                                        <i class="bg-gray-200 active:text-black
+                                        p-2 border-round-3xl pi pi-book"
+                                           v-tooltip.top="'Documentation'"></i>
+                                    </a>
                                 </div>
                             </div>
                         </div>
                     </template>
                     <template #content>
                         <p class="text-sm text-left">
-                            <a href="https://vaah.dev/cms" target="_blank">VaahCMS</a> is a web application development platform shipped with headless content management system
+                            <a href="https://vaah.dev/cms" target="_blank">VaahCMS
+                            </a> is a web application development platform shipped with headless
+                            content management system
                         </p>
-                        <div class="flex justify-content-between align-items-center mt-4">
-                            <Button label="Install" icon="pi pi-server" class="p-button bg-white border-gray-800 text-black-alpha-80"/>
-                            <SplitButton label="Advanced Options" :model="items" class="mb-2"></SplitButton>
+                        <div v-if="store.status" class="flex justify-content-between align-items-center mt-4">
+                            <Button v-if="store.status.stage && store.status.stage === 'installed'"
+                                    disabled label="Install" icon="pi pi-server"
+                                    class="p-button bg-white border-gray-800 text-black-alpha-80"/>
+
+                            <Button v-else label="Install" icon="pi pi-server"
+                                    @click="store.routeAction('setup.install')"
+                                    class="p-button bg-white border-gray-800 text-black-alpha-80"/>
+                            <SplitButton label="Advanced Options" :model="store.items" class="mb-2"></SplitButton>
                         </div>
                     </template>
                 </Card>
