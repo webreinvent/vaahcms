@@ -33,7 +33,7 @@ Route::group(
         Route::get( '/setup-assets', 'SetupController@getAssets' )
             ->name( 'vh.setup.assets' );
         //------------------------------------------------
-        Route::post( '/status', 'SetupController@appSetupStatus' )
+        Route::get( '/setup/status', 'SetupController@appSetupStatus' )
             ->name( 'vh.setup.status' );
         //------------------------------------------------
     });
