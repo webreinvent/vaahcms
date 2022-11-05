@@ -42,7 +42,7 @@ Route::group(
             ],
             function () {
                 //------------------------------------------------
-                Route::post( '/assets', 'JsonController@getPublicAssets' )
+                Route::get( '/assets', 'JsonController@getPublicAssets' )
                     ->name( 'vh.backend.json.assets' );
                 //------------------------------------------------
                 Route::post( '/is-logged-in', 'JsonController@isLoggedIn' )

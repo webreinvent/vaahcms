@@ -23,14 +23,14 @@ Route::group(
 */
 Route::group(
     [
-        'prefix'     => 'vaahcms/setup',
+        'prefix'     => 'backend/json',
         'middleware' => ['web'],
         'namespace'  => 'WebReinvent\VaahCms\Http\Controllers'
     ],
     function () {
 
         //------------------------------------------------
-        Route::post( '/assets', 'SetupController@getAssets' )
+        Route::get( '/setup-assets', 'SetupController@getAssets' )
             ->name( 'vh.setup.assets' );
         //------------------------------------------------
         Route::post( '/status', 'SetupController@appSetupStatus' )

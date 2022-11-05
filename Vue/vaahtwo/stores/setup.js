@@ -3,10 +3,10 @@ import {vaah} from '../vaahvue/pinia/vaah'
 
 let base_url = document.getElementsByTagName('base')[0].getAttribute("href");
 let ajax_url = base_url;
-let json_url = ajax_url + "/json";
+let json_url = ajax_url + "/json/setup";
 
-export const useRootStore = defineStore({
-    id: 'root',
+export const useSetupStore = defineStore({
+    id: 'setup',
     state: () => ({
         assets: null,
         assets_is_fetching: true,
@@ -26,7 +26,7 @@ export const useRootStore = defineStore({
                 };
 
                 vaah().ajax(
-                    this.json_url+'/assets',
+                    this.json_url+'-assets',
                     this.afterGetAssets,
                     params
                 );
@@ -62,5 +62,5 @@ export const useRootStore = defineStore({
 
 // Pinia hot reload
 if (import.meta.hot) {
-    import.meta.hot.accept(acceptHMRUpdate(useRootStore, import.meta.hot))
+    import.meta.hot.accept(acceptHMRUpdate(useSetupStore, import.meta.hot))
 }
