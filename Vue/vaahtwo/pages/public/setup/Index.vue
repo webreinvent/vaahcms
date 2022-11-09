@@ -55,7 +55,7 @@ onMounted(async () => {
                                     class="p-button bg-white border-gray-800 text-black-alpha-80"/>
 
                             <Button v-else label="Install" icon="pi pi-server"
-                                    @click="store.routeAction('setup.install')"
+                                    @click="store.routeAction('setup.install.configuration')"
                                     class="p-button bg-white border-gray-800 text-black-alpha-80"/>
                             <SplitButton label="Advanced Options" :model="store.items" class="mb-2"></SplitButton>
                         </div>
