@@ -23,17 +23,17 @@ Route::group(
 */
 Route::group(
     [
-        'prefix'     => 'backend/json',
+        'prefix'     => 'backend/setup/json',
         'middleware' => ['web'],
         'namespace'  => 'WebReinvent\VaahCms\Http\Controllers'
     ],
     function () {
 
         //------------------------------------------------
-        Route::get( '/setup-assets', 'SetupController@getAssets' )
+        Route::get( '/assets', 'SetupController@getAssets' )
             ->name( 'vh.setup.assets' );
         //------------------------------------------------
-        Route::get( '/setup/status', 'SetupController@appSetupStatus' )
+        Route::get( '/status', 'SetupController@appSetupStatus' )
             ->name( 'vh.setup.status' );
         //------------------------------------------------
     });
@@ -49,7 +49,7 @@ Route::group(
 */
 Route::group(
     [
-        'prefix'     => 'vaahcms/setup',
+        'prefix'     => 'backend/setup',
         'middleware' => ['web', 'app.is.not.installed'],
         'namespace'  => 'WebReinvent\VaahCms\Http\Controllers'
     ],

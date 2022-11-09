@@ -2,8 +2,8 @@ import {defineStore, acceptHMRUpdate} from 'pinia';
 import {vaah} from '../vaahvue/pinia/vaah'
 
 let base_url = document.getElementsByTagName('base')[0].getAttribute("href");
-let ajax_url = base_url;
-let json_url = ajax_url + "/json/setup";
+let ajax_url = base_url+'/setup';
+let json_url = ajax_url + "/json";
 
 export const useSetupStore = defineStore({
     id: 'setup',
@@ -12,8 +12,67 @@ export const useSetupStore = defineStore({
         assets_is_fetching: true,
         ajax_url: ajax_url,
         json_url: json_url,
+        is_btn_loading_db_connection: false,
         status: null,
         gutter: 20,
+        debug_option: [
+            {
+                name:'True',
+                slug:'true'
+            },
+            {
+                name:'False',
+                slug:'false'
+            }
+        ],
+        config:{
+            active_step: 0,
+            is_migrated: false,
+            dependencies: null,
+            count_total_dependencies: 0,
+            count_installed_dependencies: 0,
+            count_installed_progress: 0,
+            is_account_created: false,
+            account:{
+
+                email: null,
+                username: null,
+                password: null,
+                first_name: null,
+                middle_name: null,
+                last_name: null,
+                country_calling_code: null,
+                phone: null,
+
+            },
+            env:{
+                app_name: "VaahCMS",
+                app_key: null,
+                app_debug: true,
+                app_env: null,
+                app_env_custom: null,
+                app_url: null,
+                app_timezone: null,
+                db_connection: 'mysql',
+                db_host: '127.0.0.1',
+                db_port: 3306,
+                db_database: null,
+                db_username: null,
+                db_password: null,
+                db_is_valid: false,
+                mail_provider: null,
+                mail_driver: null,
+                mail_host: null,
+                mail_port: null,
+                mail_username: null,
+                mail_password: null,
+                mail_encryption: null,
+                mail_from_address: null,
+                mail_from_name: null,
+                mail_is_valid: false,
+                test_email_to: null,
+            }
+        },
         items: [
             {
                 label: 'Publish assets'
@@ -26,22 +85,22 @@ export const useSetupStore = defineStore({
             {
                 label: 'Configuration',
                 icon: 'pi pi-fw pi-cog',
-                to: '/ui/public/install/configuration'
+                to: '/setup/install/configuration'
             },
             {
                 label: 'Migrate',
                 icon: 'pi pi-fw pi-database',
-                to: '/ui/public/install/migrate'
+                to: '/setup/install/migrate'
             },
             {
                 label: 'Dependencies',
                 icon: 'pi pi-fw pi-server',
-                to: '/ui/public/install/dependencies'
+                to: '/setup/install/dependencies'
             },
             {
                 label: 'Account',
                 icon: 'pi pi-fw pi-user-plus',
-                to: '/ui/public/install/account'
+                to: '/setup/install/account'
             }
         ],
         show_progress_bar: false,
@@ -57,7 +116,7 @@ export const useSetupStore = defineStore({
                 };
 
                 vaah().ajax(
-                    this.json_url+'-assets',
+                    this.json_url+'/assets',
                     this.afterGetAssets,
                     params
                 );
@@ -71,6 +130,8 @@ export const useSetupStore = defineStore({
             if(data)
             {
                 this.assets = data;
+
+                this.config.env.app_url = this.assets.app_url;
 
             }
         },
@@ -117,6 +178,73 @@ export const useSetupStore = defineStore({
         afterPublishAssets(data, res)
         {
             this.hideProgress();
+        },
+        //---------------------------------------------------------------------
+        testDatabaseConnection() {
+
+            this.is_btn_loading_db_connection = true;
+            this.config.env.db_is_valid=false;
+
+            this.showProgress();
+
+            let params = {
+                params: this.config.env,
+                method: 'post',
+            };
+
+            vaah().ajax(
+                this.ajax_url+'/test/database/connection',
+                this.afterTestDatabaseConnection,
+                params
+            );
+
+        },
+        //---------------------------------------------------------------------
+        loadConfigurations: function () {
+
+
+            if(this.config.env.app_env !== 'custom')
+            {
+                this.config.env.app_env_custom = "";
+
+                let params = {
+                    params : this.config.env,
+                    method: 'post',
+                };
+
+                vaah().ajax(
+                    this.ajax_url+'/get/configurations',
+                    this.afterLoadConfigurations,
+                    params
+                );
+            }
+
+
+        },
+        //---------------------------------------------------------------------
+        afterLoadConfigurations: function (data, res) {
+            if(data)
+            {
+                for(let key in this.config.env)
+                {
+                    if( data[key])
+                    {
+                        this.config.env[key] = data[key];
+                    }
+                }
+
+            }
+        },
+
+
+        //---------------------------------------------------------------------
+        afterTestDatabaseConnection(data, res)
+        {
+            this.is_btn_loading_db_connection = false;
+            if(data)
+            {
+                this.config.env.db_is_valid=true;
+            }
         },
 
 

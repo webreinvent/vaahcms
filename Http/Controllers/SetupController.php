@@ -221,15 +221,15 @@ class SetupController extends Controller
 
         if(VaahSetup::isInstalled())
         {
-            $response['status'] = 'failed';
-            $response['errors'][] = 'Application is already installed.';
+            $response['success'] = false;
+            $response['messages'][] = 'Application is already installed.';
             return response()->json($response);
         }
 
 
         $response = VaahSetup::verifyAppUrl($request);
 
-        if($response['status'] == 'failed')
+        if(!$response['success'])
         {
             return response()->json($response);
         }
@@ -255,8 +255,8 @@ class SetupController extends Controller
         if ( $validator->fails() ) {
 
             $errors             = errorsToArray($validator->errors());
-            $response['status'] = 'failed';
-            $response['errors'] = $errors;
+            $response['success'] = false;
+            $response['messages'] = $errors;
             return response()->json($response);
         }
 
@@ -268,15 +268,15 @@ class SetupController extends Controller
 
         if(!file_exists($file_path))
         {
-            $response['status'] = 'failed';
-            $response['errors'] = [];
+            $response['success'] = false;
+            $response['messages'] = [];
             return response()->json($response);
         }
 
         //$params = vh_env_file_to_array($file_path, true);
         $params = VaahSetup::getEnvFileVariables($env_file, 'key_value', true);
 
-        $response['status'] = 'success';
+        $response['success'] = true;
         $response['data'] = $params;
 
         return response()->json($response);

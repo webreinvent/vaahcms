@@ -30,8 +30,8 @@ class VaahHelper{
         if ( $validator->fails() ) {
 
             $errors             = errorsToArray($validator->errors());
-            $response['status'] = 'failed';
-            $response['errors'] = $errors;
+            $response['success'] = false;
+            $response['messages'] = $errors;
             return $response;
         }
 
@@ -46,14 +46,14 @@ class VaahHelper{
         config(['database.connections.db_connection_test' => $inputs]);
 
         try{
-            $response['status'] = 'success';
+            $response['success'] = true;
             $response['data']['inputs'] = $inputs;
             $response['data']['result'] = \DB::connection('db_connection_test')->getPdo();
             $response['messages'][] = 'Successfully connect with Database';
         }catch(\Exception $e)
         {
-            $response['status'] = 'failed';
-            $response['errors'][] = $e->getMessage();
+            $response['success'] = false;
+            $response['messages'][] = $e->getMessage();
         }
 
 

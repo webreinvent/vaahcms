@@ -15,21 +15,23 @@ onMounted(async () => {
 </script>
 
 <template>
-    <div class="">
+    <div v-if="store.assets" class="">
         <div class="text-center mb-4">
             <img src="http://irisrishu.com/vaahcms/backend/vaahone/images/vaahcms-logo.svg" alt="" class="w-1 mb-2 mx-auto">
             <h4 class="text-xl font-semibold">Install VaahCMS</h4>
         </div>
         <div class="container">
-            <Steps :model="store.install_items" :readonly="false" class="my-4">
+            <Steps :model="store.install_items" :readonly="true" class="my-4">
                 <template #item="{item}">
                     <router-link :to="item.to">
-                        <a class="flex align-items-center font-medium"> <i :class="item.icon" class="step-icon"></i>{{item.label}}</a>
+                        <a class="flex align-items-center font-medium">
+                            <i :class="item.icon" class="step-icon"></i>{{item.label}}</a>
                     </router-link>
 
                 </template>
             </Steps>
-            <div class="w-auto text-center my-4"><Tag class="bg-black-alpha-90 m-auto is-small">ACTIVE ENV FILE: <b class="ml-1">.env.rishu</b></Tag></div>
+            <div class="w-auto text-center my-4"><Tag class="bg-black-alpha-90 m-auto is-small">
+                ACTIVE ENV FILE: <b class="ml-1">{{ store.assets.env_file }}</b></Tag></div>
             <router-view />
             <div class="flex justify-content-center text-center mt-5">
                 <div class="text-xs">

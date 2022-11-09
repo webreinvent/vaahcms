@@ -462,7 +462,7 @@ class VaahSetup{
         $path = base_path('/vaahcms.json');
 
         if (!File::exists($path)) {
-            $response['status'] = 'success';
+            $response['success'] = true;
             $response['data'][] = '';
             if(env('APP_DEBUG'))
             {
@@ -478,7 +478,7 @@ class VaahSetup{
 
         if(!isset($config['environments']))
         {
-            $response['status'] = 'success';
+            $response['success'] = true;
             $response['data'][] = '';
             if(env('APP_DEBUG'))
             {
@@ -503,8 +503,8 @@ class VaahSetup{
             {
                 $duplicate_urls = implode( ', ', $duplicates);
 
-                $response['status'] = 'failed';
-                $response['errors'][] = 'Duplicate entries for app_url(s) '.$duplicate_urls.' is/are found in vaahcms.json file.';
+                $response['success'] = false;
+                $response['messages'][] = 'Duplicate entries for app_url(s) '.$duplicate_urls.' is/are found in vaahcms.json file.';
                 if(env('APP_DEBUG'))
                 {
                     $response['hint'][] = 'APP URL already exist in vaahcms.json';
@@ -528,7 +528,7 @@ class VaahSetup{
             }*/
         }
 
-        $response['status'] = 'success';
+        $response['success'] = true;
         $response['data'][] = '';
 
         return $response;
