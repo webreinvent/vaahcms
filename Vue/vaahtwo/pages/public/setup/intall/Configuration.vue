@@ -119,7 +119,8 @@ onMounted(async () => {
       <div class="col-12 md:col-4">
         <h5 class="text-left p-1 title is-6">Database Username</h5>
         <div class="p-inputgroup">
-          <InputText v-model="store.config.env.db_username" placeholder="Database Username"
+          <InputText v-model="store.config.env.db_username"
+                     placeholder="Database Username"
                      class="p-inputtext-sm"/>
         </div>
       </div>
@@ -142,7 +143,10 @@ onMounted(async () => {
       <div class="col-12 md:col-4">
         <h5 class="text-left p-1 title is-6">Mail Provider</h5>
         <div class="p-inputgroup">
-          <Dropdown v-model="selectedCity1" :options="cities" optionLabel="name" optionValue="code" placeholder="Select Mail Provider" class="p-inputtext-sm"/>
+          <Dropdown v-model="selectedCity1" :options="cities"
+                    optionLabel="name" optionValue="code"
+                    placeholder="Select Mail Provider"
+                    class="p-inputtext-sm"/>
         </div>
       </div>
 

@@ -31,7 +31,7 @@ class VaahHelper{
 
             $errors             = errorsToArray($validator->errors());
             $response['success'] = false;
-            $response['messages'] = $errors;
+            $response['errors'] = $errors;
             return $response;
         }
 
@@ -53,7 +53,7 @@ class VaahHelper{
         }catch(\Exception $e)
         {
             $response['success'] = false;
-            $response['messages'][] = $e->getMessage();
+            $response['errors'][] = $e->getMessage();
         }
 
 
