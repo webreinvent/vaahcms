@@ -135,9 +135,20 @@ onMounted(async () => {
       </div>
     </div>
 
-    <Button @click="store.testDatabaseConnection()" label="Test Database connection"
+    <Button v-if="store.config.env.db_is_valid"
+            @click="store.testDatabaseConnection()"
+            label="Test Database connection"
+            :loading="store.is_btn_loading_db_connection"
+            icon="pi pi-check"
+            class="p-button-success p-button-sm my-4 is-small"/>
+
+    <Button v-else
+            @click="store.testDatabaseConnection()"
+            label="Test Database connection"
             :loading="store.is_btn_loading_db_connection"
             icon="pi pi-database" class="p-button-sm my-4 is-small"/>
+
+
 
     <div class="grid p-fluid">
       <div class="col-12 md:col-4">
@@ -257,7 +268,9 @@ onMounted(async () => {
     <div class="grid p-fluid">
       <div class="col-12">
         <div class="flex justify-content-end">
-          <Button label="Save & Next" class="p-button-sm w-auto" @click="goToNextStep"></Button>
+          <Button label="Save & Next" :loading="store.is_btn_loading_config"
+                  :disabled="!store.config.env.db_is_valid"
+                  class="p-button-sm w-auto" @click="store.validateConfigurations"></Button>
         </div>
       </div>
     </div>

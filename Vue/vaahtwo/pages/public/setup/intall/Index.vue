@@ -21,7 +21,7 @@ onMounted(async () => {
             <h4 class="text-xl font-semibold">Install VaahCMS</h4>
         </div>
         <div class="container">
-            <Steps :model="store.install_items" :readonly="true" class="my-4">
+            <Steps :model="store.install_items" :readonly="false" class="my-4">
                 <template #item="{item}">
                     <router-link :to="item.to">
                         <a class="flex align-items-center font-medium">

@@ -1,8 +1,23 @@
+<script setup>
+
+import {onMounted, reactive} from "vue";
+
+import { useSetupStore } from '../../../../stores/setup'
+const store = useSetupStore();
+import { useRootStore } from '../../../../stores/root'
+const root = useRootStore();
+
+
+onMounted(async () => {
+
+});
+</script>
+
 <template>
   <Message severity="info" :closable="true" class="is-small">This step will run database migrations and seeds.</Message>
   <Button label="Migrate & Run Seeds" icon="pi pi-database" iconPos="left" @click="showTemplate" class="is-small"/>
   <div class="flex justify-content-between mt-5">
-    <Button label="Back" class="p-button-sm" @click="goBack"></Button>
+    <Button label="Back" class="p-button-sm" @click="$router.push('/setup/install/configuration')"></Button>
     <Button label="Save & Next" class="p-button-sm" @click="goToNextStep"></Button>
   </div>
   <ConfirmDialog group="templating" class="is-small" :style="{width: '400px'}" :breakpoints="{'600px': '100vw'}">
@@ -14,42 +29,6 @@
     </template>
   </ConfirmDialog>
 </template>
-
-<script>
-export default {
-  name: "Migrate",
-  methods: {
-    goBack(){
-      this.$router.push("/ui/public/install/configuration")
-    },
-    goToNextStep(){
-      this.$router.push("/ui/public/install/dependencies")
-    },
-    showTemplate() {
-      console.log('test'),
-      this.$confirm.require({
-        group: 'templating',
-        header: 'Deleting existing migrations',
-        message: 'This will delete all existing migration from database/migrations folder.',
-        icon: 'pi pi-exclamation-circle text-red-600',
-        acceptClass:'p-button p-button-danger is-small',
-        acceptLabel:'Proceed',
-        rejectLabel:'Cancel',
-        rejectClass:' is-small btn-dark',
-        accept: () => {
-          console.log('accepted')
-        },
-        reject: () => {
-          console.log('rejected')
-        },
-        onHide: () => {
-          this.$toast.add({severity:'error', summary:'Hide', detail:'You have hidden', life: 3000});
-        }
-      });
-    }
-  }
-}
-</script>
 
 <style scoped>
 
