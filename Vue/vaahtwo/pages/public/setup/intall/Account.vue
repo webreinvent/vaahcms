@@ -1,72 +1,155 @@
+<script setup>
+
+import {onMounted, reactive} from "vue";
+
+import { useSetupStore } from '../../../../stores/setup'
+const store = useSetupStore();
+import { useRootStore } from '../../../../stores/root'
+const root = useRootStore();
+
+
+onMounted(async () => {
+
+});
+</script>
+
 <template>
-  <Message severity="info" :closable="true" class="is-small">Create first account,this account will have super administrator role and will have all the permissions.</Message>
-  <div class="grid p-fluid">
-    <div class="col-12 md:col-3">
-      <h5 class="text-left p-1 title is-6">First name</h5>
-      <div class="p-inputgroup">
-        <InputText placeholder="Enter first name" class="p-inputtext-sm"/>
-      </div>
+    <div v-if="store && store.assets">
+        <Message severity="info" :closable="true" class="is-small">
+            Create first account,this account will have super administrator role and will have all the permissions.
+        </Message>
+        <div class="grid p-fluid">
+            <div class="col-12 md:col-3">
+                <h5 class="text-left p-1 title is-6">First name</h5>
+                <div class="p-inputgroup">
+                    <InputText
+                        v-model="store.config.account.first_name"
+                        name="account-first_name"
+                        data-testid="account-first_name"
+                        placeholder="Enter first name"
+                        class="p-inputtext-sm"/>
+                </div>
+            </div>
+            <div class="col-12 md:col-3">
+                <h5 class="text-left p-1 title is-6">Middle name</h5>
+                <div class="p-inputgroup">
+                    <InputText
+                        v-model="store.config.account.middle_name"
+                        name="account-middle_name"
+                        data-testid="account-middle_name"
+                        placeholder="Enter middle name"
+                        class="p-inputtext-sm"/>
+                </div>
+            </div>
+            <div class="col-12 md:col-3">
+                <h5 class="text-left p-1 title is-6">Last name</h5>
+                <div class="p-inputgroup">
+                    <InputText
+                        v-model="store.config.account.last_name"
+                        name="account-last_name"
+                        data-testid="account-last_name"
+                        placeholder="Enter last name"
+                        class="p-inputtext-sm"/>
+                </div>
+            </div>
+            <div class="col-12 md:col-3">
+                <h5 class="text-left p-1 title is-6">Email</h5>
+                <div class="p-inputgroup">
+                    <InputText
+                        v-model="store.config.account.email"
+                        name="account-email"
+                        data-testid="account-email"
+                        placeholder="Enter email"
+                        class="p-inputtext-sm"/>
+                </div>
+            </div>
+        </div>
+        <div class="grid p-fluid">
+            <div class="col-12 md:col-3">
+                <h5 class="text-left p-1 title is-6">Username</h5>
+                <div class="p-inputgroup">
+                    <InputText
+                        v-model="store.config.account.username"
+                        name="account-username"
+                        data-testid="account-username"
+                        placeholder="Enter Username"
+                        class="p-inputtext-sm"/>
+                </div>
+            </div>
+            <div class="col-12 md:col-3">
+                <h5 class="text-left p-1 title is-6">Password</h5>
+                <div class="p-inputgroup">
+                    <Password
+                        v-model="store.config.account.password"
+                        name="account-password"
+                        data-testid="account-password"
+                        :feedback="false"
+                        toggleMask input-class="w-full p-inputtext-sm"
+                        placeholder="Enter password"/>
+                </div>
+            </div>
+            <div class="col-12 md:col-3">
+                <h5 class="text-left p-1 title is-6">Search Country</h5>
+                <AutoComplete
+                    v-model="store.config.account.country_calling_code"
+                    :suggestions="filteredSearchCountries"
+                    @complete="searchCountry($event)"
+                    placeholder="Enter Your Country"
+                    optionLabel="name"
+                    name="account-country_calling_code"
+                    data-testid="account-country_calling_code"
+                    input-class="p-inputtext-sm"/>
+            </div>
+            <div class="col-12 md:col-3">
+                <h5 class="text-left p-1 title is-6">Phone</h5>
+                <div class="p-inputgroup">
+                    <InputText
+                        v-model="store.config.account.phone"
+                        name="account-phone"
+                        data-testid="account-phone"
+                        placeholder="Enter phone"
+                        class="p-inputtext-sm"/>
+                </div>
+            </div>
+        </div>
+        <div class="grid p-fluid">
+            <div class="col-12 mt-3">
+                <Button
+                    v-if="store.config.is_account_created"
+                    icon="pi pi-user-plus"
+                    label="Create Account"
+                    class="p-button-sm w-auto is-small"
+                    :loading="store.config.btn_is_account_creating"/>
+                <Button
+                    v-else
+                    icon="pi pi-user-plus"
+                    label="Create Account"
+                    class="p-button-sm w-auto is-small"
+                    :loading="store.config.btn_is_account_creating"
+                    @click="store.createAccount()"/>
+            </div>
+            <div class="col-12">
+                <div class="flex justify-content-between mt-3">
+                    <Button
+                        label="Back"
+                        class="p-button-sm w-auto"
+                        :to="{name: 'setup.install.dependencies'}"></Button>
+                    <Button
+                        v-if="store.config.is_account_created"
+                        icon="pi pi-external-link"
+                        label="Go to Backend Sign in"
+                        class="p-button-sm w-auto"
+                        @click="store.validateAccountCreation()"></Button>
+                    <Button
+                        v-else
+                        icon="pi pi-external-link"
+                        label="Go to Backend Sign in"
+                        class="p-button-sm w-auto"
+                        @click="store.validateAccountCreation()"></Button>
+                </div>
+            </div>
+        </div>
     </div>
-
-    <div class="col-12 md:col-3">
-      <h5 class="text-left p-1 title is-6">Middle name</h5>
-      <div class="p-inputgroup">
-        <InputText placeholder="Enter middle name" class="p-inputtext-sm"/>
-      </div>
-    </div>
-
-    <div class="col-12 md:col-3">
-      <h5 class="text-left p-1 title is-6">Last name</h5>
-      <div class="p-inputgroup">
-        <InputText placeholder="Enter last name" class="p-inputtext-sm"/>
-      </div>
-    </div>
-    <div class="col-12 md:col-3">
-      <h5 class="text-left p-1 title is-6">Email</h5>
-      <div class="p-inputgroup">
-        <InputText placeholder="Enter email" class="p-inputtext-sm"/>
-      </div>
-    </div>
-  </div>
-  <div class="grid p-fluid">
-
-
-    <div class="col-12 md:col-3">
-      <h5 class="text-left p-1 title is-6">Username</h5>
-      <div class="p-inputgroup">
-        <InputText placeholder="Enter Username" class="p-inputtext-sm"/>
-      </div>
-    </div>
-
-    <div class="col-12 md:col-3">
-      <h5 class="text-left p-1 title is-6">Password</h5>
-      <div class="p-inputgroup">
-        <Password :feedback="false" toggleMask input-class="w-full p-inputtext-sm" placeholder="Enter password"/>
-      </div>
-    </div>
-    <div class="col-12 md:col-3">
-      <h5 class="text-left p-1 title is-6">Search Country</h5>
-      <AutoComplete v-model="selectedCountry1" :suggestions="filteredCountries" @complete="searchCountry($event)" placeholder="Enter Your Country" optionLabel="name" input-class="p-inputtext-sm"/>
-    </div>
-
-    <div class="col-12 md:col-3">
-      <h5 class="text-left p-1 title is-6">Phone</h5>
-      <div class="p-inputgroup">
-        <InputText placeholder="Enter phone" class="p-inputtext-sm"/>
-      </div>
-    </div>
-  </div>
-  <div class="grid p-fluid">
-    <div class="col-12 mt-3">
-      <Button icon="pi pi-user-plus" label="Create Account" class="p-button-sm w-auto is-small"/>
-    </div>
-    <div class="col-12">
-      <div class="flex justify-content-between mt-3">
-        <Button label="Back" class="p-button-sm w-auto" @click="goBack"></Button>
-        <Button icon="pi pi-external-link" label="Go to Backend Sign in" class="p-button-sm w-auto"></Button>
-      </div>
-    </div>
-  </div>
 </template>
 
 <script>
@@ -76,9 +159,9 @@ export default {
   name: "Account",
   data(){
     return{
-      countries: null,
-      selectedCountry1: null,
-      filteredCountries: null,
+        countries: null,
+        selectedCountry1: null,
+        filteredSearchCountries: null,
     }
       },
   mounted() {
@@ -91,12 +174,14 @@ export default {
     searchCountry(event) {
       setTimeout(() => {
         if (!event.query.trim().length) {
-          this.filteredCountries = [...this.countries];
+          this.filteredSearchCountries = [...this.countries];
         }
         else {
-          this.filteredCountries = this.countries.filter((country) => {
+          this.filteredSearchCountries = this.countries.filter((country) => {
             return country.toLowerCase().startsWith(event.query.toLowerCase());
           });
+
+
         }
       }, 250);
     }

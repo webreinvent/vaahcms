@@ -38,6 +38,7 @@ export const useSetupStore = defineStore({
             count_installed_dependencies: 0,
             count_installed_progress: 0,
             is_account_created: false,
+            btn_is_account_creating: false,
             account:{
 
                 email: null,
@@ -372,6 +373,39 @@ export const useSetupStore = defineStore({
         //---------------------------------------------------------------------
 
 
+        //---------------------------------------------------------------------
+        createAccount: function () {
+            this.config.btn_is_account_creating = true;
+            let params = {
+                params: this.config.account,
+                method: 'post',
+            };
+            vaah().ajax(
+                this.ajax_url+'/store/admin',
+                this.createAccountAfter,
+                params
+            );
+        },
+
+        //---------------------------------------------------------------------
+        createAccountAfter: function (data, res) {
+            this.config.btn_is_account_creating = false;
+            if(data)
+            {
+                this.config.is_account_created = true;
+            }
+        },
+        //---------------------------------------------------------------------
+        validateAccountCreation: function (){
+            if(!this.config.is_account_created)
+            {
+                this.$vaah.toastErrors(['Create the Super Administrator Account'])
+            } else
+            {
+                this.resetConfig();
+                this.$router.push({name: 'sign.in'})
+            }
+        },
         //---------------------------------------------------------------------
         routeAction(name)
         {
