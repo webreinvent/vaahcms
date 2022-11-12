@@ -73,7 +73,7 @@ onMounted(async () => {
         <div class="p-input">
           <InputText v-model="store.config.env.app_name"
                      placeholder="App/Website Name"
-                     class="p-inputtext-sm" id="app-url"/>
+                     class="p-inputtext-sm" id="app-name"/>
 
         </div>
       </div>
@@ -143,8 +143,10 @@ onMounted(async () => {
       <div class="col-12 md:col-4">
         <h5 class="text-left p-1 title is-6">Mail Provider</h5>
         <div class="p-inputgroup">
-          <Dropdown v-model="selectedCity1" :options="cities"
-                    optionLabel="name" optionValue="code"
+          <Dropdown v-model="store.config.env.mail_provider"
+                    :options="store.assets.mail_sample_settings"
+                    @change="store.setMailConfigurations()"
+                    optionLabel="name" optionValue="slug"
                     placeholder="Select Mail Provider"
                     class="p-inputtext-sm"/>
         </div>
@@ -153,14 +155,16 @@ onMounted(async () => {
       <div class="col-12 md:col-4">
         <h5 class="text-left p-1 title is-6">Mail Driver</h5>
         <div class="p-inputgroup">
-          <InputText placeholder="Mail Driver" class="p-inputtext-sm"/>
+          <InputText v-model="store.config.env.mail_driver"
+                     placeholder="Mail Driver" class="p-inputtext-sm"/>
         </div>
       </div>
 
       <div class="col-12 md:col-4">
         <h5 class="text-left p-1 title is-6">Mail Host</h5>
         <div class="p-inputgroup">
-          <InputText placeholder="Mail Host" class="p-inputtext-sm"/>
+          <InputText v-model="store.config.env.mail_host"
+                     placeholder="Mail Host" class="p-inputtext-sm"/>
         </div>
       </div>
     </div>
@@ -169,21 +173,25 @@ onMounted(async () => {
       <div class="col-12 md:col-4">
         <h5 class="text-left p-1 title is-6">Mail Port</h5>
         <div class="p-inputgroup">
-          <Dropdown v-model="selectedCity1" :options="cities" optionLabel="name" optionValue="code" placeholder="Mail Port" class="p-inputtext-sm"/>
+            <InputText v-model="store.config.env.mail_port"
+                       placeholder="Mail Port" class="p-inputtext-sm"/>
         </div>
       </div>
 
       <div class="col-12 md:col-4">
         <h5 class="text-left p-1 title is-6">Mail Username</h5>
         <div class="p-inputgroup">
-          <InputText placeholder="Mail Username" class="p-inputtext-sm"/>
+          <InputText v-model="store.config.env.mail_username"
+                     placeholder="Mail Username" class="p-inputtext-sm"/>
         </div>
       </div>
 
       <div class="col-12 md:col-4">
         <h5 class="text-left p-1 title is-6">Mail Password</h5>
         <div class="p-inputgroup">
-          <Password :feedback="false" toggleMask input-class="w-full p-inputtext-sm" placeholder="Mail Password"/>
+          <Password v-model="store.config.env.mail_password"
+                    :feedback="false" toggleMask
+                    input-class="w-full p-inputtext-sm" placeholder="Mail Password"/>
         </div>
       </div>
     </div>
@@ -192,26 +200,59 @@ onMounted(async () => {
       <div class="col-12 md:col-4">
         <h5 class="text-left p-1 title is-6">Mail Encryption</h5>
         <div class="p-inputgroup">
-          <Dropdown v-model="selectedCity1" :options="cities" optionLabel="name" optionValue="code" placeholder="Select Mail Encryption" class="p-inputtext-sm"/>
+          <Dropdown v-model="store.config.env.mail_encryption"
+                    :options="store.assets.mail_encryption_types"
+                    optionLabel="name" optionValue="slug"
+                    placeholder="Select Mail Encryption" class="p-inputtext-sm"/>
         </div>
       </div>
 
       <div class="col-12 md:col-4">
         <h5 class="text-left p-1 title is-6">From Name</h5>
         <div class="p-inputgroup">
-          <InputText placeholder="From Name" class="p-inputtext-sm"/>
+          <InputText v-model="store.config.env.mail_from_name"
+                     placeholder="From Name" class="p-inputtext-sm"/>
         </div>
       </div>
 
       <div class="col-12 md:col-4">
         <h5 class="text-left p-1 title is-6">From Email</h5>
         <div class="p-inputgroup">
-          <InputText placeholder="From Email" class="p-inputtext-sm"/>
+          <InputText v-model="store.config.env.mail_from_address"
+                     placeholder="From Email" class="p-inputtext-sm"/>
         </div>
       </div>
     </div>
 
-    <Button label="Test Mail Configuration" icon="pi pi-envelope" class="p-button-sm my-4 is-small"/>
+    <Button v-if="store.config.env.mail_is_valid"
+            @click="$event => $refs.op.toggle($event)"
+            label="Test Mail Configuration"
+            icon="pi pi-check"
+            class="p-button-sm my-4 is-small"/>
+
+    <Button v-else
+            @click="$event => $refs.op.toggle($event)"
+            label="Test Mail Configuration"
+            icon="pi pi-envelope"
+            class="p-button-sm my-4 is-small"/>
+
+
+      <OverlayPanel ref="op" appendTo="body"
+                    :showCloseIcon="true" id="overlay_panel"
+                    style="width: 450px" :breakpoints="{'960px': '75vw'}">
+          <div class="col-12">
+              <h5 class="text-left p-1 title is-6">Mail Username</h5>
+              <div class="p-inputgroup">
+                  <InputText type="email" v-model="store.config.env.test_email_to"
+                             placeholder="Your email" class="p-inputtext-sm"/>
+
+              </div>
+              <Button :loading="store.is_btn_loading_mail_config"
+                      @click="store.testMailConfiguration"
+                      label="Send Email"
+                      class="p-button-sm my-4 is-small"/>
+          </div>
+      </OverlayPanel>
 
     <div class="grid p-fluid">
       <div class="col-12">
