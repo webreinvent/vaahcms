@@ -10,6 +10,7 @@ const root = useRootStore();
 
 onMounted(async () => {
     await store.getAssets();
+    store.getDependencies();
 });
 
 </script>
@@ -22,23 +23,26 @@ onMounted(async () => {
                 <Card>
                     <template #title>
                         <div class="flex align-items-center justify-content-between">
-                            <h5 class="font-semibold">Cms</h5>
+                            <h5 class="font-semibold">{{item.name}}</h5>
                             <i class="pi pi-download bg-gray-200 p-2 border-round-3xl" style="font-size: 12px"></i>
                         </div>
                     </template>
                     <template #content>
                         <div class="mb-3">
-                            <Tag value="New" class="mr-2 bg-gray-200 text-black-alpha-80"></Tag>
-                            <Tag value="New" class="mr-2 bg-gray-200 text-black-alpha-80"></Tag>
-                            <Tag value="New" class="mr-2 bg-gray-200 text-black-alpha-80"></Tag>
+                            <Tag :value="item.type" class="mr-2 bg-gray-200 text-black-alpha-80"></Tag>
+                            <Tag :value="item.slug" class="mr-2 bg-gray-200 text-black-alpha-80"></Tag>
+                            <Tag :value="item.version" class="mr-2 bg-gray-200 text-black-alpha-80"></Tag>
                         </div>
                         <p class="text-xs">
-                            Cms module to manage your content
+                            {{item.title}}
                         </p>
                         <p class="text-xs mb-3">
-                            Developed by: <a >Vaah</a>
+                            Developed by:
+                            <a target="_blank" :href="item.author_website">
+                                {{item.author_name}}
+                            </a>
                         </p>
-                        <ProgressBar :value="value" class="mb-3" mode="indeterminate"/>
+                        <ProgressBar :value="0" class="mb-3" />
                         <div class="field-checkbox">
                             <Checkbox inputId="binary" v-model="checked" :binary="true" class="is-small" />
                             <label for="binary" class="text-xs">Import Sample data</label>
@@ -51,7 +55,7 @@ onMounted(async () => {
                 </Card>
             </div>
             <div class="col-12">
-                <ProgressBar :value="value" class="mt-4 mb-5" mode="indeterminate"/>
+                <ProgressBar :value="0" class="mt-4 mb-5" />
                 <div class="my-3">
                     <Button icon="pi pi-download" label="Download & install Dependencies" class="p-button-sm mr-2 is-small"/>
                     <Button label="Skip" class="btn-dark p-button-sm is-small"/>
