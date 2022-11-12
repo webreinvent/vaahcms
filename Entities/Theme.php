@@ -123,7 +123,7 @@ class Theme extends Model {
             ->withTrashed()
             ->first();
 
-        $response['status'] = 'success';
+        $response['success'] = true;
         $response['data'] = $item;
 
         return $response;
@@ -138,7 +138,7 @@ class Theme extends Model {
 
         if(is_null($settings) || !is_array($settings) || count($settings) < 1)
         {
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'][] = 'Fatal with '.$path.'\Config\config.php';
             return $response;
         }
@@ -158,7 +158,7 @@ class Theme extends Model {
         if ( $validator->fails() ) {
 
             $errors             = errorsToArray($validator->errors());
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'] = $errors;
             return response()->json($response);
         }
@@ -233,7 +233,7 @@ class Theme extends Model {
 
         if(count($list) < 1)
         {
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'][] = 'No theme installed/downloaded';
             return $response;
         }
@@ -363,7 +363,7 @@ class Theme extends Model {
     public static function validateDependencies($dependencies)
     {
 
-        $response['status'] = 'success';
+        $response['success'] = true;
 
 
         foreach ($dependencies as $key => $dependency_list)
@@ -380,13 +380,13 @@ class Theme extends Model {
 
                             if(!$module)
                             {
-                                $response['status'] = 'failed';
+                                $response['success'] = false;
                                 $response['errors'][] = "Please install and activate '".$dependency_slug."' module.";
                             }
 
                             if($module && $module->is_active != 1)
                             {
-                                $response['status'] = 'failed';
+                                $response['success'] = false;
                                 $response['errors'][] = $dependency_slug.' module is not active';
                             }
                         }
@@ -405,13 +405,13 @@ class Theme extends Model {
 
                             if(!$theme)
                             {
-                                $response['status'] = 'failed';
+                                $response['success'] = false;
                                 $response['errors'][] = "Please install and activate '".$dependency_slug."' theme.";
                             }
 
                             if($theme && $theme->is_active != 1)
                             {
-                                $response['status'] = 'failed';
+                                $response['success'] = false;
                                 $response['errors'][] = $dependency_slug.' theme is not active';
                             }
                         }
@@ -442,7 +442,7 @@ class Theme extends Model {
          */
         $response = vh_theme_action($item->name, 'SetupController@dependencies');
 
-        if($response['status'] == 'failed')
+        if(isset($response['success']) && !$response['success'])
         {
             return $response;
         }
@@ -453,7 +453,7 @@ class Theme extends Model {
         $response = static::validateDependencies($response['data']);
 
 
-        if(isset($response['status']) && $response['status'] == 'failed')
+        if(isset($response['success']) && !$response['success'])
         {
             return $response;
         }
@@ -503,7 +503,7 @@ class Theme extends Model {
 
         $item->save();
 
-        $response['status'] = 'success';
+        $response['success'] = true;
         $response['data'][] = '';
         $response['messages'][] = 'Theme is activated';
 
@@ -520,7 +520,7 @@ class Theme extends Model {
         $item = static::slug($slug)->first();
         $item->is_active = null;
         $item->save();
-        $response['status'] = 'success';
+        $response['success'] = true;
         $response['data'][] = '';
         $response['messages'][] = trans('vaahcms-general.action_successful');
         if(env('APP_DEBUG'))
@@ -539,7 +539,7 @@ class Theme extends Model {
         $item = static::slug($slug)->first();
         $item->is_default = 1;
         $item->save();
-        $response['status'] = 'success';
+        $response['success'] = true;
         $response['data'][] = '';
         $response['messages'][] = trans('vaahcms-general.action_successful');
         if(env('APP_DEBUG'))
@@ -601,7 +601,7 @@ class Theme extends Model {
             //Delete theme entry
             static::where('slug', $item->slug)->forceDelete();
 
-            $response['status'] = 'success';
+            $response['success'] = true;
             $response['data'][] = '';
             $response['messages'][] = trans('vaahcms-general.action_successful');
             if(env('APP_DEBUG'))
@@ -612,7 +612,7 @@ class Theme extends Model {
 
         }catch(\Exception $e)
         {
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'][] = $e->getMessage();
 
         }
@@ -632,7 +632,7 @@ class Theme extends Model {
 
             if(!isset($api_response) || empty($api_response))
             {
-                $response['status'] = 'failed';
+                $response['success'] = false;
                 $response['data']['url'] = $api;
                 $response['errors'][] = 'API Response Error.';
                 return $response;
@@ -643,7 +643,7 @@ class Theme extends Model {
 
             if(!isset($api_response) || !isset($api_response['status']) || $api_response['status'] != 'success')
             {
-                $response['status'] = 'failed';
+                $response['success'] = false;
                 $response['data']['url'] = $api;
                 $response['data']['data'] = $api_response;
                 $response['errors'][] = 'API Response Error.';
@@ -651,12 +651,12 @@ class Theme extends Model {
 
                 return $response;
 
-            } else if($api_response['status'] == 'success')
+            } else if(isset($api_response['success']) && $api_response['success'])
             {
                 return $api_response;
             } else
             {
-                $response['status'] = 'failed';
+                $response['success'] = false;
                 $response['data']['url'] = $api;
                 $response['data']['data'] = $api_response;
                 $response['errors'][] = 'Unknown Error.';
@@ -665,7 +665,7 @@ class Theme extends Model {
 
         }catch(\Exception $e)
         {
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'][] = $e->getMessage();
             return $response;
         }
@@ -686,7 +686,7 @@ class Theme extends Model {
 
         if(is_dir($package_path))
         {
-            $response['status'] = 'success';
+            $response['success'] = true;
             $response['data'] = [];
             $response['messages'][] = $name." theme already exist.";
             return $response;
@@ -710,14 +710,14 @@ class Theme extends Model {
 
             vh_delete_folder($zip_file);
 
-            $response['status'] = 'success';
+            $response['success'] = true;
             $response['data'] = [];
             $response['messages'][] = $name." theme is installed.";
             return $response;
 
         }catch(\Exception $e)
         {
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'][] = $e->getMessage();
             return $response;
         }
@@ -767,14 +767,14 @@ class Theme extends Model {
             $item->is_update_available = null;
             $item->save();
 
-            $response['status'] = 'success';
+            $response['success'] = true;
             $response['data'] = [];
             $response['messages'][] = $name." theme is updated.";
             return $response;
 
         }catch(\Exception $e)
         {
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'][] = $e->getMessage();
             return $response;
         }
@@ -794,11 +794,11 @@ class Theme extends Model {
 
             \Artisan::call($command, $params);
 
-            $response['status'] = 'success';
+            $response['success'] = true;
             $response['messages'][] = 'Sample Data Successfully Imported';
         }catch(\Exception $e)
         {
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'][] = $e->getMessage();
         }
 
@@ -826,7 +826,7 @@ class Theme extends Model {
             }
         }
 
-        $response['status'] = 'success';
+        $response['success'] = true;
         $response['data'][] = '';
         if($updates > 0)
         {
@@ -848,14 +848,14 @@ class Theme extends Model {
 
         if(!$request->has('inputs'))
         {
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'][] = 'Select IDs';
             return $response;
         }
 
         if(!$request->has('data'))
         {
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'][] = 'Select Status';
             return $response;
         }
@@ -872,7 +872,7 @@ class Theme extends Model {
             $item->save();
         }
 
-        $response['status'] = 'success';
+        $response['success'] = true;
         $response['data'] = [];
         $response['messages'][] = trans('vaahcms-general.action_successful');
 

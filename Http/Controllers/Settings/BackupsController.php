@@ -27,13 +27,13 @@ class BackupsController extends Controller
 
         if(!\Auth::user()->hasPermission('has-access-of-setting-section'))
         {
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'][] = trans("vaahcms::messages.permission_denied");
 
             return response()->json($response);
         }
 
-        $response['status'] = 'success';
+        $response['success'] = true;
         $response['data']['roles'] = Role::getActiveRoles();
 
         return response()->json($response);
@@ -44,7 +44,7 @@ class BackupsController extends Controller
 
         if(!\Auth::user()->hasPermission('has-access-of-setting-section'))
         {
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'][] = trans("vaahcms::messages.permission_denied");
 
             return response()->json($response);

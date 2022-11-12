@@ -437,7 +437,7 @@ class User extends Authenticatable
         $user = User::where('email', $request->email)->first();
         if($user)
         {
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'][] = trans('vaahcms-user.email_already_registered');
             return $response;
         }
@@ -451,7 +451,7 @@ class User extends Authenticatable
 
             if($user)
             {
-                $response['status'] = 'failed';
+                $response['success'] = false;
                 $response['errors'][] = trans('vaahcms-user.phone_already_registered');
                 return $response;
             }
@@ -460,7 +460,7 @@ class User extends Authenticatable
         //if status is registered then user_id is required
         if($request->has('status') && $request->status == 'registered' && !$request->has('user_id'))
         {
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'][] = trans('vaahcms-user.registration_status_is_registered');
             return $response;
         }
@@ -566,7 +566,7 @@ class User extends Authenticatable
 
         if ($validator->fails())
         {
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'] = errorsToArray($validator->errors());
             return $response;
         }
@@ -582,7 +582,7 @@ class User extends Authenticatable
         if ($validator->fails())
         {
             $errors = errorsToArray($validator->errors());
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'] = $errors;
             return $response;
         }
@@ -592,7 +592,7 @@ class User extends Authenticatable
         //check user is active
         if(!$user)
         {
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'][] = trans('vaahcms-user.no_user_exist');
             return $response;
         }
@@ -600,7 +600,7 @@ class User extends Authenticatable
         //check user is active
         if($user->is_active != 1)
         {
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'][] = trans('vaahcms::messages.inactive_account');
             return $response;
         }
@@ -631,7 +631,7 @@ class User extends Authenticatable
         if ($validator->fails())
         {
             $errors = errorsToArray($validator->errors());
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'] = $errors;
             return $response;
         }
@@ -645,7 +645,7 @@ class User extends Authenticatable
 
         if(!$user)
         {
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'][] = trans('vaahcms-user.no_user_exist');
             return $response;
         }
@@ -653,7 +653,7 @@ class User extends Authenticatable
         //check user is active
         if($user->is_active != 1)
         {
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'][] = trans('vaahcms::messages.inactive_account');
             return $response;
         }
@@ -667,7 +667,7 @@ class User extends Authenticatable
 
         $user = self::beforeUserLoginValidation($request);
 
-        if(isset($user['status']) && $user['status'] == 'failed')
+        if(isset($user['success']) && !$user['success'])
         {
             return $user;
         }
@@ -675,7 +675,7 @@ class User extends Authenticatable
         if(isset($permission_slug) && !$user->hasPermission($permission_slug))
         {
 
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'][] = trans("vaahcms::messages.permission_denied");
 
             return $response;
@@ -699,7 +699,7 @@ class User extends Authenticatable
             $user->save();
 
 
-            $response['status'] = 'success';
+            $response['success'] = true;
         }elseif(Auth::attempt(['username' => $inputs['email'],
             'password' => trim($request->get('password'))
         ], $remember)){
@@ -707,9 +707,9 @@ class User extends Authenticatable
             $user->last_login_at = Carbon::now();
             $user->save();
 
-            $response['status'] = 'success';
+            $response['success'] = true;
         } else {
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'][] = trans('vaahcms::messages.invalid_credentials');
         }
 
@@ -719,14 +719,14 @@ class User extends Authenticatable
     public static function sendLoginOtp($request, $permission_slug=null): array
     {
         $user = self::beforeUserActionValidation($request);
-        if(isset($user['status']) && $user['status'] == 'failed')
+        if(isset($user['success']) && !$user['success'])
         {
             return $user;
         }
 
         if(isset($permission_slug) && !$user->hasPermission($permission_slug))
         {
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'][] = trans("vaahcms::messages.permission_denied");
             return $response;
         }
@@ -749,12 +749,12 @@ class User extends Authenticatable
 
         $response = Notification::dispatch($notification, $user, $inputs);
 
-        if(isset($response['status']) && $response['status'] == 'failed')
+        if(isset($response['success']) && !$response['success'])
         {
             return $response;
         }
 
-        $response['status'] = 'success';
+        $response['success'] = true;
         $response['messages'] = [
             trans('vaahcms-login.otp_sent')
         ];
@@ -767,7 +767,7 @@ class User extends Authenticatable
 
         $user = self::beforeUserActionValidation($request);
 
-        if(isset($user['status']) && $user['status'] == 'failed')
+        if(isset($user['success']) && !$user['success'])
         {
             return $user;
         }
@@ -775,7 +775,7 @@ class User extends Authenticatable
         if(isset($permission_slug) && !$user->hasPermission($permission_slug))
         {
 
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'][] = trans("vaahcms::messages.permission_denied");
 
             return $response;
@@ -789,7 +789,7 @@ class User extends Authenticatable
         if ( $validator->fails() ) {
 
             $errors             = errorsToArray($validator->errors());
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'] = $errors;
             return $response;
         }
@@ -800,7 +800,7 @@ class User extends Authenticatable
             || empty($user->login_otp)
         )
         {
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'][] = 'Invalid OTP';
             return $response;
         }
@@ -822,11 +822,11 @@ class User extends Authenticatable
             $user->last_login_ip = request()->ip();
             $user->save();
 
-            $response['status'] = 'success';
+            $response['success'] = true;
             $response['data'] = [];
 
         } else {
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'][] = trans('vaahcms::messages.invalid_credentials');
         }
         return $response;
@@ -837,7 +837,7 @@ class User extends Authenticatable
     {
 
         $user = self::beforeUserActionValidation($request);
-        if(isset($user['status']) && $user['status'] == 'failed')
+        if(isset($user['success']) && !$user['success'])
         {
             return $user;
         }
@@ -845,7 +845,7 @@ class User extends Authenticatable
         if(isset($permission_slug) && !$user->hasPermission($permission_slug))
         {
 
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'][] = trans("vaahcms::messages.permission_denied");
 
             return $response;
@@ -871,7 +871,7 @@ class User extends Authenticatable
 
         $response = Notification::send($notification,$user,$request->all());
 
-        if(isset($response['status']) && $response['status'] == 'failed')
+        if(isset($response['success']) && !$response['success'])
         {
             return $response;
         }
@@ -896,7 +896,7 @@ class User extends Authenticatable
         if ( $validator->fails() ) {
 
             $errors             = errorsToArray($validator->errors());
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'] = $errors;
             return $response;
         }
@@ -905,7 +905,7 @@ class User extends Authenticatable
 
         if(!$user)
         {
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'][] = trans('vaahcms-login.incorrect_reset_password_code');
             return $response;
         }
@@ -914,7 +914,7 @@ class User extends Authenticatable
         $user->reset_password_code = null;
         $user->save();
 
-        $response['status'] = 'success';
+        $response['success'] = true;
         $response['data'][] = '';
         $response['messages'][] = trans('vaahcms-login.password_has_been_reset');
 
@@ -949,7 +949,7 @@ class User extends Authenticatable
 
             if($details)
             {
-                $response['status'] = 'success';
+                $response['success'] = true;
                 if(env('APP_DEBUG'))
                 {
                     $response['data']['permission'] = 'Permission slug: '.$permission_slug;
@@ -971,7 +971,7 @@ class User extends Authenticatable
         {
             if($details)
             {
-                $response['status'] = 'failed';
+                $response['success'] = false;
                 $response['errors'][] = 'No Permission exist with slug: ' . $permission_slug;
 
                 if (env('APP_DEBUG')) {
@@ -988,7 +988,7 @@ class User extends Authenticatable
         if ($permission->is_active != 1) {
             if($details)
             {
-                $response['status'] = 'failed';
+                $response['success'] = false;
                 $response['errors'][] = $permission_slug.' is inactive';
                 if(env('APP_DEBUG'))
                 {
@@ -1014,7 +1014,7 @@ class User extends Authenticatable
             {
                 if($details)
                 {
-                    $response['status'] = 'success';
+                    $response['success'] = true;
                     $response['data'] = [];
                     if(env('APP_DEBUG'))
                     {
@@ -1032,7 +1032,7 @@ class User extends Authenticatable
 
         if($details)
         {
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'][] = trans("vaahcms::messages.permission_denied");
             if(env('APP_DEBUG'))
             {
@@ -1099,7 +1099,7 @@ class User extends Authenticatable
 
         $validate = self::validation($inputs);
 
-        if(isset($validate['status']) && $validate['status'] == 'failed')
+        if(isset($validate['success']) && !$validate['success'])
         {
             return $validate;
         }
@@ -1112,7 +1112,7 @@ class User extends Authenticatable
         if ( $validator->fails() ) {
 
             $errors             = errorsToArray($validator->errors());
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'] = $errors;
             return $response;
         }
@@ -1122,7 +1122,7 @@ class User extends Authenticatable
 
         if($user)
         {
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'][] = trans('vaahcms-user.email_already_registered');
             return $response;
         }
@@ -1132,7 +1132,7 @@ class User extends Authenticatable
 
         if($user)
         {
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'][] = trans('vaahcms-user.username_already_registered');
             return $response;
         }
@@ -1155,7 +1155,7 @@ class User extends Authenticatable
 
         Role::syncRolesWithUsers();
 
-        $response['status'] = 'success';
+        $response['success'] = true;
         $response['data']['item'] = $reg;
         $response['messages'][] = trans('vaahcms-general.saved_successfully');
         return $response;
@@ -1236,7 +1236,7 @@ class User extends Authenticatable
 
         $countRole = Role::all()->count();
 
-        $response['status'] = 'success';
+        $response['success'] = true;
         $response['data']['list'] = $list;
         $response['data']['totalRole'] = $countRole;
 
@@ -1261,7 +1261,7 @@ class User extends Authenticatable
 
         $item = $item->first();
 
-        $response['status'] = 'success';
+        $response['success'] = true;
         $response['data'] = $item;
 
         return $response;
@@ -1303,7 +1303,7 @@ class User extends Authenticatable
         }
 
         $response['data']['list'] = $list;
-        $response['status'] = 'success';
+        $response['success'] = true;
 
         return $response;
 
@@ -1317,7 +1317,7 @@ class User extends Authenticatable
 
         $validate = self::validation($inputs);
 
-        if(isset($validate['status']) && $validate['status'] == 'failed')
+        if(isset($validate['success']) && !$validate['success'])
         {
             return $validate;
         }
@@ -1330,7 +1330,7 @@ class User extends Authenticatable
             if ( $validator->fails() ) {
 
                 $errors             = errorsToArray($validator->errors());
-                $response['status'] = 'failed';
+                $response['success'] = false;
                 $response['errors'] = $errors;
                 return $response;
             }
@@ -1353,7 +1353,7 @@ class User extends Authenticatable
 
             if($user)
             {
-                $response['status'] = 'failed';
+                $response['success'] = false;
                 $response['errors'][] = trans('vaahcms-user.email_already_registered');
                 return $response;
             }
@@ -1363,7 +1363,7 @@ class User extends Authenticatable
 
             if($user)
             {
-                $response['status'] = 'failed';
+                $response['success'] = false;
                 $response['errors'][] = trans('vaahcms-user.username_already_registered');
                 return $response;
             }
@@ -1372,7 +1372,7 @@ class User extends Authenticatable
         } else
         {
             $validation = self::userValidation($request);
-            if(isset($validation['status']) && $validation['status'] == 'failed')
+            if(isset($validation['success']) && !$validation['success'])
             {
                 return $validation;
             } else if(isset($validation['status'])
@@ -1404,7 +1404,7 @@ class User extends Authenticatable
         }
 
 
-        $response['status'] = 'success';
+        $response['success'] = true;
         $response['messages'][] = 'Saved';
         $response['data'] = $item;
 
@@ -1418,14 +1418,14 @@ class User extends Authenticatable
 
         if(!$request->has('inputs'))
         {
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'][] = 'Select IDs';
             return $response;
         }
 
         if(!$request->has('data'))
         {
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'][] = 'Select Status';
             return $response;
         }
@@ -1465,7 +1465,7 @@ class User extends Authenticatable
             $reg->save();
         }
 
-        $response['status'] = 'success';
+        $response['success'] = true;
         $response['data'] = [];
         $response['messages'][] = trans('vaahcms-general.action_successful');
 
@@ -1479,7 +1479,7 @@ class User extends Authenticatable
 
         if(!$request->has('inputs'))
         {
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'][] = 'Select IDs';
             return $response;
         }
@@ -1506,7 +1506,7 @@ class User extends Authenticatable
             }
         }
 
-        $response['status'] = 'success';
+        $response['success'] = true;
         $response['data'] = [];
         $response['messages'][] = trans('vaahcms-general.action_successful');
 
@@ -1520,14 +1520,14 @@ class User extends Authenticatable
 
         if(!$request->has('inputs'))
         {
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'][] = 'Select IDs';
             return $response;
         }
 
         if(!$request->has('data'))
         {
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'][] = 'Select Status';
             return $response;
         }
@@ -1544,7 +1544,7 @@ class User extends Authenticatable
             }
         }
 
-        $response['status'] = 'success';
+        $response['success'] = true;
         $response['data'] = [];
         $response['messages'][] = trans('vaahcms-general.action_successful');
 
@@ -1564,7 +1564,7 @@ class User extends Authenticatable
         if($inputs['inputs']['id'] == 1 && $role->slug == 'super-administrator'
             && $inputs['data']['is_active'] == 0)
         {
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'][] = trans('vaahcms-user.first_user_super_administrator');
             return $response;
         }
@@ -1600,7 +1600,7 @@ class User extends Authenticatable
 
         Role::recountRelations();
 
-        $response['status'] = 'success';
+        $response['success'] = true;
         $response['data'] = [];
 
         return $response;
@@ -1615,14 +1615,14 @@ class User extends Authenticatable
 
         if(!$request->has('inputs'))
         {
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'][] = 'Select IDs';
             return $response;
         }
 
         if(!$request->has('data'))
         {
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'][] = 'Select Status';
             return $response;
         }
@@ -1647,7 +1647,7 @@ class User extends Authenticatable
             }
         }
 
-        $response['status'] = 'success';
+        $response['success'] = true;
         $response['data'] = [];
         $response['messages'][] = trans('vaahcms-general.action_successful');
 
@@ -1680,7 +1680,7 @@ class User extends Authenticatable
         if ( $validator->fails() ) {
 
             $errors             = errorsToArray($validator->errors());
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'] = $errors;
             return $response;
         }
@@ -1705,14 +1705,14 @@ class User extends Authenticatable
         if ( $validator->fails() ) {
 
             $errors             = errorsToArray($validator->errors());
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'] = $errors;
             return response()->json($response);
         }
 
         if(!\Auth::check())
         {
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'][] = trans('vaahcms-user.logged_in_to_update_profile');
             return $response;
         }
@@ -1732,7 +1732,7 @@ class User extends Authenticatable
                 ->first();
             if($user_exist)
             {
-                $response['status'] = 'failed';
+                $response['success'] = false;
                 $response['errors'][] = trans('vaahcms-user.username_already_taken');
                 return $response;
             }
@@ -1746,7 +1746,7 @@ class User extends Authenticatable
 
             if($email_exist)
             {
-                $response['status'] = 'failed';
+                $response['success'] = false;
                 $response['errors'][] = trans('vaahcms-user.email_associate_with_other_user');
                 return $response;
             }
@@ -1762,7 +1762,7 @@ class User extends Authenticatable
         $user->save();
 
 
-        $response['status'] = 'success';
+        $response['success'] = true;
         $response['data'][] = '';
         $response['messages'][] = trans('vaahcms-general.action_successful');
         return $response;
@@ -1783,14 +1783,14 @@ class User extends Authenticatable
         if ( $validator->fails() ) {
 
             $errors             = errorsToArray($validator->errors());
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'] = $errors;
             return $response;
         }
 
         if($request->new_password != $request->confirm_password)
         {
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'][] = trans('vaahcms-user.confirm_password_not_match');
             return $response;
         }
@@ -1802,7 +1802,7 @@ class User extends Authenticatable
 
             if(!$check)
             {
-                $response['status'] = 'failed';
+                $response['success'] = false;
                 $response['errors'][] = trans('vaahcms-user.current_password_incorrect');
                 return $response;
             }
@@ -1811,7 +1811,7 @@ class User extends Authenticatable
             $user->password = $request->new_password;
             $user->save();
 
-            $response['status'] = 'success';
+            $response['success'] = true;
             $response['data'][] = '';
             $response['messages'][] = trans('vaahcms-general.action_successful');
 
@@ -1820,7 +1820,7 @@ class User extends Authenticatable
 
         }catch(\Exception $e)
         {
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'][] = $e->getMessage();
 
         }
@@ -1838,7 +1838,7 @@ class User extends Authenticatable
         if ( $validator->fails() ) {
 
             $errors             = errorsToArray($validator->errors());
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'] = $errors;
             return $response;
         }
@@ -1855,7 +1855,7 @@ class User extends Authenticatable
         $user->avatar_url = $request->url;
         $user->save();
 
-        $response['status'] = 'success';
+        $response['success'] = true;
         $response['messages'][] = 'Avatar updated.';
         $response['data']['avatar'] = $user->avatar;
         $response['data']['avatar_url'] = $user->avatar_url;
@@ -1878,7 +1878,7 @@ class User extends Authenticatable
         $user->avatar_url = null;
         $user->save();
 
-        $response['status'] = 'success';
+        $response['success'] = true;
         $response['messages'][] = 'Avatar removed.';
         $response['data']['avatar'] = $user->avatar;
         $response['data']['avatar_url'] = $user->avatar_url;
@@ -1951,7 +1951,7 @@ class User extends Authenticatable
 
         $has_security = true;
 
-        $response['status'] = 'failed';
+        $response['success'] = false;
         $response['data'] = null;
 
         if(!config('settings.global.mfa_status')
@@ -1995,7 +1995,7 @@ class User extends Authenticatable
 
         $this->notify(new MultiFactorCode());
 
-        $response['status'] = 'success';
+        $response['success'] = true;
 
         return $response;
 

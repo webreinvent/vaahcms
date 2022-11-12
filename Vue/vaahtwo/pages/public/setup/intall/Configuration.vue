@@ -239,7 +239,7 @@ onMounted(async () => {
             @click="$event => $refs.op.toggle($event)"
             label="Test Mail Configuration"
             icon="pi pi-check"
-            class="p-button-sm my-4 is-small"/>
+            class="p-button-success p-button-sm my-4 is-small"/>
 
     <Button v-else
             @click="$event => $refs.op.toggle($event)"

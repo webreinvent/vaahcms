@@ -28,7 +28,7 @@ class UsersController extends Controller
 
         if(!\Auth::user()->hasPermission('has-access-of-users-section'))
         {
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'][] = trans("vaahcms::messages.permission_denied");
 
             return response()->json($response);
@@ -48,7 +48,7 @@ class UsersController extends Controller
         $data['custom_fields'] = Setting::where('category','user_setting')
             ->where('label','custom_fields')->first();
 
-        $response['status'] = 'success';
+        $response['success'] = true;
         $response['data'] = $data;
 
         return response()->json($response);
@@ -59,7 +59,7 @@ class UsersController extends Controller
 
         if(!\Auth::user()->hasPermission('can-create-users'))
         {
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'][] = trans("vaahcms::messages.permission_denied");
 
             return response()->json($response);
@@ -75,7 +75,7 @@ class UsersController extends Controller
 
         if(!\Auth::user()->hasPermission('has-access-of-users-section'))
         {
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'][] = trans("vaahcms::messages.permission_denied");
 
             return response()->json($response);
@@ -91,7 +91,7 @@ class UsersController extends Controller
     {
         if(!\Auth::user()->hasPermission('can-read-users'))
         {
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'][] = trans("vaahcms::messages.permission_denied");
 
             return response()->json($response);
@@ -108,7 +108,7 @@ class UsersController extends Controller
 
         if(!\Auth::user()->hasPermission('can-read-users'))
         {
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'][] = trans("vaahcms::messages.permission_denied");
 
             return response()->json($response);
@@ -122,7 +122,7 @@ class UsersController extends Controller
     {
         if(!\Auth::user()->hasPermission('can-update-users'))
         {
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'][] = trans("vaahcms::messages.permission_denied");
 
             return response()->json($response);
@@ -142,7 +142,7 @@ class UsersController extends Controller
         if ( $validator->fails() ) {
 
             $errors             = errorsToArray($validator->errors());
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'] = $errors;
             return response()->json($response);
         }
@@ -160,7 +160,7 @@ class UsersController extends Controller
                 if(!\Auth::user()->hasPermission('can-manage-users') &&
                     !\Auth::user()->hasPermission('can-update-users'))
                 {
-                    $response['status'] = 'failed';
+                    $response['success'] = false;
                     $response['errors'][] = trans("vaahcms::messages.permission_denied");
 
                     return $response;
@@ -174,7 +174,7 @@ class UsersController extends Controller
 
                 if(!\Auth::user()->hasPermission('can-update-users'))
                 {
-                    $response['status'] = 'failed';
+                    $response['success'] = false;
                     $response['errors'][] = trans("vaahcms::messages.permission_denied");
 
                     return $response;
@@ -188,7 +188,7 @@ class UsersController extends Controller
 
                 if(!\Auth::user()->hasPermission('can-update-users'))
                 {
-                    $response['status'] = 'failed';
+                    $response['success'] = false;
                     $response['errors'][] = trans("vaahcms::messages.permission_denied");
 
                     return $response;
@@ -204,7 +204,7 @@ class UsersController extends Controller
                 if(!\Auth::user()->hasPermission('can-update-users') ||
                     !\Auth::user()->hasPermission('can-delete-users'))
                 {
-                    $response['status'] = 'failed';
+                    $response['success'] = false;
                     $response['errors'][] = trans("vaahcms::messages.permission_denied");
 
                     return $response;
@@ -219,7 +219,7 @@ class UsersController extends Controller
                 if(!\Auth::user()->hasPermission('can-manage-users') &&
                     !\Auth::user()->hasPermission('can-update-users'))
                 {
-                    $response['status'] = 'failed';
+                    $response['success'] = false;
                     $response['errors'][] = trans("vaahcms::messages.permission_denied");
 
                     return $response;
@@ -241,7 +241,7 @@ class UsersController extends Controller
 
         if(!\Auth::user()->hasPermission('can-update-users'))
         {
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'][] = trans("vaahcms::messages.permission_denied");
 
             return response()->json($response);
@@ -255,7 +255,7 @@ class UsersController extends Controller
         if ( $validator->fails() ) {
 
             $errors             = errorsToArray($validator->errors());
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'] = $errors;
             return response()->json($response);
         }
@@ -269,7 +269,7 @@ class UsersController extends Controller
 
         if(!\Auth::user()->hasPermission('can-update-users'))
         {
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'][] = trans("vaahcms::messages.permission_denied");
 
             return response()->json($response);
@@ -283,7 +283,7 @@ class UsersController extends Controller
         if ( $validator->fails() ) {
 
             $errors             = errorsToArray($validator->errors());
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'] = $errors;
             return response()->json($response);
         }
@@ -301,7 +301,7 @@ class UsersController extends Controller
         $data['mfa_methods'] = config('settings.global.mfa_methods');
         $data['mfa_status'] = config('settings.global.mfa_status');
 
-        $response['status'] = 'success';
+        $response['success'] = true;
         $response['data'] = $data;
         if(env('APP_DEBUG'))
         {
@@ -322,7 +322,7 @@ class UsersController extends Controller
     {
         $response = User::storePassword($request);
 
-        if($response['status'] == 'success')
+        if(isset($response['success']) && $response['success'])
         {
             \Auth::logout();
 

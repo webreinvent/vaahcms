@@ -45,7 +45,7 @@ class PermissionsController extends Controller
             return $response;
         }
 
-        $response['status'] = 'success';
+        $response['success'] = true;
         $response['data'] = $item;
         return response()->json($response);
     }
@@ -86,7 +86,7 @@ class PermissionsController extends Controller
         }
 
         $response['data']['roles'] = $list;
-        $response['status'] = 'success';
+        $response['success'] = true;
 
         return response()->json($response);
     }
@@ -130,7 +130,7 @@ class PermissionsController extends Controller
         }
 
         $response['data']['users'] = $list;
-        $response['status'] = 'success';
+        $response['success'] = true;
 
         return response()->json($response);
     }

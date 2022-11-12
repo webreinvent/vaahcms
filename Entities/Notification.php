@@ -185,7 +185,7 @@ class Notification extends Model {
         if ( $validator->fails() ) {
 
             $errors             = errorsToArray($validator->errors());
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'] = $errors;
             return response()->json($response);
         }
@@ -259,7 +259,7 @@ class Notification extends Model {
         }
 
 
-        $response['status'] = 'success';
+        $response['success'] = true;
         $response['messages'][] = 'Saved';
         $response['data']['item'] = $item;
 
@@ -288,7 +288,7 @@ class Notification extends Model {
         dispatch((new ProcessNotifications($notification, $user, $inputs))
             ->onQueue($priority));
 
-        $response['status'] = 'success';
+        $response['success'] = true;
         $response['data'] = [];
         $response['messages'][] = trans('vaahcms-general.action_successful');
 
@@ -307,7 +307,7 @@ class Notification extends Model {
         if ( $validator->fails() ) {
 
             $errors             = errorsToArray($validator->errors());
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'] = $errors;
             return $response;
         }
@@ -330,13 +330,13 @@ class Notification extends Model {
                 static::sendViaFrontend($notification, $user, $inputs);
             }
 
-            $response['status'] = 'success';
+            $response['success'] = true;
             $response['data'] = [];
             $response['messages'][] = trans('vaahcms-general.action_successful');
 
         }catch(\Exception $e)
         {
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'][] = $e->getMessage();
         }
 
@@ -427,7 +427,7 @@ class Notification extends Model {
         if ( $validator->fails() ) {
 
             $errors             = errorsToArray($validator->errors());
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'] = $errors;
             return $response;
         }

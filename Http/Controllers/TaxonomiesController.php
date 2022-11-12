@@ -25,7 +25,7 @@ class TaxonomiesController extends Controller
 
         if(!\Auth::user()->hasPermission('has-access-of-taxonomies-section'))
         {
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'][] = trans("vaahcms::messages.permission_denied");
 
             return response()->json($response);
@@ -61,7 +61,7 @@ class TaxonomiesController extends Controller
             ->whereNull('parent_id')->with(['children'])
             ->select('id', 'name', 'slug')->get();
 
-        $response['status'] = 'success';
+        $response['success'] = true;
         $response['data'] = $data;
 
         return response()->json($response);
@@ -74,7 +74,7 @@ class TaxonomiesController extends Controller
 
         if(!\Auth::user()->hasPermission('can-create-taxonomies'))
         {
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'][] = trans("vaahcms::messages.permission_denied");
 
             return response()->json($response);
@@ -89,7 +89,7 @@ class TaxonomiesController extends Controller
 
         if(!\Auth::user()->hasPermission('has-access-of-taxonomies-section'))
         {
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'][] = trans("vaahcms::messages.permission_denied");
 
             return response()->json($response);
@@ -103,7 +103,7 @@ class TaxonomiesController extends Controller
     {
         if(!\Auth::user()->hasPermission('can-read-taxonomies'))
         {
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'][] = trans("vaahcms::messages.permission_denied");
 
             return response()->json($response);
@@ -118,7 +118,7 @@ class TaxonomiesController extends Controller
     {
         if(!\Auth::user()->hasPermission('can-update-taxonomies'))
         {
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'][] = trans("vaahcms::messages.permission_denied");
 
             return response()->json($response);
@@ -138,14 +138,14 @@ class TaxonomiesController extends Controller
         if ( $validator->fails() ) {
 
             $errors             = errorsToArray($validator->errors());
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'] = $errors;
             return response()->json($response);
         }
 
         $response = [];
 
-        $response['status'] = 'success';
+        $response['success'] = true;
 
         $inputs = $request->all();
 
@@ -158,7 +158,7 @@ class TaxonomiesController extends Controller
                 if(!\Auth::user()->hasPermission('can-manage-taxonomies') &&
                     !\Auth::user()->hasPermission('can-update-taxonomies'))
                 {
-                    $response['status'] = 'failed';
+                    $response['success'] = false;
                     $response['errors'][] = trans("vaahcms::messages.permission_denied");
 
                     return $response;
@@ -172,7 +172,7 @@ class TaxonomiesController extends Controller
 
                 if(!\Auth::user()->hasPermission('can-update-taxonomies'))
                 {
-                    $response['status'] = 'failed';
+                    $response['success'] = false;
                     $response['errors'][] = trans("vaahcms::messages.permission_denied");
 
                     return $response;
@@ -186,7 +186,7 @@ class TaxonomiesController extends Controller
 
                 if(!\Auth::user()->hasPermission('can-update-taxonomies'))
                 {
-                    $response['status'] = 'failed';
+                    $response['success'] = false;
                     $response['errors'][] = trans("vaahcms::messages.permission_denied");
 
                     return $response;
@@ -202,7 +202,7 @@ class TaxonomiesController extends Controller
                 if(!\Auth::user()->hasPermission('can-update-taxonomies') ||
                     !\Auth::user()->hasPermission('can-delete-taxonomies'))
                 {
-                    $response['status'] = 'failed';
+                    $response['success'] = false;
                     $response['errors'][] = trans("vaahcms::messages.permission_denied");
 
                     return $response;
@@ -245,14 +245,14 @@ class TaxonomiesController extends Controller
 
         if(!\Auth::user()->hasPermission('can-manage-taxonomy-type'))
         {
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'][] = trans("vaahcms::messages.permission_denied");
 
             return $response;
         }
 
         if(!$request->has('name') || !$request->name){
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'][] = 'The name field is required.';
             return $response;
         }
@@ -262,7 +262,7 @@ class TaxonomiesController extends Controller
 
         if($item)
         {
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'][] = "This name is already exist.";
             return $response;
         }
@@ -273,7 +273,7 @@ class TaxonomiesController extends Controller
         $add->is_active = true;
         $add->save();
 
-        $response['status'] = 'success';
+        $response['success'] = true;
         $response['messages'][] = 'Successfully Added.';
         return $response;
     }
@@ -282,7 +282,7 @@ class TaxonomiesController extends Controller
     {
         if(!\Auth::user()->hasPermission('can-manage-taxonomy-type'))
         {
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'][] = trans("vaahcms::messages.permission_denied");
 
             return $response;
@@ -297,7 +297,7 @@ class TaxonomiesController extends Controller
 
         $item->forceDelete();
 
-        $response['status'] = 'success';
+        $response['success'] = true;
         $response['messages'][] = 'Successfully Deleted.';
         return $response;
     }
@@ -319,7 +319,7 @@ class TaxonomiesController extends Controller
 
         if(!\Auth::user()->hasPermission('can-manage-taxonomy-type'))
         {
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'][] = trans("vaahcms::messages.permission_denied");
 
             return $response;
@@ -368,7 +368,7 @@ class TaxonomiesController extends Controller
 
         if(!\Auth::user()->hasPermission('can-manage-taxonomy-type'))
         {
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'][] = trans("vaahcms::messages.permission_denied");
 
             return $response;

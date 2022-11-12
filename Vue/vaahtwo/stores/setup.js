@@ -17,6 +17,7 @@ export const useSetupStore = defineStore({
         is_btn_loading_db_connection: false,
         is_modal_test_mail_active: false,
         is_btn_loading_config: false,
+        btn_is_migration: false,
         status: null,
         gutter: 20,
         debug_option: [
@@ -331,6 +332,44 @@ export const useSetupStore = defineStore({
             }
 
         },
+
+        //---------------------------------------------------------------------
+        runMigrations: function () {
+            this.btn_is_migration = true;
+            this.config.is_migrated = false;
+            let params = {
+                method: 'post',
+            };
+
+            vaah().ajax(
+                this.ajax_url+'/run/migrations',
+                this.afterRunMigrations,
+                params
+            );
+        },
+        //---------------------------------------------------------------------
+        afterRunMigrations: function (data, res) {
+
+            this.btn_is_migration = false;
+            if(data)
+            {
+                this.config.is_migrated = true;
+            }
+
+        },
+
+        //---------------------------------------------------------------------
+        validateMigration: function () {
+            if(!this.config.is_migrated)
+            {
+                vaah().toastErrors(['Click on Migrate & Run Seeds button']);
+                return false;
+            } else
+            {
+                this.$router.push({name: 'setup.install.dependencies'})
+            }
+        },
+        //---------------------------------------------------------------------
 
 
         //---------------------------------------------------------------------

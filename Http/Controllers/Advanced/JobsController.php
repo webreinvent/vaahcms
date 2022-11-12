@@ -24,7 +24,7 @@ class JobsController extends Controller
 
         if(!\Auth::user()->hasPermission('has-access-of-advanced-section'))
         {
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'][] = trans("vaahcms::messages.permission_denied");
 
             return response()->json($response);
@@ -33,7 +33,7 @@ class JobsController extends Controller
         $data = [];
         $data['permission'] = [];
 
-        $response['status'] = 'success';
+        $response['success'] = true;
         $response['data'] = $data;
 
         return response()->json($response);
@@ -45,7 +45,7 @@ class JobsController extends Controller
 
         if(!\Auth::user()->hasPermission('has-access-of-advanced-section'))
         {
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'][] = trans("vaahcms::messages.permission_denied");
 
             return response()->json($response);
@@ -60,7 +60,7 @@ class JobsController extends Controller
 
         if(!\Auth::user()->hasPermission('has-access-of-advanced-section'))
         {
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'][] = trans("vaahcms::messages.permission_denied");
 
             return response()->json($response);
@@ -68,7 +68,7 @@ class JobsController extends Controller
 
         $response = [];
 
-        $response['status'] = 'success';
+        $response['success'] = true;
 
         switch ($action)
         {

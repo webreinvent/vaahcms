@@ -11,7 +11,7 @@ function vh_api_call($api_url, $params =null)
     if($res->getStatusCode() == 200)
     {
 
-        $response['status'] = 'success';
+        $response['success'] = true;
         $response['data'] = $res->getBody();
 
         return $response;
@@ -19,7 +19,7 @@ function vh_api_call($api_url, $params =null)
     } else
     {
 
-        $response['status'] = 'failed';
+        $response['success'] = false;
         $response['errors'][] = 'error';
         return $response;
 

@@ -197,7 +197,7 @@ class Migration extends Model {
 
         }catch(\Exception $e)
         {
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['messages'][] = $e->getMessage();
             return $response;
         }
