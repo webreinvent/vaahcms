@@ -13,6 +13,7 @@ export const useSetupStore = defineStore({
         ajax_url: ajax_url,
         json_url: json_url,
         is_btn_loading_db_connection: false,
+        is_btn_loading_config: false,
         status: null,
         gutter: 20,
         debug_option: [

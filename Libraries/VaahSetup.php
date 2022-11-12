@@ -504,7 +504,7 @@ class VaahSetup{
                 $duplicate_urls = implode( ', ', $duplicates);
 
                 $response['success'] = false;
-                $response['messages'][] = 'Duplicate entries for app_url(s) '.$duplicate_urls.' is/are found in vaahcms.json file.';
+                $response['errors'][] = 'Duplicate entries for app_url(s) '.$duplicate_urls.' is/are found in vaahcms.json file.';
                 if(env('APP_DEBUG'))
                 {
                     $response['hint'][] = 'APP URL already exist in vaahcms.json';

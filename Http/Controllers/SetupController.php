@@ -222,7 +222,7 @@ class SetupController extends Controller
         if(VaahSetup::isInstalled())
         {
             $response['success'] = false;
-            $response['messages'][] = 'Application is already installed.';
+            $response['errors'][] = 'Application is already installed.';
             return response()->json($response);
         }
 
@@ -256,7 +256,7 @@ class SetupController extends Controller
 
             $errors             = errorsToArray($validator->errors());
             $response['success'] = false;
-            $response['messages'] = $errors;
+            $response['errors'] = $errors;
             return response()->json($response);
         }
 
@@ -269,7 +269,7 @@ class SetupController extends Controller
         if(!file_exists($file_path))
         {
             $response['success'] = false;
-            $response['messages'] = [];
+            $response['errors'] = [];
             return response()->json($response);
         }
 

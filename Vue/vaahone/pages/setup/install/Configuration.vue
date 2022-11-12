@@ -387,7 +387,7 @@
                             <b-button type="is-primary"
                                       size="small"
                                       :loading="is_btn_loading_config"
-                                      @click="validateConfigurations()">
+                                      l">
                                 Save & Next
                             </b-button>
                         </div>
