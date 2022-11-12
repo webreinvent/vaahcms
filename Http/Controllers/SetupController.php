@@ -295,7 +295,7 @@ class SetupController extends Controller
         $validator = \Validator::make( $request->all(), $rules);
         if ( $validator->fails() ) {
             $errors             = errorsToArray($validator->errors());
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'] = $errors;
             return $response;
         }
@@ -324,7 +324,9 @@ class SetupController extends Controller
 
         $response = VaahSetup::verifyAppUrl($request);
 
-        if($response['status'] == 'failed')
+
+
+        if(!$response['success'])
         {
             return response()->json($response);
         }
@@ -341,7 +343,8 @@ class SetupController extends Controller
 
         //generate env file
         $response = VaahSetup::generateEnvFile($request);
-        if($response['status'] == 'failed')
+
+        if(!$response['success'])
         {
             return response()->json($response);
         }
@@ -350,7 +353,7 @@ class SetupController extends Controller
         if(!VaahSetup::isAppUrlExistInVaahCmsJson($request))
         {
             $response = VaahSetup::createVaahCmsJsonFile($request);
-            if ($response['status'] == 'failed') {
+            if (!$response['success']) {
                 return response()->json($response);
             }
         }
@@ -361,7 +364,7 @@ class SetupController extends Controller
         $data = [];
         $response = [];
 
-        $response['status'] = 'success';
+        $response['success'] = true;
         $response['messages'][] = 'Configuration Saved';
         $response['data'] = $data;
         if(env('APP_DEBUG'))

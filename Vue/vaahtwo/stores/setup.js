@@ -10,6 +10,7 @@ export const useSetupStore = defineStore({
     state: () => ({
         assets: null,
         assets_is_fetching: true,
+        base_url: base_url,
         ajax_url: ajax_url,
         json_url: json_url,
         is_btn_loading_mail_config: false,
@@ -243,7 +244,7 @@ export const useSetupStore = defineStore({
         afterTestDatabaseConnection(data, res)
         {
             this.is_btn_loading_db_connection = false;
-            if(data)
+            if(data && !res.data.errors)
             {
                 this.config.env.db_is_valid=true;
             }
@@ -301,8 +302,34 @@ export const useSetupStore = defineStore({
                 this.config.env.mail_encryption = null;
             }
         },
-        toggleTestMailModal(event) {
-            this.$refs.op.toggle(event);
+
+        //---------------------------------------------------------------------
+        validateConfigurations: function () {
+            this.is_btn_loading_config = true;
+            let params = {
+                params: this.config.env,
+                method: 'post',
+            };
+
+            vaah().ajax(
+                this.ajax_url+'/test/configurations',
+                this.afterValidateConfigurations,
+                params
+            );
+        },
+        //---------------------------------------------------------------------
+        afterValidateConfigurations: function (data, res) {
+
+            if(!data)
+            {
+                this.is_btn_loading_config = false
+            } else
+            {
+                this.config.active_step = 1;
+                location.assign(this.base_url+"#/setup/install/migrate");
+                window.location.reload();
+            }
+
         },
 
 

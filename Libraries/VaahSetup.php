@@ -51,13 +51,13 @@ class VaahSetup{
 
             VaahFile::createFile(base_path('/'), $file_name, $html);
 
-            $response['status'] = 'success';
+            $response['success'] = true;
             $response['data'] = [];
             return $response;
 
         }catch(\Exception $e)
         {
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'][] = $e->getMessage();
             return $response;
         }
@@ -172,12 +172,12 @@ class VaahSetup{
 
             VaahFile::createJsonFileFromArray($data, 'vaahcms.json');
 
-            $response['status'] = 'success';
+            $response['success'] = true;
             $response['data'] = [];
 
         }catch(\Exception $e)
         {
-            $response['status'] = 'failed';
+            $response['success'] = 'false';
             $response['errors'][] = $e->getMessage();
 
         }
