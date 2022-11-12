@@ -208,7 +208,7 @@ function vh_action($method, $params=null, $output_type=null){
             $response = vh_vaahcms_action($method, $params);
 
 
-            if(isset(isset($response['success']) && $response['success'])
+            if(isset($response['success']) && $response['success'])
             {
                 $params['string'] = $response['data'];
             }
