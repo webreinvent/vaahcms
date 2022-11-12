@@ -13,6 +13,7 @@ export const useSetupStore = defineStore({
         base_url: base_url,
         ajax_url: ajax_url,
         json_url: json_url,
+        filtered_country_codes: [],
         is_btn_loading_mail_config: false,
         is_btn_loading_db_connection: false,
         is_modal_test_mail_active: false,
@@ -48,6 +49,7 @@ export const useSetupStore = defineStore({
                 middle_name: null,
                 last_name: null,
                 country_calling_code: null,
+                country_calling_code_object: null,
                 phone: null,
 
             },
@@ -405,6 +407,29 @@ export const useSetupStore = defineStore({
                 this.resetConfig();
                 this.$router.push({name: 'sign.in'})
             }
+        },
+        //---------------------------------------------------------------------
+        searchCountryCode: function (event){
+
+            this.country_calling_code_object = null;
+            this.country_calling_code = null;
+
+           setTimeout(() => {
+                if (!event.query.trim().length) {
+                    this.filtered_country_codes = this.assets.country_calling_codes;
+                }
+                else {
+                    this.filtered_country_codes = this.assets.country_calling_codes.filter((country) => {
+                        return country.name.toLowerCase().startsWith(event.query.toLowerCase());
+                    });
+                }
+            }, 250);
+        },
+        //---------------------------------------------------------------------
+        onSelectCountryCode: function (event){
+
+            this.config.account.country_calling_code = event.value.slug;
+
         },
         //---------------------------------------------------------------------
         routeAction(name)

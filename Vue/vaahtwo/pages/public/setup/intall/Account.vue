@@ -11,6 +11,7 @@ const root = useRootStore();
 onMounted(async () => {
 
 });
+
 </script>
 
 <template>
@@ -91,9 +92,10 @@ onMounted(async () => {
             <div class="col-12 md:col-3">
                 <h5 class="text-left p-1 title is-6">Search Country</h5>
                 <AutoComplete
-                    v-model="store.config.account.country_calling_code"
-                    :suggestions="filteredSearchCountries"
-                    @complete="searchCountry($event)"
+                    v-model="store.config.account.country_calling_code_object"
+                    :suggestions="store.filtered_country_codes"
+                    @complete="store.searchCountryCode"
+                    @item-select="store.onSelectCountryCode"
                     placeholder="Enter Your Country"
                     optionLabel="name"
                     name="account-country_calling_code"
@@ -151,43 +153,6 @@ onMounted(async () => {
         </div>
     </div>
 </template>
-
-<script>
-import countriesData from "../../../../assets/data/country.json";
-import {FilterService,FilterMatchMode} from 'primevue/api';
-export default {
-  name: "Account",
-  data(){
-    return{
-        countries: null,
-        selectedCountry1: null,
-        filteredSearchCountries: null,
-    }
-      },
-  mounted() {
-    this.countries = countriesData.data.map((country) => country.name);
-  },
-  methods: {
-    goBack(){
-      this.$router.push("/ui/public/install/dependencies")
-    },
-    searchCountry(event) {
-      setTimeout(() => {
-        if (!event.query.trim().length) {
-          this.filteredSearchCountries = [...this.countries];
-        }
-        else {
-          this.filteredSearchCountries = this.countries.filter((country) => {
-            return country.toLowerCase().startsWith(event.query.toLowerCase());
-          });
-
-
-        }
-      }, 250);
-    }
-  }
-}
-</script>
 
 <style scoped>
 
