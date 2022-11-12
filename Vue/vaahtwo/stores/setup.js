@@ -12,7 +12,9 @@ export const useSetupStore = defineStore({
         assets_is_fetching: true,
         ajax_url: ajax_url,
         json_url: json_url,
+        is_btn_loading_mail_config: false,
         is_btn_loading_db_connection: false,
+        is_modal_test_mail_active: false,
         is_btn_loading_config: false,
         status: null,
         gutter: 20,
@@ -181,26 +183,6 @@ export const useSetupStore = defineStore({
             this.hideProgress();
         },
         //---------------------------------------------------------------------
-        testDatabaseConnection() {
-
-            this.is_btn_loading_db_connection = true;
-            this.config.env.db_is_valid=false;
-
-            this.showProgress();
-
-            let params = {
-                params: this.config.env,
-                method: 'post',
-            };
-
-            vaah().ajax(
-                this.ajax_url+'/test/database/connection',
-                this.afterTestDatabaseConnection,
-                params
-            );
-
-        },
-        //---------------------------------------------------------------------
         loadConfigurations: function () {
 
 
@@ -236,7 +218,26 @@ export const useSetupStore = defineStore({
 
             }
         },
+        //---------------------------------------------------------------------
+        testDatabaseConnection() {
 
+            this.is_btn_loading_db_connection = true;
+            this.config.env.db_is_valid=false;
+
+            this.showProgress();
+
+            let params = {
+                params: this.config.env,
+                method: 'post',
+            };
+
+            vaah().ajax(
+                this.ajax_url+'/test/database/connection',
+                this.afterTestDatabaseConnection,
+                params
+            );
+
+        },
 
         //---------------------------------------------------------------------
         afterTestDatabaseConnection(data, res)
@@ -246,6 +247,62 @@ export const useSetupStore = defineStore({
             {
                 this.config.env.db_is_valid=true;
             }
+        },
+        //---------------------------------------------------------------------
+        //---------------------------------------------------------------------
+        testMailConfiguration: function () {
+            this.is_btn_loading_mail_config = true;
+            this.config.env.mail_is_valid=false;
+            this.showProgress();
+
+            let params = {
+                params: this.config.env,
+                method: 'post',
+            };
+
+            vaah().ajax(
+                this.ajax_url+'/test/mail/configuration',
+                this.afterTestMailConfiguration,
+                params
+            );
+
+        },
+        //---------------------------------------------------------------------
+        afterTestMailConfiguration: function (data, res) {
+            this.is_btn_loading_mail_config = false;
+
+            if(data && !res.data.errors)
+            {
+                this.config.env.mail_is_valid=true;
+            }
+        },
+        //---------------------------------------------------------------------
+        setMailConfigurations: function () {
+
+            console.log(222,this.config.env.mail_provider);
+
+            if(this.config.env.mail_provider!='other')
+            {
+                let mail_config = vaah().findInArrayByKey(
+                    this.assets.mail_sample_settings, 'slug', this.config.env.mail_provider);
+
+                if(mail_config)
+                {
+                    for(let key in mail_config.settings)
+                    {
+                        this.config.env[key] = mail_config.settings[key];
+                    }
+                }
+            } else
+            {
+                this.config.env.mail_driver = null;
+                this.config.env.mail_host = null;
+                this.config.env.mail_port = null;
+                this.config.env.mail_encryption = null;
+            }
+        },
+        toggleTestMailModal(event) {
+            this.$refs.op.toggle(event);
         },
 
 
