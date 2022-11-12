@@ -132,9 +132,7 @@ class TaxonomyType extends Model {
         $inputs = $request->new_item;
 
         $validation = self::validation($inputs);
-        if( isset($validation['status'])
-            && $validation['status'] == 'failed'
-            )
+        if( isset($validation['success']) && !$validation['success'])
         {
             return $validation;
         }
@@ -146,7 +144,7 @@ class TaxonomyType extends Model {
 
         if($item)
         {
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'][] = "This name is already exist.";
             return $response;
         }
@@ -157,7 +155,7 @@ class TaxonomyType extends Model {
 
         if($item)
         {
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'][] = "This slug is already exist.";
             return $response;
         }
@@ -168,7 +166,7 @@ class TaxonomyType extends Model {
         $item->is_active = 1;
         $item->save();
 
-        $response['status'] = 'success';
+        $response['success'] = true;
         $response['data']['item'] = $item;
         $response['messages'][] = trans('vaahcms-general.saved_successfully');
         return $response;
@@ -208,7 +206,7 @@ class TaxonomyType extends Model {
 
         $data['list'] = $list->paginate(config('vaahcms.per_page'));
 
-        $response['status'] = 'success';
+        $response['success'] = true;
         $response['data'] = $data;
 
         return $response;
@@ -225,7 +223,7 @@ class TaxonomyType extends Model {
         ->first();
 
 
-        $response['status'] = 'success';
+        $response['success'] = true;
         $response['data'] = $item;
 
         return $response;
@@ -239,7 +237,7 @@ class TaxonomyType extends Model {
 
 
         $validation = self::validation($input);
-        if(isset($validation['status']) && $validation['status'] == 'failed')
+        if(isset($validation['success']) && !$validation['success'])
         {
             return $validation;
         }
@@ -250,7 +248,7 @@ class TaxonomyType extends Model {
 
         if($user)
         {
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'][] = "This name is already exist.";
             return $response;
         }
@@ -262,7 +260,7 @@ class TaxonomyType extends Model {
 
         if($user)
         {
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'][] = "This slug is already exist.";
             return $response;
         }
@@ -274,7 +272,7 @@ class TaxonomyType extends Model {
         $update->save();
 
 
-        $response['status'] = 'success';
+        $response['success'] = true;
         $response['data'] = [];
         $response['messages'][] = 'Data updated.';
 
@@ -287,14 +285,14 @@ class TaxonomyType extends Model {
 
         if(!$request->has('inputs'))
         {
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'][] = 'Select IDs';
             return $response;
         }
 
         if(!$request->has('data'))
         {
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'][] = 'Select Status';
             return $response;
         }
@@ -323,7 +321,7 @@ class TaxonomyType extends Model {
             $item->save();
         }
 
-        $response['status'] = 'success';
+        $response['success'] = true;
         $response['data'] = [];
         $response['messages'][] = trans('vaahcms-general.action_successful');
 
@@ -337,7 +335,7 @@ class TaxonomyType extends Model {
 
         if(!$request->has('inputs'))
         {
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'][] = 'Select IDs';
             return $response;
         }
@@ -352,7 +350,7 @@ class TaxonomyType extends Model {
             }
         }
 
-        $response['status'] = 'success';
+        $response['success'] = true;
         $response['data'] = [];
         $response['messages'][] = trans('vaahcms-general.action_successful');
 
@@ -366,14 +364,14 @@ class TaxonomyType extends Model {
 
         if(!$request->has('inputs'))
         {
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'][] = 'Select IDs';
             return $response;
         }
 
         if(!$request->has('data'))
         {
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'][] = 'Select Status';
             return $response;
         }
@@ -387,7 +385,7 @@ class TaxonomyType extends Model {
             }
         }
 
-        $response['status'] = 'success';
+        $response['success'] = true;
         $response['data'] = [];
         $response['messages'][] = trans('vaahcms-general.action_successful');
 
@@ -400,14 +398,14 @@ class TaxonomyType extends Model {
 
         if(!$request->has('inputs'))
         {
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'][] = 'Select IDs';
             return $response;
         }
 
         if(!$request->has('data'))
         {
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'][] = 'Select Status';
             return $response;
         }
@@ -421,7 +419,7 @@ class TaxonomyType extends Model {
             }
         }
 
-        $response['status'] = 'success';
+        $response['success'] = true;
         $response['data'] = [];
         $response['messages'][] = trans('vaahcms-general.action_successful');
 
@@ -448,7 +446,7 @@ class TaxonomyType extends Model {
         if ( $validator->fails() ) {
 
             $errors             = errorsToArray($validator->errors());
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'] = $errors;
             return $response;
         }

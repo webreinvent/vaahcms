@@ -297,7 +297,7 @@ class Registration extends Model
         if ( $validator->fails() ) {
 
             $errors             = errorsToArray($validator->errors());
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'] = $errors;
             return $response;
         }
@@ -307,7 +307,7 @@ class Registration extends Model
 
         if($user)
         {
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'][] = trans('vaahcms-user.email_already_registered');
             return $response;
         }
@@ -317,7 +317,7 @@ class Registration extends Model
 
         if($user)
         {
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'][] = trans('vaahcms-user.username_already_registered');
             return $response;
         }
@@ -327,7 +327,7 @@ class Registration extends Model
 
         if($user)
         {
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'][] = 'User already exist';
             if(env('APP_DEBUG'))
             {
@@ -352,7 +352,7 @@ class Registration extends Model
         $reg->fill($inputs);
         $reg->save();
 
-        $response['status'] = 'success';
+        $response['success'] = true;
         $response['data']['item'] = $reg;
         $response['messages'][] = trans('vaahcms-general.saved_successfully');
         return $response;
@@ -408,7 +408,7 @@ class Registration extends Model
             $list = $list->paginate(config('vaahcms.per_page'));
         }
 
-        $response['status'] = 'success';
+        $response['success'] = true;
         $response['data']['list'] = $list;
 
         return $response;
@@ -431,7 +431,7 @@ class Registration extends Model
         $item = $item->first();
 
 
-        $response['status'] = 'success';
+        $response['success'] = true;
         $response['data']['item'] = $item;
 
         return $response;
@@ -457,7 +457,7 @@ class Registration extends Model
         if ( $validator->fails() ) {
 
             $errors             = errorsToArray($validator->errors());
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'] = $errors;
             return $response;
         }
@@ -467,7 +467,7 @@ class Registration extends Model
             ->where('email', $request->email)->first();
         if($user)
         {
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'][] = 'This email is already registered.';
             return $response;
         }
@@ -478,7 +478,7 @@ class Registration extends Model
 
         if($user)
         {
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'][] = trans('vaahcms-user.username_already_registered');
             return $response;
         }
@@ -523,7 +523,7 @@ class Registration extends Model
 
         $item->save();
 
-        $response['status'] = 'success';
+        $response['success'] = true;
         $response['messages'][] = 'Saved';
         $response['data'] = $item;
 
@@ -539,7 +539,7 @@ class Registration extends Model
         $user = User::where('email', $request->email)->first();
         if($user)
         {
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'][] = 'Email is already registered.';
             return $response;
         }
@@ -553,7 +553,7 @@ class Registration extends Model
 
             if($user)
             {
-                $response['status'] = 'failed';
+                $response['success'] = false;
                 $response['errors'][] = 'Phone number is already registered.';
                 return $response;
             }
@@ -562,7 +562,7 @@ class Registration extends Model
         //if status is registered then user_id is required
         if($request->has('status') && $request->status == 'registered' && !$request->has('user_id'))
         {
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'][] = 'The registration status is "registered", hence user id is required';
             return $response;
         }
@@ -621,14 +621,14 @@ class Registration extends Model
 
         if(!$request->has('inputs'))
         {
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'][] = 'Select IDs';
             return $response;
         }
 
         if(!$request->has('data'))
         {
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'][] = 'Select Status';
             return $response;
         }
@@ -640,7 +640,7 @@ class Registration extends Model
             $reg->save();
         }
 
-        $response['status'] = 'success';
+        $response['success'] = true;
         $response['data'] = [];
         $response['messages'][] = trans('vaahcms-general.action_successful');
 
@@ -654,7 +654,7 @@ class Registration extends Model
 
         if(!$request->has('inputs'))
         {
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'][] = 'Select IDs';
             return $response;
         }
@@ -669,7 +669,7 @@ class Registration extends Model
             }
         }
 
-        $response['status'] = 'success';
+        $response['success'] = true;
         $response['data'] = [];
         $response['messages'][] = trans('vaahcms-general.action_successful');
 
@@ -683,7 +683,7 @@ class Registration extends Model
 
         if(!$request->has('inputs'))
         {
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'][] = 'Select IDs';
             return $response;
         }
@@ -697,7 +697,7 @@ class Registration extends Model
             }
         }
 
-        $response['status'] = 'success';
+        $response['success'] = true;
         $response['data'] = [];
         $response['messages'][] = trans('vaahcms-general.action_successful');
 
@@ -711,7 +711,7 @@ class Registration extends Model
 
         if(!$request->has('inputs'))
         {
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'][] = 'Select IDs';
             return $response;
         }
@@ -726,7 +726,7 @@ class Registration extends Model
             }
         }
 
-        $response['status'] = 'success';
+        $response['success'] = true;
         $response['data'] = [];
         $response['messages'][] = trans('vaahcms-general.action_successful');
 
@@ -740,7 +740,7 @@ class Registration extends Model
 
         if(!$request->has('inputs'))
         {
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'][] = 'Select IDs';
             return $response;
         }
@@ -756,7 +756,7 @@ class Registration extends Model
             }
         }
 
-        $response['status'] = 'success';
+        $response['success'] = true;
         $response['data'] = [];
         $response['messages'][] = trans('vaahcms-general.action_successful');
 
@@ -770,7 +770,7 @@ class Registration extends Model
         $reg = static::where('id',$id)->withTrashed()->first();
 
         if(!$reg){
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'][] = 'Registration does not exist exist.';
             return $response;
         }
@@ -782,7 +782,7 @@ class Registration extends Model
 
         if($user_exist)
         {
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'][] = "User of this Email Id is already exist.";
             return $response;
         }
@@ -803,7 +803,7 @@ class Registration extends Model
         $reg->status = 'user-created';
         $reg->save();
 
-        $response['status'] = 'success';
+        $response['success'] = true;
         $response['data']['user'] = $user;
         $response['messages'][] = 'User is created.';
 

@@ -43,7 +43,7 @@ class ExtendController extends Controller
 
 
 
-        $response['status'] = 'success';
+        $response['success'] = true;
         $response['data'] = [];
 
         return $response;
@@ -64,7 +64,7 @@ class ExtendController extends Controller
 
         ];
 
-        $response['status'] = 'success';
+        $response['success'] = true;
         $response['data'] = $list;
 
         return $response;
@@ -245,7 +245,7 @@ class ExtendController extends Controller
 
 
 
-        $response['status'] = 'success';
+        $response['success'] = true;
         $response['data'] = $list;
 
         return $response;
@@ -254,7 +254,7 @@ class ExtendController extends Controller
     public function getNotificationVariables()
     {
 
-        $response['status'] = 'success';
+        $response['success'] = true;
         $response['data'] = vh_notification_variables();
 
         return $response;
@@ -263,7 +263,7 @@ class ExtendController extends Controller
     public function getNotificationActions()
     {
 
-        $response['status'] = 'success';
+        $response['success'] = true;
         $response['data'] = vh_notification_actions();
 
         return $response;
@@ -273,7 +273,7 @@ class ExtendController extends Controller
     {
         $string = VaahStr::translateDynamicStrings($params);
 
-        $response['status'] = 'success';
+        $response['success'] = true;
         $response['data'] = $string;
 
         return $response;
@@ -283,7 +283,7 @@ class ExtendController extends Controller
     public function getPublicUrls()
     {
 
-        $response['status'] = 'success';
+        $response['success'] = true;
         $response['data'] = vh_public_urls();
 
         return $response;
@@ -338,7 +338,7 @@ class ExtendController extends Controller
 
             $log_list = $logs->getList(new Request());
 
-            if(isset($log_list->original) && $log_list->original['status'] == 'success'){
+            if(isset($log_list->original) && $log_list->original['success']){
                 $log_list = $log_list->original['data']['list'];
             }
         }
@@ -426,7 +426,7 @@ class ExtendController extends Controller
             ]
         ];
 
-        $response['status'] = 'success';
+        $response['success'] = true;
         $response['data'] = $data;
 
         return $response;

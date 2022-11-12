@@ -33,7 +33,7 @@ class UserSettingController extends Controller
 
         if(!\Auth::user()->hasPermission('has-access-of-setting-section'))
         {
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'][] = trans("vaahcms::messages.permission_denied");
 
             return response()->json($response);
@@ -42,7 +42,7 @@ class UserSettingController extends Controller
         $data['timezones'] = vh_get_timezones();
         $data['country_calling_codes'] = vh_get_countries_calling_codes();
 
-        $response['status'] = 'success';
+        $response['success'] = true;
         $response['data'] = $data;
 
         return response()->json($response);
@@ -53,7 +53,7 @@ class UserSettingController extends Controller
 
         if(!\Auth::user()->hasPermission('has-access-of-setting-section'))
         {
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'][] = trans("vaahcms::messages.permission_denied");
 
             return response()->json($response);
@@ -68,7 +68,7 @@ class UserSettingController extends Controller
             ->select('id','key','label','type','value')
             ->first();
 
-        $response['status'] = 'success';
+        $response['success'] = true;
         $response['data']['list']['fields'] = $fields;
         $response['data']['list']['custom_fields'] = $custom_fields;
 
@@ -82,7 +82,7 @@ class UserSettingController extends Controller
 
         if(!\Auth::user()->hasPermission('has-access-of-setting-section'))
         {
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'][] = trans("vaahcms::messages.permission_denied");
 
             return response()->json($response);
@@ -99,7 +99,7 @@ class UserSettingController extends Controller
         if ( $validator->fails() ) {
 
             $errors             = errorsToArray($validator->errors());
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'] = $errors;
             return $response;
         }
@@ -114,7 +114,7 @@ class UserSettingController extends Controller
             $item->save();
         }
 
-        $response['status'] = 'success';
+        $response['success'] = true;
         $response['messages'][] = 'Updated';
 
         return response()->json($response);
@@ -127,7 +127,7 @@ class UserSettingController extends Controller
 
         if(!\Auth::user()->hasPermission('has-access-of-setting-section'))
         {
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'][] = trans("vaahcms::messages.permission_denied");
 
             return response()->json($response);
@@ -137,7 +137,7 @@ class UserSettingController extends Controller
 
         Setting::where('id',$input['id'])->update($input);
 
-        $response['status'] = 'success';
+        $response['success'] = true;
         $response['data']['item'] = $input;
 
         return response()->json($response);

@@ -422,13 +422,13 @@ class VaahSetup{
         try{
             \File::copy(base_path('.env.example'),base_path('.env'));
 
-            $response['status'] = 'success';
+            $response['success'] = true;
             $response['data'][] = '';
 
 
         }catch(\Exception $e)
         {
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'][] = $e->getMessage();
         }
 
@@ -517,7 +517,7 @@ class VaahSetup{
             {
                 if( $environment->app_url === url("/") && $environment->env_file != '.env.'.$request->app_env)
                 {
-                    $response['status'] = 'failed';
+                    $response['success'] = false;
                     $response['errors'][] = 'APP_URL ('.$environment->app_url.') already exist in vaahcms.json for '.$environment->env_file.' file.';
                     if(env('APP_DEBUG'))
                     {

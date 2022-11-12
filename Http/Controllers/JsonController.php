@@ -126,7 +126,7 @@ class JsonController extends Controller
         $data['backend_logo_url'] = vh_backend_logo();
 
 
-        $response['status'] = 'success';
+        $response['success'] = true;
         $response['data'] = $data;
 
         return response()->json($response);
@@ -147,7 +147,7 @@ class JsonController extends Controller
             $is_logged = true;
         }
 
-        $response['status'] = 'success';
+        $response['success'] = true;
         $response['data']['is_logged_in'] = $is_logged;
 
         return response()->json($response);
@@ -190,12 +190,12 @@ class JsonController extends Controller
 
         if(!\Auth::check())
         {
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'] = [];
             return response()->json($response);
         }
 
-        $response['status'] = 'success';
+        $response['success'] = true;
         $response['data']['list'] = \Auth::user()->permissions(true);
 
         return response()->json($response);

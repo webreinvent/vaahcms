@@ -73,7 +73,7 @@ class VaahMail{
             dispatch((new ProcessMails($mail, $to, $cc, $bcc))
                 ->onQueue($priority));
 
-            $response['status'] = 'success';
+            $response['success'] = true;
             $response['data'] = [];
             $response['messages'][] = trans('vaahcms-general.action_successful');
 
@@ -139,7 +139,7 @@ class VaahMail{
         dispatch((new ProcessMails($mail, $to, $cc, $bcc))
             ->onQueue($priority));
 
-        $response['status'] = 'success';
+        $response['success'] = true;
         $response['data'] = [];
         $response['messages'][] = trans('vaahcms-general.action_successful');
 
@@ -155,13 +155,13 @@ class VaahMail{
                 ->bcc($bcc)
                 ->send($mail);
 
-            $response['status'] = 'success';
+            $response['success'] = true;
             $response['data'] = [];
             $response['messages'][] = trans('vaahcms-general.action_successful');
 
         }catch(\Exception $e)
         {
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'][] = $e->getMessage();
 
         }

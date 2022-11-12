@@ -28,7 +28,7 @@ class RolesController extends Controller
 
         if(!\Auth::user()->hasPermission('has-access-of-roles-section'))
         {
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'][] = trans("vaahcms::messages.permission_denied");
 
             return response()->json($response);
@@ -45,7 +45,7 @@ class RolesController extends Controller
         $data['module'] = $module;
         $data['types'] = Taxonomy::getTaxonomyByType('roles');
 
-        $response['status'] = 'success';
+        $response['success'] = true;
         $response['data'] = $data;
 
         return response()->json($response);
@@ -57,7 +57,7 @@ class RolesController extends Controller
     {
         if(!\Auth::user()->hasPermission('can-create-roles'))
         {
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'][] = trans("vaahcms::messages.permission_denied");
 
             return response()->json($response);
@@ -71,7 +71,7 @@ class RolesController extends Controller
     {
         if(!\Auth::user()->hasPermission('has-access-of-roles-section'))
         {
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'][] = trans("vaahcms::messages.permission_denied");
 
             return response()->json($response);
@@ -86,7 +86,7 @@ class RolesController extends Controller
 
         if(!\Auth::user()->hasPermission('can-read-roles'))
         {
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'][] = trans("vaahcms::messages.permission_denied");
 
             return response()->json($response);
@@ -102,7 +102,7 @@ class RolesController extends Controller
 
         if(!\Auth::user()->hasPermission('can-read-roles'))
         {
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'][] = trans("vaahcms::messages.permission_denied");
 
             return response()->json($response);
@@ -117,7 +117,7 @@ class RolesController extends Controller
 
         if(!\Auth::user()->hasPermission('can-read-roles'))
         {
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'][] = trans("vaahcms::messages.permission_denied");
 
             return response()->json($response);
@@ -138,7 +138,7 @@ class RolesController extends Controller
     {
         if(!\Auth::user()->hasPermission('can-update-roles'))
         {
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'][] = trans("vaahcms::messages.permission_denied");
 
             return response()->json($response);
@@ -158,7 +158,7 @@ class RolesController extends Controller
         if ( $validator->fails() ) {
 
             $errors             = errorsToArray($validator->errors());
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'] = $errors;
             return response()->json($response);
         }
@@ -174,7 +174,7 @@ class RolesController extends Controller
                 if(!\Auth::user()->hasPermission('can-manage-roles') &&
                     !\Auth::user()->hasPermission('can-update-roles'))
                 {
-                    $response['status'] = 'failed';
+                    $response['success'] = false;
                     $response['errors'][] = trans("vaahcms::messages.permission_denied");
 
                     return $response;
@@ -188,7 +188,7 @@ class RolesController extends Controller
 
                 if(!\Auth::user()->hasPermission('can-update-roles'))
                 {
-                    $response['status'] = 'failed';
+                    $response['success'] = false;
                     $response['errors'][] = trans("vaahcms::messages.permission_denied");
 
                     return $response;
@@ -203,7 +203,7 @@ class RolesController extends Controller
 
                 if(!\Auth::user()->hasPermission('can-update-roles'))
                 {
-                    $response['status'] = 'failed';
+                    $response['success'] = false;
                     $response['errors'][] = trans("vaahcms::messages.permission_denied");
 
                     return $response;
@@ -219,7 +219,7 @@ class RolesController extends Controller
                 if(!\Auth::user()->hasPermission('can-update-roles') ||
                     !\Auth::user()->hasPermission('can-delete-roles'))
                 {
-                    $response['status'] = 'failed';
+                    $response['success'] = false;
                     $response['errors'][] = trans("vaahcms::messages.permission_denied");
 
                     return $response;
@@ -234,7 +234,7 @@ class RolesController extends Controller
                 if(!\Auth::user()->hasPermission('can-manage-roles') &&
                     !\Auth::user()->hasPermission('can-update-roles'))
                 {
-                    $response['status'] = 'failed';
+                    $response['success'] = false;
                     $response['errors'][] = trans("vaahcms::messages.permission_denied");
 
                     return $response;
@@ -249,7 +249,7 @@ class RolesController extends Controller
                 if(!\Auth::user()->hasPermission('can-manage-roles') &&
                     !\Auth::user()->hasPermission('can-update-roles'))
                 {
-                    $response['status'] = 'failed';
+                    $response['success'] = false;
                     $response['errors'][] = trans("vaahcms::messages.permission_denied");
 
                     return $response;
@@ -264,7 +264,7 @@ class RolesController extends Controller
                 if(!\Auth::user()->hasPermission('can-manage-roles') &&
                     !\Auth::user()->hasPermission('can-update-roles'))
                 {
-                    $response['status'] = 'failed';
+                    $response['success'] = false;
                     $response['errors'][] = trans("vaahcms::messages.permission_denied");
 
                     return $response;

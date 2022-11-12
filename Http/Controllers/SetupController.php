@@ -46,7 +46,7 @@ class SetupController extends Controller
             //publish assets
             $response = VaahSetup::publishDotEnv();
 
-            if($response['status'] == 'failed')
+            if(isset($response['success']) && !$response['success'])
             {
                 abort(403, $response['errors']);
             }
@@ -79,7 +79,7 @@ class SetupController extends Controller
         $data['env_file'] = env('ENV_FILE');
         $data['app_url'] = url("/");
 
-        $response['status'] = 'success';
+        $response['success'] = true;
         $response['data'] = $data;
 
         return response()->json($response);
@@ -122,7 +122,7 @@ class SetupController extends Controller
 
 
 
-        $response['status'] = 'success';
+        $response['success'] = true;
         $response['data'] = $data;
 
         return response()->json($response);
@@ -140,35 +140,35 @@ class SetupController extends Controller
         if ( $validator->fails() ) {
 
             $errors             = errorsToArray($validator->errors());
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'] = $errors;
             return response()->json($response);
         }
 
         if(!VaahSetup::isInstalled())
         {
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'][] = 'Application is installed.';
             return response()->json($response);
         }
 
         if(!\Auth::check())
         {
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'][] = 'You are not logged in.';
             return response()->json($response);
         }
 
         if(!\Auth::user()->hasRole('super-administrator'))
         {
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'][] = 'Permission denied. You must be logged in from Administrator account.';
             return response()->json($response);
         }
 
         if($request->confirm != 'RESET')
         {
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'][] = 'Type RESET to confirm.';
             return response()->json($response);
         }
@@ -200,14 +200,14 @@ class SetupController extends Controller
             $request->session()->flush();
 
 
-            $response['status'] = 'success';
+            $response['success'] = true;
             $response['data'][] = '';
 
 
 
         }catch(\Exception $e)
         {
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'][] = $e->getMessage();
 
         }
@@ -303,7 +303,7 @@ class SetupController extends Controller
         //verify database connection
         if(!$request->has('db_is_valid') || $request->db_is_valid != true)
         {
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'][] = 'Test the database configuration';
             return response()->json($response);
         }
@@ -314,7 +314,7 @@ class SetupController extends Controller
         {
             if($request->has('mail_provider') && !empty($request->mail_provider))
             {
-                $response['status'] = 'failed';
+                $response['success'] = false;
                 $response['errors'][] = 'Test the mail configuration';
                 return response()->json($response);
             }
@@ -383,7 +383,7 @@ class SetupController extends Controller
 
         $env_params = vh_env_file_to_array(base_path('/'.$active_env_file), true);
 
-        $response['status'] = 'success';
+        $response['success'] = true;
         $response['data']['app_key'] = $env_params['app_key'];
         $response['data']['app_vaahcms_env'] = "";
         if(isset($env_params['app_vaahcms_env']))
@@ -406,7 +406,7 @@ class SetupController extends Controller
         {
             $response = VaahArtisan::seed('db:wipe');
 
-            if(isset($response['status']) && $response['status'] == 'failed')
+            if(isset($response['success']) && !$response['status'])
             {
                 return $response;
             }
@@ -415,14 +415,14 @@ class SetupController extends Controller
             $provider = "WebReinvent\VaahCms\VaahCmsServiceProvider";
             $response = VaahArtisan::publishMigrations($provider);
 
-            if(isset($response['status']) && $response['status'] == 'failed')
+            if(isset($response['success']) && !$response['success'])
             {
                 return $response;
             }
 
             //run migration
             $response = VaahArtisan::migrate();
-            if(isset($response['status']) && $response['status'] == 'failed')
+            if(isset($response['success']) && !$response['success'])
             {
                 return $response;
             }
@@ -430,7 +430,7 @@ class SetupController extends Controller
 
             //publish vaahcms seeds
             $response = VaahArtisan::publishSeeds($provider);
-            if(isset($response['status']) && $response['status'] == 'failed')
+            if(isset($response['success']) && !$response['success'])
             {
                 return $response;
             }
@@ -439,7 +439,7 @@ class SetupController extends Controller
             //run vaahcms seeds
             $seed_class = "WebReinvent\VaahCms\Database\Seeders\VaahCmsTableSeeder";
             $response = VaahArtisan::seed('db:seed', $seed_class);
-            if(isset($response['status']) && $response['status'] == 'failed')
+            if(isset($response['success']) && !$response['success'])
             {
                 return $response;
             }
@@ -449,14 +449,14 @@ class SetupController extends Controller
             VaahArtisan::publish(null, 'laravel-notifications');
 
             $response =[];
-            $response['status'] = 'success';
+            $response['success'] = true;
             $response['messages'][] = 'Migration were successful';
             $response['data'] = $data;
             return response()->json($response);
         }
         catch(\Exception $e) {
 
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'][] = $e->getMessage();
             return response()->json($response);
         }
@@ -466,7 +466,7 @@ class SetupController extends Controller
     //----------------------------------------------------------
     public function getDependencies(Request $request)
     {
-        $response['status'] = 'success';
+        $response['success'] = true;
         $response['data']['list'] = VaahSetup::getDependencies();
         return response()->json($response);
     }
@@ -486,7 +486,7 @@ class SetupController extends Controller
         if ( $validator->fails() ) {
 
             $errors             = errorsToArray($validator->errors());
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'] = $errors;
             return response()->json($response);
         }
@@ -503,13 +503,13 @@ class SetupController extends Controller
                 $response = Module::download($request->name, $request->download_link);
             }
 
-            if($response['status'] == 'success')
+            if(isset($response['success']) && $response['success'])
             {
                 Module::syncAllModules();
                 Module::activateItem($request->slug);
             }
 
-            if($response['status'] == 'success' && $request->import_sample_data)
+            if(isset($response['success']) && $response['success'] && $request->import_sample_data)
             {
                 Module::importSampleData($request->slug);
             }
@@ -525,14 +525,14 @@ class SetupController extends Controller
                 $response = Theme::download($request->name, $request->download_link);
             }
 
-            if($response['status'] == 'success')
+            if(isset($response['success']) && $response['success'])
             {
                 Theme::syncAll();
                 Theme::activateItem($request->slug, true);
 
             }
 
-            if($response['status'] == 'success' && $request->import_sample_data)
+            if(isset($response['success']) && $response['success'] && $request->import_sample_data)
             {
                 Theme::importSampleData($request->slug);
             }
@@ -547,7 +547,7 @@ class SetupController extends Controller
 
         $details = Module::getOfficialDetails($request->slug);
 
-        if($details['status'] == 'failed')
+        if(isset($details['success']) && !$details['success'])
         {
             return $details;
 
@@ -564,7 +564,7 @@ class SetupController extends Controller
 
         $details = Theme::getOfficialDetails($request->slug);
 
-        if($details['status'] == 'failed')
+        if(isset($details['success']) && !$details['success'])
         {
             return $details;
 
@@ -585,7 +585,7 @@ class SetupController extends Controller
         //check users table
         if(!\Schema::hasTable('vh_users'))
         {
-            $response['status'] = 'success';
+            $response['success'] = true;
             $response['data']['active_step'] = 'database';
             return response()->json($response);
         }
@@ -594,7 +594,7 @@ class SetupController extends Controller
 
         if($any_super_admin_exist > 0)
         {
-            $response['status'] = 'success';
+            $response['success'] = true;
             $response['messages'][] = trans("vaahcms::messages.setup_completed");
             $response['data']['flash_message'] = trans("vaahcms::messages.setup_completed");
             $response['data']['active_step'] = 'completed';
@@ -602,7 +602,7 @@ class SetupController extends Controller
         }
 
 
-        $response['status'] = 'success';
+        $response['success'] = true;
         $response['data']['active_step'] = 'database';
 
         return response()->json($response);
@@ -628,7 +628,7 @@ class SetupController extends Controller
         if ( $validator->fails() ) {
 
             $errors             = errorsToArray($validator->errors());
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'] = $errors;
             return response()->json($response);
         }
@@ -637,7 +637,7 @@ class SetupController extends Controller
 
         if($any_super_admin_exist > 0)
         {
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'][] = trans("vaahcms::messages.permission_denied");
             return response()->json($response);
         }
@@ -655,7 +655,7 @@ class SetupController extends Controller
 
         if(!$role)
         {
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'][] = \Lang::get('vaahcms::messages.not_exist', ['key' => 'role slug', 'value' => 'super-administrator']);;
             return response()->json($response);
         }
@@ -668,7 +668,7 @@ class SetupController extends Controller
 
         $role->users()->updateExistingPivot($user['id'], array('is_active' => 1));
 
-        $response['status'] = 'success';
+        $response['success'] = true;
         $response['messages'][] = trans("vaahcms::messages.setup_completed");
         $response['data']['flash_message'] =  trans("vaahcms::messages.setup_completed");
         $response['data']['active_step'] = 'completed';
@@ -709,7 +709,7 @@ class SetupController extends Controller
             return $response;
         }catch(\Exception $e)
         {
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'][] = $e->getMessage();
             return $response;
         }
@@ -727,7 +727,7 @@ class SetupController extends Controller
             return $response;
         }catch(\Exception $e)
         {
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'][] = $e->getMessage();
             return $response;
         }
