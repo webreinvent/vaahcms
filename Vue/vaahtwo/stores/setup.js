@@ -373,6 +373,25 @@ export const useSetupStore = defineStore({
             }
         },
         //---------------------------------------------------------------------
+        getDependencies: function () {
+
+            let params = {};
+
+            vaah().ajax(
+                this.ajax_url+'/get/dependencies',
+                this.afterGetDependencies,
+                params
+            );
+        },
+        //---------------------------------------------------------------------
+        afterGetDependencies: function (data, res) {
+            if(data)
+            {
+                this.config.dependencies = data.list;
+                this.config.count_total_dependencies = data.list.length;
+            }
+        },
+        //---------------------------------------------------------------------
 
 
         //---------------------------------------------------------------------

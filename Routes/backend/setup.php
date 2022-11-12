@@ -71,7 +71,7 @@ Route::group(
         Route::post( '/get/required/configurations', 'SetupController@getRequiredConfigurations' )
             ->name( 'vh.setup.get.get.required.configurations' );
         //------------------------------------------------
-        Route::post( '/get/dependencies', 'SetupController@getDependencies' )
+        Route::get( '/get/dependencies', 'SetupController@getDependencies' )
             ->name( 'vh.setup.get.dependencies' );
         //------------------------------------------------
         Route::post( '/install/dependencies', 'SetupController@installDependencies' )
