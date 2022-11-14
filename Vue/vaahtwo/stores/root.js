@@ -14,6 +14,10 @@ export const useRootStore = defineStore({
         json_url: json_url,
         gutter: 20,
         show_progress_bar: false,
+        is_forgot_password_btn_loading: false,
+        forgot_password_items: {
+            email: null,
+        }
     }),
     getters: {},
     actions: {
@@ -43,6 +47,32 @@ export const useRootStore = defineStore({
 
             }
         },
+        //-----------------------------------------------------------------------
+        onSendCode()
+        {
+            console.log('hi');
+            this.is_forgot_password_btn_loading = true;
+            let params = {
+                params: this.forgot_password_items,
+                method: 'post',
+            };
+            vaah().ajax(
+                this.ajax_url+'/sendResetCode/post',
+                this.onSendCodeAfter,
+                params
+            );
+
+        },
+        //-----------------------------------------------------------------------
+        onSendCodeAfter(data, res)
+        {
+            this.is_forgot_password_btn_loading = false;
+            if(data)
+            {
+                this.$router.push({ name: 'dashboard' })
+            }
+        },
+        //-----------------------------------------------------------------------
         async to(path)
         {
             this.$router.push({path: path})

@@ -1,4 +1,5 @@
 
+
 let routes= [];
 let routes_list= [];
 
@@ -10,6 +11,7 @@ import Configuration from "../pages/public/setup/intall/Configuration.vue";
 import Dependencies from "../pages/public/setup/intall/Dependencies.vue";
 import Migrate from "../pages/public/setup/intall/Migrate.vue";
 import Account from "../pages/public/setup/intall/Account.vue";
+import ForgotPassword from "../pages/public/ForgotPassword.vue";
 
 
 
@@ -23,6 +25,12 @@ routes_list = [
                 path: '/',
                 name: 'sign.in',
                 component: Signin,
+                props: true,
+            },
+            {
+                path: '/forgot-password',
+                name: 'forgot.password',
+                component: ForgotPassword,
                 props: true,
             },
             {
