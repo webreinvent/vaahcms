@@ -4,7 +4,7 @@ let routes_list= [];
 
 import LayoutPublic from '../layouts/Public.vue'
 import Signin from '../pages/public/Signin.vue'
-import Setup from '../pages/public/setup/Index.vue'
+import SetupIndex from '../pages/public/setup/Index.vue'
 import SetupInstall from '../pages/public/setup/intall/Index.vue'
 import Configuration from "../pages/public/setup/intall/Configuration.vue";
 import Dependencies from "../pages/public/setup/intall/Dependencies.vue";
@@ -27,8 +27,8 @@ routes_list = [
             },
             {
                 path: '/setup',
-                name: 'setup',
-                component: Setup,
+                name: 'setup.index',
+                component: SetupIndex,
                 props: true,
             },
             {

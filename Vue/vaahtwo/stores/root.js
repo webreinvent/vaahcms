@@ -14,6 +14,7 @@ export const useRootStore = defineStore({
         json_url: json_url,
         gutter: 20,
         show_progress_bar: false,
+        is_installation_verified: false,
     }),
     getters: {},
     actions: {
@@ -40,6 +41,36 @@ export const useRootStore = defineStore({
             if(data)
             {
                 this.assets = data;
+
+            }
+        },
+        //---------------------------------------------------------------------
+        async verifyInstallStatus() {
+
+            let params = {
+            };
+
+            vaah().ajax(
+                this.ajax_url+'/setup/json/status',
+                this.afterVerifyInstallStatus,
+                params
+            );
+
+        },
+
+
+        //---------------------------------------------------------------------
+        afterVerifyInstallStatus(data, res)
+        {
+            if(data)
+            {
+
+                if(data.stage !== 'installed')
+                {
+                    this.$router.push({name : 'setup.index'});
+                }
+
+                this.is_installation_verified = true;
 
             }
         },
