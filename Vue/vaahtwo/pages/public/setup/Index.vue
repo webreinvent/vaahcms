@@ -5,6 +5,8 @@ import {onMounted, reactive} from "vue";
 import { useSetupStore } from '../../../stores/setup'
 const store = useSetupStore();
 import { useRootStore } from '../../../stores/root'
+import Footer from "../../../components/organisms/Footer.vue"
+
 const root = useRootStore();
 
 
@@ -100,14 +102,8 @@ onMounted(async () => {
                 </Card>
             </div>
         </div>
-        <div class="text-xs text-center mt-8"><p>
-            © 2022.
-            <a class="text-blue-400" href="https://vaah.dev/cms" target="_blank">VaahCMS</a>
-            v1.6.10
-            | <a class="text-blue-400" href="https://docs.vaah.dev/vaahcms" target="_blank">Documentation</a></p> <p class="has-text-centered">
-            Laravel v8.41.0
-            | PHP v8.0.18
-        </p></div>
+        
+        <Footer />
     </div>
 </template>
 
