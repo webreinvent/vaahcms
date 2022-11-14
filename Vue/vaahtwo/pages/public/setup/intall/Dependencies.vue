@@ -24,7 +24,11 @@ onMounted(async () => {
                     <template #title>
                         <div class="flex align-items-center justify-content-between">
                             <h5 class="font-semibold">{{item.name}}</h5>
-                            <i class="pi pi-download bg-gray-200 p-2 border-round-3xl" style="font-size: 12px"></i>
+                            <i v-if="item.installed"
+                               class="pi pi-check bg-green-500 p-2 border-round-3xl"
+                               style="font-size: 12px"></i>
+                            <i v-else class="pi pi-download bg-gray-200 p-2 border-round-3xl"
+                               style="font-size: 12px"></i>
                         </div>
                     </template>
                     <template #content>
@@ -42,29 +46,45 @@ onMounted(async () => {
                                 {{item.author_name}}
                             </a>
                         </p>
-                        <ProgressBar :value="0" class="mb-3" />
+                        <ProgressBar v-if="store.active_dependency && item.slug === store.active_dependency.slug "
+                                     mode="indeterminate" class="mb-3" />
+                        <ProgressBar v-else :value="0" class="mb-3" />
                         <div class="field-checkbox">
-                            <Checkbox inputId="binary" v-model="checked" :binary="true" class="is-small" />
+                            <Checkbox inputId="binary" v-model="item.import_sample_data"
+                                      :binary="true" class="is-small" />
                             <label for="binary" class="text-xs">Import Sample data</label>
                         </div>
-                    </template>
-                    <template #footer>
-                        <Button icon="pi pi-check" label="Save" class="p-button-sm btn-primary-light is-small"/>
-                        <Button icon="pi pi-times" label="Cancel" class="p-button-sm btn-danger-light is-small" style="margin-left: .5em" />
                     </template>
                 </Card>
             </div>
             <div class="col-12">
-                <ProgressBar :value="0" class="mt-4 mb-5" />
+                <ProgressBar :value="store.config.count_installed_progress" class="mt-4 mb-5" />
                 <div class="my-3">
-                    <Button icon="pi pi-download" label="Download & install Dependencies" class="p-button-sm mr-2 is-small"/>
-                    <Button label="Skip" class="btn-dark p-button-sm is-small"/>
+                    <Button v-if="store.config.count_installed_progress === 100"
+                            icon="pi pi-check"
+                            @click="store.installDependencies()"
+                            :loading="store.is_btn_loading_dependency"
+                            label="Download & install Dependencies"
+                            class="p-button-success p-button-sm mr-2 is-small"/>
+                    <Button v-else icon="pi pi-download"
+                            @click="store.installDependencies()"
+                            :loading="store.is_btn_loading_dependency"
+                            label="Download & install Dependencies"
+                            class="p-button-sm mr-2 is-small"/>
+
+                    <Button label="Skip"
+                            @click="store.skipDependencies()"
+                            class="btn-dark p-button-sm is-small"/>
                 </div>
             </div>
             <div class="col-12">
                 <div class="flex justify-content-between">
-                    <Button label="Back" class="p-button-sm" @click="goBack"></Button>
-                    <Button label="Save & Next" class="p-button-sm" @click="goToNextStep"></Button>
+                    <Button label="Back" class="p-button-sm"
+                            @click="$router.push({name:'setup.install.migrate'})">
+                    </Button>
+                    <Button label="Save & Next"
+                            class="p-button-sm" @click="store.validateDependencies">
+                    </Button>
                 </div>
             </div>
         </div>
