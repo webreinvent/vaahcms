@@ -18,7 +18,13 @@ export const useRootStore = defineStore({
         is_forgot_password_btn_loading: false,
         forgot_password_items: {
             email: null,
-        }
+        },
+        is_reset_password_btn_loading: false,
+        reset_password_items: {
+            reset_password_code: null,
+            password: null,
+            password_confirmation: null,
+        },
     }),
     getters: {},
     actions: {
