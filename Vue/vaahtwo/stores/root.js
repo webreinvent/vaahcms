@@ -15,6 +15,10 @@ export const useRootStore = defineStore({
         gutter: 20,
         show_progress_bar: false,
         is_installation_verified: false,
+        is_forgot_password_btn_loading: false,
+        forgot_password_items: {
+            email: null,
+        }
     }),
     getters: {},
     actions: {
