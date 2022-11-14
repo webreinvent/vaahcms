@@ -11,6 +11,7 @@ const root = useRootStore();
 onMounted(async () => {
     await store.getAssets();
     await store.getStatus();
+    await store.getAdvancedOptionMenu();
 });
 </script>
 
@@ -57,7 +58,12 @@ onMounted(async () => {
                             <Button v-else label="Install" icon="pi pi-server"
                                     @click="store.routeAction('setup.install.configuration')"
                                     class="p-button bg-white border-gray-800 text-black-alpha-80"/>
-                            <SplitButton label="Advanced Options" :model="store.items" class="mb-2"></SplitButton>
+
+                            <SplitButton label="Advanced Options"
+                                         :model="store.advanced_option_menu_list"
+                                         class="mb-2">
+
+                            </SplitButton>
                         </div>
                     </template>
                 </Card>

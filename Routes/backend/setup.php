@@ -96,7 +96,7 @@ Route::group(
 */
 Route::group(
     [
-        'prefix'     => 'vaahcms/setup',
+        'prefix'     => 'backend/setup',
         'middleware' => ['web',  'app.is.installed'],
         'namespace'  => 'WebReinvent\VaahCms\Http\Controllers'
     ],

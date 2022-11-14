@@ -14,6 +14,7 @@ export const useSetupStore = defineStore({
         ajax_url: ajax_url,
         json_url: json_url,
         filtered_country_codes: [],
+        advanced_option_menu_list: [],
         is_btn_loading_mail_config: false,
         is_btn_loading_db_connection: false,
         is_modal_test_mail_active: false,
@@ -83,14 +84,6 @@ export const useSetupStore = defineStore({
                 test_email_to: null,
             }
         },
-        items: [
-            {
-                label: 'Publish assets'
-            },
-            {
-                label: 'Clear Cache'
-            }
-        ],
         install_items: [
             {
                 label: 'Configuration',
@@ -176,7 +169,7 @@ export const useSetupStore = defineStore({
             };
 
             vaah().ajax(
-                this.json_url+'/publish/assets',
+                this.ajax_url+'/publish/assets',
                 this.afterPublishAssets,
                 params
             );
@@ -187,6 +180,24 @@ export const useSetupStore = defineStore({
         //---------------------------------------------------------------------
         afterPublishAssets(data, res)
         {
+            this.hideProgress();
+        },
+        //---------------------------------------------------------------------
+        clearCache: function () {
+
+            this.showProgress();
+
+            let params = {
+            };
+
+            vaah().ajax(
+                this.ajax_url+'/clear/cache',
+                this.afterClearCache,
+                params
+            );
+        },
+        //---------------------------------------------------------------------
+        afterClearCache: function (data, res) {
             this.hideProgress();
         },
         //---------------------------------------------------------------------
@@ -430,6 +441,23 @@ export const useSetupStore = defineStore({
                 this.resetConfig();
                 this.$router.push({name: 'sign.in'})
             }
+        },
+        //---------------------------------------------------------------------
+        getAdvancedOptionMenu: function (){
+            this.advanced_option_menu_list =  [
+                {
+                    label: 'Publish assets',
+                    command: () => {
+                        this.publishAssets()
+                    }
+                },
+                {
+                    label: 'Clear Cache',
+                    command: () => {
+                        this.clearCache()
+                    }
+                },
+            ];
         },
         //---------------------------------------------------------------------
         resetConfig() {
