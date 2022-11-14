@@ -425,9 +425,51 @@ export const useSetupStore = defineStore({
                 vaah().toastErrors(['Create the Super Administrator Account']);
             } else
             {
-                //this.resetConfig();
+                this.resetConfig();
                 this.$router.push({name: 'sign.in'})
             }
+        },
+        //---------------------------------------------------------------------
+        resetConfig() {
+            this.config.active_step = 0;
+            this.config.is_migrated = false;
+            this.config.dependencies = null;
+            this.config.count_total_dependencies = 0;
+            this.config.count_installed_dependencies = 0;
+            this.config.count_installed_progress = 0;
+            this.config.is_account_created = false;
+            this.config.account.email = null;
+            this.config.account.username = null;
+            this.config.account.password = null;
+            this.config.account.first_name = null;
+            this.config.account.middle_name = null;
+            this.config.account.last_name = null;
+            this.config.account.country_calling_code = null;
+            this.config.account.phone = null;
+            this.config.env.app_name = "VaahCMS";
+            this.config.env.app_key = null;
+            this.config.env.app_debug = true;
+            this.config.env.app_env = null;
+            this.config.env.app_url = null;
+            this.config.env.app_timezone = null;
+            this.config.env.db_connection = 'mysql';
+            this.config.env.db_host = '127.0.0.1';
+            this.config.env.db_port = 3306;
+            this.config.env.db_database = null;
+            this.config.env.db_username = null;
+            this.config.env.db_password = null;
+            this.config.env.db_is_valid = false;
+            this.config.env.mail_provider = null;
+            this.config.env.mail_driver = null;
+            this.config.env.mail_host = null;
+            this.config.env.mail_port = null;
+            this.config.env.mail_username = null;
+            this.config.env.mail_password = null;
+            this.config.env.mail_encryption = null;
+            this.config.env.mail_from_address = null;
+            this.config.env.mail_from_name = null;
+            this.config.env.mail_is_valid = false;
+            this.config.env.test_email_to = null;
         },
         //---------------------------------------------------------------------
         searchCountryCode: function (event){
