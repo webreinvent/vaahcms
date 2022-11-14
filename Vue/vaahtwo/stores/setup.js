@@ -593,7 +593,7 @@ export const useSetupStore = defineStore({
                 },
                 method: 'post',
             };
-            vaah().ajax(
+            await vaah().ajax(
                 this.ajax_url+'/install/dependencies',
                 this.afterInstallDependency,
                 params

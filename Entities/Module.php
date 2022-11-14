@@ -556,7 +556,8 @@ class Module extends Model {
             $api_response = json_decode($api_response, true);
 
 
-            if(!isset($api_response) || !isset($api_response['success']) || !$api_response['success'])
+            if(!isset($api_response) || !isset($api_response['success'])
+                || !$api_response['success'])
             {
                 $response['success'] = false;
                 $response['data']['url'] = $api;
