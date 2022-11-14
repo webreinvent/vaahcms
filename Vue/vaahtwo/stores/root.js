@@ -14,10 +14,7 @@ export const useRootStore = defineStore({
         json_url: json_url,
         gutter: 20,
         show_progress_bar: false,
-        is_forgot_password_btn_loading: false,
-        forgot_password_items: {
-            email: null,
-        }
+        is_installation_verified: false,
     }),
     getters: {},
     actions: {
@@ -47,32 +44,36 @@ export const useRootStore = defineStore({
 
             }
         },
-        //-----------------------------------------------------------------------
-        onSendCode()
-        {
-            console.log('hi');
-            this.is_forgot_password_btn_loading = true;
+        //---------------------------------------------------------------------
+        async verifyInstallStatus() {
+
             let params = {
-                params: this.forgot_password_items,
-                method: 'post',
             };
+
             vaah().ajax(
-                this.ajax_url+'/sendResetCode/post',
-                this.onSendCodeAfter,
+                this.ajax_url+'/setup/json/status',
+                this.afterVerifyInstallStatus,
                 params
             );
 
         },
-        //-----------------------------------------------------------------------
-        onSendCodeAfter(data, res)
+
+
+        //---------------------------------------------------------------------
+        afterVerifyInstallStatus(data, res)
         {
-            this.is_forgot_password_btn_loading = false;
             if(data)
             {
-                this.$router.push({ name: 'dashboard' })
+
+                if(data.stage !== 'installed')
+                {
+                    this.$router.push({name : 'setup.index'});
+                }
+
+                this.is_installation_verified = true;
+
             }
         },
-        //-----------------------------------------------------------------------
         async to(path)
         {
             this.$router.push({path: path})

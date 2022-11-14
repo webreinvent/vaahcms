@@ -1,9 +1,20 @@
 <script  setup>
+    import {onMounted, reactive} from "vue";
 
+    import { useSetupStore } from '../../stores/setup'
+    const store = useSetupStore();
+    import { useRootStore } from '../../stores/root'
+    const root = useRootStore();
+
+    onMounted(async () => {
+        root.verifyInstallStatus();
+        await root.getAssets();
+
+    });
 </script>
 <template  >
 
-    <div>
+    <div v-if="root.assets && is_installation_verified">
         <div class="grid flex justify-content-center flex-wrap ">
             <div class="col-5 flex align-items-center justify-content-center ">
 
