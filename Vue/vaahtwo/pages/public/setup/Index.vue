@@ -102,7 +102,7 @@ onMounted(async () => {
                 </Card>
             </div>
         </div>
-        
+
         <Footer />
     </div>
 </template>

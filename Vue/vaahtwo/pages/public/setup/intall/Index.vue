@@ -5,6 +5,8 @@ import {onMounted, reactive} from "vue";
 import { useSetupStore } from '../../../../stores/setup'
 const store = useSetupStore();
 import { useRootStore } from '../../../../stores/root'
+import Footer from "../../../../components/organisms/Footer.vue"
+
 const root = useRootStore();
 
 
@@ -33,12 +35,8 @@ onMounted(async () => {
             <div class="w-auto text-center my-4"><Tag class="bg-black-alpha-90 m-auto is-small">
                 ACTIVE ENV FILE: <b class="ml-1">{{ store.assets.env_file }}</b></Tag></div>
             <router-view />
-            <div class="flex justify-content-center text-center mt-5">
-                <div class="text-xs">
-                    © 2022.<a class="px-1">VaahCMS</a> v1.6.6 | <a>Documentation</a>
-                    <p class="text-xs">Laravel v8.4.1 | PHP v8.0.18</p>
-                </div>
-            </div>
+
+            <Footer />
         </div>
     </div>
 </template>
