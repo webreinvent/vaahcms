@@ -8,17 +8,15 @@ const root = useRootStore();
 
 
 onMounted(async () => {
-    await root.getAssets();
+
 });
 
 </script>
 <template>
     <Card style="width: 28rem;max-width: 100vw; margin-bottom: 2em" class="m-auto">
         <template #title>
-            <div class="content text-center" v-if="root && root.assets">
-                <img :src="root.assets.backend_logo_url"
-                     alt=""
-                     class="w-5 mb-2">
+            <div class="content text-center">
+                <img src="http://irisrishu.com/vaahcms/backend/vaahone/images/vaahcms-logo.svg" alt="" class="w-5 mb-2">
                 <h4 class="text-xl font-semibold line-height-2 mb-2">Forgot password?</h4>
                 <p class="text-sm text-gray-600 font-semibold mb-5">You can recover your password from here.</p>
             </div>
