@@ -12,6 +12,7 @@ import Dependencies from "../pages/public/setup/intall/Dependencies.vue";
 import Migrate from "../pages/public/setup/intall/Migrate.vue";
 import Account from "../pages/public/setup/intall/Account.vue";
 import ForgotPassword from "../pages/public/ForgotPassword.vue";
+import ResetPassword from "../pages/public/ResetPassword.vue";
 
 
 
@@ -31,6 +32,12 @@ routes_list = [
                 path: '/forgot-password',
                 name: 'forgot.password',
                 component: ForgotPassword,
+                props: true,
+            },
+            {
+                path: '/reset-password',
+                name: 'reset.password_without_code',
+                component: ResetPassword,
                 props: true,
             },
             {

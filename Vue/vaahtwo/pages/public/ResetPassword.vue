@@ -1,18 +1,14 @@
 <script setup>
 
 import {onMounted, reactive} from "vue";
-import Footer from "../../components/organisms/Footer.vue"
 
-
-import { useAuthStore } from '../../stores/auth';
-const auth = useAuthStore();
 
 import { useRootStore } from '../../stores/root';
 const root = useRootStore();
 
 
 onMounted(async () => {
-    await auth.getAssets();
+    await root.getAssets();
 });
 
 </script>
@@ -29,7 +25,7 @@ onMounted(async () => {
             <div>
                 <div class="p-float-label field mb-5">
                     <InputText
-                        v-model="auth.reset_password_items.reset_password_code"
+                        v-model="root.reset_password_items.reset_password_code"
                         name="reset_password-reset_password_code"
                         data-testid="reset_password-reset_password_code"
                         id="code"
@@ -39,7 +35,7 @@ onMounted(async () => {
                 </div>
                 <div class="p-float-label field mb-5">
                     <Password
-                        v-model="auth.reset_password_items.password"
+                        v-model="root.reset_password_items.password"
                         name="reset_password-password"
                         data-testid="reset_password-password"
                         class="w-full"
@@ -49,7 +45,7 @@ onMounted(async () => {
                 </div>
                 <div class="p-float-label field mb-5">
                     <Password
-                        v-model="auth.reset_password_items.password_confirmation"
+                        v-model="root.reset_password_items.password_confirmation"
                         name="reset_password-password_confirmation"
                         data-testid="reset_password-password_confirmation"
                         class="w-full"
@@ -61,8 +57,8 @@ onMounted(async () => {
                     <Button
                         label="Recover"
                         class="p-button-sm"
-                        @click="auth.resetPassword()"
-                        :loading="auth.is_reset_password_btn_loading"/>
+                        @click="root.onResetPassword()"
+                        :loading="root.is_reset_password_btn_loading"/>
                     <router-link :to="{name:'sign.in'}">
                         <Button label="Sign In" class="p-button-text p-button-sm"/>
                     </router-link>
@@ -70,9 +66,14 @@ onMounted(async () => {
             </div>
         </template>
         <template #footer>
-            <Footer />
+            <div class="text-xs text-center"><p>
+                © 2022.
+                <a class="text-blue-400" href="https://vaah.dev/cms" target="_blank">VaahCMS</a>
+                v1.6.10
+                | <a class="text-blue-400" href="https://docs.vaah.dev/vaahcms" target="_blank">Documentation</a></p> <p class="has-text-centered">
+                Laravel v8.41.0
+                | PHP v8.0.18
+            </p></div>
         </template>
-
     </Card>
-
 </template>
