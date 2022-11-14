@@ -397,6 +397,7 @@ export const useSetupStore = defineStore({
         //---------------------------------------------------------------------
         createAccount: function () {
             this.config.btn_is_account_creating = true;
+            this.config.env.db_is_valid=false;
             let params = {
                 params: this.config.account,
                 method: 'post',
@@ -414,16 +415,17 @@ export const useSetupStore = defineStore({
             if(data)
             {
                 this.config.is_account_created = true;
+                this.config.env.db_is_valid=true;
             }
         },
         //---------------------------------------------------------------------
         validateAccountCreation: function (){
             if(!this.config.is_account_created)
             {
-                this.$vaah.toastErrors(['Create the Super Administrator Account'])
+                vaah().toastErrors(['Create the Super Administrator Account']);
             } else
             {
-                this.resetConfig();
+                //this.resetConfig();
                 this.$router.push({name: 'sign.in'})
             }
         },
