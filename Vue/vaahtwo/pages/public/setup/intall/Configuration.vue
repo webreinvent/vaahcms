@@ -129,7 +129,8 @@ onMounted(async () => {
         <h5 class="text-left p-1 title is-6">Database Password</h5>
         <div class="p-inputgroup">
           <Password v-model="store.config.env.db_password" :feedback="false"
-                    toggleMask input-class="w-full p-inputtext-sm"
+                    toggleMask autocomplete="new-password"
+                    input-class="w-full p-inputtext-sm"
                     placeholder="Database Password"/>
         </div>
       </div>
@@ -230,6 +231,7 @@ onMounted(async () => {
         <h5 class="text-left p-1 title is-6">From Email</h5>
         <div class="p-inputgroup">
           <InputText v-model="store.config.env.mail_from_address"
+                     type="email"
                      placeholder="From Email" class="p-inputtext-sm"/>
         </div>
       </div>

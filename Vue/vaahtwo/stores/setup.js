@@ -18,9 +18,11 @@ export const useSetupStore = defineStore({
         is_btn_loading_db_connection: false,
         is_modal_test_mail_active: false,
         is_btn_loading_config: false,
+        is_btn_loading_dependency: false,
         btn_is_migration: false,
         status: null,
         gutter: 20,
+        active_dependency: null,
         debug_option: [
             {
                 name:'True',
@@ -502,6 +504,93 @@ export const useSetupStore = defineStore({
 
             this.config.account.country_calling_code = event.value.slug;
 
+        },
+        //---------------------------------------------------------------------
+        validateDependencies: function (event){
+
+            if(this.config.count_installed_progress != 100)
+            {
+                vaah().toastErrors(['Dependencies are not installed.']);
+                return false;
+            } else
+            {
+                this.$router.push({name: 'setup.install.account'})
+            }
+
+        },
+        //---------------------------------------------------------------------
+        skipDependencies: function () {
+            this.config.count_installed_progress = 100;
+        },
+        //---------------------------------------------------------------------
+
+        //---------------------------------------------------------------------
+        async installDependencies() {
+
+            let index;
+            let dependency;
+
+
+            this.config.count_installed_dependencies = 0;
+            this.config.count_installed_progress = 0;
+
+            if(this.config.dependencies)
+            {
+                this.is_btn_loading_dependency = true;
+                let dependencies = this.config.dependencies;
+                for(index in dependencies)
+                {
+                    dependency = dependencies[index];
+                    await this.installDependency(dependency);
+                }
+
+                this.is_btn_loading_dependency = false;
+            }
+
+
+
+        },
+        //---------------------------------------------------------------------
+        async installDependency(dependency) {
+            this.active_dependency = dependency;
+
+            let params = {
+                params: {
+                    name: this.active_dependency.name,
+                    slug: this.active_dependency.slug,
+                    type: this.active_dependency.type,
+                    source: this.active_dependency.source,
+                    download_link: this.active_dependency.download_link,
+                    import_sample_data: this.active_dependency.import_sample_data,
+                },
+                method: 'post',
+            };
+            vaah().ajax(
+                this.ajax_url+'/install/dependencies',
+                this.afterInstallDependency,
+                params
+            );
+        },
+        //---------------------------------------------------------------------
+        afterInstallDependency: function (data, res) {
+            if(data)
+            {
+                console.log('--->this.active_dependency', this.active_dependency);
+                if(this.active_dependency)
+                {
+                    this.active_dependency.installed = true;
+                    vaah().updateArray(this.config.dependencies, this.active_dependency);
+
+                    this.config.count_installed_dependencies = this.config.count_installed_dependencies+1;
+                    let progress = this.config.count_installed_dependencies/this.config.count_total_dependencies;
+
+                    progress =  Math.round(progress*100);
+                    this.config.count_installed_progress = progress;
+
+                    this.active_dependency = null;
+                }
+
+            }
         },
         //---------------------------------------------------------------------
         routeAction(name)
