@@ -60,6 +60,7 @@ onMounted(async () => {
                         v-model="store.config.account.email"
                         name="account-email"
                         data-testid="account-email"
+                        @blur="store.generateUsername()"
                         placeholder="Enter email"
                         class="p-inputtext-sm"/>
                 </div>
