@@ -107,6 +107,12 @@ export const useSetupStore = defineStore({
             }
         ],
         show_progress_bar: false,
+        show_reset_modal: false,
+        reset_inputs: {
+            confirm: null,
+            delete_dependencies: null,
+            delete_media: null,
+        },
     }),
     getters: {},
     actions: {
@@ -198,6 +204,26 @@ export const useSetupStore = defineStore({
         },
         //---------------------------------------------------------------------
         afterClearCache: function (data, res) {
+            this.hideProgress();
+        },
+        //---------------------------------------------------------------------
+        confirmReset: function () {
+
+            this.showProgress();
+
+            let params = {
+                params: this.reset_inputs,
+                method: 'post'
+            };
+
+            vaah().ajax(
+                this.ajax_url+'/reset/confirm',
+                this.afterConfirmReset,
+                params
+            )
+        },
+        //---------------------------------------------------------------------
+        afterConfirmReset: function () {
             this.hideProgress();
         },
         //---------------------------------------------------------------------

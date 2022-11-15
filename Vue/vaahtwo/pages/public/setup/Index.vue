@@ -88,6 +88,7 @@ onMounted(async () => {
                         </p>
                         <div v-if="store.status" class="flex justify-content-between align-items-center mt-4">
                             <Button v-if="store.status.is_user_administrator"
+                                    @click="store.show_reset_modal = true"
                                     label="Reset"
                                     icon="pi pi-refresh"
                                     class="p-button-danger" />
@@ -104,6 +105,66 @@ onMounted(async () => {
         </div>
 
         <Footer />
+
+        <Dialog header="Reset"
+                v-model:visible="store.show_reset_modal"
+                :breakpoints="{'960px': '75vw', '640px': '90vw'}"
+                :style="{width: '50vw'}">
+
+
+            <Message severity="error" icon="null" :closable="false">
+                <p>You are going to <b>RESET</b> the application. This will remove all the data of the application.</p>
+                <p>After reset you <b>CANNOT</b> be restored data! Are you <b>ABSOLUTELY</b> sure?</p>
+            </Message>
+
+            <div>
+                <p>This action can lead to data loss. To prevent accidental actions we ask you to confirm your intention.</p>
+
+                <p class="has-margin-bottom-5">
+                    Please type <b>RESET</b> to proceed and click Confirm button or close this modal to cancel.
+                </p>
+            </div>
+
+            <InputText v-model="store.reset_inputs.confirm"
+                       placeholder="Type RESET to Confirm" class="p-inputtext-md"
+                       required
+            />
+
+            <div class="mt-2" v-if="store.reset_inputs.confirm === 'RESET' ">
+                <div class="field-checkbox">
+                    <Checkbox inputId="delete_media"
+                              v-model="store.reset_inputs.delete_media"
+                              value="true"
+                    />
+                    <label>
+                        Delete Files From Storage (storage/app/public)Delete Files From Storage (storage/app/public)
+                    </label>
+                </div>
+
+                <div class="field-checkbox">
+                    <Checkbox inputId="delete_dependencies"
+                              v-model="store.reset_inputs.delete_dependencies"
+                              value="true"
+                    />
+                    <label>
+                        Delete Dependencies (Modules & Themes)
+                    </label>
+                </div>
+            </div>
+
+            <template #footer>
+                <Button label="No"
+                        icon="pi pi-times"
+                        @click="store.show_reset_modal = false"
+                        class="p-button-text"/>
+
+                <Button class="p-button-danger"
+                        label="Confirm"
+                        icon="pi pi-check"
+                        @click="store.confirmReset()"
+                        autofocus />
+            </template>
+        </Dialog>
     </div>
 </template>
 
