@@ -141,7 +141,7 @@ onMounted(async () => {
                               value="true"
                     />
                     <label>
-                        Delete Files From Storage (storage/app/public)
+                        Delete Files From Storage (storage/app/public)Delete Files From Storage (storage/app/public)
                     </label>
                 </div>
 
