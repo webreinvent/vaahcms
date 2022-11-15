@@ -74,6 +74,7 @@ export const useRootStore = defineStore({
 
             }
         },
+        //-----------------------------------------------------------------------
         async to(path)
         {
             this.$router.push({path: path})

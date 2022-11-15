@@ -20,10 +20,10 @@ Route::group(
         Route::post( '/signin/post', 'PublicController@postLogin' )
             ->name( 'vh.backend.signin.post' );
         //------------------------------------------------
-        Route::post( '/sendResetCode/post', 'PublicController@postSendResetCode' )
+        Route::post( '/auth/sendResetCode/post', 'PublicController@postSendResetCode' )
             ->name( 'vh.backend.sendResetCode.post' );
         //------------------------------------------------
-        Route::post( '/resetPassword/post', 'PublicController@postResetPassword' )
+        Route::post( '/auth/resetPassword/post', 'PublicController@postResetPassword' )
             ->name( 'vh.backend.resetPassword.post' );
         //------------------------------------------------
         Route::post( '/signin/generate/otp', 'PublicController@postGenerateOTP' );
