@@ -1,11 +1,14 @@
 <script setup>
 
 import {onMounted, reactive} from "vue";
+import Footer from "../../components/organisms/Footer.vue"
 
 
 import { useAuthStore } from '../../stores/auth';
 const auth = useAuthStore();
-import Footer from "../../components/organisms/Footer.vue"
+
+import { useRootStore } from '../../stores/root';
+const root = useRootStore();
 
 
 onMounted(async () => {
@@ -16,8 +19,8 @@ onMounted(async () => {
 <template>
     <Card style="width: 28rem;max-width: 100vw; margin-bottom: 2em" class="m-auto">
         <template #title>
-            <div class="content text-center" v-if="auth && auth.assets">
-                <img :src="auth.assets.backend_logo_url" alt="" class="w-5 mb-2">
+            <div class="content text-center" v-if="root && root.assets">
+                <img :src="root.assets.backend_logo_url" alt="" class="w-5 mb-2">
                 <h4 class="text-xl font-semibold line-height-2 mb-2">Reset password?</h4>
                 <p class="text-sm text-gray-600 font-semibold mb-5">You can recover your password from here.</p>
             </div>
