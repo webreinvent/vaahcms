@@ -2,14 +2,12 @@ import {defineStore, acceptHMRUpdate} from 'pinia';
 import {vaah} from '../vaahvue/pinia/vaah'
 
 let base_url = document.getElementsByTagName('base')[0].getAttribute("href");
-let ajax_url = base_url;
+let ajax_url = base_url+'/auth';
 let json_url = ajax_url + "/json";
 
 export const useAuthStore = defineStore({
     id: 'auth',
     state: () => ({
-        assets: null,
-        assets_is_fetching: true,
         ajax_url: ajax_url,
         json_url: json_url,
         gutter: 20,
@@ -28,33 +26,6 @@ export const useAuthStore = defineStore({
     }),
     getters: {},
     actions: {
-        async getAssets() {
-
-            if(this.assets_is_fetching === true){
-                this.assets_is_fetching = false;
-
-                let params = {
-                };
-
-                vaah().ajax(
-                    this.json_url+'/assets',
-                    this.afterGetAssets,
-                    params
-                );
-            }
-        },
-
-
-        //---------------------------------------------------------------------
-        afterGetAssets(data, res)
-        {
-            if(data)
-            {
-                this.assets = data;
-
-            }
-        },
-        //-----------------------------------------------------------------------
         sendCode()
         {
             this.is_forgot_password_btn_loading = true;
