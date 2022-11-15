@@ -405,8 +405,14 @@ export const useSetupStore = defineStore({
             }
         },
         //---------------------------------------------------------------------
-
-
+        generateUsername()
+        {
+            let email = this.config.account.email.split('@');
+            if(email[0])
+            {
+                this.config.account.username = email[0];
+            }
+        },
         //---------------------------------------------------------------------
         createAccount: function () {
             this.config.btn_is_account_creating = true;
