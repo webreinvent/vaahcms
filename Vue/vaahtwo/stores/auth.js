@@ -2,7 +2,7 @@ import {defineStore, acceptHMRUpdate} from 'pinia';
 import {vaah} from '../vaahvue/pinia/vaah'
 
 let base_url = document.getElementsByTagName('base')[0].getAttribute("href");
-let ajax_url = base_url+'/auth';
+let ajax_url = base_url;
 let json_url = ajax_url + "/json";
 
 export const useAuthStore = defineStore({
@@ -23,6 +23,26 @@ export const useAuthStore = defineStore({
             password: null,
             password_confirmation: null,
         },
+        is_btn_loading: false,
+        no_of_login_attempt: null,
+        max_attempts_of_login: 5,
+        sign_in_items: {
+            type: 'password',
+            email: null,
+            password: null,
+            attempts: 0,
+            login_otp:null,
+            max_attempts: 5,
+            is_password_disabled: null,
+        },
+        verification: {
+            otp_0: null,
+            otp_1: null,
+            otp_2: null,
+            otp_3: null,
+            otp_4: null,
+            otp_5: null,
+        },
     }),
     getters: {},
     actions: {
@@ -34,7 +54,7 @@ export const useAuthStore = defineStore({
                 method: 'post',
             };
             vaah().ajax(
-                this.ajax_url+'/sendResetCode/post',
+                this.ajax_url+'/auth/sendResetCode/post',
                 this.sendCodeAfter,
                 params
             );
@@ -58,7 +78,7 @@ export const useAuthStore = defineStore({
                 method: 'post',
             };
             vaah().ajax(
-                this.ajax_url+'/resetPassword/post',
+                this.ajax_url+'/auth/resetPassword/post',
                 this.resetPasswordAfter,
                 params
             );
@@ -70,6 +90,58 @@ export const useAuthStore = defineStore({
             if(data)
             {
                 this.$router.push({ name: 'dashboard' })
+            }
+        },
+        //-----------------------------------------------------------------------
+        signIn () {
+            this.no_of_login_attempt++;
+            this.is_btn_loading = true;
+
+            let params = {
+                params: this.sign_in_items,
+                method: 'post'
+            };
+
+            vaah().ajax(
+                this.ajax_url+'/signin/post',
+                this.signInAfter,
+                params
+            );
+        },
+        //---------------------------------------------------------------------
+        signInAfter (data, res) {
+            this.is_btn_loading = false
+            console.log(data.redirect_url);
+
+            if(data) {
+                if(data.verification_response && data.verification_response.status
+                    && data.verification_response.status === 'success') {
+                    this.is_verification_form_visible = true;
+                } else {
+                    window.location = data.redirect_url+'#/dashboard';
+                }
+            }
+        },
+        //-----------------------------------------------------------------------
+        generateOTP: function () {
+            this.is_btn_loading = true;
+
+            let params = {
+                params: this.sign_in_items,
+                method: 'post'
+            };
+
+            vaah().ajax(
+                this.ajax_url+'/signin/generate/otp',
+                this.generateOTPAfter,
+                params
+            );
+        },
+        //---------------------------------------------------------------------
+        generateOTPAfter: function (data, res) {
+            this.is_btn_loading = false;
+            if (data) {
+
             }
         },
         //-----------------------------------------------------------------------

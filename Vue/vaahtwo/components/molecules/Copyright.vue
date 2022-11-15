@@ -5,7 +5,7 @@ const root = useRootStore();
 </script>
 
 <template>
-    <div v-if="root.assets" class="text-xs text-center mt-8">
+    <div v-if="root.assets" class="text-xs text-center">
 
         <p v-if="root.assets.server">
             &copy; {{root.assets.server.current_year}}.
