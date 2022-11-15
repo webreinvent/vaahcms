@@ -78,10 +78,8 @@ onMounted(async () => {
                             <h4 class="text-xl font-semi-bold">Reset</h4>
                             <div class="icons flex">
                                 <div class="m-1">
-                                    <Button class="bg-gray-200 p-2 p-button-rounded p-button-outlined"
-                                            icon="pi pi-refresh"
-                                            v-tooltip.top="'Refresh'"
-                                            @click="store.getStatus()" />
+                                    <i class="bg-gray-200 p-2 border-rounded pi pi-refresh"
+                                       @click="store.getStats()"></i>
                                 </div>
                             </div>
                         </div>
