@@ -87,17 +87,17 @@ onMounted(async () => {
                             You can reset/re-install the application if you're logged in from "Administrator" account.
                         </p>
                         <div v-if="store.status" class="flex justify-content-between align-items-center mt-4">
-                            <Button
+                            <Button v-if="store.status.is_user_administrator"
                                     @click="store.show_reset_modal = true"
                                     label="Reset"
                                     icon="pi pi-refresh"
                                     class="p-button-danger" />
 
-<!--                            <Button v-else-->
-<!--                                    label="Reset"-->
-<!--                                    icon="pi pi-refresh"-->
-<!--                                    class="p-button-danger"-->
-<!--                                    disabled />-->
+                            <Button v-else
+                                    label="Reset"
+                                    icon="pi pi-refresh"
+                                    class="p-button-danger"
+                                    disabled />
                         </div>
                     </template>
                 </Card>
