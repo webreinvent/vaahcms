@@ -77,7 +77,8 @@ onMounted(async () => {
                             <h4 class="text-xl font-semi-bold">Reset</h4>
                             <div class="icons flex">
                                 <div class="m-1">
-                                    <i class="bg-gray-200 p-2 border-rounded pi pi-refresh"></i>
+                                    <i class="bg-gray-200 p-2 border-rounded pi pi-refresh"
+                                       @click="store.getStats()"></i>
                                 </div>
                             </div>
                         </div>
