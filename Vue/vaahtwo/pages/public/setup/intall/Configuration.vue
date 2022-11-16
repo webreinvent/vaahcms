@@ -111,7 +111,8 @@ onMounted(async () => {
       <div class="col-12 md:col-4">
         <h5 class="text-left p-1 title is-6">Database Name</h5>
         <div class="p-inputgroup">
-            <InputText v-model="store.config.env.db_database" placeholder="Database Name"
+            <InputText v-model="store.config.env.db_database"
+                       placeholder="Database Name"
                        class="p-inputtext-sm"/>
         </div>
       </div>

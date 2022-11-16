@@ -257,6 +257,7 @@ export const useSetupStore = defineStore({
                     if( data[key])
                     {
                         this.config.env[key] = data[key];
+                        this.config.env.db_password = null;
                     }
                 }
 
