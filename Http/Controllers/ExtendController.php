@@ -77,7 +77,7 @@ class ExtendController extends Controller
         if(\Auth::user()->hasPermission('has-access-of-dashboard'))
         {
             $list[0] = [
-                'link' => self::$link,
+                'to' => self::$link,
                 'icon' => 'tachometer-alt',
                 'label'=> 'Dashboard',
             ];
@@ -90,7 +90,7 @@ class ExtendController extends Controller
             \Auth::user()->hasPermission('has-access-of-permissions-section'))
         {
             $list[1] = [
-                'link' => '#',
+                'to' => '#',
                 'icon' => 'users-cog',
                 'label'=> 'Users & Access',
             ];
@@ -99,7 +99,7 @@ class ExtendController extends Controller
         if(\Auth::user()->hasPermission('has-access-of-registrations-section'))
         {
             $list[1]['child'][] =  [
-                'link' => self::$link."/registrations/",
+                'to' => self::$link."/registrations/",
                 'icon' => 'user-plus',
                 'label'=> 'Registration'
             ];
@@ -108,7 +108,7 @@ class ExtendController extends Controller
         if(\Auth::user()->hasPermission('has-access-of-users-section'))
         {
             $list[1]['child'][] =  [
-                'link' => self::$link."/users/",
+                'to' => self::$link."/users/",
                 'icon' => 'users',
                 'label'=> 'Users'
             ];
@@ -117,7 +117,7 @@ class ExtendController extends Controller
         if(\Auth::user()->hasPermission('has-access-of-roles-section'))
         {
             $list[1]['child'][] =  [
-                'link' => self::$link."/roles/",
+                'to' => self::$link."/roles/",
                 'icon' => 'user-tag',
                 'label'=> 'Roles'
             ];
@@ -127,7 +127,7 @@ class ExtendController extends Controller
         if(\Auth::user()->hasPermission('has-access-of-permissions-section'))
         {
             $list[1]['child'][] =  [
-                'link' => self::$link."/permissions/",
+                'to' => self::$link."/permissions/",
                 'icon' => 'key',
                 'label'=> 'Permissions'
             ];
@@ -138,7 +138,7 @@ class ExtendController extends Controller
             \Auth::user()->hasPermission('has-access-of-theme-section'))
         {
             $list[2] = [
-                'link' => "#",
+                'to' => "#",
                 'icon' => "cubes",
                 'label'=> 'Extend',
             ];
@@ -147,7 +147,7 @@ class ExtendController extends Controller
         if(\Auth::user()->hasPermission('has-access-of-module-section'))
         {
             $list[2]['child'][] =  [
-                'link' => self::$link."/modules/",
+                'to' => self::$link."/modules/",
                 'icon' => 'cube',
                 'label'=> 'Modules'
             ];
@@ -156,7 +156,7 @@ class ExtendController extends Controller
         if(\Auth::user()->hasPermission('has-access-of-theme-section'))
         {
             $list[2]['child'][] =  [
-                'link' => self::$link."/themes/",
+                'to' => self::$link."/themes/",
                 'icon' => 'palette',
                 'label'=> 'Themes'
             ];
@@ -166,42 +166,42 @@ class ExtendController extends Controller
         if(\Auth::user()->hasPermission('has-access-of-setting-section'))
         {
             $list[3] = [
-                'link' => '#',
+                'to' => '#',
                 'icon'=> 'cog',
                 'label'=> 'Settings',
                 'child' => [
                     [
-                        'link' => self::$link."/settings/general",
+                        'to' => self::$link."/settings/general",
                         'icon' => 'tools',
                         'label'=> 'General'
                     ],
                     [
-                        'link' => self::$link."/settings/user-settings",
+                        'to' => self::$link."/settings/user-settings",
                         'icon' => 'users-cog',
                         'label'=> 'User Settings'
                     ],
                     [
-                        'link' => self::$link."/settings/env-variables",
+                        'to' => self::$link."/settings/env-variables",
                         'icon' => 'code',
                         'label'=> 'Env Variables'
                     ],
                     [
-                        'link' => self::$link."/settings/localization",
+                        'to' => self::$link."/settings/localization",
                         'icon' => 'language',
                         'label'=> 'Localization'
                     ],
                     [
-                        'link' => self::$link."/settings/notifications",
+                        'to' => self::$link."/settings/notifications",
                         'icon' => 'bell',
                         'label'=> 'Notifications'
                     ],
                     [
-                        'link' => self::$link."/settings/update",
+                        'to' => self::$link."/settings/update",
                         'icon' => 'download',
                         'label'=> 'Update'
                     ],
                     [
-                        'link' => self::$base."setup",
+                        'to' => self::$base."setup",
                         'icon' => 'retweet',
                         'label'=> 'Reset'
                     ],
@@ -212,7 +212,7 @@ class ExtendController extends Controller
         if(\Auth::user()->hasPermission('has-access-of-advanced-section'))
         {
             $list[4] = [
-                'link' => self::$link."/advanced/logs",
+                'to' => self::$link."/advanced/logs",
                 'icon'=> 'stethoscope',
                 'label'=> 'Advanced',
 
@@ -225,17 +225,17 @@ class ExtendController extends Controller
         if(\Auth::user()->hasPermission('has-access-of-media-section'))
         {
             $list[5] = [
-                'link' => '#',
+                'to' => '#',
                 'icon'=> 'photo-video',
                 'label'=> 'Manage',
                 'child' => [
                     [
-                        'link' => self::$link."/manage/media",
+                        'to' => self::$link."/manage/media",
                         'icon' => 'file',
                         'label'=> 'Media'
                     ],
                     [
-                        'link' => self::$link."/manage/taxonomies",
+                        'to' => self::$link."/manage/taxonomies",
                         'icon' => 'project-diagram',
                         'label'=> 'Taxonomies'
                     ]
