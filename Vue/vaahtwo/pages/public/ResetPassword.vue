@@ -53,6 +53,8 @@ const auth = useAuthStore();
                 <div class="field flex justify-content-between align-items-center">
                     <Button
                         label="Recover"
+                        name="reset_password-reset_password_btn"
+                        data-testid="reset_password-reset_password_btn"
                         class="p-button-sm"
                         @click="auth.resetPassword()"
                         :loading="auth.is_reset_password_btn_loading"/>

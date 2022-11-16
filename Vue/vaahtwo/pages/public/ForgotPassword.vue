@@ -32,6 +32,8 @@ const auth = useAuthStore();
             <div class="field flex justify-content-between align-items-center">
                 <Button
                     label="Send Code"
+                    name="forgot_password-send_code_btn"
+                    data-testid="forgot_password-send_code_btn"
                     class="p-button-sm"
                     native-type="submit"
                     @click="auth.sendCode()"
