@@ -25,7 +25,7 @@ if (mix.inProduction()) {
     //mix.setResourceRoot(publish_folder+'/vaahtwo/build')
     mix.setPublicPath(publish_folder);
 
-    mix.sass(theme_path+'/scss/build.scss', theme_path+'build/');
+    mix.sass(theme_path+'scss/build.scss', theme_path+'build/');
 
     /*mix.combine([
        // theme_path+'/css/lara-light-theme/theme.css',
