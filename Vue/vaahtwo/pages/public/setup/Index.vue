@@ -6,6 +6,7 @@ import { useSetupStore } from '../../../stores/setup'
 const store = useSetupStore();
 import { useRootStore } from '../../../stores/root'
 import Footer from "../../../components/organisms/Footer.vue"
+import Logo from "../../../components/molecules/Logo.vue";
 
 const root = useRootStore();
 
@@ -19,7 +20,7 @@ onMounted(async () => {
 
 <template>
     <div v-if="store && store.assets && root && root.assets" class="setup text-center">
-        <img src="http://irisrishu.com/vaahcms/backend/vaahone/images/vaahcms-logo.svg" alt="" class="w-1 mb-5">
+        <Logo/>
         <div class="grid justify-content-center">
             <div v-if="store.assets.is_installed" class="col-12">
                 <Message severity="success">VaahCMS is successfully setup</Message>
