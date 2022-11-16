@@ -3,6 +3,7 @@ import {onMounted, reactive, ref} from "vue";
 import { useRootStore } from '../../stores/root'
 import Footer from '../../components/organisms/Footer.vue'
 import {vaah} from "../../vaahvue/pinia/vaah";
+import Logo from "../../components/molecules/Logo.vue";
 import { useAuthStore } from "../../stores/auth";
 
 const root = useRootStore();
@@ -22,10 +23,7 @@ onMounted(async () => {
                     <Card style="width: 28rem;max-width: 100vw; margin-bottom: 2em" class="m-auto">
                         <template #title>
                             <div class="content text-center">
-                                <img
-                                    :src="root.assets.backend_logo_url"
-                                    alt=""
-                                    class="w-5 mb-2">
+                                <Logo/>
                                 <h4 class="text-xl font-semibold line-height-2 mb-2">Welcome Back</h4>
                                 <p class="text-sm text-gray-600 font-semibold">Please Sign in to continue</p>
                             </div>
