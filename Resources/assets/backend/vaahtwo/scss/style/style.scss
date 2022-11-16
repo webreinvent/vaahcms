@@ -1,0 +1,440 @@
+@use 'sass:math';
+@import "./../global/all.scss";
+@import "./../primevue-tailwind-light/variables.scss";
+
+//Resets
+p,h1,h2,h3,h4,h5,h6,a,div{
+  margin:0;
+}
+
+//sidebar
+.sidebar{
+  min-height:max-content;
+  max-height:calc(100vh - 80px);
+  overflow-y:auto;
+  position:fixed;
+  top: 75px;
+  left:50px;
+}
+
+//level
+.level{
+  display:flex;
+  align-items: center;
+  justify-content: space-between;
+
+  code {
+    border-radius: 5px;
+  }
+
+  img {
+    display: inline-block;
+    vertical-align: top;
+  }
+
+  // Modifiers
+  &.is-mobile {
+    display: flex;
+
+    .level-left,
+    .level-right {
+      display: flex;
+    }
+
+    .level-left + .level-right {
+      margin-top: 0;
+    }
+
+    .level-item {
+      &:not(:last-child) {
+        margin-bottom: 0;
+      }
+
+      &:not(.is-narrow) {
+        flex-grow: 1;
+      }
+    }
+  }
+
+  // Responsiveness
+  @media screen and (min-width: 769px), print {
+    display: flex;
+
+    & > .level-item {
+      &:not(.is-narrow) {
+        flex-grow: 1;
+      }
+    }
+  }
+}
+.level-item {
+  align-items: center;
+  display: flex;
+  flex-basis: auto;
+  flex-grow: 0;
+  flex-shrink: 0;
+  justify-content: center;
+
+  .title,
+  .subtitle {
+    margin-bottom: 0;
+  }
+
+  // Responsiveness
+  @media screen and (max-width: 768px) {
+    &:not(:last-child) {
+      margin-bottom: 5px;
+    }
+  }
+}
+.level-left,
+.level-right {
+  flex-basis: auto;
+  flex-grow: 0;
+  flex-shrink: 0;
+
+  .level-item {
+    // Modifiers
+    &.is-flexible {
+      flex-grow: 1;
+    }
+
+    // Responsiveness
+    @media screen and (min-width: 769px), print {
+      &:not(:last-child) {
+        margin-right:1rem;
+      }
+    }
+  }
+}
+.level-left {
+  align-items: center;
+  justify-content: flex-start;
+  display: flex;
+
+  // Responsiveness
+  @media screen and (max-width: 768px) {
+    & + .level-right {
+      margin-top: 1.5rem;
+    }
+  }
+
+  @media screen and (min-width: 769px) {
+    display: flex;
+  }
+}
+.level-right {
+  align-items: center;
+  justify-content: flex-end;
+  display: flex;
+}
+
+//Media
+$media-border-color: $shade500 !default;
+$media-border-size: 1px !default;
+$media-spacing: 1rem !default;
+$media-spacing-large: 1.5rem !default;
+$media-content-spacing: 0.75rem !default;
+$media-level-1-spacing: 0.75rem !default;
+$media-level-1-content-spacing: 0.5rem !default;
+$media-level-2-spacing: 0.5rem !default;
+
+.media {
+  align-items: flex-start;
+  display: flex;
+  text-align: inherit;
+
+  .content:not(:last-child) {
+    margin-bottom: $media-content-spacing;
+  }
+
+  .media {
+    border-top: $media-border-size solid $media-border-color;
+    display: flex;
+    padding-top: $media-level-1-spacing;
+
+    .content:not(:last-child),
+    .control:not(:last-child) {
+      margin-bottom: $media-level-1-content-spacing;
+    }
+
+    .media {
+      padding-top: $media-level-2-spacing;
+
+      & + .media {
+        margin-top: $media-level-2-spacing;
+      }
+    }
+  }
+
+  & + .media {
+    border-top: $media-border-size solid $media-border-color;
+    margin-top: $media-spacing;
+    padding-top: $media-spacing;
+  }
+
+  // Sizes
+  &.is-large {
+    & + .media {
+      margin-top: $media-spacing-large;
+      padding-top: $media-spacing-large;
+    }
+  }
+}
+
+.media-left,
+.media-right {
+  flex-basis: auto;
+  flex-grow: 0;
+  flex-shrink: 0;
+}
+
+.media-left {
+
+}
+
+.media-right {
+
+}
+
+.media-content {
+  flex-basis: auto;
+  flex-grow: 1;
+  flex-shrink: 1;
+  text-align: inherit;
+}
+@media screen and (max-width: 768px){
+  .media-content {
+    overflow-x: auto;
+  }
+}
+
+
+//Plain Buttons
+.p-button-plain{
+  background:$plainButtonActiveBgColor;
+  border-color:$plainButtonActiveBgColor;
+  &:hover{
+    background:$plainButtonHoverBgColor !important;
+    border-color:$plainButtonHoverBgColor !important;
+  }
+}
+
+//light-buttons
+.p-button{
+  &.is-light{
+    background:$primaryLighterColor;
+    color:$primaryDarkColor;
+  }
+  &.p-button-secondary{
+    &.is-light{
+      background:$secondaryLighterColor;
+      color:$secondaryDarkColor;
+    }
+  }
+  &.p-button-success{
+    &.is-light{
+      background:$successLighterColor;
+      color:$successDarkColor;
+    }
+  }
+  &.p-button-info{
+    &.is-light{
+      background:$infoLighterColor;
+      color:$infoDarkColor;
+    }
+  }
+  &.p-button-warning{
+    &.is-light{
+      background:$warningLighterColor;
+      color:$warningDarkColor;
+    }
+  }
+  &.p-button-help{
+    &.is-light{
+      background:$helpLighterColor;
+      color:$helpDarkColor;
+    }
+  }
+  &.p-button-danger{
+    &.is-light{
+      background:$dangerLighterColor;
+      color:$dangerDarkColor;
+    }
+  }
+  &.p-button-plain{
+    &.is-light{
+      background:$plainButtonActiveBgColor;
+      border-color: $secondaryDarkColor;
+      color:$secondaryDarkColor;
+    }
+  }
+}
+
+
+.color-sample-box{
+  min-width: 100px;
+  min-height: 100px;
+    &.primary{
+      background:$primaryColor;
+      &.is-light{
+        background:$primaryLightColor
+      }
+      &.is-lighter{
+        background:$primaryLighterColor
+      }
+      &.is-dark{
+        background:$primaryDarkColor
+      }
+      &.is-darker{
+        background:$primaryDarkerColor
+      }
+    }
+    &.danger{
+      background:$dangerColor;
+      &.is-light{
+      background:$dangerLightColor;
+      }
+      &.is-lighter{
+        background:$dangerLighterColor;
+      }
+      &.is-dark{
+        background:$dangerDarkColor
+      }
+      &.is-darker{
+        background:$dangerDarkerColor
+      }
+  }
+    &.info{
+      background:$infoColor;
+      &.is-light{
+        background:$infoLightColor
+      }
+      &.is-lighter{
+        background:$infoLighterColor
+      }
+      &.is-dark{
+        background:$infoDarkColor
+      }
+      &.is-darker{
+        background:$infoDarkerColor
+      }
+    }
+    &.warning{
+      background:$warningColor;
+      &.is-light{
+        background:$warningLightColor
+      }
+      &.is-lighter{
+        background:$warningLighterColor
+      }
+      &.is-dark{
+        background:$warningDarkColor
+      }
+      &.is-darker{
+        background:$warningDarkerColor
+      }
+    }
+  &.success{
+    background:$successColor;
+    &.is-light{
+      background:$successLightColor
+    }
+    &.is-lighter{
+      background:$successLighterColor
+    }
+    &.is-dark{
+      background:$successDarkColor
+    }
+    &.is-darker{
+      background:$successDarkerColor
+    }
+  }
+  &.help{
+    background:$helpColor;
+    &.is-light{
+      background:$helpLightColor
+    }
+    &.is-lighter{
+      background:$helpLighterColor
+    }
+    &.is-dark{
+      background:$helpDarkColor
+    }
+    &.is-darker{
+      background:$helpDarkerColor
+    }
+  }
+  &.secondary{
+    background:$secondaryColor;
+    &.is-light{
+      background:$secondaryLightColor
+    }
+    &.is-lighter{
+      background:$secondaryLighterColor
+    }
+    &.is-dark{
+      background:$secondaryDarkColor
+    }
+    &.is-darker{
+      background:$secondaryDarkerColor
+    }
+  }
+}
+
+//Switch small
+.p-inputswitch{
+  &.is-small{
+    width:$input-switch-small-width;
+    height:$input-switch-small-height;
+    .p-inputswitch-slider{
+      &:before{
+        width:$input-switch-small-handle-width;
+        height:$input-switch-small-handle-height;
+        left: $input-switch-small-slider-padding;
+        margin-top: math.div(-1 * $input-switch-small-handle-height, 2);
+      }
+    }
+    &.p-inputswitch-checked{
+      .p-inputswitch-slider{
+        &:before{
+          transform: translateX(0.8rem);
+        }
+      }
+    }
+  }
+}
+
+
+//radio button small
+.p-radiobutton{
+  &.is-small{
+    width:$radiobutton-small-width;
+    height:$radiobutton-small-height;
+    .p-radiobutton-box{
+      width:$radiobutton-small-width;
+      height:$radiobutton-small-height;
+    }
+  }
+}
+
+//checkbox small
+.p-checkbox{
+  &.is-small{
+    width: $checkbox-small-width;
+    height: $checkbox-small-height;
+    .p-checkbox-box{
+      width:$checkbox-small-width;
+      height:$checkbox-small-height;
+    }
+
+  }
+}
+
+
+//card
+.p-card{
+  .p-card-header{
+    padding:$cardHeaderPadding
+  }
+}

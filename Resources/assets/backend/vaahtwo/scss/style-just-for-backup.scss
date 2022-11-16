@@ -1,0 +1,154 @@
+@import "./tailwind-light";
+
+.p-message.p-message-error {
+    background: #f7c7c7;
+    border: none;
+    border-width: 0 0 0 6px;
+    color: #DC2626;
+}
+
+.vaahtwo{
+    @import "_draggable";
+    .p-component-overlay-enter{
+        z-index: 1100 !important;
+    }
+    .p-card{
+        border-radius: 0.25rem;
+        box-shadow: 0 0.5em 1em -0.125em rgb(10 10 10 / 10%), 0 0 0 1px rgb(10 10 10 / 2%);
+        .p-card-header{
+            box-shadow: 0 0.125em 0.25em rgb(10 10 10 / 10%);
+            padding: 10px 1.5rem;
+        }
+    }
+    .p-menu{
+        border-radius: 0.25rem;
+        box-shadow: 0 0.5em 1em -0.125em rgb(10 10 10 / 10%), 0 0 0 1px rgb(10 10 10 / 2%);
+        border-color: transparent;
+    }
+    .main-container{
+        width: calc(100% - 210px);
+        margin: 70px 5px 0 auto;
+    }
+    .top-nav-fixed{
+        width: 100%;
+        margin-left: auto;
+        position: fixed;
+        padding-bottom: 4px;
+        right: 0;
+        top: 0px;
+        z-index: 100;
+        .navbar-logo{
+            width: 200px;
+            img{
+                max-height: 30px;
+                width: 140px;
+                margin: auto;
+            }
+        }
+    }
+    .sidebar{
+        position: fixed;
+        top: 65px;
+        left: 0;
+        width: 200px;
+        z-index: 100;
+        max-height: calc(100vh - 60px);
+        overflow-y: auto;
+        &::-webkit-scrollbar {
+            display: none;
+        }
+        &::-webkit-scrollbar-track {
+            box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+        }
+        &::-webkit-scrollbar-thumb {
+            background-color: darkgrey;
+            outline: 1px solid slategrey;
+        }
+        .p-panelmenu .p-panelmenu-panel:last-child .p-panelmenu-content{
+            border-radius: 0;
+        }
+        .p-panelmenu .p-panelmenu-panel:first-child .p-panelmenu-header > a{
+            border-radius:0;
+        }
+    }
+}
+
+.dragArea{
+
+}
+
+body{
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 0.98rem;
+}
+
+.p-panel-header{
+    padding: 0.5rem 0.8rem !important;
+}
+
+.p-inputswitch-sm{
+    height: 1.2rem !important;
+}
+
+.p-inputswitch-sm .p-inputswitch-slider:before{
+    height: 1rem !important;
+    margin-top: -0.51rem !important;
+}
+
+.p-button-tiny{
+    padding: 0.1rem 0.7rem !important;
+}
+.p-button-tiny .pi{
+    font-size: 0.95rem  !important;
+}
+.primevue table td, .primevue table th{
+    vertical-align: middle !important;
+}
+
+.p-datatable .p-inputswitch{
+    display: block !important;
+}
+
+.p-datatable .p-datatable-tbody > tr.p-highlight{
+    background: var(--blue-50) !important;
+    color: var(--text-color) !important;
+}
+
+.p-highlight .p-checkbox .p-checkbox-box{
+    border-color: var(--blue-600) !important;
+}
+
+.p-toast{
+    z-index: 1000 !important;
+}
+
+.p-container-toasts .p-toast-summary{
+    display: none !important;
+}
+
+.p-container-toasts .p-toast-detail{
+    margin: 0.2rem 0 0 0 !important;
+}
+
+
+.p-container-toasts .p-toast-message-content
+{
+    padding: 0.7rem !important;
+}
+
+.p-container-toasts .p-toast-message-icon
+{
+    display: none !important;
+}
+
+.p-component-overlay-enter{
+    z-index: 40 !important;
+}
+
+.p-sidebar-active{
+    z-index: 50 !important;
+}
+
+.p-container-message .p-message-text{
+    width: 100%  !important;
+}

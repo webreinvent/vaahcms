@@ -1,8 +1,8 @@
 @font-face {
     font-family: 'primeicons';
     font-display: block;
-    src: url('./fonts/primeicons.eot');
-    src: url('./fonts/primeicons.eot?#iefix') format('embedded-opentype'), url('./fonts/primeicons.ttf') format('truetype'), url('./fonts/primeicons.woff') format('woff'), url('./fonts/primeicons.svg?#primeicons') format('svg');
+    src: url('./primeicons.eot');
+    src: url('./primeicons.eot?#iefix') format('embedded-opentype'), url('./primeicons.ttf') format('truetype'), url('./primeicons.woff') format('woff'), url('./primeicons.svg?#primeicons') format('svg');
     font-weight: normal;
     font-style: normal;
 }
@@ -780,7 +780,7 @@
 .pi-refresh:before {
     content: "\e938";
 }
-  
+
 .pi-user:before {
     content: "\e939";
 }

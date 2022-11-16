@@ -21,27 +21,28 @@ if (mix.inProduction()) {
     console.log('IN PRODUCTION MODE');
     console.log('---------------------');
 
-    publish_folder = './../../Resources/assets/backend/';
+    publish_folder = './../../Resources/assets/backend/'+theme_path+'/';
+    //mix.setResourceRoot(publish_folder+'/vaahtwo/build')
     mix.setPublicPath(publish_folder);
 
-    //mix.sass(theme_path+'/scss/style.scss', theme_path+'build/');
+    mix.sass(theme_path+'/scss/build.scss', theme_path+'build/');
 
-    mix.combine([
+    /*mix.combine([
        // theme_path+'/css/lara-light-theme/theme.css',
         theme_path+'/css/tailwind-light/theme.css',
         theme_path+'/css/primevue.min.css',
         theme_path+'/css/primeflex-3.2.1/primeflex.css',
         theme_path+'/css/primeicons.css',
-    ], theme_path+'build/build.css');
+    ], theme_path+'build/build.css');*/
 
 
     /**
      * vaahone css
      */
-    theme_name = 'vaahone';
+    /*theme_name = 'vaahone';
     theme_path = './../../Resources/assets/backend/'+theme_name+'/';
     mix.sass(theme_path+'/scss/build.scss', theme_path+'css/');
-    mix.sass(theme_path+'/scss/style.scss', theme_path+'css/');
+    mix.sass(theme_path+'/scss/style.scss', theme_path+'css/');*/
 
 
 } else if(mode !== 'publish') {
@@ -71,6 +72,8 @@ if (mix.inProduction()) {
 
 
 console.log('mode--->', mode);
+
+
 
 if(mode === 'publish')
 {
