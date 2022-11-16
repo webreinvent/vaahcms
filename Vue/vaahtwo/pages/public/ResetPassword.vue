@@ -12,7 +12,7 @@ const root = useRootStore();
 
 
 onMounted(async () => {
-    await auth.getAssets();
+    await root.getAssets();
 });
 
 </script>

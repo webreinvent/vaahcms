@@ -11,7 +11,7 @@ import { useRootStore } from '../../stores/root';
 const root = useRootStore();
 
 onMounted(async () => {
-    await auth.getAssets();
+    await root.getAssets();
 });
 
 </script>
@@ -27,30 +27,26 @@ onMounted(async () => {
             </div>
         </template>
         <template #content>
-            <div>
-                <form>
-                    <div class="p-float-label field mb-5">
-                        <InputText
-                            v-model="auth.forgot_password_items.email"
-                            name="forgot_password-email"
-                            data-testid="forgot_password-email"
-                            id="email"
-                            class="w-full"
-                            type="text"/>
-                        <label for="email">Enter Email Address</label>
-                    </div>
-                    <div class="field flex justify-content-between align-items-center">
-                        <Button
-                            label="Send Code"
-                            class="p-button-sm"
-                            native-type="submit"
-                            @click="auth.sendCode()"
-                            :loading="auth.is_forgot_password_btn_loading"/>
-                        <router-link :to="{name:'sign.in'}">
-                            <Button label="Sign In" class="p-button-text p-button-sm"/>
-                        </router-link>
-                    </div>
-                </form>
+            <div class="p-float-label field mb-5">
+                <InputText
+                    v-model="auth.forgot_password_items.email"
+                    name="forgot_password-email"
+                    data-testid="forgot_password-email"
+                    id="email"
+                    class="w-full"
+                    type="text"/>
+                <label for="email">Enter Email Address</label>
+            </div>
+            <div class="field flex justify-content-between align-items-center">
+                <Button
+                    label="Send Code"
+                    class="p-button-sm"
+                    native-type="submit"
+                    @click="auth.sendCode()"
+                    :loading="auth.is_forgot_password_btn_loading"/>
+                <router-link :to="{name:'sign.in'}">
+                    <Button label="Sign In" class="p-button-text p-button-sm"/>
+                </router-link>
             </div>
         </template>
         <template #footer>
