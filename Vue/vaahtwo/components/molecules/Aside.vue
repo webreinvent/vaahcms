@@ -18,27 +18,12 @@ onMounted(async () => {
 
 });
 
-const items = ref([
-    {
-        label: 'VueThree',
-        items: [
-            {
-                label: 'Dashboard',
-                icon: 'fa-regular fa-chart-bar',
-                to: "/"
-            },
-
-        ]
-    },
-]);
-
 </script>
+
 <template>
 
-    <div v-if="height">
-        <Menu :model="items" />
-
-        {{ root.assets.extended_views.sidebar_menu.success }}
+    <div v-if="height && root && root.assets && root.assets.extended_views && root.assets.extended_views.sidebar_menu">
+        <Menu :model="root.assets.extended_views.sidebar_menu.success.vaahcms" />
     </div>
 
 </template>

@@ -78,8 +78,10 @@ class ExtendController extends Controller
         {
             $list[0] = [
                 'to' => self::$link,
-                'icon' => 'tachometer-alt',
+                'icon' => 'fa-solid fa-gauge-high',
                 'label'=> 'Dashboard',
+                'id' => 1,
+                'key' => false
             ];
         }
 
@@ -91,45 +93,51 @@ class ExtendController extends Controller
         {
             $list[1] = [
                 'to' => '#',
-                'icon' => 'users-cog',
+                'icon' => 'fa-solid fa-user-gear',
                 'label'=> 'Users & Access',
+                'id' => 2,
+                'key' => false
             ];
         }
 
         if(\Auth::user()->hasPermission('has-access-of-registrations-section'))
         {
-            $list[1]['child'][] =  [
+            $list[1]['items'][] =  [
                 'to' => self::$link."/registrations/",
-                'icon' => 'user-plus',
-                'label'=> 'Registration'
+                'icon' => 'fa-solid fa-user-plus',
+                'label'=> 'Registration',
+                'key' => false
             ];
         }
 
         if(\Auth::user()->hasPermission('has-access-of-users-section'))
         {
-            $list[1]['child'][] =  [
+            $list[1]['items'][] =  [
                 'to' => self::$link."/users/",
-                'icon' => 'users',
-                'label'=> 'Users'
+                'icon' => 'fa-solid fa-users',
+                'label'=> 'Users',
+                'key' => false
             ];
         }
 
         if(\Auth::user()->hasPermission('has-access-of-roles-section'))
         {
-            $list[1]['child'][] =  [
+            $list[1]['items'][] =  [
                 'to' => self::$link."/roles/",
-                'icon' => 'user-tag',
-                'label'=> 'Roles'
+                'icon' => 'fa-solid fa-user-tag',
+                'label'=> 'Roles',
+                'key' => false
             ];
         }
 
 
         if(\Auth::user()->hasPermission('has-access-of-permissions-section'))
         {
-            $list[1]['child'][] =  [
+            $list[1]['items'][] =  [
                 'to' => self::$link."/permissions/",
-                'icon' => 'key',
-                'label'=> 'Permissions'
+                'icon' => 'fa-solid fa-key',
+                'label'=> 'Permissions',
+                'key' => false
             ];
         }
 
@@ -139,26 +147,30 @@ class ExtendController extends Controller
         {
             $list[2] = [
                 'to' => "#",
-                'icon' => "cubes",
+                'icon' => "fa-solid fa-cubes",
                 'label'=> 'Extend',
+                'key' => false,
+                'id' => 3
             ];
         }
 
         if(\Auth::user()->hasPermission('has-access-of-module-section'))
         {
-            $list[2]['child'][] =  [
+            $list[2]['items'][] =  [
                 'to' => self::$link."/modules/",
-                'icon' => 'cube',
-                'label'=> 'Modules'
+                'icon' => 'fa-solid fa-cube',
+                'label'=> 'Modules',
+                'key' => false
             ];
         }
 
         if(\Auth::user()->hasPermission('has-access-of-theme-section'))
         {
-            $list[2]['child'][] =  [
+            $list[2]['items'][] =  [
                 'to' => self::$link."/themes/",
-                'icon' => 'palette',
-                'label'=> 'Themes'
+                'icon' => 'fa-solid fa-palette"',
+                'label'=> 'Themes',
+                'key' => false
             ];
         }
 
@@ -167,43 +179,52 @@ class ExtendController extends Controller
         {
             $list[3] = [
                 'to' => '#',
-                'icon'=> 'cog',
+                'icon'=> 'fa-solid fa-gear',
                 'label'=> 'Settings',
-                'child' => [
+                'id' => 4,
+                'key' => false,
+                'items' => [
                     [
                         'to' => self::$link."/settings/general",
-                        'icon' => 'tools',
-                        'label'=> 'General'
+                        'icon' => 'fa-solid fa-screwdriver-wrench',
+                        'label'=> 'General',
+                        'key' => false
                     ],
                     [
                         'to' => self::$link."/settings/user-settings",
-                        'icon' => 'users-cog',
-                        'label'=> 'User Settings'
+                        'icon' => 'fa-solid fa-user-gear',
+                        'label'=> 'User Settings',
+                        'key' => false
                     ],
                     [
                         'to' => self::$link."/settings/env-variables",
-                        'icon' => 'code',
-                        'label'=> 'Env Variables'
+                        'icon' => 'fa-solid fa-code',
+                        'label'=> 'Env Variables',
+                        'key' => false
                     ],
                     [
                         'to' => self::$link."/settings/localization",
-                        'icon' => 'language',
-                        'label'=> 'Localization'
+                        'icon' => 'fa-solid fa-language',
+                        'label'=> 'Localization',
+                        'key' => false
                     ],
                     [
                         'to' => self::$link."/settings/notifications",
-                        'icon' => 'bell',
-                        'label'=> 'Notifications'
+                        'icon' => 'fa-solid fa-bell',
+                        'label'=> 'Notifications',
+                        'key' => false
                     ],
                     [
                         'to' => self::$link."/settings/update",
-                        'icon' => 'download',
-                        'label'=> 'Update'
+                        'icon' => 'fa-solid fa-download',
+                        'label'=> 'Update',
+                        'key' => false
                     ],
                     [
                         'to' => self::$base."setup",
-                        'icon' => 'retweet',
-                        'label'=> 'Reset'
+                        'icon' => 'fa-solid fa-retweet',
+                        'label'=> 'Reset',
+                        'key' => false
                     ],
                 ]
             ];
@@ -213,9 +234,10 @@ class ExtendController extends Controller
         {
             $list[4] = [
                 'to' => self::$link."/advanced/logs",
-                'icon'=> 'stethoscope',
+                'icon'=> 'fa-solid fa-stethoscope',
                 'label'=> 'Advanced',
-
+                'id' => 5,
+                'key' => false
             ];
         }
 
@@ -226,18 +248,22 @@ class ExtendController extends Controller
         {
             $list[5] = [
                 'to' => '#',
-                'icon'=> 'photo-video',
+                'icon'=> 'fa-solid fa-photo-film',
                 'label'=> 'Manage',
-                'child' => [
+                'id' => 6,
+                'key' => false,
+                'items' => [
                     [
                         'to' => self::$link."/manage/media",
-                        'icon' => 'file',
-                        'label'=> 'Media'
+                        'icon' => 'fa-solid fa-file',
+                        'label'=> 'Media',
+                        'key' => false
                     ],
                     [
                         'to' => self::$link."/manage/taxonomies",
-                        'icon' => 'project-diagram',
-                        'label'=> 'Taxonomies'
+                        'icon' => 'fa-solid fa-diagram-project',
+                        'label'=> 'Taxonomies',
+                        'key' => false
                     ]
                 ]
             ];
