@@ -28,7 +28,7 @@ import { useAuthStore } from "../../stores/auth";
                     <p class="text-sm text-gray-600 font-semibold">Please Sign in to continue</p>
                 </div>
             </template>
-            
+
             <template #content>
                 <div class="field mb-6">
                     <div class="field-radiobutton cursor-pointer">
@@ -74,7 +74,7 @@ import { useAuthStore } from "../../stores/auth";
                             @click="auth.generateOTP()" />
 
                     <div class="p-float-label field">
-                        <InputText type="number" class="w-full" id="otp" v-model="auth.verification.otp_0"/>
+                        <InputText type="number" class="w-full" id="otp" v-model="auth.sign_in_items.login_otp"/>
                         <label for="otp">Enter OTP</label>
                     </div>
                 </div>

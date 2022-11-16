@@ -35,14 +35,6 @@ export const useAuthStore = defineStore({
             max_attempts: 5,
             is_password_disabled: null,
         },
-        verification: {
-            otp_0: null,
-            otp_1: null,
-            otp_2: null,
-            otp_3: null,
-            otp_4: null,
-            otp_5: null,
-        },
     }),
     getters: {},
     actions: {
