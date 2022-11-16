@@ -110,7 +110,7 @@ export const useAuthStore = defineStore({
                     && data.verification_response.status === 'success') {
                     this.is_verification_form_visible = true;
                 } else {
-                    window.location = data.redirect_url+'#/dashboard';
+                    window.location = data.redirect_url+'#/vaah/';
                 }
             }
         },

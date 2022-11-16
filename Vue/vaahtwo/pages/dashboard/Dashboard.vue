@@ -1,9 +1,9 @@
 <script  setup>
 
 </script>
-<template  >
+<template>
 
-    <div>
+    <div class="grid dashboard">
         <h1 class="text-4xl">Dashboard</h1>
     </div>
 
