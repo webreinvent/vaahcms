@@ -95,7 +95,7 @@ import { useAuthStore } from "../../stores/auth";
                         />
                     </div>
 
-                    <router-link to="">
+                    <router-link to="/forgot-password">
                         <Button label="Forgot Password?" class="p-button-text p-button-sm"/>
                     </router-link>
                 </div>
