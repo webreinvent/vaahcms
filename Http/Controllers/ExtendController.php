@@ -78,10 +78,8 @@ class ExtendController extends Controller
         {
             $list[0] = [
                 'to' => self::$link,
-                'icon' => 'fa-solid fa-gauge-high',
+                'icon' => 'pi pi-compass',
                 'label'=> 'Dashboard',
-                'id' => 1,
-                'key' => false
             ];
         }
 
@@ -93,10 +91,8 @@ class ExtendController extends Controller
         {
             $list[1] = [
                 'to' => '#',
-                'icon' => 'fa-solid fa-user-gear',
+                'icon' => 'pi-user',
                 'label'=> 'Users & Access',
-                'id' => 2,
-                'key' => false
             ];
         }
 
@@ -104,9 +100,8 @@ class ExtendController extends Controller
         {
             $list[1]['items'][] =  [
                 'to' => self::$link."/registrations/",
-                'icon' => 'fa-solid fa-user-plus',
+                'icon' => 'pi-user-plus',
                 'label'=> 'Registration',
-                'key' => false
             ];
         }
 
@@ -114,9 +109,8 @@ class ExtendController extends Controller
         {
             $list[1]['items'][] =  [
                 'to' => self::$link."/users/",
-                'icon' => 'fa-solid fa-users',
+                'icon' => 'pi-users',
                 'label'=> 'Users',
-                'key' => false
             ];
         }
 
@@ -124,9 +118,8 @@ class ExtendController extends Controller
         {
             $list[1]['items'][] =  [
                 'to' => self::$link."/roles/",
-                'icon' => 'fa-solid fa-user-tag',
+                'icon' => 'pi-tag',
                 'label'=> 'Roles',
-                'key' => false
             ];
         }
 
@@ -134,10 +127,9 @@ class ExtendController extends Controller
         if(\Auth::user()->hasPermission('has-access-of-permissions-section'))
         {
             $list[1]['items'][] =  [
-                'to' => self::$link."/permissions/",
-                'icon' => 'fa-solid fa-key',
+                'to' =>  self::$link."/permissions/",
+                'icon' => 'pi-key',
                 'label'=> 'Permissions',
-                'key' => false
             ];
         }
 
@@ -147,10 +139,8 @@ class ExtendController extends Controller
         {
             $list[2] = [
                 'to' => "#",
-                'icon' => "fa-solid fa-cubes",
+                'icon' => "pi-box",
                 'label'=> 'Extend',
-                'key' => false,
-                'id' => 3
             ];
         }
 
@@ -158,9 +148,8 @@ class ExtendController extends Controller
         {
             $list[2]['items'][] =  [
                 'to' => self::$link."/modules/",
-                'icon' => 'fa-solid fa-cube',
+                'icon' => 'pi-box',
                 'label'=> 'Modules',
-                'key' => false
             ];
         }
 
@@ -168,9 +157,8 @@ class ExtendController extends Controller
         {
             $list[2]['items'][] =  [
                 'to' => self::$link."/themes/",
-                'icon' => 'fa-solid fa-palette"',
+                'icon' => 'pi-palette',
                 'label'=> 'Themes',
-                'key' => false
             ];
         }
 
@@ -179,52 +167,43 @@ class ExtendController extends Controller
         {
             $list[3] = [
                 'to' => '#',
-                'icon'=> 'fa-solid fa-gear',
+                'icon'=> 'pi-cog',
                 'label'=> 'Settings',
-                'id' => 4,
-                'key' => false,
                 'items' => [
                     [
                         'to' => self::$link."/settings/general",
-                        'icon' => 'fa-solid fa-screwdriver-wrench',
+                        'icon' => 'pi-cog',
                         'label'=> 'General',
-                        'key' => false
                     ],
                     [
                         'to' => self::$link."/settings/user-settings",
-                        'icon' => 'fa-solid fa-user-gear',
+                        'icon' => 'pi-user',
                         'label'=> 'User Settings',
-                        'key' => false
                     ],
                     [
                         'to' => self::$link."/settings/env-variables",
-                        'icon' => 'fa-solid fa-code',
+                        'icon' => 'pi-cog',
                         'label'=> 'Env Variables',
-                        'key' => false
                     ],
                     [
                         'to' => self::$link."/settings/localization",
-                        'icon' => 'fa-solid fa-language',
+                        'icon' => 'pi-code',
                         'label'=> 'Localization',
-                        'key' => false
                     ],
                     [
                         'to' => self::$link."/settings/notifications",
-                        'icon' => 'fa-solid fa-bell',
+                        'icon' => 'pi-bell',
                         'label'=> 'Notifications',
-                        'key' => false
                     ],
                     [
                         'to' => self::$link."/settings/update",
-                        'icon' => 'fa-solid fa-download',
+                        'icon' => 'pi-download',
                         'label'=> 'Update',
-                        'key' => false
                     ],
                     [
                         'to' => self::$base."setup",
-                        'icon' => 'fa-solid fa-retweet',
+                        'icon' => 'pi-refresh',
                         'label'=> 'Reset',
-                        'key' => false
                     ],
                 ]
             ];
@@ -234,10 +213,8 @@ class ExtendController extends Controller
         {
             $list[4] = [
                 'to' => self::$link."/advanced/logs",
-                'icon'=> 'fa-solid fa-stethoscope',
+                'icon'=> 'pi-database',
                 'label'=> 'Advanced',
-                'id' => 5,
-                'key' => false
             ];
         }
 
@@ -248,22 +225,18 @@ class ExtendController extends Controller
         {
             $list[5] = [
                 'to' => '#',
-                'icon'=> 'fa-solid fa-photo-film',
+                'icon'=> 'pi-image',
                 'label'=> 'Manage',
-                'id' => 6,
-                'key' => false,
                 'items' => [
                     [
                         'to' => self::$link."/manage/media",
-                        'icon' => 'fa-solid fa-file',
+                        'icon' => 'pi-file',
                         'label'=> 'Media',
-                        'key' => false
                     ],
                     [
                         'to' => self::$link."/manage/taxonomies",
-                        'icon' => 'fa-solid fa-diagram-project',
+                        'icon' => 'pi-sitemap',
                         'label'=> 'Taxonomies',
-                        'key' => false
                     ]
                 ]
             ];
