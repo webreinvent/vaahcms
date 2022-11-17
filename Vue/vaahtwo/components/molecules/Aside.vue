@@ -1,6 +1,5 @@
 <script setup>
-import { onMounted, reactive, ref } from 'vue';
-import { useRootStore } from  '../../stores/root';
+import {reactive, ref} from 'vue';
 
 import Menu from 'primevue/menu';
 
@@ -10,22 +9,26 @@ const data = reactive(inputs);
 const height = ref(window.innerHeight)
 
 const menu = ref();
-const root = useRootStore();
 
-onMounted(async () => {
-    root.verifyInstallStatus();
-    await root.getAssets();
+const items = ref([
+    {
+        label: 'VueThree',
+        items: [
+            {
+                label: 'Dashboard',
+                icon: 'fa-regular fa-chart-bar',
+                to: "/"
+            },
 
-});
+        ]
+    },
+]);
 
 </script>
-
 <template>
 
-    <div v-if="height && root && root.assets && root.assets.extended_views && root.assets.extended_views.sidebar_menu">
-        <Menu :model="root.assets.extended_views.sidebar_menu.success.vaahcms" />
+    <div v-if="height">
+        <Menu :model="items" />
     </div>
 
 </template>
-
-
