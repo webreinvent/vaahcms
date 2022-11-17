@@ -10,18 +10,18 @@ onMounted(async () => {
 });
 
 const expandNode = (item) => {
-    root.items.filter((i) => {
-        if(i.id === item.id && i.key === false){
+    root.assets.extended_views.sidebar_menu.success.vaahcms.filter((i) => {
+        if(i.index === item.index && i.key === false){
             i.key = true;
-            document.getElementById('p-panelmenu-content' + item.id).style.display = 'none';
-            document.getElementById('arrow-icon' + item.id).classList.remove('pi-chevron-down');
-            document.getElementById('arrow-icon' + item.id).classList.add('pi-chevron-right');
+            document.getElementById('p-panelmenu-content' + item.index).style.display = 'none';
+            document.getElementById('arrow-icon' + item.index).classList.remove('pi-chevron-down');
+            document.getElementById('arrow-icon' + item.index).classList.add('pi-chevron-right');
         }
-        else if(i.id === item.id && i.key === true){
+        else if(i.id === item.index && i.key === true){
             i.key = false;
-            document.getElementById('p-panelmenu-content' + item.id).style.display = 'initial';
-            document.getElementById('arrow-icon' + item.id).classList.remove('pi-chevron-right')
-            document.getElementById('arrow-icon' + item.id).classList.add('pi-chevron-down')
+            document.getElementById('p-panelmenu-content' + item.index).style.display = 'initial';
+            document.getElementById('arrow-icon' + item.index).classList.remove('pi-chevron-right')
+            document.getElementById('arrow-icon' + item.index).classList.add('pi-chevron-down')
         }
     });
 }
