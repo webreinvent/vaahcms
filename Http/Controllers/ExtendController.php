@@ -182,12 +182,12 @@ class ExtendController extends Controller
                     ],
                     [
                         'to' => self::$link."/settings/env-variables",
-                        'icon' => 'pi-cog',
+                        'icon' => 'pi-code',
                         'label'=> 'Env Variables',
                     ],
                     [
                         'to' => self::$link."/settings/localization",
-                        'icon' => 'pi-code',
+                        'icon' => 'pi-language',
                         'label'=> 'Localization',
                     ],
                     [
@@ -225,7 +225,7 @@ class ExtendController extends Controller
         {
             $list[5] = [
                 'to' => '#',
-                'icon'=> 'pi-image',
+                'icon'=> 'pi-images',
                 'label'=> 'Manage',
                 'items' => [
                     [
