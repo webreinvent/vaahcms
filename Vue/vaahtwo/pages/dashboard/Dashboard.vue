@@ -1,10 +1,23 @@
 <script  setup>
 
+import { onMounted } from 'vue';
+import { useRootStore } from "../../stores/root";
+import { useDashboardStore } from "../../stores/dashboard";
+
+const root = useRootStore();
+const store = useDashboardStore();
+
+onMounted(async () => {
+    root.verifyInstallStatus();
+    await root.getAssets();
+    await store.getItem();
+});
+
 </script>
 <template>
-
     <div class="grid dashboard">
         <div class="col-12 md:col-8">
+
             <Card>
                 <template #content>
                     <h5 class="text-xl font-semibold">Welcome to Vaah<b>cms</b></h5>
@@ -57,57 +70,35 @@
 
                         <Divider></Divider>
 
-                        <div class="col-12">
-                            <h5 class="text-lg font-semibold mb-4">Users and roles</h5>
-                            <div class="grid m-0">
-                                <div class="col">
-                                    <span class="p-3 border-circle bg-blue-50">
-                                        <i class="pi pi-user text-blue-400"></i>
-                                    </span>
+                        <template v-if="store && store.dashboard_items && store.dashboard_items.success"
+                                  v-for="module in store.dashboard_items.success"
+                        >
+                            <div class="col-12" v-if="module.card">
+                                <h5 class="text-lg font-semibold mb-4">{{ module.card.title }}</h5>
 
-                                    <p class="text-sm font-semibold mt-3">Total Users</p>
-                                    <h6 class="text-xl font-semibold my-1">1683</h6>
-                                    <a href="" class="text-sm">View Details</a>
-                                </div>
+                                <div class="grid m-0">
+                                    <template v-if="(key+1)%4 !== 0"
+                                              v-for="(item,key) in module.card.list"
+                                    >
+                                        <div class="col">
+                                            <span class="p-3 border-circle bg-blue-50">
+                                                <i class="text-blue-400 pi" :class="item.icon"></i>
+                                            </span>
 
-                                <Divider layout="vertical" class="hidden md:block"></Divider>
-                                <Divider class="md:hidden"></Divider>
+                                            <p class="text-sm font-semibold mt-3">{{ item.label }}</p>
+                                            <h6 class="text-xl font-semibold my-1">{{ item.count }}</h6>
+                                            <a href="" @click="store.goToLink(item.link)"
+                                               class="text-sm">
+                                                View Details
+                                            </a>
+                                        </div>
 
-                                <div class="col">
-                                    <span class="p-3 border-circle bg-blue-50">
-                                        <i class="pi pi-user text-blue-400"></i>
-                                    </span>
-
-                                    <p class="text-sm font-semibold mt-3">Total Roles</p>
-                                    <h6 class="text-xl font-semibold my-1">7</h6>
-                                    <a href="" class="text-sm">View Details</a>
-                                </div>
-
-                                <Divider layout="vertical" class="hidden md:block"></Divider>
-                                <Divider class="md:hidden"></Divider>
-
-                                <div class="col">
-                                    <span class="p-3 border-circle bg-blue-50">
-                                        <i class="pi pi-user text-blue-400"></i>
-                                    </span>
-                                    <p class="text-sm font-semibold mt-3">Total Permissions</p>
-                                    <h6 class="text-xl font-semibold my-1">62</h6>
-                                    <a href="" class="text-sm">View Details</a>
-                                </div>
-
-                                <Divider layout="vertical" class="hidden md:block"></Divider>
-                                <Divider class="md:hidden"></Divider>
-
-                                <div class="col">
-                                    <span class="p-3 border-circle bg-green-50">
-                                        <i class="pi pi-user text-green-400"></i>
-                                    </span>
-                                    <p class="text-sm font-semibold mt-3">Active Users</p>
-                                    <h6 class="text-xl font-semibold my-1">1683</h6>
-                                    <a href="" class="text-sm">View Details</a>
+                                        <Divider layout="vertical" class="hidden md:block"></Divider>
+                                        <Divider class="md:hidden"></Divider>
+                                    </template>
                                 </div>
                             </div>
-                        </div>
+                        </template>
                     </div>
                 </template>
             </Card>
@@ -124,7 +115,7 @@
                     class="p-button-sm p-button-outlined mb-3"
             />
 
-            <Accordion :multiple="true" :activeIndex="active_index">
+            <Accordion :multiple="true" :activeIndex="store.active_index">
                 <AccordionTab header="Jobs">
                     <p class="text-sm">
                         Tasks that is kept in the queue to be performed one after another. Queues allow you to defer the processing of a time consuming task, such as sending an e-mail, until a later time which drastically speeds up web requests to your application.

@@ -299,28 +299,28 @@ class ExtendController extends Controller
                 [
                     "count" => User::count(),
                     "label" => 'Total User',
-                    "icon" => "users",
+                    "icon" => "pi-users",
                     "type" => "info",
                     "link" => self::$link."/users/"
                 ],
                 [
                     "count" => Role::count(),
                     "label" => 'Total Role',
-                    "icon" => "user-tag",
+                    "icon" => "pi-tags",
                     "type" => "info",
                     "link" => self::$link."/roles/"
                 ],
                 [
                     "count" => Permission::count(),
                     "label" => 'Total Permission',
-                    "icon" => "key",
+                    "icon" => "pi-key",
                     "type" => "info",
                     "link" => self::$link."/permissions/"
                 ],
                 [
                     "count" => User::where('is_active',1)->count(),
                     "label" => 'Active Users',
-                    "icon" => "user-check",
+                    "icon" => "pi-user",
                     "type" => "success",
                     "link" => self::$link."/users?status=active"
                 ]
