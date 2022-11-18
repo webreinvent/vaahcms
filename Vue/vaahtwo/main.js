@@ -104,6 +104,7 @@ import TriStateCheckbox from 'primevue/tristatecheckbox';
 import VirtualScroller from 'primevue/virtualscroller';
 //-------------/PrimeVue Imports
 
+import 'primevue/resources/primevue.min.css';
 
 
 //-------------APP

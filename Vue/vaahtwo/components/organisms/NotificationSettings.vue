@@ -1,144 +1,144 @@
 <template>
-<Card class="notification-settings">
-  <template #header>
-    <div class="flex justify-content-between align-items-center">
-        <h4 class="font-semibold text-lg">Notification</h4>
-        <Button icon="pi pi-plus" label="Add"></Button>
-    </div>
-  </template>
-  <template #content>
-    <div class="grid" v-if="!show">
-        <div class="col">
-            <DataTable :value="notifications" stripedRows responsiveLayout="scroll" class="p-datatable-sm" showGridlines>
-                <Column header="Notification Title">
-                    <template #body="slotProps">
-                        <p>{{slotProps.data.title}}</p>
-                    </template>
-                </Column>
-                <Column header="Edit">
-                    <template #body="slotProps">
-                        <Button icon="pi pi-pencil" @click="showNotificationSettings(slotProps.index)" class="p-button-rounded p-button-sm"></Button>
-                    </template>
-                </Column>
-            </DataTable>
-        </div>
-    </div>
-    <div class="grid" v-else>
-        <div class="col-12 mb-3">
-            <div class="flex align-items-center justify-content-between">
-                <h4 class="font-semibold text-xl">{{activeNotification.title}}</h4>
-                <Button class="p-button-outlined" label="Go back" icon="pi pi-arrow-left" icon-class="text-xs" v-if="show" @click="hideNotificationSettings"></Button>
+    <Card class="notification-settings">
+        <template #header>
+            <div class="flex justify-content-between align-items-center">
+                <h4 class="font-semibold text-lg">Notification</h4>
+                <Button icon="pi pi-plus" label="Add" class="p-button-sm"></Button>
             </div>
-        </div>
-      <div class="col-3 pr-3">
-          <h5 class="text-lg font-semibold mb-4">Variables</h5>
-          <div class="p-inputgroup mb-3">
-              <AutoComplete placeholder="Search"></AutoComplete>
-          </div>
-        <div class="notification-variables">
-            <div class="p-inputgroup mb-3" v-for="item in activeNotification.variables">
-                <InputText :model-value="item" readonly></InputText>
-                <Button icon="pi pi-copy"></Button>
-                <Button icon="pi pi-question-circle" class="p-button-secondary"></Button>
+        </template>
+        <template #content>
+            <div class="grid" v-if="!show">
+                <div class="col">
+                    <DataTable :value="notifications" stripedRows responsiveLayout="scroll" class="p-datatable-sm" showGridlines>
+                        <Column header="Notification Title">
+                            <template #body="slotProps">
+                                <p>{{slotProps.data.title}}</p>
+                            </template>
+                        </Column>
+                        <Column header="Edit">
+                            <template #body="slotProps">
+                                <Button icon="pi pi-pencil" @click="showNotificationSettings(slotProps.index)" class="p-button-rounded p-button-sm"></Button>
+                            </template>
+                        </Column>
+                    </DataTable>
+                </div>
             </div>
-        </div>
-      </div>
-      <div class="col-9 pl-3 p-fluid">
-        <h5 class="text-lg font-semibold mb-4">Notification Options</h5>
-        <div class="grid justify-content-between">
-          <div class="col-5">
-              <h5 class="text-sm font-semibold mb-2">Deliver via</h5>
-            <div class="flex justify-content-between">
+            <div class="grid" v-else>
+                <div class="col-12 mb-3">
+                    <div class="flex align-items-center justify-content-between">
+                        <h4 class="font-semibold text-xl">{{activeNotification.title}}</h4>
+                        <Button class="p-button-outlined p-button-sm" label="Go back" icon="pi pi-arrow-left" icon-class="text-xs" v-if="show" @click="hideNotificationSettings"></Button>
+                    </div>
+                </div>
+                <div class="col-3 pr-3">
+                    <h5 class="text-lg font-semibold mb-4">Variables</h5>
+                    <div class="p-inputgroup mb-3">
+                        <AutoComplete placeholder="Search"></AutoComplete>
+                    </div>
+                    <div class="notification-variables">
+                        <div class="p-inputgroup mb-3" v-for="item in activeNotification.variables">
+                            <InputText :model-value="item" readonly></InputText>
+                            <Button icon="pi pi-copy"></Button>
+                            <Button icon="pi pi-question-circle" class="p-button-secondary"></Button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-9 pl-3 p-fluid">
+                    <h5 class="text-lg font-semibold mb-4">Notification Options</h5>
+                    <div class="grid justify-content-between">
+                        <div class="col-5">
+                            <h5 class="text-sm font-semibold mb-2">Deliver via</h5>
+                            <div class="flex justify-content-between">
                 <span>
               <h5 class="font-semibold text-xs">Mail</h5>
-              <InputSwitch v-model="checked" />
+              <InputSwitch v-model="checked"  class="is-small"/>
             </span>
-                <span>
+                                <span>
               <h5 class="font-semibold text-xs">SMS</h5>
-              <InputSwitch v-model="checked" />
+              <InputSwitch v-model="checked"  class="is-small"/>
             </span>
-                <span>
+                                <span>
               <h5 class="font-semibold text-xs">Push</h5>
-              <InputSwitch v-model="checked" />
+              <InputSwitch v-model="checked"  class="is-small"/>
             </span>
-                <span>
+                                <span>
               <h5 class="font-semibold text-xs">Frontend</h5>
-              <InputSwitch v-model="checked" />
+              <InputSwitch v-model="checked"  class="is-small"/>
             </span>
-                <span>
+                                <span>
               <h5 class="font-semibold text-xs">Backend</h5>
-              <InputSwitch v-model="checked" />
+              <InputSwitch v-model="checked"  class="is-small"/>
             </span>
-            </div>
-          </div>
-          <div class="col-6 justify-content-end flex">
+                            </div>
+                        </div>
+                        <div class="col-6 justify-content-end flex">
            <span class="text-right">
               <h5 class="font-semibold text-xs">Error notifications</h5>
-              <InputSwitch v-model="checked"/>
+              <InputSwitch v-model="checked" class="is-small"/>
            </span>
-          </div>
-          <div class="col-12">
-            <TabView ref="tabview1">
-              <TabPanel header="Mail" content-class="p-0">
-                <div>
-                    <h5 class="text-left p-1">Subject</h5>
-                    <div class="p-inputgroup">
-                        <InputText placeholder="Enter Subject"></InputText>
+                        </div>
+                        <div class="col-12">
+                            <TabView ref="tabview1">
+                                <TabPanel header="Mail" content-class="p-0">
+                                    <div>
+                                        <h5 class="p-1 text-xs mb-1 mt-3">Subject</h5>
+                                        <div class="p-inputgroup">
+                                            <InputText placeholder="Enter Subject"></InputText>
+                                        </div>
+                                        <h5 class="p-1 text-xs mb-1 mt-3">From</h5>
+                                        <div class="p-inputgroup">
+                                            <InputText placeholder="Enter From"></InputText>
+                                        </div>
+                                        <h5 class="p-1 text-xs mb-1 mt-3">Line</h5>
+                                        <div class="p-inputgroup">
+                                            <Textarea v-model="value" :autoResize="true" class="w-full" placeholder="Content with variables"/>
+                                            <Button icon="pi pi-trash" class=""/>
+                                        </div>
+                                        <h5 class="p-1 text-xs mb-1 mt-3">Greetings</h5>
+                                        <div class="p-inputgroup">
+                                            <InputText placeholder="Content with variables"></InputText>
+                                        </div>
+                                        <h5 class="p-1 text-xs mb-1 mt-3">Action</h5>
+                                        <div class="p-inputgroup">
+                                            <InputText placeholder="Enter action label"></InputText>
+                                            <Dropdown placeholder="Choose an action"></Dropdown>
+                                        </div>
+                                        <div class="flex mt-5">
+                                            <Button icon="" label="Add Subject" class="w-auto mr-2 p-button-sm" disabled></Button>
+                                            <Button icon="" label="Add From" class="w-auto mr-2 p-button-sm"></Button>
+                                            <Button icon="" label="Add Greetings" class="w-auto mr-2 p-button-sm"></Button>
+                                            <Button icon="" label="Add Line" class="w-auto mr-2 p-button-sm"></Button>
+                                            <Button icon="" label="Add Action" class="w-auto p-button-sm"></Button>
+                                        </div>
+                                    </div>
+                                </TabPanel>
+                                <TabPanel header="Backend">
+                                    <div class="col-12 px-0">
+                                        <h5 class="p-1 text-xs mb-1">Message</h5>
+                                        <div class="p-inputgroup">
+                                            <Textarea v-model="value" :autoResize="true" class="w-full" />
+                                            <Button icon="pi pi-copy" class=""/>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 px-0">
+                                        <h5 class="p-1 text-xs mb-1">Action</h5>
+                                        <div class="p-inputgroup">
+                                            <InputText placeholder="Enter action label"></InputText>
+                                            <Dropdown placeholder="Choose an action"></Dropdown>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 mt-4">
+                                        <Button label="Save" icon="pi pi-save" class="w-auto mr-3 p-button-sm"></Button>
+                                        <Button label="Test" icon="pi pi-reply" class="w-auto p-button-sm"></Button>
+                                    </div>
+                                </TabPanel>
+                            </TabView>
+                        </div>
                     </div>
-                    <h5 class="text-left p-1">From</h5>
-                    <div class="p-inputgroup">
-                        <InputText placeholder="Enter From"></InputText>
-                    </div>
-                  <h5 class="text-left p-1">Line</h5>
-                  <div class="p-inputgroup">
-                    <Textarea v-model="value" :autoResize="true" class="w-full" placeholder="Content with variables"/>
-                    <Button icon="pi pi-trash" class=""/>
-                  </div>
-                    <h5 class="text-left p-1">Greetings</h5>
-                    <div class="p-inputgroup">
-                        <InputText placeholder="Content with variables"></InputText>
-                    </div>
-                    <h5 class="text-left p-1">Action</h5>
-                    <div class="p-inputgroup">
-                        <InputText placeholder="Enter action label"></InputText>
-                        <Dropdown placeholder="Choose an action"></Dropdown>
-                    </div>
-                  <div class="flex mt-5">
-                    <Button icon="" label="Add Subject" class="w-auto mr-2" disabled></Button>
-                    <Button icon="" label="Add From" class="w-auto mr-2"></Button>
-                    <Button icon="" label="Add Greetings" class="w-auto mr-2"></Button>
-                    <Button icon="" label="Add Line" class="w-auto mr-2"></Button>
-                    <Button icon="" label="Add Action" class="w-auto"></Button>
-                  </div>
                 </div>
-              </TabPanel>
-              <TabPanel header="Backend">
-                <div class="col-12 px-0">
-                  <h5 class="text-left p-1">Message</h5>
-                  <div class="p-inputgroup">
-                    <Textarea v-model="value" :autoResize="true" class="w-full" />
-                    <Button icon="pi pi-copy" class=""/>
-                  </div>
-                </div>
-                <div class="col-12 px-0">
-                  <h5 class="text-left p-1">Action</h5>
-                  <div class="p-inputgroup">
-                    <InputText placeholder="Enter action label"></InputText>
-                    <Dropdown placeholder="Choose an action"></Dropdown>
-                  </div>
-                </div>
-                <div class="col-12 mt-4">
-                  <Button label="Save" icon="pi pi-save" class="w-auto mr-3"></Button>
-                  <Button label="Test" icon="pi pi-reply" class="w-auto"></Button>
-                </div>
-              </TabPanel>
-            </TabView>
-          </div>
-        </div>
-      </div>
-    </div>
-  </template>
-</Card>
+            </div>
+        </template>
+    </Card>
 </template>
 
 <script>

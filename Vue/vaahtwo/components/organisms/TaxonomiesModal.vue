@@ -1,46 +1,32 @@
 <template>
-<div>
-    <div class="p-inputgroup">
-        <Dropdown placeholder="Select a Parent"></Dropdown>
-        <InputText></InputText>
-        <Button label="Add"></Button>
-    </div>
     <div>
-        <!--<Tree :value="nodes">
-            <template #default="slotProps">
-                <div class="flex justify-content-between">
-                    <b class="mr-3">{{slotProps.node.label}} <small class="font-weight-normal">({{slotProps.node.children.length}})</small></b>
+        <div class="p-inputgroup">
+            <Dropdown placeholder="Select a Parent" v-model="selectedParent" :options="tvModel" option-label="label"></Dropdown>
+            <InputText v-model="inputChild"></InputText>
+            <Button label="Add" @click="addToTree(selectedParent)"></Button>
+        </div>
+        <div>
+        </div>
+        <div class="draggable-tree-list">
+            <tree-view :initial-model="tvModel" :model-defaults="modelDefaults">
+                <template v-slot:text="{ model, customClasses }">
+                    <div class="list-item">
                     <span>
-                        <a class="mr-2"><i class="pi pi-pencil"></i></a>
-                        <a><i class="pi pi-copy"></i></a>
+                      <p class="inline" v-if="!editLabel">{{ model.label }}</p>
+                      <InputText :model-value="model.label" v-if="editLabel"></InputText>
+                      <span v-if="model.children.length > 0" class="font-semibold">
+                         ({{model.children.length}})
+                      </span>
                     </span>
-                </div>
-            </template>
-            <template #url="slotProps">
-                <div class="flex justify-content-between">
-                <a class="mr-3">{{slotProps.node.label}}</a>
-                    <span>
-                        <a class="mr-2"><i class="pi pi-pencil"></i></a>
-                        <a><i class="pi pi-copy"></i></a>
+                        <span>
+                      <a v-if="!editLabel" @click="editLabel = true" class="cursor-pointer"><i class="pi pi-pencil ml-4 mr-2" ></i></a>
+                      <a v-if="editLabel" @click="editLabel = false" class="cursor-pointer"><i class="pi pi-check ml-4 mr-2" ></i></a>
                     </span>
-                </div>
-            </template>
-        </Tree>-->
+                    </div>
+                </template>
+            </tree-view>
+        </div>
     </div>
-    <div>
-        <tree-view :initial-model="tvModel" :model-defaults="modelDefaults">
-            <template v-slot:text="{ model, customClasses }">
-                <span>{{ model.label }}
-                    <span v-if="model.children.length > 0" class="font-semibold">
-                       ({{model.children.length}})
-                    </span>
-                    <a><i class="pi pi-pencil ml-4 mr-2"></i></a>
-                    <a><i class="pi pi-trash"></i></a>
-                </span>
-            </template>
-        </tree-view>
-    </div>
-</div>
 </template>
 
 <script>
@@ -54,59 +40,11 @@ export default {
     },
     data(){
         return{
+            parentsList:null,
+            selectedParent:null,
+            inputChild:null,
+            editLabel:false,
             selectedKey2: null,
-            nodes: [
-                {
-                    key: '0',
-                    label: 'Introduction',
-                    children: [
-                        {key: '0-0', label: 'What is Vue.js?', data:'https://vuejs.org/guide/introduction.html#what-is-vue', type: 'url'},
-                        {key: '0-1', label: 'Quick Start', data: 'https://vuejs.org/guide/quick-start.html#quick-start', type: 'url'},
-                        {key: '0-2', label: 'Creating a Vue Application', data:'https://vuejs.org/guide/essentials/application.html#creating-a-vue-application', type:'url'},
-                        {key: '0-3', label: 'Conditionals Rendering', data: 'https://vuejs.org/guide/essentials/conditional.html#conditional-rendering', type: 'url'}
-                    ]
-                },
-                {
-                    key: '1',
-                    label: 'Components In-Depth',
-                    children: [
-                        {key: '1-0', label: 'Component Registration', data: 'https://vuejs.org/guide/components/registration.html#component-registration', type: 'url'},
-                        {key: '1-1', label: 'Props', data: 'https://vuejs.org/guide/components/props.html#props', type: 'url'},
-                        {key: '1-2', label: 'Components Events', data: 'https://vuejs.org/guide/components/events.html#component-events', type: 'url'}
-                    ]
-                }
-            ],
-            myArray:[
-                {
-                    name: 'Node 1',
-                    id: 1,
-                    pid: 0,
-                    dragDisabled: true,
-                    addTreeNodeDisabled: true,
-                    addLeafNodeDisabled: true,
-                    editNodeDisabled: true,
-                    delNodeDisabled: true,
-                    children: [
-                        {
-                            name: 'Node 1-2',
-                            id: 2,
-                            isLeaf: true,
-                            pid: 1
-                        }
-                    ]
-                },
-                {
-                    name: 'Node 2',
-                    id: 3,
-                    pid: 0,
-                    disabled: true
-                },
-                {
-                    name: 'Node 3',
-                    id: 4,
-                    pid: 0
-                }
-            ],
             tvModel: [
                 {
                     id: 'dragdrop2-node1',
@@ -172,6 +110,7 @@ export default {
                 expanderTitle: 'Expand this node',
                 draggable: true,
                 allowDrop: true,
+                deletable:true,
                 state: {
                     expanded: false
                 },
@@ -181,7 +120,7 @@ export default {
                         treeViewNodeSelfExpandedIndicator: 'pi  pi-chevron-right',
                         treeViewNodeSelfAction: 'action-button',
                         treeViewNodeSelfAddChildIcon: 'pi pi-plus',
-                        treeViewNodeSelfDeleteIcon: 'pi pi-minus'
+                        treeViewNodeSelfDeleteIcon: 'pi pi-trash'
                     }
                 }
             }
@@ -193,6 +132,15 @@ export default {
         },
         onNodeUnselect(node) {
             console.log('UnSelected --->',node)
+        },
+        addToTree(item){
+            item.children.push(
+                {
+                    id:'lorem',
+                    label:this.inputChild,
+                    children:[]
+                });
+            this.inputChild = null;
         }
     }
 }
@@ -201,6 +149,58 @@ export default {
 <style lang="scss">
 .p-treenode-label{
     width: 100% !important;
+}
+.grtv-wrapper{
+    .grtvn-self-action{
+        border:none;
+        background:none;
+        cursor:pointer;
+    }
+    .grtvn-self-expander.action-button{
+        padding-left:0;
+    }
+    .action-button i {
+        &.pi-trash{
+            color:red;
+            font-size: 14px;
+            font-weight: normal;
+        }
+    }
+}
+.grtv-wrapper .grtvn-self-expander.grtvn-self-expanded i.grtvn-self-expanded-indicator {
+    transform: rotate(90deg);
+    transition: all 0.2s linear;
+}
+.grtv-wrapper{
+    .grtvn-children{
+        transition: all 0.2s linear;
+    }
+}
+.draggable-tree-list{
+    ul{
+        list-style-type:none;
+        padding-left: 0;
+        &.grtv{
+            li{
+                padding:8px 0;
+                .grtvn-self{
+                    width: 100%;
+                    display: flex;
+                    .list-item{
+                        width:100%;
+                        display:flex;
+                        align-items:center;
+                        justify-content:space-between;
+                    }
+                }
+                .grtvn-children-wrapper{
+                    ul{
+                        padding-left:14px
+                    }
+                }
+            }
+        }
+    }
 }
 .action-button{
     border: none;

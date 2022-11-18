@@ -121,6 +121,7 @@ export default {
     position: relative;
     background: white;
     z-index: 99;
+    color: #3273dc;
     padding: 0 3px;
     font-size: 0.85rem;
 }
@@ -128,7 +129,7 @@ export default {
     border-color: #3273dc;
     border-width: 2px;
     top: 27px;
-    width: 200px;
+    width: 220px;
     left: 65%;
     z-index: -1;
 }

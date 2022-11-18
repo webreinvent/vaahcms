@@ -4,7 +4,7 @@
             <div class="content text-center">
                 <img src="http://irisrishu.com/vaahcms/backend/vaahone/images/vaahcms-logo.svg" alt="" class="w-5 mb-2">
                 <h4 class="text-xl font-semibold line-height-2 mb-2">Multi-Factor Authentication</h4>
-                <p class="text-sm text-gray-600 font-semibold">You have received an email which contains two factor code.</p>
+                <p class="text-sm text-gray-600 font-semibold mb-4">You have received an email which contains two factor code.</p>
             </div>
         </template>
         <template #content>
