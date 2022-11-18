@@ -23,10 +23,10 @@
 
     @if(env('VAAHCMS_ASSETS') == 'develop')
         <!--CSS Support for Bulma & Buefy-->
-        <link href="http://localhost:4001/vaahone/build/build.css" rel="stylesheet" media="screen">
+        <link href="http://localhost:4001/vaahone/build/vaahone.css" rel="stylesheet" media="screen">
 
         <!--CSS Support for PrimeVue-->
-        <link href="http://localhost:4001/vaahtwo/build/build.css" rel="stylesheet" media="screen">
+        <link href="http://localhost:4001/vaahtwo/build/vaahtwo.css" rel="stylesheet" media="screen">
     @else
         <!--CSS Support for Bulma & Buefy-->
         <link href="{{vh_get_backend_assets_url()}}/build/vaahone.css" rel="stylesheet" media="screen">

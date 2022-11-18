@@ -42,13 +42,13 @@ if (mix.inProduction()) {
     publish_folder = './../../Resources/assets/backend/';
     mix.setPublicPath(publish_folder);
 
-    mix.sass(theme_path+'/scss/build.scss', theme_path+'build/');
+    mix.sass(theme_path+'/scss/build.scss', theme_path+'build/vaahtwo.css');
 
 
     // vaahone css
     theme_name = 'vaahone';
     theme_path = './../../Resources/assets/backend/'+theme_name+'/';
-    mix.sass(theme_path+'/scss/build.scss', theme_path+'build/');
+    mix.sass(theme_path+'/scss/build.scss', theme_path+'build/vaahone.css');
 }
 
 
