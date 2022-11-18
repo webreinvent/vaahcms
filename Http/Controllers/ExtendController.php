@@ -392,12 +392,12 @@ class ExtendController extends Controller
         $data['expanded_header_links'] = [
             [
                 'name' => 'Check Updates',
-                'icon' => 'redo-alt',
+                'icon' => 'pi pi-refresh',
                 'link' => self::$link."/settings/update"
             ],
             [
                 'name' => 'Getting Started',
-                'icon' => 'play-circle',
+                'icon' => 'pi pi-play',
                 'open_in_new_tab' => true,
                 'link' => 'https://docs.vaah.dev/vaahcms/installation.html'
             ]

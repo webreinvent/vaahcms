@@ -102,18 +102,70 @@ onMounted(async () => {
         </div>
 
         <div class="col-12 md:col-4 mt-3">
-            <Button label="Check Updates"
-                    icon="pi pi-refresh"
-                    class="p-button-sm p-button-outlined mr-2 mb-3"
-            />
+            <template v-if="store && store.dashboard_items && store.dashboard_items.success"
+                      v-for="module in store.dashboard_items.success"
+            >
+                <template v-if="module.expanded_header_links"
+                          v-for="h_item in module.expanded_header_links"
+                >
+                    <Button :label="h_item.name"
+                            :icon="h_item.icon"
+                            class="p-button-sm p-button-outlined mr-2 mb-3 pi"
+                    />
+                </template>
+            </template>
 
-            <Button label="Getting Started"
-                    icon="pi pi-play"
-                    class="p-button-sm p-button-outlined mb-3"
-            />
+            <Accordion :multiple="true" :activeIndex="store.active_index">
+                <template v-if="store && store.dashboard_items && store.dashboard_items.success"
+                          v-for="module in store.dashboard_items.success"
+                >
+                    <template v-if="module.expanded_item"
+                              v-for="item in module.expanded_item"
+                    >
+
+                        <AccordionTab header="item.title">
+                            <template v-if="item.type === 'content' ">
+                                <div v-if="!item.is_job_enabled">
+                                    <Message severity="error" :closable="false">
+                                        Enable <b>Laravel Queues</b> to run your jobs
+                                        <a @click="store.goToLink(root.current_url+'#/vaah/settings/general')"
+                                           href=""
+                                        >
+                                            View Setting
+                                        </a>
+                                    </Message>
+                                </div>
+
+                                <p class="text-sm">
+                                    {{ item.description }}
+                                </p>
+
+                                <div class="flex justify-content-evenly align-items-center align-items-center">
+                                    <template v-for="f_item in item.footer">
+                                        <a href="" class="text-center" @click="store.goToLink(f_item.link)">
+                                            <i class="mr-2 pi" :class="f_item.icon"></i>
+                                            {{ f_item.count }} {{ f_item.name }}
+                                        </a>
+
+                                        <Divider layout="vertical"></Divider>
+                                    </template>
+                                &nbsp;</div>
+
+                                <Divider></Divider>
+                            </template>
+                        </AccordionTab>
+                    </template>
+                </template>
+            </Accordion>
 
             <Accordion :multiple="true" :activeIndex="store.active_index">
                 <AccordionTab header="Jobs">
+                    <Message severity="error" :closable="false" icon="null">
+                        Enable <b>Laravel Queues</b> to run your jobs
+                        <a href="" @click="store.goToLink(root.current_url+'#/vaah/settings/general')">
+                            View Setting
+                        </a>
+                    </Message>
                     <p class="text-sm">
                         Tasks that is kept in the queue to be performed one after another. Queues allow you to defer the processing of a time consuming task, such as sending an e-mail, until a later time which drastically speeds up web requests to your application.
                     </p>
