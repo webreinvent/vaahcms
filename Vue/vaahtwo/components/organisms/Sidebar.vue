@@ -1,35 +1,6 @@
 <template>
     <div class="sidebar">
-        <PanelMenu :model="items">
-            <!--<template #item="{item}">
-                <div class="p-panelmenu-panel">
-                    <div class="p-component p-panelmenu-header p-highlight">
-                       <div class="p-panelmenu-header-content">
-                           <a id="pv_id_4_header_1" class="p-panelmenu-header-link" tabindex="0" aria-expanded="true" aria-controls="pv_id_4_content_1"  @click="expandNode(item)">
-                               <span class="p-panelmenu-icon pi pi-chevron-down" :id="'arrow-icon' + item.id" v-if="item.items"></span>
-                               <span class="p-menuitem-icon" :class="item.icon"></span>
-                               <span class="p-menuitem-text">{{item.label}}</span>
-                           </a>
-                       </div>
-                    </div>
-                    <div :id="'p-panelmenu-content' + item.id" class="p-toggleable-content" role="region" aria-labelledby="pv_id_4_header_1" v-if="item.items">
-                        <div class="p-panelmenu-content">
-                            <ul class="p-submenu-list p-panelmenu-root-submenu" role="tree">
-                                <li role="none" class="p-menuitem" v-for="sub_item in item.items">
-                                  <div class="p-menuitem-content">
-                                      <router-link :to='sub_item.to'>
-                                          <a class="p-menuitem-link router-link-active" role="treeitem" aria-expanded="false">
-                                              <span class="p-menuitem-icon" :class="sub_item.icon"></span>
-                                              <span class="p-menuitem-text">{{sub_item.label}}</span>
-                                          </a>
-                                      </router-link>
-                                  </div>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </template>-->
+        <!--<PanelMenu :model="items">
             <template #item="{item}">
                 <div class="p-panelmenu-panel">
                     <div id="pv_id_4_0_header" class="p-panelmenu-header" tabindex="0" role="button" aria-label="File" aria-controls="pv_id_4_0_content">
@@ -61,7 +32,8 @@
                     </div>
                 </div>
             </template>
-        </PanelMenu>
+        </PanelMenu>-->
+        <PanelMenu :model="items" />
     </div>
 </template>
 
@@ -71,144 +43,129 @@ export default {
     data() {
         return {
             expandedKeys: {},
-            items: [
-                {
-                id:1,
-                key: false,
+            items: [{
+                key: '0',
                 label: 'Dashboard',
-                icon: 'pi pi-compass'
-                 },
+                icon: 'pi pi-fw pi-compass',
+                to:'/ui/private/dashboard'
+            },
                 {
-                    id:2,
-                    key: false,
-                    label: 'Users & Access',
-                    icon: 'pi pi-fw pi-user',
-                    items: [{
-                        id:2.1,
-                        key: false,
-                        label: 'Modules',
-                        to: '/',
-                        icon: 'pi pi-fw pi-align-left'
-                    },
-                        {
-                            key: false,
-                            label: 'Right',
-                            icon: 'pi pi-fw pi-align-right',
-                            to: '/'
-                        },
-                        {
-                            key: false,
-                            label: 'Center',
-                            icon: 'pi pi-fw pi-align-center',
-                            to: '/'
-                        },
-                        {
-                            key: false,
-                            label: 'Justify',
-                            icon: 'pi pi-fw pi-align-justify',
-                            to: '/'
-                        }
-                    ]
-                },
-                {
-                    id:3,
-                    key: false,
-                    label: 'Extend',
-                    icon: 'pi pi-fw pi-user',
-                    items: [{
-                        key: false,
-                        label: 'Modules',
-                        icon: 'pi pi-fw pi-user-plus',
-                        to: '/',
-                    },
-                        {
-                            key: false,
-                            label: 'Themes',
-                            icon: 'pi pi-fw pi-user-minus',
-                            to: '/',
-                        }
-                    ]
-                },
-                {
-                    id:4,
-                    key: false,
+                    key: '1',
                     label: 'Settings',
-                    icon: 'pi pi-cog',
+                    icon: 'pi pi-fw pi-cog',
                     items: [{
-                        key: false,
-                        label: 'General',
+                        key: '1_0',
+                        label: 'General Settings',
                         icon: 'pi pi-fw pi-cog',
                         to:'/ui/private/settings/general-settings'
                     },
                         {
-                            key: false,
-                            label: 'User',
+                            key: '1_1',
+                            label: 'User Settings',
                             icon: 'pi pi-fw pi-user',
                             to:'/ui/private/settings/user-settings'
                         },
                         {
-                            key: false,
-                            label: 'Env Variables',
+                            key: '1_2',
+                            label: 'ENV variables',
                             icon: 'pi pi-fw pi-cog',
                             to:'/ui/private/settings/env-variables-settings'
                         },
                         {
-                            key: false,
+                            key: '1_3',
                             label: 'Localization',
                             icon: 'pi pi-fw pi-code',
                             to:'/ui/private/settings/localization-settings'
                         },
                         {
-                            key: false,
+                            key: '1_4',
                             label: 'Notification',
                             icon: 'pi pi-fw pi-bell',
                             to:'/ui/private/settings/notification-settings'
                         },
                         {
-                            key: false,
+                            key: '1_5',
                             label: 'Update',
                             icon: 'pi pi-fw pi-download',
                             to:'/ui/private/settings/update-settings'
                         },
                         {
-                            key: false,
+                            key: '1_6',
                             label: 'Reset',
                             icon: 'pi pi-fw pi-refresh',
-                            to:'/ui/private/settings/'
                         }
                     ]
                 },
                 {
-                    id:5,
-                    key: false,
-                    label: 'Advanced',
+                    key: '2',
+                    label: 'Users',
                     icon: 'pi pi-fw pi-user',
                     items: [{
-                        key: false,
-                        label: 'Modules',
-                        icon: 'pi pi-fw pi-align-left',
-                        to: '/',
+                        key: '2_0',
+                        label: 'New',
+                        icon: 'pi pi-fw pi-user-plus',
+
                     },
                         {
-                            key: false,
-                            label: 'Right',
-                            icon: 'pi pi-fw pi-align-right',
-                            to: '/',
+                            key: '2_1',
+                            label: 'Delete',
+                            icon: 'pi pi-fw pi-user-minus',
                         },
                         {
-                            key: false,
-                            label: 'Center',
-                            icon: 'pi pi-fw pi-align-center',
-                            to: '/',
-                        },
-                        {
-                            key: false,
-                            label: 'Justify',
-                            icon: 'pi pi-fw pi-align-justify',
-                            to: '/',
+                            key: '2_2',
+                            label: 'Search',
+                            icon: 'pi pi-fw pi-users',
+                            items: [{
+                                key: '2_2_0',
+                                label: 'Filter',
+                                icon: 'pi pi-fw pi-filter',
+                                items: [{
+                                    key: '2_2_0_0',
+                                    label: 'Print',
+                                    icon: 'pi pi-fw pi-print'
+                                }]
+                            },
+                                {
+                                    key: '2_2_1',
+                                    icon: 'pi pi-fw pi-bars',
+                                    label: 'List'
+                                }
+                            ]
                         }
                     ]
                 },
+                {
+                    key: '3',
+                    label: 'Events',
+                    icon: 'pi pi-fw pi-calendar',
+                    items: [{
+                        key: '3_0',
+                        label: 'Edit',
+                        icon: 'pi pi-fw pi-pencil',
+                        items: [{
+                            key: '3_0_0',
+                            label: 'Save',
+                            icon: 'pi pi-fw pi-calendar-plus'
+                        },
+                            {
+                                key: '3_0_0',
+                                label: 'Delete',
+                                icon: 'pi pi-fw pi-calendar-minus'
+                            }
+                        ]
+                    },
+                        {
+                            key: '3_1',
+                            label: 'Archieve',
+                            icon: 'pi pi-fw pi-calendar-times',
+                            items: [{
+                                key: '3_1_0',
+                                label: 'Remove',
+                                icon: 'pi pi-fw pi-calendar-minus'
+                            }]
+                        }
+                    ]
+                }
             ]
         }
     },
@@ -217,6 +174,7 @@ export default {
             for (let node of this.items) {
                 this.expandNode(node);
             }
+
             this.expandedKeys = {
                 ...this.expandedKeys
             };
@@ -224,26 +182,163 @@ export default {
         collapseAll() {
             this.expandedKeys = {};
         },
-        expandNode(item) {
-            this.items.filter((i) => {
-               if(i.id === item.id && i.key === false){
-                   i.key = true;
-                   document.getElementById('p-panelmenu-content' + item.id).style.display = 'none';
-                   document.getElementById('arrow-icon' + item.id).classList.remove('pi-chevron-down');
-                   document.getElementById('arrow-icon' + item.id).classList.add('pi-chevron-right');
-               }
-               else if(i.id === item.id && i.key === true){
-                   i.key = false;
-                   document.getElementById('p-panelmenu-content' + item.id).style.display = 'initial';
-                   document.getElementById('arrow-icon' + item.id).classList.remove('pi-chevron-right')
-                   document.getElementById('arrow-icon' + item.id).classList.add('pi-chevron-down')
-               }
-           });
-        },
+        expandNode(node) {
+            if (node.items && node.items.length) {
+                this.expandedKeys[node.key] = true;
+
+                for (let child of node.items) {
+                    this.expandNode(child);
+                }
+            }
+        }
     }
 }
 </script>
-
-<style scoped>
-
-</style>
+<!--<style>
+.p-panelmenu .p-panelmenu-header {
+    outline: 0 none;
+}
+.p-panelmenu .p-panelmenu-header .p-panelmenu-header-content {
+    border: 1px solid #e5e7eb;
+    color: #3f3f46;
+    background: #fafafa;
+    border-radius: 0.375rem;
+    transition: none;
+}
+.p-panelmenu .p-panelmenu-header .p-panelmenu-header-content .p-panelmenu-header-action {
+    padding: 1.25rem;
+    font-weight: 700;
+}
+.p-panelmenu .p-panelmenu-header .p-panelmenu-header-content .p-panelmenu-header-action .p-submenu-icon {
+    margin-right: 0.5rem;
+}
+.p-panelmenu .p-panelmenu-header .p-panelmenu-header-content .p-panelmenu-header-action .p-menuitem-icon {
+    margin-right: 0.5rem;
+}
+.p-panelmenu .p-panelmenu-header:not(.p-disabled):focus .p-panelmenu-header-content {
+    outline: 0 none;
+    outline-offset: 0;
+    box-shadow: inset 0 0 0 1px #6366F1;
+}
+.p-panelmenu .p-panelmenu-header:not(.p-highlight):not(.p-disabled):hover .p-panelmenu-header-content {
+    background: #f4f4f5;
+    border-color: #e5e7eb;
+    color: #3f3f46;
+}
+.p-panelmenu .p-panelmenu-header:not(.p-disabled).p-highlight .p-panelmenu-header-content {
+    background: #fafafa;
+    border-color: #e5e7eb;
+    color: #3f3f46;
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+    margin-bottom: 0;
+}
+.p-panelmenu .p-panelmenu-header:not(.p-disabled).p-highlight:hover .p-panelmenu-header-content {
+    border-color: #e5e7eb;
+    background: #f4f4f5;
+    color: #3f3f46;
+}
+.p-panelmenu .p-panelmenu-content {
+    padding: 0.25rem 0;
+    border: 1px solid #e5e7eb;
+    background: #ffffff;
+    color: #3f3f46;
+    border-top: 0;
+    border-top-right-radius: 0;
+    border-top-left-radius: 0;
+    border-bottom-right-radius: 0.375rem;
+    border-bottom-left-radius: 0.375rem;
+}
+.p-panelmenu .p-panelmenu-content .p-panelmenu-root-list {
+    outline: 0 none;
+}
+.p-panelmenu .p-panelmenu-content .p-menuitem > .p-menuitem-content {
+    color: #3f3f46;
+    transition: none;
+    border-radius: 0;
+}
+.p-panelmenu .p-panelmenu-content .p-menuitem > .p-menuitem-content .p-menuitem-link {
+    padding: 0.75rem 1rem;
+    user-select: none;
+}
+.p-panelmenu .p-panelmenu-content .p-menuitem > .p-menuitem-content .p-menuitem-link .p-menuitem-text {
+    color: #3f3f46;
+}
+.p-panelmenu .p-panelmenu-content .p-menuitem > .p-menuitem-content .p-menuitem-link .p-menuitem-icon {
+    color: #71717A;
+    margin-right: 0.5rem;
+}
+.p-panelmenu .p-panelmenu-content .p-menuitem > .p-menuitem-content .p-menuitem-link .p-submenu-icon {
+    color: #71717A;
+}
+.p-panelmenu .p-panelmenu-content .p-menuitem.p-highlight > .p-menuitem-content {
+    color: #3f3f46;
+    background: #f4f4f5;
+}
+.p-panelmenu .p-panelmenu-content .p-menuitem.p-highlight > .p-menuitem-content .p-menuitem-link .p-menuitem-text {
+    color: #3f3f46;
+}
+.p-panelmenu .p-panelmenu-content .p-menuitem.p-highlight > .p-menuitem-content .p-menuitem-link .p-menuitem-icon, .p-panelmenu .p-panelmenu-content .p-menuitem.p-highlight > .p-menuitem-content .p-menuitem-link .p-submenu-icon {
+    color: #71717A;
+}
+.p-panelmenu .p-panelmenu-content .p-menuitem.p-highlight.p-focus > .p-menuitem-content {
+    background: #f4f4f5;
+}
+.p-panelmenu .p-panelmenu-content .p-menuitem:not(.p-highlight):not(.p-disabled).p-focus > .p-menuitem-content {
+    color: #18181B;
+    background: #e5e7eb;
+}
+.p-panelmenu .p-panelmenu-content .p-menuitem:not(.p-highlight):not(.p-disabled).p-focus > .p-menuitem-content .p-menuitem-link .p-menuitem-text {
+    color: #18181B;
+}
+.p-panelmenu .p-panelmenu-content .p-menuitem:not(.p-highlight):not(.p-disabled).p-focus > .p-menuitem-content .p-menuitem-link .p-menuitem-icon, .p-panelmenu .p-panelmenu-content .p-menuitem:not(.p-highlight):not(.p-disabled).p-focus > .p-menuitem-content .p-menuitem-link .p-submenu-icon {
+    color: #18181B;
+}
+.p-panelmenu .p-panelmenu-content .p-menuitem:not(.p-highlight):not(.p-disabled) > .p-menuitem-content:hover {
+    color: #18181B;
+    background: #f4f4f5;
+}
+.p-panelmenu .p-panelmenu-content .p-menuitem:not(.p-highlight):not(.p-disabled) > .p-menuitem-content:hover .p-menuitem-link .p-menuitem-text {
+    color: #18181B;
+}
+.p-panelmenu .p-panelmenu-content .p-menuitem:not(.p-highlight):not(.p-disabled) > .p-menuitem-content:hover .p-menuitem-link .p-menuitem-icon, .p-panelmenu .p-panelmenu-content .p-menuitem:not(.p-highlight):not(.p-disabled) > .p-menuitem-content:hover .p-menuitem-link .p-submenu-icon {
+    color: #71717A;
+}
+.p-panelmenu .p-panelmenu-content .p-menuitem .p-menuitem-content .p-menuitem-link .p-submenu-icon {
+    margin-right: 0.5rem;
+}
+.p-panelmenu .p-panelmenu-content .p-menuitem-separator {
+    border-top: 1px solid #f3f4f6;
+    margin: 0.25rem 0;
+}
+.p-panelmenu .p-panelmenu-content .p-submenu-list:not(.p-panelmenu-root-list) {
+    padding: 0 0 0 1rem;
+}
+.p-panelmenu .p-panelmenu-panel {
+    margin-bottom: 0;
+}
+.p-panelmenu .p-panelmenu-panel .p-panelmenu-header .p-panelmenu-header-content {
+    border-radius: 0;
+}
+.p-panelmenu .p-panelmenu-panel .p-panelmenu-content {
+    border-radius: 0;
+}
+.p-panelmenu .p-panelmenu-panel:not(:first-child) .p-panelmenu-header .p-panelmenu-header-content {
+    border-top: 0 none;
+}
+.p-panelmenu .p-panelmenu-panel:not(:first-child) .p-panelmenu-header:not(.p-highlight):not(.p-disabled):hover .p-panelmenu-header-content, .p-panelmenu .p-panelmenu-panel:not(:first-child) .p-panelmenu-header:not(.p-disabled).p-highlight:hover .p-panelmenu-header-content {
+    border-top: 0 none;
+}
+.p-panelmenu .p-panelmenu-panel:first-child .p-panelmenu-header .p-panelmenu-header-content {
+    border-top-right-radius: 0.375rem;
+    border-top-left-radius: 0.375rem;
+}
+.p-panelmenu .p-panelmenu-panel:last-child .p-panelmenu-header:not(.p-highlight) .p-panelmenu-header-content {
+    border-bottom-right-radius: 0.375rem;
+    border-bottom-left-radius: 0.375rem;
+}
+.p-panelmenu .p-panelmenu-panel:last-child .p-panelmenu-content {
+    border-bottom-right-radius: 0.375rem;
+    border-bottom-left-radius: 0.375rem;
+}
+</style>-->

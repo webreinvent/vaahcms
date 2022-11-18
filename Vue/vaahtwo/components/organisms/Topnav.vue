@@ -1,5 +1,5 @@
 <template>
-    <Menubar :model="items" class="top-nav-fixed">
+    <Menubar :model="items" class="top-nav-fixed py-2">
         <template #start>
             <div class="navbar-logo">
                 <img src="https://develop.jalapeno.app/vaahcms/backend/vaahone/images/vaahcms-logo.svg" alt="VaahCMS">
@@ -7,7 +7,7 @@
         </template>
         <template #item="{item}">
             <router-link :to="item.to" custom v-slot="{href, route, navigate, isActive, isExactActive}">
-                <a :href="href" @click="navigate" class="mx-auto"><i class="pi" :class="item.icon"></i></a>
+                <a :href="href" @click="navigate" class="mx-2"><i class="pi" :class="item.icon"></i></a>
             </router-link>
         </template>
         <template #end>

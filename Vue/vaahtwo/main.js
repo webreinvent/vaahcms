@@ -25,7 +25,7 @@ import Chip from 'primevue/chip';
 import Chips from 'primevue/chips';
 import ColorPicker from 'primevue/colorpicker';
 import Column from 'primevue/column';
-//import ColumnGroup from 'primevue/columngroup';
+//import ColumnGroup from 'primevue-3.20.0/columngroup';
 import ConfirmDialog from 'primevue/confirmdialog';
 import ConfirmPopup from 'primevue/confirmpopup';
 import ConfirmationService from 'primevue/confirmationservice';
@@ -103,8 +103,6 @@ import TreeTable from 'primevue/treetable';
 import TriStateCheckbox from 'primevue/tristatecheckbox';
 import VirtualScroller from 'primevue/virtualscroller';
 //-------------/PrimeVue Imports
-
-import 'primevue/resources/primevue.min.css';
 
 
 //-------------APP

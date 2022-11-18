@@ -1,6 +1,6 @@
 .p-panelmenu {
     .p-panelmenu-header {
-        > a {
+        .p-panelmenu-header-action {
             padding: $accordionHeaderPadding;
             border: $accordionHeaderBorder;
             color: $accordionHeaderTextColor;
@@ -130,7 +130,7 @@
                     border-bottom-left-radius: $borderRadius;
                 }
             }
-        } 
+        }
     }
 
 }

@@ -33,7 +33,7 @@ export default defineConfig({
                 chunkFileNames: `[name].js`,
                 assetFileNames: `[name].[ext]`
             },
-            //external: ['vue', /primevue\/.+/],
+            //external: ['vue', /primevue-3.20.0\/.+/],
         }
     },
     server: {

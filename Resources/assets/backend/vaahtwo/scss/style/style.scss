@@ -15,7 +15,7 @@ body{
 }
 
 .main-container{
-    width: calc(100% - 210px);
+    width: calc(100% - 230px);
     margin: 70px 5px 0 auto;
 }
 .top-nav-fixed{
@@ -37,9 +37,9 @@ body{
 }
 .sidebar{
     position: fixed;
-    top: 85px;
+    top: 63px;
     left: 0;
-    width: 200px;
+    width: 225px;
     z-index: 100;
     max-height: calc(100vh - 60px);
     overflow-y: auto;
@@ -53,11 +53,9 @@ body{
         background-color: darkgrey;
         outline: 1px solid slategrey;
     }
-    .p-panelmenu .p-panelmenu-panel:last-child .p-panelmenu-content{
-        border-radius: 0;
-    }
-    .p-panelmenu .p-panelmenu-panel:first-child .p-panelmenu-header > a{
-        border-radius:0;
+    .p-panelmenu .p-panelmenu-panel:first-child .p-panelmenu-header .p-panelmenu-header-content{
+        border-top-right-radius: 0;
+        border-top-left-radius: 0;
     }
 }
 
