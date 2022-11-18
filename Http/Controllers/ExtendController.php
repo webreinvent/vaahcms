@@ -411,7 +411,7 @@ class ExtendController extends Controller
         $data['next_steps'] = [
             [
                 'name' => 'View your Site',
-                'icon' => 'tv',
+                'icon' => 'pi-desktop',
                 'link' => url('/')
             ]
         ];
@@ -420,7 +420,7 @@ class ExtendController extends Controller
         $data['actions'] = [
             [
                 'name' => 'Manage your Module',
-                'icon' => 'cube',
+                'icon' => 'pi-box',
                 'link' => self::$link."/modules"
             ]
         ];

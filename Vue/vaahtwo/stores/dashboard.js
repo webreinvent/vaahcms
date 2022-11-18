@@ -39,7 +39,7 @@ export const useDashboardStore = defineStore({
             }
         },
         //-----------------------------------------------------------------------
-        goToLink (link,target = false) {
+        goToLink (link, target = false) {
 
             if(!link) {
                 return false;

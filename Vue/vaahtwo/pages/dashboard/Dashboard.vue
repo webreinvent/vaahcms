@@ -32,39 +32,36 @@ onMounted(async () => {
                         <div class="col-12 md:col-4">
                             <h6 class="font-semibold mb-4">Next Steps</h6>
                             <ul class="links-list">
-                                <li>
-                                    <a><i class="pi pi-desktop"></i>View your site</a>
-                                </li>
-                                <li>
-                                    <a><i class="pi pi-eye"></i>View Pages</a>
-                                </li>
-                                <li>
-                                    <a><i class="pi pi-plus"></i>Add Pages</a>
-                                </li>
-                                <li>
-                                    <a><i class="pi pi-pencil"></i>Add a Content Type</a>
-                                </li>
+                                <template v-if="store && store.dashboard_items && store.dashboard_items.success"
+                                          v-for="module in store.dashboard_items.success"
+                                >
+                                    <template v-for="n_module in module.next_steps">
+                                        <li>
+                                            <a href="" @click="store.goToLink(n_item.link, n_item.open_in_new_tab ? n_item.open_in_new_tab : null)">
+                                                <i class="pi" :class="n_module.icon"></i>
+                                                {{ n_module.name }}
+                                            </a>
+                                        </li>
+                                    </template>
+                                </template>
                             </ul>
                         </div>
 
                         <div class="col-12 md:col-4">
                             <h6 class="font-semibold mb-4">More Actions</h6>
                             <ul class="links-list">
-                                <li>
-                                    <a><i class="pi pi-box"></i>Manage your modules</a>
-                                </li>
-
-                                <li>
-                                    <a><i class="pi pi-bars"></i>Manage Menus</a>
-                                </li>
-
-                                <li>
-                                    <a><i class="pi pi-microsoft"></i>Manage Blocks</a>
-                                </li>
-
-                                <li>
-                                    <a><i class="pi pi-file"></i>Learn more about CMS</a>
-                                </li>
+                                <template v-if="store && store.dashboard_items && store.dashboard_items.success"
+                                          v-for="module in store.dashboard_items.success"
+                                >
+                                    <template v-for="n_module in module.actions">
+                                        <li>
+                                            <a href="" @click="store.goToLink(n_item.link, n_item.open_in_new_tab ? n_item.open_in_new_tab : null)">
+                                                <i class="pi" :class="n_module.icon"></i>
+                                                {{ n_module.name }}
+                                            </a>
+                                        </li>
+                                    </template>
+                                </template>
                             </ul>
                         </div>
 
@@ -87,7 +84,7 @@ onMounted(async () => {
 
                                             <p class="text-sm font-semibold mt-3">{{ item.label }}</p>
                                             <h6 class="text-xl font-semibold my-1">{{ item.count }}</h6>
-                                            <a href="" @click="store.goToLink(item.link)"
+                                            <a href="" @click="store.goToLink(item.link, item.open_in_new_tab ? item.open_in_new_tab : null)"
                                                class="text-sm">
                                                 View Details
                                             </a>
