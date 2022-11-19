@@ -19,6 +19,7 @@
         "quill": "^1.3.7",
         "vue": "^3.2.41",
         "vue-router": "^4.1.6",
+        "vue3-highlightjs": "^1.0.5",
         "vuedraggable": "^4.1.0",
         "vuejs-tree": "^3.0.2"
     },

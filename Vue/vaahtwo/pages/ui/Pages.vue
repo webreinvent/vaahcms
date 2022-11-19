@@ -26,6 +26,10 @@ export default {
         return{
             pages :[
                 {
+                    label:'UI elements',
+                    to:'/ui/public/ui-elements'
+                },
+                {
                     label:'Signin',
                     to:'/ui/public/signin'
                 },

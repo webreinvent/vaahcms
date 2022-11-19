@@ -3,16 +3,16 @@
         <div class="col-12 md:col-8">
             <Card>
                 <template #content>
-                    <h5 class="text-xl font-semibold">Welcome to Vaah<b>cms</b></h5>
-                    <p>We've assembled some links to get you started:</p>
+                    <h5 class="text-xl font-semibold mb-1">Welcome to Vaah<b>cms</b></h5>
+                    <p class="text-sm">We've assembled some links to get you started:</p>
                     <div class="grid mt-4">
                         <div class="col-12 md:col-4">
-                            <h6 class="font-semibold mb-4">Get Started</h6>
-                            <Button label="Go to Theme" class="p-button-sm"></Button>
-                            <p class="text-sm mt-1">or,<a>create your own theme</a></p>
+                            <h6 class="font-semibold mb-2 text-sm">Get Started</h6>
+                            <Button label="Go to Theme" class="p-button-sm is-light"></Button>
+                            <p class="text-xs mt-2">or,<a class="cursor-pointer text-primary">create your own theme</a></p>
                         </div>
                         <div class="col-12 md:col-4">
-                            <h6 class="font-semibold mb-4">Next Steps</h6>
+                            <h6 class="font-semibold mb-2 text-sm">Next Steps</h6>
                             <ul class="links-list">
                                 <li>
                                     <a><i class="pi pi-desktop"></i>View your site</a>
@@ -29,7 +29,7 @@
                             </ul>
                         </div>
                         <div class="col-12 md:col-4">
-                            <h6 class="font-semibold mb-4">More Actions</h6>
+                            <h6 class="font-semibold mb-2 text-sm">More Actions</h6>
                             <ul class="links-list">
                                 <li>
                                     <a><i class="pi pi-box"></i>Manage your modules</a>
@@ -94,8 +94,8 @@
             </Card>
         </div>
         <div class="col-12 md:col-4">
-            <Button label="Check Updates" icon="pi pi-refresh" class="p-button-sm p-button-outlined mr-2 mb-3"></Button>
-            <Button label="Getting Started" icon="pi pi-play" class="p-button-sm p-button-outlined mb-3"></Button>
+            <Button label="Check Updates" icon="pi pi-refresh" class="p-button-sm is-light mr-2 mb-3"></Button>
+            <Button label="Getting Started" icon="pi pi-play" class="p-button-sm is-light mb-3"></Button>
             <Accordion :multiple="true" :activeIndex="active_index">
                 <AccordionTab header="Jobs">
                     <p class="text-sm">
@@ -145,6 +145,7 @@ export default {
     ul{
         padding-left: 0;
         &.links-list{
+            list-style-type: none;
             li{
                 &:not(:last-child){
                     margin-bottom:10px
