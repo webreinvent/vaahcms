@@ -1,5 +1,5 @@
 <template>
-    <Menubar :model="items" class="top-nav-fixed py-2">
+    <Menubar :model="items" class="top-nav-fixed py-2 align-items-center">
         <template #start>
             <div class="navbar-logo">
                 <img src="https://develop.jalapeno.app/vaahcms/backend/vaahone/images/vaahcms-logo.svg" alt="VaahCMS">
@@ -11,7 +11,13 @@
             </router-link>
         </template>
         <template #end>
-            <Button icon="pi pi-bars" @click="toggle"></Button>
+           <div class="flex align-items-center">
+               <a @click="toggle" class="cursor-pointer flex align-items-center">
+                   <Avatar image="https://www.gravatar.com/avatar/98431994177b4bb856d3f03dbee7ba03.jpg?s=80&d=mp&r=g" class="mr-2" shape="circle" />
+                   <span>Jhon Doe </span>
+                   <i class="pi pi-chevron-down text-sm mt-1 ml-1"></i>
+               </a>
+           </div>
             <TieredMenu :model="menu_options" ref="menu" :popup="true">
             </TieredMenu>
         </template>
@@ -48,8 +54,7 @@ export default {
                 {
                     label:'Profile',
                     icon:'pi pi-fw pi-user',
-                    command: () =>{
-                    }
+                    to:{path:'/ui/private/profile'}
                 },
                 {
                     label:'Logout',
