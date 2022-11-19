@@ -6,7 +6,7 @@ const root = useRootStore();
 
 onMounted(async () => {
     root.verifyInstallStatus();
-    await root.getAssets();
+    await root.getAssets(); await root.menuItems();
 });
 
 const menu = ref();
@@ -43,11 +43,13 @@ const menu_options = ref([
     }
 ]);
 
-const menu_item = ref();
+
 
 if(root &&  root.assets && root.assets.extended_views) {
-    root.assets.extended_views.top_right_user_menu.success.forEach(item);
+    const manu_items_value =  root.assets.extended_views.top_right_user_menu.success;
+    const menu_item = ref(manu_items_value);
 }
+
 
 </script>
 
@@ -72,9 +74,7 @@ if(root &&  root.assets && root.assets.extended_views) {
                         aria-controls="overlay_menu"
                 />
 
-                <Button icon="pi pi-bars" @click="log" />
-
-                <TieredMenu id="overlay_menu" :model="menu_item" ref="menu" :popup="true" />
+                <TieredMenu id="overlay_menu" :model="root.items" ref="menu" :popup="true" />
             </template>
         </Menubar>
     </div>

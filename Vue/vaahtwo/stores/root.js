@@ -16,6 +16,7 @@ export const useRootStore = defineStore({
         show_progress_bar: false,
         is_logged_in: false,
         is_installation_verified: false,
+        items: null,
     }),
     getters: {},
     actions: {
@@ -70,6 +71,11 @@ export const useRootStore = defineStore({
             this.is_logged_in = true;
         },
         //-----------------------------------------------------------------------
+        menuItems() {
+            if(this.assets && this.assets.extended_views) {
+                this.items = this.assets.extended_views.top_right_user_menu.success;
+            }
+        },
         //---------------------------------------------------------------------
         async verifyInstallStatus() {
 
