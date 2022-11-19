@@ -104,6 +104,8 @@ import TriStateCheckbox from 'primevue/tristatecheckbox';
 import VirtualScroller from 'primevue/virtualscroller';
 //-------------/PrimeVue Imports
 
+import VueHighlightJS from 'vue3-highlightjs'
+import 'highlight.js/styles/solarized-light.css'
 
 //-------------APP
 import App from "./layouts/App.vue"
@@ -126,6 +128,8 @@ app.use(PrimeVue, { ripple: true });
 app.use(ConfirmationService);
 app.use(ToastService);
 app.use(DialogService);
+
+app.use(VueHighlightJS)
 
 app.directive('tooltip', Tooltip);
 app.directive('badge', BadgeDirective);

@@ -1,4 +1,4 @@
-import ContentTypes from "../pages/ui/ContentTypes.vue";
+import UiElements from "../pages/ui/UiElements.vue";
 
 
 let routes= [];
@@ -31,6 +31,9 @@ import Media from "../pages/ui/Media.vue";
 import MultiFactorAuth from "../pages/ui/MultiFactorAuth.vue";
 import Pages from "../pages/ui/Pages.vue";
 import MenuContent from "../pages/ui/MenuContent.vue";
+import Profile from "../pages/ui/Profile.vue";
+import ContentTypes from "../pages/ui/ContentTypes.vue";
+
 
 routes_list = [{
     path: '/ui',
@@ -48,6 +51,12 @@ routes_list = [{
             component: PublicPages,
             name: PublicPages,
             children: [
+                {
+                    path: 'ui-elements',
+                    name: 'UiElements',
+                    component: UiElements,
+                    props: true,
+                },
                 {
                     path: 'signin',
                     name: 'Signin',
@@ -182,6 +191,11 @@ routes_list = [{
                     path: 'menu',
                     name: MenuContent,
                     component: MenuContent
+                },
+                {
+                    path: 'profile',
+                    name: Profile,
+                    component: Profile
                 }
             ]
         }
