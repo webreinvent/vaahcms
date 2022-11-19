@@ -379,10 +379,6 @@ export const useUserStore = defineStore({
                 await this.getList();
             }
         },
-        //--------------------------------------------------------------------
-        getRole: function (item){
-            this.$router.push({name: 'user.role', params:{id:item.id}})
-        },
         //---------------------------------------------------------------------
         async listAction(type = null){
 
@@ -881,10 +877,6 @@ export const useUserStore = defineStore({
         confirmDeleteItemAfter()
         {
             this.itemAction('delete', this.item);
-        },
-        //--------------------------------------------------------------------
-        onUpload(){
-
         },
         //---------------------------------------------------------------------
         async getFormMenu()
