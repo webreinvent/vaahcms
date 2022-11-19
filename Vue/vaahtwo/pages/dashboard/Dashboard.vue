@@ -1,11 +1,12 @@
 <script  setup>
 
-import { onMounted } from 'vue';
+import { onMounted,ref } from 'vue';
 import { useRootStore } from "../../stores/root";
 import { useDashboardStore } from "../../stores/dashboard";
 
 const root = useRootStore();
 const store = useDashboardStore();
+const key = ref();
 
 onMounted(async () => {
     root.verifyInstallStatus();
@@ -74,11 +75,11 @@ onMounted(async () => {
                                 <h5 class="text-lg font-semibold mb-4">{{ module.card.title }}</h5>
 
                                 <div class="grid m-0">
-                                    <template v-if="(key+1)%4 !== 0"
-                                              v-for="(item,key) in module.card.list"
+                                    <template v-for="(item, key) in module.card.list"
+                                              v-if="(key+1)%4 !== 0"
                                     >
                                         <div class="col">
-                                            <span class="p-3 border-circle bg-blue-50">
+                                            <span class="p-3 border-circle" :class="item.css_class">
                                                 <i class="text-blue-400 pi" :class="item.icon"></i>
                                             </span>
 
@@ -115,87 +116,81 @@ onMounted(async () => {
                 </template>
             </template>
 
-            <Accordion :multiple="true" :activeIndex="store.active_index">
-                <template v-if="store && store.dashboard_items && store.dashboard_items.success"
-                          v-for="module in store.dashboard_items.success"
-                >
-                    <template v-if="module.expanded_item"
-                              v-for="item in module.expanded_item"
+            <template v-if="store && store.dashboard_items && store.dashboard_items.success">
+                <template v-for="module in store.dashboard_items.success">
+                    <Accordion :multiple="true"
+                               :activeIndex="store.active_index"
                     >
-
-                        <AccordionTab header="item.title">
-                            <template v-if="item.type === 'content' ">
-                                <div v-if="!item.is_job_enabled">
-                                    <Message severity="error" :closable="false">
-                                        Enable <b>Laravel Queues</b> to run your jobs
-                                        <a @click="store.goToLink(root.current_url+'#/vaah/settings/general')"
-                                           href=""
+                        <template v-for="item in module.expanded_item">
+                            <AccordionTab  :header="item.title">
+                                <div v-if="item.type == 'content'">
+                                    <div v-if="!item.is_job_enabled">
+                                        <Message class="bg-red-50 text-red-400"
+                                                 :closable="false"
+                                                 icon="null"
                                         >
-                                            View Setting
-                                        </a>
-                                    </Message>
+                                            Enable <b>Laravel Queues</b> to run your jobs
+                                            <a @click="store.goToLink(root.current_url+'#/vaah/settings/general')"
+                                               href=""
+                                            >
+                                                View Setting
+                                            </a>
+                                        </Message>
+                                    </div>
+
+                                    <p class="text-sm">l
+                                        {{ item.description }}
+                                    </p>
+                                    <Divider></Divider>
+
+                                    <div class="flex justify-content-evenly align-items-center align-items-center">
+                                        <template v-for="f_item in item.footer">
+                                            <a href="" class="text-center" @click="store.goToLink(f_item.link)">
+                                                <i class="mr-2 pi" :class=" 'pi-' + f_item.icon"></i>
+                                                {{ f_item.count }} {{ f_item.name }}
+                                            </a>
+
+                                            <Divider layout="vertical"></Divider>
+                                        </template>
+                                    </div>
                                 </div>
 
-                                <p class="text-sm">
-                                    {{ item.description }}
-                                </p>
+                                <div v-if="item.type === 'list' ">
+                                    <div v-for="(log,l_index) in item.list">
+                                        <div class="flex justify-content-between">
+                                            <p class="text-sm text-red-500">
+                                                {{ log.name }}
+                                            </p>
 
-                                <div class="flex justify-content-evenly align-items-center align-items-center">
-                                    <template v-for="f_item in item.footer">
-                                        <a href="" class="text-center" @click="store.goToLink(f_item.link)">
-                                            <i class="mr-2 pi" :class="f_item.icon"></i>
-                                            {{ f_item.count }} {{ f_item.name }}
-                                        </a>
+                                            <a href=""
+                                               @click="store.goToLink(item.link+'details/'+log.name)"
+                                               class="text-sm"
+                                            >
+                                                View
+                                            </a>
+                                        </div>
+                                    </div>
 
-                                        <Divider layout="vertical"></Divider>
-                                    </template>
-                                &nbsp;</div>
+                                    <div v-if="item.list.length === 0">
+                                        <div class="card-content">
+                                            <div class="notification is-small is-success is-light">
+                                                {{ item.empty_response_note }}
+                                            </div>
+                                        </div>
+                                    </div>
 
-                                <Divider></Divider>
-                            </template>
-                        </AccordionTab>
-                    </template>
+                                    <div v-if="item.list.length > item.list_limit" class="card-footer">
+                                        <div class="card-footer-item" >
+                                            <a @click="store.goToLink(item.link)">{{ item.link_text }}</a>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </AccordionTab>
+                        </template>
+                    </Accordion>
                 </template>
-            </Accordion>
-
-            <Accordion :multiple="true" :activeIndex="store.active_index">
-                <AccordionTab header="Jobs">
-                    <Message severity="error" :closable="false" icon="null">
-                        Enable <b>Laravel Queues</b> to run your jobs
-                        <a href="" @click="store.goToLink(root.current_url+'#/vaah/settings/general')">
-                            View Setting
-                        </a>
-                    </Message>
-                    <p class="text-sm">
-                        Tasks that is kept in the queue to be performed one after another. Queues allow you to defer the processing of a time consuming task, such as sending an e-mail, until a later time which drastically speeds up web requests to your application.
-                    </p>
-
-                    <Divider></Divider>
-
-                    <div class="flex justify-content-evenly align-items-center align-items-center">
-                        <a href="" class="text-center">
-                            <i class="pi pi-envelope mr-2"></i>
-                            4 Pending
-                        </a>
-
-                        <Divider layout="vertical"></Divider>
-
-                        <a href="" class="text-center">
-                            <i class="pi pi-ban mr-2 text-red-500"></i>
-                            0 Failed
-                        </a>
-                    </div>
-                </AccordionTab>
-
-                <AccordionTab header="Laravel logs (1)">
-                    <div class="flex justify-content-between">
-                        <p class="text-sm text-red-500">
-                            laravel-2022-10-12.log
-                        </p>
-                        <a href="" class="text-sm">View</a>
-                    </div>
-                </AccordionTab>
-            </Accordion>
+            </template>
         </div>
     </div>
 

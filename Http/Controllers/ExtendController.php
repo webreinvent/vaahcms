@@ -299,30 +299,34 @@ class ExtendController extends Controller
                 [
                     "count" => User::count(),
                     "label" => 'Total User',
-                    "icon" => "pi-users",
+                    "icon" => "pi-users text-blue-400",
                     "type" => "info",
-                    "link" => self::$link."/users/"
+                    "link" => self::$link."/users/",
+                    "css_class" => "bg-blue-50"
                 ],
                 [
                     "count" => Role::count(),
                     "label" => 'Total Role',
-                    "icon" => "pi-tags",
+                    "icon" => "pi-tags text-blue-400",
                     "type" => "info",
-                    "link" => self::$link."/roles/"
+                    "link" => self::$link."/roles/",
+                    "css_class" => "bg-blue-50"
                 ],
                 [
                     "count" => Permission::count(),
                     "label" => 'Total Permission',
-                    "icon" => "pi-key",
+                    "icon" => "pi-key text-blue-400",
                     "type" => "info",
-                    "link" => self::$link."/permissions/"
+                    "link" => self::$link."/permissions/",
+                    "css_class" => "bg-blue-50"
                 ],
                 [
                     "count" => User::where('is_active',1)->count(),
                     "label" => 'Active Users',
-                    "icon" => "pi-user",
+                    "icon" => "pi-user text-green-400",
                     "type" => "success",
-                    "link" => self::$link."/users?status=active"
+                    "link" => self::$link."/users?status=active",
+                    "css_class" => "bg-green-50"
                 ]
             ]
 
@@ -372,7 +376,7 @@ class ExtendController extends Controller
                         'name' => 'Failed',
                         'count' => FailedJob::count(),
                         'type' => 'danger',
-                        'icon' => 'ban',
+                        'icon' => 'ban text-red-500',
                         'link' => self::$link."/advanced/jobs-failed/",
                     ]
                 ]
