@@ -307,14 +307,14 @@
                                     <InputText></InputText>
                                 </div>
                             </div>
-                            <div class="col-12 md:col-3">
+                            <div class="col-12 md:col-4">
                                 <div class="p-inputgroup">
                                     <Button icon="pi pi-plus" label="Add Meta Tag" ></Button>
-                                    <Button label="Save" ></Button>
-                                    <Button icon="pi pi-copy" ></Button>
+                                    <Button label="Save"></Button>
+                                    <Button icon="pi pi-copy"></Button>
                                 </div>
                             </div>
-                            <div class="col-12 md:col-3">
+                            <div class="col-12 md:col-4">
                                 <div class="p-inputgroup">
                                     <Dropdown v-model="metaOption" :options="metaOptions" option-label="label" option-value="value"></Dropdown>
                                     <Button label="Generate"></Button>
