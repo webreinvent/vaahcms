@@ -65,17 +65,16 @@ $colors: (
 );
 
 //reused color variables
-$shade000:#ffffff !default;    //surface
-$shade100:darken($shade000, 25%) !default;    //header background      //updated: gray-50
-$shade200:darken($shade000, 30%) !default;    //hover background       //updated: gray-100
-$shade300:darken($shade000, 35%) !default;    //border, divider        //updated  coolgray-200
-$shade400:darken($shade000, 40%)  !default;    //input border           //updated: gray-300
-$shade500:darken($shade000, 45%)  !default;    //input icon             //updated: coolgray500
-$shade500:darken($shade000, 50%)  !default;    //input icon             //updated: coolgray500
-$shade600:darken($shade000, 60%)  !default;    //text secondary color   //updated: gray-500
-$shade700:darken($shade000, 70%) !default;    //text color             //updated: gray-700
-$shade800:darken($shade000, 80%)  !default;    //unused                 gray-800
-$shade900:darken($shade000, 90%) !default;    //unused                 gray-900
+$shade000:$shade000 !default;    //surface
+$shade100:$shade100 !default;    //header background      //updated: gray-50
+$shade200:$shade200 !default;    //hover background       //updated: gray-100
+$shade300:$shade300 !default;    //border, divider        //updated  coolgray-200
+$shade400:$shade400 !default;    //input border           //updated: gray-300
+$shade500:$shade500 !default;    //input icon             //updated: coolgray500
+$shade600:$shade600 !default;    //text secondary color   //updated: gray-500
+$shade700:$shade700 !default;    //text color             //updated: gray-700
+$shade800:$shade800 !default;    //unused                 gray-800
+$shade900:$shade900 !default;    //unused                 gray-900
 
 //global
 $fontFamily:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji" !default;

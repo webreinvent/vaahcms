@@ -9,17 +9,16 @@ $danger: hsl(5, 100%, 59%) !default;
 $help: hsl(271, 91%, 65%) !default;
 $secondary: hsl(215, 16%, 47%) !default;
 
-$shade000:#ffffff !default;
-$shade100:darken($shade000, 15%) !default;
-$shade200:darken($shade000, 20%) !default;
-$shade300:darken($shade000, 25%) !default;
-$shade400:darken($shade000, 30%)  !default;
-$shade500:darken($shade000, 35%)  !default;
-$shade500:darken($shade000, 40%)  !default;
-$shade600:darken($shade000, 50%)  !default;
-$shade700:darken($shade000, 60%) !default;
-$shade800:darken($shade000, 70%)  !default;
-$shade900:darken($shade000, 80%) !default;
+$shade000:#ffffff !default;    //surface
+$shade100:#fafafa !default;    //header background      //updated: gray-50
+$shade200:#f4f4f5 !default;    //hover background       //updated: gray-100
+$shade300:#e5e7eb !default;    //border, divider        //updated  coolgray-200
+$shade400:#d4d4d8 !default;    //input border           //updated: gray-300
+$shade500:#6b7280 !default;    //input icon             //updated: coolgray500
+$shade600:#71717A !default;    //text secondary color   //updated: gray-500
+$shade700:#3f3f46 !default;    //text color             //updated: gray-700
+$shade800:#27272A !default;    //unused                 gray-800
+$shade900:#18181B !default;    //unused                 gray-900
 
 $colors: (
         "blue": #3B82F6,

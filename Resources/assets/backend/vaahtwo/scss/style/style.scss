@@ -37,7 +37,7 @@ body{
 }
 .sidebar{
     position: fixed;
-    top: 63px;
+    top: 50px;
     left: 0;
     width: 225px;
     z-index: 100;
@@ -507,3 +507,4 @@ $media-level-2-spacing: 0.5rem !default;
         min-height: 2.9rem;
     }
 }
+
