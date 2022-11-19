@@ -28,7 +28,7 @@ class TaxonomiesController extends Controller
             $type = TaxonomyType::where('slug',$request->type)->first();
 
             if(!$type){
-                $response['status'] = 'failed';
+                $response['success'] = false;
                 $response['errors'][] = "Type not found.";
                 return $response;
             }
@@ -40,7 +40,7 @@ class TaxonomiesController extends Controller
                     ->where('type',$type->parent_id)->first();
 
                 if(!$parent){
-                    $response['status'] = 'failed';
+                    $response['success'] = false;
                     $response['errors'][] = "Parent not found.";
                     return $response;
                 }
@@ -81,7 +81,7 @@ class TaxonomiesController extends Controller
             return $response;
         }
 
-        $response['status'] = 'success';
+        $response['success'] = true;
         $response['data'] = $item;
         return response()->json($response);
     }
@@ -103,7 +103,7 @@ class TaxonomiesController extends Controller
             $type = TaxonomyType::where('slug',$request->type)->first();
 
             if(!$type){
-                $response['status'] = 'failed';
+                $response['success'] = false;
                 $response['errors'][] = "Type slug not found.";
                 return $response;
             }
@@ -115,7 +115,7 @@ class TaxonomiesController extends Controller
                     ->where('type',$type->parent_id)->first();
 
                 if(!$parent){
-                    $response['status'] = 'failed';
+                    $response['success'] = false;
                     $response['errors'][] = "Parent slug not found.";
                     return $response;
                 }

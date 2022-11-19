@@ -225,7 +225,7 @@ class Role extends Model {
 
         if(!\Auth::user()->hasPermission('can-create-roles'))
         {
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'][] = trans("vaahcms::messages.permission_denied");
 
             return $response;
@@ -234,7 +234,7 @@ class Role extends Model {
         $inputs = $request->new_item;
 
         $validation = static::validation($inputs);
-        if(isset($validation['status']) && $validation['status'] == 'failed')
+        if(isset($validation['success']) && !$validation['success'])
         {
             return $validation;
         }
@@ -244,7 +244,7 @@ class Role extends Model {
 
         if($user)
         {
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'][] = "This name is already exist.";
             return $response;
         }
@@ -255,7 +255,7 @@ class Role extends Model {
 
         if($user)
         {
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'][] = "This slug is already exist.";
             return $response;
         }
@@ -269,7 +269,7 @@ class Role extends Model {
         Role::syncRolesWithUsers();
         Role::recountRelations();
 
-        $response['status'] = 'success';
+        $response['success'] = true;
         $response['data']['item'] = $role;
         $response['messages'][] = trans('vaahcms-general.saved_successfully');
         return $response;
@@ -329,7 +329,7 @@ class Role extends Model {
         $countUser = User::all()->count();
 
 
-        $response['status'] = 'success';
+        $response['success'] = true;
         $response['data'] = $data;
         $response['data']['totalPermission'] = $countPermission;
         $response['data']['totalUser'] = $countUser;
@@ -344,7 +344,7 @@ class Role extends Model {
 
         $item = Role::where('id', $id)->with(['createdByUser', 'updatedByUser', 'deletedByUser'])->withTrashed()->first();
 
-        $response['status'] = 'success';
+        $response['success'] = true;
         $response['data'] = $item;
 
         return $response;
@@ -391,7 +391,7 @@ class Role extends Model {
 
 
         $response['data']['list'] = $list;
-        $response['status'] = 'success';
+        $response['success'] = true;
 
         return $response;
 
@@ -429,7 +429,7 @@ class Role extends Model {
         }
 
         $response['data']['list'] = $list;
-        $response['status'] = 'success';
+        $response['success'] = true;
 
         return $response;
 
@@ -443,7 +443,7 @@ class Role extends Model {
     {
         if(!\Auth::user()->hasPermission('can-update-roles'))
         {
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'][] = trans("vaahcms::messages.permission_denied");
 
             return $response;
@@ -453,7 +453,7 @@ class Role extends Model {
         $input = $request->item;
 
         $validation = static::validation($input);
-        if(isset($validation['status']) && $validation['status'] == 'failed')
+        if(isset($validation['success']) && !$validation['success'])
         {
             return $validation;
         }
@@ -463,7 +463,7 @@ class Role extends Model {
 
         if($user)
         {
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'][] = "This name is already exist.";
             return $response;
         }
@@ -474,7 +474,7 @@ class Role extends Model {
 
         if($user)
         {
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'][] = "This slug is already exist.";
             return $response;
         }
@@ -489,7 +489,7 @@ class Role extends Model {
         $update->save();
 
 
-        $response['status'] = 'success';
+        $response['success'] = true;
         $response['data'] = [];
         $response['messages'][] = 'Data updated.';
 
@@ -502,14 +502,14 @@ class Role extends Model {
 
         if(!$request->has('inputs'))
         {
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'][] = 'Select IDs';
             return $response;
         }
 
         if(!$request->has('data'))
         {
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'][] = 'Select Status';
             return $response;
         }
@@ -534,7 +534,7 @@ class Role extends Model {
             $role->save();
         }
 
-        $response['status'] = 'success';
+        $response['success'] = true;
         $response['data'] = [];
         $response['messages'][] = trans('vaahcms-general.action_successful');
 
@@ -548,7 +548,7 @@ class Role extends Model {
 
         if(!$request->has('inputs'))
         {
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'][] = 'Select IDs';
             return $response;
         }
@@ -565,7 +565,7 @@ class Role extends Model {
             }
         }
 
-        $response['status'] = 'success';
+        $response['success'] = true;
         $response['data'] = [];
         $response['messages'][] = trans('vaahcms-general.action_successful');
 
@@ -579,14 +579,14 @@ class Role extends Model {
 
         if(!$request->has('inputs'))
         {
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'][] = 'Select IDs';
             return $response;
         }
 
         if(!$request->has('data'))
         {
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'][] = 'Select Status';
             return $response;
         }
@@ -600,7 +600,7 @@ class Role extends Model {
             }
         }
 
-        $response['status'] = 'success';
+        $response['success'] = true;
         $response['data'] = [];
         $response['messages'][] = trans('vaahcms-general.action_successful');
 
@@ -613,14 +613,14 @@ class Role extends Model {
 
         if(!$request->has('inputs'))
         {
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'][] = 'Select IDs';
             return $response;
         }
 
         if(!$request->has('data'))
         {
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'][] = 'Select Status';
             return $response;
         }
@@ -640,7 +640,7 @@ class Role extends Model {
             }
         }
 
-        $response['status'] = 'success';
+        $response['success'] = true;
         $response['data'] = [];
         $response['messages'][] = trans('vaahcms-general.action_successful');
 
@@ -658,7 +658,7 @@ class Role extends Model {
 
         if($item->id == 1)
         {
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'][] = 'Super Admin permission can not be changed';
             return response()->json($response);
 
@@ -731,14 +731,14 @@ class Role extends Model {
 
         if(!$request->has('inputs'))
         {
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'][] = 'Select IDs';
             return $response;
         }
 
         if(!$request->has('data'))
         {
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'][] = 'Select Status';
             return $response;
         }
@@ -763,7 +763,7 @@ class Role extends Model {
             $perm->save();
         }
 
-        $response['status'] = 'success';
+        $response['success'] = true;
         $response['data'] = [];
 
         return $response;
@@ -779,7 +779,7 @@ class Role extends Model {
 
         $item = Permission::where('module',$request->module)->withTrashed()->select('section')->get()->unique('section');
 
-        $response['status'] = 'success';
+        $response['success'] = true;
         $response['data'] = $item;
 
         return $response;
@@ -808,7 +808,7 @@ class Role extends Model {
         if ( $validator->fails() ) {
 
             $errors             = errorsToArray($validator->errors());
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'] = $errors;
             return $response;
         }

@@ -10,7 +10,7 @@ function vh_action_response($class_namespace, $method, $params=null) {
         $response = $c->$method($params);
         return $response;
     } catch (\Exception $e) {
-        $response['status'] = 'failed';
+        $response['success'] = false;
         $response['errors'][] = $e->getMessage();
         return $response;
     }
@@ -65,11 +65,11 @@ function vh_modules_action($method, $params=null, $output_type=null)
         $res = vh_module_action($item->name, 'ExtendController@'.$method);
 
 
-        if(isset($res['status']) && $res['status'] == 'failed')
+        if(isset($res['success']) && !$res['success'])
         {
             $output['failed'][$item->slug] = $res;
 
-        } elseif(isset($res['status']) && $res['status'] == 'success'
+        } elseif(isset($res['success']) && $res['success']
             && isset($res['data']) && count(array_filter($res['data'])) > 0)
         {
 
@@ -140,11 +140,11 @@ function vh_themes_action($method, $params=null, $output_type=null)
 
 
 
-        if($res['status'] == 'failed')
+        if(isset($res['success']) && !$res['success'])
         {
             $output['failed'][$item->slug] = $res;
 
-        } elseif(isset($res['status']) && $res['status'] == 'success'
+        } elseif(isset($res['success']) && $res['success']
             && isset($res['data']) && count(array_filter($res['data'])) > 0)
         {
             if($output_type == 'array'){
@@ -177,7 +177,7 @@ function vh_action($method, $params=null, $output_type=null){
 
             $vaahcms_res = vh_vaahcms_action($method, $params);
 
-            if(isset($vaahcms_res['status']) && $vaahcms_res['status'] == 'failed')
+            if(isset($vaahcms_res['success']) && !$vaahcms_res['success'])
             {
                 $output['failed'] = $vaahcms_res;
             } else{
@@ -208,7 +208,7 @@ function vh_action($method, $params=null, $output_type=null){
             $response = vh_vaahcms_action($method, $params);
 
 
-            if(isset($response['status']) && $response['status'] == 'success')
+            if(isset($response['success']) && $response['success'])
             {
                 $params['string'] = $response['data'];
             }
@@ -243,7 +243,7 @@ function vh_action($method, $params=null, $output_type=null){
         default:
             $vaahcms_res = vh_vaahcms_action($method, $params);
 
-            if(isset($vaahcms_res['status']) && $vaahcms_res['status'] == 'failed')
+            if(isset($vaahcms_res['success']) && !$vaahcms_res['success'])
             {
                 $vaahcms['failed'] = $vaahcms_res;
             } else{

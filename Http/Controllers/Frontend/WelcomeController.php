@@ -29,7 +29,7 @@ class WelcomeController extends Controller
     public function clearCache(Request $request)
     {
         $response = VaahArtisan::clearCache();
-        if($response['status'] == 'failed')
+        if(isset($response['success']) && !$response['success'])
         {
             return $response;
         }
@@ -45,12 +45,12 @@ class WelcomeController extends Controller
                 }
             }
 
-            $response['status'] = 'success';
+            $response['success'] = true;
             $response['messages'][] = 'Cache was successfully deleted.';
 
         }catch(\Exception $e)
         {
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'][] = $e->getMessage();
 
         }
@@ -144,7 +144,7 @@ class WelcomeController extends Controller
         if ( $validator->fails() ) {
 
             $errors             = errorsToArray($validator->errors());
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'] = $errors;
             return $response;
         }

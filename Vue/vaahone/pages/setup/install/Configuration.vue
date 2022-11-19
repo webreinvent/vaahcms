@@ -24,33 +24,33 @@
 
                     <div class="column is-4">
                         <b-field label="Env"
-                             expanded
-                             :label-position="labelPosition">
-                        <b-select placeholder="- Select an environment -"
-                                  expanded
-                                  name="config-app_env"
-                                  dusk="config-app_env"
-                                  @input="loadConfigurations()"
-                                  v-model="config.env.app_env">
-                            <option value="">- Select an environment -</option>
-                            <option v-for="(item, key) in page.assets.environments"
-                                    :key="key"
-                                    :value="item.slug"
-                            >{{item.name}}</option>
-                        </b-select>
+                                 expanded
+                                 :label-position="labelPosition">
+                            <b-select placeholder="- Select an environment -"
+                                      expanded
+                                      name="config-app_env"
+                                      dusk="config-app_env"
+                                      @input="loadConfigurations()"
+                                      v-model="config.env.app_env">
+                                <option value="">- Select an environment -</option>
+                                <option v-for="(item, key) in page.assets.environments"
+                                        :key="key"
+                                        :value="item.slug"
+                                >{{item.name}}</option>
+                            </b-select>
 
 
-                        <b-input v-if="config.env.app_env == 'custom'"
-                                 class="has-margin-top-5"
-                            placeholder="Env File Name"
-                                 v-model="config.env.app_env_custom"></b-input>
+                            <b-input v-if="config.env.app_env == 'custom'"
+                                     class="has-margin-top-5"
+                                     placeholder="Env File Name"
+                                     v-model="config.env.app_env_custom"></b-input>
 
                         </b-field>
                     </div>
 
                     <div class="column is-4">
                         <b-field label="Debug" expanded
-                             :label-position="labelPosition">
+                                 :label-position="labelPosition">
                             <b-select placeholder="- Select debug status -"
                                       expanded
                                       name="config-db_connection"
@@ -364,8 +364,8 @@
                             </section>
                             <footer class="modal-card-foot">
                                 <b-button type="is-primary"
-                                        :loading="is_btn_loading_mail_config"
-                                        @click="testMailConfiguration()">
+                                          :loading="is_btn_loading_mail_config"
+                                          @click="testMailConfiguration()">
                                     Send Email
                                 </b-button>
                             </footer>

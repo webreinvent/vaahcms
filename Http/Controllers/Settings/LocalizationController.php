@@ -30,7 +30,7 @@ class LocalizationController extends Controller
 
         if(!\Auth::user()->hasPermission('has-access-of-setting-section'))
         {
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'][] = trans("vaahcms::messages.permission_denied");
 
             return response()->json($response);
@@ -38,7 +38,7 @@ class LocalizationController extends Controller
 
         $lang_list = Language::getLangList();
 
-        $response['status'] = 'success';
+        $response['success'] = true;
         $response['data']['languages']['list'] = $lang_list;
 
         $response['data']['languages']['default'] = Language::where('default',1)
@@ -57,7 +57,7 @@ class LocalizationController extends Controller
 
         if(!\Auth::user()->hasPermission('has-access-of-setting-section'))
         {
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'][] = trans("vaahcms::messages.permission_denied");
 
             return response()->json($response);
@@ -72,7 +72,7 @@ class LocalizationController extends Controller
 
         if(!\Auth::user()->hasPermission('has-access-of-setting-section'))
         {
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'][] = trans("vaahcms::messages.permission_denied");
 
             return response()->json($response);
@@ -94,7 +94,7 @@ class LocalizationController extends Controller
 
         if(!\Auth::user()->hasPermission('has-access-of-setting-section'))
         {
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'][] = trans("vaahcms::messages.permission_denied");
 
             return response()->json($response);
@@ -109,7 +109,7 @@ class LocalizationController extends Controller
 
         if(!\Auth::user()->hasPermission('has-access-of-setting-section'))
         {
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'][] = trans("vaahcms::messages.permission_denied");
 
             return response()->json($response);
@@ -128,7 +128,7 @@ class LocalizationController extends Controller
 
         if(!\Auth::user()->hasPermission('has-access-of-setting-section'))
         {
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'][] = trans("vaahcms::messages.permission_denied");
 
             return response()->json($response);
@@ -147,7 +147,7 @@ class LocalizationController extends Controller
 
         if(!\Auth::user()->hasPermission('has-access-of-setting-section'))
         {
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'][] = trans("vaahcms::messages.permission_denied");
 
             return response()->json($response);

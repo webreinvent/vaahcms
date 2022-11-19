@@ -47,7 +47,7 @@ class MediaController extends Controller
         if ( $validator->fails() ) {
 
             $errors             = errorsToArray($validator->errors());
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'] = $errors;
             return response()->json($response);
         }
@@ -126,12 +126,12 @@ class MediaController extends Controller
 
             }
 
-            $response['status'] = 'success';
+            $response['success'] = true;
             $response['data'] = $data;
 
         }catch(\Exception $e)
         {
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'][] = $e->getMessage();
         }
 
@@ -144,7 +144,7 @@ class MediaController extends Controller
 
         if(!\Auth::user()->hasPermission('has-access-of-media-section'))
         {
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'][] = trans("vaahcms::messages.permission_denied");
 
             return response()->json($response);
@@ -158,7 +158,7 @@ class MediaController extends Controller
         $data['download_url'] = route('vh.frontend.media.download').'/';
         $data['date'] = $year_and_month;
 
-        $response['status'] = 'success';
+        $response['success'] = true;
         $response['data'] = $data;
 
         return response()->json($response);
@@ -175,7 +175,7 @@ class MediaController extends Controller
         if ( $validator->fails() ) {
 
             $errors             = errorsToArray($validator->errors());
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'] = $errors;
             return response()->json($response);
         }
@@ -187,12 +187,12 @@ class MediaController extends Controller
 
         if(!$exist)
         {
-            $response['status'] = 'success';
+            $response['success'] = true;
             $response['messages'][] = 'Url is available';
             $response['data'] = true;
         } else
         {
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'][] = 'Url is taken';
         }
 
@@ -205,7 +205,7 @@ class MediaController extends Controller
 
         if(!\Auth::user()->hasPermission('can-create-media'))
         {
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'][] = trans("vaahcms::messages.permission_denied");
 
             return response()->json($response);
@@ -220,7 +220,7 @@ class MediaController extends Controller
     {
         if(!\Auth::user()->hasPermission('has-access-of-media-section'))
         {
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'][] = trans("vaahcms::messages.permission_denied");
 
             return response()->json($response);
@@ -236,7 +236,7 @@ class MediaController extends Controller
 
         if(!\Auth::user()->hasPermission('can-read-media'))
         {
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'][] = trans("vaahcms::messages.permission_denied");
 
             return response()->json($response);
@@ -252,7 +252,7 @@ class MediaController extends Controller
 
         if(!\Auth::user()->hasPermission('can-update-media'))
         {
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'][] = trans("vaahcms::messages.permission_denied");
 
             return response()->json($response);
@@ -273,7 +273,7 @@ class MediaController extends Controller
         if ( $validator->fails() ) {
 
             $errors             = errorsToArray($validator->errors());
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'] = $errors;
             return response()->json($response);
         }

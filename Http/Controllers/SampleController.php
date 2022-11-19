@@ -23,7 +23,7 @@ class SampleController extends Controller
 
         $data['columns'] = '';
 
-        $response['status'] = 'success';
+        $response['success'] = true;
         $response['data'] = $data;
 
         return response()->json($response);
@@ -34,10 +34,10 @@ class SampleController extends Controller
 
         $data = [];
 
-        $response['status'] = 'failed';
+        $response['success'] = false;
         $response['errors'][] = 'error';
 
-        $response['status'] = 'success';
+        $response['success'] = true;
         $response['messages'][] = 'Saved';
         $response['data'] = $data;
 
@@ -51,10 +51,10 @@ class SampleController extends Controller
 
         $data = [];
 
-        $response['status'] = 'failed';
+        $response['success'] = false;
         $response['errors'][] = 'error';
 
-        $response['status'] = 'success';
+        $response['success'] = true;
         $response['messages'][] = 'Saved';
         $response['data'] = $data;
 
@@ -68,10 +68,10 @@ class SampleController extends Controller
 
         $data = [];
 
-        $response['status'] = 'failed';
+        $response['success'] = false;
         $response['errors'][] = 'error';
 
-        $response['status'] = 'success';
+        $response['success'] = true;
         $response['messages'][] = 'Saved';
         $response['data'] = $data;
 
@@ -83,10 +83,10 @@ class SampleController extends Controller
     {
         $data = [];
 
-        $response['status'] = 'failed';
+        $response['success'] = false;
         $response['errors'][] = 'error';
 
-        $response['status'] = 'success';
+        $response['success'] = true;
         $response['messages'][] = 'Saved';
         $response['data'] = $data;
 
@@ -105,7 +105,7 @@ class SampleController extends Controller
         if ( $validator->fails() ) {
 
             $errors             = errorsToArray($validator->errors());
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'] = $errors;
             return response()->json($response);
         }

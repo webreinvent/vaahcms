@@ -23,17 +23,17 @@ Route::group(
 */
 Route::group(
     [
-        'prefix'     => 'vaahcms/setup',
+        'prefix'     => 'backend/setup/json',
         'middleware' => ['web'],
         'namespace'  => 'WebReinvent\VaahCms\Http\Controllers'
     ],
     function () {
 
         //------------------------------------------------
-        Route::post( '/assets', 'SetupController@getAssets' )
+        Route::get( '/assets', 'SetupController@getAssets' )
             ->name( 'vh.setup.assets' );
         //------------------------------------------------
-        Route::post( '/status', 'SetupController@appSetupStatus' )
+        Route::get( '/status', 'SetupController@appSetupStatus' )
             ->name( 'vh.setup.status' );
         //------------------------------------------------
     });
@@ -49,7 +49,7 @@ Route::group(
 */
 Route::group(
     [
-        'prefix'     => 'vaahcms/setup',
+        'prefix'     => 'backend/setup',
         'middleware' => ['web', 'app.is.not.installed'],
         'namespace'  => 'WebReinvent\VaahCms\Http\Controllers'
     ],
@@ -71,7 +71,7 @@ Route::group(
         Route::post( '/get/required/configurations', 'SetupController@getRequiredConfigurations' )
             ->name( 'vh.setup.get.get.required.configurations' );
         //------------------------------------------------
-        Route::post( '/get/dependencies', 'SetupController@getDependencies' )
+        Route::get( '/get/dependencies', 'SetupController@getDependencies' )
             ->name( 'vh.setup.get.dependencies' );
         //------------------------------------------------
         Route::post( '/install/dependencies', 'SetupController@installDependencies' )
@@ -96,7 +96,7 @@ Route::group(
 */
 Route::group(
     [
-        'prefix'     => 'vaahcms/setup',
+        'prefix'     => 'backend/setup',
         'middleware' => ['web',  'app.is.installed'],
         'namespace'  => 'WebReinvent\VaahCms\Http\Controllers'
     ],

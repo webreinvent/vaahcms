@@ -263,7 +263,7 @@ class Permission extends Model {
         $countRole = Role::all()->count();
         $countUser = User::all()->count();
 
-        $response['status'] = 'success';
+        $response['success'] = true;
         $response['data'] = $data;
         $response['data']['totalRole'] = $countRole;
         $response['data']['totalUser'] = $countUser;
@@ -279,7 +279,7 @@ class Permission extends Model {
         $item = Permission::where('id', $id)->with(['createdByUser', 'updatedByUser', 'deletedByUser'])
             ->withTrashed()->first();
 
-        $response['status'] = 'success';
+        $response['success'] = true;
         $response['data'] = $item;
 
         return $response;
@@ -334,7 +334,7 @@ class Permission extends Model {
 
         $response['data']['list'] = $list;
 
-        $response['status'] = 'success';
+        $response['success'] = true;
 
         return $response;
 
@@ -348,7 +348,7 @@ class Permission extends Model {
 
 
         $validation = static::validation($input);
-        if(isset($validation['status']) && $validation['status'] == 'failed')
+        if(isset($validation['success']) && !$validation['success'])
         {
             return $validation;
         }
@@ -362,7 +362,7 @@ class Permission extends Model {
         $update->save();
 
 
-        $response['status'] = 'success';
+        $response['success'] = true;
         $response['data'] = [];
         $response['messages'][] = 'Data updated.';
 
@@ -377,7 +377,7 @@ class Permission extends Model {
         if(!\Auth::user()->hasPermission('can-manage-permissions') &&
             !\Auth::user()->hasPermission('can-update-permissions'))
         {
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'][] = trans("vaahcms::messages.permission_denied");
 
             return $response;
@@ -385,14 +385,14 @@ class Permission extends Model {
 
         if(!$request->has('inputs'))
         {
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'][] = 'Select IDs';
             return $response;
         }
 
         if(!$request->has('data'))
         {
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'][] = 'Select Status';
             return $response;
         }
@@ -417,7 +417,7 @@ class Permission extends Model {
             $perm->save();
         }
 
-        $response['status'] = 'success';
+        $response['success'] = true;
         $response['data'] = [];
         $response['messages'][] = trans('vaahcms-general.action_successful');
 
@@ -430,7 +430,7 @@ class Permission extends Model {
         if(!\Auth::user()->hasPermission('can-update-permissions') ||
             !\Auth::user()->hasPermission('can-delete-permissions'))
         {
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'][] = trans("vaahcms::messages.permission_denied");
 
             return $response;
@@ -438,14 +438,14 @@ class Permission extends Model {
 
         if(!$request->has('inputs'))
         {
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'][] = 'Select IDs';
             return $response;
         }
 
         if(!$request->has('data'))
         {
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'][] = 'Select Status';
             return $response;
         }
@@ -463,7 +463,7 @@ class Permission extends Model {
             }
         }
 
-        $response['status'] = 'success';
+        $response['success'] = true;
         $response['data'] = [];
         $response['messages'][] = trans('vaahcms-general.action_successful');
 
@@ -478,7 +478,7 @@ class Permission extends Model {
 
         if(!\Auth::user()->hasPermission('can-update-permissions'))
         {
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'][] = trans("vaahcms::messages.permission_denied");
 
             return $response;
@@ -486,7 +486,7 @@ class Permission extends Model {
 
         if(!$request->has('inputs'))
         {
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'][] = 'Select IDs';
             return $response;
         }
@@ -503,7 +503,7 @@ class Permission extends Model {
             }
         }
 
-        $response['status'] = 'success';
+        $response['success'] = true;
         $response['data'] = [];
         $response['messages'][] = trans('vaahcms-general.action_successful');
 
@@ -517,7 +517,7 @@ class Permission extends Model {
 
         if(!\Auth::user()->hasPermission('can-update-permissions'))
         {
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'][] = trans("vaahcms::messages.permission_denied");
 
             return $response;
@@ -525,14 +525,14 @@ class Permission extends Model {
 
         if(!$request->has('inputs'))
         {
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'][] = 'Select IDs';
             return $response;
         }
 
         if(!$request->has('data'))
         {
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'][] = 'Select Status';
             return $response;
         }
@@ -546,7 +546,7 @@ class Permission extends Model {
             }
         }
 
-        $response['status'] = 'success';
+        $response['success'] = true;
         $response['data'] = [];
         $response['messages'][] = trans('vaahcms-general.action_successful');
 
@@ -562,7 +562,7 @@ class Permission extends Model {
         if(!\Auth::user()->hasPermission('can-manage-permissions') &&
             !\Auth::user()->hasPermission('can-update-permissions'))
         {
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'][] = trans("vaahcms::messages.permission_denied");
 
             return $response;
@@ -598,7 +598,7 @@ class Permission extends Model {
         $item->save();
         Permission::recountRelations();
         Role::recountRelations();
-        $response['status'] = 'success';
+        $response['success'] = true;
         $response['data'] = [];
 
         return $response;
@@ -625,7 +625,7 @@ class Permission extends Model {
         if ( $validator->fails() ) {
 
             $errors             = errorsToArray($validator->errors());
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'] = $errors;
             return $response;
         }
@@ -640,7 +640,7 @@ class Permission extends Model {
 
         $item = Permission::where('module',$request->filter)->withTrashed()->select('section')->get()->unique('section');
 
-        $response['status'] = 'success';
+        $response['success'] = true;
         $response['data'] = $item;
 
         return $response;

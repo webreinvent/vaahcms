@@ -23,7 +23,7 @@ class IsNotInstalled
         {
             if ($request->ajax()) {
 
-                $response['status'] = 'failed';
+                $response['success'] = false;
                 $response['errors'][] = 'Application is already installed.';
                 if(env('APP_DEBUG'))
                 {

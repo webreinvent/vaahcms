@@ -38,7 +38,7 @@ class UpdateController extends Controller
 
         if(!\Auth::user()->hasPermission('has-access-of-setting-section'))
         {
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'][] = trans("vaahcms::messages.permission_denied");
 
             return response()->json($response);
@@ -81,7 +81,7 @@ class UpdateController extends Controller
             self::createBackendNotificationForUpdate($request);
         }
 
-        $response['status'] = 'success';
+        $response['success'] = true;
         $response['data'][] = '';
         return $response;
 
@@ -93,7 +93,7 @@ class UpdateController extends Controller
 
         if(!\Auth::user()->hasPermission('has-access-of-setting-section'))
         {
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'][] = trans("vaahcms::messages.permission_denied");
 
             return response()->json($response);
@@ -103,7 +103,7 @@ class UpdateController extends Controller
             return $this->runCommand("composer", "update");
         }catch(\Exception $e)
         {
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'][] = $e->getMessage();
             return $response;
         }
@@ -114,7 +114,7 @@ class UpdateController extends Controller
 
         if(!\Auth::user()->hasPermission('has-access-of-setting-section'))
         {
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'][] = trans("vaahcms::messages.permission_denied");
 
             return response()->json($response);
@@ -132,23 +132,23 @@ class UpdateController extends Controller
             $provider = "WebReinvent\VaahCms\VaahCmsServiceProvider";
             $response = VaahArtisan::publishMigrations($provider);
 
-            if(isset($response['status']) && $response['status'] == 'failed')
+            if(isset($response['success']) && !$response['success'])
             {
                 return $response;
             }
 
             //publish vaahcms seeds
             $response = VaahArtisan::publishSeeds($provider);
-            if(isset($response['status']) && $response['status'] == 'failed')
+            if(isset($response['success']) && !$response['success'])
             {
                 return $response;
             }
 
-            $res['status'] = 'success';
+            $res['success'] = true;
             return $res;
         }catch(\Exception $e)
         {
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'][] = $e->getMessage();
             return $response;
         }
@@ -160,7 +160,7 @@ class UpdateController extends Controller
 
         if(!\Auth::user()->hasPermission('has-access-of-setting-section'))
         {
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'][] = trans("vaahcms::messages.permission_denied");
 
             return response()->json($response);
@@ -172,7 +172,7 @@ class UpdateController extends Controller
 
             //run migration
             $response = VaahArtisan::migrate();
-            if(isset($response['status']) && $response['status'] == 'failed')
+            if(isset($response['success']) && !$response['success'])
             {
                 return $response;
             }
@@ -180,16 +180,16 @@ class UpdateController extends Controller
             //run vaahcms seeds
             $seed_class = "WebReinvent\VaahCms\Database\Seeders\VaahCmsTableSeeder";
             $response = VaahArtisan::seed('db:seed', $seed_class);
-            if(isset($response['status']) && $response['status'] == 'failed')
+            if(isset($response['success']) && !$response['success'])
             {
                 return $response;
             }
 
-            $res['status'] = 'success';
+            $res['success'] = true;
             return $res;
         }catch(\Exception $e)
         {
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'][] = $e->getMessage();
             return $response;
         }
@@ -201,7 +201,7 @@ class UpdateController extends Controller
 
         if(!\Auth::user()->hasPermission('has-access-of-setting-section'))
         {
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'][] = trans("vaahcms::messages.permission_denied");
 
             return response()->json($response);
@@ -218,7 +218,7 @@ class UpdateController extends Controller
             return $response;
         }catch(\Exception $e)
         {
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'][] = $e->getMessage();
             return $response;
         }

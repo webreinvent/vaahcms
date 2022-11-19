@@ -212,7 +212,7 @@ class LanguageString extends Model {
 
         $list = $list->with('languageCategory')->paginate(config('vaahcms.per_page'));
 
-        $response['status'] = 'success';
+        $response['success'] = true;
         $response['data']['list'] = $list;
 
         return $response;
@@ -225,7 +225,7 @@ class LanguageString extends Model {
         if(!is_array($request->list) || count($request->list) < 1)
         {
 
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['messages'][] = trans('vaahcms-localization.one_string_required');
             return $response;
 
@@ -292,7 +292,7 @@ class LanguageString extends Model {
         //Generate a language file
 
 
-        $response['status'] = 'success';
+        $response['success'] = true;
         $response['data'][] = '';
         $response['messages'][] = trans('vaahcms-general.action_successful');
         return $response;
@@ -311,14 +311,14 @@ class LanguageString extends Model {
         if ( $validator->fails() ) {
 
             $errors             = errorsToArray($validator->errors());
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'] = $errors;
             return $response;
         }
 
         static::where('slug', $request->slug)->forceDelete();
 
-        $response['status'] = 'success';
+        $response['success'] = true;
         $response['data'][] = '';
         return $response;
 

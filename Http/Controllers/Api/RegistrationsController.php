@@ -52,7 +52,7 @@ class RegistrationsController extends Controller
             return $response;
         }
 
-        $response['status'] = 'success';
+        $response['success'] = true;
         $response['data'] = $item;
         return response()->json($response);
     }

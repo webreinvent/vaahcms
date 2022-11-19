@@ -89,7 +89,7 @@ class RolesController extends Controller
             return $response;
         }
 
-        $response['status'] = 'success';
+        $response['success'] = true;
         $response['data'] = $item;
         return response()->json($response);
     }
@@ -129,7 +129,7 @@ class RolesController extends Controller
         }
 
         $response['data']['users'] = $list;
-        $response['status'] = 'success';
+        $response['success'] = true;
 
         return response()->json($response);
     }
@@ -170,7 +170,7 @@ class RolesController extends Controller
         }
 
         $response['data']['permissions'] = $list;
-        $response['status'] = 'success';
+        $response['success'] = true;
 
         return response()->json($response);
     }

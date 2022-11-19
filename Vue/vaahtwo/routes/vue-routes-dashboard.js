@@ -3,11 +3,22 @@ let routes_list= [];
 
 import Dashboard from '../pages/dashboard/Dashboard.vue'
 
+import LayoutBackend from '../layouts/Backend.vue'
+
 routes_list = {
-    path: '/dashboard',
-    name: 'dashboard',
-    component: Dashboard,
+    path: '/vaah/',
+    name: 'LayoutBackend',
+    component: LayoutBackend,
     props: true,
+    children: [
+        {
+            path: '',
+            name: 'dashboard',
+            component: Dashboard,
+            props: true
+        }
+
+    ]
 };
 
 routes.push(routes_list);

@@ -114,7 +114,7 @@ class Module extends Model {
             ->withTrashed()
             ->first();
 
-        $response['status'] = 'success';
+        $response['success'] = true;
         $response['data'] = $item;
 
         return $response;
@@ -128,7 +128,7 @@ class Module extends Model {
 
         if(is_null($settings) || !is_array($settings) || count($settings) < 1)
         {
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'][] = 'Fatal with '.$module_path.'\Config\config.php';
             return $response;
         }
@@ -149,7 +149,7 @@ class Module extends Model {
         if ( $validator->fails() ) {
 
             $errors             = errorsToArray($validator->errors());
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'] = $errors;
             return $response;
         }
@@ -236,7 +236,7 @@ class Module extends Model {
 
         if(count($list) < 1)
         {
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'][] = trans('vaahcms-general.no_module_installed');
             return $response;
         }
@@ -289,7 +289,7 @@ class Module extends Model {
     public static function validateDependencies($dependencies)
     {
 
-        $response['status'] = 'success';
+        $response['success'] = true;
 
 
         foreach ($dependencies as $key => $dependency_list)
@@ -306,13 +306,13 @@ class Module extends Model {
 
                             if(!$module)
                             {
-                                $response['status'] = 'failed';
+                                $response['success'] = false;
                                 $response['errors'][] = "Please install and activate '".$dependency_slug."' module.";
                             }
 
                             if($module && $module->is_active != 1)
                             {
-                                $response['status'] = 'failed';
+                                $response['success'] = false;
                                 $response['errors'][] = $dependency_slug.' module is not active';
                             }
                         }
@@ -331,13 +331,13 @@ class Module extends Model {
 
                             if(!$theme)
                             {
-                                $response['status'] = 'failed';
+                                $response['success'] = false;
                                 $response['errors'][] = "Please install and activate '".$dependency_slug."' theme.";
                             }
 
                             if($theme && $theme->is_active != 1)
                             {
-                                $response['status'] = 'failed';
+                                $response['success'] = false;
                                 $response['errors'][] = $dependency_slug.' theme is not active';
                             }
                         }
@@ -371,7 +371,7 @@ class Module extends Model {
         $response = vh_module_action($module->name, 'SetupController@dependencies');
 
 
-        if($response['status'] == 'failed')
+        if(isset($response['success']) && !$response['success'])
         {
             return $response;
         }
@@ -382,7 +382,7 @@ class Module extends Model {
         $response = Module::validateDependencies($response['data']);
 
 
-        if(isset($response['status']) && $response['status'] == 'failed')
+        if(isset($response['success']) && !$response['success'])
         {
             return $response;
         }
@@ -418,7 +418,7 @@ class Module extends Model {
         $module->is_assets_published = 1;
         $module->save();
 
-        $response['status'] = 'success';
+        $response['success'] = true;
         $response['data'][] = '';
         $response['messages'][] = 'Module is activated';
 
@@ -435,7 +435,7 @@ class Module extends Model {
         $item = static::slug($slug)->first();
         $item->is_active = null;
         $item->save();
-        $response['status'] = 'success';
+        $response['success'] = true;
         $response['data'][] = '';
         $response['messages'][] = trans('vaahcms-general.action_successful');
         if(env('APP_DEBUG'))
@@ -497,7 +497,7 @@ class Module extends Model {
             //Delete module entry
             static::where('slug', $item->slug)->forceDelete();
 
-            $response['status'] = 'success';
+            $response['success'] = true;
             $response['data'][] = '';
             $response['messages'][] = trans('vaahcms-general.action_successful');
             if(env('APP_DEBUG'))
@@ -508,7 +508,7 @@ class Module extends Model {
 
         }catch(\Exception $e)
         {
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'][] = $e->getMessage();
 
         }
@@ -547,7 +547,7 @@ class Module extends Model {
 
             if(!isset($api_response) || empty($api_response))
             {
-                $response['status'] = 'failed';
+                $response['success'] = false;
                 $response['data']['url'] = $api;
                 $response['errors'][] = 'API Response Error.';
                 return $response;
@@ -556,9 +556,10 @@ class Module extends Model {
             $api_response = json_decode($api_response, true);
 
 
-            if(!isset($api_response) || !isset($api_response['status']) || $api_response['status'] != 'success')
+            if(!isset($api_response) || !isset($api_response['success'])
+                || !$api_response['success'])
             {
-                $response['status'] = 'failed';
+                $response['success'] = false;
                 $response['data']['url'] = $api;
                 $response['data']['data'] = $api_response;
                 $response['errors'][] = 'API Response Error.';
@@ -566,12 +567,12 @@ class Module extends Model {
 
                 return $response;
 
-            } else if($api_response['status'] == 'success')
+            } else if(isset($api_response['success']) && $api_response['success'])
             {
                 return $api_response;
             } else
             {
-                $response['status'] = 'failed';
+                $response['success'] = false;
                 $response['data']['url'] = $api;
                 $response['data']['data'] = $api_response;
                 $response['errors'][] = 'Unknown Error.';
@@ -580,7 +581,7 @@ class Module extends Model {
 
         }catch(\Exception $e)
         {
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'][] = $e->getMessage();
             return $response;
         }
@@ -601,7 +602,7 @@ class Module extends Model {
 
         if(is_dir($package_path))
         {
-            $response['status'] = 'success';
+            $response['success'] = true;
             $response['data'] = [];
             $response['messages'][] = $name." module already exist.";
             return $response;
@@ -625,14 +626,14 @@ class Module extends Model {
 
             vh_delete_folder($zip_file);
 
-            $response['status'] = 'success';
+            $response['success'] = true;
             $response['data'] = [];
             $response['messages'][] = $name." module is installed.";
             return $response;
 
         }catch(\Exception $e)
         {
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'][] = $e->getMessage();
             return $response;
         }
@@ -681,14 +682,14 @@ class Module extends Model {
             $module->is_update_available = null;
             $module->save();
 
-            $response['status'] = 'success';
+            $response['success'] = true;
             $response['data'] = [];
             $response['messages'][] = $name." module is updated.";
             return $response;
 
         }catch(\Exception $e)
         {
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'][] = $e->getMessage();
             return $response;
         }
@@ -707,11 +708,11 @@ class Module extends Model {
 
             \Artisan::call($command, $params);
 
-            $response['status'] = 'success';
+            $response['success'] = true;
             $response['messages'][] = 'Sample Data Successfully Imported';
         }catch(\Exception $e)
         {
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'][] = $e->getMessage();
         }
 
@@ -739,7 +740,7 @@ class Module extends Model {
             }
         }
 
-        $response['status'] = 'success';
+        $response['success'] = true;
         $response['data'][] = '';
         if($updates > 0)
         {
@@ -762,14 +763,14 @@ class Module extends Model {
 
         if(!$request->has('inputs'))
         {
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'][] = 'Select IDs';
             return $response;
         }
 
         if(!$request->has('data'))
         {
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'][] = 'Select Status';
             return $response;
         }
@@ -786,7 +787,7 @@ class Module extends Model {
             $item->save();
         }
 
-        $response['status'] = 'success';
+        $response['success'] = true;
         $response['data'] = [];
         $response['messages'][] = trans('vaahcms-general.action_successful');
 

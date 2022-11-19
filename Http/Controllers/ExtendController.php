@@ -43,7 +43,7 @@ class ExtendController extends Controller
 
 
 
-        $response['status'] = 'success';
+        $response['success'] = true;
         $response['data'] = [];
 
         return $response;
@@ -64,7 +64,7 @@ class ExtendController extends Controller
 
         ];
 
-        $response['status'] = 'success';
+        $response['success'] = true;
         $response['data'] = $list;
 
         return $response;
@@ -77,8 +77,8 @@ class ExtendController extends Controller
         if(\Auth::user()->hasPermission('has-access-of-dashboard'))
         {
             $list[0] = [
-                'link' => self::$link,
-                'icon' => 'tachometer-alt',
+                'to' => self::$link,
+                'icon' => 'pi pi-compass',
                 'label'=> 'Dashboard',
             ];
         }
@@ -90,46 +90,46 @@ class ExtendController extends Controller
             \Auth::user()->hasPermission('has-access-of-permissions-section'))
         {
             $list[1] = [
-                'link' => '#',
-                'icon' => 'users-cog',
+                'to' => '#',
+                'icon' => 'pi-user',
                 'label'=> 'Users & Access',
             ];
         }
 
         if(\Auth::user()->hasPermission('has-access-of-registrations-section'))
         {
-            $list[1]['child'][] =  [
-                'link' => self::$link."/registrations/",
-                'icon' => 'user-plus',
-                'label'=> 'Registration'
+            $list[1]['items'][] =  [
+                'to' => self::$link."/registrations/",
+                'icon' => 'pi-user-plus',
+                'label'=> 'Registration',
             ];
         }
 
         if(\Auth::user()->hasPermission('has-access-of-users-section'))
         {
-            $list[1]['child'][] =  [
-                'link' => self::$link."/users/",
-                'icon' => 'users',
-                'label'=> 'Users'
+            $list[1]['items'][] =  [
+                'to' => self::$link."/users/",
+                'icon' => 'pi-users',
+                'label'=> 'Users',
             ];
         }
 
         if(\Auth::user()->hasPermission('has-access-of-roles-section'))
         {
-            $list[1]['child'][] =  [
-                'link' => self::$link."/roles/",
-                'icon' => 'user-tag',
-                'label'=> 'Roles'
+            $list[1]['items'][] =  [
+                'to' => self::$link."/roles/",
+                'icon' => 'pi-tag',
+                'label'=> 'Roles',
             ];
         }
 
 
         if(\Auth::user()->hasPermission('has-access-of-permissions-section'))
         {
-            $list[1]['child'][] =  [
-                'link' => self::$link."/permissions/",
-                'icon' => 'key',
-                'label'=> 'Permissions'
+            $list[1]['items'][] =  [
+                'to' =>  self::$link."/permissions/",
+                'icon' => 'pi-key',
+                'label'=> 'Permissions',
             ];
         }
 
@@ -138,27 +138,27 @@ class ExtendController extends Controller
             \Auth::user()->hasPermission('has-access-of-theme-section'))
         {
             $list[2] = [
-                'link' => "#",
-                'icon' => "cubes",
+                'to' => "#",
+                'icon' => "pi-box",
                 'label'=> 'Extend',
             ];
         }
 
         if(\Auth::user()->hasPermission('has-access-of-module-section'))
         {
-            $list[2]['child'][] =  [
-                'link' => self::$link."/modules/",
-                'icon' => 'cube',
-                'label'=> 'Modules'
+            $list[2]['items'][] =  [
+                'to' => self::$link."/modules/",
+                'icon' => 'pi-box',
+                'label'=> 'Modules',
             ];
         }
 
         if(\Auth::user()->hasPermission('has-access-of-theme-section'))
         {
-            $list[2]['child'][] =  [
-                'link' => self::$link."/themes/",
-                'icon' => 'palette',
-                'label'=> 'Themes'
+            $list[2]['items'][] =  [
+                'to' => self::$link."/themes/",
+                'icon' => 'pi-palette',
+                'label'=> 'Themes',
             ];
         }
 
@@ -166,44 +166,44 @@ class ExtendController extends Controller
         if(\Auth::user()->hasPermission('has-access-of-setting-section'))
         {
             $list[3] = [
-                'link' => '#',
-                'icon'=> 'cog',
+                'to' => '#',
+                'icon'=> 'pi-cog',
                 'label'=> 'Settings',
-                'child' => [
+                'items' => [
                     [
-                        'link' => self::$link."/settings/general",
-                        'icon' => 'tools',
-                        'label'=> 'General'
+                        'to' => self::$link."/settings/general",
+                        'icon' => 'pi-cog',
+                        'label'=> 'General',
                     ],
                     [
-                        'link' => self::$link."/settings/user-settings",
-                        'icon' => 'users-cog',
-                        'label'=> 'User Settings'
+                        'to' => self::$link."/settings/user-settings",
+                        'icon' => 'pi-user',
+                        'label'=> 'User Settings',
                     ],
                     [
-                        'link' => self::$link."/settings/env-variables",
-                        'icon' => 'code',
-                        'label'=> 'Env Variables'
+                        'to' => self::$link."/settings/env-variables",
+                        'icon' => 'pi-code',
+                        'label'=> 'Env Variables',
                     ],
                     [
-                        'link' => self::$link."/settings/localization",
-                        'icon' => 'language',
-                        'label'=> 'Localization'
+                        'to' => self::$link."/settings/localization",
+                        'icon' => 'pi-language',
+                        'label'=> 'Localization',
                     ],
                     [
-                        'link' => self::$link."/settings/notifications",
-                        'icon' => 'bell',
-                        'label'=> 'Notifications'
+                        'to' => self::$link."/settings/notifications",
+                        'icon' => 'pi-bell',
+                        'label'=> 'Notifications',
                     ],
                     [
-                        'link' => self::$link."/settings/update",
-                        'icon' => 'download',
-                        'label'=> 'Update'
+                        'to' => self::$link."/settings/update",
+                        'icon' => 'pi-download',
+                        'label'=> 'Update',
                     ],
                     [
-                        'link' => self::$base."setup",
-                        'icon' => 'retweet',
-                        'label'=> 'Reset'
+                        'to' => self::$base."setup",
+                        'icon' => 'pi-refresh',
+                        'label'=> 'Reset',
                     ],
                 ]
             ];
@@ -212,10 +212,9 @@ class ExtendController extends Controller
         if(\Auth::user()->hasPermission('has-access-of-advanced-section'))
         {
             $list[4] = [
-                'link' => self::$link."/advanced/logs",
-                'icon'=> 'stethoscope',
+                'to' => self::$link."/advanced/logs",
+                'icon'=> 'pi-database',
                 'label'=> 'Advanced',
-
             ];
         }
 
@@ -225,19 +224,19 @@ class ExtendController extends Controller
         if(\Auth::user()->hasPermission('has-access-of-media-section'))
         {
             $list[5] = [
-                'link' => '#',
-                'icon'=> 'photo-video',
+                'to' => '#',
+                'icon'=> 'pi-images',
                 'label'=> 'Manage',
-                'child' => [
+                'items' => [
                     [
-                        'link' => self::$link."/manage/media",
-                        'icon' => 'file',
-                        'label'=> 'Media'
+                        'to' => self::$link."/manage/media",
+                        'icon' => 'pi-file',
+                        'label'=> 'Media',
                     ],
                     [
-                        'link' => self::$link."/manage/taxonomies",
-                        'icon' => 'project-diagram',
-                        'label'=> 'Taxonomies'
+                        'to' => self::$link."/manage/taxonomies",
+                        'icon' => 'pi-sitemap',
+                        'label'=> 'Taxonomies',
                     ]
                 ]
             ];
@@ -245,7 +244,7 @@ class ExtendController extends Controller
 
 
 
-        $response['status'] = 'success';
+        $response['success'] = true;
         $response['data'] = $list;
 
         return $response;
@@ -254,7 +253,7 @@ class ExtendController extends Controller
     public function getNotificationVariables()
     {
 
-        $response['status'] = 'success';
+        $response['success'] = true;
         $response['data'] = vh_notification_variables();
 
         return $response;
@@ -263,7 +262,7 @@ class ExtendController extends Controller
     public function getNotificationActions()
     {
 
-        $response['status'] = 'success';
+        $response['success'] = true;
         $response['data'] = vh_notification_actions();
 
         return $response;
@@ -273,7 +272,7 @@ class ExtendController extends Controller
     {
         $string = VaahStr::translateDynamicStrings($params);
 
-        $response['status'] = 'success';
+        $response['success'] = true;
         $response['data'] = $string;
 
         return $response;
@@ -283,7 +282,7 @@ class ExtendController extends Controller
     public function getPublicUrls()
     {
 
-        $response['status'] = 'success';
+        $response['success'] = true;
         $response['data'] = vh_public_urls();
 
         return $response;
@@ -300,28 +299,28 @@ class ExtendController extends Controller
                 [
                     "count" => User::count(),
                     "label" => 'Total User',
-                    "icon" => "users",
+                    "icon" => "pi-users",
                     "type" => "info",
                     "link" => self::$link."/users/"
                 ],
                 [
                     "count" => Role::count(),
                     "label" => 'Total Role',
-                    "icon" => "user-tag",
+                    "icon" => "pi-tags",
                     "type" => "info",
                     "link" => self::$link."/roles/"
                 ],
                 [
                     "count" => Permission::count(),
                     "label" => 'Total Permission',
-                    "icon" => "key",
+                    "icon" => "pi-key",
                     "type" => "info",
                     "link" => self::$link."/permissions/"
                 ],
                 [
                     "count" => User::where('is_active',1)->count(),
                     "label" => 'Active Users',
-                    "icon" => "user-check",
+                    "icon" => "pi-user",
                     "type" => "success",
                     "link" => self::$link."/users?status=active"
                 ]
@@ -338,7 +337,7 @@ class ExtendController extends Controller
 
             $log_list = $logs->getList(new Request());
 
-            if(isset($log_list->original) && $log_list->original['status'] == 'success'){
+            if(isset($log_list->original) && $log_list->original['success']){
                 $log_list = $log_list->original['data']['list'];
             }
         }
@@ -393,12 +392,12 @@ class ExtendController extends Controller
         $data['expanded_header_links'] = [
             [
                 'name' => 'Check Updates',
-                'icon' => 'redo-alt',
+                'icon' => 'pi pi-refresh',
                 'link' => self::$link."/settings/update"
             ],
             [
                 'name' => 'Getting Started',
-                'icon' => 'play-circle',
+                'icon' => 'pi pi-play',
                 'open_in_new_tab' => true,
                 'link' => 'https://docs.vaah.dev/vaahcms/installation.html'
             ]
@@ -412,7 +411,7 @@ class ExtendController extends Controller
         $data['next_steps'] = [
             [
                 'name' => 'View your Site',
-                'icon' => 'tv',
+                'icon' => 'pi-desktop',
                 'link' => url('/')
             ]
         ];
@@ -421,12 +420,12 @@ class ExtendController extends Controller
         $data['actions'] = [
             [
                 'name' => 'Manage your Module',
-                'icon' => 'cube',
+                'icon' => 'pi-box',
                 'link' => self::$link."/modules"
             ]
         ];
 
-        $response['status'] = 'success';
+        $response['success'] = true;
         $response['data'] = $data;
 
         return $response;

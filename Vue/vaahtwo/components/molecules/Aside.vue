@@ -15,9 +15,9 @@ const items = ref([
         label: 'VueThree',
         items: [
             {
-            label: 'Dashboard',
-            icon: 'fa-regular fa-chart-bar',
-            to: "/"
+                label: 'Dashboard',
+                icon: 'fa-regular fa-chart-bar',
+                to: "/"
             },
 
         ]
@@ -32,5 +32,3 @@ const items = ref([
     </div>
 
 </template>
-
-

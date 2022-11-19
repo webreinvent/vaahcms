@@ -30,7 +30,7 @@ class VaahHelper{
         if ( $validator->fails() ) {
 
             $errors             = errorsToArray($validator->errors());
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'] = $errors;
             return $response;
         }
@@ -46,13 +46,13 @@ class VaahHelper{
         config(['database.connections.db_connection_test' => $inputs]);
 
         try{
-            $response['status'] = 'success';
+            $response['success'] = true;
             $response['data']['inputs'] = $inputs;
             $response['data']['result'] = \DB::connection('db_connection_test')->getPdo();
             $response['messages'][] = 'Successfully connect with Database';
         }catch(\Exception $e)
         {
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'][] = $e->getMessage();
         }
 
@@ -82,7 +82,7 @@ class VaahHelper{
         if ( $validator->fails() ) {
 
             $errors             = errorsToArray($validator->errors());
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'] = $errors;
             return $response;
         }
@@ -114,14 +114,14 @@ class VaahHelper{
             Notification::route('mail', $request->test_email_to)
                 ->notify(new TestSmtp());;
 
-            $response['status'] = 'success';
+            $response['success'] = true;
             $response['data']['inputs'] = $inputs;
             $response['messages'][] = 'Test email successfully sent';
 
 
         }catch(\Exception $e)
         {
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'][] = $e->getMessage();
 
         }
@@ -140,11 +140,11 @@ class VaahHelper{
 
         try{
             \Artisan::call('key:generate');
-            $response['status'] = 'success';
+            $response['success'] = true;
             $response['data'] = [];
         }catch(\Exception $e)
         {
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'][] = $e->getMessage();
 
         }
@@ -161,11 +161,11 @@ class VaahHelper{
             \Artisan::call('view:clear');
             \Artisan::call('clear-compiled');
 
-            $response['status'] = 'success';
+            $response['success'] = true;
             $response['data'] = [];
         }catch(\Exception $e)
         {
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'][] = $e->getMessage();
 
         }
@@ -182,16 +182,16 @@ class VaahHelper{
                 $vaahcms_params = file_get_contents(base_path('/vaahcms.json'));
                 $vaahcms_params = json_decode($vaahcms_params, true);
                 $data = $vaahcms_params;
-                $response['status'] = 'success';
+                $response['success'] = true;
                 $response['data'] = $data;
                 return $response;
             } else{
-                $response['status'] = 'failed';
+                $response['success'] = false;
                 $response['errors'][] = 'vaahcms.json configuration file is missing';
             }
         }catch(\Exception $e)
         {
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'][] = $e->getMessage();
         }
     }
@@ -200,7 +200,7 @@ class VaahHelper{
     {
         $params = static::getVaahCMSJsonFileParams();
 
-        if($params['status'] == 'failed')
+        if(isset($params['success']) && !$params['success'])
         {
             return null;
         }

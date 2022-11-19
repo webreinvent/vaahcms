@@ -30,7 +30,7 @@ export const vaah = defineStore({
                 method: 'get',
                 query: null,
                 headers: null,
-                show_success: true,
+                show_toast: true,
             }
 
             if(options)
@@ -45,7 +45,7 @@ export const vaah = defineStore({
             let method = default_option.method.toLowerCase();
             let query = default_option.query;
             let headers = default_option.headers;
-            let show_success = default_option.show_success;
+            let show_toast = default_option.show_toast;
 
 
 
@@ -96,7 +96,9 @@ export const vaah = defineStore({
             let ajax = await axios[method](url, params, q)
                 .then(function (response) {
                     self.show_progress_bar = false;
-                    self.processResponse(response, show_success);
+                    if(show_toast){
+                        self.processResponse(response);
+                    }
                     if(callback)
                     {
                         if(response.data && response.data.data)
@@ -121,22 +123,14 @@ export const vaah = defineStore({
         },
 
         //----------------------------------------------------------
-        processResponse: function(response, show_success)
+        processResponse: function(response)
         {
-            if(
-                (response.data.failed || response.data.success === false)
-                && response.data.messages
-            )
+            if(response.data.errors)
             {
-                this.toastErrors(response.data.messages);
+                this.toastErrors(response.data.errors);
             }
 
-            if(
-                response.data.success
-                && response.data.success === true
-                && response.data.messages
-                && show_success === true
-            )
+            if(response.data.messages)
             {
                 this.toastSuccess(response.data.messages);
             }
@@ -381,6 +375,12 @@ export const vaah = defineStore({
             });
 
             return element;
+        },
+        //----------------------------------------------------------
+        updateArray: function(array, updatedElement) {
+            const index = array.indexOf(updatedElement);
+            array[index] = updatedElement;
+            return array;
         },
         //----------------------------------------------------------
         //----------------------------------------------------------

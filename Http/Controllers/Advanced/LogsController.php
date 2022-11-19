@@ -25,7 +25,7 @@ class LogsController extends Controller
 
         if(!\Auth::user()->hasPermission('has-access-of-advanced-section'))
         {
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'][] = trans("vaahcms::messages.permission_denied");
 
             return response()->json($response);
@@ -101,7 +101,7 @@ class LogsController extends Controller
             }
         }
 
-        $response['status'] = 'success';
+        $response['success'] = true;
         $response['data']['list'] = array_reverse($list);
 
         return response()->json($response);
@@ -113,14 +113,14 @@ class LogsController extends Controller
 
         if(!\Auth::user()->hasPermission('has-access-of-advanced-section'))
         {
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'][] = trans("vaahcms::messages.permission_denied");
 
             return response()->json($response);
         }
 
 
-        $response['status'] = 'success';
+        $response['success'] = true;
         $response['data'] = [];
 
         $folder_path = storage_path('logs');
@@ -172,7 +172,7 @@ class LogsController extends Controller
 
         if(!\Auth::user()->hasPermission('has-access-of-advanced-section'))
         {
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'][] = trans("vaahcms::messages.permission_denied");
 
             return response()->json($response);
@@ -192,7 +192,7 @@ class LogsController extends Controller
 
         if(!\Auth::user()->hasPermission('has-access-of-advanced-section'))
         {
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'][] = trans("vaahcms::messages.permission_denied");
 
             return response()->json($response);
@@ -202,7 +202,7 @@ class LogsController extends Controller
 
         $folder_path = storage_path('logs');
 
-        $response['status'] = 'success';
+        $response['success'] = true;
         $response['data']['message'] = 'success';
 
         switch ($action)
@@ -229,7 +229,7 @@ class LogsController extends Controller
             case 'clear-file':
 
                 VaahFiles::writeFile($request->path, '');
-                
+
                 $response['messages'][] = 'Successfully clear';
 
                 break;

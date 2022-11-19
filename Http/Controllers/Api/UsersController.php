@@ -52,7 +52,7 @@ class UsersController extends Controller
             return $response;
         }
 
-        $response['status'] = 'success';
+        $response['success'] = true;
         $response['data'] = $item;
         return response()->json($response);
     }
@@ -105,7 +105,7 @@ class UsersController extends Controller
 
         if($role_slug){
 
-            $response['status'] = 'success';
+            $response['success'] = true;
             $response['data'] = false;
 
             if($item->hasRole($role_slug)){
@@ -148,7 +148,7 @@ class UsersController extends Controller
         }
 
         $response['data']['roles'] = $list;
-        $response['status'] = 'success';
+        $response['success'] = true;
 
         return response()->json($response);
     }
@@ -169,7 +169,7 @@ class UsersController extends Controller
 
         if($permission_slug){
 
-            $response['status'] = 'success';
+            $response['success'] = true;
             $response['data'] = false;
 
             if($item->hasPermission($permission_slug)){
@@ -205,7 +205,7 @@ class UsersController extends Controller
         }
 
         $response['data']['permissions'] = $list;
-        $response['status'] = 'success';
+        $response['success'] = true;
 
         return response()->json($response);
     }

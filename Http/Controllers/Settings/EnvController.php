@@ -32,7 +32,7 @@ class EnvController extends Controller
 
         if(!\Auth::user()->hasPermission('has-access-of-setting-section'))
         {
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'][] = trans("vaahcms::messages.permission_denied");
 
             return response()->json($response);
@@ -48,7 +48,7 @@ class EnvController extends Controller
         $data['country_calling_codes'] = vh_get_countries_calling_codes();
         $data['app_url'] = url("/");
 
-        $response['status'] = 'success';
+        $response['success'] = true;
         $response['data'] = $data;
 
         return response()->json($response);
@@ -59,7 +59,7 @@ class EnvController extends Controller
 
         if(!\Auth::user()->hasPermission('has-access-of-setting-section'))
         {
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'][] = trans("vaahcms::messages.permission_denied");
 
             return response()->json($response);
@@ -70,7 +70,7 @@ class EnvController extends Controller
         $data['env_file'] = VaahSetup::getActiveEnvFileName();
         $data['list'] = VaahSetup::getEnvFileVariables(null, 'list');
 
-        $response['status'] = 'success';
+        $response['success'] = true;
         $response['data'] = $data;
 
         return response()->json($response);
@@ -82,7 +82,7 @@ class EnvController extends Controller
 
         if(!\Auth::user()->hasPermission('has-access-of-setting-section'))
         {
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'][] = trans("vaahcms::messages.permission_denied");
 
             return response()->json($response);
@@ -104,7 +104,7 @@ class EnvController extends Controller
 
         if(!\Auth::user()->hasPermission('has-access-of-setting-section'))
         {
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'][] = trans("vaahcms::messages.permission_denied");
 
             return response()->json($response);
@@ -112,7 +112,7 @@ class EnvController extends Controller
 
         $response = VaahSetup::generateEnvFile($request, 'list');
 
-        if($response['status'] && $response['status'] == 'success')
+        if(isset($response['success']) && $response['success'])
         {
             VaahHelper::clearCache();
             $response['data']['redirect_url'] = route('vh.backend');

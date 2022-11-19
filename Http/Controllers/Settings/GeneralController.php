@@ -30,13 +30,13 @@ class GeneralController extends Controller
 
         if(!\Auth::user()->hasPermission('has-access-of-setting-section'))
         {
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'][] = trans("vaahcms::messages.permission_denied");
 
             return response()->json($response);
         }
 
-        $response['status'] = 'success';
+        $response['success'] = true;
         $response['data']['base_url'] = url('/');
         $response['data']['roles'] = Role::getActiveRoles();
         $response['data']['file_types'] = vh_file_types();
@@ -51,7 +51,7 @@ class GeneralController extends Controller
 
         if(!\Auth::user()->hasPermission('has-access-of-setting-section'))
         {
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'][] = trans("vaahcms::messages.permission_denied");
 
             return response()->json($response);
@@ -64,7 +64,7 @@ class GeneralController extends Controller
         $data['scripts'] = Setting::getGlobalScripts($request);
         $data['meta_tags'] = Setting::getGlobalMetaTags($request);
 
-        $response['status'] = 'success';
+        $response['success'] = true;
         $response['data'] = $data;
 
         return response()->json($response);
@@ -78,7 +78,7 @@ class GeneralController extends Controller
 
         if(!\Auth::user()->hasPermission('has-access-of-setting-section'))
         {
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'][] = trans("vaahcms::messages.permission_denied");
 
             return response()->json($response);
@@ -102,7 +102,7 @@ class GeneralController extends Controller
                     ->update(['value' => $value]);
             }
         }
-        $response['status'] = 'success';
+        $response['success'] = true;
         $response['data'][] = '';
         $response['messages'][] = 'Settings successful saved';
 
@@ -115,7 +115,7 @@ class GeneralController extends Controller
 
         if(!\Auth::user()->hasPermission('has-access-of-setting-section'))
         {
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'][] = trans("vaahcms::messages.permission_denied");
 
             return response()->json($response);
@@ -129,7 +129,7 @@ class GeneralController extends Controller
         if ( $validator->fails() ) {
 
             $errors             = errorsToArray($validator->errors());
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'] = $errors;
             return response()->json($response);
         }
@@ -169,7 +169,7 @@ class GeneralController extends Controller
             $setting->save();
         }
 
-        $response['status'] = 'success';
+        $response['success'] = true;
         $response['messages'][] = 'Saved';
         $response['data'] = $data;
         if(env('APP_DEBUG'))
@@ -186,7 +186,7 @@ class GeneralController extends Controller
 
         if(!\Auth::user()->hasPermission('has-access-of-setting-section'))
         {
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'][] = trans("vaahcms::messages.permission_denied");
 
             return response()->json($response);
@@ -200,7 +200,7 @@ class GeneralController extends Controller
         if ( $validator->fails() ) {
 
             $errors             = errorsToArray($validator->errors());
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'] = $errors;
             return response()->json($response);
         }
@@ -225,7 +225,7 @@ class GeneralController extends Controller
             $setting->save();
         }
 
-        $response['status'] = 'success';
+        $response['success'] = true;
         $response['messages'][] = 'Saved';
         $response['data'] = $data;
         if(env('APP_DEBUG'))

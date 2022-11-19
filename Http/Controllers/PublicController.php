@@ -77,7 +77,7 @@ class PublicController extends Controller
         if ( $validator->fails() ) {
 
             $errors             = errorsToArray($validator->errors());
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'] = $errors;
             return response()->json($response);
         }
@@ -92,7 +92,7 @@ class PublicController extends Controller
             $response = User::login($request, $permission_to_check);
         }
 
-        if(isset($response['status']) && $response['status'] == 'failed')
+        if(isset($response['success']) && !$response['success'])
         {
             return response()->json($response);
         }
@@ -109,7 +109,7 @@ class PublicController extends Controller
 
         $response = [];
 
-        $response['status'] = 'success';
+        $response['success'] = true;
         $response['messages'][] = 'Login Successful';
         $response['data']['redirect_url'] = $redirect_url;
         $response['data']['verification_response'] = Auth::user()->verifySecurityAuthentication();
@@ -141,7 +141,7 @@ class PublicController extends Controller
         if ( $validator->fails() ) {
 
             $errors             = errorsToArray($validator->errors());
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'] = $errors;
             return response()->json($response);
         }
@@ -150,7 +150,7 @@ class PublicController extends Controller
         $user = auth()->user();
 
         if($user && !$user->mfa_code && !$user->mfa_code_expired_at){
-            $response['status'] = 'success';
+            $response['success'] = true;
             $response['messages'][] = 'Login Successful';
             $response['data']['redirect_url'] = route('vh.backend').'#/vaah';
             return $response;
@@ -163,7 +163,7 @@ class PublicController extends Controller
             $user->save();
             auth()->logout();
 
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'][] = 'The code has expired. Please login again.';
             $response['data']['redirect_url'] = route('vh.backend');
 
@@ -177,12 +177,12 @@ class PublicController extends Controller
             $user->mfa_code_expired_at = null;
             $user->save();
 
-            $response['status'] = 'success';
+            $response['success'] = true;
             $response['messages'][] = 'Login Successful';
             $response['data']['redirect_url'] = route('vh.backend').'#/vaah';
 
         }else{
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'][] = 'Code is not correct.';
         }
 

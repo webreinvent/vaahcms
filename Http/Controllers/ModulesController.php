@@ -29,7 +29,7 @@ class ModulesController extends Controller
 
         if(!\Auth::user()->hasPermission('has-access-of-module-section'))
         {
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'][] = trans("vaahcms::messages.permission_denied");
 
             return response()->json($response);
@@ -41,7 +41,7 @@ class ModulesController extends Controller
         $data['debug'] = config('vaahcms.debug');
         $data['installed'] = Module::select('slug')->get()->pluck('slug')->toArray();
 
-        $response['status'] = 'success';
+        $response['success'] = true;
         $response['data'] = $data;
 
         return response()->json($response);
@@ -55,7 +55,7 @@ class ModulesController extends Controller
 
         if(!\Auth::user()->hasPermission('has-access-of-module-section'))
         {
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'][] = trans("vaahcms::messages.permission_denied");
 
             return response()->json($response);
@@ -96,7 +96,7 @@ class ModulesController extends Controller
         $stats['update_available'] = Module::updateAvailable()->count();
 
 
-        $response['status'] = 'success';
+        $response['success'] = true;
         $response['data']['list'] = $list->paginate(config('vaahcms.per_page'));
         $response['data']['stats'] = $stats;
 
@@ -109,7 +109,7 @@ class ModulesController extends Controller
 
         if(!\Auth::user()->hasPermission('can-read-module'))
         {
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'][] = trans("vaahcms::messages.permission_denied");
 
             return response()->json($response);
@@ -124,7 +124,7 @@ class ModulesController extends Controller
 
         if(!\Auth::user()->hasPermission('can-install-module'))
         {
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'][] = trans("vaahcms::messages.permission_denied");
 
             return response()->json($response);
@@ -139,7 +139,7 @@ class ModulesController extends Controller
         if ( $validator->fails() ) {
 
             $errors             = errorsToArray($validator->errors());
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'] = $errors;
             return response()->json($response);
         }
@@ -155,7 +155,7 @@ class ModulesController extends Controller
     {
         if(!\Auth::user()->hasPermission('can-update-module'))
         {
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'][] = trans("vaahcms::messages.permission_denied");
 
             return response()->json($response);
@@ -170,7 +170,7 @@ class ModulesController extends Controller
         if ( $validator->fails() ) {
 
             $errors             = errorsToArray($validator->errors());
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'] = $errors;
             return response()->json($response);
         }
@@ -195,7 +195,7 @@ class ModulesController extends Controller
         if ( $validator->fails() ) {
 
             $errors             = errorsToArray($validator->errors());
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'] = $errors;
             return response()->json($response);
         }
@@ -214,7 +214,7 @@ class ModulesController extends Controller
         $method_name = lcfirst(str_replace(" ", "", $method_name));
 
         $response = vh_module_action($module->name, 'SetupController@'.$method_name);
-        if($response['status'] == 'failed')
+        if(isset($response['success']) && !$response['success'])
         {
             return response()->json($response);
         }
@@ -227,7 +227,7 @@ class ModulesController extends Controller
             case 'activate':
                 if(!\Auth::user()->hasPermission('can-activate-module'))
                 {
-                    $response['status'] = 'failed';
+                    $response['success'] = false;
                     $response['errors'][] = trans("vaahcms::messages.permission_denied");
 
                     return response()->json($response);
@@ -238,7 +238,7 @@ class ModulesController extends Controller
             case 'deactivate':
                 if(!\Auth::user()->hasPermission('can-deactivate-module'))
                 {
-                    $response['status'] = 'failed';
+                    $response['success'] = false;
                     $response['errors'][] = trans("vaahcms::messages.permission_denied");
 
                     return response()->json($response);
@@ -249,7 +249,7 @@ class ModulesController extends Controller
             case 'import_sample_data':
                 if(!\Auth::user()->hasPermission('can-import-sample-data-in-module'))
                 {
-                    $response['status'] = 'failed';
+                    $response['success'] = false;
                     $response['errors'][] = trans("vaahcms::messages.permission_denied");
 
                     return response()->json($response);
@@ -260,7 +260,7 @@ class ModulesController extends Controller
             case 'delete':
                 if(!\Auth::user()->hasPermission('can-delete-module'))
                 {
-                    $response['status'] = 'failed';
+                    $response['success'] = false;
                     $response['errors'][] = trans("vaahcms::messages.permission_denied");
 
                     return response()->json($response);
@@ -299,7 +299,7 @@ class ModulesController extends Controller
 
         $module_slugs = implode($module_slugs,",");
 
-        $response['status'] = 'success';
+        $response['success'] = true;
         $response['data'] = $module_slugs;
         return response()->json($response);
 
@@ -311,7 +311,7 @@ class ModulesController extends Controller
 
         if(!\Auth::user()->hasPermission('can-update-module'))
         {
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'][] = trans("vaahcms::messages.permission_denied");
 
             return response()->json($response);
@@ -319,7 +319,7 @@ class ModulesController extends Controller
 
         if(!$request->has('modules'))
         {
-            $response['status'] = 'success';
+            $response['success'] = true;
             return response()->json($response);
         }
 
@@ -336,7 +336,7 @@ class ModulesController extends Controller
 
         }
 
-        $response['status'] = 'success';
+        $response['success'] = true;
         return response()->json($response);
 
     }
@@ -347,7 +347,7 @@ class ModulesController extends Controller
 
         if(!\Auth::user()->hasPermission('can-update-module'))
         {
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'][] = trans("vaahcms::messages.permission_denied");
 
             return response()->json($response);
@@ -361,7 +361,7 @@ class ModulesController extends Controller
         if ( $validator->fails() ) {
 
             $errors             = errorsToArray($validator->errors());
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'] = $errors;
             return response()->json($response);
         }

@@ -198,7 +198,7 @@ class Media extends Model {
         if ( $validator->fails() ) {
 
             $errors             = errorsToArray($validator->errors());
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'] = $errors;
             return $response;
         }
@@ -211,7 +211,7 @@ class Media extends Model {
 
             if($download_url_exist)
             {
-                $response['status'] = 'failed';
+                $response['success'] = false;
                 $response['errors'][] = trans('vaahcms-media.download_url_associate');
                 return $response;
             }
@@ -222,7 +222,7 @@ class Media extends Model {
         $item->fill($request->all());
         $item->save();
 
-        $response['status'] = 'success';
+        $response['success'] = true;
         $response['data'] = $item;
         $response['messages'][] = trans('vaahcms-general.saved_successfully');
 
@@ -273,7 +273,7 @@ class Media extends Model {
         $data['list'] = $list->paginate(config('vaahcms.per_page'));
 
 
-        $response['status'] = 'success';
+        $response['success'] = true;
         $response['data'] = $data;
 
         return $response;
@@ -288,7 +288,7 @@ class Media extends Model {
             !\Auth::user()->hasPermission('can-create-registrations') &&
             !\Auth::user()->hasPermission('can-read-registrations'))
         {
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'][] = trans("vaahcms::messages.permission_denied");
             return $response;
         }
@@ -298,7 +298,7 @@ class Media extends Model {
         $item->with(['createdByUser', 'updatedByUser', 'deletedByUser']);
         $item = $item->first();
 
-        $response['status'] = 'success';
+        $response['success'] = true;
         $response['data']['item'] = $item;
 
         return $response;
@@ -322,7 +322,7 @@ class Media extends Model {
         if ( $validator->fails() ) {
 
             $errors             = errorsToArray($validator->errors());
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'] = $errors;
             return $response;
         }
@@ -336,7 +336,7 @@ class Media extends Model {
 
             if($download_url_exist)
             {
-                $response['status'] = 'failed';
+                $response['success'] = false;
                 $response['errors'][] = trans('vaahcms-media.download_url_associate');
                 return $response;
             }
@@ -347,7 +347,7 @@ class Media extends Model {
         $item->fill($request->all());
         $item->save();
 
-        $response['status'] = 'success';
+        $response['success'] = true;
         $response['data'] = $item;
         $response['messages'][] = 'Save';
 
@@ -362,14 +362,14 @@ class Media extends Model {
 
         if(!$request->has('inputs'))
         {
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'][] = 'Select IDs';
             return $response;
         }
 
         if(!$request->has('data'))
         {
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'][] = 'Select Status';
             return $response;
         }
@@ -385,7 +385,7 @@ class Media extends Model {
             $perm->save();
         }
 
-        $response['status'] = 'success';
+        $response['success'] = true;
         $response['data'] = [];
         $response['messages'][] = trans('vaahcms-general.action_successful');
 
@@ -397,14 +397,14 @@ class Media extends Model {
 
         if(!$request->has('inputs'))
         {
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'][] = 'Select IDs';
             return $response;
         }
 
         if(!$request->has('data'))
         {
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'][] = 'Select Status';
             return $response;
         }
@@ -429,7 +429,7 @@ class Media extends Model {
             }
         }
 
-        $response['status'] = 'success';
+        $response['success'] = true;
         $response['data'] = [];
         $response['messages'][] = trans('vaahcms-general.action_successful');
 
@@ -443,7 +443,7 @@ class Media extends Model {
 
         if(!$request->has('inputs'))
         {
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'][] = 'Select IDs';
             return $response;
         }
@@ -459,7 +459,7 @@ class Media extends Model {
             }
         }
 
-        $response['status'] = 'success';
+        $response['success'] = true;
         $response['data'] = [];
         $response['messages'][] = trans('vaahcms-general.action_successful');
 
@@ -473,14 +473,14 @@ class Media extends Model {
 
         if(!$request->has('inputs'))
         {
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'][] = 'Select IDs';
             return $response;
         }
 
         if(!$request->has('data'))
         {
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'][] = 'Select Status';
             return $response;
         }
@@ -495,7 +495,7 @@ class Media extends Model {
             }
         }
 
-        $response['status'] = 'success';
+        $response['success'] = true;
         $response['data'] = [];
         $response['messages'][] = trans('vaahcms-general.action_successful');
 
