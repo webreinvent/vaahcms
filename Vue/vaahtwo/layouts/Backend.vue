@@ -12,6 +12,8 @@ const rootStore = useRootStore();
 
 
 onMounted(async () => {
+
+    await rootStore.checkLoggedIn();
     await rootStore.getAssets();
 });
 
@@ -21,7 +23,7 @@ onMounted(async () => {
 
 <template>
 
-    <div class="grid">
+    <div v-if="rootStore.is_logged_in" class="grid">
         <div><Topnav /></div>
         <div class="col-2 mt-6"> <Sidebar/> </div>
 <!--        <div class="col-2 mt-6"><Aside/></div>-->

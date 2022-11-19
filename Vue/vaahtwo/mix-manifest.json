@@ -265,5 +265,8 @@
     "/public/vaahcms/backend/vaahtwo/scss/style.scss": "/public/vaahcms/backend/vaahtwo/scss/style.scss",
     "/public/vaahcms/backend/vaahtwo/scss/tailwind-light.scss": "/public/vaahcms/backend/vaahtwo/scss/tailwind-light.scss",
     "/public/vaahcms/backend/vaahtwo/scss/_draggable.scss": "/public/vaahcms/backend/vaahtwo/scss/_draggable.scss"
+<<<<<<< HEAD
 >>>>>>> Added: setup index page
+=======
+>>>>>>> vaahcms-setup-development
 }

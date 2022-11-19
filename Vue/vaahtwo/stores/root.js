@@ -14,6 +14,7 @@ export const useRootStore = defineStore({
         json_url: json_url,
         gutter: 20,
         show_progress_bar: false,
+        is_logged_in: false
         is_installation_verified: false,
     }),
     getters: {},
@@ -33,6 +34,42 @@ export const useRootStore = defineStore({
                 );
             }
         },
+
+
+        //---------------------------------------------------------------------
+        afterGetAssets(data, res)
+        {
+            if(data)
+            {
+                this.assets = data;
+
+            }
+        },
+        //---------------------------------------------------------------------
+        checkLoggedIn()
+        {
+            let params = {
+                method: 'post'
+            };
+
+            vaah().ajax(
+                this.json_url+'/is-logged-in',
+                this.afterCheckLoggedIn,
+                params
+            );
+        },
+        //---------------------------------------------------------------------
+        afterCheckLoggedIn(data,res)
+        {
+            if(data && data.is_logged_in == false)
+            {
+                this.$router.push({name: 'sign.in'})
+                return false;
+            }
+
+            this.is_logged_in = true;
+        },
+        //-----------------------------------------------------------------------
 
 
         //---------------------------------------------------------------------

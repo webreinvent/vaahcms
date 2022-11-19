@@ -252,12 +252,13 @@ export const useSetupStore = defineStore({
         afterLoadConfigurations: function (data, res) {
             if(data)
             {
+                this.config.env.db_password = null;
                 for(let key in this.config.env)
                 {
                     if( data[key])
                     {
                         this.config.env[key] = data[key];
-                        this.config.env.db_password = null;
+
                     }
                 }
 
