@@ -62,7 +62,8 @@ class UsersController extends Controller
     //----------------------------------------------------------
     public function getList(Request $request)
     {
-        return User::getList($request);
+        $response = User::getList($request);
+        return response()->json($response);
     }
     //----------------------------------------------------------
     public function updateList(Request $request)
@@ -105,6 +106,11 @@ class UsersController extends Controller
             $response['errors']     = 'User not found.';
             return $response;
         }
+        if($item['is_active'] == 1){
+            $item['is_active'] = 'active';
+        }else{
+            $item['is_active'] = 'inactive';
+        }
 
         $response['status'] = 'success';
         $response['data'] = $item;
@@ -113,7 +119,18 @@ class UsersController extends Controller
     //----------------------------------------------------------
     public function updateItem(Request $request,$id)
     {
-        return User::updateItem($request,$id);
+        $item = User::where('id',$id)->first();
+
+        if(!$item){
+            $response['status']     = 'failed';
+            $response['errors']     = 'Registration not found.';
+            return $response;
+        }
+
+        $request['id'] = $item->id;
+
+        $response = User::updateItem($request);
+        return response()->json($response);
     }
     //----------------------------------------------------------
     public function deleteItem(Request $request,$id)

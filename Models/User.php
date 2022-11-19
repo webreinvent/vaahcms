@@ -8,9 +8,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
 use WebReinvent\VaahCms\Entities\Role;
 use WebReinvent\VaahCms\Traits\CrudWithUuidObservantTrait;
-use WebReinvent\VaahCms\Entities\User as VhUser;
 
-class User extends VhUser
+class User extends UserBase
 {
 
     use SoftDeletes;
@@ -271,10 +270,39 @@ class User extends VhUser
     //-------------------------------------------------
     public static function getList($request, $excluded_columns = [])
     {
-        $list = self::getSorted($request->filter);
-        $list->isActiveFilter($request->filter);
-        $list->trashedFilter($request->filter);
-        $list->searchFilter($request->filter);
+        $list = self::orderBy('created_at', 'DESC');
+
+        if(isset($request['trashed']) && $request['trashed'] == 'true')
+        {
+            $list->withTrashed();
+        }
+        if(isset($request['from']) && isset($request['to']))
+        {
+            $list->betweenDates($request['from'],$request['to']);
+        }
+
+        if(isset($request['status']) && $request['status']){
+            if($request['status'] == 'active')
+            {
+                $list->where('is_active',1);
+            }else{
+                $list->whereNull('is_active')->orWhere('is_active',0);
+            }
+        }
+
+        if(isset($request['filter']['q']))
+        {
+            $list->where(function ($q) use ($request){
+                $q->where('first_name', 'LIKE', '%'.$request['filter']['q'].'%')
+                    ->orWhere('last_name', 'LIKE', '%'.$request['filter']['q'].'%')
+                    ->orWhere('middle_name', 'LIKE', '%'.$request['filter']['q'].'%')
+                    ->orWhere('display_name', 'LIKE', '%'.$request['filter']['q'].'%')
+                    ->orWhere(\DB::raw('concat(first_name," ",middle_name," ",last_name)'), 'like', '%'.$request['filter']['q'].'%')
+                    ->orWhere(\DB::raw('concat(first_name," ",last_name)'), 'like', '%'.$request['filter']['q'].'%')
+                    ->orWhere('email', 'LIKE', '%'.$request['filter']['q'].'%')
+                    ->orWhere('id', '=', $request['filter']['q']);
+            });
+        }
 
         $rows = config('vaahcms.per_page');
 
@@ -470,41 +498,107 @@ class User extends VhUser
 
     }
     //-------------------------------------------------
-    public static function updateItem($request, $id)
+    public static function updateItem($request)
     {
         $inputs = $request->all();
 
-        $validation = self::validation($inputs);
-        if (!$validation['success']) {
-            return $validation;
+        $validate = self::validation($inputs);
+
+        if(isset($validate['status']) && $validate['status'] == 'failed')
+        {
+            return $validate;
         }
 
-        // check if name exist
-        $user = self::where('id', '!=', $inputs['id'])
-            ->where('name', $inputs['name'])->first();
+        if(isset($inputs['phone']))
+        {
+            $rules['phone'] = 'integer';
 
-        if ($user) {
-            $response['success'] = false;
-            $response['messages'][] = "This name is already exist.";
-            return $response;
+            $validator = \Validator::make( $request->all(), $rules);
+            if ( $validator->fails() ) {
+
+                $errors             = errorsToArray($validator->errors());
+                $response['status'] = 'failed';
+                $response['errors'] = $errors;
+                return $response;
+            }
         }
 
-        // check if slug exist
-        $user = self::where('id', '!=', $inputs['id'])
-            ->where('slug', $inputs['slug'])->first();
 
-        if ($user) {
-            $response['success'] = false;
-            $response['messages'][] = "This slug is already exist.";
-            return $response;
+
+
+        if($request->has('birth'))
+        {
+            $inputs['birth'] = \Illuminate\Support\Carbon::parse($request->birth)->format('Y-m-d');
         }
 
-        $update = self::where('id', $id)->withTrashed()->first();
-        $update->fill($inputs);
-        $update->slug = Str::slug($inputs['slug']);
-        $update->save();
+        if($request->has('id'))
+        {
 
-        $response = self::getItem($id);
+            // check if already exist
+            $user = self::where('id', '!=', $inputs['id'])
+                ->where('email',$inputs['email'])->first();
+
+            if($user)
+            {
+                $response['status'] = 'failed';
+                $response['errors'][] = trans('vaahcms-user.email_already_registered');
+                return $response;
+            }
+            // check if already exist
+            $user = self::where('id', '!=', $inputs['id'])
+                ->where('username',$inputs['username'])->first();
+
+            if($user)
+            {
+                $response['status'] = 'failed';
+                $response['errors'][] = trans('vaahcms-user.username_already_registered');
+                return $response;
+            }
+
+            $item = User::find($request->id);
+        } else
+        {
+            $validation = self::userValidation($request);
+            if(isset($validation['status']) && $validation['status'] == 'failed')
+            {
+                return $validation;
+            } else if(isset($validation['status'])
+                && $validation['status'] == 'registration-exist')
+            {
+                $item = $validation['data'];
+            } else
+            {
+                $item = new User();
+                $item->password = generate_password();
+                $item->is_active = 1;
+                $item->status = 'active';
+                $item->activated_at = date('Y-m-d H:i:s');
+                $item->uuid = Str::uuid();
+            }
+        }
+        if($inputs['is_active'] == 'active'){
+            $inputs['is_active'] = 1;
+        }else{
+            $inputs['is_active'] = 0;
+        }
+
+        $item->fill($inputs);
+        if($request->has('password'))
+        {
+            $item->password = $request->password;
+        }
+
+        $item->save();
+
+        if(!$request->has('id'))
+        {
+            Role::syncRolesWithUsers();
+        }
+
+
+        $response['status'] = 'success';
+        $response['messages'][] = 'Saved';
+        $response['data'] = $item;
 
         return $response;
     }
