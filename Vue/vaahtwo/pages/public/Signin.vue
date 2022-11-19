@@ -10,13 +10,13 @@ const root = useRootStore();
 const auth = useAuthStore();
 
 onMounted(async () => {
-    root.verifyInstallStatus();
+    auth.verifyInstallStatus();
     await root.getAssets();
 
 });
 </script>
 <template>
-    <div v-if="root.assets && root.is_installation_verified">
+    <div v-if="root.assets && auth.is_installation_verified">
         <div class="grid flex justify-content-center flex-wrap ">
             <div class="col-5 flex align-items-center justify-content-center ">
                 <div v-if="root.assets">

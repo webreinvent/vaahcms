@@ -8,6 +8,7 @@ let json_url = ajax_url + "/json";
 export const useAuthStore = defineStore({
     id: 'auth',
     state: () => ({
+        base_url: base_url,
         ajax_url: ajax_url,
         json_url: json_url,
         gutter: 20,
@@ -112,6 +113,36 @@ export const useAuthStore = defineStore({
                 } else {
                     window.location = data.redirect_url+'#/vaah/';
                 }
+            }
+        },
+        //---------------------------------------------------------------------
+        async verifyInstallStatus() {
+
+            let params = {
+            };
+
+            vaah().ajax(
+                this.base_url+'/setup/json/status',
+                this.afterVerifyInstallStatus,
+                params
+            );
+
+        },
+
+
+        //---------------------------------------------------------------------
+        afterVerifyInstallStatus(data, res)
+        {
+            if(data)
+            {
+
+                if(data.stage !== 'installed')
+                {
+                    this.$router.push({name : 'setup.index'});
+                }
+
+                this.is_installation_verified = true;
+
             }
         },
         //-----------------------------------------------------------------------
