@@ -14,7 +14,7 @@ export const useRootStore = defineStore({
         json_url: json_url,
         gutter: 20,
         show_progress_bar: false,
-        is_logged_in: false
+        is_logged_in: false,
         is_installation_verified: false,
     }),
     getters: {},
@@ -70,17 +70,6 @@ export const useRootStore = defineStore({
             this.is_logged_in = true;
         },
         //-----------------------------------------------------------------------
-
-
-        //---------------------------------------------------------------------
-        afterGetAssets(data, res)
-        {
-            if(data)
-            {
-                this.assets = data;
-
-            }
-        },
         //---------------------------------------------------------------------
         async verifyInstallStatus() {
 

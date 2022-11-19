@@ -32,10 +32,12 @@ onMounted(async () => {
                             <h4 class="text-xl font-semi-bold">Install</h4>
                             <div class="icons flex">
                                 <div v-if="root.assets.auth_user" class="m-1">
-                                    <i class="bg-gray-200 p-2 border-round-3xl pi pi-server"
-                                       v-tooltip.top="'Dashboard'">
-
-                                    </i>
+                                    <a @click="$router.push({name:'dashboard'})">
+                                        <Button class="bg-gray-200 active:text-black
+                                        p-2 p-button-rounded p-button-outlined"
+                                                v-tooltip.top="'Dashboard'"
+                                                icon=" pi pi-server"/>
+                                    </a>
                                 </div>
                                 <div class="m-1">
                                     <a href="https://docs.vaah.dev/vaahcms/installation.html" target="_blank">
