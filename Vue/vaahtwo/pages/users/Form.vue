@@ -1,14 +1,12 @@
 <script setup>
 import {onMounted, ref, watch} from "vue";
 import { useUserStore } from '../../stores/store-users'
-import { useRootStore } from '../../stores/root'
 
 import VhField from './../../vaahvue/vue-three/primeflex/VhField.vue'
 import {useRoute} from 'vue-router';
 
 
 const store = useUserStore();
-const root = useRootStore();
 const route = useRoute();
 
 onMounted(async () => {
@@ -91,37 +89,18 @@ const toggleFormMenu = (event) => {
 
 
             <div v-if="store.item && store.assets">
-                <div class="field mb-4 flex justify-content-between align-items-center" v-if="root && root.assets">
-                    <img
-                        src="https://img.site/p/100/100/BDC3C8/solid-box"
-                        alt=""
-                        width="64"
-                        height="64"
-                        style="border-radius: 50%">
-                    <FileUpload
-                        mode="basic"
-                        name="demo[]"
-                        :url="root.assets.urls.upload"
-                        accept="image/*"
-                        :maxFileSize="1000000"
-                        @upload="store.onUpload"
-                        @uploader="myUploader"/>
-                </div>
+
                 <VhField label="Email">
                     <InputText
                         class="w-full"
-                        v-model="store.item.email"
-                        name="account-email"
-                        data-testid="account-email">
+                        v-model="store.item.email">
                     </InputText >
                 </VhField>
 
                 <VhField label="Username">
                     <InputText
                         class="w-full"
-                        v-model="store.item.username"
-                        name="account-username"
-                        data-testid="account-username">
+                        v-model="store.item.username">
                     </InputText >
                 </VhField>
 
@@ -131,16 +110,13 @@ const toggleFormMenu = (event) => {
                         :feedback="false"
                         id="password"
                         class="w-full"
-                        name="account-password"
-                        data-testid="account-password"/>
+                        inputClass="w-full"/>
                 </VhField>
 
                 <VhField label="Display Name">
                     <InputText
                         class="w-full"
-                        v-model="store.item.display_name"
-                        name="account-display_name"
-                        data-testid="account-display_name">
+                        v-model="store.item.display_name">
                     </InputText >
                 </VhField>
 
@@ -151,44 +127,34 @@ const toggleFormMenu = (event) => {
                         optionLabel="name"
                         optionValue="slug"
                         id="Title"
-                        class="w-full"
-                        name="account-title"
-                        data-testid="account-title"/>
+                        class="w-full"/>
                 </VhField>
 
                 <VhField label="Designation">
                     <InputText
                         class="w-full"
-                        v-model="store.item.designation"
-                        name="account-designation"
-                        data-testid="account-designation">
+                        v-model="store.item.designation">
                     </InputText >
                 </VhField>
 
                 <VhField label="First Name">
                     <InputText
                         class="w-full"
-                        v-model="store.item.first_name"
-                        name="account-first_name"
-                        data-testid="account-first_name">
+                        v-model="store.item.first_name">
                     </InputText >
                 </VhField>
 
                 <VhField label="Middle Name">
                     <InputText
                         class="w-full"
-                        v-model="store.item.middle_name"
-                        name="account-middle_name"
-                        data-testid="account-middle_name">
+                        v-model="store.item.middle_name">
                     </InputText >
                 </VhField>
 
                 <VhField label="Last Name">
                     <InputText
                         class="w-full"
-                        v-model="store.item.last_name"
-                        name="account-last_name"
-                        data-testid="account-last_name">
+                        v-model="store.item.last_name">
                     </InputText >
                 </VhField>
 
@@ -198,9 +164,8 @@ const toggleFormMenu = (event) => {
                         :options="store.gender_options"
                         optionLabel="label"
                         optionValue="value"
-                        aria-labelledby="custom"
-                        name="account-gender"
-                        data-testid="account-gender">
+                        dataKey="value"
+                        aria-labelledby="custom">
                         <template #option="slotProps">
                             <p>{{slotProps.option.label}}</p>
                         </template>
@@ -211,60 +176,47 @@ const toggleFormMenu = (event) => {
                     <Dropdown
                         v-model="store.item.country_calling_code"
                         :options="store.assets.countries"
-                        :editable="true"
                         optionLabel="calling_code"
                         optionValue="calling_code"
                         id="calling_code"
-                        class="w-full"
-                        name="account-country_calling_code"
-                        data-testid="account-country_calling_code"/>
+                        class="w-full"/>
                 </VhField>
 
                 <VhField label="Phone">
                     <InputText
                         class="w-full"
-                        v-model="store.item.phone"
-                        name="account-phone"
-                        data-testid="account-phone">
+                        v-model="store.item.phone">
                     </InputText >
                 </VhField>
 
                 <VhField label="bio">
                     <Editor
-                        v-model="store.item.bio"
-                        editorStyle="height: 320px"
-                        name="account-bio"
-                        data-testid="account-bio"/>
+                        :v-model="store.item.bio"
+                        editorStyle="height: 320px"/>
                 </VhField>
 
                 <VhField label="Website">
                     <InputText
                         class="w-full"
-                        v-model="store.item.website"
-                        name="account-website"
-                        data-testid="account-website">
+                        v-model="store.item.website">
                     </InputText >
                 </VhField>
 
                 <VhField label="Timezone">
                     <AutoComplete
-                        v-model="store.item.timezone"
+                        v-model="store.item.timezone_name_object"
                         :suggestions="store.filtered_timezone_codes"
                         @complete="store.searchTimezoneCode"
                         @item-select="store.onSelectTimezoneCode"
-                        placeholder="Enter Your Timezone"
+                        placeholder="Enter Your Country"
                         optionLabel="name"
-                        class="w-full"
-                        name="account-timezone"
-                        data-testid="account-timezone"/>
+                        class="w-full"/>
                 </VhField>
 
                 <VhField label="Alternate Email">
                     <InputText
                         class="w-full"
-                        v-model="store.item.alternate_email"
-                        name="account-alternate_email"
-                        data-testid="account-alternate_email">
+                        v-model="store.item.alternate_email">
                     </InputText >
                 </VhField>
 
@@ -274,9 +226,7 @@ const toggleFormMenu = (event) => {
                         inputId="basic"
                         v-model="store.item.birth"
                         autocomplete="off"
-                        class="w-full"
-                        name="account-birth"
-                        data-testid="account-birth"/>
+                        class="w-full"/>
                 </VhField>
 
                 <VhField label="Country">
@@ -287,8 +237,8 @@ const toggleFormMenu = (event) => {
                         @item-select="store.onSelectCountryCode"
                         placeholder="Enter Your Country"
                         optionLabel="name"
-                        name="account-country"
-                        data-testid="account-country"
+                        name="account-country_calling_code"
+                        data-testid="account-country_calling_code"
                         class="w-full"/>
                 </VhField>
 
@@ -296,9 +246,7 @@ const toggleFormMenu = (event) => {
                     <InputText
                         type="number"
                         class="w-full"
-                        v-model="store.item.foreign_user_id"
-                        name="account-foreign_user_id"
-                        data-testid="account-foreign_user_id">
+                        v-model="store.item.foreign_user_id">
                     </InputText >
                 </VhField>
 
@@ -309,9 +257,7 @@ const toggleFormMenu = (event) => {
                         optionLabel="label"
                         optionValue="value"
                         id="country-code"
-                        class="w-full"
-                        name="account-status"
-                        data-testid="account-status"/>
+                        class="w-full"/>
                 </VhField>
 
                 <VhField label="Is Active">
@@ -319,9 +265,7 @@ const toggleFormMenu = (event) => {
                         v-model="store.item.is_active"
                         :options="store.is_active_options"
                         optionLabel="label"
-                        optionValue="value"
-                        name="account-is_active"
-                        data-testid="account-is_active">
+                        optionValue="label">
                         <template #option="slotProps">
                             <span class="text-sm">{{slotProps.option.label}}</span>
                         </template>
