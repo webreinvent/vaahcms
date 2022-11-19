@@ -15,7 +15,7 @@
         <meta name="sentry-dns" id="sentry_dns" content="{{env('SENTRY_DSN')}}">
     @endif
 
-    <base href="{{\URL::to('/')}}">
+    <base href="{{\URL::to('/backend')}}">
 
     <link href="https://fonts.googleapis.com/css?family=IBM+Plex+Sans:300,400,500,600,700&display=swap" rel="stylesheet">
 
@@ -23,18 +23,16 @@
 
     @if(env('VAAHCMS_ASSETS') == 'develop')
         <!--CSS Support for Bulma & Buefy-->
-        <link href="http://localhost:4001/vaahone/css/build.css" rel="stylesheet" media="screen">
-        <link href="http://localhost:4001/vaahone/css/style.css" rel="stylesheet" media="screen">
+        <link href="http://localhost:4001/vaahone/build/vaahone.css" rel="stylesheet" media="screen">
 
         <!--CSS Support for PrimeVue-->
-        <link href="http://localhost:4001/vaahtwo/css/build.css" rel="stylesheet" media="screen">
+        <link href="http://localhost:4001/vaahtwo/build/vaahtwo.css" rel="stylesheet" media="screen">
     @else
         <!--CSS Support for Bulma & Buefy-->
-        <link href="{{vh_get_backend_assets("css/build.css", 'vaahone')}}" rel="stylesheet" media="screen">
-        <link href="{{vh_get_backend_assets("css/style.css", 'vaahone')}}" rel="stylesheet" media="screen">
+        <link href="{{vh_get_backend_assets_url()}}/build/vaahone.css" rel="stylesheet" media="screen">
 
         <!--CSS Support for PrimeVue-->
-        <link href="{{vh_get_backend_assets("css/build.css", 'vaahtwo')}}" rel="stylesheet" media="screen">
+        <link href="{{vh_get_backend_assets_url()}}/build/vaahtwo.css" rel="stylesheet" media="screen">
     @endif
 
     {!! vh_config_css() !!}

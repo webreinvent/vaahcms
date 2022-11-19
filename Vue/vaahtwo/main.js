@@ -25,7 +25,7 @@ import Chip from 'primevue/chip';
 import Chips from 'primevue/chips';
 import ColorPicker from 'primevue/colorpicker';
 import Column from 'primevue/column';
-//import ColumnGroup from 'primevue/columngroup';
+//import ColumnGroup from 'primevue-3.20.0/columngroup';
 import ConfirmDialog from 'primevue/confirmdialog';
 import ConfirmPopup from 'primevue/confirmpopup';
 import ConfirmationService from 'primevue/confirmationservice';
@@ -40,6 +40,7 @@ import Divider from 'primevue/divider';
 import Dock from 'primevue/dock';
 import Dropdown from 'primevue/dropdown';
 import DynamicDialog from 'primevue/dynamicdialog';
+import Editor from 'primevue/editor';
 import Fieldset from 'primevue/fieldset';
 import FileUpload from 'primevue/fileupload';
 import Galleria from 'primevue/galleria';
@@ -104,9 +105,8 @@ import VirtualScroller from 'primevue/virtualscroller';
 //-------------/PrimeVue Imports
 
 
-
 //-------------APP
-import App from './layouts/App.vue'
+import App from "./layouts/App.vue"
 import router from './routes/router'
 
 const app = createApp(App);
@@ -163,6 +163,7 @@ app.component('Divider', Divider);
 app.component('Dock', Dock);
 app.component('Dropdown', Dropdown);
 app.component('DynamicDialog', DynamicDialog);
+app.component('Editor', Editor);
 app.component('Fieldset', Fieldset);
 app.component('FileUpload', FileUpload);
 app.component('Galleria', Galleria);

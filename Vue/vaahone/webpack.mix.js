@@ -49,7 +49,7 @@ if (mix.inProduction()) {
     source_theme_folder = "./../../Resources/assets/backend/"+theme_name;
     mix.combine([
         source_theme_folder+'/css/bootstrap4-light-blue/theme.css',
-        source_theme_folder+'/css/primevue.min.css',
+        source_theme_folder+'/css/primevue-3.20.0.min.css',
         source_theme_folder+'/css/primeflex-3.1.2/primeflex.css',
         source_theme_folder+'/css/primeicons.css',
         source_theme_folder+'/css/style.css',

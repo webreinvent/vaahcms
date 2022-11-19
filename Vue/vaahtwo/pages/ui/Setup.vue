@@ -25,8 +25,8 @@
                             <a href="https://vaah.dev/cms" target="_blank">VaahCMS</a> is a web application development platform shipped with headless content management system
                         </p>
                         <div class="flex justify-content-between align-items-center mt-4">
-                            <Button label="Install" icon="pi pi-server" class="p-button bg-white border-gray-800 text-black-alpha-80"/>
-                            <SplitButton label="Advanced Options" :model="items" class="mb-2"></SplitButton>
+                            <Button label="Install" icon="pi pi-server" class="p-button-secondary p-button-outlined p-button-sm"/>
+                            <SplitButton label="Advanced Options" :model="items" class="mb-2 p-button-sm"></SplitButton>
                         </div>
                     </template>
                 </Card>
@@ -48,7 +48,7 @@
                             You can reset/re-install the application if you're logged in from "Administrator" account.
                         </p>
                         <div class="flex justify-content-between align-items-center mt-4">
-                            <Button label="Reset" icon="pi pi-refresh" class="p-button-danger"/>
+                            <Button label="Reset" icon="pi pi-refresh" class="p-button-danger p-button-sm"/>
                         </div>
                     </template>
                 </Card>

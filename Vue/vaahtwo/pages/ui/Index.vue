@@ -1,41 +1,12 @@
 
 <template>
     <div>
-        <!--<div style="position: fixed; top:0; left: 33%; z-index:100;">
-            <Menubar :model="items">
-            </Menubar>
-        </div>-->
-        <!--<Topnav></Topnav>
-        <Sidebar></Sidebar>
-        <div class="grid main-container">
-            <div class="col-12 mt-6 mx-auto">
-                <RouterView></RouterView>
-            </div>
-        </div>-->
-        <div class="grid">
-            <div class="col-6 col-offset-3 mt-6">
-                <DataTable :value="pages" stripedRows responsiveLayout="scroll" class="p-datatable-sm" showGridlines>
-                    <Column header="Pages">
-                        <template #body="slotProps">
-                            <p>{{slotProps.data.label}}</p>
-                        </template>
-                    </Column>
-                    <Column header="Link">
-                        <template #body="slotProps">
-                            <router-link :to="slotProps.data.to" class="mr-2" >
-                             <Button icon="pi pi-link" class="p-button-rounded p-button-sm"></Button>
-                            </router-link>
-                        </template>
-                    </Column>
-                </DataTable>
-            </div>
-        </div>
+        <router-view></router-view>
     </div>
 </template>
 <script setup>
 import {ref} from "vue";
-import Sidebar from "../../components/partials/Sidebar.vue";
-import Topnav from "../../components/partials/Topnav.vue";
+
 
 const pages = ref([
     {
@@ -91,7 +62,7 @@ const pages = ref([
 
 
 </script>
-<style lang="scss">
+<!--<style lang="scss">
 .p-component-overlay-enter{
     z-index: 1100 !important;
 }
@@ -110,7 +81,7 @@ const pages = ref([
 }
 .main-container{
     width: calc(100% - 210px);
-    margin: 55px 5px 0 auto;
+    margin: 70px 5px 0 auto;
 }
 .top-nav-fixed{
     width: 100%;
@@ -131,7 +102,7 @@ const pages = ref([
 }
 .sidebar{
     position: fixed;
-    top: 51px;
+    top: 65px;
     left: 0;
     width: 200px;
     z-index: 100;
@@ -154,4 +125,4 @@ const pages = ref([
         border-radius:0;
     }
 }
-</style>
+</style>-->

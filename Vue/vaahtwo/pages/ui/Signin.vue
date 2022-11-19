@@ -4,17 +4,17 @@
             <div class="content text-center">
                 <img src="http://irisrishu.com/vaahcms/backend/vaahone/images/vaahcms-logo.svg" alt="" class="w-5 mb-2">
                 <h4 class="text-xl font-semibold line-height-2 mb-2">Welcome Back</h4>
-                <p class="text-sm text-gray-600 font-semibold">Please Sign in to continue</p>
+                <p class="text-sm text-gray-600 font-semibold mb-4">Please Sign in to continue</p>
             </div>
         </template>
         <template #content>
-            <div class="field mb-6">
+            <div class="field mb-5">
                 <div class="field-radiobutton cursor-pointer">
-                    <RadioButton name="Password" value="password" v-model="signInType" inputId="passowrd" />
+                    <RadioButton name="Password" value="password" class="is-small" v-model="signInType" inputId="passowrd" />
                     <label for="password" class="text-sm">Login Via Password</label>
                 </div>
                 <div class="field-radiobutton cursor-pointer">
-                    <RadioButton name="OTP" value="otp" v-model="signInType" inputId="otp"/>
+                    <RadioButton name="OTP" value="otp" class="is-small" v-model="signInType" inputId="otp"/>
                     <label for="otp" class="text-sm">Login Via OTP</label>
                 </div>
             </div>
@@ -27,18 +27,18 @@
                 <label for="password">Enter Password</label>
             </div>
             <div v-if="signInType === 'otp'" class="mb-5">
-                <Button label="Generate OTP" class="mb-5"></Button>
+                <Button label="Generate OTP" class="mb-5 p-button-sm"></Button>
                <div class="p-float-label field">
                    <InputText type="number" class="w-full" id="otp"/>
                    <label for="otp">Enter OTP</label>
                </div>
             </div>
             <div class="field flex justify-content-between align-items-center">
-                <router-link to="/public/multi-factor-auth">
+                <router-link to="/ui/public/multi-factor-auth">
 
                 <Button label="Sign In" class="p-button-sm" />
                 </router-link>
-                <router-link to="">
+                <router-link to="/ui/public/forgot-password">
                     <Button label="Forgot Password?" class="p-button-text p-button-sm"/>
                 </router-link>
             </div>

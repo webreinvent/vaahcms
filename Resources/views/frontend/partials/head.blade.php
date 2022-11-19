@@ -17,7 +17,7 @@
 
     <base href="{{\URL::to('/')}}">
 
-    <link href="https://fonts.googleapis.com/css?family=IBM+Plex+Sans:300,400,500,600,700&display=swap" rel="stylesheet">
+    <link href="https:/./fonts.googleapis.com/css?family=IBM+Plex+Sans:300,400,500,600,700&display=swap" rel="stylesheet">
 
 
     @if(env('VAAHCMS_ASSETS') == 'develop')

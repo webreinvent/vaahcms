@@ -5,17 +5,17 @@
         <UsersForm></UsersForm>
     </div>
     <div class="col-12 md:col-4">
-        <UserDetials></UserDetials>
+        <UserDetails/>
     </div>
 </div>
 </template>
 
 <script>
-import UsersForm from "../../components/partials/UsersForm.vue";
-import UserDetials from "../../components/partials/UserDetails.vue";
+import UsersForm from "../../components/organisms/UsersForm.vue";
+import UserDetails from "../../components/organisms/UserDetails.vue";
 export default {
     name: "Users",
-    components: {UserDetials, UsersForm},
+    components: {UserDetails, UsersForm},
     data(){
         return{
             user_view:'create',

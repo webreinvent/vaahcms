@@ -9,8 +9,8 @@
 </template>
 
 <script>
-import Topnav from "../../components/partials/Topnav.vue";
-import Sidebar from "../../components/partials/Sidebar.vue";
+import Topnav from "../../components/organisms/Topnav.vue";
+import Sidebar from "../../components/organisms/Sidebar.vue";
 export default {
     name: "PrivatePages",
     components:{Topnav,Sidebar}

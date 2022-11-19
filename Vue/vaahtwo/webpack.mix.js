@@ -2,7 +2,9 @@ const mix = require('laravel-mix');
 
 
 let theme_name = 'vaahtwo';
-let theme_path = './../../Resources/assets/backend/'+theme_name+'/';
+let resource_path = './../../Resources/assets/backend/';
+let theme_path = resource_path+theme_name+'/';
+let build_path = './../../Resources/assets/backend/build/';
 let publish_folder;
 
 
@@ -21,19 +23,10 @@ if (mix.inProduction()) {
     console.log('IN PRODUCTION MODE');
     console.log('---------------------');
 
-    publish_folder = './../../Resources/assets/backend/';
+    publish_folder = build_path;
     mix.setPublicPath(publish_folder);
 
-    mix.sass(theme_path+'/scss/style.scss', theme_path+'css/');
-
-    mix.combine([
-       // theme_path+'/css/lara-light-theme/theme.css',
-        theme_path+'/css/tailwind-light/theme.css',
-        theme_path+'/css/primevue.min.css',
-        theme_path+'/css/primeflex-3.2.1/primeflex.css',
-        theme_path+'/css/primeicons.css',
-        theme_path+'/css/style.css',
-    ], theme_path+'build/build.css');
+    mix.sass(theme_path+'/scss/build.scss', build_path+'vaahtwo.css').options({ processCssUrls: false })
 
 
     /**
@@ -41,38 +34,32 @@ if (mix.inProduction()) {
      */
     theme_name = 'vaahone';
     theme_path = './../../Resources/assets/backend/'+theme_name+'/';
-    mix.sass(theme_path+'/scss/build.scss', theme_path+'css/');
-    mix.sass(theme_path+'/scss/style.scss', theme_path+'css/');
+    mix.sass(theme_path+'/scss/build.scss', build_path+'vaahone.css').options({ processCssUrls: false })
+
 
 
 } else if(mode !== 'publish') {
     publish_folder = './../../Resources/assets/backend/';
     mix.setPublicPath(publish_folder);
 
-    mix.combine([
-        //theme_path+'/css/lara-light-theme/theme.css',
-        theme_path+'/css/tailwind-light/theme.css',
-        theme_path+'/css/primevue.min.css',
-        theme_path+'/css/primeflex-3.2.1/primeflex.css',
-        theme_path+'/css/primeicons.css',
-        theme_path+'/css/style.css',
-    ], theme_path+'build/build.css');
+    mix.sass(theme_path+'/scss/build.scss', theme_path+'build/vaahtwo.css');
 
-     // vaahone css
+
+    // vaahone css
     theme_name = 'vaahone';
     theme_path = './../../Resources/assets/backend/'+theme_name+'/';
-
-    mix.sass(theme_path+'/scss/build.scss', theme_path+'css/');
-    mix.sass(theme_path+'/scss/style.scss', theme_path+'css/');
+    mix.sass(theme_path+'/scss/build.scss', theme_path+'build/vaahone.css');
 }
 
 
 console.log('mode--->', mode);
 
+
+
 if(mode === 'publish')
 {
-    let source_path = './../../Resources/assets/backend/';
-    let output_path = __dirname+'/../../../../public/vaahcms/backend'
+    let source_path = './../../Resources/assets/backend/build';
+    let output_path = __dirname+'/../../../../public/vaahcms/backend/build'
     mix.copy(source_path, output_path);
 }
 

@@ -1,0 +1,929 @@
+@import "./../global/all.scss";
+
+$primaryColor: $primary !default;
+$primaryLightColor:lighten($primary, 20%) !default;
+$primaryLighterColor:lighten($primary, 30%) !default;
+$primaryDarkColor: darken($primary, 20%) !default;
+$primaryDarkerColor:darken($primary, 30%) !default;
+$primaryTextColor: #ffffff !default;
+
+$infoColor:$info !default;
+$infoLightColor: lighten($infoColor, 20%) !default;
+$infoLighterColor: lighten($infoColor, 30%) !default;
+$infoDarkColor:darken($infoColor, 15%) !default;
+$infoDarkerColor:darken($infoColor, 25%) !default;
+
+
+$successColor:$success;
+$successLightColor: lighten($successColor, 30%) !default;
+$successLighterColor: lighten($successColor, 40%) !default;
+$successDarkColor:darken($successColor, 15%) !default;
+$successDarkerColor:darken($successColor, 25%) !default;
+
+$dangerColor:$danger !default;
+$dangerLightColor: lighten($dangerColor, 20%) !default;
+$dangerLighterColor: lighten($dangerColor, 30%) !default;
+$dangerDarkColor:darken($dangerColor, 20%) !default;
+$dangerDarkerColor:darken($dangerColor, 30%) !default;
+
+$warningColor:$warning !default;
+$warningLightColor: lighten($warningColor, 20%) !default;
+$warningLighterColor: lighten($warningColor, 30%) !default;
+$warningDarkColor:darken($warningColor, 20%) !default;
+$warningDarkerColor:darken($warningColor, 30%) !default;
+
+$helpColor:$help;
+$helpLightColor:lighten($helpColor, 20%);
+$helpLighterColor:lighten($helpColor, 30%);
+$helpDarkColor: darken($helpColor, 15%);
+$helpDarkerColor: darken($helpColor, 25%);
+
+$secondaryColor:$secondary;
+$secondaryDarkColor: darken($secondary, 20%) !default;
+$secondaryDarkerColor: darken($secondary, 30%) !default;
+$secondaryLightColor:lighten($secondary, 15%) !default;
+$secondaryLighterColor:lighten($secondary, 25%) !default;
+
+
+$highlightBg: #EEF2FF !default;
+$highlightTextColor: #312E81 !default;
+$highlightFocusBg: #E0E7FF !default;
+
+$colors: (
+        "blue": #3B82F6,
+        "green": #22C55E,
+        "yellow": #EAB308,
+        "cyan": #06B6D4,
+        "pink": #EC4899,
+        "indigo": #6366F1,
+        "teal": #14B8A6,
+        "orange": #F97316,
+        "bluegray": #64748B,
+        "purple": #A855F7,
+        "red": #EF4444,
+        "primary": $primaryColor
+);
+
+//reused color variables
+$shade000:#ffffff !default;    //surface
+$shade100:darken($shade000, 25%) !default;    //header background      //updated: gray-50
+$shade200:darken($shade000, 30%) !default;    //hover background       //updated: gray-100
+$shade300:darken($shade000, 35%) !default;    //border, divider        //updated  coolgray-200
+$shade400:darken($shade000, 40%)  !default;    //input border           //updated: gray-300
+$shade500:darken($shade000, 45%)  !default;    //input icon             //updated: coolgray500
+$shade500:darken($shade000, 50%)  !default;    //input icon             //updated: coolgray500
+$shade600:darken($shade000, 60%)  !default;    //text secondary color   //updated: gray-500
+$shade700:darken($shade000, 70%) !default;    //text color             //updated: gray-700
+$shade800:darken($shade000, 80%)  !default;    //unused                 gray-800
+$shade900:darken($shade000, 90%) !default;    //unused                 gray-900
+
+//global
+$fontFamily:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji" !default;
+$fontSize:$font-size !default;
+$fontWeight:$font-weight !default;
+$textColor:$text-color !default;
+$textSecondaryColor:$shade600 !default;
+$borderRadius:$border-radius !default;
+$transitionDuration:$transition-duration !default;
+$formElementTransition:$form-element-transition !default;
+$actionIconTransition:$action-icon-transition !default;
+$listItemTransition:$list-item-transition !default;
+$primeIconFontSize:$prime-icon-font-size !default;
+$divider:$divider !default;
+$inlineSpacing:$inline-spacing !default;
+$disabledOpacity:$disabled-opacity !default;
+$maskBg:$mask-bg !default;
+$loadingIconFontSize:$loading-icon-font-size !default;
+$errorColor:$dangerColor !default;
+
+//scale
+$scaleSM:0.875 !default;
+$scaleLG:1.25 !default;
+
+//focus
+$focusOutlineColor:$focus-outline-color !default;
+$focusOutline:$focus-outline !default;
+$focusOutlineOffset:$focus-outline-offset !default;
+$focusShadow:$focus-shadow !default;
+
+//action icons
+$actionIconWidth:$action-icon-width !default;
+$actionIconHeight:$action-icon-height !default;
+$actionIconBg:$action-icon-bg !default;
+$actionIconBorder:$action-icon-border !default;
+$actionIconColor:$action-icon-color !default;
+$actionIconHoverBg:$action-icon-hover-bg !default;
+$actionIconHoverBorderColor:$action-icon-hover-border-color !default;
+$actionIconHoverColor:$action-icon-hover-color !default;
+$actionIconBorderRadius:$action-icon-border-radius !default;
+
+//input field (e.g. inputtext, spinner, inputmask)
+$inputPadding:$input-padding !default;
+$inputTextFontSize:$fontSize !default;
+$inputBg:$shade000 !default;
+$inputTextColor:$shade700 !default;
+$inputIconColor:$shade600 !default;
+$inputBorder:1px solid $shade400 !default;
+$inputHoverBorderColor:$shade400 !default;
+$inputFocusBorderColor:$input-focus-border-color !default;
+$inputErrorBorderColor:$input-error-border-color !default;
+$inputPlaceholderTextColor:$input-placeholder-text-color !default;
+$inputFilledBg:$input-filled-bg !default;
+$inputFilledHoverBg:$inputFilledBg !default;
+$inputFilledFocusBg:$input-filled-focus-bg !default;
+
+//input groups
+$inputGroupBg:$input-group-bg !default;
+$inputGroupTextColor:$input-group-text-color !default;
+$inputGroupAddOnMinWidth:$input-group-add-on-min-width !default;
+
+//input lists (e.g. dropdown, autocomplete, multiselect, orderlist)
+$inputListBg:$input-list-bg !default;
+$inputListTextColor:$input-list-text-color !default;
+$inputListBorder:$inputBorder !default;
+$inputListPadding:$input-list-padding !default;
+$inputListItemPadding:$input-list-item-padding !default;
+$inputListItemBg:$input-list-item-bg !default;
+$inputListHeaderBorder:0 none !default;
+$inputListItemTextColor:$input-list-item-text-color !default;
+$inputListItemHoverBg:$input-list-item-hover-bg !default;
+$inputListItemTextHoverColor:$input-list-item-text-hover-color !default;
+$inputListItemFocusBg:$input-list-item-focus-bg !default;
+$inputListItemTextFocusColor:$input-list-item-text-focus-color !default;
+$inputListItemBorder:$input-list-item-border !default;
+$inputListItemBorderRadius:$input-list-item-border-radius !default;
+$inputListItemMargin:$input-list-item-margin !default;
+$inputListItemFocusShadow:$input-list-item-focus-shadow !default;
+$inputListHeaderPadding:$input-list-header-padding !default;
+$inputListHeaderMargin:$input-list-header-margin !default;
+$inputListHeaderBg:$input-list-header-bg !default;
+$inputListHeaderTextColor:$input-list-header-text-color !default;
+$input-list-header-border:0 none !default;
+
+//inputs with overlays (e.g. autocomplete, dropdown, multiselect)
+$inputOverlayBg:$inputListBg !default;
+$inputOverlayHeaderBg:$input-list-header-bg !default;
+$inputOverlayBorder:$input-overlay-border !default;
+$inputOverlayShadow:$input-overlay-shadow !default;
+
+//password
+$passwordMeterBg:$shade300 !default;
+$passwordWeakBg:$dangerLightColor !default;
+$passwordMediumBg:$warningLightColor !default;
+$passwordStrongBg:$successLightColor !default;
+
+//button
+$buttonPadding:$button-padding !default;
+$buttonIconOnlyWidth:$button-icon-only-width !default;
+$buttonIconOnlyPadding:$button-icon-only-padding !default;
+$buttonBg:$primaryColor !default;
+$buttonTextColor:$primaryTextColor !default;
+$buttonBorder:1px solid $primaryColor !default;
+$buttonHoverBg:$primaryDarkColor !default;
+$buttonTextHoverColor:$primaryTextColor !default;
+$buttonHoverBorderColor:$primaryDarkColor !default;
+$buttonActiveBg:$primaryDarkColor !default;
+$buttonTextActiveColor:$primaryTextColor !default;
+$buttonActiveBorderColor:$primaryDarkColor !default;
+$raisedButtonShadow:$raised-button-shadow !default;
+$roundedButtonBorderRadius:$rounded-button-border-radius !default;
+
+$textButtonHoverBgOpacity:$text-button-hover-bg-opacity !default;
+$textButtonActiveBgOpacity:$text-button-active-bg-opacity !default;
+$outlinedButtonBorder:$outlined-button-border !default;
+$plainButtonTextColor:$textSecondaryColor !default;
+$plainButtonHoverBgColor:$plain-button-hover-bg-color !default;
+$plainButtonActiveBgColor:$plain-button-active-bg-color !default;
+
+$secondaryButtonBg: $secondary!default;
+$secondaryButtonTextColor:#ffffff !default;
+$secondaryButtonBorder:1px solid $secondaryButtonBg !default;
+$secondaryButtonHoverBg:$secondaryDarkColor !default;
+$secondaryButtonTextHoverColor:$secondaryButtonTextColor !default;
+$secondaryButtonHoverBorderColor:$secondaryDarkColor !default;
+$secondaryButtonActiveBg:$secondaryDarkColor !default;
+$secondaryButtonTextActiveColor:$secondaryButtonTextColor !default;
+$secondaryButtonActiveBorderColor:$secondaryDarkColor !default;
+$secondaryButtonFocusShadow:0 0 0 0.2rem scale-color($secondaryButtonBg, $lightness: 60%) !default;
+
+$infoButtonBg:$info !default;
+$infoButtonTextColor:$shade000 !default;
+$infoButtonBorder:1px solid $infoButtonBg !default;
+$infoButtonHoverBg:$infoDarkColor !default;
+$infoButtonTextHoverColor:$infoButtonTextColor !default;
+$infoButtonHoverBorderColor:$info !default;
+$infoButtonActiveBg:$info !default;
+$infoButtonTextActiveColor:$infoButtonTextColor !default;
+$infoButtonActiveBorderColor:$info !default;
+$infoButtonFocusShadow:0 0 0 0.2rem scale-color($infoButtonBg, $lightness: 60%) !default;
+
+$successButtonBg:#22C55E !default;
+$successButtonTextColor:#ffffff !default;
+$successButtonBorder:1px solid $successButtonBg !default;
+$successButtonHoverBg:$successDarkColor !default;
+$successButtonTextHoverColor:$successButtonTextColor !default;
+$successButtonHoverBorderColor:$successDarkColor !default;
+$successButtonActiveBg:$successDarkColor !default;
+$successButtonTextActiveColor:$successButtonTextColor !default;
+$successButtonActiveBorderColor:$successDarkColor !default;
+$successButtonFocusShadow:0 0 0 0.2rem scale-color($successButtonBg, $lightness: 60%) !default;
+
+$warningButtonBg:$warningColor !default;
+$warningButtonTextColor:#ffffff !default;
+$warningButtonBorder:1px solid $warningButtonBg !default;
+$warningButtonHoverBg:$warningDarkColor !default;
+$warningButtonTextHoverColor:$warningButtonTextColor !default;
+$warningButtonHoverBorderColor:$warningDarkColor !default;
+$warningButtonActiveBg:$warningDarkColor !default;
+$warningButtonTextActiveColor:$warningButtonTextColor !default;
+$warningButtonActiveBorderColor:$warningDarkColor !default;
+$warningButtonFocusShadow:0 0 0 0.2rem scale-color($warningButtonBg, $lightness: 60%) !default;
+
+$helpButtonBg:$helpColor !default;
+$helpButtonTextColor:#ffffff !default;
+$helpButtonBorder:1px solid $helpButtonBg !default;
+$helpButtonHoverBg:$helpDarkColor !default;
+$helpButtonTextHoverColor:$helpButtonTextColor !default;
+$helpButtonHoverBorderColor:$helpDarkColor !default;
+$helpButtonActiveBg:$helpDarkColor !default;
+$helpButtonTextActiveColor:$helpButtonTextColor !default;
+$helpButtonActiveBorderColor:$helpDarkColor !default;
+$helpButtonFocusShadow:0 0 0 0.2rem scale-color($helpButtonBg, $lightness: 60%) !default;
+
+$dangerButtonBg:$dangerColor !default;
+$dangerButtonTextColor:#ffffff !default;
+$dangerButtonBorder:1px solid $dangerButtonBg !default;
+$dangerButtonHoverBg:$dangerDarkColor !default;
+$dangerButtonTextHoverColor:$dangerButtonTextColor !default;
+$dangerButtonHoverBorderColor:$dangerDarkColor !default;
+$dangerButtonActiveBg:$dangerDarkColor !default;
+$dangerButtonTextActiveColor:$dangerButtonTextColor !default;
+$dangerButtonActiveBorderColor:$dangerDarkColor !default;
+$dangerButtonFocusShadow:0 0 0 0.2rem scale-color($dangerButtonBg, $lightness: 60%) !default;
+
+$linkButtonColor:$primaryColor !default;
+$linkButtonHoverColor:$primaryColor !default;
+$linkButtonTextHoverDecoration:underline !default;
+$linkButtonFocusShadow:0 0 0 0.2rem $focusOutlineColor !default;
+
+//checkbox
+$checkboxWidth:$checkbox-width !default;
+$checkboxHeight:$checkbox-height !default;
+$checkboxBorder:$checkbox-border !default;
+$checkboxIconFontSize:$checkbox-icon-font-size !default;
+$checkboxActiveBorderColor:$primaryColor !default;
+$checkboxActiveBg:$primaryColor !default;
+$checkboxIconActiveColor:$primaryTextColor !default;
+$checkboxActiveHoverBg:$primaryColor !default;
+$checkboxIconActiveHoverColor:$primaryTextColor !default;
+$checkboxActiveHoverBorderColor:$primaryColor !default;
+
+//radiobutton
+$radiobuttonWidth:$radiobutton-width !default;
+$radiobuttonHeight:$radiobutton-height !default;
+$radiobuttonBorder:$radiobutton-border !default;
+$radiobuttonIconSize:$radiobutton-icon-size !default;
+$radiobuttonActiveBorderColor:$radiobutton-active-border-color !default;
+$radiobuttonActiveBg:$radiobutton-active-bg !default;
+$radiobuttonIconActiveColor:$primaryTextColor !default;
+$radiobuttonActiveHoverBg:$primaryColor !default;
+$radiobuttonIconActiveHoverColor:$primaryTextColor !default;
+$radiobuttonActiveHoverBorderColor:$primaryColor !default;
+
+//colorpicker
+$colorPickerPreviewWidth:$color-picker-preview-width!default;
+$colorPickerPreviewHeight:$color-picker-preview-height !default;
+$colorPickerBg:$color-picker-bg !default;
+$colorPickerBorder:$color-picker-border !default;
+$colorPickerHandleColor:$color-picker-handle-color !default;
+
+//togglebutton
+$toggleButtonBg:$inputBg !default;
+$toggleButtonBorder:1px solid $shade400 !default;
+$toggleButtonTextColor:$shade700 !default;
+$toggleButtonIconColor:$shade600 !default;
+$toggleButtonHoverBg:$shade200 !default;
+$toggleButtonHoverBorderColor:$shade400 !default;
+$toggleButtonTextHoverColor:$shade700 !default;
+$toggleButtonIconHoverColor:$shade600 !default;
+$toggleButtonActiveBg:$primaryColor !default;
+$toggleButtonActiveBorderColor:$primaryColor !default;
+$toggleButtonTextActiveColor:$primaryTextColor !default;
+$toggleButtonIconActiveColor:$primaryTextColor !default;
+$toggleButtonActiveHoverBg:$primaryDarkColor !default;
+$toggleButtonActiveHoverBorderColor:$primaryDarkColor !default;
+$toggleButtonTextActiveHoverColor:$primaryTextColor !default;
+$toggleButtonIconActiveHoverColor:$primaryTextColor !default;
+
+//inplace
+$inplacePadding:$inputPadding !default;
+$inplaceHoverBg:$shade200 !default;
+$inplaceTextHoverColor:$shade900 !default;
+
+//rating
+$ratingIconFontSize:$rating-icon-font-size !default;
+$ratingCancelIconColor:$rating-cancel-icon-color !default;
+$ratingCancelIconHoverColor:$rating-cancel-icon-hover-color !default;
+$ratingStarIconOffColor:$rating-star-icon-off-color !default;
+$ratingStarIconOnColor:$rating-star-icon-on-color !default;
+$ratingStarIconHoverColor:$rating-star-icon-hover-color !default;
+
+//slider
+$sliderBg:$slider-bg !default;
+$sliderBorder:$slider-border !default;
+$sliderHorizontalHeight:$slider-horizontal-height !default;
+$sliderVerticalWidth:$slider-vertical-width !default;
+$sliderHandleWidth:$slider-handle-width !default;
+$sliderHandleHeight:$slider-handle-height !default;
+$sliderHandleBg:$slider-handle-bg !default;
+$sliderHandleBorder:$slider-handle-border !default;
+$sliderHandleBorderRadius:$slider-handle-border-radius !default;
+$sliderHandleHoverBorderColor:$slider-handle-hover-border-color !default;
+$sliderHandleHoverBg:$slider-handle-hover-bg !default;
+$sliderRangeBg:$slider-range-bg !default;
+
+//calendar
+$calendarTableMargin:$calendar-table-margin !default;
+$calendarPadding:$calendar-padding !default;
+$calendarBg:$calendar-bg !default;
+$calendarInlineBg:$calendarBg !default;
+$calendarTextColor:$calendar-text-color !default;
+$calendarBorder:$inputListBorder !default;
+$calendarOverlayBorder:$inputOverlayBorder !default;
+
+$calendarHeaderPadding:$calendar-header-padding !default;
+$calendarHeaderBg:$calendar-header-bg !default;
+$calendarInlineHeaderBg:$calendar-inline-header-bg !default;
+$calendarHeaderBorder:$calendar-header-border !default;
+$calendarHeaderTextColor:$calendar-header-text-color !default;
+$calendarHeaderFontWeight:$calendar-header-font-weight !default;
+$calendarHeaderCellPadding:$calendar-header-cell-padding !default;
+$calendarMonthYearHeaderHoverTextColor: $calendar-month-year-header-hover-text-color !default;
+
+$calendarCellDatePadding:$calendar-cell-date-padding !default;
+$calendarCellDateWidth:$calendar-cell-date-width !default;
+$calendarCellDateHeight:$calendar-cell-date-height !default;
+$calendarCellDateBorderRadius:$calendar-cell-date-border-radius !default;
+$calendarCellDateBorder:$calendar-cell-date-border !default;
+$calendarCellDateHoverBg:$calendar-cell-date-hover-bg !default;
+$calendarCellDateTodayBg:$calendar-cell-date-today-bg !default;
+$calendarCellDateTodayBorderColor:$calendar-cell-date-today-border-color !default;
+$calendarCellDateTodayTextColor:$calendar-cell-date-today-text-color !default;
+
+$calendarButtonBarPadding:$calendar-button-bar-padding !default;
+$calendarTimePickerPadding:$calendar-time-picker-padding !default;
+$calendarTimePickerElementPadding:$calendar-time-picker-element-padding !default;
+$calendarTimePickerTimeFontSize:$calendar-time-picker-time-font-size !default;
+
+$calendarBreakpoint:$calendar-breakpoint !default;
+$calendarCellDatePaddingSM:$calendar-cell-date-padding-sm !default;
+
+//input switch
+$inputSwitchWidth:$input-switch-width !default;
+$inputSwitchHeight:$input-switch-height !default;
+$inputSwitchBorderRadius:$input-switch-border-radius !default;
+$inputSwitchHandleWidth:$input-switch-handle-width !default;
+$inputSwitchHandleHeight:$input-switch-handle-height !default;
+$inputSwitchHandleBorderRadius:$input-switch-handle-border-radius !default;
+$inputSwitchSliderPadding:$input-switch-slider-padding !default;
+$inputSwitchSliderOffBg:$input-switch-slider-off-bg !default;
+$inputSwitchHandleOffBg:$input-switch-handle-off-bg !default;
+$inputSwitchSliderOffHoverBg:$input-switch-slider-off-hover-bg!default;
+$inputSwitchSliderOnBg:$input-switch-slider-on-bg !default;
+$inputSwitchSliderOnHoverBg:$primaryDarkColor !default;
+$inputSwitchHandleOnBg:$input-switch-handle-on-bg !default;
+
+//panel
+$panelHeaderBorderColor:$panel-header-border-color !default;
+$panelHeaderBorder:$panel-header-border !default;
+$panelHeaderBg:$panel-header-bg !default;
+$panelHeaderTextColor:$panel-header-text-color !default;
+$panelHeaderFontWeight:$panel-header-font-weight !default;
+$panelHeaderPadding:$panel-header-padding !default;
+$panelToggleableHeaderPadding:$panel-toggleable-header-padding !default;
+
+$panelHeaderHoverBg:$panel-header-hover-bg !default;
+$panelHeaderHoverBorderColor:$panel-header-hover-border-color !default;
+$panelHeaderTextHoverColor:$panel-header-text-hover-color !default;
+
+$panelContentBorderColor: $panel-content-border-color !default;
+$panelContentBorder:$panel-content-border !default;
+$panelContentBg:$panel-content-bg !default;
+$panelContentEvenRowBg:scale-color($panelContentBg, $lightness: -1%) !default;
+$panelContentTextColor:$panel-content-text-color !default;
+$panelContentPadding:$panel-content-padding !default;
+
+$panelFooterBorder:$panel-footer-border !default;
+$panelFooterBg:$panel-footer-bg !default;
+$panelFooterTextColor:$panel-footer-text-color !default;
+$panelFooterPadding:$panel-footer-padding !default;
+
+//accordion
+$accordionSpacing:$accordion-spacing !default;
+$accordionHeaderBorder:$panelHeaderBorder !default;
+$accordionHeaderBg:$panelHeaderBg !default;
+$accordionHeaderTextColor:$panelHeaderTextColor !default;
+$accordionHeaderFontWeight:$panelHeaderFontWeight !default;
+$accordionHeaderPadding:$panelHeaderPadding !default;
+
+$accordionHeaderHoverBg:$accordion-header-hover-bg !default;
+$accordionHeaderHoverBorderColor:$accordion-header-hover-border-color !default;
+$accordionHeaderTextHoverColor:$accordion-header-text-hover-color !default;
+
+$accordionHeaderActiveBg:$panelHeaderBg !default;
+$accordionHeaderActiveBorderColor:$accordion-header-active-border-color !default;
+$accordionHeaderTextActiveColor:$accordion-header-text-active-color !default;
+
+$accordionHeaderActiveHoverBg:$accordion-header-active-hover-bg !default;
+$accordionHeaderActiveHoverBorderColor:$accordion-header-active-hover-border-color !default;
+$accordionHeaderTextActiveHoverColor:$accordion-header-text-active-hover-color !default;
+
+$accordionContentBorder:$panelContentBorder !default;
+$accordionContentBg:$panelContentBg !default;
+$accordionContentTextColor:$panelContentTextColor !default;
+$accordionContentPadding:$panelContentPadding !default;
+
+//tabview
+$tabviewNavBorder:$tabview-nav-border !default;
+$tabviewNavBorderWidth:$tabview-nav-border-width !default;
+$tabviewNavBg:$tabview-nav-bg !default;
+
+$tabviewHeaderSpacing:$tabview-header-spacing !default;
+$tabviewHeaderBorder:$tabview-header-border !default;
+$tabviewHeaderBorderWidth:$tabview-header-border-width !default;
+$tabviewHeaderBorderColor:$tabview-header-border-color !default;
+$tabviewHeaderBg:$tabview-header-bg !default;
+$tabviewHeaderTextColor:$tabview-header-text-color !default;
+$tabviewHeaderFontWeight:$panelHeaderFontWeight !default;
+$tabviewHeaderPadding:$panelHeaderPadding !default;
+$tabviewHeaderMargin:$tabview-header-margin !default;
+
+$tabviewHeaderHoverBg:$tabview-header-hover-bg !default;
+$tabviewHeaderHoverBorderColor:$tabview-header-hover-border-color !default;
+$tabviewHeaderTextHoverColor:$tabview-header-text-hover-color !default;
+
+$tabviewHeaderActiveBg:$tabview-header-active-bg !default;
+$tabviewHeaderActiveBorderColor:$primaryColor !default;
+$tabviewHeaderTextActiveColor:$primaryColor !default;
+
+$tabviewContentBorder:$tabview-content-border !default;
+$tabviewContentBg:$panelContentBg !default;
+$tabviewContentTextColor:$panelContentTextColor !default;
+$tabviewContentPadding:$panelContentPadding !default;
+
+//upload
+$fileUploadProgressBarHeight:$file-upload-progress-bar-height !default;
+$fileUploadContentPadding:$file-upload-content-padding !default;
+
+//scrollpanel
+$scrollPanelTrackBorder:$scroll-panel-track-border !default;
+$scrollPanelTrackBg:$scroll-panel-track-bg !default;
+
+//card
+$cardHeaderPadding:$card-header-padding !default;
+$cardBodyPadding:$card-body-padding !default;
+$cardTitleFontSize:$card-title-font-size !default;
+$cardTitleFontWeight:$card-title-font-weight !default;
+$cardSubTitleFontWeight:$card-sub-title-font-weight !default;
+$cardSubTitleColor:$card-sub-title-color !default;
+$cardContentPadding:$card-content-padding !default;
+$cardFooterPadding:$card-footer-padding !default;
+$cardShadow:$card-shadow !default;
+
+//editor
+$editorToolbarBg:$panelHeaderBg !default;
+$editorToolbarBorder:$panelHeaderBorder !default;
+$editorToolbarPadding:$panelHeaderPadding !default;
+$editorToolbarIconColor:$textSecondaryColor !default;
+$editorToolbarIconHoverColor:$textColor !default;
+$editorIconActiveColor:$primaryColor !default;
+$editorContentBorder:$panelContentBorder !default;
+$editorContentBg:$panelContentBg !default;
+
+//paginator
+$paginatorBg:$paginator-bg !default;
+$paginatorTextColor:$paginator-text-color !default;
+$paginatorBorder:$paginator-border !default;
+$paginatorBorderWidth:$paginator-border-width !default;
+$paginatorPadding:$paginator-padding !default;
+$paginatorElementWidth:$buttonIconOnlyWidth !default;
+$paginatorElementHeight:$buttonIconOnlyWidth !default;
+$paginatorElementBg:$paginator-element-bg !default;
+$paginatorElementBorder:$paginator-element-border !default;
+$paginatorElementIconColor:$paginator-element-icon-color !default;
+$paginatorElementHoverBg:$paginator-element-hover-bg !default;
+$paginatorElementHoverBorderColor:$paginator-element-hover-border-color !default;
+$paginatorElementIconHoverColor:$paginator-element-icon-hover-color !default;
+$paginatorElementBorderRadius:$paginator-element-border-radius !default;
+$paginatorElementMargin:$paginator-element-margin !default;
+$paginatorElementPadding:$paginator-element-padding !default;
+
+//table
+$tableHeaderBorder:$table-header-border !default;
+$tableHeaderBorderWidth:$table-header-border-width !default;
+$tableHeaderBg:$table-header-bg !default;
+$tableHeaderTextColor:$table-header-text-color !default;
+$tableHeaderFontWeight:$table-header-font-weight !default;
+$tableHeaderPadding:$table-header-padding !default;
+
+$tableHeaderCellPadding:$table-header-cell-padding !default;
+$tableHeaderCellBg:$table-header-cell-bg !default;
+$tableHeaderCellTextColor:$table-header-cell-text-color !default;
+$tableHeaderCellFontWeight:$table-header-cell-font-weight !default;
+$tableHeaderCellBorder:$table-header-cell-border !default;
+$tableHeaderCellBorderWidth:$table-header-cell-border-width !default;
+$tableHeaderCellHoverBg:$table-header-cell-hover-bg !default;
+$tableHeaderCellTextHoverColor:$table-header-cell-text-hover-color !default;
+$tableHeaderCellIconColor:$table-header-cell-icon-color !default;
+$tableHeaderCellIconHoverColor:$table-header-cell-icon-hover-color !default;
+$tableHeaderCellHighlightBg:$table-header-cell-highlight-bg !default;
+$tableHeaderCellHighlightTextColor:$primaryColor !default;
+$tableHeaderCellHighlightHoverBg:$table-header-cell-highlight-hover-bg !default;
+$tableHeaderCellHighlightTextHoverColor:$primaryColor !default;
+$tableSortableColumnBadgeSize:$table-sortable-column-badge-size !default;
+
+$tableBodyRowBg:$table-body-row-bg !default;
+$tableBodyRowTextColor:$table-body-row-text-color !default;
+$tableBodyRowEvenBg:scale-color($tableBodyRowBg, $lightness: -1%) !default;
+$tableBodyRowHoverBg:$table-body-row-hover-bg !default;
+$tableBodyRowTextHoverColor:$table-body-row-text-hover-color !default;
+$tableBodyCellBorder:$table-body-cell-border !default;
+$tableBodyCellBorderWidth:$table-body-cell-border-width !default;
+$tableBodyCellPadding:$table-body-cell-padding !default;
+
+$tableFooterCellPadding:$table-footer-cell-padding !default;
+$tableFooterCellBg:$table-footer-cell-bg !default;
+$tableFooterCellTextColor:$table-footer-cell-text-color !default;
+$tableFooterCellFontWeight:$table-footer-cell-font-weight !default;
+$tableFooterCellBorder:$table-footer-cell-border !default;
+$tableFooterCellBorderWidth:$table-footer-cell-border-width !default;
+$tableResizerHelperBg:$primaryColor !default;
+
+$tableFooterBorder:$table-footer-border !default;
+$tableFooterBorderWidth:$table-footer-border-width !default;
+$tableFooterBg:$table-footer-bg !default;
+$tableFooterTextColor:$table-footer-text-color !default;
+$tableFooterFontWeight:$table-footer-font-weight !default;
+$tableFooterPadding:$table-footer-padding !default;
+
+$tableCellContentAlignment:$table-cell-content-alignment !default;
+$tableTopPaginatorBorderWidth:$table-top-paginator-border-width !default;
+$tableBottomPaginatorBorderWidth:$table-bottom-paginator-border-width !default;
+
+$tableScaleSM:0.5 !default;
+$tableScaleLG:1.25 !default;
+
+//dataview
+$dataViewContentPadding:$data-view-content-padding !default;
+$dataViewContentBorder:$data-view-content-border !default;
+$dataViewListItemBorder:$data-view-list-item-border !default;
+$dataViewListItemBorderWidth:$data-view-list-item-border-width !default;
+
+//schedule
+$fullCalendarEventBg:$primaryColor !default;
+$fullCalendarEventBorderColor: $primaryColor !default;
+$fullCalendarEventBorder:1px solid $primaryColor !default;
+$fullCalendarEventTextColor:$primaryTextColor !default;
+
+//tree
+$treeContainerPadding:$tree-container-padding !default;
+$treeNodePadding:$tree-node-padding !default;
+$treeNodeContentPadding:$tree-node-content-padding !default;
+$treeNodeChildrenPadding:$tree-node-children-padding !default;
+$treeNodeIconColor:$tree-node-icon-color !default;
+
+//timeline
+$timelineVerticalEventContentPadding:$timeline-vertical-event-content-padding !default;
+$timelineHorizontalEventContentPadding:$timeline-horizontal-event-content-padding !default;
+$timelineEventMarkerWidth:$timeline-event-marker-width !default;
+$timelineEventMarkerHeight:$timeline-event-marker-height !default;
+$timelineEventMarkerBorderRadius:$timeline-event-marker-border-radius !default;
+$timelineEventMarkerBorder:2px solid $primaryColor !default;
+$timelineEventMarkerBackground:$timeline-event-marker-background !default;
+$timelineEventConnectorSize:$timeline-event-connector-size !default;
+$timelineEventColor:$timeline-event-color !default;
+
+//org chart
+$organizationChartConnectorColor:$organization-chart-connector-color !default;
+
+//message
+$messageMargin:$message-margin!default;
+$messagePadding:$message-padding !default;
+$messageBorderWidth:$message-border-width !default;
+$messageIconFontSize:$message-icon-font-size !default;
+$messageTextFontSize:$message-text-font-size !default;
+$messageTextFontWeight:$message-text-font-weight !default;
+
+//inline message
+$inlineMessagePadding:$inputPadding !default;
+$inlineMessageMargin:$inline-message-margin !default;
+$inlineMessageIconFontSize:$inline-message-icon-font-size !default;
+$inlineMessageTextFontSize:$inline-message-text-font-size !default;
+$inlineMessageBorderWidth:$inline-message-border-width !default;
+
+//toast
+$toastIconFontSize:$toast-icon-font-size !default;
+$toastMessageTextMargin:$toast-message-text-margin !default;
+$toastMargin:$toast-margin !default;
+$toastPadding:$toast-padding !default;
+$toastBorderWidth:$toast-border-width !default;
+$toastShadow:$toast-shadow !default;
+$toastOpacity:$toast-opacity !default;
+$toastTitleFontWeight:$toast-title-font-weight !default;
+$toastDetailMargin:$inlineSpacing 0 0 0 !default;
+
+//severities
+$infoMessageBg:$infoLightColor !default;
+$infoMessageBorder:none !default;
+$infoMessageTextColor:$infoDarkColor !default;
+$infoMessageIconColor:$infoDarkColor !default;
+$successMessageBg:$successLightColor !default;
+$successMessageBorder:none !default;
+$successMessageTextColor:$successDarkColor !default;
+$successMessageIconColor:$successDarkColor !default;
+$warningMessageBg:$warningLightColor !default;
+$warningMessageBorder:none !default;
+$warningMessageTextColor:$warningDarkColor !default;
+$warningMessageIconColor:$warningDarkColor !default;
+$errorMessageBg:$dangerLightColor !default;
+$errorMessageBorder:none !default;
+$errorMessageTextColor:$dangerDarkColor !default;
+$errorMessageIconColor:$dangerDarkColor !default;
+
+//overlays
+$overlayContentBorder:$overlay-content-border !default;
+$overlayContentBg:$panelContentBg !default;
+$overlayContainerShadow:$overlay-container-shadow !default;
+
+//dialog
+$dialogHeaderBg:$dialog-header-bg !default;
+$dialogHeaderBorder:$dialog-header-border !default;
+$dialogHeaderTextColor:$dialog-header-text-color !default;
+$dialogHeaderFontWeight:$dialog-header-font-weight !default;
+$dialogHeaderFontSize:$dialog-header-font-size !default;
+$dialogHeaderPadding:$dialog-header-padding !default;
+$dialogContentPadding:$dialog-content-padding !default;
+$dialogFooterBorder:$dialog-footer-border !default;
+$dialogFooterPadding:$dialog-footer-padding !default;
+
+//confirmpopup
+$confirmPopupContentPadding:$panelContentPadding !default;
+$confirmPopupFooterPadding:$confirm-popup-footer-padding !default;
+
+//tooltip
+$tooltipBg:$tooltip-bg !default;
+$tooltipTextColor:$tooltip-text-color !default;
+$tooltipPadding:$inputPadding !default;
+
+//steps
+$stepsItemBg:$steps-item-bg !default;
+$stepsItemBorder:$steps-item-border !default;
+$stepsItemTextColor:$steps-item-text-color !default;
+$stepsItemNumberWidth:$steps-item-number-width !default;
+$stepsItemNumberHeight:$steps-item-number-height !default;
+$stepsItemNumberFontSize:$steps-item-number-font-size !default;
+$stepsItemNumberColor:$steps-item-number-color !default;
+$stepsItemNumberBorderRadius:$steps-item-number-border-radius !default;
+$stepsItemActiveFontWeight:$steps-item-active-font-weight !default;
+
+//progressbar
+$progressBarHeight:$progress-bar-height !default;
+$progressBarBorder:$progress-bar-border !default;
+$progressBarBg:$progress-bar-bg !default;
+$progressBarValueBg:$primaryColor !default;
+$progressBarValueTextColor:$primaryTextColor !default;
+
+//menu (e.g. menu, menubar, tieredmenu)
+$menuWidth:$menu-width !default;
+$menuBg:$menu-bg !default;
+$menuBorder:$menu-border !default;
+$menuTextColor:$menu-text-color !default;
+$menuitemPadding:$menuitem-padding !default;
+$menuitemBorderRadius:$menuitem-border-radius !default;
+$menuitemTextColor:$menuitem-text-color !default;
+$menuitemIconColor:$menuitem-icon-color !default;
+$menuitemTextHoverColor:$menuitem-text-hover-color !default;
+$menuitemIconHoverColor:$menuitem-icon-hover-color !default;
+$menuitemHoverBg:$menuitem-hover-bg !default;
+$menuitemTextActiveColor:$menuitem-text-active-color !default;
+$menuitemIconActiveColor:$menuitem-icon-active-color !default;
+$menuitemActiveBg:$menuitem-active-bg !default;
+$menuitemSubmenuIconFontSize:$menuitem-submenu-icon-font-size !default;
+$submenuHeaderMargin:$submenu-header-margin !default;
+$submenuHeaderPadding:$submenu-header-padding !default;
+$submenuHeaderBg:$submenu-header-bg !default;
+$submenuHeaderTextColor:$submenu-header-text-color !default;
+$submenuHeaderBorderRadius:$submenu-header-border-radius !default;
+$submenuHeaderFontWeight:$submenu-header-font-weight !default;
+$overlayMenuBg:$menuBg !default;
+$overlayMenuBorder:$overlay-menu-border !default;
+$overlayMenuShadow:$overlay-menu-shadow !default;
+$verticalMenuPadding:$vertical-menu-padding !default;
+$menuSeparatorMargin:$menu-separator-margin !default;
+
+$breadcrumbPadding:$breadcrumb-padding !default;
+$breadcrumbBg:$menuBg !default;
+$breadcrumbBorder:$menuBorder !default;
+$breadcrumbItemTextColor:$menuitemTextColor !default;
+$breadcrumbItemIconColor:$menuitemIconColor !default;
+$breadcrumbLastItemTextColor:$menuitemTextColor !default;
+$breadcrumbLastItemIconColor:$menuitemIconColor !default;
+$breadcrumbSeparatorColor:$menuitemTextColor !default;
+
+$horizontalMenuPadding:$horizontal-menu-padding !default;
+$horizontalMenuBg:$horizontal-menu-bg !default;
+$horizontalMenuBorder:$menuBorder !default;
+$horizontalMenuTextColor:$menuTextColor !default;
+$horizontalMenuRootMenuitemPadding:$menuitemPadding !default;
+$horizontalMenuRootMenuitemBorderRadius:$borderRadius !default;
+$horizontalMenuRootMenuitemTextColor:$menuitemTextColor !default;
+$horizontalMenuRootMenuitemIconColor:$menuitemIconColor !default;
+$horizontalMenuRootMenuitemTextHoverColor:$menuitemTextHoverColor !default;
+$horizontalMenuRootMenuitemIconHoverColor:$menuitemIconHoverColor !default;
+$horizontalMenuRootMenuitemHoverBg:$menuitemHoverBg !default;
+$horizontalMenuRootMenuitemTextActiveColor:$menuitemTextActiveColor !default;
+$horizontalMenuRootMenuitemIconActiveColor:$menuitemIconActiveColor !default;
+$horizontalMenuRootMenuitemActiveBg:$menuitemActiveBg !default;
+
+//badge and tag
+$badgeBg:$primaryColor !default;
+$badgeTextColor:$primaryTextColor !default;
+$badgeMinWidth:$badge-min-width !default;
+$badgeHeight:$badge-height !default;
+$badgeFontWeight:$badge-font-weight !default;
+$badgeFontSize:$badge-font-size !default;
+
+$tagPadding:$tag-padding !default;
+
+//carousel
+$carouselIndicatorsPadding:$carousel-indicators-padding !default;
+$carouselIndicatorBg:$carousel-indicator-bg !default;
+$carouselIndicatorHoverBg:$carousel-indicator-hover-bg !default;
+$carouselIndicatorBorderRadius:$carousel-indicator-border-radius !default;
+$carouselIndicatorWidth:$carousel-indicator-width !default;
+$carouselIndicatorHeight:$carousel-indicator-height !default;
+
+//galleria
+$galleriaMaskBg:$galleria-mask-bg !default;
+$galleriaCloseIconMargin:$galleria-close-icon-margin !default;
+$galleriaCloseIconFontSize:$galleria-close-icon-font-size !default;
+$galleriaCloseIconBg:$galleria-close-icon-bg !default;
+$galleriaCloseIconColor:$galleria-close-icon-color !default;
+$galleriaCloseIconHoverBg:$galleria-close-icon-hover-bg !default;
+$galleriaCloseIconHoverColor:$galleria-close-icon-hover-color !default;
+$galleriaCloseIconWidth:$galleria-close-icon-width !default;
+$galleriaCloseIconHeight:$galleria-close-icon-height !default;
+$galleriaCloseIconBorderRadius:$galleria-close-icon-border-radius !default;
+$galleriaItemNavigatorBg:$galleria-item-navigator-bg !default;
+$galleriaItemNavigatorColor:$galleria-item-navigator-color !default;
+$galleriaItemNavigatorMargin:$galleria-item-navigator-margin !default;
+$galleriaItemNavigatorFontSize:$galleria-item-navigator-font-size !default;
+$galleriaItemNavigatorHoverBg:$galleria-item-navigator-hover-bg !default;
+$galleriaItemNavigatorHoverColor:$galleria-item-navigator-hover-color !default;
+$galleriaItemNavigatorWidth:$galleria-item-navigator-width !default;
+$galleriaItemNavigatorHeight:$galleria-item-navigator-height !default;
+$galleriaItemNavigatorBorderRadius:$borderRadius !default;
+
+$galleriaCaptionBg:$galleria-caption-bg !default;
+$galleriaCaptionTextColor:$galleria-caption-text-color !default;
+$galleriaCaptionPadding:$galleria-caption-padding !default;
+
+$galleriaIndicatorsPadding:$galleria-indicators-padding !default;
+$galleriaIndicatorBg:$galleria-indicator-bg !default;
+$galleriaIndicatorHoverBg:$galleria-indicator-hover-bg !default;
+$galleriaIndicatorBorderRadius:$galleria-indicator-border-radius !default;
+$galleriaIndicatorWidth: $galleria-indicator-width !default;
+$galleriaIndicatorHeight:$galleria-indicator-height !default;
+$galleriaIndicatorsBgOnItem:$galleria-indicators-bg--on-item !default;
+$galleriaIndicatorBgOnItem:$galleria-indicator-bg-on-item !default;
+$galleriaIndicatorHoverBgOnItem:$galleria-indicator-hover-bg-on-item !default;
+
+$galleriaThumbnailContainerBg:$galleria-thumbnail-container-bg !default;
+$galleriaThumbnailContainerPadding:$galleria-thumbnail-container-padding !default;
+$galleriaThumbnailNavigatorBg:$galleria-thumbnail-navigator-bg !default;
+$galleriaThumbnailNavigatorColor:$galleria-thumbnail-navigator-color !default;
+$galleriaThumbnailNavigatorHoverBg:$galleria-thumbnail-navigator-hover-bg !default;
+$galleriaThumbnailNavigatorHoverColor:$galleria-thumbnail-navigator-hover-color !default;
+$galleriaThumbnailNavigatorBorderRadius:$galleria-thumbnail-navigator-border-radius !default;
+$galleriaThumbnailNavigatorWidth:$galleria-thumbnail-navigator-width !default;
+$galleriaThumbnailNavigatorHeight:$galleria-thumbnail-navigator-height !default;
+
+//divider
+$dividerHorizontalMargin:$divider-horizontal-margin !default;
+$dividerHorizontalPadding:$divider-horizontal-padding !default;
+$dividerVerticalMargin:$divider-vertical-margin !default;
+$dividerVerticalPadding:$divider-vertical-padding !default;
+$dividerSize:$divider-size !default;
+$dividerColor:$divider-color !default;
+
+//avatar
+$avatarBg:$avatar-bg !default;
+$avatarTextColor:$textColor !default;
+
+//chip
+$chipBg:$chip-bg !default;
+$chipTextColor:$textColor !default;
+$chipBorderRadius: $chip-border-radius !default;
+$chipFocusBg:$chip-focus-bg !default;
+$chipFocusTextColor:$textColor !default;
+
+//scrollTop
+$scrollTopBg:$scroll-top-bg !default;
+$scrollTopHoverBg:$scroll-top-hover-bg !default;
+$scrollTopWidth:$scroll-top-width !default;
+$scrollTopHeight:$scroll-top-height !default;
+$scrollTopBorderRadius:$scroll-top-border-radius !default;
+$scrollTopFontSize:$scroll-top-font-size !default;
+$scrollTopTextColor:$scroll-top-text-color !default;
+
+//skeleton
+$skeletonBg:$skeleton-bg !default;
+$skeletonAnimationBg:$skeleton-animation-bg !default;
+
+//splitter
+$splitterGutterBg:$splitter-gutter-bg !default;
+$splitterGutterHandleBg:$splitter-gutter-handle-bg !default;
+
+//speeddial
+$speedDialButtonWidth: $speed-dial-button-width !default;
+$speedDialButtonHeight: $speed-dial-button-height !default;
+$speedDialButtonIconFontSize: $speed-dial-button-icon-font-size !default;
+$speedDialActionWidth: $speed-dial-action-width !default;
+$speedDialActionHeight: $speed-dial-action-height !default;
+$speedDialActionBg: $speed-dial-action-bg !default;
+$speedDialActionHoverBg: $speed-dial-action-hover-bg !default;
+$speedDialActionTextColor: $speed-dial-action-text-color !default;
+$speedDialActionTextHoverColor: $speed-dial-action-text-hover-color !default;
+
+//dock
+$dockActionWidth: $dock-action-width !default;
+$dockActionHeight: $dock-action-height !default;
+$dockItemPadding: $dock-item-padding !default;
+$dockCurrentItemMargin: $dock-current-item-margin !default;
+$dockFirstItemsMargin: $dock-first-items-margin !default;
+$dockSecondItemsMargin: $dock-second-items-margin !default;
+$dockBg: $dock-bg !default;
+$dockBorder: $dock-border !default;
+$dockPadding: $dock-padding !default;
+$dockBorderRadius: $dock-border-radius !default;
+
+//image
+$imageMaskBg:$image-mask-bg !default;
+$imagePreviewToolbarPadding:$image-preview-toolbar-padding !default;
+$imagePreviewIndicatorColor:$image-preview-indicator-color !default;
+$imagePreviewIndicatorBg:$image-preview-indicator-bg !default;
+$imagePreviewActionIconBg:$image-preview-action-icon-bg !default;
+$imagePreviewActionIconColor:$image-preview-action-icon-color !default;
+$imagePreviewActionIconHoverBg:$image-preview-action-icon-hover-bg !default;
+$imagePreviewActionIconHoverColor:$image-preview-action-icon-hover-color !default;
+$imagePreviewActionIconWidth:$image-preview-action-icon-width !default;
+$imagePreviewActionIconHeight:$image-preview-action-icon-height !default;
+$imagePreviewActionIconFontSize:$image-preview-action-icon-font-size !default;
+$imagePreviewActionIconBorderRadius:$image-preview-action-icon-border-radius !default;
+
+:root {
+  --surface-a:#{$shade000};
+  --surface-b:#{$shade100};
+  --surface-c:#{$shade200};
+  --surface-d:#{$shade300};
+  --surface-e:#{$shade000};
+  --surface-f:#{$shade000};
+  --text-color:#{$shade700};
+  --text-color-secondary:#{$shade600};
+  --primary-color:#{$primaryColor};
+  --primary-color-text:#{$primaryTextColor};
+  --font-family:#{$fontFamily};
+  --surface-0: #ffffff;
+  --surface-50: #FAFAFA;
+  --surface-100: #F4F4F5;
+  --surface-200: #E4E4E7;
+  --surface-300: #D4D4D8;
+  --surface-400: #A1A1AA;
+  --surface-500: #71717A;
+  --surface-600: #52525B;
+  --surface-700: #3F3F46;
+  --surface-800: #27272A;
+  --surface-900: #18181B;
+  --gray-50: #FAFAFA;
+  --gray-100: #F4F4F5;
+  --gray-200: #E4E4E7;
+  --gray-300: #D4D4D8;
+  --gray-400: #A1A1AA;
+  --gray-500: #71717A;
+  --gray-600: #52525B;
+  --gray-700: #3F3F46;
+  --gray-800: #27272A;
+  --gray-900: #18181B;
+  --content-padding:#{$panelContentPadding};
+  --inline-spacing:#{$inlineSpacing};
+  --border-radius:#{$borderRadius};
+  --surface-ground:#FAFAFA;
+  --surface-section:#ffffff;
+  --surface-card:#ffffff;
+  --surface-overlay:#ffffff;
+  --surface-border:#e5e7eb;
+  --surface-hover: #f4f4f5;
+  --focus-ring: #{$focusShadow};
+  --maskbg: #{$maskBg};
+  color-scheme: light;
+}

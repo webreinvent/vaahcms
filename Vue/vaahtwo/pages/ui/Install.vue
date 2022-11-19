@@ -16,10 +16,10 @@
             <div class="w-auto text-center my-4"><Tag class="bg-black-alpha-90 m-auto is-small">ACTIVE ENV FILE: <b class="ml-1">.env.rishu</b></Tag></div>
             <router-view />
             <div class="flex justify-content-center text-center mt-5">
-                <p class="text-xs">
+                <div class="text-xs">
                     © 2022.<a class="px-1">VaahCMS</a> v1.6.6 | <a>Documentation</a>
                     <p class="text-xs">Laravel v8.4.1 | PHP v8.0.18</p>
-                </p>
+                </div>
             </div>
         </div>
     </div>
@@ -35,22 +35,22 @@ export default {
                 {
                     label: 'Configuration',
                     icon: 'pi pi-fw pi-cog',
-                    to: '/public/install/configuration'
+                    to: '/ui/public/install/configuration'
                 },
                 {
                     label: 'Migrate',
                     icon: 'pi pi-fw pi-database',
-                    to: '/public/install/migrate'
+                    to: '/ui/public/install/migrate'
                 },
                 {
                     label: 'Dependencies',
                     icon: 'pi pi-fw pi-server',
-                    to: '/public/install/dependencies'
+                    to: '/ui/public/install/dependencies'
                 },
                 {
                     label: 'Account',
                     icon: 'pi pi-fw pi-user-plus',
-                    to: '/public/install/account'
+                    to: '/ui/public/install/account'
                 }
             ],
             formObject: {}
@@ -121,6 +121,7 @@ export default {
     position: relative;
     background: white;
     z-index: 99;
+    color: #3273dc;
     padding: 0 3px;
     font-size: 0.85rem;
 }
@@ -128,7 +129,7 @@ export default {
     border-color: #3273dc;
     border-width: 2px;
     top: 27px;
-    width: 200px;
+    width: 220px;
     left: 65%;
     z-index: -1;
 }
