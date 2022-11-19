@@ -149,7 +149,7 @@ class VaahStr{
 
         $dynamic_strings = $extend->getPublicUrls();
 
-        if($dynamic_strings && $dynamic_strings['status'] === 'success'){
+        if(isset($dynamic_strings['success']) && $dynamic_strings['success']){
             foreach ($dynamic_strings['data'] as $dynamic_string){
 
                 if(count($params) > 0 && isset($params['has_replace_string'])
