@@ -7,7 +7,7 @@ let model_namespace = 'WebReinvent\\VaahCms\\Models\\Role';
 
 
 let base_url = document.getElementsByTagName('base')[0].getAttribute("href");
-let ajax_url = base_url + "/role/roles";
+let ajax_url = base_url + "/vaah/roles";
 
 let empty_states = {
     query: {

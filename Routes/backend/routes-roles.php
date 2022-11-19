@@ -2,7 +2,7 @@
 
 Route::group(
     [
-    'prefix' => 'backend/role/roles',
+    'prefix' => 'backend/vaah/roles',
 
     'middleware' => ['web', 'has.backend.access'],
 
