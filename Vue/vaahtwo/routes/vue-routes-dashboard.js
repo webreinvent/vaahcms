@@ -7,7 +7,6 @@ import LayoutBackend from '../layouts/Backend.vue'
 
 routes_list = {
     path: '/vaah/',
-    name: 'LayoutBackend',
     component: LayoutBackend,
     props: true,
     children: [

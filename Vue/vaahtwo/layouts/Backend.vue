@@ -24,10 +24,14 @@ onMounted(async () => {
 <template>
 
     <div v-if="rootStore.is_logged_in" class="grid">
-        <div><Topnav /></div>
-        <div class="col-2 mt-6"> <Sidebar/> </div>
-<!--        <div class="col-2 mt-6"><Aside/></div>-->
-        <div class="col mt-6"><RouterView /></div>
+        <Topnav />
+        <Sidebar/>
+        <div class="grid main-container">
+            <div class="col-12">
+                <RouterView></RouterView>
+            </div>
+        </div>
+
     </div>
 
     <Footer />

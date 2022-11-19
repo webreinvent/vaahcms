@@ -26,6 +26,7 @@ include('backend/roles.php');
 include('backend/permissions.php');
 include('backend/users.php');
 include('backend/advanced.php');
+include('backend/routes-roles.php');
 
 
 
