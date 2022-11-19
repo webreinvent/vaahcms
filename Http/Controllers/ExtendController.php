@@ -184,7 +184,7 @@ class ExtendController extends Controller
                     ],
                     [
                         'url' => self::$link."/settings/localization",
-                        'icon' => 'pi pi-language',
+                        'icon' => 'pi pi-book',
                         'label'=> 'Localization',
                     ],
                     [
