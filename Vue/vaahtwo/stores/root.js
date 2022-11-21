@@ -45,6 +45,14 @@ export const useRootStore = defineStore({
 
             }
         },
+
+
+        //---------------------------------------------------------------------
+        async reloadAssets(data, res)
+        {
+            this.assets_is_fetching = true;
+            await this.getAssets();
+        },
         //---------------------------------------------------------------------
         checkLoggedIn()
         {

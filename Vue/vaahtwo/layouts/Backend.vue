@@ -14,7 +14,7 @@ const rootStore = useRootStore();
 onMounted(async () => {
 
     await rootStore.checkLoggedIn();
-    await rootStore.getAssets();
+    await rootStore.reloadAssets();
 });
 
 
