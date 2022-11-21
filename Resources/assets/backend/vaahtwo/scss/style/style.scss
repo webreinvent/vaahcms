@@ -57,6 +57,15 @@ body{
         border-top-right-radius: 0;
         border-top-left-radius: 0;
     }
+    .p-panelmenu{
+        .p-panelmenu-header-action{
+            position: relative;
+            .p-submenu-icon{
+                position: absolute;
+                right: 10px;
+            }
+        }
+    }
 }
 
 //level
