@@ -310,8 +310,9 @@ class User extends UserBase
         {
             $rows = $request->rows;
         }
-
+        $list->withCount(['activeRoles']);
         $list = $list->paginate($rows);
+        $countRole = Role::all()->count();
 
         $response['success'] = true;
         $response['data'] = $list;
