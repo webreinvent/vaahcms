@@ -50,6 +50,20 @@ const useVaah = vaah();
 
             </Column>
 
+            <Column field="roles" header="Roles"
+                    :sortable="true">
+
+                <template #body="prop">
+                    <Badge v-if="prop.data.deleted_at"
+                           value="Trashed"
+                           severity="danger"></Badge>
+                    <Button @click="store.getRole(prop.data)">
+                        {{ prop.data.active_roles_count }} / {{store.assets.totalRole}}
+                    </Button>
+                </template>
+
+            </Column>
+
             <Column field="is_active" v-if="store.isViewLarge()"
                     :sortable="true"
                     style="width:100px;"

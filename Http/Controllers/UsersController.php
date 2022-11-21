@@ -49,10 +49,13 @@ class UsersController extends Controller
             $data['empty_item'][$column] = null;
         }
 
+        $countRole = Role::all()->count();
+
         $data['actions'] = [];
         $data['name_titles'] = vh_name_titles();
         $data['countries'] = vh_get_country_list();
         $data['timezones'] = vh_get_timezones();
+        $data['totalRole'] = $countRole;
         $response['success'] = true;
         $response['data'] = $data;
 
