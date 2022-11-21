@@ -55,11 +55,15 @@ class ExtendController extends Controller
         $list = [
             [
                 'link' => self::$link."/profile/",
-                'label'=> 'Profile'
+                'label'=> 'Profile',
+                'icon' => 'pi pi-fw pi-user',
+                'to' => '/vaah/profile/',
             ],
             [
                 'link' => route('vh.backend.logout'),
-                'label'=> 'Logout'
+                'label'=> 'Logout',
+                'icon' => 'pi pi-sign-out',
+                'to' => route('vh.backend.logout'),
             ],
 
         ];

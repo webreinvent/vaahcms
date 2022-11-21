@@ -6,7 +6,8 @@ const root = useRootStore();
 
 onMounted(async () => {
     root.verifyInstallStatus();
-    await root.getAssets(); await root.menuItems();
+    await root.getAssets();
+    await root.menuItems();
 });
 
 const menu = ref();
@@ -27,22 +28,6 @@ const items = ref( [
         icon:'pi pi-link'
     }
 ]);
-
-const menu_options = ref([
-    {
-        label:'Profile',
-        icon:'pi pi-fw pi-user',
-        command: () =>{
-        }
-    },
-    {
-        label:'Logout',
-        icon:'pi pi-fw pi-sign-out',
-        command: () =>{
-        }
-    }
-]);
-
 
 
 if(root &&  root.assets && root.assets.extended_views) {
@@ -74,7 +59,17 @@ if(root &&  root.assets && root.assets.extended_views) {
                         aria-controls="overlay_menu"
                 />
 
-                <TieredMenu id="overlay_menu" :model="root.items" ref="menu" :popup="true" />
+<!--                <template v-for="menu_options in root.assets.extended_views.top_right_user_menu.success">-->
+<!--                    <template v-for="link in menu_options">-->
+<!--                        <TieredMenu id="overlay_menu" :model="link" ref="menu" :popup="true" />-->
+<!--                    </template>-->
+<!--                </template>-->
+
+<!--                <template v-for="menu_options in root.assets.extended_views.top_right_user_menu.success">-->
+<!--                    <TieredMenu id="overlay_menu" :model="menu_options" ref="menu" :popup="true" />-->
+<!--                </template>-->
+
+                <TieredMenu id="overlay_menu" :model="root.assets.extended_views.top_right_user_menu.success.vaahcms" ref="menu" :popup="true" />
             </template>
         </Menubar>
     </div>
