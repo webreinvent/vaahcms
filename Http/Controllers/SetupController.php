@@ -360,7 +360,7 @@ class SetupController extends Controller
 
         //publish vaahcms configurations
         VaahSetup::publishConfig();
-        VaahArtisan::clearCache();
+//        VaahArtisan::clearCache();
 
         $data = [];
         $response = [];

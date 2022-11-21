@@ -19,7 +19,6 @@ onMounted(async () => {
 
 
 const confirmDelete = (event) => {
-    let self = this;
     confirm.require({
         group: 'templating',
         header: 'Deleting existing migrations',
