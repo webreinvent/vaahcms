@@ -64,6 +64,12 @@ function () {
     Route::any('/{id}/action/{action}', 'RolesController@itemAction')
         ->name('vh.backend.role.roles.item.action');
 
+    /**
+     * get role permissions
+     */
+    Route::post('/item/{id}/permissions', 'RolesController@getItemPermission')
+        ->name('backend.vaah.roles.item.permissions');
+
     //---------------------------------------------------------
 
 });

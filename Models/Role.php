@@ -542,6 +542,19 @@ class Role extends Model
     }
 
     //-------------------------------------------------
+    public function getItemPermission($request, $id)
+    {
+        if(!\Auth::user()->hasPermission('can-read-roles'))
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+            return response()->json($response);
+        }
+
+        $response = \WebReinvent\VaahCms\Entities\Role::getRolePermission($request, $id);
+        return response()->json($response);
+    }
     //-------------------------------------------------
     //-------------------------------------------------
 
