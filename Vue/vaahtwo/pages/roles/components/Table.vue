@@ -39,17 +39,55 @@ const useVaah = vaah();
 
             </Column>
 
+             <Column v-if="store.isViewLarge()"
+                     field="slug"
+                     header="Slug"
+                     :sortable="true"
+             >
+                 <template #body="prop">
+                     <Badge v-if="prop.data.deleted_at"
+                            value="Trashed"
+                            severity="danger"
+                     />
+                     {{ prop.data.slug }}
+                 </template>
 
-                <Column field="updated_at" header="Updated"
-                        v-if="store.isViewLarge()"
-                        style="width:150px;"
-                        :sortable="true">
+             </Column>
 
-                    <template #body="prop">
-                        {{useVaah.ago(prop.data.updated_at)}}
-                    </template>
+             <Column field="permissions"
+                     header="Permissions"
+             >
+                 <template #body="props">
+                     <Button class="p-button p-button-rounded"
+                             v-tooltip.top="'View Permissions'"
+                     >
+                         {{ props.data.count_permissions }} / {{ store.total_permissions }}
+                     </Button>
+                 </template>
+             </Column>
 
-                </Column>
+            <Column field="users"
+                     header="Users"
+            >
+                 <template #body="props">
+                     <Button class="p-button p-button-rounded"
+                             v-tooltip.top="'View Users'"
+                     >
+                         {{ props.data.count_users }} / {{ store.total_users }}
+                     </Button>
+                 </template>
+             </Column>
+
+
+            <Column field="updated_at" header="Updated"
+                    v-if="store.isViewLarge()"
+                    style="width:150px;"
+                    :sortable="true"
+            >
+                <template #body="prop">
+                    {{useVaah.ago(prop.data.updated_at)}}
+                </template>
+            </Column>
 
             <Column field="is_active" v-if="store.isViewLarge()"
                     :sortable="true"

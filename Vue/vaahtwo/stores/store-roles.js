@@ -62,7 +62,9 @@ export const useRoleStore = defineStore({
         list_bulk_menu: [],
         item_menu_list: [],
         item_menu_state: null,
-        form_menu_list: []
+        form_menu_list: [],
+        total_permissions: null,
+        total_users: null,
     }),
     getters: {
 
@@ -185,6 +187,8 @@ export const useRoleStore = defineStore({
             if(data)
             {
                 this.list = data;
+                this.total_permissions = res.data.totalPermissions;
+                this.total_users = res.data.totalUsers;
             }
         },
         //---------------------------------------------------------------------

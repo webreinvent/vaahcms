@@ -5,6 +5,7 @@ use DateTimeInterface;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
+use WebReinvent\VaahCms\Entities\Permission;
 use WebReinvent\VaahCms\Traits\CrudWithUuidObservantTrait;
 use WebReinvent\VaahCms\Entities\User;
 
@@ -237,8 +238,13 @@ class Role extends Model
 
         $list = $list->paginate($rows);
 
+        $countPermissions = Permission::all()->count();
+        $countUsers = User::all()->count();
+
         $response['success'] = true;
         $response['data'] = $list;
+        $response['totalPermissions'] = $countPermissions;
+        $response['totalUsers'] = $countUsers;
 
         return $response;
 
