@@ -13,11 +13,11 @@ const useVaah = vaah();
     <div v-if="store.list">
         <!--table-->
          <DataTable :value="store.list.data"
-                       dataKey="id"
-                   class="p-datatable-sm"
-                   v-model:selection="store.action.items"
-                   stripedRows
-                   responsiveLayout="scroll">
+                    dataKey="id"
+                    class="p-datatable-sm"
+                    v-model:selection="store.action.items"
+                    stripedRows
+                    responsiveLayout="scroll">
 
             <Column selectionMode="multiple"
                     v-if="store.isViewLarge()"
@@ -60,6 +60,7 @@ const useVaah = vaah();
                  <template #body="props">
                      <Button class="p-button p-button-rounded"
                              v-tooltip.top="'View Permissions'"
+                             @click="store.toPermission(props.data)"
                      >
                          {{ props.data.count_permissions }} / {{ store.total_permissions }}
                      </Button>

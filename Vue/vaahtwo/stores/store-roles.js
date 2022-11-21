@@ -65,6 +65,7 @@ export const useRoleStore = defineStore({
         form_menu_list: [],
         total_permissions: null,
         total_users: null,
+        menu_items: null,
     }),
     getters: {
 
@@ -601,6 +602,11 @@ export const useRoleStore = defineStore({
             this.$router.push({name: 'roles.form', params:{id:item.id}})
         },
         //---------------------------------------------------------------------
+        toPermission(item) {
+            this.item = item;
+            this.$router.push({name: 'roles.permission', params: {id: item.id}});
+        },
+        //---------------------------------------------------------------------
         isViewLarge()
         {
             return this.view === 'large';
@@ -853,6 +859,23 @@ export const useRoleStore = defineStore({
 
             this.form_menu_list = form_menu;
 
+        },
+        //---------------------------------------------------------------------
+        getMenuItems() {
+            this.list_bulk_menu = [
+                {
+                    label: 'Active All Permissions',
+                    command: async () => {
+                        await this.listAction('activate-all')
+                    }
+                },
+                {
+                    label: 'Inactive All Permissions',
+                    command: async () => {
+                        await this.listAction('deactivate-all')
+                    }
+                },
+            ]
         },
         //---------------------------------------------------------------------
     }
