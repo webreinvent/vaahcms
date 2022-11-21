@@ -37,7 +37,7 @@ body{
 }
 .sidebar{
     position: fixed;
-    top: 63px;
+    top: 50px;
     left: 0;
     width: 225px;
     z-index: 100;
@@ -505,5 +505,12 @@ $media-level-2-spacing: 0.5rem !default;
 .p-inputtextarea{
     &.has-min-height{
         min-height: 2.9rem;
+    }
+}
+
+
+.components-list{
+    h5{
+        margin:15px 0
     }
 }

@@ -50,30 +50,30 @@
                             <h5 class="text-sm font-semibold mb-2">Deliver via</h5>
                             <div class="flex justify-content-between">
                 <span>
-              <h5 class="font-semibold text-xs">Mail</h5>
+              <h5 class="font-semibold text-xs mb-1">Mail</h5>
               <InputSwitch v-model="checked"  class="is-small"/>
             </span>
                                 <span>
-              <h5 class="font-semibold text-xs">SMS</h5>
+              <h5 class="font-semibold text-xs mb-1">SMS</h5>
               <InputSwitch v-model="checked"  class="is-small"/>
             </span>
                                 <span>
-              <h5 class="font-semibold text-xs">Push</h5>
+              <h5 class="font-semibold text-xs mb-1">Push</h5>
               <InputSwitch v-model="checked"  class="is-small"/>
             </span>
                                 <span>
-              <h5 class="font-semibold text-xs">Frontend</h5>
+              <h5 class="font-semibold text-xs mb-1">Frontend</h5>
               <InputSwitch v-model="checked"  class="is-small"/>
             </span>
                                 <span>
-              <h5 class="font-semibold text-xs">Backend</h5>
+              <h5 class="font-semibold text-xs mb-1">Backend</h5>
               <InputSwitch v-model="checked"  class="is-small"/>
             </span>
                             </div>
                         </div>
                         <div class="col-6 justify-content-end flex">
            <span class="text-right">
-              <h5 class="font-semibold text-xs">Error notifications</h5>
+              <h5 class="font-semibold text-xs mb-1">Error notifications</h5>
               <InputSwitch v-model="checked" class="is-small"/>
            </span>
                         </div>
@@ -92,7 +92,7 @@
                                         <h5 class="p-1 text-xs mb-1 mt-3">Line</h5>
                                         <div class="p-inputgroup">
                                             <Textarea v-model="value" :autoResize="true" class="w-full" placeholder="Content with variables"/>
-                                            <Button icon="pi pi-trash" class=""/>
+                                            <Button icon="pi pi-trash" class="has-max-height"/>
                                         </div>
                                         <h5 class="p-1 text-xs mb-1 mt-3">Greetings</h5>
                                         <div class="p-inputgroup">
@@ -117,7 +117,7 @@
                                         <h5 class="p-1 text-xs mb-1">Message</h5>
                                         <div class="p-inputgroup">
                                             <Textarea v-model="value" :autoResize="true" class="w-full" />
-                                            <Button icon="pi pi-copy" class=""/>
+                                            <Button icon="pi pi-copy" class="has-max-height"/>
                                         </div>
                                     </div>
                                     <div class="col-12 px-0">

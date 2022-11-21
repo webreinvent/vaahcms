@@ -18,12 +18,12 @@
             <Column field="fieldName" header="Field Name"></Column>
             <Column field="visibilityStatus" header="Is Hidden">
               <template #body="slotProps">
-                <InputSwitch v-model="slotProps.data.visibilityStatus" />
+                <InputSwitch v-model="slotProps.data.visibilityStatus"  class="is-small"/>
               </template>
             </Column>
             <Column field="applyToRegistration" header="Apply To Registration">
               <template #body="slotProps">
-                <Checkbox v-model="slotProps.data.applyToRegistration" :binary="true" />
+                <Checkbox v-model="slotProps.data.applyToRegistration" :binary="true" class="is-small"/>
               </template>
             </Column>
           </DataTable>
@@ -48,7 +48,7 @@
               </div>
             </div>
             <div class="col-12 md:col-3 flex justify-content-end">
-              <Button icon="pi pi-save" label="save"></Button>
+              <Button icon="pi pi-save" label="save" class="p-button-sm"></Button>
             </div>
           </div>
         </AccordionTab>
