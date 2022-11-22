@@ -146,6 +146,146 @@ class UsersController extends Controller
         return User::itemAction($request,$id,$action);
     }
     //----------------------------------------------------------
+    public function getItemRoles(Request $request,$id){
+
+        $item = User::withTrashed()->where('id', $id)->first();
+
+        $response['data']['item'] = $item;
+
+
+        if($request->has("q"))
+        {
+            $list = $item->roles()->where(function ($q) use ($request){
+                $q->where('name', 'LIKE', '%'.$request->q.'%')
+                    ->orWhere('slug', 'LIKE', '%'.$request->q.'%');
+            });
+        } else
+        {
+            $list = $item->roles();
+        }
+
+        $list->orderBy('pivot_is_active', 'desc');
+
+        $list = $list->paginate(config('vaahcms.per_page'));
+
+
+        foreach ($list as $role){
+
+            $data = User::getPivotData($role->pivot);
+
+            $role['json'] = $data;
+            $role['json_length'] = count($data);
+        }
+
+        $response['data']['list'] = $list;
+        $response['status'] = 'success';
+
+        return response()->json($response);
+
+    }
+
+    public function postActions(Request $request, $action){
+
+        $rules = array(
+            'inputs' => 'required',
+        );
+
+        $validator = \Validator::make( $request->all(), $rules);
+        if ( $validator->fails() ) {
+
+            $errors             = errorsToArray($validator->errors());
+            $response['status'] = 'failed';
+            $response['errors'] = $errors;
+            return response()->json($response);
+        }
+
+        $response = [];
+
+        $request->merge(['action'=>$action]);
+
+        switch ($action)
+        {
+
+            //------------------------------------
+            case 'bulk-change-status':
+
+                if(!\Auth::user()->hasPermission('can-manage-users') &&
+                    !\Auth::user()->hasPermission('can-update-users'))
+                {
+                    $response['status'] = 'failed';
+                    $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+                    return $response;
+                }
+
+                $response = User::bulkStatusChange($request);
+
+                break;
+            //------------------------------------
+            case 'bulk-trash':
+
+                if(!\Auth::user()->hasPermission('can-update-users'))
+                {
+                    $response['status'] = 'failed';
+                    $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+                    return $response;
+                }
+
+                $response = User::bulkTrash($request);
+
+                break;
+            //------------------------------------
+            case 'bulk-restore':
+
+                if(!\Auth::user()->hasPermission('can-update-users'))
+                {
+                    $response['status'] = 'failed';
+                    $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+                    return $response;
+                }
+
+                $response = User::bulkRestore($request);
+
+                break;
+
+            //------------------------------------
+            case 'bulk-delete':
+
+                if(!\Auth::user()->hasPermission('can-update-users') ||
+                    !\Auth::user()->hasPermission('can-delete-users'))
+                {
+                    $response['status'] = 'failed';
+                    $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+                    return $response;
+                }
+
+                $response = User::bulkDelete($request);
+
+                break;
+            //------------------------------------
+            case 'toggle_role_active_status':
+
+//                if(!\Auth::user()->hasPermission('can-manage-users') &&
+//                    !\Auth::user()->hasPermission('can-update-users'))
+//                {
+//                    $response['status'] = 'failed';
+//                    $response['errors'][] = trans("vaahcms::messages.permission_denied");
+//
+//                    return $response;
+//                }
+
+                $response = User::bulkChangeRoleStatus($request);
+
+                break;
+            //------------------------------------
+
+        }
+
+        return response()->json($response);
+    }
 
 
 }

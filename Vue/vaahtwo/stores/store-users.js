@@ -35,6 +35,10 @@ export const useUserStore = defineStore({
         assets_is_fetching: true,
         app: null,
         assets: null,
+        roles_item:null,
+        roles_list:null,
+        displayModal:false,
+        modalData:null,
         rows_per_page: [10,20,30,50,100,500],
         list: null,
         item: {
@@ -257,6 +261,7 @@ export const useUserStore = defineStore({
             this.item.timezone = event.value.slug;
         },
         //---------------------------------------------------------------------
+        //---------------------------------------------------------------------
         searchCountryCode: function (event){
             this.country_name_object = null;
             this.country = null;
@@ -380,8 +385,76 @@ export const useUserStore = defineStore({
             }
         },
         //--------------------------------------------------------------------
-        getRole: function (item){
-            this.$router.push({name: 'user.role', params:{id:item.id}})
+        getRole: function (id){
+            let url = this.ajax_url+'/item/'+id+'/roles';
+            let method = 'get';
+            let options = {
+                method: method,
+            };
+             vaah().ajax(
+                url,
+                this.getRoleAfter,
+                options
+            );
+            this.$router.push({name: 'user.role', params:{id:id}})
+        },
+        //---------------------------------------------------------------------
+        getRoleAfter(data, res){
+            if(data){
+                this.roles_item = data.item;
+                this.roles_list = data.list;
+            }
+        },
+        //--------------------------------l------------------------------------
+        changePermission(item,id){
+            let params = {
+                id : id,
+                role_id : item.id,
+            };
+
+            var data = {};
+
+            if(item.pivot.is_active)
+            {
+                data.is_active = 0;
+            } else
+            {
+                data.is_active = 1;
+            }
+
+            this.actions(false, 'toggle_role_active_status', params, data)
+
+        },
+        actions: function (e, action, inputs, data) {
+            if(e)
+            {
+                e.preventDefault();
+            }
+
+            let url = this.ajax_url+"/actions/"+action;
+            let method = 'post';
+            let params = {
+                inputs: inputs,
+                data: data,
+            };
+            let options = {
+                params: params,
+                method: 'post',
+            };
+
+            vaah().ajax(
+                url,
+                this.actionAfter,
+                options
+            );
+        },
+        actionAfter(data,res){
+            console.log(data);
+        },
+        //---------------------------------------------------------------------
+        showModal(item){
+            this.displayModal = true;
+            this.modalData = item.json;
         },
         //---------------------------------------------------------------------
         async listAction(type = null){
@@ -863,6 +936,13 @@ export const useUserStore = defineStore({
 
             item_menu.push({
                 label: 'Delete',
+                icon: 'pi pi-trash',
+                command: () => {
+                    this.confirmDeleteItem('delete');
+                }
+            });
+            item_menu.push({
+                label: 'Active All',
                 icon: 'pi pi-trash',
                 command: () => {
                     this.confirmDeleteItem('delete');

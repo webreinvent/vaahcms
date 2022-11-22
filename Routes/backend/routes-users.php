@@ -66,4 +66,10 @@ Route::group(
 
         //---------------------------------------------------------
 
+        //---------------------------------------------------------
+        Route::get('/item/{id}/roles', 'UsersController@getItemRoles')
+            ->name('backend.vaah.users.role');
+
+        Route::post('/actions/{action_name}', 'UsersController@postActions')
+            ->name('backend.vaah.users.actions');
     });

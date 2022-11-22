@@ -9,7 +9,7 @@ const useVaah = vaah();
 
 <template>
 
-    <div v-if="store.list">
+    <div v-if="store.list && store.assets">
         <!--table-->
         <DataTable :value="store.list.data"
                    dataKey="id"
@@ -57,7 +57,7 @@ const useVaah = vaah();
                     <Badge v-if="prop.data.deleted_at"
                            value="Trashed"
                            severity="danger"></Badge>
-                    <Button @click="store.getRole(prop.data)">
+                    <Button @click="store.getRole(prop.data.id)">
                         {{ prop.data.active_roles_count }} / {{store.assets.totalRole}}
                     </Button>
                 </template>

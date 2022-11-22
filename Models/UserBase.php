@@ -1575,7 +1575,7 @@ class UserBase extends Authenticatable
 
         $data = [
             'is_active' => $inputs['data']['is_active'],
-            'updated_by' => Auth::user()->id,
+            //'updated_by' => Auth::user()->id,
             'updated_at' => Carbon::now()
         ];
 
@@ -1584,7 +1584,7 @@ class UserBase extends Authenticatable
             $pivot = $item->roles->find($inputs['inputs']['role_id'])->pivot;
 
             if($pivot->is_active === null && !$pivot->created_by){
-                $data['created_by'] = Auth::user()->id;
+                //$data['created_by'] = Auth::user()->id;
                 $data['created_at'] = Carbon::now();
             }
 

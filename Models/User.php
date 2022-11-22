@@ -406,6 +406,8 @@ class User extends UserBase
         $items_id = collect($inputs['items'])->pluck('id')->toArray();
         self::whereIn('id', $items_id)->forceDelete();
 
+
+
         $response['success'] = true;
         $response['data'] = true;
         $response['messages'][] = 'Action was successful.';
