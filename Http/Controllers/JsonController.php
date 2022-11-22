@@ -105,6 +105,7 @@ class JsonController extends Controller
             $data['auth_user'] = [
                 'name' => \Auth::user()->name,
                 'email' => \Auth::user()->email,
+                'avatar' => \Auth::user()->avatar,
             ];
 
             //-----Vue Backend Notices----------------------

@@ -4,7 +4,7 @@ import {onMounted, reactive} from "vue";
 import Aside from '../components/molecules/Aside.vue';
 
 import { useRootStore } from '../stores/root'
-import Topnav from "../components/organisms/Topnav.vue";
+import Topnav from "../components/molecules/Topnav.vue";
 import Footer from "../components/organisms/Footer.vue";
 import Sidebar from "../components/molecules/Sidebar.vue";
 

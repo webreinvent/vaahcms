@@ -15,6 +15,31 @@ export const useRootStore = defineStore({
         gutter: 20,
         show_progress_bar: false,
         is_logged_in: false,
+        top_menu_items: [
+            {
+                to:'/',
+                title:'',
+                icon:'pi pi-home'
+            },
+            {
+                to:'/',
+                title:'',
+                icon:'pi pi-link'
+            }
+        ],
+        top_dropdown_menu_items: [
+            {
+                label:'Profile',
+                icon:'pi pi-fw pi-user',
+                to:{path:'/ui/private/profile'}
+            },
+            {
+                label:'Logout',
+                icon:'pi pi-fw pi-sign-out',
+                command: () =>{
+                }
+            }
+        ],
         is_installation_verified: false,
     }),
     getters: {},
@@ -95,6 +120,23 @@ export const useRootStore = defineStore({
 
         //---------------------------------------------------------------------
         afterVerifyInstallStatus(data, res)
+        {
+            if(data)
+            {
+
+                if(data.stage !== 'installed')
+                {
+                    this.$router.push({name : 'setup.index'});
+                }
+
+                this.is_installation_verified = true;
+
+            }
+        },
+
+
+        //---------------------------------------------------------------------
+        toggleTopDropDownMenu()
         {
             if(data)
             {

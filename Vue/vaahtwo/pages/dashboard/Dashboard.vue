@@ -74,8 +74,7 @@ onMounted(async () => {
                                 <h5 class="text-lg font-semibold mb-4">{{ module.card.title }}</h5>
 
                                 <div class="grid m-0">
-                                    <template v-if="(key+1)%4 !== 0"
-                                              v-for="(item,key) in module.card.list"
+                                    <template v-for="(item,key) in module.card.list"
                                     >
                                         <div class="col">
                                             <span class="p-3 border-circle bg-blue-50">
