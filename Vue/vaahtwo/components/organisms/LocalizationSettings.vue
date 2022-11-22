@@ -16,9 +16,11 @@
                 <div class="col-4 align-items-center flex">
                     <Dropdown v-model="selectedLanguage" :options="languages" optionLabel="label" optionValue="value" placeholder="Select a Language" />
                 </div>
-                <div class="p-inputgroup col-4">
-                    <Dropdown v-model="selectedCategory" :options="categories" optionLabel="label" optionValue="value" placeholder="Select a Category" />
-                    <Dropdown v-model="selectedFilter" :options="filterOptions" optionLabel="label" optionValue="value" placeholder="Select a Filter" />
+                <div class="col-4">
+                    <div class="p-inputgroup ">
+                        <Dropdown v-model="selectedCategory" :options="categories" optionLabel="label" optionValue="value" placeholder="Select a Category" />
+                        <Dropdown v-model="selectedFilter" :options="filterOptions" optionLabel="label" optionValue="value" placeholder="Select a Filter" />
+                    </div>
                 </div>
             </div>
             <div class="grid mt-4">

@@ -64,7 +64,7 @@ export default {
                             label: 'Reset',
                             icon: 'pi pi-refresh',
                             command: () => {
-                                this.$router.push({ path: '/ui/private/settings/account' });
+                                this.$router.push({ path: '/ui/public/setup' });
                             }
                         },
                     ]},

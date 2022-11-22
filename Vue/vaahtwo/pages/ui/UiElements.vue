@@ -2,15 +2,7 @@
     <div class="grid components-list">
             <Sidebar></Sidebar>
         <div class="col-12">
-            <div>
-                <div class="col-12 p-fluid">
-                    <div class="card">
-                        <CodePreview name="components/Level.vue" :code="raw.level">
-                            <Level/>
-                        </CodePreview>
-                    </div>
-                </div>
-
+            <div class="grid">
                 <div class="col-12 p-fluid">
                     <div class="card">
                         <CodePreview name="components/Colors.vue" :code="raw.colors">
@@ -18,7 +10,29 @@
                         </CodePreview>
                     </div>
                 </div>
+                <div class="col-12">
+                    <div class="card">
+                        <CodePreview name="components/ButtonsComponent.vue" :code="raw.buttons">
+                            <ButtonsComponent/>
+                        </CodePreview>
+                    </div>
+                </div>
 
+                <div class="col-12 lg:col-6">
+                    <div class="card">
+                        <CodePreview name="components/MessagesComponent.vue" :code="raw.message">
+                            <MessagesComponent/>
+                        </CodePreview>
+                    </div>
+                </div>
+
+                <div class="col-12 lg:col-6">
+                    <div class="card">
+                        <CodePreview name="components/ToastsComponent.vue" :code="raw.toasts">
+                            <ToastsComponent/>
+                        </CodePreview>
+                    </div>
+                 </div>
                 <div class="col-12 md:col-7">
                     <div class="card">
                         <CodePreview name="components/Input.vue" :code="raw.input">
@@ -70,14 +84,14 @@
                     </div>
                 </div>
 
-                <div class="col-12">
+
+                <div class="col-12 p-fluid">
                     <div class="card">
-                        <CodePreview name="components/ButtonsComponent.vue" :code="raw.buttons">
-                            <ButtonsComponent/>
+                        <CodePreview name="components/Level.vue" :code="raw.level">
+                            <Level/>
                         </CodePreview>
                     </div>
                 </div>
-
                 <div class="col-12">
                     <div class="card">
                         <CodePreview name="components/DataTableComponent.vue" :code="raw.dataTable">
@@ -176,21 +190,9 @@
                     </div>
                 </div>
 
-                <div class="col-12 lg:col-6">
-                    <div class="card">
-                        <CodePreview name="components/MessagesComponent.vue" :code="raw.message">
-                            <MessagesComponent/>
-                        </CodePreview>
-                    </div>
-                </div>
+
 
                 <div class="col-12 lg:col-6">
-                    <div class="card">
-                        <CodePreview name="components/ToastsComponent.vue" :code="raw.toasts">
-                            <ToastsComponent/>
-                        </CodePreview>
-                    </div>
-
                     <div class="card">
                         <CodePreview name="components/TimelineComponent.vue" :code="raw.timeline">
                             <TimelineComponent/>

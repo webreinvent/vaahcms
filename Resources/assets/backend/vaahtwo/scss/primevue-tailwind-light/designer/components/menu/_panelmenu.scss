@@ -2,7 +2,6 @@
     .p-panelmenu-header {
         .p-panelmenu-header-action {
             padding: $accordionHeaderPadding;
-            border: $accordionHeaderBorder;
             color: $accordionHeaderTextColor;
             background: $accordionHeaderBg;
             font-weight: $accordionHeaderFontWeight;
@@ -18,7 +17,6 @@
             }
 
             &:focus {
-                @include focused();
             }
         }
 
@@ -55,8 +53,7 @@
 
     .p-panelmenu-content {
         padding: $verticalMenuPadding;
-        border: $accordionContentBorder;
-        background: $accordionContentBg;
+        background: $accordionHeaderBg;
         color: $accordionContentTextColor;
         border-top: 0;
         border-top-right-radius: 0;

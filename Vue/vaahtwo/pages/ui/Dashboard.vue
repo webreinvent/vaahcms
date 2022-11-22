@@ -1,6 +1,6 @@
 <template>
     <div class="grid dashboard">
-        <div class="col-12 md:col-8">
+        <div class="col-12 md:col-8 pr-3">
             <Card>
                 <template #content>
                     <h5 class="text-xl font-semibold mb-1">Welcome to Vaah<b>cms</b></h5>
@@ -9,7 +9,7 @@
                         <div class="col-12 md:col-4">
                             <h6 class="font-semibold mb-2 text-sm">Get Started</h6>
                             <Button label="Go to Theme" class="p-button-sm is-light"></Button>
-                            <p class="text-xs mt-2">or,<a class="cursor-pointer text-primary">create your own theme</a></p>
+                            <p class="text-xs mt-2">or,<a class="cursor-pointer"> create your own theme</a></p>
                         </div>
                         <div class="col-12 md:col-4">
                             <h6 class="font-semibold mb-2 text-sm">Next Steps</h6>
@@ -45,7 +45,7 @@
                                 </li>
                             </ul>
                         </div>
-                        <Divider></Divider>
+                        <Divider  class="dashboard-divider"></Divider>
                         <div class="col-12">
                             <h5 class="text-lg font-semibold mb-4">Users and roles</h5>
                             <div class="grid m-0">
@@ -54,7 +54,7 @@
                                     <i class="pi pi-user text-blue-400"></i>
                                 </span>
                                     <p class="text-sm font-semibold mt-3">Total Users</p>
-                                    <h6 class="text-xl font-semibold my-1">1683</h6>
+                                    <h6 class="text-xl font-semibold my-2">1683</h6>
                                     <a href="" class="text-sm">View Details</a>
                                 </div>
                                 <Divider layout="vertical" class="hidden md:block"></Divider>
@@ -64,7 +64,7 @@
                                     <i class="pi pi-user text-blue-400"></i>
                                 </span>
                                     <p class="text-sm font-semibold mt-3">Total Roles</p>
-                                    <h6 class="text-xl font-semibold my-1">7</h6>
+                                    <h6 class="text-xl font-semibold my-2">7</h6>
                                     <a href="" class="text-sm">View Details</a>
                                 </div>
                                 <Divider layout="vertical" class="hidden md:block"></Divider>
@@ -74,7 +74,7 @@
                                     <i class="pi pi-user text-blue-400"></i>
                                 </span>
                                     <p class="text-sm font-semibold mt-3">Total Permissions</p>
-                                    <h6 class="text-xl font-semibold my-1">62</h6>
+                                    <h6 class="text-xl font-semibold my-2">62</h6>
                                     <a href="" class="text-sm">View Details</a>
                                 </div>
                                 <Divider layout="vertical" class="hidden md:block"></Divider>
@@ -84,7 +84,7 @@
                                     <i class="pi pi-user text-green-400"></i>
                                 </span>
                                     <p class="text-sm font-semibold mt-3">Active Users</p>
-                                    <h6 class="text-xl font-semibold my-1">1683</h6>
+                                    <h6 class="text-xl font-semibold my-2">1683</h6>
                                     <a href="" class="text-sm">View Details</a>
                                 </div>
                             </div>
@@ -93,16 +93,17 @@
                 </template>
             </Card>
         </div>
-        <div class="col-12 md:col-4">
+        <div class="col-12 md:col-4 pl-1">
             <Button label="Check Updates" icon="pi pi-refresh" class="p-button-sm is-light mr-2 mb-3"></Button>
             <Button label="Getting Started" icon="pi pi-play" class="p-button-sm is-light mb-3"></Button>
             <Accordion :multiple="true" :activeIndex="active_index">
                 <AccordionTab header="Jobs">
+                    <Message severity="error" :closable="false" class="is-light mt-0">Enable <span class="font-bold">Laravel Queues</span> to run your jobs. <a class="cursor-pointer">View Settings</a> </Message>
                     <p class="text-sm">
                         Tasks that is kept in the queue to be performed one after another. Queues allow you to defer the processing of a time consuming task, such as sending an e-mail, until a later time which drastically speeds up web requests to your application.
                     </p>
-                    <Divider></Divider>
-                    <div class="flex justify-content-evenly align-items-center align-items-center">
+                    <Divider class="dashboard-divider"></Divider>
+                    <div class="flex justify-content-evenly align-items-center align-items-center -my-2">
                         <a href="" class="text-center"><i class="pi pi-envelope mr-2"></i>4 Pending</a>
                         <Divider layout="vertical"></Divider>
                         <a href="" class="text-center"><i class="pi pi-ban mr-2 text-red-500"></i>0 Failed</a>
@@ -118,14 +119,17 @@
                 </AccordionTab>
             </Accordion>
         </div>
-        <div class="text-xs text-center footer-text"><p>
-            © 2022.
-            <a class="text-blue-400" href="https://vaah.dev/cms" target="_blank">VaahCMS</a>
-            v1.6.10
-            | <a class="text-blue-400" href="https://docs.vaah.dev/vaahcms" target="_blank">Documentation</a></p> <p class="has-text-centered">
-            Laravel v8.41.0
-            | PHP v8.0.18
-        </p></div>
+        <div class="col-12">
+            <div class="text-xs text-center footer-text"><p>
+                © 2022.
+                <a class="" href="https://vaah.dev/cms" target="_blank">VaahCMS</a>
+                v1.6.10
+                | <a class="" href="https://docs.vaah.dev/vaahcms" target="_blank">Documentation</a></p> <p class="has-text-centered">
+                Laravel v8.41.0
+                | PHP v8.0.18
+            </p>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -142,13 +146,19 @@ export default {
 
 <style scoped lang="scss">
 .dashboard{
+    .dashboard-divider{
+        &:before{
+            width:calc(100% + 2rem);
+            margin-left: -1rem;
+        }
+    }
     ul{
         padding-left: 0;
         &.links-list{
             list-style-type: none;
             li{
                 &:not(:last-child){
-                    margin-bottom:10px
+                    margin-bottom:12px
                 }
                 a{
                     cursor: pointer;
@@ -160,10 +170,7 @@ export default {
         }
     }
     .footer-text{
-        position: absolute;
-        bottom: 40px;
-        left:50%;
-        transform: translateX(-50%);
+        margin-top: 75px;
     }
 }
 </style>

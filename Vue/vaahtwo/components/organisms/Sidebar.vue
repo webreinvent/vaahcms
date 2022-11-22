@@ -93,6 +93,7 @@ export default {
                             key: '1_6',
                             label: 'Reset',
                             icon: 'pi pi-fw pi-refresh',
+                            to:'/ui/public/setup'
                         }
                     ]
                 },

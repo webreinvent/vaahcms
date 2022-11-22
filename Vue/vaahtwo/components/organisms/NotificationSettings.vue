@@ -35,7 +35,7 @@
                     <div class="p-inputgroup mb-3">
                         <AutoComplete placeholder="Search"></AutoComplete>
                     </div>
-                    <div class="notification-variables">
+                    <div class="notification-variables pt-2 pr-1">
                         <div class="p-inputgroup mb-3" v-for="item in activeNotification.variables">
                             <InputText :model-value="item" readonly></InputText>
                             <Button icon="pi pi-copy"></Button>
