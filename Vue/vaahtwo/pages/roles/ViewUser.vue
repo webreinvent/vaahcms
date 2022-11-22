@@ -1,12 +1,9 @@
 <script setup>
-import { h, onMounted, ref} from "vue";
+import {onMounted, ref} from "vue";
 import { useRoute } from 'vue-router';
-import { useDialog } from 'primevue/usedialog';
 
-import { useRoleStore } from '../../stores/store-roles'
+import { useRoleStore } from '../../stores/store-roles';
 
-import VhViewRow from '../../vaahvue/vue-three/primeflex/VhViewRow.vue';
-import PermissionDetailsView from '../../components/molecules/PermissionDetailsView.vue';
 const store = useRoleStore();
 const route = useRoute();
 
@@ -32,39 +29,37 @@ onMounted(async () => {
 });
 
 //--------toggle item menu--------//
-const item_menu_state = ref();
+const uer_items_menu = ref();
 
 const toggleItemMenu = (event) => {
-    item_menu_state.value.toggle(event);
+    uer_items_menu.value.toggle(event);
 };
 //--------toggle item menu--------//
-
-//--------toggle dynamic modal--------//
-const dialog = useDialog();
-
-const openViewModal = () => {
-    const dialogRef = dialog.open(PermissionDetailsView, {
-        props: {
-            header: 'Details',
-            style: {
-                width: '50vw',
-            },
-            breakpoints:{
-                '960px': '75vw',
-                '640px': '90vw'
-            },
-            modal: true
-        }
-    });
-}
-
-//--------toggle dynamic modal--------//
-
 </script>
 
 <template>
     <div class="col-6">
         <Panel v-if="store && store.item">
+            <div class="grid p-fluid">
+                <div class="col-12">
+                    <div class="p-inputgroup ">
+
+                        <InputText v-model="store.query.q"
+                                   @keyup.enter="store.delayedItemUsersSearch()"
+                                   @keyup.enter.native="store.delayedItemUsersSearch()"
+                                   @keyup.13="store.delayedItemUsersSearch()"
+                                   placeholder="Search"
+                        />
+
+                        <Button @click="store.delayedItemUsersSearch()"
+                                icon="pi pi-search"
+                        />
+                    </div>
+                </div>
+            </div>
+
+            <Divider />
+
             <template class="p-1" #header>
                 <div class="flex flex-row">
 
@@ -84,8 +79,8 @@ const openViewModal = () => {
                         aria-haspopup="true"
                     />
 
-                    <Menu ref="item_menu_state"
-                          :model="store.menu_items"
+                    <Menu ref="uer_items_menu"
+                          :model="store.role_user_menu"
                           :popup="true"
                     />
                     <!--/item_menu-->
@@ -97,8 +92,8 @@ const openViewModal = () => {
                 </div>
             </template>
 
-            <DataTable v-if="store && store.permission"
-                       :value="store.permission.list.data"
+            <DataTable v-if="store && store.role_users"
+                       :value="store.role_users.list.data"
                        dataKey="id"
                        class="p-datatable-sm"
                        stripedRows
@@ -107,54 +102,31 @@ const openViewModal = () => {
                 <Column field="name"
                         header="Name"
                 >
-
                     <template #body="prop">
                         {{ prop.data.name }}
                     </template>
                 </Column>
 
-                <Column field="has-permission"
-                        header="Has Permission"
+                <Column field="email"
+                        header="Email"
                 >
+                    <template #body="prop">
+                        {{ prop.data.email }}
+                    </template>
+                </Column>
 
+                <Column field="has-role"
+                        header="Has Role"
+                >
                     <template #body="prop">
                         <Button label="Yes"
                                 class="p-button-sm p-button-success p-button-rounded"
                                 v-if="prop.data.pivot.is_active === 1"
-                                @click="store.changePermission(prop.data)"
                         />
 
                         <Button label="No"
                                 class="p-button-sm p-button-danger p-button-rounded"
                                 v-else
-                                @click="store.changePermission(prop.data)"
-                        />
-                    </template>
-                </Column>
-
-                <Column field="is-active"
-                        header="Permission Status"
-                >
-
-                    <template #body="prop">
-                        <Button label="Active"
-                                class="p-button-sm p-button-rounded p-button-success"
-                                v-if="prop.data.is_active === 1"
-                        />
-
-                        <Button label="Inactive"
-                                class="p-button-sm p-button-danger p-button-rounded"
-                                v-else
-                        />
-                    </template>
-                </Column>
-
-                <Column>
-                    <template #body="prop">
-                        <Button class="p-button-sm p-button-rounded p-button-outlined"
-                                @click="openViewModal"
-                                icon="pi pi-eye"
-                                label="View"
                         />
                     </template>
                 </Column>
@@ -163,15 +135,13 @@ const openViewModal = () => {
             <Divider />
 
             <!--paginator-->
-            <Paginator v-if="store && store.permission"
+            <Paginator v-if="store && store.role_users"
                        :rows="store.query.rows"
-                       :totalRecords="store.permission.list.total"
+                       :totalRecords="store.role_users.list.total"
                        @page="store.permissionPaginate($event)"
                        :rowsPerPageOptions="store.rows_per_page">
             </Paginator>
             <!--/paginator-->
         </Panel>
-
-        <DynamicDialog  />
     </div>
 </template>

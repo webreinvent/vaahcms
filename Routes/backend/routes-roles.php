@@ -70,6 +70,16 @@ function () {
     Route::post('/item/{id}/permissions', 'RolesController@getItemPermission')
         ->name('backend.vaah.roles.item.permissions');
 
+    /**
+     * get role users
+     */
+    Route::get('/item/{id}/users', 'RolesController@getItemUser')
+        ->name('backend.vaah.roles.item.users');
+    /**
+     * toggle actions
+     */
+    Route::post('/actions/{action_name}', 'RolesController@postActions')
+        ->name('backend.vaah.roles.actions');
     //---------------------------------------------------------
 
 });

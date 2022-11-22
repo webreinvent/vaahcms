@@ -16,7 +16,9 @@ onMounted(async () => {
 </script>
 <template>
     <div>
-        <DataTable :value="store.permission" v-if="store && store.permission" responsiveLayout="scroll">
+        <DataTable :value="store.permission.list.data"
+                   v-if="store && store.permission"
+                   responsiveLayout="scroll">
             <Column field="created_at" header="Created At">
                 <template #body="prop">
                     {{ prop.data.created_at }}

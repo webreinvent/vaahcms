@@ -67,6 +67,9 @@ export const useRoleStore = defineStore({
         total_users: null,
         menu_items: null,
         permission: null,
+        role_user_menu: null,
+        role_users: null,
+        search_item: null,
     }),
     getters: {
 
@@ -578,6 +581,7 @@ export const useRoleStore = defineStore({
             this.showProgress();
 
             let params = {
+                query: vaah().clone(this.query),
                 method: 'post'
             };
 
@@ -593,8 +597,101 @@ export const useRoleStore = defineStore({
             this.hideProgress();
 
             if (data) {
-                this.permission = data.list.data;
+                this.permission = data;
             }
+        },
+        //---------------------------------------------------------------------
+        permissionPaginate(event) {
+            this.query.page = event.page+1;
+            this.getItemPermissions(this.item.id);
+        },
+        //---------------------------------------------------------------------
+         getItemUsers(id) {
+
+            this.showProgress();
+
+            let params = {
+                q: this.search_item
+            };
+
+            vaah().ajax(
+                this.ajax_url+'/item/' + id + '/users',
+                this.afterGetItemUsers,
+                params
+            );
+        },
+        //---------------------------------------------------------------------
+        afterGetItemUsers(data, res) {
+            this.hideProgress();
+
+            if (data) {
+                this.role_users = data;
+            }
+        },
+        //---------------------------------------------------------------------
+        userPaginate(event) {
+            this.query.page = event.page+1;
+            this.getItemUsers(this.item.id);
+        },
+        //---------------------------------------------------------------------
+        async delayedItemUsersSearch() {
+            this.showProgress();
+            let self = this;
+            this.query.page = 1;
+            this.action.items = [];
+            clearTimeout(this.search.delay_timer);
+            this.search.delay_timer = setTimeout(async function () {
+                await self.updateUrlQueryString(self.query);
+                await self.getItemUsers();
+            }, this.search.delay_time);
+
+            this.hideProgress();
+        },
+        //---------------------------------------------------------------------
+        changePermission (item) {
+
+            let inputs = {
+                id : this.list.data.id,
+                permission_id : item.id,
+            };
+
+            let data = {};
+
+            if (item.pivot.is_active) {
+                data.is_active = 0;
+            } else {
+                data.is_active = 1;
+            }
+
+            this.actions(false, 'toggle_permission_active_status', inputs, data)
+
+        },
+        //---------------------------------------------------------------------
+        actions (e, action, inputs , data) {
+
+            this.showProgress();
+
+            if (e) {
+                e.preventDefault();
+            }
+
+            let params = {
+                inputs: inputs,
+                method: 'post',
+                data: data,
+            };
+
+            vaah().ajax(
+                this.ajax_url+'/actions/' + action,
+                this.afterGetItemUsers,
+                params
+            );
+        },
+        //---------------------------------------------------------------------
+        afterActions (data,res) {
+
+            this.hideProgress();
+            this.getItemPermissions();
         },
         //---------------------------------------------------------------------
         closeForm()
@@ -631,6 +728,12 @@ export const useRoleStore = defineStore({
             this.item = item;
             this.getItemPermissions(item.id);
             this.$router.push({name: 'roles.permission', params: {id: item.id}});
+        },
+        //---------------------------------------------------------------------
+        toUser(item) {
+            this.item = item;
+            this.getItemUsers(item.id);
+            this.$router.push({name: 'roles.user', params: {id: item.id}});
         },
         //---------------------------------------------------------------------
         isViewLarge()
@@ -901,6 +1004,17 @@ export const useRoleStore = defineStore({
                         await this.listAction('deactivate-all')
                     }
                 },
+            ]
+        },
+        //---------------------------------------------------------------------
+        getRoleUserMenuItems() {
+            this.role_user_menu = [
+                {
+                    label: ' Attach To All Users'
+                },
+                {
+                    label: 'Detach To All Users'
+                }
             ]
         },
         //---------------------------------------------------------------------

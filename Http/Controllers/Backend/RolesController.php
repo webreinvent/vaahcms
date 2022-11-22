@@ -102,6 +102,16 @@ class RolesController extends Controller
         return Role::getItemPermission($request, $id);
     }
     //----------------------------------------------------------
+    public function getItemUser(Request $request, $id)
+    {
+        return Role::getItemUser($request, $id);
+    }
+    //----------------------------------------------------------
+    public function postActions(Request $request, $action)
+    {
+        return Role::postActions($request, $action);
+    }
+    //----------------------------------------------------------
 
 
 }

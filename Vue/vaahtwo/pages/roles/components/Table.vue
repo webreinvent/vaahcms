@@ -73,6 +73,7 @@ const useVaah = vaah();
                  <template #body="props">
                      <Button class="p-button-sm p-button-rounded"
                              v-tooltip.top="'View Users'"
+                             @click="store.toUser(props.data)"
                      >
                          {{ props.data.count_users }} / {{ store.total_users }}
                      </Button>
