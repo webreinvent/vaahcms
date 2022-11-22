@@ -54,11 +54,11 @@ class ExtendController extends Controller
     {
         $list = [
             [
-                'link' => self::$link."/profile/",
+                'url' => self::$link."/profile/",
                 'label'=> 'Profile'
             ],
             [
-                'link' => route('vh.backend.logout'),
+                'url' => route('vh.backend.logout'),
                 'label'=> 'Logout'
             ],
 
