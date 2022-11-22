@@ -676,9 +676,11 @@ export const useRoleStore = defineStore({
             }
 
             let params = {
-                inputs: inputs,
+                params: {
+                    inputs: inputs,
+                    data: data,
+                },
                 method: 'post',
-                data: data,
             };
 
             vaah().ajax(
@@ -691,7 +693,7 @@ export const useRoleStore = defineStore({
         afterActions (data,res) {
 
             this.hideProgress();
-            this.getItemPermissions();
+            this.getItemPermissions(this.item.id);
         },
         //---------------------------------------------------------------------
         closeForm()

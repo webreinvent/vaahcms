@@ -542,7 +542,7 @@ class Role extends Model
     }
 
     //-------------------------------------------------
-    public function getItemPermission($request, $id)
+    public static function getItemPermission($request, $id)
     {
         if(!\Auth::user()->hasPermission('can-read-roles'))
         {
@@ -553,6 +553,154 @@ class Role extends Model
         }
 
         $response = \WebReinvent\VaahCms\Entities\Role::getRolePermission($request, $id);
+        return response()->json($response);
+    }
+    //-------------------------------------------------
+    public static function getItemUser($request, $id)
+    {
+        if(!\Auth::user()->hasPermission('can-read-roles'))
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+            return response()->json($response);
+        }
+
+        $response = \WebReinvent\VaahCms\Entities\Role::getRoleUser($request, $id);
+        return response()->json($response);
+    }
+    //-------------------------------------------------
+    public static function postActions($request, $action)
+    {
+//        dd($request->inputs);
+        $rules = array(
+            'inputs' => 'required',
+        );
+
+        $validator = \Validator::make( $request->all(), $rules);
+        if ( $validator->fails() ) {
+
+            $errors             = errorsToArray($validator->errors());
+            $response['status'] = 'failed';
+            $response['errors'] = $errors;
+            return response()->json($response);
+        }
+
+        $response = [];
+
+        switch ($action)
+        {
+
+            //------------------------------------
+            case 'bulk-change-status':
+
+                if(!\Auth::user()->hasPermission('can-manage-roles') &&
+                    !\Auth::user()->hasPermission('can-update-roles'))
+                {
+                    $response['status'] = 'failed';
+                    $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+                    return $response;
+                }
+
+                $response = \WebReinvent\VaahCms\Entities\Role::bulkStatusChange($request);
+
+                break;
+            //------------------------------------
+            case 'bulk-trash':
+
+                if(!\Auth::user()->hasPermission('can-update-roles'))
+                {
+                    $response['status'] = 'failed';
+                    $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+                    return $response;
+                }
+
+                $response = Role::bulkTrash($request);
+
+                break;
+            //------------------------------------
+            case 'bulk-restore':
+
+
+                if(!\Auth::user()->hasPermission('can-update-roles'))
+                {
+                    $response['status'] = 'failed';
+                    $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+                    return $response;
+                }
+
+                $response = Role::bulkRestore($request);
+
+                break;
+
+            //------------------------------------
+            case 'bulk-delete':
+
+                if(!\Auth::user()->hasPermission('can-update-roles') ||
+                    !\Auth::user()->hasPermission('can-delete-roles'))
+                {
+                    $response['status'] = 'failed';
+                    $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+                    return $response;
+                }
+
+                $response = Role::bulkDelete($request);
+
+                break;
+            //------------------------------------
+            case 'toggle_permission_active_status':
+
+                if(!\Auth::user()->hasPermission('can-manage-roles') &&
+                    !\Auth::user()->hasPermission('can-update-roles'))
+                {
+                    $response['status'] = 'failed';
+                    $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+                    return $response;
+                }
+
+                $response = \WebReinvent\VaahCms\Entities\Role::bulkChangePermissionStatus($request);
+
+                break;
+            //------------------------------------
+            case 'toggle_user_active_status':
+
+                if(!\Auth::user()->hasPermission('can-manage-roles') &&
+                    !\Auth::user()->hasPermission('can-update-roles'))
+                {
+                    $response['status'] = 'failed';
+                    $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+                    return $response;
+                }
+
+                $response = Role::bulkChangeUserStatus($request);
+
+                break;
+            //------------------------------------
+            case 'change-role-permission-status':
+
+                if(!\Auth::user()->hasPermission('can-manage-roles') &&
+                    !\Auth::user()->hasPermission('can-update-roles'))
+                {
+                    $response['status'] = 'failed';
+                    $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+                    return $response;
+                }
+
+                $response = Role::bulkPermissionStatusChange($request);
+                break;
+            //------------
+            //------------------------------------
+            //------------------------------------
+
+        }
+
         return response()->json($response);
     }
     //-------------------------------------------------
