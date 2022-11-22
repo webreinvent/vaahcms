@@ -36,7 +36,7 @@
     </Column>
     <Column header="Agent" sortable filterField="representative" sortField="representative.name" :showFilterMatchModes="false" :filterMenuStyle="{'width':'14rem'}" style="min-width: 14rem">
       <template #body="{data}">
-        <img :alt="data.representative.name" :src="'demo/images/avatar/' + data.representative.image" width="32" style="vertical-align: middle" />
+        <img :alt="data.representative.name" :src="'demo/images/avatar/' + data.representative.image" width="32" style="vertical-align: middle" class="mr-2 " />
         <span class="image-text">{{data.representative.name}}</span>
       </template>
       <template #filter="{filterModel}">

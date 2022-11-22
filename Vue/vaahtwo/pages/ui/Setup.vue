@@ -11,12 +11,12 @@
                         <div class="flex justify-content-between align-items-center">
                             <h4 class="text-xl font-semi-bold">Install</h4>
                             <div class="icons flex">
-                                <div class="m-1">
+                                <a class="m-1">
                                     <i class="bg-gray-200 p-2 border-round-3xl pi pi-server" v-tooltip.top="'Dashboard'"></i>
-                                </div>
-                                <div class="m-1">
+                                </a>
+                                <a class="m-1">
                                     <i class="bg-gray-200 p-2 border-round-3xl pi pi-book" v-tooltip.top="'Documentation'"></i>
-                                </div>
+                                </a>
                             </div>
                         </div>
                     </template>
@@ -26,7 +26,7 @@
                         </p>
                         <div class="flex justify-content-between align-items-center mt-4">
                             <Button label="Install" icon="pi pi-server" class="p-button-secondary p-button-outlined p-button-sm"/>
-                            <SplitButton label="Advanced Options" :model="items" class="mb-2 p-button-sm"></SplitButton>
+                            <SplitButton label="Advanced Options" :model="items" class="p-button-sm"></SplitButton>
                         </div>
                     </template>
                 </Card>
@@ -38,7 +38,9 @@
                             <h4 class="text-xl font-semi-bold">Reset</h4>
                             <div class="icons flex">
                                 <div class="m-1">
-                                    <i class="bg-gray-200 p-2 border-rounded pi pi-refresh"></i>
+                                    <a href="">
+                                        <i class="bg-gray-200 p-2 border-round-3xl pi pi-refresh"></i>
+                                    </a>
                                 </div>
                             </div>
                         </div>
@@ -84,13 +86,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.p-card .p-card-body {
-    padding: 0.85rem 1rem;
-}
-.p-button{
-    padding: 5px 8px;
-}
-.p-card .p-card-content {
-    padding: 1rem 0 0 0;
-}
+
 </style>

@@ -4,7 +4,7 @@
             <Card>
                 <template #header>
                     <div class="flex justify-content-between align-items-center">
-                        <h5 class="font-semibold text-sm">Create</h5>
+                        <h5 class="font-semibold text-lg">Create</h5>
                         <div class="p-inputgroup justify-content-end">
                             <Button label="Save & New" icon="pi pi-pencil" class="p-button-sm"/>
                             <Button class="p-button-sm" icon="pi pi-caret-down" @click="toggle"/>
@@ -48,13 +48,13 @@
         </div>
         <div class="col-12 md:col-4">
             <Card>
-                <template #header><h5 class="text-sm">Multiple File Upload</h5></template>
+                <template #header><h5 class="font-semibold text-lg">Multiple File Upload</h5></template>
                 <template #content>
                     <div class="mb-5">
                         <FileUpload mode="basic" name="demo[]" url="./upload.php" accept="image/*" :maxFileSize="1000000" @upload="onUpload" class="w-full"/>
                     </div>
                     <div class="flex justify-content-between align-items-center mb-5">
-                        <h6 class="font-semibold">Media List (3)</h6>
+                        <h6 class="font-semibold text-sm">Media List (3)</h6>
                         <span>
                                 <Button icon="pi pi-plus" class="p-button-sm mr-2" @click="handleAccordion('expand')"></Button>
                                 <Button icon="pi pi-minus" class="p-button-sm" @click="handleAccordion('collapse')"></Button>

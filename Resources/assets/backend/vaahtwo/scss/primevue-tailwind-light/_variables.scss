@@ -2,8 +2,8 @@
 
 $primaryColor: $primary !default;
 $primaryLightColor:lighten($primary, 20%) !default;
-$primaryLighterColor:lighten($primary, 30%) !default;
-$primaryDarkColor: darken($primary, 20%) !default;
+$primaryLighterColor:lighten($primary, 40%) !default;
+$primaryDarkColor: darken($primary, 10%) !default;
 $primaryDarkerColor:darken($primary, 30%) !default;
 $primaryTextColor: #ffffff !default;
 

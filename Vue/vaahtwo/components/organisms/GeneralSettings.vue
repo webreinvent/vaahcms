@@ -3,7 +3,7 @@
         <Card>
             <template #header>
                 <div class="flex justify-content-between align-items-center w-full">
-                    <h6 class="font-semibold">General Settings</h6>
+                    <h5 class="font-semibold text-lg">General Settings</h5>
                     <div>
                         <Button label="Expand all" class="p-button-sm mr-2" @click="expandAll"></Button>
                         <Button label="Collapse all" class="p-button-sm" @click="collapseAll"></Button>
@@ -43,14 +43,14 @@
                                             <Button icon="pi pi-copy" class=""/>
                                         </div>
                                     </div>
-                                    <div class="col-8">
+                                    <div class="col-7">
                                         <h5 class="p-1 text-xs mb-1">Meta Description</h5>
                                         <div class="p-inputgroup">
                                             <Textarea v-model="value" :autoResize="true" class="w-full"/>
                                             <Button icon="pi pi-copy" class="has-max-height"/>
                                         </div>
                                     </div>
-                                    <div class="col-4">
+                                    <div class="col-5">
                                         <h5 class="p-1 text-xs mb-1">Meta Description</h5>
                                         <div class="p-inputgroup">
                                             <SelectButton v-model="visibility" :options="visibitlityOptions" aria-labelledby="single"/>
@@ -90,7 +90,7 @@
                                                 <label for="copyright-custom">Custom</label>
                                             </div>
                                         </div>
-                                        <InputText class="w-full" v-if="copyrightText === 'custom'"></InputText>
+                                        <InputText class="w-full" v-if="copyrightText === 'custom'" placeholder="Enter Custom Text"></InputText>
                                     </div>
                                     <div class="col-12">
                                         <h5 class="p-1 text-xs mb-1">Copyright Link</h5>
@@ -104,7 +104,7 @@
                                                 <label for="copyright-custom">Custom</label>
                                             </div>
                                         </div>
-                                        <InputText class="w-full" v-if="copyrightLink === 'custom'"></InputText>
+                                        <InputText class="w-full" v-if="copyrightLink === 'custom'" placeholder="Enter Custom Link"></InputText>
                                     </div>
                                     <div class="col-12">
                                         <h5 class="p-1 text-xs mb-1">Copyright Year</h5>
@@ -473,6 +473,6 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss">
 
 </style>

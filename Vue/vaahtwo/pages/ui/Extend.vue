@@ -4,7 +4,7 @@
         <Card>
             <template #header>
                 <div class="flex justify-content-between align-items-center">
-                    <h5 class="font-semibold">Themes</h5>
+                    <h5 class="font-semibold text-lg">Themes</h5>
                     <div class="p-inputgroup justify-content-end">
                         <Button label="Install" icon="pi pi-plus" class="p-button-sm" @click="showThemes"/>
                         <Button class="p-button-sm" icon="pi pi-download" label="Check Updates"/>
@@ -77,7 +77,7 @@
         <Card>
             <template #header>
                 <div class="flex justify-content-between align-items-center">
-                    <h5 class="font-semibold white-space-nowrap">Install Themes</h5>
+                    <h5 class="white-space-nowrap font-semibold text-lg">Install Themes</h5>
                     <div class="p-inputgroup justify-content-end w-6">
                         <span class="p-input-icon-left">
                             <i class="pi pi-search" />

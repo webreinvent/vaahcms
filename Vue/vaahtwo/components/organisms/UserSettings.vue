@@ -48,7 +48,7 @@
               </div>
             </div>
             <div class="col-12 md:col-3 flex justify-content-end">
-              <Button icon="pi pi-save" label="save" class="p-button-sm"></Button>
+              <Button icon="pi pi-save" label="Save" class="p-button-sm"></Button>
             </div>
           </div>
         </AccordionTab>
