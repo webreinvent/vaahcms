@@ -66,6 +66,7 @@ export const useRoleStore = defineStore({
         total_permissions: null,
         total_users: null,
         menu_items: null,
+        permission: null,
     }),
     getters: {
 
@@ -572,6 +573,30 @@ export const useRoleStore = defineStore({
             await this.updateUrlQueryString(this.query);
         },
         //---------------------------------------------------------------------
+        getItemPermissions(id) {
+
+            this.showProgress();
+
+            let params = {
+                method: 'post'
+            };
+
+            vaah().ajax(
+                this.ajax_url+'/item/' + id + '/permissions',
+                this.afterGetItemPermissions,
+                params
+            );
+        },
+        //---------------------------------------------------------------------
+        afterGetItemPermissions(data, res) {
+
+            this.hideProgress();
+
+            if (data) {
+                this.permission = data.list.data;
+            }
+        },
+        //---------------------------------------------------------------------
         closeForm()
         {
             this.$router.push({name: 'roles.index'})
@@ -604,6 +629,7 @@ export const useRoleStore = defineStore({
         //---------------------------------------------------------------------
         toPermission(item) {
             this.item = item;
+            this.getItemPermissions(item.id);
             this.$router.push({name: 'roles.permission', params: {id: item.id}});
         },
         //---------------------------------------------------------------------
@@ -878,9 +904,15 @@ export const useRoleStore = defineStore({
             ]
         },
         //---------------------------------------------------------------------
-        getRolePermission(item) {
-            
+        showProgress()
+        {
+            this.show_progress_bar = true;
         },
+        //---------------------------------------------------------------------
+        hideProgress()
+        {
+            this.show_progress_bar = false;
+        }
         //---------------------------------------------------------------------
     }
 });

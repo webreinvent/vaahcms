@@ -58,7 +58,7 @@ const useVaah = vaah();
                      header="Permissions"
              >
                  <template #body="props">
-                     <Button class="p-button p-button-rounded"
+                     <Button class="p-button-sm p-button-rounded"
                              v-tooltip.top="'View Permissions'"
                              @click="store.toPermission(props.data)"
                      >
@@ -71,7 +71,7 @@ const useVaah = vaah();
                      header="Users"
             >
                  <template #body="props">
-                     <Button class="p-button p-button-rounded"
+                     <Button class="p-button-sm p-button-rounded"
                              v-tooltip.top="'View Users'"
                      >
                          {{ props.data.count_users }} / {{ store.total_users }}
