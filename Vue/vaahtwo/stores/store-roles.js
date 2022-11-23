@@ -2,12 +2,15 @@ import {watch} from 'vue'
 import {acceptHMRUpdate, defineStore} from 'pinia'
 import qs from 'qs'
 import {vaah} from '../vaahvue/pinia/vaah'
+import { useRootStore } from "./root";
 
 let model_namespace = 'WebReinvent\\VaahCms\\Models\\Role';
 
 
 let base_url = document.getElementsByTagName('base')[0].getAttribute("href");
 let ajax_url = base_url + "/vaah/roles";
+
+// const root = useRootStore();
 
 let empty_states = {
     query: {
@@ -70,6 +73,7 @@ export const useRoleStore = defineStore({
         role_user_menu_items: null,
         role_users: null,
         search_item: null,
+        active_permission: null,
     }),
     getters: {
 
@@ -1095,6 +1099,10 @@ export const useRoleStore = defineStore({
                     }
                 }
             ]
+        },
+        //---------------------------------------------------------------------
+        hasPermission(slug) {
+            vaah().hasPermission(root.permission, slug);
         },
         //---------------------------------------------------------------------
         showProgress()

@@ -16,20 +16,15 @@ onMounted(async () => {
 </script>
 <template>
     <div>
-        <DataTable :value="store.permission.list.data"
-                   v-if="store && store.permission"
-                   responsiveLayout="scroll">
-            <Column field="created_at" header="Created At">
-                <template #body="prop">
-                    {{ prop.data.created_at }}
-                </template>
-            </Column>
-            <Column field="updated_at" header="Updated At">
-                <template #body="prop">
-                    {{ prop.data.updated_at }}
-                </template>
-            </Column>
-        </DataTable>
+        <div v-if="store && store.active_permission">
+            <p class="text-sm">Created By : <span> {{ store.active_permission.json.created_by }}</span></p>
+            <Divider />
+            <p class="text-sm">Updated By : <span> {{ store.active_permission.json.updated_by }}</span></p>
+            <Divider />
+            <p class="text-sm">Created At : <span> {{ store.active_permission.json.created_at }}</span></p>
+            <Divider />
+            <p class="text-sm">Updated At : <span> {{ store.active_permission.json.updated_at }}</span></p>
+        </div>
 
     </div>
 </template>

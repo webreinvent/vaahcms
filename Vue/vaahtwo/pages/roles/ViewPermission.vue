@@ -5,12 +5,14 @@ import { useDialog } from 'primevue/usedialog';
 import { useConfirm } from "primevue/useconfirm";
 
 import { useRoleStore } from '../../stores/store-roles'
+import { useRootStore } from "../../stores/root"
 
 import VhViewRow from '../../vaahvue/vue-three/primeflex/VhViewRow.vue';
 import PermissionDetailsView from '../../components/molecules/PermissionDetailsView.vue';
 import {vaah} from "../../vaahvue/pinia/vaah";
 const store = useRoleStore();
 const route = useRoute();
+const root = useRootStore();
 
 onMounted(async () => {
 
@@ -33,6 +35,11 @@ onMounted(async () => {
     }
 
     await store.getPermissionMenuItems();
+
+    /**
+     * Fetch the permissions from the database
+     */
+    await root.getPermission();
 });
 
 
@@ -92,6 +99,9 @@ const confirmChangeStatus = (event, id) => {
 <template>
     <div class="col-6">
         <Panel v-if="store && store.item">
+            <p v-if="root && root.permission">
+                {{ root.permission }}
+            </p>
             <template class="p-1" #header>
                 <div class="flex flex-row">
 
@@ -181,7 +191,7 @@ const confirmChangeStatus = (event, id) => {
                 <Column>
                     <template #body="prop">
                         <Button class="p-button-sm p-button-rounded p-button-outlined"
-                                @click="openViewModal"
+                                @click="openViewModal(), store.active_permission = prop.data"
                                 icon="pi pi-eye"
                                 label="View"
                         />
