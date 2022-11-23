@@ -29,13 +29,15 @@ onMounted(async () => {
     {
         await store.getItem(route.params.id);
     }
+
+    await store.getPermissionMenuItems();
 });
 
 //--------toggle item menu--------//
-const item_menu_state = ref();
+const permission_menu = ref();
 
 const toggleItemMenu = (event) => {
-    item_menu_state.value.toggle(event);
+    permission_menu.value.toggle(event);
 };
 //--------toggle item menu--------//
 
@@ -84,8 +86,8 @@ const openViewModal = () => {
                         aria-haspopup="true"
                     />
 
-                    <Menu ref="item_menu_state"
-                          :model="store.menu_items"
+                    <Menu ref="permission_menu"
+                          :model="store.permission_menu_items"
                           :popup="true"
                     />
                     <!--/item_menu-->
@@ -121,13 +123,13 @@ const openViewModal = () => {
                         <Button label="Yes"
                                 class="p-button-sm p-button-success p-button-rounded"
                                 v-if="prop.data.pivot.is_active === 1"
-                                @click="store.changePermission(prop.data)"
+                                @click="store.changeRolePermission(prop.data)"
                         />
 
                         <Button label="No"
                                 class="p-button-sm p-button-danger p-button-rounded"
                                 v-else
-                                @click="store.changePermission(prop.data)"
+                                @click="store.changeRolePermission(prop.data)"
                         />
                     </template>
                 </Column>
@@ -140,11 +142,13 @@ const openViewModal = () => {
                         <Button label="Active"
                                 class="p-button-sm p-button-rounded p-button-success"
                                 v-if="prop.data.is_active === 1"
+                                @click="store.changeRoleStatus(prop.data.id)"
                         />
 
                         <Button label="Inactive"
                                 class="p-button-sm p-button-danger p-button-rounded"
                                 v-else
+                                @click="store.changeRoleStatus(prop.data.id)"
                         />
                     </template>
                 </Column>
@@ -171,6 +175,8 @@ const openViewModal = () => {
             </Paginator>
             <!--/paginator-->
         </Panel>
+
+        <ConfirmDialog />
 
         <DynamicDialog  />
     </div>

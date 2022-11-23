@@ -65,9 +65,9 @@ export const useRoleStore = defineStore({
         form_menu_list: [],
         total_permissions: null,
         total_users: null,
-        menu_items: null,
+        permission_menu_items: null,
         permission: null,
-        role_user_menu: null,
+        role_user_menu_items: null,
         role_users: null,
         search_item: null,
     }),
@@ -648,10 +648,46 @@ export const useRoleStore = defineStore({
             this.hideProgress();
         },
         //---------------------------------------------------------------------
-        changePermission (item) {
+        changeRoleStatus (id) {
+
+            this.$confirm.require({
+                message: 'Are you sure you want to <b>change</b> the status? This action will impact all roles that assign to this permission.',
+                header: 'Changing Status',
+                icon: 'pi pi-exclamation-triangle',
+
+                accept: () => {
+
+                    this.showProgress();
+
+                    let params = {
+                        inputs: [id],
+                        data: null
+                    };
+
+                    vaah().ajax(
+                        this.ajax_url+'/actions/change-role-permission-status',
+                        this.afterChangeRoleStatus,
+                        params
+                    );
+                },
+
+                reject: () => {
+                    this.$toast.add({severity:'error', summary:'Rejected', detail:'You have rejected', life: 3000});
+                }
+            });
+        },
+        //---------------------------------------------------------------------
+        afterChangeRoleStatus (data,res) {
+
+            this.hideProgress();
+            this.getItemPermissions(this.filter.page);
+            this.$store.dispatch('root/reloadPermissions');
+        },
+        //---------------------------------------------------------------------
+        changeRolePermission (item) {
 
             let inputs = {
-                id : this.list.data.id,
+                id : this.item.id,
                 permission_id : item.id,
             };
 
@@ -664,6 +700,42 @@ export const useRoleStore = defineStore({
             }
 
             this.actions(false, 'toggle_permission_active_status', inputs, data)
+
+        },
+        //---------------------------------------------------------------------
+        changeUserRole: function (item) {
+
+            let params = {
+                id : this.item.id,
+                user_id : item.id,
+            };
+
+            let data = {};
+
+            if(item.pivot.is_active)
+            {
+                data.is_active = 0;
+            } else
+            {
+                data.is_active = 1;
+            }
+
+            this.actions(false, 'toggle_user_active_status', params, data)
+
+        },
+        //---------------------------------------------------------------------
+        bulkActions (input, action) {
+            let params = {
+                id: this.item.id,
+                permission_id: null,
+                user_id: null
+            };
+
+            let data = {
+                is_active: input
+            };
+
+            this.actions(false, action, params, data)
 
         },
         //---------------------------------------------------------------------
@@ -685,15 +757,15 @@ export const useRoleStore = defineStore({
 
             vaah().ajax(
                 this.ajax_url+'/actions/' + action,
-                this.afterGetItemUsers,
+                this.afterActions,
                 params
             );
         },
         //---------------------------------------------------------------------
         afterActions (data,res) {
-
             this.hideProgress();
             this.getItemPermissions(this.item.id);
+            this.getItemUsers(this.item.id);
         },
         //---------------------------------------------------------------------
         closeForm()
@@ -1009,13 +1081,36 @@ export const useRoleStore = defineStore({
             ]
         },
         //---------------------------------------------------------------------
-        getRoleUserMenuItems() {
-            this.role_user_menu = [
+        async getPermissionMenuItems() {
+            this.permission_menu_items = [
                 {
-                    label: ' Attach To All Users'
+                    label: 'Active All Permissions',
+                    command: () => {
+                        this.bulkActions(1, 'toggle_permission_active_status');
+                    }
                 },
                 {
-                    label: 'Detach To All Users'
+                    label: 'Inactive All Permissions',
+                    command: () => {
+                        this.bulkActions(0, 'toggle_permission_active_status');
+                    }
+                }
+            ]
+        },
+        //---------------------------------------------------------------------
+        async getRoleUserMenuItems() {
+            this.role_user_menu_items = [
+                {
+                    label: 'Attach To All Users',
+                    command: () => {
+                        this.bulkActions(1, 'toggle_user_active_status');
+                    }
+                },
+                {
+                    label: 'Detach To All Users',
+                    command: () => {
+                        this.bulkActions(0, 'toggle_user_active_status');
+                    }
                 }
             ]
         },

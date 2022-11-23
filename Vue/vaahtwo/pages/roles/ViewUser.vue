@@ -26,6 +26,8 @@ onMounted(async () => {
     {
         await store.getItem(route.params.id);
     }
+
+    await store.getRoleUserMenuItems();
 });
 
 //--------toggle item menu--------//
@@ -80,7 +82,7 @@ const toggleItemMenu = (event) => {
                     />
 
                     <Menu ref="uer_items_menu"
-                          :model="store.role_user_menu"
+                          :model="store.role_user_menu_items"
                           :popup="true"
                     />
                     <!--/item_menu-->
@@ -122,11 +124,13 @@ const toggleItemMenu = (event) => {
                         <Button label="Yes"
                                 class="p-button-sm p-button-success p-button-rounded"
                                 v-if="prop.data.pivot.is_active === 1"
+                                @click="store.changeUserRole(prop.data)"
                         />
 
                         <Button label="No"
                                 class="p-button-sm p-button-danger p-button-rounded"
                                 v-else
+                                @click="store.changeUserRole(prop.data)"
                         />
                     </template>
                 </Column>

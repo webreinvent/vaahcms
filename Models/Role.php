@@ -678,7 +678,7 @@ class Role extends Model
                     return $response;
                 }
 
-                $response = Role::bulkChangeUserStatus($request);
+                $response = \WebReinvent\VaahCms\Entities\Role::bulkChangeUserStatus($request);
 
                 break;
             //------------------------------------
