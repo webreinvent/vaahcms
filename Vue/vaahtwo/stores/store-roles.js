@@ -650,31 +650,13 @@ export const useRoleStore = defineStore({
         //---------------------------------------------------------------------
         changeRoleStatus (id) {
 
-            this.$confirm.require({
-                message: 'Are you sure you want to <b>change</b> the status? This action will impact all roles that assign to this permission.',
-                header: 'Changing Status',
-                icon: 'pi pi-exclamation-triangle',
+            let inputs = {
+                inputs: [id],
+            };
 
-                accept: () => {
+            let data = {};
 
-                    this.showProgress();
-
-                    let params = {
-                        inputs: [id],
-                        data: null
-                    };
-
-                    vaah().ajax(
-                        this.ajax_url+'/actions/change-role-permission-status',
-                        this.afterChangeRoleStatus,
-                        params
-                    );
-                },
-
-                reject: () => {
-                    this.$toast.add({severity:'error', summary:'Rejected', detail:'You have rejected', life: 3000});
-                }
-            });
+            this.actions(false, 'change-role-permission-status', inputs, data);
         },
         //---------------------------------------------------------------------
         afterChangeRoleStatus (data,res) {

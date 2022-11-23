@@ -693,7 +693,7 @@ class Role extends Model
                     return $response;
                 }
 
-                $response = Role::bulkPermissionStatusChange($request);
+                $response = \WebReinvent\VaahCms\Entities\Role::bulkPermissionStatusChange($request);
                 break;
             //------------
             //------------------------------------

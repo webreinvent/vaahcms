@@ -2,11 +2,13 @@
 import { h, onMounted, ref} from "vue";
 import { useRoute } from 'vue-router';
 import { useDialog } from 'primevue/usedialog';
+import { useConfirm } from "primevue/useconfirm";
 
 import { useRoleStore } from '../../stores/store-roles'
 
 import VhViewRow from '../../vaahvue/vue-three/primeflex/VhViewRow.vue';
 import PermissionDetailsView from '../../components/molecules/PermissionDetailsView.vue';
+import {vaah} from "../../vaahvue/pinia/vaah";
 const store = useRoleStore();
 const route = useRoute();
 
@@ -33,6 +35,7 @@ onMounted(async () => {
     await store.getPermissionMenuItems();
 });
 
+
 //--------toggle item menu--------//
 const permission_menu = ref();
 
@@ -40,6 +43,7 @@ const toggleItemMenu = (event) => {
     permission_menu.value.toggle(event);
 };
 //--------toggle item menu--------//
+
 
 //--------toggle dynamic modal--------//
 const dialog = useDialog();
@@ -62,6 +66,27 @@ const openViewModal = () => {
 
 //--------toggle dynamic modal--------//
 
+
+//--------toggle confirm modal--------//
+const confirm = useConfirm();
+
+const confirmChangeStatus = (event, id) => {
+    confirm.require({
+        group: 'templating',
+        message: 'Are you sure you want to change the status? This action will impact all roles that assign to this permission.',
+        header: 'Changing Status',
+        icon: 'pi pi-exclamation-circle text-red-600',
+        acceptClass:'p-button p-button-danger is-small',
+        acceptLabel:'Change',
+        rejectLabel:'Cancel',
+        rejectClass:' is-small btn-dark',
+
+        accept: () => {
+            store.changeRoleStatus(id);
+        },
+    })
+};
+//--------toggle confirm modal--------//
 </script>
 
 <template>
@@ -142,13 +167,13 @@ const openViewModal = () => {
                         <Button label="Active"
                                 class="p-button-sm p-button-rounded p-button-success"
                                 v-if="prop.data.is_active === 1"
-                                @click="store.changeRoleStatus(prop.data.id)"
+                                @click="confirmChangeStatus(event, prop.data.id)"
                         />
 
                         <Button label="Inactive"
                                 class="p-button-sm p-button-danger p-button-rounded"
                                 v-else
-                                @click="store.changeRoleStatus(prop.data.id)"
+                                @click="confirmChangeStatus(event, prop.data.id)"
                         />
                     </template>
                 </Column>
@@ -176,7 +201,16 @@ const openViewModal = () => {
             <!--/paginator-->
         </Panel>
 
-        <ConfirmDialog />
+        <ConfirmDialog group="templating" class="is-small"
+                       :style="{width: '400px'}"
+                       :breakpoints="{'600px': '100vw'}">
+            <template #message="slotProps">
+                <div class="flex">
+                    <i :class="slotProps.message.icon" style="font-size: 1.5rem"></i>
+                    <p class="pl-2 text-sm">{{slotProps.message.message}}</p>
+                </div>
+            </template>
+        </ConfirmDialog>
 
         <DynamicDialog  />
     </div>
