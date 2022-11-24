@@ -19,6 +19,9 @@ let empty_states = {
             is_active: null,
             trashed: null,
             sort: null,
+            module: null,
+            section: null,
+            role_permission_q: null
         },
     },
     action: {
@@ -73,6 +76,7 @@ export const useRoleStore = defineStore({
         search_item: null,
         active_role_permission: null,
         active_role_user: null,
+        module_section_list: null,
     }),
     getters: {
 
@@ -751,6 +755,28 @@ export const useRoleStore = defineStore({
             this.hideProgress();
             this.getItemPermissions(this.item.id);
             this.getItemUsers(this.item.id);
+        },
+        //---------------------------------------------------------------------
+        getModuleSection() {
+
+            let params = {
+                params: {
+                    module: this.query.filter.module,
+                },
+                method: 'post',
+            };
+
+            vaah().ajax(
+                this.ajax_url+'/getModuleSections',
+                this.afterAetModuleSection,
+                params
+            );
+        },
+        //---------------------------------------------------------------------
+        afterAetModuleSection(data, res) {
+            if(data){
+                this.module_section_list = data[0];
+            }
         },
         //---------------------------------------------------------------------
         closeForm()

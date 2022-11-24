@@ -137,6 +137,48 @@ const confirmChangeStatus = (event, id) => {
                 </div>
             </template>
 
+            <div class="flex justify-content-between">
+
+                <div v-if="store && store.assets">
+                    <Dropdown v-model="store.query.filter.module"
+                              :options="store.assets.module"
+                              optionLabel="module"
+                              placeholder="Select a Module"
+                              @change="store.getModuleSection()"
+                    />
+                </div>
+
+<!--                v-for="option in store.module_section_list"-->
+<!--                {{ store.module_section_list }}-->
+                <div v-if="store.query.filter.module">
+                    <Dropdown v-model="store.query.filter.section"
+
+                              :options="store.module_section_list"
+                              optionLabel="section"
+                              placeholder="Select a Section"
+                    >
+                    </Dropdown>
+                </div>
+
+                <div class="grid p-fluid">
+                    <div class="col-12">
+                        <div class="p-inputgroup ">
+
+                            <InputText v-model="store.query.filter.role_permission_q"
+                                       @keyup.enter="store.delayedItemUsersSearch()"
+                                       @keyup.enter.native="store.delayedItemUsersSearch()"
+                                       @keyup.13="store.delayedItemUsersSearch()"
+                                       placeholder="Search"
+                            />
+
+                            <Button @click="store.delayedItemUsersSearch()"
+                                    icon="pi pi-search"
+                            />
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <DataTable v-if="store && store.permission"
                        :value="store.permission.list.data"
                        dataKey="id"

@@ -80,6 +80,11 @@ function () {
      */
     Route::post('/actions/{action_name}', 'RolesController@postActions')
         ->name('backend.vaah.roles.actions');
+    /**
+     * get module section
+     */
+    Route::post('/getModuleSections', 'RolesController@getModuleSections')
+        ->name('backend.vaah.roles.getModuleSections');
     //---------------------------------------------------------
 
 });

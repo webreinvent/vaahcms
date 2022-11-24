@@ -704,6 +704,21 @@ class Role extends Model
         return response()->json($response);
     }
     //-------------------------------------------------
+    public static function getModuleSections($request)
+    {
+        $item = Permission::where('module',$request->module)->withTrashed()->select('section')->get()->unique('section');
+
+//        $item_array = $item->pluck('section');
+
+        $item_array = [ 'section' => $item];
+
+        $response['success'] = true;
+        $response['data'] = $item;
+
+        return $response;
+
+
+    }
     //-------------------------------------------------
 
 
