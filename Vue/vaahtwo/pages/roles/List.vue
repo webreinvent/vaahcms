@@ -3,14 +3,13 @@ import {onMounted, reactive, ref} from "vue";
 import {useRoute} from 'vue-router';
 
 import {useRoleStore} from '../../stores/store-roles'
+import { useConfirm } from "primevue/useconfirm"
 
 import Actions from "./components/Actions.vue";
 import Table from "./components/Table.vue";
 
 const store = useRoleStore();
 const route = useRoute();
-
-import { useConfirm } from "primevue/useconfirm";
 const confirm = useConfirm();
 
 

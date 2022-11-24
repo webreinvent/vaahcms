@@ -184,6 +184,10 @@ export const useRootStore = defineStore({
                     url: "http://localhost/tanmoy.d001/vaahcms-dev-env/public/backend/logout"
                 }
             ]
+        afterGetPermission(data, res) {
+            if (data) {
+                this.permission = data.list;
+            }
         },
         //-----------------------------------------------------------------------
         async getIsActiveStatusOptions() {

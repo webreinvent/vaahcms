@@ -99,9 +99,6 @@ const confirmChangeStatus = (event, id) => {
 <template>
     <div class="col-6">
         <Panel v-if="store && store.item">
-            <p v-if="root && root.permission">
-                {{ root.permission }}
-            </p>
             <template class="p-1" #header>
                 <div class="flex flex-row">
 
@@ -113,18 +110,24 @@ const confirmChangeStatus = (event, id) => {
 
             <template #icons>
                 <div class="p-inputgroup">
-                    <!--/item_menu-->
-                    <Button
-                        type="button"
-                        @click="toggleItemMenu"
-                        icon="pi pi-angle-down"
-                        aria-haspopup="true"
-                    />
 
-                    <Menu ref="permission_menu"
-                          :model="store.permission_menu_items"
-                          :popup="true"
-                    />
+                    <!--/item_menu-->
+                    <template v-if="store.hasPermission('can-update-roles')
+                                    || store.hasPermission('can-manage-roles')"
+                              class="control"
+                    >
+                        <Button
+                            type="button"
+                            @click="toggleItemMenu"
+                            icon="pi pi-angle-down"
+                            aria-haspopup="true"
+                        />
+
+                        <Menu ref="permission_menu"
+                              :model="store.permission_menu_items"
+                              :popup="true"
+                        />
+                        </template>
                     <!--/item_menu-->
 
                     <Button class="p-button-primary"
@@ -154,7 +157,9 @@ const confirmChangeStatus = (event, id) => {
                         header="Has Permission"
                 >
 
-                    <template #body="prop">
+                    <template #body="prop"
+                              v-if="store.hasPermission('can-update-roles') || store.hasPermission('can-manage-roles')"
+                    >
                         <Button label="Yes"
                                 class="p-button-sm p-button-success p-button-rounded"
                                 v-if="prop.data.pivot.is_active === 1"
@@ -167,13 +172,32 @@ const confirmChangeStatus = (event, id) => {
                                 @click="store.changeRolePermission(prop.data)"
                         />
                     </template>
+
+                    <template #body="prop"
+                              v-else
+                    >
+                        <Button label="Yes"
+                                class="p-button-sm p-button-success p-button-rounded"
+                                v-if="prop.data.pivot.is_active === 1"
+                                disabled
+                        />
+
+                        <Button label="No"
+                                class="p-button-sm p-button-danger p-button-rounded"
+                                v-else
+                                disabled
+                        />
+                    </template>
                 </Column>
 
                 <Column field="is-active"
                         header="Permission Status"
                 >
 
-                    <template #body="prop">
+                    <template #body="prop"
+                              v-if="(store.hasPermission('can-update-permissions')|| store.hasPermission('can-manage-permissions'))
+                               && (store.hasPermission('can-update-roles')|| store.hasPermission('can-manage-roles'))"
+                    >
                         <Button label="Active"
                                 class="p-button-sm p-button-rounded p-button-success"
                                 v-if="prop.data.is_active === 1"
@@ -184,6 +208,22 @@ const confirmChangeStatus = (event, id) => {
                                 class="p-button-sm p-button-danger p-button-rounded"
                                 v-else
                                 @click="confirmChangeStatus(event, prop.data.id)"
+                        />
+                    </template>
+
+                    <template #body="prop"
+                              v-else
+                    >
+                        <Button label="Active"
+                                class="p-button-sm p-button-rounded p-button-success"
+                                v-if="prop.data.is_active === 1"
+                                disabled
+                        />
+
+                        <Button label="Inactive"
+                                class="p-button-sm p-button-danger p-button-rounded"
+                                v-else
+                                disabled
                         />
                     </template>
                 </Column>
@@ -206,14 +246,15 @@ const confirmChangeStatus = (event, id) => {
                        :rows="store.query.rows"
                        :totalRecords="store.permission.list.total"
                        @page="store.permissionPaginate($event)"
-                       :rowsPerPageOptions="store.rows_per_page">
-            </Paginator>
+                       :rowsPerPageOptions="store.rows_per_page"
+            />
             <!--/paginator-->
         </Panel>
 
         <ConfirmDialog group="templating" class="is-small"
                        :style="{width: '400px'}"
-                       :breakpoints="{'600px': '100vw'}">
+                       :breakpoints="{'600px': '100vw'}"
+        >
             <template #message="slotProps">
                 <div class="flex">
                     <i :class="slotProps.message.icon" style="font-size: 1.5rem"></i>

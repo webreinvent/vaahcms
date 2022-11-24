@@ -10,8 +10,6 @@ let model_namespace = 'WebReinvent\\VaahCms\\Models\\Role';
 let base_url = document.getElementsByTagName('base')[0].getAttribute("href");
 let ajax_url = base_url + "/vaah/roles";
 
-// const root = useRootStore();
-
 let empty_states = {
     query: {
         page: null,
@@ -1103,7 +1101,8 @@ export const useRoleStore = defineStore({
         },
         //---------------------------------------------------------------------
         hasPermission(slug) {
-            vaah().hasPermission(root.permission, slug);
+            const root = useRootStore();
+            return vaah().hasPermission(root.permission, slug);
         },
         //---------------------------------------------------------------------
         showProgress()

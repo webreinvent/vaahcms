@@ -97,17 +97,22 @@ const openDetailsViewModal = () => {
             <template #icons>
                 <div class="p-inputgroup">
                     <!--/item_menu-->
-                    <Button
-                        type="button"
-                        @click="toggleItemMenu"
-                        icon="pi pi-angle-down"
-                        aria-haspopup="true"
-                    />
+                    <template v-if="store.hasPermission('can-update-roles')
+                                    || store.hasPermission('can-manage-roles')"
+                              class="control"
+                    >
+                        <Button
+                            type="button"
+                            @click="toggleItemMenu"
+                            icon="pi pi-angle-down"
+                            aria-haspopup="true"
+                        />
 
-                    <Menu ref="uer_items_menu"
-                          :model="store.role_user_menu_items"
-                          :popup="true"
-                    />
+                        <Menu ref="uer_items_menu"
+                              :model="store.role_user_menu_items"
+                              :popup="true"
+                        />
+                    </template>
                     <!--/item_menu-->
 
                     <Button class="p-button-primary"
@@ -143,7 +148,10 @@ const openDetailsViewModal = () => {
                 <Column field="has-role"
                         header="Has Role"
                 >
-                    <template #body="prop">
+                    <template #body="prop"
+                              v-if="store.hasPermission('can-update-roles')||
+                                    store.hasPermission('can-manage-roles')"
+                    >
                         <Button label="Yes"
                                 class="p-button-sm p-button-success p-button-rounded"
                                 v-if="prop.data.pivot.is_active === 1"
@@ -154,6 +162,22 @@ const openDetailsViewModal = () => {
                                 class="p-button-sm p-button-danger p-button-rounded"
                                 v-else
                                 @click="store.changeUserRole(prop.data)"
+                        />
+                    </template>
+
+                    <template #body="prop"
+                              v-else
+                    >
+                        <Button label="Yes"
+                                class="p-button-sm p-button-success p-button-rounded"
+                                v-if="prop.data.pivot.is_active === 1"
+                                disabled
+                        />
+
+                        <Button label="No"
+                                class="p-button-sm p-button-danger p-button-rounded"
+                                v-else
+                                disabled
                         />
                     </template>
                 </Column>
@@ -176,8 +200,8 @@ const openDetailsViewModal = () => {
                        :rows="store.query.rows"
                        :totalRecords="store.role_users.list.total"
                        @page="store.permissionPaginate($event)"
-                       :rowsPerPageOptions="store.rows_per_page">
-            </Paginator>
+                       :rowsPerPageOptions="store.rows_per_page"
+            />
             <!--/paginator-->
         </Panel>
 
