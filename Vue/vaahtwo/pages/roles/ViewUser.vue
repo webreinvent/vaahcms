@@ -1,8 +1,10 @@
 <script setup>
-import {onMounted, ref} from "vue";
+import { h, onMounted, ref } from "vue";
 import { useRoute } from 'vue-router';
 
 import { useRoleStore } from '../../stores/store-roles';
+import { useDialog } from "primevue/usedialog";
+import RoleUserDetailsView from "../../components/molecules/RoleUserDetailsView.vue";
 
 const store = useRoleStore();
 const route = useRoute();
@@ -37,6 +39,27 @@ const toggleItemMenu = (event) => {
     uer_items_menu.value.toggle(event);
 };
 //--------toggle item menu--------//
+
+
+//--------toggle dynamic modal--------//
+const dialog = useDialog();
+
+const openDetailsViewModal = () => {
+    const dialogRef = dialog.open(RoleUserDetailsView, {
+        props: {
+            header: 'Details',
+            style: {
+                width: '50vw',
+            },
+            breakpoints:{
+                '960px': '75vw',
+                '640px': '90vw'
+            },
+            modal: true
+        }
+    });
+}
+//--------toggle dynamic modal--------//
 </script>
 
 <template>
@@ -134,6 +157,16 @@ const toggleItemMenu = (event) => {
                         />
                     </template>
                 </Column>
+
+                <Column>
+                    <template #body="prop">
+                        <Button class="p-button-sm p-button-rounded p-button-outlined"
+                                @click="openDetailsViewModal(), store.active_role_user = prop.data"
+                                icon="pi pi-eye"
+                                label="View"
+                        />
+                    </template>
+                </Column>
             </DataTable>
 
             <Divider />
@@ -147,5 +180,7 @@ const toggleItemMenu = (event) => {
             </Paginator>
             <!--/paginator-->
         </Panel>
+
+        <DynamicDialog  />
     </div>
 </template>

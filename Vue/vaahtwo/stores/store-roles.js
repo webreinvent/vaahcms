@@ -73,7 +73,8 @@ export const useRoleStore = defineStore({
         role_user_menu_items: null,
         role_users: null,
         search_item: null,
-        active_permission: null,
+        active_role_permission: null,
+        active_role_user: null,
     }),
     getters: {
 

@@ -16,14 +16,14 @@ onMounted(async () => {
 </script>
 <template>
     <div>
-        <div v-if="store && store.active_permission">
-            <p class="text-sm">Created By : <span> {{ store.active_permission.json.created_by }}</span></p>
+        <div v-if="store && store.active_role_permission">
+            <p class="text-sm">Created By : <span> {{ store.active_role_permission.json.created_by }}</span></p>
             <Divider />
-            <p class="text-sm">Updated By : <span> {{ store.active_permission.json.updated_by }}</span></p>
+            <p class="text-sm">Updated By : <span> {{ store.active_role_permission.json.updated_by }}</span></p>
             <Divider />
-            <p class="text-sm">Created At : <span> {{ store.active_permission.json.created_at }}</span></p>
+            <p class="text-sm">Created At : <span> {{ store.active_role_permission.json.created_at }}</span></p>
             <Divider />
-            <p class="text-sm">Updated At : <span> {{ store.active_permission.json.updated_at }}</span></p>
+            <p class="text-sm">Updated At : <span> {{ store.active_role_permission.json.updated_at }}</span></p>
         </div>
 
     </div>

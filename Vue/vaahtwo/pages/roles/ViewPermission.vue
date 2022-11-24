@@ -191,7 +191,7 @@ const confirmChangeStatus = (event, id) => {
                 <Column>
                     <template #body="prop">
                         <Button class="p-button-sm p-button-rounded p-button-outlined"
-                                @click="openViewModal(), store.active_permission = prop.data"
+                                @click="openViewModal(), store.active_role_permission = prop.data"
                                 icon="pi pi-eye"
                                 label="View"
                         />
