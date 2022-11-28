@@ -12,19 +12,19 @@ const useVaah = vaah();
     <div v-if="store.list">
         <!--table-->
          <DataTable :value="store.list.data"
-                       dataKey="id"
-                   class="p-datatable-sm"
-                   v-model:selection="store.action.items"
-                   stripedRows
-                   responsiveLayout="scroll">
+                    dataKey="id"
+                    class="p-datatable-sm"
+                    v-model:selection="store.action.items"
+                    stripedRows
+                    responsiveLayout="scroll"
+         >
 
             <Column selectionMode="multiple"
                     v-if="store.isViewLarge()"
-                    headerStyle="width: 3em">
-            </Column>
+                    headerStyle="width: 3em"
+            />
 
-            <Column field="id" header="ID" :style="{width: store.getIdWidth()}" :sortable="true">
-            </Column>
+            <Column field="id" header="ID" :style="{width: store.getIdWidth()}" :sortable="true" />
 
             <Column field="name" header="Name"
                     :sortable="true">
@@ -32,77 +32,110 @@ const useVaah = vaah();
                 <template #body="prop">
                     <Badge v-if="prop.data.deleted_at"
                            value="Trashed"
-                           severity="danger"></Badge>
-                    {{prop.data.name}}
+                           severity="danger"
+                    />
+                    {{ prop.data.name }}
+                </template>
+            </Column>
+
+             <Column field="slug"
+                     header="Slug"
+                    :sortable="true"
+                     v-if="store.isViewLarge()"
+             >
+                <template #body="prop">
+                    {{ prop.data.slug }}
+                </template>
+            </Column>
+
+             <Column field="total_roles"
+                     header="Roles"
+             >
+                 <template #body="prop">
+                     <Button class="p-button p-button-rounded"
+                             v-tooltip.top="'View Role'"
+                             @click="store.toRole(prop.data)"
+                     >
+                        {{ prop.data.count_roles }} / {{store.total_roles }}
+                     </Button>
+                 </template>
+             </Column>
+
+             <Column field="total_users"
+                     header="Users"
+             >
+                 <template #body="prop">
+                     <Button class="p-button p-button-rounded"
+                             v-tooltip.top="'User'"
+                             disabled
+                     >
+                         {{ prop.data.count_users }} / {{store.total_users }}
+                     </Button>
+                 </template>
+             </Column>
+
+            <Column field="updated_at" header="Updated"
+                    v-if="store.isViewLarge()"
+                    style="width:150px;"
+                    :sortable="true"
+            >
+                <template #body="prop">
+                    {{ useVaah.ago(prop.data.updated_at) }}
                 </template>
 
             </Column>
 
-
-                <Column field="updated_at" header="Updated"
-                        v-if="store.isViewLarge()"
-                        style="width:150px;"
-                        :sortable="true">
-
-                    <template #body="prop">
-                        {{useVaah.ago(prop.data.updated_at)}}
-                    </template>
-
-                </Column>
-
             <Column field="is_active" v-if="store.isViewLarge()"
                     :sortable="true"
                     style="width:100px;"
-                    header="Is Active">
-
+                    header="Is Active"
+            >
                 <template #body="prop">
                     <InputSwitch v-model.bool="prop.data.is_active"
                                  v-bind:false-value="0"  v-bind:true-value="1"
                                  class="p-inputswitch-sm"
-                                 @input="store.toggleIsActive(prop.data)">
-                    </InputSwitch>
+                                 @input="store.toggleIsActive(prop.data)"
+                    />
                 </template>
 
             </Column>
 
             <Column field="actions" style="width:150px;"
                     :style="{width: store.getActionWidth() }"
-                    :header="store.getActionLabel()">
-
+                    :header="store.getActionLabel()"
+            >
                 <template #body="prop">
-                    <div class="p-inputgroup ">
+                    <div class="p-inputgroup">
 
                         <Button class="p-button-tiny p-button-text"
                                 v-tooltip.top="'View'"
                                 @click="store.toView(prop.data)"
-                                icon="pi pi-eye" />
+                                icon="pi pi-eye"
+                        />
 
                         <Button class="p-button-tiny p-button-text"
                                 v-tooltip.top="'Update'"
                                 @click="store.toEdit(prop.data)"
-                                icon="pi pi-pencil" />
+                                icon="pi pi-pencil"
+                        />
 
                         <Button class="p-button-tiny p-button-danger p-button-text"
                                 v-if="store.isViewLarge() && !prop.data.deleted_at"
                                 @click="store.itemAction('trash', prop.data)"
                                 v-tooltip.top="'Trash'"
-                                icon="pi pi-trash" />
+                                icon="pi pi-trash"
+                        />
 
 
                         <Button class="p-button-tiny p-button-success p-button-text"
                                 v-if="store.isViewLarge() && prop.data.deleted_at"
                                 @click="store.itemAction('restore', prop.data)"
                                 v-tooltip.top="'Restore'"
-                                icon="pi pi-replay" />
-
-
+                                icon="pi pi-replay"
+                        />
                     </div>
-
                 </template>
-
-
             </Column>
-
 
         </DataTable>
         <!--/table-->
@@ -113,8 +146,8 @@ const useVaah = vaah();
         <Paginator v-model:rows="store.query.rows"
                    :totalRecords="store.list.total"
                    @page="store.paginate($event)"
-                   :rowsPerPageOptions="store.rows_per_page">
-        </Paginator>
+                   :rowsPerPageOptions="store.rows_per_page"
+        />
         <!--/paginator-->
 
     </div>

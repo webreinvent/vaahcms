@@ -235,10 +235,14 @@ class Permission extends Model
             $rows = $request->rows;
         }
 
+        $total_roles = Role::count();
+        $total_users = User::count();
         $list = $list->paginate($rows);
 
         $response['success'] = true;
         $response['data'] = $list;
+        $response['total_roles'] = $total_roles;
+        $response['total_users'] = $total_users;
 
         return $response;
 
