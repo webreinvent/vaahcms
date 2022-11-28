@@ -65,6 +65,10 @@ function () {
     Route::any('/{id}/action/{action}', 'PermissionsController@itemAction')
         ->name('vh.backend.vaah.api.permissions.item.action');
 
-
+    /**
+     * Get Item Roles
+     */
+    Route::get('/item/{id}/roles', 'PermissionsController@getItemRoles')
+        ->name('backend.vaah.permissions.role');
 
 });

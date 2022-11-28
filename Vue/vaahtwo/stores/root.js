@@ -15,6 +15,8 @@ export const useRootStore = defineStore({
         gutter: 20,
         show_progress_bar: false,
         is_logged_in: false,
+        is_installation_verified: false,
+        permission: null,
         top_menu_items: [
             {
                 to:'/',
@@ -40,7 +42,6 @@ export const useRootStore = defineStore({
                 }
             }
         ],
-        is_installation_verified: false,
     }),
     getters: {},
     actions: {
@@ -103,6 +104,23 @@ export const useRootStore = defineStore({
             this.is_logged_in = true;
         },
         //-----------------------------------------------------------------------
+        async getPermission() {
+            let params = {
+                method: 'post'
+            };
+
+            vaah().ajax(
+                this.json_url+'/permissions',
+                this.afterGetPermission,
+                params
+            );
+        },
+        //-----------------------------------------------------------------------
+        afterGetPermission(data, res) {
+            if (data) {
+                this.permission = data.list;
+            }
+        },
         //---------------------------------------------------------------------
         async verifyInstallStatus() {
 

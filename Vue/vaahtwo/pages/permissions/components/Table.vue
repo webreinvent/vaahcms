@@ -24,12 +24,17 @@ const useVaah = vaah();
                     headerStyle="width: 3em"
             />
 
-            <Column field="id" header="ID" :style="{width: store.getIdWidth()}" :sortable="true" />
+            <Column field="id"
+                    header="ID"
+                    class="text-sm"
+                    :style="{width: store.getIdWidth()}"
+                    :sortable="true"
+            />
 
             <Column field="name" header="Name"
                     :sortable="true">
 
-                <template #body="prop">
+                <template #body="prop" class="text-xs">
                     <Badge v-if="prop.data.deleted_at"
                            value="Trashed"
                            severity="danger"
@@ -43,7 +48,7 @@ const useVaah = vaah();
                     :sortable="true"
                      v-if="store.isViewLarge()"
              >
-                <template #body="prop">
+                <template #body="prop" class="text-xs">
                     {{ prop.data.slug }}
                 </template>
             </Column>
@@ -52,7 +57,7 @@ const useVaah = vaah();
                      header="Roles"
              >
                  <template #body="prop">
-                     <Button class="p-button p-button-rounded"
+                     <Button class="p-button p-button-rounded p-button-xs text-xs"
                              v-tooltip.top="'View Role'"
                              @click="store.toRole(prop.data)"
                      >
@@ -65,7 +70,7 @@ const useVaah = vaah();
                      header="Users"
              >
                  <template #body="prop">
-                     <Button class="p-button p-button-rounded"
+                     <Button class="p-button p-button-rounded p-button-xs text-xs"
                              v-tooltip.top="'User'"
                              disabled
                      >
@@ -79,7 +84,7 @@ const useVaah = vaah();
                     style="width:150px;"
                     :sortable="true"
             >
-                <template #body="prop">
+                <template #body="prop" class="text-sm">
                     {{ useVaah.ago(prop.data.updated_at) }}
                 </template>
 
@@ -125,7 +130,6 @@ const useVaah = vaah();
                                 v-tooltip.top="'Trash'"
                                 icon="pi pi-trash"
                         />
-
 
                         <Button class="p-button-tiny p-button-success p-button-text"
                                 v-if="store.isViewLarge() && prop.data.deleted_at"

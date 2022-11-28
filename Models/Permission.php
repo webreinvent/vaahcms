@@ -396,6 +396,9 @@ class Permission extends Model
             case 'delete-all':
                 self::withTrashed()->forceDelete();
                 break;
+            case 'toggle_role_active_status':
+                $response = \WebReinvent\VaahCms\Entities\Permission::bulkChangeRoleStatus($request);
+                break;
         }
 
         $response['success'] = true;
@@ -540,6 +543,18 @@ class Permission extends Model
     }
 
     //-------------------------------------------------
+    public static function getItemRoles($request, $id)
+    {
+        if (!\Auth::user()->hasPermission('can-read-permissions')) {
+            $response['status'] = 'failed';
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+            return response()->json($response);
+        }
+
+        $response = \WebReinvent\VaahCms\Entities\Permission::getItemRoles($request,$id);
+        return response()->json($response);
+    }
     //-------------------------------------------------
     //-------------------------------------------------
 

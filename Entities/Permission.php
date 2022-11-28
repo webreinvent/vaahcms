@@ -656,19 +656,19 @@ class Permission extends Model {
         $data = array();
 
         if($pivot->created_by && User::find($pivot->created_by)){
-            $data['Created by'] = User::find($pivot->created_by)->name;
+            $data['created_by'] = User::find($pivot->created_by)->name;
         }
 
         if($pivot->updated_by && User::find($pivot->updated_by)){
-            $data['Updated by'] = User::find($pivot->updated_by)->name;
+            $data['updated_by'] = User::find($pivot->updated_by)->name;
         }
 
         if($pivot->created_at){
-            $data['Created at'] = date('d-m-Y H:i:s', strtotime($pivot->created_at));
+            $data['created_at'] = date('d-m-Y H:i:s', strtotime($pivot->created_at));
         }
 
         if($pivot->updated_at){
-            $data['Updated at'] = date('d-m-Y H:i:s', strtotime($pivot->updated_at));
+            $data['updated_at'] = date('d-m-Y H:i:s', strtotime($pivot->updated_at));
         }
 
         return $data;
