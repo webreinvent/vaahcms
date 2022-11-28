@@ -2,6 +2,7 @@ import {watch} from 'vue'
 import {acceptHMRUpdate, defineStore} from 'pinia'
 import qs from 'qs'
 import {vaah} from '../vaahvue/pinia/vaah'
+import { useRootStore } from "./root";
 
 let model_namespace = 'WebReinvent\\VaahCms\\Models\\Permission';
 
@@ -65,6 +66,14 @@ export const usePermissionStore = defineStore({
         form_menu_list: [],
         total_roles: null,
         total_users: null,
+        roles: null,
+        roles_menu_items: null,
+        active_permission_role : null,
+        permission_role: {
+            filter: {
+                q: null,
+            }
+        }
     }),
     getters: {
 
@@ -211,6 +220,103 @@ export const usePermissionStore = defineStore({
             }
             this.getItemMenu();
             await this.getFormMenu();
+        },
+        //---------------------------------------------------------------------
+         getItemRoles() {
+            this.showProgress();
+
+            let params = {
+                method: 'get',
+                q: this.permission_role.filter.q
+
+            };
+
+            vaah().ajax(
+                this.ajax_url+'/item/' + this.item.id + '/roles',
+                this.afterGetItemRoles,
+                params
+            );
+        },
+        //---------------------------------------------------------------------
+        afterGetItemRoles(data, res) {
+            this.hideProgress();
+
+            if (data) {
+                this.roles = data;
+            }
+        },
+        //---------------------------------------------------------------------
+        changePermission(item) {
+
+            let params = {
+                id : this.item.id,
+                role_id : item.id,
+            };
+
+            var data = {};
+
+            if(item.pivot.is_active)
+            {
+                data.is_active = 0;
+            } else
+            {
+                data.is_active = 1;
+            }
+
+            this.actions(false, 'toggle_role_active_status', params, data)
+
+        },
+        //---------------------------------------------------------------------
+        bulkActions (input, action) {
+            let params = {
+                id: this.item.id,
+                role_id: null
+            };
+
+            let data = {
+                is_active: input
+            };
+
+            this.actions(false, action, params, data)
+
+        },
+        //---------------------------------------------------------------------
+        actions (e, action, inputs , data) {
+
+            this.showProgress();
+
+            if (e) {
+                e.preventDefault();
+            }
+
+            let params = {
+                params: {
+                    inputs: inputs,
+                    data: data,
+                },
+                method: 'post',
+            };
+
+            vaah().ajax(
+                this.ajax_url+'/actions/' + action,
+                this.afterActions,
+                params
+            );
+        },
+        //---------------------------------------------------------------------
+        afterActions (data,res) {
+            this.hideProgress();
+            this.getItemRoles();
+        },
+        //---------------------------------------------------------------------
+        delayedItemUsersSearch() {
+            let self = this;
+            this.query.page = 1;
+            this.action.items = [];
+            clearTimeout(this.search.delay_timer);
+            this.search.delay_timer = setTimeout(async function() {
+                self.getItemRoles();
+            }, this.search.delay_time);
         },
         //---------------------------------------------------------------------
         isListActionValid()
@@ -602,6 +708,7 @@ export const usePermissionStore = defineStore({
         //---------------------------------------------------------------------
         toRole(item) {
             this.item = item;
+            this.getItemRoles();
             this.$router.push({name: 'permissions.view-role', params: {id:item.id}})
         },
         //---------------------------------------------------------------------
@@ -858,6 +965,43 @@ export const usePermissionStore = defineStore({
             this.form_menu_list = form_menu;
 
         },
+        //---------------------------------------------------------------------
+        async getRoleMenu() {
+            return this.roles_menu_items = [
+                {
+                    label: 'Active All Roles',
+                    command: () => {
+                        this.bulkActions(1, 'toggle_role_active_status');
+                    }
+                },
+                {
+                    label: 'Inactive All Roles',
+                    command: () => {
+                        this.bulkActions(0, 'toggle_role_active_status');
+                    }
+                }
+            ];
+        },
+        //---------------------------------------------------------------------
+        hasPermission(slug) {
+            const root = useRootStore();
+            return vaah().hasPermission(root.permission, slug);
+        },
+        //---------------------------------------------------------------------
+        copy(data) {
+            vaah().copy(data);
+        },
+        //---------------------------------------------------------------------
+        showProgress()
+        {
+            this.show_progress_bar = true;
+        },
+        //---------------------------------------------------------------------
+        hideProgress()
+        {
+            this.show_progress_bar = false;
+        }
+        //---------------------------------------------------------------------
         //---------------------------------------------------------------------
     }
 });

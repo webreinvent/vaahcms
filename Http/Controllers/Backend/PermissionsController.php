@@ -97,6 +97,9 @@ class PermissionsController extends Controller
         return Permission::itemAction($request,$id,$action);
     }
     //----------------------------------------------------------
-
-
+    public function getItemRoles(Request $request, $id)
+    {
+        return Permission::getItemRoles($request, $id);
+    }
+    //----------------------------------------------------------
 }

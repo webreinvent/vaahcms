@@ -383,6 +383,20 @@ export const vaah = defineStore({
             return array;
         },
         //----------------------------------------------------------
+        hasPermission: function (permissions, slug) {
+
+            if(!permissions)
+            {
+                return false;
+            }
+
+            if(permissions.length < 1)
+            {
+                return false;
+            }
+
+            return permissions.indexOf(slug) > -1 ? true : false;
+        },
         //----------------------------------------------------------
         //----------------------------------------------------------
         //----------------------------------------------------------
