@@ -62,13 +62,15 @@ export const usePermissionStore = defineStore({
         list_bulk_menu: [],
         item_menu_list: [],
         item_menu_state: null,
-        form_menu_list: []
+        form_menu_list: [],
+        total_roles: null,
+        total_users: null,
     }),
     getters: {
 
     },
     actions: {
-        //---------------------------------------------------------------------
+        //------------------------------------------------------l---------------
         async onLoad(route)
         {
             /**
@@ -182,9 +184,10 @@ export const usePermissionStore = defineStore({
         //---------------------------------------------------------------------
         afterGetList: function (data, res)
         {
-            if(data)
-            {
+            if (data) {
                 this.list = data;
+                this.total_roles = res.data.total_roles;
+                this.total_users = res.data.total_users;
             }
         },
         //---------------------------------------------------------------------
@@ -595,6 +598,11 @@ export const usePermissionStore = defineStore({
         {
             this.item = item;
             this.$router.push({name: 'permissions.form', params:{id:item.id}})
+        },
+        //---------------------------------------------------------------------
+        toRole(item) {
+            this.item = item;
+            this.$router.push({name: 'permissions.view-role', params: {id:item.id}})
         },
         //---------------------------------------------------------------------
         isViewLarge()
