@@ -5,6 +5,7 @@ import LayoutBackend from "../layouts/Backend.vue";
 import List from '../pages/permissions/List.vue'
 import Form from '../pages/permissions/Form.vue'
 import Item from '../pages/permissions/Item.vue'
+import ViewRole from '../pages/permissions/ViewRole.vue'
 
 routes_list = {
 
@@ -28,6 +29,12 @@ routes_list = {
                     path: 'view/:id?',
                     name: 'permissions.view',
                     component: Item,
+                    props: true,
+                },
+                {
+                    path: 'role/:id?',
+                    name: 'permissions.view-role',
+                    component: ViewRole,
                     props: true,
                 }
             ]
