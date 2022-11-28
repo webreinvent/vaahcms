@@ -358,22 +358,21 @@ class Role extends Model {
         $item = Role::withTrashed()->where('id', $id)->first();
         $response['data']['item'] = $item;
 
-        if($request->has("q"))
+        if (isset($request['filter']["q"]))
         {
             $list = $item->permissions()->where(function ($q) use ($request){
-                $q->where('name', 'LIKE', '%'.$request->q.'%')
-                    ->orWhere('slug', 'LIKE', '%'.$request->q.'%');
+                $q->where('name', 'LIKE', '%'.$request['filter']["q"].'%')
+                    ->orWhere('slug', 'LIKE', '%'.$request['filter']["q"].'%');
             });
-        } else
-        {
+        } else {
             $list = $item->permissions();
         }
 
-        if($request['filter']['module']){
+        if (isset($request['filter']['module'])) {
             $list->where('module',$request['filter']['module']);
         }
 
-        if($request['filter']['section']){
+        if (isset($request['filter']['section'])) {
             $list->where('section',$request['filter']['section']);
         }
 
@@ -832,19 +831,19 @@ class Role extends Model {
         $data = array();
 
         if($pivot->created_by && User::find($pivot->created_by)){
-            $data['Created by'] = User::find($pivot->created_by)->name;
+            $data['created_by'] = User::find($pivot->created_by)->name;
         }
 
         if($pivot->updated_by && User::find($pivot->updated_by)){
-            $data['Updated by'] = User::find($pivot->updated_by)->name;
+            $data['updated_by'] = User::find($pivot->updated_by)->name;
         }
 
         if($pivot->created_at){
-            $data['Created at'] = date('d-m-Y H:i:s', strtotime($pivot->created_at));
+            $data['created_at'] = date('d-m-Y H:i:s', strtotime($pivot->created_at));
         }
 
         if($pivot->updated_at){
-            $data['Updated at'] = date('d-m-Y H:i:s', strtotime($pivot->updated_at));
+            $data['updated_at'] = date('d-m-Y H:i:s', strtotime($pivot->updated_at));
         }
 
         return $data;

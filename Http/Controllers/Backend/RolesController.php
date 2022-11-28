@@ -118,8 +118,7 @@ class RolesController extends Controller
     //----------------------------------------------------------
     public function getModuleSections(Request $request)
     {
-        $response = Role::getModuleSections($request);
-        return response()->json($response);
+        return  Role::getModuleSections($request);
     }
     //----------------------------------------------------------
 

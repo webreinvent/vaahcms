@@ -19,9 +19,6 @@ let empty_states = {
             is_active: null,
             trashed: null,
             sort: null,
-            module: null,
-            section: null,
-            role_permission_q: null
         },
     },
     action: {
@@ -77,6 +74,13 @@ export const useRoleStore = defineStore({
         active_role_permission: null,
         active_role_user: null,
         module_section_list: null,
+        role_permission: {
+            filter: {
+                q: null,
+                module: null,
+                section: null,
+            }
+        }
     }),
     getters: {
 
@@ -151,7 +155,13 @@ export const useRoleStore = defineStore({
                 {
                     this.delayedSearch();
                 },{deep: true}
-            )
+            );
+
+            watch(this.role_permission.filter.q, (newVal, oldVal) => {
+                this.delayedRolePermissionSearch();
+            }, {
+                deep:true
+            });
         },
         //---------------------------------------------------------------------
         async getAssets() {
@@ -583,17 +593,17 @@ export const useRoleStore = defineStore({
             await this.updateUrlQueryString(this.query);
         },
         //---------------------------------------------------------------------
-        getItemPermissions(id) {
+        async getItemPermissions() {
 
             this.showProgress();
 
             let params = {
-                query: vaah().clone(this.query),
+                query: this.role_permission,
                 method: 'post'
             };
 
             vaah().ajax(
-                this.ajax_url+'/item/' + id + '/permissions',
+                this.ajax_url+'/item/' + this.item.id + '/permissions',
                 this.afterGetItemPermissions,
                 params
             );
@@ -607,6 +617,14 @@ export const useRoleStore = defineStore({
                 this.permission = data;
             }
         },
+        //---------------------------------------------------------------------
+        async delayedRolePermissionSearch() {
+            let self = this;
+            this.search.delay_timer = setTimeout(async function() {
+                await  self.getItemPermissions();
+            },
+                this.search.delay_time
+            )},
         //---------------------------------------------------------------------
         permissionPaginate(event) {
             this.query.page = event.page+1;
@@ -761,7 +779,7 @@ export const useRoleStore = defineStore({
 
             let params = {
                 params: {
-                    module: this.query.filter.module,
+                    module: this.role_permission.filter.module,
                 },
                 method: 'post',
             };
@@ -809,9 +827,9 @@ export const useRoleStore = defineStore({
             this.$router.push({name: 'roles.form', params:{id:item.id}})
         },
         //---------------------------------------------------------------------
-        toPermission(item) {
+        async toPermission(item) {
             this.item = item;
-            this.getItemPermissions(item.id);
+            await this.getItemPermissions();
             this.$router.push({name: 'roles.permission', params: {id: item.id}});
         },
         //---------------------------------------------------------------------

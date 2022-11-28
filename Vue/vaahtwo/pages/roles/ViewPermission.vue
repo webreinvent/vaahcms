@@ -111,6 +111,10 @@ const confirmChangeStatus = (event, id) => {
             <template #icons>
                 <div class="p-inputgroup">
 
+                    <Button class="p-button-primary">
+                        # {{ store.item.id }}
+                    </Button>
+
                     <!--/item_menu-->
                     <template v-if="store.hasPermission('can-update-roles')
                                     || store.hasPermission('can-manage-roles')"
@@ -127,7 +131,7 @@ const confirmChangeStatus = (event, id) => {
                               :model="store.permission_menu_items"
                               :popup="true"
                         />
-                        </template>
+                    </template>
                     <!--/item_menu-->
 
                     <Button class="p-button-primary"
@@ -140,7 +144,7 @@ const confirmChangeStatus = (event, id) => {
             <div class="flex justify-content-between">
 
                 <div v-if="store && store.assets">
-                    <Dropdown v-model="store.query.filter.module"
+                    <Dropdown v-model="store.role_permission.filter.module"
                               :options="store.assets.module"
                               optionLabel="module"
                               placeholder="Select a Module"
@@ -150,9 +154,8 @@ const confirmChangeStatus = (event, id) => {
 
 <!--                v-for="option in store.module_section_list"-->
 <!--                {{ store.module_section_list }}-->
-                <div v-if="store.query.filter.module">
-                    <Dropdown v-model="store.query.filter.section"
-
+                <div v-if="store.role_permission.filter.module && store.module_section_list">
+                    <Dropdown v-model="store.role_permission.filter.section"
                               :options="store.module_section_list"
                               optionLabel="section"
                               placeholder="Select a Section"
@@ -164,14 +167,14 @@ const confirmChangeStatus = (event, id) => {
                     <div class="col-12">
                         <div class="p-inputgroup ">
 
-                            <InputText v-model="store.query.filter.role_permission_q"
-                                       @keyup.enter="store.delayedItemUsersSearch()"
-                                       @keyup.enter.native="store.delayedItemUsersSearch()"
-                                       @keyup.13="store.delayedItemUsersSearch()"
+                            <InputText v-model="store.role_permission.filter.q"
+                                       @keyup.enter="store.delayedRolePermissionSearch()"
+                                       @keyup.enter.native="store.delayedRolePermissionSearch()"
+                                       @keyup.13="store.delayedRolePermissionSearch()"
                                        placeholder="Search"
                             />
 
-                            <Button @click="store.delayedItemUsersSearch()"
+                            <Button @click="store.delayedRolePermissionSearch()"
                                     icon="pi pi-search"
                             />
                         </div>
