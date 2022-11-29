@@ -70,9 +70,7 @@ export const usePermissionStore = defineStore({
         roles_menu_items: null,
         active_permission_role : null,
         permission_role: {
-            filter: {
-                q: null,
-            }
+            q: null,
         }
     }),
     getters: {
@@ -148,7 +146,13 @@ export const usePermissionStore = defineStore({
                 {
                     this.delayedSearch();
                 },{deep: true}
-            )
+            );
+
+            watch(this.permission_role, (newVal, oldVal) => {
+                this.delayedItemUsersSearch();
+            }, {
+                deep:true
+            });
         },
         //---------------------------------------------------------------------
         async getAssets() {
@@ -222,12 +226,11 @@ export const usePermissionStore = defineStore({
             await this.getFormMenu();
         },
         //---------------------------------------------------------------------
-         getItemRoles() {
+         async getItemRoles() {
             this.showProgress();
 
             let params = {
-                method: 'get',
-                q: this.permission_role.filter.q
+                query: this.permission_role
 
             };
 
@@ -309,13 +312,11 @@ export const usePermissionStore = defineStore({
             this.getItemRoles();
         },
         //---------------------------------------------------------------------
-        delayedItemUsersSearch() {
+        async delayedItemUsersSearch() {
             let self = this;
-            this.query.page = 1;
-            this.action.items = [];
             clearTimeout(this.search.delay_timer);
             this.search.delay_timer = setTimeout(async function() {
-                self.getItemRoles();
+                await self.getItemRoles();
             }, this.search.delay_time);
         },
         //---------------------------------------------------------------------
@@ -535,6 +536,11 @@ export const usePermissionStore = defineStore({
         async paginate(event) {
             this.query.page = event.page+1;
             await this.getList();
+        },
+        //---------------------------------------------------------------------
+        async rolePaginate(event) {
+            this.query.page = event.page + 1;
+            await this.getItemRoles();
         },
         //---------------------------------------------------------------------
         async reload()

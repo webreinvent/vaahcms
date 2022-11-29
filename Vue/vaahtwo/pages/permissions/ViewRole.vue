@@ -122,7 +122,7 @@ const openViewModal = () => {
                 <div class="col-12">
                     <div class="p-inputgroup ">
 
-                        <InputText v-model="store.permission_role.filter.q"
+                        <InputText v-model="store.permission_role.q"
                                    @keyup.enter="store.delayedItemUsersSearch()"
                                    @keyup.enter.native="store.delayedItemUsersSearch()"
                                    @keyup.13="store.delayedItemUsersSearch()"
@@ -213,7 +213,7 @@ const openViewModal = () => {
             <!--paginator-->
             <Paginator v-model:rows="store.query.rows"
                        :totalRecords="store.roles.list.total"
-                       @page="store.paginate($event)"
+                       @page="store.rolePaginate($event)"
                        :rowsPerPageOptions="store.rows_per_page"
                        v-if="store && store.roles"
             />
