@@ -6,6 +6,7 @@ import { useDialog } from 'primevue/usedialog';
 import RoleDetailsView from './components/RoleDetasilsView.vue'
 import { useRoute } from "vue-router";
 import { useRootStore } from "../../stores/root";
+import { vaah } from "../../vaahvue/pinia/vaah";
 
 const store = usePermissionStore();
 const root = useRootStore();
@@ -122,7 +123,7 @@ const openViewModal = () => {
                 <div class="col-12">
                     <div class="p-inputgroup ">
 
-                        <InputText v-model="store.permission_role.q"
+                        <InputText v-model="store.permission_role_query.q"
                                    @keyup.enter="store.delayedItemUsersSearch()"
                                    @keyup.enter.native="store.delayedItemUsersSearch()"
                                    @keyup.13="store.delayedItemUsersSearch()"
@@ -152,7 +153,7 @@ const openViewModal = () => {
                     <template #body="prop" >
                         <Button :label="prop.data.name"
                                 class="p-button-text"
-                                @click="store.copy(prop.data.slug)"
+                                @click="vaah().copy(prop.data.slug)"
                                 v-tooltip.top="'Copy Slug'"
                         />
 
@@ -211,7 +212,7 @@ const openViewModal = () => {
             <Divider />
 
             <!--paginator-->
-            <Paginator v-model:rows="store.query.rows"
+            <Paginator v-model:rows="store.permission_role_query.rows"
                        :totalRecords="store.roles.list.total"
                        @page="store.rolePaginate($event)"
                        :rowsPerPageOptions="store.rows_per_page"

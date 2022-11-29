@@ -69,8 +69,10 @@ export const usePermissionStore = defineStore({
         roles: null,
         roles_menu_items: null,
         active_permission_role : null,
-        permission_role: {
+        permission_role_query: {
             q: null,
+            page: null,
+            rows: 20,
         }
     }),
     getters: {
@@ -148,7 +150,7 @@ export const usePermissionStore = defineStore({
                 },{deep: true}
             );
 
-            watch(this.permission_role, (newVal, oldVal) => {
+            watch(this.permission_role_query, (newVal, oldVal) => {
                 this.delayedItemUsersSearch();
             }, {
                 deep:true
@@ -230,8 +232,7 @@ export const usePermissionStore = defineStore({
             this.showProgress();
 
             let params = {
-                query: this.permission_role
-
+                query: this.permission_role_query
             };
 
             vaah().ajax(
@@ -539,7 +540,7 @@ export const usePermissionStore = defineStore({
         },
         //---------------------------------------------------------------------
         async rolePaginate(event) {
-            this.query.page = event.page + 1;
+            this.permission_role_query.page = event.page + 1;
             await this.getItemRoles();
         },
         //---------------------------------------------------------------------
@@ -992,10 +993,6 @@ export const usePermissionStore = defineStore({
         hasPermission(slug) {
             const root = useRootStore();
             return vaah().hasPermission(root.permission, slug);
-        },
-        //---------------------------------------------------------------------
-        copy(data) {
-            vaah().copy(data);
         },
         //---------------------------------------------------------------------
         showProgress()
