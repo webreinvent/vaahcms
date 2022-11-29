@@ -75,12 +75,13 @@ export const useRoleStore = defineStore({
         active_role_user: null,
         module_section_list: null,
         role_permission: {
-            filter: {
-                q: null,
-                module: null,
-                section: null,
-            }
-        }
+            q: null,
+            module: null,
+            section: null,
+        },
+        role_user_filter: {
+            q: null
+        },
     }),
     getters: {
 
@@ -157,11 +158,17 @@ export const useRoleStore = defineStore({
                 },{deep: true}
             );
 
-            watch(this.role_permission.filter.q, (newVal, oldVal) => {
+            watch(this.role_permission, (newVal, oldVal) => {
                 this.delayedRolePermissionSearch();
             }, {
                 deep:true
             });
+
+            watch(this.role_user_filter, (newVal, oldVal) => {
+                this.delayedItemUsersSearch();
+            }, {
+                deep:true
+            })
         },
         //---------------------------------------------------------------------
         async getAssets() {
@@ -620,6 +627,7 @@ export const useRoleStore = defineStore({
         //---------------------------------------------------------------------
         async delayedRolePermissionSearch() {
             let self = this;
+            clearTimeout(this.search.delay_timer);
             this.search.delay_timer = setTimeout(async function() {
                 await  self.getItemPermissions();
             },
@@ -628,19 +636,20 @@ export const useRoleStore = defineStore({
         //---------------------------------------------------------------------
         permissionPaginate(event) {
             this.query.page = event.page+1;
-            this.getItemPermissions(this.item.id);
+            this.getItemPermissions();
         },
         //---------------------------------------------------------------------
-         getItemUsers(id) {
+         async getItemUsers() {
 
             this.showProgress();
 
             let params = {
-                q: this.search_item
+                query: this.role_user_filter.q,
+                method: 'get'
             };
 
             vaah().ajax(
-                this.ajax_url+'/item/' + id + '/users',
+                this.ajax_url+'/item/' + this.item.id + '/users',
                 this.afterGetItemUsers,
                 params
             );
@@ -656,21 +665,15 @@ export const useRoleStore = defineStore({
         //---------------------------------------------------------------------
         userPaginate(event) {
             this.query.page = event.page+1;
-            this.getItemUsers(this.item.id);
+            this.getItemUsers();
         },
         //---------------------------------------------------------------------
         async delayedItemUsersSearch() {
-            this.showProgress();
             let self = this;
-            this.query.page = 1;
-            this.action.items = [];
             clearTimeout(this.search.delay_timer);
             this.search.delay_timer = setTimeout(async function () {
-                await self.updateUrlQueryString(self.query);
                 await self.getItemUsers();
             }, this.search.delay_time);
-
-            this.hideProgress();
         },
         //---------------------------------------------------------------------
         changeRoleStatus (id) {
@@ -772,7 +775,13 @@ export const useRoleStore = defineStore({
         afterActions (data,res) {
             this.hideProgress();
             this.getItemPermissions(this.item.id);
-            this.getItemUsers(this.item.id);
+            this.getItemUsers();
+        },
+        //---------------------------------------------------------------------
+        restRolePermissionFilters() {
+            this.role_permission.q = null;
+            this.role_permission.module = null;
+            this.role_permission.section = null;
         },
         //---------------------------------------------------------------------
         getModuleSection() {
@@ -835,7 +844,7 @@ export const useRoleStore = defineStore({
         //---------------------------------------------------------------------
         toUser(item) {
             this.item = item;
-            this.getItemUsers(item.id);
+            this.getItemUsers();
             this.$router.push({name: 'roles.user', params: {id: item.id}});
         },
         //---------------------------------------------------------------------

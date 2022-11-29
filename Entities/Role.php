@@ -358,11 +358,11 @@ class Role extends Model {
         $item = Role::withTrashed()->where('id', $id)->first();
         $response['data']['item'] = $item;
 
-        if (isset($request['filter']["q"]))
+        if (isset($request["q"]))
         {
             $list = $item->permissions()->where(function ($q) use ($request){
-                $q->where('name', 'LIKE', '%'.$request['filter']["q"].'%')
-                    ->orWhere('slug', 'LIKE', '%'.$request['filter']["q"].'%');
+                $q->where('name', 'LIKE', '%'.$request["q"].'%')
+                    ->orWhere('slug', 'LIKE', '%'.$request["q"].'%');
             });
         } else {
             $list = $item->permissions();
