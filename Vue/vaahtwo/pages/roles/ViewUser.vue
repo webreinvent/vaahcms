@@ -65,22 +65,6 @@ const openDetailsViewModal = () => {
 <template>
     <div class="col-6">
         <Panel v-if="store && store.item">
-            <div class="grid p-fluid">
-                <div class="col-12">
-                    <div class="p-inputgroup">
-
-                        <InputText v-model="store.role_user_filter.q"
-                                   @keyup.enter="store.delayedItemUsersSearch()"
-                                   @keyup.enter.native="store.delayedItemUsersSearch()"
-                                   @keyup.13="store.delayedItemUsersSearch()"
-                                   placeholder="Search"
-                        />
-                    </div>
-                </div>
-            </div>
-
-            <Divider />
-
             <template class="p-1" #header>
                 <div class="flex flex-row">
 
@@ -96,7 +80,7 @@ const openDetailsViewModal = () => {
                     <Button class="p-button-primary">
                         # {{ store.item.id }}
                     </Button>
-                    
+
                     <!--/item_menu-->
                     <template v-if="store.hasPermission('can-update-roles')
                                     || store.hasPermission('can-manage-roles')"
@@ -122,6 +106,22 @@ const openDetailsViewModal = () => {
                     />
                 </div>
             </template>
+
+            <div class="grid p-fluid">
+                <div class="col-12">
+                    <div class="p-inputgroup">
+
+                        <InputText v-model="store.role_user_query.q"
+                                   @keyup.enter="store.delayedItemUsersSearch()"
+                                   @keyup.enter.native="store.delayedItemUsersSearch()"
+                                   @keyup.13="store.delayedItemUsersSearch()"
+                                   placeholder="Search"
+                        />
+                    </div>
+                </div>
+            </div>
+
+            <Divider />
 
             <DataTable v-if="store && store.role_users"
                        :value="store.role_users.list.data"

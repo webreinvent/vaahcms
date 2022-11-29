@@ -74,13 +74,15 @@ export const useRoleStore = defineStore({
         active_role_permission: null,
         active_role_user: null,
         module_section_list: null,
-        role_permission: {
+        role_permission_query: {
             q: null,
             module: null,
             section: null,
+            page: null,
         },
-        role_user_filter: {
-            q: null
+        role_user_query: {
+            q: null,
+            page: null
         },
     }),
     getters: {
@@ -158,13 +160,13 @@ export const useRoleStore = defineStore({
                 },{deep: true}
             );
 
-            watch(this.role_permission, (newVal, oldVal) => {
+            watch(this.role_permission_query, (newVal, oldVal) => {
                 this.delayedRolePermissionSearch();
             }, {
                 deep:true
             });
 
-            watch(this.role_user_filter, (newVal, oldVal) => {
+            watch(this.role_user_query, (newVal, oldVal) => {
                 this.delayedItemUsersSearch();
             }, {
                 deep:true
@@ -605,7 +607,7 @@ export const useRoleStore = defineStore({
             this.showProgress();
 
             let params = {
-                query: this.role_permission,
+                query: this.role_permission_query,
                 method: 'post'
             };
 
@@ -635,7 +637,7 @@ export const useRoleStore = defineStore({
             )},
         //---------------------------------------------------------------------
         permissionPaginate(event) {
-            this.query.page = event.page+1;
+            this.role_permission_query.page = event.page+1;
             this.getItemPermissions();
         },
         //---------------------------------------------------------------------
@@ -644,7 +646,7 @@ export const useRoleStore = defineStore({
             this.showProgress();
 
             let params = {
-                query: this.role_user_filter,
+                query: this.role_user_query,
                 method: 'get'
             };
 
@@ -664,7 +666,7 @@ export const useRoleStore = defineStore({
         },
         //---------------------------------------------------------------------
         userPaginate(event) {
-            this.query.page = event.page+1;
+            this.role_user_query.page = event.page+1;
             this.getItemUsers();
         },
         //---------------------------------------------------------------------
@@ -778,10 +780,10 @@ export const useRoleStore = defineStore({
             this.getItemUsers();
         },
         //---------------------------------------------------------------------
-        restRolePermissionFilters() {
-            this.role_permission.q = null;
-            this.role_permission.module = null;
-            this.role_permission.section = null;
+        resetRolePermissionFilters() {
+            this.role_permission_query.q = null;
+            this.role_permission_query.module = null;
+            this.role_permission_query.section = null;
         },
         //---------------------------------------------------------------------
         getModuleSection() {

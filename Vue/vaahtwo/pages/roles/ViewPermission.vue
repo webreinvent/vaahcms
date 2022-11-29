@@ -144,7 +144,7 @@ const confirmChangeStatus = (event, id) => {
             <div class="flex justify-content-between">
 
                 <div v-if="store && store.assets">
-                    <Dropdown v-model="store.role_permission.module"
+                    <Dropdown v-model="store.role_permission_query.module"
                               :options="store.assets.module"
                               optionLabel="module"
                               placeholder="Select a Module"
@@ -152,8 +152,8 @@ const confirmChangeStatus = (event, id) => {
                     />
                 </div>
 
-                <div v-if="store.role_permission.module && store.module_section_list">
-                    <Dropdown v-model="store.role_permission.section"
+                <div v-if="store.role_permission_query.module && store.module_section_list">
+                    <Dropdown v-model="store.role_permission_query.section"
                               :options="store.module_section_list"
                               optionLabel="section"
                               placeholder="Select a Section"
@@ -165,7 +165,7 @@ const confirmChangeStatus = (event, id) => {
                     <div class="col-12">
                         <div class="p-inputgroup">
 
-                                <InputText v-model="store.role_permission.q"
+                                <InputText v-model="store.role_permission_query.q"
                                            @keyup.enter="store.delayedRolePermissionSearch()"
                                            @keyup.enter.native="store.delayedRolePermissionSearch()"
                                            @keyup.13="store.delayedRolePermissionSearch()"
@@ -173,8 +173,8 @@ const confirmChangeStatus = (event, id) => {
                                            type="text"
                                 />
 
-                            <Button label="Rest"
-                                    @click="store.restRolePermissionFilters()"
+                            <Button label="Reset"
+                                    @click="store.resetRolePermissionFilters()"
                             />
                         </div>
                     </div>
@@ -193,7 +193,12 @@ const confirmChangeStatus = (event, id) => {
                 >
 
                     <template #body="prop">
-                        {{ prop.data.name }}
+
+                        <Button :label="prop.data.name"
+                                class="p-button-text"
+                                @click="vaah().copy(prop.data.slug)"
+                                v-tooltip.top="'Copy Slug'"
+                        />
                     </template>
                 </Column>
 
