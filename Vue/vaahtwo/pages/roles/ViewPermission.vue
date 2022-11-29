@@ -292,7 +292,7 @@ const confirmChangeStatus = (event, id) => {
 
             <!--paginator-->
             <Paginator v-if="store && store.permission"
-                       :rows="store.query.rows"
+                       :rows="store.role_permission_query.rows"
                        :totalRecords="store.permission.list.total"
                        @page="store.permissionPaginate($event)"
                        :rowsPerPageOptions="store.rows_per_page"

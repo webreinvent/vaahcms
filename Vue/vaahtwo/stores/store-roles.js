@@ -79,10 +79,12 @@ export const useRoleStore = defineStore({
             module: null,
             section: null,
             page: null,
+            rows: 20,
         },
         role_user_query: {
             q: null,
-            page: null
+            page: null,
+            rows: 20,
         },
     }),
     getters: {

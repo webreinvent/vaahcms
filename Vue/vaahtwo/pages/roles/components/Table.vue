@@ -49,7 +49,11 @@ const useVaah = vaah();
                             value="Trashed"
                             severity="danger"
                      />
-                     {{ prop.data.slug }}
+                     <Button :label="prop.data.slug"
+                             class="p-button-text"
+                             v-tooltip.top="'Copy Slug'"
+                             @click="useVaah.copy(prop.data.slug)"
+                     />
                  </template>
 
              </Column>
@@ -94,54 +98,51 @@ const useVaah = vaah();
             <Column field="is_active" v-if="store.isViewLarge()"
                     :sortable="true"
                     style="width:100px;"
-                    header="Is Active">
-
+                    header="Is Active"
+            >
                 <template #body="prop">
                     <InputSwitch v-model.bool="prop.data.is_active"
                                  v-bind:false-value="0"  v-bind:true-value="1"
                                  class="p-inputswitch-sm"
-                                 @input="store.toggleIsActive(prop.data)">
-                    </InputSwitch>
+                                 @input="store.toggleIsActive(prop.data)"
+                    />
                 </template>
-
             </Column>
 
             <Column field="actions" style="width:150px;"
                     :style="{width: store.getActionWidth() }"
-                    :header="store.getActionLabel()">
-
+                    :header="store.getActionLabel()"
+            >
                 <template #body="prop">
                     <div class="p-inputgroup ">
 
                         <Button class="p-button-tiny p-button-text"
                                 v-tooltip.top="'View'"
                                 @click="store.toView(prop.data)"
-                                icon="pi pi-eye" />
+                                icon="pi pi-eye"
+                        />
 
                         <Button class="p-button-tiny p-button-text"
                                 v-tooltip.top="'Update'"
                                 @click="store.toEdit(prop.data)"
-                                icon="pi pi-pencil" />
+                                icon="pi pi-pencil"
+                        />
 
                         <Button class="p-button-tiny p-button-danger p-button-text"
                                 v-if="store.isViewLarge() && !prop.data.deleted_at"
                                 @click="store.itemAction('trash', prop.data)"
                                 v-tooltip.top="'Trash'"
-                                icon="pi pi-trash" />
-
+                                icon="pi pi-trash"
+                        />
 
                         <Button class="p-button-tiny p-button-success p-button-text"
                                 v-if="store.isViewLarge() && prop.data.deleted_at"
                                 @click="store.itemAction('restore', prop.data)"
                                 v-tooltip.top="'Restore'"
-                                icon="pi pi-replay" />
-
-
+                                icon="pi pi-replay"
+                        />
                     </div>
-
                 </template>
-
-
             </Column>
 
 
