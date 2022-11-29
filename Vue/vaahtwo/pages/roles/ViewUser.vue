@@ -67,17 +67,13 @@ const openDetailsViewModal = () => {
         <Panel v-if="store && store.item">
             <div class="grid p-fluid">
                 <div class="col-12">
-                    <div class="p-inputgroup ">
+                    <div class="p-inputgroup">
 
-                        <InputText v-model="store.query.q"
+                        <InputText v-model="store.role_user_filter.q"
                                    @keyup.enter="store.delayedItemUsersSearch()"
                                    @keyup.enter.native="store.delayedItemUsersSearch()"
                                    @keyup.13="store.delayedItemUsersSearch()"
                                    placeholder="Search"
-                        />
-
-                        <Button @click="store.delayedItemUsersSearch()"
-                                icon="pi pi-search"
                         />
                     </div>
                 </div>
@@ -96,6 +92,11 @@ const openDetailsViewModal = () => {
 
             <template #icons>
                 <div class="p-inputgroup">
+
+                    <Button class="p-button-primary">
+                        # {{ store.item.id }}
+                    </Button>
+                    
                     <!--/item_menu-->
                     <template v-if="store.hasPermission('can-update-roles')
                                     || store.hasPermission('can-manage-roles')"
@@ -141,7 +142,7 @@ const openDetailsViewModal = () => {
                         header="Email"
                 >
                     <template #body="prop">
-                        {{ prop.data.email }}
+                        {{ prop.data.email }}l
                     </template>
                 </Column>
 

@@ -644,7 +644,7 @@ export const useRoleStore = defineStore({
             this.showProgress();
 
             let params = {
-                query: this.role_user_filter.q,
+                query: this.role_user_filter,
                 method: 'get'
             };
 
