@@ -11,7 +11,7 @@ const store = useRoleStore();
 <template>
     <div>
 
-        <Sidebar v-model:visible="store.show_filters"
+        <Sidebar v-model:visible="store.show_filters" style="z-index: 1101"
                  position="right">
 
             <VhFieldVertical >

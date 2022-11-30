@@ -44,10 +44,10 @@ class RolesController extends Controller
             $data['empty_item'][$column] = null;
         }
 
-        $module = Permission::withTrashed()->select('module')->get()->unique('module');
+        $modules = Permission::withTrashed()->get()->unique('module')->pluck('module');
 
         $data['actions'] = [];
-        $data['module'] = $module;
+        $data['modules'] = $modules;
 
         $response['success'] = true;
         $response['data'] = $data;

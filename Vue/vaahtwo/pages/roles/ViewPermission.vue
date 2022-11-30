@@ -145,19 +145,31 @@ const confirmChangeStatus = (event, id) => {
 
                 <div v-if="store && store.assets">
                     <Dropdown v-model="store.role_permission_query.module"
-                              :options="store.assets.module"
-                              optionLabel="module"
+                              :options="store.assets.modules"
                               placeholder="Select a Module"
                               @change="store.getModuleSection()"
-                    />
+                    >
+                        <template #option="slotProps">
+                            <div>
+                                {{ slotProps.option.charAt(0).toUpperCase() + slotProps.option.slice(1)}}
+                            </div>
+                        </template>
+                    </Dropdown>
                 </div>
 
-                <div v-if="store.role_permission_query.module && store.module_section_list">
+                <div v-if="store.role_permission_query.module && store.module_section_list"
+                     class="mx-1"
+                >
                     <Dropdown v-model="store.role_permission_query.section"
                               :options="store.module_section_list"
-                              optionLabel="section"
                               placeholder="Select a Section"
+                              @click="store.getItemPermissions()"
                     >
+                        <template #option="slotProps">
+                            <div>
+                                {{ slotProps.option.charAt(0).toUpperCase() + slotProps.option.slice(1)}}
+                            </div>
+                        </template>
                     </Dropdown>
                 </div>
 
@@ -165,13 +177,18 @@ const confirmChangeStatus = (event, id) => {
                     <div class="col-12">
                         <div class="p-inputgroup">
 
-                                <InputText v-model="store.role_permission_query.q"
-                                           @keyup.enter="store.delayedRolePermissionSearch()"
-                                           @keyup.enter.native="store.delayedRolePermissionSearch()"
-                                           @keyup.13="store.delayedRolePermissionSearch()"
-                                           placeholder="Search"
-                                           type="text"
-                                />
+                            <span class="p-input-icon-left">
+                                <i class="pi pi-search" />
+
+                            <InputText v-model="store.role_permission_query.q"
+                                       @keyup.enter="store.delayedRolePermissionSearch()"
+                                       @keyup.enter.native="store.delayedRolePermissionSearch()"
+                                       @keyup.13="store.delayedRolePermissionSearch()"
+                                       placeholder="Search"
+                                       type="text"
+                                       class="w-full"
+                            />
+                            </span>
 
                             <Button label="Reset"
                                     @click="store.resetRolePermissionFilters()"

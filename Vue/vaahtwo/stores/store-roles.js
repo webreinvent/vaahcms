@@ -793,7 +793,7 @@ export const useRoleStore = defineStore({
 
             let params = {
                 params: {
-                    module: this.role_permission.filter.module,
+                    module: this.role_permission_query.module,
                 },
                 method: 'post',
             };
@@ -807,7 +807,7 @@ export const useRoleStore = defineStore({
         //---------------------------------------------------------------------
         afterAetModuleSection(data, res) {
             if(data){
-                this.module_section_list = data[0];
+                this.module_section_list = data;
             }
         },
         //---------------------------------------------------------------------

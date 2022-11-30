@@ -368,12 +368,12 @@ class Role extends Model {
             $list = $item->permissions();
         }
 
-        if (isset($request['filter']['module'])) {
-            $list->where('module',$request['filter']['module']);
+        if (isset($request['module'])) {
+            $list->where('module',$request['module']);
         }
 
-        if (isset($request['filter']['section'])) {
-            $list->where('section',$request['filter']['section']);
+        if (isset($request['section'])) {
+            $list->where('section',$request['section']);
         }
 
         $list->orderBy('pivot_is_active', 'desc');
