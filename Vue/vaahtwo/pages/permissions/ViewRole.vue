@@ -122,13 +122,16 @@ const openViewModal = () => {
             <div class="grid p-fluid">
                 <div class="col-12">
                     <div class="p-inputgroup ">
-
-                        <InputText v-model="store.permission_role_query.q"
-                                   @keyup.enter="store.delayedItemUsersSearch()"
-                                   @keyup.enter.native="store.delayedItemUsersSearch()"
-                                   @keyup.13="store.delayedItemUsersSearch()"
-                                   placeholder="Search"
-                        />
+                        <span class="p-input-icon-left">
+                            <i class="pi pi-search" />
+                            <InputText v-model="store.permission_role_query.q"
+                                       @keyup.enter="store.delayedItemUsersSearch()"
+                                       @keyup.enter.native="store.delayedItemUsersSearch()"
+                                       @keyup.13="store.delayedItemUsersSearch()"
+                                       placeholder="Search"
+                                       class="w-full"
+                            />
+                        </span>
 
                         <Button @click="store.delayedItemUsersSearch()"
                                 icon="pi pi-search"

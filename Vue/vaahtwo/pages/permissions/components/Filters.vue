@@ -11,6 +11,7 @@ const store = usePermissionStore();
     <div>
 
         <Sidebar v-model:visible="store.show_filters"
+                 style="z-index: 1001"
                  position="right">
 
             <VhFieldVertical >
