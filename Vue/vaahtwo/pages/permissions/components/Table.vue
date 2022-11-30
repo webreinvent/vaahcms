@@ -62,7 +62,7 @@ const useVaah = vaah();
                      header="Roles"
              >
                  <template #body="prop">
-                     <Button class="p-button p-button-rounded p-button-xs text-xs"
+                     <Button class="p-button p-button-rounded p-button-xs text-xs white-space-nowrap"
                              v-tooltip.top="'View Role'"
                              @click="store.toRole(prop.data)"
                      >
@@ -75,7 +75,7 @@ const useVaah = vaah();
                      header="Users"
              >
                  <template #body="prop">
-                     <Button class="p-button p-button-rounded p-button-xs text-xs"
+                     <Button class="p-button p-button-rounded p-button-xs text-xs white-space-nowrap"
                              v-tooltip.top="'User'"
                              disabled
                      >
