@@ -21,22 +21,20 @@ const useVaah = vaah();
 
             <Column selectionMode="multiple"
                     v-if="store.isViewLarge()"
-                    headerStyle="width: 3em">
-            </Column>
+                    headerStyle="width: 3em"
+            />
 
-            <Column field="id" header="ID" :style="{width: store.getIdWidth()}" :sortable="true">
-            </Column>
+            <Column field="id" header="ID" :style="{width: store.getIdWidth()}" :sortable="true" />
 
             <Column field="name" header="Name"
-                    :sortable="true">
-
+                    :sortable="true"
+            >
                 <template #body="prop">
                     <Badge v-if="prop.data.deleted_at"
                            value="Trashed"
                            severity="danger"></Badge>
                     {{prop.data.name}}
                 </template>
-
             </Column>
 
              <Column v-if="store.isViewLarge()"
@@ -55,7 +53,6 @@ const useVaah = vaah();
                              @click="useVaah.copy(prop.data.slug)"
                      />
                  </template>
-
              </Column>
 
              <Column field="permissions"
@@ -82,8 +79,7 @@ const useVaah = vaah();
                          {{ props.data.count_users }} / {{ store.total_users }}
                      </Button>
                  </template>
-             </Column>
-
+            </Column>
 
             <Column field="updated_at" header="Updated"
                     v-if="store.isViewLarge()"
@@ -155,8 +151,8 @@ const useVaah = vaah();
         <Paginator v-model:rows="store.query.rows"
                    :totalRecords="store.list.total"
                    @page="store.paginate($event)"
-                   :rowsPerPageOptions="store.rows_per_page">
-        </Paginator>
+                   :rowsPerPageOptions="store.rows_per_page"
+        />
         <!--/paginator-->
 
     </div>

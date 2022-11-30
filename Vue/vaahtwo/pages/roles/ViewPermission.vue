@@ -179,15 +179,14 @@ const confirmChangeStatus = (event, id) => {
 
                             <span class="p-input-icon-left">
                                 <i class="pi pi-search" />
-
-                            <InputText v-model="store.role_permission_query.q"
-                                       @keyup.enter="store.delayedRolePermissionSearch()"
-                                       @keyup.enter.native="store.delayedRolePermissionSearch()"
-                                       @keyup.13="store.delayedRolePermissionSearch()"
-                                       placeholder="Search"
-                                       type="text"
-                                       class="w-full"
-                            />
+                                <InputText v-model="store.role_permission_query.q"
+                                           @keyup.enter="store.delayedRolePermissionSearch()"
+                                           @keyup.enter.native="store.delayedRolePermissionSearch()"
+                                           @keyup.13="store.delayedRolePermissionSearch()"
+                                           placeholder="Search"
+                                           type="text"
+                                           class="w-full"
+                                />
                             </span>
 
                             <Button label="Reset"
