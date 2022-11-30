@@ -49,7 +49,12 @@ const useVaah = vaah();
                      v-if="store.isViewLarge()"
              >
                 <template #body="prop" class="text-xs">
-                    {{ prop.data.slug }}
+                    <Button class="p-button-text"
+                            :label="prop.data.slug"
+                            v-tooltip.top="'Copy Slug'"
+                            @click="useVaah.copy(prop.data.slug)"
+                            />
+
                 </template>
             </Column>
 
