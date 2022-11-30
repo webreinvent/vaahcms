@@ -238,8 +238,8 @@ class Role extends Model
 
         $list = $list->paginate($rows);
 
-        $countPermissions = Permission::all()->count();
-        $countUsers = User::all()->count();
+        $countPermissions = Permission::count();
+        $countUsers = User::count();
 
         $response['success'] = true;
         $response['data'] = $list;

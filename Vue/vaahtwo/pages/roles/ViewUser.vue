@@ -198,7 +198,7 @@ const openDetailsViewModal = () => {
 
             <!--paginator-->
             <Paginator v-if="store && store.role_users"
-                       :rows="store.query.rows"
+                       v-model:rows="store.role_user_query.rows"
                        :totalRecords="store.role_users.list.total"
                        @page="store.permissionPaginate($event)"
                        :rowsPerPageOptions="store.rows_per_page"

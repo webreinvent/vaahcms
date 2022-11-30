@@ -786,6 +786,7 @@ export const useRoleStore = defineStore({
             this.role_permission_query.q = null;
             this.role_permission_query.module = null;
             this.role_permission_query.section = null;
+            this.role_permission_query.rows = 20;
         },
         //---------------------------------------------------------------------
         getModuleSection() {

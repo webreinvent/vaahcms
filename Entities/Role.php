@@ -378,8 +378,13 @@ class Role extends Model {
 
         $list->orderBy('pivot_is_active', 'desc');
 
+        $rows = config('vaahcms.per_page');
 
-        $list = $list->paginate(config('vaahcms.per_page'));
+        if ($request->has('rows')) {
+            $rows = $request->rows;
+        }
+
+        $list = $list->paginate($rows);
 
         foreach ($list as $permission){
 
@@ -418,7 +423,13 @@ class Role extends Model {
 
         $list->orderBy('pivot_is_active', 'desc');
 
-        $list = $list->paginate(config('vaahcms.per_page'));
+        $rows = config('vaahcms.per_page');
+
+        if ($request->has('rows')) {
+            $rows = $request->rows;
+        }
+
+        $list = $list->paginate($rows);
 
         foreach ($list as $user){
 
