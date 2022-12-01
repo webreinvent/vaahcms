@@ -17,18 +17,23 @@ onMounted( async () => {
      * If record id is not set in url then
      * redirect user to list view
      */
-    if(route.params && !route.params.id)
-    {
+    if (route.params && !route.params.id) {
         store.toList();
         return false;
     }
 
     /**
+     * Fetch the item from the database
+     */
+    if (route.params && route.params.id) {
+        await store.getItem(route.params.id);
+    }
+
+    /**
      * Fetch the record from the database
      */
-    if(!store.item)
-    {
-        await store.getItem(route.params.id);
+    if (store.item && !store.roles) {
+        await store.getItemRoles();
     }
 
     /**
