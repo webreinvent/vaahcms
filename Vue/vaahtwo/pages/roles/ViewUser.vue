@@ -24,11 +24,20 @@ onMounted(async () => {
     /**
      * Fetch the record from the database
      */
-    if(!store.item)
-    {
+    if (route.params && route.params.id) {
         await store.getItem(route.params.id);
     }
 
+    /**
+     * Fetch item users from the database
+     */
+    if (store.item && !store.permission) {
+        await store.getItemUsers();
+    }
+
+    /**
+     * Fetch user menu item from store
+     */
     await store.getRoleUserMenuItems();
 });
 

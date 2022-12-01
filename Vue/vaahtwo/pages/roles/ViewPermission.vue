@@ -29,11 +29,20 @@ onMounted(async () => {
     /**
      * Fetch the record from the database
      */
-    if(!store.item)
-    {
+    if (route.params && route.params.id) {
         await store.getItem(route.params.id);
     }
 
+    /**
+     * Fetch item permissions from the database
+     */
+    if (store.item && !store.permission) {
+        await store.getItemPermissions();
+    }
+
+    /**
+     * Fetch permission menu item from store
+     */
     await store.getPermissionMenuItems();
 
     /**
@@ -197,8 +206,8 @@ const confirmChangeStatus = (event, id) => {
                 </div>
             </div>
 
-            <DataTable v-if="store && store.permission"
-                       :value="store.permission.list.data"
+            <DataTable v-if="store && store.permissions"
+                       :value="store.permissions.list.data"
                        dataKey="id"
                        class="p-datatable-sm"
                        stripedRows

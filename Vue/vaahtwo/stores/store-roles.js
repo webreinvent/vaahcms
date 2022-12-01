@@ -67,7 +67,7 @@ export const useRoleStore = defineStore({
         total_permissions: null,
         total_users: null,
         permission_menu_items: null,
-        permission: null,
+        permissions: null,
         role_user_menu_items: null,
         role_users: null,
         search_item: null,
@@ -625,7 +625,7 @@ export const useRoleStore = defineStore({
             this.hideProgress();
 
             if (data) {
-                this.permission = data;
+                this.permissions = data;
             }
         },
         //---------------------------------------------------------------------
