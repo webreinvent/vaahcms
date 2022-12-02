@@ -3,9 +3,9 @@
 Route::group(
     [
     'prefix' => 'backend/vaah/permissions',
-    
+
     'middleware' => ['web', 'has.backend.access'],
-    
+
     'namespace' => 'WebReinvent\\VaahCms\Http\Controllers\Backend',
 ],
 function () {
@@ -55,7 +55,7 @@ function () {
     /**
      * List Actions
      */
-    Route::any('/action/{action}', 'PermissionsController@listAction')
+    Route::any('/actions/{action}', 'PermissionsController@listAction')
         ->name('vh.backend.vaah.permissions.list.actions');
 
     /**
@@ -63,6 +63,12 @@ function () {
      */
     Route::any('/{id}/action/{action}', 'PermissionsController@itemAction')
         ->name('vh.backend.vaah.permissions.item.action');
+
+    /**
+     * Get Item Roles
+     */
+    Route::get('/item/{id}/roles', 'PermissionsController@getItemRoles')
+        ->name('backend.vaah.permissions.role');
 
     //---------------------------------------------------------
 

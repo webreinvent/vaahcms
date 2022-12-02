@@ -267,7 +267,7 @@ export const usePermissionStore = defineStore({
                 data.is_active = 1;
             }
 
-            this.actions(false, 'toggle_role_active_status', params, data)
+            this.actions(false, 'toggle-role-active-status', params, data)
 
         },
         //---------------------------------------------------------------------
@@ -978,13 +978,13 @@ export const usePermissionStore = defineStore({
                 {
                     label: 'Active All Roles',
                     command: () => {
-                        this.bulkActions(1, 'toggle_role_active_status');
+                        this.bulkActions(1, 'toggle-role-active-status');
                     }
                 },
                 {
                     label: 'Inactive All Roles',
                     command: () => {
-                        this.bulkActions(0, 'toggle_role_active_status');
+                        this.bulkActions(0, 'toggle-role-active-status');
                     }
                 }
             ];
@@ -992,7 +992,7 @@ export const usePermissionStore = defineStore({
         //---------------------------------------------------------------------
         hasPermission(slug) {
             const root = useRootStore();
-            return vaah().hasPermission(root.permission, slug);
+            return vaah().hasPermission(root.permissions, slug);
         },
         //---------------------------------------------------------------------
         showProgress()

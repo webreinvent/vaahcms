@@ -1,4 +1,4 @@
-<?php namespace WebReinvent\VaahCms\Entities;
+<?php namespace WebReinvent\VaahCms\Models;
 
 use DateTimeInterface;
 use Illuminate\Database\Eloquent\Model;
@@ -6,9 +6,10 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
+use WebReinvent\VaahCms\Entities\User;
 use WebReinvent\VaahCms\Traits\CrudWithUuidObservantTrait;
 
-class Permission extends Model {
+class PermissionBase extends Model {
 
     use SoftDeletes;
     use CrudWithUuidObservantTrait;
@@ -138,7 +139,7 @@ class Permission extends Model {
     //-------------------------------------------------
     public static function countUsers($id)
     {
-        $roles_ids = Permission::getPermissionRoleIds($id);
+        $roles_ids = self::getPermissionRoleIds($id);
 
         if(!$roles_ids || !is_array($roles_ids))
         {
@@ -155,7 +156,7 @@ class Permission extends Model {
     public static function syncPermissionsWithRoles()
     {
 
-        $permissions_list = Permission::all();
+        $permissions_list = self::all();
 
         if($permissions_list){
             foreach ($permissions_list as $permission){
@@ -172,7 +173,7 @@ class Permission extends Model {
             }
         }
 
-        $permissions = Permission::all()->pluck('id')->toArray();
+        $permissions = self::all()->pluck('id')->toArray();
 
         $roles = Role::all();
 
@@ -197,15 +198,15 @@ class Permission extends Model {
     //-------------------------------------------------
     public static function recountRelations()
     {
-        $list = Permission::withTrashed()->select('id')->get();
+        $list = self::withTrashed()->select('id')->get();
 
         if($list)
         {
             foreach ($list as $item)
             {
-                $roles_ids = Permission::getPermissionRoleIds($item->id);
+                $roles_ids = self::getPermissionRoleIds($item->id);
                 $item->count_roles = count($roles_ids);
-                $item->count_users = Permission::countUsers($item->id);
+                $item->count_users = self::countUsers($item->id);
                 $item->save();
             }
         }
@@ -217,11 +218,11 @@ class Permission extends Model {
 
         if(isset($request->recount) && $request->recount == true)
         {
-            Permission::syncPermissionsWithRoles();
-            Permission::recountRelations();
+            self::syncPermissionsWithRoles();
+            self::recountRelations();
         }
 
-        $list = Permission::orderBy('id', 'desc');
+        $list = self::orderBy('id', 'desc');
 
         if($request['trashed'] == 'true')
         {
@@ -276,7 +277,7 @@ class Permission extends Model {
     public static function getItem($id)
     {
 
-        $item = Permission::where('id', $id)->with(['createdByUser', 'updatedByUser', 'deletedByUser'])
+        $item = self::where('id', $id)->with(['createdByUser', 'updatedByUser', 'deletedByUser'])
             ->withTrashed()->first();
 
         $response['success'] = true;
@@ -570,7 +571,7 @@ class Permission extends Model {
 
         $inputs = $request->all();
 
-        $item = Permission::where('id',$inputs['inputs']['id'])->withTrashed()->first();
+        $item = self::where('id',$inputs['inputs']['id'])->withTrashed()->first();
 
         $data = [
             'is_active' => $inputs['data']['is_active'],
@@ -596,8 +597,8 @@ class Permission extends Model {
 
 
         $item->save();
-        Permission::recountRelations();
-        Role::recountRelations();
+        self::recountRelations();
+        \WebReinvent\VaahCms\Entities\Role::recountRelations();
         $response['success'] = true;
         $response['data'] = [];
 
@@ -638,7 +639,7 @@ class Permission extends Model {
     public static function getModuleSections($request)
     {
 
-        $item = Permission::where('module',$request->filter)->withTrashed()->select('section')->get()->unique('section');
+        $item = self::where('module',$request->filter)->withTrashed()->select('section')->get()->unique('section');
 
         $response['success'] = true;
         $response['data'] = $item;

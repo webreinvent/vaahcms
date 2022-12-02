@@ -16,7 +16,7 @@ export const useRootStore = defineStore({
         show_progress_bar: false,
         is_logged_in: false,
         is_installation_verified: false,
-        permission: null,
+        permissions: null,
         top_menu_items: [
             {
                 to:'/',
@@ -118,7 +118,7 @@ export const useRootStore = defineStore({
         //-----------------------------------------------------------------------
         afterGetPermission(data, res) {
             if (data) {
-                this.permission = data.list;
+                this.permissions = data.list;
             }
         },
         //---------------------------------------------------------------------
