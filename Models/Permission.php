@@ -8,7 +8,7 @@ use Illuminate\Support\Str;
 use WebReinvent\VaahCms\Traits\CrudWithUuidObservantTrait;
 use WebReinvent\VaahCms\Entities\User;
 
-class Permission extends Model
+class Permission extends PermissionBase
 {
 
     use SoftDeletes;
@@ -396,8 +396,8 @@ class Permission extends Model
             case 'delete-all':
                 self::withTrashed()->forceDelete();
                 break;
-            case 'toggle_role_active_status':
-                $response = \WebReinvent\VaahCms\Entities\Permission::bulkChangeRoleStatus($request);
+            case 'toggle-role-active-status':
+                $response = self::bulkChangeRoleStatus($request);
                 break;
         }
 
@@ -543,18 +543,6 @@ class Permission extends Model
     }
 
     //-------------------------------------------------
-    public static function getItemRoles($request, $id)
-    {
-        if (!\Auth::user()->hasPermission('can-read-permissions')) {
-            $response['status'] = 'failed';
-            $response['errors'][] = trans("vaahcms::messages.permission_denied");
-
-            return response()->json($response);
-        }
-
-        $response = \WebReinvent\VaahCms\Entities\Permission::getItemRoles($request,$id);
-        return response()->json($response);
-    }
     //-------------------------------------------------
     //-------------------------------------------------
 
