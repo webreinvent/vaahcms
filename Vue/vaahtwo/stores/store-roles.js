@@ -811,6 +811,10 @@ export const useRoleStore = defineStore({
             }
         },
         //---------------------------------------------------------------------
+        resetRoleUserFilters() {
+            this.role_user_query.q = null;
+        },
+        //---------------------------------------------------------------------
         closeForm()
         {
             this.$router.push({name: 'roles.index'})

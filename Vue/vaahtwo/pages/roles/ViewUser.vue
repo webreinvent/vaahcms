@@ -119,12 +119,20 @@ const openDetailsViewModal = () => {
             <div class="grid p-fluid">
                 <div class="col-12">
                     <div class="p-inputgroup">
+                         <span class="p-input-icon-left">
+                            <i class="pi pi-search" />
+                            <InputText v-model="store.role_user_query.q"
+                                       @keyup.enter="store.delayedItemUsersSearch()"
+                                       @keyup.enter.native="store.delayedItemUsersSearch()"
+                                       @keyup.13="store.delayedItemUsersSearch()"
+                                       placeholder="Search"
+                                       type="text"
+                                       class="w-full"
+                            />
+                         </span>
 
-                        <InputText v-model="store.role_user_query.q"
-                                   @keyup.enter="store.delayedItemUsersSearch()"
-                                   @keyup.enter.native="store.delayedItemUsersSearch()"
-                                   @keyup.13="store.delayedItemUsersSearch()"
-                                   placeholder="Search"
+                        <Button label="Reset"
+                                @click="store.resetRoleUserFilters()"
                         />
                     </div>
                 </div>

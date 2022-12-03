@@ -9,7 +9,7 @@ use WebReinvent\VaahCms\Entities\Permission;
 use WebReinvent\VaahCms\Traits\CrudWithUuidObservantTrait;
 use WebReinvent\VaahCms\Entities\User;
 
-class Role extends Model
+class Role extends RoleBase
 {
 
     use SoftDeletes;
@@ -552,7 +552,7 @@ class Role extends Model
             return response()->json($response);
         }
 
-        $response = \WebReinvent\VaahCms\Entities\Role::getRolePermission($request, $id);
+        $response = Role::getRolePermission($request, $id);
         return response()->json($response);
     }
     //-------------------------------------------------
@@ -566,7 +566,7 @@ class Role extends Model
             return response()->json($response);
         }
 
-        $response = \WebReinvent\VaahCms\Entities\Role::getRoleUser($request, $id);
+        $response = Role::getRoleUser($request, $id);
         return response()->json($response);
     }
     //-------------------------------------------------
@@ -603,7 +603,7 @@ class Role extends Model
                     return $response;
                 }
 
-                $response = \WebReinvent\VaahCms\Entities\Role::bulkStatusChange($request);
+                $response = Role::bulkStatusChange($request);
 
                 break;
             //------------------------------------
@@ -663,7 +663,7 @@ class Role extends Model
                     return $response;
                 }
 
-                $response = \WebReinvent\VaahCms\Entities\Role::bulkChangePermissionStatus($request);
+                $response = Role::bulkChangePermissionStatus($request);
 
                 break;
             //------------------------------------
@@ -678,7 +678,7 @@ class Role extends Model
                     return $response;
                 }
 
-                $response = \WebReinvent\VaahCms\Entities\Role::bulkChangeUserStatus($request);
+                $response = Role::bulkChangeUserStatus($request);
 
                 break;
             //------------------------------------
@@ -693,7 +693,7 @@ class Role extends Model
                     return $response;
                 }
 
-                $response = \WebReinvent\VaahCms\Entities\Role::bulkPermissionStatusChange($request);
+                $response = Role::bulkPermissionStatusChange($request);
                 break;
             //------------
             //------------------------------------

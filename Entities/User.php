@@ -304,7 +304,7 @@ class User extends Authenticatable
     //-------------------------------------------------
     public function roles()
     {
-        return $this->belongsToMany('WebReinvent\VaahCms\Entities\Role',
+        return $this->belongsToMany('WebReinvent\VaahCms\Models\Role',
             'vh_user_roles', 'vh_user_id', 'vh_role_id'
         )->withPivot('is_active',
             'created_by',

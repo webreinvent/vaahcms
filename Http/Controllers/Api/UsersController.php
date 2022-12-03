@@ -8,7 +8,6 @@ use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Hash;
 use WebReinvent\VaahCms\Entities\Registration;
-use WebReinvent\VaahCms\Entities\Role;
 use WebReinvent\VaahCms\Entities\User;
 use WebReinvent\VaahCms\Models\Permission;
 

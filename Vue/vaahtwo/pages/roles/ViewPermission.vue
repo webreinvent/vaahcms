@@ -160,7 +160,7 @@ const confirmChangeStatus = (event, id) => {
                     >
                         <template #option="slotProps">
                             <div>
-                                {{ slotProps.option.charAt(0).toUpperCase() + slotProps.option.slice(1)}}
+                                {{ slotProps.option.charAt(0).toUpperCase() + slotProps.option.slice(1) }}
                             </div>
                         </template>
                     </Dropdown>
@@ -176,7 +176,7 @@ const confirmChangeStatus = (event, id) => {
                     >
                         <template #option="slotProps">
                             <div>
-                                {{ slotProps.option.charAt(0).toUpperCase() + slotProps.option.slice(1)}}
+                                {{ slotProps.option.charAt(0).toUpperCase() + slotProps.option.slice(1) }}
                             </div>
                         </template>
                     </Dropdown>
@@ -185,7 +185,6 @@ const confirmChangeStatus = (event, id) => {
                 <div class="grid p-fluid">
                     <div class="col-12">
                         <div class="p-inputgroup">
-
                             <span class="p-input-icon-left">
                                 <i class="pi pi-search" />
                                 <InputText v-model="store.role_permission_query.q"
