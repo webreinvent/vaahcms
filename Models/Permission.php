@@ -114,7 +114,7 @@ class Permission extends PermissionBase
 
 
         // check if name exist
-        $item = self::where('name', $inputs['name'])->first();
+        $item = self::withTrashed()->where('name', $inputs['name'])->first();
 
         if ($item) {
             $response['success'] = false;
@@ -123,7 +123,7 @@ class Permission extends PermissionBase
         }
 
         // check if slug exist
-        $item = self::where('slug', $inputs['slug'])->first();
+        $item = self::withTrashed()->where('slug', $inputs['slug'])->first();
 
         if ($item) {
             $response['success'] = false;
