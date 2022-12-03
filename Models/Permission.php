@@ -465,6 +465,8 @@ class Permission extends PermissionBase
 
         $response = self::getItem($id);
 
+        $response['success'] = true;
+        $response['messages'][] = 'Updated successfully.';
         return $response;
     }
     //-------------------------------------------------
