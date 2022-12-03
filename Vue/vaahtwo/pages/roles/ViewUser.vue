@@ -121,10 +121,10 @@ const openDetailsViewModal = () => {
                     <div class="p-inputgroup">
                          <span class="p-input-icon-left">
                             <i class="pi pi-search" />
-                            <InputText v-model="store.role_user_query.q"
-                                       @keyup.enter="store.delayedItemUsersSearch()"
-                                       @keyup.enter.native="store.delayedItemUsersSearch()"
-                                       @keyup.13="store.delayedItemUsersSearch()"
+                            <InputText v-model="store.query.role_user_query.q"
+                                       @keyup.enter="store.delayedRoleUsersSearch()"
+                                       @keyup.enter.native="store.delayedRoleUsersSearch()"
+                                       @keyup.13="store.delayedRoleUsersSearch()"
                                        placeholder="Search"
                                        type="text"
                                        class="w-full"
@@ -215,9 +215,9 @@ const openDetailsViewModal = () => {
 
             <!--paginator-->
             <Paginator v-if="store && store.role_users"
-                       v-model:rows="store.role_user_query.rows"
+                       v-model:rows="store.query.role_user_query.rows"
                        :totalRecords="store.role_users.list.total"
-                       @page="store.permissionPaginate($event)"
+                       @page="store.userPaginate($event)"
                        :rowsPerPageOptions="store.rows_per_page"
             />
             <!--/paginator-->

@@ -417,8 +417,7 @@ class RoleBase extends Model {
                     ->orWhere('last_name', 'LIKE', '%'.$request->q.'%')
                     ->orWhere('email', 'LIKE', '%'.$request->q.'%');
             });
-        } else
-        {
+        } else {
             $list = $item->users();
         }
 

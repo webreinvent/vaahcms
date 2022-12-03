@@ -115,7 +115,7 @@ class Role extends RoleBase
 
 
         // check if name exist
-        $item = self::where('name', $inputs['name'])->first();
+        $item = self::withTrashed()->where('name', $inputs['name'])->first();
 
         if ($item) {
             $response['success'] = false;
@@ -124,7 +124,7 @@ class Role extends RoleBase
         }
 
         // check if slug exist
-        $item = self::where('slug', $inputs['slug'])->first();
+        $item = self::withTrashed()->where('slug', $inputs['slug'])->first();
 
         if ($item) {
             $response['success'] = false;
@@ -464,6 +464,8 @@ class Role extends RoleBase
 
         $response = self::getItem($id);
 
+        $response['status'] = true;
+        $response['messages'][] = 'Updated Successfully.';
         return $response;
     }
     //-------------------------------------------------
@@ -652,7 +654,7 @@ class Role extends RoleBase
 
                 break;
             //------------------------------------
-            case 'toggle_permission_active_status':
+            case 'toggle-permission-active-status':
 
                 if(!\Auth::user()->hasPermission('can-manage-roles') &&
                     !\Auth::user()->hasPermission('can-update-roles'))
@@ -667,7 +669,7 @@ class Role extends RoleBase
 
                 break;
             //------------------------------------
-            case 'toggle_user_active_status':
+            case 'toggle-user-active-status':
 
                 if(!\Auth::user()->hasPermission('can-manage-roles') &&
                     !\Auth::user()->hasPermission('can-update-roles'))

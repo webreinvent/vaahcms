@@ -20,6 +20,18 @@ let empty_states = {
             trashed: null,
             sort: null,
         },
+        role_permission_query: {
+            q: null,
+            module: null,
+            section: null,
+            page: null,
+            rows: null,
+        },
+        role_user_query: {
+            q: null,
+            page: null,
+            rows: null,
+        },
     },
     action: {
         type: null,
@@ -74,18 +86,6 @@ export const useRoleStore = defineStore({
         active_role_permission: null,
         active_role_user: null,
         module_section_list: null,
-        role_permission_query: {
-            q: null,
-            module: null,
-            section: null,
-            page: null,
-            rows: 20,
-        },
-        role_user_query: {
-            q: null,
-            page: null,
-            rows: 20,
-        },
     }),
     getters: {
 
@@ -162,14 +162,14 @@ export const useRoleStore = defineStore({
                 },{deep: true}
             );
 
-            watch(this.role_permission_query, (newVal, oldVal) => {
+            watch(this.query.role_permission_query, (newVal, oldVal) => {
                 this.delayedRolePermissionSearch();
             }, {
                 deep:true
             });
 
-            watch(this.role_user_query, (newVal, oldVal) => {
-                this.delayedItemUsersSearch();
+            watch(this.query.role_user_query, (newVal, oldVal) => {
+                this.delayedRoleUsersSearch();
             }, {
                 deep:true
             })
@@ -195,6 +195,8 @@ export const useRoleStore = defineStore({
                 if(data.rows)
                 {
                     this.query.rows = data.rows;
+                    this.query.role_permission_query.rows = data.rows;
+                    this.query.role_user_query.rows = data.rows;
                 }
 
                 if(this.route.params && !this.route.params.id){
@@ -609,7 +611,7 @@ export const useRoleStore = defineStore({
             this.showProgress();
 
             let params = {
-                query: this.role_permission_query,
+                query: this.query.role_permission_query,
                 method: 'post'
             };
 
@@ -639,7 +641,7 @@ export const useRoleStore = defineStore({
             )},
         //---------------------------------------------------------------------
         permissionPaginate(event) {
-            this.role_permission_query.page = event.page+1;
+            this.query.role_permission_query.page = event.page+1;
             this.getItemPermissions();
         },
         //---------------------------------------------------------------------
@@ -648,8 +650,7 @@ export const useRoleStore = defineStore({
             this.showProgress();
 
             let params = {
-                query: this.role_user_query,
-                method: 'get'
+                query: this.query.role_user_query,
             };
 
             vaah().ajax(
@@ -668,11 +669,11 @@ export const useRoleStore = defineStore({
         },
         //---------------------------------------------------------------------
         userPaginate(event) {
-            this.role_user_query.page = event.page+1;
+            this.query.role_user_query.page = event.page+1;
             this.getItemUsers();
         },
         //---------------------------------------------------------------------
-        async delayedItemUsersSearch() {
+        async delayedRoleUsersSearch() {
             let self = this;
             clearTimeout(this.search.delay_timer);
             this.search.delay_timer = setTimeout(async function () {
@@ -713,7 +714,7 @@ export const useRoleStore = defineStore({
                 data.is_active = 1;
             }
 
-            this.actions(false, 'toggle_permission_active_status', inputs, data)
+            this.actions(false, 'toggle-permission-active-status', inputs, data)
 
         },
         //---------------------------------------------------------------------
@@ -734,7 +735,7 @@ export const useRoleStore = defineStore({
                 data.is_active = 1;
             }
 
-            this.actions(false, 'toggle_user_active_status', params, data)
+            this.actions(false, 'toggle-user-active-status', params, data)
 
         },
         //---------------------------------------------------------------------
@@ -783,17 +784,17 @@ export const useRoleStore = defineStore({
         },
         //---------------------------------------------------------------------
         resetRolePermissionFilters() {
-            this.role_permission_query.q = null;
-            this.role_permission_query.module = null;
-            this.role_permission_query.section = null;
-            this.role_permission_query.rows = 20;
+            this.query.role_permission_query.q = null;
+            this.query.role_permission_query.module = null;
+            this.query.role_permission_query.section = null;
+            this.query.role_permission_query.rows = 20;
         },
         //---------------------------------------------------------------------
         getModuleSection() {
 
             let params = {
                 params: {
-                    module: this.role_permission_query.module,
+                    module: this.query.role_permission_query.module,
                 },
                 method: 'post',
             };
@@ -812,7 +813,7 @@ export const useRoleStore = defineStore({
         },
         //---------------------------------------------------------------------
         resetRoleUserFilters() {
-            this.role_user_query.q = null;
+            this.query.role_user_query.q = null;
         },
         //---------------------------------------------------------------------
         closeForm()
@@ -1133,13 +1134,13 @@ export const useRoleStore = defineStore({
                 {
                     label: 'Active All Permissions',
                     command: () => {
-                        this.bulkActions(1, 'toggle_permission_active_status');
+                        this.bulkActions(1, 'toggle-permission-active-status');
                     }
                 },
                 {
                     label: 'Inactive All Permissions',
                     command: () => {
-                        this.bulkActions(0, 'toggle_permission_active_status');
+                        this.bulkActions(0, 'toggle-permission-active-status');
                     }
                 }
             ]
@@ -1150,13 +1151,13 @@ export const useRoleStore = defineStore({
                 {
                     label: 'Attach To All Users',
                     command: () => {
-                        this.bulkActions(1, 'toggle_user_active_status');
+                        this.bulkActions(1, 'toggle-user-active-status');
                     }
                 },
                 {
                     label: 'Detach To All Users',
                     command: () => {
-                        this.bulkActions(0, 'toggle_user_active_status');
+                        this.bulkActions(0, 'toggle-user-active-status');
                     }
                 }
             ]
