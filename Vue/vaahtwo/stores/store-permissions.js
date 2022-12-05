@@ -20,7 +20,7 @@ let empty_states = {
             trashed: null,
             sort: null,
         },
-        permission_role_query: {
+        permission_roles_query: {
             q: null,
             page: null,
             rows: null,
@@ -71,7 +71,7 @@ export const usePermissionStore = defineStore({
         form_menu_list: [],
         total_roles: null,
         total_users: null,
-        roles: null,
+        permission_roles: null,
         roles_menu_items: null,
         active_permission_role : null,
     }),
@@ -150,7 +150,7 @@ export const usePermissionStore = defineStore({
                 },{deep: true}
             );
 
-            watch(this.query.permission_role_query, (newVal, oldVal) => {
+            watch(this.query.permission_roles_query, (newVal, oldVal) => {
                 this.delayedItemUsersSearch();
             }, {
                 deep:true
@@ -177,7 +177,7 @@ export const usePermissionStore = defineStore({
                 if(data.rows)
                 {
                     this.query.rows = data.rows;
-                    this.query.permission_role_query.rows = data.rows
+                    this.query.permission_roles_query.rows = data.rows
                 }
 
                 if(this.route.params && !this.route.params.id){
@@ -233,7 +233,7 @@ export const usePermissionStore = defineStore({
             this.showProgress();
 
             let params = {
-                query: this.query.permission_role_query,
+                query: this.query.permission_roles_query,
             };
 
             vaah().ajax(
@@ -247,7 +247,7 @@ export const usePermissionStore = defineStore({
             this.hideProgress();
 
             if (data) {
-                this.roles = data;
+                this.permission_roles = data;
             }
         },
         //---------------------------------------------------------------------
@@ -316,10 +316,13 @@ export const usePermissionStore = defineStore({
         //---------------------------------------------------------------------
         async delayedItemUsersSearch() {
             let self = this;
-            clearTimeout(this.search.delay_timer);
-            this.search.delay_timer = setTimeout(async function() {
-                await self.getItemRoles();
-            }, this.search.delay_time);
+
+            if (this.item && this.item.id) {
+                clearTimeout(this.search.delay_timer);
+                this.search.delay_timer = setTimeout(async function() {
+                    await self.getItemRoles();
+                }, this.search.delay_time);
+            }
         },
         //---------------------------------------------------------------------
         isListActionValid()
@@ -541,7 +544,7 @@ export const usePermissionStore = defineStore({
         },
         //---------------------------------------------------------------------
         async rolePaginate(event) {
-            this.query.permission_role_query.page = event.page + 1;
+            this.query.permission_roles_query.page = event.page + 1;
             await this.getItemRoles();
         },
         //---------------------------------------------------------------------
@@ -682,6 +685,11 @@ export const usePermissionStore = defineStore({
                 this.query.filter[key] = null;
             }
             await this.updateUrlQueryString(this.query);
+        },
+        //---------------------------------------------------------------------
+        resetPermissionRolesQuery() {
+            this.query.permission_roles_query.q = null;
+            this.query.permission_roles_query.rows = this.assets.rows;
         },
         //---------------------------------------------------------------------
         closeForm()
