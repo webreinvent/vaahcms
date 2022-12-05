@@ -20,14 +20,14 @@ let empty_states = {
             trashed: null,
             sort: null,
         },
-        role_permission_query: {
+        role_permissions_query: {
             q: null,
             module: null,
             section: null,
             page: null,
             rows: null,
         },
-        role_user_query: {
+        role_users_query: {
             q: null,
             page: null,
             rows: null,
@@ -79,7 +79,7 @@ export const useRoleStore = defineStore({
         total_permissions: null,
         total_users: null,
         permission_menu_items: null,
-        permissions: null,
+        role_permissions: null,
         role_user_menu_items: null,
         role_users: null,
         search_item: null,
@@ -162,13 +162,13 @@ export const useRoleStore = defineStore({
                 },{deep: true}
             );
 
-            watch(this.query.role_permission_query, (newVal, oldVal) => {
+            watch(this.query.role_permissions_query, (newVal, oldVal) => {
                 this.delayedRolePermissionSearch();
             }, {
                 deep:true
             });
 
-            watch(this.query.role_user_query, (newVal, oldVal) => {
+            watch(this.query.role_users_query, (newVal, oldVal) => {
                 this.delayedRoleUsersSearch();
             }, {
                 deep:true
@@ -195,8 +195,8 @@ export const useRoleStore = defineStore({
                 if(data.rows)
                 {
                     this.query.rows = data.rows;
-                    this.query.role_permission_query.rows = data.rows;
-                    this.query.role_user_query.rows = data.rows;
+                    this.query.role_permissions_query.rows = data.rows;
+                    this.query.role_users_query.rows = data.rows;
                 }
 
                 if(this.route.params && !this.route.params.id){
@@ -611,7 +611,7 @@ export const useRoleStore = defineStore({
             this.showProgress();
 
             let params = {
-                query: this.query.role_permission_query,
+                query: this.query.role_permissions_query,
                 method: 'post'
             };
 
@@ -627,22 +627,25 @@ export const useRoleStore = defineStore({
             this.hideProgress();
 
             if (data) {
-                this.permissions = data;
+                this.role_permissions = data;
             }
         },
         //---------------------------------------------------------------------
         async delayedRolePermissionSearch() {
             let self = this;
-            clearTimeout(this.search.delay_timer);
-            this.search.delay_timer = setTimeout(async function() {
-                await  self.getItemPermissions();
-            },
-                this.search.delay_time
-            )},
+            if(self.item && self.item.id)
+            {
+                clearTimeout(this.search.delay_timer);
+                this.search.delay_timer = setTimeout(async function() {
+                    await  self.getItemPermissions();
+                },this.search.delay_time)
+            }
+
+        },
         //---------------------------------------------------------------------
-        permissionPaginate(event) {
-            this.query.role_permission_query.page = event.page+1;
-            this.getItemPermissions();
+        async permissionPaginate(event) {
+            this.query.role_permissions_query.page = event.page+1;
+            await this.getItemPermissions();
         },
         //---------------------------------------------------------------------
          async getItemUsers() {
@@ -650,7 +653,8 @@ export const useRoleStore = defineStore({
             this.showProgress();
 
             let params = {
-                query: this.query.role_user_query,
+                query: this.query.role_users_query,
+                method: 'get',
             };
 
             vaah().ajax(
@@ -668,17 +672,19 @@ export const useRoleStore = defineStore({
             }
         },
         //---------------------------------------------------------------------
-        userPaginate(event) {
-            this.query.role_user_query.page = event.page+1;
-            this.getItemUsers();
+        async userPaginate(event) {
+            this.query.role_users_query.page = event.page+1;
+            await this.getItemUsers();
         },
         //---------------------------------------------------------------------
         async delayedRoleUsersSearch() {
             let self = this;
-            clearTimeout(this.search.delay_timer);
-            this.search.delay_timer = setTimeout(async function () {
-                await self.getItemUsers();
-            }, this.search.delay_time);
+            if(self.item && self.item.id) {
+                clearTimeout(this.search.delay_timer);
+                this.search.delay_timer = setTimeout(async function () {
+                    await self.getItemUsers();
+                }, this.search.delay_time);
+            }
         },
         //---------------------------------------------------------------------
         changeRoleStatus (id) {
@@ -784,17 +790,17 @@ export const useRoleStore = defineStore({
         },
         //---------------------------------------------------------------------
         resetRolePermissionFilters() {
-            this.query.role_permission_query.q = null;
-            this.query.role_permission_query.module = null;
-            this.query.role_permission_query.section = null;
-            this.query.role_permission_query.rows = 20;
+            this.query.role_permissions_query.q = null;
+            this.query.role_permissions_query.module = null;
+            this.query.role_permissions_query.section = null;
+            this.query.role_permissions_query.rows = this.assets.rows;
         },
         //---------------------------------------------------------------------
         getModuleSection() {
 
             let params = {
                 params: {
-                    module: this.query.role_permission_query.module,
+                    module: this.query.role_permissions_query.module,
                 },
                 method: 'post',
             };
@@ -813,7 +819,8 @@ export const useRoleStore = defineStore({
         },
         //---------------------------------------------------------------------
         resetRoleUserFilters() {
-            this.query.role_user_query.q = null;
+            this.query.role_users_query.q = null;
+            this.query.role_users_query.rows = this.assets.rows;
         },
         //---------------------------------------------------------------------
         closeForm()
