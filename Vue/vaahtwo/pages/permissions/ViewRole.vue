@@ -32,7 +32,7 @@ onMounted( async () => {
     /**
      * Fetch the record from the database
      */
-    if (store.item && !store.roles) {
+    if (store.item && !store.permission_roles) {
         await store.getItemRoles();
     }
 
@@ -129,7 +129,7 @@ const openViewModal = () => {
                     <div class="p-inputgroup ">
                         <span class="p-input-icon-left">
                             <i class="pi pi-search" />
-                            <InputText v-model="store.query.permission_role_query.q"
+                            <InputText v-model="store.query.permission_roles_query.q"
                                        @keyup.enter="store.delayedItemUsersSearch()"
                                        @keyup.enter.native="store.delayedItemUsersSearch()"
                                        @keyup.13="store.delayedItemUsersSearch()"
@@ -138,8 +138,8 @@ const openViewModal = () => {
                             />
                         </span>
 
-                        <Button @click="store.delayedItemUsersSearch()"
-                                icon="pi pi-search"
+                        <Button label="Reset"
+                                @click="store.resetPermissionRolesQuery()"
                         />
                     </div>
                 </div>
@@ -147,8 +147,8 @@ const openViewModal = () => {
 
             <Divider />
 
-            <DataTable v-if="store && store.roles"
-                       :value="store.roles.list.data"
+            <DataTable v-if="store && store.permission_roles"
+                       :value="store.permission_roles.list.data"
                        dataKey="id"
                        class="p-datatable-sm"
                        stripedRows
@@ -220,11 +220,11 @@ const openViewModal = () => {
             <Divider />
 
             <!--paginator-->
-            <Paginator v-model:rows="store.query.permission_role_query.rows"
-                       :totalRecords="store.roles.list.total"
+            <Paginator v-if="store && store.permission_roles"
+                       v-model:rows="store.query.permission_roles_query.rows"
+                       :totalRecords="store.permission_roles.list.total"
                        @page="store.rolePaginate($event)"
                        :rowsPerPageOptions="store.rows_per_page"
-                       v-if="store && store.roles"
             />
             <!--/paginator-->
         </Panel>
