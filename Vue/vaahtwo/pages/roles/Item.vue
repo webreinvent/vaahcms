@@ -55,62 +55,55 @@ const toggleItemMenu = (event) => {
 
 </script>
 <template>
-
     <div class="col-6">
-
         <Panel v-if="store && store.item">
-
             <template class="p-1" #header>
-
                 <div class="flex flex-row">
-
                     <div class="p-panel-title">
-                        #{{store.item.id}}
+                       {{ store.item.name }}
                     </div>
-
                 </div>
-
             </template>
 
             <template #icons>
-
-
                 <div class="p-inputgroup">
+                    <Button :label=" '#' + store.item.id "
+                            icon="pi pi-save"
+                            @click="store.itemAction('save')"
+                    />
+
                     <Button label="Edit"
+                            icon="pi pi-save"
                             @click="store.toEdit(store.item)"
-                            icon="pi pi-save"/>
+                    />
 
                     <!--item_menu-->
-                    <Button
-                        type="button"
-                        @click="toggleItemMenu"
-                        icon="pi pi-angle-down"
-                        aria-haspopup="true"/>
+                    <Button type="button"
+                            icon="pi pi-angle-down"
+                            aria-haspopup="true"
+                            @click="toggleItemMenu"
+                    />
 
                     <Menu ref="item_menu_state"
                           :model="store.item_menu_list"
-                          :popup="true" />
+                          :popup="true"
+                    />
                     <!--/item_menu-->
 
                     <Button class="p-button-primary"
                             icon="pi pi-times"
-                            @click="store.toList()"/>
-
+                            @click="store.toList()"
+                    />
                 </div>
-
-
-
             </template>
 
-
             <div v-if="store.item">
-
                 <Message severity="error"
                          class="p-container-message"
                          :closable="false"
                          icon="pi pi-trash"
-                         v-if="store.item.deleted_at">
-
+                         v-if="store.item.deleted_at"
+                >
                     <div class="flex align-items-center justify-content-between">
 
                         <div class="">
@@ -120,12 +113,10 @@ const toggleItemMenu = (event) => {
                         <div class="">
                             <Button label="Restore"
                                     class="p-button-sm"
-                                    @click="store.itemAction('restore')">
-                            </Button>
+                                    @click="store.itemAction('restore')"
+                            />
                         </div>
-
                     </div>
-
                 </Message>
 
                 <div class="p-datatable p-component p-datatable-responsive-scroll p-datatable-striped p-datatable-sm">

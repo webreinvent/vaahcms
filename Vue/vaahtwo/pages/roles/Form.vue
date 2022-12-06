@@ -37,7 +37,7 @@ const toggleFormMenu = (event) => {
                 <div class="flex flex-row">
                     <div class="p-panel-title">
                         <span v-if="store.item && store.item.id">
-                            Update
+                            {{ store.item.name }}
                         </span>
                         <span v-else>
                             Create
@@ -50,37 +50,47 @@ const toggleFormMenu = (event) => {
             </template>
 
             <template #icons>
-
-
                 <div class="p-inputgroup">
-                    <Button label="Save"
-                            v-if="store.item && store.item.id"
+                    <Button v-if="store.item && store.item.id"
+                            :label=" '#' + store.item.id "
+                            icon="pi pi-save"
                             @click="store.itemAction('save')"
-                            icon="pi pi-save"/>
+                    />
 
-                    <Button label="Create & New"
-                            v-else
+                    <Button v-if="store.item && store.item.id"
+                            label="Save"
+                            icon="pi pi-save"
+                            @click="store.itemAction('save')"
+                    />
+
+                    <Button v-else
+                            label="Create & New"
+                            icon="pi pi-save"
                             @click="store.itemAction('create-and-new')"
-                            icon="pi pi-save"/>
-
+                    />
 
                     <!--form_menu-->
-                    <Button
-                        type="button"
-                        @click="toggleFormMenu"
-                        icon="pi pi-angle-down"
-                        aria-haspopup="true"/>
+                    <Button icon="pi pi-angle-down"
+                            type="button"
+                            aria-haspopup="true"
+                            @click="toggleFormMenu"
+                    />
 
                     <Menu ref="form_menu"
                           :model="store.form_menu_list"
-                          :popup="true" />
+                          :popup="true"
+                    />
                     <!--/form_menu-->
 
+                    <Button v-if="store.item && store.item.id"
+                            icon="pi pi-eye"
+                            v-tooltip.top="'View'"
+                            @click="store.toView(store.item)"
+                    />
 
-                    <Button class="p-button-primary"
-                            icon="pi pi-times"
-                            @click="store.toList()">
-                    </Button>
+                    <Button icon="pi pi-times"
+                            @click="store.toList()"
+                    />
                 </div>
 
 
