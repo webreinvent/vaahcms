@@ -357,8 +357,7 @@ class RoleBase extends Model {
     public static function getList($request)
     {
 
-        if(isset($request->recount) && $request->recount == true)
-        {
+        if (isset($request->recount) && $request->recount == true) {
             Permission::syncPermissionsWithRoles();
             self::syncRolesWithUsers();
             self::recountRelations();

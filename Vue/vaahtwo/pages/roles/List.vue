@@ -48,12 +48,9 @@ onMounted(async () => {
 <template>
 
     <div class="grid">
-
         <div :class="'col-'+store.list_view_width">
             <Panel>
-
                 <template class="p-1" #header>
-
                     <div class="flex flex-row">
                         <div >
                             <b class="mr-1">Roles</b>
@@ -61,18 +58,21 @@ onMounted(async () => {
                                    :value="store.list.total">
                             </Badge>
                         </div>
-
                     </div>
-
                 </template>
 
                 <template #icons>
+                    <div class="p-inputgroup">
+                        <Button label="Create"
+                                icon="pi pi-plus"
+                                @click="store.toForm()"
+                        />
 
-                    <Button @click="store.toForm()">
-                        <i class="pi pi-plus mr-1"></i>
-                        Create
-                    </Button>
-
+                        <Button icon="pi pi-refresh"
+                                :loading="store.is_btn_loading"
+                                @click="store.sync()"
+                        />
+                    </div>
                 </template>
 
                 <Actions/>
@@ -80,12 +80,10 @@ onMounted(async () => {
                 <br/>
 
                 <Table/>
-
             </Panel>
         </div>
 
         <RouterView/>
-
     </div>
 
 

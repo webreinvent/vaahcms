@@ -20,6 +20,7 @@ let empty_states = {
             trashed: null,
             sort: null,
         },
+        recount: null,
     },
 
     role_permissions_query: {
@@ -90,6 +91,7 @@ export const useRoleStore = defineStore({
         module_section_list: null,
         role_permissions_query: vaah().clone(empty_states.role_permissions_query),
         role_users_query: vaah().clone(empty_states.role_users_query),
+        is_btn_loading: false,
     }),
     getters: {
 
@@ -214,6 +216,7 @@ export const useRoleStore = defineStore({
             let options = {
                 query: vaah().clone(this.query)
             };
+
             await vaah().ajax(
                 this.ajax_url,
                 this.afterGetList,
@@ -223,8 +226,10 @@ export const useRoleStore = defineStore({
         //---------------------------------------------------------------------
         afterGetList: function (data, res)
         {
-            if(data)
-            {
+            this.is_btn_loading = false;
+            this.query.recount = null;
+
+            if (data) {
                 this.list = data;
                 this.total_permissions = res.data.totalPermissions;
                 this.total_users = res.data.totalUsers;
@@ -508,7 +513,11 @@ export const useRoleStore = defineStore({
         },
 
         //---------------------------------------------------------------------
-
+        async sync() {
+            this.is_btn_loading = true;
+            this.query.recount = true;
+            await this.getList();
+        },
         //---------------------------------------------------------------------
         onItemSelection(items)
         {
