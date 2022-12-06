@@ -222,7 +222,7 @@ class RoleBase extends Model {
 
     }
     //-------------------------------------------------
-    public static function create($request)
+    public static function createItem($request)
     {
 
         if(!\Auth::user()->hasPermission('can-create-roles'))
@@ -233,19 +233,18 @@ class RoleBase extends Model {
             return $response;
         }
 
-        $inputs = $request->new_item;
+        $inputs = $request->all();
 
-        $validation = static::validation($inputs);
-        if(isset($validation['success']) && !$validation['success'])
-        {
+        $validation = self::validation($inputs);
+
+        if (isset($validation['success']) && !$validation['success']) {
             return $validation;
         }
 
         // check if name exist
-        $user = static::where('name',$inputs['name'])->first();
+        $user = self::withTrashed()->where('name',$inputs['name'])->first();
 
-        if($user)
-        {
+        if ($user) {
             $response['success'] = false;
             $response['errors'][] = "This name is already exist.";
             return $response;
@@ -253,7 +252,7 @@ class RoleBase extends Model {
 
 
         // check if slug exist
-        $user = static::where('slug',$inputs['slug'])->first();
+        $user = self::withTrashed()->where('slug',$inputs['slug'])->first();
 
         if($user)
         {
@@ -262,7 +261,7 @@ class RoleBase extends Model {
             return $response;
         }
 
-        $role = new static();
+        $role = new self();
         $role->fill($inputs);
         $role->slug = Str::slug($inputs['slug']);
         $role->save();
@@ -278,6 +277,83 @@ class RoleBase extends Model {
 
     }
     //-------------------------------------------------
+    public function scopeGetSorted($query, $filter)
+    {
+
+        if(!isset($filter['sort']))
+        {
+            return $query->orderBy('id', 'desc');
+        }
+
+        $sort = $filter['sort'];
+
+
+        $direction = Str::contains($sort, ':');
+
+        if(!$direction)
+        {
+            return $query->orderBy($sort, 'asc');
+        }
+
+        $sort = explode(':', $sort);
+
+        return $query->orderBy($sort[0], $sort[1]);
+    }
+    //-------------------------------------------------
+    public function scopeIsActiveFilter($query, $filter)
+    {
+
+        if(!isset($filter['is_active'])
+            || is_null($filter['is_active'])
+            || $filter['is_active'] === 'null'
+        )
+        {
+            return $query;
+        }
+        $is_active = $filter['is_active'];
+
+        if($is_active === 'true' || $is_active === true)
+        {
+            return $query->whereNotNull('is_active');
+        } else{
+            return $query->whereNull('is_active');
+        }
+
+    }
+    //-------------------------------------------------
+    public function scopeTrashedFilter($query, $filter)
+    {
+
+        if(!isset($filter['trashed']))
+        {
+            return $query;
+        }
+        $trashed = $filter['trashed'];
+
+        if($trashed === 'include')
+        {
+            return $query->withTrashed();
+        } else if($trashed === 'only'){
+            return $query->onlyTrashed();
+        }
+
+    }
+    //-------------------------------------------------
+    public function scopeSearchFilter($query, $filter)
+    {
+
+        if(!isset($filter['q']))
+        {
+            return $query;
+        }
+        $search = $filter['q'];
+        $query->where(function ($q) use ($search) {
+            $q->where('name', 'LIKE', '%' . $search . '%')
+                ->orWhere('slug', 'LIKE', '%' . $search . '%');
+        });
+
+    }
+    //-------------------------------------------------
     public static function getList($request)
     {
 
@@ -288,58 +364,30 @@ class RoleBase extends Model {
             self::recountRelations();
         }
 
-        $list = static::orderBy('id', 'desc');
+        $list = self::getSorted($request->filter);
+        $list->isActiveFilter($request->filter);
+        $list->trashedFilter($request->filter);
+        $list->searchFilter($request->filter);
 
+        $rows = config('vaahcms.per_page');
 
-
-        if($request['trashed'] == 'true')
-        {
-
-            $list->withTrashed();
+        if($request->has('rows')) {
+            $rows = $request->rows;
         }
 
-        if(isset($request->from) && isset($request->to))
-        {
-            $list->betweenDates($request['from'],$request['to']);
-        }
+        $list = $list->paginate($rows);
 
-        if(isset($request['status']) && $request['status']){
-            if($request['status'] == 'active')
-            {
-                $list->where('is_active',1);
-            }else{
-                $list->whereNull('is_active')->orWhere('is_active',0);
-            }
-        }
-
-
-
-        if(isset($request->q))
-        {
-
-            $list->where(function ($q) use ($request){
-                $q->where('name', 'LIKE', '%'.$request->q.'%')
-                    ->orWhere('slug', 'LIKE', '%'.$request->q.'%');
-            });
-        }
-
-
-        $data['list'] = $list->paginate(config('vaahcms.per_page'));
-
-        $countPermission = Permission::all()->count();
-
-        $countUser = User::all()->count();
-
+        $countPermissions = Permission::count();
+        $countUsers = User::count();
 
         $response['success'] = true;
-        $response['data'] = $data;
-        $response['data']['totalPermission'] = $countPermission;
-        $response['data']['totalUser'] = $countUser;
+        $response['data'] = $list;
+        $response['totalPermissions'] = $countPermissions;
+        $response['totalUsers'] = $countUsers;
 
         return $response;
-
-
     }
+
     //-------------------------------------------------
     public static function getItem($id)
     {
@@ -355,15 +403,14 @@ class RoleBase extends Model {
     //-------------------------------------------------
     public static function getRolePermission($request,$id)
     {
-
         $item = self::withTrashed()->where('id', $id)->first();
         $response['data']['item'] = $item;
 
-        if (isset($request["q"]))
+        if ($request->has('q'))
         {
             $list = $item->permissions()->where(function ($q) use ($request){
-                $q->where('name', 'LIKE', '%'.$request["q"].'%')
-                    ->orWhere('slug', 'LIKE', '%'.$request["q"].'%');
+                $q->where('name', 'LIKE', '%'. $request->q .'%')
+                    ->orWhere('slug', 'LIKE', '%'. $request->q .'%');
             });
         } else {
             $list = $item->permissions();
@@ -400,22 +447,19 @@ class RoleBase extends Model {
         $response['success'] = true;
 
         return $response;
-
-
     }
     //-------------------------------------------------
     public static function getRoleUser($request,$id)
     {
-
         $item = self::withTrashed()->where('id', $id)->first();
         $response['data']['item'] = $item;
 
-        if($request->has("q"))
-        {
+        if ($request->has("q")) {
             $list = $item->users()->where(function ($q) use ($request){
-                $q->where('first_name', 'LIKE', '%'.$request->q.'%')
-                    ->orWhere('last_name', 'LIKE', '%'.$request->q.'%')
-                    ->orWhere('email', 'LIKE', '%'.$request->q.'%');
+                $q->where('first_name', 'LIKE', '%' . $request->q . '%')
+                    ->orWhere('middle_name', 'LIKE', '%' . $request->q . '%')
+                    ->orWhere('last_name', 'LIKE', '%' . $request->q . '%')
+                    ->orWhere('email', 'LIKE', '%' . $request->q .'%');
             });
         } else {
             $list = $item->users();
@@ -431,8 +475,7 @@ class RoleBase extends Model {
 
         $list = $list->paginate($rows);
 
-        foreach ($list as $user){
-
+        foreach ($list as $user) {
             $data = self::getPivotData($user->pivot);
 
             $user['json'] = $data;
@@ -443,8 +486,6 @@ class RoleBase extends Model {
         $response['success'] = true;
 
         return $response;
-
-
     }
     //-------------------------------------------------
 
@@ -619,45 +660,47 @@ class RoleBase extends Model {
 
     }
     //-------------------------------------------------
-    public static function bulkDelete($request)
+    public static function deleteList($request): array
     {
+        $inputs = $request->all();
 
-        if(!$request->has('inputs'))
-        {
-            $response['success'] = false;
-            $response['errors'][] = 'Select IDs';
+        $rules = array(
+            'type' => 'required',
+            'items' => 'required',
+        );
+
+        $messages = array(
+            'type.required' => 'Action type is required',
+            'items.required' => 'Select items',
+        );
+
+        $validator = \Validator::make($inputs, $rules, $messages);
+
+        if ($validator->fails()) {
+            $errors = errorsToArray($validator->errors());
+            $response['failed'] = true;
+            $response['messages'] = $errors;
+
             return $response;
         }
 
-        if(!$request->has('data'))
-        {
-            $response['success'] = false;
-            $response['errors'][] = 'Select Status';
-            return $response;
-        }
+        $items_id = collect($inputs['items'])->pluck('id')->toArray();
 
-        foreach($request->inputs as $id)
-        {
+        foreach($items_id as $id) {
             $item = static::where('id', $id)->withTrashed()->first();
-            if($item)
-            {
 
+            if ($item) {
                 $item->permissions()->detach();
-
                 $item->users()->detach();
-
                 $item->forceDelete();
-
             }
         }
 
         $response['success'] = true;
-        $response['data'] = [];
+        $response['data'] = true;
         $response['messages'][] = trans('vaahcms-general.action_successful');
 
         return $response;
-
-
     }
     //-------------------------------------------------
     public static function bulkChangePermissionStatus($request)
@@ -681,16 +724,16 @@ class RoleBase extends Model {
             'updated_at' => \Illuminate\Support\Carbon::now()
         ];
 
-        if($inputs['inputs']['permission_id']){
+        if ($inputs['inputs']['permission_id']) {
             $pivot = $item->permissions->find($inputs['inputs']['permission_id'])->pivot;
 
-            if($pivot->is_active === null && !$pivot->created_by){
+            if ($pivot->is_active === null && !$pivot->created_by) {
                 $data['created_by'] = Auth::user()->id;
                 $data['created_at'] = \Illuminate\Support\Carbon::now();
             }
 
             $item->permissions()->updateExistingPivot($inputs['inputs']['permission_id'], $data);
-        }else{
+        } else {
             $item->permissions()
                 ->newPivotStatement()
                 ->where('vh_role_id', '=', $item->id)
@@ -698,9 +741,8 @@ class RoleBase extends Model {
 //            $item->permissions()->updateExistingPivot('', array('is_active' => $inputs['data']['is_active']));
         }
 
-
         self::recountRelations();
-            $response['messages'] = [];
+        $response['messages'] = [];
     }
     //-------------------------------------------------
     public static function bulkChangeUserStatus($request)
@@ -717,17 +759,17 @@ class RoleBase extends Model {
         ];
 
 
-        if($inputs['inputs']['user_id']){
+        if ($inputs['inputs']['user_id']) {
 
             $pivot = $item->users->find($inputs['inputs']['user_id'])->pivot;
 
-            if($pivot->is_active === null && !$pivot->created_by){
+            if ($pivot->is_active === null && !$pivot->created_by) {
                 $data['created_by'] = Auth::user()->id;
                 $data['created_at'] = \Illuminate\Support\Carbon::now();
             }
 
             $item->users()->updateExistingPivot($inputs['inputs']['user_id'], $data);
-        }else{
+        } else {
             $item->users()
                 ->newPivotStatement()
                 ->where('vh_role_id', '=', $item->id)
@@ -787,15 +829,12 @@ class RoleBase extends Model {
 
     public static function getModuleSections($request)
     {
-
-        $item = Permission::where('module',$request->module)->withTrashed()->select('section')->get()->unique('section');
+        $sections = Permission::where('module', $request->module)->withTrashed()->get()->unique('section')->pluck('section');
 
         $response['success'] = true;
-        $response['data'] = $item;
+        $response['data'] = $sections;
 
         return $response;
-
-
     }
 
     //-------------------------------------------------

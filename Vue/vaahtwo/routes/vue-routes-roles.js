@@ -33,14 +33,14 @@ routes_list = {
                     props: true,
                 },
                 {
-                    path: 'permission/:id?',
-                    name: 'roles.permission',
+                    path: 'permissions/:id?',
+                    name: 'roles.permissions',
                     component: ViewPermission,
                     props: true,
                 },
                 {
-                    path: 'user/:id?',
-                    name: 'roles.user',
+                    path: 'users/:id?',
+                    name: 'roles.users',
                     component: ViewUser,
                     props: true,
                 }

@@ -90,8 +90,8 @@ function () {
     /**
      * get module section
      */
-    Route::post('/getModuleSections', 'RolesController@getModuleSections')
-        ->name('backend.vaah.roles.getModuleSections');
+    Route::post('/module/{module_name}/sections', 'RolesController@getModuleSections')
+        ->name('backend.vaah.roles.module.sections');
     //---------------------------------------------------------
 
 });

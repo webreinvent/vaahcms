@@ -20,19 +20,21 @@ let empty_states = {
             trashed: null,
             sort: null,
         },
-        role_permissions_query: {
-            q: null,
-            module: null,
-            section: null,
-            page: null,
-            rows: null,
-        },
-        role_users_query: {
-            q: null,
-            page: null,
-            rows: null,
-        },
     },
+
+    role_permissions_query: {
+        q: null,
+        module: null,
+        section: null,
+        page: null,
+        rows: null,
+    },
+    role_users_query: {
+        q: null,
+        page: null,
+        rows: null,
+    },
+
     action: {
         type: null,
         items: [],
@@ -86,6 +88,8 @@ export const useRoleStore = defineStore({
         active_role_permission: null,
         active_role_user: null,
         module_section_list: null,
+        role_permissions_query: vaah().clone(empty_states.role_permissions_query),
+        role_users_query: vaah().clone(empty_states.role_users_query),
     }),
     getters: {
 
@@ -162,13 +166,13 @@ export const useRoleStore = defineStore({
                 },{deep: true}
             );
 
-            watch(this.query.role_permissions_query, (newVal, oldVal) => {
+            watch(this.role_permissions_query, (newVal, oldVal) => {
                 this.delayedRolePermissionSearch();
             }, {
                 deep:true
             });
 
-            watch(this.query.role_users_query, (newVal, oldVal) => {
+            watch(this.role_users_query, (newVal, oldVal) => {
                 this.delayedRoleUsersSearch();
             }, {
                 deep:true
@@ -195,8 +199,8 @@ export const useRoleStore = defineStore({
                 if(data.rows)
                 {
                     this.query.rows = data.rows;
-                    this.query.role_permissions_query.rows = data.rows;
-                    this.query.role_users_query.rows = data.rows;
+                    this.role_permissions_query.rows = data.rows;
+                    this.role_users_query.rows = data.rows;
                 }
 
                 if(this.route.params && !this.route.params.id){
@@ -611,7 +615,7 @@ export const useRoleStore = defineStore({
             this.showProgress();
 
             let params = {
-                query: this.query.role_permissions_query,
+                query: this.role_permissions_query,
                 method: 'post'
             };
 
@@ -644,7 +648,7 @@ export const useRoleStore = defineStore({
         },
         //---------------------------------------------------------------------
         async permissionPaginate(event) {
-            this.query.role_permissions_query.page = event.page+1;
+            this.role_permissions_query.page = event.page+1;
             await this.getItemPermissions();
         },
         //---------------------------------------------------------------------
@@ -653,7 +657,7 @@ export const useRoleStore = defineStore({
             this.showProgress();
 
             let params = {
-                query: this.query.role_users_query,
+                query: this.role_users_query,
                 method: 'get',
             };
 
@@ -673,7 +677,7 @@ export const useRoleStore = defineStore({
         },
         //---------------------------------------------------------------------
         async userPaginate(event) {
-            this.query.role_users_query.page = event.page+1;
+            this.role_users_query.page = event.page+1;
             await this.getItemUsers();
         },
         //---------------------------------------------------------------------
@@ -790,23 +794,23 @@ export const useRoleStore = defineStore({
         },
         //---------------------------------------------------------------------
         resetRolePermissionFilters() {
-            this.query.role_permissions_query.q = null;
-            this.query.role_permissions_query.module = null;
-            this.query.role_permissions_query.section = null;
-            this.query.role_permissions_query.rows = this.assets.rows;
+            this.role_permissions_query.q = null;
+            this.role_permissions_query.module = null;
+            this.role_permissions_query.section = null;
+            this.role_permissions_query.rows = this.assets.rows;
         },
         //---------------------------------------------------------------------
         getModuleSection() {
 
             let params = {
                 params: {
-                    module: this.query.role_permissions_query.module,
+                    module: this.role_permissions_query.module,
                 },
                 method: 'post',
             };
 
             vaah().ajax(
-                this.ajax_url+'/getModuleSections',
+                this.ajax_url+'/module/' + this.role_permissions_query.module +'/sections',
                 this.afterAetModuleSection,
                 params
             );
@@ -819,8 +823,8 @@ export const useRoleStore = defineStore({
         },
         //---------------------------------------------------------------------
         resetRoleUserFilters() {
-            this.query.role_users_query.q = null;
-            this.query.role_users_query.rows = this.assets.rows;
+            this.role_users_query.q = null;
+            this.role_users_query.rows = this.assets.rows;
         },
         //---------------------------------------------------------------------
         closeForm()
@@ -856,13 +860,13 @@ export const useRoleStore = defineStore({
         async toPermission(item) {
             this.item = item;
             await this.getItemPermissions();
-            this.$router.push({name: 'roles.permission', params: {id: item.id}});
+            this.$router.push({name: 'roles.permissions', params: {id: item.id}});
         },
         //---------------------------------------------------------------------
         toUser(item) {
             this.item = item;
             this.getItemUsers();
-            this.$router.push({name: 'roles.user', params: {id: item.id}});
+            this.$router.push({name: 'roles.users', params: {id: item.id}});
         },
         //---------------------------------------------------------------------
         isViewLarge()

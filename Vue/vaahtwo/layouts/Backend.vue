@@ -36,6 +36,7 @@ onMounted(async () => {
                     <RouterView></RouterView>
                 </div>
             </div>
+
         </div>
 
         <Footer />

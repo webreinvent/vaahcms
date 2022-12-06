@@ -56,7 +56,7 @@ const toggleItemMenu = (event) => {
 </script>
 <template>
 
-    <div class="col-6" >
+    <div class="col-6">
 
         <Panel v-if="store && store.item">
 

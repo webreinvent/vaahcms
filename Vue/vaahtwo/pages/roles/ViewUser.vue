@@ -4,7 +4,7 @@ import { useRoute } from 'vue-router';
 
 import { useRoleStore } from '../../stores/store-roles';
 import { useDialog } from "primevue/usedialog";
-import RoleUserDetailsView from "../../components/molecules/RoleUserDetailsView.vue";
+import RoleUserDetailsView from "./components/RoleUserDetailsView.vue";
 
 const store = useRoleStore();
 const route = useRoute();
@@ -121,7 +121,7 @@ const openDetailsViewModal = () => {
                     <div class="p-inputgroup">
                          <span class="p-input-icon-left">
                             <i class="pi pi-search" />
-                            <InputText v-model="store.query.role_users_query.q"
+                            <InputText v-model="store.role_users_query.q"
                                        @keyup.enter="store.delayedRoleUsersSearch()"
                                        @keyup.enter.native="store.delayedRoleUsersSearch()"
                                        @keyup.13="store.delayedRoleUsersSearch()"
@@ -215,7 +215,7 @@ const openDetailsViewModal = () => {
 
             <!--paginator-->
             <Paginator v-if="store && store.role_users"
-                       v-model:rows="store.query.role_users_query.rows"
+                       v-model:rows="store.role_users_query.rows"
                        :totalRecords="store.role_users.list.total"
                        @page="store.userPaginate($event)"
                        :rowsPerPageOptions="store.rows_per_page"

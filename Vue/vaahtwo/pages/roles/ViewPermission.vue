@@ -8,7 +8,7 @@ import { useRoleStore } from '../../stores/store-roles'
 import { useRootStore } from "../../stores/root"
 
 import VhViewRow from '../../vaahvue/vue-three/primeflex/VhViewRow.vue';
-import PermissionDetailsView from '../../components/molecules/PermissionDetailsView.vue';
+import PermissionDetailsView from './components/PermissionDetailsView.vue';
 import {vaah} from "../../vaahvue/pinia/vaah";
 const store = useRoleStore();
 const route = useRoute();
@@ -153,7 +153,7 @@ const confirmChangeStatus = (event, id) => {
             <div class="flex justify-content-between">
 
                 <div v-if="store && store.assets">
-                    <Dropdown v-model="store.query.role_permissions_query.module"
+                    <Dropdown v-model="store.role_permissions_query.module"
                               :options="store.assets.modules"
                               placeholder="Select a Module"
                               @change="store.getModuleSection()"
@@ -166,10 +166,10 @@ const confirmChangeStatus = (event, id) => {
                     </Dropdown>
                 </div>
 
-                <div v-if="store.query.role_permissions_query.module && store.module_section_list"
+                <div v-if="store.role_permissions_query.module && store.module_section_list"
                      class="mx-1"
                 >
-                    <Dropdown v-model="store.query.role_permissions_query.section"
+                    <Dropdown v-model="store.role_permissions_query.section"
                               :options="store.module_section_list"
                               placeholder="Select a Section"
                               @click="store.getItemPermissions()"
@@ -187,7 +187,7 @@ const confirmChangeStatus = (event, id) => {
                         <div class="p-inputgroup">
                             <span class="p-input-icon-left">
                                 <i class="pi pi-search" />
-                                <InputText v-model="store.query.role_permissions_query.q"
+                                <InputText v-model="store.role_permissions_query.q"
                                            @keyup.enter="store.delayedRolePermissionSearch()"
                                            @keyup.enter.native="store.delayedRolePermissionSearch()"
                                            @keyup.13="store.delayedRolePermissionSearch()"
@@ -316,7 +316,7 @@ const confirmChangeStatus = (event, id) => {
 
             <!--paginator-->
             <Paginator v-if="store && store.role_permissions"
-                       v-model:rows="store.query.role_permissions_query.rows"
+                       v-model:rows="store.role_permissions_query.rows"
                        :totalRecords="store.role_permissions.list.total"
                        @page="store.permissionPaginate($event)"
                        :rowsPerPageOptions="store.rows_per_page"

@@ -1,5 +1,5 @@
 <script setup>
-import { useRoleStore } from "../../stores/store-roles";
+import { useRoleStore } from "../../../stores/store-roles";
 import { onMounted } from "vue";
 
 const store = useRoleStore();
