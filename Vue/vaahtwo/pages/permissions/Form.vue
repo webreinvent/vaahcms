@@ -27,89 +27,91 @@ const toggleFormMenu = (event) => {
 </script>
 <template>
 
-    <div class="col-6" >
-
-        <Panel >
-
+    <div class="col-5">
+        <Panel>
             <template class="p-1" #header>
-
-
                 <div class="flex flex-row">
-                    <div class="p-panel-title">
+                    <div class="p-panel-title text-sm">
                         <span v-if="store.item && store.item.id">
-                            Update
+                           {{ store.item.name }}
                         </span>
                         <span v-else>
                             Create
                         </span>
                     </div>
-
                 </div>
-
-
             </template>
 
             <template #icons>
-
-
                 <div class="p-inputgroup">
-                    <Button label="Save"
-                            v-if="store.item && store.item.id"
+                    <Button v-if="store.item && store.item.id"
+                            class="p-button-primary p-button-sm"
+                            :label=" '#' + store.item.id"
+                    />
+
+                    <Button v-if="store.item && store.item.id"
+                            class="p-button-sm"
+                            label="Save"
+                            icon="pi pi-save"
                             @click="store.itemAction('save')"
-                            icon="pi pi-save"/>
+                    />
 
-                    <Button label="Create & New"
-                            v-else
+                    <Button v-else
+                            class="p-button-sm"
+                            label="Create & New"
+                            icon="pi pi-save"
                             @click="store.itemAction('create-and-new')"
-                            icon="pi pi-save"/>
-
+                    />
 
                     <!--form_menu-->
-                    <Button
-                        type="button"
-                        @click="toggleFormMenu"
-                        icon="pi pi-angle-down"
-                        aria-haspopup="true"/>
+                    <Button class="p-button-sm"
+                            icon="pi pi-angle-down"
+                            aria-haspopup="true"
+                            type="button"
+                            @click="toggleFormMenu"
+                    />
 
                     <Menu ref="form_menu"
                           :model="store.form_menu_list"
-                          :popup="true" />
+                          :popup="true"
+                    />
                     <!--/form_menu-->
 
+                    <Button v-if="store.item && store.item.id"
+                            class="p-button-primary p-button-sm"
+                            icon="pi pi-eye"
+                            v-tooltip.top="'View'"
+                            @click="store.toView(store.item)"
+                    />
 
-                    <Button class="p-button-primary"
+                    <Button class="p-button-primary p-button-sm"
                             icon="pi pi-times"
-                            @click="store.toList()">
-                    </Button>
+                            @click="store.toList()"
+                    />
                 </div>
-
-
-
             </template>
-
 
             <div v-if="store.item">
 
                 <VhField label="Name">
-                    <InputText class="w-full" v-model="store.item.name">
-                    </InputText >
+                    <InputText class="w-full" v-model="store.item.name" />
                 </VhField>
 
                 <VhField label="Slug">
-                    <InputText class="w-full" v-model="store.item.slug">
-                    </InputText >
+                    <InputText class="w-full" v-model="store.item.slug" />
+                </VhField>
+
+                <VhField label="Details">
+                    <Textarea class="w-full" v-model="store.item.details" />
                 </VhField>
 
                 <VhField label="Is Active">
                     <InputSwitch v-bind:false-value="0"
                                  v-bind:true-value="1"
-                                 v-model="store.item.is_active">
-                    </InputSwitch>
+                                 v-model="store.item.is_active"
+                    />
                 </VhField>
-
             </div>
         </Panel>
-
     </div>
-
 </template>

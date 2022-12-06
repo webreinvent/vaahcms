@@ -56,50 +56,46 @@ const toggleItemMenu = (event) => {
 </script>
 <template>
 
-    <div class="col-6" >
-
+    <div class="col-5">
         <Panel v-if="store && store.item">
-
             <template class="p-1" #header>
-
                 <div class="flex flex-row">
-
-                    <div class="p-panel-title">
-                        #{{store.item.id}}
+                    <div class="p-panel-title text-sm">
+                        {{ store.item.name }}
                     </div>
-
                 </div>
-
             </template>
 
             <template #icons>
-
-
                 <div class="p-inputgroup">
-                    <Button label="Edit"
+                    <Button class="p-button-sm"
+                            :label=" '#' + store.item.id"
+                    />
+
+                    <Button class="p-button-sm"
+                            label="Edit"
+                            icon="pi pi-save"
                             @click="store.toEdit(store.item)"
-                            icon="pi pi-save"/>
+                    />
 
                     <!--item_menu-->
-                    <Button
-                        type="button"
-                        @click="toggleItemMenu"
+                    <Button class="p-button-sm"
                         icon="pi pi-angle-down"
-                        aria-haspopup="true"/>
+                        type="button"
+                        aria-haspopup="true"
+                        @click="toggleItemMenu"
+                    />
 
                     <Menu ref="item_menu_state"
                           :model="store.item_menu_list"
                           :popup="true" />
                     <!--/item_menu-->
 
-                    <Button class="p-button-primary"
+                    <Button class="p-button-primary p-button-sm"
                             icon="pi pi-times"
-                            @click="store.toList()"/>
-
+                            @click="store.toList()"
+                    />
                 </div>
-
-
-
             </template>
 
 
@@ -109,7 +105,8 @@ const toggleItemMenu = (event) => {
                          class="p-container-message"
                          :closable="false"
                          icon="pi pi-trash"
-                         v-if="store.item.deleted_at">
+                         v-if="store.item.deleted_at"
+                >
 
                     <div class="flex align-items-center justify-content-between">
 
@@ -123,56 +120,48 @@ const toggleItemMenu = (event) => {
                                     @click="store.itemAction('restore')">
                             </Button>
                         </div>
-
                     </div>
-
                 </Message>
 
                 <div class="p-datatable p-component p-datatable-responsive-scroll p-datatable-striped p-datatable-sm">
-                <table class="p-datatable-table">
-                    <tbody class="p-datatable-tbody">
-                    <template v-for="(value, column) in store.item ">
+                    <table class="p-datatable-table">
+                        <tbody class="p-datatable-tbody">
+                            <template v-for="(value, column) in store.item ">
 
-                        <template v-if="column === 'created_by' || column === 'updated_by'">
-                        </template>
+                                <template v-if="column === 'created_by' || column === 'updated_by'">
+                                </template>
 
-                        <template v-else-if="column === 'id' || column === 'uuid'">
-                            <VhViewRow :label="column"
-                                       :value="value"
-                                       :can_copy="true"
-                            />
-                        </template>
+                                <template v-else-if="column === 'id' || column === 'uuid'">
+                                    <VhViewRow :label="column"
+                                               :value="value"
+                                               :can_copy="true"
+                                    />
+                                </template>
 
-                        <template v-else-if="(column === 'created_by_user' || column === 'updated_by_user'  || column === 'deleted_by_user') && (typeof value === 'object' && value !== null)">
-                            <VhViewRow :label="column"
-                                       :value="value"
-                                       type="user"
-                            />
-                        </template>
+                                <template v-else-if="(column === 'created_by_user' || column === 'updated_by_user'  || column === 'deleted_by_user') && (typeof value === 'object' && value !== null)">
+                                    <VhViewRow :label="column"
+                                               :value="value"
+                                               type="user"
+                                    />
+                                </template>
 
-                        <template v-else-if="column === 'is_active'">
-                            <VhViewRow :label="column"
-                                       :value="value"
-                                       type="yes-no"
-                            />
-                        </template>
+                                <template v-else-if="column === 'is_active'">
+                                    <VhViewRow :label="column"
+                                               :value="value"
+                                               type="yes-no"
+                                    />
+                                </template>
 
-                        <template v-else>
-                            <VhViewRow :label="column"
-                                       :value="value"
-                                       />
-                        </template>
-
-
-                    </template>
-                    </tbody>
-
-                </table>
-
+                                <template v-else>
+                                    <VhViewRow :label="column"
+                                               :value="value"
+                                    />
+                                </template>
+                            </template>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </Panel>
-
     </div>
-
 </template>
