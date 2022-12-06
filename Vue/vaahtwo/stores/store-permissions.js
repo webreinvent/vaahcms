@@ -76,6 +76,7 @@ export const usePermissionStore = defineStore({
         roles_menu_items: null,
         active_permission_role : null,
         permission_roles_query: vaah().clone(empty_states.permission_roles_query),
+        is_btn_loading: false,
     }),
     getters: {
 
@@ -202,6 +203,9 @@ export const usePermissionStore = defineStore({
         //---------------------------------------------------------------------
         afterGetList: function (data, res)
         {
+            this.is_btn_loading = false;
+            this.query.recount = null;
+
             if (data) {
                 this.list = data;
                 this.total_roles = res.data.total_roles;
@@ -589,9 +593,9 @@ export const usePermissionStore = defineStore({
 
         //---------------------------------------------------------------------
         async sync() {
+            this.is_btn_loading = true;
             this.query.recount = true;
             await this.getList();
-            this.query.recount = null;
         },
         //---------------------------------------------------------------------
         onItemSelection(items)
