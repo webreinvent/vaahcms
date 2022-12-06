@@ -80,12 +80,12 @@ const openViewModal = () => {
 </script>
 
 <template>
-    <div class="col-6">
+    <div class="col-5">
         <Panel v-if="store && store.item">
             <template class="p-1" #header>
                 <div class="flex flex-row">
 
-                    <div class="p-panel-title">
+                    <div class="p-panel-title text-sm">
                         {{ store.item.name }}
                     </div>
                 </div>
@@ -94,7 +94,7 @@ const openViewModal = () => {
             <template #icons>
                 <div class="p-inputgroup">
 
-                    <Button class="p-button-primary">
+                    <Button class="p-button-primary p-button-sm">
                         # {{ store.item.id }}
                     </Button>
 
@@ -103,11 +103,11 @@ const openViewModal = () => {
                                     || store.hasPermission('can-manage-permissions')"
                               class="control"
                     >
-                        <Button
-                            type="button"
-                            @click="toggleItemMenu"
-                            icon="pi pi-angle-down"
-                            aria-haspopup="true"
+                        <Button class="p-button-sm"
+                                type="button"
+                                @click="toggleItemMenu"
+                                icon="pi pi-angle-down"
+                                aria-haspopup="true"
                         />
 
                         <Menu ref="role_menu_items"
@@ -117,7 +117,7 @@ const openViewModal = () => {
                     </template>
                     <!--/item_menu-->
 
-                    <Button class="p-button-primary"
+                    <Button class="p-button-primary p-button-sm"
                             icon="pi pi-times"
                             @click="store.toList()"
                     />
@@ -129,7 +129,7 @@ const openViewModal = () => {
                     <div class="p-inputgroup ">
                         <span class="p-input-icon-left">
                             <i class="pi pi-search" />
-                            <InputText v-model="store.query.permission_roles_query.q"
+                            <InputText v-model="store.permission_roles_query.q"
                                        @keyup.enter="store.delayedItemUsersSearch()"
                                        @keyup.enter.native="store.delayedItemUsersSearch()"
                                        @keyup.13="store.delayedItemUsersSearch()"
@@ -221,7 +221,7 @@ const openViewModal = () => {
 
             <!--paginator-->
             <Paginator v-if="store && store.permission_roles"
-                       v-model:rows="store.query.permission_roles_query.rows"
+                       v-model:rows="store.permission_roles_query.rows"
                        :totalRecords="store.permission_roles.list.total"
                        @page="store.rolePaginate($event)"
                        :rowsPerPageOptions="store.rows_per_page"

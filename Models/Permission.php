@@ -100,49 +100,6 @@ class Permission extends PermissionBase
 
         $query->whereBetween('updated_at', [$from, $to]);
     }
-
-    //-------------------------------------------------
-    public static function createItem($request)
-    {
-
-        $inputs = $request->all();
-
-        $validation = self::validation($inputs);
-        if (!$validation['success']) {
-            return $validation;
-        }
-
-
-        // check if name exist
-        $item = self::withTrashed()->where('name', $inputs['name'])->first();
-
-        if ($item) {
-            $response['success'] = false;
-            $response['messages'][] = "This name is already exist.";
-            return $response;
-        }
-
-        // check if slug exist
-        $item = self::withTrashed()->where('slug', $inputs['slug'])->first();
-
-        if ($item) {
-            $response['success'] = false;
-            $response['messages'][] = "This slug is already exist.";
-            return $response;
-        }
-
-        $item = new self();
-        $item->fill($inputs);
-        $item->slug = Str::slug($inputs['slug']);
-        $item->save();
-
-        $response['success'] = true;
-        $response['data']['item'] = $item;
-        $response['messages'][] = 'Saved successfully.';
-        return $response;
-
-    }
-
     //-------------------------------------------------
     public function scopeGetSorted($query, $filter)
     {
@@ -221,35 +178,6 @@ class Permission extends PermissionBase
 
     }
     //-------------------------------------------------
-    public static function getList($request)
-    {
-        $list = self::getSorted($request->filter);
-        $list->isActiveFilter($request->filter);
-        $list->trashedFilter($request->filter);
-        $list->searchFilter($request->filter);
-
-        $rows = config('vaahcms.per_page');
-
-        if($request->has('rows'))
-        {
-            $rows = $request->rows;
-        }
-
-        $total_roles = Role::count();
-        $total_users = User::count();
-        $list = $list->paginate($rows);
-
-        $response['success'] = true;
-        $response['data'] = $list;
-        $response['total_roles'] = $total_roles;
-        $response['total_users'] = $total_users;
-
-        return $response;
-
-
-    }
-
-    //-------------------------------------------------
     public static function updateList($request)
     {
 
@@ -298,40 +226,6 @@ class Permission extends PermissionBase
                 self::whereIn('id', $items_id)->restore();
                 break;
         }
-
-        $response['success'] = true;
-        $response['data'] = true;
-        $response['messages'][] = 'Action was successful.';
-
-        return $response;
-    }
-
-    //-------------------------------------------------
-    public static function deleteList($request): array
-    {
-        $inputs = $request->all();
-
-        $rules = array(
-            'type' => 'required',
-            'items' => 'required',
-        );
-
-        $messages = array(
-            'type.required' => 'Action type is required',
-            'items.required' => 'Select items',
-        );
-
-        $validator = \Validator::make($inputs, $rules, $messages);
-        if ($validator->fails()) {
-
-            $errors = errorsToArray($validator->errors());
-            $response['failed'] = true;
-            $response['messages'] = $errors;
-            return $response;
-        }
-
-        $items_id = collect($inputs['items'])->pluck('id')->toArray();
-        self::whereIn('id', $items_id)->forceDelete();
 
         $response['success'] = true;
         $response['data'] = true;

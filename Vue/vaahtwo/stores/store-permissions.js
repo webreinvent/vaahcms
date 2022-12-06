@@ -20,15 +20,16 @@ let empty_states = {
             trashed: null,
             sort: null,
         },
-        permission_roles_query: {
-            q: null,
-            page: null,
-            rows: null,
-        }
+        recount: null,
     },
     action: {
         type: null,
         items: [],
+    },
+    permission_roles_query: {
+        q: null,
+        page: null,
+        rows: null,
     }
 };
 
@@ -74,6 +75,7 @@ export const usePermissionStore = defineStore({
         permission_roles: null,
         roles_menu_items: null,
         active_permission_role : null,
+        permission_roles_query: vaah().clone(empty_states.permission_roles_query),
     }),
     getters: {
 
@@ -108,7 +110,7 @@ export const usePermissionStore = defineStore({
                     break;
                 default:
                     this.view = 'small';
-                    this.list_view_width = 6;
+                    this.list_view_width = 7;
                     break
             }
         },
@@ -150,7 +152,7 @@ export const usePermissionStore = defineStore({
                 },{deep: true}
             );
 
-            watch(this.query.permission_roles_query, (newVal, oldVal) => {
+            watch(this.permission_roles_query, (newVal, oldVal) => {
                 this.delayedItemUsersSearch();
             }, {
                 deep:true
@@ -177,7 +179,7 @@ export const usePermissionStore = defineStore({
                 if(data.rows)
                 {
                     this.query.rows = data.rows;
-                    this.query.permission_roles_query.rows = data.rows
+                    this.permission_roles_query.rows = data.rows
                 }
 
                 if(this.route.params && !this.route.params.id){
@@ -233,7 +235,7 @@ export const usePermissionStore = defineStore({
             this.showProgress();
 
             let params = {
-                query: this.query.permission_roles_query,
+                query: this.permission_roles_query,
             };
 
             vaah().ajax(
@@ -251,7 +253,7 @@ export const usePermissionStore = defineStore({
             }
         },
         //---------------------------------------------------------------------
-        changePermission(item) {
+        async changePermission(item) {
 
             let params = {
                 id : this.item.id,
@@ -268,11 +270,11 @@ export const usePermissionStore = defineStore({
                 data.is_active = 1;
             }
 
-            this.actions(false, 'toggle-role-active-status', params, data)
+            await this.actions(false, 'toggle-role-active-status', params, data)
 
         },
         //---------------------------------------------------------------------
-        bulkActions (input, action) {
+        async bulkActions (input, action) {
             let params = {
                 id: this.item.id,
                 role_id: null
@@ -282,11 +284,11 @@ export const usePermissionStore = defineStore({
                 is_active: input
             };
 
-            this.actions(false, action, params, data)
+            await this.actions(false, action, params, data)
 
         },
         //---------------------------------------------------------------------
-        actions (e, action, inputs , data) {
+        async actions (e, action, inputs , data) {
 
             this.showProgress();
 
@@ -309,9 +311,10 @@ export const usePermissionStore = defineStore({
             );
         },
         //---------------------------------------------------------------------
-        afterActions (data,res) {
+        async afterActions (data,res) {
             this.hideProgress();
-            this.getItemRoles();
+            await this.getItemRoles();
+            await this.getList();
         },
         //---------------------------------------------------------------------
         async delayedItemUsersSearch() {
@@ -544,7 +547,7 @@ export const usePermissionStore = defineStore({
         },
         //---------------------------------------------------------------------
         async rolePaginate(event) {
-            this.query.permission_roles_query.page = event.page + 1;
+            this.permission_roles_query.page = event.page + 1;
             await this.getItemRoles();
         },
         //---------------------------------------------------------------------
@@ -585,7 +588,11 @@ export const usePermissionStore = defineStore({
         },
 
         //---------------------------------------------------------------------
-
+        async sync() {
+            this.query.recount = true;
+            await this.getList();
+            this.query.recount = null;
+        },
         //---------------------------------------------------------------------
         onItemSelection(items)
         {
@@ -688,8 +695,8 @@ export const usePermissionStore = defineStore({
         },
         //---------------------------------------------------------------------
         resetPermissionRolesQuery() {
-            this.query.permission_roles_query.q = null;
-            this.query.permission_roles_query.rows = this.assets.rows;
+            this.permission_roles_query.q = null;
+            this.permission_roles_query.rows = this.assets.rows;
         },
         //---------------------------------------------------------------------
         closeForm()
@@ -986,14 +993,14 @@ export const usePermissionStore = defineStore({
             return this.roles_menu_items = [
                 {
                     label: 'Active All Roles',
-                    command: () => {
-                        this.bulkActions(1, 'toggle-role-active-status');
+                    command: async () => {
+                        await this.bulkActions(1, 'toggle-role-active-status');
                     }
                 },
                 {
                     label: 'Inactive All Roles',
-                    command: () => {
-                        this.bulkActions(0, 'toggle-role-active-status');
+                    command: async () => {
+                        await this.bulkActions(0, 'toggle-role-active-status');
                     }
                 }
             ];
