@@ -1,6 +1,6 @@
 <script  setup>
 
-import { onMounted } from 'vue';
+import { onMounted, ref } from 'vue';
 import { useRootStore } from "../../stores/root";
 import { useDashboardStore } from "../../stores/dashboard";
 
@@ -13,7 +13,9 @@ onMounted(async () => {
     await store.getItem();
 });
 
+const key = ref();
 </script>
+
 <template>
     <div class="grid dashboard">
         <div class="col-12 md:col-8">
