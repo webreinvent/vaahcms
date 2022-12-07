@@ -63,7 +63,7 @@ onMounted(async () => {
 
                 <template #icons>
                     <div class="p-inputgroup">
-                        <Button class="p-button-sm"
+                        <Button class="p-button-outlined p-button-sm"
                                 label="Create"
                                 icon="pi pi-plus"
                                 @click="store.toForm()"

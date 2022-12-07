@@ -1,12 +1,13 @@
 <script setup>
 import {onMounted, ref, watch} from "vue";
 import {useRoute} from 'vue-router';
-
-import { usePermissionStore } from '../../stores/store-permissions'
-
+import { vaah } from '../../vaahvue/pinia/vaah';
+import { usePermissionStore } from '../../stores/store-permissions';
 import VhViewRow from '../../vaahvue/vue-three/primeflex/VhViewRow.vue';
+
 const store = usePermissionStore();
 const route = useRoute();
+const useVaah = vaah();
 
 onMounted(async () => {
 
@@ -68,22 +69,23 @@ const toggleItemMenu = (event) => {
 
             <template #icons>
                 <div class="p-inputgroup">
-                    <Button class="p-button-sm"
+                    <Button class="p-button-outlined p-button-sm"
                             :label=" '#' + store.item.id"
+                            @click="useVaah.copy(store.item.id)"
                     />
 
-                    <Button class="p-button-sm"
+                    <Button class="p-button-outlined p-button-sm"
                             label="Edit"
                             icon="pi pi-save"
                             @click="store.toEdit(store.item)"
                     />
 
                     <!--item_menu-->
-                    <Button class="p-button-sm"
-                        icon="pi pi-angle-down"
-                        type="button"
-                        aria-haspopup="true"
-                        @click="toggleItemMenu"
+                    <Button class="p-button-outlined p-button-sm"
+                            icon="pi pi-angle-down"
+                            type="button"
+                            aria-haspopup="true"
+                            @click="toggleItemMenu"
                     />
 
                     <Menu ref="item_menu_state"
@@ -91,7 +93,7 @@ const toggleItemMenu = (event) => {
                           :popup="true" />
                     <!--/item_menu-->
 
-                    <Button class="p-button-primary p-button-sm"
+                    <Button class="p-button-sm"
                             icon="pi pi-times"
                             @click="store.toList()"
                     />

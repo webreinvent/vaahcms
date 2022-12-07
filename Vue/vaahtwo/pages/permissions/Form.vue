@@ -1,13 +1,14 @@
 <script setup>
 import {onMounted, ref, watch} from "vue";
-import { usePermissionStore } from '../../stores/store-permissions'
-
+import { usePermissionStore } from '../../stores/store-permissions';
+import { vaah } from '../../vaahvue/pinia/vaah';
 import VhField from './../../vaahvue/vue-three/primeflex/VhField.vue'
 import {useRoute} from 'vue-router';
 
 
 const store = usePermissionStore();
 const route = useRoute();
+const useVaah = vaah();
 
 onMounted(async () => {
     if(route.params && route.params.id)
@@ -45,26 +46,34 @@ const toggleFormMenu = (event) => {
             <template #icons>
                 <div class="p-inputgroup">
                     <Button v-if="store.item && store.item.id"
-                            class="p-button-primary p-button-sm"
+                            class="p-button-outlined p-button-sm"
                             :label=" '#' + store.item.id"
+                            @click="useVaah.copy(store.item.id)"
                     />
 
                     <Button v-if="store.item && store.item.id"
-                            class="p-button-sm"
+                            class="p-button-outlined p-button-sm"
                             label="Save"
                             icon="pi pi-save"
                             @click="store.itemAction('save')"
                     />
 
                     <Button v-else
-                            class="p-button-sm"
+                            class="p-button-outlined p-button-sm"
                             label="Create & New"
                             icon="pi pi-save"
                             @click="store.itemAction('create-and-new')"
                     />
 
+                    <Button v-if="store.item && store.item.id"
+                            class="p-button-outlined p-button-sm"
+                            icon="pi pi-eye"
+                            v-tooltip.top="'View'"
+                            @click="store.toView(store.item)"
+                    />
+
                     <!--form_menu-->
-                    <Button class="p-button-sm"
+                    <Button class="p-button-outlined p-button-sm"
                             icon="pi pi-angle-down"
                             aria-haspopup="true"
                             type="button"
@@ -77,14 +86,7 @@ const toggleFormMenu = (event) => {
                     />
                     <!--/form_menu-->
 
-                    <Button v-if="store.item && store.item.id"
-                            class="p-button-primary p-button-sm"
-                            icon="pi pi-eye"
-                            v-tooltip.top="'View'"
-                            @click="store.toView(store.item)"
-                    />
-
-                    <Button class="p-button-primary p-button-sm"
+                    <Button class="p-button-sm"
                             icon="pi pi-times"
                             @click="store.toList()"
                     />
