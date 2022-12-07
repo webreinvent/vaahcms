@@ -3,11 +3,13 @@ import { h, onMounted, ref } from "vue";
 import { useRoute } from 'vue-router';
 
 import { useRoleStore } from '../../stores/store-roles';
+import { vaah } from '../../vaahvue/pinia/vaah';
 import { useDialog } from "primevue/usedialog";
 import RoleUserDetailsView from "./components/RoleUserDetailsView.vue";
 
 const store = useRoleStore();
 const route = useRoute();
+const useVaah = vaah();
 
 onMounted(async () => {
 
@@ -77,7 +79,7 @@ const openDetailsViewModal = () => {
             <template class="p-1" #header>
                 <div class="flex flex-row">
 
-                    <div class="p-panel-title">
+                    <div class="p-panel-title text-sm">
                         {{ store.item.name }}
                     </div>
                 </div>
@@ -86,20 +88,21 @@ const openDetailsViewModal = () => {
             <template #icons>
                 <div class="p-inputgroup">
 
-                    <Button class="p-button-primary">
-                        # {{ store.item.id }}
-                    </Button>
+                    <Button class="p-button-outlined p-button-sm"
+                            :label=" '#' + store.item.id"
+                            @click="useVaah.copy(store.item.id)"
+                    />
 
                     <!--/item_menu-->
                     <template v-if="store.hasPermission('can-update-roles')
                                     || store.hasPermission('can-manage-roles')"
                               class="control"
                     >
-                        <Button
-                            type="button"
-                            @click="toggleItemMenu"
-                            icon="pi pi-angle-down"
-                            aria-haspopup="true"
+                        <Button class="p-button-outlined p-button-sm"
+                                icon="pi pi-angle-down"
+                                type="button"
+                                aria-haspopup="true"
+                                @click="toggleItemMenu"
                         />
 
                         <Menu ref="uer_items_menu"
@@ -109,7 +112,7 @@ const openDetailsViewModal = () => {
                     </template>
                     <!--/item_menu-->
 
-                    <Button class="p-button-primary"
+                    <Button class="p-button-sm"
                             icon="pi pi-times"
                             @click="store.toList()"
                     />

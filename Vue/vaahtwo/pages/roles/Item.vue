@@ -2,11 +2,13 @@
 import {onMounted, ref, watch} from "vue";
 import {useRoute} from 'vue-router';
 
-import {useRoleStore} from '../../stores/store-roles'
+import {useRoleStore} from '../../stores/store-roles';
+import { vaah } from '../../vaahvue/pinia/vaah';
 
 import VhViewRow from '../../vaahvue/vue-three/primeflex/VhViewRow.vue';
 const store = useRoleStore();
 const route = useRoute();
+const useVaah = vaah();
 
 onMounted(async () => {
 
@@ -59,7 +61,7 @@ const toggleItemMenu = (event) => {
         <Panel v-if="store && store.item">
             <template class="p-1" #header>
                 <div class="flex flex-row">
-                    <div class="p-panel-title">
+                    <div class="p-panel-title text-sm">
                        {{ store.item.name }}
                     </div>
                 </div>
@@ -67,18 +69,20 @@ const toggleItemMenu = (event) => {
 
             <template #icons>
                 <div class="p-inputgroup">
-                    <Button :label=" '#' + store.item.id "
-                            icon="pi pi-save"
-                            @click="store.itemAction('save')"
+                    <Button class="p-button-outlined p-button-sm"
+                            :label=" '#' + store.item.id "
+                            @click="useVaah.copy(store.item.id)"
                     />
 
-                    <Button label="Edit"
+                    <Button class="p-button-outlined p-button-sm"
+                            label="Edit"
                             icon="pi pi-save"
                             @click="store.toEdit(store.item)"
                     />
 
                     <!--item_menu-->
-                    <Button type="button"
+                    <Button class="p-button-outlined"
+                            type="button"
                             icon="pi pi-angle-down"
                             aria-haspopup="true"
                             @click="toggleItemMenu"
@@ -90,7 +94,7 @@ const toggleItemMenu = (event) => {
                     />
                     <!--/item_menu-->
 
-                    <Button class="p-button-primary"
+                    <Button class="p-button-sm"
                             icon="pi pi-times"
                             @click="store.toList()"
                     />
