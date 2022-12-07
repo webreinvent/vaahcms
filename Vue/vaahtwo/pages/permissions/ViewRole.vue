@@ -11,6 +11,7 @@ import { vaah } from "../../vaahvue/pinia/vaah";
 const store = usePermissionStore();
 const root = useRootStore();
 const route = useRoute();
+const useVaah = vaah();
 
 onMounted( async () => {
     /**
@@ -94,20 +95,21 @@ const openViewModal = () => {
             <template #icons>
                 <div class="p-inputgroup">
 
-                    <Button class="p-button-primary p-button-sm">
-                        # {{ store.item.id }}
-                    </Button>
+                    <Button class="p-button-outlined p-button-sm"
+                            :label=" '#' + store.item.id"
+                            @click="useVaah.copy(store.item.id)"
+                    />
 
                     <!--/item_menu-->
                     <template v-if="store.hasPermission('can-update-permissions')
                                     || store.hasPermission('can-manage-permissions')"
                               class="control"
                     >
-                        <Button class="p-button-sm"
-                                type="button"
-                                @click="toggleItemMenu"
+                        <Button class="p-button-outlined p-button-sm"
                                 icon="pi pi-angle-down"
+                                type="button"
                                 aria-haspopup="true"
+                                @click="toggleItemMenu"
                         />
 
                         <Menu ref="role_menu_items"
@@ -117,7 +119,7 @@ const openViewModal = () => {
                     </template>
                     <!--/item_menu-->
 
-                    <Button class="p-button-primary p-button-sm"
+                    <Button class="p-button-sm"
                             icon="pi pi-times"
                             @click="store.toList()"
                     />
@@ -129,16 +131,16 @@ const openViewModal = () => {
                     <div class="p-inputgroup ">
                         <span class="p-input-icon-left">
                             <i class="pi pi-search" />
-                            <InputText v-model="store.permission_roles_query.q"
-                                       @keyup.enter="store.delayedItemUsersSearch()"
-                                       @keyup.enter.native="store.delayedItemUsersSearch()"
-                                       @keyup.13="store.delayedItemUsersSearch()"
-                                       placeholder="Search"
-                                       class="w-full"
+                            <InputText  class="w-full p-inputtext-sm"
+                                        placeholder="Search"
+                                        v-model="store.permission_roles_query.q"
+                                        @keyup.enter="store.delayedItemUsersSearch()"
+                                        @keyup.enter.native="store.delayedItemUsersSearch()"
+                                        @keyup.13="store.delayedItemUsersSearch()"
                             />
                         </span>
 
-                        <Button label="Reset"
+                        <Button class="p-button-sm" label="Reset"
                                 @click="store.resetPermissionRolesQuery()"
                         />
                     </div>
