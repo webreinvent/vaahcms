@@ -42,6 +42,7 @@ export const useRootStore = defineStore({
                 }
             }
         ],
+        top_right_user_menu: null,
     }),
     getters: {},
     actions: {
@@ -167,6 +168,21 @@ export const useRootStore = defineStore({
                 this.is_installation_verified = true;
 
             }
+        },
+        //-----------------------------------------------------------------------
+        async getTopRightUserMenu() {
+            return this.top_right_user_menu = [
+                {
+                    label: "Profile",
+                    icon:'pi pi-fw pi-user',
+                    url: "http://localhost/tanmoy.d001/vaahcms-dev-env/public/backend#/vaah/profile/"
+                },
+                {
+                    label: "Logout",
+                    icon:'pi pi-fw pi-sign-out',
+                    url: "http://localhost/tanmoy.d001/vaahcms-dev-env/public/backend/logout"
+                }
+            ]
         },
         //-----------------------------------------------------------------------
         async to(path)
