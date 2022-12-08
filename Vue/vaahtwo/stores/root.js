@@ -43,6 +43,7 @@ export const useRootStore = defineStore({
             }
         ],
         top_right_user_menu: null,
+        is_active_status_options: null
     }),
     getters: {},
     actions: {
@@ -181,6 +182,19 @@ export const useRootStore = defineStore({
                     label: "Logout",
                     icon:'pi pi-fw pi-sign-out',
                     url: "http://localhost/tanmoy.d001/vaahcms-dev-env/public/backend/logout"
+                }
+            ]
+        },
+        //-----------------------------------------------------------------------
+        async getIsActiveStatusOptions() {
+            return this.is_active_status_options = [
+                {
+                    label: 'Yes',
+                    value: 1
+                },
+                {
+                    label: 'No',
+                    value: null
                 }
             ]
         },
