@@ -403,7 +403,7 @@ export const usePermissionStore = defineStore({
                 this.action.type = type;
             }
 
-            let url = this.ajax_url+'/action/'+type
+            let url = this.ajax_url+'/actions/'+type
             let method = 'PUT';
 
             switch (type)
@@ -449,17 +449,6 @@ export const usePermissionStore = defineStore({
              */
             switch (type)
             {
-                /**
-                 * Create a record, hence method is `POST`
-                 * https://docs.vaah.dev/guide/laravel.html#create-one-or-many-records
-                 */
-                case 'create-and-new':
-                case 'create-and-close':
-                case 'create-and-clone':
-                    options.method = 'POST';
-                    options.params = item;
-                    break;
-
                 /**
                  * Update a record with many columns, hence method is `PUT`
                  * https://docs.vaah.dev/guide/laravel.html#update-a-record-update-soft-delete-status-change-etc

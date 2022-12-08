@@ -86,7 +86,7 @@ const openViewModal = () => {
             <template class="p-1" #header>
                 <div class="flex flex-row">
 
-                    <div class="p-panel-title text-sm">
+                    <div class="font-semibold text-sm">
                         {{ store.item.name }}
                     </div>
                 </div>

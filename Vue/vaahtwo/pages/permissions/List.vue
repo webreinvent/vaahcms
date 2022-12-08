@@ -63,12 +63,6 @@ onMounted(async () => {
 
                 <template #icons>
                     <div class="p-inputgroup">
-                        <Button class="p-button-outlined p-button-sm"
-                                label="Create"
-                                icon="pi pi-plus"
-                                @click="store.toForm()"
-                        />
-
                         <Button class="p-button-sm"
                                 icon="pi pi-refresh"
                                 :loading="store.is_btn_loading"

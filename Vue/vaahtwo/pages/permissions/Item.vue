@@ -61,7 +61,7 @@ const toggleItemMenu = (event) => {
         <Panel v-if="store && store.item">
             <template class="p-1" #header>
                 <div class="flex flex-row">
-                    <div class="p-panel-title text-sm">
+                    <div class="font-semibold text-sm">
                         {{ store.item.name }}
                     </div>
                 </div>
@@ -76,7 +76,7 @@ const toggleItemMenu = (event) => {
 
                     <Button class="p-button-outlined p-button-sm"
                             label="Edit"
-                            icon="pi pi-save"
+                            icon="pi pi-pencil"
                             @click="store.toEdit(store.item)"
                     />
 

@@ -213,50 +213,6 @@ class PermissionBase extends Model {
 
     }
     //-------------------------------------------------
-    public static function createItem($request)
-    {
-
-        $inputs = $request->all();
-
-        $validation = self::validation($inputs);
-        if (!$validation['success']) {
-            return $validation;
-        }
-
-
-        // check if name exist
-        $item = self::withTrashed()->where('name', $inputs['name'])->first();
-
-        if ($item) {
-            $response['success'] = false;
-            $response['messages'][] = "This name is already exist.";
-            return $response;
-        }
-
-        // check if slug exist
-        $item = self::withTrashed()->where('slug', $inputs['slug'])->first();
-
-        if ($item) {
-            $response['success'] = false;
-            $response['messages'][] = "This slug is already exist.";
-            return $response;
-        }
-
-        $item = new self();
-        $item->fill($inputs);
-        $item->slug = Str::slug($inputs['slug']);
-        $item->save();
-
-        self::syncPermissionsWithRoles();
-        self::recountRelations();
-
-        $response['success'] = true;
-        $response['data']['item'] = $item;
-        $response['messages'][] = 'Saved successfully.';
-        return $response;
-
-    }
-    //-------------------------------------------------
     public static function getList($request)
     {
         if (isset($request->recount) && $request->recount == true) {
