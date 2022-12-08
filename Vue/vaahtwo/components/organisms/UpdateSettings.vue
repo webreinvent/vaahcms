@@ -10,7 +10,7 @@
         </template>
         <template #content>
             <div class="text-center" v-if="!update">
-                <h4>Current Version of</h4>
+                <h4 class="mb-3">Current Version of</h4>
                 <p><Tag>VaahCMS</Tag> is <Tag>v1.6.10</Tag></p>
             </div>
             <div v-else class="text-sm">
@@ -34,10 +34,10 @@
                     <div class="col-3">
                         <ol class="pl-3">
                             <li class="mb-2">
-                                Downloading latest version (it can take upto 3 to 5 minutes) <i class="pi pi-refresh"></i>
+                                Downloading latest version (it can take upto 3 to 5 minutes) <i class="pi pi-spin pi-spinner"></i>
                             </li>
                             <li class="mb-2">
-                                Publish assets
+                                Publish assets <i class="pi pi-check"></i>
                             </li>
                             <li class="mb-2">
                                 Run migrations and seeds

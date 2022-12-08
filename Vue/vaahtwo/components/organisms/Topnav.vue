@@ -7,7 +7,7 @@
         </template>
         <template #item="{item}">
             <router-link :to="item.to" custom v-slot="{href, route, navigate, isActive, isExactActive}">
-                <a :href="href" @click="navigate" class="mx-2"><i class="pi" :class="item.icon"></i></a>
+                <a :href="href" @click="navigate" class=" text-black mx-2"><i class="pi" :class="item.icon"></i></a>
             </router-link>
         </template>
         <template #end>

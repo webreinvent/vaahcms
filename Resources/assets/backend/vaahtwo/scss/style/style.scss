@@ -8,15 +8,21 @@ p,h1,h2,h3,h4,h5,h6,a,div{
 }
 a{
     text-decoration: none;
+    color:$primaryColor;
+    &:hover{
+        color: $textColor;
+    }
 }
 body{
     color:$textColor;
     font-family: $fontFamily;
+    background: $shade200;
+    line-height: $line-height;
 }
 
 .main-container{
     width: calc(100% - 230px);
-    margin: 70px 5px 0 auto;
+    margin: 55px 2px 0 auto;
 }
 .top-nav-fixed{
     width: 100%;
@@ -34,15 +40,21 @@ body{
             margin: auto;
         }
     }
+    .p-menubar-root-list{
+        margin-left: 20px;
+    }
 }
 .sidebar{
     position: fixed;
-    top: 50px;
+    background-color: $shade100;
+    top: 52px;
     left: 0;
     width: 225px;
-    z-index: 100;
+    z-index: 99;
+    min-height: 100%;
     max-height: calc(100vh - 60px);
     overflow-y: auto;
+    border-right: 1px solid #e5e7eb;
     &::-webkit-scrollbar {
         display: none;
     }
@@ -56,6 +68,29 @@ body{
     .p-panelmenu .p-panelmenu-panel:first-child .p-panelmenu-header .p-panelmenu-header-content{
         border-top-right-radius: 0;
         border-top-left-radius: 0;
+    }
+    .p-panelmenu{
+        .p-panelmenu-header-action{
+            position: relative;
+            .p-submenu-icon{
+                position: absolute;
+                right: 10px;
+                font-size: 0.75rem;
+                margin-left: 5px;
+            }
+        }
+        .p-panelmenu-content{
+            .p-menuitem-link{
+                position: relative;
+                .p-submenu-icon{
+                    order: 3;
+                    font-size: 0.75rem;
+                    margin-left: 5px;
+                    position: absolute;
+                    right: 10px;
+                }
+            }
+        }
     }
 }
 
@@ -309,8 +344,39 @@ $media-level-2-spacing: 0.5rem !default;
             background:$plainButtonActiveBgColor;
             border-color: $secondaryDarkColor;
             color:$secondaryDarkColor;
+            &:hover{
+                color: white;
+            }
         }
     }
+}
+
+//light Messages
+.p-message{
+    &.p-message-info{
+        &.is-light{
+            background: $infoLighterColor;
+        }
+    }
+    &.p-message-success{
+        &.is-light{
+            background:$successLighterColor;
+        }
+    }
+    &.p-message-warn{
+        &.is-light{
+            background:$warningLighterColor
+        }
+    }
+    &.p-message-error{
+        &.is-light{
+            background:$dangerLighterColor;
+        }
+    }
+}
+
+.p-inputswitch-slider{
+    box-shadow: none !important;
 }
 
 
@@ -503,14 +569,36 @@ $media-level-2-spacing: 0.5rem !default;
 
 //textarea with min-height
 .p-inputtextarea{
+    border-radius: $borderRadius;
     &.has-min-height{
         min-height: 2.9rem;
     }
 }
 
+.p-inputgroup{
+    .p-inputtextarea,.p-inputtext{
+        border-radius: $borderRadius;
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+    }
+}
+
+//Select button disable color
+.p-selectbutton .p-button.p-highlight{
+    &[aria-label='Disable'],&[aria-label='False'],&[aria-label='No'],&[aria-label='Inactive']{
+        background: $secondaryButtonBg;
+        border-color: $secondaryButtonBg;
+        &.p-button{
+            &:focus{
+                box-shadow: 0 0 0 2px #ffffff, 0 0 0 4px $secondaryButtonBg, 0 1px 2px 0 rgb(0 0 0 / 0%);
+            }
+        }
+    }
+}
 
 .components-list{
     h5{
         margin:15px 0
     }
 }
+

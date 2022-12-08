@@ -16,7 +16,9 @@
             <template #content>
                     <div class="field mb-4 flex justify-content-between align-items-center">
                         <img src="https://img.site/p/100/100/BDC3C8/solid-box" alt="" width="64" height="64" style="border-radius: 50%">
-                        <FileUpload mode="basic" name="demo[]" url="./upload.php" accept="image/*" :maxFileSize="1000000" @upload="onUpload" />
+                        <div class="w-max">
+                            <FileUpload mode="basic" name="demo[]" url="./upload.php" accept="image/*" :maxFileSize="1000000" @upload="onUpload"/>
+                        </div>
                     </div>
                    <span class="p-float-label">
                        <InputText id="email" class="w-full"></InputText>
