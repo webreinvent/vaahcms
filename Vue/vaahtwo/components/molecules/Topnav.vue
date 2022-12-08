@@ -50,7 +50,10 @@ const toggleDropDownMenu= (event) => {
                          :popup="true"
             >
                 <template #item="{item}">
-                    <a :href="item.url">{{item.label}}</a>
+                    <a :href="item.url">
+                        <span><i :class="item.icon + ' mx-2 my-2 py-1'" /></span>
+                        {{item.label}}
+                    </a>
                 </template>
             </TieredMenu>
         </template>
