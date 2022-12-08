@@ -495,6 +495,10 @@ export const usePermissionStore = defineStore({
                 await this.getList();
                 await this.formActionAfter();
                 this.getItemMenu();
+
+                if (this.route.params && this.route.params.id) {
+                    await this.getItem(this.route.params.id);
+                }
             }
         },
         //---------------------------------------------------------------------
