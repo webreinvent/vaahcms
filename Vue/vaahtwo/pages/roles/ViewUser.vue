@@ -79,7 +79,7 @@ const openDetailsViewModal = () => {
             <template class="p-1" #header>
                 <div class="flex flex-row">
 
-                    <div class="p-panel-title text-sm">
+                    <div class="font-semibold text-sm">
                         {{ store.item.name }}
                     </div>
                 </div>
@@ -88,7 +88,7 @@ const openDetailsViewModal = () => {
             <template #icons>
                 <div class="p-inputgroup">
 
-                    <Button class="p-button-outlined p-button-sm"
+                    <Button class="p-button-sm"
                             :label=" '#' + store.item.id"
                             @click="useVaah.copy(store.item.id)"
                     />
@@ -98,7 +98,7 @@ const openDetailsViewModal = () => {
                                     || store.hasPermission('can-manage-roles')"
                               class="control"
                     >
-                        <Button class="p-button-outlined p-button-sm"
+                        <Button class="p-button-sm"
                                 icon="pi pi-angle-down"
                                 type="button"
                                 aria-haspopup="true"

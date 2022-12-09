@@ -61,7 +61,7 @@ const toggleItemMenu = (event) => {
         <Panel v-if="store && store.item">
             <template class="p-1" #header>
                 <div class="flex flex-row">
-                    <div class="p-panel-title text-sm">
+                    <div class="font-semibold text-sm">
                        {{ store.item.name }}
                     </div>
                 </div>
@@ -69,20 +69,19 @@ const toggleItemMenu = (event) => {
 
             <template #icons>
                 <div class="p-inputgroup">
-                    <Button class="p-button-outlined p-button-sm"
+                    <Button class="p-button-sm"
                             :label=" '#' + store.item.id "
                             @click="useVaah.copy(store.item.id)"
                     />
 
-                    <Button class="p-button-outlined p-button-sm"
+                    <Button class="p-button-sm"
                             label="Edit"
                             icon="pi pi-save"
                             @click="store.toEdit(store.item)"
                     />
 
                     <!--item_menu-->
-                    <Button class="p-button-outlined"
-                            type="button"
+                    <Button type="button"
                             icon="pi pi-angle-down"
                             aria-haspopup="true"
                             @click="toggleItemMenu"
@@ -114,7 +113,7 @@ const toggleItemMenu = (event) => {
                             Deleted {{store.item.deleted_at}}
                         </div>
 
-                        <div class="">
+                        <div class="ml-3">
                             <Button label="Restore"
                                     class="p-button-sm"
                                     @click="store.itemAction('restore')"

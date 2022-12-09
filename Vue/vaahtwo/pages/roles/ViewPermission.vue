@@ -3,13 +3,14 @@ import { h, onMounted, ref} from "vue";
 import { useRoute } from 'vue-router';
 import { useDialog } from 'primevue/usedialog';
 import { useConfirm } from "primevue/useconfirm";
-
 import { useRoleStore } from '../../stores/store-roles'
 import { useRootStore } from "../../stores/root"
+import { vaah } from "../../vaahvue/pinia/vaah";
 
 import VhViewRow from '../../vaahvue/vue-three/primeflex/VhViewRow.vue';
 import PermissionDetailsView from './components/PermissionDetailsView.vue';
-import {vaah} from "../../vaahvue/pinia/vaah";
+
+const useVaah = vaah();
 const store = useRoleStore();
 const route = useRoute();
 const root = useRootStore();
@@ -111,7 +112,7 @@ const confirmChangeStatus = (event, id) => {
             <template class="p-1" #header>
                 <div class="flex flex-row">
 
-                    <div class="p-panel-title text-sm">
+                    <div class="font-semibold text-sm">
                         {{ store.item.name }}
                     </div>
                 </div>
@@ -120,9 +121,9 @@ const confirmChangeStatus = (event, id) => {
             <template #icons>
                 <div class="p-inputgroup">
 
-                    <Button class="p-button-outlined p-button-sm"
+                    <Button class="p-button-sm"
                             :label=" '#' + store.item.id"
-                            @click="vaah().copy(store.item.id)"
+                            @click="useVaah.copy(store.item.id)"
                     />
 
                     <!--/item_menu-->
@@ -130,7 +131,7 @@ const confirmChangeStatus = (event, id) => {
                                     || store.hasPermission('can-manage-roles')"
                               class="control"
                     >
-                        <Button class="p-button-outlined p-button-sm"
+                        <Button class="p-button-sm"
                                 icon="pi pi-angle-down"
                                 type="button"
                                 aria-haspopup="true"
@@ -221,7 +222,7 @@ const confirmChangeStatus = (event, id) => {
 
                         <Button :label="prop.data.name"
                                 class="p-button-text"
-                                @click="vaah().copy(prop.data.slug)"
+                                @click="useVaah.copy(prop.data.slug)"
                                 v-tooltip.top="'Copy Slug'"
                         />
                     </template>

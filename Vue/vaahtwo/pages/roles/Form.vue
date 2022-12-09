@@ -32,7 +32,7 @@ const toggleFormMenu = (event) => {
         <Panel>
             <template class="p-1" #header>
                 <div class="flex flex-row">
-                    <div class="p-panel-title text-sm">
+                    <div class="font-semibold text-sm">
                         <span v-if="store.item && store.item.id">
                             {{ store.item.name }}
                         </span>
@@ -46,34 +46,34 @@ const toggleFormMenu = (event) => {
             <template #icons>
                 <div class="p-inputgroup">
                     <Button v-if="store.item && store.item.id"
-                            class="p-button-outlined p-button-sm"
+                            class="p-button-sm"
                             :label=" '#' + store.item.id "
                             @click="useVaah.copy(store.item.id)"
                     />
 
                     <Button v-if="store.item && store.item.id"
-                            class="p-button-outlined p-button-sm"
+                            class="p-button-sm"
                             label="Save"
                             icon="pi pi-save"
                             @click="store.itemAction('save')"
                     />
 
                     <Button v-else
-                            class="p-button-outlined p-button-sm"
+                            class="p-button-sm"
                             label="Create & New"
                             icon="pi pi-save"
                             @click="store.itemAction('create-and-new')"
                     />
 
                     <Button v-if="store.item && store.item.id"
-                            class="p-button-outlined p-button-sm"
+                            class="p-button-sm"
                             icon="pi pi-eye"
                             v-tooltip.top="'View'"
                             @click="store.toView(store.item)"
                     />
 
                     <!--form_menu-->
-                    <Button class="p-button-outlined p-button-sm"
+                    <Button class="p-button-sm"
                             icon="pi pi-angle-down"
                             type="button"
                             aria-haspopup="true"
@@ -93,7 +93,6 @@ const toggleFormMenu = (event) => {
                     />
                 </div>
             </template>
-
 
             <div v-if="store.item">
 
