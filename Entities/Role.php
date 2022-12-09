@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
+use WebReinvent\VaahCms\Models\Permission;
 use WebReinvent\VaahCms\Traits\CrudWithUuidObservantTrait;
 
 class Role extends Model {
@@ -265,7 +266,7 @@ class Role extends Model {
         $role->slug = Str::slug($inputs['slug']);
         $role->save();
 
-        Permission::syncPermissionsWithRoles();
+        PermissionBase::syncPermissionsWithRoles();
         Role::syncRolesWithUsers();
         Role::recountRelations();
 
@@ -281,7 +282,7 @@ class Role extends Model {
 
         if(isset($request->recount) && $request->recount == true)
         {
-            Permission::syncPermissionsWithRoles();
+            PermissionBase::syncPermissionsWithRoles();
             Role::syncRolesWithUsers();
             Role::recountRelations();
         }
@@ -324,7 +325,7 @@ class Role extends Model {
 
         $data['list'] = $list->paginate(config('vaahcms.per_page'));
 
-        $countPermission = Permission::all()->count();
+        $countPermission = PermissionBase::all()->count();
 
         $countUser = User::all()->count();
 
@@ -745,7 +746,7 @@ class Role extends Model {
 
         foreach($request->inputs as $id)
         {
-            $perm = Permission::where('id',$id)->withTrashed()->first();
+            $perm = PermissionBase::where('id',$id)->withTrashed()->first();
 
             if($perm->deleted_at){
                 continue ;
@@ -777,7 +778,7 @@ class Role extends Model {
     public static function getModuleSections($request)
     {
 
-        $item = Permission::where('module',$request->module)->withTrashed()->select('section')->get()->unique('section');
+        $item = PermissionBase::where('module',$request->module)->withTrashed()->select('section')->get()->unique('section');
 
         $response['success'] = true;
         $response['data'] = $item;

@@ -15,6 +15,8 @@ export const useRootStore = defineStore({
         gutter: 20,
         show_progress_bar: false,
         is_logged_in: false,
+        is_installation_verified: false,
+        permissions: null,
         top_menu_items: [
             {
                 to:'/',
@@ -40,7 +42,8 @@ export const useRootStore = defineStore({
                 }
             }
         ],
-        is_installation_verified: false,
+        top_right_user_menu: null,
+        is_active_status_options: null
     }),
     getters: {},
     actions: {
@@ -103,6 +106,23 @@ export const useRootStore = defineStore({
             this.is_logged_in = true;
         },
         //-----------------------------------------------------------------------
+        async getPermission() {
+            let params = {
+                method: 'post'
+            };
+
+            vaah().ajax(
+                this.json_url+'/permissions',
+                this.afterGetPermission,
+                params
+            );
+        },
+        //-----------------------------------------------------------------------
+        afterGetPermission(data, res) {
+            if (data) {
+                this.permissions = data.list;
+            }
+        },
         //---------------------------------------------------------------------
         async verifyInstallStatus() {
 
@@ -149,6 +169,34 @@ export const useRootStore = defineStore({
                 this.is_installation_verified = true;
 
             }
+        },
+        //-----------------------------------------------------------------------
+        async getTopRightUserMenu() {
+            return this.top_right_user_menu = [
+                {
+                    label: "Profile",
+                    icon:'pi pi-fw pi-user',
+                    url: "http://localhost/tanmoy.d001/vaahcms-dev-env/public/backend#/vaah/profile/"
+                },
+                {
+                    label: "Logout",
+                    icon:'pi pi-fw pi-sign-out',
+                    url: "http://localhost/tanmoy.d001/vaahcms-dev-env/public/backend/logout"
+                }
+            ]
+        },
+        //-----------------------------------------------------------------------
+        async getIsActiveStatusOptions() {
+            return this.is_active_status_options = [
+                {
+                    label: 'Yes',
+                    value: 1
+                },
+                {
+                    label: 'No',
+                    value: null
+                }
+            ]
         },
         //-----------------------------------------------------------------------
         async to(path)

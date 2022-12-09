@@ -3,7 +3,7 @@ namespace WebReinvent\VaahCms\Libraries;
 
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
-use WebReinvent\VaahCms\Entities\Permission;
+use WebReinvent\VaahCms\Models\Permission;
 
 
 class VaahSeeder{

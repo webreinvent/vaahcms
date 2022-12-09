@@ -9,7 +9,7 @@ const menu = ref();
 
 
 onMounted(async () => {
-
+    await rootStore.getTopRightUserMenu();
 });
 
 
@@ -44,13 +44,16 @@ const toggleDropDownMenu= (event) => {
                    <i class="pi pi-chevron-down text-sm mt-1 ml-1"></i>
                </a>
            </div>
-            <TieredMenu  v-if="rootStore.assets.extended_views
-            && rootStore.assets.extended_views.top_right_user_menu
-            && rootStore.assets.extended_views.top_right_user_menu.success"
-                         :model="rootStore.assets.extended_views.top_right_user_menu.success"
-                         ref="menu" :popup="true">
+            <TieredMenu  v-if="rootStore && rootStore.top_right_user_menu"
+                         :model="rootStore.top_right_user_menu"
+                         ref="menu"
+                         :popup="true"
+            >
                 <template #item="{item}">
-                    <a :href="item.url">{{item.label}}</a>
+                    <a :href="item.url">
+                        <span><i :class="item.icon + ' mx-2 my-2 py-1'" /></span>
+                        {{item.label}}
+                    </a>
                 </template>
             </TieredMenu>
         </template>

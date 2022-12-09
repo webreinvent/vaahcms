@@ -22,18 +22,21 @@ onMounted(async () => {
 
 
 <template>
+    <div>
 
-    <div v-if="rootStore.is_logged_in" class="grid">
-        <Topnav />
-        <Sidebar/>
-        <div class="grid main-container">
-            <div class="col-12">
-                <RouterView></RouterView>
+        <div v-if="rootStore.is_logged_in" class="grid">
+
+            <Topnav />
+
+            <Sidebar/>
+
+            <div class="grid main-container">
+                <div class="col-12">
+                    <RouterView></RouterView>
+                </div>
             </div>
         </div>
 
+        <Footer />
     </div>
-
-    <Footer />
-
 </template>
