@@ -6,8 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
-use WebReinvent\VaahCms\Entities\Permission;
 use WebReinvent\VaahCms\Entities\User;
+use WebReinvent\VaahCms\Models\Permission;
 use WebReinvent\VaahCms\Traits\CrudWithUuidObservantTrait;
 
 class RoleBase extends Model {

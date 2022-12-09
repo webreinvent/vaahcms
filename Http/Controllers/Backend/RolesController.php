@@ -2,7 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
-use WebReinvent\VaahCms\Entities\Permission;
+use WebReinvent\VaahCms\Models\Permission;
 use WebReinvent\VaahCms\Models\Role;
 
 

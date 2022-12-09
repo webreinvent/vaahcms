@@ -371,7 +371,7 @@ class Role extends RoleBase
             return response()->json($response);
         }
 
-        $response = Role::getRolePermission($request, $id);
+        $response = self::getRolePermission($request, $id);
         return response()->json($response);
     }
     //-------------------------------------------------
@@ -385,7 +385,7 @@ class Role extends RoleBase
             return response()->json($response);
         }
 
-        $response = Role::getRoleUser($request, $id);
+        $response = self::getRoleUser($request, $id);
         return response()->json($response);
     }
     //-------------------------------------------------
@@ -422,7 +422,7 @@ class Role extends RoleBase
                     return $response;
                 }
 
-                $response = Role::bulkStatusChange($request);
+                $response = self::bulkStatusChange($request);
 
                 break;
             //------------------------------------
@@ -436,7 +436,7 @@ class Role extends RoleBase
                     return $response;
                 }
 
-                $response = Role::bulkTrash($request);
+                $response = self::bulkTrash($request);
 
                 break;
             //------------------------------------
@@ -451,7 +451,7 @@ class Role extends RoleBase
                     return $response;
                 }
 
-                $response = Role::bulkRestore($request);
+                $response = self::bulkRestore($request);
 
                 break;
 
@@ -467,7 +467,7 @@ class Role extends RoleBase
                     return $response;
                 }
 
-                $response = Role::bulkDelete($request);
+                $response = self::bulkDelete($request);
 
                 break;
             //------------------------------------
@@ -482,7 +482,7 @@ class Role extends RoleBase
                     return $response;
                 }
 
-                $response = Role::bulkChangePermissionStatus($request);
+                $response = self::bulkChangePermissionStatus($request);
 
                 break;
             //------------------------------------
@@ -497,7 +497,7 @@ class Role extends RoleBase
                     return $response;
                 }
 
-                $response = Role::bulkChangeUserStatus($request);
+                $response = self::bulkChangeUserStatus($request);
 
                 break;
             //------------------------------------
@@ -512,7 +512,7 @@ class Role extends RoleBase
                     return $response;
                 }
 
-                $response = Role::bulkPermissionStatusChange($request);
+                $response = self::bulkPermissionStatusChange($request);
                 break;
             //------------
             //------------------------------------

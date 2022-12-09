@@ -796,10 +796,11 @@ export const useRoleStore = defineStore({
             );
         },
         //---------------------------------------------------------------------
-        afterActions (data,res) {
-            this.hideProgress();
-            this.getItemPermissions(this.item.id);
-            this.getItemUsers();
+        async afterActions (data,res) {
+            await this.hideProgress();
+            await this.getItemPermissions(this.item.id);
+            await this.getItemUsers();
+            await this.getList();
         },
         //---------------------------------------------------------------------
         resetRolePermissionFilters() {
@@ -1185,7 +1186,7 @@ export const useRoleStore = defineStore({
         //---------------------------------------------------------------------
         hasPermission(slug) {
             const root = useRootStore();
-            return vaah().hasPermission(root.permission, slug);
+            return vaah().hasPermission(root.permissions, slug);
         },
         //---------------------------------------------------------------------
         showProgress()

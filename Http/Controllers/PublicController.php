@@ -14,7 +14,6 @@ use Illuminate\Support\Str;
 use WebReinvent\VaahCms\Entities\Migration;
 use WebReinvent\VaahCms\Entities\Module;
 use WebReinvent\VaahCms\Entities\ModuleMigration;
-use WebReinvent\VaahCms\Entities\Permission;
 use WebReinvent\VaahCms\Models\Role;
 use WebReinvent\VaahCms\Entities\Setting;
 use WebReinvent\VaahCms\Entities\Theme;
