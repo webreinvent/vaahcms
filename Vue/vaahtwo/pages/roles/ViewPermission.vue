@@ -221,7 +221,7 @@ const confirmChangeStatus = (event, id) => {
                     <template #body="prop">
 
                         <Button :label="prop.data.name"
-                                class="p-button-text"
+                                class="p-button-text text-left"
                                 @click="useVaah.copy(prop.data.slug)"
                                 v-tooltip.top="'Copy Slug'"
                         />

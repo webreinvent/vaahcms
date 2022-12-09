@@ -81,8 +81,9 @@ const toggleItemMenu = (event) => {
                     />
 
                     <!--item_menu-->
-                    <Button type="button"
+                    <Button class="p-button-sm"
                             icon="pi pi-angle-down"
+                            type="button"
                             aria-haspopup="true"
                             @click="toggleItemMenu"
                     />

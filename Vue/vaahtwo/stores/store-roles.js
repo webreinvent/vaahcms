@@ -1,8 +1,8 @@
-import {watch} from 'vue'
-import {acceptHMRUpdate, defineStore} from 'pinia'
-import qs from 'qs'
-import {vaah} from '../vaahvue/pinia/vaah'
+import { watch } from 'vue'
+import { acceptHMRUpdate, defineStore } from 'pinia'
+import { vaah } from '../vaahvue/pinia/vaah'
 import { useRootStore } from "./root";
+import qs from 'qs'
 
 let model_namespace = 'WebReinvent\\VaahCms\\Models\\Role';
 
@@ -178,7 +178,7 @@ export const useRoleStore = defineStore({
                 this.delayedRoleUsersSearch();
             }, {
                 deep:true
-            })
+            });
         },
         //---------------------------------------------------------------------
         async getAssets() {

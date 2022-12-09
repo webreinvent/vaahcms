@@ -130,11 +130,12 @@ const openDetailsViewModal = () => {
                                        @keyup.13="store.delayedRoleUsersSearch()"
                                        placeholder="Search"
                                        type="text"
-                                       class="w-full"
+                                       class="w-full p-inputtext-sm"
                             />
                          </span>
 
-                        <Button label="Reset"
+                        <Button class="p-button-sm"
+                                label="Reset"
                                 @click="store.resetRoleUserFilters()"
                         />
                     </div>

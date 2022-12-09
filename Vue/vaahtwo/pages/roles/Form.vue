@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted, ref, watch } from "vue";
+import { onMounted, ref } from "vue";
 import { useRoleStore } from '../../stores/store-roles';
 import { useRootStore } from "../../stores/root";
 import { vaah } from '../../vaahvue/pinia/vaah';

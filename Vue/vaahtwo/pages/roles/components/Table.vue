@@ -44,7 +44,7 @@ const useVaah = vaah();
              >
                  <template #body="prop">
                      <Button :label="prop.data.slug"
-                             class="p-button-text"
+                             class="p-button-text text-left"
                              v-tooltip.top="'Copy Slug'"
                              @click="useVaah.copy(prop.data.slug)"
                      />
@@ -55,7 +55,7 @@ const useVaah = vaah();
                      header="Permissions"
              >
                  <template #body="props">
-                     <Button class="p-button-sm p-button-rounded"
+                     <Button class="p-button-sm p-button-rounded white-space-nowrap"
                              v-tooltip.top="'View Permissions'"
                              @click="store.toPermission(props.data)"
                      >
@@ -68,7 +68,7 @@ const useVaah = vaah();
                      header="Users"
             >
                  <template #body="props">
-                     <Button class="p-button-sm p-button-rounded"
+                     <Button class="p-button-sm p-button-rounded white-space-nowrap"
                              v-tooltip.top="'View Users'"
                              @click="store.toUser(props.data)"
                      >
