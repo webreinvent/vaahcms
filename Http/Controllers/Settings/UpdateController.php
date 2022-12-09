@@ -14,11 +14,11 @@ use Symfony\Component\Process\Process;
 use WebReinvent\VaahCms\Entities\Notification;
 use WebReinvent\VaahCms\Entities\NotificationContent;
 use WebReinvent\VaahCms\Entities\Notified;
-use WebReinvent\VaahCms\Entities\Role;
 use WebReinvent\VaahCms\Entities\Setting;
 use WebReinvent\VaahCms\Libraries\VaahBackup;
 use WebReinvent\VaahCms\Libraries\VaahSetup;
 use WebReinvent\VaahExtend\Libraries\VaahArtisan;
+use WebReinvent\VaahCms\Models\Role;
 
 
 class UpdateController extends Controller

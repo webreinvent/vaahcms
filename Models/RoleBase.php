@@ -1,4 +1,4 @@
-<?php namespace WebReinvent\VaahCms\Entities;
+<?php namespace WebReinvent\VaahCms\Models;
 
 use Carbon\Carbon;
 use DateTimeInterface;
@@ -6,10 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
+use WebReinvent\VaahCms\Entities\User;
 use WebReinvent\VaahCms\Models\Permission;
 use WebReinvent\VaahCms\Traits\CrudWithUuidObservantTrait;
 
-class Role extends Model {
+class RoleBase extends Model {
 
     use SoftDeletes;
     use CrudWithUuidObservantTrait;
@@ -151,7 +152,7 @@ class Role extends Model {
     public static function countUsers($id)
     {
 
-        $role = Role::withTrashed()->where('id', $id)->first();
+        $role = self::withTrashed()->where('id', $id)->first();
 
         if(!$role)
         {
@@ -163,7 +164,7 @@ class Role extends Model {
     //-------------------------------------------------
     public static function countPermissions($id)
     {
-        $role = Role::withTrashed()->where('id', $id)->first();
+        $role = self::withTrashed()->where('id', $id)->first();
         if(!$role)
         {
             return 0;
@@ -176,7 +177,7 @@ class Role extends Model {
     //-------------------------------------------------
     public static function recountRelations()
     {
-        $list = Role::withTrashed()->select('id')->get();
+        $list = self::withTrashed()->select('id')->get();
 
         if($list)
         {
@@ -193,7 +194,7 @@ class Role extends Model {
     public static function syncRolesWithUsers()
     {
         $all_users = User::select('id')->get()->pluck('id')->toArray();
-        $all_roles = Role::select('id')->get();
+        $all_roles = self::select('id')->get();
 
         if(!$all_roles)
         {
@@ -207,7 +208,7 @@ class Role extends Model {
 
 
         //enable all roles for super admin users
-        $super_admin_role = Role::slug('super-administrator')->first();
+        $super_admin_role = self::slug('super-administrator')->first();
         $super_admin_users = $super_admin_role->users()->wherePivot('is_active', 1)
             ->get()
             ->pluck('id')
@@ -221,7 +222,7 @@ class Role extends Model {
 
     }
     //-------------------------------------------------
-    public static function create($request)
+    public static function createItem($request)
     {
 
         if(!\Auth::user()->hasPermission('can-create-roles'))
@@ -232,19 +233,18 @@ class Role extends Model {
             return $response;
         }
 
-        $inputs = $request->new_item;
+        $inputs = $request->all();
 
-        $validation = static::validation($inputs);
-        if(isset($validation['success']) && !$validation['success'])
-        {
+        $validation = self::validation($inputs);
+
+        if (isset($validation['success']) && !$validation['success']) {
             return $validation;
         }
 
         // check if name exist
-        $user = static::where('name',$inputs['name'])->first();
+        $user = self::withTrashed()->where('name',$inputs['name'])->first();
 
-        if($user)
-        {
+        if ($user) {
             $response['success'] = false;
             $response['errors'][] = "This name is already exist.";
             return $response;
@@ -252,7 +252,7 @@ class Role extends Model {
 
 
         // check if slug exist
-        $user = static::where('slug',$inputs['slug'])->first();
+        $user = self::withTrashed()->where('slug',$inputs['slug'])->first();
 
         if($user)
         {
@@ -261,14 +261,14 @@ class Role extends Model {
             return $response;
         }
 
-        $role = new static();
+        $role = new self();
         $role->fill($inputs);
         $role->slug = Str::slug($inputs['slug']);
         $role->save();
 
-        PermissionBase::syncPermissionsWithRoles();
-        Role::syncRolesWithUsers();
-        Role::recountRelations();
+        Permission::syncPermissionsWithRoles();
+        self::syncRolesWithUsers();
+        self::recountRelations();
 
         $response['success'] = true;
         $response['data']['item'] = $role;
@@ -277,73 +277,121 @@ class Role extends Model {
 
     }
     //-------------------------------------------------
+    public function scopeGetSorted($query, $filter)
+    {
+
+        if(!isset($filter['sort']))
+        {
+            return $query->orderBy('id', 'desc');
+        }
+
+        $sort = $filter['sort'];
+
+
+        $direction = Str::contains($sort, ':');
+
+        if(!$direction)
+        {
+            return $query->orderBy($sort, 'asc');
+        }
+
+        $sort = explode(':', $sort);
+
+        return $query->orderBy($sort[0], $sort[1]);
+    }
+    //-------------------------------------------------
+    public function scopeIsActiveFilter($query, $filter)
+    {
+
+        if(!isset($filter['is_active'])
+            || is_null($filter['is_active'])
+            || $filter['is_active'] === 'null'
+        )
+        {
+            return $query;
+        }
+        $is_active = $filter['is_active'];
+
+        if($is_active === 'true' || $is_active === true)
+        {
+            return $query->whereNotNull('is_active');
+        } else{
+            return $query->whereNull('is_active');
+        }
+
+    }
+    //-------------------------------------------------
+    public function scopeTrashedFilter($query, $filter)
+    {
+
+        if(!isset($filter['trashed']))
+        {
+            return $query;
+        }
+        $trashed = $filter['trashed'];
+
+        if($trashed === 'include')
+        {
+            return $query->withTrashed();
+        } else if($trashed === 'only'){
+            return $query->onlyTrashed();
+        }
+
+    }
+    //-------------------------------------------------
+    public function scopeSearchFilter($query, $filter)
+    {
+
+        if(!isset($filter['q']))
+        {
+            return $query;
+        }
+        $search = $filter['q'];
+        $query->where(function ($q) use ($search) {
+            $q->where('name', 'LIKE', '%' . $search . '%')
+                ->orWhere('slug', 'LIKE', '%' . $search . '%');
+        });
+
+    }
+    //-------------------------------------------------
     public static function getList($request)
     {
 
-        if(isset($request->recount) && $request->recount == true)
-        {
-            PermissionBase::syncPermissionsWithRoles();
-            Role::syncRolesWithUsers();
-            Role::recountRelations();
+        if (isset($request->recount) && $request->recount == true) {
+            Permission::syncPermissionsWithRoles();
+            self::syncRolesWithUsers();
+            self::recountRelations();
         }
 
-        $list = static::orderBy('id', 'desc');
+        $list = self::getSorted($request->filter);
+        $list->isActiveFilter($request->filter);
+        $list->trashedFilter($request->filter);
+        $list->searchFilter($request->filter);
 
+        $rows = config('vaahcms.per_page');
 
-
-        if($request['trashed'] == 'true')
-        {
-
-            $list->withTrashed();
+        if($request->has('rows')) {
+            $rows = $request->rows;
         }
 
-        if(isset($request->from) && isset($request->to))
-        {
-            $list->betweenDates($request['from'],$request['to']);
-        }
+        $list = $list->paginate($rows);
 
-        if(isset($request['status']) && $request['status']){
-            if($request['status'] == 'active')
-            {
-                $list->where('is_active',1);
-            }else{
-                $list->whereNull('is_active')->orWhere('is_active',0);
-            }
-        }
-
-
-
-        if(isset($request->q))
-        {
-
-            $list->where(function ($q) use ($request){
-                $q->where('name', 'LIKE', '%'.$request->q.'%')
-                    ->orWhere('slug', 'LIKE', '%'.$request->q.'%');
-            });
-        }
-
-
-        $data['list'] = $list->paginate(config('vaahcms.per_page'));
-
-        $countPermission = PermissionBase::all()->count();
-
-        $countUser = User::all()->count();
-
+        $countPermissions = Permission::count();
+        $countUsers = User::count();
 
         $response['success'] = true;
-        $response['data'] = $data;
-        $response['data']['totalPermission'] = $countPermission;
-        $response['data']['totalUser'] = $countUser;
+        $response['data'] = $list;
+        $response['totalPermissions'] = $countPermissions;
+        $response['totalUsers'] = $countUsers;
 
         return $response;
-
-
     }
+
     //-------------------------------------------------
     public static function getItem($id)
     {
 
-        $item = Role::where('id', $id)->with(['createdByUser', 'updatedByUser', 'deletedByUser'])->withTrashed()->first();
+        $item = self::where('id', $id)->with(['createdByUser', 'updatedByUser', 'deletedByUser'])->withTrashed()->first();
 
         $response['success'] = true;
         $response['data'] = $item;
@@ -354,33 +402,36 @@ class Role extends Model {
     //-------------------------------------------------
     public static function getRolePermission($request,$id)
     {
-
-        $item = Role::withTrashed()->where('id', $id)->first();
+        $item = self::withTrashed()->where('id', $id)->first();
         $response['data']['item'] = $item;
 
-        if($request->has("q"))
+        if ($request->has('q'))
         {
             $list = $item->permissions()->where(function ($q) use ($request){
-                $q->where('name', 'LIKE', '%'.$request->q.'%')
-                    ->orWhere('slug', 'LIKE', '%'.$request->q.'%');
+                $q->where('name', 'LIKE', '%'. $request->q .'%')
+                    ->orWhere('slug', 'LIKE', '%'. $request->q .'%');
             });
-        } else
-        {
+        } else {
             $list = $item->permissions();
         }
 
-        if($request['filter']['module']){
-            $list->where('module',$request['filter']['module']);
+        if (isset($request['module'])) {
+            $list->where('module',$request['module']);
         }
 
-        if($request['filter']['section']){
-            $list->where('section',$request['filter']['section']);
+        if (isset($request['section'])) {
+            $list->where('section',$request['section']);
         }
 
         $list->orderBy('pivot_is_active', 'desc');
 
+        $rows = config('vaahcms.per_page');
 
-        $list = $list->paginate(config('vaahcms.per_page'));
+        if ($request->has('rows')) {
+            $rows = $request->rows;
+        }
+
+        $list = $list->paginate($rows);
 
         foreach ($list as $permission){
 
@@ -395,34 +446,35 @@ class Role extends Model {
         $response['success'] = true;
 
         return $response;
-
-
     }
     //-------------------------------------------------
     public static function getRoleUser($request,$id)
     {
-
-        $item = Role::withTrashed()->where('id', $id)->first();
+        $item = self::withTrashed()->where('id', $id)->first();
         $response['data']['item'] = $item;
 
-        if($request->has("q"))
-        {
+        if ($request->has("q")) {
             $list = $item->users()->where(function ($q) use ($request){
-                $q->where('first_name', 'LIKE', '%'.$request->q.'%')
-                    ->orWhere('last_name', 'LIKE', '%'.$request->q.'%')
-                    ->orWhere('email', 'LIKE', '%'.$request->q.'%');
+                $q->where('first_name', 'LIKE', '%' . $request->q . '%')
+                    ->orWhere('middle_name', 'LIKE', '%' . $request->q . '%')
+                    ->orWhere('last_name', 'LIKE', '%' . $request->q . '%')
+                    ->orWhere('email', 'LIKE', '%' . $request->q .'%');
             });
-        } else
-        {
+        } else {
             $list = $item->users();
         }
 
         $list->orderBy('pivot_is_active', 'desc');
 
-        $list = $list->paginate(config('vaahcms.per_page'));
+        $rows = config('vaahcms.per_page');
 
-        foreach ($list as $user){
+        if ($request->has('rows')) {
+            $rows = $request->rows;
+        }
 
+        $list = $list->paginate($rows);
+
+        foreach ($list as $user) {
             $data = self::getPivotData($user->pivot);
 
             $user['json'] = $data;
@@ -433,8 +485,6 @@ class Role extends Model {
         $response['success'] = true;
 
         return $response;
-
-
     }
     //-------------------------------------------------
 
@@ -594,7 +644,7 @@ class Role extends Model {
 
         foreach($request->inputs as $id)
         {
-            $item = Role::withTrashed()->where('id', $id)->first();
+            $item = self::withTrashed()->where('id', $id)->first();
             if(isset($item) && isset($item->deleted_at))
             {
                 $item->restore();
@@ -609,45 +659,47 @@ class Role extends Model {
 
     }
     //-------------------------------------------------
-    public static function bulkDelete($request)
+    public static function deleteList($request): array
     {
+        $inputs = $request->all();
 
-        if(!$request->has('inputs'))
-        {
-            $response['success'] = false;
-            $response['errors'][] = 'Select IDs';
+        $rules = array(
+            'type' => 'required',
+            'items' => 'required',
+        );
+
+        $messages = array(
+            'type.required' => 'Action type is required',
+            'items.required' => 'Select items',
+        );
+
+        $validator = \Validator::make($inputs, $rules, $messages);
+
+        if ($validator->fails()) {
+            $errors = errorsToArray($validator->errors());
+            $response['failed'] = true;
+            $response['messages'] = $errors;
+
             return $response;
         }
 
-        if(!$request->has('data'))
-        {
-            $response['success'] = false;
-            $response['errors'][] = 'Select Status';
-            return $response;
-        }
+        $items_id = collect($inputs['items'])->pluck('id')->toArray();
 
-        foreach($request->inputs as $id)
-        {
+        foreach($items_id as $id) {
             $item = static::where('id', $id)->withTrashed()->first();
-            if($item)
-            {
 
+            if ($item) {
                 $item->permissions()->detach();
-
                 $item->users()->detach();
-
                 $item->forceDelete();
-
             }
         }
 
         $response['success'] = true;
-        $response['data'] = [];
+        $response['data'] = true;
         $response['messages'][] = trans('vaahcms-general.action_successful');
 
         return $response;
-
-
     }
     //-------------------------------------------------
     public static function bulkChangePermissionStatus($request)
@@ -655,7 +707,7 @@ class Role extends Model {
 
         $inputs = $request->all();
 
-        $item = Role::where('id',$inputs['inputs']['id'])->withTrashed()->first();
+        $item = self::where('id',$inputs['inputs']['id'])->withTrashed()->first();
 
         if($item->id == 1)
         {
@@ -671,16 +723,16 @@ class Role extends Model {
             'updated_at' => \Illuminate\Support\Carbon::now()
         ];
 
-        if($inputs['inputs']['permission_id']){
+        if ($inputs['inputs']['permission_id']) {
             $pivot = $item->permissions->find($inputs['inputs']['permission_id'])->pivot;
 
-            if($pivot->is_active === null && !$pivot->created_by){
+            if ($pivot->is_active === null && !$pivot->created_by) {
                 $data['created_by'] = Auth::user()->id;
                 $data['created_at'] = \Illuminate\Support\Carbon::now();
             }
 
             $item->permissions()->updateExistingPivot($inputs['inputs']['permission_id'], $data);
-        }else{
+        } else {
             $item->permissions()
                 ->newPivotStatement()
                 ->where('vh_role_id', '=', $item->id)
@@ -688,9 +740,8 @@ class Role extends Model {
 //            $item->permissions()->updateExistingPivot('', array('is_active' => $inputs['data']['is_active']));
         }
 
-
-        Role::recountRelations();
-            $response['messages'] = [];
+        self::recountRelations();
+        $response['messages'] = [];
     }
     //-------------------------------------------------
     public static function bulkChangeUserStatus($request)
@@ -698,7 +749,7 @@ class Role extends Model {
 
         $inputs = $request->all();
 
-        $item = Role::where('id',$inputs['inputs']['id'])->withTrashed()->first();
+        $item = self::where('id',$inputs['inputs']['id'])->withTrashed()->first();
 
         $data = [
             'is_active' => $inputs['data']['is_active'],
@@ -707,23 +758,23 @@ class Role extends Model {
         ];
 
 
-        if($inputs['inputs']['user_id']){
+        if ($inputs['inputs']['user_id']) {
 
             $pivot = $item->users->find($inputs['inputs']['user_id'])->pivot;
 
-            if($pivot->is_active === null && !$pivot->created_by){
+            if ($pivot->is_active === null && !$pivot->created_by) {
                 $data['created_by'] = Auth::user()->id;
                 $data['created_at'] = \Illuminate\Support\Carbon::now();
             }
 
             $item->users()->updateExistingPivot($inputs['inputs']['user_id'], $data);
-        }else{
+        } else {
             $item->users()
                 ->newPivotStatement()
                 ->where('vh_role_id', '=', $item->id)
                 ->update($data);
         }
-        Role::recountRelations();
+        self::recountRelations();
         $response['messages'] = [];
     }
     //-------------------------------------------------
@@ -746,7 +797,7 @@ class Role extends Model {
 
         foreach($request->inputs as $id)
         {
-            $perm = PermissionBase::where('id',$id)->withTrashed()->first();
+            $perm = Permission::where('id',$id)->withTrashed()->first();
 
             if($perm->deleted_at){
                 continue ;
@@ -777,15 +828,12 @@ class Role extends Model {
 
     public static function getModuleSections($request)
     {
-
-        $item = PermissionBase::where('module',$request->module)->withTrashed()->select('section')->get()->unique('section');
+        $sections = Permission::where('module', $request->module)->withTrashed()->get()->unique('section')->pluck('section');
 
         $response['success'] = true;
-        $response['data'] = $item;
+        $response['data'] = $sections;
 
         return $response;
-
-
     }
 
     //-------------------------------------------------
@@ -832,19 +880,19 @@ class Role extends Model {
         $data = array();
 
         if($pivot->created_by && User::find($pivot->created_by)){
-            $data['Created by'] = User::find($pivot->created_by)->name;
+            $data['created_by'] = User::find($pivot->created_by)->name;
         }
 
         if($pivot->updated_by && User::find($pivot->updated_by)){
-            $data['Updated by'] = User::find($pivot->updated_by)->name;
+            $data['updated_by'] = User::find($pivot->updated_by)->name;
         }
 
         if($pivot->created_at){
-            $data['Created at'] = date('d-m-Y H:i:s', strtotime($pivot->created_at));
+            $data['created_at'] = date('d-m-Y H:i:s', strtotime($pivot->created_at));
         }
 
         if($pivot->updated_at){
-            $data['Updated at'] = date('d-m-Y H:i:s', strtotime($pivot->updated_at));
+            $data['updated_at'] = date('d-m-Y H:i:s', strtotime($pivot->updated_at));
         }
 
         return $data;

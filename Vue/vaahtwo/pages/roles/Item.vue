@@ -2,11 +2,13 @@
 import {onMounted, ref, watch} from "vue";
 import {useRoute} from 'vue-router';
 
-import {useRoleStore} from '../../stores/store-roles'
+import {useRoleStore} from '../../stores/store-roles';
+import { vaah } from '../../vaahvue/pinia/vaah';
 
 import VhViewRow from '../../vaahvue/vue-three/primeflex/VhViewRow.vue';
 const store = useRoleStore();
 const route = useRoute();
+const useVaah = vaah();
 
 onMounted(async () => {
 
@@ -55,77 +57,70 @@ const toggleItemMenu = (event) => {
 
 </script>
 <template>
-
-    <div class="col-6" >
-
+    <div class="col-6">
         <Panel v-if="store && store.item">
-
             <template class="p-1" #header>
-
                 <div class="flex flex-row">
-
-                    <div class="p-panel-title">
-                        #{{store.item.id}}
+                    <div class="font-semibold text-sm">
+                       {{ store.item.name }}
                     </div>
-
                 </div>
-
             </template>
 
             <template #icons>
-
-
                 <div class="p-inputgroup">
-                    <Button label="Edit"
+                    <Button class="p-button-sm"
+                            :label=" '#' + store.item.id "
+                            @click="useVaah.copy(store.item.id)"
+                    />
+
+                    <Button class="p-button-sm"
+                            label="Edit"
+                            icon="pi pi-save"
                             @click="store.toEdit(store.item)"
-                            icon="pi pi-save"/>
+                    />
 
                     <!--item_menu-->
-                    <Button
-                        type="button"
-                        @click="toggleItemMenu"
-                        icon="pi pi-angle-down"
-                        aria-haspopup="true"/>
+                    <Button class="p-button-sm"
+                            icon="pi pi-angle-down"
+                            type="button"
+                            aria-haspopup="true"
+                            @click="toggleItemMenu"
+                    />
 
                     <Menu ref="item_menu_state"
                           :model="store.item_menu_list"
-                          :popup="true" />
+                          :popup="true"
+                    />
                     <!--/item_menu-->
 
-                    <Button class="p-button-primary"
+                    <Button class="p-button-sm"
                             icon="pi pi-times"
-                            @click="store.toList()"/>
-
+                            @click="store.toList()"
+                    />
                 </div>
-
-
-
             </template>
 
-
             <div v-if="store.item">
-
                 <Message severity="error"
                          class="p-container-message"
                          :closable="false"
                          icon="pi pi-trash"
-                         v-if="store.item.deleted_at">
-
+                         v-if="store.item.deleted_at"
+                >
                     <div class="flex align-items-center justify-content-between">
 
                         <div class="">
                             Deleted {{store.item.deleted_at}}
                         </div>
 
-                        <div class="">
+                        <div class="ml-3">
                             <Button label="Restore"
                                     class="p-button-sm"
-                                    @click="store.itemAction('restore')">
-                            </Button>
+                                    @click="store.itemAction('restore')"
+                            />
                         </div>
-
                     </div>
-
                 </Message>
 
                 <div class="p-datatable p-component p-datatable-responsive-scroll p-datatable-striped p-datatable-sm">

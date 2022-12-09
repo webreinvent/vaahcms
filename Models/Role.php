@@ -7,8 +7,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
 use WebReinvent\VaahCms\Traits\CrudWithUuidObservantTrait;
 use WebReinvent\VaahCms\Entities\User;
+use WebReinvent\VaahCms\Models\Permission;
 
-class Role extends Model
+class Role extends RoleBase
 {
 
     use SoftDeletes;
@@ -102,150 +103,6 @@ class Role extends Model
     }
 
     //-------------------------------------------------
-    public static function createItem($request)
-    {
-
-        $inputs = $request->all();
-
-        $validation = self::validation($inputs);
-        if (!$validation['success']) {
-            return $validation;
-        }
-
-
-        // check if name exist
-        $item = self::where('name', $inputs['name'])->first();
-
-        if ($item) {
-            $response['success'] = false;
-            $response['messages'][] = "This name is already exist.";
-            return $response;
-        }
-
-        // check if slug exist
-        $item = self::where('slug', $inputs['slug'])->first();
-
-        if ($item) {
-            $response['success'] = false;
-            $response['messages'][] = "This slug is already exist.";
-            return $response;
-        }
-
-        $item = new self();
-        $item->fill($inputs);
-        $item->slug = Str::slug($inputs['slug']);
-        $item->save();
-
-        $response['success'] = true;
-        $response['data']['item'] = $item;
-        $response['messages'][] = 'Saved successfully.';
-        return $response;
-
-    }
-
-    //-------------------------------------------------
-    public function scopeGetSorted($query, $filter)
-    {
-
-        if(!isset($filter['sort']))
-        {
-            return $query->orderBy('id', 'desc');
-        }
-
-        $sort = $filter['sort'];
-
-
-        $direction = Str::contains($sort, ':');
-
-        if(!$direction)
-        {
-            return $query->orderBy($sort, 'asc');
-        }
-
-        $sort = explode(':', $sort);
-
-        return $query->orderBy($sort[0], $sort[1]);
-    }
-    //-------------------------------------------------
-    public function scopeIsActiveFilter($query, $filter)
-    {
-
-        if(!isset($filter['is_active'])
-            || is_null($filter['is_active'])
-            || $filter['is_active'] === 'null'
-        )
-        {
-            return $query;
-        }
-        $is_active = $filter['is_active'];
-
-        if($is_active === 'true' || $is_active === true)
-        {
-            return $query->whereNotNull('is_active');
-        } else{
-            return $query->whereNull('is_active');
-        }
-
-    }
-    //-------------------------------------------------
-    public function scopeTrashedFilter($query, $filter)
-    {
-
-        if(!isset($filter['trashed']))
-        {
-            return $query;
-        }
-        $trashed = $filter['trashed'];
-
-        if($trashed === 'include')
-        {
-            return $query->withTrashed();
-        } else if($trashed === 'only'){
-            return $query->onlyTrashed();
-        }
-
-    }
-    //-------------------------------------------------
-    public function scopeSearchFilter($query, $filter)
-    {
-
-        if(!isset($filter['q']))
-        {
-            return $query;
-        }
-        $search = $filter['q'];
-        $query->where(function ($q) use ($search) {
-            $q->where('name', 'LIKE', '%' . $search . '%')
-                ->orWhere('slug', 'LIKE', '%' . $search . '%');
-        });
-
-    }
-    //-------------------------------------------------
-    public static function getList($request)
-    {
-        $list = self::getSorted($request->filter);
-        $list->isActiveFilter($request->filter);
-        $list->trashedFilter($request->filter);
-        $list->searchFilter($request->filter);
-
-        $rows = config('vaahcms.per_page');
-
-        if($request->has('rows'))
-        {
-            $rows = $request->rows;
-        }
-
-        $list = $list->paginate($rows);
-
-        $response['success'] = true;
-        $response['data'] = $list;
-
-        return $response;
-
-
-    }
-
-    //-------------------------------------------------
     public static function updateList($request)
     {
 
@@ -294,40 +151,6 @@ class Role extends Model
                 self::whereIn('id', $items_id)->restore();
                 break;
         }
-
-        $response['success'] = true;
-        $response['data'] = true;
-        $response['messages'][] = 'Action was successful.';
-
-        return $response;
-    }
-
-    //-------------------------------------------------
-    public static function deleteList($request): array
-    {
-        $inputs = $request->all();
-
-        $rules = array(
-            'type' => 'required',
-            'items' => 'required',
-        );
-
-        $messages = array(
-            'type.required' => 'Action type is required',
-            'items.required' => 'Select items',
-        );
-
-        $validator = \Validator::make($inputs, $rules, $messages);
-        if ($validator->fails()) {
-
-            $errors = errorsToArray($validator->errors());
-            $response['failed'] = true;
-            $response['messages'] = $errors;
-            return $response;
-        }
-
-        $items_id = collect($inputs['items'])->pluck('id')->toArray();
-        self::whereIn('id', $items_id)->forceDelete();
 
         $response['success'] = true;
         $response['data'] = true;
@@ -458,6 +281,8 @@ class Role extends Model
 
         $response = self::getItem($id);
 
+        $response['status'] = true;
+        $response['messages'][] = 'Updated Successfully.';
         return $response;
     }
     //-------------------------------------------------
@@ -536,8 +361,166 @@ class Role extends Model
     }
 
     //-------------------------------------------------
+    public static function getItemPermission($request, $id)
+    {
+        if(!\Auth::user()->hasPermission('can-read-roles'))
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+            return response()->json($response);
+        }
+
+        $response = self::getRolePermission($request, $id);
+        return response()->json($response);
+    }
     //-------------------------------------------------
+    public static function getItemUser($request, $id)
+    {
+        if(!\Auth::user()->hasPermission('can-read-roles'))
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+            return response()->json($response);
+        }
+
+        $response = self::getRoleUser($request, $id);
+        return response()->json($response);
+    }
     //-------------------------------------------------
+    public static function postActions($request, $action)
+    {
+//        dd($request->inputs);
+        $rules = array(
+            'inputs' => 'required',
+        );
+
+        $validator = \Validator::make( $request->all(), $rules);
+        if ( $validator->fails() ) {
+
+            $errors             = errorsToArray($validator->errors());
+            $response['status'] = 'failed';
+            $response['errors'] = $errors;
+            return response()->json($response);
+        }
+
+        $response = [];
+
+        switch ($action)
+        {
+
+            //------------------------------------
+            case 'bulk-change-status':
+
+                if(!\Auth::user()->hasPermission('can-manage-roles') &&
+                    !\Auth::user()->hasPermission('can-update-roles'))
+                {
+                    $response['status'] = 'failed';
+                    $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+                    return $response;
+                }
+
+                $response = self::bulkStatusChange($request);
+
+                break;
+            //------------------------------------
+            case 'bulk-trash':
+
+                if(!\Auth::user()->hasPermission('can-update-roles'))
+                {
+                    $response['status'] = 'failed';
+                    $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+                    return $response;
+                }
+
+                $response = self::bulkTrash($request);
+
+                break;
+            //------------------------------------
+            case 'bulk-restore':
 
 
+                if(!\Auth::user()->hasPermission('can-update-roles'))
+                {
+                    $response['status'] = 'failed';
+                    $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+                    return $response;
+                }
+
+                $response = self::bulkRestore($request);
+
+                break;
+
+            //------------------------------------
+            case 'bulk-delete':
+
+                if(!\Auth::user()->hasPermission('can-update-roles') ||
+                    !\Auth::user()->hasPermission('can-delete-roles'))
+                {
+                    $response['status'] = 'failed';
+                    $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+                    return $response;
+                }
+
+                $response = self::bulkDelete($request);
+
+                break;
+            //------------------------------------
+            case 'toggle-permission-active-status':
+
+                if(!\Auth::user()->hasPermission('can-manage-roles') &&
+                    !\Auth::user()->hasPermission('can-update-roles'))
+                {
+                    $response['status'] = 'failed';
+                    $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+                    return $response;
+                }
+
+                $response = self::bulkChangePermissionStatus($request);
+
+                break;
+            //------------------------------------
+            case 'toggle-user-active-status':
+
+                if(!\Auth::user()->hasPermission('can-manage-roles') &&
+                    !\Auth::user()->hasPermission('can-update-roles'))
+                {
+                    $response['status'] = 'failed';
+                    $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+                    return $response;
+                }
+
+                $response = self::bulkChangeUserStatus($request);
+
+                break;
+            //------------------------------------
+            case 'change-role-permission-status':
+
+                if(!\Auth::user()->hasPermission('can-manage-roles') &&
+                    !\Auth::user()->hasPermission('can-update-roles'))
+                {
+                    $response['status'] = 'failed';
+                    $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+                    return $response;
+                }
+
+                $response = self::bulkPermissionStatusChange($request);
+                break;
+            //------------
+            //------------------------------------
+            //------------------------------------
+
+        }
+
+        return response()->json($response);
+    }
+    //-------------------------------------------------
 }

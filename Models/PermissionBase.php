@@ -7,6 +7,7 @@ use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use WebReinvent\VaahCms\Entities\User;
+use WebReinvent\VaahCms\Models\Role;
 use WebReinvent\VaahCms\Traits\CrudWithUuidObservantTrait;
 
 class PermissionBase extends Model {
@@ -122,7 +123,7 @@ class PermissionBase extends Model {
     }
     //-------------------------------------------------
     public function roles() {
-        return $this->belongsToMany( 'WebReinvent\VaahCms\Entities\Role',
+        return $this->belongsToMany( 'WebReinvent\VaahCms\Models\Role',
             'vh_role_permissions', 'vh_permission_id', 'vh_role_id'
         )->withPivot('is_active',
             'created_by',
@@ -175,7 +176,7 @@ class PermissionBase extends Model {
 
         $permissions = self::all()->pluck('id')->toArray();
 
-        $roles = \WebReinvent\VaahCms\Entities\Role::all();
+        $roles = Role::all();
 
         if($roles)
         {
@@ -610,7 +611,7 @@ class PermissionBase extends Model {
 
         $item->save();
         self::recountRelations();
-        \WebReinvent\VaahCms\Entities\Role::recountRelations();
+        Role::recountRelations();
         $response['success'] = true;
         $response['data'] = [];
 

@@ -14,7 +14,8 @@ const rootStore = useRootStore();
 onMounted(async () => {
 
     await rootStore.checkLoggedIn();
-    await rootStore.reloadAssets();
+    await rootStore.getAssets();
+    await rootStore.getPermission();
 });
 
 
@@ -35,6 +36,7 @@ onMounted(async () => {
                     <RouterView></RouterView>
                 </div>
             </div>
+
         </div>
 
         <Footer />

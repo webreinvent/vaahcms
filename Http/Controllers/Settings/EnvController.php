@@ -10,11 +10,11 @@ use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 use WebReinvent\VaahCms\Entities\Language;
-use WebReinvent\VaahCms\Entities\Role;
 use WebReinvent\VaahCms\Entities\Setting;
 use WebReinvent\VaahCms\Libraries\VaahBackup;
 use WebReinvent\VaahCms\Libraries\VaahHelper;
 use WebReinvent\VaahCms\Libraries\VaahSetup;
+use WebReinvent\VaahCms\Models\Role;
 
 
 class EnvController extends Controller

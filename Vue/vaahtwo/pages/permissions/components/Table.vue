@@ -49,7 +49,7 @@ const useVaah = vaah();
                      v-if="store.isViewLarge()"
              >
                 <template #body="prop" class="text-xs">
-                    <Button class="p-button-text"
+                    <Button class="p-button-text text-left"
                             :label="prop.data.slug"
                             v-tooltip.top="'Copy Slug'"
                             @click="useVaah.copy(prop.data.slug)"
@@ -62,7 +62,7 @@ const useVaah = vaah();
                      header="Roles"
              >
                  <template #body="prop">
-                     <Button class="p-button p-button-rounded p-button-xs text-xs white-space-nowrap"
+                     <Button class="p-button p-button-rounded p-button-sm white-space-nowrap"
                              v-tooltip.top="'View Role'"
                              @click="store.toRole(prop.data)"
                      >
@@ -75,7 +75,7 @@ const useVaah = vaah();
                      header="Users"
              >
                  <template #body="prop">
-                     <Button class="p-button p-button-rounded p-button-xs text-xs white-space-nowrap"
+                     <Button class="p-button p-button-rounded p-button-sm white-space-nowrap"
                              v-tooltip.top="'User'"
                              disabled
                      >

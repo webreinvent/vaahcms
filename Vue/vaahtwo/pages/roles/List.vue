@@ -3,14 +3,13 @@ import {onMounted, reactive, ref} from "vue";
 import {useRoute} from 'vue-router';
 
 import {useRoleStore} from '../../stores/store-roles'
+import { useConfirm } from "primevue/useconfirm"
 
 import Actions from "./components/Actions.vue";
 import Table from "./components/Table.vue";
 
 const store = useRoleStore();
 const route = useRoute();
-
-import { useConfirm } from "primevue/useconfirm";
 const confirm = useConfirm();
 
 
@@ -49,12 +48,9 @@ onMounted(async () => {
 <template>
 
     <div class="grid">
-
         <div :class="'col-'+store.list_view_width">
             <Panel>
-
                 <template class="p-1" #header>
-
                     <div class="flex flex-row">
                         <div >
                             <b class="mr-1">Roles</b>
@@ -62,18 +58,23 @@ onMounted(async () => {
                                    :value="store.list.total">
                             </Badge>
                         </div>
-
                     </div>
-
                 </template>
 
                 <template #icons>
+                    <div class="p-inputgroup">
+                        <Button class="p-button-outlined p-button-sm"
+                                label="Create"
+                                icon="pi pi-plus"
+                                @click="store.toForm()"
+                        />
 
-                    <Button @click="store.toForm()">
-                        <i class="pi pi-plus mr-1"></i>
-                        Create
-                    </Button>
-
+                        <Button class="p-button-sm"
+                                icon="pi pi-refresh"
+                                :loading="store.is_btn_loading"
+                                @click="store.sync()"
+                        />
+                    </div>
                 </template>
 
                 <Actions/>
@@ -81,12 +82,10 @@ onMounted(async () => {
                 <br/>
 
                 <Table/>
-
             </Panel>
         </div>
 
         <RouterView/>
-
     </div>
 
 

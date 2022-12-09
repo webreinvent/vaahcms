@@ -8,8 +8,8 @@ use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\File;
-use WebReinvent\VaahCms\Entities\Role;
 use WebReinvent\VaahCms\Libraries\VaahBackup;
+use WebReinvent\VaahCms\Models\Role;
 
 
 class BackupsController extends Controller

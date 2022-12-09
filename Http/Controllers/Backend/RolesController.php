@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use WebReinvent\VaahCms\Models\Permission;
 use WebReinvent\VaahCms\Models\Role;
 
 
@@ -43,7 +44,10 @@ class RolesController extends Controller
             $data['empty_item'][$column] = null;
         }
 
+        $modules = Permission::withTrashed()->get()->unique('module')->pluck('module');
+
         $data['actions'] = [];
+        $data['modules'] = $modules;
 
         $response['success'] = true;
         $response['data'] = $data;
@@ -95,6 +99,26 @@ class RolesController extends Controller
     public function itemAction(Request $request,$id,$action)
     {
         return Role::itemAction($request,$id,$action);
+    }
+    //----------------------------------------------------------
+    public function getItemPermission(Request $request, $id)
+    {
+        return Role::getItemPermission($request, $id);
+    }
+    //----------------------------------------------------------
+    public function getItemUser(Request $request, $id)
+    {
+        return Role::getItemUser($request, $id);
+    }
+    //----------------------------------------------------------
+    public function postActions(Request $request, $action)
+    {
+        return Role::postActions($request, $action);
+    }
+    //----------------------------------------------------------
+    public function getModuleSections(Request $request)
+    {
+        return  Role::getModuleSections($request);
     }
     //----------------------------------------------------------
 

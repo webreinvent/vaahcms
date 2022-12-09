@@ -1,7 +1,8 @@
-import {watch} from 'vue'
-import {acceptHMRUpdate, defineStore} from 'pinia'
+import { watch } from 'vue'
+import { acceptHMRUpdate, defineStore } from 'pinia'
+import { vaah } from '../vaahvue/pinia/vaah'
+import { useRootStore } from "./root";
 import qs from 'qs'
-import {vaah} from '../vaahvue/pinia/vaah'
 
 let model_namespace = 'WebReinvent\\VaahCms\\Models\\Role';
 
@@ -19,7 +20,22 @@ let empty_states = {
             trashed: null,
             sort: null,
         },
+        recount: null,
     },
+
+    role_permissions_query: {
+        q: null,
+        module: null,
+        section: null,
+        page: null,
+        rows: null,
+    },
+    role_users_query: {
+        q: null,
+        page: null,
+        rows: null,
+    },
+
     action: {
         type: null,
         items: [],
@@ -62,7 +78,20 @@ export const useRoleStore = defineStore({
         list_bulk_menu: [],
         item_menu_list: [],
         item_menu_state: null,
-        form_menu_list: []
+        form_menu_list: [],
+        total_permissions: null,
+        total_users: null,
+        permission_menu_items: null,
+        role_permissions: null,
+        role_user_menu_items: null,
+        role_users: null,
+        search_item: null,
+        active_role_permission: null,
+        active_role_user: null,
+        module_section_list: null,
+        role_permissions_query: vaah().clone(empty_states.role_permissions_query),
+        role_users_query: vaah().clone(empty_states.role_users_query),
+        is_btn_loading: false,
     }),
     getters: {
 
@@ -137,7 +166,19 @@ export const useRoleStore = defineStore({
                 {
                     this.delayedSearch();
                 },{deep: true}
-            )
+            );
+
+            watch(this.role_permissions_query, (newVal, oldVal) => {
+                this.delayedRolePermissionSearch();
+            }, {
+                deep:true
+            });
+
+            watch(this.role_users_query, (newVal, oldVal) => {
+                this.delayedRoleUsersSearch();
+            }, {
+                deep:true
+            });
         },
         //---------------------------------------------------------------------
         async getAssets() {
@@ -160,6 +201,8 @@ export const useRoleStore = defineStore({
                 if(data.rows)
                 {
                     this.query.rows = data.rows;
+                    this.role_permissions_query.rows = data.rows;
+                    this.role_users_query.rows = data.rows;
                 }
 
                 if(this.route.params && !this.route.params.id){
@@ -173,6 +216,7 @@ export const useRoleStore = defineStore({
             let options = {
                 query: vaah().clone(this.query)
             };
+
             await vaah().ajax(
                 this.ajax_url,
                 this.afterGetList,
@@ -182,9 +226,13 @@ export const useRoleStore = defineStore({
         //---------------------------------------------------------------------
         afterGetList: function (data, res)
         {
-            if(data)
-            {
+            this.is_btn_loading = false;
+            this.query.recount = null;
+
+            if (data) {
                 this.list = data;
+                this.total_permissions = res.data.totalPermissions;
+                this.total_users = res.data.totalUsers;
             }
         },
         //---------------------------------------------------------------------
@@ -384,6 +432,10 @@ export const useRoleStore = defineStore({
                 await this.getList();
                 await this.formActionAfter();
                 this.getItemMenu();
+
+                if (this.route.params && this.route.params.id) {
+                    await this.getItem(this.route.params.id);
+                }
             }
         },
         //---------------------------------------------------------------------
@@ -465,7 +517,11 @@ export const useRoleStore = defineStore({
         },
 
         //---------------------------------------------------------------------
-
+        async sync() {
+            this.is_btn_loading = true;
+            this.query.recount = true;
+            await this.getList();
+        },
         //---------------------------------------------------------------------
         onItemSelection(items)
         {
@@ -567,6 +623,224 @@ export const useRoleStore = defineStore({
             await this.updateUrlQueryString(this.query);
         },
         //---------------------------------------------------------------------
+        async getItemPermissions() {
+
+            this.showProgress();
+
+            let params = {
+                query: this.role_permissions_query,
+                method: 'post'
+            };
+
+            vaah().ajax(
+                this.ajax_url+'/item/' + this.item.id + '/permissions',
+                this.afterGetItemPermissions,
+                params
+            );
+        },
+        //---------------------------------------------------------------------
+        afterGetItemPermissions(data, res) {
+
+            this.hideProgress();
+
+            if (data) {
+                this.role_permissions = data;
+            }
+        },
+        //---------------------------------------------------------------------
+        async delayedRolePermissionSearch() {
+            let self = this;
+            if(self.item && self.item.id)
+            {
+                clearTimeout(this.search.delay_timer);
+                this.search.delay_timer = setTimeout(async function() {
+                    await  self.getItemPermissions();
+                },this.search.delay_time)
+            }
+
+        },
+        //---------------------------------------------------------------------
+        async permissionPaginate(event) {
+            this.role_permissions_query.page = event.page+1;
+            await this.getItemPermissions();
+        },
+        //---------------------------------------------------------------------
+         async getItemUsers() {
+
+            this.showProgress();
+
+            let params = {
+                query: this.role_users_query,
+                method: 'get',
+            };
+
+            vaah().ajax(
+                this.ajax_url+'/item/' + this.item.id + '/users',
+                this.afterGetItemUsers,
+                params
+            );
+        },
+        //---------------------------------------------------------------------
+        afterGetItemUsers(data, res) {
+            this.hideProgress();
+
+            if (data) {
+                this.role_users = data;
+            }
+        },
+        //---------------------------------------------------------------------
+        async userPaginate(event) {
+            this.role_users_query.page = event.page+1;
+            await this.getItemUsers();
+        },
+        //---------------------------------------------------------------------
+        async delayedRoleUsersSearch() {
+            let self = this;
+            if(self.item && self.item.id) {
+                clearTimeout(this.search.delay_timer);
+                this.search.delay_timer = setTimeout(async function () {
+                    await self.getItemUsers();
+                }, this.search.delay_time);
+            }
+        },
+        //---------------------------------------------------------------------
+        changeRoleStatus (id) {
+
+            let inputs = {
+                inputs: [id],
+            };
+
+            let data = {};
+
+            this.actions(false, 'change-role-permission-status', inputs, data);
+        },
+        //---------------------------------------------------------------------
+        afterChangeRoleStatus (data,res) {
+
+            this.hideProgress();
+            this.getItemPermissions(this.filter.page);
+            this.$store.dispatch('root/reloadPermissions');
+        },
+        //---------------------------------------------------------------------
+        changeRolePermission (item) {
+
+            let inputs = {
+                id : this.item.id,
+                permission_id : item.id,
+            };
+
+            let data = {};
+
+            if (item.pivot.is_active) {
+                data.is_active = 0;
+            } else {
+                data.is_active = 1;
+            }
+
+            this.actions(false, 'toggle-permission-active-status', inputs, data)
+
+        },
+        //---------------------------------------------------------------------
+        changeUserRole: function (item) {
+
+            let params = {
+                id : this.item.id,
+                user_id : item.id,
+            };
+
+            let data = {};
+
+            if(item.pivot.is_active)
+            {
+                data.is_active = 0;
+            } else
+            {
+                data.is_active = 1;
+            }
+
+            this.actions(false, 'toggle-user-active-status', params, data)
+
+        },
+        //---------------------------------------------------------------------
+        bulkActions (input, action) {
+            let params = {
+                id: this.item.id,
+                permission_id: null,
+                user_id: null
+            };
+
+            let data = {
+                is_active: input
+            };
+
+            this.actions(false, action, params, data)
+
+        },
+        //---------------------------------------------------------------------
+        actions (e, action, inputs , data) {
+
+            this.showProgress();
+
+            if (e) {
+                e.preventDefault();
+            }
+
+            let params = {
+                params: {
+                    inputs: inputs,
+                    data: data,
+                },
+                method: 'post',
+            };
+
+            vaah().ajax(
+                this.ajax_url+'/actions/' + action,
+                this.afterActions,
+                params
+            );
+        },
+        //---------------------------------------------------------------------
+        async afterActions (data,res) {
+            await this.hideProgress();
+            await this.getItemPermissions(this.item.id);
+            await this.getItemUsers();
+            await this.getList();
+        },
+        //---------------------------------------------------------------------
+        resetRolePermissionFilters() {
+            this.role_permissions_query.q = null;
+            this.role_permissions_query.module = null;
+            this.role_permissions_query.section = null;
+            this.role_permissions_query.rows = this.assets.rows;
+        },
+        //---------------------------------------------------------------------
+        getModuleSection() {
+
+            let params = {
+                params: {
+                    module: this.role_permissions_query.module,
+                },
+                method: 'post',
+            };
+
+            vaah().ajax(
+                this.ajax_url+'/module/' + this.role_permissions_query.module +'/sections',
+                this.afterAetModuleSection,
+                params
+            );
+        },
+        //---------------------------------------------------------------------
+        afterAetModuleSection(data, res) {
+            if(data){
+                this.module_section_list = data;
+            }
+        },
+        //---------------------------------------------------------------------
+        resetRoleUserFilters() {
+            this.role_users_query.q = null;
+            this.role_users_query.rows = this.assets.rows;
+        },
+        //---------------------------------------------------------------------
         closeForm()
         {
             this.$router.push({name: 'roles.index'})
@@ -595,6 +869,18 @@ export const useRoleStore = defineStore({
         {
             this.item = item;
             this.$router.push({name: 'roles.form', params:{id:item.id}})
+        },
+        //---------------------------------------------------------------------
+        async toPermission(item) {
+            this.item = item;
+            await this.getItemPermissions();
+            this.$router.push({name: 'roles.permissions', params: {id: item.id}});
+        },
+        //---------------------------------------------------------------------
+        toUser(item) {
+            this.item = item;
+            this.getItemUsers();
+            this.$router.push({name: 'roles.users', params: {id: item.id}});
         },
         //---------------------------------------------------------------------
         isViewLarge()
@@ -850,6 +1136,72 @@ export const useRoleStore = defineStore({
             this.form_menu_list = form_menu;
 
         },
+        //---------------------------------------------------------------------
+        getMenuItems() {
+            this.list_bulk_menu = [
+                {
+                    label: 'Active All Permissions',
+                    command: async () => {
+                        await this.listAction('activate-all')
+                    }
+                },
+                {
+                    label: 'Inactive All Permissions',
+                    command: async () => {
+                        await this.listAction('deactivate-all')
+                    }
+                },
+            ]
+        },
+        //---------------------------------------------------------------------
+        async getPermissionMenuItems() {
+            this.permission_menu_items = [
+                {
+                    label: 'Active All Permissions',
+                    command: () => {
+                        this.bulkActions(1, 'toggle-permission-active-status');
+                    }
+                },
+                {
+                    label: 'Inactive All Permissions',
+                    command: () => {
+                        this.bulkActions(0, 'toggle-permission-active-status');
+                    }
+                }
+            ]
+        },
+        //---------------------------------------------------------------------
+        async getRoleUserMenuItems() {
+            this.role_user_menu_items = [
+                {
+                    label: 'Attach To All Users',
+                    command: () => {
+                        this.bulkActions(1, 'toggle-user-active-status');
+                    }
+                },
+                {
+                    label: 'Detach To All Users',
+                    command: () => {
+                        this.bulkActions(0, 'toggle-user-active-status');
+                    }
+                }
+            ]
+        },
+        //---------------------------------------------------------------------
+        hasPermission(slug) {
+            const root = useRootStore();
+            return vaah().hasPermission(root.permissions, slug);
+        },
+        //---------------------------------------------------------------------
+        showProgress()
+        {
+            this.show_progress_bar = true;
+        },
+        //---------------------------------------------------------------------
+        hideProgress()
+        {
+            this.show_progress_bar = false;
+        }
         //---------------------------------------------------------------------
     }
 });
