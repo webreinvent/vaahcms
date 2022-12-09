@@ -43,10 +43,6 @@ const useVaah = vaah();
                      :sortable="true"
              >
                  <template #body="prop">
-                     <Badge v-if="prop.data.deleted_at"
-                            value="Trashed"
-                            severity="danger"
-                     />
                      <Button :label="prop.data.slug"
                              class="p-button-text"
                              v-tooltip.top="'Copy Slug'"

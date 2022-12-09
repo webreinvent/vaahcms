@@ -1,13 +1,14 @@
 <script setup>
 import { onMounted, ref, watch } from "vue";
 import { useRoleStore } from '../../stores/store-roles';
+import { useRootStore } from "../../stores/root";
 import { vaah } from '../../vaahvue/pinia/vaah';
 import { useRoute } from 'vue-router';
-
 import VhField from './../../vaahvue/vue-three/primeflex/VhField.vue'
 
 
 const store = useRoleStore();
+const root = useRootStore();
 const route = useRoute();
 const useVaah = vaah();
 
@@ -17,6 +18,8 @@ onMounted(async () => {
         await store.getItem(route.params.id);
     }
     store.getFormMenu();
+
+    await root.getIsActiveStatusOptions();
 });
 
 //--------form_menu
@@ -109,9 +112,11 @@ const toggleFormMenu = (event) => {
                 </VhField>
 
                 <VhField label="Is Active">
-                    <InputSwitch v-bind:false-value="0"
-                                 v-bind:true-value="1"
-                                 v-model="store.item.is_active"
+                    <SelectButton v-if="root && root.is_active_status_options"
+                                  v-model="store.item.is_active"
+                                  :options="root.is_active_status_options"
+                                  option-label="label"
+                                  option-value="value"
                     />
                 </VhField>
             </div>

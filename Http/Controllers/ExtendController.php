@@ -10,13 +10,13 @@ use Illuminate\Support\Facades\Auth;
 use WebReinvent\VaahCms\Entities\FailedJob;
 use WebReinvent\VaahCms\Entities\Job;
 use WebReinvent\VaahCms\Entities\Module;
-use WebReinvent\VaahCms\Entities\Role;
 use WebReinvent\VaahCms\Entities\Setting;
 use WebReinvent\VaahCms\Entities\Theme;
 use WebReinvent\VaahCms\Entities\User;
 use WebReinvent\VaahCms\Http\Controllers\Advanced\LogsController;
 use WebReinvent\VaahCms\Libraries\VaahStr;
 use WebReinvent\VaahCms\Models\Permission;
+use WebReinvent\VaahCms\Models\Role;
 
 class ExtendController extends Controller
 {

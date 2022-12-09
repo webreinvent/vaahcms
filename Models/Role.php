@@ -5,9 +5,9 @@ use DateTimeInterface;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
-use WebReinvent\VaahCms\Entities\Permission;
 use WebReinvent\VaahCms\Traits\CrudWithUuidObservantTrait;
 use WebReinvent\VaahCms\Entities\User;
+use WebReinvent\VaahCms\Models\Permission;
 
 class Role extends RoleBase
 {
