@@ -90,18 +90,13 @@ const toggleFormMenu = (event) => {
 
             <div v-if="store.item">
 
-                <VhField label="Name">
-                    <InputText class="w-full" v-model="store.item.name">
+                <VhField label="email">
+                    <InputText class="w-full" v-model="store.item.email">
                     </InputText >
                 </VhField>
 
-                <VhField label="Slug">
-                    <InputText class="w-full" v-model="store.item.slug">
-                    </InputText >
-                </VhField>
-
-                <VhField label="Name">
-                    <InputText class="w-full" v-model="store.item.name">
+                <VhField label="username">
+                    <InputText class="w-full" v-model="store.item.username">
                     </InputText >
                 </VhField>
 
