@@ -28,6 +28,7 @@ class Role extends RoleBase
         'uuid',
         'name',
         'slug',
+        'details',
         'is_active',
         'created_by',
         'updated_by',
