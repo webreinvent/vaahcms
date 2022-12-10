@@ -1,12 +1,11 @@
 <?php
-namespace WebReinvent\VaahCms\Http\Controllers;
+namespace WebReinvent\VaahCms\Http\Controllers\Backend;
 
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Hash;
 use WebReinvent\VaahCms\Entities\Registration;
 use WebReinvent\VaahCms\Entities\Setting;
-use WebReinvent\VaahCms\Entities\User;
 use WebReinvent\VaahCms\Models\Role;
 use WebReinvent\VaahCms\Models\User;
 

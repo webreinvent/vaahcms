@@ -57,7 +57,7 @@ Add following service provider in `config/app.php`
         //...
         'users' => [
             'driver' => 'eloquent',
-            'model' => \WebReinvent\VaahCms\Entities\User::class,
+            'model' => \ WebReinvent\VaahCms\Models\User::class,
         ],
         //...
     ],

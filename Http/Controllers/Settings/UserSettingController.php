@@ -11,11 +11,11 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 use WebReinvent\VaahCms\Entities\Language;
 use WebReinvent\VaahCms\Entities\Setting;
-use WebReinvent\VaahCms\Entities\User;
 use WebReinvent\VaahCms\Libraries\VaahBackup;
 use WebReinvent\VaahCms\Libraries\VaahHelper;
 use WebReinvent\VaahCms\Libraries\VaahSetup;
 use WebReinvent\VaahCms\Models\Role;
+use WebReinvent\VaahCms\Models\User;
 
 
 class UserSettingController extends Controller

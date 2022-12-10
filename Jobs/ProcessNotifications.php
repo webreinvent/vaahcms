@@ -12,7 +12,7 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Throwable;
 use WebReinvent\VaahCms\Entities\Notification;
-use WebReinvent\VaahCms\Entities\User;
+use WebReinvent\VaahCms\Models\User;
 
 class ProcessNotifications implements ShouldQueue
 {

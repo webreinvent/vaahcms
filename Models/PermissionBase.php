@@ -6,8 +6,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
-use WebReinvent\VaahCms\Entities\User;
 use WebReinvent\VaahCms\Models\Role;
+use WebReinvent\VaahCms\Models\User;
 use WebReinvent\VaahCms\Traits\CrudWithUuidObservantTrait;
 
 class PermissionBase extends Model {
@@ -70,7 +70,7 @@ class PermissionBase extends Model {
     //-------------------------------------------------
     public function createdByUser()
     {
-        return $this->belongsTo('WebReinvent\VaahCms\Entities\User',
+        return $this->belongsTo(' WebReinvent\VaahCms\Models\User',
             'created_by', 'id'
         )->select('id', 'uuid', 'first_name', 'last_name', 'email');
     }
@@ -109,7 +109,7 @@ class PermissionBase extends Model {
     //-------------------------------------------------
     public function updatedByUser()
     {
-        return $this->belongsTo('WebReinvent\VaahCms\Entities\User',
+        return $this->belongsTo(' WebReinvent\VaahCms\Models\User',
             'updated_by', 'id'
         )->select('id', 'uuid', 'first_name', 'last_name', 'email');
     }
@@ -117,13 +117,13 @@ class PermissionBase extends Model {
     //-------------------------------------------------
     public function deletedByUser()
     {
-        return $this->belongsTo('WebReinvent\VaahCms\Entities\User',
+        return $this->belongsTo(' WebReinvent\VaahCms\Models\User',
             'deleted_by', 'id'
         )->select('id', 'uuid', 'first_name', 'last_name', 'email');
     }
     //-------------------------------------------------
     public function roles() {
-        return $this->belongsToMany( 'WebReinvent\VaahCms\Models\Role',
+        return $this->belongsToMany( Role::class,
             'vh_role_permissions', 'vh_permission_id', 'vh_role_id'
         )->withPivot('is_active',
             'created_by',

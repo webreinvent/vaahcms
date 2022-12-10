@@ -127,7 +127,7 @@ class Media extends Model {
     //-------------------------------------------------
     public function createdByUser()
     {
-        return $this->belongsTo('WebReinvent\VaahCms\Entities\User',
+        return $this->belongsTo(' WebReinvent\VaahCms\Models\User',
             'created_by', 'id'
         )->select('id', 'uuid', 'first_name', 'last_name', 'email');
     }
@@ -166,7 +166,7 @@ class Media extends Model {
     //-------------------------------------------------
     public function updatedByUser()
     {
-        return $this->belongsTo('WebReinvent\VaahCms\Entities\User',
+        return $this->belongsTo(' WebReinvent\VaahCms\Models\User',
             'updated_by', 'id'
         )->select('id', 'uuid', 'first_name', 'last_name', 'email');
     }
@@ -174,7 +174,7 @@ class Media extends Model {
     //-------------------------------------------------
     public function deletedByUser()
     {
-        return $this->belongsTo('WebReinvent\VaahCms\Entities\User',
+        return $this->belongsTo(' WebReinvent\VaahCms\Models\User',
             'deleted_by', 'id'
         )->select('id', 'uuid', 'first_name', 'last_name', 'email');
     }

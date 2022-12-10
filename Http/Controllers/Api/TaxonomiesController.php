@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Hash;
 use WebReinvent\VaahCms\Entities\Registration;
 use WebReinvent\VaahCms\Entities\Taxonomy;
 use WebReinvent\VaahCms\Entities\TaxonomyType;
-use WebReinvent\VaahCms\Entities\User;
+use WebReinvent\VaahCms\Models\User;
 use WebReinvent\VaahCms\Models\Role;
 
 class TaxonomiesController extends Controller

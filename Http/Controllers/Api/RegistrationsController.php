@@ -9,7 +9,7 @@ use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Hash;
 use WebReinvent\VaahCms\Entities\Registration;
 use WebReinvent\VaahCms\Models\Role;
-use WebReinvent\VaahCms\Entities\User;
+use WebReinvent\VaahCms\Models\User;
 
 class RegistrationsController extends Controller
 {

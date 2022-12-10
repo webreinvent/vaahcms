@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Hash;
 use WebReinvent\VaahCms\Entities\Registration;
 use WebReinvent\VaahCms\Entities\Setting;
 use WebReinvent\VaahCms\Entities\Taxonomy;
-use WebReinvent\VaahCms\Entities\User;
+use WebReinvent\VaahCms\Models\User;
 
 class RegistrationsController extends Controller
 {

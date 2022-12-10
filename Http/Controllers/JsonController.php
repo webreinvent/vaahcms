@@ -12,7 +12,7 @@ use VaahCms\Modules\Cms\Entities\Page;
 use WebReinvent\VaahCms\Entities\Module;
 use WebReinvent\VaahCms\Entities\Notified;
 use WebReinvent\VaahCms\Entities\Theme;
-use WebReinvent\VaahCms\Entities\User;
+use WebReinvent\VaahCms\Models\User;
 
 class JsonController extends Controller
 {
