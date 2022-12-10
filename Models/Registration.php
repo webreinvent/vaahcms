@@ -8,7 +8,7 @@ use Illuminate\Support\Str;
 use WebReinvent\VaahCms\Traits\CrudWithUuidObservantTrait;
 use WebReinvent\VaahCms\Entities\User;
 
-class Registration extends Model
+class Registration extends RegistrationBase
 {
 
     use SoftDeletes;
@@ -25,8 +25,8 @@ class Registration extends Model
     //-------------------------------------------------
     protected $fillable = [
         'uuid',
-        'name',
-        'slug',
+        'email',
+        'username',
         'is_active',
         'created_by',
         'updated_by',
@@ -36,6 +36,7 @@ class Registration extends Model
     //-------------------------------------------------
     protected $appends = [
     ];
+
 
     //-------------------------------------------------
     protected function serializeDate(DateTimeInterface $date)
@@ -221,7 +222,7 @@ class Registration extends Model
 
     }
     //-------------------------------------------------
-    public static function getList($request)
+    public static function getList($request,$excluded_columns = [])
     {
         $list = self::getSorted($request->filter);
         $list->isActiveFilter($request->filter);
@@ -401,7 +402,7 @@ class Registration extends Model
         return $response;
     }
     //-------------------------------------------------
-    public static function getItem($id)
+    public static function getItem($id,$excluded_columns = [])
     {
 
         $item = self::where('id', $id)
