@@ -35,6 +35,10 @@ Route::group(
             ->name( 'vh.backend.verify.post' );
         //------------------------------------------------
 
+        Route::any( '/faker', 'Frontend\WelcomeController@getFaker' )
+            ->name( 'vh.faker' );
+        //------------------------------------------------
+
         Route::group(
             [
                 'prefix'     => 'json',
