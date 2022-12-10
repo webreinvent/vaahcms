@@ -2,14 +2,13 @@
 
 use Carbon\Carbon;
 use DateTimeInterface;
-use http\Env\Request;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
 use WebReinvent\VaahCms\Traits\CrudWithUuidObservantTrait;
 use WebReinvent\VaahCms\Entities\User;
 
-class Registration extends RegistrationBase
+class Registration extends Model
 {
 
     use SoftDeletes;
@@ -26,13 +25,9 @@ class Registration extends RegistrationBase
     //-------------------------------------------------
     protected $fillable = [
         'uuid',
-
-        'email', 'username', 'password', 'display_name',
-        'designation','title', 'first_name', 'middle_name',
-        'last_name', 'gender', 'country_calling_code', 'phone',
-        'bio', 'timezone', 'alternate_email', 'avatar_url',
-        'birth', 'country', 'country_code', 'status',
-
+        'name',
+        'slug',
+        'is_active',
         'created_by',
         'updated_by',
         'deleted_by',
@@ -41,7 +36,6 @@ class Registration extends RegistrationBase
     //-------------------------------------------------
     protected $appends = [
     ];
-
 
     //-------------------------------------------------
     protected function serializeDate(DateTimeInterface $date)
@@ -112,7 +106,6 @@ class Registration extends RegistrationBase
     {
 
         $inputs = $request->all();
-//        dd($inputs);
 
         $validation = self::validation($inputs);
         if (!$validation['success']) {
@@ -120,34 +113,27 @@ class Registration extends RegistrationBase
         }
 
 
-        // check if email exist
-        $item = self::where('email', $inputs['email'])->first();
+        // check if name exist
+        $item = self::where('name', $inputs['name'])->first();
 
         if ($item) {
             $response['success'] = false;
-            $response['messages'][] = "This email is already exist.";
+            $response['messages'][] = "This name is already exist.";
             return $response;
-        }
-        if($inputs['email'] && $inputs['alternate_email']
-            && $inputs['email']==$inputs['alternate_email'] )
-        {
-             $response['success'] = false;
-             $response['messages'][] = "This alternate email should be different";
-             return $response;
         }
 
         // check if slug exist
-       /* $item = self::where('slug', $inputs['slug'])->first();
+        $item = self::where('slug', $inputs['slug'])->first();
 
         if ($item) {
             $response['success'] = false;
             $response['messages'][] = "This slug is already exist.";
             return $response;
-        }*/
+        }
 
         $item = new self();
         $item->fill($inputs);
-//        $item->slug = Str::slug($inputs['slug']);
+        $item->slug = Str::slug($inputs['slug']);
         $item->save();
 
         $response['success'] = true;
@@ -228,14 +214,14 @@ class Registration extends RegistrationBase
             return $query;
         }
         $search = $filter['q'];
-        /*$query->where(function ($q) use ($search) {
+        $query->where(function ($q) use ($search) {
             $q->where('name', 'LIKE', '%' . $search . '%')
                 ->orWhere('slug', 'LIKE', '%' . $search . '%');
-        });*/
+        });
 
     }
     //-------------------------------------------------
-    public static function getList($request,$excluded_columns = [])
+    public static function getList($request)
     {
         $list = self::getSorted($request->filter);
         $list->isActiveFilter($request->filter);
@@ -415,7 +401,7 @@ class Registration extends RegistrationBase
         return $response;
     }
     //-------------------------------------------------
-    public static function getItem($id,$excluded_columns = [])
+    public static function getItem($id)
     {
 
         $item = self::where('id', $id)
@@ -440,20 +426,13 @@ class Registration extends RegistrationBase
     {
         $inputs = $request->all();
 
-        $validation = self::validation($inputs,$id);
+        $validation = self::validation($inputs);
         if (!$validation['success']) {
             return $validation;
         }
-        if($inputs['email'] && $inputs['alternate_email']
-            && $inputs['email']==$inputs['alternate_email'] )
-        {
-             $response['success'] = false;
-             $response['messages'][] = "This alternate email should be different";
-             return $response;
-        }
 
         // check if name exist
-       /* $user = self::where('id', '!=', $inputs['id'])
+        $user = self::where('id', '!=', $inputs['id'])
             ->where('name', $inputs['name'])->first();
 
         if ($user) {
@@ -461,8 +440,6 @@ class Registration extends RegistrationBase
             $response['messages'][] = "This name is already exist.";
             return $response;
         }
-
-
 
         // check if slug exist
         $user = self::where('id', '!=', $inputs['id'])
@@ -472,20 +449,14 @@ class Registration extends RegistrationBase
             $response['success'] = false;
             $response['messages'][] = "This slug is already exist.";
             return $response;
-        }*/
+        }
 
         $update = self::where('id', $id)->withTrashed()->first();
         $update->fill($inputs);
-//        $update->slug = Str::slug($inputs['slug']);
+        $update->slug = Str::slug($inputs['slug']);
         $update->save();
 
-//        $response = self::getItem($id);
-        $item = self::getItem($id);
-
-        $response['success'] = true;
-        $response['data']['item'] = $item;
-        $response['messages'][] = 'Saved successfully.';
-//        dd($response);
+        $response = self::getItem($id);
 
         return $response;
     }
@@ -509,7 +480,6 @@ class Registration extends RegistrationBase
     //-------------------------------------------------
     public static function itemAction($request, $id, $type): array
     {
-//        dd($type);
         switch($type)
         {
             case 'activate':
@@ -536,35 +506,12 @@ class Registration extends RegistrationBase
     }
     //-------------------------------------------------
 
-    public static function validation($inputs, $id=null)
+    public static function validation($inputs)
     {
 
         $rules = array(
-//            'name' => 'required|max:150',
-//            'slug' => 'required|max:150',
-
-            'email' => "required|email|unique:vh_registrations,email,$id",
-            'username' => 'required|string|max:150',
-            'password' => 'required|string|min:6',
-            'display_name' => 'required|string|max:150',
-
-            'designation' => 'required|max:150',
-            'title' => 'required',
-            'first_name' => 'required|string|max:150',
-            'middle_name' => 'nullable|string|max:150',
-
-            'last_name' => 'required|string|max:150',
-            'gender' => 'required',
-            'country_calling_code' => 'required',
-//            'country_code' => 'required',
-
-            'phone' => 'required|numeric|digits:10',
-            'bio' => 'required|max:250',
-            'alternate_email' => 'required|email',
-            'birth' => 'required|date',
-
-            'timezone' => 'required',
-            'status' => 'required',
+            'name' => 'required|max:150',
+            'slug' => 'required|max:150',
         );
 
         $validator = \Validator::make($inputs, $rules);
@@ -587,25 +534,6 @@ class Registration extends RegistrationBase
             ->first();
         return $item;
     }
-    public function getCountryCallingCodeAttribute($value)
-    {
-        $calling_code_int=$value;
-        $calling_code_string=(string) $calling_code_int;
-        return $calling_code_string;
-    }
-    /*public function getGenderAttribute($value)
-    {
-        if($value=='M'){
-            return 'Male';
-        }
-        elseif ($value=='F'){
-            return 'Female';
-        }
-        else{
-            return 'Others';
-        }
-    }*/
-
 
     //-------------------------------------------------
     //-------------------------------------------------
