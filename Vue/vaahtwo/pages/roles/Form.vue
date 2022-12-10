@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted, ref } from "vue";
+import { onMounted, ref, watch } from "vue";
 import { useRoleStore } from '../../stores/store-roles';
 import { useRootStore } from "../../stores/root";
 import { vaah } from '../../vaahvue/pinia/vaah';
@@ -21,6 +21,11 @@ onMounted(async () => {
 
     await root.getIsActiveStatusOptions();
 });
+
+watch(store.item, async (newVal, oldVal) => {
+    store.item.slug = store.strToSlug(newVal.name);
+})
+
 
 //--------form_menu
 const form_menu = ref();
