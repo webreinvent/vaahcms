@@ -9,7 +9,7 @@ const store = useDashboardStore();
 
 onMounted(async () => {
     root.verifyInstallStatus();
-    await root.getAssets();
+    await root.reloadAssets();
     await store.getItem();
 });
 
