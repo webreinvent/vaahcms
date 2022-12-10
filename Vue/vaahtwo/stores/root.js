@@ -10,6 +10,7 @@ export const useRootStore = defineStore({
     state: () => ({
         assets: null,
         assets_is_fetching: true,
+        base_url: base_url,
         ajax_url: ajax_url,
         json_url: json_url,
         gutter: 20,
@@ -176,12 +177,12 @@ export const useRootStore = defineStore({
                 {
                     label: "Profile",
                     icon:'pi pi-fw pi-user',
-                    url: "http://localhost/tanmoy.d001/vaahcms-dev-env/public/backend#/vaah/profile/"
+                    url: this.base_url+"#/vaah/profile/"
                 },
                 {
                     label: "Logout",
                     icon:'pi pi-fw pi-sign-out',
-                    url: "http://localhost/tanmoy.d001/vaahcms-dev-env/public/backend/logout"
+                    url: this.base_url+"/logout"
                 }
             ]
         },
