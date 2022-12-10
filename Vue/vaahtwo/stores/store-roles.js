@@ -1204,6 +1204,11 @@ export const useRoleStore = defineStore({
         hideProgress()
         {
             this.show_progress_bar = false;
+        },
+        //---------------------------------------------------------------------
+        strToSlug(name)
+        {
+            return vaah().strToSlug(name);
         }
         //---------------------------------------------------------------------
     }
