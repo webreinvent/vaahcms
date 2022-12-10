@@ -40,6 +40,9 @@ class PermissionBase extends Model {
         'deleted_by'
     ];
 
+
+
+
     //-------------------------------------------------
     protected $appends  = [
 
@@ -47,7 +50,7 @@ class PermissionBase extends Model {
 
     //-------------------------------------------------
 
-
+protected $excluded_columns = [];
 
     //-------------------------------------------------
     protected function serializeDate(DateTimeInterface $date)

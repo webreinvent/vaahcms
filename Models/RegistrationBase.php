@@ -1,4 +1,4 @@
-<?php namespace WebReinvent\VaahCms\Entities;
+<?php namespace WebReinvent\VaahCms\Models;
 
 use Carbon\Traits\Timestamp;
 use Hash;
@@ -12,7 +12,7 @@ use WebReinvent\VaahCms\Traits\CrudWithUuidObservantTrait;
 use DateTimeInterface;
 
 
-class Registration extends Model
+class RegistrationBase extends Model
 {
     use Notifiable;
     use SoftDeletes;
@@ -38,6 +38,7 @@ class Registration extends Model
         "invited_for_key", "invited_for_value", "user_id",
         "user_created_at", "created_ip", "registration_id", "meta",
         "created_by", "updated_by","deleted_by"
+
     ];
     //-------------------------------------------------
     protected $hidden = [
@@ -53,7 +54,7 @@ class Registration extends Model
     }
     //-------------------------------------------------
     protected $appends  = [
-        'name'
+
     ];
 
     //-------------------------------------------------
