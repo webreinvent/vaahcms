@@ -53,7 +53,10 @@ export const useRoleStore = defineStore({
         assets: null,
         rows_per_page: [10,20,30,50,100,500],
         list: null,
-        item: null,
+        item: {
+            name: null,
+            slug: null
+        },
         fillable:null,
         empty_query:empty_states.query,
         empty_action:empty_states.action,
