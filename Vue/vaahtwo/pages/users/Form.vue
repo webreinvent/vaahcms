@@ -19,6 +19,8 @@ onMounted(async () => {
     store.getFormMenu();
 });
 
+const myUploader = ref();
+
 //--------form_menu
 const form_menu = ref();
 const toggleFormMenu = (event) => {
@@ -28,32 +30,23 @@ const toggleFormMenu = (event) => {
 
 </script>
 <template>
-
-    <div class="col-6" >
-
+    <div class="col-5" >
         <Panel >
-
             <template class="p-1" #header>
-
-
                 <div class="flex flex-row">
                     <div class="p-panel-title">
                         <span v-if="store.item && store.item.id">
-                            Update
+                            {{ store.item.name }}
                         </span>
+
                         <span v-else>
                             Create
                         </span>
                     </div>
-
                 </div>
-
-
             </template>
 
             <template #icons>
-
-
                 <div class="p-inputgroup">
                     <Button label="Save"
                             v-if="store.item && store.item.id"
@@ -78,7 +71,13 @@ const toggleFormMenu = (event) => {
                           :popup="true" />
                     <!--/form_menu-->
 
-
+                    <Button v-if="store.item && store.item.id"
+                            class="p-button-sm"
+                            icon="pi pi-eye"
+                            v-tooltip.top="'View'"
+                            @click="store.toView(store.item)"
+                    />
+                    
                     <Button class="p-button-primary"
                             icon="pi pi-times"
                             @click="store.toList()">

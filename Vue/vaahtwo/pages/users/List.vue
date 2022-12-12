@@ -47,33 +47,26 @@ onMounted(async () => {
 
 </script>
 <template>
-
     <div class="grid">
-
         <div :class="'col-'+store.list_view_width">
             <Panel>
-
                 <template class="p-1" #header>
-
                     <div class="flex flex-row">
                         <div >
                             <b class="mr-1">Users</b>
                             <Badge v-if="store.list && store.list.total > 0"
-                                   :value="store.list.total">
-                            </Badge>
+                                   :value="store.list.total"
+                            />
                         </div>
-
                     </div>
-
                 </template>
 
                 <template #icons>
-
-                    <Button @click="store.toForm()">
-                        <i class="pi pi-plus mr-1"></i>
-                        Create
-                    </Button>
-
+                    <Button class="p-button-sm"
+                            label="Create"
+                            icon="pi pi-plus"
+                            @click="store.toForm()"
+                    />
                 </template>
 
                 <Actions/>
@@ -81,13 +74,9 @@ onMounted(async () => {
                 <br/>
 
                 <Table/>
-
             </Panel>
         </div>
 
         <RouterView/>
-
     </div>
-
-
 </template>

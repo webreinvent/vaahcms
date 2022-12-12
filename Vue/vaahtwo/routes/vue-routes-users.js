@@ -33,7 +33,7 @@ routes_list = {
                 },
                 {
                     path: 'role/:id',
-                    name: 'user.role',
+                    name: 'users.role',
                     component: UserRole,
                     props: true,
                 }

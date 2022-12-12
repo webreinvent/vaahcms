@@ -23,6 +23,12 @@ let empty_states = {
     action: {
         type: null,
         items: [],
+    },
+
+    user_roles_query: {
+        q: null,
+        page: null,
+        rows: null,
     }
 };
 
@@ -41,31 +47,7 @@ export const useUserStore = defineStore({
         modalData:null,
         rows_per_page: [10,20,30,50,100,500],
         list: null,
-        item: {
-            email: null,
-            username: null,
-            password: null,
-            display_name: null,
-            title: null,
-            designation: null,
-            first_name: null,
-            middle_name: null,
-            last_name: null,
-            gender: null,
-            country_calling_code: null,
-            country_name_object: null,
-            timezone_name_object: null,
-            phone: null,
-            bio: null,
-            website: null,
-            timezone: null,
-            alternate_email: null,
-            birth: null,
-            country: null,
-            foreign_user_id: null,
-            status: null,
-            is_active: null
-        },
+        item: null,
         fillable:null,
         empty_query:empty_states.query,
         empty_action:empty_states.action,
@@ -136,6 +118,9 @@ export const useUserStore = defineStore({
                 value:'inactive'
             }
         ],
+
+        user_roles_menu: null,
+        user_roles_query: vaah().clone(empty_states.user_roles_query)
     }),
     getters: {
 
@@ -170,7 +155,7 @@ export const useUserStore = defineStore({
                     break;
                 default:
                     this.view = 'small';
-                    this.list_view_width = 6;
+                    this.list_view_width = 7;
                     break
             }
         },
@@ -210,12 +195,18 @@ export const useUserStore = defineStore({
                 {
                     this.delayedSearch();
                 },{deep: true}
+            );
+
+            watch(this.user_roles_query, async (newVal,oldVal) =>
+                {
+                    await this.delayedUserRolesSearch();
+                },{deep: true}
             )
         },
         //---------------------------------------------------------------------
         async getAssets() {
 
-            if(this.assets_is_fetching === true){
+            if (this.assets_is_fetching === true) {
                 this.assets_is_fetching = false;
 
                 vaah().ajax(
@@ -225,17 +216,16 @@ export const useUserStore = defineStore({
             }
         },
         //---------------------------------------------------------------------
-        afterGetAssets(data, res)
-        {
-            if(data)
-            {
+        afterGetAssets(data, res) {
+            if (data) {
                 this.assets = data;
-                if(data.rows)
-                {
+
+                if (data.rows) {
                     this.query.rows = data.rows;
+                    this.user_roles_query.rows = data.rows;
                 }
 
-                if(this.route.params && !this.route.params.id){
+                if (this.route.params && !this.route.params.id) {
                     this.item = vaah().clone(data.empty_item);
                 }
 
@@ -301,7 +291,6 @@ export const useUserStore = defineStore({
             }
         },
         //---------------------------------------------------------------------
-
         async getItem(id) {
             if(id){
                 await vaah().ajax(
@@ -385,40 +374,59 @@ export const useUserStore = defineStore({
             }
         },
         //--------------------------------------------------------------------
-        getRole: function (id){
-            let url = this.ajax_url+'/item/'+id+'/roles';
-            let method = 'get';
-            let options = {
-                method: method,
+        async getUserRoles () {
+            this.showProgress();
+
+            let url = this.ajax_url+'/item/' + this.item.id + '/roles';
+
+            let params = {
+                query: this.user_roles_query,
+                method: 'get',
             };
+
              vaah().ajax(
                 url,
-                this.getRoleAfter,
-                options
+                await this.afterGetUserRoles,
+                params
             );
-            this.$router.push({name: 'user.role', params:{id:id}})
         },
         //---------------------------------------------------------------------
-        getRoleAfter(data, res){
-            if(data){
+        async afterGetUserRoles(data, res) {
+            this.hideProgress();
+
+            if (data) {
                 this.roles_item = data.item;
                 this.roles_list = data.list;
             }
         },
-        //--------------------------------l------------------------------------
+        //---------------------------------------------------------------------
+        async delayedUserRolesSearch() {
+            let self = this;
+
+            if (self.item && self.item.id) {
+                clearTimeout(this.search.delay_timer);
+                this.search.delay_timer = setTimeout(async function() {
+                    await self.getUserRoles();
+                },this.search.delay_time)
+            }
+        },
+        //---------------------------------------------------------------------
+        async userRolesPaginate(event) {
+            this.user_roles_query.page = event.page + 1;
+            await this.getUserRoles();
+        },
+        //---------------------------------------------------------------------
         changePermission(item,id){
             let params = {
                 id : id,
                 role_id : item.id,
             };
 
-            var data = {};
+            let data = {};
 
-            if(item.pivot.is_active)
-            {
+            if (item.pivot.is_active) {
                 data.is_active = 0;
-            } else
-            {
+            } else {
                 data.is_active = 1;
             }
 
@@ -752,6 +760,11 @@ export const useUserStore = defineStore({
             await this.updateUrlQueryString(this.query);
         },
         //---------------------------------------------------------------------
+        async resetUserRolesFilters() {
+            this.user_roles_query.q = null;
+            this.user_roles_query.rows = this.assets.rows;
+        },
+        //---------------------------------------------------------------------
         closeForm()
         {
             this.$router.push({name: 'users.index'})
@@ -780,6 +793,12 @@ export const useUserStore = defineStore({
         {
             this.item = item;
             this.$router.push({name: 'users.form', params:{id:item.id}})
+        },
+        //---------------------------------------------------------------------
+        async toRole(item) {
+            this.item = item;
+            await this.getUserRoles();
+            this.$router.push({name: 'users.role', params: { id: item.id }})
         },
         //---------------------------------------------------------------------
         isViewLarge()
@@ -952,6 +971,23 @@ export const useUserStore = defineStore({
             this.item_menu_list = item_menu;
         },
         //---------------------------------------------------------------------
+        async getUserRolesMenuItems() {
+            return this.user_roles_menu = [
+                {
+                    label: 'Active All Roles',
+                    command: async () => {
+                        await this.listAction('activate-all')
+                    }
+                },
+                {
+                    label: 'Inactive All Roles',
+                    command: async () => {
+                        await this.listAction('deactivate-all')
+                    }
+                },
+            ]
+        },
+        //---------------------------------------------------------------------
         confirmDeleteItem()
         {
             this.form.type = 'delete';
@@ -1046,6 +1082,16 @@ export const useUserStore = defineStore({
             this.form_menu_list = form_menu;
 
         },
+        //---------------------------------------------------------------------
+        showProgress()
+        {
+            this.show_progress_bar = true;
+        },
+        //---------------------------------------------------------------------
+        hideProgress()
+        {
+            this.show_progress_bar = false;
+        }
         //---------------------------------------------------------------------
     }
 });
