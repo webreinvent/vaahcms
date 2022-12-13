@@ -27,7 +27,7 @@ class Registration extends RegistrationBase
         'uuid',
         'email',
         'username',
-        'is_active',
+//        'is_active',
         'created_by',
         'updated_by',
         'deleted_by',
@@ -115,26 +115,26 @@ class Registration extends RegistrationBase
 
 
         // check if name exist
-        $item = self::where('name', $inputs['name'])->first();
+//        $item = self::where('name', $inputs['name'])->first();
 
-        if ($item) {
+       /* if ($item) {
             $response['success'] = false;
             $response['messages'][] = "This name is already exist.";
             return $response;
-        }
+        }*/
 
         // check if slug exist
-        $item = self::where('slug', $inputs['slug'])->first();
+       /* $item = self::where('slug', $inputs['slug'])->first();
 
         if ($item) {
             $response['success'] = false;
             $response['messages'][] = "This slug is already exist.";
             return $response;
-        }
+        }*/
 
         $item = new self();
         $item->fill($inputs);
-        $item->slug = Str::slug($inputs['slug']);
+//        $item->slug = Str::slug($inputs['slug']);
         $item->save();
 
         $response['success'] = true;
@@ -215,10 +215,10 @@ class Registration extends RegistrationBase
             return $query;
         }
         $search = $filter['q'];
-        $query->where(function ($q) use ($search) {
+        /*$query->where(function ($q) use ($search) {
             $q->where('name', 'LIKE', '%' . $search . '%')
                 ->orWhere('slug', 'LIKE', '%' . $search . '%');
-        });
+        });*/
 
     }
     //-------------------------------------------------
@@ -433,7 +433,7 @@ class Registration extends RegistrationBase
         }
 
         // check if name exist
-        $user = self::where('id', '!=', $inputs['id'])
+       /* $user = self::where('id', '!=', $inputs['id'])
             ->where('name', $inputs['name'])->first();
 
         if ($user) {
@@ -450,7 +450,7 @@ class Registration extends RegistrationBase
             $response['success'] = false;
             $response['messages'][] = "This slug is already exist.";
             return $response;
-        }
+        }*/
 
         $update = self::where('id', $id)->withTrashed()->first();
         $update->fill($inputs);
@@ -511,8 +511,8 @@ class Registration extends RegistrationBase
     {
 
         $rules = array(
-            'name' => 'required|max:150',
-            'slug' => 'required|max:150',
+//            'name' => 'required|max:150',
+//            'slug' => 'required|max:150',
         );
 
         $validator = \Validator::make($inputs, $rules);
