@@ -6,18 +6,14 @@ import { useRootStore } from '../../stores/root'
 const rootStore = useRootStore();
 const menu = ref();
 
-
-
 onMounted(async () => {
     await rootStore.getTopRightUserMenu();
 });
-
 
 const toggleDropDownMenu= (event) => {
     let self = this;
     menu.value.toggle(event);
 }
-
 
 </script>
 
