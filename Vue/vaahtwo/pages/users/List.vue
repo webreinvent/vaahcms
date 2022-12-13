@@ -62,11 +62,19 @@ onMounted(async () => {
                 </template>
 
                 <template #icons>
-                    <Button class="p-button-sm"
-                            label="Create"
-                            icon="pi pi-plus"
-                            @click="store.toForm()"
-                    />
+                    <div class="p-inputgroup">
+                        <Button class="p-button-sm p-button-outlined"
+                                label="Create"
+                                icon="pi pi-plus"
+                                @click="store.toForm()"
+                        />
+
+                        <Button class="p-button-sm"
+                                icon="pi pi-refresh"
+                                :loading="store.is_btn_loading"
+                                @click="store.sync()"
+                        />
+                    </div>
                 </template>
 
                 <Actions/>

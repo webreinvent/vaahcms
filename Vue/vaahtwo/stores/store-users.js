@@ -20,7 +20,9 @@ let empty_states = {
             trashed: null,
             sort: null,
         },
+        recount: null,
     },
+
     action: {
         type: null,
         items: [],
@@ -121,7 +123,8 @@ export const useUserStore = defineStore({
         ],
 
         user_roles_menu: null,
-        user_roles_query: vaah().clone(empty_states.user_roles_query)
+        user_roles_query: vaah().clone(empty_states.user_roles_query),
+        is_btn_loading: false,
     }),
     getters: {
 
@@ -279,15 +282,17 @@ export const useUserStore = defineStore({
             };
             await vaah().ajax(
                 this.ajax_url,
-                this.afterGetList,
+                await this.afterGetList,
                 options
             );
         },
         //---------------------------------------------------------------------
-        afterGetList: function (data, res)
-        {
-            if(data)
-            {
+        async afterGetList (data, res) {
+
+            this.is_btn_loading = false;
+            this.query.recount = null;
+
+            if (data) {
                 this.list = data;
             }
         },
@@ -417,7 +422,7 @@ export const useUserStore = defineStore({
             await this.getUserRoles();
         },
         //---------------------------------------------------------------------
-        changePermission(item,id){
+        async changeUserRole(item,id){
             let params = {
                 id : id,
                 role_id : item.id,
@@ -431,21 +436,37 @@ export const useUserStore = defineStore({
                 data.is_active = 1;
             }
 
-            this.actions(false, 'toggle_role_active_status', params, data)
+            await this.actions(false, 'toggle-role-active-status', params, data)
 
         },
-        actions: function (e, action, inputs, data) {
-            if(e)
-            {
+        //---------------------------------------------------------------------
+        async bulkActions (input, action) {
+
+            let params = {
+                id: this.item.id,
+                role_id: null
+            };
+
+            let data = {
+                is_active: input
+            };
+
+            await this.actions(false, action, params, data)
+
+        },
+        //---------------------------------------------------------------------
+        async actions(e, action, inputs, data) {
+            if (e) {
                 e.preventDefault();
             }
 
             let url = this.ajax_url+"/actions/"+action;
-            let method = 'post';
+
             let params = {
                 inputs: inputs,
                 data: data,
             };
+
             let options = {
                 params: params,
                 method: 'post',
@@ -453,12 +474,14 @@ export const useUserStore = defineStore({
 
             vaah().ajax(
                 url,
-                this.actionAfter,
+                await this.afterActions,
                 options
             );
         },
-        actionAfter(data,res){
-            console.log(data);
+        //---------------------------------------------------------------------
+        async afterActions(data,res){
+            await this.getList();
+            await this.getUserRoles();
         },
         //---------------------------------------------------------------------
         showModal(item){
@@ -659,7 +682,12 @@ export const useUserStore = defineStore({
         },
 
         //---------------------------------------------------------------------
+        async sync() {
+            this.is_btn_loading = true;
+            this.query.recount = true;
 
+            await this.getList();
+        },
         //---------------------------------------------------------------------
         onItemSelection(items)
         {
@@ -977,13 +1005,13 @@ export const useUserStore = defineStore({
                 {
                     label: 'Active All Roles',
                     command: async () => {
-                        await this.listAction('activate-all')
+                        await this.bulkActions(1, 'toggle-role-active-status')
                     }
                 },
                 {
                     label: 'Inactive All Roles',
                     command: async () => {
-                        await this.listAction('deactivate-all')
+                        await this.bulkActions(0, 'toggle-role-active-status')
                     }
                 },
             ]

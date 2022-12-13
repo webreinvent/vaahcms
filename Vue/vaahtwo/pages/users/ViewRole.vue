@@ -133,13 +133,13 @@ const toggleItemMenu = (event) => {
                                     <Button  v-if="prop.data.pivot.is_active === 1"
                                              class="p-button-success p-button-sm p-button-rounded"
                                             label="Yes"
-                                            @click="store.changePermission(prop.data,route.params.id)"
+                                            @click="store.changeUserRole(prop.data,route.params.id)"
                                     />
 
                                     <Button v-else
                                             class="p-button-danger p-button-sm p-button-rounded"
                                             label="No"
-                                            @click="store.changePermission(prop.data,route.params.id)"
+                                            @click="store.changeUserRole(prop.data,route.params.id)"
                                     />
                                 </template>
 

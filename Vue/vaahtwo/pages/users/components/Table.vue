@@ -43,7 +43,15 @@ const useVaah = vaah();
                 <template #body="prop">
                     {{ prop.data.email }}
                 </template>
+            </Column>
 
+            <Column  v-if="store.isViewLarge()"
+                     field="last_login_at"
+                     header="Last Login At"
+            >
+                <template #body="prop">
+                    {{ prop.data.last_login_at }}
+                </template>
             </Column>
 
             <Column field="roles"

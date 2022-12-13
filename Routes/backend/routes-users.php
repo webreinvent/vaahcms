@@ -4,7 +4,7 @@ Route::group(
     [
         'prefix' => 'backend/users',
 
-        //'middleware' => ['web', 'has.backend.access'],
+        'middleware' => ['web', 'has.backend.access'],
 
         'namespace' => 'WebReinvent\VaahCms\Http\Controllers\Backend',
     ],

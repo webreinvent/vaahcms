@@ -77,7 +77,7 @@ const toggleFormMenu = (event) => {
                             v-tooltip.top="'View'"
                             @click="store.toView(store.item)"
                     />
-                    
+
                     <Button class="p-button-primary"
                             icon="pi pi-times"
                             @click="store.toList()">

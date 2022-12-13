@@ -3,9 +3,6 @@ namespace WebReinvent\VaahCms\Http\Controllers\Backend;
 
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
-use Illuminate\Support\Facades\Hash;
-use WebReinvent\VaahCms\Entities\Registration;
-use WebReinvent\VaahCms\Entities\Setting;
 use WebReinvent\VaahCms\Models\Role;
 use WebReinvent\VaahCms\Models\User;
 
@@ -265,16 +262,16 @@ class UsersController extends Controller
 
                 break;
             //------------------------------------
-            case 'toggle_role_active_status':
+            case 'toggle-role-active-status':
 
-//                if(!\Auth::user()->hasPermission('can-manage-users') &&
-//                    !\Auth::user()->hasPermission('can-update-users'))
-//                {
-//                    $response['status'] = 'failed';
-//                    $response['errors'][] = trans("vaahcms::messages.permission_denied");
-//
-//                    return $response;
-//                }
+                if(!\Auth::user()->hasPermission('can-manage-users') &&
+                    !\Auth::user()->hasPermission('can-update-users'))
+                {
+                    $response['status'] = 'failed';
+                    $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+                    return $response;
+                }
 
                 $response = User::bulkChangeRoleStatus($request);
 
