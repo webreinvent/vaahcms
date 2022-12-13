@@ -1,468 +1,183 @@
-<script src="./SiteSettingsJs.js"></script>
 <template>
-
-    <div class="block is-marginless">
-
-        <b-collapse :open="false" aria-id="site_settings">
-
-            <div class="level has-padding-10" slot="trigger"
-                 slot-scope="props"
-                 aria-controls="site_settings">
-
-                <div class="label-left">
-                    <h4 class="title is-5">Site Settings</h4>
-                    <h2 class="subtitle is-6">After a successful password update, you
-                        will be redirected to the login page where you can
-                        log in with your new password.</h2>
+    <div>
+        <template #header>
+            <div class="w-full">
+                <div>
+                    <h5 class="font-semibold text-sm">Site Settings</h5>
+                    <p class="text-color-secondary text-xs">After a successful password update, you will be redirected to
+                        the login page where you can log in with your new password.</p>
                 </div>
-                <div class="label-right is-hidden-mobile">
-                    <b-button v-text="props.open ? 'Collapse' : 'Expand'">
-                    </b-button>
-                </div>
-
             </div>
-
-
-            <div class="block has-margin-top-10 has-padding-10">
-
-                <div class="columns is-multiline has-background-white-bis columns-settings">
-                    <div class="column is-half">
-                        <div class="block has-padding-10">
-
-                            <b-field label="Site Title"
-                                     expanded
-                                     grouped
-                                     :label-position="labelPosition">
-                                <b-field expanded>
-                                    <b-input expanded
-                                             v-model="list.site_title"
-                                             type="text"></b-input>
-                                    <b-tooltip label="Copy Code Snippet" type="is-dark">
-                                        <p class="control">
-                                            <b-button icon-left="copy"
-                                                      @click="copySetting('site_title')">
-                                            </b-button>
-                                        </p>
-                                    </b-tooltip>
-                                </b-field>
-                            </b-field>
-
-                            <b-field label="Meta Description"
-
-                                     :label-position="labelPosition">
-                                <b-input maxlength="200" expanded
-                                         v-model="list.site_description"
-                                         type="textarea"></b-input>
-                                <b-tooltip label="Copy Code Snippet" type="is-dark">
-                                    <p class="control">
-                                        <b-button icon-left="copy"
-                                                  @click="copySetting('site_description')">
-                                        </b-button>
-                                    </p>
-                                </b-tooltip>
-                            </b-field>
-
-
-                            <b-field  label="Default Site Language"
-                                      :label-position="labelPosition">
-
-                                <b-select placeholder="Default Site Language"
-                                          v-model="list.language">
-                                    <option v-for="language in assets.languages"
-                                            :value="language.locale_code_iso_639">
-                                        {{language.name}}
-                                    </option>
-                                </b-select>
-
-                            </b-field>
-
-                            <b-field  expanded
-                                      label="Search Engine Visibility"
-                                      :message="inputs.search_engine_visibility.message"
-                                      :type="inputs.search_engine_visibility.type"
-                                      :label-position="labelPosition">
-
-                                <b-field>
-                                    <b-radio-button native-value="1"
-                                                    type="is-success"
-                                                    v-model="list.search_engine_visibility">
-                                        <span>Visible</span>
-                                    </b-radio-button>
-
-                                    <b-radio-button native-value="0"
-                                                    type="is-danger"
-                                                    v-model="list.search_engine_visibility">
-                                        <span>Invisible</span>
-                                    </b-radio-button>
-                                    <b-tooltip label="Copy Code Snippet" type="is-dark">
-                                        <p class="control">
-                                            <b-button icon-left="copy"
-                                                      @click="copySetting('vh_search_engine_visibility()',true)">
-                                            </b-button>
-                                        </p>
-                                    </b-tooltip>
-                                </b-field>
-
-
-
-                            </b-field>
-
-                            <b-field label="Redirect after Frontend Login"
-                                     expanded
-                                     grouped
-                                     :label-position="labelPosition">
-                                <b-field expanded>
-                                    <b-input expanded
-                                             v-model="list.redirect_after_frontend_login"
-                                             type="text"
-                                             placeholder="Enter url"></b-input>
-                                    <b-tooltip label="Copy Code Snippet" type="is-dark">
-                                        <p class="control">
-                                            <b-button icon-left="copy"
-                                                      @click="copySetting('redirect_after_frontend_login')">
-                                            </b-button>
-                                        </p>
-                                    </b-tooltip>
-                                </b-field>
-                            </b-field>
-
-
-
-
-                            <b-field label="Maximum number of forgot password attempts per session"
-                                     expanded
-                                     grouped
-                                     :label-position="labelPosition">
-                                <b-field expanded>
-                                    <b-input expanded
-                                             v-model="list.maximum_number_of_forgot_password_attempts_per_session"
-                                             type="number"></b-input>
-                                    <b-tooltip label="Copy Code Snippet" type="is-dark">
-                                        <p class="control">
-                                            <b-button icon-left="copy"
-                                                      @click="copySetting('maximum_number_of_forgot_password_attempts_per_session')">
-                                            </b-button>
-                                        </p>
-                                    </b-tooltip>
-                                </b-field>
-                            </b-field>
-
-
-                            <b-field label="Maximum number of login attempts per session"
-                                     expanded
-                                     grouped
-                                     :label-position="labelPosition">
-                                <b-field expanded>
-                                    <b-input expanded
-                                             v-model="list.maximum_number_of_login_attempts_per_session"
-                                             type="number"></b-input>
-                                    <b-tooltip label="Copy Code Snippet" type="is-dark">
-                                        <p class="control">
-                                            <b-button icon-left="copy"
-                                                      @click="copySetting('maximum_number_of_login_attempts_per_session')">
-                                            </b-button>
-                                        </p>
-                                    </b-tooltip>
-                                </b-field>
-                            </b-field>
-
-
-                        </div>
-
-                    </div>
-                    <div class="column is-half">
-                        <div class="block has-padding-10">
-
-
-                            <b-field  expanded
-                                      grouped
-                                      label="Copyright Text"
-                                      :label-position="labelPosition">
-
-                                <b-field expanded>
-                                    <b-radio-button v-model="list.copyright_text"
-                                                    type="is-success"
-                                                    native-value="app_name" >
-                                        <span>Use App Name</span>
-                                    </b-radio-button>
-                                    <b-radio-button
-                                            v-model="inputs.copyright_text_custom"
-                                            native-value="1">
-                                        <span>Custom</span>
-                                    </b-radio-button>
-
-                                    <b-input v-if="inputs.copyright_text_custom"
-                                             v-model="list.copyright_text"
-                                             expanded type="text"
-                                             placeholder="Type Copyright Text">
-                                    </b-input>
-
-                                    <b-tooltip label="Copy Code Snippet" type="is-dark">
-                                        <p class="control">
-                                            <b-button icon-left="copy"
-                                                      @click="copySetting('copyright_text')">
-                                            </b-button>
-                                        </p>
-                                    </b-tooltip>
-                                </b-field>
-
-
-                            </b-field>
-
-                            <b-field  expanded
-                                      grouped
-                                      label="Copyright Link"
-                                      :label-position="labelPosition">
-
-                                <b-field expanded>
-                                    <b-radio-button v-model="list.copyright_link"
-                                                    type="is-success"
-                                                    native-value="app_url" >
-                                        <span>Use App Url</span>
-                                    </b-radio-button>
-                                    <b-radio-button
-                                            v-model="inputs.copyright_link_custom"
-                                            native-value="true">
-                                        <span>Custom</span>
-                                    </b-radio-button>
-
-                                    <b-input v-if="inputs.copyright_link_custom"
-                                             v-model="list.copyright_link"
-                                             expanded type="text"
-                                             placeholder="Type Copyright Link">
-                                    </b-input>
-                                    <b-tooltip label="Copy Code Snippet" type="is-dark">
-                                        <p class="control">
-                                            <b-button icon-left="copy"
-                                                      @click="copySetting('copyright_link')">
-                                            </b-button>
-                                        </p>
-                                    </b-tooltip>
-
-                                </b-field>
-
-                            </b-field>
-
-                            <b-field  expanded
-                                      grouped
-                                      label="Copyright Year"
-                                      :label-position="labelPosition">
-
-                                <b-field expanded>
-                                    <b-radio-button v-model="list.copyright_year"
-                                                    type="is-success"
-                                                    native-value="use_current_year" >
-                                        <span>Use Current Year</span>
-                                    </b-radio-button>
-                                    <b-radio-button
-                                            v-model="inputs.copyright_year_custom"
-                                            native-value="true">
-                                        <span>Custom</span>
-                                    </b-radio-button>
-
-                                    <b-input v-if="inputs.copyright_year_custom"
-                                             v-model="list.copyright_year"
-                                             expanded type="text"
-                                             placeholder="Type Copyright Year">
-                                    </b-input>
-                                    <b-tooltip label="Copy Code Snippet" type="is-dark">
-                                        <p class="control">
-                                            <b-button icon-left="copy"
-                                                      @click="copySetting('copyright_year')">
-                                            </b-button>
-                                        </p>
-                                    </b-tooltip>
-
-                                </b-field>
-
-
-                            </b-field>
-
-                            <div class="block">
-                                <b-field  expanded
-                                          label="Assign Role(s) on Registration"
-                                          :label-position="labelPosition">
-
-                                    <TagRolesOnRegistration :options="assets.roles"
-                                                            :allow_new="true"
-                                                            v-model="list.registration_roles"
-                                                            :selected_value="list.registration_roles"
-                                                            @onSelect="onSelectRegistrationRoles"
-                                                            :open_on_focus="true"/>
-
-                                </b-field>
-                            </div>
-
-                            <div class="block">
-                                <b-field  expanded
-                                          label="Allowed file types for upload"
-                                          class="has-margin-bottom-15"
-                                          :label-position="labelPosition">
-
-                                    <TagFileTypes :options="assets.file_types"
-                                                  :allow_new="true"
-                                                  v-model="list.upload_allowed_files"
-                                                  :selected_value="list.upload_allowed_files"
-                                                  @onSelect="onSelectFileType"
-                                                  :open_on_focus="true"/>
-
-                                </b-field>
-                            </div>
-
-
-
-
-
-                            <b-field  expanded
-                                      :message="inputs.maintenance_mode.message"
-                                      :type="inputs.maintenance_mode.type"
-                                      label="Maintenance Mode"
-                                      :label-position="labelPosition">
-
-                                <b-field>
-                                    <b-radio-button native-value="0"
-                                                    type="is-success"
-                                                    v-model="list.maintenance_mode">
-                                        <span>Disable</span>
-                                    </b-radio-button>
-
-                                    <b-radio-button native-value="1"
-                                                    type="is-danger"
-                                                    v-model="list.maintenance_mode">
-                                        <span>Enable</span>
-                                    </b-radio-button>
-                                </b-field>
-
-
-
-                            </b-field>
-
-                            <b-field  expanded
-                                      :type="inputs.password_protection.type"
-                                      :message="inputs.password_protection.message"
-                                      label="Password Protection"
-                                      :label-position="labelPosition">
-
-                                <b-field expanded>
-
-                                    <b-radio-button type="is-success"
-                                                    v-model="list.password_protection"
-                                                    native-value="0">
-                                        <span>Disable</span>
-                                    </b-radio-button>
-
-                                    <b-radio-button type="is-danger"
-                                                    v-model="list.password_protection"
-                                                    native-value="1">
-                                        <span>Enable</span>
-                                    </b-radio-button>
-
-                                    <b-input expanded type="password"
-                                             v-if="list.password_protection == 1"
-                                             v-model="list.site_password"
-                                             password-reveal
-                                             placeholder="Enter password">
-                                    </b-input>
-
-                                </b-field>
-
-
-                            </b-field>
-
-
-                            <b-field  expanded
-                                      :type="inputs.laravel_queues.type"
-                                      :message="inputs.laravel_queues.message"
-                                      label="Laravel Queues"
-                                      :label-position="labelPosition">
-
-                                <b-field expanded>
-
-                                    <b-radio-button type="is-danger"
-                                                    v-model="list.laravel_queues"
-                                                    native-value="0">
-                                        <span>Disable</span>
-                                    </b-radio-button>
-
-                                    <b-radio-button type="is-success"
-                                                    v-model="list.laravel_queues"
-                                                    native-value="1">
-                                        <span>Enable</span>
-                                    </b-radio-button>
-
-                                </b-field>
-
-
-                            </b-field>
-
-
-                            <b-field  expanded
-                                      label="Redirect after Backend Logout"
-                                      :label-position="labelPosition">
-
-                                <b-field expanded>
-
-                                    <b-radio-button type="is-success"
-                                                    v-model="list.redirect_after_backend_logout"
-                                                    native-value="backend">
-                                        <span>Backend</span>
-                                    </b-radio-button>
-
-                                    <b-radio-button type="is-info"
-                                                    v-model="list.redirect_after_backend_logout"
-                                                    native-value="frontend">
-                                        <span>Frontend</span>
-                                    </b-radio-button>
-
-                                    <b-radio-button type="is-primary"
-                                                    v-model="list.redirect_after_backend_logout"
-                                                    native-value="custom">
-                                        <span>Custom</span>
-                                    </b-radio-button>
-
-                                    <b-input expanded type="text"
-                                             v-if="list.redirect_after_backend_logout === 'custom'"
-                                             v-model="list.redirect_after_backend_logout_url"
-                                             placeholder="Enter url">
-                                    </b-input>
-                                    <b-tooltip label="Copy Code Snippet" type="is-dark">
-                                        <p class="control" v-if="list.redirect_after_backend_logout === 'custom'">
-                                            <b-button icon-left="copy"
-                                                      @click="copySetting('redirect_after_backend_logout')">
-                                            </b-button>
-                                        </p>
-                                    </b-tooltip>
-
-                                </b-field>
-
-                            </b-field>
-
-
-                        </div>
-
-                    </div>
-
-                    <div class="column">
-                        <div class="block has-padding-left-10 has-padding-right-10">
-                            <b-button type="is-primary has-margin-right-10"
-                                      :loading="is_loading"
-                                      @click="storeSiteSettings" >
-                                Save Settings
-                            </b-button>
-                            <b-button type="is-danger"
-                                      :loading="btn_is_loading"
-                                      @click="clearCache" >
-                                Clear Cache
-                            </b-button>
+        </template>
+        <div class="grid justify-content-evenly">
+            <div class="col-12 md:col-6 pr-4">
+                <div class="grid p-fluid">
+                    <div class="col-12">
+                        <h5 class="p-1 text-xs mb-1">Site Title</h5>
+                        <div class="p-inputgroup">
+                            <InputText class="" id="site-title"/>
+                            <Button icon="pi pi-copy" class=""/>
                         </div>
                     </div>
-
+                    <div class="col-6">
+                        <h5 class="p-1 text-xs mb-1">Default Site Language</h5>
+                        <Dropdown v-model="selectedLanguage" :options="languages" placeholder="Select a Language"/>
+                    </div>
+                    <div class="col-6">
+                        <h5 class="p-1 text-xs mb-1">Redirect after Frontend Login</h5>
+                        <div class="p-inputgroup">
+                            <InputText/>
+                            <Button icon="pi pi-copy" class=""/>
+                        </div>
+                    </div>
+                    <div class="col-7">
+                        <h5 class="p-1 text-xs mb-1">Meta Description</h5>
+                        <div class="p-inputgroup">
+                            <Textarea v-model="value" :autoResize="true" class="w-full"/>
+                            <Button icon="pi pi-copy" class="has-max-height"/>
+                        </div>
+                    </div>
+                    <div class="col-5">
+                        <h5 class="p-1 text-xs mb-1">Meta Description</h5>
+                        <div class="p-inputgroup">
+                            <SelectButton v-model="visibility" :options="visibitlityOptions" aria-labelledby="single"/>
+                            <Button icon="pi pi-copy" class=""/>
+                        </div>
+                    </div>
+                    <div class="col-12 p-fluid">
+                        <h5 class="p-1 text-xs mb-1">Assign Role(s) on Registration</h5>
+                        <Chips v-model="registrationRoles" id="registration-roles" placeholder="Search"/>
+                    </div>
+                    <div class="col-12 p-fluid">
+                        <h5 class="p-1 text-xs mb-1">Allowed file types for upload</h5>
+                        <Chips v-model="allowedFiles" id="allowed-files" inputClass="w-full" class="w-full"></Chips>
+                    </div>
+                    <div class="col-12">
+                        <h5 class="p-1 text-xs mb-1">Redirect after Backend Logout</h5>
+                        <div class="p-inputgroup">
+                            <SelectButton v-model="redirectAfterLogout" :options="redirectAfterLogoutOptions"
+                                          aria-labelledby="single" class="p-button-sm"/>
+                            <InputText placeholder="Enter Redirection Link"
+                                       :disabled="redirectAfterLogout !== 'Custom'"></InputText>
+                        </div>
+                    </div>
                 </div>
-
             </div>
-        </b-collapse>
-
-        <hr class="is-marginless"/>
+            <div class="col-12 md:col-6 pl-4">
+                <div class="grid">
+                    <div class="col-12">
+                        <h5 class="p-1 text-xs mb-1">Copyright Text</h5>
+                        <div class="p-inputgroup">
+                            <div class="field-radiobutton mr-2">
+                                <RadioButton inputId="copyright-app-name" name="city" value="app-name" v-model="copyrightText" />
+                                <label for="copyright-app-name">Use App Name</label>
+                            </div>
+                            <div class="field-radiobutton">
+                                <RadioButton inputId="copyright-custom" name="city" value="custom" v-model="copyrightText" />
+                                <label for="copyright-custom">Custom</label>
+                            </div>
+                        </div>
+                        <InputText class="w-full" v-if="copyrightText === 'custom'" placeholder="Enter Custom Text"></InputText>
+                    </div>
+                    <div class="col-12">
+                        <h5 class="p-1 text-xs mb-1">Copyright Link</h5>
+                        <div class="p-inputgroup">
+                            <div class="field-radiobutton mr-2">
+                                <RadioButton inputId="copyright-link" name="city" value="app-name" v-model="copyrightLink" />
+                                <label for="copyright-link">Use App Url</label>
+                            </div>
+                            <div class="field-radiobutton">
+                                <RadioButton inputId="copyright-custom" name="city" value="custom" v-model="copyrightLink" />
+                                <label for="copyright-custom">Custom</label>
+                            </div>
+                        </div>
+                        <InputText class="w-full" v-if="copyrightLink === 'custom'" placeholder="Enter Custom Link"></InputText>
+                    </div>
+                    <div class="col-12">
+                        <h5 class="p-1 text-xs mb-1">Copyright Year</h5>
+                        <div class="p-inputgroup">
+                            <div class="field-radiobutton mr-2">
+                                <RadioButton inputId="copyright-year" name="city" value="app-name" v-model="copyrightYear" />
+                                <label for="copyright-year">Use Current year</label>
+                            </div>
+                            <div class="field-radiobutton">
+                                <RadioButton inputId="copyright-custom" name="city" value="custom" v-model="copyrightYear" />
+                                <label for="copyright-custom">Custom</label>
+                            </div>
+                        </div>
+                        <Calendar inputId="yearpicker" v-model="date10" view="year" dateFormat="yy"  v-if="copyrightYear === 'custom'" input-class="w-full" class="w-full"
+                                  placeholder="Choose Copyright Year" />
+                    </div>
+                    <div class="col-6">
+                        <h5 class="p-1 text-xs mb-1">Max number of forgot password attempts</h5>
+                        <div class="p-inputgroup">
+                            <InputNumber inputId="withoutgrouping" mode="decimal" :useGrouping="false"/>
+                            <Button icon="pi pi-copy" class=""/>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <h5 class="p-1 text-xs mb-1">Maximum number of login attempts</h5>
+                        <div class="p-inputgroup">
+                            <InputNumber inputId="withoutgrouping" mode="decimal" :useGrouping="false"/>
+                            <Button icon="pi pi-copy" class=""/>
+                        </div>
+                    </div>
+                    <div class="col-4 p-fluid">
+                        <h5 class="p-1 text-xs mb-1">Password Protection</h5>
+                        <SelectButton v-model="passwordProtection" :options="passwordProtectionOptions" class="p-button-sm"
+                                      aria-labelledby="single"/>
+                    </div>
+                    <div class="col-4 p-fluid">
+                        <h5 class="p-1 text-xs mb-1">Laravel Queues</h5>
+                        <SelectButton v-model="laravelQueues" :options="laravelQueuesOptions" class="p-button-sm" aria-labelledby="single"/>
+                    </div>
+                    <div class="col-4 p-fluid">
+                        <h5 class="p-1 text-xs mb-1">Maintenance Mode</h5>
+                        <SelectButton v-model="maintenanceMode" :options="maintenanceModeOptions" class="p-button-sm" aria-labelledby="single"/>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 mt-5">
+                <Button label="Save Settings" icon="pi pi-save" class="mr-2 p-button-sm"></Button>
+                <Button label="Clear Cache" icon="pi pi-trash" class="p-button-danger p-button-sm"></Button>
+            </div>
+        </div>
     </div>
-
 </template>
+
+<script>
+export default {
+    name: "Site Settings",
+
+    data() {
+        return {
+
+        }
+    },
+
+    methods: {
+        expandAll() {
+            let accordionTabs = document.getElementById('accordionTabContainer').children.length;
+            for (let i = 0; i <= accordionTabs; i++) {
+                this.activeIndex.push(i);
+            }
+        },
+        collapseAll() {
+            this.activeIndex = [];
+        },
+        addLinkHandler() {
+            if (!this.showLinkInput) {
+                return this.showLinkInput = true;
+            } else if (this.showLinkInput && this.addLink !== "" && this.addLink !== null) {
+                this.socialMediaLinks.push({title:this.addLink,icon:'pi-link'});
+                this.addLink = null;
+                return this.showLinkInput = true;
+            }
+        }
+    }
+}
+</script>
+
+<style lang="scss">
+
+</style>
