@@ -1160,42 +1160,93 @@ class UserBase extends Authenticatable
 
     }
     //-------------------------------------------------
-    public static function getList($request,$excluded_columns = [])
+    public function scopeGetSorted($query, $filter)
+    {
+        if( !isset($filter['sort'])) {
+            return $query->orderBy('id', 'desc');
+        }
+
+        $sort = $filter['sort'];
+
+        $direction = Str::contains($sort, ':');
+
+        if (!$direction) {
+            return $query->orderBy($sort, 'asc');
+        }
+
+        $sort = explode(':', $sort);
+
+        return $query->orderBy($sort[0], $sort[1]);
+    }
+    //-------------------------------------------------
+    public function scopeIsActiveFilter($query, $filter)
     {
 
+        if (!isset($filter['is_active'])
+            || is_null($filter['is_active'])
+            || $filter['is_active'] === 'null'
+        )
+        {
+            return $query;
+        }
+
+        $is_active = $filter['is_active'];
+
+        if ($is_active === 'true' || $is_active === true) {
+            return $query->whereNotNull('is_active');
+        } else {
+            return $query->whereNull('is_active');
+        }
+    }
+    //-------------------------------------------------
+    public function scopeTrashedFilter($query, $filter)
+    {
+        if (!isset($filter['trashed'])) {
+            return $query;
+        }
+
+        $trashed = $filter['trashed'];
+
+        if ($trashed === 'include') {
+            return $query->withTrashed();
+        } else if($trashed === 'only'){
+            return $query->onlyTrashed();
+        }
+    }
+    //-------------------------------------------------
+    public function scopeSearchFilter($query, $filter)
+    {
+        if (!isset($filter['q'])) {
+            return $query;
+        }
+
+        $search = $filter['q'];
+
+        $query->where(function ($q) use ($search) {
+            $q->where('first_name', 'LIKE', '%'.$search.'%')
+                ->orWhere('last_name', 'LIKE', '%'.$search.'%')
+                ->orWhere('middle_name', 'LIKE', '%'.$search.'%')
+                ->orWhere('display_name', 'LIKE', '%'.$search.'%')
+                ->orWhere(\DB::raw('concat(first_name," ",middle_name," ",last_name)'), 'like', '%'.$search.'%')
+                ->orWhere(\DB::raw('concat(first_name," ",last_name)'), 'like', '%'.$search.'%')
+                ->orWhere('email', 'LIKE', '%'.$search.'%')
+                ->orWhere('id', '=', $search);
+        });
+    }
+    //-------------------------------------------------
+    public static function getList($request,$excluded_columns = [])
+    {
         if (isset($request['recount']) && $request['recount'] == true) {
             Role::syncRolesWithUsers();
         }
 
-        $list = self::orderBy('created_at', 'DESC');
-
-        if (isset($request['trashed']) && $request['trashed'] == 'true') {
-            $list->withTrashed();
-        }
+        $list = self::getSorted($request->filter);
+        $list->isActiveFilter($request->filter);
+        $list->trashedFilter($request->filter);
+        $list->searchFilter($request->filter);
 
         if (isset($request['from']) && isset($request['to'])) {
             $list->betweenDates($request['from'],$request['to']);
-        }
-
-        if (isset($request['status']) && $request['status']) {
-            if ($request['status'] == 'active') {
-                $list->where('is_active',1);
-            } else{
-                $list->whereNull('is_active')->orWhere('is_active',0);
-            }
-        }
-
-        if (isset($request['filter']['q'])) {
-            $list->where(function ($q) use ($request) {
-                $q->where('first_name', 'LIKE', '%'.$request['filter']['q'].'%')
-                    ->orWhere('last_name', 'LIKE', '%'.$request['filter']['q'].'%')
-                    ->orWhere('middle_name', 'LIKE', '%'.$request['filter']['q'].'%')
-                    ->orWhere('display_name', 'LIKE', '%'.$request['filter']['q'].'%')
-                    ->orWhere(\DB::raw('concat(first_name," ",middle_name," ",last_name)'), 'like', '%'.$request['filter']['q'].'%')
-                    ->orWhere(\DB::raw('concat(first_name," ",last_name)'), 'like', '%'.$request['filter']['q'].'%')
-                    ->orWhere('email', 'LIKE', '%'.$request['filter']['q'].'%')
-                    ->orWhere('id', '=', $request['filter']['q']);
-            });
         }
 
         $rows = config('vaahcms.per_page');
@@ -1203,6 +1254,7 @@ class UserBase extends Authenticatable
         if ($request->has('rows')) {
             $rows = $request->rows;
         }
+
         $list->withCount(['activeRoles']);
         $list = $list->paginate($rows);
         $countRole = Role::all()->count();

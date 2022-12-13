@@ -11,8 +11,9 @@ const store = useUserStore();
     <div>
 
         <Sidebar v-model:visible="store.show_filters"
-                 position="right">
-
+                 position="right"
+                 style="z-index: 1101"
+        >
             <VhFieldVertical >
                 <template #label>
                     <b>Sort By:</b>
