@@ -90,22 +90,111 @@ const toggleFormMenu = (event) => {
 
             <div v-if="store.item">
 
-                <VhField label="email">
+                <VhField label="Email">
                     <InputText class="w-full" v-model="store.item.email">
                     </InputText >
                 </VhField>
 
-                <VhField label="username">
+                <VhField label="Username">
                     <InputText class="w-full" v-model="store.item.username">
                     </InputText >
                 </VhField>
 
-                <VhField label="Is Active">
+                <VhField label="Password">
+                    <Password  class="w-full" v-model="store.item.password">
+                    </Password  >
+                </VhField>
+
+
+                <VhField label="Display Name">
+                    <InputText class="w-full" v-model="store.item.display_name">
+                    </InputText >
+                </VhField>
+
+                <VhField label="Title">
+                    <Dropdown v-model="store.item.title"
+                              :options="cities"
+                              placeholder="- Select a title -" />
+                </VhField>
+
+                <VhField label="Designation">
+                    <InputText class="w-full" v-model="store.item.designation">
+                    </InputText >
+                </VhField>
+
+                <VhField label="First Name">
+                    <InputText class="w-full" v-model="store.item.first_name">
+                    </InputText >
+                </VhField>
+                <VhField label="Middle Name">
+                    <InputText class="w-full" v-model="store.item.middle_name">
+                    </InputText >
+                </VhField>
+
+                <VhField label="Last Name">
+                    <InputText class="w-full" v-model="store.item.last_name">
+                    </InputText >
+                </VhField>
+
+                 <VhField label="Gender">
+                    <Dropdown v-model="store.item.gender"
+                              :options="gender"
+                              placeholder="- Select your gender -" />
+                </VhField>
+
+                <VhField label="Country Code">
+                    <Dropdown v-model="store.item.country_calling_code"
+                              :options="country_calling_code"
+                              placeholder="- Select a country code -" />
+                </VhField>
+                <VhField label="Phone">
+                    <InputNumber inputId="withoutgrouping" v-model="store.item.phone"  :useGrouping="false" />
+                </VhField>
+
+                <VhField label="Bio">
+                    <Textarea v-model="store.item.bio" :autoResize="true" rows="5" cols="30" />
+                </VhField>
+
+                <VhField label="Timezone">
+                    <AutoComplete v-model="store.item.timezone"
+                                  @complete="searchCountry($event)"
+                                  optionLabel="name" />
+                </VhField>
+
+                <VhField label="Alternate Email">
+                    <InputText class="w-full"
+                               v-model="store.item.alternate_email">
+                    </InputText >
+                </VhField>
+
+                <VhField label="Date of Birth">
+                    <Calendar inputId="dateformat"
+                              v-model="store.item.birth"
+                              dateFormat="mm-dd-yy" />
+                </VhField>
+
+                 <VhField label="Country">
+                    <AutoComplete v-model="store.item.country"
+                                  @complete="searchCountry($event)"
+                                  optionLabel="name" />
+                </VhField>
+
+                <VhField label="Status">
+                    <Dropdown v-model="store.item.status"
+                              :options="registration_statuses"
+                              placeholder="- Select a status -" />
+                </VhField>
+
+
+
+
+
+<!--                <VhField label="Is Active">
                     <InputSwitch v-bind:false-value="0"
                                  v-bind:true-value="1"
                                  v-model="store.item.is_active">
                     </InputSwitch>
-                </VhField>
+                </VhField>-->
 
             </div>
         </Panel>
