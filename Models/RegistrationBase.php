@@ -797,7 +797,7 @@ class RegistrationBase extends Model
         $user->password = $reg->password;
         $user->registration_id = $reg->id;
         $user->status = 'active';
-        $user->is_active = 1;
+//        $user->is_active = 1;
         $user->save();
 
         $reg->vh_user_id = $user->id;
