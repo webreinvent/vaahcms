@@ -125,10 +125,11 @@ const toggleItemMenu = (event) => {
                                    />
                                 </template>
                             </Column>
+
                             <Column field="role"
                                     header="Has Permission"
                             >
-                                <template #body="prop">
+                                <template #body="prop" v-if="store.hasPermission('can-update-users') || store.hasPermission('can-manage-users')">
                                     <Button  v-if="prop.data.pivot.is_active === 1"
                                              class="p-button-success p-button-sm p-button-rounded"
                                             label="Yes"
@@ -139,6 +140,20 @@ const toggleItemMenu = (event) => {
                                             class="p-button-danger p-button-sm p-button-rounded"
                                             label="No"
                                             @click="store.changePermission(prop.data,route.params.id)"
+                                    />
+                                </template>
+
+                                <template #body="prop" v-else>
+                                    <Button v-if="prop.data.pivot.is_active === 1"
+                                            class="p-button-success p-button-sm p-button-rounded"
+                                            label="Yes"
+                                            disabled
+                                    />
+
+                                    <Button v-else
+                                            class="p-button-danger p-button-sm p-button-rounded"
+                                            label="No"
+                                            disabled
                                     />
                                 </template>
                             </Column>
