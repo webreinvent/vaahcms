@@ -23,6 +23,7 @@ include('backend/taxonomies.php');
 include('backend/registrations.php');
 include('backend/profile.php');
 include('backend/advanced.php');
+include('backend/routes-jobs.php');
 include('backend/routes-roles.php');
 include('backend/routes-permissions.php');
 include('backend/routes-users.php');

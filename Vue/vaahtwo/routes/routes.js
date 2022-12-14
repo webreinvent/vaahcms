@@ -1,3 +1,5 @@
+import jobs from "../../vaahone/store/modules/advanced/jobs";
+
 let routes= [];
 
 import ui from "./vue-routes-ui";
@@ -7,6 +9,7 @@ import users from "./vue-routes-users";
 import roles from "./vue-routes-roles";
 import permissions from "./vue-routes-permissions";
 import settings from "./vue-routes-settings";
+import jobs from "./vue-routes-jobs";
 
 routes = routes.concat(ui);
 routes = routes.concat(public_routes);
@@ -15,5 +18,6 @@ routes = routes.concat(roles);
 routes = routes.concat(users);
 routes = routes.concat(permissions);
 routes = routes.concat(settings);
+routes = routes.concat(jobs);
 
 export default routes;
