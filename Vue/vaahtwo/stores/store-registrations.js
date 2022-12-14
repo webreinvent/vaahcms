@@ -156,6 +156,7 @@ export const useRegistrationStore = defineStore({
         {
             if(data)
             {
+                console.log(data);
                 this.assets = data;
                 if(data.rows)
                 {
