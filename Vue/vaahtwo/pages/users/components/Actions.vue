@@ -38,11 +38,14 @@ const toggleBulkMenuState = (event) => {
                 <!--selected_menu-->
                 <Button class="p-button-sm"
                         icon="pi pi-angle-down"
-                        :badge="store.action.items.length"
                         aria-haspopup="true"
                         aria-controls="overlay_menu"
                         @click="toggleSelectedMenuState"
-                />
+                >
+                    <Badge v-if="store.action.items.length > 0"
+                           :value="store.action.items.length"
+                    />
+                </Button>
 
                 <Menu ref="selected_menu_state"
                       :model="store.list_selected_menu"
@@ -88,8 +91,12 @@ const toggleBulkMenuState = (event) => {
                             <Button class="p-button-sm"
                                     label="Filters"
                                     @click="store.show_filters = true"
-                                    :badge="store.count_filters"
-                            />
+                            >
+
+                                <Badge v-if="store.count_filters > 0"
+                                       :value="store.count_filters"
+                                />
+                            </Button>
 
                             <Button class="p-button-sm"
                                     label="Reset"
