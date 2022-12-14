@@ -134,7 +134,7 @@ const toggleItemMenu = (event) => {
                             </Column>
 
                             <Column field="role"
-                                    header="Has Permission"
+                                    header="Has Role"
                             >
                                 <template #body="prop" v-if="store.hasPermission('can-update-users') || store.hasPermission('can-manage-users')">
                                     <Button  v-if="prop.data.pivot.is_active === 1"
