@@ -1,5 +1,3 @@
-import jobs from "../../vaahone/store/modules/advanced/jobs";
-
 let routes= [];
 
 import ui from "./vue-routes-ui";
