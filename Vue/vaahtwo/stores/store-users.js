@@ -110,16 +110,6 @@ export const useUserStore = defineStore({
             },
 
         ],
-        is_active_options:[
-            {
-                label:'Active',
-                value:'active'
-            },
-            {
-                label:'Inactive',
-                value:'inactive'
-            }
-        ],
 
         user_roles_menu: null,
         user_roles_query: vaah().clone(empty_states.user_roles_query),

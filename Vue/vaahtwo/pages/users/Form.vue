@@ -12,11 +12,13 @@ const root = useRootStore();
 const route = useRoute();
 
 onMounted(async () => {
-    if(route.params && route.params.id)
-    {
+    if (route.params && route.params.id) {
         await store.getItem(route.params.id);
     }
+
     store.getFormMenu();
+
+    root.getIsActiveStatusOptions();
 });
 
 const myUploader = ref();
@@ -314,17 +316,12 @@ const toggleFormMenu = (event) => {
                 </VhField>
 
                 <VhField label="Is Active">
-                    <SelectButton
-                        v-model="store.item.is_active"
-                        :options="store.is_active_options"
-                        optionLabel="label"
-                        optionValue="value"
-                        name="account-is_active"
-                        data-testid="account-is_active">
-                        <template #option="slotProps">
-                            <span class="text-sm">{{slotProps.option.label}}</span>
-                        </template>
-                    </SelectButton>
+                    <SelectButton v-if="root && root.is_active_status_options"
+                                  v-model="store.item.is_active"
+                                  :options="root.is_active_status_options"
+                                  option-label="label"
+                                  option-value="value"
+                    />
                 </VhField>
 
             </div>

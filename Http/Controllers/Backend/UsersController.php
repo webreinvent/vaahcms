@@ -92,6 +92,15 @@ class UsersController extends Controller
     //----------------------------------------------------------
     public function updateItem(Request $request,$id)
     {
+        if (!\Auth::user()->hasPermission('can-update-users')) {
+            $response['success'] = false;
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+            return $response;
+        }
+
+        dd(1);
+
         $item = User::where('id',$id)->first();
 
         if(!$item){
@@ -102,7 +111,7 @@ class UsersController extends Controller
 
         $request['id'] = $item->id;
 
-        $response = User::updateItem($request);
+        return User::updateItem($request);
         return response()->json($response);
     }
     //----------------------------------------------------------
