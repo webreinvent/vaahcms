@@ -95,7 +95,7 @@ const openViewModal = () => {
             <template #icons>
                 <div class="p-inputgroup">
 
-                    <Button class="p-button-outlined p-button-sm"
+                    <Button class="p-button-sm"
                             :label=" '#' + store.item.id"
                             @click="useVaah.copy(store.item.id)"
                     />
@@ -105,7 +105,7 @@ const openViewModal = () => {
                                     || store.hasPermission('can-manage-permissions')"
                               class="control"
                     >
-                        <Button class="p-button-outlined p-button-sm"
+                        <Button class="p-button-sm"
                                 icon="pi pi-angle-down"
                                 type="button"
                                 aria-haspopup="true"
@@ -210,7 +210,7 @@ const openViewModal = () => {
 
                 <Column>
                     <template #body="prop">
-                        <Button class="p-button-sm p-button-rounded p-button-outlined"
+                        <Button class="p-button-sm p-button-rounded"
                                 @click="openViewModal(), store.active_permission_role = prop.data"
                                 icon="pi pi-eye"
                                 label="View"

@@ -69,19 +69,19 @@ const toggleItemMenu = (event) => {
 
             <template #icons>
                 <div class="p-inputgroup">
-                    <Button class="p-button-outlined p-button-sm"
+                    <Button class="p-button-sm"
                             :label=" '#' + store.item.id"
                             @click="useVaah.copy(store.item.id)"
                     />
 
-                    <Button class="p-button-outlined p-button-sm"
+                    <Button class="p-button-sm"
                             label="Edit"
                             icon="pi pi-pencil"
                             @click="store.toEdit(store.item)"
                     />
 
                     <!--item_menu-->
-                    <Button class="p-button-outlined p-button-sm"
+                    <Button class="p-button-sm"
                             icon="pi pi-angle-down"
                             type="button"
                             aria-haspopup="true"
