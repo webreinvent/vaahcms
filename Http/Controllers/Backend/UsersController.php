@@ -90,30 +90,7 @@ class UsersController extends Controller
     //----------------------------------------------------------
     public function getItem(Request $request, $id)
     {
-        $item = User::where('id', $id)->with(['createdByUser',
-            'updatedByUser', 'deletedByUser']);
-
-        if($request['trashed'] == 'true')
-        {
-            $item->withTrashed();
-        }
-
-        $item = $item->first();
-
-        if(!$item){
-            $response['status']     = 'failed';
-            $response['errors']     = 'User not found.';
-            return $response;
-        }
-        if($item['is_active'] == 1){
-            $item['is_active'] = 'active';
-        }else{
-            $item['is_active'] = 'inactive';
-        }
-
-        $response['status'] = 'success';
-        $response['data'] = $item;
-        return response()->json($response);
+        return User::getItem($id);
     }
     //----------------------------------------------------------
     public function updateItem(Request $request,$id)

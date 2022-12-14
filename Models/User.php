@@ -280,27 +280,6 @@ class User extends UserBase
         return $response;
     }
     //-------------------------------------------------
-    public static function getItem($id, $excluded_columns = [])
-    {
-
-        $item = self::where('id', $id)
-            ->with(['createdByUser', 'updatedByUser', 'deletedByUser'])
-            ->withTrashed()
-            ->first();
-
-        if(!$item)
-        {
-            $response['success'] = false;
-            $response['errors'][] = 'Record not found with ID: '.$id;
-            return $response;
-        }
-        $response['success'] = true;
-        $response['data'] = $item;
-
-        return $response;
-
-    }
-    //-------------------------------------------------
     public static function updateItem($request)
     {
         $inputs = $request->all();

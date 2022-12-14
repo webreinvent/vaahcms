@@ -1272,9 +1272,16 @@ class UserBase extends Authenticatable
             'updatedByUser', 'deletedByUser'])
             ->withTrashed();
 
-        if(!\Auth::user()->hasPermission('can-see-users-contact-details')){
+        if(!$item)
+        {
+            $response['success'] = false;
+            $response['errors'][] = 'Record not found with ID: '.$id;
+            return $response;
+        }
+
+        if (!\Auth::user()->hasPermission('can-see-users-contact-details')) {
             $item->exclude(array_merge(['email','alternate_email', 'phone'],$excluded_columns));
-        }else{
+        } else {
             $item->exclude($excluded_columns);
         }
 

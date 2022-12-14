@@ -110,7 +110,7 @@ const toggleItemMenu = (event) => {
                             Deleted {{store.item.deleted_at}}
                         </div>
 
-                        <div class="">
+                        <div class="ml-3">
                             <Button label="Restore"
                                     class="p-button-sm"
                                     @click="store.itemAction('restore')"
