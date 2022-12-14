@@ -44,8 +44,7 @@ export const useUserStore = defineStore({
         assets_is_fetching: true,
         app: null,
         assets: null,
-        roles_item:null,
-        roles_list:null,
+        user_roles:null,
         displayModal:false,
         modalData:null,
         rows_per_page: [10,20,30,50,100,500],
@@ -401,8 +400,7 @@ export const useUserStore = defineStore({
             this.hideProgress();
 
             if (data) {
-                this.roles_item = data.item;
-                this.roles_list = data.list;
+                this.user_roles = data;
             }
         },
         //---------------------------------------------------------------------

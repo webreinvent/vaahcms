@@ -22,9 +22,16 @@ onMounted(async () => {
     }
 
     /**
+     * Fetch the item from the database
+     */
+    if (route.params && route.params.id) {
+        await store.getItem(route.params.id);
+    }
+
+    /**
      * Fetch user roles from the database
      */
-    if (store.item && !store.roles_list) {
+    if (store.item && !store.user_roles) {
         await store.getUserRoles();
     }
 
@@ -108,8 +115,8 @@ const toggleItemMenu = (event) => {
 
             <div>
                 <div class="p-datatable p-component p-datatable-responsive-scroll p-datatable-striped p-datatable-sm">
-                    <div v-if="store.roles_list">
-                        <DataTable :value="store.roles_list.data"
+                    <div v-if="store && store.user_roles">
+                        <DataTable :value="store.user_roles.list.data"
                                    dataKey="id"
                                    class="p-datatable-sm"
                                    stripedRows
@@ -174,7 +181,7 @@ const toggleItemMenu = (event) => {
 
                         <!--paginator-->
                         <Paginator v-model:rows="store.user_roles_query.rows"
-                                   :totalRecords="store.roles_list.total"
+                                   :totalRecords="store.user_roles.list.total"
                                    @page="store.userRolesPaginate($event)"
                                    :rowsPerPageOptions="store.rows_per_page">
                         </Paginator>
