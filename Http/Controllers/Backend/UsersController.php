@@ -82,10 +82,7 @@ class UsersController extends Controller
     //----------------------------------------------------------
     public function createItem(Request $request)
     {
-        $data = new \stdClass();
-        $data->new_item = $request->all();
-        $response = User::createItem($data);
-        return response()->json($response);
+       return User::createItem($request);
     }
     //----------------------------------------------------------
     public function getItem(Request $request, $id)

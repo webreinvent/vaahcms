@@ -1092,8 +1092,14 @@ class UserBase extends Authenticatable
     //-------------------------------------------------
     public static function createItem($request)
     {
+        if (!\Auth::user()->hasPermission('can-create-users')) {
+            $response['success'] = false;
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
 
-        $inputs = $request->new_item;
+            return $response;
+        }
+
+        $inputs = $request->all();
 
         $validate = self::validation($inputs);
 
