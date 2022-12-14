@@ -26,16 +26,49 @@ const useVaah = vaah();
             <Column field="id" header="ID" :style="{width: store.getIdWidth()}" :sortable="true">
             </Column>
 
-            <Column field="name" header="Name"
-                    :sortable="true">
+            <Column field="name"
+                    header="Name"
+                    >
+                <template #body="prop">
+                    {{prop.data.first_name}}
+                    {{prop.data.middle_name}}
+                    {{prop.data.last_name}}
+                </template>
+            </Column>
 
+             <Column field="email"
+                    header="Email"
+                    :sortable="true">
                 <template #body="prop">
                     <Badge v-if="prop.data.deleted_at"
                            value="Trashed"
                            severity="danger"></Badge>
-                    {{prop.data.name}}
+                    {{prop.data.email}}
                 </template>
+            </Column>
 
+             <Column field="status"
+                    header="Status"
+                    :sortable="true">
+                <template #body="prop">
+                    <Badge v-if="prop.data.deleted_at"
+                           value="Trashed"
+                           severity="danger"></Badge>
+                    {{prop.data.status}}
+                </template>
+            </Column>
+
+             <Column field="gender"
+                    header="Gender"
+                    :sortable="true">
+                <template #body="prop">
+                    <Badge v-if="prop.data.deleted_at"
+                           value="Trashed"
+                           severity="danger"></Badge>
+                    <Badge v-if="prop.data.gender=='M'" value="Male" severity="success" class="mr-2"></Badge>
+                    <Badge v-if="prop.data.gender=='F'" value="Female" severity="info" class="mr-2"></Badge>
+                    <Badge v-if="prop.data.gender=='O'" value="Others" severity="warning" class="mr-2"></Badge>
+                </template>
             </Column>
 
 
@@ -43,11 +76,9 @@ const useVaah = vaah();
                         v-if="store.isViewLarge()"
                         style="width:150px;"
                         :sortable="true">
-
                     <template #body="prop">
                         {{useVaah.ago(prop.data.updated_at)}}
                     </template>
-
                 </Column>
 
             <Column field="is_active" v-if="store.isViewLarge()"
