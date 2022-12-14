@@ -5,9 +5,9 @@ use Illuminate\Mail\Mailable;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Notification;
-use WebReinvent\VaahCms\Entities\User;
 use WebReinvent\VaahCms\Jobs\ProcessMails;
 use WebReinvent\VaahCms\Mail\GenericMail;
+use WebReinvent\VaahCms\Models\User;
 use WebReinvent\VaahCms\Notifications\TestSmtp;
 
 use Dotenv\Dotenv;

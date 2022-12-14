@@ -1,14 +1,14 @@
-import {watch} from 'vue'
-import {acceptHMRUpdate, defineStore} from 'pinia'
-import qs from 'qs'
-import {vaah} from '../vaahvue/pinia/vaah'
+import { watch } from 'vue'
+import { acceptHMRUpdate, defineStore } from 'pinia'
+import { vaah } from '../vaahvue/pinia/vaah'
 import { useRootStore } from "./root";
+import qs from 'qs'
 
-let model_namespace = 'WebReinvent\\VaahCms\\Models\\Permission';
+let model_namespace = 'WebReinvent\\VaahCms\\Entities\\User';
 
 
 let base_url = document.getElementsByTagName('base')[0].getAttribute("href");
-let ajax_url = base_url + "/vaah/permissions";
+let ajax_url = base_url + "/users";
 
 let empty_states = {
     query: {
@@ -22,19 +22,21 @@ let empty_states = {
         },
         recount: null,
     },
+
     action: {
         type: null,
         items: [],
     },
-    permission_roles_query: {
+
+    user_roles_query: {
         q: null,
         page: null,
         rows: null,
     }
 };
 
-export const usePermissionStore = defineStore({
-    id: 'permissions',
+export const useUserStore = defineStore({
+    id: 'users',
     state: () => ({
         base_url: base_url,
         ajax_url: ajax_url,
@@ -42,6 +44,9 @@ export const usePermissionStore = defineStore({
         assets_is_fetching: true,
         app: null,
         assets: null,
+        user_roles:null,
+        displayModal:false,
+        modalData:null,
         rows_per_page: [10,20,30,50,100,500],
         list: null,
         item: null,
@@ -69,13 +74,45 @@ export const usePermissionStore = defineStore({
         list_bulk_menu: [],
         item_menu_list: [],
         item_menu_state: null,
+        filtered_timezone_codes:[],
+        filtered_country_codes:[],
         form_menu_list: [],
-        total_roles: null,
-        total_users: null,
-        permission_roles: null,
-        roles_menu_items: null,
-        active_permission_role : null,
-        permission_roles_query: vaah().clone(empty_states.permission_roles_query),
+        gender_options: [
+            {
+                label: 'Male',
+                value: 'male'
+            },
+            {
+                label: 'Female',
+                value: 'female'
+            },
+            {
+                label: 'Others',
+                value: 'others'
+            }
+        ],
+        status_options: [
+            {
+                label: 'Active',
+                value: 'active'
+            },
+            {
+                label: 'Inactive',
+                value: 'inactive'
+            },
+            {
+                label: 'Blocked',
+                value: 'blocked'
+            },
+            {
+                label: 'Banned',
+                value: 'banned'
+            },
+
+        ],
+
+        user_roles_menu: null,
+        user_roles_query: vaah().clone(empty_states.user_roles_query),
         is_btn_loading: false,
     }),
     getters: {
@@ -105,7 +142,7 @@ export const usePermissionStore = defineStore({
         {
             switch(route_name)
             {
-                case 'permissions.index':
+                case 'users.index':
                     this.view = 'large';
                     this.list_view_width = 12;
                     break;
@@ -153,16 +190,16 @@ export const usePermissionStore = defineStore({
                 },{deep: true}
             );
 
-            watch(this.permission_roles_query, (newVal, oldVal) => {
-                this.delayedItemUsersSearch();
-            }, {
-                deep:true
-            });
+            watch(this.user_roles_query, async (newVal,oldVal) =>
+                {
+                    await this.delayedUserRolesSearch();
+                },{deep: true}
+            )
         },
         //---------------------------------------------------------------------
         async getAssets() {
 
-            if(this.assets_is_fetching === true){
+            if (this.assets_is_fetching === true) {
                 this.assets_is_fetching = false;
 
                 vaah().ajax(
@@ -172,22 +209,60 @@ export const usePermissionStore = defineStore({
             }
         },
         //---------------------------------------------------------------------
-        afterGetAssets(data, res)
-        {
-            if(data)
-            {
+        afterGetAssets(data, res) {
+            if (data) {
                 this.assets = data;
-                if(data.rows)
-                {
+
+                if (data.rows) {
                     this.query.rows = data.rows;
-                    this.permission_roles_query.rows = data.rows
+                    this.user_roles_query.rows = data.rows;
                 }
 
-                if(this.route.params && !this.route.params.id){
+                if (this.route.params && !this.route.params.id) {
                     this.item = vaah().clone(data.empty_item);
                 }
 
             }
+        },
+        //--------------------------------------------------------------------
+        searchTimezoneCode: function (event){
+            this.timezone_name_object = null;
+            this.timezone = null;
+            setTimeout(() => {
+                if (!event.query.trim().length) {
+                    this.filtered_timezone_codes = this.assets.timezones;
+                }else {
+                    this.filtered_timezone_codes = this.assets.timezones.filter((timezone) => {
+                        return timezone.name.toLowerCase().startsWith(event.query.toLowerCase());
+                    });
+                }
+            }, 250);
+
+        },
+        //---------------------------------------------------------------------
+        onSelectTimezoneCode: function (event){
+            this.item.timezone = event.value.slug;
+        },
+        //---------------------------------------------------------------------
+        //---------------------------------------------------------------------
+        searchCountryCode: function (event){
+            this.country_name_object = null;
+            this.country = null;
+
+            setTimeout(() => {
+                if (!event.query.trim().length) {
+                    this.filtered_country_codes = this.assets.countries;
+                }
+                else {
+                    this.filtered_country_codes = this.assets.countries.filter((country) => {
+                        return country.name.toLowerCase().startsWith(event.query.toLowerCase());
+                    });
+                }
+            }, 250);
+        },
+        //---------------------------------------------------------------------
+        onSelectCountryCode: function (event){
+            this.item.country = event.value.name;
         },
         //---------------------------------------------------------------------
         async getList() {
@@ -196,24 +271,21 @@ export const usePermissionStore = defineStore({
             };
             await vaah().ajax(
                 this.ajax_url,
-                this.afterGetList,
+                await this.afterGetList,
                 options
             );
         },
         //---------------------------------------------------------------------
-        afterGetList: function (data, res)
-        {
+        async afterGetList (data, res) {
+
             this.is_btn_loading = false;
             this.query.recount = null;
 
             if (data) {
                 this.list = data;
-                this.total_roles = res.data.total_roles;
-                this.total_users = res.data.total_users;
             }
         },
         //---------------------------------------------------------------------
-
         async getItem(id) {
             if(id){
                 await vaah().ajax(
@@ -229,107 +301,10 @@ export const usePermissionStore = defineStore({
             {
                 this.item = data;
             }else{
-                this.$router.push({name: 'permissions.index'});
+                this.$router.push({name: 'users.index'});
             }
             this.getItemMenu();
             await this.getFormMenu();
-        },
-        //---------------------------------------------------------------------
-         async getItemRoles() {
-            this.showProgress();
-
-            let params = {
-                query: this.permission_roles_query,
-            };
-
-            vaah().ajax(
-                this.ajax_url+'/item/' + this.item.id + '/roles',
-                this.afterGetItemRoles,
-                params
-            );
-        },
-        //---------------------------------------------------------------------
-        afterGetItemRoles(data, res) {
-            this.hideProgress();
-
-            if (data) {
-                this.permission_roles = data;
-            }
-        },
-        //---------------------------------------------------------------------
-        async changePermission(item) {
-
-            let params = {
-                id : this.item.id,
-                role_id : item.id,
-            };
-
-            var data = {};
-
-            if(item.pivot.is_active)
-            {
-                data.is_active = 0;
-            } else
-            {
-                data.is_active = 1;
-            }
-
-            await this.actions(false, 'toggle-role-active-status', params, data)
-
-        },
-        //---------------------------------------------------------------------
-        async bulkActions (input, action) {
-            let params = {
-                id: this.item.id,
-                role_id: null
-            };
-
-            let data = {
-                is_active: input
-            };
-
-            await this.actions(false, action, params, data)
-
-        },
-        //---------------------------------------------------------------------
-        async actions (e, action, inputs , data) {
-
-            this.showProgress();
-
-            if (e) {
-                e.preventDefault();
-            }
-
-            let params = {
-                params: {
-                    inputs: inputs,
-                    data: data,
-                },
-                method: 'post',
-            };
-
-            vaah().ajax(
-                this.ajax_url+'/actions/' + action,
-                this.afterActions,
-                params
-            );
-        },
-        //---------------------------------------------------------------------
-        async afterActions (data,res) {
-            this.hideProgress();
-            await this.getItemRoles();
-            await this.getList();
-        },
-        //---------------------------------------------------------------------
-        async delayedItemUsersSearch() {
-            let self = this;
-
-            if (this.item && this.item.id) {
-                clearTimeout(this.search.delay_timer);
-                this.search.delay_timer = setTimeout(async function() {
-                    await self.getItemRoles();
-                }, this.search.delay_time);
-            }
         },
         //---------------------------------------------------------------------
         isListActionValid()
@@ -393,6 +368,114 @@ export const usePermissionStore = defineStore({
                 await this.getList();
             }
         },
+        //--------------------------------------------------------------------
+        async getUserRoles () {
+            this.showProgress();
+
+            let url = this.ajax_url+'/item/' + this.item.id + '/roles';
+
+            let params = {
+                query: this.user_roles_query,
+                method: 'get',
+            };
+
+             vaah().ajax(
+                url,
+                await this.afterGetUserRoles,
+                params
+            );
+        },
+        //---------------------------------------------------------------------
+        async afterGetUserRoles(data, res) {
+            this.hideProgress();
+
+            if (data) {
+                this.user_roles = data;
+            }
+        },
+        //---------------------------------------------------------------------
+        async delayedUserRolesSearch() {
+            let self = this;
+
+            if (self.item && self.item.id) {
+                clearTimeout(this.search.delay_timer);
+                this.search.delay_timer = setTimeout(async function() {
+                    await self.getUserRoles();
+                },this.search.delay_time)
+            }
+        },
+        //---------------------------------------------------------------------
+        async userRolesPaginate(event) {
+            this.user_roles_query.page = event.page + 1;
+            await this.getUserRoles();
+        },
+        //---------------------------------------------------------------------
+        async changeUserRole(item,id){
+            let params = {
+                id : id,
+                role_id : item.id,
+            };
+
+            let data = {};
+
+            if (item.pivot.is_active) {
+                data.is_active = 0;
+            } else {
+                data.is_active = 1;
+            }
+
+            await this.actions(false, 'toggle-role-active-status', params, data)
+
+        },
+        //---------------------------------------------------------------------
+        async bulkActions (input, action) {
+
+            let params = {
+                id: this.item.id,
+                role_id: null
+            };
+
+            let data = {
+                is_active: input
+            };
+
+            await this.actions(false, action, params, data)
+
+        },
+        //---------------------------------------------------------------------
+        async actions(e, action, inputs, data) {
+            if (e) {
+                e.preventDefault();
+            }
+
+            let url = this.ajax_url+"/actions/"+action;
+
+            let params = {
+                inputs: inputs,
+                data: data,
+            };
+
+            let options = {
+                params: params,
+                method: 'post',
+            };
+
+            vaah().ajax(
+                url,
+                await this.afterActions,
+                options
+            );
+        },
+        //---------------------------------------------------------------------
+        async afterActions(data,res){
+            await this.getList();
+            await this.getUserRoles();
+        },
+        //---------------------------------------------------------------------
+        showModal(item){
+            this.displayModal = true;
+            this.modalData = item.json;
+        },
         //---------------------------------------------------------------------
         async listAction(type = null){
 
@@ -403,7 +486,7 @@ export const usePermissionStore = defineStore({
                 this.action.type = type;
             }
 
-            let url = this.ajax_url+'/actions/'+type
+            let url = this.ajax_url+'/action/'+type
             let method = 'PUT';
 
             switch (type)
@@ -450,6 +533,17 @@ export const usePermissionStore = defineStore({
             switch (type)
             {
                 /**
+                 * Create a record, hence method is `POST`
+                 * https://docs.vaah.dev/guide/laravel.html#create-one-or-many-records
+                 */
+                case 'create-and-new':
+                case 'create-and-close':
+                case 'create-and-clone':
+                    options.method = 'POST';
+                    options.params = item;
+                    break;
+
+                /**
                  * Update a record with many columns, hence method is `PUT`
                  * https://docs.vaah.dev/guide/laravel.html#update-a-record-update-soft-delete-status-change-etc
                  */
@@ -487,10 +581,8 @@ export const usePermissionStore = defineStore({
             );
         },
         //---------------------------------------------------------------------
-        async itemActionAfter(data, res)
-        {
-            if(data)
-            {
+        async itemActionAfter(data, res) {
+            if (data) {
                 this.item = data;
                 await this.getList();
                 await this.formActionAfter();
@@ -513,7 +605,7 @@ export const usePermissionStore = defineStore({
                 case 'create-and-close':
                 case 'save-and-close':
                     this.setActiveItemAsEmpty();
-                    this.$router.push({name: 'permissions.index'});
+                    this.$router.push({name: 'users.index'});
                     break;
                 case 'save-and-clone':
                     this.item.id = null;
@@ -541,11 +633,6 @@ export const usePermissionStore = defineStore({
         async paginate(event) {
             this.query.page = event.page+1;
             await this.getList();
-        },
-        //---------------------------------------------------------------------
-        async rolePaginate(event) {
-            this.permission_roles_query.page = event.page + 1;
-            await this.getItemRoles();
         },
         //---------------------------------------------------------------------
         async reload()
@@ -588,6 +675,7 @@ export const usePermissionStore = defineStore({
         async sync() {
             this.is_btn_loading = true;
             this.query.recount = true;
+
             await this.getList();
         },
         //---------------------------------------------------------------------
@@ -691,45 +779,45 @@ export const usePermissionStore = defineStore({
             await this.updateUrlQueryString(this.query);
         },
         //---------------------------------------------------------------------
-        resetPermissionRolesQuery() {
-            this.permission_roles_query.q = null;
-            this.permission_roles_query.rows = this.assets.rows;
+        async resetUserRolesFilters() {
+            this.user_roles_query.q = null;
+            this.user_roles_query.rows = this.assets.rows;
         },
         //---------------------------------------------------------------------
         closeForm()
         {
-            this.$router.push({name: 'permissions.index'})
+            this.$router.push({name: 'users.index'})
         },
         //---------------------------------------------------------------------
         toList()
         {
             this.item = null;
-            this.$router.push({name: 'permissions.index'})
+            this.$router.push({name: 'users.index'})
         },
         //---------------------------------------------------------------------
         toForm()
         {
             this.item = vaah().clone(this.assets.empty_item);
             this.getFormMenu();
-            this.$router.push({name: 'permissions.form'})
+            this.$router.push({name: 'users.form'})
         },
         //---------------------------------------------------------------------
         toView(item)
         {
             this.item = vaah().clone(item);
-            this.$router.push({name: 'permissions.view', params:{id:item.id}})
+            this.$router.push({name: 'users.view', params:{id:item.id}})
         },
         //---------------------------------------------------------------------
         toEdit(item)
         {
             this.item = item;
-            this.$router.push({name: 'permissions.form', params:{id:item.id}})
+            this.$router.push({name: 'users.form', params:{id:item.id}})
         },
         //---------------------------------------------------------------------
-        toRole(item) {
+        async toRole(item) {
             this.item = item;
-            this.getItemRoles();
-            this.$router.push({name: 'permissions.view-role', params: {id:item.id}})
+            await this.getUserRoles();
+            this.$router.push({name: 'users.role', params: { id: item.id }})
         },
         //---------------------------------------------------------------------
         isViewLarge()
@@ -891,8 +979,32 @@ export const usePermissionStore = defineStore({
                     this.confirmDeleteItem('delete');
                 }
             });
+            item_menu.push({
+                label: 'Active All',
+                icon: 'pi pi-trash',
+                command: () => {
+                    this.confirmDeleteItem('delete');
+                }
+            });
 
             this.item_menu_list = item_menu;
+        },
+        //---------------------------------------------------------------------
+        async getUserRolesMenuItems() {
+            return this.user_roles_menu = [
+                {
+                    label: 'Active All Roles',
+                    command: async () => {
+                        await this.bulkActions(1, 'toggle-role-active-status')
+                    }
+                },
+                {
+                    label: 'Inactive All Roles',
+                    command: async () => {
+                        await this.bulkActions(0, 'toggle-role-active-status')
+                    }
+                },
+            ]
         },
         //---------------------------------------------------------------------
         confirmDeleteItem()
@@ -904,6 +1016,10 @@ export const usePermissionStore = defineStore({
         confirmDeleteItemAfter()
         {
             this.itemAction('delete', this.item);
+        },
+        //--------------------------------------------------------------------
+        onUpload(){
+
         },
         //---------------------------------------------------------------------
         async getFormMenu()
@@ -986,23 +1102,6 @@ export const usePermissionStore = defineStore({
 
         },
         //---------------------------------------------------------------------
-        async getRoleMenu() {
-            return this.roles_menu_items = [
-                {
-                    label: 'Active All Roles',
-                    command: async () => {
-                        await this.bulkActions(1, 'toggle-role-active-status');
-                    }
-                },
-                {
-                    label: 'Inactive All Roles',
-                    command: async () => {
-                        await this.bulkActions(0, 'toggle-role-active-status');
-                    }
-                }
-            ];
-        },
-        //---------------------------------------------------------------------
         hasPermission(slug) {
             const root = useRootStore();
             return vaah().hasPermission(root.permissions, slug);
@@ -1018,7 +1117,6 @@ export const usePermissionStore = defineStore({
             this.show_progress_bar = false;
         }
         //---------------------------------------------------------------------
-        //---------------------------------------------------------------------
     }
 });
 
@@ -1026,5 +1124,5 @@ export const usePermissionStore = defineStore({
 
 // Pinia hot reload
 if (import.meta.hot) {
-    import.meta.hot.accept(acceptHMRUpdate(usePermissionStore, import.meta.hot))
+    import.meta.hot.accept(acceptHMRUpdate(useUserStore, import.meta.hot))
 }

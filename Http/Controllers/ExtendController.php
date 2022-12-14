@@ -12,11 +12,11 @@ use WebReinvent\VaahCms\Entities\Job;
 use WebReinvent\VaahCms\Entities\Module;
 use WebReinvent\VaahCms\Entities\Setting;
 use WebReinvent\VaahCms\Entities\Theme;
-use WebReinvent\VaahCms\Entities\User;
 use WebReinvent\VaahCms\Http\Controllers\Advanced\LogsController;
 use WebReinvent\VaahCms\Libraries\VaahStr;
 use WebReinvent\VaahCms\Models\Permission;
 use WebReinvent\VaahCms\Models\Role;
+use WebReinvent\VaahCms\Models\User;
 
 class ExtendController extends Controller
 {

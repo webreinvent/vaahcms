@@ -1,4 +1,5 @@
-<?php namespace WebReinvent\VaahCms\Entities;
+<?php
+namespace WebReinvent\VaahCms\Models;
 
 
 
@@ -21,11 +22,10 @@ use WebReinvent\VaahCms\Jobs\ProcessMails;
 use WebReinvent\VaahCms\Jobs\ProcessNotifications;
 use WebReinvent\VaahCms\Libraries\VaahMail;
 use WebReinvent\VaahCms\Mail\TestMail;
-use WebReinvent\VaahCms\Models\Permission;
 use WebReinvent\VaahCms\Notifications\MultiFactorCode;
 use WebReinvent\VaahCms\Traits\CrudWithUuidObservantTrait;
 
-class User extends Authenticatable
+class UserBase extends Authenticatable
 {
 
     use Notifiable;
@@ -304,7 +304,7 @@ class User extends Authenticatable
     //-------------------------------------------------
     public function roles()
     {
-        return $this->belongsToMany('WebReinvent\VaahCms\Models\Role',
+        return $this->belongsToMany(Role::class,
             'vh_user_roles', 'vh_user_id', 'vh_role_id'
         )->withPivot('is_active',
             'created_by',
@@ -385,28 +385,26 @@ class User extends Authenticatable
             {
                 $permissions = $role->permissions()->isActive()
                     ->wherePivot('is_active', 1)->get();
-            } else{
+            } else {
                 $permissions = $role->permissions()->get();
             }
 
             foreach ($permissions as $permission) {
 
-                if($role->slug =='super-administrator')
-                {
+                if ($role->slug =='super-administrator') {
                     $permissions_list[$permission->id] = $permission->toArray();
 
-                } else{
-                    if(!$permission->is_active)
-                    {
+                } else {
+                    if (!$permission->is_active) {
                         continue;
                     }
+
                     $permissions_list[$permission->id] = $permission->toArray();
                 }
             }
         }
 
-        if($slugs_only)
-        {
+        if ($slugs_only) {
             $permissions_list = collect($permissions_list)
                 ->pluck('slug')->toArray();
         }
@@ -435,7 +433,7 @@ class User extends Authenticatable
     {
 
         //check if user already exist with the emails
-        $user = User::where('email', $request->email)->first();
+        $user = self::where('email', $request->email)->first();
         if($user)
         {
             $response['success'] = false;
@@ -446,7 +444,7 @@ class User extends Authenticatable
         //check if user already exist with the phone
         if($request->has('country_calling_code') && $request->has('phone'))
         {
-            $user = User::where('country_calling_code', $request->country_calling_code)
+            $user = self::where('country_calling_code', $request->country_calling_code)
                 ->where('phone', $request->phone)
                 ->first();
 
@@ -467,7 +465,7 @@ class User extends Authenticatable
         }
 
         //check if registration record exist
-        $reg_by_email = User::findByEmail($request->email);
+        $reg_by_email = self::findByEmail($request->email);
         if($reg_by_email)
         {
             $response['status'] = 'registration-exist';
@@ -476,7 +474,7 @@ class User extends Authenticatable
         }
 
         if($request->has('country_calling_code') && $request->has('phone')) {
-            $reg_by_phone = User::where('country_calling_code', $request->country_calling_code)
+            $reg_by_phone = self::where('country_calling_code', $request->country_calling_code)
                 ->where('phone', $request->phone)
                 ->first();
 
@@ -492,7 +490,7 @@ class User extends Authenticatable
     //-------------------------------------------------
     public static function isLastSuperAdmin()
     {
-        $count = User::countSuperAdministrators();
+        $count = self::countSuperAdministrators();
         if($count < 2)
         {
             return true;
@@ -1056,7 +1054,7 @@ class User extends Authenticatable
     //-------------------------------------------------
     public static function getAvatarById($id)
     {
-        $user = User::find($id);
+        $user = self::find($id);
         return $user->thumbnail;
     }
     //-------------------------------------------------
@@ -1084,7 +1082,7 @@ class User extends Authenticatable
     public static function getUsersForAssets()
     {
 
-        $list = User::active()
+        $list = self::active()
             ->select('id', 'first_name', 'middle_name', 'last_name')
             ->get();
 
@@ -1092,16 +1090,20 @@ class User extends Authenticatable
 
     }
     //-------------------------------------------------
-
-    public static function create($request)
+    public static function createItem($request)
     {
+        if (!\Auth::user()->hasPermission('can-create-users')) {
+            $response['success'] = false;
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
 
-        $inputs = $request->new_item;
+            return $response;
+        }
+
+        $inputs = $request->all();
 
         $validate = self::validation($inputs);
 
-        if(isset($validate['success']) && !$validate['success'])
-        {
+        if (isset($validate['status']) && $validate['status'] == 'failed') {
             return $validate;
         }
 
@@ -1110,42 +1112,41 @@ class User extends Authenticatable
         );
 
         $validator = \Validator::make( $inputs, $rules);
+
         if ( $validator->fails() ) {
 
             $errors             = errorsToArray($validator->errors());
-            $response['success'] = false;
+            $response['status'] = 'failed';
             $response['errors'] = $errors;
             return $response;
         }
 
         // check if already exist
-        $user = self::where('email',$inputs['email'])->first();
+        $user = self::withTrashed()->where('email',$inputs['email'])->first();
 
-        if($user)
-        {
-            $response['success'] = false;
+        if ($user) {
+            $response['status'] = 'failed';
             $response['errors'][] = trans('vaahcms-user.email_already_registered');
             return $response;
         }
 
         // check if username already exist
-        $user = self::where('username',$inputs['username'])->first();
+        $user = self::withTrashed()->where('username',$inputs['username'])->first();
 
-        if($user)
-        {
-            $response['success'] = false;
+        if ($user) {
+            $response['status'] = 'failed';
             $response['errors'][] = trans('vaahcms-user.username_already_registered');
             return $response;
         }
 
-        if(!isset($inputs['username']))
-        {
+        if (!isset($inputs['username'])) {
             $inputs['username'] = Str::slug($inputs['email']);
         }
 
-        if(!isset($inputs['status']))
-        {
-            $inputs['status'] = 'inactive';
+        if ($inputs['is_active'] == 'active') {
+            $inputs['is_active'] = 1;
+        } else {
+            $inputs['is_active'] = 0;
         }
 
         $inputs['created_ip'] = request()->ip();
@@ -1156,97 +1157,120 @@ class User extends Authenticatable
 
         Role::syncRolesWithUsers();
 
-        $response['success'] = true;
+        $response['status'] = 'success';
         $response['data']['item'] = $reg;
         $response['messages'][] = trans('vaahcms-general.saved_successfully');
         return $response;
 
     }
     //-------------------------------------------------
-    public static function getList($request,$excluded_columns = [])
+    public function scopeGetSorted($query, $filter)
+    {
+        if( !isset($filter['sort'])) {
+            return $query->orderBy('id', 'desc');
+        }
+
+        $sort = $filter['sort'];
+
+        $direction = Str::contains($sort, ':');
+
+        if (!$direction) {
+            return $query->orderBy($sort, 'asc');
+        }
+
+        $sort = explode(':', $sort);
+
+        return $query->orderBy($sort[0], $sort[1]);
+    }
+    //-------------------------------------------------
+    public function scopeIsActiveFilter($query, $filter)
     {
 
-        if(isset($request['recount']) && $request['recount'] == true)
+        if (!isset($filter['is_active'])
+            || is_null($filter['is_active'])
+            || $filter['is_active'] === 'null'
+        )
         {
+            return $query;
+        }
+
+        $is_active = $filter['is_active'];
+
+        if ($is_active === 'true' || $is_active === true) {
+            return $query->whereNotNull('is_active');
+        } else {
+            return $query->whereNull('is_active');
+        }
+    }
+    //-------------------------------------------------
+    public function scopeTrashedFilter($query, $filter)
+    {
+        if (!isset($filter['trashed'])) {
+            return $query;
+        }
+
+        $trashed = $filter['trashed'];
+
+        if ($trashed === 'include') {
+            return $query->withTrashed();
+        } else if($trashed === 'only'){
+            return $query->onlyTrashed();
+        }
+    }
+    //-------------------------------------------------
+    public function scopeSearchFilter($query, $filter)
+    {
+        if (!isset($filter['q'])) {
+            return $query;
+        }
+
+        $search = $filter['q'];
+
+        $query->where(function ($q) use ($search) {
+            $q->where('first_name', 'LIKE', '%'. $search . '%')
+                ->orWhere('last_name', 'LIKE', '%' . $search . '%')
+                ->orWhere('middle_name', 'LIKE', '%' . $search . '%')
+                ->orWhere('display_name', 'LIKE', '%' . $search . '%')
+                ->orWhere(\DB::raw('concat(first_name," ",middle_name," ",last_name)'), 'like', '%' . $search .'%')
+                ->orWhere(\DB::raw('concat(first_name," ",last_name)'), 'like', '%'. $search .'%')
+                ->orWhere('email', 'LIKE', '%' . $search .'%')
+                ->orWhere('id', '=', $search);
+        });
+    }
+    //-------------------------------------------------
+    public static function getList($request,$excluded_columns = [])
+    {
+        if (isset($request['recount']) && $request['recount'] == true) {
             Role::syncRolesWithUsers();
         }
 
-        $list = self::orderBy('created_at', 'DESC');
+        $list = self::getSorted($request->filter);
+        $list->isActiveFilter($request->filter);
+        $list->trashedFilter($request->filter);
+        $list->searchFilter($request->filter);
 
-        if(isset($request['trashed']) && $request['trashed'] == 'true')
-        {
-            $list->withTrashed();
-        }
-
-        if(isset($request['from']) && isset($request['to']))
-        {
+        if (isset($request['from']) && isset($request['to'])) {
             $list->betweenDates($request['from'],$request['to']);
         }
 
-        if(isset($request['status']) && $request['status']){
-            if($request['status'] == 'active')
-            {
-                $list->where('is_active',1);
-            }else{
-                $list->whereNull('is_active')->orWhere('is_active',0);
-            }
-        }
+        $rows = config('vaahcms.per_page');
 
-        if(isset($request['roles']) && is_array($request['roles']) && count($request['roles']) > 0){
-
-            $list->whereHas('roles', function ($query) use ($request){
-                $query->where('vh_user_roles.is_active', '=', 1)->whereIn('vh_roles.slug', $request['roles']);
-            });
-
-        }elseif(isset($request['roles']) && $request['roles']){
-            $list->whereHas('roles', function ($query) use ($request){
-                $query->where('vh_user_roles.is_active', '=', 1)->where('vh_roles.slug', $request['roles']);
-            });
-        }
-
-        if(isset($request['q']))
-        {
-            $list->where(function ($q) use ($request){
-                $q->where('first_name', 'LIKE', '%'.$request['q'].'%')
-                    ->orWhere('last_name', 'LIKE', '%'.$request['q'].'%')
-                    ->orWhere('middle_name', 'LIKE', '%'.$request['q'].'%')
-                    ->orWhere('display_name', 'LIKE', '%'.$request['q'].'%')
-                    ->orWhere(\DB::raw('concat(first_name," ",middle_name," ",last_name)'), 'like', '%'.$request['q'].'%')
-                    ->orWhere(\DB::raw('concat(first_name," ",last_name)'), 'like', '%'.$request['q'].'%')
-                    ->orWhere('email', 'LIKE', '%'.$request['q'].'%')
-                    ->orWhere('id', '=', $request['q']);
-            });
-        }
-
-
-        if(!\Auth::user()->hasPermission('can-see-users-contact-details')){
-            $list->exclude(array_merge(['email','alternate_email', 'phone'],$excluded_columns));
-        }else{
-            $list->exclude($excluded_columns);
+        if ($request->has('rows')) {
+            $rows = $request->rows;
         }
 
         $list->withCount(['activeRoles']);
 
-        if(isset($request['per_page'])
-            && $request['per_page']
-            && is_numeric($request['per_page'])){
-            $list = $list->paginate($request['per_page']);
-        }else{
-            $list = $list->paginate(config('vaahcms.per_page'));
-        }
-
+        $list = $list->paginate($rows);
         $countRole = Role::all()->count();
 
         $response['success'] = true;
-        $response['data']['list'] = $list;
         $response['data']['totalRole'] = $countRole;
+        $response['data'] = $list;
 
         return $response;
-
     }
-
     //-------------------------------------------------
-
     public static function getItem($id,$excluded_columns = [])
     {
 
@@ -1254,9 +1278,16 @@ class User extends Authenticatable
             'updatedByUser', 'deletedByUser'])
             ->withTrashed();
 
-        if(!\Auth::user()->hasPermission('can-see-users-contact-details')){
+        if(!$item)
+        {
+            $response['success'] = false;
+            $response['errors'][] = 'Record not found with ID: '.$id;
+            return $response;
+        }
+
+        if (!\Auth::user()->hasPermission('can-see-users-contact-details')) {
             $item->exclude(array_merge(['email','alternate_email', 'phone'],$excluded_columns));
-        }else{
+        } else {
             $item->exclude($excluded_columns);
         }
 
@@ -1268,13 +1299,10 @@ class User extends Authenticatable
         return $response;
 
     }
-
     //-------------------------------------------------
-
     public static function getItemRoles($request,$id)
     {
-
-        $item = User::withTrashed()->where('id', $id)->first();
+        $item = self::withTrashed()->where('id', $id)->first();
 
         $response['data']['item'] = $item;
 
@@ -1369,7 +1397,7 @@ class User extends Authenticatable
                 return $response;
             }
 
-            $item = User::find($request->id);
+            $item = self::find($request->id);
         } else
         {
             $validation = self::userValidation($request);
@@ -1433,7 +1461,7 @@ class User extends Authenticatable
 
         foreach($request->inputs as $id)
         {
-            $reg = User::where('id',$id)->withTrashed()->first();
+            $reg = self::where('id',$id)->withTrashed()->first();
 
             if($reg->deleted_at){
                 continue ;
@@ -1487,7 +1515,7 @@ class User extends Authenticatable
 
         foreach($request->inputs as $id)
         {
-            $item = User::find($id);
+            $item = self::find($id);
             if($item)
             {
 
@@ -1537,7 +1565,7 @@ class User extends Authenticatable
         foreach($request->inputs as $id)
         {
 
-            $item = User::withTrashed()->where('id', $id)->first();
+            $item = self::withTrashed()->where('id', $id)->first();
 
             if(isset($item) && isset($item->deleted_at))
             {
@@ -1570,12 +1598,12 @@ class User extends Authenticatable
             return $response;
         }
 
-        $item = User::find($inputs['inputs']['id']);
+        $item = self::find($inputs['inputs']['id']);
 
 
         $data = [
             'is_active' => $inputs['data']['is_active'],
-            'updated_by' => Auth::user()->id,
+            //'updated_by' => Auth::user()->id,
             'updated_at' => Carbon::now()
         ];
 
@@ -1584,7 +1612,7 @@ class User extends Authenticatable
             $pivot = $item->roles->find($inputs['inputs']['role_id'])->pivot;
 
             if($pivot->is_active === null && !$pivot->created_by){
-                $data['created_by'] = Auth::user()->id;
+                //$data['created_by'] = Auth::user()->id;
                 $data['created_at'] = Carbon::now();
             }
 
@@ -1851,7 +1879,7 @@ class User extends Authenticatable
             $user_id = \Auth::user()->id;
         }
 
-        $user = User::find($user_id);
+        $user = self::find($user_id);
 
         $user->avatar_url = $request->url;
         $user->save();
@@ -1875,7 +1903,7 @@ class User extends Authenticatable
             $user_id = \Auth::user()->id;
         }
 
-        $user = User::find($user_id);
+        $user = self::find($user_id);
         $user->avatar_url = null;
         $user->save();
 
@@ -1893,12 +1921,12 @@ class User extends Authenticatable
 
         $data = array();
 
-        if($pivot->created_by && User::find($pivot->created_by)){
-            $data['Created by'] = User::find($pivot->created_by)->name;
+        if($pivot->created_by && self::find($pivot->created_by)){
+            $data['Created by'] = self::find($pivot->created_by)->name;
         }
 
-        if($pivot->updated_by && User::find($pivot->updated_by)){
-            $data['Updated by'] = User::find($pivot->updated_by)->name;
+        if($pivot->updated_by && self::find($pivot->updated_by)){
+            $data['Updated by'] = self::find($pivot->updated_by)->name;
         }
 
         if($pivot->created_at){

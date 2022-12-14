@@ -3,7 +3,7 @@ namespace WebReinvent\VaahCms\Libraries;
 
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Notification;
-use WebReinvent\VaahCms\Entities\User;
+use WebReinvent\VaahCms\Models\User;
 use WebReinvent\VaahCms\Notifications\TestSmtp;
 
 use Dotenv\Dotenv;

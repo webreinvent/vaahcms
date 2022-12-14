@@ -5,7 +5,7 @@ namespace WebReinvent\VaahCms\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
-use WebReinvent\VaahCms\Entities\User;
+use WebReinvent\VaahCms\Models\User;
 
 class DashboardController extends Controller
 {

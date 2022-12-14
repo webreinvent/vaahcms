@@ -48,25 +48,25 @@ const toggleFormMenu = (event) => {
                 <div  v-if="store.item && store.item.id"
                       class="p-inputgroup"
                 >
-                    <Button class="p-button-outlined p-button-sm"
+                    <Button class="p-button-sm"
                             :label=" '#' + store.item.id"
                             @click="useVaah.copy(store.item.id)"
                     />
 
-                    <Button class="p-button-outlined p-button-sm"
+                    <Button class="p-button-sm"
                             label="Save"
                             icon="pi pi-save"
                             @click="store.itemAction('save')"
                     />
 
-                    <Button class="p-button-outlined p-button-sm"
+                    <Button class="p-button-sm"
                             icon="pi pi-eye"
                             v-tooltip.top="'View'"
                             @click="store.toView(store.item)"
                     />
 
                     <!--form_menu-->
-                    <Button class="p-button-outlined p-button-sm"
+                    <Button class="p-button-sm"
                             icon="pi pi-angle-down"
                             aria-haspopup="true"
                             type="button"

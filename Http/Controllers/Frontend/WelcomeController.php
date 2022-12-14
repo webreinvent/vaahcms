@@ -9,7 +9,7 @@ use Illuminate\Support\Str;
 use VaahCms\Modules\Cms\Entities\MenuItem;
 use WebReinvent\VaahCms\Entities\Module;
 use WebReinvent\VaahCms\Entities\Theme;
-use WebReinvent\VaahCms\Entities\User;
+use WebReinvent\VaahCms\Models\User;
 use WebReinvent\VaahExtend\Libraries\VaahArtisan;
 use Faker\Factory;
 use WebReinvent\VaahExtend\Libraries\VaahDB;
@@ -137,7 +137,7 @@ class WelcomeController extends Controller
         );
 
         $messages = [
-            'model_namespace.required' => "model_namespace is required. Eg: WebReinvent\VaahCms\Entities\User"
+            'model_namespace.required' => "model_namespace is required. Eg: WebReinvent\VaahCms\Models\User"
         ];
 
         $validator = \Validator::make( $request->all(), $rules, $messages);

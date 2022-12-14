@@ -2,14 +2,15 @@
 import {onMounted, reactive, ref} from "vue";
 import {useRoute} from 'vue-router';
 
-import {useRoleStore} from '../../stores/store-roles'
-import { useConfirm } from "primevue/useconfirm"
+import {useUserStore} from '../../stores/store-users'
 
 import Actions from "./components/Actions.vue";
 import Table from "./components/Table.vue";
 
-const store = useRoleStore();
+const store = useUserStore();
 const route = useRoute();
+
+import { useConfirm } from "primevue/useconfirm";
 const confirm = useConfirm();
 
 
@@ -46,17 +47,16 @@ onMounted(async () => {
 
 </script>
 <template>
-
     <div class="grid">
         <div :class="'col-'+store.list_view_width">
             <Panel>
                 <template class="p-1" #header>
                     <div class="flex flex-row">
                         <div >
-                            <b class="mr-1">Roles</b>
+                            <b class="mr-1">Users</b>
                             <Badge v-if="store.list && store.list.total > 0"
-                                   :value="store.list.total">
-                            </Badge>
+                                   :value="store.list.total"
+                            />
                         </div>
                     </div>
                 </template>
@@ -87,6 +87,4 @@ onMounted(async () => {
 
         <RouterView/>
     </div>
-
-
 </template>
