@@ -54,21 +54,9 @@ const useVaah = vaah();
                     <Badge v-if="prop.data.deleted_at"
                            value="Trashed"
                            severity="danger"></Badge>
-<!--                    <Tag class="mr-2" severity="success" >{{prop.data.status}}</Tag>-->
-                    <Badge class="mr-2" >{{prop.data.status}}</Badge>
+                    {{prop.data.status}}
                 </template>
             </Column>
-
-
-
-             <Column field="updated_at" header="Updated"
-                     v-if="store.isViewLarge()"
-                     style="width:150px;"
-                     :sortable="true">
-                 <template #body="prop">
-                     {{useVaah.ago(prop.data.updated_at)}}
-                 </template>
-             </Column>
 
              <Column field="gender"
                     header="Gender"
@@ -77,6 +65,21 @@ const useVaah = vaah();
                     <Badge v-if="prop.data.deleted_at"
                            value="Trashed"
                            severity="danger"></Badge>
+                    <Badge v-if="prop.data.gender=='M'" value="Male" severity="success" class="mr-2"></Badge>
+                    <Badge v-if="prop.data.gender=='F'" value="Female" severity="info" class="mr-2"></Badge>
+                    <Badge v-if="prop.data.gender=='O'" value="Others" severity="warning" class="mr-2"></Badge>
+                </template>
+            </Column>
+
+
+                <Column field="updated_at" header="Updated"
+                        v-if="store.isViewLarge()"
+                        style="width:150px;"
+                        :sortable="true">
+                    <template #body="prop">
+                        {{useVaah.ago(prop.data.updated_at)}}
+                    </template>
+                </Column>
 
                     <Badge v-if="prop.data.gender=='M'" value="Male" severity="success" class="mr-2"></Badge>
                     <Badge v-if="prop.data.gender=='F'" value="Female" severity="info" class="mr-2"></Badge>

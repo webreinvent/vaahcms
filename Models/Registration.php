@@ -25,9 +25,13 @@ class Registration extends RegistrationBase
     //-------------------------------------------------
     protected $fillable = [
         'uuid',
-        'email',
-        'username',
-//        'is_active',
+
+        'email', 'username', 'password', 'display_name',
+        'title', 'designation', 'first_name', 'middle_name',
+        'last_name', 'gender', 'country_calling_code', 'phone',
+        'bio', 'timezone', 'alternate_email', 'avatar_url',
+        'birth', 'country', 'country_code', 'status',
+
         'created_by',
         'updated_by',
         'deleted_by',
@@ -107,6 +111,7 @@ class Registration extends RegistrationBase
     {
 
         $inputs = $request->all();
+//        dd($inputs);
 
         $validation = self::validation($inputs);
         if (!$validation['success']) {
@@ -454,7 +459,7 @@ class Registration extends RegistrationBase
 
         $update = self::where('id', $id)->withTrashed()->first();
         $update->fill($inputs);
-        $update->slug = Str::slug($inputs['slug']);
+//        $update->slug = Str::slug($inputs['slug']);
         $update->save();
 
         $response = self::getItem($id);
@@ -513,6 +518,21 @@ class Registration extends RegistrationBase
         $rules = array(
 //            'name' => 'required|max:150',
 //            'slug' => 'required|max:150',
+
+            'email' => 'required|email|unique:vh_registrations',
+            'username' => 'required|string|max:150',
+            'password' => 'required|string|min:6',
+            'display_name' => 'required|string|max:150',
+            'title' => 'required',
+            'designation' => 'required|max:150',
+            'first_name' => 'required|string|max:150',
+            'middle_name' => 'required|string|max:150',
+            'last_name' => 'required|string|max:150',
+            'gender' => 'required',
+            'phone' => 'required|numeric|digits:10',
+            'bio' => 'required|max:250',
+            'alternate_email' => 'required|email',
+            'birth' => 'required|date',
         );
 
         $validator = \Validator::make($inputs, $rules);
