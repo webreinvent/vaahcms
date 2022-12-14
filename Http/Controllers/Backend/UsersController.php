@@ -99,8 +99,6 @@ class UsersController extends Controller
             return $response;
         }
 
-        dd(1);
-
         $item = User::where('id',$id)->first();
 
         if(!$item){
