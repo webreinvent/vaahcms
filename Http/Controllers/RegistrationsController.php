@@ -25,6 +25,7 @@ class RegistrationsController extends Controller
     //----------------------------------------------------------
     public function getAssets(Request $request)
     {
+//        dd('im get assets');
 
         if(!\Auth::user()->hasPermission('has-access-of-registrations-section'))
         {
@@ -88,7 +89,6 @@ class RegistrationsController extends Controller
         $response = Registration::getList($request,$excluded_columns);
         return response()->json($response);
     }
-
     //----------------------------------------------------------
     public function getItem(Request $request, $id)
     {

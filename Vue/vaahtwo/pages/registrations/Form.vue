@@ -15,7 +15,9 @@ onMounted(async () => {
         await store.getItem(route.params.id);
     }
     store.getFormMenu();
+
 });
+
 
 //--------form_menu
 const form_menu = ref();
@@ -90,6 +92,7 @@ const toggleFormMenu = (event) => {
 
             <div v-if="store.item">
 
+
                 <VhField label="Email">
                     <InputText class="w-full" v-model="store.item.email">
                     </InputText >
@@ -111,11 +114,17 @@ const toggleFormMenu = (event) => {
                     </InputText >
                 </VhField>
 
+
                 <VhField label="Title">
                     <Dropdown v-model="store.item.title"
-                              :options="cities"
+                              :options="store.assets.name_titles"
+                              optionLabel="name"
+                              optionValue="slug"
                               placeholder="- Select a title -" />
                 </VhField>
+
+
+
 
                 <VhField label="Designation">
                     <InputText class="w-full" v-model="store.item.designation">
@@ -137,16 +146,62 @@ const toggleFormMenu = (event) => {
                 </VhField>
 
                  <VhField label="Gender">
-                    <Dropdown v-model="store.item.gender"
-                              :options="gender"
-                              placeholder="- Select your gender -" />
+                        <RadioButton inputId="male"
+                                     name="gender"
+                                     value="M"
+                                     v-model="store.item.gender" />
+                        <label for="male">Male</label>
+                        <RadioButton inputId="female"
+                                     name="gender"
+                                     value="F"
+                                     v-model="store.item.gender" />
+                        <label for="female">Female</label>
+
+                        <RadioButton inputId="other"
+                                     name="other"
+                                     value="O"
+                                     v-model="store.item.gender" />
+                        <label for="other">Other</label>
+
+                </VhField>
+
+                <VhField label="Country">
+
+                      <Dropdown v-model="store.item.country"
+                              :options="store.assets.countries"
+                              optionLabel="name"
+                              optionValue="name"
+                              :filter="true"
+                              placeholder="- Select a country -"
+                              :showClear="true">
+                    </Dropdown>
                 </VhField>
 
                 <VhField label="Country Code">
-                    <Dropdown v-model="store.item.country_calling_code"
-                              :options="country_calling_code"
-                              placeholder="- Select a country code -" />
+
+                      <Dropdown v-model="store.item.country_code"
+                              :options="store.assets.countries"
+                              optionLabel="code"
+                              optionValue="code"
+                              :filter="true"
+                              placeholder="- Select Country code -"
+                              :showClear="true">
+                    </Dropdown>
                 </VhField>
+
+
+                <VhField label="Country  Code">
+                    <Dropdown v-model="store.item.country_calling_code"
+                              :options="store.assets.country_calling_code"
+                              optionLabel="calling_code"
+                              optionValue='calling_code'
+                              placeholder="- Select a country code -" >
+                    </Dropdown>
+                </VhField>
+
+
+
+
                 <VhField label="Phone">
                     <InputNumber inputId="withoutgrouping" v-model="store.item.phone"  :useGrouping="false" />
                 </VhField>
@@ -156,10 +211,18 @@ const toggleFormMenu = (event) => {
                 </VhField>
 
                 <VhField label="Timezone">
-                    <AutoComplete v-model="store.item.timezone"
-                                  @complete="searchCountry($event)"
-                                  optionLabel="name" />
+
+                    <Dropdown v-model="store.item.timezone"
+                              :options="store.assets.timezones"
+                              optionLabel="name"
+                              optionValue="slug"
+                              :filter="true"
+                              placeholder="- Select a title -"
+                              :showClear="true">
+                    </Dropdown>
+
                 </VhField>
+
 
                 <VhField label="Alternate Email">
                     <InputText class="w-full"
@@ -173,15 +236,13 @@ const toggleFormMenu = (event) => {
                               dateFormat="mm-dd-yy" />
                 </VhField>
 
-                 <VhField label="Country">
-                    <AutoComplete v-model="store.item.country"
-                                  @complete="searchCountry($event)"
-                                  optionLabel="name" />
-                </VhField>
+
 
                 <VhField label="Status">
                     <Dropdown v-model="store.item.status"
-                              :options="registration_statuses"
+                              :options="store.assets.registration_statuses"
+                              optionLabel="name"
+                              optionValue="slug"
                               placeholder="- Select a status -" />
                 </VhField>
 
