@@ -104,13 +104,17 @@ const toggleFormMenu = (event) => {
                 </VhField>
 
                 <VhField label="Password">
-                    <Password  class="w-full" v-model="store.item.password">
+                    <Password  class="w-full" v-model="store.item.password" :feedback="false" toggleMask>
                     </Password  >
                 </VhField>
 
 
                 <VhField label="Display Name">
                     <InputText class="w-full" v-model="store.item.display_name">
+                    </InputText >
+                </VhField>
+                <VhField label="Designation">
+                    <InputText class="w-full" v-model="store.item.designation">
                     </InputText >
                 </VhField>
 
@@ -123,13 +127,6 @@ const toggleFormMenu = (event) => {
                               placeholder="- Select a title -" />
                 </VhField>
 
-
-
-
-                <VhField label="Designation">
-                    <InputText class="w-full" v-model="store.item.designation">
-                    </InputText >
-                </VhField>
 
                 <VhField label="First Name">
                     <InputText class="w-full" v-model="store.item.first_name">
@@ -144,6 +141,8 @@ const toggleFormMenu = (event) => {
                     <InputText class="w-full" v-model="store.item.last_name">
                     </InputText >
                 </VhField>
+
+
 
                  <VhField label="Gender">
                         <RadioButton inputId="male"
@@ -190,12 +189,12 @@ const toggleFormMenu = (event) => {
                 </VhField>
 
 
-                <VhField label="Country  Code">
+                <VhField label="Calling  Code">
                     <Dropdown v-model="store.item.country_calling_code"
                               :options="store.assets.country_calling_code"
-                              optionLabel="calling_code"
+                              optionLabel='calling_code'
                               optionValue='calling_code'
-                              placeholder="- Select a country code -" >
+                              placeholder="- Select Country Calling Code -" >
                     </Dropdown>
                 </VhField>
 
