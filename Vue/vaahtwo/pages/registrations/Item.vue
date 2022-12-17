@@ -133,6 +133,7 @@ const toggleItemMenu = (event) => {
                     <tbody class="p-datatable-tbody">
                     <template v-for="(value, column) in store.item ">
 
+
                         <template v-if="column === 'created_by' || column === 'updated_by'">
                         </template>
 
@@ -156,6 +157,19 @@ const toggleItemMenu = (event) => {
                                        type="yes-no"
                             />
                         </template>
+                        <template v-else-if="column === 'gender'">
+                            <tr>
+                                <td><b>Gender</b></td>
+                                <td>
+                                    <Badge v-if="value=='M'" value="Male" severity="success" class="mr-2"></Badge>
+                                    <Badge v-if="value=='F'" value="Female" severity="info" class="mr-2"></Badge>
+                                    <Badge v-if="value=='O'" value="Others" severity="warning" class="mr-2"></Badge>
+                                </td>
+                            </tr>
+
+
+                        </template>
+
 
                         <template v-else>
                             <VhViewRow :label="column"

@@ -309,6 +309,9 @@ export const useRegistrationStore = defineStore({
         },
         //---------------------------------------------------------------------
         itemAction(type, item=null){
+            // console.log('type '+ type);
+            // console.log('item '+ item);
+            // console.log( item);
             if(!item)
             {
                 item = this.item;

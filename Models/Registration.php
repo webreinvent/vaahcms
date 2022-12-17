@@ -2,6 +2,7 @@
 
 use Carbon\Carbon;
 use DateTimeInterface;
+use http\Env\Request;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
@@ -27,7 +28,7 @@ class Registration extends RegistrationBase
         'uuid',
 
         'email', 'username', 'password', 'display_name',
-        'title', 'designation', 'first_name', 'middle_name',
+        'designation','title', 'first_name', 'middle_name',
         'last_name', 'gender', 'country_calling_code', 'phone',
         'bio', 'timezone', 'alternate_email', 'avatar_url',
         'birth', 'country', 'country_code', 'status',
@@ -432,7 +433,7 @@ class Registration extends RegistrationBase
     {
         $inputs = $request->all();
 
-        $validation = self::validation($inputs);
+        $validation = self::validation($inputs,$id);
         if (!$validation['success']) {
             return $validation;
         }
@@ -462,7 +463,13 @@ class Registration extends RegistrationBase
 //        $update->slug = Str::slug($inputs['slug']);
         $update->save();
 
-        $response = self::getItem($id);
+//        $response = self::getItem($id);
+        $item = self::getItem($id);
+
+        $response['success'] = true;
+        $response['data']['item'] = $item;
+        $response['messages'][] = 'Saved successfully.';
+//        dd($response);
 
         return $response;
     }
@@ -486,6 +493,7 @@ class Registration extends RegistrationBase
     //-------------------------------------------------
     public static function itemAction($request, $id, $type): array
     {
+//        dd($type);
         switch($type)
         {
             case 'activate':
@@ -512,27 +520,35 @@ class Registration extends RegistrationBase
     }
     //-------------------------------------------------
 
-    public static function validation($inputs)
+    public static function validation($inputs, $id=null)
     {
 
         $rules = array(
 //            'name' => 'required|max:150',
 //            'slug' => 'required|max:150',
 
-            'email' => 'required|email|unique:vh_registrations',
+            'email' => "required|email|unique:vh_registrations,email,$id",
             'username' => 'required|string|max:150',
             'password' => 'required|string|min:6',
             'display_name' => 'required|string|max:150',
-            'title' => 'required',
+
             'designation' => 'required|max:150',
+            'title' => 'required',
             'first_name' => 'required|string|max:150',
-            'middle_name' => 'required|string|max:150',
+            'middle_name' => 'nullable|string|max:150',
+
             'last_name' => 'required|string|max:150',
             'gender' => 'required',
+            'country' => 'required',
+            'country_code' => 'required',
+
             'phone' => 'required|numeric|digits:10',
             'bio' => 'required|max:250',
             'alternate_email' => 'required|email',
             'birth' => 'required|date',
+
+            'timezone' => 'required',
+            'status' => 'required',
         );
 
         $validator = \Validator::make($inputs, $rules);
@@ -555,6 +571,25 @@ class Registration extends RegistrationBase
             ->first();
         return $item;
     }
+    public function getCountryCallingCodeAttribute($value)
+    {
+        $calling_code_int=$value;
+        $calling_code_string=(string) $calling_code_int;
+        return $calling_code_string;
+    }
+    /*public function getGenderAttribute($value)
+    {
+        if($value=='M'){
+            return 'Male';
+        }
+        elseif ($value=='F'){
+            return 'Female';
+        }
+        else{
+            return 'Others';
+        }
+    }*/
+
 
     //-------------------------------------------------
     //-------------------------------------------------
