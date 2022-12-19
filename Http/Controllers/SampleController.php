@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Hash;
-use WebReinvent\VaahCms\Entities\Registration;
+use WebReinvent\VaahCms\Models\Registration;
 
 class SampleController extends Controller
 {
