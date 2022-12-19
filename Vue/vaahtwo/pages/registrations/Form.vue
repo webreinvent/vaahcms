@@ -113,11 +113,6 @@ const toggleFormMenu = (event) => {
                     <InputText class="w-full" v-model="store.item.display_name">
                     </InputText >
                 </VhField>
-                <VhField label="Designation">
-                    <InputText class="w-full" v-model="store.item.designation">
-                    </InputText >
-                </VhField>
-
 
                 <VhField label="Title">
                     <Dropdown v-model="store.item.title"
@@ -125,6 +120,11 @@ const toggleFormMenu = (event) => {
                               optionLabel="name"
                               optionValue="slug"
                               placeholder="- Select a title -" />
+                </VhField>
+
+                <VhField label="Designation">
+                    <InputText class="w-full" v-model="store.item.designation">
+                    </InputText >
                 </VhField>
 
 
@@ -162,9 +162,12 @@ const toggleFormMenu = (event) => {
                                      v-model="store.item.gender" />
                         <label for="other">Other</label>
 
+
                 </VhField>
 
-                <VhField label="Country">
+
+
+<!--                <VhField label="Country">
 
                       <Dropdown v-model="store.item.country"
                               :options="store.assets.countries"
@@ -174,9 +177,9 @@ const toggleFormMenu = (event) => {
                               placeholder="- Select a country -"
                               :showClear="true">
                     </Dropdown>
-                </VhField>
+                </VhField>-->
 
-                <VhField label="Country Code">
+<!--                <VhField label="Country Code">
 
                       <Dropdown v-model="store.item.country_code"
                               :options="store.assets.countries"
@@ -186,15 +189,15 @@ const toggleFormMenu = (event) => {
                               placeholder="- Select Country code -"
                               :showClear="true">
                     </Dropdown>
-                </VhField>
+                </VhField>-->
 
 
-                <VhField label="Calling  Code">
+                <VhField label="Country Code">
                     <Dropdown v-model="store.item.country_calling_code"
                               :options="store.assets.country_calling_code"
                               optionLabel='calling_code'
                               optionValue='calling_code'
-                              placeholder="- Select Country Calling Code -" >
+                              placeholder="- Select a country code -" >
                     </Dropdown>
                 </VhField>
 
@@ -232,6 +235,7 @@ const toggleFormMenu = (event) => {
                 <VhField label="Date of Birth">
                     <Calendar inputId="dateformat"
                               v-model="store.item.birth"
+                              :showIcon="true"
                               dateFormat="mm-dd-yy" />
                 </VhField>
 

@@ -120,14 +120,21 @@ class Registration extends RegistrationBase
         }
 
 
-        // check if name exist
-//        $item = self::where('name', $inputs['name'])->first();
+        // check if email exist
+        $item = self::where('email', $inputs['email'])->first();
 
-       /* if ($item) {
+        if ($item) {
             $response['success'] = false;
-            $response['messages'][] = "This name is already exist.";
+            $response['messages'][] = "This email is already exist.";
             return $response;
-        }*/
+        }
+        if($inputs['email'] && $inputs['alternate_email']
+            && $inputs['email']==$inputs['alternate_email'] )
+        {
+             $response['success'] = false;
+             $response['messages'][] = "This alternate email should be different";
+             return $response;
+        }
 
         // check if slug exist
        /* $item = self::where('slug', $inputs['slug'])->first();
@@ -437,6 +444,13 @@ class Registration extends RegistrationBase
         if (!$validation['success']) {
             return $validation;
         }
+        if($inputs['email'] && $inputs['alternate_email']
+            && $inputs['email']==$inputs['alternate_email'] )
+        {
+             $response['success'] = false;
+             $response['messages'][] = "This alternate email should be different";
+             return $response;
+        }
 
         // check if name exist
        /* $user = self::where('id', '!=', $inputs['id'])
@@ -447,6 +461,8 @@ class Registration extends RegistrationBase
             $response['messages'][] = "This name is already exist.";
             return $response;
         }
+
+
 
         // check if slug exist
         $user = self::where('id', '!=', $inputs['id'])
@@ -539,8 +555,8 @@ class Registration extends RegistrationBase
 
             'last_name' => 'required|string|max:150',
             'gender' => 'required',
-            'country' => 'required',
-            'country_code' => 'required',
+            'country_calling_code' => 'required',
+//            'country_code' => 'required',
 
             'phone' => 'required|numeric|digits:10',
             'bio' => 'required|max:250',
