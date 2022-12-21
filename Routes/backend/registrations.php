@@ -1,5 +1,6 @@
 <?php
 
+
 Route::group(
     [
         'prefix' => 'backend/vaah/registrations',

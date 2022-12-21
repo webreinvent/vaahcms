@@ -9,10 +9,10 @@ use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Hash;
 use WebReinvent\VaahCms\Models\Registration;
 use WebReinvent\VaahCms\Entities\Setting;
+use WebReinvent\VaahCms\Entities\Taxonomy;
 use WebReinvent\VaahCms\Models\User;
-use WebReinvent\VaahCms\Models\Role;
 
-class UsersController extends Controller
+class RegistrationsController extends Controller
 {
 
     public $theme;
@@ -25,8 +25,9 @@ class UsersController extends Controller
     //----------------------------------------------------------
     public function getAssets(Request $request)
     {
+//        dd('im get assets');
 
-        if(!\Auth::user()->hasPermission('has-access-of-users-section'))
+        if(!\Auth::user()->hasPermission('has-access-of-registrations-section'))
         {
             $response['success'] = false;
             $response['errors'][] = trans("vaahcms::messages.permission_denied");
@@ -34,16 +35,13 @@ class UsersController extends Controller
             return response()->json($response);
         }
 
-        $role = Role::withTrashed()->select('id','uuid','name','slug')->get();
-
         $data['country_calling_code'] = vh_get_country_list();
         $data['countries'] = vh_get_country_list();
         $data['timezones'] = vh_get_timezones();
         $data['country_code'] = vh_get_country_list();
-        $data['registration_statuses'] = vh_registration_statuses();
+        $data['registration_statuses'] = Taxonomy::getTaxonomyByType('registrations');
         $data['bulk_actions'] = vh_general_bulk_actions();
         $data['name_titles'] = vh_name_titles();
-        $data['role'] = $role;
         $data['fields'] = User::getUserSettings();
         $data['custom_fields'] = Setting::where('category','user_setting')
             ->where('label','custom_fields')->first();
@@ -57,7 +55,7 @@ class UsersController extends Controller
     public function postCreate(Request $request)
     {
 
-        if(!\Auth::user()->hasPermission('can-create-users'))
+        if(!\Auth::user()->hasPermission('can-create-registrations'))
         {
             $response['success'] = false;
             $response['errors'][] = trans("vaahcms::messages.permission_denied");
@@ -65,15 +63,20 @@ class UsersController extends Controller
             return response()->json($response);
         }
 
+        $response = Registration::create($request);
 
-        $response = User::create($request);
+        if(isset($response['success']) && $response['success'])
+        {
+            $list = Registration::getList($request);
+            $response['data']['list'] = $list['data']['list'];
+        }
+
         return response()->json($response);
     }
     //----------------------------------------------------------
     public function getList(Request $request)
     {
-
-        if(!\Auth::user()->hasPermission('has-access-of-users-section'))
+        if(!\Auth::user()->hasPermission('has-access-of-registrations-section'))
         {
             $response['success'] = false;
             $response['errors'][] = trans("vaahcms::messages.permission_denied");
@@ -81,15 +84,16 @@ class UsersController extends Controller
             return response()->json($response);
         }
 
-        $excluded_columns = User::getUserSettings(true);
+        $excluded_columns = User::getUserSettings(true,true);
 
-        $response = User::getList($request,$excluded_columns);
+        $response = Registration::getList($request,$excluded_columns);
         return response()->json($response);
     }
     //----------------------------------------------------------
     public function getItem(Request $request, $id)
     {
-        if(!\Auth::user()->hasPermission('can-read-users'))
+
+        if(!\Auth::user()->hasPermission('can-read-registrations'))
         {
             $response['success'] = false;
             $response['errors'][] = trans("vaahcms::messages.permission_denied");
@@ -97,30 +101,31 @@ class UsersController extends Controller
             return response()->json($response);
         }
 
-        $excluded_columns = User::getUserSettings(true);
+        $excluded_columns = User::getUserSettings(true,true);
 
-        $response = User::getItem($id,$excluded_columns);
+        $request->merge(['id'=>$id]);
+        $response = Registration::getItem($request,$excluded_columns);
         return response()->json($response);
     }
     //----------------------------------------------------------
-    public function getItemRoles(Request $request, $id)
+    public function createUser(Request $request,$id)
     {
-
-        if(!\Auth::user()->hasPermission('can-read-users'))
+        if(!\Auth::user()->hasPermission('can-create-users-from-registrations'))
         {
             $response['success'] = false;
             $response['errors'][] = trans("vaahcms::messages.permission_denied");
 
-            return response()->json($response);
+            return $response;
         }
 
-        $response = User::getItemRoles($request, $id);
+        $response = Registration::createUser($id);
         return response()->json($response);
     }
     //----------------------------------------------------------
     public function postStore(Request $request)
     {
-        if(!\Auth::user()->hasPermission('can-update-users'))
+
+        if(!\Auth::user()->hasPermission('can-update-registrations'))
         {
             $response['success'] = false;
             $response['errors'][] = trans("vaahcms::messages.permission_denied");
@@ -128,12 +133,15 @@ class UsersController extends Controller
             return response()->json($response);
         }
 
-        $response = User::postStore($request);
+        $response = Registration::postStore($request);
         return response()->json($response);
     }
     //----------------------------------------------------------
+
+    //----------------------------------------------------------
     public function postActions(Request $request, $action)
     {
+
         $rules = array(
             'inputs' => 'required',
         );
@@ -149,16 +157,14 @@ class UsersController extends Controller
 
         $response = [];
 
-        $request->merge(['action'=>$action]);
-
         switch ($action)
         {
 
             //------------------------------------
             case 'bulk-change-status':
 
-                if(!\Auth::user()->hasPermission('can-manage-users') &&
-                    !\Auth::user()->hasPermission('can-update-users'))
+                if(!\Auth::user()->hasPermission('can-manage-registrations') &&
+                    !\Auth::user()->hasPermission('can-update-registrations'))
                 {
                     $response['success'] = false;
                     $response['errors'][] = trans("vaahcms::messages.permission_denied");
@@ -166,13 +172,12 @@ class UsersController extends Controller
                     return $response;
                 }
 
-                $response = User::bulkStatusChange($request);
-
+                $response = Registration::bulkStatusChange($request);
                 break;
             //------------------------------------
             case 'bulk-trash':
 
-                if(!\Auth::user()->hasPermission('can-update-users'))
+                if(!\Auth::user()->hasPermission('can-update-registrations'))
                 {
                     $response['success'] = false;
                     $response['errors'][] = trans("vaahcms::messages.permission_denied");
@@ -180,13 +185,13 @@ class UsersController extends Controller
                     return $response;
                 }
 
-                $response = User::bulkTrash($request);
+                $response = Registration::bulkTrash($request);
 
                 break;
             //------------------------------------
             case 'bulk-restore':
 
-                if(!\Auth::user()->hasPermission('can-update-users'))
+                if(!\Auth::user()->hasPermission('can-update-registrations'))
                 {
                     $response['success'] = false;
                     $response['errors'][] = trans("vaahcms::messages.permission_denied");
@@ -194,15 +199,15 @@ class UsersController extends Controller
                     return $response;
                 }
 
-                $response = User::bulkRestore($request);
+                $response = Registration::bulkRestore($request);
 
                 break;
 
             //------------------------------------
             case 'bulk-delete':
 
-                if(!\Auth::user()->hasPermission('can-update-users') ||
-                    !\Auth::user()->hasPermission('can-delete-users'))
+                if(!\Auth::user()->hasPermission('can-update-registrations') ||
+                    !\Auth::user()->hasPermission('can-delete-registrations'))
                 {
                     $response['success'] = false;
                     $response['errors'][] = trans("vaahcms::messages.permission_denied");
@@ -210,14 +215,14 @@ class UsersController extends Controller
                     return $response;
                 }
 
-                $response = User::bulkDelete($request);
+                $response = Registration::bulkDelete($request);
 
                 break;
             //------------------------------------
-            case 'toggle_role_active_status':
+            case 'send-verification-mail':
 
-                if(!\Auth::user()->hasPermission('can-manage-users') &&
-                    !\Auth::user()->hasPermission('can-update-users'))
+                if(!\Auth::user()->hasPermission('can-manage-registrations') &&
+                    !\Auth::user()->hasPermission('can-update-registrations'))
                 {
                     $response['success'] = false;
                     $response['errors'][] = trans("vaahcms::messages.permission_denied");
@@ -225,7 +230,7 @@ class UsersController extends Controller
                     return $response;
                 }
 
-                $response = User::bulkChangeRoleStatus($request);
+                $response = Registration::sendVerificationEmail($request);
 
                 break;
             //------------------------------------
@@ -236,113 +241,9 @@ class UsersController extends Controller
 
     }
     //----------------------------------------------------------
-    public function storeAvatar(Request $request)
-    {
 
-        if(!\Auth::user()->hasPermission('can-update-users'))
-        {
-            $response['success'] = false;
-            $response['errors'][] = trans("vaahcms::messages.permission_denied");
-
-            return response()->json($response);
-        }
-
-        $rules = array(
-            'user_id' => 'required',
-        );
-
-        $validator = \Validator::make( $request->all(), $rules);
-        if ( $validator->fails() ) {
-
-            $errors             = errorsToArray($validator->errors());
-            $response['success'] = false;
-            $response['errors'] = $errors;
-            return response()->json($response);
-        }
-
-        $response = User::storeAvatar($request, $request->user_id);
-        return response()->json($response);
-    }
     //----------------------------------------------------------
-    public function removeAvatar(Request $request)
-    {
-
-        if(!\Auth::user()->hasPermission('can-update-users'))
-        {
-            $response['success'] = false;
-            $response['errors'][] = trans("vaahcms::messages.permission_denied");
-
-            return response()->json($response);
-        }
-
-        $rules = array(
-            'user_id' => 'required',
-        );
-
-        $validator = \Validator::make( $request->all(), $rules);
-        if ( $validator->fails() ) {
-
-            $errors             = errorsToArray($validator->errors());
-            $response['success'] = false;
-            $response['errors'] = $errors;
-            return response()->json($response);
-        }
-
-
-        $response = User::removeAvatar($request->user_id);
-        return response()->json($response);
-    }
     //----------------------------------------------------------
-    public function getProfile(Request $request)
-    {
-
-        $data['profile'] = User::find(\Auth::user()->id);
-
-        $data['mfa_methods'] = config('settings.global.mfa_methods');
-        $data['mfa_status'] = config('settings.global.mfa_status');
-
-        $response['success'] = true;
-        $response['data'] = $data;
-        if(env('APP_DEBUG'))
-        {
-            $response['hint'][] = '';
-        }
-
-        return response()->json($response);
-
-    }
-    //----------------------------------------------------------
-    public function storeProfile(Request $request)
-    {
-        $response = User::storeProfile($request);
-        return response()->json($response);
-    }
-    //----------------------------------------------------------
-    public function storeProfilePassword(Request $request)
-    {
-        $response = User::storePassword($request);
-
-        if(isset($response['success']) && $response['success'])
-        {
-            \Auth::logout();
-
-            $response['data']['redirect_url'] = route('vh.backend');
-        }
-
-        return response()->json($response);
-    }
-    //----------------------------------------------------------
-    public function storeProfileAvatar(Request $request)
-    {
-        $response = User::storeAvatar($request);
-        return response()->json($response);
-    }
-    //----------------------------------------------------------
-    public function removeProfileAvatar(Request $request)
-    {
-        $response = User::removeAvatar();
-        return response()->json($response);
-    }
     //----------------------------------------------------------
 
 
