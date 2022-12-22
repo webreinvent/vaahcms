@@ -4,11 +4,11 @@ import { vaah } from '../vaahvue/pinia/vaah'
 import { useRootStore } from "./root";
 import qs from 'qs'
 
-let model_namespace = 'WebReinvent\\VaahCms\\Models\\Role';
+let model_namespace = 'WebReinvent\\VaahCms\\Models\\Setting';
 
 
 let base_url = document.getElementsByTagName('base')[0].getAttribute("href");
-let ajax_url = base_url + "/vaah/roles";
+let ajax_url = base_url + "/vaah/settings";
 
 let empty_states = {
     query: {
@@ -21,6 +21,16 @@ let empty_states = {
             sort: null,
         },
         recount: null,
+    },
+
+    sidebar_menu_items:[],
+
+    list: null,
+    settings:{
+        list: null,
+        links: [],
+        scripts: null,
+        meta_tags: [],
     },
 
     role_permissions_query: {
@@ -42,7 +52,7 @@ let empty_states = {
     }
 };
 
-export const useRoleStore = defineStore({
+export const useSettingStore = defineStore({
     id: 'roles',
     state: () => ({
         base_url: base_url,
@@ -51,6 +61,7 @@ export const useRoleStore = defineStore({
         assets_is_fetching: true,
         app: null,
         assets: null,
+        general_assets: null,
         rows_per_page: [10,20,30,50,100,500],
         list: null,
         item: {
@@ -155,9 +166,9 @@ export const useRoleStore = defineStore({
             watch(route, (newVal,oldVal) =>
                 {
                     this.route = newVal;
-                    // if (newVal.params.id) {
-                    //     this.getItem(newVal.params.id);
-                    // }
+                    if(newVal.params.id){
+                        this.getItem(newVal.params.id);
+                    }
                     this.setViewAndWidth(newVal.name);
                 }, { deep: true }
             )
@@ -184,33 +195,24 @@ export const useRoleStore = defineStore({
             });
         },
         //---------------------------------------------------------------------
-        async getAssets() {
+        async getGeneralAssets() {
 
             if(this.assets_is_fetching === true){
                 this.assets_is_fetching = false;
 
                 vaah().ajax(
-                    this.ajax_url+'/assets',
-                    this.afterGetAssets,
+                    this.ajax_url+'/general/assets',
+                    this.afterGetGeneralAssets,
                 );
             }
         },
         //---------------------------------------------------------------------
-        afterGetAssets(data, res)
+        afterGetGeneralAssets(data, res)
         {
             if(data)
             {
-                this.assets = data;
-                if(data.rows)
-                {
-                    this.query.rows = data.rows;
-                    this.role_permissions_query.rows = data.rows;
-                    this.role_users_query.rows = data.rows;
-                }
+                this.general_assets = data;
 
-                if(this.route.params && !this.route.params.id){
-                    this.item = vaah().clone(data.empty_item);
-                }
 
             }
         },
@@ -1218,5 +1220,5 @@ export const useRoleStore = defineStore({
 
 // Pinia hot reload
 if (import.meta.hot) {
-    import.meta.hot.accept(acceptHMRUpdate(useRoleStore, import.meta.hot))
+    import.meta.hot.accept(acceptHMRUpdate(useSettingStore, import.meta.hot))
 }

@@ -13,6 +13,9 @@ a{
         color: $textColor;
     }
 }
+.p-toast{
+    z-index: 1000 !important;
+}
 body{
     color:$textColor;
     font-family: $fontFamily;
