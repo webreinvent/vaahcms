@@ -160,6 +160,7 @@ class Registration extends RegistrationBase
     //-------------------------------------------------
     public function scopeGetSorted($query, $filter)
     {
+//        dd($filter);
 
         if(!isset($filter['sort']))
         {
@@ -228,15 +229,23 @@ class Registration extends RegistrationBase
             return $query;
         }
         $search = $filter['q'];
-        /*$query->where(function ($q) use ($search) {
-            $q->where('name', 'LIKE', '%' . $search . '%')
-                ->orWhere('slug', 'LIKE', '%' . $search . '%');
-        });*/
+        $query->where(function ($q) use ($search) {
+            $q->where('first_name', 'LIKE', '%'.$search.'%')
+                    ->orWhere('last_name', 'LIKE', '%'.$search.'%')
+                    ->orWhere('middle_name', 'LIKE', '%'.$search.'%')
+                    ->orWhere('display_name', 'LIKE', '%'.$search.'%')
+                    ->orWhere(\DB::raw('concat(first_name," ",middle_name," ",last_name)'), 'like', '%'.$search.'%')
+                    ->orWhere(\DB::raw('concat(first_name," ",last_name)'), 'like', '%'.$search.'%')
+                    ->orWhere('email', 'LIKE', '%'.$search.'%')
+                    ->orWhere('id', '=', $search);
+        });
+
 
     }
     //-------------------------------------------------
     public static function getList($request,$excluded_columns = [])
     {
+//        dd($request->filter);
         $list = self::getSorted($request->filter);
         $list->isActiveFilter($request->filter);
         $list->trashedFilter($request->filter);
@@ -561,7 +570,7 @@ class Registration extends RegistrationBase
             'phone' => 'required|numeric|digits:10',
             'bio' => 'required|max:250',
             'alternate_email' => 'required|email',
-            'birth' => 'required|date',
+            'birth' => 'required|date|before:today',
 
             'timezone' => 'required',
             'status' => 'required',

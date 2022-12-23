@@ -23,13 +23,14 @@ onMounted(async () => {
 const form_menu = ref();
 const toggleFormMenu = (event) => {
     form_menu.value.toggle(event);
+
 };
 //--------/form_menu
 
 </script>
 <template>
 
-    <div class="col-6" >
+    <div class="col-4" >
 
         <Panel >
 
@@ -43,6 +44,7 @@ const toggleFormMenu = (event) => {
                         </span>
                         <span v-else>
                             Create
+
                         </span>
                     </div>
 
@@ -103,7 +105,11 @@ const toggleFormMenu = (event) => {
                     </InputText >
                 </VhField>
 
-                <VhField label="Password">
+                <VhField v-if="store.item && store.item.id" label="New Password">
+                    <Password  class="w-full" v-model="store.item.password" :feedback="false" toggleMask>
+                    </Password  >
+                </VhField>
+                <VhField v-else label="Password">
                     <Password  class="w-full" v-model="store.item.password" :feedback="false" toggleMask>
                     </Password  >
                 </VhField>
@@ -237,6 +243,17 @@ const toggleFormMenu = (event) => {
                               v-model="store.item.birth"
                               :showIcon="true"
                               dateFormat="mm-dd-yy" />
+                </VhField>
+
+                <VhField label="Country">
+                      <Dropdown v-model="store.item.country"
+                              :options="store.assets.countries"
+                              optionLabel="name"
+                              optionValue="name"
+                              :filter="true"
+                              placeholder="- Select a country -"
+                              :showClear="true">
+                    </Dropdown>
                 </VhField>
 
 

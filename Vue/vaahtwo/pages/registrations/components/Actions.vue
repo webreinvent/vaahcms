@@ -41,6 +41,7 @@ const toggleBulkMenuState = (event) => {
                     @click="toggleSelectedMenuState"
                     aria-haspopup="true"
                     aria-controls="overlay_menu">
+                    <span> Actions </span>
                     <i class="pi pi-angle-down"></i>
                     <Badge v-if="store.action.items.length > 0"
                            :value="store.action.items.length" />
@@ -57,7 +58,10 @@ const toggleBulkMenuState = (event) => {
                     aria-haspopup="true"
                     aria-controls="bulk_menu_state"
                     class="ml-1">
-                    <i class="pi pi-ellipsis-h"></i>
+<!--                    <i class="pi pi-ellipsis-h"></i>-->
+                    <span> Bulk Actions </span>
+                    <i class="pi pi-angle-down"></i>
+<!--                    <i class="pi pi-ellipsis-h"></i>-->
                 </Button>
                 <Menu ref="bulk_menu_state"
                       :model="store.list_bulk_menu"

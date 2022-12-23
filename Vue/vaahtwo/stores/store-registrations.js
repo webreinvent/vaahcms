@@ -97,7 +97,7 @@ export const useRegistrationStore = defineStore({
                     break;
                 default:
                     this.view = 'small';
-                    this.list_view_width = 6;
+                    this.list_view_width = 8;
                     break
             }
         },
@@ -309,9 +309,9 @@ export const useRegistrationStore = defineStore({
         },
         //---------------------------------------------------------------------
         itemAction(type, item=null){
-            // console.log('type '+ type);
-            // console.log('item '+ item);
-            // console.log( item);
+            console.log('type '+ type);
+            console.log('item '+ item);
+            console.log( item);
             if(!item)
             {
                 item = this.item;
