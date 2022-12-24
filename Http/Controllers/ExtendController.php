@@ -8,7 +8,7 @@ use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
 use WebReinvent\VaahCms\Entities\FailedJob;
-use WebReinvent\VaahCms\Entities\Job;
+use Webreinvent\VaahCms\Models\Job;
 use WebReinvent\VaahCms\Entities\Module;
 use WebReinvent\VaahCms\Entities\Setting;
 use WebReinvent\VaahCms\Entities\Theme;

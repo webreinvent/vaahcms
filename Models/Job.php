@@ -1,4 +1,4 @@
-<?php namespace WebReinvent\\VaahCms\Models;
+<?php namespace WebReinvent\VaahCms\Models;
 
 use Carbon\Carbon;
 use DateTimeInterface;
@@ -6,9 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
 use WebReinvent\VaahCms\Traits\CrudWithUuidObservantTrait;
-use WebReinvent\VaahCms\Entities\User;
+use WebReinvent\VaahCms\Models\User;
 
-class Job extends Model
+class Job extends JobBase
 {
 
     use SoftDeletes;

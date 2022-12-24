@@ -4,7 +4,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
-use WebReinvent\VaahCms\Entities\Job;
+use Webreinvent\VaahCms\Models\Job;
 
 
 class JobsController extends Controller

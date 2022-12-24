@@ -1,8 +1,8 @@
-<?php namespace WebReinvent\\VaahCms\Http\Controllers\Backend;
+<?php namespace WebReinvent\VaahCms\Http\Controllers\Backend;
 
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
-use WebReinvent\\VaahCms\Models\Job;
+use WebReinvent\VaahCms\Models\Job;
 
 
 class JobsController extends Controller
