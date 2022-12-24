@@ -56,18 +56,22 @@ class JobBase extends Model {
     }
 
     //-------------------------------------------------
-    public function scopeBetweenDates($query, $from, $to,$by = 'created_at')
+    public function scopeBetweenDates($query, $from, $to)
     {
 
-        if($from)
-        {
-            $from = Carbon::parse($from)->timestamp;
+        if ($from) {
+            $from = \Carbon::parse($from)
+                ->startOfDay()
+                ->toDateTimeString();
         }
-        if($to)
-        {
-            $to = Carbon::parse($to)->timestamp;
+
+        if ($to) {
+            $to = \Carbon::parse($to)
+                ->endOfDay()
+                ->toDateTimeString();
         }
-        $query->whereBetween($by,[$from,$to]);
+
+        $query->whereBetween('updated_at', [$from, $to]);
     }
     //-------------------------------------------------
     public static function getList($request)
