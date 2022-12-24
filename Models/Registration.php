@@ -132,7 +132,7 @@ class Registration extends RegistrationBase
             && $inputs['email']==$inputs['alternate_email'] )
         {
              $response['success'] = false;
-             $response['messages'][] = "This alternate email should be different";
+             $response['messages'][] = "The alternate email id should be different";
              return $response;
         }
 
@@ -149,6 +149,8 @@ class Registration extends RegistrationBase
         $item->fill($inputs);
 //        $item->slug = Str::slug($inputs['slug']);
         $item->save();
+//        dd($item);
+
 
         $response['success'] = true;
         $response['data']['item'] = $item;
@@ -490,9 +492,10 @@ class Registration extends RegistrationBase
 
 //        $response = self::getItem($id);
         $item = self::getItem($id);
+//        dd($item);
 
         $response['success'] = true;
-        $response['data']['item'] = $item;
+        $response['data']['item'] = $item['data'];
         $response['messages'][] = 'Saved successfully.';
 //        dd($response);
 

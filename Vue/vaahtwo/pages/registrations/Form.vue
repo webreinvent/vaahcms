@@ -44,7 +44,6 @@ const toggleFormMenu = (event) => {
                         </span>
                         <span v-else>
                             Create
-
                         </span>
                     </div>
 

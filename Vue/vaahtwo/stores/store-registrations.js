@@ -156,7 +156,7 @@ export const useRegistrationStore = defineStore({
         {
             if(data)
             {
-                console.log(data);
+                // console.log(data);
                 this.assets = data;
                 if(data.rows)
                 {
@@ -310,8 +310,10 @@ export const useRegistrationStore = defineStore({
         //---------------------------------------------------------------------
         itemAction(type, item=null){
             console.log('type '+ type);
-            console.log('item '+ item);
-            console.log( item);
+            // console.log('item '+ item);
+            // console.log( item);
+            // console.log( "this item");
+            // console.log( this.item);
             if(!item)
             {
                 item = this.item;
@@ -331,6 +333,7 @@ export const useRegistrationStore = defineStore({
              */
             switch (type)
             {
+
                 /**
                  * Create a record, hence method is `POST`
                  * https://docs.vaah.dev/guide/laravel.html#create-one-or-many-records
@@ -384,7 +387,14 @@ export const useRegistrationStore = defineStore({
         {
             if(data)
             {
-                this.item = data;
+                // this.item = data;
+                // console.log("data" );
+                // console.log(data);
+                // console.log(data.item);
+                // console.log(data.item.data);
+                // this.item = data.item.data;
+
+                this.item = data.item;
                 await this.getList();
                 await this.formActionAfter();
                 this.getItemMenu();
@@ -396,6 +406,11 @@ export const useRegistrationStore = defineStore({
             switch (this.form.action)
             {
                 case 'create-and-new':
+                    this.setActiveItemAsEmpty();
+                    break;
+                case 'create-and-clone':
+                    this.item.id = null;
+                    break;
                 case 'save-and-new':
                     this.setActiveItemAsEmpty();
                     break;
@@ -415,6 +430,7 @@ export const useRegistrationStore = defineStore({
                     this.toList();
                     break;
             }
+            this.getFormMenu();
         },
         //---------------------------------------------------------------------
         async toggleIsActive(item)
@@ -779,14 +795,14 @@ export const useRegistrationStore = defineStore({
         {
             let form_menu = [];
 
-            if(this.item && this.item.id)
+            if(this.item && this.item.id )
             {
+
                 form_menu = [
                     {
                         label: 'Save & Close',
                         icon: 'pi pi-check',
                         command: () => {
-
                             this.itemAction('save-and-close');
                         }
                     },
@@ -816,6 +832,7 @@ export const useRegistrationStore = defineStore({
                 ];
 
             } else{
+
                 form_menu = [
                     {
                         label: 'Create & Close',
@@ -852,6 +869,7 @@ export const useRegistrationStore = defineStore({
             },)
 
             this.form_menu_list = form_menu;
+
 
         },
         //---------------------------------------------------------------------
