@@ -62,7 +62,9 @@ export const useJobStore = defineStore({
         list_bulk_menu: [],
         item_menu_list: [],
         item_menu_state: null,
-        form_menu_list: []
+        form_menu_list: [],
+        is_btn_loading: false,
+        jobs_menu_items: null,
     }),
     getters: {
 
@@ -170,9 +172,12 @@ export const useJobStore = defineStore({
         },
         //---------------------------------------------------------------------
         async getList() {
+            this.is_btn_loading = true;
+
             let options = {
                 query: vaah().clone(this.query)
             };
+
             await vaah().ajax(
                 this.ajax_url,
                 this.afterGetList,
@@ -182,6 +187,8 @@ export const useJobStore = defineStore({
         //---------------------------------------------------------------------
         afterGetList: function (data, res)
         {
+            this.is_btn_loading = false;
+
             if(data)
             {
                 this.list = data;
@@ -849,6 +856,17 @@ export const useJobStore = defineStore({
 
             this.form_menu_list = form_menu;
 
+        },
+        //---------------------------------------------------------------------
+        async getJobsMenuItems() {
+            this.jobs_menu_items = [
+                {
+                    label: 'Delete All',
+                    // command: () => {
+                    //     this.bulkActions(1, 'toggle-permission-active-status');
+                    // }
+                },
+            ]
         },
         //---------------------------------------------------------------------
     }

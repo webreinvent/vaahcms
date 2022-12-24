@@ -43,7 +43,23 @@ onMounted(async () => {
      * fetch list of records
      */
     await store.getList();
+
+    /**
+     * fetch job menu items
+     */
+    await store.getJobsMenuItems();
+
 });
+
+
+/**
+ * toggle job menu
+ */
+const jobs_menu_items = ref();
+
+const toggleJobMenu = (event) => {
+    jobs_menu_items.value.toggle(event);
+};
 
 </script>
 <template>
@@ -62,32 +78,47 @@ onMounted(async () => {
                                    :value="store.list.total">
                             </Badge>
                         </div>
-
                     </div>
-
                 </template>
 
                 <template #icons>
 
-                    <Button @click="store.toForm()">
-                        <i class="pi pi-plus mr-1"></i>
-                        Create
-                    </Button>
+                    <div class="p-inputgroup">
+                        <Button class="p-button-sm"
+                                icon="pi pi-refresh"
+                                :loading="store.is_btn_loading"
+                                @click="store.getList()"
+                        />
 
+                        <!--/jobs menu-->
+                        <Button class="p-button-sm"
+                                icon="pi pi-ellipsis-v"
+                                type="button"
+                                aria-haspopup="true"
+                                @click="toggleJobMenu"
+                        />
+
+                        <Menu ref="jobs_menu_items"
+                              :model="store.jobs_menu_items"
+                              :popup="true"
+                        />
+                        <!--/jobs menu-->
+                    </div>
                 </template>
+
+                <Message severity="info" :closable="false">
+                    This list consist of only queued/pending jobs.
+                    Completed jobs gets deleted automatically .
+                </Message>
 
                 <Actions/>
 
                 <br/>
 
                 <Table/>
-
             </Panel>
         </div>
 
         <RouterView/>
-
     </div>
-
-
 </template>

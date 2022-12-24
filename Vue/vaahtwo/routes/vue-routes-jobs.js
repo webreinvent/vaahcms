@@ -7,7 +7,7 @@ import Item from '../pages/jobs/Item.vue'
 
 routes_list = {
 
-    path: '/jobs',
+    path: '/vaah/advanced/jobs',
     name: 'jobs.index',
     component: List,
     props: true,

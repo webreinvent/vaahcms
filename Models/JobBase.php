@@ -56,6 +56,44 @@ class JobBase extends Model {
     }
 
     //-------------------------------------------------
+    public function scopeGetSorted($query, $filter)
+    {
+
+        if(!isset($filter['sort']))
+        {
+            return $query->orderBy('id', 'desc');
+        }
+
+        $sort = $filter['sort'];
+
+
+        $direction = Str::contains($sort, ':');
+
+        if(!$direction)
+        {
+            return $query->orderBy($sort, 'asc');
+        }
+
+        $sort = explode(':', $sort);
+
+        return $query->orderBy($sort[0], $sort[1]);
+    }
+    //-------------------------------------------------
+    public function scopeSearchFilter($query, $filter)
+    {
+
+        if(!isset($filter['q']))
+        {
+            return $query;
+        }
+        $search = $filter['q'];
+        $query->where(function ($q) use ($search) {
+            $q->where('queue', 'LIKE', '%' . $search . '%')
+                ->orWhere('id', 'LIKE', '%' . $search . '%');
+        });
+
+    }
+    //-------------------------------------------------
     public function scopeBetweenDates($query, $from, $to)
     {
 
@@ -77,35 +115,28 @@ class JobBase extends Model {
     public static function getList($request)
     {
 
-        $list = self::orderBy('id', 'desc');
-
-        if(isset($request->from) && $request->from
-            && isset($request->to) && $request->to)
+        if(!\Auth::user()->hasPermission('has-access-of-advanced-section'))
         {
-            if(isset($request->date_filter_by) && $request->date_filter_by){
-                $list->betweenDates($request['from'],$request['to'],$request->date_filter_by);
-            }else{
-                $list->betweenDates($request['from'],$request['to']);
-            }
+            $response['success'] = false;
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+            return response()->json($response);
         }
 
-        if(isset($request->q) && $request->q)
+        $list = self::getSorted($request->filter);
+        $list->searchFilter($request->filter);
+
+        $rows = config('vaahcms.per_page');
+
+        if($request->has('rows'))
         {
-            $list->where(function ($q) use ($request){
-                $q->where('queue', 'LIKE', '%'.$request->q.'%');
-                $q->orWhere('id', 'LIKE', '%'.$request->q.'%');
-            });
+            $rows = $request->rows;
         }
 
-        if(isset($request->status) && $request->status)
-        {
-            $list->where('queue', $request->status);
-        }
-
-        $data['list'] = $list->paginate(config('vaahcms.per_page'));
+//        $list = $list->paginate($rows);
 
         $response['success'] = true;
-        $response['data'] = $data;
+        $response['data'] = $list;
 
         return $response;
     }
