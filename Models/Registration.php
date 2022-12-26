@@ -112,12 +112,16 @@ class Registration extends RegistrationBase
     {
 
         $inputs = $request->all();
-//        dd($inputs);
+
+
+
+//        dd($password);
 
         $validation = self::validation($inputs);
         if (!$validation['success']) {
             return $validation;
         }
+
 
 
         // check if email exist
@@ -554,10 +558,11 @@ class Registration extends RegistrationBase
         $rules = array(
 //            'name' => 'required|max:150',
 //            'slug' => 'required|max:150',
+            'id'=>'nullable',
 
             'email' => "required|email|unique:vh_registrations,email,$id",
-            'username' => 'required|string|max:150',
-            'password' => 'required|string|min:6',
+            'username' => "required|string|max:25|unique:vh_registrations,username,$id",
+            'password' => 'required_if:id,null|string|min:6',
             'display_name' => 'required|string|max:150',
 
             'designation' => 'required|max:150',
@@ -577,6 +582,7 @@ class Registration extends RegistrationBase
 
             'timezone' => 'required',
             'status' => 'required',
+            'country' => 'required',
         );
 
         $validator = \Validator::make($inputs, $rules);

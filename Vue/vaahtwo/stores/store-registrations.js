@@ -62,7 +62,14 @@ export const useRegistrationStore = defineStore({
         list_bulk_menu: [],
         item_menu_list: [],
         item_menu_state: null,
-        form_menu_list: []
+        form_menu_list: [],
+
+        gender_options: [
+            {name:'Male',value:'M',icon: 'pi pi-arrow-up'},
+            {name:'Female',value:'F',icon: 'pi pi-arrow-down'},
+            {name:'Others',value:'O',icon: 'pi pi-arrows-v'},
+        ],
+
     }),
     getters: {
 

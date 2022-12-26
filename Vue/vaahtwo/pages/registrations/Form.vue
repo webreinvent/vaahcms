@@ -147,28 +147,20 @@ const toggleFormMenu = (event) => {
                     </InputText >
                 </VhField>
 
-
-
-                 <VhField label="Gender">
-                        <RadioButton inputId="male"
-                                     name="gender"
-                                     value="M"
-                                     v-model="store.item.gender" />
-                        <label for="male">Male</label>
-                        <RadioButton inputId="female"
-                                     name="gender"
-                                     value="F"
-                                     v-model="store.item.gender" />
-                        <label for="female">Female</label>
-
-                        <RadioButton inputId="other"
-                                     name="other"
-                                     value="O"
-                                     v-model="store.item.gender" />
-                        <label for="other">Other</label>
-
-
+                <VhField label="Gender">
+                    <SelectButton v-model="store.item.gender"
+                                  :options="store.gender_options"
+                                  aria-labelledby="single"
+                                  optionLabel="name"
+                                  optionValue="value">
+                        <template #option="slotProps">
+                            <i :class="slotProps.option.icon"></i>
+                            {{slotProps.option.name}}
+                        </template>
+                    </SelectButton>
                 </VhField>
+
+
 
 
 

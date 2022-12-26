@@ -77,10 +77,12 @@ const useVaah = vaah();
                     <Badge v-if="prop.data.deleted_at"
                            value="Trashed"
                            severity="danger"></Badge>
-
-                    <Badge v-if="prop.data.gender=='M'" value="Male" severity="success" class="mr-2"></Badge>
-                    <Badge v-if="prop.data.gender=='F'" value="Female" severity="info" class="mr-2"></Badge>
-                    <Badge v-if="prop.data.gender=='O'" value="Others" severity="warning" class="mr-2"></Badge>
+                     <Badge severity="info" class="mr-2">
+                        <i v-if="prop.data.gender=='M'" class="pi pi-arrow-up"></i>
+                        <i v-if="prop.data.gender=='F'" class="pi pi-arrow-down"></i>
+                        <i v-if="prop.data.gender=='O'" class="pi pi-arrows-v"></i>
+                        {{prop.data.gender}}
+                    </Badge>
                 </template>
             </Column>
 
