@@ -368,6 +368,7 @@ export const useRegistrationStore = defineStore({
                  * and no need to send entire `item` object
                  * https://docs.vaah.dev/guide/laravel.html#delete-a-record-hard-deleted
                  */
+
                 case 'delete':
                     options.method = 'DELETE';
                     ajax_url += '/'+item.id
@@ -410,6 +411,10 @@ export const useRegistrationStore = defineStore({
         //---------------------------------------------------------------------
         async formActionAfter ()
         {
+             console.log('switch');
+             console.log(this.form.action);
+             console.log(this.item);
+
             switch (this.form.action)
             {
                 case 'create-and-new':
@@ -430,7 +435,7 @@ export const useRegistrationStore = defineStore({
                     this.item.id = null;
                     break;
                 case 'trash':
-                    this.item = null;
+                    // this.item = null;
                     break;
                 case 'delete':
                     this.item = null;

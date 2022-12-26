@@ -547,8 +547,11 @@ class Registration extends RegistrationBase
                     ->restore();
                 break;
         }
+        $item=self::getItem($id);
+        $response['success'] = true;
+        $response['data']['item'] = $item['data'];
 
-        return self::getItem($id);
+        return $response;
     }
     //-------------------------------------------------
 

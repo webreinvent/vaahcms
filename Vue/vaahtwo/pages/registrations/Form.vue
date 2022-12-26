@@ -33,6 +33,28 @@ const toggleFormMenu = (event) => {
     <div class="col-4" >
 
         <Panel >
+            <Message severity="error"
+                         class="p-container-message"
+                         :closable="false"
+                         icon="pi pi-trash"
+                         v-if="store.item.deleted_at">
+
+                    <div class="flex align-items-center justify-content-between">
+
+                        <div class="">
+                            Deleted {{store.item.deleted_at}}
+                        </div>
+
+                        <div class="">
+                            <Button label="Restore"
+                                    class="p-button-sm"
+                                    @click="store.itemAction('restore')">
+                            </Button>
+                        </div>
+
+                    </div>
+
+                </Message>
 
             <template class="p-1" #header>
 
@@ -91,7 +113,7 @@ const toggleFormMenu = (event) => {
             </template>
 
 
-            <div v-if="store.item">
+            <div v-if="store.item && store.assets">
 
 
                 <VhField label="Email">
