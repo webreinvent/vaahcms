@@ -35,7 +35,6 @@ const useVaah = vaah();
                     {{prop.data.last_name}}
                 </template>
             </Column>
-
              <Column field="email"
                     header="Email"
                     :sortable="true">
@@ -54,8 +53,7 @@ const useVaah = vaah();
                     <Badge v-if="prop.data.deleted_at"
                            value="Trashed"
                            severity="danger"></Badge>
-<!--                    <Tag class="mr-2" severity="success" >{{prop.data.status}}</Tag>-->
-                    <Badge class="mr-2" >{{prop.data.status}}</Badge>
+                    <Tag class="mr-2"  >{{prop.data.status}}</Tag>
                 </template>
             </Column>
 
@@ -77,12 +75,12 @@ const useVaah = vaah();
                     <Badge v-if="prop.data.deleted_at"
                            value="Trashed"
                            severity="danger"></Badge>
-                     <Badge severity="info" class="mr-2">
+                     <Tag severity="info" class="mr-2">
                         <i v-if="prop.data.gender=='M'" class="pi pi-arrow-up"></i>
                         <i v-if="prop.data.gender=='F'" class="pi pi-arrow-down"></i>
                         <i v-if="prop.data.gender=='O'" class="pi pi-arrows-v"></i>
                         {{prop.data.gender}}
-                    </Badge>
+                    </Tag>
                 </template>
             </Column>
 

@@ -673,6 +673,27 @@ export const useRegistrationStore = defineStore({
         {
             this.list_selected_menu = [
                 {
+                    label: 'Email Verification Pending',
+                    command: async () => {
+                        await this.updateList('email-verification-pending')
+                    }
+                },
+                {
+                    label: 'Email Verified',
+                    command: async () => {
+                        await this.updateList('email-verified')
+                    }
+                },
+                {
+                    label: 'User Created',
+                    command: async () => {
+                        await this.updateList('user-created')
+                    }
+                },
+                {
+                    separator: true
+                },
+              /*  {
                     label: 'Activate',
                     command: async () => {
                         await this.updateList('activate')
@@ -686,7 +707,7 @@ export const useRegistrationStore = defineStore({
                 },
                 {
                     separator: true
-                },
+                },*/
                 {
                     label: 'Trash',
                     icon: 'pi pi-times',
@@ -716,6 +737,27 @@ export const useRegistrationStore = defineStore({
         {
             this.list_bulk_menu = [
                 {
+                    label: 'Email Verification Pending',
+                    command: async () => {
+                        await this.listAction('email-verification-pending')
+                    }
+                },
+                {
+                    label: 'Email Verified',
+                    command: async () => {
+                        await this.listAction('email-verified')
+                    }
+                },
+                {
+                    label: 'User Created',
+                    command: async () => {
+                        await this.listAction('user-created')
+                    }
+                },
+                {
+                    separator: true
+                },
+               /* {
                     label: 'Mark all as active',
                     command: async () => {
                         await this.listAction('activate-all')
@@ -729,7 +771,7 @@ export const useRegistrationStore = defineStore({
                 },
                 {
                     separator: true
-                },
+                },*/
                 {
                     label: 'Trash All',
                     icon: 'pi pi-times',

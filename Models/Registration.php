@@ -235,6 +235,7 @@ class Registration extends RegistrationBase
             return $query;
         }
         $search = $filter['q'];
+
         $query->where(function ($q) use ($search) {
             $q->where('first_name', 'LIKE', '%'.$search.'%')
                     ->orWhere('last_name', 'LIKE', '%'.$search.'%')
@@ -322,6 +323,12 @@ class Registration extends RegistrationBase
             case 'restore':
                 self::whereIn('id', $items_id)->restore();
                 break;
+            case 'email-verification-pending':
+            case 'email-verified':
+            case 'user-created':
+                $items->update(['status' => $inputs['type']]);
+                break;
+
         }
 
         $response['success'] = true;
@@ -420,6 +427,11 @@ class Registration extends RegistrationBase
                 break;
             case 'delete-all':
                 self::withTrashed()->forceDelete();
+                break;
+             case 'email-verification-pending':
+             case 'email-verified':
+             case 'user-created':
+                self::query()->update(['status' => $type]);
                 break;
         }
 
