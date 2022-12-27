@@ -164,7 +164,7 @@ export const useRegistrationStore = defineStore({
         {
             if(data)
             {
-                // console.log(data);
+
                 this.assets = data;
                 if(data.rows)
                 {
@@ -317,11 +317,8 @@ export const useRegistrationStore = defineStore({
         },
         //---------------------------------------------------------------------
         itemAction(type, item=null){
-            console.log('type '+ type);
-            // console.log('item '+ item);
-            // console.log( item);
-            // console.log( "this item");
-            // console.log( this.item);
+
+
             if(!item)
             {
                 item = this.item;
@@ -396,12 +393,6 @@ export const useRegistrationStore = defineStore({
         {
             if(data)
             {
-                // this.item = data;
-                // console.log("data" );
-                // console.log(data);
-                // console.log(data.item);
-                // console.log(data.item.data);
-                // this.item = data.item.data;
 
                 this.item = data.item;
                 await this.getList();
@@ -412,9 +403,7 @@ export const useRegistrationStore = defineStore({
         //---------------------------------------------------------------------
         async formActionAfter ()
         {
-             console.log('switch');
-             console.log(this.form.action);
-             console.log(this.item);
+
 
             switch (this.form.action)
             {
