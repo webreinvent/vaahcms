@@ -160,13 +160,10 @@ const toggleItemMenu = (event) => {
                         <template v-else-if="column === 'gender'">
                             <tr>
                                 <td><b>Gender</b></td>
-                                <td>
-                                    <Badge severity="info" class="mr-2">
-                                        <i v-if="value=='M'" class="pi pi-arrow-up"></i>
-                                        <i v-if="value=='F'" class="pi pi-arrow-down"></i>
-                                        <i v-if="value=='O'" class="pi pi-arrows-v"></i>
-                                        {{value}}
-                                    </Badge>
+                                <td v-if="value">
+                                    <Badge severity="primary" class="mr-2" v-if="value=='M'">Male</Badge>
+                                    <Badge severity="primary" class="mr-2" v-if="value=='F'">Female</Badge>
+                                    <Badge severity="primary" class="mr-2" v-if="value=='O'">Others</Badge>
                                 </td>
                             </tr>
 

@@ -41,7 +41,7 @@ const store = useRegistrationStore();
 
             <Divider/>
 
-            <VhFieldVertical >
+<!--            <VhFieldVertical >
                 <template #label>
                     <b>Is Active:</b>
                 </template>
@@ -65,7 +65,7 @@ const store = useRegistrationStore();
                     <label for="active-false">Only Inactive</label>
                 </div>
 
-            </VhFieldVertical>
+            </VhFieldVertical>-->
 
             <VhFieldVertical >
                 <template #label>
@@ -89,6 +89,33 @@ const store = useRegistrationStore();
                                  value="only"
                                  v-model="store.query.filter.trashed" />
                     <label for="trashed-only">Only Trashed</label>
+                </div>
+
+            </VhFieldVertical>
+
+            <Divider/>
+            <VhFieldVertical >
+                <template #label>
+                    <b>Status:</b>
+                </template>
+
+                <div class="field-radiobutton">
+                    <RadioButton name="email-verification-pending"
+                                 value="email-verification-pending"
+                                 v-model="store.query.filter.status" />
+                    <label for="email-verification-pending">Email Verification Pending</label>
+                </div>
+                <div class="field-radiobutton">
+                    <RadioButton name="email-verified"
+                                 value="email-verified"
+                                 v-model="store.query.filter.status" />
+                    <label for="email-verified">Email Verified</label>
+                </div>
+                <div class="field-radiobutton">
+                    <RadioButton name="user-created"
+                                 value="user-created"
+                                 v-model="store.query.filter.status" />
+                    <label for="user-created">User Created</label>
                 </div>
 
             </VhFieldVertical>

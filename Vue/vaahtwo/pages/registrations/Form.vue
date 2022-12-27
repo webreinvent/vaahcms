@@ -37,7 +37,7 @@ const toggleFormMenu = (event) => {
                          class="p-container-message"
                          :closable="false"
                          icon="pi pi-trash"
-                         v-if="store.item.deleted_at">
+                         v-if="store.item && store.item.deleted_at">
 
                     <div class="flex align-items-center justify-content-between">
 

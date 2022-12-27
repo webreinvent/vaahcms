@@ -113,15 +113,20 @@ class Registration extends RegistrationBase
 
         $inputs = $request->all();
 
+        $rules = array(
+            'email' => 'required|email|max:150',
+            'first_name' => 'required|max:150',
+            'password' => 'required',
+        );
 
+        $validator = \Validator::make( $inputs, $rules);
+        if ( $validator->fails() ) {
 
-//        dd($password);
-
-        $validation = self::validation($inputs);
-        if (!$validation['success']) {
-            return $validation;
+            $errors             = errorsToArray($validator->errors());
+            $response['status'] = 'failed';
+            $response['errors'] = $errors;
+            return $response;
         }
-
 
 
         // check if email exist
@@ -129,25 +134,34 @@ class Registration extends RegistrationBase
 
         if ($item) {
             $response['success'] = false;
-            $response['messages'][] = "This email is already exist.";
+            $response['errors'][] = "This email is already exist.";
             return $response;
         }
-        if($inputs['email'] && $inputs['alternate_email']
-            && $inputs['email']==$inputs['alternate_email'] )
-        {
-             $response['success'] = false;
-             $response['messages'][] = "The alternate email id should be different";
-             return $response;
-        }
-
-        // check if slug exist
-       /* $item = self::where('slug', $inputs['slug'])->first();
+        $item = self::where('username', $inputs['username'])->first();
 
         if ($item) {
             $response['success'] = false;
-            $response['messages'][] = "This slug is already exist.";
+            $response['errors'][] = "This username is already exist.";
             return $response;
-        }*/
+        }
+
+        if($inputs['email'] && isset($inputs['alternate_email'])
+            && $inputs['email']==$inputs['alternate_email'] )
+        {
+             $response['success'] = false;
+             $response['errors'][] = "The alternate email id should be different";
+             return $response;
+        }
+        if(!isset($inputs['username']))
+        {
+            $inputs['username'] = Str::slug($inputs['email']);
+        }
+
+        if(!isset($inputs['status']))
+        {
+            $inputs['status'] = 'email-verification-pending';
+        }
+
 
         $item = new self();
         $item->fill($inputs);
@@ -250,13 +264,27 @@ class Registration extends RegistrationBase
 
     }
     //-------------------------------------------------
+    public function scopeStatusFilter($query,$filter){
+        if(!isset($filter['status']))
+        {
+            return $query;
+        }
+        $search = $filter['status'];
+
+        $query->where(function ($q) use ($search) {
+            $q->where('status', 'LIKE', '%'.$search.'%')
+                    ->orWhere('status', '=', $search);
+        });
+    }
+    //-------------------------------------------------
     public static function getList($request,$excluded_columns = [])
     {
-//        dd($request->filter);
+
         $list = self::getSorted($request->filter);
         $list->isActiveFilter($request->filter);
         $list->trashedFilter($request->filter);
         $list->searchFilter($request->filter);
+        $list->statusFilter($request->filter);
 
         $rows = config('vaahcms.per_page');
 
@@ -264,6 +292,7 @@ class Registration extends RegistrationBase
         {
             $rows = $request->rows;
         }
+
 
         $list = $list->paginate($rows);
 
@@ -467,48 +496,29 @@ class Registration extends RegistrationBase
     {
         $inputs = $request->all();
 
+
         $validation = self::validation($inputs,$id);
         if (!$validation['success']) {
             return $validation;
         }
+
+
+
         if($inputs['email'] && $inputs['alternate_email']
             && $inputs['email']==$inputs['alternate_email'] )
         {
              $response['success'] = false;
-             $response['messages'][] = "This alternate email should be different";
+             $response['errors'][] = "This alternate email should be different";
              return $response;
         }
 
-        // check if name exist
-       /* $user = self::where('id', '!=', $inputs['id'])
-            ->where('name', $inputs['name'])->first();
 
-        if ($user) {
-            $response['success'] = false;
-            $response['messages'][] = "This name is already exist.";
-            return $response;
-        }
-
-
-
-        // check if slug exist
-        $user = self::where('id', '!=', $inputs['id'])
-            ->where('slug', $inputs['slug'])->first();
-
-        if ($user) {
-            $response['success'] = false;
-            $response['messages'][] = "This slug is already exist.";
-            return $response;
-        }*/
 
         $update = self::where('id', $id)->withTrashed()->first();
         $update->fill($inputs);
-//        $update->slug = Str::slug($inputs['slug']);
         $update->save();
 
-//        $response = self::getItem($id);
         $item = self::getItem($id);
-//        dd($item);
 
         $response['success'] = true;
         $response['data']['item'] = $item['data'];
@@ -571,40 +581,15 @@ class Registration extends RegistrationBase
     {
 
         $rules = array(
-//            'name' => 'required|max:150',
-//            'slug' => 'required|max:150',
-            'id'=>'nullable',
-
             'email' => "required|email|unique:vh_registrations,email,$id",
-            'username' => "required|string|max:25|unique:vh_registrations,username,$id",
-            'password' => 'required_if:id,null|string|min:6',
-            'display_name' => 'required|string|max:150',
-
-            'designation' => 'required|max:150',
-            'title' => 'required',
             'first_name' => 'required|string|max:150',
-            'middle_name' => 'nullable|string|max:150',
-
-            'last_name' => 'required|string|max:150',
-            'gender' => 'required',
-            'country_calling_code' => 'required',
-//            'country_code' => 'required',
-
-            'phone' => 'required|numeric|digits:10',
-            'bio' => 'required|max:250',
-            'alternate_email' => 'required|email',
-            'birth' => 'required|date|before:today',
-
-            'timezone' => 'required',
-            'status' => 'required',
-            'country' => 'required',
         );
 
         $validator = \Validator::make($inputs, $rules);
         if ($validator->fails()) {
             $messages = $validator->errors();
             $response['success'] = false;
-            $response['messages'] = $messages->all();
+            $response['errors'] = $messages->all();
             return $response;
         }
 
@@ -626,18 +611,7 @@ class Registration extends RegistrationBase
         $calling_code_string=(string) $calling_code_int;
         return $calling_code_string;
     }
-    /*public function getGenderAttribute($value)
-    {
-        if($value=='M'){
-            return 'Male';
-        }
-        elseif ($value=='F'){
-            return 'Female';
-        }
-        else{
-            return 'Others';
-        }
-    }*/
+    
 
 
     //-------------------------------------------------

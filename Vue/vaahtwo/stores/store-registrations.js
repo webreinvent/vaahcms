@@ -18,6 +18,7 @@ let empty_states = {
             is_active: null,
             trashed: null,
             sort: null,
+            status:null,
         },
     },
     action: {
@@ -65,9 +66,9 @@ export const useRegistrationStore = defineStore({
         form_menu_list: [],
 
         gender_options: [
-            {name:'Male',value:'M',icon: 'pi pi-arrow-up'},
-            {name:'Female',value:'F',icon: 'pi pi-arrow-down'},
-            {name:'Others',value:'O',icon: 'pi pi-arrows-v'},
+            {name:'Male',value:'M',icon: ''},
+            {name:'Female',value:'F',icon: ''},
+            {name:'Others',value:'O',icon: ''},
         ],
 
     }),
@@ -674,18 +675,21 @@ export const useRegistrationStore = defineStore({
             this.list_selected_menu = [
                 {
                     label: 'Email Verification Pending',
+                    icon: 'pi pi-calendar-times',
                     command: async () => {
                         await this.updateList('email-verification-pending')
                     }
                 },
                 {
                     label: 'Email Verified',
+                    icon: 'pi pi-envelope',
                     command: async () => {
                         await this.updateList('email-verified')
                     }
                 },
                 {
                     label: 'User Created',
+                    icon: 'pi pi-user-plus',
                     command: async () => {
                         await this.updateList('user-created')
                     }
@@ -737,19 +741,22 @@ export const useRegistrationStore = defineStore({
         {
             this.list_bulk_menu = [
                 {
-                    label: 'Email Verification Pending',
+                    label: 'All Users Email Verification Pending',
+                    icon: 'pi pi-calendar-times',
                     command: async () => {
                         await this.listAction('email-verification-pending')
                     }
                 },
                 {
-                    label: 'Email Verified',
+                    label: 'All Users Email Verified',
+                    icon: 'pi pi-envelope',
                     command: async () => {
                         await this.listAction('email-verified')
                     }
                 },
                 {
-                    label: 'User Created',
+                    label: 'All User Created',
+                    icon: 'pi pi-user-plus',
                     command: async () => {
                         await this.listAction('user-created')
                     }

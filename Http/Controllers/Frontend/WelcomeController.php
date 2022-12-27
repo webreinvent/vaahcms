@@ -230,7 +230,7 @@ class WelcomeController extends Controller
                     $fill[$column] = $faker->password;
                 break;
 
-                case 'title':
+                /*case 'title':
                     $fill[$column] = $faker->randomElement(['Mr','Miss','Mrs','Ms']);
                     break;
 
@@ -241,7 +241,7 @@ class WelcomeController extends Controller
 
                 case 'phone':
                     $fill[$column] = $faker->numerify('##########');
-                break;
+                break;*/
 
                 case 'birth':
 //                    $fill[$column] = new Date();

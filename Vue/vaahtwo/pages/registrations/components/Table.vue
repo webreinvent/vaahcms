@@ -53,7 +53,7 @@ const useVaah = vaah();
                     <Badge v-if="prop.data.deleted_at"
                            value="Trashed"
                            severity="danger"></Badge>
-                    <Tag class="mr-2"  >{{prop.data.status}}</Tag>
+                    <Tag class="mr-2" severity="success"  v-if="prop.data.status">{{prop.data.status}}</Tag>
                 </template>
             </Column>
 
@@ -70,17 +70,15 @@ const useVaah = vaah();
 
              <Column field="gender"
                     header="Gender"
+                    v-if="store.isViewLarge()"
                     :sortable="true">
-                <template #body="prop">
+                <template #body="prop"  >
                     <Badge v-if="prop.data.deleted_at"
                            value="Trashed"
                            severity="danger"></Badge>
-                     <Tag severity="info" class="mr-2">
-                        <i v-if="prop.data.gender=='M'" class="pi pi-arrow-up"></i>
-                        <i v-if="prop.data.gender=='F'" class="pi pi-arrow-down"></i>
-                        <i v-if="prop.data.gender=='O'" class="pi pi-arrows-v"></i>
-                        {{prop.data.gender}}
-                    </Tag>
+                     <Tag severity="primary" class="mr-2" v-if="prop.data.gender && prop.data.gender=='M'">Male</Tag>
+                     <Tag severity="primary" class="mr-2" v-if="prop.data.gender && prop.data.gender=='F'">Female</Tag>
+                     <Tag severity="primary" class="mr-2" v-if="prop.data.gender && prop.data.gender=='O'">Other</Tag>
                 </template>
             </Column>
 
