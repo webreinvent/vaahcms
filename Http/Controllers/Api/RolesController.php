@@ -89,7 +89,7 @@ class RolesController extends Controller
         }
 
         $response['success'] = true;
-        $response['data'] = $item;
+        $response['data']['item'] = $item;
         return response()->json($response);
     }
     //----------------------------------------------------------
