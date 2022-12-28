@@ -253,7 +253,7 @@ class TaxonomiesController extends Controller
 
         if(!$request->has('name') || !$request->name){
             $response['success'] = false;
-            $response['errors'][] = 'The name field is required. 1';
+            $response['errors'][] = 'The name field is required.';
             return $response;
         }
 

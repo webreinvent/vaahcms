@@ -214,7 +214,7 @@
     {
         "category": "user",
         "name": "Name Required",
-        "content": "The name field is required. 2"
+        "content": "The name field is required."
     },
     {
         "category": "user",
@@ -239,7 +239,7 @@
     {
         "category": "user",
         "name": "Username Required",
-        "content": "The name field is required. 5"
+        "content": "The name field is required."
     },
     {
         "category": "user",
