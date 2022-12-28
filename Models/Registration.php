@@ -137,6 +137,7 @@ class Registration extends RegistrationBase
             $response['errors'][] = "This email is already exist.";
             return $response;
         }
+        // check if username exist
         $item = self::where('username', $inputs['username'])->first();
 
         if ($item) {
@@ -145,6 +146,7 @@ class Registration extends RegistrationBase
             return $response;
         }
 
+        // check if email and alternate email are same
         if($inputs['email'] && isset($inputs['alternate_email'])
             && $inputs['email']==$inputs['alternate_email'] )
         {
@@ -165,9 +167,8 @@ class Registration extends RegistrationBase
 
         $item = new self();
         $item->fill($inputs);
-//        $item->slug = Str::slug($inputs['slug']);
         $item->save();
-//        dd($item);
+
 
 
         $response['success'] = true;
@@ -180,7 +181,7 @@ class Registration extends RegistrationBase
     //-------------------------------------------------
     public function scopeGetSorted($query, $filter)
     {
-//        dd($filter);
+
 
         if(!isset($filter['sort']))
         {
@@ -523,7 +524,7 @@ class Registration extends RegistrationBase
         $response['success'] = true;
         $response['data']['item'] = $item['data'];
         $response['messages'][] = 'Saved successfully.';
-//        dd($response);
+
 
         return $response;
     }
@@ -547,7 +548,6 @@ class Registration extends RegistrationBase
     //-------------------------------------------------
     public static function itemAction($request, $id, $type): array
     {
-//        dd($type);
         switch($type)
         {
             case 'activate':
@@ -611,7 +611,7 @@ class Registration extends RegistrationBase
         $calling_code_string=(string) $calling_code_int;
         return $calling_code_string;
     }
-    
+
 
 
     //-------------------------------------------------

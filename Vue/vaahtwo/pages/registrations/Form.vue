@@ -179,35 +179,6 @@ const toggleFormMenu = (event) => {
                     </SelectButton>
                 </VhField>
 
-
-
-
-
-<!--                <VhField label="Country">
-
-                      <Dropdown v-model="store.item.country"
-                              :options="store.assets.countries"
-                              optionLabel="name"
-                              optionValue="name"
-                              :filter="true"
-                              placeholder="- Select a country -"
-                              :showClear="true">
-                    </Dropdown>
-                </VhField>-->
-
-<!--                <VhField label="Country Code">
-
-                      <Dropdown v-model="store.item.country_code"
-                              :options="store.assets.countries"
-                              optionLabel="code"
-                              optionValue="code"
-                              :filter="true"
-                              placeholder="- Select Country code -"
-                              :showClear="true">
-                    </Dropdown>
-                </VhField>-->
-
-
                 <VhField label="Country Code">
                     <Dropdown v-model="store.item.country_calling_code"
                               :options="store.assets.country_calling_code"
@@ -216,9 +187,6 @@ const toggleFormMenu = (event) => {
                               placeholder="- Select a country code -" >
                     </Dropdown>
                 </VhField>
-
-
-
 
                 <VhField label="Phone">
                     <InputNumber inputId="withoutgrouping" v-model="store.item.phone"  :useGrouping="false" />
@@ -275,17 +243,7 @@ const toggleFormMenu = (event) => {
                               optionValue="slug"
                               placeholder="- Select a status -" />
                 </VhField>
-
-
-
-
-
-<!--                <VhField label="Is Active">
-                    <InputSwitch v-bind:false-value="0"
-                                 v-bind:true-value="1"
-                                 v-model="store.item.is_active">
-                    </InputSwitch>
-                </VhField>-->
+                
 
             </div>
         </Panel>

@@ -230,23 +230,7 @@ class WelcomeController extends Controller
                     $fill[$column] = $faker->password;
                 break;
 
-                /*case 'title':
-                    $fill[$column] = $faker->randomElement(['Mr','Miss','Mrs','Ms']);
-                    break;
 
-                case 'gender':
-                    $fill[$column] = $faker->randomElement(['M','F','O']);
-                    break;
-
-
-                case 'phone':
-                    $fill[$column] = $faker->numerify('##########');
-                break;*/
-
-                case 'birth':
-//                    $fill[$column] = new Date();
-//                    Wed Dec 14 2022 00:00:00 GMT+0530 (India Standard Time)
-                break;
                 case 'timezone':
                     $fill[$column] = $faker->timezone('US');
                 break;

@@ -82,20 +82,6 @@ const useVaah = vaah();
                 </template>
             </Column>
 
-<!--            <Column field="is_active" v-if="store.isViewLarge()"
-                    :sortable="true"
-                    style="width:100px;"
-                    header="Is Active">
-
-                <template #body="prop">
-                    <InputSwitch v-model.bool="prop.data.is_active"
-                                 v-bind:false-value="0"  v-bind:true-value="1"
-                                 class="p-inputswitch-sm"
-                                 @input="store.toggleIsActive(prop.data)">
-                    </InputSwitch>
-                </template>
-
-            </Column>-->
 
             <Column field="actions" style="width:150px;"
                     :style="{width: store.getActionWidth() }"
