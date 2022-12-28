@@ -76,9 +76,9 @@ const useVaah = vaah();
                     <Badge v-if="prop.data.deleted_at"
                            value="Trashed"
                            severity="danger"></Badge>
-                     <Tag severity="primary" class="mr-2" v-if="prop.data.gender && prop.data.gender=='M'">Male</Tag>
-                     <Tag severity="primary" class="mr-2" v-if="prop.data.gender && prop.data.gender=='F'">Female</Tag>
-                     <Tag severity="primary" class="mr-2" v-if="prop.data.gender && prop.data.gender=='O'">Other</Tag>
+                     <Tag severity="primary" class="mr-2" v-if="prop.data.gender && prop.data.gender=='m'">Male</Tag>
+                     <Tag severity="primary" class="mr-2" v-if="prop.data.gender && prop.data.gender=='f'">Female</Tag>
+                     <Tag severity="primary" class="mr-2" v-if="prop.data.gender && prop.data.gender=='o'">Other</Tag>
                 </template>
             </Column>
 

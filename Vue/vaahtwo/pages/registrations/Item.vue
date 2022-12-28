@@ -161,9 +161,9 @@ const toggleItemMenu = (event) => {
                             <tr>
                                 <td><b>Gender</b></td>
                                 <td v-if="value">
-                                    <Badge severity="primary" class="mr-2" v-if="value=='M'">Male</Badge>
-                                    <Badge severity="primary" class="mr-2" v-if="value=='F'">Female</Badge>
-                                    <Badge severity="primary" class="mr-2" v-if="value=='O'">Others</Badge>
+                                    <Badge severity="primary" class="mr-2" v-if="value=='m'">Male</Badge>
+                                    <Badge severity="primary" class="mr-2" v-if="value=='f'">Female</Badge>
+                                    <Badge severity="primary" class="mr-2" v-if="value=='o'">Others</Badge>
                                 </td>
                             </tr>
 
