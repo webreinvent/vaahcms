@@ -66,9 +66,9 @@ export const useRegistrationStore = defineStore({
         form_menu_list: [],
 
         gender_options: [
-            {name:'Male',value:'M',icon: ''},
-            {name:'Female',value:'F',icon: ''},
-            {name:'Others',value:'O',icon: ''},
+            {name:'Male',value:'m',icon: ''},
+            {name:'Female',value:'f',icon: ''},
+            {name:'Others',value:'o',icon: ''},
         ],
 
     }),
