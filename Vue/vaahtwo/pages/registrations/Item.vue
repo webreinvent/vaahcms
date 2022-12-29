@@ -48,10 +48,14 @@ onMounted(async () => {
 
 //--------toggle item menu
 const item_menu_state = ref();
+const displayModal = ref(false);
 const toggleItemMenu = (event) => {
     item_menu_state.value.toggle(event);
 };
 //--------/toggle item menu
+
+
+
 
 </script>
 <template>
@@ -137,7 +141,9 @@ const toggleItemMenu = (event) => {
                         <template v-if="column === 'created_by' || column === 'updated_by'">
                         </template>
 
-                        <template v-else-if="column === 'id' || column === 'uuid'">
+                        <template v-else-if="column === 'id' || column === 'uuid'|| column === 'email' ||
+                                             column === 'username' || column === 'phone' ||
+                                             column === 'activation_code' ||column === 'alternate_email' " >
                             <VhViewRow :label="column"
                                        :value="value"
                                        :can_copy="true"
@@ -150,6 +156,31 @@ const toggleItemMenu = (event) => {
                                        type="user"
                             />
                         </template>
+
+                        <template v-else-if="column === 'meta'">
+                            <tr>
+                                <td><b>Meta</b></td>
+                                <td v-if="value">
+                                    <Button icon="pi pi-eye"
+                                            label="view"
+                                            class="p-button-outlined p-button-secondary p-button-rounded p-button-sm"
+                                            @click="openModal"
+                                    />
+                                </td>
+                            </tr>
+                        </template>
+
+
+                        <template v-else-if="column === 'status'">
+                            <tr>
+                                <td><b>Status</b></td>
+                                <td v-if="value">
+                                    <Tag class="mr-2 " severity="success"   v-if="value">{{value}}</Tag>
+                                </td>
+                            </tr>
+                        </template>
+
+
 
                         <template v-else-if="column === 'is_active'">
                             <VhViewRow :label="column"
@@ -166,9 +197,6 @@ const toggleItemMenu = (event) => {
                                     <Badge severity="primary" class="mr-2" v-if="value=='o'">Others</Badge>
                                 </td>
                             </tr>
-
-
-
                         </template>
 
 
