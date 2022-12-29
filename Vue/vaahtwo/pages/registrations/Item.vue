@@ -2,13 +2,15 @@
 import {onMounted, ref, watch} from "vue";
 import {useRoute} from 'vue-router';
 
+
 import { useRegistrationStore } from '../../stores/store-registrations'
 
 import VhViewRow from '../../vaahvue/vue-three/primeflex/VhViewRow.vue';
 const store = useRegistrationStore();
 const route = useRoute();
 
-onMounted(async () => {
+onMounted(async () =>
+{
 
     /**
      * If record id is not set in url then
@@ -48,11 +50,22 @@ onMounted(async () => {
 
 //--------toggle item menu
 const item_menu_state = ref();
-const displayModal = ref(false);
 const toggleItemMenu = (event) => {
     item_menu_state.value.toggle(event);
 };
 //--------/toggle item menu
+
+//--------/toggle item menu
+const display_meta_modal = ref(false);
+const openModal = () => {
+            display_meta_modal.value = true;
+};
+const closeModal = () => {
+            display_meta_modal.value = false;
+}
+//--------/toggle item menu
+
+
 
 
 
@@ -168,7 +181,15 @@ const toggleItemMenu = (event) => {
                                     />
                                 </td>
                             </tr>
-                        </template>
+                            <Dialog header="Meta"
+                                    v-model:visible="display_meta_modal"
+                                    :breakpoints="{'960px': '75vw', '640px': '90vw'}"
+                                    :style="{width: '50vw'}" :modal="true"
+                            >
+                                <p class="m-0">{{value}}</p>
+                            </Dialog>
+
+                            </template>
 
 
                         <template v-else-if="column === 'status'">
