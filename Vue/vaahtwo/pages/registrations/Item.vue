@@ -95,14 +95,18 @@ const closeModal = () => {
                 <div class="p-inputgroup">
                     <Button label="Edit"
                             @click="store.toEdit(store.item)"
-                            icon="pi pi-save"/>
+                            icon="pi pi-save"
+                            data-testid="register-view_to_edit"
+                    />
 
                     <!--item_menu-->
                     <Button
                         type="button"
                         @click="toggleItemMenu"
                         icon="pi pi-angle-down"
-                        aria-haspopup="true"/>
+                        aria-haspopup="true"
+                        data-testid="register-view_toggle_item_menu_list"
+                    />
 
                     <Menu ref="item_menu_state"
                           :model="store.item_menu_list"
@@ -111,7 +115,9 @@ const closeModal = () => {
 
                     <Button class="p-button-primary"
                             icon="pi pi-times"
-                            @click="store.toList()"/>
+                            @click="store.toList()"
+                            data-testid="register-view_to_list"
+                    />
 
                 </div>
 
@@ -137,7 +143,9 @@ const closeModal = () => {
                         <div class="">
                             <Button label="Restore"
                                     class="p-button-sm"
-                                    @click="store.itemAction('restore')">
+                                    @click="store.itemAction('restore')"
+                                    data-testid="register-view_item_action_to_restore"
+                                    >
                             </Button>
                         </div>
 
@@ -160,6 +168,7 @@ const closeModal = () => {
                             <VhViewRow :label="column"
                                        :value="value"
                                        :can_copy="true"
+                                       data-testid="register-view_copy"
                             />
                         </template>
 
@@ -167,6 +176,7 @@ const closeModal = () => {
                             <VhViewRow :label="column"
                                        :value="value"
                                        type="user"
+                                       data-testid="register-view_user_copy"
                             />
                         </template>
 
@@ -178,6 +188,7 @@ const closeModal = () => {
                                             label="view"
                                             class="p-button-outlined p-button-secondary p-button-rounded p-button-sm"
                                             @click="openModal"
+                                            data-testid="register-open_meta_modal"
                                     />
                                 </td>
                             </tr>
@@ -204,6 +215,7 @@ const closeModal = () => {
                                                     label="Resend Verification Email"
                                                     class="p-button-outlined p-button-secondary p-button-sm"
                                                     @click="store.sendVerificationMail"
+
                                             />
                                         </td>
                                     </tr>

@@ -69,7 +69,9 @@ onMounted(async () => {
 
                 <template #icons>
 
-                    <Button @click="store.toForm()">
+                    <Button
+                        @click="store.toForm()"
+                        data-testid="register-to_create_form">
                         <i class="pi pi-plus mr-1"></i>
                         Create
                     </Button>

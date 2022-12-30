@@ -93,25 +93,33 @@ const useVaah = vaah();
                         <Button class="p-button-tiny p-button-text"
                                 v-tooltip.top="'View'"
                                 @click="store.toView(prop.data)"
-                                icon="pi pi-eye" />
+                                icon="pi pi-eye"
+                                data-testid="register-table_to_view"
+                        />
 
                         <Button class="p-button-tiny p-button-text"
                                 v-tooltip.top="'Update'"
                                 @click="store.toEdit(prop.data)"
-                                icon="pi pi-pencil" />
+                                icon="pi pi-pencil"
+                                data-testid="register-table_to_edit"
+                        />
 
                         <Button class="p-button-tiny p-button-danger p-button-text"
                                 v-if="store.isViewLarge() && !prop.data.deleted_at"
                                 @click="store.itemAction('trash', prop.data)"
                                 v-tooltip.top="'Trash'"
-                                icon="pi pi-trash" />
+                                icon="pi pi-trash"
+                                data-testid="register-table_item_action_restore"
+                        />
 
 
                         <Button class="p-button-tiny p-button-success p-button-text"
                                 v-if="store.isViewLarge() && prop.data.deleted_at"
                                 @click="store.itemAction('restore', prop.data)"
                                 v-tooltip.top="'Restore'"
-                                icon="pi pi-replay" />
+                                icon="pi pi-replay"
+                                data-testid="register-table_item_action_delete"
+                        />
 
 
                     </div>
@@ -131,7 +139,9 @@ const useVaah = vaah();
         <Paginator v-model:rows="store.query.rows"
                    :totalRecords="store.list.total"
                    @page="store.paginate($event)"
-                   :rowsPerPageOptions="store.rows_per_page">
+                   :rowsPerPageOptions="store.rows_per_page"
+                   data-testid="register-table_paginate"
+        >
         </Paginator>
         <!--/paginator-->
 

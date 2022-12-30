@@ -48,7 +48,9 @@ const toggleFormMenu = (event) => {
                         <div class="">
                             <Button label="Restore"
                                     class="p-button-sm"
-                                    @click="store.itemAction('restore')">
+                                    @click="store.itemAction('restore')"
+                                    data-testid="register-form_item_action_restore"
+                            >
                             </Button>
                         </div>
 
@@ -81,12 +83,16 @@ const toggleFormMenu = (event) => {
                     <Button label="Save"
                             v-if="store.item && store.item.id"
                             @click="store.itemAction('save')"
-                            icon="pi pi-save"/>
+                            icon="pi pi-save"
+                            data-testid="register-form_item_action_save"
+                    />
 
                     <Button label="Create & New"
                             v-else
                             @click="store.itemAction('create-and-new')"
-                            icon="pi pi-save"/>
+                            icon="pi pi-save"
+                            data-testid="register-form_item_action_create_and_new"
+                    />
 
 
                     <!--form_menu-->
@@ -94,7 +100,9 @@ const toggleFormMenu = (event) => {
                         type="button"
                         @click="toggleFormMenu"
                         icon="pi pi-angle-down"
-                        aria-haspopup="true"/>
+                        aria-haspopup="true"
+                        data-testid="register-form_toggle_form_menu_list"
+                    />
 
                     <Menu ref="form_menu"
                           :model="store.form_menu_list"
@@ -104,7 +112,9 @@ const toggleFormMenu = (event) => {
 
                     <Button class="p-button-primary"
                             icon="pi pi-times"
-                            @click="store.toList()">
+                            @click="store.toList()"
+                            data-testid="register-form_to_list"
+                    >
                     </Button>
                 </div>
             </template>
