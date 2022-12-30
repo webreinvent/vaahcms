@@ -196,7 +196,18 @@ const closeModal = () => {
                             <tr>
                                 <td><b>Status</b></td>
                                 <td v-if="value">
-                                    <Tag class="mr-2 " severity="success"   v-if="value">{{value}}</Tag>
+                                <table>
+                                    <tr>
+                                        <td><Tag class="mr-2 " severity="success"   v-if="value">{{value}}</Tag></td>
+                                        <td>
+                                            <Button v-if="value == 'email-verification-pending'"
+                                                    label="Resend Verification Email"
+                                                    class="p-button-outlined p-button-secondary p-button-sm"
+                                                    @click="store.sendVerificationMail"
+                                            />
+                                        </td>
+                                    </tr>
+                                </table>
                                 </td>
                             </tr>
                         </template>
