@@ -64,6 +64,7 @@ export const useRegistrationStore = defineStore({
         item_menu_list: [],
         item_menu_state: null,
         form_menu_list: [],
+        item_status:null,
 
         gender_options: [
             {name:'Male',value:'m',icon: ''},
@@ -393,7 +394,6 @@ export const useRegistrationStore = defineStore({
         {
             if(data)
             {
-
                 this.item = data.item;
                 await this.getList();
                 await this.formActionAfter();
@@ -923,6 +923,29 @@ export const useRegistrationStore = defineStore({
 
         },
         //---------------------------------------------------------------------
+        sendVerificationMail(item=null){
+            if(!item){
+                item=this.item;
+            }
+            let ajax_url = this.ajax_url+'/'+item.id+'/'+'send-verification-mail';
+            let options = {
+                method: 'PATCH',
+                params : item,
+            };
+            vaah().ajax(
+                ajax_url,
+                this.sendVerificationMailAfter,
+                options
+            );
+
+        },
+        //---------------------------------------------------------------------
+        async sendVerificationMailAfter(){
+            this.item = data.item;
+            await this.getList();
+            this.getItemMenu();
+        }
+
     }
 });
 

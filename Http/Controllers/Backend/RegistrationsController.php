@@ -115,6 +115,10 @@ class RegistrationsController extends Controller
         return Registration::itemAction($request,$id,$action);
     }
     //----------------------------------------------------------
+    public function sendVerificationEmail(Request $request,$id)
+    {
+        return Registration::sendVerificationEmail( $request,$id);
+    }
 
 
 }

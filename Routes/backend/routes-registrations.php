@@ -3,9 +3,9 @@
 Route::group(
     [
     'prefix' => 'backend/vaah/registrations',
-    
+
     'middleware' => ['web', 'has.backend.access'],
-    
+
     'namespace' => 'WebReinvent\\VaahCms\Http\Controllers\Backend',
 ],
 function () {
@@ -65,5 +65,7 @@ function () {
         ->name('vh.backend.vaah.registrations.item.action');
 
     //---------------------------------------------------------
+    Route::patch('/{id}/send-verification-mail', 'RegistrationsController@sendVerificationEmail')
+        ->name('vh.backend.vaah.registrations.send_verification_mail');
 
 });

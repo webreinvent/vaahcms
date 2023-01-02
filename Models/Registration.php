@@ -548,6 +548,7 @@ class Registration extends RegistrationBase
     //-------------------------------------------------
     public static function itemAction($request, $id, $type): array
     {
+
         switch($type)
         {
             case 'activate':
@@ -568,6 +569,7 @@ class Registration extends RegistrationBase
                     ->withTrashed()
                     ->restore();
                 break;
+
         }
         $item=self::getItem($id);
         $response['success'] = true;
@@ -610,6 +612,44 @@ class Registration extends RegistrationBase
         $calling_code_int=$value;
         $calling_code_string=(string) $calling_code_int;
         return $calling_code_string;
+    }
+    public static function sendVerificationEmail($request): array
+    {
+//        dd($request->inputs);
+        $rules = array(
+            'inputs' => 'required',
+        );
+        $validator = \Validator::make( $request->all(), $rules);
+        if ( $validator->fails() ) {
+
+            $errors             = errorsToArray($validator->errors());
+            $response['status'] = 'failed';
+            $response['errors'] = $errors;
+            return response()->json($response);
+        }
+
+        if(!$request->has('inputs'))
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = 'Select IDs';
+            return $response;
+        }
+
+        foreach($request->inputs as $id) {
+            $reg = self::where('id', $id)->withTrashed()->first();
+            if ($reg) {
+                $reg->activation_code = Str::uuid();
+                $reg->activation_code_sent_at = \Carbon::now;
+                $reg->save();
+            }
+        }
+
+        $item=self::getItem($id);
+        $response['success'] = true;
+        $response['data']['item'] = $item['data'];
+        $response['messages'][] ='Verification Email Send Successfully';
+        return $response;
+
     }
 
 

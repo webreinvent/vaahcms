@@ -55,7 +55,7 @@ const toggleItemMenu = (event) => {
 };
 //--------/toggle item menu
 
-//--------/toggle item menu
+//--------modal
 const display_meta_modal = ref(false);
 const openModal = () => {
             display_meta_modal.value = true;
@@ -63,7 +63,12 @@ const openModal = () => {
 const closeModal = () => {
             display_meta_modal.value = false;
 }
-//--------/toggle item menu
+//--------/modal
+
+const item_status=ref();
+const toggleStatusesMenu = (event) => {
+    item_status.value.toggle(event);
+};
 
 
 
@@ -203,7 +208,7 @@ const closeModal = () => {
                             </template>
 
 
-                        <template v-else-if="column === 'status'">
+<!--                        <template v-else-if="column === 'status'">
                             <tr>
                                 <td><b>Status</b></td>
                                 <td v-if="value">
@@ -214,24 +219,63 @@ const closeModal = () => {
                                             <Button v-if="value == 'email-verification-pending'"
                                                     label="Resend Verification Email"
                                                     class="p-button-outlined p-button-secondary p-button-sm"
-                                                    @click="store.sendVerificationMail"
-
+                                                    data-testid="register-resend_verification_email"
                                             />
                                         </td>
                                     </tr>
                                 </table>
                                 </td>
                             </tr>
+                        </template>-->
+
+                        <template v-else-if="column === 'status'" >
+                            <tr>
+                                <td><b>Status</b></td>
+                                <td v-if="value">
+                                    <div class="p-inputgroup">
+                                        <Button :label="value"
+                                                v-if="value"
+                                                class="p-button-outlined p-button-secondary p-button-sm"
+                                                disabled="disabled"
+                                        />
+
+                                        <Button type="button"
+                                                @click="toggleStatusesMenu"
+                                                icon="pi pi-angle-down"
+                                                aria-haspopup="true"
+                                                class="p-button-outlined p-button-secondary"
+                                        />
+                                        <Menu ref="item_status"
+                                              :model="store.assets.registration_statuses"
+                                              :popup="true" />
+
+                                        <Button v-if="value == 'email-verification-pending'"
+                                                label="Resend Verification Email"
+                                                class="p-button-info p-button-sm"
+                                                data-testid="register-resend_verification_email"
+                                                 @click="store.sendVerificationMail()"
+                                        />
+                                        <Button v-if="value == 'email-verified'"
+                                                label="Create User"
+                                                class="p-button-success p-button-sm"
+                                                data-testid="register-resend_verification_email"
+                                                 @click="confirmCreateUser"
+                                        />
+                                        <Button v-if="value == 'email-verified'"
+                                                type="button"
+                                                @click=""
+                                                icon="pi pi-angle-down"
+                                                aria-haspopup="true"
+                                                class="p-button-success"
+                                        />
+
+
+                                    </div>
+                                </td>
+                            </tr>
                         </template>
 
 
-
-                        <template v-else-if="column === 'is_active'">
-                            <VhViewRow :label="column"
-                                       :value="value"
-                                       type="yes-no"
-                            />
-                        </template>
                         <template v-else-if="column === 'gender'">
                             <tr>
                                 <td><b>Gender</b></td>
