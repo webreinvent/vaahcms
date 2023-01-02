@@ -117,7 +117,7 @@ class RegistrationsController extends Controller
     //----------------------------------------------------------
     public function sendVerificationEmail(Request $request,$id)
     {
-        return Registration::sendVerificationEmail( $request,$id);
+        return Registration::sendVerificationEmail($request, $id);
     }
 
 

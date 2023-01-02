@@ -65,7 +65,7 @@ function () {
         ->name('vh.backend.vaah.registrations.item.action');
 
     //---------------------------------------------------------
-    Route::patch('/{id}/send-verification-mail', 'RegistrationsController@sendVerificationEmail')
+    Route::any('/{id}/send-verification-mail', 'RegistrationsController@sendVerificationEmail')
         ->name('vh.backend.vaah.registrations.send_verification_mail');
 
 });

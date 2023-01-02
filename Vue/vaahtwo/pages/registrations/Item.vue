@@ -208,26 +208,6 @@ const toggleStatusesMenu = (event) => {
                             </template>
 
 
-<!--                        <template v-else-if="column === 'status'">
-                            <tr>
-                                <td><b>Status</b></td>
-                                <td v-if="value">
-                                <table>
-                                    <tr>
-                                        <td><Tag class="mr-2 " severity="success"   v-if="value">{{value}}</Tag></td>
-                                        <td>
-                                            <Button v-if="value == 'email-verification-pending'"
-                                                    label="Resend Verification Email"
-                                                    class="p-button-outlined p-button-secondary p-button-sm"
-                                                    data-testid="register-resend_verification_email"
-                                            />
-                                        </td>
-                                    </tr>
-                                </table>
-                                </td>
-                            </tr>
-                        </template>-->
-
                         <template v-else-if="column === 'status'" >
                             <tr>
                                 <td><b>Status</b></td>
@@ -237,6 +217,7 @@ const toggleStatusesMenu = (event) => {
                                                 v-if="value"
                                                 class="p-button-outlined p-button-secondary p-button-sm"
                                                 disabled="disabled"
+
                                         />
 
                                         <Button type="button"
@@ -244,6 +225,7 @@ const toggleStatusesMenu = (event) => {
                                                 icon="pi pi-angle-down"
                                                 aria-haspopup="true"
                                                 class="p-button-outlined p-button-secondary"
+                                                data-testid="register-view_toggle_statuses_menu"
                                         />
                                         <Menu ref="item_status"
                                               :model="store.assets.registration_statuses"
@@ -252,14 +234,14 @@ const toggleStatusesMenu = (event) => {
                                         <Button v-if="value == 'email-verification-pending'"
                                                 label="Resend Verification Email"
                                                 class="p-button-info p-button-sm"
-                                                data-testid="register-resend_verification_email"
-                                                 @click="store.sendVerificationMail()"
+                                                @click="store.sendVerificationEmail()"
+                                                data-testid="register-view_send_verification_email"
                                         />
                                         <Button v-if="value == 'email-verified'"
                                                 label="Create User"
                                                 class="p-button-success p-button-sm"
-                                                data-testid="register-resend_verification_email"
-                                                 @click="confirmCreateUser"
+                                                 @click="store.confirmCreateUser()"
+                                                data-testid="register-view_confirm_create_user"
                                         />
                                         <Button v-if="value == 'email-verified'"
                                                 type="button"
@@ -267,6 +249,7 @@ const toggleStatusesMenu = (event) => {
                                                 icon="pi pi-angle-down"
                                                 aria-haspopup="true"
                                                 class="p-button-success"
+                                                data-testid="register-view_email_verified"
                                         />
 
 
