@@ -80,7 +80,7 @@ const toggleStatusesMenu = (event) => {
 
     <div class="col-4" >
 
-        <Panel v-if="store && store.item">
+        <Panel v-if="store && store.item" >
 
             <template class="p-1" #header>
 
@@ -227,7 +227,8 @@ const toggleStatusesMenu = (event) => {
                                                 class="p-button-outlined p-button-secondary"
                                                 data-testid="register-view_toggle_statuses_menu"
                                         />
-                                        <Menu ref="item_status"
+                                        <Menu v-if="store.assets && store.assets.registration_statuses"
+                                            ref="item_status"
                                               :model="store.assets.registration_statuses"
                                               :popup="true" />
 
