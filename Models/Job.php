@@ -13,7 +13,14 @@ class Job extends JobBase
 
     use CrudWithUuidObservantTrait;
 
-
+    //-------------------------------------------------
+    protected $table = 'jobs';
+    //-------------------------------------------------
+    protected $dates = [
+        'created_at',
+        'updated_at',
+        'deleted_at'
+    ];
     //-------------------------------------------------
     protected $fillable = [
         'uuid',
@@ -171,6 +178,30 @@ class Job extends JobBase
             $q->where('name', 'LIKE', '%' . $search . '%')
                 ->orWhere('slug', 'LIKE', '%' . $search . '%');
         });
+
+    }
+    //-------------------------------------------------
+    public static function getList($request)
+    {
+        $list = self::getSorted($request->filter);
+        $list->isActiveFilter($request->filter);
+        $list->trashedFilter($request->filter);
+        $list->searchFilter($request->filter);
+
+        $rows = config('vaahcms.per_page');
+
+        if($request->has('rows'))
+        {
+            $rows = $request->rows;
+        }
+
+        $list = $list->paginate($rows);
+
+        $response['success'] = true;
+        $response['data'] = $list;
+
+        return $response;
+
 
     }
 
