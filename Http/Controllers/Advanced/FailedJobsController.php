@@ -5,7 +5,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use WebReinvent\VaahCms\Entities\FailedJob;
-use WebReinvent\VaahCms\Entities\Job;
+use WebReinvent\VaahCms\Models\Job;
 
 
 class FailedJobsController extends Controller
