@@ -210,7 +210,7 @@ const confirmChangeStatus = (event, id) => {
             <DataTable v-if="store && store.role_permissions"
                        :value="store.role_permissions.list.data"
                        dataKey="id"
-                       class="p-datatable-sm"
+                       class="p-datatable-sm mt-3"
                        stripedRows
                        responsiveLayout="scroll"
             >
