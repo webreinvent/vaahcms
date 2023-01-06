@@ -28,7 +28,7 @@ Route::group(
         Route::get( '/assets', 'GeneralController@getAssets' )
             ->name( 'vh.backend.settings.general.assets' );
         //------------------------------------------------
-        Route::post( '/list', 'GeneralController@getList' )
+        Route::get( '/list', 'GeneralController@getList' )
             ->name( 'vh.backend.settings.general.list' );
         //------------------------------------------------
         Route::post( '/store/site/settings', 'GeneralController@storeSiteSettings' )

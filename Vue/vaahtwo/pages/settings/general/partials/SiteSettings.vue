@@ -1,5 +1,19 @@
+<script setup>
+import {onMounted, ref} from "vue";
+import {useRoute} from 'vue-router';
+
+import {useSettingStore} from '../../stores/store-settings';
+import { vaah } from '../../vaahvue/pinia/vaah';
+
+import VhViewRow from '../../vaahvue/vue-three/primeflex/VhViewRow.vue';
+const store = useSettingStore();
+const route = useRoute();
+const useVaah = vaah();
+
+</script>
+
 <template>
-    <div>
+    <div v-if="store.assets && store.list">
         <template #header>
             <div class="w-full">
                 <div>
@@ -15,25 +29,27 @@
                     <div class="col-12">
                         <h5 class="p-1 text-xs mb-1">Site Title</h5>
                         <div class="p-inputgroup">
-                            <InputText class="" id="site-title"/>
+                            <InputText class="" v-model="store.list.site_title" id="site-title"/>
                             <Button icon="pi pi-copy" class=""/>
                         </div>
                     </div>
                     <div class="col-6">
                         <h5 class="p-1 text-xs mb-1">Default Site Language</h5>
-                        <Dropdown v-model="selectedLanguage" :options="languages" placeholder="Select a Language"/>
+                        <Dropdown v-model="store.list.language"
+                                  :options="store.assets.languages"
+                                  placeholder="Select a Language"/>
                     </div>
                     <div class="col-6">
                         <h5 class="p-1 text-xs mb-1">Redirect after Frontend Login</h5>
                         <div class="p-inputgroup">
-                            <InputText/>
+                            <InputText v-model="store.list.redirect_after_frontend_login" />
                             <Button icon="pi pi-copy" class=""/>
                         </div>
                     </div>
                     <div class="col-7">
                         <h5 class="p-1 text-xs mb-1">Meta Description</h5>
                         <div class="p-inputgroup">
-                            <Textarea v-model="value" :autoResize="true" class="w-full"/>
+                            <Textarea v-model="store.list.site_description" :autoResize="true" class="w-full"/>
                             <Button icon="pi pi-copy" class="has-max-height"/>
                         </div>
                     </div>
@@ -144,39 +160,6 @@
         </div>
     </div>
 </template>
-
-<script>
-export default {
-    name: "Site Settings",
-
-    data() {
-        return {
-
-        }
-    },
-
-    methods: {
-        expandAll() {
-            let accordionTabs = document.getElementById('accordionTabContainer').children.length;
-            for (let i = 0; i <= accordionTabs; i++) {
-                this.activeIndex.push(i);
-            }
-        },
-        collapseAll() {
-            this.activeIndex = [];
-        },
-        addLinkHandler() {
-            if (!this.showLinkInput) {
-                return this.showLinkInput = true;
-            } else if (this.showLinkInput && this.addLink !== "" && this.addLink !== null) {
-                this.socialMediaLinks.push({title:this.addLink,icon:'pi-link'});
-                this.addLink = null;
-                return this.showLinkInput = true;
-            }
-        }
-    }
-}
-</script>
 
 <style lang="scss">
 

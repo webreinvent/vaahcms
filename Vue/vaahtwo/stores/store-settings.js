@@ -14,6 +14,13 @@ let empty_states = {
     query: {
         page: null,
         rows: null,
+        general_list: null,
+        general_settings:{
+            list: null,
+            links: [],
+            scripts: null,
+            meta_tags: [],
+        },
         filter: {
             q: null,
             is_active: null,
@@ -223,7 +230,7 @@ export const useSettingStore = defineStore({
             };
 
             await vaah().ajax(
-                this.ajax_url,
+                this.ajax_url+'/general/list',
                 this.afterGetList,
                 options
             );
@@ -235,9 +242,8 @@ export const useSettingStore = defineStore({
             this.query.recount = null;
 
             if (data) {
-                this.list = data;
-                this.total_permissions = res.data.totalPermissions;
-                this.total_users = res.data.totalUsers;
+                this.general_settings = data;
+                this.general_list = data.list;
             }
         },
         //---------------------------------------------------------------------
@@ -487,7 +493,7 @@ export const useSettingStore = defineStore({
         //---------------------------------------------------------------------
         async reload()
         {
-            await this.getAssets();
+            await this.getGeneralAssets();
             await this.getList();
         },
         //---------------------------------------------------------------------

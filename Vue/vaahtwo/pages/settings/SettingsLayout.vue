@@ -1,5 +1,5 @@
 <script setup>
-import {onMounted, ref, watch} from "vue";
+import {onMounted, ref} from "vue";
 import {useRoute} from 'vue-router';
 
 import {useSettingStore} from '../../stores/store-settings';
@@ -9,6 +9,7 @@ import VhViewRow from '../../vaahvue/vue-three/primeflex/VhViewRow.vue';
 const store = useSettingStore();
 const route = useRoute();
 const useVaah = vaah();
+
 
 const sidebar_menu_items = ref([
     {
@@ -67,9 +68,7 @@ const sidebar_menu_items = ref([
 ]);
 
 onMounted(async () => {
-
-    store.getGeneralAssets();
-
+    await store.reload();
 });
 
 </script>
