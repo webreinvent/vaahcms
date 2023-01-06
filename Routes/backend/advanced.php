@@ -42,24 +42,7 @@ Route::group(
     });
 
 
-Route::group(
-    [
-        'prefix' => 'backend/vaah/advanced/jobs',
-        'middleware' => ['web', 'has.backend.access'],
-        'namespace' => 'WebReinvent\VaahCms\Http\Controllers\Advanced',
-    ],
-    function () {
-        //---------------------------------------------------------
-        Route::any('/assets', 'JobsController@getAssets')
-            ->name('vh.backend.jobs.jobs.assets');
-        //---------------------------------------------------------
-        Route::any('/list', 'JobsController@getList')
-            ->name('vh.backend.jobs.jobs.list');
-        //---------------------------------------------------------
-        Route::post('/actions/{action_name}', 'JobsController@postActions')
-            ->name('vh.backend.jobs.jobs.actions');
-        //---------------------------------------------------------
-    });
+
 
 
 Route::group(

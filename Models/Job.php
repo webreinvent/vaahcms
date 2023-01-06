@@ -306,8 +306,7 @@ class Job extends JobBase
                 ->pluck('id')
                 ->toArray();
 
-            $items = self::whereIn('id', $items_id)
-                ->withTrashed();
+            $items = self::whereIn('id', $items_id);
         }
 
 
@@ -350,7 +349,7 @@ class Job extends JobBase
                 self::withTrashed()->restore();
                 break;
             case 'delete-all':
-                self::withTrashed()->forceDelete();
+                self::query()->forceDelete();
                 break;
         }
 
@@ -426,7 +425,7 @@ class Job extends JobBase
     //-------------------------------------------------
     public static function deleteItem($request, $id): array
     {
-        $item = self::where('id', $id)->withTrashed()->first();
+        $item = self::where('id', $id)->first();
         if (!$item) {
             $response['success'] = false;
             $response['messages'][] = 'Record does not exist.';

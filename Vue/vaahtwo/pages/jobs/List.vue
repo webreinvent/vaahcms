@@ -66,14 +66,10 @@ onMounted(async () => {
                     </div>
 
                 </template>
-                <template class="p-1">
-                    <b-notification type="is-info"
-                                    :closable="false"
-                                    class="is-light is-small">
-                        This list consist of only queued/pending jobs.
-                        Completed jobs gets deleted automatically .
-                    </b-notification>
-                </template>
+                <Message :closable="false">
+                    This list consist of only queued/pending jobs.
+                    Completed jobs gets deleted automatically .
+                </Message>
 
 
                 <Actions/>
