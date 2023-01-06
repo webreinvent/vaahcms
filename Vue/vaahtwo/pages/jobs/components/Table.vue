@@ -86,6 +86,23 @@ const useVaah = vaah();
                 </template>
 
             </Column>
+            <Column field="actions" style="width:150px;"
+                    :style="{width: store.getActionWidth() }"
+                    :header="store.getActionLabel()">
+
+                <template #body="prop">
+                    <div class="p-inputgroup ">
+                        <Button class="p-button-tiny p-button-danger p-button-text"
+                                v-if="store.isViewLarge() && !prop.data.deleted_at"
+                                @click="store.itemAction('delete', prop.data)"
+                                v-tooltip.top="'Delete'"
+                                icon="pi pi-trash" />
+                    </div>
+
+                </template>
+
+
+            </Column>
 
 
         </DataTable>
@@ -104,22 +121,9 @@ const useVaah = vaah();
     </div>
     <Dialog header="Payload"
             v-model:visible="store.payloadModal"
-            :style="{width: '50%'}"
+            :style="{width: '40%'}"
     >
         {{store.payloadContent}}
     </Dialog>
-    <div tabindex="-1" class="modal is-active" :visible="store.payloadModal">
-        <div class="modal-background"></div>
-        <button type="button" class="modal-close is-large" style=""><i class="fa fa-times"></i></button>
-        <div class="animation-content modal-content" style="max-width: 640px;">
-            <div class="card">
-                <div class="card-content">
-                    <pre class="is-size-6">
-                        {{store.payloadContent}}
-                    </pre>
-                </div>
-            </div>
-        </div>
-    </div>
 
 </template>

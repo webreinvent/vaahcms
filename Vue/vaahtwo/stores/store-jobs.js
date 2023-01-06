@@ -657,35 +657,6 @@ export const useJobStore = defineStore({
         {
             this.list_selected_menu = [
                 {
-                    label: 'Activate',
-                    command: async () => {
-                        await this.updateList('activate')
-                    }
-                },
-                {
-                    label: 'Deactivate',
-                    command: async () => {
-                        await this.updateList('deactivate')
-                    }
-                },
-                {
-                    separator: true
-                },
-                {
-                    label: 'Trash',
-                    icon: 'pi pi-times',
-                    command: async () => {
-                        await this.updateList('trash')
-                    }
-                },
-                {
-                    label: 'Restore',
-                    icon: 'pi pi-replay',
-                    command: async () => {
-                        await this.updateList('restore')
-                    }
-                },
-                {
                     label: 'Delete',
                     icon: 'pi pi-trash',
                     command: () => {
@@ -699,35 +670,6 @@ export const useJobStore = defineStore({
         getListBulkMenu()
         {
             this.list_bulk_menu = [
-                {
-                    label: 'Mark all as active',
-                    command: async () => {
-                        await this.listAction('activate-all')
-                    }
-                },
-                {
-                    label: 'Mark all as inactive',
-                    command: async () => {
-                        await this.listAction('deactivate-all')
-                    }
-                },
-                {
-                    separator: true
-                },
-                {
-                    label: 'Trash All',
-                    icon: 'pi pi-times',
-                    command: async () => {
-                        await this.listAction('trash-all')
-                    }
-                },
-                {
-                    label: 'Restore All',
-                    icon: 'pi pi-replay',
-                    command: async () => {
-                        await this.listAction('restore-all')
-                    }
-                },
                 {
                     label: 'Delete All',
                     icon: 'pi pi-trash',
@@ -869,7 +811,7 @@ export const useJobStore = defineStore({
         //---------------------------------------------------------------------
         viewPayloads(content)
         {
-            this.payloadContent = JSON.stringify(content);
+            this.payloadContent = JSON.stringify(content,null, 2);
             this.payloadModal=true
         },
         //---------------------------------------------------------------------
