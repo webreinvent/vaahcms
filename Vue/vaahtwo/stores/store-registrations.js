@@ -71,6 +71,7 @@ export const useRegistrationStore = defineStore({
             {name:'Female',value:'f',icon: ''},
             {name:'Others',value:'o',icon: ''},
         ],
+        is_btn_loading: false,
 
     }),
     getters: {
@@ -192,6 +193,7 @@ export const useRegistrationStore = defineStore({
         //---------------------------------------------------------------------
         afterGetList: function (data, res)
         {
+            this.is_btn_loading = false;
             if(data)
             {
                 this.list = data;
@@ -488,7 +490,10 @@ export const useRegistrationStore = defineStore({
         },
 
         //---------------------------------------------------------------------
-
+        async sync() {
+            this.is_btn_loading = true;
+            await this.getList();
+        },
         //---------------------------------------------------------------------
         onItemSelection(items)
         {
