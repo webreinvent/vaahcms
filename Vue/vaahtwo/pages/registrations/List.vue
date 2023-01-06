@@ -68,13 +68,20 @@ onMounted(async () => {
                 </template>
 
                 <template #icons>
+                    <div class="p-inputgroup">
+                        <Button
+                            @click="store.toForm()"
+                            data-testid="register-to_create_form">
+                            <i class="pi pi-plus mr-1"></i>
+                            Create
+                        </Button>
 
-                    <Button
-                        @click="store.toForm()"
-                        data-testid="register-to_create_form">
-                        <i class="pi pi-plus mr-1"></i>
-                        Create
-                    </Button>
+                        <Button class="p-button-sm"
+                                icon="pi pi-refresh"
+                                :loading="store.is_btn_loading"
+                                @click="store.sync()"
+                        />
+                    </div>
 
                 </template>
 
