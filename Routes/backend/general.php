@@ -37,6 +37,7 @@ Route::group(
 
         Route::any( '/faker', 'Frontend\WelcomeController@getFaker' )
             ->name( 'vh.faker' );
+
         //------------------------------------------------
 
         Route::group(

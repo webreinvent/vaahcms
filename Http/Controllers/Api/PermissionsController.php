@@ -7,8 +7,9 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Hash;
-use WebReinvent\VaahCms\Entities\Registration;
+use WebReinvent\VaahCms\Models\Registration;
 use WebReinvent\VaahCms\Models\User;
+use WebReinvent\VaahCms\Models\Registration;
 use WebReinvent\VaahCms\Models\Permission;
 
 class PermissionsController extends Controller

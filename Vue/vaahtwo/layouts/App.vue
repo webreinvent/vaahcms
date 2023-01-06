@@ -35,8 +35,6 @@ useVaah.setConfirm(confirm);
         </Toast>
 
         <ConfirmDialog class="p-container-confirm-dialog"/>
-
         <RouterView />
-
     </div>
 </template>

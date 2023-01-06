@@ -177,10 +177,12 @@ class WelcomeController extends Controller
         foreach ($fillable as $column)
         {
             $type = \DB::getSchemaBuilder()->getColumnType($table, $column);
+
             $value = null;
 
             switch($type)
             {
+
                 case 'text':
                 $value = $faker->text(60);
                     break;
@@ -219,13 +221,29 @@ class WelcomeController extends Controller
                     $fill[$column] = $faker->lastName;
                     break;
 
+                case 'alternate_email':
                 case 'email':
                     $fill[$column] = $faker->email;
                     break;
 
+                case 'password':
+                    $fill[$column] = $faker->password;
+                break;
+
+                case 'gender':
+                    $fill[$column] = $faker->randomElement(['m','f','o']);
+                    break;
+
+
+                case 'timezone':
+                    $fill[$column] = $faker->timezone('US');
+                break;
+
+                case 'display_name':
                 case 'username':
                     $fill[$column] = $faker->userName;
                     break;
+
 
                 case 'slug':
                     if(isset($fill['name']) && !empty($fill['name']))

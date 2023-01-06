@@ -18,6 +18,7 @@ use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Str;
+use WebReinvent\VaahCms\Entities\Setting;
 use WebReinvent\VaahCms\Jobs\ProcessMails;
 use WebReinvent\VaahCms\Jobs\ProcessNotifications;
 use WebReinvent\VaahCms\Libraries\VaahMail;
