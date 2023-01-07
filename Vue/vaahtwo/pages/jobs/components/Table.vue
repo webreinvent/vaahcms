@@ -123,7 +123,14 @@ const useVaah = vaah();
             v-model:visible="store.payloadModal"
             :style="{width: '40%'}"
     >
-        {{store.payloadContent}}
+
+        <Card class="w-max">
+            <template #content>
+                <span v-html="store.payloadContent"></span>
+            </template>
+        </Card>
+
+
     </Dialog>
 
 </template>

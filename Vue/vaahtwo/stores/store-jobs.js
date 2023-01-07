@@ -811,7 +811,7 @@ export const useJobStore = defineStore({
         //---------------------------------------------------------------------
         viewPayloads(content)
         {
-            this.payloadContent = JSON.stringify(content,null, 2);
+            this.payloadContent = `<pre class="is-size-6">`+JSON.stringify(content, null, 2)+ `</pre>`;
             this.payloadModal=true
         },
         //---------------------------------------------------------------------

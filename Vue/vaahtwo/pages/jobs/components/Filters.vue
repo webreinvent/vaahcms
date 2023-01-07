@@ -1,7 +1,7 @@
 <script  setup>
 
 import { useJobStore } from '../../../stores/store-jobs'
-import VhViewRow from '../../../vaahvue/vue-three/primeflex/VhViewRow.vue';
+import VhFieldVertical from '../../../vaahvue/vue-three/primeflex/VhFieldVertical.vue';
 
 
 const store = useJobStore();
