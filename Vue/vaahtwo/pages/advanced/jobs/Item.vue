@@ -2,9 +2,9 @@
 import {onMounted, ref, watch} from "vue";
 import {useRoute} from 'vue-router';
 
-import { useJobStore } from '../../stores/store-jobs'
+import { useJobStore } from '../../../stores/store-jobs'
 
-import VhViewRow from '../../vaahvue/vue-three/primeflex/VhViewRow.vue';
+import VhViewRow from '../../../vaahvue/vue-three/primeflex/VhViewRow.vue';
 const store = useJobStore();
 const route = useRoute();
 

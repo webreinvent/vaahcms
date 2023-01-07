@@ -1,6 +1,6 @@
 <script  setup>
 import {ref, reactive, watch, onMounted} from 'vue';
-import { useJobStore } from '../../../stores/store-jobs'
+import { useJobStore } from '../../../../stores/store-jobs'
 
 import Filters from './Filters.vue'
 

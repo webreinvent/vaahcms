@@ -1,7 +1,7 @@
 <script  setup>
 
-import { useJobStore } from '../../../stores/store-jobs'
-import VhFieldVertical from '../../../vaahvue/vue-three/primeflex/VhFieldVertical.vue';
+import { useJobStore } from '../../../../stores/store-jobs'
+import VhFieldVertical from '../../../../vaahvue/vue-three/primeflex/VhFieldVertical.vue';
 
 
 const store = useJobStore();
