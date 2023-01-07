@@ -37,8 +37,7 @@ const useVaah = vaah();
                         />
 
                         <Button class="p-button-tiny p-button-danger p-button-text"
-                                v-if="store.isViewLarge() && !prop.data.deleted_at"
-                                @click="store.itemAction('delete', prop.data)"
+                                @click="store.confirmDelete(prop.data)"
                                 v-tooltip.top="'Delete'"
                                 icon="pi pi-trash" />
                     </div>

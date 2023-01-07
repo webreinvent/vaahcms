@@ -76,16 +76,6 @@ export const useLogStore = defineStore({
              * Set initial routes
              */
             this.route = route;
-
-            /**
-             * Update with view and list css column number
-             */
-            this.setViewAndWidth(route.name);
-
-            /**
-             * Update query state with the query parameters of url
-             */
-            this.updateQueryFromUrl(route);
         },
         //---------------------------------------------------------------------
         setViewAndWidth(route_name)
@@ -222,6 +212,7 @@ export const useLogStore = defineStore({
             {
                 this.item = data;
             }else{
+                this.item = null;
                 this.$router.push({name: 'logs.index'});
             }
             await this.getItemMenu();
@@ -247,6 +238,33 @@ export const useLogStore = defineStore({
         {
             if(data && data.message === 'success'){
                 this.getItem(this.item.name);
+            }
+        },
+        //---------------------------------------------------------------------
+        deleteItem: function () {
+
+            let params = {
+                params:this.item,
+                method:'POST'
+            }
+
+            vaah().ajax(
+                ajax_url+'/actions/bulk-delete',
+                this.deleteItemAfter,
+                params
+            );
+
+
+
+        },
+        //---------------------------------------------------------------------
+        deleteItemAfter: function (data, res) {
+
+            if(data && data.message === 'success'){
+                this.getList();
+                if(this.item){
+                    this.getItem(this.item.name);
+                }
             }
         },
         //---------------------------------------------------------------------
@@ -477,6 +495,10 @@ export const useLogStore = defineStore({
         {
             await this.getAssets();
             await this.getList();
+
+            if(this.item){
+                this.getItem(this.item.name);
+            }
         },
         //---------------------------------------------------------------------
         async getFaker () {
@@ -522,15 +544,10 @@ export const useLogStore = defineStore({
             this.item = vaah().clone(this.assets.empty_item);
         },
         //---------------------------------------------------------------------
-        confirmDelete()
+        confirmDelete(item)
         {
-            if(this.action.items.length < 1)
-            {
-                vaah().toastErrors(['Select a record']);
-                return false;
-            }
-            this.action.type = 'delete';
-            vaah().confirmDialogDelete(this.listAction);
+            this.item = item;
+            vaah().confirmDialogDelete(this.deleteItem);
         },
         //---------------------------------------------------------------------
         confirmDeleteAll()

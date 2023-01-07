@@ -68,7 +68,7 @@ const toggleItemMenu = (event) => {
                         class="p-button-sm p-button-rounded p-button-text" />
                 <Button icon="pi pi-download" @click="store.downloadFile(store.item)"
                         class="p-button-sm p-button-rounded p-button-text" />
-                <Button @click="store.getItem(store.item.name)" icon="pi pi-refresh"
+                <Button icon="pi pi-refresh" @click="store.getItem(store.item.name)"
                         class="p-button-sm p-button-rounded p-button-text" />
                 <Button icon="pi pi-times" @click="store.toList()"
                         class="p-button-sm p-button-rounded p-button-text" />

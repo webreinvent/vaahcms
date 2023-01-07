@@ -140,21 +140,6 @@ class LogsController extends Controller
         return response()->json($response);
     }
     //----------------------------------------------------------
-//    public function updateList(Request $request)
-//    {
-//        return Job::updateList($request);
-//    }
-    //----------------------------------------------------------
-    public function listAction(Request $request, $type)
-    {
-        return Job::listAction($request, $type);
-    }
-    //----------------------------------------------------------
-    public function deleteList(Request $request)
-    {
-        return Job::deleteList($request);
-    }
-    //----------------------------------------------------------
     public function getItem(Request $request, $name)
     {
         if(!\Auth::user()->hasPermission('has-access-of-advanced-section'))
@@ -180,7 +165,13 @@ class LogsController extends Controller
 
         $file_name_array = explode(".",$name);
 
-        if(File::exists($path) && $file_name_array[1] && $file_name_array[1] == 'log')
+        if(!File::exists($path)){
+            $response['success'] = false;
+            $response['errors'] = [];
+            return response()->json($response);
+        }
+
+        if($file_name_array[1] && $file_name_array[1] == 'log')
         {
 
 
@@ -210,16 +201,6 @@ class LogsController extends Controller
 
 
         return response()->json($response);
-    }
-    //----------------------------------------------------------
-    public function deleteItem(Request $request,$id)
-    {
-        return Job::deleteItem($request,$id);
-    }
-    //----------------------------------------------------------
-    public function itemAction(Request $request,$id,$action)
-    {
-        return Job::itemAction($request,$id,$action);
     }
     //----------------------------------------------------------
 

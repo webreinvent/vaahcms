@@ -67,6 +67,11 @@ onMounted(async () => {
 
                 </template>
 
+                <template #icons>
+                    <Button icon="pi pi-refresh" @click="store.reload()"
+                            class="p-button-sm p-button-rounded p-button-text" />
+                </template>
+
 
                 <Actions/>
 
