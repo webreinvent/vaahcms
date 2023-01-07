@@ -209,7 +209,7 @@ class ExtendController extends Controller
         if(\Auth::user()->hasPermission('has-access-of-advanced-section'))
         {
             $list[4] = [
-                'url' => self::$link."/advanced/jobs",
+                'url' => self::$link."/advanced/logs",
                 'icon'=> 'pi pi-database',
                 'label'=> 'Advanced',
             ];

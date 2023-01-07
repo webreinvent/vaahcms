@@ -14,7 +14,7 @@ onMounted(async () => {
      * If record id is not set in url then
      * redirect user to list view
      */
-    if(route.params && !route.params.id)
+    if(route.params && !route.params.name)
     {
         store.toList();
         return false;
@@ -25,24 +25,13 @@ onMounted(async () => {
      */
     if(!store.item || Object.keys(store.item).length < 1)
     {
-        await store.getItem(route.params.id);
+        await store.getItem(route.params.name);
     }
 
     /**
      * Watch if url record id is changed, if changed
      * then fetch the new records from database
      */
-    /*watch(route, async (newVal,oldVal) =>
-        {
-            if(newVal.params && !newVal.params.id
-                && newVal.name === 'articles.view')
-            {
-                store.toList();
-
-            }
-            await store.getItem(route.params.id);
-        }, { deep: true }
-    )*/
 
 });
 
@@ -56,7 +45,7 @@ const toggleItemMenu = (event) => {
 </script>
 <template>
 
-    <div class="col-6" >
+    <div class="col-7" >
 
         <Panel v-if="store && store.item">
 
@@ -65,118 +54,76 @@ const toggleItemMenu = (event) => {
                 <div class="flex flex-row">
 
                     <div class="p-panel-title">
-                        #{{store.item.id}}
+                        Log
+
+                        <span v-if="store.item.name">
+                           :  {{store.item.name}}
+                        </span>
                     </div>
-
                 </div>
-
             </template>
 
             <template #icons>
-
-
-                <div class="p-inputgroup">
-                    <Button label="Edit"
-                            @click="store.toEdit(store.item)"
-                            data-testid="logs-item-to-edit"
-                            icon="pi pi-save"/>
-
-                    <!--item_menu-->
-                    <Button
-                        type="button"
-                        @click="toggleItemMenu"
-                        data-testid="logs-item-menu"
-                        icon="pi pi-angle-down"
-                        aria-haspopup="true"/>
-
-                    <Menu ref="item_menu_state"
-                          :model="store.item_menu_list"
-                          :popup="true" />
-                    <!--/item_menu-->
-
-                    <Button class="p-button-primary"
-                            icon="pi pi-times"
-                            data-testid="logs-item-to-list"
-                            @click="store.toList()"/>
-
-                </div>
-
-
-
+                <Button icon="pi pi-trash" @click="store.clearFile(store.item)"
+                        class="p-button-sm p-button-rounded p-button-text" />
+                <Button icon="pi pi-download" @click="store.downloadFile(store.item)"
+                        class="p-button-sm p-button-rounded p-button-text" />
+                <Button @click="store.getItem(store.item.name)" icon="pi pi-refresh"
+                        class="p-button-sm p-button-rounded p-button-text" />
+                <Button icon="pi pi-times" @click="store.toList()"
+                        class="p-button-sm p-button-rounded p-button-text" />
             </template>
 
+            <div class="card">
+                <TabView>
+                    <TabPanel header="Logs">
+                        <table v-if="store.item.logs" class="p-datatable">
+                            <tr v-for="log in store.item.logs">
+                                <td>
 
-            <div v-if="store.item">
+                                    <div class="level is-marginless">
 
-                <Message severity="error"
-                         class="p-container-message"
-                         :closable="false"
-                         icon="pi pi-trash"
-                         v-if="store.item.deleted_at">
+                                        <div class="level-left">
 
-                    <div class="flex align-items-center justify-content-between">
+                                            <div class="level-item">
+                                                <Tag class="mr-2" value="TYPE"></Tag>
+                                                <Tag class="mr-2" severity="danger" :value="log.type"></Tag>
+                                            </div>
 
-                        <div class="">
-                            Deleted {{store.item.deleted_at}}
-                        </div>
+                                            <div class="level-item">
+                                                <Tag class="mr-2" severity="info" value="TIME"></Tag>
+                                                <Tag class="mr-2" severity="danger"
+                                                     :value="log.timestamp+'/'+log.ago"></Tag>
 
-                        <div class="">
-                            <Button label="Restore"
-                                    class="p-button-sm"
-                                    data-testid="logs-item-restore"
-                                    @click="store.itemAction('restore')">
-                            </Button>
-                        </div>
+                                            </div>
 
-                    </div>
+                                            <div class="level-item">
+                                                <Tag class="mr-2" severity="info" value="ENV"></Tag>
+                                                <Tag class="mr-2" severity="danger"
+                                                     :value="log.env"></Tag>
+                                            </div>
 
-                </Message>
+                                        </div>
 
-                <div class="p-datatable p-component p-datatable-responsive-scroll p-datatable-striped p-datatable-sm">
-                <table class="p-datatable-table">
-                    <tbody class="p-datatable-tbody">
-                    <template v-for="(value, column) in store.item ">
+                                    </div>
 
-                        <template v-if="column === 'created_by' || column === 'updated_by'">
-                        </template>
-
-                        <template v-else-if="column === 'id' || column === 'uuid'">
-                            <VhViewRow :label="column"
-                                       :value="value"
-                                       :can_copy="true"
-                            />
-                        </template>
-
-                        <template v-else-if="(column === 'created_by_user' || column === 'updated_by_user'  || column === 'deleted_by_user') && (typeof value === 'object' && value !== null)">
-                            <VhViewRow :label="column"
-                                       :value="value"
-                                       type="user"
-                            />
-                        </template>
-
-                        <template v-else-if="column === 'is_active'">
-                            <VhViewRow :label="column"
-                                       :value="value"
-                                       type="yes-no"
-                            />
-                        </template>
-
-                        <template v-else>
-                            <VhViewRow :label="column"
-                                       :value="value"
-                                       />
-                        </template>
-
-
-                    </template>
-                    </tbody>
-
-                </table>
-
-                </div>
+                                    <small>
+                                        {{log.message}}
+                                    </small>
+                                </td>
+                            </tr>
+                        </table>
+                    </TabPanel>
+                    <TabPanel header="Raw">
+                        <small v-if="store.item.content"
+                            style="max-height: 768px; overflow: auto;"
+                            v-html="store.item.content"></small>
+                    </TabPanel>
+                </TabView>
             </div>
-        </Panel>
 
+
+        </Panel>
     </div>
 
 </template>

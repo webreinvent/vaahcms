@@ -29,6 +29,13 @@ const useVaah = vaah();
 
                 <template #body="prop">
                     <div class="p-inputgroup ">
+
+                        <Button class="p-button-tiny p-button-text"
+                                v-tooltip.top="'View'"
+                                @click="store.toView(prop.data)"
+                                icon="pi pi-eye"
+                        />
+
                         <Button class="p-button-tiny p-button-danger p-button-text"
                                 v-if="store.isViewLarge() && !prop.data.deleted_at"
                                 @click="store.itemAction('delete', prop.data)"

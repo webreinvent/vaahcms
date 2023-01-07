@@ -124,8 +124,8 @@ export const useLogStore = defineStore({
             watch(route, (newVal,oldVal) =>
                 {
                     this.route = newVal;
-                    if(newVal.params.id){
-                        this.getItem(newVal.params.id);
+                    if(newVal.params.name){
+                        this.getItem(newVal.params.name);
                     }
                     this.setViewAndWidth(newVal.name);
                 }, { deep: true }
@@ -178,7 +178,7 @@ export const useLogStore = defineStore({
                     this.query.rows = data.rows;
                 }
 
-                if(this.route.params && !this.route.params.id){
+                if(this.route.params && !this.route.params.name){
                     this.item = vaah().clone(data.empty_item);
                 }
 
@@ -198,7 +198,6 @@ export const useLogStore = defineStore({
         //---------------------------------------------------------------------
         afterGetList: function (data, res)
         {
-            console.log(11,data.list);
 
             if(data && data.list)
             {
@@ -207,10 +206,10 @@ export const useLogStore = defineStore({
         },
         //---------------------------------------------------------------------
 
-        async getItem(id) {
-            if(id){
+        async getItem(name) {
+            if(name){
                 await vaah().ajax(
-                    ajax_url+'/'+id,
+                    ajax_url+'/'+name,
                     this.getItemAfter
                 );
             }
@@ -218,6 +217,7 @@ export const useLogStore = defineStore({
         //---------------------------------------------------------------------
         async getItemAfter(data, res)
         {
+
             if(data)
             {
                 this.item = data;
@@ -226,6 +226,33 @@ export const useLogStore = defineStore({
             }
             await this.getItemMenu();
             await this.getFormMenu();
+        },
+        //---------------------------------------------------------------------
+        clearFile: function(item)
+        {
+            let params = {
+                params:item,
+                method:'POST'
+            }
+
+            vaah().ajax(
+                ajax_url+'/actions/clear-file',
+                this.clearFileAfter,
+                params
+            );
+        },
+
+        //---------------------------------------------------------------------
+        clearFileAfter: function(data, res)
+        {
+            if(data && data.message === 'success'){
+                this.getItem(this.item.name);
+            }
+        },
+        //---------------------------------------------------------------------
+
+        async downloadFile(item) {
+            window.location.href = this.ajax_url+"/download-file/"+item.name;
         },
         //---------------------------------------------------------------------
         isListActionValid()
@@ -606,7 +633,7 @@ export const useLogStore = defineStore({
         toView(item)
         {
             this.item = vaah().clone(item);
-            this.$router.push({name: 'logs.view', params:{id:item.id}})
+            this.$router.push({name: 'logs.view', params:{name:item.name}})
         },
         //---------------------------------------------------------------------
         toEdit(item)

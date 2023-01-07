@@ -155,9 +155,61 @@ class LogsController extends Controller
         return Job::deleteList($request);
     }
     //----------------------------------------------------------
-    public function getItem(Request $request, $id)
+    public function getItem(Request $request, $name)
     {
-        return Job::getItem($id);
+        if(!\Auth::user()->hasPermission('has-access-of-advanced-section'))
+        {
+            $response['success'] = false;
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+            return response()->json($response);
+        }
+
+
+        $response['success'] = true;
+        $response['data'] = [];
+
+        $folder_path = storage_path('logs');
+
+        $folder_path = str_replace("\\", "/", $folder_path);
+
+        $path = $folder_path.'/'.$name;
+
+        $response['data']['name'] = $name;
+        $response['data']['path'] = $path;
+
+        $file_name_array = explode(".",$name);
+
+        if(File::exists($path) && $file_name_array[1] && $file_name_array[1] == 'log')
+        {
+
+
+            $content = File::get($path);
+
+            $pattern = "/^\[(?<date>.*)\]\s(?<env>\w+)\.(?<type>\w+):(?<message>.*)/m";
+
+            preg_match_all($pattern, $content, $matches, PREG_SET_ORDER, 0);
+
+
+            $logs = [];
+            foreach ($matches as $match) {
+                $logs[] = [
+                    'timestamp' => \Carbon::parse($match['date'])->format('Y-m-d h:i A'),
+                    'ago' => \Carbon::parse($match['date'])->diffForHumans(),
+                    'env' => $match['env'],
+                    'type' => $match['type'],
+                    'message' => trim($match['message'])
+                ];
+            }
+
+            $response['data']['content'] = $content;
+            $response['data']['logs'] = array_reverse($logs);
+
+
+        }
+
+
+        return response()->json($response);
     }
     //----------------------------------------------------------
     public function deleteItem(Request $request,$id)
@@ -171,5 +223,81 @@ class LogsController extends Controller
     }
     //----------------------------------------------------------
 
+    //----------------------------------------------------------
+    public function downloadFile(Request $request,$file_name)
+    {
+
+        if(!\Auth::user()->hasPermission('has-access-of-advanced-section'))
+        {
+            $response['success'] = false;
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+            return response()->json($response);
+        }
+
+        if(!$file_name || !File::exists(storage_path('logs/',$file_name))){
+            return 'No File Found.';
+        }
+
+        $file_path =  storage_path('logs/').$file_name;
+
+        return response()->download($file_path);
+    }
+
+    //----------------------------------------------------------
+
+    public function postActions(Request $request, $action)
+    {
+
+        if(!\Auth::user()->hasPermission('has-access-of-advanced-section'))
+        {
+            $response['success'] = false;
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+            return response()->json($response);
+        }
+
+        $response = [];
+
+        $folder_path = storage_path('logs');
+
+        $response['success'] = true;
+        $response['data']['message'] = 'success';
+
+        switch ($action)
+        {
+            //------------------------------------
+            case 'bulk-delete-all':
+
+                VaahFiles::deleteFolder($folder_path);
+
+                $response['messages'][] = 'Successfully delete all logs';
+
+                break;
+
+            //------------------------------------
+            case 'bulk-delete':
+
+                VaahFiles::deleteFile($request->path);
+
+                $response['messages'][] = 'Successfully delete';
+
+                break;
+
+            //------------------------------------
+            case 'clear-file':
+
+                VaahFiles::writeFile($request->path, '');
+
+                $response['messages'][] = 'Successfully clear';
+
+                break;
+            //------------------------------------
+
+        }
+
+        return response()->json($response);
+
+    }
 
 }

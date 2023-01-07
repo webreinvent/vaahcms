@@ -39,7 +39,7 @@ function () {
     /**
      * Get Item
      */
-    Route::get('/{id}', 'LogsController@getItem')
+    Route::get('/{name}', 'LogsController@getItem')
         ->name('vh.backend.vaah.jobs.read');
     /**
      * Update Item
@@ -65,5 +65,9 @@ function () {
         ->name('vh.backend.vaah.jobs.item.action');
 
     //---------------------------------------------------------
+
+    Route::get( '/download-file/{file_name}', 'LogsController@downloadFile');
+    //---------------------------------------------------------
+    Route::post( '/actions/{action_name}', 'LogsController@postActions');
 
 });

@@ -37,7 +37,7 @@ routes_list = {
                             props: true,
                         },
                         {
-                            path: 'view/:id?',
+                            path: 'view/:name?',
                             name: 'logs.view',
                             component: LogItem,
                             props: true,
