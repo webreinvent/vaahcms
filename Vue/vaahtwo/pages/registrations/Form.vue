@@ -77,9 +77,10 @@ const toggleFormMenu = (event) => {
             </template>
 
             <template #icons>
-
-
                 <div class="p-inputgroup">
+                    <Button v-if="store.item && store.item.id">
+                        #{{store.item.id}}
+                    </Button>
                     <Button label="Save"
                             v-if="store.item && store.item.id"
                             @click="store.itemAction('save')"

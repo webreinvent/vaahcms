@@ -230,6 +230,10 @@ class WelcomeController extends Controller
                     $fill[$column] = $faker->password;
                 break;
 
+                case 'country_calling_code':
+                    $fill[$column] = $faker->randomElement([91]);
+                    break;
+
                 case 'gender':
                     $fill[$column] = $faker->randomElement(['m','f','o']);
                     break;

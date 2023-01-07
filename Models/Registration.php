@@ -159,7 +159,8 @@ class Registration extends RegistrationBase
             $inputs['username'] = Str::slug($inputs['email']);
         }
 
-        if(!isset($inputs['status']))
+        $item_statuses=['email-verification-pending','email-verified','user-created'];
+        if(!isset($inputs['status']) || !in_array( $inputs['status'],$item_statuses))
         {
             $inputs['status'] = 'email-verification-pending';
         }
@@ -644,10 +645,56 @@ class Registration extends RegistrationBase
 
     }
 
+    //-------------------------------------------------
+    public static function createUser($id)
+    {
+
+        $reg = self::where('id',$id)->withTrashed()->first();
 
 
+        if(!$reg){
+            $response['status'] = 'failed';
+            $response['errors'][] = 'Registration does not exist exist.';
+            return $response;
+        }
+
+        $reg->makeVisible('password');
+
+        // check if User of this Email Id is already exist
+        $user_exist = User::where('email',$reg['email'])->first();
+
+        if($user_exist)
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = "User of this Email Id is already exist.";
+            return $response;
+        }
+
+        $user = new User();
+
+        // For Ignore Password Mutator
+        $user->prevent_password_hashing = true;
+
+        $user->fill($reg->toArray());
+        $user->password = $reg->password;
+        $user->registration_id = $reg->id;
+        $user->status = 'active';
+        $user->is_active = 1;
+        $user->save();
+
+        $reg->vh_user_id = $user->id;
+        $reg->status = 'user-created';
+        $reg->save();
+
+        $response['status'] = 'success';
+        $response['data']['user'] = $user;
+        $response['messages'][] = 'User is created.';
+
+        return $response;
+
+    }
     //-------------------------------------------------
-    //-------------------------------------------------
+    
     //-------------------------------------------------
 
 
