@@ -66,6 +66,10 @@ function () {
 
     //---------------------------------------------------------
     Route::any('/{id}/send-verification-mail', 'RegistrationsController@sendVerificationEmail')
-        ->name('vh.backend.vaah.registrations.send_verification_mail');
+        ->name('vh.backend.vaah.registrations.item.send_verification_mail');
+
+    Route::post('/{id}/createUser', 'RegistrationsController@createUser')
+        ->name('vh.backend.vaah.registrations.item.createUser');
+
 
 });

@@ -954,7 +954,41 @@ export const useRegistrationStore = defineStore({
                 await this.getList()
                 this.getItemMenu();
             }
-        }
+        },
+        //---------------------------------------------------------------------
+        confirmCreateUser(item=null){
+            if(!item)
+            {
+                item = this.item;
+            }
+            let ajax_url = this.ajax_url+'/'+item.id+'/'+'createUser';
+            let options = {
+                method:'post',
+            };
+            options.params=[item.id];
+
+            vaah().ajax(
+                ajax_url,
+                this.confirmCreateUserAfter,
+                options
+            );
+        },
+        //---------------------------------------------------------------------
+        async confirmCreateUserAfter(){
+            if(data)
+            {
+                this.item = data.item;
+                await this.getList()
+                this.getItemMenu();
+            }
+        },
+        //---------------------------------------------------------------------
+         changeStatus(value){
+            this.item.status=value;
+            this.itemAction('save');
+        },
+        //---------------------------------------------------------------------
+
         //---------------------------------------------------------------------
     }
 });

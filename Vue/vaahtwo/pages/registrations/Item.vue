@@ -65,10 +65,38 @@ const closeModal = () => {
 }
 //--------/modal
 
+/*
 const item_status=ref();
+const statuses=ref([
+                {
+                    label: 'Email Verification Pending',
+                    icon: 'pi pi-calendar-times',
+                    command: async () => {
+                        await store.updateList('email-verification-pending')
+                    }
+                },
+                {
+                    label: 'Email Verified',
+                    icon: 'pi pi-envelope',
+                    command: async () => {
+                        await store.updateList('email-verified')
+                    }
+                },
+                {
+                    label: 'User Created',
+                    icon: 'pi pi-user-plus',
+                    command: async () => {
+                        await store.updateList('user-created')
+                    }
+                },
+])
 const toggleStatusesMenu = (event) => {
     item_status.value.toggle(event);
 };
+*/
+
+
+
 
 
 
@@ -87,7 +115,7 @@ const toggleStatusesMenu = (event) => {
                 <div class="flex flex-row">
 
                     <div class="p-panel-title">
-                        #{{store.item.id}}
+                        {{store.item.display_name}}
                     </div>
 
                 </div>
@@ -98,6 +126,9 @@ const toggleStatusesMenu = (event) => {
 
 
                 <div class="p-inputgroup">
+                    <Button>
+                        #{{store.item.id}}
+                    </Button>
                     <Button label="Edit"
                             @click="store.toEdit(store.item)"
                             icon="pi pi-save"
@@ -116,13 +147,17 @@ const toggleStatusesMenu = (event) => {
                     <Menu ref="item_menu_state"
                           :model="store.item_menu_list"
                           :popup="true" />
+
+
                     <!--/item_menu-->
+
 
                     <Button class="p-button-primary"
                             icon="pi pi-times"
                             @click="store.toList()"
                             data-testid="register-view_to_list"
                     />
+
 
                 </div>
 
@@ -157,9 +192,9 @@ const toggleStatusesMenu = (event) => {
                     </div>
 
                 </Message>
-
                 <div class="p-datatable p-component p-datatable-responsive-scroll p-datatable-striped p-datatable-sm">
                 <table class="p-datatable-table">
+
                     <tbody class="p-datatable-tbody">
                     <template v-for="(value, column) in store.item ">
 
@@ -217,20 +252,29 @@ const toggleStatusesMenu = (event) => {
                                                 v-if="value"
                                                 class="p-button-outlined p-button-secondary p-button-sm"
                                                 disabled="disabled"
-
+                                        />
+                                        <Dropdown
+                                                  :options="store.assets.registration_statuses"
+                                                  optionLabel="name"
+                                                  optionValue="slug"
+                                                  placeholder="- Select a status -"
+                                                  @change="store.changeStatus($event.value)"
                                         />
 
-                                        <Button type="button"
+
+<!--                                        <Button type="button"
                                                 @click="toggleStatusesMenu"
                                                 icon="pi pi-angle-down"
                                                 aria-haspopup="true"
                                                 class="p-button-outlined p-button-secondary"
-                                                data-testid="register-view_toggle_statuses_menu"
+                                                data-testid="register-view_toggle_registration_statuses"
+
                                         />
                                         <Menu v-if="store.assets && store.assets.registration_statuses"
-                                            ref="item_status"
-                                              :model="store.assets.registration_statuses"
-                                              :popup="true" />
+                                                ref="item_status"
+                                                :model="store.assets.registration_statuses"
+                                                :popup="true" />-->
+
 
                                         <Button v-if="value == 'email-verification-pending'"
                                                 label="Resend Verification Email"
@@ -258,6 +302,46 @@ const toggleStatusesMenu = (event) => {
                                 </td>
                             </tr>
                         </template>
+                        <template v-else-if="column === 'status'" >
+                            <tr>
+                                <td><b>Status</b></td>
+                                <td v-if="value">
+                                    <div class="p-inputgroup">
+                                        <Button :label="value"
+                                                v-if="value"
+                                                class="p-button-outlined p-button-secondary p-button-sm"
+                                                disabled="disabled"
+                                        />
+<!--                                        <Button type="button"
+                                                @click="toggleStatusesMenu"
+                                                icon="pi pi-angle-down"
+                                                aria-haspopup="true"
+                                                class="p-button-outlined p-button-secondary"
+                                                data-testid="register-view_toggle_registration_statuses"
+
+                                        />
+                                        <Menu v-if="store.assets && store.assets.registration_statuses"
+                                                ref="item_status"
+                                                :model="store.assets.registration_statuses"
+                                                :popup="true" />-->
+<!--                                        <Button type="button"
+                                                label="Toggle"
+                                                @click="toggle"
+                                                aria-haspopup="true"
+                                                aria-controls="overlay_menu"/>
+                                        <Menu id="overlay_menu" ref="menu" :model="items" :popup="true" />-->
+                                        <SplitButton label="Secondary"
+                                         :model="statuses"
+                                         class="p-button-outlined p-button-secondary mb-2">
+                            </SplitButton>
+
+
+
+                                    </div>
+                                </td>
+                            </tr>
+                        </template>
+
 
 
                         <template v-else-if="column === 'gender'">
