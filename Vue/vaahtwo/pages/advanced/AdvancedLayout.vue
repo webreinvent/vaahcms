@@ -2,13 +2,7 @@
 import {onMounted, ref, watch} from "vue";
 import {useRoute} from 'vue-router';
 
-import {useSettingStore} from '../../stores/store-settings';
-import { vaah } from '../../vaahvue/pinia/vaah';
-
-import VhViewRow from '../../vaahvue/vue-three/primeflex/VhViewRow.vue';
-const store = useSettingStore();
 const route = useRoute();
-const useVaah = vaah();
 
 const sidebar_menu_items = ref([
     {
@@ -17,37 +11,28 @@ const sidebar_menu_items = ref([
             {
                 label: 'Logs',
                 icon: 'pi pi-book',
-                command: () => {
-                    this.$router.push({ path: '/vaah/settings/general' });
-                }
+                to:{ path: '/vaah/advanced/logs' }
             },
             {
                 label: 'Jobs',
                 icon: 'pi pi-align-justify',
-                command: () => {
-                    this.$router.push({ path: '/vaah/settings/user-settings' });
-                }
+                to:{ path: '/vaah/advanced/jobs' }
             },
             {
                 label: 'Failed Jobs',
                 icon: 'pi pi-times-circle',
-                command: () => {
-                    this.$router.push({ path: '/vaah/settings/env-variables' });
-                }
+                to:{ path: '/vaah/advanced/failed-jobs' }
             },
             {
                 label: 'Batches',
                 icon: 'pi pi-server',
-                command: () => {
-                    this.$router.push({ path: '/vaah/settings/localization' });
-                }
+                to:{ path: '/vaah/advanced/batches' }
             }
         ]},
 ]);
 
 onMounted(async () => {
 
-    store.getGeneralAssets();
 
 });
 
