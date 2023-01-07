@@ -154,3 +154,21 @@ const useVaah = vaah();
     </div>
 
 </template>
+
+<style lang="scss">
+.p-inputswitch {
+    &.p-inputswitch-checked {
+        .p-inputswitch-slider {
+            background: #22c55e;
+            border: #22c55e;
+        }
+    }
+}
+
+.p-inputswitch-checked {
+    .p-inputswitch-slider:hover {
+        background: #2d8631 !important;
+        border: #2d8631 !important;
+    }
+}
+</style>
