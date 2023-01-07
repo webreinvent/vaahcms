@@ -17,51 +17,37 @@ const sidebar_menu_items = ref([
             {
                 label: 'General',
                 icon: 'pi pi-cog',
-                command: () => {
-                    this.$router.push({ path: '/vaah/settings/general' });
-                }
+                to:{ path: '/vaah/settings/general' }
             },
             {
                 label: 'User Settings',
                 icon: 'pi pi-user',
-                command: () => {
-                    this.$router.push({ path: '/vaah/settings/user-settings' });
-                }
+                to:{ path: '/vaah/settings/user-settings' }
             },
             {
                 label: 'ENV Variables',
                 icon: 'pi pi-cog',
-                command: () => {
-                    this.$router.push({ path: '/vaah/settings/env-variables' });
-                }
+                to:{ path: '/vaah/settings/env-variables' }
             },
             {
                 label: 'Localization',
                 icon: 'pi pi-code',
-                command: () => {
-                    this.$router.push({ path: '/vaah/settings/localization' });
-                }
+                to:{ path: '/vaah/settings/localization' }
             },
             {
                 label: 'Notification',
                 icon: 'pi pi-bell',
-                command: () => {
-                    this.$router.push({ path: '/vaah/settings/notifications' });
-                }
+                to:{ path: '/vaah/settings/notifications' }
             },
             {
                 label: 'Update',
                 icon: 'pi pi-download',
-                command: () => {
-                    this.$router.push({ path: '/vaah/settings/update' });
-                }
+                to:{ path: '/vaah/settings/update' }
             },
             {
                 label: 'Reset',
                 icon: 'pi pi-refresh',
-                command: () => {
-                    this.$router.push({ path: '/setup' });
-                }
+                to:{ path: '/setup' }
             },
         ]},
 ]);
