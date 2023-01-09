@@ -261,21 +261,6 @@ const toggleStatusesMenu = (event) => {
                                                   @change="store.changeStatus($event.value)"
                                         />
 
-
-<!--                                        <Button type="button"
-                                                @click="toggleStatusesMenu"
-                                                icon="pi pi-angle-down"
-                                                aria-haspopup="true"
-                                                class="p-button-outlined p-button-secondary"
-                                                data-testid="register-view_toggle_registration_statuses"
-
-                                        />
-                                        <Menu v-if="store.assets && store.assets.registration_statuses"
-                                                ref="item_status"
-                                                :model="store.assets.registration_statuses"
-                                                :popup="true" />-->
-
-
                                         <Button v-if="value == 'email-verification-pending'"
                                                 label="Resend Verification Email"
                                                 class="p-button-info p-button-sm"
