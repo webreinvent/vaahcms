@@ -2,12 +2,12 @@
 import {onMounted, reactive, ref} from "vue";
 import {useRoute} from 'vue-router';
 
-import {useJobStore} from '../../../stores/advanced/store-jobs'
+import {useFailedJobStore} from '../../../stores/store-failedjobs'
 
 import Actions from "./components/Actions.vue";
 import Table from "./components/Table.vue";
 
-const store = useJobStore();
+const store = useFailedJobStore();
 const route = useRoute();
 
 import { useConfirm } from "primevue/useconfirm";
@@ -57,14 +57,14 @@ onMounted(async () => {
 
                     <div class="flex flex-row">
                         <div >
-                            <b class="mr-1">Jobs</b>
+                            <b class="mr-1">FailedJobs</b>
                             <Badge v-if="store.list && store.list.total > 0"
                                    :value="store.list.total">
                             </Badge>
                         </div>
 
-
                     </div>
+
                 </template>
                 <template #icons>
                     <div class="p-inputgroup">
@@ -76,11 +76,6 @@ onMounted(async () => {
                         />
                     </div>
                 </template>
-                <Message :closable="false">
-                    This list consist of only queued/pending jobs.
-                    Completed jobs gets deleted automatically .
-                </Message>
-
 
                 <Actions/>
 
