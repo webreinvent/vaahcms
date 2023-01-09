@@ -62,9 +62,17 @@ onMounted(async () => {
                                    :value="store.list.total">
                             </Badge>
                         </div>
-
                     </div>
-
+                </template>
+                <template #icons>
+                    <div class="p-inputgroup">
+                        <Button class="p-button-sm"
+                                data-testid="jobs-content-refresh"
+                                icon="pi pi-refresh"
+                                :loading="store.is_btn_loading"
+                                @click="store.getList()"
+                        />
+                    </div>
                 </template>
                 <Message :closable="false">
                     This list consist of only queued/pending jobs.
