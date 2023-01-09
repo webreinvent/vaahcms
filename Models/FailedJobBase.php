@@ -26,11 +26,50 @@ class FailedJobBase extends Model {
     //-------------------------------------------------
     protected $appends  = [
     ];
+    //-------------------------------------------------
 
+
+    //-------------------------------------------------
+    protected function serializeDate(DateTimeInterface $date)
+    {
+        $date_time_format = config('settings.global.datetime_format');
+
+        return $date->format($date_time_format);
+
+    }
     //-------------------------------------------------
     public function getPayloadAttribute($value)
     {
         return json_decode($value);
+    }
+    //-------------------------------------------------
+    public function getTableColumns() {
+        return $this->getConnection()->getSchemaBuilder()
+            ->getColumnListing($this->getTable());
+    }
+    //-------------------------------------------------
+    public function scopeExclude($query, $columns)
+    {
+        return $query->select( array_diff( $this->getTableColumns(),$columns) );
+    }
+
+    //-------------------------------------------------
+    public function scopeBetweenDates($query, $from, $to)
+    {
+
+        if($from)
+        {
+            $from = Carbon::parse($from)
+                ->startOfDay()
+                ->toDateTimeString();
+        }
+        if($to)
+        {
+            $to = Carbon::parse($to)
+                ->endOfDay()
+                ->toDateTimeString();
+        }
+        $query->whereBetween('failed_at',[$from,$to]);
     }
     //-------------------------------------------------
     public static function getList($request)

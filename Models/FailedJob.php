@@ -98,7 +98,7 @@ class FailedJob extends FailedJobBase
                 ->toDateTimeString();
         }
 
-        $query->whereBetween('failed_at', [$from, $to]);
+        $query->whereBetween('updated_at', [$from, $to]);
     }
 
     //-------------------------------------------------
@@ -166,8 +166,48 @@ class FailedJob extends FailedJobBase
         return $query->orderBy($sort[0], $sort[1]);
     }
     //-------------------------------------------------
+    public function scopeIsActiveFilter($query, $filter)
+    {
+
+        if(!isset($filter['is_active'])
+            || is_null($filter['is_active'])
+            || $filter['is_active'] === 'null'
+        )
+        {
+            return $query;
+        }
+        $is_active = $filter['is_active'];
+
+        if($is_active === 'true' || $is_active === true)
+        {
+            return $query->whereNotNull('is_active');
+        } else{
+            return $query->whereNull('is_active');
+        }
+
+    }
+    //-------------------------------------------------
+    public function scopeTrashedFilter($query, $filter)
+    {
+
+        if(!isset($filter['trashed']))
+        {
+            return $query;
+        }
+        $trashed = $filter['trashed'];
+
+        if($trashed === 'include')
+        {
+            return $query->withTrashed();
+        } else if($trashed === 'only'){
+            return $query->onlyTrashed();
+        }
+
+    }
+    //-------------------------------------------------
     public function scopeSearchFilter($query, $filter)
     {
+
         if(!isset($filter['q']))
         {
             return $query;
@@ -183,14 +223,9 @@ class FailedJob extends FailedJobBase
     public static function getList($request)
     {
         $list = self::getSorted($request->filter);
+        $list->isActiveFilter($request->filter);
+        $list->trashedFilter($request->filter);
         $list->searchFilter($request->filter);
-        if(isset($request->filter['range'])){
-            $from = $request->filter['range'][0];
-            $to = $request->filter['range'][1];
-            echo $from;
-            $list->betweenDates($from,$to);
-        }
-
 
         $rows = config('vaahcms.per_page');
 
@@ -310,7 +345,8 @@ class FailedJob extends FailedJobBase
                 ->pluck('id')
                 ->toArray();
 
-            $items = self::whereIn('id', $items_id);
+            $items = self::whereIn('id', $items_id)
+                ->withTrashed();
         }
 
 
@@ -353,7 +389,7 @@ class FailedJob extends FailedJobBase
                 self::withTrashed()->restore();
                 break;
             case 'delete-all':
-                self::query()->forceDelete();
+                self::withTrashed()->forceDelete();
                 break;
         }
 
@@ -363,7 +399,27 @@ class FailedJob extends FailedJobBase
 
         return $response;
     }
+    //-------------------------------------------------
+    public static function getItem($id)
+    {
 
+        $item = self::where('id', $id)
+            ->with(['createdByUser', 'updatedByUser', 'deletedByUser'])
+            ->withTrashed()
+            ->first();
+
+        if(!$item)
+        {
+            $response['success'] = false;
+            $response['errors'][] = 'Record not found with ID: '.$id;
+            return $response;
+        }
+        $response['success'] = true;
+        $response['data'] = $item;
+
+        return $response;
+
+    }
     //-------------------------------------------------
     public static function updateItem($request, $id)
     {
@@ -409,7 +465,7 @@ class FailedJob extends FailedJobBase
     //-------------------------------------------------
     public static function deleteItem($request, $id): array
     {
-        $item = self::where('id', $id)->first();
+        $item = self::where('id', $id)->withTrashed()->first();
         if (!$item) {
             $response['success'] = false;
             $response['messages'][] = 'Record does not exist.';
