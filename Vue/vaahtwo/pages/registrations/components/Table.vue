@@ -33,7 +33,7 @@ const useVaah = vaah();
                     <Badge v-if="prop.data.deleted_at"
                            value="Trashed"
                            severity="danger"></Badge>
-                    {{prop.data.display_name}}
+                    {{prop.data.name}}
                 </template>
             </Column>
              <Column field="email"

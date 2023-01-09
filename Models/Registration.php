@@ -40,6 +40,7 @@ class Registration extends RegistrationBase
 
     //-------------------------------------------------
     protected $appends = [
+        'name'
     ];
 
 
@@ -715,6 +716,72 @@ class Registration extends RegistrationBase
 
     }
     //-------------------------------------------------
+     public function setFirstNameAttribute($value)
+    {
+        $this->attributes['first_name'] = ucfirst($value);
+    }
+    //-------------------------------------------------
+    public function setMiddleNameAttribute($value)
+    {
+        $this->attributes['middle_name'] = ucfirst($value);
+    }
+    //-------------------------------------------------
+    public function setLastNameAttribute($value)
+    {
+        $this->attributes['last_name'] = ucfirst($value);
+    }
+    //-------------------------------------------------
+    public function setEmailAttribute($value)
+    {
+        $this->attributes['email'] = strtolower($value);
+    }
+    //-------------------------------------------------
+    public function setBirthAttribute($value)
+    {
+        $this->attributes['birth'] = Carbon::parse($value)->format('Y-m-d');
+    }
+    //-------------------------------------------------
+    public function setPasswordAttribute($value)
+    {
+        $this->attributes['password'] = \Hash::make($value);
+    }
+    //-------------------------------------------------
+    public function setMetaAttribute($value)
+    {
+        $this->attributes['meta'] = json_encode($value);
+    }
+    //-------------------------------------------------
+    public function getMetaAttribute($value)
+    {
+        if($value && $value!='null'){
+            return json_decode($value);
+        }else{
+            return json_decode('{}');
+        }
+    }
+    //-------------------------------------------------
+    public function getNameAttribute() {
+
+        if($this->display_name)
+        {
+            return $this->display_name;
+        }
+
+        $name = $this->first_name;
+
+        if($this->middle_name)
+        {
+            $name .= " ".$this->middle_name;
+        }
+
+        if($this->last_name)
+        {
+            $name .= " ".$this->last_name;
+        }
+
+        return $name;
+    }
+
 
 
     //-------------------------------------------------
