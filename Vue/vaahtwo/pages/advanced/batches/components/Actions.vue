@@ -1,6 +1,6 @@
 <script  setup>
 import {ref, reactive, watch, onMounted} from 'vue';
-import { useBatchStore } from '../../../stores/store-batches'
+import { useBatchStore } from '../../../../stores/store-batches'
 
 import Filters from './Filters.vue'
 
@@ -107,7 +107,6 @@ const toggleBulkMenuState = (event) => {
                     <Filters/>
 
                 </div>
-
             </div>
             <!--/right-->
 

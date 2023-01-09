@@ -1,8 +1,8 @@
 <script  setup>
-import VhFieldVertical from '../../../vaahvue/vue-three/primeflex/VhFieldVertical.vue';
+import VhFieldVertical from '../../../../vaahvue/vue-three/primeflex/VhFieldVertical.vue';
 
 
-import {useBatchStore} from '../../../stores/store-batches';
+import {useBatchStore} from '../../../../stores/store-batches';
 const store = useBatchStore();
 const dateColumns = [
     {name:"created_at"},

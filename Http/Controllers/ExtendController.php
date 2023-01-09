@@ -211,14 +211,7 @@ class ExtendController extends Controller
             $list[4] = [
                 'url' => self::$link."/advanced/jobs",
                 'icon'=> 'pi pi-database',
-                'label'=> 'Advanced',
-                'items' => [
-                    [
-                        'url' => self::$link."/advanced/batches",
-                        'icon' => 'pi pi-file',
-                        'label'=> 'Batches',
-                    ],
-                ]
+                'label'=> 'Advanced'
             ];
         }
 
