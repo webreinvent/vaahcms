@@ -11,6 +11,7 @@ import LogForm from '../pages/advanced/logs/Form.vue'
 import LogItem from '../pages/advanced/logs/Item.vue'
 import FailedJobList from '../pages/advanced/failedjobs/List.vue'
 import FailedJobItem from '../pages/advanced/failedjobs/Item.vue'
+import BatchList from '../pages/advanced/batches/List.vue'
 
 routes_list = {
 
@@ -23,27 +24,6 @@ routes_list = {
             component: AdvancedLayout,
             props: true,
             children: [
-                {
-
-                    path: 'logs',
-                    name: 'logs.index',
-                    component: LogList,
-                    props: true,
-                    children: [
-                        {
-                            path: 'form/:id?',
-                            name: 'logs.form',
-                            component: LogForm,
-                            props: true,
-                        },
-                        {
-                            path: 'view/:name?',
-                            name: 'logs.view',
-                            component: LogItem,
-                            props: true,
-                        }
-                    ]
-                },
                 {
 
                     path: 'jobs',
@@ -64,24 +44,9 @@ routes_list = {
                             props: true,
                         }
                     ]
-                },
-                {
-
-                    path: 'failedjobs',
-                    name: 'failedjobs.index',
-                    component: FailedJobList,
-                    props: true,
-                    children: [
-                        {
-                            path: 'view/:id?',
-                            name: 'faiedjobs.view',
-                            component: FailedJobItem,
-                            props: true,
-                        }
-                    ]
                 }
             ]
-        }
+        },
     ]
 };
 

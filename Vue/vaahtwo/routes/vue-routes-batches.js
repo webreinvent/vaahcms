@@ -2,9 +2,9 @@ let routes= [];
 let routes_list= [];
 
 import LayoutBackend from "../layouts/Backend.vue";
-import List from '../pages/batches/List.vue'
-import Form from '../pages/batches/Form.vue'
-import Item from '../pages/batches/Item.vue'
+import List from '../pages/advanced/batches/List.vue'
+import Form from '../pages/advanced/batches/Form.vue'
+import Item from '../pages/advanced/batches/Item.vue'
 
 routes_list = {
     path: '/vaah/advanced/batches',
@@ -12,7 +12,7 @@ routes_list = {
     props: true,
     children: [
         {
-            path: '',
+            path: '/batches',
             name: 'batches.index',
             component: List,
             props: true,

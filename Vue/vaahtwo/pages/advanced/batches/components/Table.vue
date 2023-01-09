@@ -1,6 +1,6 @@
 <script setup>
-import { vaah } from '../../../vaahvue/pinia/vaah'
-import { useBatchStore } from '../../../stores/store-batches'
+import { vaah } from '../../../../vaahvue/pinia/vaah'
+import { useBatchStore } from '../../../../stores/store-batches'
 
 const store = useBatchStore();
 const useVaah = vaah();
@@ -98,7 +98,9 @@ const useVaah = vaah();
                      :sortable="true">
 
                  <template #body="prop">
-                     <Button class="p-button-rounded p-button-text">
+                     <Button class="p-button-rounded p-button-text"
+                             data-testid="batches-table-to-trash"
+                     >
                          <span class="pi pi-trash"></span>
                      </Button>
                  </template>
