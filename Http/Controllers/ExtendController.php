@@ -212,6 +212,13 @@ class ExtendController extends Controller
                 'url' => self::$link."/advanced/jobs",
                 'icon'=> 'pi pi-database',
                 'label'=> 'Advanced',
+                'items' => [
+                    [
+                        'url' => self::$link."/advanced/batches",
+                        'icon' => 'pi pi-file',
+                        'label'=> 'Batches',
+                    ],
+                ]
             ];
         }
 
