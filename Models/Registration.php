@@ -533,19 +533,27 @@ class Registration extends RegistrationBase
     //-------------------------------------------------
     public static function deleteItem($request, $id): array
     {
-        $user=User::where('registration_id',$id)->first();
-
-        $user->registrations()->delete();
-        $user->delete();
         $item = self::where('id', $id)->withTrashed()->first();
+        $user = User::where('id',$item['id'])->first();
+        if($user) {
+
+            $user->forceDelete();
+
+            $item->vh_user_id=null;
+            $item->save();
+
+        }
+
+
+
 
         if (!$item) {
             $response['success'] = false;
             $response['messages'][] = 'Record does not exist.';
             return $response;
         }
-        $delete=$item->forceDelete();
-        dd($delete);
+        $item->forceDelete();
+
 
         $response['success'] = true;
         $response['data'] = [];
