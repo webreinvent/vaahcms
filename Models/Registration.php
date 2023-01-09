@@ -457,6 +457,7 @@ class Registration extends RegistrationBase
                 self::withTrashed()->restore();
                 break;
             case 'delete-all':
+
                 self::withTrashed()->forceDelete();
                 break;
              case 'email-verification-pending':
@@ -531,28 +532,30 @@ class Registration extends RegistrationBase
         return $response;
     }
     //-------------------------------------------------
+    public function vh_users()
+{
+    return $this->hasOne(User::class);
+}
+    //-------------------------------------------------
     public static function deleteItem($request, $id): array
     {
         $item = self::where('id', $id)->withTrashed()->first();
-        $user = User::where('id',$item['id'])->first();
-        if($user) {
 
-            $user->forceDelete();
-
-            $item->vh_user_id=null;
-            $item->save();
-
-        }
-
-
-
-
-        if (!$item) {
+         if (!$item) {
             $response['success'] = false;
             $response['messages'][] = 'Record does not exist.';
             return $response;
         }
-        $item->forceDelete();
+
+        $user_exist = User::where('registration_id',$item['id'])->first();
+        if($user_exist) {
+            $item->vh_users->delete();
+        }
+        $item->delete();
+
+
+
+//        $item->forceDelete();
 
 
         $response['success'] = true;
@@ -701,6 +704,9 @@ class Registration extends RegistrationBase
         $reg->status = 'user-created';
         $reg->save();
 
+        $item=self::getItem($id);
+        $response['data']['item'] = $item['data'];
+
         $response['status'] = 'success';
         $response['data']['user'] = $user;
         $response['messages'][] = 'User is created.';
@@ -709,7 +715,7 @@ class Registration extends RegistrationBase
 
     }
     //-------------------------------------------------
-    
+
 
     //-------------------------------------------------
 

@@ -974,7 +974,7 @@ export const useRegistrationStore = defineStore({
             );
         },
         //---------------------------------------------------------------------
-        async confirmCreateUserAfter(){
+        async confirmCreateUserAfter(data, res){
             if(data)
             {
                 this.item = data.item;
