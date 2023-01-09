@@ -1,8 +1,6 @@
 <?php
 namespace WebReinvent\VaahCms\Models;
 
-
-
 use App\Mail\OrderShipped;
 use DateTimeInterface;
 use Illuminate\Database\Eloquent\Model;
