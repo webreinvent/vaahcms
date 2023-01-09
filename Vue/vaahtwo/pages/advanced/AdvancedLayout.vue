@@ -21,7 +21,7 @@ const sidebar_menu_items = ref([
             {
                 label: 'Failed Jobs',
                 icon: 'pi pi-times-circle',
-                to:{ path: '/vaah/advanced/failed-jobs' }
+                to:{ path: '/vaah/advanced/failedjobs' }
             },
             {
                 label: 'Batches',
