@@ -253,12 +253,13 @@ const toggleStatusesMenu = (event) => {
                                                 class="p-button-outlined p-button-secondary p-button-sm"
                                                 disabled="disabled"
                                         />
-                                        <Dropdown
+                                        <Dropdown v-if="store.assets && store.assets.registration_statuses"
                                                   :options="store.assets.registration_statuses"
                                                   optionLabel="name"
                                                   optionValue="slug"
                                                   placeholder="- Select a status -"
                                                   @change="store.changeStatus($event.value)"
+                                                  data-testid="register-item_change_change_status"
                                         />
 
                                         <Button v-if="value == 'email-verification-pending'"
@@ -266,6 +267,7 @@ const toggleStatusesMenu = (event) => {
                                                 class="p-button-info p-button-sm"
                                                 @click="store.sendVerificationEmail()"
                                                 data-testid="register-view_send_verification_email"
+
                                         />
                                         <Button v-if="value == 'email-verified'"
                                                 label="Create User"
