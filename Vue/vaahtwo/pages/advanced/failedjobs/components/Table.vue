@@ -46,17 +46,17 @@ const useVaah = vaah();
                  <template #body="prop">
                      <Button class="p-button-tiny p-button-text"
                              v-tooltip.top="'View'"
-                             @click="store.viewPayloads(prop.data.payload)"
+                             @click="store.viewFailedJobsContent(prop.data.payload,'Payload')"
                              icon="pi pi-eye" />
                  </template>
 
              </Column>
-             <Column field="payload" header="Payload">
+             <Column field="exception" header="Exception">
 
                  <template #body="prop">
                      <Button class="p-button-tiny p-button-text"
                              v-tooltip.top="'View'"
-                             @click="store.viewPayloads(prop.data.payload)"
+                             @click="store.viewFailedJobsContent(prop.data.exception,'Exception')"
                              icon="pi pi-eye" />
                  </template>
 
@@ -72,7 +72,23 @@ const useVaah = vaah();
 
              </Column>
 
+             <Column field="actions" style="width:150px;"
+                     :style="{width: store.getActionWidth() }"
+                     :header="store.getActionLabel()">
 
+                 <template #body="prop">
+                     <div class="p-inputgroup ">
+                         <Button class="p-button-tiny p-button-danger p-button-text"
+                                 v-if="store.isViewLarge() && !prop.data.deleted_at"
+                                 @click="store.itemAction('delete', prop.data)"
+                                 v-tooltip.top="'Delete'"
+                                 icon="pi pi-trash" />
+                     </div>
+
+                 </template>
+
+
+             </Column>
 
 
         </DataTable>
@@ -89,5 +105,17 @@ const useVaah = vaah();
         <!--/paginator-->
 
     </div>
+    <Dialog :header="store.failedJobContentHeading"
+            v-model:visible="store.failedJobModal"
+            :style="{width: '40%'}"
+    >
 
+        <Card class="w-max">
+            <template #content>
+                <span v-html="store.failedJobContent"></span>
+            </template>
+        </Card>
+
+
+    </Dialog>
 </template>
