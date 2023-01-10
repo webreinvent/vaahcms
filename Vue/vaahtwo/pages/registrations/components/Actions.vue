@@ -36,37 +36,32 @@ const toggleBulkMenuState = (event) => {
             <div v-if="store.view === 'large'">
 
                 <!--selected_menu-->
-                <Button
-                    type="button"
-                    @click="toggleSelectedMenuState"
-                    aria-haspopup="true"
-                    aria-controls="overlay_menu"
-                    data-testid="register-toggle_list_selected_menu"
+                <Button icon="pi pi-angle-down"
+                        aria-haspopup="true"
+                        aria-controls="overlay_menu"
+                        data-testid="register-toggle_list_selected_menu"
+                        @click="toggleSelectedMenuState"
+
                 >
-                    <span> Actions </span>
-                    <i class="pi pi-angle-down"></i>
                     <Badge v-if="store.action.items.length > 0"
-                           :value="store.action.items.length" />
+                           :value="store.action.items.length"
+                    />
                 </Button>
+
                 <Menu ref="selected_menu_state"
                       :model="store.list_selected_menu"
                       :popup="true" />
                 <!--/selected_menu-->
 
                 <!--bulk_menu-->
-                <Button
-                    type="button"
-                    @click="toggleBulkMenuState"
-                    aria-haspopup="true"
-                    aria-controls="bulk_menu_state"
-                    class="ml-1"
-                    data-testid="register-toggle_list_bulk_menu"
-                >
-<!--                    <i class="pi pi-ellipsis-h"></i>-->
-                    <span> Bulk Actions </span>
-                    <i class="pi pi-angle-down"></i>
-<!--                    <i class="pi pi-ellipsis-h"></i>-->
-                </Button>
+                <Button class="ml-1"
+                        icon="pi pi-ellipsis-h"
+                        aria-haspopup="true"
+                        aria-controls="bulk_menu_state"
+                        data-testid="register-toggle_list_bulk_menu"
+                        @click="toggleBulkMenuState"
+                />
+
                 <Menu ref="bulk_menu_state"
                       :model="store.list_bulk_menu"
                       :popup="true" />
