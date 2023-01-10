@@ -40,7 +40,7 @@ routes_list = {
                     ]
                 },
                 {
-                    path: '/batches',
+                    path: 'batches',
                     name: 'batches.index',
                     component: BatchList,
                     props: true,

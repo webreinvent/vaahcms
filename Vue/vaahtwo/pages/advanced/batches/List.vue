@@ -57,12 +57,12 @@ onMounted(async () => {
                             <Badge v-if="store.list && store.list.total > 0"
                                    :value="store.list.total">
                             </Badge>
-                        </div>
-                        <div>
-                            <Button class="p-button-outlined" @click="store.getList">
-                                <span class="pi pi-refresh"></span>
-                            </Button>
-                        </div>
+                        </div>                        <div>
+                        <Button class="p-button-outlined" @click="store.getList">
+                            <span class="pi pi-refresh"></span>
+                        </Button>
+                    </div>
+
                     </div>
                 </template>
 
