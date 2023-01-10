@@ -1,3 +1,46 @@
+<script setup>
+import {onMounted, reactive, ref} from "vue";
+import {useRoute} from 'vue-router';
+
+import {useEnvStore} from '../../../stores/store-env'
+
+const store = useEnvStore();
+const route = useRoute();
+
+import { useConfirm } from "primevue/useconfirm";
+const confirm = useConfirm();
+onMounted(async () => {
+    /**
+     * call onLoad action when List view loads
+     */
+    await store.onLoad(route);
+
+    /**
+     * watch routes to update view, column width
+     * and get new item when routes get changed
+     */
+    await store.watchRoutes(route);
+
+    /**
+     * watch states like `query.filter` to
+     * call specific actions if a state gets
+     * changed
+     */
+    await store.watchStates();
+
+    /**
+     * fetch assets required for the crud
+     * operation
+     */
+    await store.getAssets();
+
+    /**
+     * fetch list of records
+     */
+    await store.getList();
+});
+</script>
+
 <template>
     <Card>
         <template #header>
@@ -16,7 +59,7 @@
         </template>
         <template #content>
             <div class="grid justify-content-start">
-                <div class="col-12 md:col-6" v-for="(item,index) in envVariables">
+                <div class="col-12 md:col-6" v-for="(item,index) in store.list">
                     <h5 class="p-1 text-xs mb-1">{{item.name}}</h5>
                     <div class="p-inputgroup">
                         <Textarea :model-value="item.value" :autoResize="true" class="has-min-height"/>
@@ -43,75 +86,7 @@
 
 </template>
 
-<script>
-export default {
-    name: "EnvVariableSettings",
-    data(){
-        return{
-            envVariables: [
-                {
-                    name:'APP_NAME',
-                    value:'test-project',
-                },
-                {
-                    name:'APP_ENV',
-                    value:null,
-                },
-                {
-                    name:'APP_KEY',
-                    value:null,
-                },
-                {
-                    name:'APP_DEBUG',
-                    value:null,
-                },
-                {
-                    name:'APP_URL',
-                    value:null,
-                },
-                {
-                    name:'APP_TIMEZONE',
-                    value:null,
-                },
-                {
-                    name:'VAAHCMS_VERSION',
-                    value:null,
-                },
-                {
-                    name:'CENTRAL_DOMAIN',
-                    value:null,
-                },
-                {
-                    name:'APP_VAAHCMS_ENV',
-                    value:null,
-                },
-                {
-                    name:'APP_KEY',
-                    value:null,
-                }
-            ],
-            addEnvVariable:null,
-            showEnvInput:true
-        }
-    },
-    methods:{
-        addLinkHandler(){
-            if(!this.showEnvInput){
-                return this.showEnvInput = true;
-            }else if(this.showEnvInput && this.addEnvVariable !== "" && this.addEnvVariable !== null){
-                this.envVariables.push(
-                    {
-                        name:this.addEnvVariable,
-                        value: null
-                    }
-                );
-                this.addEnvVariable = null;
-                return this.showEnvInput = true;
-            }
-        }
-    }
-}
-</script>
+
 
 <style scoped>
 

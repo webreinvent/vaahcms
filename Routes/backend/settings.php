@@ -53,10 +53,10 @@ Route::group(
     ],
     function () {
         //------------------------------------------------
-        Route::post( '/assets', 'EnvController@getAssets' )
+        Route::get( '/assets', 'EnvController@getAssets' )
             ->name( 'vh.backend.settings.env.assets' );
         //------------------------------------------------
-        Route::post( '/list', 'EnvController@getList' )
+        Route::get( '/list', 'EnvController@getList' )
             ->name( 'vh.backend.settings.env.list' );
         //------------------------------------------------
         Route::get( '/download-file/{file_name}', 'EnvController@downloadFile')
