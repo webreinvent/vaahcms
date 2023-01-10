@@ -44,6 +44,26 @@ routes_list = {
                             props: true,
                         }
                     ]
+                },
+                {
+                    path: 'batches',
+                    name: 'batches.index',
+                    component: BatchList,
+                    props: true,
+                    children: [
+                        {
+                            path: 'form/:id?',
+                            name: 'batches.form',
+                            component: Form,
+                            props: true,
+                        },
+                        {
+                            path: 'view/:id?',
+                            name: 'batches.view',
+                            component: Item,
+                            props: true,
+                        }
+                    ]
                 }
             ]
         },

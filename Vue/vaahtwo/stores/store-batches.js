@@ -18,8 +18,6 @@ let empty_states = {
             is_active: null,
             trashed: null,
             sort: null,
-            dateRange: null,
-            dateColumn: 'created_at'
         },
     },
     action: {
@@ -31,6 +29,9 @@ let empty_states = {
 export const useBatchStore = defineStore({
     id: 'batches',
     state: () => ({
+        dialogContent: null,
+        displayDetail: false,
+        displayFailedIds: false,
         dateColumnName: 'created_at',
         range: null,
         base_url: base_url,
@@ -89,6 +90,7 @@ export const useBatchStore = defineStore({
              * Update query state with the query parameters of url
              */
             this.updateQueryFromUrl(route);
+
         },
         //---------------------------------------------------------------------
         setViewAndWidth(route_name)
@@ -232,7 +234,6 @@ export const useBatchStore = defineStore({
         //---------------------------------------------------------------------
         isListActionValid()
         {
-
             if(!this.action.type)
             {
                 vaah().toastErrors(['Select an action type']);
@@ -812,9 +813,30 @@ export const useBatchStore = defineStore({
             this.form_menu_list = form_menu;
 
         },
-        columnNames(name) {
-            console.log(name);
-            return vaah().capitalising(name).replace('_',' ');
+        getJobProgress(item,type) {
+            let d = item;
+
+            if (type===1) {
+                return ((d.total_jobs - d.pending_jobs - d.failed_jobs) * 100) / d.total_jobs;
+            }
+            if (type===2) {
+                return ((d.pending_jobs - d.failed_jobs) * 100) / d.total_jobs;
+            }
+            if (type===3) {
+                return d.pending_jobs * 100 / d.total_jobs;
+            }
+        },
+        displayBatchDetails(content) {
+            this.dialogContent = content;
+            this.displayDetail = true;
+        },
+        displayFailedIdDetails(content) {
+            this.dialogContent = content;
+            this.displayFailedIds = true;
+        },
+        deleteItem(item) {
+            console.log(item);
+            vaah().confirmDialogDelete(this.itemAction('delete',item));
         }
         //---------------------------------------------------------------------
     }

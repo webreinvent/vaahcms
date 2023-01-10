@@ -11,7 +11,6 @@ use WebReinvent\VaahCms\Models\BatchBase;
 
 class Batch extends BatchBase
 {
-    use SoftDeletes;
     use CrudWithUuidObservantTrait;
 
     //-------------------------------------------------
@@ -78,7 +77,7 @@ class Batch extends BatchBase
 
 
         // check if name exist
-        $item = self::where('name', $inputs['name'])->withTrashed()->first();
+        $item = self::where('name', $inputs['name'])->first();
 
         if ($item) {
             $response['success'] = false;
@@ -87,7 +86,7 @@ class Batch extends BatchBase
         }
 
         // check if slug exist
-        $item = self::where('slug', $inputs['slug'])->withTrashed()->first();
+        $item = self::where('slug', $inputs['slug'])->first();
 
         if ($item) {
             $response['success'] = false;
@@ -151,23 +150,23 @@ class Batch extends BatchBase
 
     }
     //-------------------------------------------------
-    public function scopeTrashedFilter($query, $filter)
-    {
-
-        if(!isset($filter['trashed']))
-        {
-            return $query;
-        }
-        $trashed = $filter['trashed'];
-
-        if($trashed === 'include')
-        {
-            return $query->withTrashed();
-        } else if($trashed === 'only'){
-            return $query->onlyTrashed();
-        }
-
-    }
+//    public function scopeTrashedFilter($query, $filter)
+//    {
+//
+//        if(!isset($filter['trashed']))
+//        {
+//            return $query;
+//        }
+//        $trashed = $filter['trashed'];
+//
+//        if($trashed === 'include')
+//        {
+//            return $query->withTrashed();
+//        } else if($trashed === 'only'){
+//            return $query->onlyTrashed();
+//        }
+//
+//    }
     //-------------------------------------------------
     public function scopeSearchFilter($query, $filter)
     {
@@ -178,28 +177,18 @@ class Batch extends BatchBase
         }
         $search = $filter['q'];
         $query->where(function ($q) use ($search) {
-            $q->where('name', 'LIKE', '%' . $search . '%')
-                ->orWhere('slug', 'LIKE', '%' . $search . '%');
+            $q->where('name', 'LIKE', '%' . $search . '%');
+            $q->orWhere('id', 'LIKE', '%'.$request->q.'%');
         });
 
     }
     //-------------------------------------------------
     public static function getList($request)
     {
+
         $list = self::getSorted($request->filter);
-        $list->isActiveFilter($request->filter);
-        $list->trashedFilter($request->filter);
         $list->searchFilter($request->filter);
 
-//        if(isset($request->from) && $request->from
-//            && isset($request->to) && $request->to)
-//        {
-//            if(isset($request->date_filter_by) && $request->date_filter_by){
-//                $list->betweenDates($request['from'],$request['to'],$request->date_filter_by);
-//            }else{
-//                $list->betweenDates($request['from'],$request['to']);
-//            }
-//        }
         $rows = config('vaahcms.per_page');
 
         if($request->has('rows'))
@@ -291,7 +280,7 @@ class Batch extends BatchBase
         }
 
         $items_id = collect($inputs['items'])->pluck('id')->toArray();
-        self::whereIn('id', $items_id)->forceDelete();
+        self::whereIn('id', $items_id)->delete();
 
         $response['success'] = true;
         $response['data'] = true;
@@ -310,10 +299,9 @@ class Batch extends BatchBase
                 ->pluck('id')
                 ->toArray();
 
-            $items = self::whereIn('id', $items_id)
-                ->withTrashed();
-        }
+            $items = self::whereIn('id', $items_id);
 
+        }
 
         switch ($type) {
             case 'deactivate':
@@ -338,7 +326,7 @@ class Batch extends BatchBase
                 break;
             case 'delete':
                 if(isset($items_id) && count($items_id) > 0) {
-                    self::whereIn('id', $items_id)->forceDelete();
+                    self::whereIn('id', $items_id)->delete();
                 }
                 break;
             case 'activate-all':
@@ -354,7 +342,7 @@ class Batch extends BatchBase
                 self::withTrashed()->restore();
                 break;
             case 'delete-all':
-                self::withTrashed()->forceDelete();
+                self::query()->delete();
                 break;
         }
 
@@ -367,10 +355,8 @@ class Batch extends BatchBase
     //-------------------------------------------------
     public static function getItem($id)
     {
-
         $item = self::where('id', $id)
             ->with(['createdByUser', 'updatedByUser', 'deletedByUser'])
-            ->withTrashed()
             ->first();
 
         if(!$item)
@@ -430,7 +416,8 @@ class Batch extends BatchBase
     //-------------------------------------------------
     public static function deleteItem($request, $id): array
     {
-        $item = self::where('id', $id)->withTrashed()->first();
+        $item = self::where('id', $id)->first();
+
         if (!$item) {
             $response['success'] = false;
             $response['messages'][] = 'Record does not exist.';

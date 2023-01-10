@@ -25,13 +25,16 @@ const useVaah = vaah();
             <Column field="id" header="ID" :style="{width: store.getIdWidth()}" :sortable="true">
             </Column>
 
-            <Column field="name" header="Name" :sortable="true">
-
+            <Column field="name" header="" :sortable="true" style="width: 30%;">
                 <template #body="prop">
-                    <Badge v-if="prop.data.deleted_at"
-                           value="Trashed"
-                           severity="danger"></Badge>
-                    {{prop.data.name}}
+                    <span v-if="prop.data.pending_jobs > 0">
+                        <ProgressBar :value="store.getJobProgress(prop.data,1)" />
+                        <ProgressBar :value="store.getJobProgress(prop.data,2)" />
+                        <ProgressBar :value="store.getJobProgress(prop.data,3)" />
+                    </span>
+                    <span v-else>
+                        <ProgressBar :value="0" style="height:10px;" />
+                    </span>
                 </template>
             </Column>
 
@@ -39,11 +42,10 @@ const useVaah = vaah();
                      :style="{width: store.getActionWidth() }"
                      header="Detail">
                  <template #body="prop">
-                     <div class="p-inputgroup ">
-                         <Button class="p-button-outlined"
-                                 data-testid="batches-table-to-view"
-                                 @click="store.toView(prop.data)"
-                                 >
+                     <div class="p-inputgroup">
+                         <Button class="p-button-sm p-button-outlined p-button-rounded"
+                                 data-testid="batches-table-options"
+                                 @click="store.displayBatchDetails(prop.data.options)">
                              <span class="pi pi-eye"></span>
                              <span>View</span>
                          </Button>
@@ -57,7 +59,14 @@ const useVaah = vaah();
                      :sortable="true">
 
                  <template #body="prop">
-                     {{useVaah.ago(prop.data.failed_job_ids)}}
+                     <div class="p-inputgroup">
+                         <Button class="p-button-sm p-button-outlined p-button-rounded"
+                                 data-testid="batches-table-failed-ids"
+                                 @click="store.displayFailedIdDetails(prop.data.failed_job_ids)">
+                             <span class="pi pi-eye"></span>
+                             <span>{{ prop.data.failed_job_ids.length }}</span>
+                         </Button>
+                     </div>
                  </template>
 
              </Column>
@@ -99,6 +108,7 @@ const useVaah = vaah();
 
                  <template #body="prop">
                      <Button class="p-button-rounded p-button-text"
+                             @click="store.deleteItem(prop.data)"
                              data-testid="batches-table-to-trash"
                      >
                          <span class="pi pi-trash"></span>
@@ -109,7 +119,24 @@ const useVaah = vaah();
         <!--/table-->
 
         <Divider />
-
+        <Dialog header="Options"
+                v-model:visible="store.displayDetail"
+                data-testid="batch-table-detail-dialog"
+                :breakpoints="{'960px': '75vw', '640px': '90vw'}"
+                :style="{width: '50vw'}">
+            <p>
+                {{ store.dialogContent }}
+            </p>
+        </Dialog>
+        <Dialog header="Failed Ids"
+                v-model:visible="store.displayFailedIds"
+                data-testid="batch-table-detail-dialog"
+                :breakpoints="{'960px': '75vw', '640px': '90vw'}"
+                :style="{width: '50vw'}">
+            <p>
+                {{ store.dialogContent }}
+            </p>
+        </Dialog>
         <!--paginator-->
         <Paginator v-model:rows="store.query.rows"
                    :totalRecords="store.list.total"
@@ -117,7 +144,6 @@ const useVaah = vaah();
                    :rowsPerPageOptions="store.rows_per_page">
         </Paginator>
         <!--/paginator-->
-
     </div>
 
 </template>
