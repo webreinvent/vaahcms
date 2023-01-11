@@ -90,6 +90,7 @@ export const useEnvStore = defineStore({
         item_menu_list: [],
         item_menu_state: null,
         form_menu_list: [],
+        env_file: null,
     }),
     getters: {
 
@@ -206,10 +207,10 @@ export const useEnvStore = defineStore({
 
             if (data) {
                 this.list = data.list;
+                this.env_file = data.env_file;
             }
         },
         //---------------------------------------------------------------------
-
         async getItem(id) {
             if(id){
                 await vaah().ajax(
@@ -229,6 +230,73 @@ export const useEnvStore = defineStore({
             }
             this.getItemMenu();
             await this.getFormMenu();
+        },
+        //---------------------------------------------------------------------
+        isSecrete(item)
+        {
+            if(
+                item.key == 'APP_KEY'
+                || item.key.includes('SECRET')
+                || item.key.includes('API_KEY')
+                || item.key.includes('API')
+                || item.key.includes('AUTH_KEY')
+                || item.key.includes('PRIVATE_KEY')
+                || item.key.includes('MERCHANT_KEY')
+                || item.key.includes('SALT')
+                || item.key.includes('AUTH_TOKEN')
+                || item.key.includes('API_TOKEN')
+            ){
+                return true;
+            }
+
+            return false;
+
+        },
+        //---------------------------------------------------------------------
+        toggleShow() {
+            this.showPassword = !this.showPassword;
+        },
+        //---------------------------------------------------------------------
+        inputType(item) {
+
+            if(item.key.includes('PASSWORD'))
+            {
+                return 'password';
+            }
+
+
+            if(this.isSecrete(item))
+            {
+                return 'password';
+            }
+
+
+            return 'text';
+        },
+        //---------------------------------------------------------------------
+        isDisable(item) {
+            if(item.key == 'APP_KEY'
+                || item.key == 'APP_ENV'
+                || item.key == 'APP_URL'
+            )
+            {
+                return true;
+            }
+        },
+        //---------------------------------------------------------------------
+        showRevealButton(item){
+
+            if(item.key.includes('PASSWORD'))
+            {
+                return true;
+            }
+
+            if(this.isSecrete(item))
+            {
+                return true;
+            }
+
+            return false;
         },
         //---------------------------------------------------------------------
         getCopy(value)
@@ -275,13 +343,93 @@ export const useEnvStore = defineStore({
                 header: 'Updating environment variables',
                 class:'danger',
                 acceptLabel: 'Proceed',
+                acceptClass:"red",
                 rejectLabel: 'Cancel',
                 icon: 'pi pi-exclamation-triangle',
                 accept: () => {
-                    //callback to execute when user confirms the action
+                    this.store()
                 },
             });
         },
+        //---------------------------------------------------------------------
+        store() {
+
+            let valid = this.validate();
+            let options = {
+                method: 'post',
+            };
+            if(!valid)
+            {
+                return false;
+            }
+
+
+            options.params = this.list;
+
+            let ajax_url = this.ajax_url+'/store';
+            vaah().ajax(ajax_url, this.storeAfter, options);
+        },
+        //---------------------------------------------------------------------
+        storeAfter(data, res) {
+            if(data)
+            {
+                window.location.href = data.redirect_url;
+            }
+        },
+        //---------------------------------------------------------------------
+        validate()
+        {
+            let pair = this.generateKeyPair();
+
+            let failed = false;
+            let messages = [];
+
+            if(!pair['APP_KEY']) {
+                messages.push("APP_KEY is required");
+                failed = true;
+            }
+
+            if(!pair['APP_ENV']) {
+                messages.push("APP_ENV is required");
+                failed = true;
+            }
+
+            if(!pair['APP_URL']) {
+                messages.push("APP_URL is required");
+                failed = true;
+            }
+
+            if(failed)
+            {
+                this.$vaah.toastErrors(messages);
+                return false;
+            }
+
+
+            return true;
+        },
+        //---------------------------------------------------------------------
+        generateKeyPair()
+        {
+            let pair = [];
+            this.list.forEach(function (item) {
+
+                pair[item.key] = item.value;
+
+            });
+
+            return pair;
+        },
+        //---------------------------------------------------------------------
+
+        downloadFile(file_name)
+        {
+            window.location.href = this.ajax_url+"/download-file/"+file_name;
+        },
+        //---------------------------------------------------------------------
+
+
+
         //---------------------------------------------------------------------
         isListActionValid()
         {

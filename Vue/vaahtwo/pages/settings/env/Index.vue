@@ -48,21 +48,27 @@ onMounted(async () => {
                 <div>
                     <h5 class="font-semibold text-lg inline mr-2">Environment Variables</h5>
                     <Tag class="mr-2">
-                        <p class="font-semibold">.env.rishu</p>
+                        <p class="font-semibold">{{store.env_file}}</p>
                     </Tag>
                 </div>
                 <div>
-                    <Button icon="pi pi-download" class="mr-2 p-button-sm"/>
-                    <Button icon="pi pi-refresh" class="p-button-sm"/>
+                    <Button icon="pi pi-download" class="mr-2 p-button-sm"
+                            @click="store.downloadFile(store.env_file)"/>
+                    <Button icon="pi pi-refresh" class="p-button-sm" @click="store.getList()"/>
                 </div>
             </div>
         </template>
         <template #content>
             <div class="grid justify-content-start">
                 <div class="col-12 md:col-6" v-for="(item,index) in store.list">
-                    <h5 class="p-1 text-xs mb-1">{{item.name}}</h5>
+                    <h5 class="p-1 text-xs mb-1">{{item.key}}</h5>
                     <div class="p-inputgroup">
-                        <Textarea :model-value="item.value" :autoResize="true" class="has-min-height"/>
+                        <InputText v-model="item.value"
+                                   :autoResize="true"
+                                   :type="store.inputType(item)"
+                                   :disabled="store.isDisable(item)"
+                                   :toggleMask="store.showRevealButton(item)"
+                                   class="has-min-height"/>
                         <Button icon="pi pi-copy"
                                 class=" has-max-height"
                                 @click="store.getCopy(item.value)"
