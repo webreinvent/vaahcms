@@ -26,6 +26,7 @@ include('backend/routes-roles.php');
 include('backend/routes-permissions.php');
 include('backend/routes-users.php');
 include('backend/routes-registrations.php');
+include('backend/routes-taxonomies.php');
 
 
 

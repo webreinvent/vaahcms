@@ -1,4 +1,4 @@
-<?php namespace WebReinvent\\VaahCms\Models;
+<?php namespace WebReinvent\VaahCms\Models;
 
 use Carbon\Carbon;
 use DateTimeInterface;
@@ -8,7 +8,7 @@ use Illuminate\Support\Str;
 use WebReinvent\VaahCms\Traits\CrudWithUuidObservantTrait;
 use WebReinvent\VaahCms\Entities\User;
 
-class Taxonomy extends Model
+class Taxonomy extends TaxonomyBase
 {
 
     use SoftDeletes;
