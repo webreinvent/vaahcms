@@ -63,21 +63,26 @@ onMounted(async () => {
                     <h5 class="p-1 text-xs mb-1">{{item.name}}</h5>
                     <div class="p-inputgroup">
                         <Textarea :model-value="item.value" :autoResize="true" class="has-min-height"/>
-                        <Button icon="pi pi-copy" class=" has-max-height"/>
-                        <Button icon="pi pi-trash" class="p-button-danger has-max-height"/>
+                        <Button icon="pi pi-copy"
+                                class=" has-max-height"
+                                @click="store.getCopy(item.value)"
+                        />
+                        <Button icon="pi pi-trash"
+                                class="p-button-danger has-max-height"
+                                @click="store.removeVariable(item)"
+                        />
                     </div>
                 </div>
             </div>
             <div class="grid justify-content-start mt-5">
                 <div class="col-12 md:col-6">
                     <div class="p-inputgroup">
-                        <InputText v-model="addEnvVariable" v-if="showEnvInput"></InputText>
-                        <Button label="Add Env Variable" icon="pi pi-plus" @click="addLinkHandler"></Button>
+                        <Button label="Add Env Variable" icon="pi pi-plus" @click="store.addVariable"></Button>
                     </div>
                 </div>
                 <div class="col-12 md:col-6">
                     <div class="p-inputgroup justify-content-end">
-                        <Button label="Save" icon="pi pi-save"></Button>
+                        <Button label="Save" icon="pi pi-save" @click="store.confirmChanges"></Button>
                     </div>
                 </div>
             </div>

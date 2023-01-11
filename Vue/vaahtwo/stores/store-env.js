@@ -3,6 +3,7 @@ import { acceptHMRUpdate, defineStore } from 'pinia'
 import { vaah } from '../vaahvue/pinia/vaah'
 import { useRootStore } from "./root";
 import qs from 'qs'
+// import copy from "copy-to-clipboard";
 
 let model_namespace = 'WebReinvent\\VaahCms\\Models\\Setting';
 
@@ -228,6 +229,58 @@ export const useEnvStore = defineStore({
             }
             this.getItemMenu();
             await this.getFormMenu();
+        },
+        //---------------------------------------------------------------------
+        getCopy(value)
+        {
+            navigator.clipboard.writeText(value);
+            vaah().toastSuccess(['Copied']);
+        },
+        //---------------------------------------------------------------------
+        removeVariable(item) {
+
+            if(item.uid)
+            {
+                this.list = vaah().removeInArrayByKey(this.list, item, 'uid');
+            } else
+            {
+                this.list = vaah().removeInArrayByKey(this.list, item, 'key');
+            }
+            vaah().toastErrors(['Removed']);
+        },
+        //---------------------------------------------------------------------
+        addVariable() {
+            let item = this.emptyItem();
+            this.list.push(item);
+        },
+        //---------------------------------------------------------------------
+        emptyItem() {
+
+            let count = this.list.length;
+
+            let item = {
+                uid: count,
+                key: 'VARIABLE_NAME_'+count,
+                value: null,
+            };
+
+            return item;
+
+        },
+        //---------------------------------------------------------------------
+        confirmChanges()
+        {
+            vaah().confirm.require({
+                message: 'Invalid value(s) can break the application, are you sure to proceed?. You will be <b>logout</b> and redirected to login page.',
+                header: 'Updating environment variables',
+                class:'danger',
+                acceptLabel: 'Proceed',
+                rejectLabel: 'Cancel',
+                icon: 'pi pi-exclamation-triangle',
+                accept: () => {
+                    //callback to execute when user confirms the action
+                },
+            });
         },
         //---------------------------------------------------------------------
         isListActionValid()
