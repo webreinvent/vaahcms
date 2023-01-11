@@ -51,30 +51,37 @@ const dateColumns = [
 
             <VhFieldVertical >
                 <template #label>
-                    <b>Trashed:</b>
+                    <b>Column:</b>
                 </template>
-
                 <div class="field-radiobutton">
-                    <RadioButton name="trashed-exclude"
-                                 data-testid="batches-filters-trashed-exclude"
-                                 value=""
-                                 v-model="store.query.filter.trashed" />
-                    <label for="trashed-exclude">Exclude Trashed</label>
+                    <RadioButton name="sort-descending"
+                                 data-testid="jobs-filters-sort-descending"
+                                 value="created_at:desc"
+                                 v-model="store.query.filter.dateColumn" />
+                    <label for="sort-descending">Created (Descending)</label>
                 </div>
                 <div class="field-radiobutton">
-                    <RadioButton name="trashed-include"
-                                 data-testid="batches-filters-trashed-include"
-                                 value="include"
-                                 v-model="store.query.filter.trashed" />
-                    <label for="trashed-include">Include Trashed</label>
+                    <RadioButton name="sort-descending"
+                                 data-testid="jobs-filters-sort-descending"
+                                 value="cancelled_at:desc"
+                                 v-model="store.query.filter.dateColumn" />
+                    <label for="sort-descending">Cancelled (Descending)</label>
                 </div>
                 <div class="field-radiobutton">
-                    <RadioButton name="trashed-only"
-                                 data-testid="batches-filters-trashed-only"
-                                 value="only"
-                                 v-model="store.query.filter.trashed" />
-                    <label for="trashed-only">Only Trashed</label>
+                    <RadioButton name="sort-descending"
+                                 data-testid="jobs-filters-sort-descending"
+                                 value="finished_at:desc"
+                                 v-model="store.query.filter.dateColumn" />
+                    <label for="sort-descending">Finished (Descending)</label>
                 </div>
+            </VhFieldVertical>
+            <VhFieldVertical>
+                <Calendar inputId="range"
+                          v-model="store.query.filter.datesRange"
+                          selectionMode="range"
+                          :manualInput="false"
+                          :hideOnDateTimeSelect="true"
+                />
             </VhFieldVertical>
         </Sidebar>
     </div>
