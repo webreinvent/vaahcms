@@ -150,27 +150,8 @@ class Batch extends BatchBase
 
     }
     //-------------------------------------------------
-//    public function scopeTrashedFilter($query, $filter)
-//    {
-//
-//        if(!isset($filter['trashed']))
-//        {
-//            return $query;
-//        }
-//        $trashed = $filter['trashed'];
-//
-//        if($trashed === 'include')
-//        {
-//            return $query->withTrashed();
-//        } else if($trashed === 'only'){
-//            return $query->onlyTrashed();
-//        }
-//
-//    }
-    //-------------------------------------------------
     public function scopeSearchFilter($query, $filter)
     {
-
         if(!isset($filter['q']))
         {
             return $query;
@@ -178,16 +159,16 @@ class Batch extends BatchBase
         $search = $filter['q'];
         $query->where(function ($q) use ($search) {
             $q->where('name', 'LIKE', '%' . $search . '%');
-            $q->orWhere('id', 'LIKE', '%'.$request->q.'%');
+            $q->orWhere('id', 'LIKE', '%'.$search.'%');
         });
 
     }
     //-------------------------------------------------
     public static function getList($request)
     {
-
         $list = self::getSorted($request->filter);
         $list->searchFilter($request->filter);
+        $list->dateFilter($request->filter);
 
         $rows = config('vaahcms.per_page');
 
@@ -203,7 +184,17 @@ class Batch extends BatchBase
 
         return $response;
     }
+    //------------------------------------------------
+    public function scopeDateFilter($query, $requestFilters)
+    {
+        if (!$requestFilters || !isset($requestFilters['dateColumn'])) {
+            return $query;
+        }
 
+        $filters = explode(':',$requestFilters['dateColumn']);
+
+        $query->orWhere($filters[0],'<>', null);
+    }
     //-------------------------------------------------
     public static function updateList($request)
     {
