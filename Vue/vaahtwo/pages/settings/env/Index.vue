@@ -21,6 +21,11 @@ onMounted(async () => {
      * fetch list of records
      */
     await store.getList();
+
+    /**
+     * Change to upper case
+     */
+    await store.watchItem();
 });
 </script>
 
@@ -74,12 +79,23 @@ onMounted(async () => {
             <div class="grid justify-content-start mt-5">
                 <div class="col-12 md:col-6">
                     <div class="p-inputgroup">
-                        <Button label="Add Env Variable" icon="pi pi-plus" @click="store.addVariable"></Button>
+                        <InputText :autoResize="true"
+                                   v-model="store.newVariable"
+                                   class="has-min-height"
+                                   :data-testid="'env-add_variable'"
+                        />
+                        <Button label="Add Env Variable" icon="pi pi-plus"
+                                @click="store.addVariable"
+                                :disabled="!store.newVariable"
+                        ></Button>
                     </div>
                 </div>
                 <div class="col-12 md:col-6">
                     <div class="p-inputgroup justify-content-end">
-                        <Button label="Save" icon="pi pi-save" @click="store.confirmChanges"></Button>
+                        <Button label="Save"
+                                icon="pi pi-save"
+                                @click="store.confirmChanges"
+                        ></Button>
                     </div>
                 </div>
             </div>

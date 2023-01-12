@@ -12,45 +12,9 @@ let base_url = document.getElementsByTagName('base')[0].getAttribute("href");
 let ajax_url = base_url + "/vaah/settings/env";
 
 let empty_states = {
-    query: {
-        page: null,
-        rows: null,
-        filter: {
-            q: null,
-            is_active: null,
-            trashed: null,
-            sort: null,
-        },
-        recount: null,
-    },
-
-    sidebar_menu_items:[],
-
+    query: [],
     list: null,
-    settings:{
-        list: null,
-        links: [],
-        scripts: null,
-        meta_tags: [],
-    },
-
-    role_permissions_query: {
-        q: null,
-        module: null,
-        section: null,
-        page: null,
-        rows: null,
-    },
-    role_users_query: {
-        q: null,
-        page: null,
-        rows: null,
-    },
-
-    action: {
-        type: null,
-        items: [],
-    }
+    action: []
 };
 
 export const useEnvStore = defineStore({
@@ -91,11 +55,26 @@ export const useEnvStore = defineStore({
         item_menu_state: null,
         form_menu_list: [],
         env_file: null,
+        newVariable:null,
     }),
     getters: {
 
     },
     actions: {
+        //---------------------------------------------------------------------
+        watchItem()
+        {
+            // if(this.newVariable){
+                watch(() => this.newVariable, (newVal,oldVal) =>
+                    {
+                        if(newVal && newVal !== "")
+                        {
+                            this.newVariable = this.newVariable.toUpperCase();
+                        }
+                    },{deep: true}
+                )
+            // }
+        },
         //---------------------------------------------------------------------
         async getAssets() {
 
@@ -222,8 +201,14 @@ export const useEnvStore = defineStore({
         },
         //---------------------------------------------------------------------
         addVariable() {
-            let item = this.emptyItem();
+            let count = this.list.length;
+            let item = {
+                uid: count,
+                key: 'VARIABLE_NAME_'+this.newVariable,
+                value: null,
+            };
             this.list.push(item);
+            this.newVariable=null
         },
         //---------------------------------------------------------------------
         emptyItem() {
