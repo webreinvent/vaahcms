@@ -63,11 +63,16 @@ onMounted(async () => {
                 <div class="col-12 md:col-6" v-for="(item,index) in store.list">
                     <h5 class="p-1 text-xs mb-1">{{item.key}}</h5>
                     <div class="p-inputgroup">
-                        <InputText v-model="item.value"
+                        <password v-if="store.inputType(item) == 'password'"
+                                  v-model="item.value"
+                                  :autoResize="true"
+                                  toggleMask
+                                  class="has-min-height"
+                        />
+                        <InputText v-else
+                                   v-model="item.value"
                                    :autoResize="true"
-                                   :type="store.inputType(item)"
                                    :disabled="store.isDisable(item)"
-                                   :toggleMask="store.showRevealButton(item)"
                                    class="has-min-height"/>
                         <Button icon="pi pi-copy"
                                 class=" has-max-height"
