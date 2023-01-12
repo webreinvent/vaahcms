@@ -10,23 +10,6 @@ const route = useRoute();
 import { useConfirm } from "primevue/useconfirm";
 const confirm = useConfirm();
 onMounted(async () => {
-    /**
-     * call onLoad action when List view loads
-     */
-    await store.onLoad(route);
-
-    /**
-     * watch routes to update view, column width
-     * and get new item when routes get changed
-     */
-    await store.watchRoutes(route);
-
-    /**
-     * watch states like `query.filter` to
-     * call specific actions if a state gets
-     * changed
-     */
-    await store.watchStates();
 
     /**
      * fetch assets required for the crud
@@ -68,12 +51,15 @@ onMounted(async () => {
                                   :autoResize="true"
                                   toggleMask
                                   class="has-min-height"
+                                  :data-testid="'env-'+item.key"
                         />
                         <InputText v-else
                                    v-model="item.value"
                                    :autoResize="true"
                                    :disabled="store.isDisable(item)"
-                                   class="has-min-height"/>
+                                   class="has-min-height"
+                                   :data-testid="'env-'+item.key"
+                        />
                         <Button icon="pi pi-copy"
                                 class=" has-max-height"
                                 @click="store.getCopy(item.value)"
