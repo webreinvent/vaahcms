@@ -204,25 +204,11 @@ export const useEnvStore = defineStore({
             let count = this.list.length;
             let item = {
                 uid: count,
-                key: 'VARIABLE_NAME_'+this.newVariable,
+                key: this.newVariable,
                 value: null,
             };
             this.list.push(item);
             this.newVariable=null
-        },
-        //---------------------------------------------------------------------
-        emptyItem() {
-
-            let count = this.list.length;
-
-            let item = {
-                uid: count,
-                key: 'VARIABLE_NAME_'+count,
-                value: null,
-            };
-
-            return item;
-
         },
         //---------------------------------------------------------------------
         confirmChanges()
