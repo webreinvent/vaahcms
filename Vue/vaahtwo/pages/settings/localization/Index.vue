@@ -1,3 +1,27 @@
+<script setup>
+import {onMounted, reactive, ref} from "vue";
+import {useRoute} from 'vue-router';
+import {useLocalizationStore} from '../../../stores/store-localization'
+const store = useLocalizationStore();
+const route = useRoute();
+import { useConfirm } from "primevue/useconfirm";
+const confirm = useConfirm();
+onMounted(async () => {
+    /**
+     * fetch assets required for the crud
+     * operation
+     */
+    await store.getAssets();
+    /**
+     * fetch list of records
+     */
+    await store.getList();
+    /**
+     * Change to upper case
+     */
+    await store.watchItem();
+});
+</script>
 <template>
     <Card>
         <template #header>
@@ -24,10 +48,12 @@
                 </div>
             </div>
             <div class="grid mt-4">
-                <div class="col-12 md:col-6" v-for="(item,index) in localizationVariables">
+                <div class="col-12 md:col-6" v-for="(item,index) in store.list.data">
                     <h5 class="p-1 text-xs mb-1">{{item.slug}}</h5>
                     <div class="p-inputgroup">
-                        <Textarea :model-value="item.value" :autoResize="true" class="has-min-height"></Textarea>
+                        <Textarea :model-value="item.content"
+                                  :autoResize="true"
+                                  class="has-min-height"></Textarea>
                         <Button icon="pi pi-copy" class=" has-max-height"/>
                         <Button icon="pi pi-trash" class="p-button-danger has-max-height"/>
                     </div>
