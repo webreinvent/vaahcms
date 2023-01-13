@@ -168,7 +168,7 @@ class Batch extends BatchBase
     {
         $list = self::getSorted($request->filter);
         $list->searchFilter($request->filter);
-        $list->dateFilter($request->filter);
+
 
         $rows = config('vaahcms.per_page');
 

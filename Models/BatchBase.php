@@ -21,13 +21,6 @@ class BatchBase extends Model {
     protected $dateFormat = 'Y-m-d H:i:s';
     //-------------------------------------------------
     protected $fillable = [
-        'id',
-        'name',
-        'total_jobs',
-        'pending_jobs',
-        'failed_jobs',
-        'failed_job_ids',
-        'options'
     ];
 
     //-------------------------------------------------
@@ -44,7 +37,6 @@ class BatchBase extends Model {
         $date_time_format = config('settings.global.datetime_format');
 
         return $date->format($date_time_format);
-
     }
 
     //-------------------------------------------------
