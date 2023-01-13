@@ -1,30 +1,19 @@
 import { watch } from 'vue'
 import { acceptHMRUpdate, defineStore } from 'pinia'
-import { vaah } from '../vaahvue/pinia/vaah'
-import { useRootStore } from "./root";
 import qs from 'qs'
-
+import { vaah } from '../vaahvue/pinia/vaah'
 let model_namespace = 'WebReinvent\\VaahCms\\Models\\Setting';
 
 
 let base_url = document.getElementsByTagName('base')[0].getAttribute("href");
 let ajax_url = base_url + "/vaah/settings/localization";
 
-let empty_states = {
-    query: [],
-    list: null,
-    action: []
-};
-
 export const useLocalizationStore = defineStore({
     id: 'localization',
     state: () => ({
         base_url: base_url,
         ajax_url: ajax_url,
-        activeSubTab:0,
-        assets:null,
-        bulk_action: "",
-        bulk_action_data: "",
+        model: model_namespace,
         filters: {
             q: null,
             vh_lang_language_id: null,
@@ -34,6 +23,33 @@ export const useLocalizationStore = defineStore({
             status: 'all',
             recount: false
         },
+        query_string:{
+            lang_id: null,
+            cat_id: null,
+            page: null,
+            filter: null,
+        },
+        assets_is_fetching: true,
+        rows_per_page: [10,20,30,50,100,500],
+        app: null,
+        activeSubTab:0,
+        assets:null,
+        fillable:null,
+        list: null,
+        item:null,
+        route: null,
+        view: 'large',
+        show_filters: false,
+        list_view_width: 12,
+        search: {
+            delay_time: 600, // time delay in milliseconds
+            delay_timer: 0 // time delay in milliseconds
+        },
+        form: {
+            type: 'Create',
+            action: null,
+            is_button_loading: null
+        },
         new_language:{
             name: null,
             locale_code_iso_639: null,
@@ -41,35 +57,74 @@ export const useLocalizationStore = defineStore({
         new_category:{
             name: null,
         },
-        query_string:{
-            lang_id: null,
-            cat_id: null,
-            page: null,
-            filter: null,
-        },
-        show_filters: false,
-        is_btn_loading: false,
-        is_top_btn_loading: false,
-        expanded: false,
-        atRight: false,
-        size: null,
-        type: 'is-boxed',
-        show_add_language: false,
-        show_add_category: false,
-        show_import_form: false,
-        active_language: null,
-        active_category_id: null,
-        active_category: null,
-        list: null,
-        form_data: [],
+        is_list_loading: null,
+        count_filters: 0,
+        list_selected_menu: [],
+        list_bulk_menu: [],
+        item_menu_list: [],
+        item_menu_state: null,
+        form_menu_list: [],
+        payloadModal:false,
+        payloadContent:null,
         name: null,
-        icon_copy: "<b-icon icon='trash'></b-icon>"
+        icon_copy: "<b-icon icon='trash'></b-icon>",
+        languages:null,
+        categories:null,
+        filterOptions:null,
+        show_add_language:false,
+        show_add_category:false
     }),
     getters: {
 
     },
     actions: {
         //---------------------------------------------------------------------
+        async onLoad(route)
+        {
+            /**
+             * Set initial routes
+             */
+            this.route = route;
+
+            /**
+             * Update with view and list css column number
+             */
+            this.setViewAndWidth(route.name);
+
+            /**
+             * Update query state with the query parameters of url
+             */
+            this.updateQueryFromUrl(route);
+        },
+        setViewAndWidth(route_name)
+        {
+            switch(route_name)
+            {
+                case 'jobs.index':
+                    this.view = 'large';
+                    this.list_view_width = 12;
+                    break;
+                default:
+                    this.view = 'small';
+                    this.list_view_width = 6;
+                    break
+            }
+        },
+        //---------------------------------------------------------------------
+        async updateQueryFromUrl(route)
+        {
+            if(route.query)
+            {
+                if(Object.keys(route.query).length > 0)
+                {
+                    for(let key in route.query)
+                    {
+                        this.query[key] = route.query[key]
+                    }
+                    this.countFilters(route.query);
+                }
+            }
+        },
         update(name, value)
         {
             let update = {
@@ -94,38 +149,15 @@ export const useLocalizationStore = defineStore({
             // }
         },
         //---------------------------------------------------------------------
-        async getAssets(refresh = true) {
-            await this.$store.dispatch(namespace+'/getAssets');
-            if(this.query_string.lang_id){
-                this.page.assets.languages.default.id = this.query_string.lang_id;
+        async getAssets() {
+            if(this.assets_is_fetching === true){
+                this.assets_is_fetching = false;
 
-                if(this.page.assets.languages.list){
-                    this.activeSubTab = this.page.assets.languages.list.findIndex(p => p.id == this.query_string.lang_id);
-                }
-            }else{
-                this.activeSubTab = 0;
+                vaah().ajax(
+                    this.ajax_url+'/assets',
+                    this.afterGetAssets,
+                );
             }
-            if(this.query_string.cat_id){
-                this.page.assets.categories.default.id = this.query_string.cat_id;
-                if(refresh){
-                    this.showCategoryData();
-                }
-            }
-            // vaah().ajax(ajax_url+'/getAssets',this.getList(this.query_string.page));
-
-
-        },
-        //---------------------------------------------------------------------
-        showCategoryData() {
-
-            this.filters.vh_lang_category_id = this.page.assets.categories.default.id;
-            this.query_string.cat_id = this.page.assets.categories.default.id;
-
-            let cat = this.$vaah.findInArrayByKey(this.page.assets.categories.list, 'id', this.query_string.cat_id);
-            this.active_category = cat;
-
-            this.query_string.page = 1;
-            this.getList(this.query_string.page);
         },
         //---------------------------------------------------------------------
         afterGetAssets(data, res)
@@ -133,30 +165,37 @@ export const useLocalizationStore = defineStore({
             if(data)
             {
                 this.assets = data;
+                this.languages = data.languages.list;
+                this.categories = data.categories.list;
+
+                this.getList();
+
             }
         },
         //---------------------------------------------------------------------
-        async getList() {
-            this.$Progress.start();
-            this.$vaah.updateCurrentURL(this.query_string, this.$router);
-            let ajax_url = this.ajax_url+'/list';
-            this.filters.vh_lang_language_id = this.page.assets.languages.default.id;
-            this.filters.vh_lang_category_id = this.page.assets.categories.default.id;
+        async getList(page = 1,sync = false) {
+
+            this.filters.vh_lang_language_id = this.assets.languages.default.id;
+            this.filters.vh_lang_category_id = this.assets.categories.default.id;
             this.filters.sync = sync;
             this.filters.page = page;
             this.filters.filter = this.query_string.filter;
-            let params = this.filters;
-            vaah().ajax(ajax_url, this.afterGetList, params);
+            let options = {
+                query: this.filters
+            };
+            await vaah().ajax(
+                this.ajax_url+'/list',
+                this.afterGetList,
+                options
+            );
         },
         //---------------------------------------------------------------------
-        afterGetList(data, res)
+        afterGetList: function (data, res)
         {
-            this.list = data.list;
-
-            this.is_btn_loading = false;
-            this.is_top_btn_loading = false;
-            this.$Progress.finish();
-
+            if(data)
+            {
+                this.list = data.list;
+            }
         },
         //---------------------------------------------------------------------
         isSecrete(item)
@@ -339,6 +378,31 @@ export const useLocalizationStore = defineStore({
         downloadFile(file_name)
         {
             window.location.href = this.ajax_url+"/download-file/"+file_name;
+        },
+        //---------------------------------------------------------------------
+        toggleLanguageForm()
+        {
+            this.show_add_category = false;
+            this.show_add_language = !this.show_add_language;
+        },
+        //---------------------------------------------------------------------
+        toggleCategoryForm()
+        {
+            this.show_add_language = false;
+            this.show_add_category = !this.show_add_category;
+        },
+        //---------------------------------------------------------------------
+        sync: function () {
+            this.getList(this.query_string.page,true);
+        },
+        //---------------------------------------------------------------------
+        resetQueryString()
+        {
+            for(let key in this.query_string)
+            {
+                this.query_string[key] = null;
+            }
+            this.getAssets();
         },
         //---------------------------------------------------------------------
         //---------------------------------------------------------------------
