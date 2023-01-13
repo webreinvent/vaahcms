@@ -104,7 +104,7 @@ Route::group(
     function () {
         //---------------------------------------------------------
         Route::get('/assets', 'LocalizationController@getAssets')
-            ->name('backend.vaah.localization.assets');
+            ->name('vh.backend.settings.localization.assets');
         //---------------------------------------------------------
         Route::get('/list', 'LocalizationController@getList')
             ->name('backend.vaah.localization.list');

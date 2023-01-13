@@ -407,7 +407,7 @@ class LanguageString extends Model {
                 {
                     foreach ($files as $file)
                     {
-                        if(strpos($file, 'vaahcms') !== false) {
+                        if(strpos($file, 'vaahcms') !== false && !File::isDirectory($file)) {
                             unlink($file_path.'/'.$folder.'/'.$file);
                         }
                     }
