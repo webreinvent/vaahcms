@@ -9,6 +9,7 @@ import advanced from "./vue-routes-advanced";
 import permissions from "./vue-routes-permissions";
 import settings from "./vue-routes-settings";
 import registrations from "./vue-routes-registrations";
+import themes from "./vue-routes-themes";
 
 routes = routes.concat(ui);
 routes = routes.concat(public_routes);
@@ -19,5 +20,6 @@ routes = routes.concat(users);
 routes = routes.concat(permissions);
 routes = routes.concat(settings);
 routes = routes.concat(registrations);
+routes = routes.concat(themes);
 
 export default routes;

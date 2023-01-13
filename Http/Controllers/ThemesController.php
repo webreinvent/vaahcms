@@ -6,7 +6,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
-use WebReinvent\VaahCms\Entities\Theme;
+use WebReinvent\VaahCms\Models\Theme;
 
 class ThemesController extends Controller
 {

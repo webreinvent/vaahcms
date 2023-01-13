@@ -5,7 +5,7 @@ namespace WebReinvent\VaahCms\Providers;
 use Illuminate\Support\ServiceProvider;
 use WebReinvent\VaahCms\Libraries\VaahSetup;
 use WebReinvent\VaahCms\Loaders\ThemesLoader;
-use WebReinvent\VaahCms\Entities\Theme;
+use WebReinvent\VaahCms\Models\Theme;
 
 
 class ThemesServiceProvider extends ServiceProvider

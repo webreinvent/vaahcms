@@ -11,7 +11,7 @@ use VaahCms\Modules\Cms\Entities\MenuItem;
 use VaahCms\Modules\Cms\Entities\Page;
 use WebReinvent\VaahCms\Entities\Module;
 use WebReinvent\VaahCms\Entities\Notified;
-use WebReinvent\VaahCms\Entities\Theme;
+use WebReinvent\VaahCms\Models\Theme;
 use WebReinvent\VaahCms\Models\User;
 
 class JsonController extends Controller
