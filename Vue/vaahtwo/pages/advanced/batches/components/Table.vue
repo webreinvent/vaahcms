@@ -10,6 +10,7 @@ const useVaah = vaah();
 <template>
     <div v-if="store.list">
         <!--table-->
+
          <DataTable :value="store.list.data"
                        dataKey="id"
                    class="p-datatable-sm"
@@ -22,10 +23,10 @@ const useVaah = vaah();
                     headerStyle="width: 3em">
             </Column>
 
-            <Column field="id" header="ID" :style="{width: store.getIdWidth()}" :sortable="true">
+            <Column field="id" header="ID" :style="{width: store.getIdWidth()}">
             </Column>
 
-            <Column field="name" header="" :sortable="true" style="width: 30%;">
+            <Column field="name" header="" style="width: 30%;">
                 <template #body="prop">
                     <span v-if="prop.data.pending_jobs > 0">
                         <ProgressBar :value="store.getJobProgress(prop.data,1)" />
@@ -55,8 +56,7 @@ const useVaah = vaah();
 
              <Column field="failed_job_ids" header="Failed Job Ids"
                      v-if="store.isViewLarge()"
-                     style="width:150px;"
-                     :sortable="true">
+                     style="width:150px;">
 
                  <template #body="prop">
                      <div class="p-inputgroup">
@@ -73,8 +73,7 @@ const useVaah = vaah();
 
              <Column field="cancelled_at" header="Cancelled At"
                      v-if="store.isViewLarge()"
-                     style="width:150px;"
-                     :sortable="true">
+                     style="width:150px;">
 
                  <template #body="prop">
                      {{useVaah.ago(prop.data.cancelled_at)}}
@@ -83,8 +82,7 @@ const useVaah = vaah();
 
              <Column field="created_at" header="Created At"
                      v-if="store.isViewLarge()"
-                     style="width:150px;"
-                     :sortable="true">
+                     style="width:150px;">
 
                  <template #body="prop">
                      {{useVaah.ago(prop.data.created_at)}}
@@ -93,18 +91,16 @@ const useVaah = vaah();
              </Column>
              <Column field="finished_at" header="Finished At"
                      v-if="store.isViewLarge()"
-                     style="width:150px;"
-                     :sortable="true">
+                     style="width:150px;">
 
                  <template #body="prop">
                      {{useVaah.ago(prop.data.finished_at)}}
                  </template>
              </Column>
 
-             <Column  header="Delete"
+             <Column header="Delete"
                      v-if="store.isViewLarge()"
-                     style="width:150px;"
-                     :sortable="true">
+                     style="width:150px;">
 
                  <template #body="prop">
                      <Button class="p-button-rounded p-button-text"

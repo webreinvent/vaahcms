@@ -1,6 +1,6 @@
 import {watch} from 'vue'
 import {acceptHMRUpdate, defineStore} from 'pinia'
-import qs from 'qs'
+import qs, {stringify} from 'qs'
 import {vaah} from '../vaahvue/pinia/vaah'
 
 let model_namespace = 'WebReinvent\\VaahCms\\Models\\Batch';
@@ -18,7 +18,10 @@ let empty_states = {
             is_active: null,
             trashed: null,
             sort: null,
+            dateColumn: null,
         },
+        from: null,
+        to: null
     },
     action: {
         type: null,
@@ -186,7 +189,6 @@ export const useBatchStore = defineStore({
                 if(this.route.params && !this.route.params.id){
                     this.item = vaah().clone(data.empty_item);
                 }
-
             }
         },
         //---------------------------------------------------------------------
@@ -827,16 +829,24 @@ export const useBatchStore = defineStore({
             }
         },
         displayBatchDetails(content) {
-            this.dialogContent = content;
+            this.dialogContent = JSON.stringify(content, null, 2);
             this.displayDetail = true;
         },
         displayFailedIdDetails(content) {
-            this.dialogContent = content;
+            this.dialogContent = JSON.stringify(content, null, 2);
             this.displayFailedIds = true;
         },
         deleteItem(item) {
-            console.log(item);
             vaah().confirmDialogDelete(this.itemAction('delete',item));
+        },
+         setDateFilter(query) {
+            if (query.filter.datesRange) {
+                query.from = query.filter.datesRange[0];
+                query.to = query.filter.datesRange[1];
+                delete query.filter.datesRange;
+            }
+
+            return query;
         }
         //---------------------------------------------------------------------
     }
@@ -848,3 +858,12 @@ export const useBatchStore = defineStore({
 if (import.meta.hot) {
     import.meta.hot.accept(acceptHMRUpdate(useBatchStore, import.meta.hot))
 }
+
+
+
+
+
+
+
+
+
