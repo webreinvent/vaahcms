@@ -2,7 +2,7 @@
 
 //-------------------------------------------------------------
 use WebReinvent\VaahCms\Entities\Module;
-use WebReinvent\VaahCms\Entities\Theme;
+use WebReinvent\VaahCms\Models\Theme;
 
 function vh_action_response($class_namespace, $method, $params=null) {
     try{
