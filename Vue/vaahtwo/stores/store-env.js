@@ -55,7 +55,7 @@ export const useEnvStore = defineStore({
         item_menu_state: null,
         form_menu_list: [],
         env_file: null,
-        newVariable:null,
+        new_variable:null,
     }),
     getters: {
 
@@ -64,12 +64,15 @@ export const useEnvStore = defineStore({
         //---------------------------------------------------------------------
         watchItem()
         {
-            // if(this.newVariable){
-                watch(() => this.newVariable, (newVal,oldVal) =>
+            // if(this.new_variable){
+                watch(() => this.new_variable, (newVal,oldVal) =>
                     {
                         if(newVal && newVal !== "")
                         {
-                            this.newVariable = this.newVariable.toUpperCase();
+                            this.new_variable = this.new_variable.toUpperCase();
+                            // this.new_variable = this.new_variable.split('_ ').join('_');
+                            this.new_variable = this.new_variable.split(' ').join('_');
+
                         }
                     },{deep: true}
                 )
@@ -204,20 +207,20 @@ export const useEnvStore = defineStore({
             let count = this.list.length;
             let item = {
                 uid: count,
-                key: this.newVariable,
+                key: this.new_variable,
                 value: null,
             };
             this.list.push(item);
-            this.newVariable=null
+            this.new_variable=null
         },
         //---------------------------------------------------------------------
         confirmChanges()
         {
             vaah().confirm.require({
-                message: 'Invalid value(s) can break the application, are you sure to proceed?. You will be <b>logout</b> and redirected to login page.',
+                message: 'Invalid value(s) can break the application, ' +
+                    'are you sure to proceed?. ' +
+                    'You will be <b>logout</b> and redirected to login page.',
                 header: 'Updating environment variables',
-                class:'danger',
-                acceptLabel: 'Proceed',
                 acceptClass:"red",
                 rejectLabel: 'Cancel',
                 icon: 'pi pi-exclamation-triangle',

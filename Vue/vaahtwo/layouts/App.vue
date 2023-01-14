@@ -34,7 +34,16 @@ useVaah.setConfirm(confirm);
             </template>
         </Toast>
 
-        <ConfirmDialog class="p-container-confirm-dialog"/>
+        <ConfirmDialog :style="{width: '40vw'}"
+                       class="p-container-confirm-dialog">
+            <template #message="slotProps">
+                <i :class="slotProps.message.icon"
+                   class="p-confirm-dialog-icon"></i>
+                <span class="p-confirm-dialog-message"
+                      v-html="slotProps.message.message">
+                </span>
+            </template>
+        </ConfirmDialog>
         <RouterView />
     </div>
 </template>
