@@ -1,7 +1,7 @@
 import {watch} from 'vue'
 import {acceptHMRUpdate, defineStore} from 'pinia'
 import qs from 'qs'
-import {vaah} from '../vaahvue/pinia/vaah'
+import {vaah} from '../../vaahvue/pinia/vaah'
 
 let model_namespace = 'WebReinvent\\VaahCms\\Models\\Job';
 
@@ -17,6 +17,7 @@ let empty_states = {
             is_active: null,
             trashed: null,
             sort: null,
+            queue: null,
         },
     },
     action: {

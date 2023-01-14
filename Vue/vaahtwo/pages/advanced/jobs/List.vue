@@ -2,7 +2,7 @@
 import {onMounted, reactive, ref} from "vue";
 import {useRoute} from 'vue-router';
 
-import {useJobStore} from '../../../stores/store-jobs'
+import {useJobStore} from '../../../stores/advanced/store-jobs'
 
 import Actions from "./components/Actions.vue";
 import Table from "./components/Table.vue";
@@ -62,9 +62,17 @@ onMounted(async () => {
                                    :value="store.list.total">
                             </Badge>
                         </div>
-
                     </div>
-
+                </template>
+                <template #icons>
+                    <div class="p-inputgroup">
+                        <Button class="p-button-sm"
+                                data-testid="jobs-content-refresh"
+                                icon="pi pi-refresh"
+                                :loading="store.is_btn_loading"
+                                @click="store.getList()"
+                        />
+                    </div>
                 </template>
                 <Message :closable="false">
                     This list consist of only queued/pending jobs.

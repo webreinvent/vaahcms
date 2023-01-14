@@ -127,42 +127,31 @@ class Job extends JobBase
         return $query->orderBy($sort[0], $sort[1]);
     }
     //-------------------------------------------------
-    public function scopeIsActiveFilter($query, $filter)
+    public function scopeRangeFilter($query, $filter)
     {
 
-        if(!isset($filter['is_active'])
-            || is_null($filter['is_active'])
-            || $filter['is_active'] === 'null'
-        )
+        if(!isset($filter['range']))
         {
             return $query;
         }
-        $is_active = $filter['is_active'];
+        $from = date('Y-m-d',strtotime($filter['range'][0]));
+        $to = date('Y-m-d',strtotime($filter['range'][1]));
 
-        if($is_active === 'true' || $is_active === true)
-        {
-            return $query->whereNotNull('is_active');
-        } else{
-            return $query->whereNull('is_active');
-        }
+        return $query->whereBetween('created_at',[$from,$to]);
 
     }
     //-------------------------------------------------
-    public function scopeTrashedFilter($query, $filter)
+    public function scopeQueueFilter($query, $filter)
     {
 
-        if(!isset($filter['trashed']))
+        if(!isset($filter['queue']))
         {
             return $query;
         }
-        $trashed = $filter['trashed'];
-
-        if($trashed === 'include')
-        {
-            return $query->withTrashed();
-        } else if($trashed === 'only'){
-            return $query->onlyTrashed();
-        }
+        $search = $filter['queue'];
+        $query->where(function ($q) use ($search) {
+            $q->where('queue', 'LIKE', '%' . $search . '%');
+        });
 
     }
     //-------------------------------------------------
@@ -175,8 +164,8 @@ class Job extends JobBase
         }
         $search = $filter['q'];
         $query->where(function ($q) use ($search) {
-            $q->where('name', 'LIKE', '%' . $search . '%')
-                ->orWhere('slug', 'LIKE', '%' . $search . '%');
+            $q->where('queue', 'LIKE', '%' . $search . '%');
+            $q->orWhere('id', 'LIKE', '%'.$search.'%');
         });
 
     }
@@ -184,10 +173,8 @@ class Job extends JobBase
     public static function getList($request)
     {
         $list = self::getSorted($request->filter);
-        $list->isActiveFilter($request->filter);
-        $list->trashedFilter($request->filter);
+        $list->queueFilter($request->filter);
         $list->searchFilter($request->filter);
-
         $rows = config('vaahcms.per_page');
 
         if($request->has('rows'))

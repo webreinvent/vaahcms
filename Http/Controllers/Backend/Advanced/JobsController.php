@@ -1,4 +1,4 @@
-<?php namespace WebReinvent\VaahCms\Http\Controllers\Backend;
+<?php namespace WebReinvent\VaahCms\Http\Controllers\Backend\Advanced;
 
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
