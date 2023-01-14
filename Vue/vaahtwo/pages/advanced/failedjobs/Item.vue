@@ -2,7 +2,7 @@
 import {onMounted, ref, watch} from "vue";
 import {useRoute} from 'vue-router';
 
-import { useFailedJobStore } from '../../../stores/store-failedjobs'
+import { useFailedJobStore } from '../../../stores/advanced/store-failedjobs'
 
 import VhViewRow from '../../../vaahvue/vue-three/primeflex/VhViewRow.vue';
 const store = useFailedJobStore();

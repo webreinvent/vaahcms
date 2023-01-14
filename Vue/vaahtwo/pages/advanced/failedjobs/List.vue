@@ -2,7 +2,7 @@
 import {onMounted, reactive, ref} from "vue";
 import {useRoute} from 'vue-router';
 
-import {useFailedJobStore} from '../../../stores/store-failedjobs'
+import {useFailedJobStore} from '../../../stores/advanced/store-failedjobs'
 
 import Actions from "./components/Actions.vue";
 import Table from "./components/Table.vue";
@@ -57,7 +57,7 @@ onMounted(async () => {
 
                     <div class="flex flex-row">
                         <div >
-                            <b class="mr-1">FailedJobs</b>
+                            <b class="mr-1">Failed Jobs</b>
                             <Badge v-if="store.list && store.list.total > 0"
                                    :value="store.list.total">
                             </Badge>
