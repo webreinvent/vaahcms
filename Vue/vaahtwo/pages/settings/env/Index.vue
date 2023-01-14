@@ -1,3 +1,34 @@
+<script setup>
+import {onMounted, reactive, ref} from "vue";
+import {useRoute} from 'vue-router';
+
+import {useEnvStore} from '../../../stores/settings/store-env'
+
+const store = useEnvStore();
+const route = useRoute();
+
+import { useConfirm } from "primevue/useconfirm";
+const confirm = useConfirm();
+onMounted(async () => {
+
+    /**
+     * fetch assets required for the crud
+     * operation
+     */
+    await store.getAssets();
+
+    /**
+     * fetch list of records
+     */
+    await store.getList();
+
+    /**
+     * Change to upper case
+     */
+    await store.watchItem();
+});
+</script>
+
 <template>
     <Card>
         <template #header>
@@ -5,36 +36,72 @@
                 <div>
                     <h5 class="font-semibold text-lg inline mr-2">Environment Variables</h5>
                     <Tag class="mr-2">
-                        <p class="font-semibold">.env.rishu</p>
+                        <p class="font-semibold">{{store.env_file}}</p>
                     </Tag>
                 </div>
                 <div>
-                    <Button icon="pi pi-download" class="mr-2 p-button-sm"/>
-                    <Button icon="pi pi-refresh" class="p-button-sm"/>
+                    <Button icon="pi pi-download"
+                            class="mr-2 p-button-sm"
+                            @click="store.downloadFile(store.env_file)">
+                    </Button>
+                    <Button icon="pi pi-refresh"
+                            class="p-button-sm"
+                            @click="store.getList()">
+                    </Button>
                 </div>
             </div>
         </template>
         <template #content>
             <div class="grid justify-content-start">
-                <div class="col-12 md:col-6" v-for="(item,index) in envVariables">
-                    <h5 class="p-1 text-xs mb-1">{{item.name}}</h5>
-                    <div class="p-inputgroup">
-                        <Textarea :model-value="item.value" :autoResize="true" class="has-min-height"/>
-                        <Button icon="pi pi-copy" class=" has-max-height"/>
-                        <Button icon="pi pi-trash" class="p-button-danger has-max-height"/>
-                    </div>
+                <div class="col-12 md:col-6" v-for="(item,index) in store.list">
+                    <h5 class="p-1 text-xs mb-1">{{item.key}}</h5>
+                    <form>
+                        <div class="p-inputgroup">
+                            <password v-if="store.inputType(item) == 'password'"
+                                      v-model="item.value"
+                                      :disabled="store.isDisable(item)"
+                                      toggleMask
+                                      class="has-min-height"
+                                      :data-testid="'env-'+item.key"
+                            ></password>
+                            <InputText v-else
+                                       v-model="item.value"
+                                       :disabled="store.isDisable(item)"
+                                       class="has-min-height"
+                                       :data-testid="'env-'+item.key"
+                            ></InputText>
+                            <Button icon="pi pi-copy"
+                                    class=" has-max-height"
+                                    @click="store.getCopy(item.value)"
+                            ></Button>
+                            <Button icon="pi pi-trash"
+                                    class="p-button-danger has-max-height"
+                                    @click="store.removeVariable(item)"
+                            ></Button>
+                        </div>
+                    </form>
                 </div>
             </div>
             <div class="grid justify-content-start mt-5">
                 <div class="col-12 md:col-6">
                     <div class="p-inputgroup">
-                        <InputText v-model="addEnvVariable" v-if="showEnvInput"></InputText>
-                        <Button label="Add Env Variable" icon="pi pi-plus" @click="addLinkHandler"></Button>
+                        <InputText :autoResize="true"
+                                   v-model="store.new_variable"
+                                   class="has-min-height"
+                                   :data-testid="'env-add_variable'"
+                        ></InputText>
+                        <Button label="Add Env Variable" icon="pi pi-plus"
+                                @click="store.addVariable"
+                                :disabled="!store.new_variable"
+                        ></Button>
                     </div>
                 </div>
                 <div class="col-12 md:col-6">
                     <div class="p-inputgroup justify-content-end">
-                        <Button label="Save" icon="pi pi-save"></Button>
+                        <Button label="Save"
+                                icon="pi pi-save"
+                                @click="store.confirmChanges"
+                        ></Button>
                     </div>
                 </div>
             </div>
@@ -43,75 +110,7 @@
 
 </template>
 
-<script>
-export default {
-    name: "EnvVariableSettings",
-    data(){
-        return{
-            envVariables: [
-                {
-                    name:'APP_NAME',
-                    value:'test-project',
-                },
-                {
-                    name:'APP_ENV',
-                    value:null,
-                },
-                {
-                    name:'APP_KEY',
-                    value:null,
-                },
-                {
-                    name:'APP_DEBUG',
-                    value:null,
-                },
-                {
-                    name:'APP_URL',
-                    value:null,
-                },
-                {
-                    name:'APP_TIMEZONE',
-                    value:null,
-                },
-                {
-                    name:'VAAHCMS_VERSION',
-                    value:null,
-                },
-                {
-                    name:'CENTRAL_DOMAIN',
-                    value:null,
-                },
-                {
-                    name:'APP_VAAHCMS_ENV',
-                    value:null,
-                },
-                {
-                    name:'APP_KEY',
-                    value:null,
-                }
-            ],
-            addEnvVariable:null,
-            showEnvInput:true
-        }
-    },
-    methods:{
-        addLinkHandler(){
-            if(!this.showEnvInput){
-                return this.showEnvInput = true;
-            }else if(this.showEnvInput && this.addEnvVariable !== "" && this.addEnvVariable !== null){
-                this.envVariables.push(
-                    {
-                        name:this.addEnvVariable,
-                        value: null
-                    }
-                );
-                this.addEnvVariable = null;
-                return this.showEnvInput = true;
-            }
-        }
-    }
-}
-</script>
+
 
 <style scoped>
 

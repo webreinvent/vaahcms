@@ -4,7 +4,7 @@ import { vaah } from '../vaahvue/pinia/vaah'
 import { useRootStore } from "./root";
 import qs from 'qs'
 
-let model_namespace = 'WebReinvent\\VaahCms\\Entities\\User';
+let model_namespace = 'WebReinvent\\VaahCms\\Models\\User';
 
 
 let base_url = document.getElementsByTagName('base')[0].getAttribute("href");
