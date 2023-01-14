@@ -1,5 +1,5 @@
 <script  setup>
-import { useFailedJobStore } from '../../../../stores/store-failedjobs'
+import { useFailedJobStore } from '../../../../stores/advanced/store-failedjobs'
 import VhFieldVertical from '../../../../vaahvue/vue-three/primeflex/VhFieldVertical.vue';
 const store = useFailedJobStore();
 

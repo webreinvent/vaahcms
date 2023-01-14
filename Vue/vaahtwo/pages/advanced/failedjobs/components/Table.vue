@@ -1,6 +1,6 @@
 <script setup>
 import { vaah } from '../../../../vaahvue/pinia/vaah'
-import { useFailedJobStore } from '../../../../stores/store-failedjobs'
+import { useFailedJobStore } from '../../../../stores/advanced/store-failedjobs'
 
 const store = useFailedJobStore();
 const useVaah = vaah();
