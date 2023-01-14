@@ -141,14 +141,14 @@ class Job extends JobBase
 
     }
     //-------------------------------------------------
-    public function scopeStatusFilter($query, $filter)
+    public function scopeQueueFilter($query, $filter)
     {
 
-        if(!isset($filter['status']))
+        if(!isset($filter['queue']))
         {
             return $query;
         }
-        $search = $filter['status'];
+        $search = $filter['queue'];
         $query->where(function ($q) use ($search) {
             $q->where('queue', 'LIKE', '%' . $search . '%');
         });
@@ -165,6 +165,7 @@ class Job extends JobBase
         $search = $filter['q'];
         $query->where(function ($q) use ($search) {
             $q->where('queue', 'LIKE', '%' . $search . '%');
+            $q->orWhere('id', 'LIKE', '%'.$search.'%');
         });
 
     }
@@ -172,8 +173,7 @@ class Job extends JobBase
     public static function getList($request)
     {
         $list = self::getSorted($request->filter);
-        $list->rangeFilter($request->filter);
-        $list->statusFilter($request->filter);
+        $list->queueFilter($request->filter);
         $list->searchFilter($request->filter);
         $rows = config('vaahcms.per_page');
 

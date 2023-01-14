@@ -1,6 +1,6 @@
 <script  setup>
 
-import { useJobStore } from '../../../../stores/store-jobs'
+import { useJobStore } from '../../../../stores/advanced/store-jobs'
 import VhFieldVertical from '../../../../vaahvue/vue-three/primeflex/VhFieldVertical.vue';
 
 
@@ -46,25 +46,40 @@ const store = useJobStore();
             <Divider/>
 
             <VhFieldVertical >
-                <Dropdown v-model="store.query.filter.status"
-                          data-testid="jobs-filters-status"
-                          :options="[{name: 'Default', value: 'default'},
-                                    {name: 'High', value: 'high'},
-                                    {name: 'Medium', value: 'medium'},
-                                    {name: 'Low', value: 'low'}]"
-                          optionLabel="name"
-                          optionValue="value"
-                          placeholder="Select a Status" />
-            </VhFieldVertical>
-            <Divider/>
-            <VhFieldVertical >
-                <label for="range">Range</label>
-                <Calendar inputId="range"
-                          data-testid="jobs-filters-range"
-                          v-model="store.query.filter.range"
-                          selectionMode="range"
-                          dateFormat="yy-mm-dd"
-                          :manualInput="false" />
+
+
+                <template #label>
+                    <b>Queue:</b>
+                </template>
+
+                <div class="field-radiobutton">
+                    <RadioButton name="default"
+                                 data-testid="jobs-queue_defaut"
+                                 value="default"
+                                 v-model="store.query.filter.queue" />
+                    <label for="default">Default</label>
+                </div>
+                <div class="field-radiobutton">
+                    <RadioButton name="high"
+                                 data-testid="jobs-queue_high"
+                                 value="high"
+                                 v-model="store.query.filter.queue" />
+                    <label for="high">High</label>
+                </div>
+                <div class="field-radiobutton">
+                    <RadioButton name="medium"
+                                 data-testid="jobs-queue_medium"
+                                 value="medium"
+                                 v-model="store.query.filter.queue" />
+                    <label for="medium">Medium</label>
+                </div>
+                <div class="field-radiobutton">
+                    <RadioButton name="low"
+                                 data-testid="jobs-queue_low"
+                                 value="low"
+                                 v-model="store.query.filter.queue" />
+                    <label for="low">Low</label>
+                </div>
             </VhFieldVertical>
 
 

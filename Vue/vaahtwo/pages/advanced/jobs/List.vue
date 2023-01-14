@@ -2,7 +2,7 @@
 import {onMounted, reactive, ref} from "vue";
 import {useRoute} from 'vue-router';
 
-import {useJobStore} from '../../../stores/store-jobs'
+import {useJobStore} from '../../../stores/advanced/store-jobs'
 
 import Actions from "./components/Actions.vue";
 import Table from "./components/Table.vue";
