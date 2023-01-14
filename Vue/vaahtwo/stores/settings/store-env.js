@@ -1,7 +1,7 @@
 import { watch } from 'vue'
 import { acceptHMRUpdate, defineStore } from 'pinia'
-import { vaah } from '../vaahvue/pinia/vaah'
-import { useRootStore } from "./root";
+import { vaah } from '../../vaahvue/pinia/vaah'
+import { useRootStore } from "./../root";
 import qs from 'qs'
 // import copy from "copy-to-clipboard";
 

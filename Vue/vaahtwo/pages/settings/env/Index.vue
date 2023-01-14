@@ -2,7 +2,7 @@
 import {onMounted, reactive, ref} from "vue";
 import {useRoute} from 'vue-router';
 
-import {useEnvStore} from '../../../stores/store-env'
+import {useEnvStore} from '../../../stores/settings/store-env'
 
 const store = useEnvStore();
 const route = useRoute();
