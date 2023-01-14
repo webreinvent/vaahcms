@@ -221,7 +221,7 @@ export const useEnvStore = defineStore({
                     'are you sure to proceed?. ' +
                     'You will be <b>logout</b> and redirected to login page.',
                 header: 'Updating environment variables',
-                acceptClass:"red",
+                acceptClass:"yellow",
                 rejectLabel: 'Cancel',
                 icon: 'pi pi-exclamation-triangle',
                 accept: () => {
