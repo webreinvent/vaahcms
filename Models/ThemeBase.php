@@ -5,7 +5,9 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
+use WebReinvent\VaahCms\Entities\Migration;
 use WebReinvent\VaahCms\Entities\Setting;
+use WebReinvent\VaahCms\Entities\Theme;
 use ZanySoft\Zip\Zip;
 
 
@@ -904,18 +906,122 @@ class ThemeBase extends Model {
     }
     //-------------------------------------------------
 
-    public static function getDefault()
+    //-------------------------------------------------
+    public static function activateItem($slug, $is_default=false)
     {
 
+        $item = static::slug($slug)->first();
+
+        /*
+         * get theme dependencies
+         */
+        $response = vh_theme_action($item->name, 'SetupController@dependencies');
+
+        if($response['status'] == 'failed')
+        {
+            return $response;
+        }
+
+        /*
+         * check theme dependencies are installed
+         */
+        $response = static::validateDependencies($response['data']);
+
+
+        if(isset($response['status']) && $response['status'] == 'failed')
+        {
+            return $response;
+        }
+
+
+        if(!isset($item->is_migratable) || (isset($item->is_migratable) && $item->is_migratable == true))
+        {
+
+            $path = vh_theme_migrations_path($item->name);
+
+            $max_batch = \DB::table('migrations')
+                ->max('batch');
+
+            Migration::runMigrations($path);
+
+            $current_max_batch = \DB::table('migrations')
+                ->max('batch');
+
+            if($current_max_batch > $max_batch){
+                Migration::syncThemeMigrations($item->id,$current_max_batch);
+            }
+
+
+
+            $seeds_namespace = vh_theme_database_seeder($item->name);
+            Migration::runSeeds($seeds_namespace);
+
+            //copy assets to public folder
+            static::copyAssets($item);
+
+        }
+
+        // check if any theme is marked as default
+        $is_default_exist = self::where('is_default', 1)->exists();
+
+        if($is_default || !$is_default_exist)
+        {
+            $item->is_default = 1;
+
+            //mark all other themes no none default
+            Theme::where('is_default', 1)->update(['is_default'=>null]);
+        }
+
+        $item->is_active = 1;
+        $item->is_assets_published = 1;
+
+        $item->save();
+
+        $response['status'] = 'success';
+        $response['data'][] = '';
+        $response['messages'][] = 'Theme is activated';
+
+        if(env('APP_DEBUG'))
+        {
+            $response['hint'][] = '';
+        }
+        return $response;
+
     }
+    //-------------------------------------------------
+    public static function deactivateItem($slug)
+    {
+        $item = static::slug($slug)->first();
+        $item->is_active = null;
+        $item->save();
+        $response['status'] = 'success';
+        $response['data'][] = '';
+        $response['messages'][] = trans('vaahcms-general.action_successful');
+        if(env('APP_DEBUG'))
+        {
+            $response['hint'][] = '';
+        }
+        return $response;
+    }
+    //-------------------------------------------------
+    public static function makeItemAsDefault($slug)
+    {
 
-    //-------------------------------------------------
+        //make all themes as not default
+        static::whereNotNull('is_default')->update(['is_default' => null]);
 
-    //-------------------------------------------------
-    //-------------------------------------------------
-    //-------------------------------------------------
-    //-------------------------------------------------
-    //-------------------------------------------------
+        $item = static::slug($slug)->first();
+        $item->is_default = 1;
+        $item->save();
+        $response['status'] = 'success';
+        $response['data'][] = '';
+        $response['messages'][] = trans('vaahcms-general.action_successful');
+        if(env('APP_DEBUG'))
+        {
+            $response['hint'][] = '';
+        }
+        return $response;
+    }
     //-------------------------------------------------
 
 }
