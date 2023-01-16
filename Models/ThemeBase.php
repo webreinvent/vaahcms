@@ -5,6 +5,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
+use WebReinvent\VaahCms\Entities\Migration;
 use WebReinvent\VaahCms\Entities\Setting;
 use ZanySoft\Zip\Zip;
 
@@ -48,9 +49,6 @@ class ThemeBase extends Model {
 
     //-------------------------------------------------
 
-
-
-    //-------------------------------------------------
     protected function serializeDate(DateTimeInterface $date)
     {
         $date_time_format = config('settings.global.datetime_format');
@@ -903,19 +901,4 @@ class ThemeBase extends Model {
         return true;
     }
     //-------------------------------------------------
-
-    public static function getDefault()
-    {
-
-    }
-
-    //-------------------------------------------------
-
-    //-------------------------------------------------
-    //-------------------------------------------------
-    //-------------------------------------------------
-    //-------------------------------------------------
-    //-------------------------------------------------
-    //-------------------------------------------------
-
 }

@@ -3,10 +3,10 @@
 Route::group(
     [
         'prefix' => 'backend/vaah/themes',
-        
+
         'middleware' => ['web', 'has.backend.access'],
-        
-        'namespace' => 'WebReinvent\\VaahCms\Http\Controllers\Backend',
+
+        'namespace' => 'WebReinvent\VaahCms\Http\Controllers',
 ],
 function () {
     /**

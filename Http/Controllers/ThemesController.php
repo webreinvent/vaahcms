@@ -22,7 +22,7 @@ class ThemesController extends Controller
     //----------------------------------------------------------
 
     //----------------------------------------------------------
-    public function assets(Request $request)
+    public function getAssets(Request $request)
     {
 
         if(!\Auth::user()->hasPermission('has-access-of-theme-section'))
@@ -219,7 +219,6 @@ class ThemesController extends Controller
 
         switch($request->action)
         {
-
             //---------------------------------------
             case 'activate':
                 if(!\Auth::user()->hasPermission('can-activate-theme'))
@@ -316,7 +315,9 @@ class ThemesController extends Controller
 
     }
     //----------------------------------------------------------
+    public function itemAction(Request $request,$id,$action)
+    {
+        return Theme::itemAction($request,$id,$action);
+    }
     //----------------------------------------------------------
-
-
 }

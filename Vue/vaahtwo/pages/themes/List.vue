@@ -67,15 +67,6 @@ onMounted(async () => {
 
                 </template>
 
-                <template #icons>
-
-                    <Button data-testid="themes-list-create"
-                            @click="store.toForm()">
-                        <i class="pi pi-plus mr-1"></i>
-                        Create
-                    </Button>
-
-                </template>
 
                 <Actions/>
 
