@@ -15,6 +15,8 @@ export const useLocalizationStore = defineStore({
         ajax_url: ajax_url,
         model: model_namespace,
         filters: {
+            page: null,
+            rows: null,
             q: null,
             vh_lang_language_id: null,
             vh_lang_category_id: null,
@@ -72,7 +74,11 @@ export const useLocalizationStore = defineStore({
         categories:null,
         filterOptions:null,
         show_add_language:false,
-        show_add_category:false
+        show_add_category:false,
+        selectedCategory:null,
+        selectedLanguage:null,
+        newVariable:null,
+        totalRecord:null
     }),
     getters: {
 
@@ -125,19 +131,9 @@ export const useLocalizationStore = defineStore({
                 }
             }
         },
-        update(name, value)
-        {
-            let update = {
-                state_name: name,
-                state_value: value,
-                namespace: namespace,
-            };
-            this.$vaah.updateState(update);
-        },
         //---------------------------------------------------------------------
         watchItem()
         {
-            // if(this.newVariable){
             watch(() => this.newVariable, (newVal,oldVal) =>
                 {
                     if(newVal && newVal !== "")
@@ -146,7 +142,6 @@ export const useLocalizationStore = defineStore({
                     }
                 },{deep: true}
             )
-            // }
         },
         //---------------------------------------------------------------------
         async getAssets() {
@@ -175,8 +170,12 @@ export const useLocalizationStore = defineStore({
         //---------------------------------------------------------------------
         async getList(page = 1,sync = false) {
 
-            this.filters.vh_lang_language_id = this.assets.languages.default.id;
-            this.filters.vh_lang_category_id = this.assets.categories.default.id;
+            if(!this.selectedLanguage){
+                this.filters.vh_lang_language_id = this.assets.languages.default.id;
+            }
+            if(!this.selectedCategory){
+                this.filters.vh_lang_category_id = this.assets.categories.default.id;
+            }
             this.filters.sync = sync;
             this.filters.page = page;
             this.filters.filter = this.query_string.filter;
@@ -195,115 +194,54 @@ export const useLocalizationStore = defineStore({
             if(data)
             {
                 this.list = data.list;
+                this.totalRecord = data.list.total;
+                this.filters.rows = data.list.per_page;
             }
-        },
-        //---------------------------------------------------------------------
-        isSecrete(item)
-        {
-            if(
-                item.key == 'APP_KEY'
-                || item.key.includes('SECRET')
-                || item.key.includes('API_KEY')
-                || item.key.includes('API')
-                || item.key.includes('AUTH_KEY')
-                || item.key.includes('PRIVATE_KEY')
-                || item.key.includes('MERCHANT_KEY')
-                || item.key.includes('SALT')
-                || item.key.includes('AUTH_TOKEN')
-                || item.key.includes('API_TOKEN')
-            ){
-                return true;
-            }
-
-            return false;
-
-        },
-        //---------------------------------------------------------------------
-        inputType(item) {
-
-            if(item.key.includes('PASSWORD'))
-            {
-                return 'password';
-            }
-
-
-            if(this.isSecrete(item))
-            {
-                return 'password';
-            }
-
-
-            return 'text';
-        },
-        //---------------------------------------------------------------------
-        isDisable(item) {
-            if(item.key == 'APP_KEY'
-                || item.key == 'APP_ENV'
-                || item.key == 'APP_URL'
-            )
-            {
-                return true;
-            }
-        },
-        //---------------------------------------------------------------------
-        showRevealButton(item){
-
-            if(item.key.includes('PASSWORD'))
-            {
-                return true;
-            }
-
-            if(this.isSecrete(item))
-            {
-                return true;
-            }
-
-            return false;
         },
         //---------------------------------------------------------------------
         getCopy(value)
         {
-            navigator.clipboard.writeText(value);
+            let copyText = '{!! trans(vaahcms-'+value.language_category.slug+'.'+value.slug+') !!}';
+            navigator.clipboard.writeText(copyText);
             vaah().toastSuccess(['Copied']);
         },
         //---------------------------------------------------------------------
-        removeVariable(item) {
-
-            if(item.uid)
+        deleteString(item)
+        {
+            if(item.id)
             {
-                this.list = vaah().removeInArrayByKey(this.list, item, 'uid');
+                this.list = vaah().removeInArrayByKey(this.list.data, item, 'id');
+                let options = {
+                    method: 'POST',
+                    params: item
+                };
+                vaah().ajax(
+                    this.ajax_url+'/actions/delete-language-string',
+                    this.deleteStringAfter,
+                    options
+                );
             } else
             {
-                this.list = vaah().removeInArrayByKey(this.list, item, 'key');
+                this.list = vaah().removeInArrayByKey(this.list.data, item, 'key');
+                this.deleteStringAfter();
             }
+        },
+        //---------------------------------------------------------------------
+        deleteStringAfter()
+        {
+            this.assets_is_fetching = true;
+            this.getAssets();
             vaah().toastErrors(['Removed']);
+
         },
         //---------------------------------------------------------------------
         addVariable() {
-            let count = this.list.length;
             let item = {
-                uid: count,
-                key: this.newVariable,
+                slug: this.newVariable,
                 value: null,
             };
-            this.list.push(item);
+            this.list.data.push(item);
             this.newVariable=null
-        },
-        //---------------------------------------------------------------------
-        confirmChanges()
-        {
-            vaah().confirm.require({
-                message: 'Invalid value(s) can break the application, are you sure to proceed?. You will be <b>logout</b> and redirected to login page.',
-                header: 'Updating environment variables',
-                class:'danger',
-                acceptLabel: 'Proceed',
-                acceptClass:"red",
-                rejectLabel: 'Cancel',
-                icon: 'pi pi-exclamation-triangle',
-                accept: () => {
-                    this.store()
-                },
-            });
         },
         //---------------------------------------------------------------------
         store() {
@@ -331,48 +269,20 @@ export const useLocalizationStore = defineStore({
             }
         },
         //---------------------------------------------------------------------
-        validate()
+        confirmChanges()
         {
-            let pair = this.generateKeyPair();
-
-            let failed = false;
-            let messages = [];
-
-            if(!pair['APP_KEY']) {
-                messages.push("APP_KEY is required");
-                failed = true;
-            }
-
-            if(!pair['APP_ENV']) {
-                messages.push("APP_ENV is required");
-                failed = true;
-            }
-
-            if(!pair['APP_URL']) {
-                messages.push("APP_URL is required");
-                failed = true;
-            }
-
-            if(failed)
-            {
-                this.$vaah.toastErrors(messages);
-                return false;
-            }
-
-
-            return true;
-        },
-        //---------------------------------------------------------------------
-        generateKeyPair()
-        {
-            let pair = [];
-            this.list.forEach(function (item) {
-
-                pair[item.key] = item.value;
-
+            vaah().confirm.require({
+                message: 'Invalid value(s) can break the application, are you sure to proceed?. You will be <b>logout</b> and redirected to login page.',
+                header: 'Updating environment variables',
+                class:'danger',
+                acceptLabel: 'Proceed',
+                acceptClass:"red",
+                rejectLabel: 'Cancel',
+                icon: 'pi pi-exclamation-triangle',
+                accept: () => {
+                    this.store()
+                },
             });
-
-            return pair;
         },
         //---------------------------------------------------------------------
         downloadFile(file_name)
@@ -392,7 +302,7 @@ export const useLocalizationStore = defineStore({
             this.show_add_category = !this.show_add_category;
         },
         //---------------------------------------------------------------------
-        sync: function () {
+        sync() {
             this.getList(this.query_string.page,true);
         },
         //---------------------------------------------------------------------
@@ -403,6 +313,77 @@ export const useLocalizationStore = defineStore({
                 this.query_string[key] = null;
             }
             this.getAssets();
+        },
+        showCategoryData() {
+
+            this.filters.vh_lang_category_id = this.selectedCategory;
+            this.query_string.cat_id = this.selectedCategory;
+
+            this.getList();
+        },
+        showLanguageData() {
+
+            this.filters.vh_lang_language_id = this.selectedLanguage;
+            this.query_string.lang_id = this.selectedLanguage;
+            this.getList();
+        },
+        //---------------------------------------------------------------------
+        storeLanguage() {
+            let options = {
+                params:this.new_language,
+                method:'POST'
+            };
+
+            let ajax_url = this.ajax_url+'/store/language';
+            vaah().ajax(ajax_url, this.storeLanguageAfter, options);
+        },
+        //---------------------------------------------------------------------
+        storeLanguageAfter(data) {
+            this.assets_is_fetching = true;
+            this.getAssets();
+            this.new_language = {
+                name: null,
+                locale_code_iso_639: null,
+            };
+        },
+        //---------------------------------------------------------------------
+        storeCategory() {
+            let options = {
+                params:this.new_category,
+                method:'POST'
+            };
+
+            let ajax_url = this.ajax_url+'/store/category';
+            vaah().ajax(ajax_url, this.storeLanguageAfter, options);
+        },
+        //---------------------------------------------------------------------
+        storeCategoryAfter(data) {
+            this.assets_is_fetching = true;
+            this.getAssets();
+            this.new_language = {
+                name: null,
+                locale_code_iso_639: null,
+            };
+        },
+        //---------------------------------------------------------------------
+        generateLanguage() {
+
+            let url = this.ajax_url+'/generateLanguage';
+            let options = {
+                method:'post'
+            };
+
+            let ajax_url = this.ajax_url+'/generateLanguage';
+            vaah().ajax(ajax_url, this.generateLanguageAfter, options);
+
+        },
+        //---------------------------------------------------------------------
+        generateLanguageAfter(data) {
+            vaah().toastSuccess(['Generated']);
+        },
+        //---------------------------------------------------------------------
+        async paginate(event) {
+            await this.getList(event.page+1);
         },
         //---------------------------------------------------------------------
         //---------------------------------------------------------------------

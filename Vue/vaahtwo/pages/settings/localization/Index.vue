@@ -30,14 +30,22 @@ onMounted(async () => {
                 <div class="p-inputgroup justify-content-end">
                     <Button icon="pi pi-plus"
                             label="Add Language"
+                            data-testid="localization-add_language"
                             @click="store.toggleLanguageForm"
                     ></Button>
                     <Button icon="pi pi-plus"
                             label="Add Category"
+                            data-testid="localization-add_category"
                             @click="store.toggleCategoryForm"
                     ></Button>
-                    <Button label="Reset" @click="store.resetQueryString"></Button>
-                    <Button icon="pi pi-refresh" label="Sync" @click="store.sync()"></Button>
+                    <Button label="Reset"
+                            @click="store.resetQueryString"
+                            data-testid="localization-reset"
+                    ></Button>
+                    <Button icon="pi pi-refresh"
+                            label="Sync"
+                            data-testid="localization-sync"
+                            @click="store.sync()"></Button>
                 </div>
             </div>
         </template>
@@ -46,31 +54,32 @@ onMounted(async () => {
             <div class="flex align-items-center">
                 <div class="mb-4" v-if="store.show_add_language">
                     <h5 class="p-1 text-xs mb-1">Add New Languages</h5>
-                        <div class="level has-padding-bottom-25">
+                    <div class="level has-padding-bottom-25">
                             <div class="level-left">
                                 <div  class="level-item">
                                     <div class="p-inputgroup ">
                                         <inputText
                                             name="localization-language-name"
-                                            dusk="localization-language-name"
                                             v-model="store.new_language.name"
+                                            data-testid="localization-new_language_name"
                                             placeholder="Name"
                                         />
                                         <inputText
                                             name="localization-language-local-code-iso-639"
-                                            dusk="localization-language-local-code-iso-639"
+                                            data-testid="localization-new_language_code"
                                             v-model="store.new_language.locale_code_iso_639"
                                             placeholder="Locale ISO 639 Code"
                                         />
                                         <Button @click="store.storeLanguage"
                                                 icon="pi pi-plus"
+                                                data-testid="localization-new_language_save"
                                                 label="save"
                                         ></Button>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                </div>
                 <div class="mb-4" v-if="store.show_add_category">
                         <h5 class="p-1 text-xs mb-1">Add New Category</h5>
                         <div class="level has-padding-bottom-25" >
@@ -81,10 +90,12 @@ onMounted(async () => {
                                     <div class="p-inputgroup ">
                                         <inputText
                                             v-model="store.new_category.name"
+                                            data-testid="localization-new_category_name"
                                             placeholder="Category Name"
                                         />
                                         <Button @click="store.storeCategory"
                                                 icon="pi pi-plus"
+                                                data-testid="localization-new_category_save"
                                                 label="save"
                                         ></Button>
 
@@ -104,21 +115,30 @@ onMounted(async () => {
                 <div class="col-4 align-items-center flex">
                     <Dropdown v-model="store.selectedLanguage"
                               :options="store.languages"
+                              :data-testid="'localization-language_filter'"
                               optionLabel="name"
                               optionValue="id"
+                              @change="store.showLanguageData"
                               placeholder="Select a Language" />
                 </div>
                 <div class="col-4">
                     <div class="p-inputgroup ">
                         <Dropdown v-model="store.selectedCategory"
+                                  :data-testid="'localization-category_filter'"
                                   :options="store.categories"
                                   optionLabel="name"
                                   optionValue="id"
+                                  @change="store.showCategoryData"
                                   placeholder="Select a Category" />
-                        <Dropdown v-model="store.selectedFilter"
-                                  :options="store.filterOptions"
+                        <Dropdown v-model="store.query_string.filter"
+                                  :options="[
+                                       {name:'Empty value', value:'empty'},
+                                       {name:'Filled value', value:'filled'}
+                                  ]"
+                                  @change="store.getList()"
+                                  :data-testid="'localization-more_filter'"
                                   optionLabel="name"
-                                  optionValue="id"
+                                  optionValue="value"
                                   placeholder="Select a Filter" />
                     </div>
                 </div>
@@ -128,14 +148,56 @@ onMounted(async () => {
                     <h5 class="p-1 text-xs mb-1">{{item.slug}}</h5>
                     <div class="p-inputgroup">
                         <inputText :model-value="item.content"
-                                  :autoResize="true"
-                                  class="has-min-height"/>
+                                   :data-testid="'localization-'+item.slug"
+                                   :autoResize="true"
+                                   class="has-min-height"/>
                         <Button icon="pi pi-copy"
                                 class=" has-max-height"
-                                @click="getCopy(item.content)"
+                                data-testid="localization-copyString"
+                                @click="store.getCopy(item)"
                         />
                         <Button icon="pi pi-trash"
+                                data-testid="localization-deleteString"
+                                @click="store.deleteString(item)"
                                 class="p-button-danger has-max-height"/>
+                    </div>
+                </div>
+                <div v-else>
+                    No language string exist
+                </div>
+
+                <Paginator v-model:rows="store.filters.rows"
+                           :totalRecords="store.totalRecord"
+                           @page="store.paginate($event)"
+                           :rowsPerPageOptions="store.rows_per_page">
+                </Paginator>
+            </div>
+            <div class="grid justify-content-start mt-5">
+                <div class="col-12 md:col-6">
+                    <div class="p-inputgroup">
+                        <InputText :autoResize="true"
+                                   v-model="store.newVariable"
+                                   class="has-min-height"
+                                   data-testid="localization-add_string"
+                        ></InputText>
+                        <Button label="Add Env Variable" icon="pi pi-plus"
+                                @click="store.addVariable"
+                                :disabled="!store.newVariable"
+                        ></Button>
+                    </div>
+                </div>
+                <div class="col-12 md:col-6">
+                    <div class="p-inputgroup justify-content-end">
+                        <Button label="Generate Language Files"
+                                data-testid="localization-generate_languafe_file"
+                                icon="pi pi-refresh"
+                                @click="store.generateLanguage"
+                        ></Button>
+                        <Button label="Save"
+                                data-testid="localization-save"
+                                icon="pi pi-save"
+                                @click="store.generateLanguage"
+                        ></Button>
                     </div>
                 </div>
             </div>
