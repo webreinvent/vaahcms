@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
 use WebReinvent\VaahCms\Traits\CrudWithUuidObservantTrait;
-use WebReinvent\VaahCms\Entities\User;
+use WebReinvent\VaahCms\Models\User;
 use WebReinvent\VaahCms\Models\ThemeBase;
 
 class Theme extends ThemeBase
@@ -498,6 +498,11 @@ class Theme extends ThemeBase
                 self::where('id', $id)
                     ->withTrashed()
                     ->restore();
+                break;
+            case 'make_default':
+                self::where('id', $id)
+                    ->withTrashed()
+                    ->update(['is_default' => 1]);
                 break;
         }
 
