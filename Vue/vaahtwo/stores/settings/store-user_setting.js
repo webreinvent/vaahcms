@@ -17,7 +17,7 @@ let empty_states = {
 };
 
 export const useUserSettingStore = defineStore({
-    id: 'user-setting',
+    id: 'user-settings',
     state: () => ({
         base_url: base_url,
         ajax_url: ajax_url,
@@ -61,7 +61,13 @@ export const useUserSettingStore = defineStore({
         custom_field_list:null,
         activeIndex:[],
         selectedFieldType:null,
-        fieldTypes:null
+        fieldTypes:[
+            {name:"Text",value:"text"},
+            {name:"Email",value:"email"},
+            {name:"TextArea",value:"textarea"},
+            {name:"Number",value:"number"},
+            {name:"Password",value:"password"}
+        ],
     }),
     getters: {
 
@@ -133,186 +139,36 @@ export const useUserSettingStore = defineStore({
             }
         },
         //---------------------------------------------------------------------
-        isSecrete(item)
-        {
-            if(
-                item.key == 'APP_KEY'
-                || item.key.includes('SECRET')
-                || item.key.includes('API_KEY')
-                || item.key.includes('API')
-                || item.key.includes('AUTH_KEY')
-                || item.key.includes('PRIVATE_KEY')
-                || item.key.includes('MERCHANT_KEY')
-                || item.key.includes('SALT')
-                || item.key.includes('AUTH_TOKEN')
-                || item.key.includes('API_TOKEN')
-            ){
-                return true;
-            }
-
-            return false;
-
-        },
-        //---------------------------------------------------------------------
-        inputType(item) {
-
-            if(item.key.includes('PASSWORD'))
-            {
-                return 'password';
-            }
-
-
-            if(this.isSecrete(item))
-            {
-                return 'password';
-            }
-
-
-            return 'text';
-        },
-        //---------------------------------------------------------------------
-        isDisable(item) {
-            if(item.key == 'APP_KEY'
-                || item.key == 'APP_ENV'
-                || item.key == 'APP_URL'
-            )
-            {
-                return true;
-            }
-        },
-        //---------------------------------------------------------------------
-        showRevealButton(item){
-
-            if(item.key.includes('PASSWORD'))
-            {
-                return true;
-            }
-
-            if(this.isSecrete(item))
-            {
-                return true;
-            }
-
-            return false;
-        },
-        //---------------------------------------------------------------------
-        getCopy(value)
-        {
-            navigator.clipboard.writeText(value);
-            vaah().toastSuccess(['Copied']);
-        },
-        //---------------------------------------------------------------------
-        removeVariable(item) {
-
-            if(item.uid)
-            {
-                this.list = vaah().removeInArrayByKey(this.list, item, 'uid');
-            } else
-            {
-                this.list = vaah().removeInArrayByKey(this.list, item, 'key');
-            }
-            vaah().toastErrors(['Removed']);
-        },
-        //---------------------------------------------------------------------
-        addVariable() {
-            let count = this.list.length;
-            let item = {
-                uid: count,
-                key: this.new_variable,
-                value: null,
-            };
-            this.list.push(item);
-            this.new_variable=null
-        },
-        //---------------------------------------------------------------------
-        confirmChanges()
-        {
-            vaah().confirm.require({
-                message: 'Invalid value(s) can break the application, ' +
-                    'are you sure to proceed?. ' +
-                    'You will be <b>logout</b> and redirected to login page.',
-                header: 'Updating environment variables',
-                acceptClass:"yellow",
-                rejectLabel: 'Cancel',
-                icon: 'pi pi-exclamation-triangle',
-                accept: () => {
-                    this.store()
-                },
-            });
-        },
-        //---------------------------------------------------------------------
-        store() {
-
-            let valid = this.validate();
-            let options = {
-                method: 'post',
-            };
-            if(!valid)
-            {
+        addCustomField: function () {
+            if(!this.field_type){
+                this.$vaah.toastErrors(['Select field Type first.']);
                 return false;
             }
-
-
-            options.params = this.list;
-
-            let ajax_url = this.ajax_url+'/store';
-            vaah().ajax(ajax_url, this.storeAfter, options);
-        },
-        //---------------------------------------------------------------------
-        storeAfter(data, res) {
-            if(data)
-            {
-                window.location.href = data.redirect_url;
-            }
-        },
-        //---------------------------------------------------------------------
-        validate()
-        {
-            let pair = this.generateKeyPair();
-
-            let failed = false;
-            let messages = [];
-
-            if(!pair['APP_KEY']) {
-                messages.push("APP_KEY is required");
-                failed = true;
+            let new_item = {
+                "name": null,
+                "slug": null,
+                "type": this.selectedFieldType,
+                "excerpt": null,
+                "is_hidden": false,
+                "to_registration": false,
+            };
+            if(this.field_type === 'textarea'
+                || this.field_type === 'text'
+                || this.field_type === 'email'){
+                new_item.maxlength = null;
+                new_item.minlength = null;
             }
 
-            if(!pair['APP_ENV']) {
-                messages.push("APP_ENV is required");
-                failed = true;
+            if(this.field_type === 'password'){
+                new_item.is_password_reveal = null;
             }
 
-            if(!pair['APP_URL']) {
-                messages.push("APP_URL is required");
-                failed = true;
+            if(this.field_type === 'number'){
+                new_item.min = null;
+                new_item.max = null;
             }
 
-            if(failed)
-            {
-                this.$vaah.toastErrors(messages);
-                return false;
-            }
-
-
-            return true;
-        },
-        //---------------------------------------------------------------------
-        generateKeyPair()
-        {
-            let pair = [];
-            this.list.forEach(function (item) {
-
-                pair[item.key] = item.value;
-
-            });
-
-            return pair;
-        },
-        //---------------------------------------------------------------------
-        downloadFile(file_name)
-        {
-            window.location.href = this.ajax_url+"/download-file/"+file_name;
+            this.custom_field_list.value.push(new_item);
         },
         //---------------------------------------------------------------------
         //---------------------------------------------------------------------
