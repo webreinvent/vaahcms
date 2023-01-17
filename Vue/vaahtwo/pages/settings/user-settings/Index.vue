@@ -35,8 +35,7 @@ onMounted(async () => {
     /**
      * Change to upper case
      */
-    await store.watchItem();
->>>>>>> Update: user-settings modification list fetched
+    // await store.watchItem();
 });
 </script>
 
@@ -228,18 +227,10 @@ onMounted(async () => {
                         <div class="grid justify-content-between">
                             <div class="col-12 md:col-4">
                                 <div class="p-inputgroup">
-<<<<<<< 2.x-develop
-                                    <Dropdown v-model="store.selected_field_type"
-                                              data-testid="setting-customfield_fieldtypes"
-                                              :options="store.field_types"
-                                              optionLabel="name" optionValue="value"
+                                    <Dropdown v-model="store.selectedFieldType"
+                                              :options="store.fieldTypes"
+                                              optionLabel="name" optionValue="code"
                                               placeholder="Select a type" />
-                                    <Button label="Add"
-                                            :disabled="!store.selected_field_type"
-                                            data-testid="setting-customfield_field_add"
-                                            @click="store.addCustomField"></Button>
-=======
-                                    <Dropdown v-model="store.selectedFieldType" :options="store.fieldTypes" optionLabel="name" optionValue="code" placeholder="Select a type" />
                                     <Button label="Add"></Button>
 >>>>>>> Update: user-settings modification list fetched
                                 </div>
