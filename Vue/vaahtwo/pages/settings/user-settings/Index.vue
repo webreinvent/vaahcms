@@ -26,7 +26,7 @@ onMounted(async () => {
     /**
      * Change to upper case
      */
-    await store.watchItem();
+    // await store.watchItem();
 });
 </script>
 
@@ -79,7 +79,10 @@ onMounted(async () => {
                         <div class="grid justify-content-between">
                             <div class="col-12 md:col-3">
                                 <div class="p-inputgroup">
-                                    <Dropdown v-model="store.selectedFieldType" :options="store.fieldTypes" optionLabel="name" optionValue="code" placeholder="Select a type" />
+                                    <Dropdown v-model="store.selectedFieldType"
+                                              :options="store.fieldTypes"
+                                              optionLabel="name" optionValue="code"
+                                              placeholder="Select a type" />
                                     <Button label="Add"></Button>
                                 </div>
                             </div>
