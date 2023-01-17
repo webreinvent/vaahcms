@@ -172,9 +172,11 @@ export const useLocalizationStore = defineStore({
 
             if(!this.selectedLanguage){
                 this.filters.vh_lang_language_id = this.assets.languages.default.id;
+                this.selectedLanguage =  this.assets.languages.default.id;
             }
             if(!this.selectedCategory){
                 this.filters.vh_lang_category_id = this.assets.categories.default.id;
+                this.selectedCategory = this.assets.categories.default.id;
             }
             this.filters.sync = sync;
             this.filters.page = page;
@@ -237,8 +239,13 @@ export const useLocalizationStore = defineStore({
         //---------------------------------------------------------------------
         addVariable() {
             let item = {
+                index: this.list.data.length,
+                id: null,
+                vh_lang_language_id: this.selectedLanguage,
+                vh_lang_category_id: this.selectedCategory,
+                name: null,
                 slug: this.newVariable,
-                value: null,
+                content: null,
             };
             this.list.data.push(item);
             this.newVariable=null
@@ -293,7 +300,7 @@ export const useLocalizationStore = defineStore({
                 vh_lang_language_id: this.assets.languages.default.id
             };
             let count = 0;
-            if(!this.assets.categories.default.id && this.list && this.list.data && this.list.data.length > 0)
+            if(!this.selectedCategory && this.list && this.list.data && this.list.data.length > 0)
             {
                 this.list.data.forEach(function (item) {
 
@@ -342,12 +349,17 @@ export const useLocalizationStore = defineStore({
             this.getList(this.query_string.page,true);
         },
         //---------------------------------------------------------------------
-        resetQueryString()
+        removeQueryString()
         {
-            for(let key in this.query_string)
-            {
-                this.query_string[key] = null;
-            }
+            this.query_string.cat_id = {
+                lang_id: null,
+                cat_id: null,
+                page: null,
+                filter: null,
+            };
+            this.selectedLanguage = null;
+            this.selectedCategory = null;
+            this.assets_is_fetching = true;
             this.getAssets();
         },
         showCategoryData() {
@@ -375,12 +387,14 @@ export const useLocalizationStore = defineStore({
         },
         //---------------------------------------------------------------------
         storeLanguageAfter(data) {
-            this.assets_is_fetching = true;
-            this.getAssets();
-            this.new_language = {
-                name: null,
-                locale_code_iso_639: null,
-            };
+            if(data){
+                this.assets_is_fetching = true;
+                this.getAssets();
+                this.new_language = {
+                    name: null,
+                    locale_code_iso_639: null,
+                };
+            }
         },
         //---------------------------------------------------------------------
         storeCategory() {
@@ -391,15 +405,12 @@ export const useLocalizationStore = defineStore({
 
             let ajax_url = this.ajax_url+'/store/category';
             vaah().ajax(ajax_url, this.storeLanguageAfter, options);
+            this.new_category.name = null;
         },
         //---------------------------------------------------------------------
         storeCategoryAfter(data) {
             this.assets_is_fetching = true;
             this.getAssets();
-            this.new_language = {
-                name: null,
-                locale_code_iso_639: null,
-            };
         },
         //---------------------------------------------------------------------
         generateLanguage() {

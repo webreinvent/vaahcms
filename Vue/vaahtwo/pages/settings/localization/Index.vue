@@ -39,7 +39,7 @@ onMounted(async () => {
                             @click="store.toggleCategoryForm"
                     ></Button>
                     <Button label="Reset"
-                            @click="store.resetQueryString"
+                            @click="store.removeQueryString"
                             data-testid="localization-reset"
                     ></Button>
                     <Button icon="pi pi-refresh"
@@ -121,7 +121,7 @@ onMounted(async () => {
                               @change="store.showLanguageData"
                               placeholder="Select a Language" />
                 </div>
-                <div class="col-4">
+                <div class="col-8">
                     <div class="p-inputgroup ">
                         <Dropdown v-model="store.selectedCategory"
                                   :data-testid="'localization-category_filter'"
@@ -165,13 +165,12 @@ onMounted(async () => {
                 <div v-else>
                     No language string exist
                 </div>
-
-                <Paginator v-model:rows="store.filters.rows"
-                           :totalRecords="store.totalRecord"
-                           @page="store.paginate($event)"
-                           :rowsPerPageOptions="store.rows_per_page">
-                </Paginator>
             </div>
+            <Paginator v-model:rows="store.filters.rows"
+                       :totalRecords="store.totalRecord"
+                       @page="store.paginate($event)"
+                       :rowsPerPageOptions="store.rows_per_page">
+            </Paginator>
             <div class="grid justify-content-start mt-5">
                 <div class="col-12 md:col-6">
                     <div class="p-inputgroup">
