@@ -6,8 +6,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 use WebReinvent\VaahCms\Entities\Migration;
+use WebReinvent\VaahCms\Entities\Module;
 use WebReinvent\VaahCms\Entities\Setting;
-use WebReinvent\VaahCms\Entities\Theme;
 use ZanySoft\Zip\Zip;
 
 
@@ -16,6 +16,7 @@ class ThemeBase extends Model {
     use SoftDeletes;
     //-------------------------------------------------
     protected $table = 'vh_themes';
+
     //-------------------------------------------------
     protected $dates = [
         'update_checked_at',
@@ -549,78 +550,78 @@ class ThemeBase extends Model {
         return $response;
     }
     //-------------------------------------------------
-//    public static function deleteItem($slug)
-//    {
-//
-//        try{
-//
-//            $item = static::where('slug', $slug)->first();
-//
-//
-//            $item_path = config('vaahcms.themes_path')."/".$item->name;
-//
-//            //Delete all migrations
-//            $path =  $item_path . "/Database/Migrations/";
-//
-//            $migrations = vh_get_all_files($path);
-//
-//            if(count($migrations) > 0)
-//            {
-//                foreach($migrations as $migration)
-//                {
-//                    $migration_path = $path.$migration;
-//                    include_once ($migration_path);
-//                    $migration_class = vh_get_class_from_file($migration_path);
-//                    if($migration_class)
-//                    {
-//                        $migration_obj = new $migration_class;
-//                        $migration_obj->down();
-//                    }
-//                }
-//            }
-//
-//            //Delete theme settings
-//            $item->settings()->delete();
-//
-//            //delete all database migrations
-//            $theme_migrations = $item->migrations()->get()->pluck('migration_id')->toArray();
-//
-//            if($theme_migrations)
-//            {
-//                \DB::table('migrations')->whereIn('id', $theme_migrations)->delete();
-//                Migration::whereIn('migration_id', $theme_migrations)->delete();
-//            }
-//
-//            $item->is_active = 0;
-//            $item->save();
-//
-//
-//            //delete theme folder
-//            vh_delete_folder($item_path);
-//
-//            //Delete theme entry
-//            static::where('slug', $item->slug)->forceDelete();
-//
-//            $response['success'] = true;
-//            $response['data'][] = '';
-//            $response['messages'][] = trans('vaahcms-general.action_successful');
-//            if(env('APP_DEBUG'))
-//            {
-//                $response['hint'][] = '';
-//            }
-//            return $response;
-//
-//        }catch(\Exception $e)
-//        {
-//            $response['success'] = false;
-//            $response['errors'][] = $e->getMessage();
-//
-//        }
-//
-//
-//        return $response;
-//
-//    }
+    public static function deleteItem($slug)
+    {
+
+        try{
+
+            $item = static::where('slug', $slug)->first();
+
+
+            $item_path = config('vaahcms.themes_path')."/".$item->name;
+
+            //Delete all migrations
+            $path =  $item_path . "/Database/Migrations/";
+
+            $migrations = vh_get_all_files($path);
+
+            if(count($migrations) > 0)
+            {
+                foreach($migrations as $migration)
+                {
+                    $migration_path = $path.$migration;
+                    include_once ($migration_path);
+                    $migration_class = vh_get_class_from_file($migration_path);
+                    if($migration_class)
+                    {
+                        $migration_obj = new $migration_class;
+                        $migration_obj->down();
+                    }
+                }
+            }
+
+            //Delete theme settings
+            $item->settings()->delete();
+
+            //delete all database migrations
+            $theme_migrations = $item->migrations()->get()->pluck('migration_id')->toArray();
+
+            if($theme_migrations)
+            {
+                \DB::table('migrations')->whereIn('id', $theme_migrations)->delete();
+                Migration::whereIn('migration_id', $theme_migrations)->delete();
+            }
+
+            $item->is_active = 0;
+            $item->save();
+
+
+            //delete theme folder
+            vh_delete_folder($item_path);
+
+            //Delete theme entry
+            static::where('slug', $item->slug)->forceDelete();
+
+            $response['success'] = true;
+            $response['data'][] = '';
+            $response['messages'][] = trans('vaahcms-general.action_successful');
+            if(env('APP_DEBUG'))
+            {
+                $response['hint'][] = '';
+            }
+            return $response;
+
+        }catch(\Exception $e)
+        {
+            $response['success'] = false;
+            $response['errors'][] = $e->getMessage();
+
+        }
+
+
+        return $response;
+
+    }
     //-------------------------------------------------
     public static function getOfficialDetails($slug)
     {

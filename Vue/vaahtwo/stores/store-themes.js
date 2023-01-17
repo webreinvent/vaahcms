@@ -19,6 +19,7 @@ let empty_states = {
             trashed: null,
             sort: null,
         },
+        q: '',
     },
     action: {
         type: null,
@@ -62,7 +63,11 @@ export const useThemeStore = defineStore({
         list_bulk_menu: [],
         item_menu_list: [],
         item_menu_state: null,
-        form_menu_list: []
+        form_menu_list: [],
+        is_fetching_updates: false,
+        is_btn_loading: false,
+        list_is_loading: false,
+        themes: []
     }),
     getters: {
 
@@ -520,6 +525,18 @@ export const useThemeStore = defineStore({
             }, this.search.delay_time);
         },
         //---------------------------------------------------------------------
+        async delayedSearchThemes()
+        {
+            let self = this;
+            this.query.page = 1;
+            this.action.items = [];
+            clearTimeout(this.search.delay_timer);
+            this.search.delay_timer = setTimeout(async function() {
+                await self.updateUrlQueryString(self.query);
+                await self.getThemes();
+            }, this.search.delay_time);
+        },
+        //---------------------------------------------------------------------
         async updateUrlQueryString(query)
         {
             //remove reactivity from source object
@@ -865,6 +882,136 @@ export const useThemeStore = defineStore({
 
         },
         //---------------------------------------------------------------------
+        checkUpdate() {
+            // this.is_fetching_updates = true;
+
+            let options = {
+                query: {
+                    slugs: this.assets.installed
+                }
+            };
+            let url = this.assets.vaahcms_api_route+'theme/updates';
+            vaah().ajax(url, this.checkUpdateAfter, options);
+        },
+        //---------------------------------------------------------------------
+        checkUpdateAfter(data, res) {
+            if(data)
+            {
+                this.update('updates_list', data);
+                this.storeUpdates();
+            }
+        },
+        //---------------------------------------------------------------------
+        storeUpdates() {
+            let params = {
+                themes: this.page.updates_list
+            };
+            let url = this.ajax_url+'/store/updates';
+            this.$vaah.ajax(url, params, this.storeUpdatesAfter);
+        },
+        //---------------------------------------------------------------------
+        storeUpdatesAfter(data, res) {
+            this.is_fetching_updates = false;
+            if(data)
+            {
+                this.getList();
+            }
+        },
+        //---------------------------------------------------------------------
+        confirmDelete: function (theme) {
+            let self = this;
+            this.$buefy.dialog.confirm({
+                title: 'Deleting Theme',
+                message: 'This will <b>delete</b> all files & database of the theme  <b>'+theme.name+'</b>. This action cannot be undone.',
+                confirmText: 'Proceed',
+                type: 'is-danger',
+                container: '.bulma',
+                hasIcon: true,
+                onConfirm: function () {
+                    self.delete(theme);
+                }
+            })
+        },
+        //---------------------------------------------------------------------
+        delete: function (theme) {
+            this.$Progress.start();
+            let params = {
+                action: 'delete',
+                inputs: theme
+            };
+
+            if(this.page.active_item && this.page.active_item.id === theme.id
+                && this.$router.name === 'theme.view'
+            )
+            {
+                this.update('active_item', null);
+                this.$router.push({name: 'theme.list'});
+            }
+
+            let url = this.ajax_url+'/actions';
+            vaah().ajax(url, params, this.deleteAfter);
+        },
+        //---------------------------------------------------------------------
+        deleteAfter: function (data, res) {
+            this.$Progress.finish();
+            if(data)
+            {
+                this.update('assets_is_fetching', false);
+                this.getAssets();
+                this.getRootAssets();
+                this.$emit('eReloadList');
+            }
+        },
+        //---------------------------------------------------------------------
+        setSixColumns() {
+            this.list_view_width = 'is-6';
+            this.$router.push({name: 'themes.install'});
+        },
+        getThemes() {
+            let url = this.assets.vaahcms_api_route+'themes';
+            let options = {
+                query: {
+                    page: 1
+                }
+            };
+            vaah().ajax(url, this.getThemesAfter,options);
+        },
+        getThemesAfter(data) {
+            if(data)
+            {
+                this.themes = data.list;
+            }
+            console.log(this.themes.data);
+        },
+        //---------------------------------------------------------------------
+        isInstalled(item) {
+            return this.assets.installed.includes(item.slug);
+        },
+        //---------------------------------------------------------------------
+        install(module) {
+            this.themes.active_download = module;
+            let options = {
+                params: module
+            };
+            let url = this.ajax_url+'/download';
+            vaah().ajax(url, this.installAfter, options);
+        },
+        //---------------------------------------------------------------------
+        installAfter(data, res) {
+
+            if(data)
+            {
+                this.themes.active_download = null;
+                this.update('assets_is_fetching', false);
+                this.getAssets();
+                this.getThemes();
+            }
+
+        },
+        closeInstallTheme() {
+            this.list_view_width = 'is-12';
+            this.$router.push({name: 'themes.index'});
+        }
     }
 });
 

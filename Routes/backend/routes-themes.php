@@ -61,9 +61,13 @@ function () {
     /**
      * Item actions
      */
-    Route::any('/{id}/action/{action}', 'ThemesController@itemAction')
+    Route::any('/{id}/action/{action}', 'ThemesController@actions')
         ->name('vh.backend.vaah.themes.item.action');
-
     //---------------------------------------------------------
-
+    /**
+     * Theme Download
+     */
+    Route::post( '/download', 'ThemesController@download' )
+        ->name( 'vh.backend.themes.download' );
+    //------------------------------------------------
 });
