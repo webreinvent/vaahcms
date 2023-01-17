@@ -17,7 +17,11 @@ let empty_states = {
 };
 
 export const useUserSettingStore = defineStore({
+<<<<<<< 2.x-develop
     id: 'user-settings',
+=======
+    id: 'user-setting',
+>>>>>>> Update: user-settings modification list fetched
     state: () => ({
         base_url: base_url,
         ajax_url: ajax_url,
@@ -59,6 +63,7 @@ export const useUserSettingStore = defineStore({
         },
         field_type: null,
         custom_field_list:null,
+<<<<<<< 2.x-develop
         active_index:[],
         selected_field_type:null,
         field_types:[
@@ -68,12 +73,37 @@ export const useUserSettingStore = defineStore({
             {name:"Number",value:"number"},
             {name:"Password",value:"password"}
         ],
+=======
+        activeIndex:[],
+        selectedFieldType:null,
+        fieldTypes:null
+>>>>>>> Update: user-settings modification list fetched
     }),
     getters: {
 
     },
     actions: {
         //---------------------------------------------------------------------
+<<<<<<< 2.x-develop
+=======
+        watchItem()
+        {
+            // if(this.new_variable){
+            watch(() => this.new_variable, (newVal,oldVal) =>
+                {
+                    if(newVal && newVal !== "")
+                    {
+                        this.new_variable = this.new_variable.toUpperCase();
+                        // this.new_variable = this.new_variable.split('_ ').join('_');
+                        this.new_variable = this.new_variable.split(' ').join('_');
+
+                    }
+                },{deep: true}
+            )
+            // }
+        },
+        //---------------------------------------------------------------------
+>>>>>>> Update: user-settings modification list fetched
         async getAssets() {
 
             if(this.assets_is_fetching === true){
@@ -106,7 +136,11 @@ export const useUserSettingStore = defineStore({
             );
         },
         //---------------------------------------------------------------------
+<<<<<<< 2.x-develop
         afterGetList(data, res)
+=======
+        afterGetList: function (data, res)
+>>>>>>> Update: user-settings modification list fetched
         {
             this.is_btn_loading = false;
             this.query.recount = null;
@@ -122,6 +156,7 @@ export const useUserSettingStore = defineStore({
             }
         },
         //---------------------------------------------------------------------
+<<<<<<< 2.x-develop
         getNewItem() {
             return {
                 "id": null,
@@ -227,6 +262,188 @@ export const useUserSettingStore = defineStore({
         },
         collapseAll() {
             this.active_index = [];
+=======
+        isSecrete(item)
+        {
+            if(
+                item.key == 'APP_KEY'
+                || item.key.includes('SECRET')
+                || item.key.includes('API_KEY')
+                || item.key.includes('API')
+                || item.key.includes('AUTH_KEY')
+                || item.key.includes('PRIVATE_KEY')
+                || item.key.includes('MERCHANT_KEY')
+                || item.key.includes('SALT')
+                || item.key.includes('AUTH_TOKEN')
+                || item.key.includes('API_TOKEN')
+            ){
+                return true;
+            }
+
+            return false;
+
+        },
+        //---------------------------------------------------------------------
+        inputType(item) {
+
+            if(item.key.includes('PASSWORD'))
+            {
+                return 'password';
+            }
+
+
+            if(this.isSecrete(item))
+            {
+                return 'password';
+            }
+
+
+            return 'text';
+        },
+        //---------------------------------------------------------------------
+        isDisable(item) {
+            if(item.key == 'APP_KEY'
+                || item.key == 'APP_ENV'
+                || item.key == 'APP_URL'
+            )
+            {
+                return true;
+            }
+        },
+        //---------------------------------------------------------------------
+        showRevealButton(item){
+
+            if(item.key.includes('PASSWORD'))
+            {
+                return true;
+            }
+
+            if(this.isSecrete(item))
+            {
+                return true;
+            }
+
+            return false;
+        },
+        //---------------------------------------------------------------------
+        getCopy(value)
+        {
+            navigator.clipboard.writeText(value);
+            vaah().toastSuccess(['Copied']);
+        },
+        //---------------------------------------------------------------------
+        removeVariable(item) {
+
+            if(item.uid)
+            {
+                this.list = vaah().removeInArrayByKey(this.list, item, 'uid');
+            } else
+            {
+                this.list = vaah().removeInArrayByKey(this.list, item, 'key');
+            }
+            vaah().toastErrors(['Removed']);
+        },
+        //---------------------------------------------------------------------
+        addVariable() {
+            let count = this.list.length;
+            let item = {
+                uid: count,
+                key: this.new_variable,
+                value: null,
+            };
+            this.list.push(item);
+            this.new_variable=null
+        },
+        //---------------------------------------------------------------------
+        confirmChanges()
+        {
+            vaah().confirm.require({
+                message: 'Invalid value(s) can break the application, ' +
+                    'are you sure to proceed?. ' +
+                    'You will be <b>logout</b> and redirected to login page.',
+                header: 'Updating environment variables',
+                acceptClass:"yellow",
+                rejectLabel: 'Cancel',
+                icon: 'pi pi-exclamation-triangle',
+                accept: () => {
+                    this.store()
+                },
+            });
+        },
+        //---------------------------------------------------------------------
+        store() {
+
+            let valid = this.validate();
+            let options = {
+                method: 'post',
+            };
+            if(!valid)
+            {
+                return false;
+            }
+
+
+            options.params = this.list;
+
+            let ajax_url = this.ajax_url+'/store';
+            vaah().ajax(ajax_url, this.storeAfter, options);
+        },
+        //---------------------------------------------------------------------
+        storeAfter(data, res) {
+            if(data)
+            {
+                window.location.href = data.redirect_url;
+            }
+        },
+        //---------------------------------------------------------------------
+        validate()
+        {
+            let pair = this.generateKeyPair();
+
+            let failed = false;
+            let messages = [];
+
+            if(!pair['APP_KEY']) {
+                messages.push("APP_KEY is required");
+                failed = true;
+            }
+
+            if(!pair['APP_ENV']) {
+                messages.push("APP_ENV is required");
+                failed = true;
+            }
+
+            if(!pair['APP_URL']) {
+                messages.push("APP_URL is required");
+                failed = true;
+            }
+
+            if(failed)
+            {
+                this.$vaah.toastErrors(messages);
+                return false;
+            }
+
+
+            return true;
+        },
+        //---------------------------------------------------------------------
+        generateKeyPair()
+        {
+            let pair = [];
+            this.list.forEach(function (item) {
+
+                pair[item.key] = item.value;
+
+            });
+
+            return pair;
+        },
+        //---------------------------------------------------------------------
+        downloadFile(file_name)
+        {
+            window.location.href = this.ajax_url+"/download-file/"+file_name;
+>>>>>>> Update: user-settings modification list fetched
         },
         //---------------------------------------------------------------------
         //---------------------------------------------------------------------

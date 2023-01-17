@@ -1,8 +1,11 @@
 <script setup>
 import {onMounted, reactive, ref} from "vue";
 import {useRoute} from 'vue-router';
+<<<<<<< 2.x-develop
 import draggable from 'vuedraggable';
 import { vaah } from '../../../vaahvue/pinia/vaah'
+=======
+>>>>>>> Update: user-settings modification list fetched
 
 import {useUserSettingStore} from "../../../stores/settings/store-user_setting";
 
@@ -25,8 +28,15 @@ onMounted(async () => {
      */
     await store.getList();
 
+<<<<<<< 2.x-develop
 
     document.title = 'User Settings';
+=======
+    /**
+     * Change to upper case
+     */
+    await store.watchItem();
+>>>>>>> Update: user-settings modification list fetched
 });
 </script>
 
@@ -53,8 +63,13 @@ onMounted(async () => {
                 </div>
             </template>
             <template #content>
+<<<<<<< 2.x-develop
                 <Accordion :multiple="true" :activeIndex="store.active_index" id="accordionTabContainer">
                     <AccordionTab data-testid="setting-fields_tab">
+=======
+                <Accordion :multiple="true" :activeIndex="store.activeIndex" id="accordionTabContainer">
+                    <AccordionTab>
+>>>>>>> Update: user-settings modification list fetched
                         <template #header>
                             <div class="w-full">
                                 <div>
@@ -65,24 +80,36 @@ onMounted(async () => {
                         <DataTable :value="store.field_list" class="p-datatable-sm" showGridlines responsiveLayout="scroll">
                             <Column field="fieldName" header="Field Name">
                                 <template #body="slotProps">
+<<<<<<< 2.x-develop
                                     {{ vaah().toLabel(slotProps.data.key) }}
+=======
+                                    {{ slotProps.data.key }}
+>>>>>>> Update: user-settings modification list fetched
                                 </template>
                             </Column>
                             <Column field="visibilityStatus" header="Is Hidden">
                                 <template #body="slotProps">
+<<<<<<< 2.x-develop
                                     <InputSwitch v-model="slotProps.data.value.is_hidden"
                                                  data-testid="setting-field_is_hidden"
                                                  class="is-small"
                                                  @input="store.storeField(slotProps.data)"/>
+=======
+                                    <InputSwitch v-model="slotProps.data.value.is_hidden"  class="is-small"/>
+>>>>>>> Update: user-settings modification list fetched
                                 </template>
                             </Column>
                             <Column field="applyToRegistration" header="Apply To Registration">
                                 <template #body="slotProps">
+<<<<<<< 2.x-develop
                                     <Checkbox v-model="slotProps.data.value.to_registration"
                                               @input="store.storeField(slotProps.data)"
                                               data-testid="setting-field_to_registration"
                                               :binary="true"
                                               class="is-small"/>
+=======
+                                    <Checkbox v-model="slotProps.data.value.is_hidden" :binary="true" class="is-small"/>
+>>>>>>> Update: user-settings modification list fetched
                                 </template>
                             </Column>
                         </DataTable>
@@ -201,6 +228,7 @@ onMounted(async () => {
                         <div class="grid justify-content-between">
                             <div class="col-12 md:col-4">
                                 <div class="p-inputgroup">
+<<<<<<< 2.x-develop
                                     <Dropdown v-model="store.selected_field_type"
                                               data-testid="setting-customfield_fieldtypes"
                                               :options="store.field_types"
@@ -210,6 +238,10 @@ onMounted(async () => {
                                             :disabled="!store.selected_field_type"
                                             data-testid="setting-customfield_field_add"
                                             @click="store.addCustomField"></Button>
+=======
+                                    <Dropdown v-model="store.selectedFieldType" :options="store.fieldTypes" optionLabel="name" optionValue="code" placeholder="Select a type" />
+                                    <Button label="Add"></Button>
+>>>>>>> Update: user-settings modification list fetched
                                 </div>
                             </div>
                             <div class="col-12 md:col-3 flex justify-content-end">
@@ -226,6 +258,7 @@ onMounted(async () => {
         </Card>
     </div>
 </template>
+<<<<<<< 2.x-develop
 <style>
 .control {
     box-sizing: border-box;
@@ -252,3 +285,5 @@ onMounted(async () => {
     display:none
 }
 </style>
+=======
+>>>>>>> Update: user-settings modification list fetched
