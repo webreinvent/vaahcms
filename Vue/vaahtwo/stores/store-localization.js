@@ -244,50 +244,86 @@ export const useLocalizationStore = defineStore({
             this.newVariable=null
         },
         //---------------------------------------------------------------------
-        store() {
+        checkDuplicatedSlugs()
+        {
+            let exist = null;
+            let count = null;
+            let text = "";
+            let self = this;
 
-            let valid = this.validate();
-            let options = {
-                method: 'post',
-            };
-            if(!valid)
+            if(this.list && this.list.data && this.list.data.length > 0)
+            {
+                this.list.data.forEach(function (item) {
+                    count = 0;
+                    self.list.data.forEach(function (match) {
+                        if(item.slug && match.slug && item.slug == match.slug)
+                        {
+                            count++;
+                        }
+                    });
+                    if(count > 1)
+                    {
+                        exist = true;
+                        text = item.slug+", ";
+                        return false;
+                    }
+                })
+            }
+            if(exist)
+            {
+                vaah().toastErrors([text+" are duplicate slugs"]);
+                return false;
+            } else
+            {
+                return true;
+            }
+        },
+        //---------------------------------------------------------------------
+        storeData() {
+            let check = this.checkDuplicatedSlugs();
+            if(!check)
             {
                 return false;
             }
-
-
-            options.params = this.list;
-
-            let ajax_url = this.ajax_url+'/store';
-            vaah().ajax(ajax_url, this.storeAfter, options);
-        },
-        //---------------------------------------------------------------------
-        storeAfter(data, res) {
-            if(data)
+            let options = {
+                method: 'post',
+            };
+            options.params = {
+                list:this.list.data,
+                vh_lang_language_id: this.assets.languages.default.id
+            };
+            let count = 0;
+            if(!this.assets.categories.default.id && this.list && this.list.data && this.list.data.length > 0)
             {
-                window.location.href = data.redirect_url;
+                this.list.data.forEach(function (item) {
+
+                    if(!item.id && item.slug){
+                        count++;
+                    }
+                })
+            }
+            if(count > 0){
+                vaah().confirm.require({
+                    message: 'Are you sure you want to <b>Add</b> the Language String?, ' +
+                        'This new string will added to general category.',
+                    header: 'Add new Language String',
+                    acceptClass:"yellow",
+                    rejectLabel: 'Cancel',
+                    icon: 'pi pi-exclamation-triangle',
+                    accept: () => {
+                        let ajax_url = this.ajax_url+'/store';
+                        vaah().ajax(ajax_url, this.storeAfter, options);
+                    },
+                });
+            }else{
+                let ajax_url = this.ajax_url+'/store';
+                vaah().ajax(ajax_url, this.storeAfter, options);
             }
         },
         //---------------------------------------------------------------------
-        confirmChanges()
-        {
-            vaah().confirm.require({
-                message: 'Invalid value(s) can break the application, are you sure to proceed?. You will be <b>logout</b> and redirected to login page.',
-                header: 'Updating environment variables',
-                class:'danger',
-                acceptLabel: 'Proceed',
-                acceptClass:"red",
-                rejectLabel: 'Cancel',
-                icon: 'pi pi-exclamation-triangle',
-                accept: () => {
-                    this.store()
-                },
-            });
-        },
-        //---------------------------------------------------------------------
-        downloadFile(file_name)
-        {
-            window.location.href = this.ajax_url+"/download-file/"+file_name;
+        storeAfter(data, res) {
+            this.assets_is_fetching = true;
+            this.getAssets(false);
         },
         //---------------------------------------------------------------------
         toggleLanguageForm()

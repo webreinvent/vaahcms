@@ -196,7 +196,7 @@ onMounted(async () => {
                         <Button label="Save"
                                 data-testid="localization-save"
                                 icon="pi pi-save"
-                                @click="store.generateLanguage"
+                                @click="store.storeData"
                         ></Button>
                     </div>
                 </div>
