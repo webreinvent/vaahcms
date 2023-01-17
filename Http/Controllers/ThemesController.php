@@ -50,7 +50,6 @@ class ThemesController extends Controller
     //----------------------------------------------------------
     public function getList(Request $request)
     {
-
         if(!\Auth::user()->hasPermission('has-access-of-theme-section'))
         {
             $response['success'] = false;
@@ -151,6 +150,7 @@ class ThemesController extends Controller
     public function installUpdates(Request $request)
     {
 
+        echo "<pre>"; print_r($request->all()); die;
         if(!\Auth::user()->hasPermission('can-update-theme'))
         {
             $response['success'] = false;
@@ -181,22 +181,22 @@ class ThemesController extends Controller
     }
 
     //----------------------------------------------------------
-    public function actions(Request $request)
+    public function actions(Request $request,$id,$action)
     {
-        $rules = array(
-            'action' => 'required',
-            'inputs' => 'required',
-            'inputs.id' => 'required',
-        );
-
-        $validator = \Validator::make( $request->all(), $rules);
-        if ( $validator->fails() ) {
-
-            $errors             = errorsToArray($validator->errors());
-            $response['success'] = false;
-            $response['errors'] = $errors;
-            return response()->json($response);
-        }
+    //        $rules = array(
+    //            'action' => 'required',
+    //            'inputs' => 'required',
+    //            'inputs.id' => 'required',
+    //        );
+    //
+    //        $validator = \Validator::make( $request->all(), $rules);
+    //        if ( $validator->fails() ) {
+    //
+    //            $errors             = errorsToArray($validator->errors());
+    //            $response['success'] = false;
+    //            $response['errors'] = $errors;
+    //            return response()->json($response);
+    //        }
 
         $data = [];
         $inputs = $request->inputs;
@@ -205,9 +205,9 @@ class ThemesController extends Controller
         /*
          * Call method from module setup controller
          */
-        $theme = Theme::find($inputs['id']);
+        $theme = Theme::find($id);
 
-        $method_name = str_replace("_", " ", $request->action);
+        $method_name = str_replace("_", " ", $action);
         $method_name = ucwords($method_name);
         $method_name = lcfirst(str_replace(" ", "", $method_name));
 
@@ -217,7 +217,7 @@ class ThemesController extends Controller
             return response()->json($response);
         }
 
-        switch($request->action)
+        switch($action)
         {
             //---------------------------------------
             case 'activate':
@@ -318,6 +318,12 @@ class ThemesController extends Controller
     public function itemAction(Request $request,$id,$action)
     {
         return Theme::itemAction($request,$id,$action);
+    }
+    //----------------------------------------------------------
+    public function deleteItem(Request $request,$id)
+    {
+        $theme = Theme::where('id',$id)->first();
+        return Theme::deleteItem($theme->slug);
     }
     //----------------------------------------------------------
 }

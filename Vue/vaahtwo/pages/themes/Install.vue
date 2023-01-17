@@ -1,0 +1,113 @@
+<script setup>
+import {onMounted, reactive, ref} from "vue";
+import {useRoute} from 'vue-router';
+
+import {useThemeStore} from '../../stores/store-themes'
+
+import Actions from "./components/Actions.vue";
+import Table from "./components/Table.vue";
+
+const store = useThemeStore();
+const route = useRoute();
+
+import { useConfirm } from "primevue/useconfirm";
+const confirm = useConfirm();
+
+
+onMounted(async () => {
+    /**
+     * call onLoad action when List view loads
+     */
+    await store.onLoad(route);
+
+    /**
+     * watch routes to update view, column width
+     * and get new item when routes get changed
+     */
+    await store.watchRoutes(route);
+
+    /**
+     * watch states like `query.filter` to
+     * call specific actions if a state gets
+     * changed
+     */
+    await store.watchStates();
+
+    /**
+     * fetch assets required for the crud
+     * operation
+     */
+    await store.getAssets();
+
+    /**
+     * fetch list of records
+     */
+    await store.getThemes();
+});
+
+</script>
+<template>
+    <div class="column col-6" >
+        <div v-if="store.themes && store.themes.data">
+            <Card>
+                <template #header>
+                    <div class="flex justify-content-between align-items-center">
+                        <h5 class="white-space-nowrap font-semibold text-lg">Install Themes</h5>
+                        <div class="p-inputgroup justify-content-end w-6">
+                                <span class="p-input-icon-left">
+                                    <i class="pi pi-search" />
+                                    <InputText placeholder="Search"
+                                               class="w-full"
+                                               type="search"
+                                               icon="search"
+                                               v-model="store.query.q"
+                                               @input="store.delayedSearchThemes"
+                                               @keyup.enter.prevent="store.delayedSearchThemes">
+                                    </InputText>
+                                </span>
+                            <!--<Button icon="pi pi-times" class="p-button-sm" @click="hideThemes"/>-->
+                            <Button class="p-button-outlined" @click="store.closeInstallTheme()" icon="pi pi-times"></Button>
+
+
+                        </div>
+                    </div>
+                </template>
+                <template #content>
+                    <div class="col-12 md:col-6" v-for="item in store.themes.data">
+                        <Card>
+                            <template #header>
+                                <img :src="item.thumbnail" style="height: 15rem" />
+                            </template>
+                            <template #content>
+                                <h5 class="text-xl font-semibold mb-1">{{item.title}}</h5>
+                                <p class="mb-3 text-sm">{{item.excerpt}}</p>
+                                <Tag class="mr-2 mb-2">Name:{{item.title}}</Tag>
+                                <Tag class="mr-2 mb-2">Version: {{item.version}}</Tag>
+                                <Tag class="mr-2 mb-2">Developed by: {{item.author_name}}</Tag>
+                            </template>
+                            <template #footer>
+                                <Button icon="pi pi-check"
+                                        class="p-button-success"
+                                        v-if="store.isInstalled(item)" label="Installed"></Button>
+                                <Button icon="pi pi-download"
+                                        class="p-button-outlined" 
+                                        v-else
+                                        @click="store.install(item)" label="Install"></Button>
+                            </template>
+                        </Card>
+                    </div>
+                    <hr style="margin-top: 0;"/>
+                </template>
+            </Card>
+        </div>
+
+        <!--paginator-->
+        <!--<Paginator v-model:rows="store.query.rows"
+                   :totalRecords="store.themes.list.total"
+                   @page="store.paginate($event)"
+                   :rowsPerPageOptions="store.themes.rows_per_page">
+        </Paginator>-->
+        <!--/paginator-->
+
+    </div>
+</template>

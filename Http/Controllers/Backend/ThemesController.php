@@ -145,6 +145,4 @@ class ThemesController extends Controller
         return Theme::itemAction($request,$id,$action);
     }
     //----------------------------------------------------------
-
-
 }

@@ -47,7 +47,6 @@ onMounted(async () => {
 
 </script>
 <template>
-
     <div class="grid" v-if="store.assets">
 
         <div :class="'col-'+store.list_view_width">
@@ -61,6 +60,29 @@ onMounted(async () => {
                             <Badge v-if="store.list && store.list.total > 0"
                                    :value="store.list.total">
                             </Badge>
+                        </div>
+                        <div class="flex">
+                            <span class="p-buttonset flex justify-content-end">
+                                 <Button type="is-light"
+                                          tag="router-link"
+                                          @click="store.setSixColumns()"
+                                          icon="pi pi-plus"
+                                          label="Install">
+                                </Button>
+
+                                <Button type="is-light"
+                                          :loading="store.is_fetching_updates"
+                                          @click="store.checkUpdate()"
+                                          icon="pi pi-cloud-download"
+                                          label="Check Updates">
+                                </Button>
+
+                                <Button type="is-light"
+                                          @click="store.sync()"
+                                          :loading="store.is_btn_loading"
+                                          icon="pi pi-refresh">
+                                </Button>
+                            </span>
                         </div>
 
                     </div>

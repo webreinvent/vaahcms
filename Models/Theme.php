@@ -460,23 +460,7 @@ class Theme extends ThemeBase
 
     }
     //-------------------------------------------------
-    public static function deleteItem($request, $id): array
-    {
-        $item = self::where('id', $id)->withTrashed()->first();
-        if (!$item) {
-            $response['success'] = false;
-            $response['messages'][] = 'Record does not exist.';
-            return $response;
-        }
-        $item->forceDelete();
 
-        $response['success'] = true;
-        $response['data'] = [];
-        $response['messages'][] = 'Record has been deleted';
-
-        return $response;
-    }
-    //-------------------------------------------------
     public static function itemAction($request, $id, $type): array
     {
         switch($type)
@@ -485,6 +469,8 @@ class Theme extends ThemeBase
                 self::where('id', $id)
                     ->withTrashed()
                     ->update(['is_active' => 1]);
+                $item = self::where('id',$id)->first();
+                self::activateItem($item->slug,$item->is_default);
                 break;
             case 'deactivate':
                 self::where('id', $id)

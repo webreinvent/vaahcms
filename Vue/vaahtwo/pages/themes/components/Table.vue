@@ -37,13 +37,13 @@ const toggle = ref();
             <Column field="name" header="Theme" :sortable="true">
 
                 <template #body="prop">
-                    <h3 class="title is-5 has-margin-bottom-10">{{ prop.data.name }}</h3>
-                    <Tag class="mb-2 bg-black-alpha-90 border-noround">Name:</Tag>
-                    <Tag class="mr-2 border-noround" v-if="prop.data.name"> {{ prop.data.name }}</Tag>
-                    <Tag class="mb-2 bg-black-alpha-90 border-noround">Version:</Tag>
-                    <Tag class="mr-2 border-noround" v-if="prop.data.version">{{ prop.data.version }}</Tag>
-                    <Tag class="mb-2 bg-black-alpha-90 border-noround">Developed by:</Tag>
-                    <Tag class="mb-2 border-noround" v-if="prop.data.author_name">{{ prop.data.author_name }}</Tag>
+                    <h3 class="title is-5 has-margin-bottom-10">{{ prop.data.name }} <Tag v-if="prop.data.is_default" value="Default" severity="success" class="ml-2" rounded></Tag></h3>
+                    <Tag class="mb-2 mt-2 bg-black-alpha-90 border-noround">Name:</Tag>
+                    <Tag class="mr-2 mt-2 border-noround" v-if="prop.data.name"> {{ prop.data.name }}</Tag>
+                    <Tag class="mb-2 mt-2 bg-black-alpha-90 border-noround">Version:</Tag>
+                    <Tag class="mr-2 mt-2 border-noround" v-if="prop.data.version">{{ prop.data.version }}</Tag>
+                    <Tag class="mb-2 mt-2 bg-black-alpha-90 border-noround">Developed by:</Tag>
+                    <Tag class="mb-2 mt-2 border-noround" v-if="prop.data.author_name">{{ prop.data.author_name }}</Tag>
                 </template>
             </Column>
 
@@ -51,7 +51,7 @@ const toggle = ref();
                  <template #body="prop" class="control">
                      <span class="p-buttonset template">
                          <Button v-if="prop.data.is_active"
-                               class="p-button-sm bg-yellow-400"
+                               class="p-button-sm bg-yellow-300"
                                @click="store.toggleIsActive(prop.data)">
                              Deactivate
                          </Button>
@@ -73,10 +73,16 @@ const toggle = ref();
                              @click="store.itemAction('make_default', prop.data)">
                             Make Default
                          </Button>
+                         <Button v-if="prop.data.is_active"
+                                  size="is-small"
+                                  class="p-button-sm bg-yellow-300"
+                                  icon="pi pi-database"
+                                  @click="store.itemAction('import_sample_data', prop.data)">
+                         </Button>
                          <Button class="p-button-danger p-button-sm"
                                  data-testid="themes-table-action-trash"
                                  v-if="store.isViewLarge() && !prop.data.deleted_at"
-                                 @click="store.itemAction('trash', prop.data)"
+                                 @click="store.itemAction('delete', prop.data)"
                                  v-tooltip.top="'Trash'"
                                  icon="pi pi-trash" />
 

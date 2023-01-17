@@ -5,6 +5,7 @@ import LayoutBackend from '../layouts/Backend.vue';
 import List from '../pages/themes/List.vue';
 import Form from '../pages/themes/Form.vue';
 import Item from '../pages/themes/Item.vue';
+import ThemeInstall from '../pages/themes/Install.vue';
 
 routes_list = {
     path: '/vaah/themes/',
@@ -27,6 +28,12 @@ routes_list = {
                     path: 'view/:id?',
                     name: 'themes.view',
                     component: Item,
+                    props: true,
+                },
+                {
+                    path: 'install',
+                    name: 'themes.install',
+                    component: ThemeInstall,
                     props: true,
                 }
             ]
