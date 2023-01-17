@@ -1,3 +1,35 @@
+<script setup>
+import {onMounted, reactive, ref} from "vue";
+import {useRoute} from 'vue-router';
+
+import {useUserSettingStore} from "../../../stores/settings/store-user_setting";
+
+const store = useUserSettingStore();
+const route = useRoute();
+
+import { useConfirm } from "primevue/useconfirm";
+
+const confirm = useConfirm();
+onMounted(async () => {
+
+    /**
+     * fetch assets required for the crud
+     * operation
+     */
+    await store.getAssets();
+
+    /**
+     * fetch list of records
+     */
+    await store.getList();
+
+    /**
+     * Change to upper case
+     */
+    await store.watchItem();
+});
+</script>
+
 <template>
     <div>
         <Card>
@@ -5,7 +37,7 @@
                 <h4 class=" font-semibold text-lg">User Settings</h4>
             </template>
             <template #content>
-                <Accordion :multiple="true" :activeIndex="activeIndex" id="accordionTabContainer">
+                <Accordion :multiple="true" :activeIndex="store.activeIndex" id="accordionTabContainer">
                     <AccordionTab>
                         <template #header>
                             <div class="w-full">
@@ -14,16 +46,20 @@
                                 </div>
                             </div>
                         </template>
-                        <DataTable :value="data" class="p-datatable-sm" showGridlines responsiveLayout="scroll">
-                            <Column field="fieldName" header="Field Name"></Column>
+                        <DataTable :value="store.field_list" class="p-datatable-sm" showGridlines responsiveLayout="scroll">
+                            <Column field="fieldName" header="Field Name">
+                                <template #body="slotProps">
+                                    {{ slotProps.data.key }}
+                                </template>
+                            </Column>
                             <Column field="visibilityStatus" header="Is Hidden">
                                 <template #body="slotProps">
-                                    <InputSwitch v-model="slotProps.data.visibilityStatus"  class="is-small"/>
+                                    <InputSwitch v-model="slotProps.data.value.is_hidden"  class="is-small"/>
                                 </template>
                             </Column>
                             <Column field="applyToRegistration" header="Apply To Registration">
                                 <template #body="slotProps">
-                                    <Checkbox v-model="slotProps.data.applyToRegistration" :binary="true" class="is-small"/>
+                                    <Checkbox v-model="slotProps.data.value.is_hidden" :binary="true" class="is-small"/>
                                 </template>
                             </Column>
                         </DataTable>
@@ -43,7 +79,7 @@
                         <div class="grid justify-content-between">
                             <div class="col-12 md:col-3">
                                 <div class="p-inputgroup">
-                                    <Dropdown v-model="selectedFieldType" :options="fieldTypes" optionLabel="name" optionValue="code" placeholder="Select a type" />
+                                    <Dropdown v-model="store.selectedFieldType" :options="store.fieldTypes" optionLabel="name" optionValue="code" placeholder="Select a type" />
                                     <Button label="Add"></Button>
                                 </div>
                             </div>
@@ -57,40 +93,3 @@
         </Card>
     </div>
 </template>
-
-<script>
-export default {
-    name: "UserSettings",
-    data(){
-        return{
-            activeIndex: [0],
-            data: [
-                {
-                    fieldName:'Display Name',
-                    visibilityStatus:"False",
-                    visibilityOptions:['True','False'],
-                    applyToRegistration:false
-                },
-                {
-                    fieldName:'Title',
-                    visibilityStatus:"True",
-                    visibilityOptions:['True','False'],
-                    applyToRegistration:false
-                },
-                {
-                    fieldName:'Designation',
-                    visibilityStatus:"False",
-                    visibilityOptions:['True','False'],
-                    applyToRegistration:true
-                }
-            ],
-            selectedFieldType:null,
-            fieldTypes:['Text','Email','TextArea','Number','Password']
-        }
-    }
-}
-</script>
-
-<style scoped>
-
-</style>

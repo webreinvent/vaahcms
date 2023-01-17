@@ -74,14 +74,14 @@ Route::group(
     [
         'prefix'     => 'backend/vaah/settings/user-setting',
         'middleware' => ['web','has.backend.access'],
-        'namespace'  => 'WebReinvent\VaahCms\Http\Controllers\Settings'
+        'namespace'  => 'WebReinvent\VaahCms\Http\Controllers\Backend\Settings'
     ],
     function () {
         //------------------------------------------------
-        Route::post( '/assets', 'UserSettingController@getAssets' )
+        Route::get( '/assets', 'UserSettingController@getAssets' )
             ->name( 'vh.backend.settings.env.assets' );
         //------------------------------------------------
-        Route::post( '/list', 'UserSettingController@getList' )
+        Route::get( '/list', 'UserSettingController@getList' )
             ->name( 'vh.backend.settings.env.list' );
         //------------------------------------------------
         Route::post( '/field/store', 'UserSettingController@storeField' )
