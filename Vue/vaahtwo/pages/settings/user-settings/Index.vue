@@ -1,6 +1,7 @@
 <script setup>
 import {onMounted, reactive, ref} from "vue";
 import {useRoute} from 'vue-router';
+import draggable from 'vuedraggable';
 
 import {useUserSettingStore} from "../../../stores/settings/store-user_setting";
 
@@ -73,9 +74,84 @@ onMounted(async () => {
                             </div>
                         </template>
                         <Message severity="info">The inputs of these fields will be stored in <strong>meta</strong> column.</Message>
-                        <p class="py-5 text-center">
-                            No Records
-                        </p>
+
+                        <div class="col-12 m-2">
+                            <div v-if="store.custom_field_list && store.custom_field_list.value
+                                       && store.custom_field_list.value.length > 0">
+                                <draggable item-key="id"
+                                           v-model="store.custom_field_list.value"
+                                           class="dragArea"
+                                           :group="{ name: 'g1', pull: 'clone', put: false }"
+                                           @start="drag=true"
+                                           @end="drag=false">
+                                    <template #item = {element}>
+                                        <div class="col-12">
+                                            <Panel class="draggable-menu">
+                                                <template #header>
+                                                    <p class="control drag">
+                                                        <span>:::</span>
+                                                    </p>
+                                                    <p class="control field-label">
+                                                        <span >{{element.type}}</span>
+                                                    </p>
+                                                    <div class="control">
+                                                        <InputText v-model="store.field.name"
+                                                                   class="w-full"/>
+                                                    </div>
+                                                    <Button class="control button"
+                                                            icon="pi pi-cog"
+                                                            @click="store.toggleFieldOptions"></Button>
+                                                    <Button class="control button"
+                                                            icon="pi pi-trash"
+                                                            @click="store.deleteGroupField(index)"></Button>
+                                                </template>
+                                                <div class="p-datatable p-component
+                                                p-datatable-responsive-scroll p-datatable-sm">
+                                                    <table class="p-datatable-table">
+                                                    <tbody class="p-datatable-tbody">
+                                                    <tr>
+                                                        <td>Is hidden</td>
+                                                        <td>
+                                                            <InputSwitch v-bind:false-value="0"
+                                                                         v-bind:true-value="1">
+                                                            </InputSwitch>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Apply to Registration</td>
+                                                        <td>
+                                                            <InputSwitch v-bind:false-value="0"
+                                                                         v-bind:true-value="1">
+                                                            </InputSwitch>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Min-Length</td>
+                                                        <td><InputNumber class="w-full"/></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Max-Length</td>
+                                                        <td><InputNumber class="w-full"/></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Excerpt</td>
+                                                        <td><Textarea class="w-full"/></td>
+                                                    </tr>
+                                                    </tbody>
+                                                </table>
+                                                </div>
+                                            </Panel>
+                                        </div>
+                                    </template>
+                                </draggable>
+
+                            </div>
+                            <div v-else>
+                                <p class="py-5 text-center">
+                                    No Records
+                                </p>
+                            </div>
+                        </div>
                         <div class="grid justify-content-between">
                             <div class="col-12 md:col-4">
                                 <div class="p-inputgroup">
@@ -96,3 +172,26 @@ onMounted(async () => {
         </Card>
     </div>
 </template>
+<style>
+.control {
+    box-sizing: border-box;
+    clear: both;
+    font-size: .94rem;
+    position: relative;
+    text-align: inherit;
+    background-color: #fafafa;
+    border-color: #dbdbdb;
+    box-shadow: none;
+    color: #7a7a7a;
+}
+.button{
+    cursor: pointer;
+}
+.drag{
+    cursor: grab;
+}
+.field-label {
+    min-width: 150px;
+    pointer-events: none;
+}
+</style>
