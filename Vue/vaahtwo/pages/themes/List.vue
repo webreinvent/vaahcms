@@ -54,14 +54,14 @@ onMounted(async () => {
 
                 <template class="p-1" #header>
 
-                    <div class="flex flex-row">
-                        <div >
+                    <div class="flex flex-row w-full">
+                        <div class="w-6">
                             <b class="mr-1">Themes</b>
                             <Badge v-if="store.list && store.list.total > 0"
                                    :value="store.list.total">
                             </Badge>
                         </div>
-                        <div class="flex">
+                        <div class="w-6">
                             <span class="p-buttonset flex justify-content-end">
                                  <Button type="is-light"
                                           tag="router-link"

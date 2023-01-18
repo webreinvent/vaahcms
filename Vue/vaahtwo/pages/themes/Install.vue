@@ -60,12 +60,11 @@ onMounted(async () => {
                                                class="w-full"
                                                type="search"
                                                icon="search"
-                                               v-model="store.query.q"
-                                               @input="store.delayedSearchThemes"
-                                               @keyup.enter.prevent="store.delayedSearchThemes">
+                                               v-model="store.q"
+                                               @input="store.delayedSearch"
+                                               @keyup.enter.prevent="store.delayedSearch">
                                     </InputText>
                                 </span>
-                            <!--<Button icon="pi pi-times" class="p-button-sm" @click="hideThemes"/>-->
                             <Button class="p-button-outlined" @click="store.closeInstallTheme()" icon="pi pi-times"></Button>
 
 
@@ -90,7 +89,7 @@ onMounted(async () => {
                                         class="p-button-success"
                                         v-if="store.isInstalled(item)" label="Installed"></Button>
                                 <Button icon="pi pi-download"
-                                        class="p-button-outlined" 
+                                        class="p-button-outlined"
                                         v-else
                                         @click="store.install(item)" label="Install"></Button>
                             </template>

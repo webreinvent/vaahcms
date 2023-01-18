@@ -33,40 +33,7 @@ const toggleBulkMenuState = (event) => {
         <div :class="{'flex justify-content-between': store.isViewLarge()}">
 
             <!--left-->
-            <div v-if="store.view === 'large'">
-
-                <!--selected_menu-->
-                <Button
-                    type="button"
-                    @click="toggleSelectedMenuState"
-                    data-testid="themes-actions-menu"
-                    aria-haspopup="true"
-                    aria-controls="overlay_menu">
-                    <i class="pi pi-angle-down"></i>
-                    <Badge v-if="store.action.items.length > 0"
-                           :value="store.action.items.length" />
-                </Button>
-                <Menu ref="selected_menu_state"
-                      :model="store.list_selected_menu"
-                      :popup="true" />
-                <!--/selected_menu-->
-
-                <!--bulk_menu-->
-                <Button
-                    type="button"
-                    @click="toggleBulkMenuState"
-                    data-testid="themes-actions-bulk-menu"
-                    aria-haspopup="true"
-                    aria-controls="bulk_menu_state"
-                    class="ml-1">
-                    <i class="pi pi-ellipsis-h"></i>
-                </Button>
-                <Menu ref="bulk_menu_state"
-                      :model="store.list_bulk_menu"
-                      :popup="true" />
-                <!--/bulk_menu-->
-
-            </div>
+            <div v-if="store.view === 'large'"></div>
             <!--/left-->
 
             <!--right-->

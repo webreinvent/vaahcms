@@ -51,7 +51,7 @@ const toggle = ref();
                  <template #body="prop" class="control">
                      <span class="p-buttonset template">
                          <Button v-if="prop.data.is_active"
-                               class="p-button-sm bg-yellow-300"
+                               class="p-button-sm bg-yellow-300 text-900"
                                @click="store.toggleIsActive(prop.data)">
                              Deactivate
                          </Button>
@@ -81,8 +81,8 @@ const toggle = ref();
                          </Button>
                          <Button class="p-button-danger p-button-sm"
                                  data-testid="themes-table-action-trash"
-                                 v-if="store.isViewLarge() && !prop.data.deleted_at"
-                                 @click="store.itemAction('delete', prop.data)"
+                                 v-if="!prop.data.deleted_at"
+                                 @click="store.confirmDeleteItem(prop.data)"
                                  v-tooltip.top="'Trash'"
                                  icon="pi pi-trash" />
 

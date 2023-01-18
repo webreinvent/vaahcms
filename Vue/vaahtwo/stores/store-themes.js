@@ -19,7 +19,7 @@ let empty_states = {
             trashed: null,
             sort: null,
         },
-        q: '',
+        status: null
     },
     action: {
         type: null,
@@ -67,7 +67,9 @@ export const useThemeStore = defineStore({
         is_fetching_updates: false,
         is_btn_loading: false,
         list_is_loading: false,
-        themes: []
+        themes: [],
+        q: '',
+        module: null,
     }),
     getters: {
 
@@ -138,11 +140,11 @@ export const useThemeStore = defineStore({
         //---------------------------------------------------------------------
         watchStates()
         {
-            watch(this.query.filter, (newVal,oldVal) =>
+            watch(this.query, (newVal,oldVal) =>
                 {
                     this.delayedSearch();
                 },{deep: true}
-            )
+            );
         },
         //---------------------------------------------------------------------
         watchItem()
@@ -165,14 +167,14 @@ export const useThemeStore = defineStore({
             if(this.assets_is_fetching === true){
                 this.assets_is_fetching = false;
 
-                vaah().ajax(
+                await vaah().ajax(
                     this.ajax_url+'/assets',
                     this.afterGetAssets,
                 );
             }
         },
         //---------------------------------------------------------------------
-        afterGetAssets(data, res)
+        afterGetAssets(data)
         {
             if(data)
             {
@@ -181,11 +183,6 @@ export const useThemeStore = defineStore({
                 {
                     this.query.rows = data.rows;
                 }
-
-                if(this.route.params && !this.route.params.id){
-                    this.item = vaah().clone(data.empty_item);
-                }
-
             }
         },
         //---------------------------------------------------------------------
@@ -202,6 +199,7 @@ export const useThemeStore = defineStore({
         //---------------------------------------------------------------------
         afterGetList: function (data, res)
         {
+            this.is_btn_loading = false;
             if(data)
             {
                 this.list = data.list.data;
@@ -400,8 +398,9 @@ export const useThemeStore = defineStore({
         {
             if(data)
             {
-                this.item = data;
+                await this.getAssets();
                 await this.getList();
+                this.item = data;
                 await this.formActionAfter();
                 this.getItemMenu();
             }
@@ -521,7 +520,13 @@ export const useThemeStore = defineStore({
             clearTimeout(this.search.delay_timer);
             this.search.delay_timer = setTimeout(async function() {
                 await self.updateUrlQueryString(self.query);
-                await self.getList();
+
+                if (self.query.q !== null) {
+                    await self.getThemes();
+                }
+                if (self.query.filter.q !== null || self.query.status !== null) {
+                    await self.getList();
+                }
             }, this.search.delay_time);
         },
         //---------------------------------------------------------------------
@@ -532,7 +537,6 @@ export const useThemeStore = defineStore({
             this.action.items = [];
             clearTimeout(this.search.delay_timer);
             this.search.delay_timer = setTimeout(async function() {
-                await self.updateUrlQueryString(self.query);
                 await self.getThemes();
             }, this.search.delay_time);
         },
@@ -605,8 +609,7 @@ export const useThemeStore = defineStore({
         //---------------------------------------------------------------------
         toList()
         {
-            this.item = vaah().clone(this.assets.empty_item);
-            this.$router.push({name: 'themes.index'})
+            this.$router.push({name: 'themes.install'});
         },
         //---------------------------------------------------------------------
         toForm()
@@ -791,8 +794,9 @@ export const useThemeStore = defineStore({
             this.item_menu_list = item_menu;
         },
         //---------------------------------------------------------------------
-        confirmDeleteItem()
+        confirmDeleteItem(item)
         {
+            this.item = item;
             this.form.type = 'delete';
             vaah().confirmDialogDelete(this.confirmDeleteItemAfter);
         },
@@ -883,7 +887,7 @@ export const useThemeStore = defineStore({
         },
         //---------------------------------------------------------------------
         checkUpdate() {
-            // this.is_fetching_updates = true;
+            this.is_fetching_updates = true;
 
             let options = {
                 query: {
@@ -895,6 +899,7 @@ export const useThemeStore = defineStore({
         },
         //---------------------------------------------------------------------
         checkUpdateAfter(data, res) {
+            this.is_fetching_updates = false;
             if(data)
             {
                 this.update('updates_list', data);
@@ -918,22 +923,9 @@ export const useThemeStore = defineStore({
             }
         },
         //---------------------------------------------------------------------
-        confirmDelete: function (theme) {
-            let self = this;
-            this.$buefy.dialog.confirm({
-                title: 'Deleting Theme',
-                message: 'This will <b>delete</b> all files & database of the theme  <b>'+theme.name+'</b>. This action cannot be undone.',
-                confirmText: 'Proceed',
-                type: 'is-danger',
-                container: '.bulma',
-                hasIcon: true,
-                onConfirm: function () {
-                    self.delete(theme);
-                }
-            })
-        },
+
         //---------------------------------------------------------------------
-        delete: function (theme) {
+        delete(theme) {
             this.$Progress.start();
             let params = {
                 action: 'delete',
@@ -956,10 +948,10 @@ export const useThemeStore = defineStore({
             this.$Progress.finish();
             if(data)
             {
-                this.update('assets_is_fetching', false);
+                this.assets_is_fetching = false;
                 this.getAssets();
                 this.getRootAssets();
-                this.$emit('eReloadList');
+
             }
         },
         //---------------------------------------------------------------------
@@ -971,7 +963,8 @@ export const useThemeStore = defineStore({
             let url = this.assets.vaahcms_api_route+'themes';
             let options = {
                 query: {
-                    page: 1
+                    page: 1,
+                    q: this.q
                 }
             };
             vaah().ajax(url, this.getThemesAfter,options);
@@ -981,37 +974,42 @@ export const useThemeStore = defineStore({
             {
                 this.themes = data.list;
             }
-            console.log(this.themes.data);
         },
         //---------------------------------------------------------------------
         isInstalled(item) {
+            console.log(this.assets.installed,item.slug);
             return this.assets.installed.includes(item.slug);
         },
         //---------------------------------------------------------------------
         install(module) {
             this.themes.active_download = module;
             let options = {
-                params: module
+                params: module,
+                method: 'post'
             };
             let url = this.ajax_url+'/download';
             vaah().ajax(url, this.installAfter, options);
         },
         //---------------------------------------------------------------------
-        installAfter(data, res) {
-
+        installAfter(data) {
             if(data)
             {
+                let module = this.themes.active_download;
                 this.themes.active_download = null;
-                this.update('assets_is_fetching', false);
+                this.assets_is_fetching = true;
+                this.getList();
                 this.getAssets();
-                this.getThemes();
             }
-
         },
         closeInstallTheme() {
             this.list_view_width = 'is-12';
             this.$router.push({name: 'themes.index'});
-        }
+        },
+        sync() {
+            this.query.recount = true;
+            this.is_btn_loading = true;
+            this.getList();
+        },
     }
 });
 
