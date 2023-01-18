@@ -1,11 +1,7 @@
 <script setup>
 import {onMounted, reactive, ref} from "vue";
 import {useRoute} from 'vue-router';
-<<<<<<< 2.x-develop
 import draggable from 'vuedraggable';
-import { vaah } from '../../../vaahvue/pinia/vaah'
-=======
->>>>>>> Update: user-settings modification list fetched
 
 import {useUserSettingStore} from "../../../stores/settings/store-user_setting";
 
@@ -143,18 +139,14 @@ onMounted(async () => {
                                                         <span >{{element.type}}</span>
                                                     </p>
                                                     <div class="control">
-                                                        <InputText v-model="element.name"
-                                                                   data-testid="setting-customfield_name"
-                                                                   @input="store.onInputFieldName(element)"
+                                                        <InputText v-model="store.field.name"
                                                                    class="w-full"/>
                                                     </div>
                                                     <Button class="control button"
-                                                            data-testid="setting-customfield_toggle"
                                                             icon="pi pi-cog"
                                                             @click="store.toggleFieldOptions"></Button>
                                                     <Button class="control button"
                                                             icon="pi pi-trash"
-                                                            data-testid="setting-customfield_remove"
                                                             @click="store.deleteGroupField(index)"></Button>
                                                 </template>
                                                 <div class="p-datatable p-component
@@ -164,9 +156,7 @@ onMounted(async () => {
                                                     <tr>
                                                         <td>Is hidden</td>
                                                         <td>
-                                                            <InputSwitch v-model="element.is_hidden"
-                                                                         data-testid="setting-customfield_is_hidden"
-                                                                         v-bind:false-value="0"
+                                                            <InputSwitch v-bind:false-value="0"
                                                                          v-bind:true-value="1">
                                                             </InputSwitch>
                                                         </td>
@@ -174,40 +164,22 @@ onMounted(async () => {
                                                     <tr>
                                                         <td>Apply to Registration</td>
                                                         <td>
-                                                            <InputSwitch v-model="element.to_registration"
-                                                                         data-testid="setting-customfield_to_registration"
-                                                                         v-bind:false-value="0"
-                                                                         v-bind:true-value="1">
-                                                            </InputSwitch>
-                                                        </td>
-                                                    </tr>
-                                                    <tr v-if="element.type === 'password'">
-                                                        <td>Is Password Reveal</td>
-                                                        <td>
-                                                            <InputSwitch v-model="element.is_password_reveal"
-                                                                         data-testid="setting-customfield_is_password_reveal"
-                                                                         v-bind:false-value="0"
+                                                            <InputSwitch v-bind:false-value="0"
                                                                          v-bind:true-value="1">
                                                             </InputSwitch>
                                                         </td>
                                                     </tr>
                                                     <tr>
                                                         <td>Min-Length</td>
-                                                        <td><InputNumber v-model="element.minlength"
-                                                                         data-testid="setting-customfield_minlength"
-                                                                         class="w-full"/></td>
+                                                        <td><InputNumber class="w-full"/></td>
                                                     </tr>
                                                     <tr>
                                                         <td>Max-Length</td>
-                                                        <td><InputNumber v-model="element.maxlength"
-                                                                         data-testid="setting-customfield_maxlength"
-                                                                         class="w-full"/></td>
+                                                        <td><InputNumber class="w-full"/></td>
                                                     </tr>
                                                     <tr>
                                                         <td>Excerpt</td>
-                                                        <td><Textarea v-model="element.excerpt"
-                                                                      data-testid="setting-customfield_excerpt"
-                                                                      class="w-full"/></td>
+                                                        <td><Textarea class="w-full"/></td>
                                                     </tr>
                                                     </tbody>
                                                 </table>
@@ -248,7 +220,6 @@ onMounted(async () => {
         </Card>
     </div>
 </template>
-<<<<<<< 2.x-develop
 <style>
 .control {
     box-sizing: border-box;
@@ -271,9 +242,4 @@ onMounted(async () => {
     min-width: 150px;
     pointer-events: none;
 }
-.inactive{
-    display:none
-}
 </style>
-=======
->>>>>>> Update: user-settings modification list fetched

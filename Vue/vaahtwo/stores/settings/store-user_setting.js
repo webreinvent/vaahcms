@@ -137,11 +137,7 @@ export const useUserSettingStore = defineStore({
             );
         },
         //---------------------------------------------------------------------
-<<<<<<< 2.x-develop
         afterGetList(data, res)
-=======
-        afterGetList: function (data, res)
->>>>>>> Update: user-settings modification list fetched
         {
             this.is_btn_loading = false;
             this.query.recount = null;
@@ -155,6 +151,18 @@ export const useUserSettingStore = defineStore({
                     this.custom_field_list = this.getNewItem();
                 }
             }
+        },
+        //---------------------------------------------------------------------
+        getNewItem() {
+            return {
+                "id": null,
+                "key": null,
+                "category": "user_setting",
+                "label": "custom_fields",
+                "excerpt": null,
+                "type": "json",
+                "value": []
+            };
         },
         //---------------------------------------------------------------------
         addCustomField() {
@@ -186,7 +194,19 @@ export const useUserSettingStore = defineStore({
                 new_item.max = null;
             }
 
-            this.custom_field_list.push(new_item);
+            this.custom_field_list.value.push(new_item);
+        },
+        //---------------------------------------------------------------------
+        deleteGroupField(index) {
+            this.custom_field_list.value.splice(index, 1);
+        },
+        //---------------------------------------------------------------------
+        toggleFieldOptions(event){
+
+            let element = event.target;
+            let target = element.closest('.draggable-menu').find('.p-panel-content');
+            target.toggle();
+
         },
         //---------------------------------------------------------------------
         //---------------------------------------------------------------------
