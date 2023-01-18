@@ -77,13 +77,13 @@ onMounted(async () => {
                             No Records
                         </p>
                         <div class="grid justify-content-between">
-                            <div class="col-12 md:col-3">
+                            <div class="col-12 md:col-4">
                                 <div class="p-inputgroup">
                                     <Dropdown v-model="store.selectedFieldType"
                                               :options="store.fieldTypes"
-                                              optionLabel="name" optionValue="code"
+                                              optionLabel="name" optionValue="value"
                                               placeholder="Select a type" />
-                                    <Button label="Add"></Button>
+                                    <Button label="Add" @click="store.addCustomField"></Button>
                                 </div>
                             </div>
                             <div class="col-12 md:col-3 flex justify-content-end">
