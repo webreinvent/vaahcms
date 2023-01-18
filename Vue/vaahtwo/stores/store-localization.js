@@ -138,7 +138,8 @@ export const useLocalizationStore = defineStore({
                 {
                     if(newVal && newVal !== "")
                     {
-                        this.newVariable = this.newVariable.toUpperCase();
+                        this.newVariable = this.newVariable.toLowerCase();
+                        this.newVariable = this.newVariable.split(' ').join('_');
                     }
                 },{deep: true}
             )
@@ -351,13 +352,11 @@ export const useLocalizationStore = defineStore({
         //---------------------------------------------------------------------
         removeQueryString()
         {
-            this.query_string.cat_id = {
-                lang_id: null,
-                cat_id: null,
-                page: null,
-                filter: null,
-            };
-            this.selectedLanguage = null;
+            this.query_string.filter = null;
+            this.query_string.lang_id = null;
+            this.query_string.cat_id = null;
+            this.query_string.page = null;
+            this.selectedLanguage = this.assets.languages.default.id;
             this.selectedCategory = null;
             this.assets_is_fetching = true;
             this.getAssets();

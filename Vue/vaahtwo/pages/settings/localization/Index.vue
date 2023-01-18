@@ -153,6 +153,7 @@ onMounted(async () => {
                                    class="has-min-height"/>
                         <Button icon="pi pi-copy"
                                 class=" has-max-height"
+                                :disabled="!item.id"
                                 data-testid="localization-copyString"
                                 @click="store.getCopy(item)"
                         />
