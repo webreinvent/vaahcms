@@ -62,12 +62,13 @@ class ThemesController extends Controller
 
         $list = Theme::orderBy('created_at', 'DESC');
 
-        if($request->has('q'))
+
+        if($request->filter && array_key_exists('q',$request->filter))
         {
             $list->where(function ($s) use ($request) {
-                $s->where('name', 'LIKE', '%'.$request->q.'%')
-                    ->orWhere('slug', 'LIKE', '%'.$request->q.'%')
-                    ->orWhere('title', 'LIKE', '%'.$request->q.'%');
+                $s->where('name', 'LIKE', '%'.$request->filter['q'].'%')
+                    ->orWhere('slug', 'LIKE', '%'.$request->filter['q'].'%')
+                    ->orWhere('title', 'LIKE', '%'.$request->filter['q'].'%');
             });
         }
 
@@ -100,10 +101,11 @@ class ThemesController extends Controller
         return response()->json($response);
 
     }
+
     //----------------------------------------------------------
+
     public function getItem(Request $request, $id)
     {
-
         if(!\Auth::user()->hasPermission('can-read-theme'))
         {
             $response['success'] = false;
@@ -118,7 +120,6 @@ class ThemesController extends Controller
     //----------------------------------------------------------
     public function download(Request $request)
     {
-
         if(!\Auth::user()->hasPermission('can-install-theme'))
         {
             $response['success'] = false;
@@ -149,8 +150,6 @@ class ThemesController extends Controller
     //----------------------------------------------------------
     public function installUpdates(Request $request)
     {
-
-        echo "<pre>"; print_r($request->all()); die;
         if(!\Auth::user()->hasPermission('can-update-theme'))
         {
             $response['success'] = false;
