@@ -157,9 +157,9 @@ export const useUserSettingStore = defineStore({
             }
         },
         //---------------------------------------------------------------------
-        addCustomField: function () {
-            if(!this.field_type){
-                this.$vaah.toastErrors(['Select field Type first.']);
+        addCustomField() {
+            if(!this.selectedFieldType){
+                vaah().toastErrors(['Select field Type first.']);
                 return false;
             }
             let new_item = {
@@ -170,23 +170,23 @@ export const useUserSettingStore = defineStore({
                 "is_hidden": false,
                 "to_registration": false,
             };
-            if(this.field_type === 'textarea'
-                || this.field_type === 'text'
-                || this.field_type === 'email'){
+            if(this.selectedFieldType === 'textarea'
+                || this.selectedFieldType === 'text'
+                || this.selectedFieldType === 'email'){
                 new_item.maxlength = null;
                 new_item.minlength = null;
             }
 
-            if(this.field_type === 'password'){
+            if(this.selectedFieldType === 'password'){
                 new_item.is_password_reveal = null;
             }
 
-            if(this.field_type === 'number'){
+            if(this.selectedFieldType === 'number'){
                 new_item.min = null;
                 new_item.max = null;
             }
 
-            this.custom_field_list.value.push(new_item);
+            this.custom_field_list.push(new_item);
         },
         //---------------------------------------------------------------------
         //---------------------------------------------------------------------
