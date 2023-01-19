@@ -224,7 +224,7 @@ export const useThemeStore = defineStore({
             }else{
                 this.$router.push({name: 'themes.index'});
             }
-            await this.getItemMenu();
+            // await this.getItemMenu();
             await this.getFormMenu();
         },
         //---------------------------------------------------------------------
@@ -398,11 +398,11 @@ export const useThemeStore = defineStore({
         {
             if(data)
             {
+                this.assets_is_fetching = true;
                 await this.getAssets();
                 await this.getList();
                 this.item = data;
                 await this.formActionAfter();
-                this.getItemMenu();
             }
         },
         //---------------------------------------------------------------------
@@ -426,6 +426,8 @@ export const useThemeStore = defineStore({
                     this.item = null;
                     break;
                 case 'delete':
+                case 'activate':
+                case 'deactivate':
                     this.item = null;
                     this.toList();
                     break;
@@ -580,6 +582,7 @@ export const useThemeStore = defineStore({
         async clearSearch()
         {
             this.query.filter.q = null;
+            this.query.status= null;
             await this.updateUrlQueryString(this.query);
             await this.getList();
         },
@@ -609,7 +612,7 @@ export const useThemeStore = defineStore({
         //---------------------------------------------------------------------
         toList()
         {
-            this.$router.push({name: 'themes.install'});
+            // this.$router.go();
         },
         //---------------------------------------------------------------------
         toForm()
@@ -755,45 +758,6 @@ export const useThemeStore = defineStore({
                 },
             ];
         },
-        //---------------------------------------------------------------------
-        getItemMenu()
-        {
-            let item_menu = [];
-
-            if(this.item && this.item.deleted_at)
-            {
-
-                item_menu.push({
-                    label: 'Restore',
-                    icon: 'pi pi-refresh',
-                    command: () => {
-                        this.itemAction('restore');
-                    }
-                });
-            }
-
-            if(this.item && this.item.id && !this.item.deleted_at)
-            {
-                item_menu.push({
-                    label: 'Trash',
-                    icon: 'pi pi-times',
-                    command: () => {
-                        this.itemAction('trash');
-                    }
-                });
-            }
-
-            item_menu.push({
-                label: 'Delete',
-                icon: 'pi pi-trash',
-                command: () => {
-                    this.confirmDeleteItem('delete');
-                }
-            });
-
-            this.item_menu_list = item_menu;
-        },
-        //---------------------------------------------------------------------
         confirmDeleteItem(item)
         {
             this.item = item;
@@ -924,37 +888,6 @@ export const useThemeStore = defineStore({
         },
         //---------------------------------------------------------------------
 
-        //---------------------------------------------------------------------
-        delete(theme) {
-            this.$Progress.start();
-            let params = {
-                action: 'delete',
-                inputs: theme
-            };
-
-            if(this.page.active_item && this.page.active_item.id === theme.id
-                && this.$router.name === 'theme.view'
-            )
-            {
-                this.update('active_item', null);
-                this.$router.push({name: 'theme.list'});
-            }
-
-            let url = this.ajax_url+'/actions';
-            vaah().ajax(url, params, this.deleteAfter);
-        },
-        //---------------------------------------------------------------------
-        deleteAfter: function (data, res) {
-            this.$Progress.finish();
-            if(data)
-            {
-                this.assets_is_fetching = false;
-                this.getAssets();
-                this.getRootAssets();
-
-            }
-        },
-        //---------------------------------------------------------------------
         setSixColumns() {
             this.list_view_width = 'is-6';
             this.$router.push({name: 'themes.install'});
@@ -977,8 +910,7 @@ export const useThemeStore = defineStore({
         },
         //---------------------------------------------------------------------
         isInstalled(item) {
-            console.log(this.assets.installed,item.slug);
-            return this.assets.installed.includes(item.slug);
+            return vaah().existInArray(this.assets.installed,item.slug);
         },
         //---------------------------------------------------------------------
         install(module) {
@@ -994,7 +926,6 @@ export const useThemeStore = defineStore({
         installAfter(data) {
             if(data)
             {
-                let module = this.themes.active_download;
                 this.themes.active_download = null;
                 this.assets_is_fetching = true;
                 this.getList();

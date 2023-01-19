@@ -60,48 +60,17 @@ const toggleItemMenu = (event) => {
 
         <Panel v-if="store && store.item">
 
-            <template class="p-1" #header>
-
-                <div class="flex flex-row">
-
-                    <div class="p-panel-title">
-                        #{{store.item.id}}
+            <template #header>
+                <div class="flex justify-content-between align-items-center w-full">
+                    <h5 class="white-space-nowrap font-semibold text-lg pt-2">{{ store.item.name}}</h5>
+                    <div class="p-inputgroup justify-content-end w-6 flex">
+                        <h5 class="white-space-nowrap font-semibold text-lg pt-2 pr-3">#{{ store.item.id }}</h5>
+                        <Button class="p-button-outlined" @click="store.closeInstallTheme()" icon="pi pi-times"></Button>
                     </div>
-
                 </div>
-
             </template>
 
             <template #icons>
-
-
-                <div class="p-inputgroup">
-                    <Button label="Edit"
-                            @click="store.toEdit(store.item)"
-                            data-testid="themes-item-to-edit"
-                            icon="pi pi-save"/>
-
-                    <!--item_menu-->
-                    <Button
-                        type="button"
-                        @click="toggleItemMenu"
-                        data-testid="themes-item-menu"
-                        icon="pi pi-angle-down"
-                        aria-haspopup="true"/>
-
-                    <Menu ref="item_menu_state"
-                          :model="store.item_menu_list"
-                          :popup="true" />
-                    <!--/item_menu-->
-
-                    <Button class="p-button-primary"
-                            icon="pi pi-times"
-                            data-testid="themes-item-to-list"
-                            @click="store.toList()"/>
-
-                </div>
-
-
 
             </template>
 
@@ -154,7 +123,13 @@ const toggleItemMenu = (event) => {
                             />
                         </template>
 
-                        <template v-else-if="column === 'is_active'">
+                        <template v-else-if="column === 'is_active'
+                                            || column === 'is_update_available'
+                                            || column === 'is_assets_published'
+                                            || column === 'is_migratable'
+                                            || column === 'is_default'
+                                            || column === 'is_sample_data_available'
+                        ">
                             <VhViewRow :label="column"
                                        :value="value"
                                        type="yes-no"
