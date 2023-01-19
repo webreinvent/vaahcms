@@ -13,6 +13,7 @@ use WebReinvent\VaahCms\Entities\Language;
 use WebReinvent\VaahCms\Entities\Role;
 use WebReinvent\VaahCms\Entities\Setting;
 use WebReinvent\VaahCms\Libraries\VaahBackup;
+use WebReinvent\VaahCms\Libraries\VaahHelper;
 
 
 class GeneralController extends Controller
@@ -146,6 +147,13 @@ class GeneralController extends Controller
                 $response['errors'][] = 'Something went wrong.';
             }
         }
+
+        //clear cache
+        VaahHelper::clearCache();
+
+        $response['status'] = 'success';
+        $response['data'][] = '';
+        $response['messages'][] = 'Settings successful saved';
 
         return $response;
 
