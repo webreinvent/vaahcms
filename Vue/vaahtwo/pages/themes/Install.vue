@@ -66,8 +66,6 @@ onMounted(async () => {
                                     </InputText>
                                 </span>
                             <Button class="p-button-outlined" @click="store.closeInstallTheme()" icon="pi pi-times"></Button>
-
-
                         </div>
                     </div>
                 </template>
@@ -100,13 +98,10 @@ onMounted(async () => {
             </Card>
         </div>
 
-        <!--paginator-->
-        <!--<Paginator v-model:rows="store.query.rows"
-                   :totalRecords="store.themes.list.total"
+        <Paginator v-model:rows="store.query.rows"
+                   :totalRecords="store.themes.total"
                    @page="store.paginate($event)"
                    :rowsPerPageOptions="store.themes.rows_per_page">
-        </Paginator>-->
-        <!--/paginator-->
-
+        </Paginator>
     </div>
 </template>
