@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use WebReinvent\VaahCms\Entities\Migration;
-use WebReinvent\VaahCms\Entities\Module;
+use WebReinvent\VaahCms\Models\Module;
 
 
 class ModulesController extends Controller
@@ -24,9 +24,8 @@ class ModulesController extends Controller
     //----------------------------------------------------------
 
     //----------------------------------------------------------
-    public function assets(Request $request)
+    public function getAssets(Request $request)
     {
-
         if(!\Auth::user()->hasPermission('has-access-of-module-section'))
         {
             $response['success'] = false;
@@ -35,7 +34,7 @@ class ModulesController extends Controller
             return response()->json($response);
         }
 
-        Module::syncAllModules();
+        //Module::syncAllModules();
 
         $data['vaahcms_api_route'] = config('vaahcms.api_route');
         $data['debug'] = config('vaahcms.debug');
@@ -183,8 +182,13 @@ class ModulesController extends Controller
     }
 
     //----------------------------------------------------------
-    public function actions(Request $request)
+    public function actions(Request $request,$id,$action)
     {
+        $request->merge([
+            'inputs' => ['id' => $id],
+            'action' => $action
+        ]);
+
         $rules = array(
             'action' => 'required',
             'inputs' => 'required',

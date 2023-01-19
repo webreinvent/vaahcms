@@ -1,14 +1,15 @@
-<?php namespace WebReinvent\VaahCms\Entities;
+<?php namespace WebReinvent\VaahCms\Models;
 
 use DateTimeInterface;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
+use WebReinvent\VaahCms\Entities\Setting;
+use WebReinvent\VaahCms\Entities\Migration;
 use ZanySoft\Zip\Zip;
 
-
-class Module extends Model {
+class ModuleBase extends Model {
 
     use SoftDeletes;
     //-------------------------------------------------
@@ -45,8 +46,6 @@ class Module extends Model {
     ];
 
     //-------------------------------------------------
-
-
 
     //-------------------------------------------------
     protected function serializeDate(DateTimeInterface $date)
@@ -363,7 +362,7 @@ class Module extends Model {
     public static function activateItem($slug)
     {
 
-        $module = Module::slug($slug)->first();
+        $module = self::slug($slug)->first();
 
         /*
          * get module dependencies

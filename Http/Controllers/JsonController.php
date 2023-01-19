@@ -9,7 +9,7 @@ use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use VaahCms\Modules\Cms\Entities\MenuItem;
 use VaahCms\Modules\Cms\Entities\Page;
-use WebReinvent\VaahCms\Entities\Module;
+use WebReinvent\VaahCms\Models\Module;
 use WebReinvent\VaahCms\Entities\Notified;
 use WebReinvent\VaahCms\Entities\Theme;
 use WebReinvent\VaahCms\Models\User;

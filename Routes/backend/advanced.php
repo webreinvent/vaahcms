@@ -49,7 +49,7 @@ Route::group(
     [
         'prefix' => 'backend/vaah/jobs',
         'middleware' => ['web', 'has.backend.access'],
-        'namespace' => 'WebReinvent\\VaahCms\Http\Controllers\Backend\Advanced',
+        'namespace' => 'WebReinvent\VaahCms\Http\Controllers\Backend\Advanced',
     ],
     function () {
         /**

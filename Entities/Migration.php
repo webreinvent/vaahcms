@@ -2,6 +2,7 @@
 
 use DateTimeInterface;
 use Illuminate\Database\Eloquent\Model;
+use WebReinvent\VaahCms\Models\Module;
 
 class Migration extends Model {
 
