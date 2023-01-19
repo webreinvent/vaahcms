@@ -1,3 +1,30 @@
+<script setup>
+import {onMounted, reactive, ref} from "vue";
+import {useRoute} from 'vue-router';
+import draggable from 'vuedraggable';
+
+import {useGeneralStore} from "../../../stores/settings/store-general_setting";
+
+const store = useGeneralStore();
+const route = useRoute();
+
+import { useConfirm } from "primevue/useconfirm";
+
+const confirm = useConfirm();
+onMounted(async () => {
+
+    /**
+     * fetch assets required for the crud
+     * operation
+     */
+    await store.getAssets();
+
+    /**
+     * fetch list of records
+     */
+    await store.getList();
+});
+</script>
 <template>
     <div>
         <Card>
@@ -372,107 +399,3 @@
         </Card>
     </div>
 </template>
-
-<script>
-export default {
-    name: "GeneralSettings",
-
-    data() {
-        return {
-            activeIndex: [0],
-            languages: ['English', 'Russian', 'Spanish'],
-            selectedLanguage: 'English',
-            visibility: 'Visible',
-            visibitlityOptions: ['Visible', 'Invisible'],
-            copyrightText: 'app-name',
-            copyrightTextOptions: [{
-                label:'Use App Name',
-                value:'app-name'
-            },
-                {
-                    label:'Custom',
-                    value: 'custom'
-                }
-            ],
-            copyrightLink: 'Use App Url',
-            copyrightLinkOptions: [
-                {
-                    label:'Use App Url',
-                    value:'app-url'
-                },
-                {
-                    label:'Custom',
-                    value: 'custom'
-                }
-            ],
-            copyrightYear: 'Use Current Year',
-            copyrightYearOptions: [
-                {
-                    label:'Use Current Year',
-                    value:'current-year'
-                },
-                {
-                    label:'Custom',
-                    value: 'custom'
-                }
-            ],
-            maintenanceMode: 'Disable',
-            maintenanceModeOptions: ['Disable', 'Enable'],
-            passwordProtection: 'Disable',
-            passwordProtectionOptions: ['Disable', 'Enable'],
-            laravelQueues: 'Enable',
-            laravelQueuesOptions: ['Disable', 'Enable'],
-            redirectAfterLogout: 'Backend',
-            redirectAfterLogoutOptions: ['Backend', 'Frontend', 'Custom'],
-            registrationRoles: ['Registered'],
-            allowedFiles: ['jpg', 'jpeg'],
-            dateFormatOptions: ['y-m-d', 'y/m/d', 'y.m.d', 'Custom'],
-            dateFormat: 'y-m-d',
-            timeFormatOptions: ['H:i:s', 'h:i A', 'h:i:s A', 'Custom'],
-            timeFormat: 'H:i:s',
-            dateTimeFormatOptions: ['Y-m-d H:i:s', 'Y-m-d h:i A', 'd-M-Y H:i', 'Custom'],
-            dateTimeFormat: 'Y-m-d H:i:s',
-            socialMediaLinks: [{title:'Facebook',icon:'pi-facebook'}, {title:'Twitter',icon:'pi-twitter'}, {title:'Linkedin',icon:'pi-linkedin'}, {title:'Youtube',icon:'pi-youtube'}, {title:'Instagram',icon:'pi-instagram'}, {title:'Github',icon:'pi-github'}],
-            addLink: null,
-            showLinkInput: true,
-            metaOption:null,
-            metaOptions: [
-                {
-                    label:'Google Webmaster',
-                    value:'google-webmaster'
-                },
-                {
-                    label:'Open Graph (Facebook)',
-                    value: 'open-graph-fb'
-                }
-            ],
-
-        }
-    },
-
-    methods: {
-        expandAll() {
-            let accordionTabs = document.getElementById('accordionTabContainer').children.length;
-            for (let i = 0; i <= accordionTabs; i++) {
-                this.activeIndex.push(i);
-            }
-        },
-        collapseAll() {
-            this.activeIndex = [];
-        },
-        addLinkHandler() {
-            if (!this.showLinkInput) {
-                return this.showLinkInput = true;
-            } else if (this.showLinkInput && this.addLink !== "" && this.addLink !== null) {
-                this.socialMediaLinks.push({title:this.addLink,icon:'pi-link'});
-                this.addLink = null;
-                return this.showLinkInput = true;
-            }
-        }
-    }
-}
-</script>
-
-<style lang="scss">
-
-</style>
