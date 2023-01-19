@@ -21,14 +21,14 @@ Route::group(
     [
         'prefix'     => 'backend/vaah/settings/general',
         'middleware' => ['web','has.backend.access'],
-        'namespace'  => 'WebReinvent\VaahCms\Http\Controllers\Settings'
+        'namespace'  => 'WebReinvent\VaahCms\Http\Controllers\Backend\Settings'
     ],
     function () {
         //------------------------------------------------
         Route::get( '/assets', 'GeneralController@getAssets' )
             ->name( 'vh.backend.settings.general.assets' );
         //------------------------------------------------
-        Route::post( '/list', 'GeneralController@getList' )
+        Route::get( '/list', 'GeneralController@getList' )
             ->name( 'vh.backend.settings.general.list' );
         //------------------------------------------------
         Route::post( '/store/site/settings', 'GeneralController@storeSiteSettings' )
