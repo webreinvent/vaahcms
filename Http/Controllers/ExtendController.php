@@ -9,7 +9,7 @@ use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
 use WebReinvent\VaahCms\Models\FailedJob;
 use WebReinvent\VaahCms\Models\Job;
-use WebReinvent\VaahCms\Entities\Module;
+use WebReinvent\VaahCms\Models\Module;
 use WebReinvent\VaahCms\Entities\Setting;
 use WebReinvent\VaahCms\Models\Theme;
 use WebReinvent\VaahCms\Http\Controllers\Advanced\LogsController;

@@ -3,7 +3,7 @@
 namespace WebReinvent\VaahCms\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use WebReinvent\VaahCms\Entities\Module;
+use WebReinvent\VaahCms\Models\Module;
 use WebReinvent\VaahCms\Libraries\VaahSetup;
 use WebReinvent\VaahCms\Loaders\ModulesLoader;
 
