@@ -94,7 +94,6 @@ class UserSettingController extends Controller
         $rules = array(
             'value.*.name' => 'required',
         );
-
         $validator = \Validator::make( $inputs, $rules);
         if ( $validator->fails() ) {
 
