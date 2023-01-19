@@ -1961,7 +1961,10 @@ class User extends Authenticatable
         $response['data'] = null;
 
         if(!config('settings.global.mfa_status')
-            || config('settings.global.mfa_status') === 'disable'){
+            || config('settings.global.mfa_status') === 'disable'
+            || !is_array(config('settings.global.mfa_methods'))
+            || (is_array(config('settings.global.mfa_methods'))
+            && count(config('settings.global.mfa_methods')) == 0)){
             $has_security = false;
         }
 
