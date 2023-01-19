@@ -74,23 +74,6 @@ export const useUserSettingStore = defineStore({
     },
     actions: {
         //---------------------------------------------------------------------
-        watchItem()
-        {
-            // if(this.new_variable){
-            watch(() => this.new_variable, (newVal,oldVal) =>
-                {
-                    if(newVal && newVal !== "")
-                    {
-                        this.new_variable = this.new_variable.toUpperCase();
-                        // this.new_variable = this.new_variable.split('_ ').join('_');
-                        this.new_variable = this.new_variable.split(' ').join('_');
-
-                    }
-                },{deep: true}
-            )
-            // }
-        },
-        //---------------------------------------------------------------------
         async getAssets() {
 
             if(this.assets_is_fetching === true){
@@ -188,11 +171,62 @@ export const useUserSettingStore = defineStore({
         },
         //---------------------------------------------------------------------
         toggleFieldOptions(event){
-
             let element = event.target;
-            let target = element.closest('.draggable-menu').find('.p-panel-content');
-            target.toggle();
+            // let target = element.closest('.draggable-menu').find('.p-panel-content');
+            let check = element.closest('.draggable-menu').children[1].classList;
+            if(check.length == 1){
+                element.closest('.draggable-menu').children[1].classList.add('inactive');
+            } else {
+                element.closest('.draggable-menu').children[1].classList.remove('inactive');
+            }
 
+        },
+        //---------------------------------------------------------------------
+        onInputFieldName(element) {
+            element.slug = vaah().strToSlug(element.name,'_');
+        },
+        //---------------------------------------------------------------------
+        storeField(item) {
+            let options = {
+                method: 'post',
+            };
+
+            options.params = {
+                item:item
+            };
+            let ajax_url = this.ajax_url+'/field/store';
+            vaah().ajax(ajax_url, this.storeCustomFieldAfter, options);
+        },
+        //---------------------------------------------------------------------
+        storeFieldAfter(data, res) {
+            this.getList();
+        },
+        //---------------------------------------------------------------------
+        storeCustomField() {
+            let options = {
+                method: 'post',
+            };
+
+            options.params= {
+                item : this.custom_field_list
+            };
+            let ajax_url = this.ajax_url+'/custom-field/store';
+            vaah().ajax(ajax_url, this.storeCustomFieldAfter, options);
+        },
+        //---------------------------------------------------------------------
+        storeCustomFieldAfter(data, res) {
+
+            if(res.data.status === 'success'){
+                this.getList();
+            }
+
+        },
+        //---------------------------------------------------------------------
+        expandAll() {
+            this.activeIndex = [0,1];
+        },
+        collapseAll() {
+            this.activeIndex = [];
         },
         //---------------------------------------------------------------------
         //---------------------------------------------------------------------
