@@ -68,6 +68,36 @@ export const useGeneralStore = defineStore({
             {name:"Number",value:"number"},
             {name:"Password",value:"password"}
         ],
+        languages: null,
+        selectedLanguage: null,
+        visibility: 'Visible',
+        visibitlityOptions: ['Visible', 'Invisible'],
+        redirectAfterLogout: 'Backend',
+        redirectAfterLogoutOptions: ['Backend', 'Frontend', 'Custom'],
+        copyrightText: 'app-name',
+        copyrightLink: 'Use App Url',
+        copyrightYear: 'Use Current Year',
+        passwordProtection: 'Disable',
+        passwordProtectionOptions: ['Disable', 'Enable'],
+        laravelQueues: 'Enable',
+        laravelQueuesOptions: ['Disable', 'Enable'],
+        socialMediaLinks: null,
+        addLink: null,
+        showLinkInput: true,
+        dateFormatOptions: ['Y-m-d', 'y/m/d', 'y.m.d', 'Custom'],
+        dateFormat: 'y-m-d',
+        timeFormatOptions: ['H:i:s', 'h:i A', 'h:i:s A', 'Custom'],
+        timeFormat: 'H:i:s',
+        dateTimeFormatOptions: ['Y-m-d H:i:s', 'Y-m-d h:i A', 'd-M-Y H:i', 'Custom'],
+        dateTimeFormat: 'Y-m-d H:i:s',
+        metaTag: null,
+        scriptTag:{
+            script_after_body_start:null,
+            script_after_head_start:null,
+            script_before_body_close:null,
+            script_before_head_close:null,
+        },
+        value:null,
     }),
     getters: {
 
@@ -91,6 +121,10 @@ export const useGeneralStore = defineStore({
             if(data)
             {
                 this.assets = data;
+                this.languages = data.languages;
+                this.allowedFiles = data.file_types;
+                this.metaOptions = data.vh_meta_attributes;
+
             }
         },
         //---------------------------------------------------------------------
@@ -108,18 +142,152 @@ export const useGeneralStore = defineStore({
         //---------------------------------------------------------------------
         afterGetList(data, res)
         {
-            this.is_btn_loading = false;
-            this.query.recount = null;
-
             if (data) {
-                this.field_list = data.list.fields;
-
-                if(data.list.custom_fields){
-                    this.custom_field_list = data.list.custom_fields;
-                }else{
-                    this.custom_field_list = this.getNewItem();
-                }
+                this.list = data.list;
+                this.socialMediaLinks = data.links;
+                this.scriptTag = data.scripts;
+                this.metaTag = data.meta_tags;
             }
+        },
+        //---------------------------------------------------------------------
+        getCopy(value)
+        {
+           let text =  "{!! config('settings.global."+value+"'); !!}";
+            navigator.clipboard.writeText(text);
+            vaah().toastSuccess(['Copied']);
+        },
+        //---------------------------------------------------------------------
+        removeVariable(item) {
+
+            if(item.id)
+            {
+                this.socialMediaLinks = vaah().removeInArrayByKey(this.socialMediaLinks, item, 'id');
+            } else
+            {
+                this.socialMediaLinks = vaah().removeInArrayByKey(this.socialMediaLinks, item, 'count');
+            }
+            vaah().toastErrors(['Removed']);
+        },
+        //---------------------------------------------------------------------
+        storeSiteSettings() {
+            let options = {
+                method: 'post',
+                params:{
+                    list: this.list
+                }
+            };
+
+            let ajax_url = this.ajax_url+'/store/site/settings';
+            vaah().ajax(ajax_url, this.storeSiteSettingsAfter, options);
+        },
+        //---------------------------------------------------------------------
+        storeSiteSettingsAfter(){
+            this.getList();
+        },
+        //---------------------------------------------------------------------
+        storeLinks(){
+            let options = {
+                method: 'post',
+            };
+
+            options.params = { links: this.socialMediaLinks };
+
+            let ajax_url = this.ajax_url+'/store/links';
+            vaah().ajax(ajax_url, this.storeLinksAfter, options);
+        },
+        //---------------------------------------------------------------------
+        storeLinksAfter(){
+            this.getList();
+        },
+        //---------------------------------------------------------------------
+        storeScript(){
+            let options = {
+                method: 'post',
+            };
+
+            options.params = { list: this.scriptTag };
+
+            let ajax_url = this.ajax_url+'/store/site/settings';
+            vaah().ajax(ajax_url, this.storeScriptAfter, options);
+        },
+        //---------------------------------------------------------------------
+        storeScriptAfter(){
+            this.getList();
+        },
+        //---------------------------------------------------------------------
+        expandAll() {
+            let accordionTabs = document.getElementById('accordionTabContainer').children.length;
+            for (let i = 0; i <= accordionTabs; i++) {
+                this.activeIndex.push(i);
+            }
+        },
+        //---------------------------------------------------------------------
+        collapseAll() {
+            this.activeIndex = [];
+        },
+        //---------------------------------------------------------------------
+        addLinkHandler() {
+            if (!this.showLinkInput) {
+                return this.showLinkInput = true;
+            } else if (this.showLinkInput && this.addLink !== "" && this.addLink !== null) {
+                this.socialMediaLinks.push({label: this.addLink, icon: 'pi-link'});
+                this.addLink = null;
+                return this.showLinkInput = true;
+            }
+        },
+        //---------------------------------------------------------------------
+        addMetaTags() {
+
+            let count = this.metaTag.length;
+
+            let item = {
+                id: null,
+                uid: count,
+                category: "global",
+                label: "Meta Tag",
+                excerpt: null,
+                type: "meta_tags",
+                key: "meta_tags_"+count,
+                value: {
+                    attribute: 'name',
+                    attribute_value: '',
+                    content: '',
+                },
+                created_at: null,
+                updated_at: null,
+            };
+
+            this.metaTag.push(item);;
+
+        },
+        //---------------------------------------------------------------------
+        storeTags() {
+
+            let options = {
+                method: 'post',
+                params: this.metaTag
+            };
+
+            let ajax_url = this.ajax_url+'/store/meta/tags';
+            vaah().ajax(ajax_url, this.storeTagsAfter, options);
+        },
+        //---------------------------------------------------------------------
+        storeTagsAfter(data, res) {
+            this.getList();
+        },
+        //---------------------------------------------------------------------
+        clearCache() {
+
+            let options = {
+                method: 'get',
+            };
+
+            let ajax_url = this.ajax_url+'/clear/cache';
+            vaah().ajax(ajax_url, this.clearCacheAfter, options);
+        },
+        //---------------------------------------------------------------------
+        clearCacheAfter(data, res) {
+            window.location.reload(true);
         },
         //---------------------------------------------------------------------
         //---------------------------------------------------------------------
