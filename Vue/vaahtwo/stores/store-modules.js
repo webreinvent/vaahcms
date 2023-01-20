@@ -1,11 +1,10 @@
-import {watch} from 'vue'
-import {acceptHMRUpdate, defineStore} from 'pinia'
-import qs from 'qs'
-import {vaah} from '../vaahvue/pinia/vaah'
+import {watch} from 'vue';
+import {acceptHMRUpdate, defineStore} from 'pinia';
+import qs from 'qs';
+import {vaah} from '../vaahvue/pinia/vaah';
+import { useRootStore } from "./root"
 
 let model_namespace = 'WebReinvent\\VaahCms\\Models\\Module';
-
-
 let base_url = document.getElementsByTagName('base')[0].getAttribute("href");
 let ajax_url = base_url + "/vaah/modules";
 
@@ -19,6 +18,8 @@ let empty_states = {
             trashed: null,
             sort: null,
         },
+        q: null,
+        status: null
     },
     action: {
         type: null,
@@ -62,7 +63,18 @@ export const useModuleStore = defineStore({
         list_bulk_menu: [],
         item_menu_list: [],
         item_menu_state: null,
-        form_menu_list: []
+        form_menu_list: [],
+        modules: {
+            query_string: {
+                q: '',
+                page: ''
+            },
+            list: []
+        },
+        is_fetching_updates : false,
+        is_btn_loading: false,
+        module: null,
+        selected_item: null
     }),
     getters: {
 
@@ -133,7 +145,7 @@ export const useModuleStore = defineStore({
         //---------------------------------------------------------------------
         watchStates()
         {
-            watch(this.query.filter, (newVal,oldVal) =>
+            watch(this.query, (newVal,oldVal) =>
                 {
                     this.delayedSearch();
                 },{deep: true}
@@ -155,11 +167,10 @@ export const useModuleStore = defineStore({
                 }
         },
         //---------------------------------------------------------------------
-        async getAssets() {
-
+        async getAssets()
+        {
             if(this.assets_is_fetching === true){
                 this.assets_is_fetching = false;
-
                 vaah().ajax(
                     this.ajax_url+'/assets',
                     this.afterGetAssets,
@@ -167,7 +178,7 @@ export const useModuleStore = defineStore({
             }
         },
         //---------------------------------------------------------------------
-        afterGetAssets(data, res)
+        afterGetAssets(data)
         {
             if(data)
             {
@@ -176,11 +187,6 @@ export const useModuleStore = defineStore({
                 {
                     this.query.rows = data.rows;
                 }
-
-                // if(this.route.params && !this.route.params.id){
-                //     this.item = vaah().clone(data.empty_item);
-                // }
-
             }
         },
         //---------------------------------------------------------------------
@@ -188,6 +194,7 @@ export const useModuleStore = defineStore({
             let options = {
                 query: vaah().clone(this.query)
             };
+
             await vaah().ajax(
                 this.ajax_url,
                 this.afterGetList,
@@ -372,7 +379,7 @@ export const useModuleStore = defineStore({
                  */
                 case 'delete':
                     options.method = 'DELETE';
-                    ajax_url += '/'+item.id
+                    ajax_url += '/'+item.id+'/action/'+type
                     break;
                 /**
                  * Update a record's one column or very few columns,
@@ -394,11 +401,14 @@ export const useModuleStore = defineStore({
         //---------------------------------------------------------------------
         async itemActionAfter(data, res)
         {
-            console.log('kjskdljfkld');
             if(data)
             {
                 this.item = data;
+                this.assets_is_fetching = true;
+
                 await this.getList();
+                await this.getAssets();
+
                 await this.formActionAfter();
                 this.getItemMenu();
             }
@@ -519,8 +529,19 @@ export const useModuleStore = defineStore({
             this.action.items = [];
             clearTimeout(this.search.delay_timer);
             this.search.delay_timer = setTimeout(async function() {
-                await self.updateUrlQueryString(self.query);
-                await self.getList();
+                if ((self.query.q !== null && self.query.q !== undefined)
+                    || (self.query.status !== '' && self.query.status !== null && self.query.status !== undefined)
+                ) {
+                    await self.updateUrlQueryString(self.query);
+                    await self.getList();
+                }
+
+                if (self.modules.query_string.q !== null && self.modules.query_string.q !== undefined) {
+                    await self.updateUrlQueryString(self.query);
+                    await self.getModules();
+                }
+
+
             }, this.search.delay_time);
         },
         //---------------------------------------------------------------------
@@ -582,6 +603,11 @@ export const useModuleStore = defineStore({
             {
                 this.query.filter[key] = null;
             }
+            for(let key in this.query)
+            {
+                if (key === 'filter') continue;
+                this.query[key] = null;
+            }
             await this.updateUrlQueryString(this.query);
         },
         //---------------------------------------------------------------------
@@ -592,12 +618,12 @@ export const useModuleStore = defineStore({
         //---------------------------------------------------------------------
         toList()
         {
-            // console.log(this.assets.empty_item !== undefined);
-            // if (this.assets.empty_item !== undefined && this.assets.empty_item !== '') {
-            //     this.item = vaah().clone(this.assets.empty_item);
-            // }
 
-            // this.$router.push({name: 'modules.index'})
+            if (this.assets.empty_item !== undefined && this.assets.empty_item !== '') {
+                this.item = vaah().clone(this.assets.empty_item);
+            }
+
+            this.$router.push({name: 'modules.index'})
         },
         //---------------------------------------------------------------------
         toForm()
@@ -782,8 +808,9 @@ export const useModuleStore = defineStore({
             this.item_menu_list = item_menu;
         },
         //---------------------------------------------------------------------
-        confirmDeleteItem()
+        confirmDeleteItem(item)
         {
+            this.item = item;
             this.form.type = 'delete';
             vaah().confirmDialogDelete(this.confirmDeleteItemAfter);
         },
@@ -873,11 +900,151 @@ export const useModuleStore = defineStore({
 
         },
         //---------------------------------------------------------------------
+        getModules() {
+            let url = this.assets.vaahcms_api_route+'modules';
+            let options = {
+                query: this.modules.query_string
+            }
+            vaah().ajax(url, this.getModulesAfter, options);
+        },
+        //---------------------------------------------------------------------
+        getModulesAfter(data) {
+            this.modules.list_is_loading = false;
+
+            if(data)
+            {
+                this.modules.list = data.list;
+            }
+        },
+        //---------------------------------------------------------------------
+        closeInstallModule() {
+            this.list_view_width = '12';
+            this.$router.push({name: 'modules.index'});
+        },
+        //---------------------------------------------------------------------
         setSixColumns() {
-            this.list_view_width = 'is-6';
+            this.list_view_width = '6';
             this.$router.push({name: 'modules.install'});
         },
         //---------------------------------------------------------------------
+        sync() {
+            this.query.recount = true;
+            this.is_btn_loading = true;
+            this.getList();
+        },
+        //---------------------------------------------------------------------
+        isInstalled(item) {
+            return vaah().existInArray(this.assets.installed, item.slug);
+        },
+        //---------------------------------------------------------------------
+        checkUpdate() {
+            this.is_fetching_updates = true;
+            let params = {
+                query: {
+                    slugs: this.assets.installed
+                }
+            };
+            let url = this.assets.vaahcms_api_route+'module/updates';
+            vaah().ajax(url, this.checkUpdateAfter, params);
+        },
+        //---------------------------------------------------------------------
+        checkUpdateAfter(data) {
+            this.is_fetching_updates = false;
+            if(data)
+            {
+                this.update('updates_list', data);
+                this.storeUpdates();
+            }
+        },
+        //---------------------------------------------------------------------
+        storeUpdates() {
+            let params = {
+                query: {
+                    modules: this.page.updates_list
+                }
+
+            };
+            let url = this.ajax_url+'/store/updates';
+            vaah().ajax(url, this.storeUpdatesAfter, params);
+        },
+        //---------------------------------------------------------------------
+        storeUpdatesAfter(data) {
+            this.is_fetching_updates = false;
+            if(data)
+            {
+                this.getList();
+            }
+        },
+
+        //---------------------------------------------------------------------
+        install(module) {
+            this.modules.active_download = module;
+
+            let options = {
+                params: module,
+                method: 'post'
+            };
+            let url = this.ajax_url+'/download';
+            vaah().ajax(url, this.installAfter, options);
+        },
+        //---------------------------------------------------------------------
+        installAfter(data) {
+            if(data)
+            {
+                this.modules.active_download = null;
+                this.assets_is_fetching = true;
+                this.getList();
+                this.getAssets();
+            }
+        },
+        //---------------------------------------------------------------------
+        hasPermission(slug) {
+            const root = useRootStore();
+            return vaah().hasPermission(root.permissions, slug);
+        },
+        //---------------------------------------------------------------------
+        //---------------------------------------------------------------------
+        confirmUpdate: function(module)
+        {
+            this.module = module;
+            vaah().confirmDialog(
+                'Update Module',
+                'It is recommended to create a backup before this action. This will <b>download</b> the updates for module <b>'+module.name+'</b>. This action cannot be undone.',
+                this.getModuleDetails
+            )
+
+        },
+        //---------------------------------------------------------------------
+        getModuleDetails: function () {
+            let params = {};
+            let url = this.assets.vaahcms_api_route+'module/by/slug/'+this.module.slug;
+            vaah().ajax(url, this.getModuleDetailsAfter, params);
+        },
+        //---------------------------------------------------------------------
+        getModuleDetailsAfter(data) {
+
+            if(data)
+            {
+                this.selected_item = data;
+                this.installUpdate();
+            }
+        },
+        //---------------------------------------------------------------------
+        installUpdate: function () {
+            let params = { query: this.selected_item}
+            let url = this.ajax_url+'/install/updates';
+            vaah().ajax(url, this.installUpdateAfter, params);
+        },
+        //---------------------------------------------------------------------
+        installUpdateAfter: function (data, res) {
+            this.$Progress.finish();
+            if(data)
+            {
+                this.selected_item = null;
+                this.$emit('eReloadList');
+            }
+
+        },
     }
 });
 
