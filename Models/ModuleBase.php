@@ -612,8 +612,8 @@ class ModuleBase extends Model {
         copy($download_link, $zip_file);
 
         try{
-            Zip::check($zip_file);
-            $zip = Zip::open($zip_file);
+            (new Zip)->check($zip_file);
+            $zip = (new Zip)->open($zip_file);
             $zip_content_list = $zip->listFiles();
             $zip->extract($vaahcms_path);
             $zip->close();
@@ -657,8 +657,8 @@ class ModuleBase extends Model {
         copy($download_link, $zip_file);
 
         try{
-            Zip::check($zip_file);
-            $zip = Zip::open($zip_file);
+            (new Zip)->check($zip_file);
+            $zip = (new Zip)->open($zip_file);
             $zip_content_list = $zip->listFiles();
             $zip->extract($vaahcms_path);
             $zip->close();

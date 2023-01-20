@@ -47,17 +47,14 @@ onMounted(async () => {
 
 </script>
 <template>
-
     <div class="grid" v-if="store.assets">
-
         <div :class="'col-'+store.list_view_width">
             <Panel>
-
                 <template class="p-1" #header>
                     <div class="flex flex-row w-full">
-                        <div class="w-6">
-                            <div >
-                                <b class="mr-1">Modules</b>
+                        <div class="w-6 flex align-items-center">
+                            <div>
+                                <b class="font-semibold text-lg mr-1">Modules</b>
                                 <Badge v-if="store.list && store.list.total > 0"
                                        :value="store.list.total">
                                 </Badge>
@@ -66,18 +63,20 @@ onMounted(async () => {
                         <div class="w-6 justify-content-end">
                             <div class="">
                                 <span class="p-buttonset flex justify-content-end">
-                                     <Button class="p-button-outlined"
+                                    <Button class="p-button-outlined p-button-sm"
                                              tag="router-link"
                                              @click="store.setSixColumns()"
                                              icon="pi pi-plus"
-                                             label="Install">
+                                             label="Install"
+                                             v-if="store.hasPermission('can-install-theme')">
                                     </Button>
 
-                                    <Button class="p-button-outlined"
+                                    <Button class="p-button-outlined p-button-sm"
                                             :loading="store.is_fetching_updates"
                                             @click="store.checkUpdate()"
                                             icon="pi pi-cloud-download"
-                                            label="Check Updates">
+                                            label="Check Updates"
+                                            v-if="store.hasPermission('can-update-theme')">
                                     </Button>
 
                                     <Button class="p-button-outlined"

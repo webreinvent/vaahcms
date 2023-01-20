@@ -411,6 +411,17 @@ export const vaah = defineStore({
                 .replace(/\s*$/g, '') // Trim the last whitespace
         },
         //----------------------------------------------------------
+        existInArray: function(array, element) {
+            const index = array.indexOf(element);
+
+            if(index == -1)
+            {
+                return false;
+            } else
+            {
+                return true;
+            }
+        },
         //----------------------------------------------------------
     }
 })
