@@ -2,7 +2,7 @@
 import {onMounted, reactive, ref} from "vue";
 import {useRoute} from 'vue-router';
 
-import {useTaxonomyStore} from '../../stores/store-taxonomiescontroller'
+import {useTaxonomyStore} from '../../stores/store-taxonomies'
 
 import Actions from "./components/Actions.vue";
 import Table from "./components/Table.vue";
@@ -69,7 +69,7 @@ onMounted(async () => {
 
                 <template #icons>
 
-                    <Button data-testid="taxonomiescontroller-list-create"
+                    <Button data-testid="taxonomies-list-create"
                             @click="store.toForm()">
                         <i class="pi pi-plus mr-1"></i>
                         Create
