@@ -2,6 +2,7 @@
 import {onMounted, reactive, ref} from "vue";
 import {useRoute} from 'vue-router';
 import draggable from 'vuedraggable';
+import { vaah } from '../../../vaahvue/pinia/vaah'
 
 import {useUserSettingStore} from "../../../stores/settings/store-user_setting";
 
@@ -61,7 +62,7 @@ onMounted(async () => {
                         <DataTable :value="store.field_list" class="p-datatable-sm" showGridlines responsiveLayout="scroll">
                             <Column field="fieldName" header="Field Name">
                                 <template #body="slotProps">
-                                    {{ slotProps.data.key }}
+                                    {{ vaah().toLabel(slotProps.data.key) }}
                                 </template>
                             </Column>
                             <Column field="visibilityStatus" header="Is Hidden">
