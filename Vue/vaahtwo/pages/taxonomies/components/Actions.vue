@@ -1,6 +1,6 @@
 <script  setup>
 import {ref, reactive, watch, onMounted} from 'vue';
-import { useTaxonomyStore } from '../../../stores/store-taxonomiescontroller'
+import { useTaxonomyStore } from '../../../stores/store-taxonomies'
 
 import Filters from './Filters.vue'
 
@@ -39,7 +39,7 @@ const toggleBulkMenuState = (event) => {
                 <Button
                     type="button"
                     @click="toggleSelectedMenuState"
-                    data-testid="taxonomiescontroller-actions-menu"
+                    data-testid="taxonomies-actions-menu"
                     aria-haspopup="true"
                     aria-controls="overlay_menu">
                     <i class="pi pi-angle-down"></i>
@@ -55,7 +55,7 @@ const toggleBulkMenuState = (event) => {
                 <Button
                     type="button"
                     @click="toggleBulkMenuState"
-                    data-testid="taxonomiescontroller-actions-bulk-menu"
+                    data-testid="taxonomies-actions-bulk-menu"
                     aria-haspopup="true"
                     aria-controls="bulk_menu_state"
                     class="ml-1">
@@ -83,15 +83,15 @@ const toggleBulkMenuState = (event) => {
                                        @keyup.enter="store.delayedSearch()"
                                        @keyup.enter.native="store.delayedSearch()"
                                        @keyup.13="store.delayedSearch()"
-                                       data-testid="taxonomiescontroller-actions-search"
+                                       data-testid="taxonomies-actions-search"
                                        placeholder="Search"/>
                             <Button @click="store.delayedSearch()"
-                                    data-testid="taxonomiescontroller-actions-search-button"
+                                    data-testid="taxonomies-actions-search-button"
                                     icon="pi pi-search"/>
                             <Button
                                 type="button"
                                 class="p-button-sm"
-                                data-testid="taxonomiescontroller-actions-show-filters"
+                                data-testid="taxonomies-actions-show-filters"
                                 @click="store.show_filters = true">
                                 Filters
                                 <Badge v-if="store.count_filters > 0" :value="store.count_filters"></Badge>
@@ -100,7 +100,7 @@ const toggleBulkMenuState = (event) => {
                             <Button
                                 type="button"
                                 icon="pi pi-filter-slash"
-                                data-testid="taxonomiescontroller-actions-reset-filters"
+                                data-testid="taxonomies-actions-reset-filters"
                                 class="p-button-sm"
                                 label="Reset"
                                 @click="store.resetQuery()" />
