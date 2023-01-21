@@ -40,10 +40,10 @@ const toggle = ref();
                     <h3 class="title is-5 has-margin-bottom-10">{{ prop.data.name }} <Tag v-if="prop.data.is_default" value="Default" severity="success" class="ml-2" rounded></Tag></h3>
                     <div>{{ prop.data.excerpt }}</div>
                     <Tag class="mb-2 mt-2 bg-black-alpha-90 border-noround">Name:</Tag>
-                    <Tag class="mr-2 mt-2 border-noround" v-if="prop.data.name"> {{ prop.data.name }}</Tag>
-                    <Tag class="mb-2 mt-2 bg-black-alpha-90 border-noround">Version:</Tag>
-                    <Tag class="mr-2 mt-2 border-noround" v-if="prop.data.version">{{ prop.data.version }}</Tag>
-                    <Tag class="mb-2 mt-2 bg-black-alpha-90 border-noround">Developed by:</Tag>
+                    <Tag class="mt-2 border-noround" v-if="prop.data.name"> {{ prop.data.name }}</Tag>
+                    <Tag class="ml-2 mb-2 mt-2 bg-black-alpha-90 border-noround">Version:</Tag>
+                    <Tag class="mt-2 border-noround" v-if="prop.data.version">{{ prop.data.version }}</Tag>
+                    <Tag class="ml-2 mb-2 mt-2 bg-black-alpha-90 border-noround">Developed by:</Tag>
                     <Tag class="mb-2 mt-2 border-noround" v-if="prop.data.author_name">{{ prop.data.author_name }}</Tag>
                 </template>
             </Column>
