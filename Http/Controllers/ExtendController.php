@@ -230,7 +230,7 @@ class ExtendController extends Controller
                         'label'=> 'Media',
                     ],
                     [
-                        'url' => self::$link."/manage/taxonomies",
+                        'url' => self::$link."/manage/taxonomies/",
                         'icon' => 'pi pi-sitemap',
                         'label'=> 'Taxonomies',
                     ]
