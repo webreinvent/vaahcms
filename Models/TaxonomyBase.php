@@ -1,4 +1,4 @@
-<?php namespace WebReinvent\VaahCms\Entities;
+<?php namespace WebReinvent\VaahCms\Models;
 
 use Carbon\Carbon;
 use DateTimeInterface;
@@ -8,7 +8,7 @@ use Illuminate\Support\Str;
 use VaahCms\Modules\Cms\Entities\ContentFormField;
 use WebReinvent\VaahCms\Traits\CrudWithUuidObservantTrait;
 
-class Taxonomy extends Model {
+class TaxonomyBase extends Model {
 
     use SoftDeletes;
     use CrudWithUuidObservantTrait;
@@ -554,14 +554,14 @@ class Taxonomy extends Model {
             return $item;
         }
 
-        $item = Taxonomy::where('vh_taxonomy_type_id', $tax_type->id)
+        $item = TaxonomyBase::where('vh_taxonomy_type_id', $tax_type->id)
             ->where('name', $name)
             ->whereNotNull('is_active')
             ->first();
 
         if(!$item)
         {
-            $item = new Taxonomy();
+            $item = new TaxonomyBase();
             $item->vh_taxonomy_type_id = $tax_type->id;
             $item->name = $name;
             $item->slug = Str::slug($name);

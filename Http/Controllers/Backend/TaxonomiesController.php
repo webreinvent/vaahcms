@@ -2,13 +2,10 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
-use WebReinvent\VaahCms\Entities\Setting;
-use WebReinvent\VaahCms\Entities\TaxonomyBase;
-use WebReinvent\VaahCms\Models\User;
-use WebReinvent\VaahCms\Models\Registration;
+use WebReinvent\VaahCms\Models\Taxonomy;
 
 
-class RegistrationsController extends Controller
+class TaxonomiesController extends Controller
 {
 
 
@@ -35,8 +32,7 @@ class RegistrationsController extends Controller
             'deleted_by',
         ];
 
-
-        $model = new Registration();
+        $model = new Taxonomy();
         $fillable = $model->getFillable();
         $data['fillable']['columns'] = array_diff(
             $fillable, $data['fillable']['except']
@@ -49,20 +45,6 @@ class RegistrationsController extends Controller
 
         $data['actions'] = [];
 
-//      field copied from Http/Registration controller 's assets methods
-        $data['country_calling_code'] = vh_get_country_list();
-        $data['countries'] = vh_get_country_list();
-        $data['timezones'] = vh_get_timezones();
-        $data['country_code'] = vh_get_country_list();
-        $data['registration_statuses'] = TaxonomyBase::getTaxonomyByType('registrations');
-        $data['bulk_actions'] = vh_general_bulk_actions();
-        $data['name_titles'] = vh_name_titles();
-        $data['fields'] = User::getUserSettings();
-        $data['custom_fields'] = Setting::where('category','user_setting')
-            ->where('label','custom_fields')->first();
-        //      field copied from Http/Registration controller 's assets methods
-
-
         $response['success'] = true;
         $response['data'] = $data;
 
@@ -72,53 +54,49 @@ class RegistrationsController extends Controller
     //----------------------------------------------------------
     public function getList(Request $request)
     {
-        return Registration::getList($request);
+        return Taxonomy::getList($request);
     }
     //----------------------------------------------------------
     public function updateList(Request $request)
     {
-        return Registration::updateList($request);
+        return Taxonomy::updateList($request);
     }
     //----------------------------------------------------------
     public function listAction(Request $request, $type)
     {
-        return Registration::listAction($request, $type);
+        return Taxonomy::listAction($request, $type);
     }
     //----------------------------------------------------------
     public function deleteList(Request $request)
     {
-        return Registration::deleteList($request);
+        return Taxonomy::deleteList($request);
     }
     //----------------------------------------------------------
     public function createItem(Request $request)
     {
-        return Registration::createItem($request);
+        return Taxonomy::createItem($request);
     }
     //----------------------------------------------------------
     public function getItem(Request $request, $id)
     {
-        return Registration::getItem($id);
+        return Taxonomy::getItem($id);
     }
     //----------------------------------------------------------
     public function updateItem(Request $request,$id)
     {
-        return Registration::updateItem($request,$id);
+        return Taxonomy::updateItem($request,$id);
     }
     //----------------------------------------------------------
     public function deleteItem(Request $request,$id)
     {
-        return Registration::deleteItem($request,$id);
+        return Taxonomy::deleteItem($request,$id);
     }
     //----------------------------------------------------------
     public function itemAction(Request $request,$id,$action)
     {
-        return Registration::itemAction($request,$id,$action);
+        return Taxonomy::itemAction($request,$id,$action);
     }
     //----------------------------------------------------------
-    public function sendVerificationEmail(Request $request,$id)
-    {
-        return Registration::sendVerificationEmail($request, $id);
-    }
 
 
 }

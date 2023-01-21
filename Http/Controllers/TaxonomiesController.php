@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Str;
-use WebReinvent\VaahCms\Entities\Taxonomy;
+use WebReinvent\VaahCms\Entities\TaxonomyBase;
 use WebReinvent\VaahCms\Entities\TaxonomyType;
 
 class TaxonomiesController extends Controller
@@ -34,7 +34,7 @@ class TaxonomiesController extends Controller
         $data = [];
 
 
-        $countries = Taxonomy::getTaxonomyByType('countries');
+        $countries = TaxonomyBase::getTaxonomyByType('countries');
 
         if(count($countries) === 0){
             $country_list = \VaahCountry::getListWithSlug();
@@ -42,7 +42,7 @@ class TaxonomiesController extends Controller
             $tax_type = TaxonomyType::getFirstOrCreate('countries');
 
             foreach ($country_list as $item){
-                $add = new Taxonomy();
+                $add = new TaxonomyBase();
                 $add->vh_taxonomy_type_id = $tax_type->id;
                 $add->name = $item['name'];
                 $add->slug = $item['slug'];
@@ -80,7 +80,7 @@ class TaxonomiesController extends Controller
             return response()->json($response);
         }
 
-        $response = Taxonomy::createItem($request);
+        $response = TaxonomyBase::createItem($request);
         return response()->json($response);
     }
     //----------------------------------------------------------
@@ -95,7 +95,7 @@ class TaxonomiesController extends Controller
             return response()->json($response);
         }
 
-        $response = Taxonomy::getList($request);
+        $response = TaxonomyBase::getList($request);
         return response()->json($response);
     }
     //----------------------------------------------------------
@@ -109,7 +109,7 @@ class TaxonomiesController extends Controller
             return response()->json($response);
         }
 
-        $response = Taxonomy::getItem($id);
+        $response = TaxonomyBase::getItem($id);
         return response()->json($response);
     }
 
@@ -124,7 +124,7 @@ class TaxonomiesController extends Controller
             return response()->json($response);
         }
 
-        $response = Taxonomy::postStore($request,$id);
+        $response = TaxonomyBase::postStore($request,$id);
         return response()->json($response);
     }
     //----------------------------------------------------------
@@ -164,7 +164,7 @@ class TaxonomiesController extends Controller
                     return $response;
                 }
 
-                $response = Taxonomy::bulkStatusChange($request);
+                $response = TaxonomyBase::bulkStatusChange($request);
 
                 break;
             //------------------------------------
@@ -178,7 +178,7 @@ class TaxonomiesController extends Controller
                     return $response;
                 }
 
-                $response = Taxonomy::bulkTrash($request);
+                $response = TaxonomyBase::bulkTrash($request);
 
                 break;
             //------------------------------------
@@ -192,7 +192,7 @@ class TaxonomiesController extends Controller
                     return $response;
                 }
 
-                $response = Taxonomy::bulkRestore($request);
+                $response = TaxonomyBase::bulkRestore($request);
 
                 break;
 
@@ -208,7 +208,7 @@ class TaxonomiesController extends Controller
                     return $response;
                 }
 
-                $response = Taxonomy::bulkDelete($request);
+                $response = TaxonomyBase::bulkDelete($request);
 
                 break;
             //------------------------------------
@@ -222,7 +222,7 @@ class TaxonomiesController extends Controller
     //----------------------------------------------------------
     public function getParents(Request $request,$id, $name=null)
     {
-        $list = Taxonomy::where(function($q) use ($name){
+        $list = TaxonomyBase::where(function($q) use ($name){
             $q->where('name', 'LIKE', '%'.$name.'%')
                 ->orWhere('slug', 'LIKE', '%'.$name.'%');
         })->where('vh_taxonomy_type_id', $id)
@@ -237,7 +237,7 @@ class TaxonomiesController extends Controller
     //----------------------------------------------------------
     public function getCountryById(Request $request, $id)
     {
-        return Taxonomy::find($id);
+        return TaxonomyBase::find($id);
     }
     //----------------------------------------------------------
     public function createTaxonomyType(Request $request)
