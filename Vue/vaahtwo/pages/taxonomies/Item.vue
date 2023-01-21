@@ -2,7 +2,7 @@
 import {onMounted, ref, watch} from "vue";
 import {useRoute} from 'vue-router';
 
-import { useTaxonomyStore } from '../../stores/store-taxonomiescontroller'
+import { useTaxonomyStore } from '../../stores/store-taxonomies'
 
 import VhViewRow from '../../vaahvue/vue-three/primeflex/VhViewRow.vue';
 const store = useTaxonomyStore();
@@ -78,14 +78,14 @@ const toggleItemMenu = (event) => {
                 <div class="p-inputgroup">
                     <Button label="Edit"
                             @click="store.toEdit(store.item)"
-                            data-testid="taxonomiescontroller-item-to-edit"
+                            data-testid="taxonomies-item-to-edit"
                             icon="pi pi-save"/>
 
                     <!--item_menu-->
                     <Button
                         type="button"
                         @click="toggleItemMenu"
-                        data-testid="taxonomiescontroller-item-menu"
+                        data-testid="taxonomies-item-menu"
                         icon="pi pi-angle-down"
                         aria-haspopup="true"/>
 
@@ -96,7 +96,7 @@ const toggleItemMenu = (event) => {
 
                     <Button class="p-button-primary"
                             icon="pi pi-times"
-                            data-testid="taxonomiescontroller-item-to-list"
+                            data-testid="taxonomies-item-to-list"
                             @click="store.toList()"/>
 
                 </div>
@@ -123,7 +123,7 @@ const toggleItemMenu = (event) => {
                         <div class="">
                             <Button label="Restore"
                                     class="p-button-sm"
-                                    data-testid="taxonomiescontroller-item-restore"
+                                    data-testid="taxonomies-item-restore"
                                     @click="store.itemAction('restore')">
                             </Button>
                         </div>

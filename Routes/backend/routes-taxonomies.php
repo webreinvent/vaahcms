@@ -2,7 +2,7 @@
 
 Route::group(
     [
-        'prefix' => 'backend/vaah/taxonomies',
+        'prefix' => 'backend/vaah/manage/taxonomies',
 
         'middleware' => ['web', 'has.backend.access'],
 

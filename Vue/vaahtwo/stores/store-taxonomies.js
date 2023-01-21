@@ -7,7 +7,7 @@ let model_namespace = 'WebReinvent\\VaahCms\\Models\\Taxonomy';
 
 
 let base_url = document.getElementsByTagName('base')[0].getAttribute("href");
-let ajax_url = base_url + "/vaah/taxonomiescontroller";
+let ajax_url = base_url + "/vaah/manage/taxonomies";
 
 let empty_states = {
     query: {
@@ -27,7 +27,7 @@ let empty_states = {
 };
 
 export const useTaxonomyStore = defineStore({
-    id: 'taxonomiescontroller',
+    id: 'taxonomies',
     state: () => ({
         base_url: base_url,
         ajax_url: ajax_url,
@@ -91,7 +91,7 @@ export const useTaxonomyStore = defineStore({
         {
             switch(route_name)
             {
-                case 'taxonomiescontroller.index':
+                case 'taxonomies.index':
                     this.view = 'large';
                     this.list_view_width = 12;
                     break;
@@ -157,6 +157,8 @@ export const useTaxonomyStore = defineStore({
         //---------------------------------------------------------------------
         async getAssets() {
 
+            console.log('--->', this.ajax_url);
+
             if(this.assets_is_fetching === true){
                 this.assets_is_fetching = false;
 
@@ -219,7 +221,7 @@ export const useTaxonomyStore = defineStore({
             {
                 this.item = data;
             }else{
-                this.$router.push({name: 'taxonomiescontroller.index'});
+                this.$router.push({name: 'taxonomies.index'});
             }
             await this.getItemMenu();
             await this.getFormMenu();
@@ -413,7 +415,7 @@ export const useTaxonomyStore = defineStore({
                 case 'create-and-close':
                 case 'save-and-close':
                     this.setActiveItemAsEmpty();
-                    this.$router.push({name: 'taxonomiescontroller.index'});
+                    this.$router.push({name: 'taxonomies.index'});
                     break;
                 case 'save-and-clone':
                     this.item.id = null;
@@ -584,32 +586,32 @@ export const useTaxonomyStore = defineStore({
         //---------------------------------------------------------------------
         closeForm()
         {
-            this.$router.push({name: 'taxonomiescontroller.index'})
+            this.$router.push({name: 'taxonomies.index'})
         },
         //---------------------------------------------------------------------
         toList()
         {
             this.item = vaah().clone(this.assets.empty_item);
-            this.$router.push({name: 'taxonomiescontroller.index'})
+            this.$router.push({name: 'taxonomies.index'})
         },
         //---------------------------------------------------------------------
         toForm()
         {
             this.item = vaah().clone(this.assets.empty_item);
             this.getFormMenu();
-            this.$router.push({name: 'taxonomiescontroller.form'})
+            this.$router.push({name: 'taxonomies.form'})
         },
         //---------------------------------------------------------------------
         toView(item)
         {
             this.item = vaah().clone(item);
-            this.$router.push({name: 'taxonomiescontroller.view', params:{id:item.id}})
+            this.$router.push({name: 'taxonomies.view', params:{id:item.id}})
         },
         //---------------------------------------------------------------------
         toEdit(item)
         {
             this.item = item;
-            this.$router.push({name: 'taxonomiescontroller.form', params:{id:item.id}})
+            this.$router.push({name: 'taxonomies.form', params:{id:item.id}})
         },
         //---------------------------------------------------------------------
         isViewLarge()
