@@ -1,7 +1,7 @@
 import { watch } from 'vue'
 import { acceptHMRUpdate, defineStore } from 'pinia'
 import qs from 'qs'
-import { vaah } from '../vaahvue/pinia/vaah'
+import { vaah } from '../../vaahvue/pinia/vaah'
 let model_namespace = 'WebReinvent\\VaahCms\\Models\\Setting';
 
 
@@ -75,10 +75,9 @@ export const useLocalizationStore = defineStore({
         filterOptions:null,
         show_add_language:false,
         show_add_category:false,
-        selectedCategory:null,
-        selectedLanguage:null,
-        newVariable:null,
-        totalRecord:null
+        selected_category:null,
+        selected_language:null,
+        new_variable:null,
     }),
     getters: {
 
@@ -132,18 +131,6 @@ export const useLocalizationStore = defineStore({
             }
         },
         //---------------------------------------------------------------------
-        watchItem()
-        {
-            watch(() => this.newVariable, (newVal,oldVal) =>
-                {
-                    if(newVal && newVal !== "")
-                    {
-                        this.newVariable = this.newVariable.toLowerCase();
-                        this.newVariable = this.newVariable.split(' ').join('_');
-                    }
-                },{deep: true}
-            )
-        },
         //---------------------------------------------------------------------
         async getAssets() {
             if(this.assets_is_fetching === true){
@@ -171,13 +158,13 @@ export const useLocalizationStore = defineStore({
         //---------------------------------------------------------------------
         async getList(page = 1,sync = false) {
 
-            if(!this.selectedLanguage){
+            if(!this.selected_language){
                 this.filters.vh_lang_language_id = this.assets.languages.default.id;
-                this.selectedLanguage =  this.assets.languages.default.id;
+                this.selected_language =  this.assets.languages.default.id;
             }
-            if(!this.selectedCategory){
+            if(!this.selected_category){
                 this.filters.vh_lang_category_id = this.assets.categories.default.id;
-                this.selectedCategory = this.assets.categories.default.id;
+                this.selected_category = this.assets.categories.default.id;
             }
             this.filters.sync = sync;
             this.filters.page = page;
@@ -197,7 +184,6 @@ export const useLocalizationStore = defineStore({
             if(data)
             {
                 this.list = data.list;
-                this.totalRecord = data.list.total;
                 this.filters.rows = data.list.per_page;
             }
         },
@@ -242,14 +228,14 @@ export const useLocalizationStore = defineStore({
             let item = {
                 index: this.list.data.length,
                 id: null,
-                vh_lang_language_id: this.selectedLanguage,
-                vh_lang_category_id: this.selectedCategory,
+                vh_lang_language_id: this.selected_language,
+                vh_lang_category_id: this.selected_category,
                 name: null,
-                slug: this.newVariable,
+                slug: this.new_variable,
                 content: null,
             };
             this.list.data.push(item);
-            this.newVariable=null
+            this.new_variable=null
         },
         //---------------------------------------------------------------------
         checkDuplicatedSlugs()
@@ -301,7 +287,7 @@ export const useLocalizationStore = defineStore({
                 vh_lang_language_id: this.assets.languages.default.id
             };
             let count = 0;
-            if(!this.selectedCategory && this.list && this.list.data && this.list.data.length > 0)
+            if(!this.selected_category && this.list && this.list.data && this.list.data.length > 0)
             {
                 this.list.data.forEach(function (item) {
 
@@ -356,22 +342,22 @@ export const useLocalizationStore = defineStore({
             this.query_string.lang_id = null;
             this.query_string.cat_id = null;
             this.query_string.page = null;
-            this.selectedLanguage = this.assets.languages.default.id;
-            this.selectedCategory = null;
+            this.selected_language = this.assets.languages.default.id;
+            this.selected_category = null;
             this.assets_is_fetching = true;
             this.getAssets();
         },
         showCategoryData() {
 
-            this.filters.vh_lang_category_id = this.selectedCategory;
-            this.query_string.cat_id = this.selectedCategory;
+            this.filters.vh_lang_category_id = this.selected_category;
+            this.query_string.cat_id = this.selected_category;
 
             this.getList();
         },
         showLanguageData() {
 
-            this.filters.vh_lang_language_id = this.selectedLanguage;
-            this.query_string.lang_id = this.selectedLanguage;
+            this.filters.vh_lang_language_id = this.selected_language;
+            this.query_string.lang_id = this.selected_language;
             this.getList();
         },
         //---------------------------------------------------------------------

@@ -1,7 +1,7 @@
 <script setup>
 import {onMounted, reactive, ref} from "vue";
 import {useRoute} from 'vue-router';
-import {useLocalizationStore} from '../../../stores/store-localization'
+import {useLocalizationStore} from '../../../stores/settings/store-localization'
 const store = useLocalizationStore();
 const route = useRoute();
 import { useConfirm } from "primevue/useconfirm";
@@ -19,7 +19,6 @@ onMounted(async () => {
     /**
      * Change to upper case
      */
-    await store.watchItem();
 });
 </script>
 <template>
@@ -63,13 +62,13 @@ onMounted(async () => {
                                             v-model="store.new_language.name"
                                             data-testid="localization-new_language_name"
                                             placeholder="Name"
-                                        />
+                                        ></inputText>
                                         <inputText
                                             name="localization-language-local-code-iso-639"
                                             data-testid="localization-new_language_code"
                                             v-model="store.new_language.locale_code_iso_639"
                                             placeholder="Locale ISO 639 Code"
-                                        />
+                                        ></inputText>
                                         <Button @click="store.storeLanguage"
                                                 icon="pi pi-plus"
                                                 data-testid="localization-new_language_save"
@@ -92,7 +91,7 @@ onMounted(async () => {
                                             v-model="store.new_category.name"
                                             data-testid="localization-new_category_name"
                                             placeholder="Category Name"
-                                        />
+                                        ></inputText>
                                         <Button @click="store.storeCategory"
                                                 icon="pi pi-plus"
                                                 data-testid="localization-new_category_save"
@@ -113,23 +112,25 @@ onMounted(async () => {
             </div>
             <div class="grid justify-content-between">
                 <div class="col-4 align-items-center flex">
-                    <Dropdown v-model="store.selectedLanguage"
+                    <Dropdown v-model="store.selected_language"
                               :options="store.languages"
                               :data-testid="'localization-language_filter'"
                               optionLabel="option_label"
                               optionValue="id"
                               @change="store.showLanguageData"
-                              placeholder="Select a Language" />
+                              placeholder="Select a Language" >
+                    </Dropdown>
                 </div>
                 <div class="col-8">
                     <div class="p-inputgroup ">
-                        <Dropdown v-model="store.selectedCategory"
+                        <Dropdown v-model="store.selected_category"
                                   :data-testid="'localization-category_filter'"
                                   :options="store.categories"
                                   optionLabel="name"
                                   optionValue="id"
                                   @change="store.showCategoryData"
-                                  placeholder="Select a Category" />
+                                  placeholder="Select a Category" >
+                        </Dropdown>
                         <Dropdown v-model="store.query_string.filter"
                                   :options="[
                                        {name:'Empty value', value:'empty'},
@@ -139,7 +140,8 @@ onMounted(async () => {
                                   :data-testid="'localization-more_filter'"
                                   optionLabel="name"
                                   optionValue="value"
-                                  placeholder="Select a Filter" />
+                                  placeholder="Select a Filter" >
+                        </Dropdown>
                     </div>
                 </div>
             </div>
@@ -147,28 +149,31 @@ onMounted(async () => {
                 <div v-if="store.list" class="col-12 md:col-6" v-for="(item,index) in store.list.data">
                     <h5 class="p-1 text-xs mb-1">{{item.slug}}</h5>
                     <div class="p-inputgroup">
-                        <inputText :model-value="item.content"
+                        <inputText v-model="item.content"
                                    :data-testid="'localization-'+item.slug"
                                    :autoResize="true"
-                                   class="has-min-height"/>
+                                   class="has-min-height">
+                        </inputText>
                         <Button icon="pi pi-copy"
                                 class=" has-max-height"
                                 :disabled="!item.id"
                                 data-testid="localization-copyString"
                                 @click="store.getCopy(item)"
-                        />
+                        ></Button>
                         <Button icon="pi pi-trash"
                                 data-testid="localization-deleteString"
                                 @click="store.deleteString(item)"
-                                class="p-button-danger has-max-height"/>
+                                class="p-button-danger has-max-height">
+                        </Button>
                     </div>
                 </div>
                 <div v-else>
                     No language string exist
                 </div>
             </div>
-            <Paginator v-model:rows="store.filters.rows"
-                       :totalRecords="store.totalRecord"
+            <Paginator v-if="store.list"
+                       v-model:rows="store.filters.rows"
+                       :totalRecords="store.list.total"
                        @page="store.paginate($event)"
                        :rowsPerPageOptions="store.rows_per_page">
             </Paginator>
@@ -176,13 +181,13 @@ onMounted(async () => {
                 <div class="col-12 md:col-6">
                     <div class="p-inputgroup">
                         <InputText :autoResize="true"
-                                   v-model="store.newVariable"
+                                   v-model="store.new_variable"
                                    class="has-min-height"
                                    data-testid="localization-add_string"
                         ></InputText>
                         <Button label="Add Env Variable" icon="pi pi-plus"
                                 @click="store.addVariable"
-                                :disabled="!store.newVariable"
+                                :disabled="!store.new_variable"
                         ></Button>
                     </div>
                 </div>

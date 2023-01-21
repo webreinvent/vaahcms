@@ -36,18 +36,21 @@ class LocalizationController extends Controller
             return response()->json($response);
         }
 
+        $data['rows'] = config('vaahcms.per_page');
+
         $lang_list = Language::getLangList();
 
-        $response['success'] = true;
-        $response['data']['languages']['list'] = $lang_list;
-
-        $response['data']['languages']['default'] = Language::where('default',1)
+        $data['languages']['list'] = $lang_list;
+        $data['languages']['default'] = Language::where('default',1)
             ->first();
 
-
-        $response['data']['categories']['list'] = LanguageCategory::orderBy('name','asc')
+        $data['categories']['list'] = LanguageCategory::orderBy('name','asc')
             ->get();
-        $response['data']['categories']['default']['id'] = null;
+        $data['categories']['default']['id'] = null;
+
+
+        $response['success'] = true;
+        $response['data'] = $data;
 
         return response()->json($response);
     }
