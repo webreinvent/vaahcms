@@ -2,7 +2,7 @@
 import {onMounted, reactive, ref} from "vue";
 import {useRoute} from 'vue-router';
 
-import {useTaxonomyStore} from '../../stores/store-taxonomies'
+import {useTaxonomyStore} from '../../stores/store-taxonomiescontroller'
 
 import Actions from "./components/Actions.vue";
 import Table from "./components/Table.vue";
@@ -57,7 +57,7 @@ onMounted(async () => {
 
                     <div class="flex flex-row">
                         <div >
-                            <b class="mr-1">Taxonomies</b>
+                            <b class="mr-1">TaxonomiesController</b>
                             <Badge v-if="store.list && store.list.total > 0"
                                    :value="store.list.total">
                             </Badge>
@@ -68,19 +68,13 @@ onMounted(async () => {
                 </template>
 
                 <template #icons>
-                    <div class="p-inputgroup">
-                        <Button class="p-button-sm"
-                                label="Create"
-                                data-testid="taxonomies-list-create"
-                                icon="pi pi-plus"
-                                @click="store.toForm()"
-                        />
 
-                        <Button class="p-button-sm"
-                                icon="pi pi-refresh"
-                                :loading="store.is_btn_loading"
-                        />
-                        </div>
+                    <Button data-testid="taxonomiescontroller-list-create"
+                            @click="store.toForm()">
+                        <i class="pi pi-plus mr-1"></i>
+                        Create
+                    </Button>
+
                 </template>
 
                 <Actions/>

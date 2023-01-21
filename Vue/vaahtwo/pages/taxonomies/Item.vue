@@ -1,13 +1,12 @@
 <script setup>
-import { onMounted, ref, watch } from "vue";
-import { useRoute } from 'vue-router';
-import { useTaxonomyStore } from '../../stores/store-taxonomies'
-import { vaah } from "../../vaahvue/pinia/vaah"
+import {onMounted, ref, watch} from "vue";
+import {useRoute} from 'vue-router';
+
+import { useTaxonomyStore } from '../../stores/store-taxonomiescontroller'
 
 import VhViewRow from '../../vaahvue/vue-three/primeflex/VhViewRow.vue';
 const store = useTaxonomyStore();
 const route = useRoute();
-const useVaah = vaah();
 
 onMounted(async () => {
 
@@ -77,25 +76,18 @@ const toggleItemMenu = (event) => {
 
 
                 <div class="p-inputgroup">
-                    <Button class="p-button-sm"
-                            :label=" '#' + store.item.id "
-                            @click="useVaah.copy(store.item.id)"
-                    />
-
-                    <Button class="p-button-sm"
-                            label="Edit"
-                            icon="pi pi-pencil"
+                    <Button label="Edit"
                             @click="store.toEdit(store.item)"
-                    />
+                            data-testid="taxonomiescontroller-item-to-edit"
+                            icon="pi pi-save"/>
 
                     <!--item_menu-->
-                    <Button class="p-button-sm"
-                            type="button"
-                            @click="toggleItemMenu"
-                            data-testid="taxonomies-item-menu"
-                            icon="pi pi-angle-down"
-                            aria-haspopup="true"
-                    />
+                    <Button
+                        type="button"
+                        @click="toggleItemMenu"
+                        data-testid="taxonomiescontroller-item-menu"
+                        icon="pi pi-angle-down"
+                        aria-haspopup="true"/>
 
                     <Menu ref="item_menu_state"
                           :model="store.item_menu_list"
@@ -104,7 +96,7 @@ const toggleItemMenu = (event) => {
 
                     <Button class="p-button-primary"
                             icon="pi pi-times"
-                            data-testid="taxonomies-item-to-list"
+                            data-testid="taxonomiescontroller-item-to-list"
                             @click="store.toList()"/>
 
                 </div>
@@ -131,7 +123,7 @@ const toggleItemMenu = (event) => {
                         <div class="">
                             <Button label="Restore"
                                     class="p-button-sm"
-                                    data-testid="taxonomies-item-restore"
+                                    data-testid="taxonomiescontroller-item-restore"
                                     @click="store.itemAction('restore')">
                             </Button>
                         </div>

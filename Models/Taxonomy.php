@@ -223,8 +223,7 @@ class Taxonomy extends TaxonomyBase
     //-------------------------------------------------
     public static function getList($request)
     {
-        $list = self::with(['parent','type']);
-        $list->getSorted($request->filter);
+        $list = self::getSorted($request->filter);
         $list->isActiveFilter($request->filter);
         $list->trashedFilter($request->filter);
         $list->searchFilter($request->filter);
@@ -242,7 +241,10 @@ class Taxonomy extends TaxonomyBase
         $response['data'] = $list;
 
         return $response;
+
+
     }
+
     //-------------------------------------------------
     public static function updateList($request)
     {

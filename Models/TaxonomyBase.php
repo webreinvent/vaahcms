@@ -218,6 +218,64 @@ class TaxonomyBase extends Model {
 
     }
     //-------------------------------------------------
+    public static function getList($request)
+    {
+
+
+        $list = self::orderBy('id', 'desc')->with(['parent','type']);
+
+        if($request['trashed'] == 'true')
+        {
+
+            $list->withTrashed();
+        }
+
+        if(isset($request->from) && isset($request->to))
+        {
+            $list->betweenDates($request['from'],$request['to']);
+        }
+
+        if(isset($request['status']) &&  $request['status'])
+        {
+            if($request['status'] == 'active')
+            {
+                $list->whereNotNull('is_active');
+            }else{
+                $list->whereNull('is_active');
+            }
+        }
+
+        if(isset($request['types']) &&  $request['types'])
+        {
+
+            if(is_string($request['types'])){
+                $request['types'] = [$request['types']];
+            }
+
+            $list->whereIn('vh_taxonomy_type_id',$request['types']);
+
+        }
+
+        if(isset($request->q))
+        {
+
+            $list->where(function ($q) use ($request){
+                $q->where('name', 'LIKE', '%'.$request->q.'%')
+                    ->orWhere('slug', 'LIKE', '%'.$request->q.'%');
+            });
+        }
+
+
+        $data['list'] = $list->paginate(config('vaahcms.per_page'));
+
+        $response['success'] = true;
+        $response['data'] = $data;
+
+        return $response;
+
+
+    }
+    //-------------------------------------------------
     public static function getItem($id)
     {
 

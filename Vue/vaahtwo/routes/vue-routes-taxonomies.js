@@ -7,7 +7,7 @@ import Item from '../pages/taxonomies/Item.vue'
 
 routes_list = {
 
-    path: '/vaah/manage/taxonomies',
+    path: '/manage/taxonomies',
     name: 'taxonomies.index',
     component: List,
     props: true,
