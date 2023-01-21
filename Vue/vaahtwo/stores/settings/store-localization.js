@@ -168,7 +168,7 @@ export const useLocalizationStore = defineStore({
 
             this.filters.vh_lang_language_id = this.query_string.lang_id;
             this.filters.vh_lang_category_id = this.query_string.cat_id;
-            
+
             this.updateUrlQueryString(this.query_string);
             this.filters.sync = sync;
             this.filters.page = page;
@@ -203,7 +203,7 @@ export const useLocalizationStore = defineStore({
         {
             if(item.id)
             {
-                this.list = vaah().removeInArrayByKey(this.list.data, item, 'id');
+                this.list.data = vaah().removeInArrayByKey(this.list.data, item, 'id');
                 let options = {
                     method: 'POST',
                     params: item
@@ -215,7 +215,7 @@ export const useLocalizationStore = defineStore({
                 );
             } else
             {
-                this.list = vaah().removeInArrayByKey(this.list.data, item, 'key');
+                this.list.data = vaah().removeInArrayByKey(this.list.data, item, 'index');
                 this.deleteStringAfter();
             }
         },
@@ -232,8 +232,8 @@ export const useLocalizationStore = defineStore({
             let item = {
                 index: this.list.data.length,
                 id: null,
-                vh_lang_language_id: this.selected_language,
-                vh_lang_category_id: this.selected_category,
+                vh_lang_language_id: this.query_string.lang_id,
+                vh_lang_category_id: this.query_string.cat_id,
                 name: null,
                 slug: this.new_variable,
                 content: null,
@@ -291,7 +291,7 @@ export const useLocalizationStore = defineStore({
                 vh_lang_language_id: this.assets.languages.default.id
             };
             let count = 0;
-            if(!this.selected_category && this.list && this.list.data && this.list.data.length > 0)
+            if(!this.query_string.cat_id && this.list && this.list.data && this.list.data.length > 0)
             {
                 this.list.data.forEach(function (item) {
 
