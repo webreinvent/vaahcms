@@ -1,6 +1,6 @@
 <script setup>
 import {onMounted, ref, watch} from "vue";
-import { useTaxonomyStore } from '../../stores/store-taxonomiescontroller'
+import { useTaxonomyStore } from '../../stores/store-taxonomies'
 
 import VhField from './../../vaahvue/vue-three/primeflex/VhField.vue'
 import {useRoute} from 'vue-router';
@@ -56,14 +56,14 @@ const toggleFormMenu = (event) => {
                 <div class="p-inputgroup">
                     <Button label="Save"
                             v-if="store.item && store.item.id"
-                            data-testid="taxonomiescontroller-save"
+                            data-testid="taxonomies-save"
                             @click="store.itemAction('save')"
                             icon="pi pi-save"/>
 
                     <Button label="Create & New"
                             v-else
                             @click="store.itemAction('create-and-new')"
-                            data-testid="taxonomiescontroller-create-and-new"
+                            data-testid="taxonomies-create-and-new"
                             icon="pi pi-save"/>
 
 
@@ -71,7 +71,7 @@ const toggleFormMenu = (event) => {
                     <Button
                         type="button"
                         @click="toggleFormMenu"
-                        data-testid="taxonomiescontroller-form-menu"
+                        data-testid="taxonomies-form-menu"
                         icon="pi pi-angle-down"
                         aria-haspopup="true"/>
 
@@ -83,7 +83,7 @@ const toggleFormMenu = (event) => {
 
                     <Button class="p-button-primary"
                             icon="pi pi-times"
-                            data-testid="taxonomiescontroller-to-list"
+                            data-testid="taxonomies-to-list"
                             @click="store.toList()">
                     </Button>
                 </div>
@@ -97,23 +97,23 @@ const toggleFormMenu = (event) => {
 
                 <VhField label="Name">
                     <InputText class="w-full"
-                               name="taxonomiescontroller-name"
-                               data-testid="taxonomiescontroller-name"
+                               name="taxonomies-name"
+                               data-testid="taxonomies-name"
                                v-model="store.item.name"/>
                 </VhField>
 
                 <VhField label="Slug">
                     <InputText class="w-full"
-                               name="taxonomiescontroller-slug"
-                               data-testid="taxonomiescontroller-slug"
+                               name="taxonomies-slug"
+                               data-testid="taxonomies-slug"
                                v-model="store.item.slug"/>
                 </VhField>
 
                 <VhField label="Is Active">
                     <InputSwitch v-bind:false-value="0"
                                  v-bind:true-value="1"
-                                 name="taxonomiescontroller-active"
-                                 data-testid="taxonomiescontroller-active"
+                                 name="taxonomies-active"
+                                 data-testid="taxonomies-active"
                                  v-model="store.item.is_active"/>
                 </VhField>
 
