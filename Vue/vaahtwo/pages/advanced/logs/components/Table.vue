@@ -1,15 +1,18 @@
 <script setup>
 import {vaah} from '../../../../vaahvue/pinia/vaah'
 import {useLogStore} from '../../../../stores/store-logs'
+import {useRoute} from 'vue-router';
+
 const store = useLogStore();
 const useVaah = vaah();
+const route = useRoute();
+
 
 </script>
 
 <template>
 
     <div v-if="store.list">
-        {{ store.list.data }}
         <!--table-->
         <DataTable :value="store.list"
                    dataKey="id"
@@ -32,14 +35,16 @@ const useVaah = vaah();
 
                         <Button class="p-button-tiny p-button-text"
                                 v-tooltip.top="'View'"
+                                :disabled="route.params.name === prop.data.name"
                                 @click="store.toView(prop.data)"
                                 icon="pi pi-eye"
-                        />
+                        ></Button>
 
                         <Button class="p-button-tiny p-button-danger p-button-text"
                                 @click="store.confirmDelete(prop.data)"
                                 v-tooltip.top="'Delete'"
-                                icon="pi pi-trash" />
+                                icon="pi pi-trash" >
+                        </Button>
                     </div>
 
                 </template>

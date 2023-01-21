@@ -86,20 +86,19 @@ const toggleItemMenu = (event) => {
                                         <div class="level-left">
 
                                             <div class="level-item">
-                                                <Tag class="mr-2" value="TYPE"></Tag>
-                                                <Tag class="mr-2" severity="danger" :value="log.type"></Tag>
+                                                <Tag class="mb-2 bg-black-alpha-90 border-noround text-xs">TYPE</Tag>
+                                                <Tag class="mr-2 mb-2 border-noround" :value="log.type"></Tag>
                                             </div>
 
                                             <div class="level-item">
-                                                <Tag class="mr-2" severity="info" value="TIME"></Tag>
-                                                <Tag class="mr-2" severity="danger"
+                                                <Tag class="mb-2 bg-black-alpha-90 border-noround">TIME</Tag>
+                                                <Tag class="mr-2 mb-2 border-noround" severity="danger"
                                                      :value="log.timestamp+'/'+log.ago"></Tag>
-
                                             </div>
 
                                             <div class="level-item">
-                                                <Tag class="mr-2" severity="info" value="ENV"></Tag>
-                                                <Tag class="mr-2" severity="danger"
+                                                <Tag class="mb-2 bg-black-alpha-90 border-noround">ENV</Tag>
+                                                <Tag class="mr-2 mb-2 border-noround"
                                                      :value="log.env"></Tag>
                                             </div>
 
