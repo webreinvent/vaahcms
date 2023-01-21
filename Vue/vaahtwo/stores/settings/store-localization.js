@@ -71,7 +71,7 @@ export const useLocalizationStore = defineStore({
         name: null,
         icon_copy: "<b-icon icon='trash'></b-icon>",
         languages:null,
-        categories:null,
+        categories:[{name:'Select a Filter', value:null}],
         filterOptions:null,
         show_add_language:false,
         show_add_category:false,
@@ -124,9 +124,13 @@ export const useLocalizationStore = defineStore({
                 {
                     for(let key in route.query)
                     {
-                        this.query[key] = route.query[key]
+                        if(key === 'filter'){
+                            this.query_string[key] = route.query[key];
+                        }else{
+                            this.query_string[key] = parseInt(route.query[key]);
+                        }
+
                     }
-                    this.countFilters(route.query);
                 }
             }
         },
@@ -149,23 +153,23 @@ export const useLocalizationStore = defineStore({
             {
                 this.assets = data;
                 this.languages = data.languages.list;
-                this.categories = data.categories.list;
+                this.categories = this.categories.concat(data.categories.list);
+                this.filters.rows = data.rows;
+                if(!this.query_string.lang_id){
+                    this.query_string.lang_id = data.languages.default.id;
+                }
 
-                this.getList();
+                this.getList(this.query_string.page);
 
             }
         },
         //---------------------------------------------------------------------
         async getList(page = 1,sync = false) {
 
-            if(!this.selected_language){
-                this.filters.vh_lang_language_id = this.assets.languages.default.id;
-                this.selected_language =  this.assets.languages.default.id;
-            }
-            if(!this.selected_category){
-                this.filters.vh_lang_category_id = this.assets.categories.default.id;
-                this.selected_category = this.assets.categories.default.id;
-            }
+            this.filters.vh_lang_language_id = this.query_string.lang_id;
+            this.filters.vh_lang_category_id = this.query_string.cat_id;
+            
+            this.updateUrlQueryString(this.query_string);
             this.filters.sync = sync;
             this.filters.page = page;
             this.filters.filter = this.query_string.filter;
@@ -320,6 +324,31 @@ export const useLocalizationStore = defineStore({
             this.getAssets(false);
         },
         //---------------------------------------------------------------------
+        async updateUrlQueryString(query)
+        {
+            //remove reactivity from source object
+            query = vaah().clone(query);
+
+            //create query string
+            let query_string = qs.stringify(query, {
+                skipNulls: true,
+            });
+            let query_object = qs.parse(query_string);
+
+            if(query_object.filter){
+                query_object.filter = vaah().cleanObject(query_object.filter);
+            }
+
+            //reset url query string
+            await this.$router.replace({query: null});
+
+            //replace url query string
+            await this.$router.replace({query: query_object});
+
+            //update applied filters
+
+        },
+        //---------------------------------------------------------------------
         toggleLanguageForm()
         {
             this.show_add_category = false;
@@ -339,26 +368,11 @@ export const useLocalizationStore = defineStore({
         removeQueryString()
         {
             this.query_string.filter = null;
-            this.query_string.lang_id = null;
+            this.query_string.lang_id = this.assets.languages.default.id;
             this.query_string.cat_id = null;
             this.query_string.page = null;
-            this.selected_language = this.assets.languages.default.id;
-            this.selected_category = null;
             this.assets_is_fetching = true;
             this.getAssets();
-        },
-        showCategoryData() {
-
-            this.filters.vh_lang_category_id = this.selected_category;
-            this.query_string.cat_id = this.selected_category;
-
-            this.getList();
-        },
-        showLanguageData() {
-
-            this.filters.vh_lang_language_id = this.selected_language;
-            this.query_string.lang_id = this.selected_language;
-            this.getList();
         },
         //---------------------------------------------------------------------
         storeLanguage() {

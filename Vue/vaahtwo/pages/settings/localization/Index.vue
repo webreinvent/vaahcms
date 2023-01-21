@@ -110,29 +110,31 @@ onMounted(async () => {
                         </div>
                     </div>
             </div>
+
             <div class="grid justify-content-between">
                 <div class="col-4 align-items-center flex">
-                    <Dropdown v-model="store.selected_language"
+                    <Dropdown v-model="store.query_string.lang_id"
                               :options="store.languages"
                               :data-testid="'localization-language_filter'"
                               optionLabel="option_label"
                               optionValue="id"
-                              @change="store.showLanguageData"
+                              @change="store.getList()"
                               placeholder="Select a Language" >
                     </Dropdown>
                 </div>
                 <div class="col-8">
                     <div class="p-inputgroup ">
-                        <Dropdown v-model="store.selected_category"
+                        <Dropdown v-model="store.query_string.cat_id"
                                   :data-testid="'localization-category_filter'"
                                   :options="store.categories"
                                   optionLabel="name"
                                   optionValue="id"
-                                  @change="store.showCategoryData"
+                                  @change="store.getList()"
                                   placeholder="Select a Category" >
                         </Dropdown>
                         <Dropdown v-model="store.query_string.filter"
                                   :options="[
+                                       {name:'Select a Filter', value:null},
                                        {name:'Empty value', value:'empty'},
                                        {name:'Filled value', value:'filled'}
                                   ]"
