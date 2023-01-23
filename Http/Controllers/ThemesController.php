@@ -182,29 +182,33 @@ class ThemesController extends Controller
     //----------------------------------------------------------
     public function actions(Request $request,$id,$action)
     {
-    //        $rules = array(
-    //            'action' => 'required',
-    //            'inputs' => 'required',
-    //            'inputs.id' => 'required',
-    //        );
-    //
-    //        $validator = \Validator::make( $request->all(), $rules);
-    //        if ( $validator->fails() ) {
-    //
-    //            $errors             = errorsToArray($validator->errors());
-    //            $response['success'] = false;
-    //            $response['errors'] = $errors;
-    //            return response()->json($response);
-    //        }
+        $request->merge([
+            'inputs' => ['id' => $id],
+            'action' => $action
+        ]);
+
+        $rules = array(
+            'action' => 'required',
+            'inputs' => 'required',
+            'inputs.id' => 'required',
+        );
+
+        $validator = \Validator::make( $request->all(), $rules);
+        if ( $validator->fails() ) {
+
+            $errors             = errorsToArray($validator->errors());
+            $response['success'] = false;
+            $response['errors'] = $errors;
+            return response()->json($response);
+        }
 
         $data = [];
         $inputs = $request->inputs;
 
-
         /*
          * Call method from module setup controller
          */
-        $theme = Theme::find($id);
+        $theme = Theme::find($inputs['id']);
 
         $method_name = str_replace("_", " ", $action);
         $method_name = ucwords($method_name);

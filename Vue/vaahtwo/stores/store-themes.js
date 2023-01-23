@@ -8,6 +8,7 @@ let model_namespace = 'WebReinvent\\VaahCms\\Models\\Theme';
 
 let base_url = document.getElementsByTagName('base')[0].getAttribute("href");
 let ajax_url = base_url + "/vaah/themes";
+import { useRootStore } from "./root"
 
 let empty_states = {
     query: {
@@ -70,6 +71,12 @@ export const useThemeStore = defineStore({
         themes: [],
         q: '',
         module: null,
+        statusList: [
+            {name: 'All', value: 'all'},
+            {name: 'Active', value: 'active'},
+            {name: 'Inactive', value: 'inactive'},
+            {name: 'Updates Available', value: 'update_available'}
+        ],
     }),
     getters: {
 
@@ -602,6 +609,11 @@ export const useThemeStore = defineStore({
             {
                 this.query.filter[key] = null;
             }
+            for(let key in this.query)
+            {
+                if (key === 'filter') continue;
+                this.query[key] = null;
+            }
             await this.updateUrlQueryString(this.query);
         },
         //---------------------------------------------------------------------
@@ -889,7 +901,7 @@ export const useThemeStore = defineStore({
         //---------------------------------------------------------------------
 
         setSixColumns() {
-            this.list_view_width = 'is-6';
+            this.list_view_width = '6';
             this.$router.push({name: 'themes.install'});
         },
         getThemes() {
@@ -933,13 +945,17 @@ export const useThemeStore = defineStore({
             }
         },
         closeInstallTheme() {
-            this.list_view_width = 'is-12';
+            this.list_view_width = '12';
             this.$router.push({name: 'themes.index'});
         },
         sync() {
             this.query.recount = true;
             this.is_btn_loading = true;
             this.getList();
+        },
+        hasPermission(slug) {
+            const root = useRootStore();
+            return vaah().hasPermission(root.permissions, slug);
         },
     }
 });
