@@ -23,6 +23,9 @@ onMounted(async () => {
      * fetch list of records
      */
     await store.getList();
+
+
+    document.title = 'User Settings';
 });
 </script>
 
