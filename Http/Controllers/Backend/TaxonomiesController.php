@@ -2,7 +2,9 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Auth;
 use WebReinvent\VaahCms\Models\Taxonomy;
+use WebReinvent\VaahCms\Models\TaxonomyType;
 
 
 class TaxonomiesController extends Controller
@@ -19,6 +21,12 @@ class TaxonomiesController extends Controller
 
     public function getAssets(Request $request)
     {
+        if (!Auth::user()->hasPermission('has-access-of-taxonomies-section')) {
+            $response['success'] = false;
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+            return response()->json($response);
+        }
 
         $data = [];
 
@@ -43,7 +51,12 @@ class TaxonomiesController extends Controller
             $data['empty_item'][$column] = null;
         }
 
+        $taxonomy_types = TaxonomyType::whereNotNull('is_active')
+            ->whereNull('parent_id')->with(['children'])
+            ->select('id', 'name', 'slug')->get();
+
         $data['actions'] = [];
+        $data['types'] = $taxonomy_types;
 
         $response['success'] = true;
         $response['data'] = $data;

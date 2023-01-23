@@ -1,9 +1,33 @@
 <script setup>
 import { vaah } from '../../../vaahvue/pinia/vaah'
 import { useTaxonomyStore } from '../../../stores/store-taxonomies'
+import {useDialog} from "primevue/usedialog";
+import TaxonomyTypeModal from "../components/TaxonomyTypeModal.vue"
 
 const store = useTaxonomyStore();
 const useVaah = vaah();
+
+//--------toggle dynamic modal--------//
+const dialog = useDialog();
+
+const openTaxonomyTypeModal = () => {
+    const dialogRef = dialog.open(TaxonomyTypeModal, {
+        props: {
+            header: 'Manage Taxonomy Type',
+            style: {
+                width: '50vw',
+            },
+            breakpoints:{
+                '960px': '75vw',
+                '640px': '90vw'
+            },
+            modal: true
+        }
+    });
+}
+
+//--------toggle dynamic modal--------//
+
 
 </script>
 
@@ -62,6 +86,7 @@ const useVaah = vaah();
                             data-testid="taxonomies-table-to-manage-taxonomy-type-modal"
                             v-tooltip.top="'Manage Taxonomy Type'"
                             icon="pi pi-pencil"
+                            @click="openTaxonomyTypeModal"
                     />
                 </template>
             </Column>
@@ -142,6 +167,8 @@ const useVaah = vaah();
                    :rowsPerPageOptions="store.rows_per_page">
         </Paginator>
         <!--/paginator-->
+
+        <DynamicDialog  />
     </div>
 </template>
 
