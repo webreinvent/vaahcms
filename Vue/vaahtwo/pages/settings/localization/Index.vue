@@ -56,7 +56,7 @@ onMounted(async () => {
 
             <Message severity="warn" class="mt-0" :closable="false">
                 When you make any changes in strings.
-                You need to click on <strong>Generate Lang Files</strong>
+                You need to click on <strong>Generate Language Files</strong>
                 button to reflect your changes.</Message>
 
             <div class="flex align-items-center">
