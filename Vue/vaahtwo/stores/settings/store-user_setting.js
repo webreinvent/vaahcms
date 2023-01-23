@@ -61,6 +61,7 @@ export const useUserSettingStore = defineStore({
         custom_field_list:null,
         active_index:[],
         selected_field_type:null,
+        content_settings_status:true,
         field_types:[
             {name:"Text",value:"text"},
             {name:"Email",value:"email"},
@@ -173,11 +174,11 @@ export const useUserSettingStore = defineStore({
         toggleFieldOptions(event){
             let element = event.target;
             // let target = element.closest('.draggable-menu').find('.p-panel-content');
-            let check = element.closest('.draggable-menu').children[1].classList;
-            if(check.length == 1){
-                element.closest('.draggable-menu').children[1].classList.add('inactive');
+            let check = element.closest('.content-div').children[1].classList;
+            if(check.length == 0){
+                element.closest('.content-div').children[1].classList.add('inactive');
             } else {
-                element.closest('.draggable-menu').children[1].classList.remove('inactive');
+                element.closest('.content-div').children[1].classList.remove('inactive');
             }
 
         },
