@@ -111,8 +111,8 @@ const openTaxonomyTypeModal = () => {
                                  data-testid="taxonomies-table-is-active"
                                  v-bind:false-value="0"  v-bind:true-value="1"
                                  class="p-inputswitch-sm"
-                                 @input="store.toggleIsActive(prop.data)">
-                    </InputSwitch>
+                                 @input="store.toggleIsActive(prop.data)"
+                    />
                 </template>
             </Column>
 

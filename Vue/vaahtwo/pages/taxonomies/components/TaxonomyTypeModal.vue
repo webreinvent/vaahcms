@@ -8,11 +8,18 @@ const store = useTaxonomyStore();
 <template>
     <div>
         <div class="p-inputgroup" v-if="store">
-            <Dropdown v-model="selectedCity1"
-                      :options="cities"
+            <Dropdown v-model="store.assets.type"
+                      :options="store.assets.type"
                       optionLabel="name"
                       optionValue="code"
                       placeholder="Select a Parent"
+            />
+
+            <CascadeSelect :options="store.assets.type"
+                           optionLabel="name"
+                           optionGroupLabel="name"
+                           :optionGroupChildren="['countries', 'cities']"
+                           style="minWidth: 14rem" placeholder="Select a City"
             />
 
             <InputText class="ml-3 p-inputtext-sm"
