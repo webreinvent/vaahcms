@@ -41,7 +41,7 @@ onMounted(async () => {
 });
 </script>
 <template>
-    <div class="column col-6" >
+    <div class="col-6" >
         <div v-if="store.modules.list && store.modules.list.data">
             <Card>
                 <template #header>
@@ -59,7 +59,9 @@ onMounted(async () => {
                                                @keyup.enter.prevent="store.delayedSearch">
                                     </InputText>
                                 </span>
-                            <Button class="p-button-outlined" @click="store.closeInstallModule()" icon="pi pi-times"></Button>
+                            <Button class="p-button-sm"
+                                    @click="store.closeInstallModule()"
+                                    icon="pi pi-times"></Button>
                         </div>
                     </div>
                 </template>
