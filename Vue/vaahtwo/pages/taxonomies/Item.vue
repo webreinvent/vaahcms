@@ -1,12 +1,13 @@
 <script setup>
-import {onMounted, ref, watch} from "vue";
-import {useRoute} from 'vue-router';
-
+import { onMounted, ref, watch } from "vue";
+import { useRoute } from 'vue-router';
 import { useTaxonomyStore } from '../../stores/store-taxonomies'
+import { vaah } from "../../vaahvue/pinia/vaah"
 
 import VhViewRow from '../../vaahvue/vue-three/primeflex/VhViewRow.vue';
 const store = useTaxonomyStore();
 const route = useRoute();
+const useVaah = vaah();
 
 onMounted(async () => {
 
@@ -76,18 +77,25 @@ const toggleItemMenu = (event) => {
 
 
                 <div class="p-inputgroup">
-                    <Button label="Edit"
+                    <Button class="p-button-sm"
+                            :label=" '#' + store.item.id "
+                            @click="useVaah.copy(store.item.id)"
+                    />
+
+                    <Button class="p-button-sm"
+                            label="Edit"
+                            icon="pi pi-pencil"
                             @click="store.toEdit(store.item)"
-                            data-testid="taxonomies-item-to-edit"
-                            icon="pi pi-save"/>
+                    />
 
                     <!--item_menu-->
-                    <Button
-                        type="button"
-                        @click="toggleItemMenu"
-                        data-testid="taxonomies-item-menu"
-                        icon="pi pi-angle-down"
-                        aria-haspopup="true"/>
+                    <Button class="p-button-sm"
+                            type="button"
+                            @click="toggleItemMenu"
+                            data-testid="taxonomies-item-menu"
+                            icon="pi pi-angle-down"
+                            aria-haspopup="true"
+                    />
 
                     <Menu ref="item_menu_state"
                           :model="store.item_menu_list"

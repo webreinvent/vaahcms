@@ -8,8 +8,8 @@ use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Hash;
 use WebReinvent\VaahCms\Models\Registration;
-use WebReinvent\VaahCms\Entities\TaxonomyBase;
-use WebReinvent\VaahCms\Entities\TaxonomyType;
+use WebReinvent\VaahCms\Models\Taxonomy;
+use WebReinvent\VaahCms\Models\TaxonomyType;
 use WebReinvent\VaahCms\Models\User;
 use WebReinvent\VaahCms\Models\Role;
 
@@ -36,7 +36,7 @@ class TaxonomiesController extends Controller
             $request['type'] = $type->id;
 
             if($request->has('parent') && $request->parent){
-                $parent = TaxonomyBase::where('slug',$request->parent)
+                $parent = Taxonomy::where('slug',$request->parent)
                     ->where('type',$type->parent_id)->first();
 
                 if(!$parent){
@@ -53,19 +53,19 @@ class TaxonomiesController extends Controller
 
         $data = new \stdClass();
         $data->new_item = $request->all();
-        $response = TaxonomyBase::createItem($data);
+        $response = Taxonomy::createItem($data);
         return response()->json($response);
     }
     //----------------------------------------------------------
     public function getList(Request $request)
     {
-        $response = TaxonomyBase::getList($request);
+        $response = Taxonomy::getList($request);
         return response()->json($response);
     }
     //----------------------------------------------------------
     public function getItem(Request $request, $column, $value)
     {
-        $item = TaxonomyBase::where($column, $value)->with(['createdByUser',
+        $item = Taxonomy::where($column, $value)->with(['createdByUser',
             'updatedByUser', 'deletedByUser']);
 
         if($request['trashed'] == 'true')
@@ -89,7 +89,7 @@ class TaxonomiesController extends Controller
     public function update(Request $request, $column, $value)
     {
 
-        $item = TaxonomyBase::where($column, $value)->first();
+        $item = Taxonomy::where($column, $value)->first();
 
         if(!$item){
             $response['status']     = 'failed';
@@ -111,7 +111,7 @@ class TaxonomiesController extends Controller
             $request['type'] = $type->id;
 
             if($request->has('parent') && $request->parent){
-                $parent = TaxonomyBase::where('slug',$request->parent_slug)
+                $parent = Taxonomy::where('slug',$request->parent_slug)
                     ->where('type',$type->parent_id)->first();
 
                 if(!$parent){
@@ -130,14 +130,14 @@ class TaxonomiesController extends Controller
         $data = new \stdClass();
         $data->item = $request->all();
 
-        $response = TaxonomyBase::postStore($data,$item->id);
+        $response = Taxonomy::postStore($data,$item->id);
         return response()->json($response);
     }
     //----------------------------------------------------------
     public function delete(Request $request, $column, $value)
     {
 
-        $item = TaxonomyBase::where($column, $value)->first();
+        $item = Taxonomy::where($column, $value)->first();
 
         if(!$item){
             $response['status']     = 'failed';
@@ -147,7 +147,7 @@ class TaxonomiesController extends Controller
 
         $request['inputs'] = [$item->id];
 
-        $response = TaxonomyBase::bulkTrash($request);
+        $response = Taxonomy::bulkTrash($request);
         return response()->json($response);
     }
     //----------------------------------------------------------
