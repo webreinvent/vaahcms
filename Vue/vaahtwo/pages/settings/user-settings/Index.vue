@@ -50,7 +50,7 @@ onMounted(async () => {
                 </div>
             </template>
             <template #content>
-                <Accordion :multiple="true" :activeIndex="store.activeIndex" id="accordionTabContainer">
+                <Accordion :multiple="true" :activeIndex="store.active_index" id="accordionTabContainer">
                     <AccordionTab data-testid="setting-fields_tab">
                         <template #header>
                             <div class="w-full">
@@ -198,12 +198,13 @@ onMounted(async () => {
                         <div class="grid justify-content-between">
                             <div class="col-12 md:col-4">
                                 <div class="p-inputgroup">
-                                    <Dropdown v-model="store.selectedFieldType"
+                                    <Dropdown v-model="store.selected_field_type"
                                               data-testid="setting-customfield_fieldtypes"
-                                              :options="store.fieldTypes"
+                                              :options="store.field_types"
                                               optionLabel="name" optionValue="value"
                                               placeholder="Select a type" />
                                     <Button label="Add"
+                                            :disabled="!store.selected_field_type"
                                             data-testid="setting-customfield_field_add"
                                             @click="store.addCustomField"></Button>
                                 </div>
