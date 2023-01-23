@@ -187,7 +187,7 @@ onMounted(async () => {
                                    class="has-min-height"
                                    data-testid="localization-add_string"
                         ></InputText>
-                        <Button label="Add Env Variable" icon="pi pi-plus"
+                        <Button label="Add String" icon="pi pi-plus"
                                 @click="store.addVariable"
                                 :disabled="!store.new_variable"
                         ></Button>
