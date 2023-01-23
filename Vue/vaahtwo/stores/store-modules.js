@@ -74,7 +74,14 @@ export const useModuleStore = defineStore({
         is_fetching_updates : false,
         is_btn_loading: false,
         module: null,
-        selected_item: null
+        selected_item: null,
+        statusList: [
+            {name: 'All', value: 'all'},
+            {name: 'Active', value: 'active'},
+            {name: 'Inactive', value: 'inactive'},
+            {name: 'Update Available', value: 'update_available'}
+
+        ]
     }),
     getters: {
 
@@ -171,6 +178,7 @@ export const useModuleStore = defineStore({
         {
             if(this.assets_is_fetching === true){
                 this.assets_is_fetching = false;
+
                 vaah().ajax(
                     this.ajax_url+'/assets',
                     this.afterGetAssets,
@@ -202,7 +210,7 @@ export const useModuleStore = defineStore({
             );
         },
         //---------------------------------------------------------------------
-        afterGetList: function (data, res)
+        afterGetList: function (data)
         {
             this.is_btn_loading = false;
             if(data)

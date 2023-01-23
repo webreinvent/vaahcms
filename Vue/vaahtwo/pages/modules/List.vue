@@ -50,20 +50,51 @@ onMounted(async () => {
     <div class="grid" v-if="store.assets">
         <div :class="'col-'+store.list_view_width">
             <Panel>
-                <template class="p-1" #header>
+                <template #header>
+                    <div class="flex justify-content-between align-items-center w-full">
+                        <h5 class="font-semibold text-lg">
+                            Modules
+                            <Badge v-if="store.list && store.list.total > 0"
+                                   :value="store.list.total">
+                            </Badge>
+                        </h5>
+                        <div class="p-inputgroup justify-content-end">
+                            <Button class="p-button-sm"
+                                    tag="router-link"
+                                    @click="store.setSixColumns()"
+                                    icon="pi pi-plus"
+                                    label="Install"
+                                    data-testid="modules-list-action-check_updates"
+                                    v-if="store.hasPermission('can-install-theme')">
+                            </Button>
+                            <Button class="p-button-sm"
+                                    :loading="store.is_fetching_updates"
+                                    @click="store.checkUpdate()"
+                                    icon="pi pi-download"
+                                    label="Check Updates"
+                                    data-testid="modules-list-action-check_updates"
+                                    v-if="store.hasPermission('can-update-theme')">
+                            </Button>
+                            <Button class="p-button-sm"
+                                    @click="store.sync()"
+                                    :loading="store.is_btn_loading"
+                                    data-testid="modules-list-action-refresh"
+                                    icon="pi pi-refresh">
+                            </Button>
+                        </div>
+                    </div>
+                </template>
+                <template class="p-1" #content>
                     <div class="flex flex-row w-full">
                         <div class="w-6 flex align-items-center">
                             <div>
                                 <b class="font-semibold text-lg mr-1">Modules</b>
-                                <Badge v-if="store.list && store.list.total > 0"
-                                       :value="store.list.total">
-                                </Badge>
                             </div>
                         </div>
                         <div class="w-6 justify-content-end">
                             <div class="">
                                 <span class="p-buttonset flex justify-content-end">
-                                    <Button class="p-button-outlined p-button-sm"
+                                    <Button class="p-button-sm"
                                              tag="router-link"
                                              @click="store.setSixColumns()"
                                              icon="pi pi-plus"
@@ -71,15 +102,15 @@ onMounted(async () => {
                                              v-if="store.hasPermission('can-install-theme')">
                                     </Button>
 
-                                    <Button class="p-button-outlined p-button-sm"
+                                    <Button class="p-button-sm"
                                             :loading="store.is_fetching_updates"
                                             @click="store.checkUpdate()"
-                                            icon="pi pi-cloud-download"
+                                            icon="pi pi-download"
                                             label="Check Updates"
                                             v-if="store.hasPermission('can-update-theme')">
                                     </Button>
 
-                                    <Button class="p-button-outlined"
+                                    <Button class="p-button-sm"
                                             @click="store.sync()"
                                             :loading="store.is_btn_loading"
                                             icon="pi pi-refresh">

@@ -34,7 +34,7 @@ class ModulesController extends Controller
             return response()->json($response);
         }
 
-        //Module::syncAllModules();
+        Module::syncAllModules();
 
         $data['vaahcms_api_route'] = config('vaahcms.api_route');
         $data['debug'] = config('vaahcms.debug');

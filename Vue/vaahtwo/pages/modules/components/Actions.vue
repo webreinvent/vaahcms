@@ -30,56 +30,46 @@ const toggleBulkMenuState = (event) => {
     <div>
 
         <!--actions-->
-        <div :class="{'flex justify-content-between': store.isViewLarge()}">
+        <div class="flex justify-content-between">
 
             <!--left-->
-            <div v-if="store.view === 'large'">
 
+            <div class="col-4 mb-5">
+                <Dropdown v-model="store.query.status"
+                          :options="store.statusList"
+                          optionLabel="name"
+                          optionValue="value"
+                          placeholder="Select a filter">
+                </Dropdown>
             </div>
             <!--/left-->
 
             <!--right-->
-            <div >
-                <div class="grid p-fluid">
-
-
-                    <div class="col-12">
-                        <div class="p-inputgroup ">
-                            <InputText v-model="store.query.q"
-                                       @keyup.enter="store.delayedSearch()"
-                                       @keyup.enter.native="store.delayedSearch()"
-                                       @keyup.13="store.delayedSearch()"
-                                       data-testid="modules-actions-search"
-                                       placeholder="Search"/>
-                            <Button @click="store.delayedSearch()"
-                                    data-testid="modules-actions-search-button"
-                                    icon="pi pi-search"/>
-                            <Button
-                                type="button"
-                                class="p-button-sm"
-                                data-testid="modules-actions-show-filters"
-                                @click="store.show_filters = true">
-                                Filters
-                                <Badge v-if="store.count_filters > 0" :value="store.count_filters"></Badge>
-                            </Button>
-
-                            <Button
-                                type="button"
-                                icon="pi pi-filter-slash"
-                                data-testid="modules-actions-reset-filters"
-                                class="p-button-sm"
-                                label="Reset"
-                                @click="store.resetQuery()" />
-
-                        </div>
-                    </div>
-
-
-                    <Filters/>
-
+            <div class="col-5 col-offset-3 mb-5">
+                <div class="p-inputgroup">
+                    <InputText v-model="store.query.q"
+                               @keyup.enter="store.delayedSearch()"
+                               @keyup.enter.native="store.delayedSearch()"
+                               @keyup.13="store.getList()"
+                               data-testid="modules-actions-search"
+                               placeholder="Search"/>
+                    <Button
+                        type="button"
+                        class="p-button-sm"
+                        data-testid="modules-actions-show-filters"
+                        @click="store.delayedSearch()">
+                        Filters
+                    </Button>
+                    <Button
+                        type="button"
+                        icon="pi pi-filter-slash"
+                        data-testid="modules-actions-reset-filters"
+                        class="p-button-sm"
+                        label="Reset"
+                        @click="store.resetQuery()" />
                 </div>
-
             </div>
+
             <!--/right-->
 
         </div>
