@@ -2,7 +2,7 @@
 import {onMounted, reactive, ref} from "vue";
 import {useRoute} from 'vue-router';
 import draggable from 'vuedraggable';
-
+import { vaah } from '../../../vaahvue/pinia/vaah';
 import {useUserSettingStore} from "../../../stores/settings/store-user_setting";
 
 const store = useUserSettingStore();
@@ -101,91 +101,85 @@ onMounted(async () => {
                                        && store.custom_field_list.value.length > 0">
                                 <draggable item-key="id"
                                            v-model="store.custom_field_list.value"
-                                           class="dragArea"
-                                           :group="{ name: 'g1', pull: 'clone', put: false }"
+                                           class="dragArea list-group"
+                                           group="content-types"
                                            @start="drag=true"
                                            @end="drag=false">
-                                    <template #item = {element}>
-                                        <div class="col-12">
-                                            <Panel class="draggable-menu">
-                                                <template #header>
-                                                    <p class="control drag">
-                                                        <span>:::</span>
-                                                    </p>
-                                                    <p class="control field-label">
-                                                        <span >{{element.type}}</span>
-                                                    </p>
-                                                    <div class="control">
-                                                        <InputText v-model="element.name"
-                                                                   data-testid="setting-customfield_name"
-                                                                   @input="store.onInputFieldName(element)"
-                                                                   class="w-full"/>
-                                                    </div>
-                                                    <Button class="control button"
-                                                            data-testid="setting-customfield_toggle"
-                                                            icon="pi pi-cog"
-                                                            @click="store.toggleFieldOptions"></Button>
-                                                    <Button class="control button"
-                                                            icon="pi pi-trash"
-                                                            data-testid="setting-customfield_remove"
-                                                            @click="store.deleteGroupField(index)"></Button>
-                                                </template>
-                                                <div class="p-datatable p-component
-                                                p-datatable-responsive-scroll p-datatable-sm">
+                                    <template #item = {element,index}>
+                                        <div class="content-div">
+                                            <div class="p-inputgroup mb-3">
+                                                <Button label=":::" class="drag"
+                                                        data-testid="setting-customfield_drag_btn"/>
+                                                <InputText class="w-2"
+                                                           :model-value="vaah().toLabel(element.type)" disabled/>
+                                                <InputText class="w-6"
+                                                           v-model="element.name"
+                                                           data-testid="setting-customfield_name"
+                                                           @input="store.onInputFieldName(element)"
+                                                           placeholder="Field Name"/>
+                                                <Button icon="pi pi-cog p-button-sm"
+                                                        data-testid="setting-customfield_toggle"
+                                                        @click="store.toggleFieldOptions"/>
+                                                <Button icon="pi pi-trash p-button-sm"
+                                                        data-testid="setting-customfield_remove"
+                                                        @click="store.deleteGroupField(index)"/>
+                                            </div>
+                                            <div>
+                                                <div class="">
                                                     <table class="p-datatable-table">
-                                                    <tbody class="p-datatable-tbody">
-                                                    <tr>
-                                                        <td>Is hidden</td>
-                                                        <td>
-                                                            <InputSwitch v-model="element.is_hidden"
-                                                                         data-testid="setting-customfield_is_hidden"
-                                                                         v-bind:false-value="0"
-                                                                         v-bind:true-value="1">
-                                                            </InputSwitch>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>Apply to Registration</td>
-                                                        <td>
-                                                            <InputSwitch v-model="element.to_registration"
-                                                                         data-testid="setting-customfield_to_registration"
-                                                                         v-bind:false-value="0"
-                                                                         v-bind:true-value="1">
-                                                            </InputSwitch>
-                                                        </td>
-                                                    </tr>
-                                                    <tr v-if="element.type === 'password'">
-                                                        <td>Is Password Reveal</td>
-                                                        <td>
-                                                            <InputSwitch v-model="element.is_password_reveal"
-                                                                         data-testid="setting-customfield_is_password_reveal"
-                                                                         v-bind:false-value="0"
-                                                                         v-bind:true-value="1">
-                                                            </InputSwitch>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>Min-Length</td>
-                                                        <td><InputNumber v-model="element.minlength"
-                                                                         data-testid="setting-customfield_minlength"
-                                                                         class="w-full"/></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>Max-Length</td>
-                                                        <td><InputNumber v-model="element.maxlength"
-                                                                         data-testid="setting-customfield_maxlength"
-                                                                         class="w-full"/></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>Excerpt</td>
-                                                        <td><Textarea v-model="element.excerpt"
-                                                                      data-testid="setting-customfield_excerpt"
-                                                                      class="w-full"/></td>
-                                                    </tr>
-                                                    </tbody>
-                                                </table>
+                                                        <tbody class="p-datatable-tbody">
+                                                        <tr>
+                                                            <td>Is hidden</td>
+                                                            <td>
+                                                                <InputSwitch v-model="element.is_hidden"
+                                                                             data-testid="setting-customfield_is_hidden"
+                                                                             v-bind:false-value="0"
+                                                                             v-bind:true-value="1">
+                                                                </InputSwitch>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Apply to Registration</td>
+                                                            <td>
+                                                                <InputSwitch v-model="element.to_registration"
+                                                                             data-testid="setting-customfield_to_registration"
+                                                                             v-bind:false-value="0"
+                                                                             v-bind:true-value="1">
+                                                                </InputSwitch>
+                                                            </td>
+                                                        </tr>
+                                                        <tr v-if="element.type === 'password'">
+                                                            <td>Is Password Reveal</td>
+                                                            <td>
+                                                                <InputSwitch v-model="element.is_password_reveal"
+                                                                             data-testid="setting-customfield_is_password_reveal"
+                                                                             v-bind:false-value="0"
+                                                                             v-bind:true-value="1">
+                                                                </InputSwitch>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Min-Length</td>
+                                                            <td><InputNumber v-model="element.minlength"
+                                                                             data-testid="setting-customfield_minlength"
+                                                                             class="w-full"/></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Max-Length</td>
+                                                            <td><InputNumber v-model="element.maxlength"
+                                                                             data-testid="setting-customfield_maxlength"
+                                                                             class="w-full"/></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Excerpt</td>
+                                                            <td><Textarea v-model="element.excerpt"
+                                                                          data-testid="setting-customfield_excerpt"
+                                                                          class="w-full"/></td>
+                                                        </tr>
+                                                        </tbody>
+                                                    </table>
                                                 </div>
-                                            </Panel>
+                                            </div>
                                         </div>
                                     </template>
                                 </draggable>
@@ -226,28 +220,10 @@ onMounted(async () => {
     </div>
 </template>
 <style>
-.control {
-    box-sizing: border-box;
-    clear: both;
-    font-size: .94rem;
-    position: relative;
-    text-align: inherit;
-    background-color: #fafafa;
-    border-color: #dbdbdb;
-    box-shadow: none;
-    color: #7a7a7a;
-}
-.button{
-    cursor: pointer;
+.inactive{
+    display: none;
 }
 .drag{
     cursor: grab;
-}
-.field-label {
-    min-width: 150px;
-    pointer-events: none;
-}
-.inactive{
-    display:none
 }
 </style>
