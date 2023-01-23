@@ -54,19 +54,33 @@ const toggleFormMenu = (event) => {
 
 
                 <div class="p-inputgroup">
-                    <Button label="Save"
-                            v-if="store.item && store.item.id"
-                            data-testid="taxonomies-save"
+                    <Button v-if="store.item && store.item.id"
+                            class="p-button-sm"
+                            :label=" '#' + store.item.id "
+                            @click="useVaah.copy(store.item.id)"
+                    />
+
+                    <Button v-if="store.item && store.item.id"
+                            class="p-button-sm"
+                            label="Save"
+                            icon="pi pi-save"
                             @click="store.itemAction('save')"
-                            icon="pi pi-save"/>
+                    />
 
-                    <Button label="Create & New"
-                            v-else
+                    <Button v-else
+                            class="p-button-sm"
+                            label="Create & New"
+                            icon="pi pi-save"
                             @click="store.itemAction('create-and-new')"
-                            data-testid="taxonomies-create-and-new"
-                            icon="pi pi-save"/>
+                    />
 
-
+                    <Button v-if="store.item && store.item.id"
+                            class="p-button-sm"
+                            icon="pi pi-eye"
+                            v-tooltip.top="'View'"
+                            @click="store.toView(store.item)"
+                    />
+                    
                     <!--form_menu-->
                     <Button
                         type="button"

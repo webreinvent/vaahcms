@@ -62,7 +62,8 @@ export const useTaxonomyStore = defineStore({
         list_bulk_menu: [],
         item_menu_list: [],
         item_menu_state: null,
-        form_menu_list: []
+        form_menu_list: [],
+        is_btn_loading: false,
     }),
     getters: {
 
@@ -147,7 +148,7 @@ export const useTaxonomyStore = defineStore({
                         {
                             if(newVal && newVal !== "")
                             {
-                                this.item.name = vaah().capitalising(newVal);
+                                // this.item.name = vaah().capitalising(newVal);
                                 this.item.slug = vaah().strToSlug(newVal);
                             }
                         },{deep: true}

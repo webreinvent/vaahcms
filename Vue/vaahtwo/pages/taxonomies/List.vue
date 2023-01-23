@@ -57,7 +57,7 @@ onMounted(async () => {
 
                     <div class="flex flex-row">
                         <div >
-                            <b class="mr-1">TaxonomiesController</b>
+                            <b class="mr-1">Taxonomies</b>
                             <Badge v-if="store.list && store.list.total > 0"
                                    :value="store.list.total">
                             </Badge>
@@ -68,13 +68,19 @@ onMounted(async () => {
                 </template>
 
                 <template #icons>
+                    <div class="p-inputgroup">
+                        <Button class="p-button-sm"
+                                label="Create"
+                                data-testid="taxonomies-list-create"
+                                icon="pi pi-plus"
+                                @click="store.toForm()"
+                        />
 
-                    <Button data-testid="taxonomies-list-create"
-                            @click="store.toForm()">
-                        <i class="pi pi-plus mr-1"></i>
-                        Create
-                    </Button>
-
+                        <Button class="p-button-sm"
+                                icon="pi pi-refresh"
+                                :loading="store.is_btn_loading"
+                        />
+                        </div>
                 </template>
 
                 <Actions/>
