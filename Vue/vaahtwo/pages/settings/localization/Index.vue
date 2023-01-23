@@ -50,7 +50,15 @@ onMounted(async () => {
             </div>
         </template>
 
+
+
         <template #content>
+
+            <Message severity="warn" class="mt-0" :closable="false">
+                When you make any changes in strings.
+                You need to click on <strong>Generate Lang Files</strong>
+                button to reflect your changes.</Message>
+
             <div class="flex align-items-center">
                 <div class="mb-4" v-if="store.show_add_language">
                     <h5 class="p-1 text-xs mb-1">Add New Languages</h5>
