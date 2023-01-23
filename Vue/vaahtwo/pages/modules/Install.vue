@@ -57,9 +57,11 @@ onMounted(async () => {
                                                v-model="store.modules.query_string.q"
                                                @input="store.delayedSearch"
                                                @keyup.enter.prevent="store.delayedSearch">
+                                               data-testid="modules-install-filter_input"
                                     </InputText>
                                 </span>
                             <Button class="p-button-sm"
+                                    data-testid="modules-install-filter_button"
                                     @click="store.closeInstallModule()"
                                     icon="pi pi-times"></Button>
                         </div>
@@ -82,9 +84,11 @@ onMounted(async () => {
                                 <template #footer v-if="store.hasPermission('can-install-module')">
                                     <Button icon="pi pi-check"
                                             class="p-button-success"
+                                            data-testid="modules-install-installed-button"
                                             v-if="store.isInstalled(item)" label="Installed"></Button>
                                     <Button icon="pi pi-download"
                                             class="p-button-outlined"
+                                            data-testid="modules-install-install-button"
                                             v-else
                                             @click="store.install(item)" label="Install"></Button>
                                 </template>

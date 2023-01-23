@@ -39,6 +39,7 @@ const toggleBulkMenuState = (event) => {
                           :options="store.statusList"
                           optionLabel="name"
                           optionValue="value"
+                          data-testid="modules-actions-status-dropdown"
                           placeholder="Select a filter">
                 </Dropdown>
             </div>
@@ -56,7 +57,7 @@ const toggleBulkMenuState = (event) => {
                     <Button
                         type="button"
                         class="p-button-sm"
-                        data-testid="modules-actions-show-filters"
+                        data-testid="modules-actions-search-filters"
                         @click="store.delayedSearch()">
                         Filters
                     </Button>
