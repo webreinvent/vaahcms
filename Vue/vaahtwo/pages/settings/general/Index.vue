@@ -38,7 +38,7 @@ onMounted(async () => {
                 </div>
             </template>
             <template #content>
-                <Accordion :multiple="true" :activeIndex="store.activeIndex" id="accordionTabContainer">
+                <Accordion :multiple="true" :activeIndex="store.active_index" id="accordionTabContainer">
                     <AccordionTab>
                         <template #header>
                             <div class="w-full">
@@ -98,7 +98,7 @@ onMounted(async () => {
                                         <h5 class="p-1 text-xs mb-1">Meta Description</h5>
                                         <div class="p-inputgroup">
                                             <SelectButton v-model="store.list.search_engine_visibility"
-                                                          :options="store.visibitlityOptions"
+                                                          :options="store.visibitlity_options"
                                                           data-testid="general-visibility"
                                                           aria-labelledby="single"/>
                                             <Button icon="pi pi-copy"
@@ -125,12 +125,13 @@ onMounted(async () => {
                                         <h5 class="p-1 text-xs mb-1">Redirect after Backend Logout</h5>
                                         <div class="p-inputgroup">
                                             <SelectButton v-model="store.list.redirect_after_backend_logout"
-                                                          :options="store.redirectAfterLogoutOptions"
+                                                          :options="store.redirect_after_logout_options"
                                                           data-testid="general-redirect_logout"
                                                           aria-labelledby="single" class="p-button-sm"/>
                                             <InputText placeholder="Enter Redirection Link"
+                                                       v-model="store.list.redirect_after_backend_logout"
                                                        data-testid="general-redirect_logout_custom"
-                                                       :disabled="store.redirectAfterLogout !== 'Custom'"></InputText>
+                                                       :disabled="store.list.redirect_after_backend_logout !== 'Custom'"></InputText>
                                         </div>
                                     </div>
                                 </div>
@@ -157,7 +158,7 @@ onMounted(async () => {
                                                 <label for="copyright-custom">Custom</label>
                                             </div>
                                         </div>
-                                        <InputText class="w-full" v-if="store.copyrightText === 'custom'"
+                                        <InputText class="w-full" v-if="store.list.copyright_text === 'custom'"
                                                    data-testid="general-copyright_custom_filed"
                                                    v-model="store.list.copyright_text"
                                                    placeholder="Enter Custom Text"></InputText>
@@ -239,7 +240,7 @@ onMounted(async () => {
                                     <div class="col-4 p-fluid">
                                         <h5 class="p-1 text-xs mb-1">Password Protection</h5>
                                         <SelectButton v-model="store.list.password_protection"
-                                                      :options="store.passwordProtectionOptions"
+                                                      :options="store.password_protection_options"
                                                       class="p-button-sm"
                                                       data-testid="general-password_protection"
                                                       aria-labelledby="single"/>
@@ -247,7 +248,7 @@ onMounted(async () => {
                                     <div class="col-4 p-fluid">
                                         <h5 class="p-1 text-xs mb-1">Laravel Queues</h5>
                                         <SelectButton v-model="store.list.laravel_queues"
-                                                      :options="store.laravelQueuesOptions"
+                                                      :options="store.laravel_queues_options"
                                                       data-testid="general-laravel_queues"
                                                       class="p-button-sm" aria-labelledby="single"/>
                                     </div>
@@ -287,7 +288,7 @@ onMounted(async () => {
                                 <div class="p-inputgroup">
                                     <Dropdown v-model="store.list.date_format"
                                               data-testid="general-date_format"
-                                              :options="store.dateFormatOptions"></Dropdown>
+                                              :options="store.date_format_options"></Dropdown>
                                     <InputText placeholder="Enter Custom date format"
                                                data-testid="general-date_format_custom"
                                                v-if="store.list.date_format === 'Custom'"></InputText>
@@ -301,7 +302,7 @@ onMounted(async () => {
                                 <div class="p-inputgroup">
                                     <Dropdown v-model="store.list.time_format"
                                               data-testid="general-time_format"
-                                              :options="store.timeFormatOptions"></Dropdown>
+                                              :options="store.time_format_options"></Dropdown>
                                     <InputText placeholder="Enter Custom time format"
                                                data-testid="general-time_format_custom"
                                                v-if="store.list.time_format === 'Custom'"></InputText>
@@ -315,7 +316,7 @@ onMounted(async () => {
                                 <div class="p-inputgroup">
                                     <Dropdown v-model="store.list.datetime_format"
                                               data-testid="general-datetime_format"
-                                              :options="store.dateTimeFormatOptions"></Dropdown>
+                                              :options="store.date_time_format_options"></Dropdown>
                                     <InputText placeholder="Enter Custom date-time format"
                                                data-testid="general-datetime_format_custom"
                                                v-if="store.list.datetime_format === 'Custom'"></InputText>
@@ -341,7 +342,7 @@ onMounted(async () => {
                             </div>
                         </template>
                         <div class="grid">
-                            <div class="col-12 md:col-4" v-for="(item,index) in store.socialMediaLinks">
+                            <div class="col-12 md:col-4" v-for="(item,index) in store.social_media_links">
                                 <h5 class="p-1 text-xs mb-1">{{ item.label }}</h5>
                                 <div class="p-inputgroup p-fluid">
                                     <span class="p-input-icon-left">
@@ -367,15 +368,15 @@ onMounted(async () => {
                         <div class="grid mt-5">
                             <div class="col-12 md:col-4">
                                 <div class="p-inputgroup">
-                                    <InputText v-model="store.addLink"
+                                    <InputText v-model="store.add_link"
                                                data-testid="general-add_link_field"
                                                icon= "pi pi-link"
-                                               v-if="store.showLinkInput"
+                                               v-if="store.show_link_input"
                                                class="p-inputtext-sm"></InputText>
                                     <Button label="Add Link" icon="pi pi-plus"
                                             class="p-button-sm"
                                             data-testid="general-add_link_btn"
-                                            :disabled="!store.addLink"
+                                            :disabled="!store.add_link"
                                             @click="store.addLinkHandler"></Button>
                                 </div>
                             </div>
@@ -401,7 +402,7 @@ onMounted(async () => {
                             <div class="col-12 md:col-6 pr-3">
                                 <h5 class="p-1 text-xs mb-1">After head tag start (&lt;head&gt;)</h5>
                                 <div class="p-inputgroup">
-                                    <Textarea v-model="store.scriptTag.script_after_head_start"
+                                    <Textarea v-model="store.script_tag.script_after_head_start"
                                               :autoResize="true"
                                               data-testid="general-script_head_start"
                                               class="w-full"/>
@@ -414,7 +415,7 @@ onMounted(async () => {
                             <div class="col-12 md:col-6 pl-3">
                                 <h5 class="p-1 text-xs mb-1">After head tag close (&lt;/head&gt;)</h5>
                                 <div class="p-inputgroup">
-                                    <Textarea v-model="store.scriptTag.script_before_head_close"
+                                    <Textarea v-model="store.script_tag.script_before_head_close"
                                               :autoResize="true"
                                               data-testid="general-script_head_close"
                                               class="w-full"/>
@@ -427,7 +428,7 @@ onMounted(async () => {
                             <div class="col-12 md:col-6 pr-3">
                                 <h5 class="p-1 text-xs mb-1">After body tag start (&lt;body&gt;)</h5>
                                 <div class="p-inputgroup">
-                                    <Textarea v-model="store.scriptTag.script_after_body_start"
+                                    <Textarea v-model="store.script_tag.script_after_body_start"
                                               :autoResize="true"
                                               data-testid="general-script_body_start"
                                               class="w-full"/>
@@ -440,7 +441,7 @@ onMounted(async () => {
                             <div class="col-12 md:col-6 pl-3">
                                 <h5 class="p-1 text-xs mb-1">After body tag close (&lt;/body&gt;)</h5>
                                 <div class="p-inputgroup">
-                                    <Textarea v-model="store.scriptTag.script_before_body_close"
+                                    <Textarea v-model="store.script_tag.script_before_body_close"
                                               :autoResize="true"
                                               data-testid="general-script_body_close"
                                               class="w-full"/>
@@ -471,23 +472,27 @@ onMounted(async () => {
                             </div>
                         </template>
                         <div class="grid">
-                            <div class="col-12" v-if="store.metaTag" v-for="(item,index) in store.metaTag">
+                            <div class="col-12" v-if="store.meta_tag" v-for="(item,index) in store.meta_tag">
                                 <h5 class="p-1 text-xs mb-1">Meta Tag</h5>
                                 <div class="p-inputgroup">
                                     <Dropdown v-model="item.value.attribute"
-                                              :option="store.assets.vh_meta_attributes"
+                                              :options="store.assets.vh_meta_attributes"
                                               optionLabel="name"
                                               optionValue="slug"
                                               data-testid="general-metatags_attributes"
+                                              placeholder="Select any"
                                     />
                                     <InputText v-model="item.value.attribute_value"
                                                data-testid="general-metatags_attributes_value"></InputText>
                                     <Button label="Content" disabled=""></Button>
                                     <InputText v-model="item.value.content"
                                                data-testid="general-metatags_attributes_content"></InputText>
+                                    <Button icon="pi pi-trash"
+                                            data-testid="general-remove_tag"
+                                            @click="store.removeMetaTags(item)"/>
                                 </div>
                             </div>
-                            <div class="col-12 md:col-4">
+                            <div class="col-12 md:col-8">
                                 <div class="p-inputgroup">
                                     <Button icon="pi pi-plus"
                                             data-testid="general-add_newtag"
@@ -495,19 +500,24 @@ onMounted(async () => {
                                             label="Add Meta Tag"></Button>
                                     <Button label="Save"
                                             @click="store.storeTags"
-                                            data-testid="general-add_newtag" ></Button>
+                                            data-testid="general-meta_tag-save" ></Button>
                                     <Button icon="pi pi-copy"
-                                            data-testid="general-"
+                                            data-testid="general-meta_tag_copy"
                                             @click="store.getCopy('meta_tags')"></Button>
                                 </div>
                             </div>
                             <div class="col-12 md:col-4">
                                 <div class="p-inputgroup">
-                                    <Dropdown v-model="store.metaOption"
-                                              :options="store.metaOptions"
-                                              option-label="label"
-                                              option-value="value"></Dropdown>
-                                    <Button label="Generate"></Button>
+                                    <Dropdown v-model="store.tag_type"
+                                              :options="[
+                                                  {name:'Google Webmaster',value:'google-webmaster'},
+                                                  {name:'Open Graph (Facebook)',value:'open-graph'},
+                                              ]"
+                                              data-testid="general-gegnerate_tag"
+                                              optionLabel="name"
+                                              optionValue="value"
+                                              placeholder="Select a type"/>
+                                    <Button label="Generate" @click="store.generateTags"></Button>
                                 </div>
                             </div>
                         </div>

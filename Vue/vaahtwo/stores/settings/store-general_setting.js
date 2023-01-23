@@ -59,45 +59,27 @@ export const useGeneralStore = defineStore({
         },
         field_type: null,
         custom_field_list:null,
-        activeIndex:[],
-        selectedFieldType:null,
-        fieldTypes:[
-            {name:"Text",value:"text"},
-            {name:"Email",value:"email"},
-            {name:"TextArea",value:"textarea"},
-            {name:"Number",value:"number"},
-            {name:"Password",value:"password"}
-        ],
+        active_index:[],
         languages: null,
-        selectedLanguage: null,
-        visibility: 'Visible',
-        visibitlityOptions: ['Visible', 'Invisible'],
-        redirectAfterLogout: 'Backend',
-        redirectAfterLogoutOptions: ['Backend', 'Frontend', 'Custom'],
-        copyrightText: 'app-name',
-        copyrightLink: 'Use App Url',
-        copyrightYear: 'Use Current Year',
-        passwordProtection: 'Disable',
-        passwordProtectionOptions: ['Disable', 'Enable'],
-        laravelQueues: 'Enable',
-        laravelQueuesOptions: ['Disable', 'Enable'],
-        socialMediaLinks: null,
-        addLink: null,
-        showLinkInput: true,
-        dateFormatOptions: ['Y-m-d', 'y/m/d', 'y.m.d', 'Custom'],
-        dateFormat: 'y-m-d',
-        timeFormatOptions: ['H:i:s', 'h:i A', 'h:i:s A', 'Custom'],
-        timeFormat: 'H:i:s',
-        dateTimeFormatOptions: ['Y-m-d H:i:s', 'Y-m-d h:i A', 'd-M-Y H:i', 'Custom'],
-        dateTimeFormat: 'Y-m-d H:i:s',
-        metaTag: null,
-        scriptTag:{
+        visibitlity_options: ['Visible', 'Invisible'],
+        redirect_after_logout_options: ['Backend', 'Frontend', 'Custom'],
+        password_protection_options: ['Disable', 'Enable'],
+        laravel_queues_options: ['Disable', 'Enable'],
+        social_media_links: null,
+        add_link: null,
+        show_link_input: true,
+        date_format_options: ['Y-m-d', 'y/m/d', 'y.m.d', 'Custom'],
+        time_format_options: ['H:i:s', 'h:i A', 'h:i:s A', 'Custom'],
+        date_time_format_options: ['Y-m-d H:i:s', 'Y-m-d h:i A', 'd-M-Y H:i', 'Custom'],
+        meta_tag: null,
+        script_tag:{
             script_after_body_start:null,
             script_after_head_start:null,
             script_before_body_close:null,
             script_before_head_close:null,
         },
-        value:null,
+        allowed_files:null,
+        tag_type:null,
     }),
     getters: {
 
@@ -122,9 +104,7 @@ export const useGeneralStore = defineStore({
             {
                 this.assets = data;
                 this.languages = data.languages;
-                this.allowedFiles = data.file_types;
-                this.metaOptions = data.vh_meta_attributes;
-
+                this.allowed_files = data.file_types;
             }
         },
         //---------------------------------------------------------------------
@@ -144,9 +124,9 @@ export const useGeneralStore = defineStore({
         {
             if (data) {
                 this.list = data.list;
-                this.socialMediaLinks = data.links;
-                this.scriptTag = data.scripts;
-                this.metaTag = data.meta_tags;
+                this.social_media_links = data.links;
+                this.script_tag = data.scripts;
+                this.meta_tag = data.meta_tags;
             }
         },
         //---------------------------------------------------------------------
@@ -161,10 +141,10 @@ export const useGeneralStore = defineStore({
 
             if(item.id)
             {
-                this.socialMediaLinks = vaah().removeInArrayByKey(this.socialMediaLinks, item, 'id');
+                this.social_media_links = vaah().removeInArrayByKey(this.social_media_links, item, 'id');
             } else
             {
-                this.socialMediaLinks = vaah().removeInArrayByKey(this.socialMediaLinks, item, 'count');
+                this.social_media_links = vaah().removeInArrayByKey(this.social_media_links, item, 'count');
             }
             vaah().toastErrors(['Removed']);
         },
@@ -190,7 +170,7 @@ export const useGeneralStore = defineStore({
                 method: 'post',
             };
 
-            options.params = { links: this.socialMediaLinks };
+            options.params = { links: this.social_media_links };
 
             let ajax_url = this.ajax_url+'/store/links';
             vaah().ajax(ajax_url, this.storeLinksAfter, options);
@@ -205,7 +185,7 @@ export const useGeneralStore = defineStore({
                 method: 'post',
             };
 
-            options.params = { list: this.scriptTag };
+            options.params = { list: this.script_tag };
 
             let ajax_url = this.ajax_url+'/store/site/settings';
             vaah().ajax(ajax_url, this.storeScriptAfter, options);
@@ -218,27 +198,27 @@ export const useGeneralStore = defineStore({
         expandAll() {
             let accordionTabs = document.getElementById('accordionTabContainer').children.length;
             for (let i = 0; i <= accordionTabs; i++) {
-                this.activeIndex.push(i);
+                this.active_index.push(i);
             }
         },
         //---------------------------------------------------------------------
         collapseAll() {
-            this.activeIndex = [];
+            this.active_index = [];
         },
         //---------------------------------------------------------------------
         addLinkHandler() {
-            if (!this.showLinkInput) {
-                return this.showLinkInput = true;
-            } else if (this.showLinkInput && this.addLink !== "" && this.addLink !== null) {
-                this.socialMediaLinks.push({label: this.addLink, icon: 'pi-link'});
-                this.addLink = null;
-                return this.showLinkInput = true;
+            if (!this.show_link_input) {
+                return this.show_link_input = true;
+            } else if (this.show_link_input && this.add_link !== "" && this.add_link !== null) {
+                this.social_media_links.push({label: this.add_link, icon: 'pi-link'});
+                this.add_link = null;
+                return this.show_link_input = true;
             }
         },
         //---------------------------------------------------------------------
         addMetaTags() {
 
-            let count = this.metaTag.length;
+            let count = this.meta_tag.length;
 
             let item = {
                 id: null,
@@ -257,7 +237,7 @@ export const useGeneralStore = defineStore({
                 updated_at: null,
             };
 
-            this.metaTag.push(item);;
+            this.meta_tag.push(item);;
 
         },
         //---------------------------------------------------------------------
@@ -265,7 +245,7 @@ export const useGeneralStore = defineStore({
 
             let options = {
                 method: 'post',
-                params: this.metaTag
+                params: this.meta_tag
             };
 
             let ajax_url = this.ajax_url+'/store/meta/tags';
@@ -288,6 +268,145 @@ export const useGeneralStore = defineStore({
         //---------------------------------------------------------------------
         clearCacheAfter(data, res) {
             window.location.reload(true);
+        },
+        //---------------------------------------------------------------------
+        removeMetaTags(tag){
+            if(tag.id)
+            {
+                this.tags = vaah().removeInArrayByKey(this.meta_tag, tag, 'id');
+            } else
+            {
+                this.tags = vaah().removeInArrayByKey(this.meta_tag, tag, 'uid');
+            }
+        },
+        //---------------------------------------------------------------------
+        generateTags() {
+            if(this.tag_type == 'open-graph')
+            {
+                this.generateOpenGraph();
+            }
+
+            if(this.tag_type == 'google-webmaster')
+            {
+                this.generateWebmaster();
+            }
+
+        },
+        //---------------------------------------------------------------------
+        generateOpenGraph(){
+
+            let list = [
+                {
+                    id: null,
+                    uid: 'meta_tags_og_title',
+                    category: "global",
+                    label: "Open Graph Title",
+                    type: "meta_tags",
+                    key: "meta_tags_og_title",
+                    value: {
+                        attribute: 'property',
+                        attribute_value: 'og:title',
+                        content: '',
+                    },
+
+                },
+                {
+                    id: null,
+                    uid: 'meta_tags_og_site_name',
+                    category: "global",
+                    label: "Open Graph Site Name",
+                    type: "meta_tags",
+                    key: "meta_tags_og_site_name",
+                    value: {
+                        attribute: 'property',
+                        attribute_value: 'og:site_name',
+                        content: '',
+                    },
+
+                },
+                {
+                    id: null,
+                    uid: 'meta_tags_og_url',
+                    category: "global",
+                    label: "Open Graph Site Url",
+                    type: "meta_tags",
+                    key: "meta_tags_og_url",
+                    value: {
+                        attribute: 'property',
+                        attribute_value: 'og:url',
+                        content: '',
+                    },
+
+                },
+                {
+                    id: null,
+                    uid: 'meta_tags_og_description',
+                    category: "global",
+                    label: "Open Graph Description",
+                    type: "meta_tags",
+                    key: "meta_tags_og_description",
+                    value: {
+                        attribute: 'property',
+                        attribute_value: 'og:description',
+                        content: '',
+                    },
+
+                },
+                {
+                    id: null,
+                    uid: 'meta_tags_og_type',
+                    category: "global",
+                    label: "Open Graph Type",
+                    type: "meta_tags",
+                    key: "meta_tags_og_type",
+                    value: {
+                        attribute: 'property',
+                        attribute_value: 'og:type',
+                        content: '',
+                    },
+
+                },
+                {
+                    id: null,
+                    uid: 'meta_tags_og_image',
+                    category: "global",
+                    label: "Open Graph Image",
+                    type: "meta_tags",
+                    key: "meta_tags_og_image",
+                    value: {
+                        attribute: 'property',
+                        attribute_value: 'og:image',
+                        content: '',
+                    },
+
+                }
+            ];
+
+            this.meta_tag = this.meta_tag.concat(list);
+
+        },
+        //---------------------------------------------------------------------
+        generateWebmaster() {
+
+            let list = [
+                {
+                    id: null,
+                    uid: 'meta_tags_google_webmaster',
+                    category: "global",
+                    label: "Google Webmaster",
+                    type: "meta_tags",
+                    key: "meta_tags_google_webmaster",
+                    value: {
+                        attribute: 'name',
+                        attribute_value: 'google-site-verification',
+                        content: '',
+                    },
+
+                }
+            ];
+
+            this.meta_tag = this.meta_tag.concat(list);
+
         },
         //---------------------------------------------------------------------
         //---------------------------------------------------------------------
