@@ -12,7 +12,6 @@ const useVaah = vaah();
         <!--table-->
         <div class="col">
             <Card>
-
                 <template #content>
                     <div class="grid">
                         <div class="col-12">

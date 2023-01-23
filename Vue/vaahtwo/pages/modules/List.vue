@@ -64,7 +64,7 @@ onMounted(async () => {
                                     @click="store.setSixColumns()"
                                     icon="pi pi-plus"
                                     label="Install"
-                                    data-testid="modules-list-action-check_updates"
+                                    data-testid="modules-list-action-install"
                                     v-if="store.hasPermission('can-install-theme')">
                             </Button>
                             <Button class="p-button-sm"
@@ -84,44 +84,8 @@ onMounted(async () => {
                         </div>
                     </div>
                 </template>
-                <template class="p-1" #content>
-                    <div class="flex flex-row w-full">
-                        <div class="w-6 flex align-items-center">
-                            <div>
-                                <b class="font-semibold text-lg mr-1">Modules</b>
-                            </div>
-                        </div>
-                        <div class="w-6 justify-content-end">
-                            <div class="">
-                                <span class="p-buttonset flex justify-content-end">
-                                    <Button class="p-button-sm"
-                                             tag="router-link"
-                                             @click="store.setSixColumns()"
-                                             icon="pi pi-plus"
-                                             label="Install"
-                                             v-if="store.hasPermission('can-install-theme')">
-                                    </Button>
 
-                                    <Button class="p-button-sm"
-                                            :loading="store.is_fetching_updates"
-                                            @click="store.checkUpdate()"
-                                            icon="pi pi-download"
-                                            label="Check Updates"
-                                            v-if="store.hasPermission('can-update-theme')">
-                                    </Button>
-
-                                    <Button class="p-button-sm"
-                                            @click="store.sync()"
-                                            :loading="store.is_btn_loading"
-                                            icon="pi pi-refresh">
-                                    </Button>
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                </template>
-
-                <Actions/>
+                 <Actions/>
 
                 <br/>
 
