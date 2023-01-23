@@ -30,57 +30,49 @@ const toggleBulkMenuState = (event) => {
     <div>
 
         <!--actions-->
-        <div :class="{'flex justify-content-between': store.isViewLarge()}">
+        <div class="flex justify-content-between">
 
             <!--left-->
-            <div v-if="store.view === 'large'"></div>
+                <div class="col-4 mb-5">
+                    <Dropdown v-model="store.query.status"
+                              data-testid="themes-actions"
+                              :options="store.statusList"
+                              optionLabel="name"
+                              optionValue="value"
+                              placeholder="Select a filter"
+                              v-if="store.hasPermission('can-update-theme')"
+                    />
+                </div>
             <!--/left-->
 
             <!--right-->
-            <div >
 
+                <div class="col-5 col-offset-3 mb-5">
+                    <div class="p-inputgroup">
+                        <InputText v-model="store.query.filter.q"
+                                   @keyup.enter="store.delayedSearch()"
+                                   @keyup.enter.native="store.delayedSearch()"
+                                   @keyup.13="store.delayedSearch()"
+                                   data-testid="themes-actions-search-input"
+                                   placeholder="Search"/>
+                        <Button
+                            type="button"
+                            class="p-button-sm"
+                            data-testid="themes-actions-search-button"
+                            @click="store.delayedSearch()"
+                            label="Filter">
+                            Filters
+                        </Button>
 
-                <div class="grid p-fluid">
-
-
-                    <div class="col-12">
-                        <div class="p-inputgroup ">
-
-                            <InputText v-model="store.query.filter.q"
-                                       @keyup.enter="store.delayedSearch()"
-                                       @keyup.enter.native="store.delayedSearch()"
-                                       @keyup.13="store.delayedSearch()"
-                                       data-testid="themes-actions-search"
-                                       placeholder="Search"/>
-                            <Button @click="store.delayedSearch()"
-                                    data-testid="themes-actions-search-button"
-                                    icon="pi pi-search"/>
-                            <Button
-                                type="button"
-                                class="p-button-sm"
-                                data-testid="themes-actions-show-filters"
-                                @click="store.show_filters = true">
-                                Filters
-                                <Badge v-if="store.count_filters > 0" :value="store.count_filters"></Badge>
-                            </Button>
-
-                            <Button
-                                type="button"
-                                icon="pi pi-filter-slash"
-                                data-testid="themes-actions-reset-filters"
-                                class="p-button-sm"
-                                label="Reset"
-                                @click="store.resetQuery()" />
-
-                        </div>
+                        <Button
+                            type="button"
+                            icon="pi pi-filter-slash"
+                            data-testid="themes-actions-reset-filters"
+                            class="p-button-sm"
+                            label="Reset"
+                            @click="store.resetQuery()" />
                     </div>
-
-
-                    <Filters/>
-
                 </div>
-
-            </div>
             <!--/right-->
 
         </div>

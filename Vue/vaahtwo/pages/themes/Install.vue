@@ -62,10 +62,14 @@ onMounted(async () => {
                                                icon="search"
                                                v-model="store.q"
                                                @input="store.delayedSearch"
+                                               data-testid="themes-install-action-search"
                                                @keyup.enter.prevent="store.delayedSearch">
                                     </InputText>
                                 </span>
-                            <Button class="p-button-outlined" @click="store.closeInstallTheme()" icon="pi pi-times"></Button>
+                            <Button class="p-button-outlined"
+                                    @click="store.closeInstallTheme()"
+                                    data-testid="themes-install-action-close"
+                                    icon="pi pi-times"></Button>
                         </div>
                     </div>
                 </template>
@@ -82,12 +86,15 @@ onMounted(async () => {
                                 <Tag class="mr-2 mb-2">Version: {{item.version}}</Tag>
                                 <Tag class="mr-2 mb-2">Developed by: {{item.author_name}}</Tag>
                             </template>
-                            <template #footer>
+                            <template #footer v-if="store.hasPermission('can-install-theme')">
                                 <Button icon="pi pi-check"
                                         class="p-button-success"
-                                        v-if="store.isInstalled(item)" label="Installed"></Button>
+                                        v-if="store.isInstalled(item)"
+                                        data-testid="themes-install-action-check_installed"
+                                        label="Installed"></Button>
                                 <Button icon="pi pi-download"
                                         class="p-button-outlined"
+                                        data-testid="themes-install-action-install"
                                         v-else
                                         @click="store.install(item)" label="Install"></Button>
                             </template>
@@ -101,6 +108,7 @@ onMounted(async () => {
         <Paginator v-model:rows="store.query.rows"
                    :totalRecords="store.themes.total"
                    @page="store.paginate($event)"
+                   data-testid="themes-install-action-pagination"
                    :rowsPerPageOptions="store.themes.rows_per_page">
         </Paginator>
     </div>
