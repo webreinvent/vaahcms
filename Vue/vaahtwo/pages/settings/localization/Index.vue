@@ -19,6 +19,7 @@ onMounted(async () => {
     /**
      * Change to upper case
      */
+    document.title = 'Localization';
 });
 </script>
 <template>
