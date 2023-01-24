@@ -1,12 +1,13 @@
 <script setup>
-import {onMounted, reactive, ref} from "vue";
-import {useRoute} from 'vue-router';
-
-import {useTaxonomyStore} from '../../stores/store-taxonomies'
+import { onMounted, reactive, ref } from "vue";
+import { useRoute } from 'vue-router';
+import { useRootStore } from "../../stores/root";
+import { useTaxonomyStore } from '../../stores/store-taxonomies'
 
 import Actions from "./components/Actions.vue";
 import Table from "./components/Table.vue";
 
+const root = useRootStore();
 const store = useTaxonomyStore();
 const route = useRoute();
 
@@ -43,38 +44,40 @@ onMounted(async () => {
      * fetch list of records
      */
     await store.getList();
+
+    /**
+     * Fetch the permissions from the database
+     */
+    await root.getPermission();
 });
 
 </script>
+
 <template>
-
     <div class="grid" v-if="store.assets">
-
         <div :class="'col-'+store.list_view_width">
             <Panel>
-
                 <template class="p-1" #header>
-
                     <div class="flex flex-row">
                         <div >
                             <b class="mr-1">Taxonomies</b>
                             <Badge v-if="store.list && store.list.total > 0"
-                                   :value="store.list.total">
-                            </Badge>
+                                   :value="store.list.total"
+                            />
                         </div>
-
                     </div>
-
                 </template>
 
                 <template #icons>
                     <div class="p-inputgroup">
-                        <Button class="p-button-sm"
-                                label="Create"
-                                data-testid="taxonomies-list-create"
-                                icon="pi pi-plus"
-                                @click="store.toForm()"
-                        />
+                        <template v-if="store.hasPermission('can-create-taxonomies')">
+                            <Button class="p-button-sm"
+                                    label="Create"
+                                    data-testid="taxonomies-list-create"
+                                    icon="pi pi-plus"
+                                    @click="store.toForm()"
+                            />
+                        </template>
 
                         <Button class="p-button-sm"
                                 icon="pi pi-refresh"
@@ -88,13 +91,9 @@ onMounted(async () => {
                 <br/>
 
                 <Table/>
-
             </Panel>
         </div>
 
         <RouterView/>
-
     </div>
-
-
 </template>

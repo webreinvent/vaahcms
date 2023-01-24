@@ -32,14 +32,9 @@ const toggleFormMenu = (event) => {
 
 </script>
 <template>
-
     <div class="col-6" >
-
-        <Panel >
-
+        <Panel>
             <template class="p-1" #header>
-
-
                 <div class="flex flex-row">
                     <div class="p-panel-title">
                         <span v-if="store.item && store.item.id">
@@ -49,15 +44,10 @@ const toggleFormMenu = (event) => {
                             Create
                         </span>
                     </div>
-
                 </div>
-
-
             </template>
 
             <template #icons>
-
-
                 <div class="p-inputgroup">
                     <Button v-if="store.item && store.item.id"
                             class="p-button-sm"
@@ -89,7 +79,6 @@ const toggleFormMenu = (event) => {
                     />
 
                     <!--form_menu-->
-
                     <template v-if="store.hasPermission('can-create-taxonomies') || store.hasPermission('can-update-taxonomies')">
                         <Button type="button"
                                 @click="toggleFormMenu"
@@ -105,21 +94,16 @@ const toggleFormMenu = (event) => {
                     </template>
                     <!--/form_menu-->
 
-
                     <Button class="p-button-primary"
                             icon="pi pi-times"
                             data-testid="taxonomies-to-list"
                             @click="store.toList()">
                     </Button>
                 </div>
-
-
-
             </template>
 
 
             <div v-if="store.item">
-
                 <VhField label="Type">
                     <Dropdown class="w-full"
                               v-model="store.item.type"
@@ -179,7 +163,6 @@ const toggleFormMenu = (event) => {
                     />
                 </VhField>
 
-
                 <VhField label="Is Active">
                     <InputSwitch v-bind:false-value="0"
                                  v-bind:true-value="1"
@@ -188,10 +171,7 @@ const toggleFormMenu = (event) => {
                                  v-model="store.item.is_active"
                     />
                 </VhField>
-
             </div>
         </Panel>
-
     </div>
-
 </template>
