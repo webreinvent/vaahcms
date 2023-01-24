@@ -82,6 +82,7 @@ onMounted(async () => {
                         <Button class="p-button-sm"
                                 icon="pi pi-refresh"
                                 :loading="store.is_btn_loading"
+                                @click="store.sync()"
                         />
                     </div>
                 </template>
