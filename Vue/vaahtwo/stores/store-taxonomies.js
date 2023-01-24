@@ -2,6 +2,7 @@ import {watch} from 'vue'
 import {acceptHMRUpdate, defineStore} from 'pinia'
 import qs from 'qs'
 import {vaah} from '../vaahvue/pinia/vaah'
+import { useRootStore } from "./root";
 
 let model_namespace = 'WebReinvent\\VaahCms\\Models\\Taxonomy';
 
@@ -867,6 +868,11 @@ export const useTaxonomyStore = defineStore({
 
             this.form_menu_list = form_menu;
 
+        },
+        //---------------------------------------------------------------------
+        hasPermission(slug) {
+            const root = useRootStore();
+            return vaah().hasPermission(root.permissions, slug);
         },
         //---------------------------------------------------------------------
     }

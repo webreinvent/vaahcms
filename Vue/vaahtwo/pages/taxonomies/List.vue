@@ -80,7 +80,7 @@ onMounted(async () => {
                                 icon="pi pi-refresh"
                                 :loading="store.is_btn_loading"
                         />
-                        </div>
+                    </div>
                 </template>
 
                 <Actions/>
