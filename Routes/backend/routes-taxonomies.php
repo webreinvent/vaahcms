@@ -64,6 +64,13 @@ function () {
     Route::any('/{id}/action/{action}', 'TaxonomiesController@itemAction')
         ->name('vh.backend.vaah.taxonomies.item.action');
 
+
+    /**
+     * Create taxonomy type
+     */
+    Route::post( '/create-taxonomy-type', 'TaxonomiesController@createTaxonomyType' )
+        ->name( 'vh.backend.leads.taxonomies.createTaxonomyType' );
+
     //---------------------------------------------------------
 
 });
