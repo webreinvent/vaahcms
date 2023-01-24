@@ -1,14 +1,11 @@
-<?php
+<?php namespace WebReinvent\VaahCms\Http\Controllers\Backend;
 
-namespace WebReinvent\VaahCms\Http\Controllers;
-
-use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 use WebReinvent\VaahCms\Models\Media;
-use Illuminate\Support\Facades\File;
+
 
 class MediaController extends Controller
 {
@@ -19,11 +16,91 @@ class MediaController extends Controller
     {
 
     }
+
+    //----------------------------------------------------------
+
+    public function getAssets(Request $request)
+    {
+
+        $data = [];
+
+        $data['permission'] = [];
+        $data['rows'] = config('vaahcms.per_page');
+
+        $data['fillable']['except'] = [
+            'uuid',
+            'created_by',
+            'updated_by',
+            'deleted_by',
+        ];
+
+        $model = new Media();
+        $fillable = $model->getFillable();
+        $data['fillable']['columns'] = array_diff(
+            $fillable, $data['fillable']['except']
+        );
+
+        foreach ($fillable as $column)
+        {
+            $data['empty_item'][$column] = null;
+        }
+
+        $data['actions'] = [];
+
+        $response['success'] = true;
+        $response['data'] = $data;
+
+        return $response;
+    }
+
+    //----------------------------------------------------------
+    public function getList(Request $request)
+    {
+        return Media::getList($request);
+    }
+    //----------------------------------------------------------
+    public function updateList(Request $request)
+    {
+        return Media::updateList($request);
+    }
+    //----------------------------------------------------------
+    public function listAction(Request $request, $type)
+    {
+        return Media::listAction($request, $type);
+    }
+    //----------------------------------------------------------
+    public function deleteList(Request $request)
+    {
+        return Media::deleteList($request);
+    }
+    //----------------------------------------------------------
+    public function createItem(Request $request)
+    {
+        return Media::createItem($request);
+    }
+    //----------------------------------------------------------
+    public function getItem(Request $request, $id)
+    {
+        return Media::getItem($id);
+    }
+    //----------------------------------------------------------
+    public function updateItem(Request $request,$id)
+    {
+        return Media::updateItem($request,$id);
+    }
+    //----------------------------------------------------------
+    public function deleteItem(Request $request,$id)
+    {
+        return Media::deleteItem($request,$id);
+    }
+    //----------------------------------------------------------
+    public function itemAction(Request $request,$id,$action)
+    {
+        return Media::itemAction($request,$id,$action);
+    }
     //----------------------------------------------------------
     public function upload(Request $request)
     {
-
-
         $allowed_file_upload_size = config('vaahcms.allowed_file_upload_size');
 
         $input_file_name = null;
@@ -139,67 +216,6 @@ class MediaController extends Controller
 
     }
     //----------------------------------------------------------
-    public function getAssets(Request $request)
-    {
-
-        if(!\Auth::user()->hasPermission('has-access-of-media-section'))
-        {
-            $response['success'] = false;
-            $response['errors'][] = trans("vaahcms::messages.permission_denied");
-
-            return response()->json($response);
-        }
-
-
-        $year_and_month = Media::getDateList();
-
-        $data['bulk_actions'] = vh_general_bulk_actions();
-        $data['allowed_file_types'] = vh_file_pond_allowed_file_type();
-        $data['download_url'] = route('vh.frontend.media.download').'/';
-        $data['date'] = $year_and_month;
-
-        $response['success'] = true;
-        $response['data'] = $data;
-
-        return response()->json($response);
-    }
-    //----------------------------------------------------------
-    public function isDownloadableSlugAvailable(Request $request)
-    {
-        $rules = array(
-            'download_url' => 'required',
-        );
-
-
-        $validator = \Validator::make( $request->all(), $rules);
-        if ( $validator->fails() ) {
-
-            $errors             = errorsToArray($validator->errors());
-            $response['success'] = false;
-            $response['errors'] = $errors;
-            return response()->json($response);
-        }
-
-        $data = [];
-
-        $exist = Media::where('download_url', $request->download_url)
-            ->first();
-
-        if(!$exist)
-        {
-            $response['success'] = true;
-            $response['messages'][] = 'Url is available';
-            $response['data'] = true;
-        } else
-        {
-            $response['success'] = false;
-            $response['errors'][] = 'Url is taken';
-        }
-
-        return response()->json($response);
-
-    }
-    //----------------------------------------------------------
     public function postCreate(Request $request)
     {
 
@@ -215,105 +231,6 @@ class MediaController extends Controller
 
         return response()->json($response);
     }
-    //----------------------------------------------------------
-    public function getList(Request $request)
-    {
-        if(!\Auth::user()->hasPermission('has-access-of-media-section'))
-        {
-            $response['success'] = false;
-            $response['errors'][] = trans("vaahcms::messages.permission_denied");
-
-            return response()->json($response);
-        }
-
-        $response = Media::getList($request);
-        return response()->json($response);
-    }
-
-    //----------------------------------------------------------
-    public function getItem(Request $request, $id)
-    {
-
-        if(!\Auth::user()->hasPermission('can-read-media'))
-        {
-            $response['success'] = false;
-            $response['errors'][] = trans("vaahcms::messages.permission_denied");
-
-            return response()->json($response);
-        }
-
-        $request->merge(['id'=>$id]);
-        $response = Media::getItem($request);
-        return response()->json($response);
-    }
-    //----------------------------------------------------------
-    public function postStore(Request $request)
-    {
-
-        if(!\Auth::user()->hasPermission('can-update-media'))
-        {
-            $response['success'] = false;
-            $response['errors'][] = trans("vaahcms::messages.permission_denied");
-
-            return response()->json($response);
-        }
-
-        $response = Media::postStore($request);
-        return response()->json($response);
-    }
-    //----------------------------------------------------------
-    public function postActions(Request $request, $action)
-    {
-
-        $rules = array(
-            'inputs' => 'required',
-        );
-
-        $validator = \Validator::make( $request->all(), $rules);
-        if ( $validator->fails() ) {
-
-            $errors             = errorsToArray($validator->errors());
-            $response['success'] = false;
-            $response['errors'] = $errors;
-            return response()->json($response);
-        }
-
-        $response = [];
-
-        switch ($action)
-        {
-
-            //------------------------------------
-            case 'bulk-change-status':
-                $response = Media::bulkStatusChange($request);
-                break;
-            //------------------------------------
-            case 'bulk-trash':
-
-                $response = Media::bulkTrash($request);
-
-                break;
-            //------------------------------------
-            case 'bulk-restore':
-
-                $response = Media::bulkRestore($request);
-
-                break;
-
-            //------------------------------------
-            case 'bulk-delete':
-
-                $response = Media::bulkDelete($request);
-
-                break;
-            //------------------------------------
-
-        }
-
-        return response()->json($response);
-
-    }
-    //----------------------------------------------------------
     //----------------------------------------------------------
 
 
