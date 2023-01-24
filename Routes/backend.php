@@ -35,6 +35,7 @@ include('backend/settings.php');
 include('backend/modules.php');
 include('backend/routes-media.php');
 include('backend/routes-taxonomies.php');
+include('backend/themes.php');
 include('backend/profile.php');
 include('backend/advanced.php');
 include('backend/routes-roles.php');
