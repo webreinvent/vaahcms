@@ -21,6 +21,11 @@ onMounted(async () => {
      * Fetch the permissions from the database
      */
     await root.getPermission();
+
+    /**
+     * Fetch is_active select button's options and values
+     */
+    await root.getIsActiveStatusOptions();
 });
 
 //--------form_menu
@@ -164,11 +169,13 @@ const toggleFormMenu = (event) => {
                 </VhField>
 
                 <VhField label="Is Active">
-                    <InputSwitch v-bind:false-value="0"
-                                 v-bind:true-value="1"
-                                 name="taxonomies-active"
-                                 data-testid="taxonomies-active"
-                                 v-model="store.item.is_active"
+                    <SelectButton v-if="root && root.is_active_status_options"
+                                  :options="root.is_active_status_options"
+                                  option-label="label"
+                                  option-value="value"
+                                  name="taxonomies-active"
+                                  data-testid="taxonomies-active"
+                                  v-model="store.item.is_active"
                     />
                 </VhField>
             </div>
