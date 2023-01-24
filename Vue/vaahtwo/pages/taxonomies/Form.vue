@@ -1,12 +1,12 @@
 <script setup>
-import {onMounted, ref, watch} from "vue";
+import { onMounted, ref, watch } from "vue";
 import { useTaxonomyStore } from '../../stores/store-taxonomies'
-
+import {useRootStore } from "../../stores/root";
+import { useRoute } from 'vue-router';
 import VhField from './../../vaahvue/vue-three/primeflex/VhField.vue'
-import {useRoute} from 'vue-router';
-
 
 const store = useTaxonomyStore();
+const root = useRootStore();
 const route = useRoute();
 
 onMounted(async () => {
@@ -16,6 +16,11 @@ onMounted(async () => {
     }
 
     await store.watchItem();
+
+    /**
+     * Fetch the permissions from the database
+     */
+    await root.getPermission();
 });
 
 //--------form_menu
@@ -60,19 +65,21 @@ const toggleFormMenu = (event) => {
                             @click="useVaah.copy(store.item.id)"
                     />
 
-                    <Button v-if="store.item && store.item.id"
-                            class="p-button-sm"
-                            label="Save"
-                            icon="pi pi-save"
-                            @click="store.itemAction('save')"
-                    />
+                    <template v-if="store.hasPermission('can-create-taxonomies') || store.hasPermission('can-update-taxonomies')">
+                        <Button v-if="store.item && store.item.id"
+                                class="p-button-sm"
+                                label="Save"
+                                icon="pi pi-save"
+                                @click="store.itemAction('save')"
+                        />
 
-                    <Button v-else
-                            class="p-button-sm"
-                            label="Create & New"
-                            icon="pi pi-save"
-                            @click="store.itemAction('create-and-new')"
-                    />
+                        <Button v-else
+                                class="p-button-sm"
+                                label="Create & New"
+                                icon="pi pi-save"
+                                @click="store.itemAction('create-and-new')"
+                        />
+                    </template>
 
                     <Button v-if="store.item && store.item.id"
                             class="p-button-sm"
@@ -80,18 +87,22 @@ const toggleFormMenu = (event) => {
                             v-tooltip.top="'View'"
                             @click="store.toView(store.item)"
                     />
-                    
-                    <!--form_menu-->
-                    <Button
-                        type="button"
-                        @click="toggleFormMenu"
-                        data-testid="taxonomies-form-menu"
-                        icon="pi pi-angle-down"
-                        aria-haspopup="true"/>
 
-                    <Menu ref="form_menu"
-                          :model="store.form_menu_list"
-                          :popup="true" />
+                    <!--form_menu-->
+
+                    <template v-if="store.hasPermission('can-create-taxonomies') || store.hasPermission('can-update-taxonomies')">
+                        <Button type="button"
+                                @click="toggleFormMenu"
+                                data-testid="taxonomies-form-menu"
+                                icon="pi pi-angle-down"
+                                aria-haspopup="true"
+                        />
+
+                        <Menu ref="form_menu"
+                              :model="store.form_menu_list"
+                              :popup="true"
+                        />
+                    </template>
                     <!--/form_menu-->
 
 
@@ -109,26 +120,73 @@ const toggleFormMenu = (event) => {
 
             <div v-if="store.item">
 
+                <VhField label="Type">
+                    <Dropdown class="w-full"
+                              v-model="store.item.type"
+                              :options="store.assets.types"
+                              optionLabel="name"
+                              data-testid="taxonomies-type"
+                              name="taxonomies-type"
+                              placeholder="Select a Type"
+                    />
+                </VhField>
+
                 <VhField label="Name">
                     <InputText class="w-full"
                                name="taxonomies-name"
                                data-testid="taxonomies-name"
-                               v-model="store.item.name"/>
+                               v-model="store.item.name"
+                    />
                 </VhField>
 
                 <VhField label="Slug">
                     <InputText class="w-full"
                                name="taxonomies-slug"
                                data-testid="taxonomies-slug"
-                               v-model="store.item.slug"/>
+                               v-model="store.item.slug"
+                    />
                 </VhField>
+
+                <VhField label="Notes">
+                    <Textarea class="w-full"
+                              data-testid="taxonomies-notes"
+                              name="taxonomies-notes"
+                              v-model="store.item.notes"
+                    />
+                </VhField>
+
+                <VhField label="Seo Title">
+                    <InputText class="w-full"
+                               name="taxonomies-seo-title"
+                               data-testid="taxonomies-seo-tile"
+                               v-model="store.item.seo_title"
+                    />
+                </VhField>
+
+                <VhField label="Seo Keywords">
+                    <InputText class="w-full"
+                               name="taxonomies-seo-keywords"
+                               data-testid="taxonomies-seo-keywords"
+                               v-model="store.item.seo_keywords"
+                    />
+                </VhField>
+
+                <VhField label="Seo Description">
+                    <Textarea class="w-full"
+                               name="taxonomies-seo-description"
+                               data-testid="taxonomies-seo-description"
+                               v-model="store.item.description"
+                    />
+                </VhField>
+
 
                 <VhField label="Is Active">
                     <InputSwitch v-bind:false-value="0"
                                  v-bind:true-value="1"
                                  name="taxonomies-active"
                                  data-testid="taxonomies-active"
-                                 v-model="store.item.is_active"/>
+                                 v-model="store.item.is_active"
+                    />
                 </VhField>
 
             </div>
