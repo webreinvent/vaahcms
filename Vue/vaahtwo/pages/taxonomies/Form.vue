@@ -114,6 +114,7 @@ const toggleFormMenu = (event) => {
                               v-model="store.item.type"
                               :options="store.assets.types"
                               optionLabel="name"
+                              optionValue="id"
                               data-testid="taxonomies-type"
                               name="taxonomies-type"
                               placeholder="Select a Type"

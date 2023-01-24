@@ -24,7 +24,8 @@ let empty_states = {
     action: {
         type: null,
         items: [],
-    }
+    },
+    recount: null,
 };
 
 export const useTaxonomyStore = defineStore({
@@ -194,17 +195,18 @@ export const useTaxonomyStore = defineStore({
             };
             await vaah().ajax(
                 this.ajax_url,
-                this.afterGetList,
+                this.getListAfter,
                 options
             );
         },
         //---------------------------------------------------------------------
-        afterGetList: function (data, res)
+        getListAfter: function (data, res)
         {
-            if(data)
-            {
+            if (data) {
                 this.list = data;
             }
+
+            this.is_btn_loading = false;
         },
         //---------------------------------------------------------------------
 
@@ -873,6 +875,12 @@ export const useTaxonomyStore = defineStore({
         hasPermission(slug) {
             const root = useRootStore();
             return vaah().hasPermission(root.permissions, slug);
+        },
+        //---------------------------------------------------------------------
+        async sync() {
+            this.query.recount = true;
+            this.is_btn_loading = true;
+            await this.getList();
         },
         //---------------------------------------------------------------------
     }
