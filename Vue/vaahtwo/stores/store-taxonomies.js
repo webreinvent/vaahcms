@@ -66,6 +66,7 @@ export const useTaxonomyStore = defineStore({
         item_menu_state: null,
         form_menu_list: [],
         is_btn_loading: false,
+        taxonomy_type_items: null,
     }),
     getters: {
 
@@ -486,7 +487,19 @@ export const useTaxonomyStore = defineStore({
         },
 
         //---------------------------------------------------------------------
+        async addTaxonomyType() {
+            let options = {
+                query: vaah().clone(this.query)
+            };
 
+            await vaah().ajax(
+                this.ajax_url + '/create-taxonomy-type',
+                await this.addTaxonomyTypeAfter,
+                options
+            );
+        },
+        //---------------------------------------------------------------------
+        async addTaxonomyTypeAfter () {},
         //---------------------------------------------------------------------
         onItemSelection(items)
         {

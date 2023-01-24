@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 use WebReinvent\VaahCms\Models\Taxonomy;
 use WebReinvent\VaahCms\Models\TaxonomyType;
 
@@ -108,6 +109,43 @@ class TaxonomiesController extends Controller
     public function itemAction(Request $request,$id,$action)
     {
         return Taxonomy::itemAction($request,$id,$action);
+    }
+    //----------------------------------------------------------
+    public function createTaxonomyType(Request $request)
+    {
+
+        if (!Auth::user()->hasPermission('can-manage-taxonomy-type')) {
+            $response['success'] = false;
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+            return $response;
+        }
+
+        if (!$request->has('name') || !$request->name) {
+            $response['success'] = false;
+            $response['errors'][] = 'The name field is required.';
+            return $response;
+        }
+
+        $item = TaxonomyType::where('name',$request->name)
+            ->withTrashed()->first();
+
+        if($item)
+        {
+            $response['success'] = false;
+            $response['errors'][] = "This name is already exist.";
+            return $response;
+        }
+
+        $add = new TaxonomyType();
+        $add->fill($request->all());
+        $add->slug = Str::slug($request->name);
+        $add->is_active = true;
+        $add->save();
+
+        $response['success'] = true;
+        $response['messages'][] = 'Successfully Added.';
+        return $response;
     }
     //----------------------------------------------------------
 
