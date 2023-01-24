@@ -69,5 +69,14 @@ function () {
      */
     Route::post( '/download', 'ThemesController@download' )
         ->name( 'vh.backend.themes.download' );
+
     //------------------------------------------------
+    Route::post( '/get/slugs', 'ThemesController@ThemesSlugs' )
+        ->name( 'vh.backend.themes.get.slugs' );
+    //------------------------------------------------
+    Route::post( '/store/updates', 'ThemesController@storeUpdates' )
+        ->name( 'vh.backend.themes.store.updates' );
+    //------------------------------------------------
+    Route::post( '/install/updates', 'ThemesController@installUpdates' )
+        ->name( 'vh.backend.themes.install.updates' );
 });
