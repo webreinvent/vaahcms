@@ -16,7 +16,6 @@ include('backend/general.php');
 include('backend/ui.php');
 include('backend/setup.php');
 include('backend/settings.php');
-include('backend/modules.php');
 include('backend/themes.php');
 include('backend/media.php');
 include('backend/taxonomies.php');

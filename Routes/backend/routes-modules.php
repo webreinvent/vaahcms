@@ -66,4 +66,17 @@ function () {
 
     //---------------------------------------------------------
 
+    //------------------------------------------------
+    Route::get( '/get/slugs', 'ModulesController@getModulesSlugs' )
+        ->name( 'vh.backend.modules.get.slugs' );
+    //------------------------------------------------
+    Route::post( '/store/updates', 'ModulesController@storeUpdates' )
+        ->name( 'vh.backend.modules.store.updates' );
+    //---------------------------------------------------------
+    Route::post( '/download', 'ModulesController@download' )
+        ->name( 'vh.backend.modules.download');
+    //------------------------------------------------
+    Route::post( '/install/updates', 'ModulesController@installUpdates' )
+        ->name( 'vh.backend.modules.install.updates');
+
 });

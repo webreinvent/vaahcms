@@ -5,14 +5,12 @@ use DateTimeInterface;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
-use WebReinvent\VaahCms\Traits\CrudWithUuidObservantTrait;
 use WebReinvent\VaahCms\Models\User;
 use WebReinvent\VaahCms\Models\ModuleBase;
 
 class Module extends ModuleBase
 {
     use SoftDeletes;
-//    use CrudWithUuidObservantTrait;
 
     //-------------------------------------------------
     protected $dates = [
@@ -20,6 +18,7 @@ class Module extends ModuleBase
         'updated_at',
         'deleted_at'
     ];
+
     //-------------------------------------------------
     protected $fillable = [
         'uuid',
@@ -43,7 +42,6 @@ class Module extends ModuleBase
     }
 
     //-------------------------------------------------
-
     public function createdByUser()
     {
         return $this->belongsTo(User::class,
@@ -461,23 +459,7 @@ class Module extends ModuleBase
 
     }
     //-------------------------------------------------
-//    public static function deleteItem($request, $id): array
-//    {
-//        $item = self::where('id', $id)->withTrashed()->first();
-//        if (!$item) {
-//            $response['success'] = false;
-//            $response['messages'][] = 'Record does not exist.';
-//            return $response;
-//        }
-//        $item->forceDelete();
-//
-//        $response['success'] = true;
-//        $response['data'] = [];
-//        $response['messages'][] = 'Record has been deleted';
-//
-//        return $response;
-//    }
-//    //-------------------------------------------------
+
     public static function itemAction($request, $id, $type): array
     {
         switch($type)
@@ -536,8 +518,4 @@ class Module extends ModuleBase
     }
 
     //-------------------------------------------------
-    //-------------------------------------------------
-    //-------------------------------------------------
-
-
 }
