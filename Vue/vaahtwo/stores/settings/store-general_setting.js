@@ -61,10 +61,15 @@ export const useGeneralStore = defineStore({
         custom_field_list:null,
         active_index:[],
         languages: null,
-        visibitlity_options: ['Visible', 'Invisible'],
-        redirect_after_logout_options: ['Backend', 'Frontend', 'Custom'],
-        password_protection_options: ['Disable', 'Enable'],
-        laravel_queues_options: ['Disable', 'Enable'],
+        visibitlity_options: [{name:'Enable',value:"1"}, {name:'Disable',value:"0"}],
+        maintenanceModeOptions: [{name:'Enable',value:"1"}, {name:'Disable',value:"0"}],
+        redirect_after_logout_options: [
+            {name:'Backend',value:'backend'},
+            {name:'Frontend',value:'frontend'},
+            {name:'Custom',value:'custom'}
+        ],
+        password_protection_options: [{name:'Enable',value:"1"}, {name:'Disable',value:"0"}],
+        laravel_queues_options: [{name:'Enable',value:"1"}, {name:'Disable',value:"0"}],
         social_media_links: null,
         add_link: null,
         show_link_input: true,
@@ -80,6 +85,7 @@ export const useGeneralStore = defineStore({
         },
         allowed_files:null,
         tag_type:null,
+        filtered_registration_roles:null,
     }),
     getters: {
 
@@ -210,7 +216,7 @@ export const useGeneralStore = defineStore({
             if (!this.show_link_input) {
                 return this.show_link_input = true;
             } else if (this.show_link_input && this.add_link !== "" && this.add_link !== null) {
-                this.social_media_links.push({label: this.add_link, icon: 'pi-link'});
+                this.social_media_links.push({label: this.add_link});
                 this.add_link = null;
                 return this.show_link_input = true;
             }
@@ -242,10 +248,11 @@ export const useGeneralStore = defineStore({
         },
         //---------------------------------------------------------------------
         storeTags() {
-
             let options = {
                 method: 'post',
-                params: this.meta_tag
+                params: {
+                    tags:this.meta_tag
+                }
             };
 
             let ajax_url = this.ajax_url+'/store/meta/tags';
@@ -273,10 +280,10 @@ export const useGeneralStore = defineStore({
         removeMetaTags(tag){
             if(tag.id)
             {
-                this.tags = vaah().removeInArrayByKey(this.meta_tag, tag, 'id');
+                this.meta_tag = vaah().removeInArrayByKey(this.meta_tag, tag, 'id');
             } else
             {
-                this.tags = vaah().removeInArrayByKey(this.meta_tag, tag, 'uid');
+                this.meta_tag = vaah().removeInArrayByKey(this.meta_tag, tag, 'uid');
             }
         },
         //---------------------------------------------------------------------
@@ -407,6 +414,17 @@ export const useGeneralStore = defineStore({
 
             this.meta_tag = this.meta_tag.concat(list);
 
+        },
+        //---------------------------------------------------------------------
+        searchRegistrationRoles(event){
+            if (!event.query.trim().length) {
+                this.filtered_registration_roles = this.assets.roles;
+            }
+            else {
+                this.filtered_registration_roles = this.assets.roles.filter((roles) => {
+                    return roles.name.toLowerCase().startsWith(event.query.toLowerCase());
+                });
+            }
         },
         //---------------------------------------------------------------------
         //---------------------------------------------------------------------

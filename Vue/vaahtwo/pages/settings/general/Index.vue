@@ -2,6 +2,7 @@
 import {onMounted, reactive, ref} from "vue";
 import {useRoute} from 'vue-router';
 import draggable from 'vuedraggable';
+import { vaah } from '../../../vaahvue/pinia/vaah'
 
 import {useGeneralStore} from "../../../stores/settings/store-general_setting";
 
@@ -63,7 +64,7 @@ onMounted(async () => {
                                                     @click="store.getCopy('site_title')"/>
                                         </div>
                                     </div>
-                                    <div class="col-6">
+                                    <div class="col-5">
                                         <h5 class="p-1 text-xs mb-1">Default Site Language</h5>
                                         <Dropdown v-model="store.list.language"
                                                   :options="store.languages"
@@ -83,7 +84,7 @@ onMounted(async () => {
                                                     @click="store.getCopy('redirect_after_frontend_login')"/>
                                         </div>
                                     </div>
-                                    <div class="col-7">
+                                    <div class="col-12">
                                         <h5 class="p-1 text-xs mb-1">Meta Description</h5>
                                         <div class="p-inputgroup">
                                             <Textarea v-model="store.list.site_description"
@@ -94,11 +95,13 @@ onMounted(async () => {
                                                     class="has-max-height"/>
                                         </div>
                                     </div>
-                                    <div class="col-5">
-                                        <h5 class="p-1 text-xs mb-1">Meta Description</h5>
+                                    <div class="col-12">
+                                        <h5 class="p-1 text-xs mb-1">Search Engine Visibility</h5>
                                         <div class="p-inputgroup">
                                             <SelectButton v-model="store.list.search_engine_visibility"
                                                           :options="store.visibitlity_options"
+                                                          optionLabel="name"
+                                                          optionValue="value"
                                                           data-testid="general-visibility"
                                                           aria-labelledby="single"/>
                                             <Button icon="pi pi-copy"
@@ -113,6 +116,14 @@ onMounted(async () => {
                                                id="registration-roles"
                                                data-testid="general-registration_roles"
                                                placeholder="Search"/>
+                                        <AutoComplete :multiple="true"
+                                                      v-model="store.list.registration_roles"
+                                                      :suggestions="store.filtered_registration_roles"
+                                                      @complete="store.searchRegistrationRoles($event)"
+                                                      optionValue="value"
+                                                      optionLabel="name"
+                                                      data-testid="general-registration_roles"
+                                                      placeholder="Search"/>
                                     </div>
                                     <div class="col-12 p-fluid">
                                         <h5 class="p-1 text-xs mb-1">Allowed file types for upload</h5>
@@ -120,19 +131,6 @@ onMounted(async () => {
                                                id="allowed-files"
                                                data-testid="general-allowed_files"
                                                inputClass="w-full" class="w-full"></Chips>
-                                    </div>
-                                    <div class="col-12">
-                                        <h5 class="p-1 text-xs mb-1">Redirect after Backend Logout</h5>
-                                        <div class="p-inputgroup">
-                                            <SelectButton v-model="store.list.redirect_after_backend_logout"
-                                                          :options="store.redirect_after_logout_options"
-                                                          data-testid="general-redirect_logout"
-                                                          aria-labelledby="single" class="p-button-sm"/>
-                                            <InputText placeholder="Enter Redirection Link"
-                                                       v-model="store.list.redirect_after_backend_logout"
-                                                       data-testid="general-redirect_logout_custom"
-                                                       :disabled="store.list.redirect_after_backend_logout !== 'Custom'"></InputText>
-                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -162,6 +160,10 @@ onMounted(async () => {
                                                    data-testid="general-copyright_custom_filed"
                                                    v-model="store.list.copyright_text"
                                                    placeholder="Enter Custom Text"></InputText>
+                                        <Button icon="pi pi-copy"
+                                                data-testid="general-copyright_custom_filed_copy"
+                                                @click="store.getCopy('copyright_text')"
+                                        />
                                     </div>
                                     <div class="col-12">
                                         <h5 class="p-1 text-xs mb-1">Copyright Link</h5>
@@ -175,18 +177,22 @@ onMounted(async () => {
                                                 <label for="copyright-link">Use App Url</label>
                                             </div>
                                             <div class="field-radiobutton">
-                                                <RadioButton inputId="copyright-custom"
+                                                <RadioButton inputId="copyright-custom_link"
                                                              name="city"
                                                              value="custom"
                                                              data-testid="general-copyright_custom_link"
                                                              v-model="store.list.copyright_link" />
-                                                <label for="copyright-custom">Custom</label>
+                                                <label for="copyright-custom_link">Custom</label>
                                             </div>
                                         </div>
                                         <InputText class="w-full"
                                                    data-testid="general-copyright_custom_link_field"
                                                    v-if="store.list.copyright_link === 'custom'"
                                                    placeholder="Enter Custom Link"></InputText>
+                                        <Button icon="pi pi-copy"
+                                                data-testid="general-copyright_custom_link_filed_copy"
+                                                @click="store.getCopy('copyright_link')"
+                                        />
                                     </div>
                                     <div class="col-12">
                                         <h5 class="p-1 text-xs mb-1">Copyright Year</h5>
@@ -199,11 +205,11 @@ onMounted(async () => {
                                                 <label for="copyright-year">Use Current year</label>
                                             </div>
                                             <div class="field-radiobutton">
-                                                <RadioButton inputId="copyright-custom"
+                                                <RadioButton inputId="copyright-custom_year"
                                                              data-testid="general-copyright_year_custom"
                                                              name="city" value="custom"
                                                              v-model="store.list.copyright_year" />
-                                                <label for="copyright-custom">Custom</label>
+                                                <label for="copyright-custom_year">Custom</label>
                                             </div>
                                         </div>
                                         <Calendar inputId="yearpicker" v-model="date10" view="year"
@@ -212,6 +218,10 @@ onMounted(async () => {
                                                   v-if="store.list.copyright_year === 'custom'"
                                                   input-class="w-full" class="w-full"
                                                   placeholder="Choose Copyright Year" />
+                                        <Button icon="pi pi-copy"
+                                                data-testid="general-copyright_custom_year_filed_copy"
+                                                @click="store.getCopy('copyright_year')"
+                                        />
                                     </div>
                                     <div class="col-6">
                                         <h5 class="p-1 text-xs mb-1">Max number of forgot password attempts</h5>
@@ -237,27 +247,52 @@ onMounted(async () => {
                                                     @click="store.getCopy('maximum_number_of_login_attempts_per_session')"/>
                                         </div>
                                     </div>
-                                    <div class="col-4 p-fluid">
+                                    <div class="col-6 p-fluid">
                                         <h5 class="p-1 text-xs mb-1">Password Protection</h5>
                                         <SelectButton v-model="store.list.password_protection"
+                                                      optionLabel="name"
+                                                      optionValue="value"
                                                       :options="store.password_protection_options"
                                                       class="p-button-sm"
                                                       data-testid="general-password_protection"
                                                       aria-labelledby="single"/>
                                     </div>
-                                    <div class="col-4 p-fluid">
+                                    <div class="col-6 p-fluid">
                                         <h5 class="p-1 text-xs mb-1">Laravel Queues</h5>
                                         <SelectButton v-model="store.list.laravel_queues"
+                                                      optionLabel="name"
+                                                      optionValue="value"
                                                       :options="store.laravel_queues_options"
                                                       data-testid="general-laravel_queues"
                                                       class="p-button-sm" aria-labelledby="single"/>
                                     </div>
-                                    <div class="col-4 p-fluid">
+                                    <div class="col-6 p-fluid">
                                         <h5 class="p-1 text-xs mb-1">Maintenance Mode</h5>
                                         <SelectButton v-model="store.list.maintenance_mode"
+                                                      optionLabel="name"
+                                                      optionValue="value"
                                                       :options="store.maintenanceModeOptions"
                                                       data-testid="general-maintenance_mode"
                                                       class="p-button-sm" aria-labelledby="single"/>
+                                    </div>
+                                    <div class="col-12">
+                                        <h5 class="p-1 text-xs mb-1">Redirect after Backend Logout</h5>
+                                        <div class="p-inputgroup">
+                                            <SelectButton v-model="store.list.redirect_after_backend_logout"
+                                                          optionLabel="name"
+                                                          optionValue="value"
+                                                          :options="store.redirect_after_logout_options"
+                                                          data-testid="general-redirect_logout"
+                                                          aria-labelledby="single" class="p-button-sm"/>
+                                            <InputText placeholder="Enter Redirection Link"
+                                                       v-model="store.list.redirect_after_backend_logout_url"
+                                                       data-testid="general-redirect_logout_custom"
+                                                       :disabled="store.list.redirect_after_backend_logout !== 'custom'"></InputText>
+                                            <Button icon="pi pi-copy"
+                                                    data-testid="general-backend_logout_copy"
+                                                    @click="store.getCopy('redirect_after_backend_logout')"
+                                            />
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -265,7 +300,7 @@ onMounted(async () => {
                                 <Button label="Save Settings"
                                         icon="pi pi-save"
                                         data-testid="general-save_site"
-                                        @click="store.clearCache"
+                                        @click="store.storeSiteSettings"
                                         class="mr-2 p-button-sm"></Button>
                                 <Button label="Clear Cache"
                                         icon="pi pi-trash"
@@ -343,10 +378,10 @@ onMounted(async () => {
                         </template>
                         <div class="grid">
                             <div class="col-12 md:col-4" v-for="(item,index) in store.social_media_links">
-                                <h5 class="p-1 text-xs mb-1">{{ item.label }}</h5>
+                                <h5 class="p-1 text-xs mb-1">{{ vaah().toLabel(item.label) }}</h5>
                                 <div class="p-inputgroup p-fluid">
                                     <span class="p-input-icon-left">
-                                        <i :class="'pi z-5 ' + item.icon"/>
+                                        <i :class="item.icon?'pi z-5 '+item.icon:'pi z-5 pi-link'"/>
                                         <InputText type="text"
                                                    :data-testid="'general-'+item.label+'field'"
                                                v-model="item.value"
