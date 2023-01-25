@@ -237,6 +237,28 @@ class GeneralController extends Controller
 
     }
     //----------------------------------------------------------
+    public function deleteMetaTags(Request $request,)
+    {
+
+        if(!\Auth::user()->hasPermission('has-access-of-setting-section'))
+        {
+            $response['success'] = false;
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+            return response()->json($response);
+        }
+
+        $data = Setting::where('category', 'global')
+                ->where('type', 'meta_tags')
+                ->where('id',$request->id)->forceDelete();
+
+        $response['success'] = true;
+        $response['data'] = $data;
+
+        return response()->json($response);
+
+    }
+    //----------------------------------------------------------
     //----------------------------------------------------------
     //----------------------------------------------------------
 

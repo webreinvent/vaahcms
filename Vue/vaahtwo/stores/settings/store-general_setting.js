@@ -86,6 +86,7 @@ export const useGeneralStore = defineStore({
         allowed_files:null,
         tag_type:null,
         filtered_registration_roles:null,
+        filtered_allowed_files:null,
     }),
     getters: {
 
@@ -269,7 +270,7 @@ export const useGeneralStore = defineStore({
                 method: 'get',
             };
 
-            let ajax_url = this.ajax_url+'/clear/cache';
+            let ajax_url = this.base_url+'/clear/cache';
             vaah().ajax(ajax_url, this.clearCacheAfter, options);
         },
         //---------------------------------------------------------------------
@@ -281,6 +282,15 @@ export const useGeneralStore = defineStore({
             if(tag.id)
             {
                 this.meta_tag = vaah().removeInArrayByKey(this.meta_tag, tag, 'id');
+                let options = {
+                    method: 'POST',
+                    params: tag
+                };
+                vaah().ajax(
+                    this.ajax_url+'/delete/meta/tag',
+                    null,
+                    options
+                );
             } else
             {
                 this.meta_tag = vaah().removeInArrayByKey(this.meta_tag, tag, 'uid');
@@ -423,6 +433,16 @@ export const useGeneralStore = defineStore({
             else {
                 this.filtered_registration_roles = this.assets.roles.filter((roles) => {
                     return roles.name.toLowerCase().startsWith(event.query.toLowerCase());
+                });
+            }
+        },
+        searchAllowedFiles(event){
+            if (!event.query.trim().length) {
+                this.filtered_allowed_files = this.assets.file_types;
+            }
+            else {
+                this.filtered_allowed_files = this.assets.file_types.filter((files) => {
+                    return files.name.toLowerCase().startsWith(event.query.toLowerCase());
                 });
             }
         },

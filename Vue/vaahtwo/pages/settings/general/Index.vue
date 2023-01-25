@@ -112,18 +112,14 @@ onMounted(async () => {
                                     </div>
                                     <div class="col-12 p-fluid">
                                         <h5 class="p-1 text-xs mb-1">Assign Role(s) on Registration</h5>
-                                        <Chips v-model="store.list.registration_roles"
-                                               id="registration-roles"
-                                               data-testid="general-registration_roles"
-                                               placeholder="Search"/>
                                         <AutoComplete :multiple="true"
-                                                      v-model="store.list.registration_roles"
-                                                      :suggestions="store.filtered_registration_roles"
-                                                      @complete="store.searchRegistrationRoles($event)"
-                                                      optionValue="value"
-                                                      optionLabel="name"
-                                                      data-testid="general-registration_roles"
-                                                      placeholder="Search"/>
+                                              v-model="store.list.registration_roles"
+                                              :suggestions="store.filtered_registration_roles"
+                                              @complete="store.searchRegistrationRoles($event)"
+                                              optionValue="name"
+                                              optionLabel="name"
+                                              data-testid="general-registration_roles"
+                                              placeholder="Search"/>
                                     </div>
                                     <div class="col-12 p-fluid">
                                         <h5 class="p-1 text-xs mb-1">Allowed file types for upload</h5>
@@ -131,6 +127,14 @@ onMounted(async () => {
                                                id="allowed-files"
                                                data-testid="general-allowed_files"
                                                inputClass="w-full" class="w-full"></Chips>
+                                        <AutoComplete :multiple="true"
+                                              v-model="store.list.upload_allowed_files"
+                                              :suggestions="store.filtered_allowed_files"
+                                              @complete="store.searchAllowedFiles($event)"
+                                              optionValue="slug"
+                                              optionLabel="name"
+                                              data-testid="general-allowed_files"
+                                              placeholder="Search"/>
                                     </div>
                                 </div>
                             </div>
@@ -155,15 +159,16 @@ onMounted(async () => {
                                                              v-model="store.list.copyright_text" />
                                                 <label for="copyright-custom">Custom</label>
                                             </div>
+                                            <Button icon="pi pi-copy"
+                                                    data-testid="general-copyright_custom_filed_copy"
+                                                    @click="store.getCopy('copyright_text')"
+                                            />
                                         </div>
                                         <InputText class="w-full" v-if="store.list.copyright_text === 'custom'"
                                                    data-testid="general-copyright_custom_filed"
                                                    v-model="store.list.copyright_text"
                                                    placeholder="Enter Custom Text"></InputText>
-                                        <Button icon="pi pi-copy"
-                                                data-testid="general-copyright_custom_filed_copy"
-                                                @click="store.getCopy('copyright_text')"
-                                        />
+
                                     </div>
                                     <div class="col-12">
                                         <h5 class="p-1 text-xs mb-1">Copyright Link</h5>
@@ -184,15 +189,16 @@ onMounted(async () => {
                                                              v-model="store.list.copyright_link" />
                                                 <label for="copyright-custom_link">Custom</label>
                                             </div>
+                                            <Button icon="pi pi-copy"
+                                                    data-testid="general-copyright_custom_link_filed_copy"
+                                                    @click="store.getCopy('copyright_link')"
+                                            />
                                         </div>
                                         <InputText class="w-full"
                                                    data-testid="general-copyright_custom_link_field"
                                                    v-if="store.list.copyright_link === 'custom'"
                                                    placeholder="Enter Custom Link"></InputText>
-                                        <Button icon="pi pi-copy"
-                                                data-testid="general-copyright_custom_link_filed_copy"
-                                                @click="store.getCopy('copyright_link')"
-                                        />
+
                                     </div>
                                     <div class="col-12">
                                         <h5 class="p-1 text-xs mb-1">Copyright Year</h5>
@@ -211,6 +217,10 @@ onMounted(async () => {
                                                              v-model="store.list.copyright_year" />
                                                 <label for="copyright-custom_year">Custom</label>
                                             </div>
+                                            <Button icon="pi pi-copy"
+                                                    data-testid="general-copyright_custom_year_filed_copy"
+                                                    @click="store.getCopy('copyright_year')"
+                                            />
                                         </div>
                                         <Calendar inputId="yearpicker" v-model="date10" view="year"
                                                   dateFormat="yy"
@@ -218,10 +228,7 @@ onMounted(async () => {
                                                   v-if="store.list.copyright_year === 'custom'"
                                                   input-class="w-full" class="w-full"
                                                   placeholder="Choose Copyright Year" />
-                                        <Button icon="pi pi-copy"
-                                                data-testid="general-copyright_custom_year_filed_copy"
-                                                @click="store.getCopy('copyright_year')"
-                                        />
+
                                     </div>
                                     <div class="col-6">
                                         <h5 class="p-1 text-xs mb-1">Max number of forgot password attempts</h5>

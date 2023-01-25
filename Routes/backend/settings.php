@@ -39,6 +39,8 @@ Route::group(
         //------------------------------------------------
         Route::post( '/store/meta/tags', 'GeneralController@storeMetaTags' )
             ->name( 'vh.backend.settings.general.store.meta.tags' );
+        Route::post( '/delete/meta/tag', 'GeneralController@deleteMetaTags' )
+            ->name( 'vh.backend.settings.general.delete.meta.tags' );
         //------------------------------------------------
         //------------------------------------------------
         //------------------------------------------------
