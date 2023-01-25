@@ -66,7 +66,9 @@ export const useTaxonomyStore = defineStore({
         item_menu_state: null,
         form_menu_list: [],
         is_btn_loading: false,
-        taxonomy_type_items: null,
+        taxonomy_type_items: {
+            name: null
+        },
     }),
     getters: {
 
@@ -488,8 +490,11 @@ export const useTaxonomyStore = defineStore({
 
         //---------------------------------------------------------------------
         async addTaxonomyType() {
+            this.showProgress();
+            
             let options = {
-                query: vaah().clone(this.query)
+                params: this.taxonomy_type_items,
+                method: 'post'
             };
 
             await vaah().ajax(
@@ -499,7 +504,10 @@ export const useTaxonomyStore = defineStore({
             );
         },
         //---------------------------------------------------------------------
-        async addTaxonomyTypeAfter () {},
+        async addTaxonomyTypeAfter () {
+            this.hideProgress();
+            await this.reload();
+        },
         //---------------------------------------------------------------------
         onItemSelection(items)
         {
@@ -894,6 +902,14 @@ export const useTaxonomyStore = defineStore({
             this.query.recount = true;
             this.is_btn_loading = true;
             await this.getList();
+        },
+        //---------------------------------------------------------------------
+        showProgress() {
+            this.show_progress_bar = true;
+        },
+        //---------------------------------------------------------------------
+        hideProgress() {
+            this.show_progress_bar = false;
         },
         //---------------------------------------------------------------------
     }
