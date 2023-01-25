@@ -1,21 +1,11 @@
 <script setup>
 import { vaah } from '../../../vaahvue/pinia/vaah'
 import { useTaxonomyStore } from '../../../stores/store-taxonomies'
-import { useRootStore } from "../../../stores/root";
 import { useDialog } from "primevue/usedialog";
-import { onMounted } from "vue";
 import TaxonomyTypeModal from "../components/TaxonomyTypeModal.vue"
 
 const store = useTaxonomyStore();
 const useVaah = vaah();
-const root = useRootStore();
-
-onMounted( async () => {
-    /**
-     * Fetch the permissions from the database
-     */
-    await root.getPermission();
-});
 
 
 //--------toggle dynamic modal--------//
