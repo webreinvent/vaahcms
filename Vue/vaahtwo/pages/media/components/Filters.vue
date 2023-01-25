@@ -15,94 +15,72 @@ const store = useMediaStore();
 
             <VhFieldVertical >
                 <template #label>
-                    <b>Sort By:</b>
+                    <b>Month:</b>
                 </template>
 
                 <div class="field-radiobutton">
                     <RadioButton name="sort-none"
                                  data-testid="media-filters-sort-none"
                                  value=""
-                                 v-model="store.query.filter.sort" />
+                                 v-model="store.query.month" />
                     <label for="sort-none">None</label>
                 </div>
-                <div class="field-radiobutton">
+                <div class="field-radiobutton" v-for="month in store.assets.date.month">
                     <RadioButton name="sort-ascending"
-                                 data-testid="media-filters-sort-ascending"
-                                 value="updated_at"
-                                 v-model="store.query.filter.sort" />
-                    <label for="sort-ascending">Updated (Ascending)</label>
+                                 data-testid="media-filters-date-month"
+                                 :value="month.month"
+                                 v-model="store.query.month" />
+                    <label for="sort-ascending">{{ month.month }}</label>
                 </div>
-                <div class="field-radiobutton">
-                    <RadioButton name="sort-descending"
-                                 data-testid="media-filters-sort-descending"
-                                 value="updated_at:desc"
-                                 v-model="store.query.filter.sort" />
-                    <label for="sort-descending">Updated (Descending)</label>
-                </div>
-
             </VhFieldVertical>
 
             <Divider/>
 
             <VhFieldVertical >
                 <template #label>
-                    <b>Is Active:</b>
+                    <b>Year:</b>
                 </template>
 
                 <div class="field-radiobutton">
                     <RadioButton name="active-all"
-                                 value="null"
+                                 value=""
                                  data-testid="media-filters-active-all"
-                                 v-model="store.query.filter.is_active" />
+                                 v-model="store.query.year" />
                     <label for="active-all">All</label>
                 </div>
-                <div class="field-radiobutton">
+                <div class="field-radiobutton" v-for="item in store.assets.date.year">
                     <RadioButton name="active-true"
                                  data-testid="media-filters-active-true"
-                                 value="true"
-                                 v-model="store.query.filter.is_active" />
-                    <label for="active-true">Only Active</label>
+                                 :value="item.year"
+                                 v-model="store.query.year" />
+                    <label for="active-true">{{ item.year}}</label>
                 </div>
-                <div class="field-radiobutton">
-                    <RadioButton name="active-false"
-                                 data-testid="media-filters-active-false"
-                                 value="false"
-                                 v-model="store.query.filter.is_active" />
-                    <label for="active-false">Only Inactive</label>
-                </div>
-
             </VhFieldVertical>
 
             <VhFieldVertical >
                 <template #label>
                     <b>Trashed:</b>
                 </template>
-
                 <div class="field-radiobutton">
-                    <RadioButton name="trashed-exclude"
-                                 data-testid="media-filters-trashed-exclude"
-                                 value=""
-                                 v-model="store.query.filter.trashed" />
-                    <label for="trashed-exclude">Exclude Trashed</label>
-                </div>
-                <div class="field-radiobutton">
-                    <RadioButton name="trashed-include"
-                                 data-testid="media-filters-trashed-include"
-                                 value="include"
-                                 v-model="store.query.filter.trashed" />
-                    <label for="trashed-include">Include Trashed</label>
-                </div>
-                <div class="field-radiobutton">
-                    <RadioButton name="trashed-only"
-                                 data-testid="media-filters-trashed-only"
-                                 value="only"
-                                 v-model="store.query.filter.trashed" />
+                    <Checkbox v-model="store.query.filter.trashed"
+                              data-testid="media-filters-include_trashed"
+                    />
                     <label for="trashed-only">Only Trashed</label>
                 </div>
 
             </VhFieldVertical>
+            <VhFieldVertical >
+                <template #label>
+                    <b>Dates:</b>
+                </template>
+                <div class="field-radiobutton">
+                    <Calendar inputId="range"
+                              v-model="store.query.dates2"
+                              selectionMode="range"
+                              :manualInput="false" />
+                </div>
 
-
+            </VhFieldVertical>
         </Sidebar>
 
     </div>

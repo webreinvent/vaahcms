@@ -79,14 +79,22 @@ const toggleFormMenu = (event) => {
                         <InputText id="name" class="w-full" v-model="store.item.name"></InputText>
                         <label for="name">Name</label>
                     </span>
-                    <div class="field mb-4">
-                        <FileUpload url="./upload"  v-model="store.item.url">
-                            <template #empty>
-                                <p class="text-center text-sm text-gray-600" @click="chooseCallback">
+                    <div class="field mb-4 relative">
+                        <FileUpload url="./upload">
+                            <template #empty class="absolute">
+                                <p class="text-center text-sm text-gray-600">
                                     Drag and drop files to here to upload.
                                 </p>
                             </template>
                         </FileUpload>
+                        <FileUpload mode="basic"
+                                    v-model="store.item.url"
+                                    accept="image/*"
+                                    :maxFileSize="1000000"
+                                    @select="store.upload($event,store.item)"
+                                    class="p-button-text"
+                                    style="height: 55px;width: 100%;border: 2px dashed #bfbfbf"/>
+
                     </div>
                     <span class="p-float-label">
                         <InputText id="title" class="w-full" v-model="store.item.title"></InputText>
@@ -104,7 +112,7 @@ const toggleFormMenu = (event) => {
                     <SelectButton
                         v-model="store.item.is_downloadable"
                         :options="store.download_options"
-                        option-value="value"
+                        option-value="value ? true : false"
                         option-label="label">
                     </SelectButton>
                 </div>

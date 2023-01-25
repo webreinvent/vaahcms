@@ -28,7 +28,7 @@ const useVaah = vaah();
 
              <Column field="thumbnail" header="Thumbnail">
                  <template #body="prop">
-                     <Img :src="prop.data.url_thumbnail" />
+                     <Image :src="prop.data.url_thumbnail" />
                  </template>
              </Column>
 
@@ -69,13 +69,13 @@ const useVaah = vaah();
                 <template #body="prop">
                     <div class="p-inputgroup ">
                         <Button class="p-button-tiny p-button-text"
-                                data-testid="media-table-to-view"
+                                data-testid="media-table-open-image"
                                 v-tooltip.top="'Open Image'"
-                                 icon="pi pi-external-link"
+                                icon="pi pi-external-link"
                                 value="Open"
-                                href="prop.data.url"
-                                target="_blank"
-                                />
+                                url="prop.data.url"
+                                @click="store.openImage(prop.data.url)"
+                                target="_blank"/>
                         <Button class="p-button-tiny p-button-text"
                                 data-testid="media-table-to-view"
                                 v-tooltip.top="'View'"

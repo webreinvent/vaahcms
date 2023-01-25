@@ -141,7 +141,6 @@ class MediaController extends Controller
     //----------------------------------------------------------
     public function getAssets(Request $request)
     {
-
         if(!\Auth::user()->hasPermission('has-access-of-media-section'))
         {
             $response['success'] = false;
@@ -149,7 +148,6 @@ class MediaController extends Controller
 
             return response()->json($response);
         }
-
 
         $year_and_month = Media::getDateList();
 

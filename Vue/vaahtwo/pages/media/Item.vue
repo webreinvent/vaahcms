@@ -1,8 +1,9 @@
 <script setup>
 import {onMounted, ref, watch} from "vue";
 import {useRoute} from 'vue-router';
+import {vaah} from '../../vaahvue/pinia/vaah';
 
-import { useMediaStore } from '../../stores/store-media'
+import { useMediaStore } from '../../stores/store-media';
 
 import VhViewRow from '../../vaahvue/vue-three/primeflex/VhViewRow.vue';
 const store = useMediaStore();
@@ -65,7 +66,7 @@ const toggleItemMenu = (event) => {
                 <div class="flex flex-row">
 
                     <div class="p-panel-title">
-                        #{{store.item.id}}
+                        {{store.item.name}}
                     </div>
 
                 </div>
@@ -76,6 +77,9 @@ const toggleItemMenu = (event) => {
 
 
                 <div class="p-inputgroup">
+                    <Button @click="$vaah.copy(store.item.id)" class="p-button-outlined">
+                        #{{ store.item.id }}
+                    </Button>
                     <Button label="Edit"
                             @click="store.toEdit(store.item)"
                             data-testid="media-item-to-edit"
@@ -154,20 +158,35 @@ const toggleItemMenu = (event) => {
                             />
                         </template>
 
-                        <template v-else-if="column === 'is_active'">
+                        <template v-else-if="column === 'is_active' || column === 'is_downloadable' || column === 'download_requires_login'">
                             <VhViewRow :label="column"
                                        :value="value"
                                        type="yes-no"
                             />
                         </template>
-
+                        <template v-else-if="column === 'size'">
+                            <tr>
+                                <td><b>{{ vaah().toLabel(column) }}</b></td>
+                                <td colspan="2">
+                                    <Tag severity="primary">{{ store.toKb(value) }}</Tag>
+                                </td>
+                            </tr>
+                        </template>
+                        <template v-else-if="column === 'url' || column === 'url_thumbnail'">
+                            <tr>
+                                <td><b>{{ vaah().toLabel(column) }}</b></td>
+                                <td style="word-break: break-all;">{{ value }}</td>
+                                <td><Button icon="pi pi-external-link"
+                                            @click="store.openImage(value)"
+                                            class="p-button-text p-button-sm"/>
+                                </td>
+                            </tr>
+                        </template>
                         <template v-else>
                             <VhViewRow :label="column"
                                        :value="value"
                                        />
                         </template>
-
-
                     </template>
                     </tbody>
 

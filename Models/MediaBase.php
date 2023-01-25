@@ -231,7 +231,6 @@ class MediaBase extends Model {
     //-------------------------------------------------
     public static function getList($request)
     {
-
         $list = self::orderBy('id', 'desc');
 
         if($request['trashed'] == 'true')
@@ -264,7 +263,7 @@ class MediaBase extends Model {
         {
             $list->where(function ($q) use ($request){
                 $q->where('name', 'LIKE', '%'.$request->q.'%')
-                    ->orWhere('slug', 'LIKE', '%'.$request->q.'%');
+                    ->orWhere('type', 'LIKE', '%'.$request->q.'%');
             });
         }
 
