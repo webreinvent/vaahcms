@@ -491,7 +491,7 @@ export const useTaxonomyStore = defineStore({
         //---------------------------------------------------------------------
         async addTaxonomyType() {
             this.showProgress();
-            
+
             let options = {
                 params: this.taxonomy_type_items,
                 method: 'post'
