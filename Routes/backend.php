@@ -11,6 +11,22 @@
 |
 */
 
+Route::group(
+    [
+        'prefix'     => '/backend/',
+        'middleware' => ['web'],
+        'namespace'  => 'WebReinvent\VaahCms\Http\Controllers\Frontend'
+    ],
+    function () {
+        //------------------------------------------------
+        Route::any( '/clear/cache', 'WelcomeController@clearCache' )
+            ->name( 'vh.frontend.clear.cache' );
+        //------------------------------------------------
+        Route::any( '/faker', 'WelcomeController@getFaker' )
+            ->name( 'vh.faker' );
+        //------------------------------------------------
+    });
+
 
 include('backend/general.php');
 include('backend/ui.php');
