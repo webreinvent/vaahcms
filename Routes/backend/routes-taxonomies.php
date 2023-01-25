@@ -71,6 +71,35 @@ function () {
     Route::post( '/create-taxonomy-type', 'TaxonomiesController@createTaxonomyType' )
         ->name( 'vh.backend.leads.taxonomies.createTaxonomyType' );
 
+    /**
+     * Delete taxonomy type
+     */
+    Route::post( 'delete-taxonomy-type', 'TaxonomiesController@deleteTaxonomyType' )
+        ->name( 'vh.backend.leads.taxonomies.deleteTaxonomyType' );
+
+    /**
+     * Update taxonomy type
+     */
+    Route::post( 'update-taxonomy-type', 'TaxonomiesController@updateTaxonomyType' )
+        ->name( 'vh.backend.leads.taxonomies.updateTaxonomyType' );
+
+    /**
+     * Update taxonomy type positions
+     */
+    Route::post( 'update-taxonomy-type-position', 'TaxonomiesController@updateTaxonomyTypePosition' )
+        ->name( 'vh.backend.leads.taxonomies.updateTaxonomyTypePosition' );
+
+    /**
+     * Get parent
+     */
+    Route::get('/json/parents/{id}/{name?}', 'TaxonomiesController@getParents' )
+        ->name( 'vh.backend.leads.taxonomies.countries' );
+
+    /**
+     * Get country by ID
+     */
+    Route::get( 'json/getCountryById/{id}', 'TaxonomiesController@getCountryById' )
+        ->name( 'vh.backend.leads.taxonomies.getCountryById' );
     //---------------------------------------------------------
 
 });

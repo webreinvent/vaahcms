@@ -148,6 +148,137 @@ class TaxonomiesController extends Controller
         return $response;
     }
     //----------------------------------------------------------
+    public function deleteTaxonomyType(Request $request)
+    {
+        if (!Auth::user()->hasPermission('can-manage-taxonomy-type')) {
+            $response['success'] = false;
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+            return $response;
+        }
+
+        $item = TaxonomyType::where('id',$request->id)->with(['children'])
+            ->withTrashed()->first();
+
+        if(count($item->children) > 0){
+            self::deleteChildren($item->children);
+        }
+
+        $item->forceDelete();
+
+        $response['success'] = true;
+        $response['messages'][] = 'Successfully Deleted.';
+        return $response;
+    }
+    //----------------------------------------------------------
+    public function deleteChildren($types)
+    {
+        foreach ($types as $type){
+            if(count($type->children) > 0){
+                self::deleteChildren($type->children);
+            }
+
+            $type->forceDelete();
+        }
+
+    }
+    //----------------------------------------------------------
+    public function updateTaxonomyType(Request $request)
+    {
+
+        if (!Auth::user()->hasPermission('can-manage-taxonomy-type')) {
+            $response['success'] = false;
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+            return $response;
+        }
+
+        if (!$request->newName) {
+            $response['status']       = 'failed';
+            $response['errors'][]     = 'Name is required.';
+            return $response;
+        }
+
+
+        $name_exist = TaxonomyType::where('id','!=',$request->id)
+            ->where('name',$request->newName)->first();
+
+        if($name_exist){
+            $response['status']       = 'failed';
+            $response['errors'][]     = 'Name already exist.';
+            return $response;
+        }
+
+
+        $slug_exist = TaxonomyType::where('id','!=',$request->id)
+            ->where('slug',Str::slug($request->newName))->first();
+
+        if($slug_exist){
+            $response['status']       = 'failed';
+            $response['errors'][]     = 'Slug already exist.';
+            return $response;
+        }
+
+        $list = TaxonomyType::where('id',$request->id)->first();
+
+        $list->name = $request->newName;
+        $list->slug = Str::slug($request->newName);
+        $list->save();
+
+        $response['status']       = 'success';
+        $response['messages'][]   = 'Updated Successfully.';
+        return $response;
+
+    }
+    //----------------------------------------------------------
+    public function updateTaxonomyTypePosition(Request $request)
+    {
+
+        if (!Auth::user()->hasPermission('can-manage-taxonomy-type')) {
+            $response['success'] = false;
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+            return $response;
+        }
+
+        $parent_id = null;
+
+        if ($request->parent_id && $request->parent_id != 0) {
+
+            $parent_id = $request->parent_id;
+        }
+
+        $item = TaxonomyType::where('id',$request->id)->first();
+
+        $item->parent_id = $parent_id;
+        $item->save();
+
+        $response['status']       = 'success';
+        $response['messages'][]   = 'Updated Successfully.';
+        return $response;
+
+    }
+    //----------------------------------------------------------
+    public function getParents(Request $request,$id, $name=null)
+    {
+        $list = Taxonomy::where(function($q) use ($name){
+            $q->where('name', 'LIKE', '%'.$name.'%')
+                ->orWhere('slug', 'LIKE', '%'.$name.'%');
+        })->where('vh_taxonomy_type_id', $id)
+            ->whereNotNull('is_active')
+            ->take(10)
+            ->orderBy('created_at', 'desc')
+            ->select('id','name','slug')->get();
+
+        return $list;
+
+    }
+    //----------------------------------------------------------
+    public function getCountryById(Request $request, $id)
+    {
+        return Taxonomy::find($id);
+    }
+    //----------------------------------------------------------
 
 
 }
