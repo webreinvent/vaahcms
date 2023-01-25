@@ -1,3 +1,26 @@
+<script setup>
+import {onMounted, reactive, ref} from "vue";
+import {useRoute} from 'vue-router';
+import draggable from 'vuedraggable';
+
+import {useNotificationStore} from "../../../stores/settings/store-notification";
+
+const store = useNotificationStore();
+const route = useRoute();
+
+import { useConfirm } from "primevue/useconfirm";
+
+const confirm = useConfirm();
+onMounted(async () => {
+
+    /**
+     * fetch assets required for the crud
+     * operation
+     */
+    await store.getAssets();
+
+});
+</script>
 <template>
     <Card class="notification-settings">
         <template #header>
@@ -7,17 +30,17 @@
             </div>
         </template>
         <template #content>
-            <div class="grid" v-if="!show">
+            <div class="grid" v-if="!store.active_notification">
                 <div class="col">
-                    <DataTable :value="notifications" stripedRows responsiveLayout="scroll" class="p-datatable-sm" showGridlines>
+                    <DataTable :value="store.notifications" stripedRows responsiveLayout="scroll" class="p-datatable-sm" showGridlines>
                         <Column header="Notification Title">
                             <template #body="slotProps">
-                                <p>{{slotProps.data.title}}</p>
+                                <p>{{slotProps.data.name}}</p>
                             </template>
                         </Column>
                         <Column header="Edit">
                             <template #body="slotProps">
-                                <Button icon="pi pi-pencil" @click="showNotificationSettings(slotProps.index)" class="p-button-rounded p-button-sm"></Button>
+                                <Button icon="pi pi-pencil" @click="store.showNotificationSettings(slotProps.data)" class="p-button-rounded p-button-sm"></Button>
                             </template>
                         </Column>
                     </DataTable>
@@ -26,8 +49,8 @@
             <div class="grid" v-else>
                 <div class="col-12 mb-3">
                     <div class="flex align-items-center justify-content-between">
-                        <h4 class="font-semibold text-xl">{{activeNotification.title}}</h4>
-                        <Button class="p-button-outlined p-button-sm" label="Go back" icon="pi pi-arrow-left" icon-class="text-xs" v-if="show" @click="hideNotificationSettings"></Button>
+                        <h4 class="font-semibold text-xl">{{store.active_notification.name}}</h4>
+                        <Button class="p-button-outlined p-button-sm" label="Go back" icon="pi pi-arrow-left" icon-class="text-xs" v-if="show" @click="store.hideNotificationSettings"></Button>
                     </div>
                 </div>
                 <div class="col-3 pr-3">
@@ -36,10 +59,13 @@
                         <AutoComplete placeholder="Search"></AutoComplete>
                     </div>
                     <div class="notification-variables pt-2 pr-1">
-                        <div class="p-inputgroup mb-3" v-for="item in activeNotification.variables">
-                            <InputText :model-value="item" readonly></InputText>
-                            <Button icon="pi pi-copy"></Button>
-                            <Button icon="pi pi-question-circle" class="p-button-secondary"></Button>
+                        <div class="p-inputgroup mb-3" v-for="item in store.notification_variables">
+                            <InputText :model-value="item.name" readonly></InputText>
+                            <Button icon="pi pi-copy"
+                                    :data-testid="'setting-notification_'+item.name+'_copy'"
+                                    @click="store.getCopy(item.name)"></Button>
+                            <Button icon="pi pi-question-circle"
+                                    class="p-button-secondary"></Button>
                         </div>
                     </div>
                 </div>
@@ -49,33 +75,33 @@
                         <div class="col-5">
                             <h5 class="text-sm font-semibold mb-2">Deliver via</h5>
                             <div class="flex justify-content-between">
-                <span>
-              <h5 class="font-semibold text-xs mb-1">Mail</h5>
-              <InputSwitch v-model="checked"  class="is-small"/>
-            </span>
                                 <span>
-              <h5 class="font-semibold text-xs mb-1">SMS</h5>
-              <InputSwitch v-model="checked"  class="is-small"/>
-            </span>
+                                    <h5 class="font-semibold text-xs mb-1">Mail</h5>
+                                    <InputSwitch v-model="store.active_notification.via_mail"  class="is-small"/>
+                                </span>
                                 <span>
-              <h5 class="font-semibold text-xs mb-1">Push</h5>
-              <InputSwitch v-model="checked"  class="is-small"/>
-            </span>
+                                    <h5 class="font-semibold text-xs mb-1">SMS</h5>
+                                    <InputSwitch v-model="store.active_notification.via_sms"  class="is-small"/>
+                                </span>
                                 <span>
-              <h5 class="font-semibold text-xs mb-1">Frontend</h5>
-              <InputSwitch v-model="checked"  class="is-small"/>
-            </span>
+                                    <h5 class="font-semibold text-xs mb-1">Push</h5>
+                                    <InputSwitch v-model="store.active_notification.via_push"  class="is-small"/>
+                                </span>
                                 <span>
-              <h5 class="font-semibold text-xs mb-1">Backend</h5>
-              <InputSwitch v-model="checked"  class="is-small"/>
-            </span>
+                                    <h5 class="font-semibold text-xs mb-1">Frontend</h5>
+                                    <InputSwitch v-model="store.active_notification.via_frontend"  class="is-small"/>
+                                </span>
+                                <span>
+                                    <h5 class="font-semibold text-xs mb-1">Backend</h5>
+                                    <InputSwitch v-model="store.active_notification.via_backend"  class="is-small"/>
+                                </span>
                             </div>
                         </div>
                         <div class="col-6 justify-content-end flex">
-           <span class="text-right">
-              <h5 class="font-semibold text-xs mb-1">Error notifications</h5>
-              <InputSwitch v-model="checked" class="is-small"/>
-           </span>
+                            <span class="text-right">
+                                <h5 class="font-semibold text-xs mb-1">Error notifications</h5>
+                                <InputSwitch v-model="store.active_notification.is_error" class="is-small"/>
+                            </span>
                         </div>
                         <div class="col-12">
                             <TabView ref="tabview1">
@@ -140,72 +166,6 @@
         </template>
     </Card>
 </template>
-
-<script>
-import countriesData from "../../../assets/data/country.json";
-
-export default {
-    name: "NotificationSettings",
-    data(){
-        return{
-            countries: null,
-            selectedCountry1: null,
-            filteredCountries: null,
-            checked:true,
-            show:false,
-            notifications: [
-                {
-                    title:'Send Login OTP',
-                    variables:['#!USER:NAME!#','#!USER:DISPLAY_NAME!#','#!USER:EMAIL!#','#!USER:PHONE!#'],
-                },
-                {
-                    title:'Send Reset Password email',
-                    variables:['#!USER:NAME!#','#!USER:DISPLAY_NAME!#','#!USER:EMAIL!#','#!USER:PHONE!#'],
-                },
-                {
-                    title:'Send Update Message',
-                    variables:['#!USER:NAME!#','#!USER:DISPLAY_NAME!#','#!USER:EMAIL!#','#!USER:PHONE!#'],
-                },
-                {
-                    title:'Send Verification Email',
-                    variables:['#!USER:NAME!#','#!USER:DISPLAY_NAME!#','#!USER:EMAIL!#','#!USER:PHONE!#'],
-                },
-                {
-                    title:'Send Welcome Email',
-                    variables:['#!USER:NAME!#','#!USER:DISPLAY_NAME!#','#!USER:EMAIL!#','#!USER:PHONE!#','#!USER:NAME!#','#!USER:DISPLAY_NAME!#','#!USER:EMAIL!#','#!USER:PHONE!#','#!USER:NAME!#','#!USER:DISPLAY_NAME!#','#!USER:EMAIL!#','#!USER:PHONE!#','#!USER:NAME!#','#!USER:DISPLAY_NAME!#','#!USER:EMAIL!#','#!USER:PHONE!#'],
-                },
-            ],
-            activeNotification:null
-        }
-    },
-    mounted() {
-        this.countries = countriesData.data.map((country) => country.name);
-    },
-    methods:{
-        searchCountry(event) {
-            setTimeout(() => {
-                if (!event.query.trim().length) {
-                    this.filteredCountries = [...this.countries];
-                }
-                else {
-                    this.filteredCountries = this.countries.filter((country) => {
-                        return country.toLowerCase().startsWith(event.query.toLowerCase());
-                    });
-                }
-            }, 250);
-        },
-        showNotificationSettings(index){
-            console.log(index);
-            this.activeNotification = this.notifications[index];
-            this.show = true;
-        },
-        hideNotificationSettings(){
-            this.show  = false;
-            this.activeNotification = null;
-        }
-    }
-}
-</script>
 
 <style lang="scss">
 .notification-settings{

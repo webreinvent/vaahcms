@@ -128,11 +128,11 @@ Route::group(
     [
         'prefix'     => 'backend/vaah/settings/notifications',
         'middleware' => ['web','has.backend.access'],
-        'namespace'  => 'WebReinvent\VaahCms\Http\Controllers\Settings'
+        'namespace'  => 'WebReinvent\VaahCms\Http\Controllers\Backend\Settings'
     ],
     function () {
         //------------------------------------------------
-        Route::post( '/assets', 'NotificationsController@getAssets' )
+        Route::get( '/assets', 'NotificationsController@getAssets' )
             ->name( 'vh.backend.settings.notifications.assets' );
         //------------------------------------------------
         Route::post( '/list', 'NotificationsController@getList' )
