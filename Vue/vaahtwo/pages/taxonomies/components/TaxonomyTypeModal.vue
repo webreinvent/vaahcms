@@ -1,13 +1,22 @@
 <script setup>
 
 import {useTaxonomyStore} from "../../../stores/store-taxonomies";
+import NodeService from "../json/NodeService"
+import { onMounted, ref } from "vue";
 
 const store = useTaxonomyStore();
+
+const nodeService = ref(new NodeService());
+const nodes = ref();
+
+onMounted( async () => {
+    nodeService.value.getTreeNodes().then(data => nodes.value = data);
+});
 </script>
 
 <template>
     <div>
-        <div class="p-inputgroup" v-if="store">
+        <div class="p-inputgroup" v-if="store && store.assets">
 <!--            <Dropdown v-model="store.assets.type"-->
 <!--                      :options="store.assets.type"-->
 <!--                      optionLabel="name"-->
@@ -25,8 +34,7 @@ const store = useTaxonomyStore();
 <!--            />-->
 
             <TreeSelect v-model="store.item.type"
-                        :options="store.assets.types"
-                        :label="store.assets.types.name"
+                        :options="nodes"
                         placeholder="Select a Parent"
             />
 
@@ -43,6 +51,7 @@ const store = useTaxonomyStore();
                        data-testid="taxonomies-slug"
                        v-model="store.taxonomy_type_items.name"
             />
+
             <Button class="p-button-sm"
                     label="Add"
                     @click="store.addTaxonomyType()"
@@ -51,12 +60,6 @@ const store = useTaxonomyStore();
 
         <Divider />
 
-<!--        {{ store.assets.types }}-->
-        <div v-for="items in store.assets.types">
-            <PanelMenu :model="items"></PanelMenu>
-
-<!--            {{ items }}-->
-        </div>
-
+        <Tree :value="nodes" />
     </div>
 </template>
