@@ -1,7 +1,7 @@
-import {watch} from 'vue'
-import {acceptHMRUpdate, defineStore} from 'pinia'
-import qs from 'qs'
-import {vaah} from '../vaahvue/pinia/vaah'
+import { watch } from 'vue';
+import {acceptHMRUpdate, defineStore} from 'pinia';
+import qs from 'qs';
+import {vaah} from '../vaahvue/pinia/vaah';
 
 let model_namespace = 'WebReinvent\\VaahCms\\Models\\Media';
 
@@ -19,6 +19,11 @@ let empty_states = {
             trashed: null,
             sort: null,
         },
+        month: null,
+        year: null,
+        dates2: null,
+        from: null,
+        to: null
     },
     action: {
         type: null,
@@ -67,11 +72,11 @@ export const useMediaStore = defineStore({
         download_options:[
             {
                 label:'Yes',
-                value:'yes'
+                value: true
             },
             {
                 label:'No',
-                value: 'no'
+                value: false
             }
         ],
         menu_options: [],
@@ -145,8 +150,16 @@ export const useMediaStore = defineStore({
         //---------------------------------------------------------------------
         watchStates()
         {
-            watch(this.query.filter, (newVal,oldVal) =>
+            watch(this.query, (newVal,oldVal) =>
                 {
+                    if (Array.isArray(this.query.dates2)) {
+                        this.query.from = new Date(newVal.dates2[0]);;
+                        console.log(this.query.from);
+
+                        if (this.query.dates2.length > 1) {
+                            this.query.to = newVal.dates2[1];
+                        }
+                    }
                     this.delayedSearch();
                 },{deep: true}
             )
@@ -211,7 +224,7 @@ export const useMediaStore = defineStore({
         {
             if(data)
             {
-                this.list = data;
+                this.list = data.list;
             }
         },
         //---------------------------------------------------------------------
@@ -227,6 +240,7 @@ export const useMediaStore = defineStore({
         //---------------------------------------------------------------------
         async getItemAfter(data, res)
         {
+            console.log(data);
             if(data)
             {
                 this.item = data;
@@ -591,6 +605,12 @@ export const useMediaStore = defineStore({
             {
                 this.query.filter[key] = null;
             }
+
+            for(let key in this.query)
+            {
+                if (key === 'filter') {continue};
+                this.query[key] = null;
+            }
             await this.updateUrlQueryString(this.query);
         },
         //---------------------------------------------------------------------
@@ -668,21 +688,6 @@ export const useMediaStore = defineStore({
         {
             this.list_selected_menu = [
                 {
-                    label: 'Activate',
-                    command: async () => {
-                        await this.updateList('activate')
-                    }
-                },
-                {
-                    label: 'Deactivate',
-                    command: async () => {
-                        await this.updateList('deactivate')
-                    }
-                },
-                {
-                    separator: true
-                },
-                {
                     label: 'Trash',
                     icon: 'pi pi-times',
                     command: async () => {
@@ -710,21 +715,6 @@ export const useMediaStore = defineStore({
         getListBulkMenu()
         {
             this.list_bulk_menu = [
-                {
-                    label: 'Mark all as active',
-                    command: async () => {
-                        await this.listAction('activate-all')
-                    }
-                },
-                {
-                    label: 'Mark all as inactive',
-                    command: async () => {
-                        await this.listAction('deactivate-all')
-                    }
-                },
-                {
-                    separator: true
-                },
                 {
                     label: 'Trash All',
                     icon: 'pi pi-times',
@@ -893,6 +883,42 @@ export const useMediaStore = defineStore({
         toggle(event) {
             this.$refs.menu.toggle(event);
         },
+        //---------------------------------------------------------------------
+        openImage(url) {
+            window.open(url,'_target');
+        },
+        //---------------------------------------------------------------------
+        toKb(value) {
+            return (value / 1024).toFixed(2) + ' kb';
+        },
+        //---------------------------------------------------------------------
+        upload(event,item) {
+            let formData = new FormData();
+
+            formData.append('file', event.files[0]);
+            formData.append('folder_path', 'public/media');
+
+            vaah().ajax(
+                this.ajax_url+'/upload',
+                this.uploadAfter,
+                {
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    },
+                    method: 'post',
+                    params:  formData
+                }
+            );
+        },
+        //---------------------------------------------------------------------
+        uploadAfter(data) {
+            let path = data.url;
+
+            if (data && data.original_name) {
+                this.item = data;
+            }
+        },
+        //---------------------------------------------------------------------
     }
 });
 
@@ -902,3 +928,4 @@ export const useMediaStore = defineStore({
 if (import.meta.hot) {
     import.meta.hot.accept(acceptHMRUpdate(useMediaStore, import.meta.hot))
 }
+;

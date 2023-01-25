@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
 use WebReinvent\VaahCms\Traits\CrudWithUuidObservantTrait;
 use WebReinvent\VaahCms\Models\MediaBase;
-use WebReinvent\VaahCms\Entities\User;
+use WebReinvent\VaahCms\Models\User;
 
 class Media extends MediaBase
 {
@@ -186,36 +186,36 @@ class Media extends MediaBase
         $search = $filter['q'];
         $query->where(function ($q) use ($search) {
             $q->where('name', 'LIKE', '%' . $search . '%')
-                ->orWhere('slug', 'LIKE', '%' . $search . '%');
+                ->orWhere('extension', 'LIKE', '%' . $search . '%');
         });
 
     }
     //-------------------------------------------------
-    public static function getList($request)
-    {
-        $list = self::getSorted($request->filter);
-        $list->isActiveFilter($request->filter);
-        $list->trashedFilter($request->filter);
-        $list->searchFilter($request->filter);
-
-        $rows = config('vaahcms.per_page');
-
-        if($request->has('rows'))
-        {
-            $rows = $request->rows;
-        }
-
-        $list = $list->paginate($rows);
-
-        $response['success'] = true;
-        $response['data'] = $list;
-
-        return $response;
-
-
-    }
-
-    //-------------------------------------------------
+//    public static function getList($request)
+//    {
+//        $list = self::getSorted($request->filter);
+//        $list->isActiveFilter($request->filter);
+//        $list->trashedFilter($request->filter);
+//        $list->searchFilter($request->filter);
+//
+//        $rows = config('vaahcms.per_page');
+//
+//        if($request->has('rows'))
+//        {
+//            $rows = $request->rows;
+//        }
+//
+//        $list = $list->paginate($rows);
+//
+//        $response['success'] = true;
+//        $response['data'] = $list;
+//
+//        return $response;
+//
+//
+//    }
+//
+//    //-------------------------------------------------
     public static function updateList($request)
     {
 
