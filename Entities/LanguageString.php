@@ -210,7 +210,7 @@ class LanguageString extends Model {
             $list->where('vh_lang_category_id', $request->vh_lang_category_id);
         }
 
-        $list = $list->with('languageCategory')->paginate(config('vaahcms.per_page'));
+        $list = $list->with('languageCategory')->paginate($request->rows);
 
         $response['success'] = true;
         $response['data']['list'] = $list;
@@ -407,7 +407,7 @@ class LanguageString extends Model {
                 {
                     foreach ($files as $file)
                     {
-                        if(strpos($file, 'vaahcms') !== false) {
+                        if(strpos($file, 'vaahcms') !== false && !File::isDirectory($file)) {
                             unlink($file_path.'/'.$folder.'/'.$file);
                         }
                     }

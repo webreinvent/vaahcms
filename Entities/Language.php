@@ -219,6 +219,7 @@ class Language extends Model {
             $total = LanguageString::where('vh_lang_language_id',$item->id)->count();
             $not_empty = LanguageString::where('vh_lang_language_id',$item->id)->whereNOtNull('content')->count();
 
+            $item['option_label'] = $item->name.' ('.$not_empty.'/'.$total.')';
             $item['total'] = $total;
             $item['not_empty'] = $not_empty;
 
