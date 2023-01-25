@@ -1,11 +1,22 @@
 <script setup>
 import { vaah } from '../../../vaahvue/pinia/vaah'
 import { useTaxonomyStore } from '../../../stores/store-taxonomies'
-import {useDialog} from "primevue/usedialog";
+import { useRootStore } from "../../../stores/root";
+import { useDialog } from "primevue/usedialog";
+import { onMounted } from "vue";
 import TaxonomyTypeModal from "../components/TaxonomyTypeModal.vue"
 
 const store = useTaxonomyStore();
 const useVaah = vaah();
+const root = useRootStore();
+
+onMounted( async () => {
+    /**
+     * Fetch the permissions from the database
+     */
+    await root.getPermission();
+});
+
 
 //--------toggle dynamic modal--------//
 const dialog = useDialog();
@@ -82,12 +93,14 @@ const openTaxonomyTypeModal = () => {
                 <template #body="prop">
                     {{ prop.data.type.name }}
 
-                    <Button class="p-button-tiny p-button-text"
-                            data-testid="taxonomies-table-to-manage-taxonomy-type-modal"
-                            v-tooltip.top="'Manage Taxonomy Type'"
-                            icon="pi pi-pencil"
-                            @click="openTaxonomyTypeModal"
-                    />
+                    <template v-if="store.hasPermission('can-manage-taxonomy-types')">
+                        <Button class="p-button-tiny p-button-text"
+                                data-testid="taxonomies-table-to-manage-taxonomy-type-modal"
+                                v-tooltip.top="'Manage Taxonomy Type'"
+                                icon="pi pi-pencil"
+                                @click="openTaxonomyTypeModal"
+                        />
+                    </template>
                 </template>
             </Column>
 
