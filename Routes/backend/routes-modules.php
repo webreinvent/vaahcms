@@ -78,5 +78,9 @@ function () {
     //------------------------------------------------
     Route::post( '/install/updates', 'ModulesController@installUpdates' )
         ->name( 'vh.backend.modules.install.updates');
+    //------------------------------------------------
+    Route::any( '/publish/assets', 'ModulesController@publishAssets' )
+        ->name( 'vh.setup.publish.assets' );
+    //------------------------------------------------
 
 });

@@ -50,13 +50,20 @@ const useVaah = vaah();
                                                 v-tooltip.top="'Import Data'"
                                                 @click="store.itemAction('import_sample_data', item)">
                                         </Button>
-                                        <Button class="p-button-info p-button-sm"
+                                        <Button class="mr-2 p-button-info p-button-sm"
                                                 data-testid="modules-table-action-install-update"
                                                 icon="cloud-download-alt"
                                                 @click="store.confirmUpdate(item)"
                                                 v-tooltip.top="'Update Module'"
                                                 v-if="item.is_update_available && store.hasPermission('can-update-module')">
                                             Update
+                                        </Button>
+                                        <Button class="mr-2 p-button-info p-button-sm"
+                                                data-testid="modules-table-action-install-update"
+                                                @click="store.publishAssets(item)"
+                                                v-tooltip.top="'Publish Assets'"
+                                                v-if="!item.is_assets_published && store.hasPermission('can-install-module')">
+                                            Publish Assets
                                         </Button>
                                         <Button class="p-button-danger p-button-sm"
                                                 data-testid="modules-table-action-trash"
