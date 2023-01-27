@@ -199,9 +199,6 @@ export const useModuleStore = defineStore({
         },
         //---------------------------------------------------------------------
         async getList() {
-            const root = useRootStore();
-            console.log(root);
-
             let options = {
                 query: vaah().clone(this.query)
             };
@@ -1055,10 +1052,15 @@ export const useModuleStore = defineStore({
             }
 
         },
-        //---------------------------------------------------------------------
-        publishAssets() {
+        //----------------------------------------------------------------------
+        publishAssets(item) {
+            let moduleName = item.name;
+
             let options = {
-                method: 'POST'
+                method: 'POST',
+                params: {
+                    name: moduleName
+                }
             };
 
             let url = this.ajax_url+'/publish/assets';
