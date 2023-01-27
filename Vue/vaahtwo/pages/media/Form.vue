@@ -1,8 +1,6 @@
 <script setup>
-import {onMounted, ref, watch} from "vue";
+import {onMounted, ref} from "vue";
 import { useMediaStore } from '../../stores/store-media'
-
-import VhField from './../../vaahvue/vue-three/primeflex/VhField.vue'
 import {useRoute} from 'vue-router';
 
 
@@ -112,7 +110,7 @@ const toggleFormMenu = (event) => {
                     <SelectButton
                         v-model="store.item.is_downloadable"
                         :options="store.download_options"
-                        option-value="value ? true : false"
+                        option-value="value"
                         option-label="label">
                     </SelectButton>
                 </div>
