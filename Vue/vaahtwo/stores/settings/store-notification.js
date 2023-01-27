@@ -17,9 +17,9 @@ export const useNotificationStore = defineStore({
         model: model_namespace,
         assets_is_fetching: true,
         app: null,
-        activeSubTab:0,
-        assets:null,
-        fillable:null,
+        activeSubTab: 0,
+        assets: null,
+        fillable: null,
         route: null,
         view: 'large',
         show_filters: false,
@@ -44,18 +44,20 @@ export const useNotificationStore = defineStore({
         countries: null,
         selectedCountry1: null,
         filteredCountries: null,
-        checked:true,
-        activeNotification:null,
+        checked: true,
+        activeNotification: null,
         notifications: null,
         notification_variables: null,
         notification_actions: null,
         help_urls: null,
-        content:null,
-        active_notification:null,
+        active_notification: null,
+        is_add_from_disabled: false,
+        is_add_subject_disabled: false,
+        is_testing:false,
+        send_to:null,
+        user_list:null,
     }),
-    getters: {
-
-    },
+    getters: {},
     actions: {
         //---------------------------------------------------------------------
         async getAssets() {
@@ -83,8 +85,7 @@ export const useNotificationStore = defineStore({
             setTimeout(() => {
                 if (!event.query.trim().length) {
                     this.filteredCountries = [...this.countries];
-                }
-                else {
+                } else {
                     this.filteredCountries = this.countries.filter((country) => {
                         return country.toLowerCase().startsWith(event.query.toLowerCase());
                     });
@@ -92,28 +93,259 @@ export const useNotificationStore = defineStore({
             }, 250);
         },
         //---------------------------------------------------------------------
-        async showNotificationSettings(item){
-            this.active_notification = vaah().findInArrayByKey(this.notifications,'id',item.id)
+        async showNotificationSettings(item) {
+            this.active_notification = vaah().findInArrayByKey(this.notifications, 'id', item.id)
             let options = {
-                method:'post',
+                method: 'post',
                 query: item
             };
             await vaah().ajax(
-                this.ajax_url+'/list',
+                this.ajax_url + '/list',
                 this.afterShowNotificationSettings,
                 options
             );
         },
         //---------------------------------------------------------------------
-        afterShowNotificationSettings(data, res){
-            if(data){
-                this.content = data.list;
+        afterShowNotificationSettings(data, res) {
+            if (data) {
+                this.active_notification.contents = data.list;
+                if(this.active_notification.via_mail)
+                {
+                    if(data.list.mail.length < 1){
+                        this.addMailContent();
+                    }else{
+                        this.setMailButton();
+                    }
+
+                }
+
+                if(this.active_notification.via_sms && data.list.sms.length < 1)
+                {
+                    this.addSmsContent();
+                }
+
+                if(this.active_notification.via_push && data.list.push.length < 1)
+                {
+                    this.addPushContent();
+                }
+
+                if(this.active_notification.via_backend && data.list.backend.length < 1)
+                {
+                    this.addBackendContent();
+                }
+
+                if(this.active_notification.via_frontend && data.list.frontend.length < 1)
+                {
+                    this.addFrontendContent();
+                }
+            }
+            this.setMailButton();
+        },
+        //---------------------------------------------------------------------
+        addToMail(key) {
+            let sort = 0;
+            if(this.active_notification.contents && this.active_notification.contents.mail)
+            {
+                sort = this.active_notification.contents.mail.length;
+            }
+
+            let line = {
+                vh_notification_id: this.active_notification.id,
+                via: 'mail',
+                sort: sort,
+                key: key,
+                value: null,
+            }
+
+            this.active_notification.contents.mail.push(line);
+
+        },
+        //---------------------------------------------------------------------
+        addAction() {
+            let sort = 0;
+            if(this.active_notification.contents && this.active_notification.contents.mail)
+            {
+                sort = this.active_notification.contents.mail.length;
+            }
+
+            let line = {
+                vh_notification_id: this.active_notification.id,
+                via: 'mail',
+                sort: sort,
+                key: 'action',
+                value: null,
+                meta: {
+                    action: null
+                }
+            };
+
+            this.active_notification.contents.mail.push(line);
+
+        },
+        //---------------------------------------------------------------------
+        addSubject: function () {
+            let sort = 0;
+            if(this.active_notification.contents && this.active_notification.contents.mail)
+            {
+                sort = this.active_notification.contents.mail.length;
+            }
+
+            let line = {
+                vh_notification_id: this.active_notification.id,
+                via: 'mail',
+                sort: sort,
+                key: 'subject',
+                value: null,
+            };
+
+            this.active_notification.contents.mail.push(line);
+        },
+        //---------------------------------------------------------------------
+        addFrom: function () {
+            let sort = 0;
+            if(this.active_notification.contents && this.active_notification.contents.mail)
+            {
+                sort = this.active_notification.contents.mail.length;
+            }
+
+            let line = {
+                vh_notification_id: this.active_notification.id,
+                via: 'mail',
+                sort: sort,
+                key: 'from',
+                value: this.assets.email,
+                meta: {
+                    name: null
+                }
+            };
+
+            this.active_notification.contents.mail.push(line);
+        },
+        //---------------------------------------------------------------------
+        addMailContent()
+        {
+            let lines = [
+                {
+                    vh_notification_id: this.active_notification.id,
+                    via: 'mail',
+                    sort: 0,
+                    key: 'subject',
+                    value: null,
+                }
+            ];
+
+            this.active_notification.contents.mail = lines;
+            this.setMailButton();
+        },
+        //---------------------------------------------------------------------
+        setMailButton() {
+            this.is_add_from_disabled =  false;
+            this.is_add_subject_disabled =  false;
+
+            if(this.active_notification && this.active_notification.contents
+                && this.active_notification.contents.mail){
+                this.active_notification.contents.mail.forEach((mail,key) => {
+                    if(mail.key === 'from'){
+                        this.is_add_from_disabled =  true;
+                    }
+
+                    if(mail.key === 'subject'){
+                        this.is_add_subject_disabled =  true;
+                    }
+                });
             }
         },
         //---------------------------------------------------------------------
-        hideNotificationSettings(){
-            this.show  = false;
-            this.activeNotification = null;
+        addSmsContent(){
+            let sms_lines = [
+                {
+                    vh_notification_id: this.active_notification.id,
+                    via: 'sms',
+                    sort: 0,
+                    key: 'content',
+                    value: null,
+                }
+            ];
+
+            this.active_notification.contents.sms = sms_lines;
+        },
+        //---------------------------------------------------------------------
+        addPushContent() {
+
+            let lines = [
+                {
+                    vh_notification_id: this.active_notification.id,
+                    via: 'push',
+                    sort: 0,
+                    key: 'content',
+                    value: null,
+                },
+                {
+                    vh_notification_id: this.active_notification.id,
+                    via: 'push',
+                    sort: 1,
+                    key: 'action',
+                    value: null,
+                    meta: {
+                        action: null
+                    }
+                }
+            ];
+
+            this.active_notification.contents.push = lines;
+        },
+        //---------------------------------------------------------------------
+        addBackendContent() {
+            let lines = [
+                {
+                    vh_notification_id: this.active_notification.id,
+                    via: 'backend',
+                    sort: 0,
+                    key: 'content',
+                    value: null,
+                },
+                {
+                    vh_notification_id: this.active_notification.id,
+                    via: 'backend',
+                    sort: 1,
+                    key: 'action',
+                    value: null,
+                    meta: {
+                        action: null
+                    }
+                }
+            ];
+
+            this.active_notification.contents.backend = lines;
+
+        },
+        //---------------------------------------------------------------------
+        addFrontendContent() {
+            let lines = [
+                {
+                    vh_notification_id: this.active_notification.id,
+                    via: 'frontend',
+                    sort: 0,
+                    key: 'content',
+                    value: null,
+                },
+                {
+                    vh_notification_id: this.active_notification.id,
+                    via: 'frontend',
+                    sort: 1,
+                    key: 'action',
+                    value: null,
+                    meta: {
+                        action: null
+                    }
+                }
+            ];
+
+            this.active_notification.contents.frontend = lines;
+        },
+        //---------------------------------------------------------------------
+        hideNotificationSettings() {
+            this.active_notification = null;
         },
         //---------------------------------------------------------------------
         getCopy(value) {
@@ -121,10 +353,64 @@ export const useNotificationStore = defineStore({
             navigator.clipboard.writeText(value);
             vaah().toastSuccess(['Copied']);
         },
+        //---------------------------------------------------------------------
+        removeContent(item, via)
+        {
+            let lines = vaah().removeInArrayByKey(this.active_notification.contents[via], item, 'sort');
+
+            this.active_notification.contents[via] = lines;
+        },
+        //---------------------------------------------------------------------
+        storeNotification() {
+            let options = {
+                method: 'post',
+                params: this.active_notification
+            };
+
+            let ajax_url = this.ajax_url+'/store';
+            vaah().ajax(ajax_url, this.storeNotificationAfter, options);
+        },
+        //---------------------------------------------------------------------
+        storeNotificationAfter(data, res){
+            vaah().toastSucces(['Saved']);
+        },
+        //---------------------------------------------------------------------
+        sendNotification() {
+            this.is_sending = true;
+            let options = {
+                method: 'post',
+                params: {
+                    notification_id: this.active_notification.id,
+                    user_id: this.send_to.id
+                }
+            };
+
+            let ajax_url = this.ajax_url+'/send';
+            vaah().ajax(ajax_url, this.sendNotificationAfter, options);
+        },
+        //---------------------------------------------------------------------
+        sendNotificationAfter(data, res) {
+            if(data){
+                vaah().toastSucces(['Sent']);
+            }
+
+        },
+        //---------------------------------------------------------------------
+        searchUser(event){
+            if (!event.query.trim().length) {
+                this.user_list = this.assets;
+            }
+            else {
+                this.user_list = this.assets.filter((user) => {
+                    return user.name.toLowerCase().startsWith(event.query.toLowerCase());
+                });
+            }
+        }
+        //---------------------------------------------------------------------
+        //---------------------------------------------------------------------
+        //---------------------------------------------------------------------
+
     }
-        //---------------------------------------------------------------------
-        //---------------------------------------------------------------------
-        //---------------------------------------------------------------------
 });
 
 

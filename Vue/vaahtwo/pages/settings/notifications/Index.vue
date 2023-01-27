@@ -2,7 +2,7 @@
 import {onMounted, reactive, ref} from "vue";
 import {useRoute} from 'vue-router';
 import draggable from 'vuedraggable';
-
+import { vaah } from '../../../vaahvue/pinia/vaah'
 import {useNotificationStore} from "../../../stores/settings/store-notification";
 
 const store = useNotificationStore();
@@ -40,7 +40,10 @@ onMounted(async () => {
                         </Column>
                         <Column header="Edit">
                             <template #body="slotProps">
-                                <Button icon="pi pi-pencil" @click="store.showNotificationSettings(slotProps.data)" class="p-button-rounded p-button-sm"></Button>
+                                <Button icon="pi pi-pencil"
+                                        :data-testid="'setting-notification_'+slotProps.data.name"
+                                        @click="store.showNotificationSettings(slotProps.data)"
+                                        class="p-button-rounded p-button-sm"></Button>
                             </template>
                         </Column>
                     </DataTable>
@@ -50,7 +53,12 @@ onMounted(async () => {
                 <div class="col-12 mb-3">
                     <div class="flex align-items-center justify-content-between">
                         <h4 class="font-semibold text-xl">{{store.active_notification.name}}</h4>
-                        <Button class="p-button-outlined p-button-sm" label="Go back" icon="pi pi-arrow-left" icon-class="text-xs" v-if="show" @click="store.hideNotificationSettings"></Button>
+                        <Button class="p-button-outlined p-button-sm"
+                                label="Go back"
+                                icon="pi pi-arrow-left"
+                                icon-class="text-xs"
+                                data-testid="setting-notification_back"
+                                @click="store.hideNotificationSettings"></Button>
                     </div>
                 </div>
                 <div class="col-3 pr-3">
@@ -77,87 +85,311 @@ onMounted(async () => {
                             <div class="flex justify-content-between">
                                 <span>
                                     <h5 class="font-semibold text-xs mb-1">Mail</h5>
-                                    <InputSwitch v-model="store.active_notification.via_mail"  class="is-small"/>
+                                    <InputSwitch v-model="store.active_notification.via_mail"
+                                                 data-testid="setting-notification_mail"
+                                                 class="is-small"/>
                                 </span>
                                 <span>
                                     <h5 class="font-semibold text-xs mb-1">SMS</h5>
-                                    <InputSwitch v-model="store.active_notification.via_sms"  class="is-small"/>
+                                    <InputSwitch v-model="store.active_notification.via_sms"
+                                                 data-testid="setting-notification_sms"
+                                                 class="is-small"/>
                                 </span>
                                 <span>
                                     <h5 class="font-semibold text-xs mb-1">Push</h5>
-                                    <InputSwitch v-model="store.active_notification.via_push"  class="is-small"/>
-                                </span>
-                                <span>
-                                    <h5 class="font-semibold text-xs mb-1">Frontend</h5>
-                                    <InputSwitch v-model="store.active_notification.via_frontend"  class="is-small"/>
+                                    <InputSwitch v-model="store.active_notification.via_push"
+                                                 data-testid="setting-notification_push"
+                                                 class="is-small"/>
                                 </span>
                                 <span>
                                     <h5 class="font-semibold text-xs mb-1">Backend</h5>
-                                    <InputSwitch v-model="store.active_notification.via_backend"  class="is-small"/>
+                                    <InputSwitch v-model="store.active_notification.via_backend"
+                                                 data-testid="setting-notification_backend"
+                                                 class="is-small"/>
+                                </span>
+                                <span>
+                                    <h5 class="font-semibold text-xs mb-1">Frontend</h5>
+                                    <InputSwitch v-model="store.active_notification.via_frontend"
+                                                 data-testid="setting-notification_frontend"
+                                                 class="is-small"/>
                                 </span>
                             </div>
                         </div>
                         <div class="col-6 justify-content-end flex">
                             <span class="text-right">
                                 <h5 class="font-semibold text-xs mb-1">Error notifications</h5>
-                                <InputSwitch v-model="store.active_notification.is_error" class="is-small"/>
+                                <InputSwitch v-model="store.active_notification.is_error"
+                                             data-testid="setting-notification_error"
+                                             class="is-small"/>
                             </span>
                         </div>
                         <div class="col-12">
                             <TabView ref="tabview1">
-                                <TabPanel header="Mail" content-class="p-0">
-                                    <div>
-                                        <h5 class="p-1 text-xs mb-1 mt-3">Subject</h5>
-                                        <div class="p-inputgroup">
-                                            <InputText placeholder="Enter Subject"></InputText>
+                                <TabPanel v-if="store.active_notification.via_mail" header="Mail" content-class="p-0">
+                                    <div v-if="store.active_notification.contents" v-for="line in store.active_notification.contents.mail">
+                                        <div v-if="line.key == 'subject'">
+                                            <h5 class="p-1 text-xs mb-1 mt-3">Subject</h5>
+                                            <div class="p-inputgroup">
+                                                <InputText placeholder="Enter Subject"
+                                                           data-testid="setting-notification_subject"
+                                                           v-model="line.value"></InputText>
+                                            </div>
                                         </div>
-                                        <h5 class="p-1 text-xs mb-1 mt-3">From</h5>
-                                        <div class="p-inputgroup">
-                                            <InputText placeholder="Enter From"></InputText>
+                                        <div v-if="line.key == 'from'">
+                                            <h5 class="p-1 text-xs mb-1 mt-3">From</h5>
+                                            <div class="p-inputgroup">
+                                                <InputText placeholder="Enter From"
+                                                           v-model="line.meta.name"
+                                                           data-testid="setting-notification_from"></InputText>
+                                            </div>
+                                            <h5 class="p-1 text-xs mb-1 mt-3">From Email</h5>
+                                            <div class="p-inputgroup">
+                                                <InputText placeholder="Enter From"
+                                                           v-model="line.value"
+                                                           data-testid="setting-notification_from_email"></InputText>
+                                            </div>
                                         </div>
-                                        <h5 class="p-1 text-xs mb-1 mt-3">Line</h5>
-                                        <div class="p-inputgroup">
-                                            <Textarea v-model="value" :autoResize="true" class="w-full" placeholder="Content with variables"/>
-                                            <Button icon="pi pi-trash" class="has-max-height"/>
+                                    </div>
+                                    <div v-if="store.active_notification.contents">
+                                        <div v-if="store.active_notification.contents.mail
+                                             && store.active_notification.contents.mail.length > 0"
+                                             v-for="line in store.active_notification.contents.mail">
+                                            <div  v-if="line.key == 'line' || line.key == 'greetings'">
+                                                <h5 class="p-1 text-xs mb-1 mt-3">{{vaah().toLabel(line.key)}}</h5>
+                                                <div class="p-inputgroup">
+                                                    <InputText v-model="line.value"
+                                                               v-if="line.key == 'line'"
+                                                               :data-testid="'setting-notification_'+line.key"
+                                                               placeholder="Content with variables"></InputText>
+
+                                                    <Textarea v-else
+                                                              v-model="line.value"
+                                                              :autoResize="true"
+                                                              :data-testid="'setting-notification_'+line.key"
+                                                              class="w-full"
+                                                              placeholder="Content with variables"/>
+                                                    <Button icon="pi pi-trash"
+                                                            :data-testid="'setting-notification_remove_'+line.key"
+                                                            @click="store.removeContent(line,'mail')"
+                                                            class="has-max-height"/>
+                                                </div>
+                                            </div>
+                                            <div  v-if="line.key == 'action'">
+                                                <h5 class="p-1 text-xs mb-1 mt-3">Action</h5>
+                                                <div class="p-inputgroup">
+                                                    <InputText v-model="line.value"
+                                                               data-testid="setting-notification_action_value"
+                                                               placeholder="Enter action label"></InputText>
+                                                    <Dropdown v-model="line.meta.action"
+                                                              :options="store.notification_actions"
+                                                              optionLabel="name"
+                                                              optionValue="name"
+                                                              data-testid="setting-notification_action_option"
+                                                              placeholder="Choose an action"></Dropdown>
+                                                    <Button icon="pi pi-trash"
+                                                            data-testid="setting-notification_remove_action"
+                                                            @click="store.removeContent(line,'mail')"
+                                                            class="has-max-height"/>
+                                                </div>
+                                            </div>
                                         </div>
-                                        <h5 class="p-1 text-xs mb-1 mt-3">Greetings</h5>
-                                        <div class="p-inputgroup">
-                                            <InputText placeholder="Content with variables"></InputText>
+                                    </div>
+                                    <div class="flex mt-5">
+                                            <Button icon=""
+                                                    label="Add Subject"
+                                                    class="w-auto mr-2 p-button-sm"
+                                                    @click="store.addSubject"
+                                                    data-testid="setting-notification_add_subject"
+                                                    :disabled="store.is_add_subject_disabled"></Button>
+                                            <Button icon=""
+                                                    label="Add From"
+                                                    class="w-auto mr-2 p-button-sm"
+                                                    @click="store.addFrom"
+                                                    data-testid="setting-notification_add_from"
+                                                    :disabled="store.is_add_from_disabled"></Button>
+                                            <Button icon=""
+                                                    label="Add Greetings"
+                                                    @click="store.addToMail('greetings')"
+                                                    data-testid="setting-notification_add_greetings"
+                                                    class="w-auto mr-2 p-button-sm"></Button>
+                                            <Button icon=""
+                                                    label="Add Line"
+                                                    @click="store.addToMail('line')"
+                                                    data-testid="setting-notification_add_line"
+                                                    class="w-auto mr-2 p-button-sm"></Button>
+                                            <Button icon=""
+                                                    label="Add Action"
+                                                    @click="store.addAction"
+                                                    data-testid="setting-notification_add_action"
+                                                    class="w-auto p-button-sm"></Button>
                                         </div>
-                                        <h5 class="p-1 text-xs mb-1 mt-3">Action</h5>
-                                        <div class="p-inputgroup">
-                                            <InputText placeholder="Enter action label"></InputText>
-                                            <Dropdown placeholder="Choose an action"></Dropdown>
+                                </TabPanel>
+                                <TabPanel v-if="store.active_notification.via_sms" header="SMS">
+                                    <div v-if=" store.active_notification.contents && store.active_notification.contents.sms
+                                                && store.active_notification.contents.sms.length > 0"
+                                         v-for="line in store.active_notification.contents.sms">
+                                        <div class="col-12 px-0" v-if="line.key == 'content'">
+                                            <h5 class="p-1 text-xs mb-1">Message</h5>
+                                            <div class="p-inputgroup">
+                                            <Textarea v-model="line.value"
+                                                      data-testid="setting-notification_sms_message"
+                                                      :autoResize="true" class="w-full" />
+                                                <Button icon="pi pi-copy"
+                                                        @click="store.getCopy"
+                                                        data-testid="setting-notification_sms_message_copy"
+                                                        class="has-max-height"/>
+                                            </div>
                                         </div>
-                                        <div class="flex mt-5">
-                                            <Button icon="" label="Add Subject" class="w-auto mr-2 p-button-sm" disabled></Button>
-                                            <Button icon="" label="Add From" class="w-auto mr-2 p-button-sm"></Button>
-                                            <Button icon="" label="Add Greetings" class="w-auto mr-2 p-button-sm"></Button>
-                                            <Button icon="" label="Add Line" class="w-auto mr-2 p-button-sm"></Button>
-                                            <Button icon="" label="Add Action" class="w-auto p-button-sm"></Button>
-                                        </div>
+                                    </div>
+                                    <div v-else>
+                                        <Button label="Add Content"
+                                                data-testid="setting-notification_add_sms"
+                                                @click="store.addSmsContent"
+                                                class="w-auto mr-3 p-button-sm"></Button>
                                     </div>
                                 </TabPanel>
-                                <TabPanel header="Backend">
-                                    <div class="col-12 px-0">
-                                        <h5 class="p-1 text-xs mb-1">Message</h5>
-                                        <div class="p-inputgroup">
-                                            <Textarea v-model="value" :autoResize="true" class="w-full" />
-                                            <Button icon="pi pi-copy" class="has-max-height"/>
+                                <TabPanel v-if="store.active_notification.via_push" header="Push">
+                                    <div v-if=" store.active_notification.contents && store.active_notification.contents.push
+                                                && store.active_notification.contents.push.length > 0"
+                                         v-for="line in store.active_notification.contents.push">
+                                        <div class="col-12 px-0" v-if="line.key == 'content'">
+                                            <h5 class="p-1 text-xs mb-1">Message</h5>
+                                            <div class="p-inputgroup">
+                                            <Textarea v-model="line.value"
+                                                      data-testid="setting-notification_push_message"
+                                                      :autoResize="true" class="w-full" />
+                                                <Button icon="pi pi-copy"
+                                                        @click="store.getCopy"
+                                                        data-testid="setting-notification_push_message_copy"
+                                                        class="has-max-height"/>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 px-0" v-if="line.key == 'action'">
+                                            <h5 class="p-1 text-xs mb-1">Action</h5>
+                                            <div class="p-inputgroup">
+                                                <InputText placeholder="Enter action label"
+                                                           v-model="line.value"
+                                                           data-testid="setting-notification_push_message"></InputText>
+                                                <Dropdown placeholder="Choose an action"
+                                                          v-model="line.meta.action"
+                                                          :options="store.notification_actions"
+                                                          optionLabel="name"
+                                                          optionValue="name"
+                                                          data-testid="setting-notification_push_message_copy"></Dropdown>
+                                            </div>
                                         </div>
                                     </div>
-                                    <div class="col-12 px-0">
-                                        <h5 class="p-1 text-xs mb-1">Action</h5>
-                                        <div class="p-inputgroup">
-                                            <InputText placeholder="Enter action label"></InputText>
-                                            <Dropdown placeholder="Choose an action"></Dropdown>
-                                        </div>
-                                    </div>
-                                    <div class="col-12 mt-4">
-                                        <Button label="Save" icon="pi pi-save" class="w-auto mr-3 p-button-sm"></Button>
-                                        <Button label="Test" icon="pi pi-reply" class="w-auto p-button-sm"></Button>
+                                    <div v-else>
+                                        <Button label="Add Content"
+                                                data-testid="setting-notification_add_push"
+                                                @click="store.addPushContent"
+                                                class="w-auto mr-3 p-button-sm"></Button>
                                     </div>
                                 </TabPanel>
+                                <TabPanel v-if="store.active_notification.via_backend" header="Backend">
+                                    <div v-if=" store.active_notification.contents && store.active_notification.contents.backend
+                                                && store.active_notification.contents.backend.length > 0"
+                                         v-for="line in store.active_notification.contents.backend">
+                                        <div class="col-12 px-0" v-if="line.key == 'content'">
+                                            <h5 class="p-1 text-xs mb-1">Message</h5>
+                                            <div class="p-inputgroup">
+                                            <Textarea v-model="line.value"
+                                                      data-testid="setting-notification_backend_message"
+                                                      :autoResize="true" class="w-full" />
+                                                <Button icon="pi pi-copy"
+                                                        @click="store.getCopy"
+                                                        data-testid="setting-notification_backend_message_copy"
+                                                        class="has-max-height"/>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 px-0" v-if="line.key == 'action'">
+                                            <h5 class="p-1 text-xs mb-1">Action</h5>
+                                            <div class="p-inputgroup">
+                                                <InputText placeholder="Enter action label"
+                                                           v-model="line.value"
+                                                           data-testid="setting-notification_backend_message"></InputText>
+                                                <Dropdown placeholder="Choose an action"
+                                                          v-model="line.meta.action"
+                                                          :options="store.notification_actions"
+                                                          optionLabel="name"
+                                                          optionValue="name"
+                                                          data-testid="setting-notification_backend_message_copy"></Dropdown>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div v-else>
+                                        <Button label="Add Content"
+                                                data-testid="setting-notification_add_backend"
+                                                @click="store.addBackendContent"
+                                                class="w-auto mr-3 p-button-sm"></Button>
+                                    </div>
+                                </TabPanel>
+                                <TabPanel v-if="store.active_notification.via_frontend" header="Frontend">
+                                    <div v-if=" store.active_notification.contents && store.active_notification.contents.frontend
+                                                && store.active_notification.contents.frontend.length > 0"
+                                         v-for="line in store.active_notification.contents.frontend">
+                                        <div class="col-12 px-0" v-if="line.key == 'content'">
+                                            <h5 class="p-1 text-xs mb-1">Message</h5>
+                                            <div class="p-inputgroup">
+                                            <Textarea v-model="line.value"
+                                                      data-testid="setting-notification_frontend_message"
+                                                      :autoResize="true" class="w-full" />
+                                                <Button icon="pi pi-copy"
+                                                        @click="store.getCopy"
+                                                        data-testid="setting-notification_frontend_message_copy"
+                                                        class="has-max-height"/>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 px-0" v-if="line.key == 'action'">
+                                            <h5 class="p-1 text-xs mb-1">Action</h5>
+                                            <div class="p-inputgroup">
+                                                <InputText placeholder="Enter action label"
+                                                           v-model="line.value"
+                                                           data-testid="setting-notification_frontend_message"></InputText>
+                                                <Dropdown placeholder="Choose an action"
+                                                          v-model="line.meta.action"
+                                                          :options="store.notification_actions"
+                                                          optionLabel="name"
+                                                          optionValue="name"
+                                                          data-testid="setting-notification_frontendv_message_copy"></Dropdown>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div v-else>
+                                        <Button label="Add Content"
+                                                data-testid="setting-notification_add_frontend"
+                                                @click="store.addFrontendContent"
+                                                class="w-auto mr-3 p-button-sm"></Button>
+                                    </div>
+                                </TabPanel>
+                                <div class="col-12 mt-4">
+                                    <div class="col-12 md:col-3">
+                                        <Button label="Save" icon="pi pi-save"
+                                                data-testid="setting-notification_store"
+                                                @click="store.storeNotification"
+                                                class="w-auto mr-3 p-button-sm"></Button>
+                                        <Button label="Test"
+                                                data-testid="setting-notification_test"
+                                                @click="store.is_testing=true"
+                                                icon="pi pi-reply"
+                                                class="w-auto p-button-sm"></Button>
+                                    </div>
+                                    <div class="col-12 md:col-8">
+                                        <div v-if="store.is_testing">
+                                            <AutoComplete v-model="store.send_to"
+                                                          :suggestions="store.user_list"
+                                                          @complete="store.searchUser($event)"
+                                                          optionLabel="name"
+                                                          optionValue="id"
+                                                          placeholde="Search..."/>
+                                            <Button label="Send"
+                                                    data-testid="setting-notification_test_send"
+                                                    @click="store.sendNotification"
+                                                    icon="pi pi-reply"
+                                                    class="w-auto p-button-sm"></Button>
+                                        </div>
+                                    </div>
+                                </div>
                             </TabView>
                         </div>
                     </div>
