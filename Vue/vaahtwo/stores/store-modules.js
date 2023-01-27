@@ -199,6 +199,9 @@ export const useModuleStore = defineStore({
         },
         //---------------------------------------------------------------------
         async getList() {
+            const root = useRootStore();
+            console.log(root);
+
             let options = {
                 query: vaah().clone(this.query)
             };
@@ -210,7 +213,7 @@ export const useModuleStore = defineStore({
             );
         },
         //---------------------------------------------------------------------
-        afterGetList: function (data)
+        afterGetList(data)
         {
             this.is_btn_loading = false;
             if(data)
@@ -1029,23 +1032,22 @@ export const useModuleStore = defineStore({
             vaah().ajax(url, this.getModuleDetailsAfter, params);
         },
         //---------------------------------------------------------------------
-        getModuleDetailsAfter(data) {
+        async getModuleDetailsAfter(data) {
 
             if(data)
             {
                 this.selected_item = data;
-                this.installUpdate();
+                await this.installUpdate();
             }
         },
         //---------------------------------------------------------------------
-        installUpdate: function () {
+        installUpdate() {
             let params = { query: this.selected_item}
             let url = this.ajax_url+'/install/updates';
             vaah().ajax(url, this.installUpdateAfter, params);
         },
         //---------------------------------------------------------------------
-        installUpdateAfter: function (data, res) {
-            this.$Progress.finish();
+        installUpdateAfter(data) {
             if(data)
             {
                 this.selected_item = null;
@@ -1053,6 +1055,19 @@ export const useModuleStore = defineStore({
             }
 
         },
+        //---------------------------------------------------------------------
+        publishAssets() {
+            let options = {
+                method: 'POST'
+            };
+
+            let url = this.ajax_url+'/publish/assets';
+            vaah().ajax(url, this.publishAssetsAfter, options);
+        },
+        //---------------------------------------------------------------------
+        publishAssetsAfter(data) {},
+        //---------------------------------------------------------------------
+
     }
 });
 

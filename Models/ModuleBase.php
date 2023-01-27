@@ -221,8 +221,6 @@ class ModuleBase extends Model {
         $installed = static::orderBy('name', 'asc')->get()
             ->pluck('name')->toArray();
 
-
-
         if($installed && count($list) < 1)
         {
             foreach ($installed as $item)

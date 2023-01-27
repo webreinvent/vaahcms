@@ -72,7 +72,7 @@ onMounted(async () => {
                         <div class="col-6" v-for="item in store.modules.list.data">
                             <Card>
                                 <template #header>
-                                    <img :src="item.thumbnail" style="height: 15rem" />
+                                    <img :src="item.thumbnail"/>
                                 </template>
                                 <template #content>
                                     <h5 class="text-xl font-semibold mb-1">{{item.title}}</h5>

@@ -8,7 +8,7 @@ use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use WebReinvent\VaahCms\Entities\Migration;
 use WebReinvent\VaahCms\Models\Module;
-
+use WebReinvent\VaahCms\Libraries\VaahSetup;
 
 class ModulesController extends Controller
 {
@@ -375,7 +375,24 @@ class ModulesController extends Controller
         return response()->json($response);
 
     }
+
     //----------------------------------------------------------
+    public function publishAssets()
+    {
+        try{
+            //publish assets
+            VaahSetup::publishAssets();
+
+            $response['status'] = "success";
+            $response['messages'][] = "Assets published.";
+            return $response;
+        }catch(\Exception $e)
+        {
+            $response['success'] = false;
+            $response['errors'][] = $e->getMessage();
+            return $response;
+        }
+    }
     //----------------------------------------------------------
 
 
