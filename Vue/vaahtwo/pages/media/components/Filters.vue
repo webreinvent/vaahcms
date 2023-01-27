@@ -65,7 +65,7 @@ const store = useMediaStore();
                               data-testid="media-filters-include_trashed"
                               :binary="true"
                     />
-                    <label for="trashed-only">Only Trashed</label>
+                    <label for="trashed-only">with Trashed</label>
                 </div>
 
             </VhFieldVertical>
