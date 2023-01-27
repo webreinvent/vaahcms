@@ -1,10 +1,9 @@
 <script  setup>
 
-import { useMediaStore } from '../../../stores/store-media'
-import VhFieldVertical from './../../../vaahvue/vue-three/primeflex/VhFieldVertical.vue'
+import { useMediaStore } from '../../../stores/store-media';
+import VhFieldVertical from './../../../vaahvue/vue-three/primeflex/VhFieldVertical.vue';
 
 const store = useMediaStore();
-
 </script>
 
 <template>
@@ -62,8 +61,9 @@ const store = useMediaStore();
                     <b>Trashed:</b>
                 </template>
                 <div class="field-radiobutton">
-                    <Checkbox v-model="store.query.filter.trashed"
+                    <Checkbox v-model="store.query.trashed"
                               data-testid="media-filters-include_trashed"
+                              :binary="true"
                     />
                     <label for="trashed-only">Only Trashed</label>
                 </div>
@@ -75,7 +75,8 @@ const store = useMediaStore();
                 </template>
                 <div class="field-radiobutton">
                     <Calendar inputId="range"
-                              v-model="store.query.dates2"
+                              v-model="store.dates2"
+                              @date-select="store.setDateRange"
                               selectionMode="range"
                               :manualInput="false" />
                 </div>

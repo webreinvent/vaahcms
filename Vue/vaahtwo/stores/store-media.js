@@ -16,14 +16,13 @@ let empty_states = {
         filter: {
             q: null,
             is_active: null,
-            trashed: null,
             sort: null,
         },
+        trashed: null,
         month: null,
         year: null,
-        dates2: null,
         from: null,
-        to: null
+        to: null,
     },
     action: {
         type: null,
@@ -72,14 +71,15 @@ export const useMediaStore = defineStore({
         download_options:[
             {
                 label:'Yes',
-                value: true
+                value: 1
             },
             {
                 label:'No',
-                value: false
+                value: 0
             }
         ],
         menu_options: [],
+        dates2: [],
     }),
     getters: {
 
@@ -152,14 +152,6 @@ export const useMediaStore = defineStore({
         {
             watch(this.query, (newVal,oldVal) =>
                 {
-                    if (Array.isArray(this.query.dates2)) {
-                        this.query.from = new Date(newVal.dates2[0]);;
-                        console.log(this.query.from);
-
-                        if (this.query.dates2.length > 1) {
-                            this.query.to = newVal.dates2[1];
-                        }
-                    }
                     this.delayedSearch();
                 },{deep: true}
             )
@@ -172,7 +164,9 @@ export const useMediaStore = defineStore({
                         {
                             if(newVal && newVal !== "")
                             {
-                                this.item.name = vaah().capitalising(newVal);
+                                // this.item.name = vaah().capitalising(newVal);
+                                this.item.name = vaah().toUpperCaseWords(newVal);
+
                                 this.item.slug = vaah().strToSlug(newVal);
                             }
                         },{deep: true}
@@ -353,7 +347,7 @@ export const useMediaStore = defineStore({
             {
                 item = this.item;
             }
-            console.log(item);
+
             this.form.action = type;
 
             let ajax_url = this.ajax_url;
@@ -917,6 +911,20 @@ export const useMediaStore = defineStore({
             if (data && data.original_name) {
                 this.item = data;
             }
+        },
+        //---------------------------------------------------------------------
+        setDateRange()
+        {
+            if (this.dates2.length > 0) {
+                let current_datetime = new Date(this.dates2[0]);
+                this.query.from = current_datetime.getFullYear() + "-" + (current_datetime.getMonth() + 1) + "-" + current_datetime.getDate();
+
+                current_datetime = new Date(this.dates2[1]);
+                this.query.to = current_datetime.getFullYear() + "-" + (current_datetime.getMonth() + 1) + "-" + current_datetime.getDate();
+
+                this.getList();
+            }
+
         },
         //---------------------------------------------------------------------
     }

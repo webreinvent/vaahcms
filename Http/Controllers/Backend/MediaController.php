@@ -10,7 +10,6 @@ use WebReinvent\VaahCms\Models\Media;
 class MediaController extends Controller
 {
 
-
     //----------------------------------------------------------
     public function __construct()
     {
@@ -93,7 +92,15 @@ class MediaController extends Controller
     //----------------------------------------------------------
     public function updateItem(Request $request,$id)
     {
-        return Media::updateItem($request,$id);
+        if(!\Auth::user()->hasPermission('can-update-media'))
+        {
+            $response['success'] = false;
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+            return response()->json($response);
+        }
+
+        return Media::postStore($request);
     }
     //----------------------------------------------------------
     public function deleteItem(Request $request,$id)
@@ -239,6 +246,20 @@ class MediaController extends Controller
         return response()->json($response);
     }
     //----------------------------------------------------------
+    public function postStore(Request $request)
+    {
 
+        if(!\Auth::user()->hasPermission('can-update-media'))
+        {
+            $response['success'] = false;
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+            return response()->json($response);
+        }
+
+        $response = Media::postStore($request);
+        return response()->json($response);
+    }
+    //----------------------------------------------------------
 
 }
