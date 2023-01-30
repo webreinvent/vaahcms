@@ -1054,12 +1054,11 @@ export const useModuleStore = defineStore({
         },
         //----------------------------------------------------------------------
         publishAssets(item) {
-            let moduleName = item.name;
 
             let options = {
                 method: 'POST',
                 params: {
-                    name: moduleName
+                    slug: item.slug
                 }
             };
 

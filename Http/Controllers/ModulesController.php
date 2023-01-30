@@ -379,16 +379,20 @@ class ModulesController extends Controller
     //----------------------------------------------------------
     public function publishAssets(Request $request)
     {
-        $provider = "WebReinvent\VaahCms\\".$request->name."ServiceProvider";
-
         try {
-            $message = VaahArtisan::publishAssets($provider);
+
+            $module = Module::slug($request->slug)->first();
+
+            $message = Module::copyAssets($module);
 
             if ($message) {
+                $module->is_assets_published = 1;
+                $module->save();
                 $response['status'] = "success";
                 $response['messages'][] = "Assets published.";
                 return $response;
             }
+
             $response['status'] = "danger";
             $response['messages'][] = "Something went wrong.";
             return $response;
