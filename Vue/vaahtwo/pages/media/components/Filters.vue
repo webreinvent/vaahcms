@@ -19,7 +19,7 @@ const store = useMediaStore();
 
                 <div class="field-radiobutton">
                     <RadioButton name="sort-none"
-                                 data-testid="media-filters-sort-none"
+                                 data-testid="media-filters-date-month-all"
                                  value=""
                                  v-model="store.query.month" />
                     <label for="sort-none">None</label>
@@ -43,13 +43,13 @@ const store = useMediaStore();
                 <div class="field-radiobutton">
                     <RadioButton name="active-all"
                                  value=""
-                                 data-testid="media-filters-active-all"
+                                 data-testid="media-filters-date-year-all"
                                  v-model="store.query.year" />
                     <label for="active-all">All</label>
                 </div>
                 <div class="field-radiobutton" v-for="item in store.assets.date.year">
                     <RadioButton name="active-true"
-                                 data-testid="media-filters-active-true"
+                                 data-testid="media-filters-date-year"
                                  :value="item.year"
                                  v-model="store.query.year" />
                     <label for="active-true">{{ item.year}}</label>
@@ -75,6 +75,7 @@ const store = useMediaStore();
                 </template>
                 <div class="field-radiobutton">
                     <Calendar inputId="range"
+                              data-testid="media-filters-dates"
                               v-model="store.dates2"
                               @date-select="store.setDateRange"
                               selectionMode="range"
