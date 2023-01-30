@@ -61,6 +61,14 @@ const toggleFormMenu = (event) => {
                               :model="store.form_menu_list"
                               :popup="true" />
                         <!--/form_menu-->
+
+                        <Button class="p-button-primary"
+                                v-if="store.item && store.item.id"
+                                icon="pi pi-eye"
+                                data-testid="media-to-view"
+                                @click="store.toView(store.item)">
+                        </Button>
+
                         <Button class="p-button-primary"
                                 icon="pi pi-times"
                                 data-testid="media-to-list"
@@ -80,19 +88,21 @@ const toggleFormMenu = (event) => {
                     <div v-if="!store.item.id" class="field mb-4 relative">
                         <FileUpload mode="basic"
                                     v-model="store.item.url"
-                                    url="store.ajax_url+'/upload'+"
                                     accept="image/*"
                                     :maxFileSize="1000000"
                                     @select="store.upload($event,store.item)"
                                     class="p-button-text"
                                     style="height: 55px;width: 100%;border: 2px dashed #bfbfbf"
-                                    :auto="true"
                                     chooseLabel="Drag and drop files to here to upload."
-                                    chooseIcon="pi pi-blank"
+                                    data-testid="media-table-upload-image"
+                                    :multiple="true"
+                                    :fileLimit="1"
                         />
 
                         <div v-if="store.item.full_url" class="mt-2">
-                            <img :src="store.item.full_url" alt="" style="max-height: 100px;"/>
+                            <img :src="store.item.full_url" alt=""
+                                 style="max-height: 100px;"
+                            />
                         </div>
 
                         <div v-if="store.item.full_url" class="p-inputgroup">
@@ -106,7 +116,7 @@ const toggleFormMenu = (event) => {
                                     target="_blank"/>
 
                             <Button class="p-button p-button-danger"
-                                    data-testid="media-table-to-view"
+                                    data-testid="media-table-remove-image"
                                     label="Remove"
                                     v-tooltip.top="'Remove'"
                                     @click="store.resetItem"
@@ -115,10 +125,14 @@ const toggleFormMenu = (event) => {
                     </div>
 
                     <span class="p-float-label row" v-if="store.item.full_url">
-                        <InputText id="title" class="col-11" v-model="store.item.name" :disabled="true"></InputText>
+                        <InputText id="title"
+                                   class="col-11"
+                                   v-model="store.item.original_name"
+                                   :disabled="true">
+                        </InputText>
                         <label for="title">Uploaded File Name</label>
                         <Button class="p-button p-button-danger col-1"
-                                data-testid="media-table-to-view"
+                                data-testid="media-table-remove-original_name"
                                 v-tooltip.top="'Remove'"
                                 @click="store.resetItem"
                                 icon="pi pi-trash" />

@@ -346,7 +346,7 @@ export const useMediaStore = defineStore({
             {
                 item = this.item;
             }
-
+            console.log(this.item);
             this.form.action = type;
 
             let ajax_url = this.ajax_url;
@@ -849,14 +849,6 @@ export const useMediaStore = defineStore({
                 ];
             }
 
-            form_menu.push({
-                label: 'Fill',
-                icon: 'pi pi-pencil',
-                command: () => {
-                    this.getFaker();
-                }
-            },)
-
             this.form_menu_list = form_menu;
 
         },
@@ -910,7 +902,6 @@ export const useMediaStore = defineStore({
             if (data && data.original_name) {
                 this.item = data;
             }
-            console.log(this.item);
         },
         //---------------------------------------------------------------------
         setDateRange()
