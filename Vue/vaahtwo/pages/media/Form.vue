@@ -95,9 +95,7 @@ const toggleFormMenu = (event) => {
                                     style="height: 55px;width: 100%;border: 2px dashed #bfbfbf"
                                     chooseLabel="Drag and drop files to here to upload."
                                     data-testid="media-table-upload-image"
-                                    :multiple="true"
-                                    :fileLimit="1"
-                        />
+                                    :customUpload="true"/>
 
                         <div v-if="store.item.full_url" class="mt-2">
                             <img :src="store.item.full_url" alt=""
