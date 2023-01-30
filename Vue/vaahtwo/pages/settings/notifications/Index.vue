@@ -26,7 +26,25 @@ onMounted(async () => {
         <template #header>
             <div class="flex justify-content-between align-items-center">
                 <h4 class="font-semibold text-lg">Notification</h4>
-                <Button icon="pi pi-plus" label="Add" class="p-button-sm"></Button>
+                <Button icon="pi pi-plus" label="Add" class="p-button-sm"
+                        @click="store.addNewNotification"
+                        data-testid="setting-notification_add_new"/>
+            </div>
+            <div class="col-12 mt-3" v-if="store.show_new_item_form">
+                <Message severity="error" :closable="false">
+                    These are notifications needs to be send manually.
+                </Message>
+                <div class="p-inputgroup">
+                    <inputText data-testid="setting-notification_add_new_value"
+                               v-model="store.new_item.name"
+                               placeholder="Enter new notification name"
+                              :autoResize="true" class="w-full" />
+                    <Button icon="pi pi-save"
+                            label="save"
+                            @click="store.create"
+                            data-testid="setting-notification_save_new"
+                            class="has-max-height"/>
+                </div>
             </div>
         </template>
         <template #content>
@@ -64,7 +82,12 @@ onMounted(async () => {
                 <div class="col-3 pr-3">
                     <h5 class="text-lg font-semibold mb-4">Variables</h5>
                     <div class="p-inputgroup mb-3">
-                        <AutoComplete placeholder="Search"></AutoComplete>
+                        <AutoComplete placeholder="Search"
+                                      :suggestions="store.searched_notification_variables"
+                                      @complete="store.searchNotificationVarialbles($event)"
+                                      optionLabel="name"
+                                      optionValue="id"
+                        ></AutoComplete>
                     </div>
                     <div class="notification-variables pt-2 pr-1">
                         <div class="p-inputgroup mb-3" v-for="item in store.notification_variables">
@@ -73,6 +96,7 @@ onMounted(async () => {
                                     :data-testid="'setting-notification_'+item.name+'_copy'"
                                     @click="store.getCopy(item.name)"></Button>
                             <Button icon="pi pi-question-circle"
+                                    v-tooltip.top="item.details"
                                     class="p-button-secondary"></Button>
                         </div>
                     </div>
@@ -245,7 +269,7 @@ onMounted(async () => {
                                         <Button label="Add Content"
                                                 data-testid="setting-notification_add_sms"
                                                 @click="store.addSmsContent"
-                                                class="w-auto mr-3 p-button-sm"></Button>
+                                                class="w-auto m-3 p-button-sm"></Button>
                                     </div>
                                 </TabPanel>
                                 <TabPanel v-if="store.active_notification.via_push" header="Push">
@@ -283,7 +307,7 @@ onMounted(async () => {
                                         <Button label="Add Content"
                                                 data-testid="setting-notification_add_push"
                                                 @click="store.addPushContent"
-                                                class="w-auto mr-3 p-button-sm"></Button>
+                                                class="w-auto m-3 p-button-sm"></Button>
                                     </div>
                                 </TabPanel>
                                 <TabPanel v-if="store.active_notification.via_backend" header="Backend">
@@ -321,7 +345,7 @@ onMounted(async () => {
                                         <Button label="Add Content"
                                                 data-testid="setting-notification_add_backend"
                                                 @click="store.addBackendContent"
-                                                class="w-auto mr-3 p-button-sm"></Button>
+                                                class="w-auto m-3 p-button-sm"></Button>
                                     </div>
                                 </TabPanel>
                                 <TabPanel v-if="store.active_notification.via_frontend" header="Frontend">
@@ -359,38 +383,38 @@ onMounted(async () => {
                                         <Button label="Add Content"
                                                 data-testid="setting-notification_add_frontend"
                                                 @click="store.addFrontendContent"
-                                                class="w-auto mr-3 p-button-sm"></Button>
+                                                class="w-auto m-3 p-button-sm"></Button>
                                     </div>
                                 </TabPanel>
-                                <div class="col-12 mt-4">
-                                    <div class="col-12 md:col-3">
-                                        <Button label="Save" icon="pi pi-save"
-                                                data-testid="setting-notification_store"
-                                                @click="store.storeNotification"
-                                                class="w-auto mr-3 p-button-sm"></Button>
-                                        <Button label="Test"
-                                                data-testid="setting-notification_test"
-                                                @click="store.is_testing=true"
+                            </TabView>
+                            <div class="col-12 mt-4">
+                                <div class="col-12 col-2">
+                                    <Button label="Save" icon="pi pi-save"
+                                            data-testid="setting-notification_store"
+                                            @click="store.storeNotification"
+                                            class="w-auto mr-3 p-button-sm"></Button>
+                                    <Button label="Test"
+                                            data-testid="setting-notification_test"
+                                            @click="store.is_testing=true"
+                                            icon="pi pi-reply"
+                                            class="w-auto p-button-sm"></Button>
+                                </div>
+                                <div class="col-12 col-6">
+                                    <div class="p-inputgroup" v-if="store.is_testing">
+                                        <AutoComplete v-model="store.send_to"
+                                                      :suggestions="store.user_list"
+                                                      @complete="store.searchUser($event)"
+                                                      optionLabel="name"
+                                                      optionValue="email"
+                                                      placeholde="Search..."/>
+                                        <Button label="Send"
+                                                data-testid="setting-notification_test_send"
+                                                @click="store.sendNotification"
                                                 icon="pi pi-reply"
                                                 class="w-auto p-button-sm"></Button>
                                     </div>
-                                    <div class="col-12 md:col-8">
-                                        <div v-if="store.is_testing">
-                                            <AutoComplete v-model="store.send_to"
-                                                          :suggestions="store.user_list"
-                                                          @complete="store.searchUser($event)"
-                                                          optionLabel="name"
-                                                          optionValue="id"
-                                                          placeholde="Search..."/>
-                                            <Button label="Send"
-                                                    data-testid="setting-notification_test_send"
-                                                    @click="store.sendNotification"
-                                                    icon="pi pi-reply"
-                                                    class="w-auto p-button-sm"></Button>
-                                        </div>
-                                    </div>
                                 </div>
-                            </TabView>
+                            </div>
                         </div>
                     </div>
                 </div>

@@ -191,7 +191,6 @@ class NotificationsController extends Controller
 
         */
 
-
         $response = Notification::send(Notification::find($request->notification_id),
             User::find($request->user_id), $request->all());
 

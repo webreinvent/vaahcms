@@ -55,7 +55,13 @@ export const useNotificationStore = defineStore({
         is_add_subject_disabled: false,
         is_testing:false,
         send_to:null,
+        users:null,
         user_list:null,
+        show_new_item_form:false,
+        new_item: {
+            name: null,
+        },
+        searched_notification_variables:null,
     }),
     getters: {},
     actions: {
@@ -78,6 +84,20 @@ export const useNotificationStore = defineStore({
                 this.notification_variables = data.notification_variables.success;
                 this.notification_actions = data.notification_actions.success;
                 this.help_urls = data.help_urls;
+            }
+            this.getUser();
+        },
+        //---------------------------------------------------------------------
+        async getUser(){
+            await vaah().ajax(
+                this.base_url+'/json/users/',
+                this.afterGetUser,
+            );
+        },
+        //---------------------------------------------------------------------
+        afterGetUser(data, res){
+            if(res){
+                this.users = res.data;
             }
         },
         //---------------------------------------------------------------------
@@ -346,6 +366,7 @@ export const useNotificationStore = defineStore({
         //---------------------------------------------------------------------
         hideNotificationSettings() {
             this.active_notification = null;
+            this.getAssets();
         },
         //---------------------------------------------------------------------
         getCopy(value) {
@@ -361,21 +382,21 @@ export const useNotificationStore = defineStore({
             this.active_notification.contents[via] = lines;
         },
         //---------------------------------------------------------------------
-        storeNotification() {
+        async storeNotification() {
             let options = {
                 method: 'post',
                 params: this.active_notification
             };
 
             let ajax_url = this.ajax_url+'/store';
-            vaah().ajax(ajax_url, this.storeNotificationAfter, options);
+            await vaah().ajax(ajax_url, this.storeNotificationAfter, options);
         },
         //---------------------------------------------------------------------
         storeNotificationAfter(data, res){
             vaah().toastSucces(['Saved']);
         },
         //---------------------------------------------------------------------
-        sendNotification() {
+        async sendNotification() {
             this.is_sending = true;
             let options = {
                 method: 'post',
@@ -386,7 +407,7 @@ export const useNotificationStore = defineStore({
             };
 
             let ajax_url = this.ajax_url+'/send';
-            vaah().ajax(ajax_url, this.sendNotificationAfter, options);
+            await vaah().ajax(ajax_url, this.sendNotificationAfter, options);
         },
         //---------------------------------------------------------------------
         sendNotificationAfter(data, res) {
@@ -398,14 +419,46 @@ export const useNotificationStore = defineStore({
         //---------------------------------------------------------------------
         searchUser(event){
             if (!event.query.trim().length) {
-                this.user_list = this.assets;
+                this.user_list = this.users;
             }
             else {
-                this.user_list = this.assets.filter((user) => {
+                this.user_list = this.users.filter((user) => {
                     return user.name.toLowerCase().startsWith(event.query.toLowerCase());
                 });
             }
-        }
+        },
+        //---------------------------------------------------------------------
+        addNewNotification(){
+            this.show_new_item_form = !this.show_new_item_form;
+        },
+        //---------------------------------------------------------------------
+        async create() {
+
+            let options = {
+                method: 'post',
+                params: this.new_item
+            };
+
+            let ajax_url = this.ajax_url+'/create';
+            await vaah().ajax(ajax_url, this.createAfter, options);
+        },
+        //---------------------------------------------------------------------
+        createAfter(data, res){
+            this.show_new_item_form = false;
+            this.active_notification = data.item;
+            this.getAssets();
+        },
+        //---------------------------------------------------------------------
+        searchNotificationVarialbles(event){
+            if (!event.query.trim().length) {
+                this.searched_notification_variables = this.users;
+            }
+            else {
+                this.searched_notification_variables = this.notification_variables.filter((variables) => {
+                    return variables.name.toLowerCase().startsWith(event.query.toLowerCase());
+                });
+            }
+        },
         //---------------------------------------------------------------------
         //---------------------------------------------------------------------
         //---------------------------------------------------------------------
