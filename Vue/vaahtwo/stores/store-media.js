@@ -234,7 +234,6 @@ export const useMediaStore = defineStore({
         //---------------------------------------------------------------------
         async getItemAfter(data, res)
         {
-            console.log(data);
             if(data)
             {
                 this.item = data;
@@ -911,6 +910,7 @@ export const useMediaStore = defineStore({
             if (data && data.original_name) {
                 this.item = data;
             }
+            console.log(this.item);
         },
         //---------------------------------------------------------------------
         setDateRange()
@@ -925,6 +925,11 @@ export const useMediaStore = defineStore({
                 this.getList();
             }
 
+        },
+        //---------------------------------------------------------------------
+        resetItem()
+        {
+            this.item = this.assets.empty_item;
         },
         //---------------------------------------------------------------------
     }

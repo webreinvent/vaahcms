@@ -77,23 +77,53 @@ const toggleFormMenu = (event) => {
                         <InputText id="name" class="w-full" v-model="store.item.name"></InputText>
                         <label for="name">Name</label>
                     </span>
-                    <div class="field mb-4 relative">
-                        <FileUpload url="./upload">
-                            <template #empty class="absolute">
-                                <p class="text-center text-sm text-gray-600">
-                                    Drag and drop files to here to upload.
-                                </p>
-                            </template>
-                        </FileUpload>
+                    <div v-if="!store.item.id" class="field mb-4 relative">
                         <FileUpload mode="basic"
                                     v-model="store.item.url"
+                                    url="store.ajax_url+'/upload'+"
                                     accept="image/*"
                                     :maxFileSize="1000000"
                                     @select="store.upload($event,store.item)"
                                     class="p-button-text"
-                                    style="height: 55px;width: 100%;border: 2px dashed #bfbfbf"/>
+                                    style="height: 55px;width: 100%;border: 2px dashed #bfbfbf"
+                                    :auto="true"
+                                    chooseLabel="Drag and drop files to here to upload."
+                                    chooseIcon="pi pi-blank"
+                        />
 
+                        <div v-if="store.item.full_url" class="mt-2">
+                            <img :src="store.item.full_url" alt="" style="max-height: 100px;"/>
+                        </div>
+
+                        <div v-if="store.item.full_url" class="p-inputgroup">
+                            <Button class="p-button-tiny p-button-text"
+                                    data-testid="media-table-open-image"
+                                    v-tooltip.top="'Open Image'"
+                                    icon="pi pi-external-link"
+                                    value="Open"
+                                    url="store.item.full_url"
+                                    @click="store.openImage(store.item.full_url)"
+                                    target="_blank"/>
+
+                            <Button class="p-button p-button-danger"
+                                    data-testid="media-table-to-view"
+                                    label="Remove"
+                                    v-tooltip.top="'Remove'"
+                                    @click="store.resetItem"
+                                    icon="pi pi-trash" />
+                        </div>
                     </div>
+
+                    <span class="p-float-label row" v-if="store.item.full_url">
+                        <InputText id="title" class="col-11" v-model="store.item.name" :disabled="true"></InputText>
+                        <label for="title">Uploaded File Name</label>
+                        <Button class="p-button p-button-danger col-1"
+                                data-testid="media-table-to-view"
+                                v-tooltip.top="'Remove'"
+                                @click="store.resetItem"
+                                icon="pi pi-trash" />
+                    </span>
+
                     <span class="p-float-label">
                         <InputText id="title" class="w-full" v-model="store.item.title"></InputText>
                         <label for="title">Title</label>
