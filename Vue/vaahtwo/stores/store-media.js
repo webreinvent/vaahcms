@@ -346,7 +346,7 @@ export const useMediaStore = defineStore({
             {
                 item = this.item;
             }
-            console.log(this.item);
+
             this.form.action = type;
 
             let ajax_url = this.ajax_url;
