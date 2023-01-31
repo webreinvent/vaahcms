@@ -203,7 +203,7 @@ Route::group(
     [
         'prefix'     => 'backend/vaah/settings/update',
         'middleware' => ['web', 'app.is.installed', 'has.backend.access'],
-        'namespace'  => 'WebReinvent\VaahCms\Http\Controllers\Settings'
+        'namespace'  => 'WebReinvent\VaahCms\Http\Controllers\Backend\Settings'
     ],
     function () {
         //------------------------------------------------
