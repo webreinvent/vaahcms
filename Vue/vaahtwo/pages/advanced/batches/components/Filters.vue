@@ -24,7 +24,7 @@ const dateColumns = [
                     <RadioButton name="sort-descending"
                                  data-testid="jobs-filters-sort-descending"
                                  value="created_at"
-                                 v-model="store.query.date_filter_by" />
+                                 v-model="store.query.date_filter_by"/>
                     <label for="sort-descending">Created (Descending)</label>
                 </div>
                 <div class="field-radiobutton">
@@ -38,7 +38,7 @@ const dateColumns = [
                     <RadioButton name="sort-descending"
                                  data-testid="jobs-filters-sort-descending"
                                  value="finished_at"
-                                 v-model="store.query.date_filter_by" />
+                                 v-model="store.query.date_filter_by"/>
                     <label for="sort-descending">Finished (Descending)</label>
                 </div>
             </VhFieldVertical>
