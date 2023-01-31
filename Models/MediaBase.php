@@ -251,7 +251,7 @@ class MediaBase extends Model {
 
             $list->whereMonth('created_at', $month);
 
-//            $list->whereIn(\DB::raw('MONTH(column)'), [1,2,3]);
+            //$list->whereIn(\DB::raw('MONTH(column)'), [1,2,3]);
         }
 
         if(isset($request->year))
@@ -259,11 +259,11 @@ class MediaBase extends Model {
             $list->whereYear('created_at', $request->year);
         }
 
-        if(isset($request->q))
+        if(isset($request->filter['q']))
         {
             $list->where(function ($q) use ($request){
-                $q->where('name', 'LIKE', '%'.$request->q.'%')
-                    ->orWhere('type', 'LIKE', '%'.$request->q.'%');
+                $q->where('name', 'LIKE', '%'.$request->filter['q'].'%')
+                    ->orWhere('original_name', 'LIKE', '%'.$request->filter['q'].'%');
             });
         }
 

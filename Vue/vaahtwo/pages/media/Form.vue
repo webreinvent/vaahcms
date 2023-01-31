@@ -93,8 +93,9 @@ const toggleFormMenu = (event) => {
                                     @select="store.upload($event,store.item)"
                                     class="p-button-text"
                                     style="height: 55px;width: 100%;border: 2px dashed #bfbfbf"
-                                    chooseLabel="Drag and drop files to here to upload."
+                                    chooseLabel="Select Media"
                                     data-testid="media-table-upload-image"
+                                    :auto="true"
                                     :customUpload="true"/>
 
                         <div v-if="store.item.full_url" class="mt-2">
