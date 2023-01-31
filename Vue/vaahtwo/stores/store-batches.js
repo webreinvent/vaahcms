@@ -18,10 +18,11 @@ let empty_states = {
             is_active: null,
             trashed: null,
             sort: null,
-            dateColumn: null,
         },
+        q: null,
         from: null,
-        to: null
+        to: null,
+        date_filter_by: null
     },
     action: {
         type: null,
@@ -70,7 +71,8 @@ export const useBatchStore = defineStore({
         list_bulk_menu: [],
         item_menu_list: [],
         item_menu_state: null,
-        form_menu_list: []
+        form_menu_list: [],
+        dates: []
     }),
     getters: {
 
@@ -142,7 +144,7 @@ export const useBatchStore = defineStore({
         //---------------------------------------------------------------------
         watchStates()
         {
-            watch(this.query.filter, (newVal,oldVal) =>
+            watch(this.query, (newVal,oldVal) =>
                 {
                     this.delayedSearch();
                 },{deep: true}
@@ -185,10 +187,6 @@ export const useBatchStore = defineStore({
                 {
                     this.query.rows = data.rows;
                 }
-
-                if(this.route.params && !this.route.params.id){
-                    this.item = vaah().clone(data.empty_item);
-                }
             }
         },
         //---------------------------------------------------------------------
@@ -204,11 +202,11 @@ export const useBatchStore = defineStore({
             );
         },
         //---------------------------------------------------------------------
-        afterGetList: function (data, res)
+        afterGetList(data)
         {
             if(data)
             {
-                this.list = data;
+                this.list = data.list;
             }
         },
         //---------------------------------------------------------------------
@@ -587,6 +585,14 @@ export const useBatchStore = defineStore({
             {
                 this.query.filter[key] = null;
             }
+
+            for(let key in this.query)
+            {
+                this.query[key] = null;
+            }
+
+            this.dates2 = null;
+
             await this.updateUrlQueryString(this.query);
         },
         //---------------------------------------------------------------------
@@ -829,26 +835,29 @@ export const useBatchStore = defineStore({
             }
         },
         displayBatchDetails(content) {
-            this.dialogContent = JSON.stringify(content, null, 2);
+            this.dialogContent = `<pre class="is-size-6">`+content+`</pre>`;
             this.displayDetail = true;
         },
         displayFailedIdDetails(content) {
-            this.dialogContent = JSON.stringify(content, null, 2);
+            this.dialogContent = `<pre class="is-size-6">`+JSON.stringify(content)+`</pre>`;
             this.displayFailedIds = true;
         },
         deleteItem(item) {
             vaah().confirmDialogDelete(this.itemAction('delete',item));
         },
-         setDateFilter(query) {
-            if (query.filter.datesRange) {
-                query.from = query.filter.datesRange[0];
-                query.to = query.filter.datesRange[1];
-                delete query.filter.datesRange;
-            }
-
-            return query;
-        }
         //---------------------------------------------------------------------
+        setDateRange()
+        {
+            if (this.dates2.length > 0) {
+                let current_datetime = new Date(this.dates2[0]);
+                this.query.from = current_datetime.getFullYear() + "-" + (current_datetime.getMonth() + 1) + "-" + current_datetime.getDate();
+
+                current_datetime = new Date(this.dates2[1]);
+                this.query.to = current_datetime.getFullYear() + "-" + (current_datetime.getMonth() + 1) + "-" + current_datetime.getDate();
+
+                this.getList();
+            }
+        }
     }
 });
 

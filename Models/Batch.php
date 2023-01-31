@@ -164,26 +164,26 @@ class Batch extends BatchBase
 
     }
     //-------------------------------------------------
-    public static function getList($request)
-    {
-        $list = self::getSorted($request->filter);
-        $list->searchFilter($request->filter);
-
-
-        $rows = config('vaahcms.per_page');
-
-        if($request->has('rows'))
-        {
-            $rows = $request->rows;
-        }
-
-        $list = $list->paginate($rows);
-
-        $response['success'] = true;
-        $response['data'] = $list;
-
-        return $response;
-    }
+//    public static function getList($request)
+//    {
+//        $list = self::getSorted($request->filter);
+//        $list->searchFilter($request->filter);
+//
+//
+//        $rows = config('vaahcms.per_page');
+//
+//        if($request->has('rows'))
+//        {
+//            $rows = $request->rows;
+//        }
+//
+//        $list = $list->paginate($rows);
+//
+//        $response['success'] = true;
+//        $response['data'] = $list;
+//
+//        return $response;
+//    }
     //------------------------------------------------
     public function scopeDateFilter($query, $requestFilters)
     {

@@ -119,19 +119,25 @@ const useVaah = vaah();
                 v-model:visible="store.displayDetail"
                 data-testid="batch-table-detail-dialog"
                 :breakpoints="{'960px': '75vw', '640px': '90vw'}"
-                :style="{width: '50vw'}">
-            <p>
-                {{ store.dialogContent }}
-            </p>
+                :style="{width: '50vw'}"
+        >
+                <Card class="w-max">
+                    <template #content>
+                        <span v-html="store.dialogContent"></span>
+                    </template>
+                </Card>
         </Dialog>
         <Dialog header="Failed Ids"
                 v-model:visible="store.displayFailedIds"
                 data-testid="batch-table-detail-dialog"
                 :breakpoints="{'960px': '75vw', '640px': '90vw'}"
-                :style="{width: '50vw'}">
-            <p>
-                {{ store.dialogContent }}
-            </p>
+                :style="{width: '50vw'}"
+        >
+                <Card class="w-max">
+                    <template #content>
+                        <span v-html="store.dialogContent"></span>
+                    </template>
+                </Card>
         </Dialog>
         <!--paginator-->
         <Paginator v-model:rows="store.query.rows"

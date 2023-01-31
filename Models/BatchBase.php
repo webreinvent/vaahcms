@@ -92,47 +92,42 @@ class BatchBase extends Model {
     //-------------------------------------------------
 
     //-------------------------------------------------
-//    public static function getList($request)
-//    {
-//
-//
-//        $list = self::orderBy('created_at', 'DESC');
-//
-//        if($request['trashed'] == 'true')
-//        {
-//
-//            $list->withTrashed();
-//        }
-//
-//        if(isset($request->from) && $request->from
-//            && isset($request->to) && $request->to)
-//        {
-//            if(isset($request->date_filter_by) && $request->date_filter_by){
-//                $list->betweenDates($request['from'],$request['to'],$request->date_filter_by);
-//            }else{
-//                $list->betweenDates($request['from'],$request['to']);
-//            }
-//        }
-//
-//
-//        if(isset($request->q) && $request->q)
-//        {
-//            $list->where(function ($q) use ($request){
-//                $q->where('name', 'LIKE', '%'.$request->q.'%');
-//                $q->orWhere('id', 'LIKE', '%'.$request->q.'%');
-//            });
-//        }
-//
-//
-//        $data['list'] = $list->paginate(config('vaahcms.per_page'));
-//
-//        $response['success'] = true;
-//        $response['data'] = $data;
-//
-//        return $response;
-//
-//
-//    }
+    public static function getList($request)
+    {
+        $list = self::orderBy('created_at', 'DESC');
+
+        if($request['trashed'] == 'true')
+        {
+            $list->withTrashed();
+        }
+
+        if(isset($request->from) && $request->from
+            && isset($request->to) && $request->to)
+        {
+            if(isset($request->date_filter_by) && $request->date_filter_by){
+                $list->betweenDates($request['from'],$request['to'],$request->date_filter_by);
+            } else {
+                $list->betweenDates($request['from'],$request['to']);
+            }
+        }
+
+
+        if(isset($request->q) && $request->q)
+        {
+            $list->where(function ($q) use ($request){
+                $q->where('name', 'LIKE', '%'.$request->q.'%');
+                $q->orWhere('id', 'LIKE', '%'.$request->q.'%');
+            });
+        }
+
+
+        $data['list'] = $list->paginate(config('vaahcms.per_page'));
+
+        $response['success'] = true;
+        $response['data'] = $data;
+
+        return $response;
+    }
     //-------------------------------------------------
     public static function bulkDelete($request)
     {
