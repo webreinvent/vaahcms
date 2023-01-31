@@ -93,7 +93,7 @@ const toggleFormMenu = (event) => {
                                     @select="store.upload($event,store.item)"
                                     class="p-button-text"
                                     style="height: 55px;width: 100%;border: 2px dashed #bfbfbf"
-                                    chooseLabel="Select Media"
+                                    chooseLabel="Click to Upload"
                                     data-testid="media-table-upload-image"
                                     :auto="true"
                                     :customUpload="true"/>
