@@ -259,11 +259,11 @@ class MediaBase extends Model {
             $list->whereYear('created_at', $request->year);
         }
 
-        if(isset($request->filter['q']))
+        if(isset($request->q))
         {
             $list->where(function ($q) use ($request){
-                $q->where('name', 'LIKE', '%'.$request->filter['q'].'%')
-                    ->orWhere('original_name', 'LIKE', '%'.$request->filter['q'].'%');
+                $q->where('name', 'LIKE', '%'.$request->q.'%')
+                    ->orWhere('original_name', 'LIKE', '%'.$request->q.'%');
             });
         }
 

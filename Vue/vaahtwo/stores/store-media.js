@@ -23,6 +23,7 @@ let empty_states = {
         year: null,
         from: null,
         to: null,
+        q: null,
     },
     action: {
         type: null,
