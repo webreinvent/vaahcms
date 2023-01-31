@@ -86,16 +86,20 @@ onMounted(async () => {
                                       :suggestions="store.searched_notification_variables"
                                       @complete="store.searchNotificationVarialbles($event)"
                                       optionLabel="name"
+                                      data-testis="setting-notification_search"
                                       optionValue="id"
                         ></AutoComplete>
                     </div>
                     <div class="notification-variables pt-2 pr-1">
                         <div class="p-inputgroup mb-3" v-for="item in store.notification_variables">
-                            <InputText :model-value="item.name" readonly></InputText>
+                            <InputText :model-value="item.name"
+                                       data-testis="setting-notification_search"
+                                       readonly></InputText>
                             <Button icon="pi pi-copy"
                                     :data-testid="'setting-notification_'+item.name+'_copy'"
                                     @click="store.getCopy(item.name)"></Button>
                             <Button icon="pi pi-question-circle"
+                                    data-testis="setting-notification_tooltip"
                                     v-tooltip.top="item.details"
                                     class="p-button-secondary"></Button>
                         </div>
@@ -258,10 +262,7 @@ onMounted(async () => {
                                             <Textarea v-model="line.value"
                                                       data-testid="setting-notification_sms_message"
                                                       :autoResize="true" class="w-full" />
-                                                <Button icon="pi pi-copy"
-                                                        @click="store.getCopy"
-                                                        data-testid="setting-notification_sms_message_copy"
-                                                        class="has-max-height"/>
+
                                             </div>
                                         </div>
                                     </div>
@@ -282,10 +283,7 @@ onMounted(async () => {
                                             <Textarea v-model="line.value"
                                                       data-testid="setting-notification_push_message"
                                                       :autoResize="true" class="w-full" />
-                                                <Button icon="pi pi-copy"
-                                                        @click="store.getCopy"
-                                                        data-testid="setting-notification_push_message_copy"
-                                                        class="has-max-height"/>
+
                                             </div>
                                         </div>
                                         <div class="col-12 px-0" v-if="line.key == 'action'">
@@ -320,10 +318,7 @@ onMounted(async () => {
                                             <Textarea v-model="line.value"
                                                       data-testid="setting-notification_backend_message"
                                                       :autoResize="true" class="w-full" />
-                                                <Button icon="pi pi-copy"
-                                                        @click="store.getCopy"
-                                                        data-testid="setting-notification_backend_message_copy"
-                                                        class="has-max-height"/>
+
                                             </div>
                                         </div>
                                         <div class="col-12 px-0" v-if="line.key == 'action'">
@@ -358,10 +353,7 @@ onMounted(async () => {
                                             <Textarea v-model="line.value"
                                                       data-testid="setting-notification_frontend_message"
                                                       :autoResize="true" class="w-full" />
-                                                <Button icon="pi pi-copy"
-                                                        @click="store.getCopy"
-                                                        data-testid="setting-notification_frontend_message_copy"
-                                                        class="has-max-height"/>
+
                                             </div>
                                         </div>
                                         <div class="col-12 px-0" v-if="line.key == 'action'">
