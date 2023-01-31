@@ -80,6 +80,7 @@ export const useMediaStore = defineStore({
         ],
         menu_options: [],
         dates2: [],
+        is_btn_loading: false,
     }),
     getters: {
 
@@ -164,7 +165,6 @@ export const useMediaStore = defineStore({
                         {
                             if(newVal && newVal !== "")
                             {
-                                // this.item.name = vaah().capitalising(newVal);
                                 this.item.name = vaah().toUpperCaseWords(newVal);
 
                                 this.item.slug = vaah().strToSlug(newVal);
@@ -207,6 +207,7 @@ export const useMediaStore = defineStore({
             let options = {
                 query: vaah().clone(this.query)
             };
+
             await vaah().ajax(
                 this.ajax_url,
                 this.afterGetList,
@@ -216,6 +217,7 @@ export const useMediaStore = defineStore({
         //---------------------------------------------------------------------
         afterGetList: function (data, res)
         {
+            this.is_btn_loading = false;
             if(data)
             {
                 this.list = data.list;
@@ -334,6 +336,7 @@ export const useMediaStore = defineStore({
                 method: method,
                 show_success: false
             };
+
             await vaah().ajax(
                 url,
                 this.updateListAfter,
@@ -341,7 +344,7 @@ export const useMediaStore = defineStore({
             );
         },
         //---------------------------------------------------------------------
-        itemAction(type, item=null){
+        async itemAction(type, item=null){
             if(!item)
             {
                 item = this.item;
@@ -403,7 +406,7 @@ export const useMediaStore = defineStore({
                     break;
             }
 
-            vaah().ajax(
+             await vaah().ajax(
                 ajax_url,
                 this.itemActionAfter,
                 options
@@ -464,6 +467,7 @@ export const useMediaStore = defineStore({
         //---------------------------------------------------------------------
         async reload()
         {
+            this.is_btn_loading = true;
             await this.getAssets();
             await this.getList();
         },

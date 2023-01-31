@@ -71,10 +71,15 @@ onMounted(async () => {
 
                     <Button data-testid="media-list-create"
                             @click="store.toForm()">
-                        <i class="pi pi-plus mr-1"></i>
+                        <i class="pi pi-plus mr-2"></i>
                         Create
                     </Button>
-
+                    <Button data-testid="media-list-reload"
+                            @click="store.reload()"
+                            :loading="store.is_btn_loading"
+                            icon="pi pi-refresh"
+                            class="ml-1">
+                    </Button>
                 </template>
 
                 <Actions/>
