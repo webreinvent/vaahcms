@@ -393,7 +393,7 @@ export const useNotificationStore = defineStore({
         },
         //---------------------------------------------------------------------
         storeNotificationAfter(data, res){
-            vaah().toastSucces(['Saved']);
+            vaah().toastSuccess(['Saved']);
         },
         //---------------------------------------------------------------------
         async sendNotification() {
