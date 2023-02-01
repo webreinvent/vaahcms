@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="bulma">
 <head>
 
     <title>
@@ -52,7 +52,7 @@
 </head>
 <body class="@if(isset($data->body_class)){{$data->body_class}}@endif has-background-white-bis">
 
-<div class="bulma">
+<div>
     @include("vaahcms::backend.vaahone.components.errors")
     @include("vaahcms::backend.vaahone.components.flash")
 
