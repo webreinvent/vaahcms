@@ -78,14 +78,17 @@ class BatchBase extends Model {
     //-------------------------------------------------
     public function scopeBetweenDates($query, $from, $to,$by = 'created_at')
     {
-
         if($from)
         {
-            $from = Carbon::parse($from)->timestamp;
+            $from = \Carbon::parse($from)
+                ->setTimezone(env('APP_TIMEZONE'))
+                ->format('Y-m-d');
         }
         if($to)
         {
-            $to = Carbon::parse($to)->timestamp;
+            $to = \Carbon::parse($to)
+                ->setTimezone(env('APP_TIMEZONE'))
+                ->format('Y-m-d');
         }
         $query->whereBetween($by,[$from,$to]);
     }
@@ -120,8 +123,12 @@ class BatchBase extends Model {
             });
         }
 
+        if ($request->has('date_filter_by')) {
+            $data['list'] = $list->orderBy($request->date_filter_by,'desc')->paginate(config('vaahcms.per_page'));
+        } else {
+            $data['list'] = $list->orderBy('created_at','desc')->paginate(config('vaahcms.per_page'));
+        }
 
-        $data['list'] = $list->paginate(config('vaahcms.per_page'));
 
         $response['success'] = true;
         $response['data'] = $data;
@@ -148,8 +155,10 @@ class BatchBase extends Model {
 
         foreach($request->inputs as $id)
         {
+            $id = (int) $id;
             $item = self::where('id', $id)->first();
-            if($item)
+
+            if ($item)
             {
                 $item->delete();
             }

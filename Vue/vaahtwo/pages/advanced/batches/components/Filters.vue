@@ -25,24 +25,27 @@ const dateColumns = [
                                  data-testid="jobs-filters-sort-descending"
                                  value="created_at"
                                  v-model="store.query.date_filter_by"/>
-                    <label for="sort-descending">Created (Descending)</label>
+                    <label for="sort-descending">Created</label>
                 </div>
                 <div class="field-radiobutton">
                     <RadioButton name="sort-descending"
                                  data-testid="jobs-filters-sort-descending"
                                  value="cancelled_at"
                                  v-model="store.query.date_filter_by" />
-                    <label for="sort-descending">Cancelled (Descending)</label>
+                    <label for="sort-descending">Cancelled</label>
                 </div>
                 <div class="field-radiobutton">
                     <RadioButton name="sort-descending"
                                  data-testid="jobs-filters-sort-descending"
                                  value="finished_at"
                                  v-model="store.query.date_filter_by"/>
-                    <label for="sort-descending">Finished (Descending)</label>
+                    <label for="sort-descending">Finished</label>
                 </div>
             </VhFieldVertical>
             <VhFieldVertical>
+                <template #label>
+                    <b>Date Between:</b>
+                </template>
                 <Calendar inputId="range"
                           v-model="store.dates2"
                           @date-select="store.setDateRange"

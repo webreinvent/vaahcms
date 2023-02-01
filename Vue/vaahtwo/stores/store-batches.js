@@ -27,7 +27,7 @@ let empty_states = {
     action: {
         type: null,
         items: [],
-    }
+    },
 };
 
 export const useBatchStore = defineStore({
@@ -204,7 +204,7 @@ export const useBatchStore = defineStore({
         //---------------------------------------------------------------------
         afterGetList(data)
         {
-            if(data)
+            if (data)
             {
                 this.list = data.list;
             }
@@ -225,7 +225,7 @@ export const useBatchStore = defineStore({
             if(data)
             {
                 this.item = data;
-            }else{
+            } else {
                 this.$router.push({name: 'batches.index'});
             }
             await this.getItemMenu();
@@ -310,6 +310,7 @@ export const useBatchStore = defineStore({
                 case 'delete':
                     url = this.ajax_url
                     method = 'DELETE';
+
                     break;
                 case 'delete-all':
                     method = 'DELETE';
@@ -319,6 +320,7 @@ export const useBatchStore = defineStore({
             let options = {
                 params: this.action,
                 method: method,
+                data: {},
                 show_success: false
             };
             await vaah().ajax(
@@ -333,7 +335,9 @@ export const useBatchStore = defineStore({
             {
                 item = this.item;
             }
-
+            if (!type) {
+                type = this.form.action;
+            }
             this.form.action = type;
 
             let ajax_url = this.ajax_url;
@@ -377,6 +381,7 @@ export const useBatchStore = defineStore({
                  */
                 case 'delete':
                     options.method = 'DELETE';
+                    options.params = { data: {}};
                     ajax_url += '/'+item.id
                     break;
                 /**
@@ -603,7 +608,6 @@ export const useBatchStore = defineStore({
         //---------------------------------------------------------------------
         toList()
         {
-            this.item = vaah().clone(this.assets.empty_item);
             this.$router.push({name: 'batches.index'})
         },
         //---------------------------------------------------------------------
@@ -843,7 +847,9 @@ export const useBatchStore = defineStore({
             this.displayFailedIds = true;
         },
         deleteItem(item) {
-            vaah().confirmDialogDelete(this.itemAction('delete',item));
+            this.item = item;
+            this.form.action = 'delete';
+            vaah().confirmDialogDelete(this.itemAction);
         },
         //---------------------------------------------------------------------
         setDateRange()

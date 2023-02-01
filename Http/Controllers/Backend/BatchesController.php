@@ -51,7 +51,8 @@ class BatchesController extends Controller
     //----------------------------------------------------------
     public function getList(Request $request)
     {
-        return Batch::getList($request);
+        $response = Batch::getList($request);
+        return response()->json($response);
     }
     //----------------------------------------------------------
     public function updateList(Request $request)
@@ -86,7 +87,9 @@ class BatchesController extends Controller
     //----------------------------------------------------------
     public function deleteItem(Request $request,$id)
     {
-        return Batch::deleteItem($request,$id);
+        $request->merge(['inputs' =>[$id]]);
+
+        return Batch::bulkDelete($request);
     }
     //----------------------------------------------------------
     public function itemAction(Request $request,$id,$action)

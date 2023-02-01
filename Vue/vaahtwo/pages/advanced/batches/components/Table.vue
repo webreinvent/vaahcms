@@ -23,8 +23,7 @@ const useVaah = vaah();
                     headerStyle="width: 3em">
             </Column>
 
-            <Column field="id" header="ID" :style="{width: store.getIdWidth()}">
-            </Column>
+            <Column field="id" header="ID" :style="{width: store.getIdWidth()}"></Column>
 
             <Column field="name" header="" style="width: 30%;">
                 <template #body="prop">
