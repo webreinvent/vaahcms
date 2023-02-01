@@ -1,10 +1,18 @@
-import { watch } from 'vue'
+import { watch,nextTick  } from 'vue'
 import { acceptHMRUpdate, defineStore } from 'pinia'
 import qs from 'qs'
 import countriesData from "../../assets/data/country.json";
 import { useRootStore } from "../root.js";
 import { vaah } from '../../vaahvue/pinia/vaah'
 import semver from "semver";
+// import Terminal from "primevue/terminal";
+//----Terminal
+import 'xterm/css/xterm.css'
+import { Terminal } from 'xterm'
+import { FitAddon } from 'xterm-addon-fit'
+import { WebLinksAddon } from 'xterm-addon-web-links'
+import { Unicode11Addon } from 'xterm-addon-unicode11'
+//----/Terminal
 let model_namespace = 'WebReinvent\\VaahCms\\Models\\Setting';
 
 let base_url = document.getElementsByTagName('base')[0].getAttribute("href");
@@ -49,9 +57,9 @@ export const useUpdateStore = defineStore({
         backend_update: false,
         release: null,
         remote_version: null,
+        is_button_active:false,
         is_up_to_data:false,
         is_update_step_visible: false,
-        $nextTick:null,
         status: {
             download_latest_version: null,
             publish_assets: null,
@@ -88,7 +96,6 @@ export const useUpdateStore = defineStore({
             let local = semver.clean(root.assets.vaahcms.version);
             this.remote_version = semver.clean(res.data.tag_name);
 
-
             let diff = semver.diff(this.remote_version, local );
 
             this.is_up_to_data= false;
@@ -124,7 +131,7 @@ export const useUpdateStore = defineStore({
                 options);
         },
         //---------------------------------------------------------------------
-        onUpdate(){
+        async onUpdate(){
             this.is_checkbox_active = false;
             this.is_button_active = false;
             this.is_update_step_visible = true;
@@ -132,24 +139,24 @@ export const useUpdateStore = defineStore({
 
             let self = this;
 
-            this.$nextTick(() => {
-                self.$term = new Terminal({convertEol: true})
-                self.$fitAddon = new FitAddon()
-                self.$term.loadAddon(this.$fitAddon)
-                self.$term.loadAddon(new WebLinksAddon())
-                self.$term.loadAddon(new Unicode11Addon())
-                self.$term.unicode.activeVersion = '11'
-                self.$term.open(document.getElementById('terminal'));
-                self.$fitAddon.fit();
+            await nextTick(() => {
+                self.term = new Terminal({convertEol: true})
+                self.fitAddon = new FitAddon()
+                self.term.loadAddon(this.fitAddon)
+                self.term.loadAddon(new WebLinksAddon())
+                // self.term.loadAddon(new Unicode11Addon())
+                // self.term.unicode.activeVersion = '11'
+                self.term.open(document.getElementById('terminal'));
+                self.fitAddon.fit();
 
 
-                self.$term.writeln('Step 1/4 : Updating dependencies');
-                self.$term.writeln('-----------------------------------------');
-                self.$term.writeln('composer update');
+                self.term.writeln('Step 1/4 : Updating dependencies');
+                self.term.writeln('-----------------------------------------');
+                self.term.writeln('composer update');
 
                 vaah().ajax(
                     this.ajax_url + '/upgrade',
-                    this.afterGetAssets,
+                    this.onUpdateAfter,
                 );
             });
         },
@@ -160,7 +167,7 @@ export const useUpdateStore = defineStore({
 
                 if(data.output)
                 {
-                    this.$term.writeln(data.output);
+                    this.term.writeln(data.output);
                 }
 
                 if(res.data.status === 'success'){
@@ -172,15 +179,15 @@ export const useUpdateStore = defineStore({
                     }
 
 
-                    this.$term.writeln('\nStep 2/4 : Public Publishable Assets');
-                    this.$term.writeln('-----------------------------------------');
-                    this.$term.writeln("\nphp artisan vendor:publish --provider=\"WebReinvent\\VaahCms\\VaahCmsServiceProvider\" --tag=assets --force");
+                    this.term.writeln('\nStep 2/4 : Public Publishable Assets');
+                    this.term.writeln('-----------------------------------------');
+                    this.term.writeln("\nphp artisan vendor:publish --provider=\"WebReinvent\\VaahCms\\VaahCmsServiceProvider\" --tag=assets --force");
 
-                    this.$term.writeln("\nphp artisan vendor:publish --provider=\"WebReinvent\\VaahCms\\VaahCmsServiceProvider\" --tag=migrations  --force");
+                    this.term.writeln("\nphp artisan vendor:publish --provider=\"WebReinvent\\VaahCms\\VaahCmsServiceProvider\" --tag=migrations  --force");
 
-                    this.$term.writeln("\nphp artisan vendor:publish --provider=\"WebReinvent\\VaahCms\\VaahCmsServiceProvider\" --tag=migrations  --force");
+                    this.term.writeln("\nphp artisan vendor:publish --provider=\"WebReinvent\\VaahCms\\VaahCmsServiceProvider\" --tag=migrations  --force");
 
-                    this.$term.writeln("\nphp artisan vendor:publish --provider=\"WebReinvent\\VaahCms\\VaahCmsServiceProvider\" --tag=seeds --force");
+                    this.term.writeln("\nphp artisan vendor:publish --provider=\"WebReinvent\\VaahCms\\VaahCmsServiceProvider\" --tag=seeds --force");
 
                     this.status.publish_assets = 'pending';
                     vaah().ajax(
@@ -196,16 +203,15 @@ export const useUpdateStore = defineStore({
         },
         //---------------------------------------------------------------------
         onPublishAfter(data, res) {
-            if(res && res.data && res.data.status){
-                this.status.publish_assets = res.data.status;
-
-                if(res.data.status === 'success'){
+            if(res && res.data && res.data.success){
 
 
-                    this.$term.writeln('\nStep 3/4 : Running migrations & Seeds');
-                    this.$term.writeln('-----------------------------------------');
-                    this.$term.writeln("php artisan migrate");
-                    this.$term.writeln("php artisan db:seed");
+                if(res.data.success === true){
+                    this.status.publish_assets = 'success';
+                    this.term.writeln('\nStep 3/4 : Running migrations & Seeds');
+                    this.term.writeln('-----------------------------------------');
+                    this.term.writeln("php artisan migrate");
+                    this.term.writeln("php artisan db:seed");
 
                     this.status.migration_and_seeds = 'pending';
                     vaah().ajax(
@@ -215,24 +221,25 @@ export const useUpdateStore = defineStore({
                 }else{
                     this.status.publish_assets = 'failed';
                 }
+
             }
         },
         //---------------------------------------------------------------------
         onMigrationAndSeedsAfter(data, res) {
-            if(res && res.data && res.data.status){
-                this.status.migration_and_seeds = res.data.status;
+            if(res && res.data && res.data.success){
 
-                if(res.data.status === 'success'){
 
-                    this.$term.writeln('\nStep 4/4 : Clear Cache');
-                    this.$term.writeln('-----------------------------------------');
-                    this.$term.writeln("php artisan cache:clear");
-                    this.$term.writeln("php artisan route:clear");
-                    this.$term.writeln("php artisan config:clear");
-                    this.$term.writeln("php artisan view:clear \n");
-                    this.$term.writeln('\u001b[32m' +"-----------------------------------------------------");
-                    this.$term.writeln(" Update was successful! Click on Reload button.");
-                    this.$term.writeln("-----------------------------------------------------");
+                if(res.data.success === true){
+                    this.status.migration_and_seeds = 'success';
+                    this.term.writeln('\nStep 4/4 : Clear Cache');
+                    this.term.writeln('-----------------------------------------');
+                    this.term.writeln("php artisan cache:clear");
+                    this.term.writeln("php artisan route:clear");
+                    this.term.writeln("php artisan config:clear");
+                    this.term.writeln("php artisan view:clear \n");
+                    this.term.writeln('\u001b[32m' +"-----------------------------------------------------");
+                    this.term.writeln(" Update was successful! Click on Reload button.");
+                    this.term.writeln("-----------------------------------------------------");
 
                     this.status.clear_cache = 'pending';
                     vaah().ajax(
