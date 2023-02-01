@@ -55,7 +55,7 @@ class TaxonomiesController extends Controller
             ->whereNotNull('is_active')
             ->whereNull('parent_id')
             ->with(['children'])
-            ->select('id', 'name as label', 'slug')
+            ->select('id', 'uuid as key', 'name as label', 'slug as data')
             ->get();
 
         $data['actions'] = [];

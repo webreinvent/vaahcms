@@ -163,8 +163,6 @@ export const useTaxonomyStore = defineStore({
         //---------------------------------------------------------------------
         async getAssets() {
 
-            console.log('--->', this.ajax_url);
-
             if(this.assets_is_fetching === true){
                 this.assets_is_fetching = false;
 
