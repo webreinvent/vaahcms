@@ -110,14 +110,10 @@ const toggleFormMenu = (event) => {
 
             <div v-if="store.item">
                 <VhField label="Type">
-                    <Dropdown class="w-full"
-                              v-model="store.item.type"
-                              :options="store.assets.types"
-                              optionLabel="name"
-                              optionValue="id"
-                              data-testid="taxonomies-type"
-                              name="taxonomies-type"
-                              placeholder="Select a Type"
+                    <TreeSelect class="w-full"
+                                v-model="store.item.type"
+                                :options="store.assets.types"
+                                placeholder="Select a Parent"
                     />
                 </VhField>
 

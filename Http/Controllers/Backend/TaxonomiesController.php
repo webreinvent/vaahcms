@@ -47,41 +47,19 @@ class TaxonomiesController extends Controller
             $fillable, $data['fillable']['except']
         );
 
-        foreach ($fillable as $column)
-        {
+        foreach ($fillable as $column) {
             $data['empty_item'][$column] = null;
         }
 
-        $taxonomy_types = TaxonomyType::whereNotNull('is_active')
-            ->whereNull('parent_id')->with(['children'])
-            ->select('id', 'name', 'slug')->get();
-
-        $data['test'] = [
-            "root" => [
-                "key"=> "0",
-                "label" => "Documents",
-                "data" => "Documents Folder",
-                "icon" => "pi pi-fw pi-inbox",
-                "children" => [[
-                    "key"=> "0-0",
-                    "label" => "Work",
-                    "data" => "Work Folder",
-                    "icon" => "pi pi-fw pi-cog",
-                    "children" => [[ "key"=> "0-0-0", "label" => "Expenses.doc", "icon" => "pi pi-fw pi-file", "data" => "Expenses Document" ], [ "key"=> "0-0-1", "label"=> "Resume.doc", "icon" => "pi pi-fw pi-file", "data" => "Resume Document" ]]
-                ],
-                    [
-                        "key" => "0-1",
-                        "label" => "Home",
-                        "data" => "Home Folder",
-                        "icon" => "pi pi-fw pi-home",
-                        "children" => [["key" => "0-1-0", "label" => "Invoices.txt", "icon" => "pi pi-fw pi-file", "data" => "Invoices for this month" ]]
-                    ]]
-            ]
-        ];
+        $taxonomy_types = TaxonomyType::query()
+            ->whereNotNull('is_active')
+            ->whereNull('parent_id')
+            ->with(['children'])
+            ->select('id', 'name as label', 'slug')
+            ->get();
 
         $data['actions'] = [];
         $data['types'] = $taxonomy_types->toArray();
-//        $data['types'] = $type;
 
         $response['success'] = true;
         $response['data'] = $data;
