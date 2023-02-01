@@ -8,8 +8,8 @@ const store = useTaxonomyStore();
 
 <template>
     <div>
-        <div class="p-inputgroup" v-if="store && store.assets">
-
+        <div class="p-inputgroup mt-2" v-if="store && store.assets">
+            
             <TreeSelect v-model="store.item.type"
                         :options="store.assets.types"
                         placeholder="Select a Parent"
@@ -28,8 +28,6 @@ const store = useTaxonomyStore();
         </div>
 
         <Divider />
-
-<!--        <Tree :value="nodes" />-->
 
         <Tree :value="store.assets.types" selectionMode="single" />
     </div>
