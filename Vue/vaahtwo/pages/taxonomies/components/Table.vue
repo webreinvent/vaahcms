@@ -69,10 +69,13 @@ const openTaxonomyTypeModal = () => {
                     :sortable="true"
             >
                 <template #body="prop">
-                    <Button :label="prop.data.slug"
-                            class="p-button-text text-left"
+                    {{ prop.data.slug }}
+
+                    <Button class="p-button-tiny p-button-text"
+                            data-testid="taxonomies-table-to-edit"
                             v-tooltip.top="'Copy Slug'"
                             @click="useVaah.copy(prop.data.slug)"
+                            icon="pi pi-copy"
                     />
                 </template>
             </Column>
