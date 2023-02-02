@@ -46,7 +46,7 @@ const useVaah = vaah();
                          <Button class="p-button-sm p-button-outlined p-button-rounded"
                                  data-testid="batches-table-options"
                                  @click="store.displayBatchDetails(prop.data.options)">
-                             <span class="pi pi-eye"></span>
+                             <span class="pi pi-eye mr-1"></span>
                              <span>View</span>
                          </Button>
                      </div>
@@ -62,7 +62,7 @@ const useVaah = vaah();
                          <Button class="p-button-sm p-button-outlined p-button-rounded"
                                  data-testid="batches-table-failed-ids"
                                  @click="store.displayFailedIdDetails(prop.data.failed_job_ids)">
-                             <span class="pi pi-eye"></span>
+                             <span class="pi pi-eye mr-1"></span>
                              <span>{{ prop.data.failed_job_ids.length }}</span>
                          </Button>
                      </div>
@@ -97,8 +97,7 @@ const useVaah = vaah();
                  </template>
              </Column>
 
-             <Column header="Delete"
-                     v-if="store.isViewLarge()"
+             <Column v-if="store.isViewLarge()"
                      style="width:150px;">
 
                  <template #body="prop">
