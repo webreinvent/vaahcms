@@ -111,12 +111,12 @@ const toggleFormMenu = (event) => {
             <div v-if="store.item">
                 <VhField label="Type">
                     <TreeSelect class="w-full"
-                                v-model="store.item.type"
                                 :options="store.assets.types"
                                 placeholder="Select a Parent"
+                                @node-select="store.selectedParent"
                     />
                 </VhField>
-
+                
                 <VhField label="Name">
                     <InputText class="w-full"
                                name="taxonomies-name"

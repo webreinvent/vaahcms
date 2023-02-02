@@ -915,6 +915,10 @@ export const useTaxonomyStore = defineStore({
             this.taxonomy_type_items.parent_id = e.id;
         },
         //---------------------------------------------------------------------
+        async selectedParent(e) {
+            this.item.type = e.id;
+        },
+        //---------------------------------------------------------------------
     }
 });
 
