@@ -7,6 +7,8 @@ import { useRootStore } from '../stores/root'
 import Topnav from "../components/molecules/Topnav.vue";
 import Footer from "../components/organisms/Footer.vue";
 import Sidebar from "../components/molecules/Sidebar.vue";
+import Notices from '../components/molecules/Notices.vue'
+
 
 const rootStore = useRootStore();
 
@@ -31,10 +33,9 @@ onMounted(async () => {
 
             <Sidebar/>
 
-
-
             <div class="grid main-container">
                 <div class="col-12">
+                    <Notices/>
                     <RouterView></RouterView>
                 </div>
             </div>

@@ -40,7 +40,8 @@ onMounted(async () => {
                             && root.assets.vaahcms
                             && root.assets.vaahcms.version">
                 <h4 class="mb-3">Current Version of</h4>
-                <p><Tag>VaahCMS</Tag> is <Tag>{{ root.assets.vaahcms.version }}</Tag></p>
+                <p class="mb-3"><Tag>VaahCMS</Tag> is <Tag>{{ root.assets.vaahcms.version }}</Tag></p>
+                <p v-if="store.is_up_to_data"><span class="subtitle">Current version of this VaahCMS is the latest version</span></p>
             </div>
             <div v-if="store.backend_update">
                 <div v-if="store.release" class="text-sm">
@@ -161,5 +162,15 @@ onMounted(async () => {
     .p-terminal-response {
         color: #9FA8DA;
     }
+}
+</style>
+<style>
+.subtitle{
+    color: #48c774!important;
+    font-size: 1.25rem;
+    font-weight: 400;
+    line-height: 1.25;
+    word-break: break-word;
+    font-style: inherit;
 }
 </style>

@@ -140,12 +140,14 @@ export const useUpdateStore = defineStore({
             let self = this;
 
             await nextTick(() => {
-                self.term = new Terminal({convertEol: true})
+                self.term = new Terminal({convertEol: true,allowProposedApi: true})
                 self.fitAddon = new FitAddon()
+                self.unicode11Addon = new Unicode11Addon()
+                self.WebLinksAddon = new WebLinksAddon()
                 self.term.loadAddon(this.fitAddon)
-                self.term.loadAddon(new WebLinksAddon())
-                // self.term.loadAddon(new Unicode11Addon())
-                // self.term.unicode.activeVersion = '11'
+                self.term.loadAddon(this.WebLinksAddon)
+                self.term.loadAddon(this.unicode11Addon)
+                self.term.unicode.activeVersion = '11'
                 self.term.open(document.getElementById('terminal'));
                 self.fitAddon.fit();
 
