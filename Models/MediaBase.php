@@ -233,20 +233,20 @@ class MediaBase extends Model {
     {
         $list = self::orderBy('id', 'desc');
 
-        if($request['trashed'] == 'true')
+        if(isset($request->filter['trashed']) && ($request->filter['trashed'] == 'true'))
         {
             $list->withTrashed();
         }
 
-        if(isset($request->from) && isset($request->to))
+        if(isset($request->filter['from']) && isset($request->filter['to']))
         {
-            $list->betweenDates($request['from'],$request['to']);
+            $list->betweenDates($request->filter['from'],$request->filter['to']);
         }
 
-        if(isset($request->month))
+        if(isset($request->filter['month']))
         {
 
-            $date = date_parse($request->month);
+            $date = date_parse($request->filter['month']);
             $month = $date['month'];
 
             $list->whereMonth('created_at', $month);
@@ -254,23 +254,24 @@ class MediaBase extends Model {
             //$list->whereIn(\DB::raw('MONTH(column)'), [1,2,3]);
         }
 
-        if(isset($request->year))
+        if(isset($request->filter['year']))
         {
-            $list->whereYear('created_at', $request->year);
+            $list->whereYear('created_at', $request->filter['year']);
         }
 
-        if(isset($request->q))
+        if(isset($request->filter['q']))
         {
-            $list->where(function ($q) use ($request){
-                $q->where('name', 'LIKE', '%'.$request->q.'%')
-                    ->orWhere('original_name', 'LIKE', '%'.$request->q.'%');
+            $filter = $request->filter['q'];
+            $list->where(function ($q) use ($filter){
+                $q->where('name', 'LIKE', '%'.$filter.'%')
+                    ->orWhere('title', 'LIKE', '%'.$filter.'%');
             });
         }
 
         $list->whereNull('is_hidden');
 
-        $data['list'] = $list->paginate(config('vaahcms.per_page'));
-
+        $data['list'] = $list->skip(($request->rows * $request->page))
+            ->take($request->rows)->paginate($request->rows);
 
         $response['success'] = true;
         $response['data'] = $data;

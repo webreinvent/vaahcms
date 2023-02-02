@@ -12,7 +12,7 @@ onMounted(async () => {
     {
         await store.getItem(route.params.id);
     }
-
+    store.getFormMenu();
     await store.watchItem();
 });
 
@@ -75,7 +75,7 @@ const toggleFormMenu = (event) => {
                                 @click="store.toList()">
                         </Button>
                     </div>
-                    <TieredMenu :model="store.menu_options" ref="menu" :popup="true">
+                    <TieredMenu :model="store.form_menu_list" ref="menu" :popup="true">
                     </TieredMenu>
                 </div>
             </template>
@@ -86,57 +86,14 @@ const toggleFormMenu = (event) => {
                         <label for="name">Name</label>
                     </span>
                     <div v-if="!store.item.id" class="field mb-4 relative">
-                        <FileUpload mode="basic"
-                                    v-model="store.item.url"
-                                    accept="image/*"
-                                    :maxFileSize="1000000"
+                        <FileUpload v-model="store.item.url"
                                     @select="store.upload($event,store.item)"
-                                    class="p-button-text"
-                                    style="height: 55px;width: 100%;border: 2px dashed #bfbfbf"
-                                    chooseLabel="Click to Upload"
-                                    data-testid="media-table-upload-image"
-                                    :auto="true"
-                                    :customUpload="true"/>
-
-                        <div v-if="store.item.full_url" class="mt-2">
-                            <img :src="store.item.full_url" alt=""
-                                 style="max-height: 100px;"
-                            />
-                        </div>
-
-                        <div v-if="store.item.full_url" class="p-inputgroup">
-                            <Button class="p-button-tiny p-button-text"
-                                    data-testid="media-table-open-image"
-                                    v-tooltip.top="'Open Image'"
-                                    icon="pi pi-external-link"
-                                    value="Open"
-                                    url="store.item.full_url"
-                                    @click="store.openImage(store.item.full_url)"
-                                    target="_blank"/>
-
-                            <Button class="p-button p-button-danger"
-                                    data-testid="media-table-remove-image"
-                                    label="Remove"
-                                    v-tooltip.top="'Remove'"
-                                    @click="store.resetItem"
-                                    icon="pi pi-trash" />
-                        </div>
+                                    @remove="store.upload($event,store.item)">
+                            <template #empty>
+                                <p class="text-center text-sm text-gray-600">Drag and drop files to here to upload.</p>
+                            </template>
+                        </FileUpload>
                     </div>
-
-                    <span class="p-float-label row" v-if="store.item.full_url">
-                        <InputText id="title"
-                                   class="col-11"
-                                   v-model="store.item.original_name"
-                                   :disabled="true">
-                        </InputText>
-                        <label for="title">Uploaded File Name</label>
-                        <Button class="p-button p-button-danger col-1"
-                                data-testid="media-table-remove-original_name"
-                                v-tooltip.top="'Remove'"
-                                @click="store.resetItem"
-                                icon="pi pi-trash" />
-                    </span>
-
                     <span class="p-float-label">
                         <InputText id="title" class="w-full" v-model="store.item.title"></InputText>
                         <label for="title">Title</label>

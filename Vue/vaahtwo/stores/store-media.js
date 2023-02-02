@@ -17,13 +17,12 @@ let empty_states = {
             q: null,
             is_active: null,
             sort: null,
+            trashed: null,
+            month: null,
+            year: null,
+            from: null,
+            to: null,
         },
-        trashed: null,
-        month: null,
-        year: null,
-        from: null,
-        to: null,
-        q: null,
     },
     action: {
         type: null,
@@ -152,7 +151,7 @@ export const useMediaStore = defineStore({
         //---------------------------------------------------------------------
         watchStates()
         {
-            watch(this.query, (newVal,oldVal) =>
+            watch(this.query.filter, (newVal,oldVal) =>
                 {
                     this.delayedSearch();
                 },{deep: true}
@@ -216,7 +215,7 @@ export const useMediaStore = defineStore({
             );
         },
         //---------------------------------------------------------------------
-        afterGetList: function (data, res)
+        afterGetList(data, res)
         {
             this.is_btn_loading = false;
             if(data)
@@ -422,6 +421,7 @@ export const useMediaStore = defineStore({
                 await this.getList();
                 await this.formActionAfter();
                 this.getItemMenu();
+                this.getFormMenu();
             }
         },
         //---------------------------------------------------------------------
@@ -603,12 +603,7 @@ export const useMediaStore = defineStore({
             {
                 this.query.filter[key] = null;
             }
-
-            for(let key in this.query)
-            {
-                if (key === 'filter') {continue};
-                this.query[key] = null;
-            }
+            this.dates2 = [];
             await this.updateUrlQueryString(this.query);
         },
         //---------------------------------------------------------------------
@@ -885,24 +880,25 @@ export const useMediaStore = defineStore({
         upload(event,item) {
             let formData = new FormData();
 
-            formData.append('file', event.files[0]);
-            formData.append('folder_path', 'public/media');
+            if (event.files.length > 0) {
+                formData.append('file', event.files[event.files.length - 1]);
+                formData.append('folder_path', 'public/media');
 
-            vaah().ajax(
-                this.ajax_url+'/upload',
-                this.uploadAfter,
-                {
-                    headers: {
-                        'Content-Type': 'multipart/form-data'
-                    },
-                    method: 'post',
-                    params:  formData
-                }
-            );
+                vaah().ajax(
+                    this.ajax_url + '/upload',
+                    this.uploadAfter,
+                    {
+                        headers: {
+                            'Content-Type': 'multipart/form-data'
+                        },
+                        method: 'post',
+                        params: formData
+                    }
+                );
+            }
         },
         //---------------------------------------------------------------------
         uploadAfter(data) {
-            let path = data.url;
 
             if (data && data.original_name) {
                 this.item = data;
@@ -913,10 +909,10 @@ export const useMediaStore = defineStore({
         {
             if (this.dates2.length > 0) {
                 let current_datetime = new Date(this.dates2[0]);
-                this.query.from = current_datetime.getFullYear() + "-" + (current_datetime.getMonth() + 1) + "-" + current_datetime.getDate();
+                this.query.filter.from = current_datetime.getFullYear() + "-" + (current_datetime.getMonth() + 1) + "-" + current_datetime.getDate();
 
                 current_datetime = new Date(this.dates2[1]);
-                this.query.to = current_datetime.getFullYear() + "-" + (current_datetime.getMonth() + 1) + "-" + current_datetime.getDate();
+                this.query.filter.to = current_datetime.getFullYear() + "-" + (current_datetime.getMonth() + 1) + "-" + current_datetime.getDate();
 
                 this.getList();
             }

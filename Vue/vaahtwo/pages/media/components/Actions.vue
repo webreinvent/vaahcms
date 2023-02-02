@@ -79,7 +79,7 @@ const toggleBulkMenuState = (event) => {
                     <div class="col-12">
                         <div class="p-inputgroup ">
 
-                            <InputText v-model="store.query.q"
+                            <InputText v-model="store.query.filter.q"
                                        @keyup.enter="store.delayedSearch()"
                                        @keyup.enter.native="store.delayedSearch()"
                                        @keyup.13="store.delayedSearch()"
