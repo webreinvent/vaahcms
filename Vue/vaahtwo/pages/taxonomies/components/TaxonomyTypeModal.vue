@@ -1,7 +1,7 @@
 <script setup>
 
 import { useTaxonomyStore } from "../../../stores/store-taxonomies";
-import {ref} from "vue";
+import { ref } from "vue";
 
 const store = useTaxonomyStore();
 

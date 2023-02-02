@@ -1,7 +1,7 @@
 <script setup>
 import { onMounted, ref, watch } from "vue";
 import { useTaxonomyStore } from '../../stores/store-taxonomies'
-import {useRootStore } from "../../stores/root";
+import { useRootStore } from "../../stores/root";
 import { useRoute } from 'vue-router';
 import VhField from './../../vaahvue/vue-three/primeflex/VhField.vue'
 
@@ -34,6 +34,8 @@ const toggleFormMenu = (event) => {
     form_menu.value.toggle(event);
 };
 //--------/form_menu
+
+const selectedParentID = ref();
 
 </script>
 <template>
@@ -111,12 +113,23 @@ const toggleFormMenu = (event) => {
             <div v-if="store.item">
                 <VhField label="Type">
                     <TreeSelect class="w-full"
+                                v-model="selectedParentID"
                                 :options="store.assets.types"
                                 placeholder="Select a Parent"
                                 @node-select="store.selectedParent"
                     />
                 </VhField>
-                
+
+                <VhField label="Parent Country"
+                         v-if=" store.item.type === 'cities' "
+                >
+                    <AutoComplete class="w-full"
+                                  v-model="selectedCountry1"
+                                  :suggestions="filteredCountries"
+                                  @complete="searchCountry($event)" optionLabel="name"
+                    />
+                </VhField>
+
                 <VhField label="Name">
                     <InputText class="w-full"
                                name="taxonomies-name"
