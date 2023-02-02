@@ -15,6 +15,7 @@ const useVaah = vaah();
                        dataKey="id"
                    class="p-datatable-sm"
                    v-model:selection="store.action.items"
+                    data-testid="batches-table-checkbox"
                    stripedRows
                    responsiveLayout="scroll">
 
@@ -28,9 +29,15 @@ const useVaah = vaah();
             <Column field="name" header="" style="width: 30%;">
                 <template #body="prop">
                     <span v-if="prop.data.pending_jobs > 0">
-                        <ProgressBar :value="store.getJobProgress(prop.data,1)" />
-                        <ProgressBar :value="store.getJobProgress(prop.data,2)" />
-                        <ProgressBar :value="store.getJobProgress(prop.data,3)" />
+                        <ProgressBar :value="store.getJobProgress(prop.data,1)"
+                                     data-testid="batches-table-progress-1"
+                        />
+                        <ProgressBar :value="store.getJobProgress(prop.data,2)"
+                                     data-testid="batches-table-progress-2"
+                        />
+                        <ProgressBar :value="store.getJobProgress(prop.data,3)"
+                                     data-testid="batches-table-progress-3"
+                        />
                     </span>
                     <span v-else>
                         <ProgressBar :value="0" style="height:10px;" />
@@ -42,14 +49,12 @@ const useVaah = vaah();
                      :style="{width: store.getActionWidth() }"
                      header="Detail">
                  <template #body="prop">
-                     <div class="p-inputgroup">
-                         <Button class="p-button-sm p-button-outlined p-button-rounded"
-                                 data-testid="batches-table-options"
-                                 @click="store.displayBatchDetails(prop.data.options)">
-                             <span class="pi pi-eye mr-1"></span>
-                             <span>View</span>
-                         </Button>
-                     </div>
+                     <Button class="p-button-rounded p-button-sm p-button-outlined"
+                             data-testid="batches-table-options"
+                             @click="store.displayBatchDetails(prop.data.options)">
+                         <span class="pi pi-eye mr-1"></span>
+                         <span>View</span>
+                     </Button>
                  </template>
              </Column>
 
@@ -58,14 +63,12 @@ const useVaah = vaah();
                      style="width:150px;">
 
                  <template #body="prop">
-                     <div class="p-inputgroup">
-                         <Button class="p-button-sm p-button-outlined p-button-rounded"
-                                 data-testid="batches-table-failed-ids"
-                                 @click="store.displayFailedIdDetails(prop.data.failed_job_ids)">
-                             <span class="pi pi-eye mr-1"></span>
-                             <span>{{ prop.data.failed_job_ids.length }}</span>
-                         </Button>
-                     </div>
+                     <Button class="p-button-sm p-button-outlined p-button-rounded"
+                             data-testid="batches-table-failed-ids"
+                             @click="store.displayFailedIdDetails(prop.data.failed_job_ids)">
+                         <span class="pi pi-eye mr-1"></span>
+                         <span>{{ prop.data.failed_job_ids.length }}</span>
+                     </Button>
                  </template>
 
              </Column>
@@ -115,7 +118,7 @@ const useVaah = vaah();
         <Divider />
         <Dialog header="Options"
                 v-model:visible="store.displayDetail"
-                data-testid="batch-table-detail-dialog"
+                data-testid="batch-table-detail_dialog"
                 :breakpoints="{'960px': '75vw', '640px': '90vw'}"
                 :style="{width: '50vw'}"
         >
@@ -127,7 +130,7 @@ const useVaah = vaah();
         </Dialog>
         <Dialog header="Failed Ids"
                 v-model:visible="store.displayFailedIds"
-                data-testid="batch-table-detail-dialog"
+                data-testid="batch-table-failed_ids_dialog"
                 :breakpoints="{'960px': '75vw', '640px': '90vw'}"
                 :style="{width: '50vw'}"
         >
@@ -139,6 +142,7 @@ const useVaah = vaah();
         </Dialog>
         <!--paginator-->
         <Paginator v-model:rows="store.query.rows"
+                   data-testid="batch-table-paginator"
                    :totalRecords="store.list.total"
                    @page="store.paginate($event)"
                    :rowsPerPageOptions="store.rows_per_page">
