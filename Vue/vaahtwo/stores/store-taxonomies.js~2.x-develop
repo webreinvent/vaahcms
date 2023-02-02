@@ -916,7 +916,8 @@ export const useTaxonomyStore = defineStore({
         },
         //---------------------------------------------------------------------
         async selectedParent(e) {
-            this.item.type = e.id;
+            this.item.vh_taxonomy_type_id = e.id;
+            this.item.type = e.data;
         },
         //---------------------------------------------------------------------
     }

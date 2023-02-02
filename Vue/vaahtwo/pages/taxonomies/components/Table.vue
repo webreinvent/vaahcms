@@ -84,7 +84,7 @@ const openTaxonomyTypeModal = () => {
                     :sortable="false"
             >
                 <template #body="prop">
-                    {{ prop.data.type.name }}
+                    <p v-if="prop.data.type"> {{ prop.data.type.name }} </p>
 
                     <template v-if="store.hasPermission('can-manage-taxonomy-types')">
                         <Button class="p-button-tiny p-button-text"
@@ -103,7 +103,7 @@ const openTaxonomyTypeModal = () => {
                     :sortable="true"
             >
                 <template #body="prop">
-                    {{ useVaah.ago(prop.data.updated_at )}}
+                    {{ useVaah.ago(prop.data.updated_at) }}
                 </template>
             </Column>
 
@@ -115,7 +115,8 @@ const openTaxonomyTypeModal = () => {
                 <template #body="prop">
                     <InputSwitch v-model.bool="prop.data.is_active"
                                  data-testid="taxonomies-table-is-active"
-                                 v-bind:false-value="0"  v-bind:true-value="1"
+                                 v-bind:false-value="0"
+                                 v-bind:true-value="1"
                                  class="p-inputswitch-sm"
                                  @input="store.toggleIsActive(prop.data)"
                     />

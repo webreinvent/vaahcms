@@ -28,6 +28,7 @@ class Taxonomy extends TaxonomyBase
         'uuid',
         'name',
         'slug',
+        'vh_taxonomy_type_id',
         'is_active',
         'created_by',
         'updated_by',
@@ -513,6 +514,13 @@ class Taxonomy extends TaxonomyBase
         $rules = array(
             'name' => 'required|max:150',
             'slug' => 'required|max:150',
+            'vh_taxonomy_type_id' => 'required|exists:vh_taxonomy_types,id'
+        );
+
+        $messages = array(
+            'parent_id' => 'required_if:type,==,Cities',
+            'parent.required_if' => 'The country field is required.',
+            'vh_taxonomy_type_id.required' => 'The type field is required.'
         );
 
         $validator = \Validator::make($inputs, $rules);
