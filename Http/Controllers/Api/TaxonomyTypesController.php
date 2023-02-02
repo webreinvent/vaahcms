@@ -59,7 +59,7 @@ class TaxonomyTypesController extends Controller
         }
 
         if($request->has('with_children') && $request->with_children){
-            $item->with(['children'])->whereNull('parent_id');
+            $item->with(['childrens'])->whereNull('parent_id');
         }
 
         if($request['trashed'] == 'true')
