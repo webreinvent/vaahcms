@@ -67,7 +67,8 @@ export const useTaxonomyStore = defineStore({
         form_menu_list: [],
         is_btn_loading: false,
         taxonomy_type_items: {
-            name: null
+            name: null,
+            parent_id: null,
         },
     }),
     getters: {
@@ -487,7 +488,7 @@ export const useTaxonomyStore = defineStore({
         },
 
         //---------------------------------------------------------------------
-        async addTaxonomyType() {
+        async createTaxonomyType() {
             this.showProgress();
 
             let options = {
@@ -497,12 +498,12 @@ export const useTaxonomyStore = defineStore({
 
             await vaah().ajax(
                 this.ajax_url + '/create-taxonomy-type',
-                await this.addTaxonomyTypeAfter,
+                await this.createTaxonomyTypeAfter,
                 options
             );
         },
         //---------------------------------------------------------------------
-        async addTaxonomyTypeAfter () {
+        async createTaxonomyTypeAfter () {
             this.hideProgress();
             await this.reload();
         },
@@ -908,6 +909,10 @@ export const useTaxonomyStore = defineStore({
         //---------------------------------------------------------------------
         hideProgress() {
             this.show_progress_bar = false;
+        },
+        //---------------------------------------------------------------------
+        async selectedNode(e) {
+            this.taxonomy_type_items.parent_id = e.id;
         },
         //---------------------------------------------------------------------
     }

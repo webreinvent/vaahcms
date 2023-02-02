@@ -58,7 +58,7 @@ class TaxonomiesController extends Controller
         $data['bulk_actions'] = vh_general_bulk_actions();
 
         $data['types'] = TaxonomyType::whereNotNull('is_active')
-            ->whereNull('parent_id')->with(['children'])
+            ->whereNull('parent_id')->with(['childrens'])
             ->select('id', 'name', 'slug')->get();
 
         $response['success'] = true;
@@ -288,11 +288,11 @@ class TaxonomiesController extends Controller
             return $response;
         }
 
-        $item = TaxonomyType::where('id',$request->id)->with(['children'])
+        $item = TaxonomyType::where('id',$request->id)->with(['childrens'])
             ->withTrashed()->first();
 
-        if(count($item->children) > 0){
-            self::deleteChildren($item->children);
+        if(count($item->childrens) > 0){
+            self::deletechildrens($item->childrens);
         }
 
         $item->forceDelete();
@@ -302,11 +302,11 @@ class TaxonomiesController extends Controller
         return $response;
     }
     //----------------------------------------------------------
-    public function deleteChildren($types)
+    public function deletechildrens($types)
     {
         foreach ($types as $type){
-            if(count($type->children) > 0){
-                self::deleteChildren($type->children);
+            if(count($type->childrens) > 0){
+                self::deletechildrens($type->childrens);
             }
 
             $type->forceDelete();

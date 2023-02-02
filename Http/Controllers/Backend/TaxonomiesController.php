@@ -54,8 +54,8 @@ class TaxonomiesController extends Controller
         $taxonomy_types = TaxonomyType::query()
             ->whereNotNull('is_active')
             ->whereNull('parent_id')
-            ->with(['children'])
             ->select('id', 'uuid as key', 'name as label', 'slug as data')
+            ->with(['children'])
             ->get();
 
         $data['actions'] = [];
@@ -159,11 +159,11 @@ class TaxonomiesController extends Controller
             return $response;
         }
 
-        $item = TaxonomyType::where('id',$request->id)->with(['children'])
+        $item = TaxonomyType::where('id',$request->id)->with(['childrens'])
             ->withTrashed()->first();
 
-        if(count($item->children) > 0){
-            self::deleteChildren($item->children);
+        if(count($item->childrens) > 0){
+            self::deletechildrens($item->childrens);
         }
 
         $item->forceDelete();
@@ -173,11 +173,11 @@ class TaxonomiesController extends Controller
         return $response;
     }
     //----------------------------------------------------------
-    public function deleteChildren($types)
+    public function deletechildrens($types)
     {
         foreach ($types as $type){
-            if(count($type->children) > 0){
-                self::deleteChildren($type->children);
+            if(count($type->childrens) > 0){
+                self::deletechildrens($type->childrens);
             }
 
             $type->forceDelete();
