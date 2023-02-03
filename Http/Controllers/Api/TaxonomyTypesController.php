@@ -8,8 +8,8 @@ use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Hash;
 use WebReinvent\VaahCms\Models\Registration;
-use WebReinvent\VaahCms\Entities\Taxonomy;
-use WebReinvent\VaahCms\Entities\TaxonomyType;
+use WebReinvent\VaahCms\Models\Taxonomy;
+use WebReinvent\VaahCms\Models\TaxonomyType;
 use WebReinvent\VaahCms\Models\User;
 use WebReinvent\VaahCms\Models\Role;
 
@@ -59,7 +59,7 @@ class TaxonomyTypesController extends Controller
         }
 
         if($request->has('with_children') && $request->with_children){
-            $item->with(['children'])->whereNull('parent_id');
+            $item->with(['childrens'])->whereNull('parent_id');
         }
 
         if($request['trashed'] == 'true')

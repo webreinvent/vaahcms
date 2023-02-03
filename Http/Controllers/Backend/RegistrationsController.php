@@ -3,7 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use WebReinvent\VaahCms\Entities\Setting;
-use WebReinvent\VaahCms\Entities\Taxonomy;
+use WebReinvent\VaahCms\Entities\TaxonomyBase;
 use WebReinvent\VaahCms\Models\User;
 use WebReinvent\VaahCms\Models\Registration;
 
@@ -54,7 +54,7 @@ class RegistrationsController extends Controller
         $data['countries'] = vh_get_country_list();
         $data['timezones'] = vh_get_timezones();
         $data['country_code'] = vh_get_country_list();
-        $data['registration_statuses'] = Taxonomy::getTaxonomyByType('registrations');
+        $data['registration_statuses'] = TaxonomyBase::getTaxonomyByType('registrations');
         $data['bulk_actions'] = vh_general_bulk_actions();
         $data['name_titles'] = vh_name_titles();
         $data['fields'] = User::getUserSettings();

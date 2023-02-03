@@ -1,8 +1,10 @@
-<?php namespace WebReinvent\VaahCms\Entities;
+<?php namespace WebReinvent\VaahCms\Models;
 
 use Carbon\Carbon;
 use DateTimeInterface;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
 use WebReinvent\VaahCms\Traits\CrudWithUuidObservantTrait;
@@ -55,7 +57,7 @@ class TaxonomyType extends Model {
         return json_decode($value);
     }
 
-    public function createdByUser()
+    public function createdByUser(): BelongsTo
     {
         return $this->belongsTo(User::class,
             'created_by', 'id'
@@ -63,7 +65,7 @@ class TaxonomyType extends Model {
     }
 
     //-------------------------------------------------
-    public function updatedByUser()
+    public function updatedByUser(): BelongsTo
     {
         return $this->belongsTo(User::class,
             'updated_by', 'id'
@@ -71,7 +73,7 @@ class TaxonomyType extends Model {
     }
 
     //-------------------------------------------------
-    public function deletedByUser()
+    public function deletedByUser(): BelongsTo
     {
         return $this->belongsTo(User::class,
             'deleted_by', 'id'
@@ -79,7 +81,7 @@ class TaxonomyType extends Model {
     }
 
     //-------------------------------------------------
-    public function parent()
+    public function parent(): BelongsTo
     {
         return $this->belongsTo(self::class,
             'parent_id', 'id'
@@ -87,11 +89,21 @@ class TaxonomyType extends Model {
     }
 
     //-------------------------------------------------
-    public function children()
+    public function childrens(): HasMany
     {
         return $this->hasMany(self::class,
             'parent_id', 'id'
-        )->with(['children'])->select('id', 'name', 'slug', 'parent_id');
+        )->with(['childrens'])->select('id', 'name', 'slug', 'parent_id');
+    }
+    //-------------------------------------------------
+    // this method is only used for rendering child nodes on primevue tree component
+
+     public function children(): HasMany
+    {
+        return $this->hasMany(self::class,
+            'parent_id', 'id')
+            ->with(['children'])
+            ->select('id', 'uuid as key', 'name as label', 'slug as data', 'parent_id');
     }
     //-------------------------------------------------
     public function getTableColumns() {
@@ -186,7 +198,7 @@ class TaxonomyType extends Model {
         }
 
         if(isset($request->with_children) && $request->with_children){
-            $list->with(['children'])->whereNull('parent_id');
+            $list->with(['childrens'])->whereNull('parent_id');
         }
 
         if(isset($request->from) && isset($request->to))
@@ -488,7 +500,7 @@ class TaxonomyType extends Model {
     public static function getListInTreeFormat()
     {
         $item = self::whereNotNull('is_active')
-            ->whereNull('parent_id')->with(['children'])
+            ->whereNull('parent_id')->with(['childrens'])
             ->select('id', 'name', 'slug')->get();
         return $item;
     }

@@ -1,4 +1,4 @@
-<?php namespace WebReinvent\VaahCms\Entities;
+<?php namespace WebReinvent\VaahCms\Models;
 
 use Carbon\Carbon;
 use DateTimeInterface;
@@ -8,7 +8,7 @@ use Illuminate\Support\Str;
 use VaahCms\Modules\Cms\Entities\ContentFormField;
 use WebReinvent\VaahCms\Traits\CrudWithUuidObservantTrait;
 
-class Taxonomy extends Model {
+class TaxonomyBase extends Model {
 
     use SoftDeletes;
     use CrudWithUuidObservantTrait;
@@ -215,64 +215,6 @@ class Taxonomy extends Model {
         $response['data']['item'] = $item;
         $response['messages'][] = trans('vaahcms-general.saved_successfully');
         return $response;
-
-    }
-    //-------------------------------------------------
-    public static function getList($request)
-    {
-
-
-        $list = self::orderBy('id', 'desc')->with(['parent','type']);
-
-        if($request['trashed'] == 'true')
-        {
-
-            $list->withTrashed();
-        }
-
-        if(isset($request->from) && isset($request->to))
-        {
-            $list->betweenDates($request['from'],$request['to']);
-        }
-
-        if(isset($request['status']) &&  $request['status'])
-        {
-            if($request['status'] == 'active')
-            {
-                $list->whereNotNull('is_active');
-            }else{
-                $list->whereNull('is_active');
-            }
-        }
-
-        if(isset($request['types']) &&  $request['types'])
-        {
-
-            if(is_string($request['types'])){
-                $request['types'] = [$request['types']];
-            }
-
-            $list->whereIn('vh_taxonomy_type_id',$request['types']);
-
-        }
-
-        if(isset($request->q))
-        {
-
-            $list->where(function ($q) use ($request){
-                $q->where('name', 'LIKE', '%'.$request->q.'%')
-                    ->orWhere('slug', 'LIKE', '%'.$request->q.'%');
-            });
-        }
-
-
-        $data['list'] = $list->paginate(config('vaahcms.per_page'));
-
-        $response['success'] = true;
-        $response['data'] = $data;
-
-        return $response;
-
 
     }
     //-------------------------------------------------
@@ -554,14 +496,14 @@ class Taxonomy extends Model {
             return $item;
         }
 
-        $item = Taxonomy::where('vh_taxonomy_type_id', $tax_type->id)
+        $item = TaxonomyBase::where('vh_taxonomy_type_id', $tax_type->id)
             ->where('name', $name)
             ->whereNotNull('is_active')
             ->first();
 
         if(!$item)
         {
-            $item = new Taxonomy();
+            $item = new TaxonomyBase();
             $item->vh_taxonomy_type_id = $tax_type->id;
             $item->name = $name;
             $item->slug = Str::slug($name);
