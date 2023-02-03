@@ -4,6 +4,8 @@ import { useTaxonomyStore } from '../../stores/store-taxonomies'
 import { useRootStore } from "../../stores/root";
 import { useRoute } from 'vue-router';
 import VhField from './../../vaahvue/vue-three/primeflex/VhField.vue'
+import { useDialog } from "primevue/usedialog";
+import TaxonomyTypeModal from "./components/TaxonomyTypeModal.vue";
 
 const store = useTaxonomyStore();
 const root = useRootStore();
@@ -36,6 +38,27 @@ const toggleFormMenu = (event) => {
 //--------/form_menu
 
 const selectedParentID = ref();
+
+//--------toggle dynamic modal--------//
+const dialog = useDialog();
+
+const openTaxonomyTypeModal = () => {
+    const dialogRef = dialog.open(TaxonomyTypeModal, {
+        props: {
+            header: 'Manage Taxonomy Type',
+            style: {
+                width: '50vw',
+            },
+            breakpoints:{
+                '960px': '75vw',
+                '640px': '90vw'
+            },
+            modal: true
+        }
+    });
+}
+
+//--------toggle dynamic modal--------//
 
 </script>
 <template>
@@ -109,24 +132,36 @@ const selectedParentID = ref();
                 </div>
             </template>
 
-
             <div v-if="store.item">
+
                 <VhField label="Type">
-                    <TreeSelect class="w-full"
-                                v-model="selectedParentID"
-                                :options="store.assets.types"
-                                placeholder="Select a Parent"
-                                @node-select="store.selectedParent"
-                    />
+                    <div class="p-inputgroup">
+                        <TreeSelect class="w-full"
+                                    v-model="selectedParentID"
+                                    :options="store.assets.types"
+                                    placeholder="Select a Parent"
+                                    @node-select="store.selectedParent"
+                        />
+
+                        <Button v-if="store.hasPermission('can-manage-taxonomy-types')"
+                                class="p-button-sm"
+                                label="Manage"
+                                data-testid="taxonomies-form-to-manage-taxonomy-type-modal"
+                                @click="openTaxonomyTypeModal"
+                        />
+                    </div>
                 </VhField>
 
                 <VhField label="Parent Country"
                          v-if=" store.item.type === 'cities' "
                 >
-                    <AutoComplete class="w-full"
-                                  v-model="selectedCountry1"
-                                  :suggestions="filteredCountries"
-                                  @complete="searchCountry($event)" optionLabel="name"
+                    <Dropdown v-model="store.item.parent_id"
+                              :options="store.assets.countries"
+                              optionLabel="name"
+                              optionValue="code"
+                              :filter="true"
+                              placeholder="Select a Parent country"
+                              class="p-inputtext-sm w-full"
                     />
                 </VhField>
 

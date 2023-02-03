@@ -920,6 +920,19 @@ export const useTaxonomyStore = defineStore({
             this.item.type = e.data;
         },
         //---------------------------------------------------------------------
+        async searchCountry(event) {
+            setTimeout(() => {
+                if (!event.query.trim().length) {
+                    filteredCountries.value = [...countries.value];
+                }
+                else {
+                    filteredCountries.value = countries.value.filter((country) => {
+                        return country.name.toLowerCase().startsWith(event.query.toLowerCase());
+                    });
+                }
+            }, 250);
+        },
+        //---------------------------------------------------------------------
     }
 });
 
