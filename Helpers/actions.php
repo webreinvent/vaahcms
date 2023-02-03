@@ -1,7 +1,7 @@
 <?php
 
 //-------------------------------------------------------------
-use WebReinvent\VaahCms\Entities\Module;
+use WebReinvent\VaahCms\Models\Module;
 use WebReinvent\VaahCms\Models\Theme;
 
 function vh_action_response($class_namespace, $method, $params=null) {

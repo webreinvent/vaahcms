@@ -7,8 +7,8 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use WebReinvent\VaahCms\Entities\Migration;
-use WebReinvent\VaahCms\Entities\Module;
-
+use WebReinvent\VaahCms\Models\Module;
+use WebReinvent\VaahExtend\Libraries\VaahArtisan;
 
 class ModulesController extends Controller
 {
@@ -24,9 +24,8 @@ class ModulesController extends Controller
     //----------------------------------------------------------
 
     //----------------------------------------------------------
-    public function assets(Request $request)
+    public function getAssets(Request $request)
     {
-
         if(!\Auth::user()->hasPermission('has-access-of-module-section'))
         {
             $response['success'] = false;
@@ -183,8 +182,13 @@ class ModulesController extends Controller
     }
 
     //----------------------------------------------------------
-    public function actions(Request $request)
+    public function actions(Request $request,$id,$action)
     {
+        $request->merge([
+            'inputs' => ['id' => $id],
+            'action' => $action
+        ]);
+
         $rules = array(
             'action' => 'required',
             'inputs' => 'required',
@@ -371,7 +375,33 @@ class ModulesController extends Controller
         return response()->json($response);
 
     }
+
     //----------------------------------------------------------
+    public function publishAssets(Request $request)
+    {
+        try {
+
+            $module = Module::slug($request->slug)->first();
+
+            $message = Module::copyAssets($module);
+
+            if ($message) {
+                $module->is_assets_published = 1;
+                $module->save();
+                $response['status'] = "success";
+                $response['messages'][] = "Assets published.";
+                return $response;
+            }
+
+            $response['status'] = "danger";
+            $response['messages'][] = "Something went wrong.";
+            return $response;
+        } catch(\Exception $e) {
+            $response['success'] = false;
+            $response['errors'][] = $e->getMessage();
+            return $response;
+        }
+    }
     //----------------------------------------------------------
 
 

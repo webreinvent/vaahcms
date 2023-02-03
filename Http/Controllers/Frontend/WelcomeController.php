@@ -7,7 +7,7 @@ use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Str;
 use VaahCms\Modules\Cms\Entities\MenuItem;
-use WebReinvent\VaahCms\Entities\Module;
+use WebReinvent\VaahCms\Models\Module;
 use WebReinvent\VaahCms\Models\Theme;
 use WebReinvent\VaahCms\Models\User;
 use WebReinvent\VaahExtend\Libraries\VaahArtisan;

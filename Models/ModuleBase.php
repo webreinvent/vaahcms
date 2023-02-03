@@ -1,14 +1,15 @@
-<?php namespace WebReinvent\VaahCms\Entities;
+<?php namespace WebReinvent\VaahCms\Models;
 
 use DateTimeInterface;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
+use WebReinvent\VaahCms\Entities\Setting;
+use WebReinvent\VaahCms\Entities\Migration;
 use ZanySoft\Zip\Zip;
 
-
-class Module extends Model {
+class ModuleBase extends Model {
 
     use SoftDeletes;
     //-------------------------------------------------
@@ -45,8 +46,6 @@ class Module extends Model {
     ];
 
     //-------------------------------------------------
-
-
 
     //-------------------------------------------------
     protected function serializeDate(DateTimeInterface $date)
@@ -222,8 +221,6 @@ class Module extends Model {
         $installed = static::orderBy('name', 'asc')->get()
             ->pluck('name')->toArray();
 
-
-
         if($installed && count($list) < 1)
         {
             foreach ($installed as $item)
@@ -363,7 +360,7 @@ class Module extends Model {
     public static function activateItem($slug)
     {
 
-        $module = Module::slug($slug)->first();
+        $module = self::slug($slug)->first();
 
         /*
          * get module dependencies
@@ -613,8 +610,8 @@ class Module extends Model {
         copy($download_link, $zip_file);
 
         try{
-            Zip::check($zip_file);
-            $zip = Zip::open($zip_file);
+            (new Zip)->check($zip_file);
+            $zip = (new Zip)->open($zip_file);
             $zip_content_list = $zip->listFiles();
             $zip->extract($vaahcms_path);
             $zip->close();
@@ -658,8 +655,8 @@ class Module extends Model {
         copy($download_link, $zip_file);
 
         try{
-            Zip::check($zip_file);
-            $zip = Zip::open($zip_file);
+            (new Zip)->check($zip_file);
+            $zip = (new Zip)->open($zip_file);
             $zip_content_list = $zip->listFiles();
             $zip->extract($vaahcms_path);
             $zip->close();
