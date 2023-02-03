@@ -3,9 +3,12 @@ let routes_list= [];
 
 import LayoutBackend from "../layouts/Backend.vue";
 import AdvancedLayout from "../pages/advanced/AdvancedLayout.vue";
-import List from '../pages/advanced/jobs/List.vue'
-import Form from '../pages/advanced/jobs/Form.vue'
-import Item from '../pages/advanced/jobs/Item.vue'
+import JobList from '../pages/advanced/jobs/List.vue'
+import JobForm from '../pages/advanced/jobs/Form.vue'
+import JobItem from '../pages/advanced/jobs/Item.vue'
+import LogList from '../pages/advanced/logs/List.vue'
+import LogForm from '../pages/advanced/logs/Form.vue'
+import LogItem from '../pages/advanced/logs/Item.vue'
 import FailedJobList from '../pages/advanced/failedjobs/List.vue'
 import FailedJobItem from '../pages/advanced/failedjobs/Item.vue'
 
@@ -22,21 +25,42 @@ routes_list = {
             children: [
                 {
 
+                    path: 'logs',
+                    name: 'logs.index',
+                    component: LogList,
+                    props: true,
+                    children: [
+                        {
+                            path: 'form/:id?',
+                            name: 'logs.form',
+                            component: LogForm,
+                            props: true,
+                        },
+                        {
+                            path: 'view/:name?',
+                            name: 'logs.view',
+                            component: LogItem,
+                            props: true,
+                        }
+                    ]
+                },
+                {
+
                     path: 'jobs',
                     name: 'jobs.index',
-                    component: List,
+                    component: JobList,
                     props: true,
                     children: [
                         {
                             path: 'form/:id?',
                             name: 'jobs.form',
-                            component: Form,
+                            component: JobForm,
                             props: true,
                         },
                         {
                             path: 'view/:id?',
                             name: 'jobs.view',
-                            component: Item,
+                            component: JobItem,
                             props: true,
                         }
                     ]
