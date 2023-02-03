@@ -325,7 +325,6 @@ export const vaah = defineStore({
                 str = this.toUpperCaseWords(str);
                 return str;
             }
-
         },
         //----------------------------------------------------------
         toUpperCaseWords: function(str)

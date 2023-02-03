@@ -59,9 +59,10 @@ export const useUserSettingStore = defineStore({
         },
         field_type: null,
         custom_field_list:null,
-        activeIndex:[],
-        selectedFieldType:null,
-        fieldTypes:[
+        active_index:[],
+        selected_field_type:null,
+        content_settings_status:true,
+        field_types:[
             {name:"Text",value:"text"},
             {name:"Email",value:"email"},
             {name:"TextArea",value:"textarea"},
@@ -135,30 +136,30 @@ export const useUserSettingStore = defineStore({
         },
         //---------------------------------------------------------------------
         addCustomField() {
-            if(!this.selectedFieldType){
+            if(!this.selected_field_type){
                 vaah().toastErrors(['Select field Type first.']);
                 return false;
             }
             let new_item = {
                 "name": null,
                 "slug": null,
-                "type": this.selectedFieldType,
+                "type": this.selected_field_type,
                 "excerpt": null,
                 "is_hidden": false,
                 "to_registration": false,
             };
-            if(this.selectedFieldType === 'textarea'
-                || this.selectedFieldType === 'text'
-                || this.selectedFieldType === 'email'){
+            if(this.selected_field_type === 'textarea'
+                || this.selected_field_type === 'text'
+                || this.selected_field_type === 'email'){
                 new_item.maxlength = null;
                 new_item.minlength = null;
             }
 
-            if(this.selectedFieldType === 'password'){
+            if(this.selected_field_type === 'password'){
                 new_item.is_password_reveal = null;
             }
 
-            if(this.selectedFieldType === 'number'){
+            if(this.selected_field_type === 'number'){
                 new_item.min = null;
                 new_item.max = null;
             }
@@ -173,11 +174,11 @@ export const useUserSettingStore = defineStore({
         toggleFieldOptions(event){
             let element = event.target;
             // let target = element.closest('.draggable-menu').find('.p-panel-content');
-            let check = element.closest('.draggable-menu').children[1].classList;
-            if(check.length == 1){
-                element.closest('.draggable-menu').children[1].classList.add('inactive');
+            let check = element.closest('.content-div').children[1].classList;
+            if(check.length == 0){
+                element.closest('.content-div').children[1].classList.add('inactive');
             } else {
-                element.closest('.draggable-menu').children[1].classList.remove('inactive');
+                element.closest('.content-div').children[1].classList.remove('inactive');
             }
 
         },
@@ -223,10 +224,10 @@ export const useUserSettingStore = defineStore({
         },
         //---------------------------------------------------------------------
         expandAll() {
-            this.activeIndex = [0,1];
+            this.active_index = [0,1];
         },
         collapseAll() {
-            this.activeIndex = [];
+            this.active_index = [];
         },
         //---------------------------------------------------------------------
         //---------------------------------------------------------------------
