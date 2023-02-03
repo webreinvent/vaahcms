@@ -32,6 +32,12 @@ class FailedJobBase extends Model {
     {
         return json_decode($value);
     }
+
+    //-------------------------------------------------
+    public function getExceptionAttribute($value)
+    {
+        return json_decode($value);
+    }
     //-------------------------------------------------
     public static function getList($request)
     {
