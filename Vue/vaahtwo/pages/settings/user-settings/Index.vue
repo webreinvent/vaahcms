@@ -53,7 +53,7 @@ onMounted(async () => {
             </template>
             <template #content>
                 <Accordion :multiple="true" :activeIndex="store.active_index" id="accordionTabContainer">
-                    <AccordionTab data-testid="setting-fields_tab">
+                    <AccordionTab >
                         <template #header>
                             <div class="w-full">
                                 <div>
@@ -86,7 +86,7 @@ onMounted(async () => {
                             </Column>
                         </DataTable>
                     </AccordionTab>
-                    <AccordionTab data-testid="setting-fields_tab">
+                    <AccordionTab >
                         <template #header>
                             <div class="w-full">
                                 <div>
