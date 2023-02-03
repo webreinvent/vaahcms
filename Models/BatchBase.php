@@ -1,4 +1,4 @@
-<?php namespace WebReinvent\VaahCms\Entities;
+<?php namespace WebReinvent\VaahCms\Models;
 
 use Carbon\Carbon;
 use DateTimeInterface;
@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
 
 
-class Batch extends Model {
+class BatchBase extends Model {
 
     //-------------------------------------------------
     protected $table = 'job_batches';
@@ -37,7 +37,6 @@ class Batch extends Model {
         $date_time_format = config('settings.global.datetime_format');
 
         return $date->format($date_time_format);
-
     }
 
     //-------------------------------------------------
@@ -79,14 +78,17 @@ class Batch extends Model {
     //-------------------------------------------------
     public function scopeBetweenDates($query, $from, $to,$by = 'created_at')
     {
-
         if($from)
         {
-            $from = Carbon::parse($from)->timestamp;
+            $from = \Carbon::parse($from)
+                ->setTimezone(env('APP_TIMEZONE'))
+                ->format('Y-m-d');
         }
         if($to)
         {
-            $to = Carbon::parse($to)->timestamp;
+            $to = \Carbon::parse($to)
+                ->setTimezone(env('APP_TIMEZONE'))
+                ->format('Y-m-d');
         }
         $query->whereBetween($by,[$from,$to]);
     }
@@ -95,13 +97,10 @@ class Batch extends Model {
     //-------------------------------------------------
     public static function getList($request)
     {
-
-
         $list = self::orderBy('created_at', 'DESC');
 
         if($request['trashed'] == 'true')
         {
-
             $list->withTrashed();
         }
 
@@ -110,7 +109,7 @@ class Batch extends Model {
         {
             if(isset($request->date_filter_by) && $request->date_filter_by){
                 $list->betweenDates($request['from'],$request['to'],$request->date_filter_by);
-            }else{
+            } else {
                 $list->betweenDates($request['from'],$request['to']);
             }
         }
@@ -124,15 +123,17 @@ class Batch extends Model {
             });
         }
 
+        if ($request->has('date_filter_by')) {
+            $data['list'] = $list->orderBy($request->date_filter_by,'desc')->paginate(config('vaahcms.per_page'));
+        } else {
+            $data['list'] = $list->orderBy('created_at','desc')->paginate(config('vaahcms.per_page'));
+        }
 
-        $data['list'] = $list->paginate(config('vaahcms.per_page'));
 
         $response['success'] = true;
         $response['data'] = $data;
 
         return $response;
-
-
     }
     //-------------------------------------------------
     public static function bulkDelete($request)
@@ -154,8 +155,10 @@ class Batch extends Model {
 
         foreach($request->inputs as $id)
         {
+            $id = (int) $id;
             $item = self::where('id', $id)->first();
-            if($item)
+
+            if ($item)
             {
                 $item->delete();
             }

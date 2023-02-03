@@ -211,7 +211,7 @@ class ExtendController extends Controller
             $list[4] = [
                 'url' => self::$link."/advanced/logs",
                 'icon'=> 'pi pi-database',
-                'label'=> 'Advanced',
+                'label'=> 'Advanced'
             ];
         }
 

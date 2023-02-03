@@ -11,6 +11,8 @@ import LogForm from '../pages/advanced/logs/Form.vue'
 import LogItem from '../pages/advanced/logs/Item.vue'
 import FailedJobList from '../pages/advanced/failedjobs/List.vue'
 import FailedJobItem from '../pages/advanced/failedjobs/Item.vue'
+import BatchList from '../pages/advanced/batches/List.vue'
+
 
 routes_list = {
 
@@ -79,6 +81,12 @@ routes_list = {
                             props: true,
                         }
                     ]
+                },
+                {
+                    path: 'batches',
+                    name: 'batches.index',
+                    component: BatchList,
+                    props: true
                 }
             ]
         }
