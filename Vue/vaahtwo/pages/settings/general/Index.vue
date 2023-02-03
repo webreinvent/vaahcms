@@ -1,3 +1,31 @@
+<script setup>
+import {onMounted, reactive, ref} from "vue";
+import {useRoute} from 'vue-router';
+import draggable from 'vuedraggable';
+import { vaah } from '../../../vaahvue/pinia/vaah'
+
+import {useGeneralStore} from "../../../stores/settings/store-general_setting";
+
+const store = useGeneralStore();
+const route = useRoute();
+
+import { useConfirm } from "primevue/useconfirm";
+
+const confirm = useConfirm();
+onMounted(async () => {
+
+    /**
+     * fetch assets required for the crud
+     * operation
+     */
+    await store.getAssets();
+
+    /**
+     * fetch list of records
+     */
+    await store.getList();
+});
+</script>
 <template>
     <div>
         <Card>
@@ -5,13 +33,13 @@
                 <div class="flex justify-content-between align-items-center w-full">
                     <h5 class="font-semibold text-lg">General Settings</h5>
                     <div>
-                        <Button label="Expand all" class="p-button-sm mr-2" @click="expandAll"></Button>
-                        <Button label="Collapse all" class="p-button-sm" @click="collapseAll"></Button>
+                        <Button label="Expand all" class="p-button-sm mr-2" @click="store.expandAll"></Button>
+                        <Button label="Collapse all" class="p-button-sm" @click="store.collapseAll"></Button>
                     </div>
                 </div>
             </template>
             <template #content>
-                <Accordion :multiple="true" :activeIndex="activeIndex" id="accordionTabContainer">
+                <Accordion :multiple="true" :activeIndex="store.active_index" id="accordionTabContainer">
                     <AccordionTab>
                         <template #header>
                             <div class="w-full">
@@ -22,57 +50,91 @@
                                 </div>
                             </div>
                         </template>
-                        <div class="grid justify-content-evenly">
+                        <div v-if="store.list" class="grid justify-content-evenly">
                             <div class="col-12 md:col-6 pr-4">
                                 <div class="grid p-fluid">
                                     <div class="col-12">
                                         <h5 class="p-1 text-xs mb-1">Site Title</h5>
                                         <div class="p-inputgroup">
-                                            <InputText class="" id="site-title"/>
-                                            <Button icon="pi pi-copy" class=""/>
+                                            <InputText v-model="store.list.site_title"
+                                                       data-testid="general-site_title"
+                                                       class="" id="site-title"/>
+                                            <Button icon="pi pi-copy"
+                                                    data-testid="general-site_title_copy"
+                                                    @click="store.getCopy('site_title')"/>
                                         </div>
                                     </div>
-                                    <div class="col-6">
+                                    <div class="col-5">
                                         <h5 class="p-1 text-xs mb-1">Default Site Language</h5>
-                                        <Dropdown v-model="selectedLanguage" :options="languages" placeholder="Select a Language"/>
+                                        <Dropdown v-model="store.list.language"
+                                                  :options="store.languages"
+                                                  optionLabel="name"
+                                                  data-testid="general-site_language"
+                                                  optionValue="locale_code_iso_639"
+                                                  placeholder="Select a Language"/>
                                     </div>
                                     <div class="col-6">
                                         <h5 class="p-1 text-xs mb-1">Redirect after Frontend Login</h5>
                                         <div class="p-inputgroup">
-                                            <InputText/>
-                                            <Button icon="pi pi-copy" class=""/>
+                                            <InputText v-model="store.list.redirect_after_frontend_login"
+                                                       data-testid="general-login_redirection"
+                                            />
+                                            <Button icon="pi pi-copy"
+                                                    data-testid="general-login_redirection_copy"
+                                                    @click="store.getCopy('redirect_after_frontend_login')"/>
                                         </div>
                                     </div>
-                                    <div class="col-7">
+                                    <div class="col-12">
                                         <h5 class="p-1 text-xs mb-1">Meta Description</h5>
                                         <div class="p-inputgroup">
-                                            <Textarea v-model="value" :autoResize="true" class="w-full"/>
-                                            <Button icon="pi pi-copy" class="has-max-height"/>
+                                            <Textarea v-model="store.list.site_description"
+                                                      :autoResize="true" class="w-full"/>
+                                            <Button icon="pi pi-copy"
+                                                    data-testid="general-site_description_copy"
+                                                    @click="store.getCopy('site_description')"
+                                                    class="has-max-height"/>
                                         </div>
                                     </div>
-                                    <div class="col-5">
-                                        <h5 class="p-1 text-xs mb-1">Meta Description</h5>
+                                    <div class="col-12">
+                                        <h5 class="p-1 text-xs mb-1">Search Engine Visibility</h5>
                                         <div class="p-inputgroup">
-                                            <SelectButton v-model="visibility" :options="visibitlityOptions" aria-labelledby="single"/>
-                                            <Button icon="pi pi-copy" class=""/>
+                                            <SelectButton v-model="store.list.search_engine_visibility"
+                                                          :options="store.visibitlity_options"
+                                                          optionLabel="name"
+                                                          optionValue="value"
+                                                          data-testid="general-visibility"
+                                                          aria-labelledby="single"/>
+                                            <Button icon="pi pi-copy"
+                                                    data-testid="general-visibility_copy"
+                                                    @click="store.getCopy('vh_search_engine_visibility')"
+                                            />
                                         </div>
                                     </div>
                                     <div class="col-12 p-fluid">
                                         <h5 class="p-1 text-xs mb-1">Assign Role(s) on Registration</h5>
-                                        <Chips v-model="registrationRoles" id="registration-roles" placeholder="Search"/>
+                                        <AutoComplete :multiple="true"
+                                              v-model="store.list.registration_roles"
+                                              :suggestions="store.filtered_registration_roles"
+                                              @complete="store.searchRegistrationRoles($event)"
+                                              optionValue="name"
+                                              optionLabel="name"
+                                              data-testid="general-registration_roles"
+                                              placeholder="Search"/>
                                     </div>
                                     <div class="col-12 p-fluid">
                                         <h5 class="p-1 text-xs mb-1">Allowed file types for upload</h5>
-                                        <Chips v-model="allowedFiles" id="allowed-files" inputClass="w-full" class="w-full"></Chips>
-                                    </div>
-                                    <div class="col-12">
-                                        <h5 class="p-1 text-xs mb-1">Redirect after Backend Logout</h5>
-                                        <div class="p-inputgroup">
-                                            <SelectButton v-model="redirectAfterLogout" :options="redirectAfterLogoutOptions"
-                                                          aria-labelledby="single" class="p-button-sm"/>
-                                            <InputText placeholder="Enter Redirection Link"
-                                                       :disabled="redirectAfterLogout !== 'Custom'"></InputText>
-                                        </div>
+                                        <Chips v-model="store.list.upload_allowed_files"
+                                               id="allowed-files"
+                                               data-testid="general-allowed_files"
+                                               inputClass="w-full" class="w-full"></Chips>
+                                        <AutoComplete :multiple="true"
+                                              v-model="store.list.upload_allowed_files"
+                                              :suggestions="store.filtered_allowed_files"
+                                              @complete="store.searchAllowedFiles($event)"
+                                              optionValue="slug"
+                                              optionLabel="name"
+                                              data-testid="general-allowed_files"
+                                              placeholder="Search"/>
                                     </div>
                                 </div>
                             </div>
@@ -82,77 +144,176 @@
                                         <h5 class="p-1 text-xs mb-1">Copyright Text</h5>
                                         <div class="p-inputgroup">
                                             <div class="field-radiobutton mr-2">
-                                                <RadioButton inputId="copyright-app-name" name="city" value="app-name" v-model="copyrightText" />
+                                                <RadioButton inputId="copyright-app-name"
+                                                             name="city"
+                                                             value="app-name"
+                                                             data-testid="general-copyright"
+                                                             v-model="store.list.copyright_text" />
                                                 <label for="copyright-app-name">Use App Name</label>
                                             </div>
                                             <div class="field-radiobutton">
-                                                <RadioButton inputId="copyright-custom" name="city" value="custom" v-model="copyrightText" />
+                                                <RadioButton inputId="copyright-custom"
+                                                             name="city"
+                                                             value="custom"
+                                                             data-testid="general-copyright_custom"
+                                                             v-model="store.list.copyright_text" />
                                                 <label for="copyright-custom">Custom</label>
                                             </div>
+                                            <Button icon="pi pi-copy"
+                                                    data-testid="general-copyright_custom_filed_copy"
+                                                    @click="store.getCopy('copyright_text')"
+                                            />
                                         </div>
-                                        <InputText class="w-full" v-if="copyrightText === 'custom'" placeholder="Enter Custom Text"></InputText>
+                                        <InputText class="w-full" v-if="store.list.copyright_text === 'custom'"
+                                                   data-testid="general-copyright_custom_filed"
+                                                   v-model="store.list.copyright_text"
+                                                   placeholder="Enter Custom Text"></InputText>
+
                                     </div>
                                     <div class="col-12">
                                         <h5 class="p-1 text-xs mb-1">Copyright Link</h5>
                                         <div class="p-inputgroup">
                                             <div class="field-radiobutton mr-2">
-                                                <RadioButton inputId="copyright-link" name="city" value="app-name" v-model="copyrightLink" />
+                                                <RadioButton inputId="copyright-link"
+                                                             name="city"
+                                                             value="app-name"
+                                                             data-testid="general-copyright_link"
+                                                             v-model="store.list.copyright_link" />
                                                 <label for="copyright-link">Use App Url</label>
                                             </div>
                                             <div class="field-radiobutton">
-                                                <RadioButton inputId="copyright-custom" name="city" value="custom" v-model="copyrightLink" />
-                                                <label for="copyright-custom">Custom</label>
+                                                <RadioButton inputId="copyright-custom_link"
+                                                             name="city"
+                                                             value="custom"
+                                                             data-testid="general-copyright_custom_link"
+                                                             v-model="store.list.copyright_link" />
+                                                <label for="copyright-custom_link">Custom</label>
                                             </div>
+                                            <Button icon="pi pi-copy"
+                                                    data-testid="general-copyright_custom_link_filed_copy"
+                                                    @click="store.getCopy('copyright_link')"
+                                            />
                                         </div>
-                                        <InputText class="w-full" v-if="copyrightLink === 'custom'" placeholder="Enter Custom Link"></InputText>
+                                        <InputText class="w-full"
+                                                   data-testid="general-copyright_custom_link_field"
+                                                   v-if="store.list.copyright_link === 'custom'"
+                                                   placeholder="Enter Custom Link"></InputText>
+
                                     </div>
                                     <div class="col-12">
                                         <h5 class="p-1 text-xs mb-1">Copyright Year</h5>
                                         <div class="p-inputgroup">
                                             <div class="field-radiobutton mr-2">
-                                                <RadioButton inputId="copyright-year" name="city" value="app-name" v-model="copyrightYear" />
+                                                <RadioButton inputId="copyright-year"
+                                                             data-testid="general-copyright_year"
+                                                             name="city" value="app-name"
+                                                             v-model="store.list.copyright_year" />
                                                 <label for="copyright-year">Use Current year</label>
                                             </div>
                                             <div class="field-radiobutton">
-                                                <RadioButton inputId="copyright-custom" name="city" value="custom" v-model="copyrightYear" />
-                                                <label for="copyright-custom">Custom</label>
+                                                <RadioButton inputId="copyright-custom_year"
+                                                             data-testid="general-copyright_year_custom"
+                                                             name="city" value="custom"
+                                                             v-model="store.list.copyright_year" />
+                                                <label for="copyright-custom_year">Custom</label>
                                             </div>
+                                            <Button icon="pi pi-copy"
+                                                    data-testid="general-copyright_custom_year_filed_copy"
+                                                    @click="store.getCopy('copyright_year')"
+                                            />
                                         </div>
-                                        <Calendar inputId="yearpicker" v-model="date10" view="year" dateFormat="yy"  v-if="copyrightYear === 'custom'" input-class="w-full" class="w-full"
+                                        <Calendar inputId="yearpicker" v-model="date10" view="year"
+                                                  dateFormat="yy"
+                                                  data-testid="general-copyright_yearcalender"
+                                                  v-if="store.list.copyright_year === 'custom'"
+                                                  input-class="w-full" class="w-full"
                                                   placeholder="Choose Copyright Year" />
+
                                     </div>
                                     <div class="col-6">
                                         <h5 class="p-1 text-xs mb-1">Max number of forgot password attempts</h5>
                                         <div class="p-inputgroup">
-                                            <InputNumber inputId="withoutgrouping" mode="decimal" :useGrouping="false"/>
-                                            <Button icon="pi pi-copy" class=""/>
+                                            <InputNumber inputId="withoutgrouping"
+                                                         v-model="store.list.maximum_number_of_forgot_password_attempts_per_session"
+                                                         data-testid="general-forgotpassword_attempts"
+                                                         :useGrouping="false"/>
+                                            <Button icon="pi pi-copy"
+                                                    data-testid="general-forgotpassword_attempts_copy"
+                                                    @click="store.getCopy('maximum_number_of_forgot_password_attempts_per_session')"/>
                                         </div>
                                     </div>
                                     <div class="col-6">
                                         <h5 class="p-1 text-xs mb-1">Maximum number of login attempts</h5>
                                         <div class="p-inputgroup">
-                                            <InputNumber inputId="withoutgrouping" mode="decimal" :useGrouping="false"/>
-                                            <Button icon="pi pi-copy" class=""/>
+                                            <InputNumber inputId="withoutgrouping"
+                                                         data-testid="general-login_attempts"
+                                                         v-model="store.list.maximum_number_of_login_attempts_per_session"
+                                                         :useGrouping="false"/>
+                                            <Button icon="pi pi-copy"
+                                                    data-testid="general-login_attempts_copy"
+                                                    @click="store.getCopy('maximum_number_of_login_attempts_per_session')"/>
                                         </div>
                                     </div>
-                                    <div class="col-4 p-fluid">
+                                    <div class="col-6 p-fluid">
                                         <h5 class="p-1 text-xs mb-1">Password Protection</h5>
-                                        <SelectButton v-model="passwordProtection" :options="passwordProtectionOptions" class="p-button-sm"
+                                        <SelectButton v-model="store.list.password_protection"
+                                                      optionLabel="name"
+                                                      optionValue="value"
+                                                      :options="store.password_protection_options"
+                                                      class="p-button-sm"
+                                                      data-testid="general-password_protection"
                                                       aria-labelledby="single"/>
                                     </div>
-                                    <div class="col-4 p-fluid">
+                                    <div class="col-6 p-fluid">
                                         <h5 class="p-1 text-xs mb-1">Laravel Queues</h5>
-                                        <SelectButton v-model="laravelQueues" :options="laravelQueuesOptions" class="p-button-sm" aria-labelledby="single"/>
+                                        <SelectButton v-model="store.list.laravel_queues"
+                                                      optionLabel="name"
+                                                      optionValue="value"
+                                                      :options="store.laravel_queues_options"
+                                                      data-testid="general-laravel_queues"
+                                                      class="p-button-sm" aria-labelledby="single"/>
                                     </div>
-                                    <div class="col-4 p-fluid">
+                                    <div class="col-6 p-fluid">
                                         <h5 class="p-1 text-xs mb-1">Maintenance Mode</h5>
-                                        <SelectButton v-model="maintenanceMode" :options="maintenanceModeOptions" class="p-button-sm" aria-labelledby="single"/>
+                                        <SelectButton v-model="store.list.maintenance_mode"
+                                                      optionLabel="name"
+                                                      optionValue="value"
+                                                      :options="store.maintenanceModeOptions"
+                                                      data-testid="general-maintenance_mode"
+                                                      class="p-button-sm" aria-labelledby="single"/>
+                                    </div>
+                                    <div class="col-12">
+                                        <h5 class="p-1 text-xs mb-1">Redirect after Backend Logout</h5>
+                                        <div class="p-inputgroup">
+                                            <SelectButton v-model="store.list.redirect_after_backend_logout"
+                                                          optionLabel="name"
+                                                          optionValue="value"
+                                                          :options="store.redirect_after_logout_options"
+                                                          data-testid="general-redirect_logout"
+                                                          aria-labelledby="single" class="p-button-sm"/>
+                                            <InputText placeholder="Enter Redirection Link"
+                                                       v-model="store.list.redirect_after_backend_logout_url"
+                                                       data-testid="general-redirect_logout_custom"
+                                                       :disabled="store.list.redirect_after_backend_logout !== 'custom'"></InputText>
+                                            <Button icon="pi pi-copy"
+                                                    data-testid="general-backend_logout_copy"
+                                                    @click="store.getCopy('redirect_after_backend_logout')"
+                                            />
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-12 mt-5">
-                                <Button label="Save Settings" icon="pi pi-save" class="mr-2 p-button-sm"></Button>
-                                <Button label="Clear Cache" icon="pi pi-trash" class="p-button-danger p-button-sm"></Button>
+                                <Button label="Save Settings"
+                                        icon="pi pi-save"
+                                        data-testid="general-save_site"
+                                        @click="store.storeSiteSettings"
+                                        class="mr-2 p-button-sm"></Button>
+                                <Button label="Clear Cache"
+                                        icon="pi pi-trash"
+                                        data-testid="general-clear_cache"
+                                        @click="store.clearCache"
+                                        class="p-button-danger p-button-sm"></Button>
                             </div>
                         </div>
                     </AccordionTab>
@@ -163,57 +324,55 @@
                                 <p class="text-color-secondary text-xs">Global date and time settings.</p>
                             </div>
                         </template>
-                        <div class="grid">
+                        <div v-if="store.list" class="grid">
                             <div class="col-4">
                                 <h5 class="p-1 text-xs mb-1">Date Format</h5>
                                 <div class="p-inputgroup">
-                                    <Dropdown v-model="dateFormat" :options="dateFormatOptions"></Dropdown>
-                                    <InputText placeholder="Enter Custom date format" v-if="dateFormat === 'Custom'"></InputText>
-                                    <Button icon="pi pi-copy" class=""/>
+                                    <Dropdown v-model="store.list.date_format"
+                                              data-testid="general-date_format"
+                                              :options="store.date_format_options"></Dropdown>
+                                    <InputText placeholder="Enter Custom date format"
+                                               data-testid="general-date_format_custom"
+                                               v-if="store.list.date_format === 'Custom'"></InputText>
+                                    <Button icon="pi pi-copy"
+                                            data-testid="general-date_format_copy"
+                                            @click="store.getCopy('date_format')"/>
                                 </div>
                             </div>
                             <div class="col-4">
                                 <h5 class="p-1 text-xs mb-1">Time Format</h5>
                                 <div class="p-inputgroup">
-                                    <Dropdown v-model="timeFormat" :options="timeFormatOptions"></Dropdown>
-                                    <InputText placeholder="Enter Custom time format" v-if="timeFormat === 'Custom'"></InputText>
-                                    <Button icon="pi pi-copy" class=""/>
+                                    <Dropdown v-model="store.list.time_format"
+                                              data-testid="general-time_format"
+                                              :options="store.time_format_options"></Dropdown>
+                                    <InputText placeholder="Enter Custom time format"
+                                               data-testid="general-time_format_custom"
+                                               v-if="store.list.time_format === 'Custom'"></InputText>
+                                    <Button icon="pi pi-copy"
+                                            data-testid="general-time_format_copy"
+                                            @click="store.getCopy('time_format')"/>
                                 </div>
                             </div>
                             <div class="col-4">
                                 <h5 class="p-1 text-xs mb-1">Date Time Format</h5>
                                 <div class="p-inputgroup">
-                                    <Dropdown v-model="dateTimeFormat" :options="dateTimeFormatOptions"></Dropdown>
-                                    <InputText placeholder="Enter Custom date-time format" v-if="dateTimeFormat === 'Custom'"></InputText>
-                                    <Button icon="pi pi-copy" class=""/>
+                                    <Dropdown v-model="store.list.datetime_format"
+                                              data-testid="general-datetime_format"
+                                              :options="store.date_time_format_options"></Dropdown>
+                                    <InputText placeholder="Enter Custom date-time format"
+                                               data-testid="general-datetime_format_custom"
+                                               v-if="store.list.datetime_format === 'Custom'"></InputText>
+                                    <Button icon="pi pi-copy"
+                                            data-testid="general-datetime_format_copy"
+                                            @click="store.getCopy('datetime_format')"/>
                                 </div>
                             </div>
-                            <!--<div class="col-6">
-                              <h5 class="text-left p-1">Date Format</h5>
-                              <div class="p-inputgroup">
-                                <SelectButton v-model="dateFormat" :options="dateFormatOptions" aria-labelledby="single"/>
-                                <InputText v-if="dateFormat === 'Custom'"></InputText>
-                                <Button icon="pi pi-copy" class=""/>
-                              </div>
-                            </div>
-                            <div class="col-6">
-                              <h5 class="text-left p-1">Time Format</h5>
-                              <div class="p-inputgroup">
-                                <SelectButton v-model="timeFormat" :options="timeFormatOptions" aria-labelledby="single"/>
-                                <InputText v-if="timeFormat === 'Custom'"></InputText>
-                                <Button icon="pi pi-copy" class=""/>
-                              </div>
-                            </div>
-                            <div class="col-6">
-                              <h5 class="text-left p-1">Date Time Format</h5>
-                              <div class="p-inputgroup">
-                                <SelectButton v-model="dateTimeFormat" :options="dateTimeFormatOptions" aria-labelledby="single"/>
-                                <InputText v-if="dateTimeFormat === 'Custom'"></InputText>
-                                <Button icon="pi pi-copy" class=""/>
-                              </div>
-                            </div>-->
                             <div class="col-12 mt-5">
-                                <Button label="Save Settings" icon="pi pi-save" class="mr-2 p-button-sm"></Button>
+                                <Button label="Save Settings"
+                                        @click="store.storeSiteSettings()"
+                                        data-testid="general-date_format_save"
+                                        icon="pi pi-save"
+                                        class="mr-2 p-button-sm"></Button>
                             </div>
                         </div>
                     </AccordionTab>
@@ -225,29 +384,51 @@
                             </div>
                         </template>
                         <div class="grid">
-
-                            <div class="col-12 md:col-4" v-for="(item,index) in socialMediaLinks">
-                                <h5 class="p-1 text-xs mb-1">{{ item.title }}</h5>
+                            <div class="col-12 md:col-4" v-for="(item,index) in store.social_media_links">
+                                <h5 class="p-1 text-xs mb-1">{{ vaah().toLabel(item.label) }}</h5>
                                 <div class="p-inputgroup p-fluid">
-                  <span class="p-input-icon-left">
-                    <i :class="'pi z-5 ' + item.icon"/>
-                    <InputText type="text" :placeholder="'Enter ' + item.title + ' Link'" class="w-full p-inputtext-sm"/>
-                  </span>
-                                    <Button icon="pi pi-copy" class=" p-button-sm"/>
-                                    <Button icon="pi pi-trash" class="p-button-danger p-button-sm"/>
+                                    <span class="p-input-icon-left">
+                                        <i :class="item.icon?'pi z-5 '+item.icon:'pi z-5 pi-link'"/>
+                                        <InputText type="text"
+                                                   :data-testid="'general-'+item.label+'field'"
+                                               v-model="item.value"
+                                               :placeholder="'Enter ' + item.label + ' Link'"
+                                               class="w-full p-inputtext-sm"/>
+                                    </span>
+                                    <Button icon="pi pi-copy"
+                                            data-testid="general-link_copy"
+                                            :disabled="!item.id"
+                                            @click="store.getCopy(item.key)"
+                                            class=" p-button-sm"/>
+                                    <Button icon="pi pi-trash"
+                                            data-testid="general-link_remove"
+                                            @click="store.removeVariable(item)"
+                                            class="p-button-danger p-button-sm"/>
                                 </div>
                             </div>
                         </div>
                         <div class="grid mt-5">
                             <div class="col-12 md:col-4">
                                 <div class="p-inputgroup">
-                                    <InputText v-model="addLink" v-if="showLinkInput" class="p-inputtext-sm"></InputText>
-                                    <Button label="Add Link" icon="pi pi-plus" class="p-button-sm" @click="addLinkHandler"></Button>
+                                    <InputText v-model="store.add_link"
+                                               data-testid="general-add_link_field"
+                                               icon= "pi pi-link"
+                                               v-if="store.show_link_input"
+                                               class="p-inputtext-sm"></InputText>
+                                    <Button label="Add Link" icon="pi pi-plus"
+                                            class="p-button-sm"
+                                            data-testid="general-add_link_btn"
+                                            :disabled="!store.add_link"
+                                            @click="store.addLinkHandler"></Button>
                                 </div>
                             </div>
                             <div class="col-12 md:col-8">
                                 <div class="p-inputgroup justify-content-end">
-                                    <Button label="Save" icon="pi pi-save" class="p-button-sm"></Button>
+                                    <Button label="Save"
+                                            icon="pi pi-save"
+                                            data-testid="general-link_save"
+                                            @click="store.storeLinks()"
+                                            class="p-button-sm"></Button>
                                 </div>
                             </div>
                         </div>
@@ -263,29 +444,64 @@
                             <div class="col-12 md:col-6 pr-3">
                                 <h5 class="p-1 text-xs mb-1">After head tag start (&lt;head&gt;)</h5>
                                 <div class="p-inputgroup">
-                                    <Textarea v-model="value" :autoResize="true" class="w-full"/>
-                                    <Button icon="pi pi-copy" class="has-max-height"/>
+                                    <Textarea v-model="store.script_tag.script_after_head_start"
+                                              :autoResize="true"
+                                              data-testid="general-script_head_start"
+                                              class="w-full"/>
+                                    <Button icon="pi pi-copy"
+                                            data-testid="general-script_head_start_copy"
+                                            @click="store.getCopy('script_after_head_start')"
+                                            class="has-max-height"/>
                                 </div>
                             </div>
                             <div class="col-12 md:col-6 pl-3">
                                 <h5 class="p-1 text-xs mb-1">After head tag close (&lt;/head&gt;)</h5>
                                 <div class="p-inputgroup">
-                                    <Textarea v-model="value" :autoResize="true" class="w-full"/>
-                                    <Button icon="pi pi-copy" class="has-max-height"/>
+                                    <Textarea v-model="store.script_tag.script_before_head_close"
+                                              :autoResize="true"
+                                              data-testid="general-script_head_close"
+                                              class="w-full"/>
+                                    <Button icon="pi pi-copy"
+                                            data-testid="general-script_head_close_copy"
+                                            @click="store.getCopy('script_before_head_close')"
+                                            class="has-max-height"/>
                                 </div>
                             </div>
                             <div class="col-12 md:col-6 pr-3">
                                 <h5 class="p-1 text-xs mb-1">After body tag start (&lt;body&gt;)</h5>
                                 <div class="p-inputgroup">
-                                    <Textarea v-model="value" :autoResize="true" class="w-full"/>
-                                    <Button icon="pi pi-copy" class="has-max-height"/>
+                                    <Textarea v-model="store.script_tag.script_after_body_start"
+                                              :autoResize="true"
+                                              data-testid="general-script_body_start"
+                                              class="w-full"/>
+                                    <Button icon="pi pi-copy"
+                                            data-testid="general-script_body_start_copy"
+                                            @click="store.getCopy('script_after_body_start')"
+                                            class="has-max-height"/>
                                 </div>
                             </div>
                             <div class="col-12 md:col-6 pl-3">
                                 <h5 class="p-1 text-xs mb-1">After body tag close (&lt;/body&gt;)</h5>
                                 <div class="p-inputgroup">
-                                    <Textarea v-model="value" :autoResize="true" class="w-full"/>
-                                    <Button icon="pi pi-copy" class="has-max-height"/>
+                                    <Textarea v-model="store.script_tag.script_before_body_close"
+                                              :autoResize="true"
+                                              data-testid="general-script_body_close"
+                                              class="w-full"/>
+                                    <Button icon="pi pi-copy"
+                                            data-testid="general-script_body_close_copy"
+                                            @click="store.getCopy('script_before_body_close')"
+                                            class="has-max-height"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="grid mt-5">
+                            <div class="col-12">
+                                <div class="p-inputgroup justify-content-end">
+                                    <Button label="Save"
+                                            icon="pi pi-save"
+                                            data-testid="general-script_save"
+                                            @click="store.storeScript()"
+                                            class="p-button-sm"></Button>
                                 </div>
                             </div>
                         </div>
@@ -298,71 +514,52 @@
                             </div>
                         </template>
                         <div class="grid">
-                            <div class="col-12">
+                            <div class="col-12" v-if="store.meta_tag" v-for="(item,index) in store.meta_tag">
                                 <h5 class="p-1 text-xs mb-1">Meta Tag</h5>
                                 <div class="p-inputgroup">
-                                    <Dropdown input-class=""></Dropdown>
-                                    <InputText></InputText>
+                                    <Dropdown v-model="item.value.attribute"
+                                              :options="store.assets.vh_meta_attributes"
+                                              optionLabel="name"
+                                              optionValue="slug"
+                                              data-testid="general-metatags_attributes"
+                                              placeholder="Select any"
+                                    />
+                                    <InputText v-model="item.value.attribute_value"
+                                               data-testid="general-metatags_attributes_value"></InputText>
                                     <Button label="Content" disabled=""></Button>
-                                    <InputText></InputText>
+                                    <InputText v-model="item.value.content"
+                                               data-testid="general-metatags_attributes_content"></InputText>
+                                    <Button icon="pi pi-trash"
+                                            data-testid="general-remove_tag"
+                                            @click="store.removeMetaTags(item)"/>
+                                </div>
+                            </div>
+                            <div class="col-12 md:col-8">
+                                <div class="p-inputgroup">
+                                    <Button icon="pi pi-plus"
+                                            data-testid="general-add_newtag"
+                                            @click="store.addMetaTags"
+                                            label="Add Meta Tag"></Button>
+                                    <Button label="Save"
+                                            @click="store.storeTags"
+                                            data-testid="general-meta_tag-save" ></Button>
+                                    <Button icon="pi pi-copy"
+                                            data-testid="general-meta_tag_copy"
+                                            @click="store.getCopy('meta_tags')"></Button>
                                 </div>
                             </div>
                             <div class="col-12 md:col-4">
                                 <div class="p-inputgroup">
-                                    <Button icon="pi pi-plus" label="Add Meta Tag" ></Button>
-                                    <Button label="Save"></Button>
-                                    <Button icon="pi pi-copy"></Button>
-                                </div>
-                            </div>
-                            <div class="col-12 md:col-4">
-                                <div class="p-inputgroup">
-                                    <Dropdown v-model="metaOption" :options="metaOptions" option-label="label" option-value="value"></Dropdown>
-                                    <Button label="Generate"></Button>
-                                </div>
-                            </div>
-                        </div>
-                    </AccordionTab>
-                    <AccordionTab>
-                        <template #header>
-                            <div class="w-full">
-                                <h5 class="font-semibold text-sm">Securities</h5>
-                                <p class="text-color-secondary text-xs">Enable and choose multiple methods of authentication</p>
-                            </div>
-                        </template>
-                        <div class="grid">
-                            <div class="col-12">
-                                <h4 class="font-semibold text-sm">Multi-Factor Authentication</h4>
-                                <p class="text-color-secondary text-xs font-semibold">Require a email OTP, sms OTP or authenticator app verification when you login with password.</p>
-                            </div>
-                            <div class="col-12">
-                                <div class="field">
-                                    <div class="field-radiobutton">
-                                        <RadioButton inputId="city1" name="city" value="Chicago" v-model="city" />
-                                        <label for="city1">Disable</label>
-                                    </div>
-                                    <div class="field-radiobutton">
-                                        <RadioButton inputId="city2" name="city" value="Los Angeles" v-model="city" />
-                                        <label for="city2">Enable for all users</label>
-                                    </div>
-                                    <div class="field-radiobutton">
-                                        <RadioButton inputId="city3" name="city" value="New York" v-model="city" />
-                                        <label for="city3">Users will have option to enable it</label>
-                                    </div>
-                                </div>
-                                <div class="field">
-                                    <h5 class="mb-3 font-semibold text-sm">MFA Methods</h5>
-                                    <div class="field-checkbox">
-                                        <Checkbox inputId="binary" class="is-small" v-model="checked" :binary="true" />
-                                        <label for="binary">Email OTP Verification</label>
-                                    </div>
-                                    <div class="field-checkbox">
-                                        <Checkbox inputId="binary" class="is-small" v-model="checked" :binary="true" />
-                                        <label for="binary">SMS OTP Verification</label>
-                                    </div>
-                                    <div class="field-checkbox">
-                                        <Checkbox inputId="binary" class="is-small" v-model="checked" :binary="true" />
-                                        <label for="binary">Authenticator App (only user can enable this)</label>
-                                    </div>
+                                    <Dropdown v-model="store.tag_type"
+                                              :options="[
+                                                  {name:'Google Webmaster',value:'google-webmaster'},
+                                                  {name:'Open Graph (Facebook)',value:'open-graph'},
+                                              ]"
+                                              data-testid="general-gegnerate_tag"
+                                              optionLabel="name"
+                                              optionValue="value"
+                                              placeholder="Select a type"/>
+                                    <Button label="Generate" @click="store.generateTags"></Button>
                                 </div>
                             </div>
                         </div>
@@ -372,107 +569,3 @@
         </Card>
     </div>
 </template>
-
-<script>
-export default {
-    name: "GeneralSettings",
-
-    data() {
-        return {
-            activeIndex: [0],
-            languages: ['English', 'Russian', 'Spanish'],
-            selectedLanguage: 'English',
-            visibility: 'Visible',
-            visibitlityOptions: ['Visible', 'Invisible'],
-            copyrightText: 'app-name',
-            copyrightTextOptions: [{
-                label:'Use App Name',
-                value:'app-name'
-            },
-                {
-                    label:'Custom',
-                    value: 'custom'
-                }
-            ],
-            copyrightLink: 'Use App Url',
-            copyrightLinkOptions: [
-                {
-                    label:'Use App Url',
-                    value:'app-url'
-                },
-                {
-                    label:'Custom',
-                    value: 'custom'
-                }
-            ],
-            copyrightYear: 'Use Current Year',
-            copyrightYearOptions: [
-                {
-                    label:'Use Current Year',
-                    value:'current-year'
-                },
-                {
-                    label:'Custom',
-                    value: 'custom'
-                }
-            ],
-            maintenanceMode: 'Disable',
-            maintenanceModeOptions: ['Disable', 'Enable'],
-            passwordProtection: 'Disable',
-            passwordProtectionOptions: ['Disable', 'Enable'],
-            laravelQueues: 'Enable',
-            laravelQueuesOptions: ['Disable', 'Enable'],
-            redirectAfterLogout: 'Backend',
-            redirectAfterLogoutOptions: ['Backend', 'Frontend', 'Custom'],
-            registrationRoles: ['Registered'],
-            allowedFiles: ['jpg', 'jpeg'],
-            dateFormatOptions: ['y-m-d', 'y/m/d', 'y.m.d', 'Custom'],
-            dateFormat: 'y-m-d',
-            timeFormatOptions: ['H:i:s', 'h:i A', 'h:i:s A', 'Custom'],
-            timeFormat: 'H:i:s',
-            dateTimeFormatOptions: ['Y-m-d H:i:s', 'Y-m-d h:i A', 'd-M-Y H:i', 'Custom'],
-            dateTimeFormat: 'Y-m-d H:i:s',
-            socialMediaLinks: [{title:'Facebook',icon:'pi-facebook'}, {title:'Twitter',icon:'pi-twitter'}, {title:'Linkedin',icon:'pi-linkedin'}, {title:'Youtube',icon:'pi-youtube'}, {title:'Instagram',icon:'pi-instagram'}, {title:'Github',icon:'pi-github'}],
-            addLink: null,
-            showLinkInput: true,
-            metaOption:null,
-            metaOptions: [
-                {
-                    label:'Google Webmaster',
-                    value:'google-webmaster'
-                },
-                {
-                    label:'Open Graph (Facebook)',
-                    value: 'open-graph-fb'
-                }
-            ],
-
-        }
-    },
-
-    methods: {
-        expandAll() {
-            let accordionTabs = document.getElementById('accordionTabContainer').children.length;
-            for (let i = 0; i <= accordionTabs; i++) {
-                this.activeIndex.push(i);
-            }
-        },
-        collapseAll() {
-            this.activeIndex = [];
-        },
-        addLinkHandler() {
-            if (!this.showLinkInput) {
-                return this.showLinkInput = true;
-            } else if (this.showLinkInput && this.addLink !== "" && this.addLink !== null) {
-                this.socialMediaLinks.push({title:this.addLink,icon:'pi-link'});
-                this.addLink = null;
-                return this.showLinkInput = true;
-            }
-        }
-    }
-}
-</script>
-
-<style lang="scss">
-
-</style>
