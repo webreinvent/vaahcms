@@ -21,5 +21,6 @@ routes = routes.concat(users);
 routes = routes.concat(permissions);
 routes = routes.concat(settings);
 routes = routes.concat(registrations);
+routes = routes.concat(modules);
 
 export default routes;
