@@ -12,7 +12,7 @@ use WebReinvent\VaahCms\Models\Job;
 use WebReinvent\VaahCms\Models\Module;
 use WebReinvent\VaahCms\Entities\Setting;
 use WebReinvent\VaahCms\Models\Theme;
-use WebReinvent\VaahCms\Http\Controllers\Advanced\LogsController;
+use WebReinvent\VaahCms\Http\Controllers\Backend\Advanced\LogsController;
 use WebReinvent\VaahCms\Libraries\VaahStr;
 use WebReinvent\VaahCms\Models\Permission;
 use WebReinvent\VaahCms\Models\Role;
