@@ -9,6 +9,8 @@ import advanced from "./vue-routes-advanced";
 import permissions from "./vue-routes-permissions";
 import settings from "./vue-routes-settings";
 import registrations from "./vue-routes-registrations";
+import media from "./vue-routes-media";
+import taxonomies from "./vue-routes-taxonomies";
 import modules from "./vue-routes-modules";
 import themes from "./vue-routes-themes";
 
@@ -21,6 +23,9 @@ routes = routes.concat(users);
 routes = routes.concat(permissions);
 routes = routes.concat(settings);
 routes = routes.concat(registrations);
+routes = routes.concat(media);
+routes = routes.concat(taxonomies);
 routes = routes.concat(modules);
+routes = routes.concat(themes);
 
 export default routes;
