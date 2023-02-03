@@ -89,7 +89,7 @@ Route::group(
     ],
     function () {
         //------------------------------------------------
-        Route::post( '/notices/mark-as-read', 'Settings\NotificationsController@markAsRead' )
+        Route::post( '/notices/mark-as-read', 'Backend\Settings\NotificationsController@markAsRead' )
             ->name( 'vh.backend.notices.mark_as_read' );
         //------------------------------------------------
 

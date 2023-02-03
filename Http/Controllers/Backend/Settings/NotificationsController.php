@@ -1,6 +1,6 @@
 <?php
 
-namespace WebReinvent\VaahCms\Http\Controllers\Settings;
+namespace WebReinvent\VaahCms\Http\Controllers\Backend\Settings;
 
 
 use Illuminate\Http\Request;
@@ -190,7 +190,6 @@ class NotificationsController extends Controller
         $translated = vh_translate_dynamic_strings($params);
 
         */
-
 
         $response = Notification::send(Notification::find($request->notification_id),
             User::find($request->user_id), $request->all());

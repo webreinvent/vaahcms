@@ -9,6 +9,7 @@ export const useRootStore = defineStore({
     id: 'root',
     state: () => ({
         assets: null,
+        active_item:null,
         assets_is_fetching: true,
         base_url: base_url,
         ajax_url: ajax_url,
@@ -211,6 +212,33 @@ export const useRootStore = defineStore({
         hideProgress()
         {
             this.show_progress_bar = false;
+        },
+        async markAsRead(item, dismiss=false){
+
+            let options = {
+                method:'post',
+                params:item,
+            };
+            this.active_item = item;
+            this.active_item.dismiss = dismiss;
+
+            await vaah().ajax(
+                this.ajax_url+'/notices/mark-as-read',
+                this.markAsReadAfter,
+                options
+            );
+        },
+        markAsReadAfter(data, res){
+            let item  = this.active_item;
+
+            let list = vaah().removeInArrayByKey(this.assets.vue_notices, this.active_item, 'id');
+            this.assets.vue_notices = list;
+            this.active_item = null;
+            if(item.meta && item.meta.action
+                && item.meta.action.link && item.dismiss != true)
+            {
+                window.location.href = item.meta.action.link;
+            }
         }
 
     }

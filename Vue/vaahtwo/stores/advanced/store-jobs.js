@@ -1,13 +1,12 @@
 import {watch} from 'vue'
 import {acceptHMRUpdate, defineStore} from 'pinia'
 import qs from 'qs'
-import {vaah} from '../vaahvue/pinia/vaah'
+import {vaah} from '../../vaahvue/pinia/vaah'
 
-let model_namespace = 'WebReinvent\\VaahCms\\Models\\FailedJob';
-
+let model_namespace = 'WebReinvent\\VaahCms\\Models\\Job';
 
 let base_url = document.getElementsByTagName('base')[0].getAttribute("href");
-let ajax_url = base_url + "/vaah/failedjobs";
+let ajax_url = base_url + "/vaah/jobs";
 
 let empty_states = {
     query: {
@@ -18,6 +17,7 @@ let empty_states = {
             is_active: null,
             trashed: null,
             sort: null,
+            queue: null,
         },
     },
     action: {
@@ -26,8 +26,8 @@ let empty_states = {
     }
 };
 
-export const useFailedJobStore = defineStore({
-    id: 'failedjobs',
+export const useJobStore = defineStore({
+    id: 'jobs',
     state: () => ({
         base_url: base_url,
         ajax_url: ajax_url,
@@ -63,9 +63,8 @@ export const useFailedJobStore = defineStore({
         item_menu_list: [],
         item_menu_state: null,
         form_menu_list: [],
-        failedJobModal:false,
-        failedJobContent:null,
-        failedJobContentHeading:null
+        payloadModal:false,
+        payloadContent:null,
     }),
     getters: {
 
@@ -94,7 +93,7 @@ export const useFailedJobStore = defineStore({
         {
             switch(route_name)
             {
-                case 'failedjobs.index':
+                case 'jobs.index':
                     this.view = 'large';
                     this.list_view_width = 12;
                     break;
@@ -222,7 +221,7 @@ export const useFailedJobStore = defineStore({
             {
                 this.item = data;
             }else{
-                this.$router.push({name: 'failedjobs.index'});
+                this.$router.push({name: 'jobs.index'});
             }
             await this.getItemMenu();
             await this.getFormMenu();
@@ -244,6 +243,50 @@ export const useFailedJobStore = defineStore({
             }
 
             return true;
+        },
+        //---------------------------------------------------------------------
+        async updateList(type = null){
+
+            if(!type && this.action.type)
+            {
+                type = this.action.type;
+            } else{
+                this.action.type = type;
+            }
+
+            if(!this.isListActionValid())
+            {
+                return false;
+            }
+
+
+            let method = 'PUT';
+
+            switch (type)
+            {
+                case 'delete':
+                    method = 'DELETE';
+                    break;
+            }
+
+            let options = {
+                params: this.action,
+                method: method,
+                show_success: false
+            };
+            await vaah().ajax(
+                this.ajax_url,
+                this.updateListAfter,
+                options
+            );
+        },
+        //---------------------------------------------------------------------
+        async updateListAfter(data, res) {
+            if(data)
+            {
+                this.action = vaah().clone(this.empty_action);
+                await this.getList();
+            }
         },
         //---------------------------------------------------------------------
         async listAction(type = null){
@@ -302,6 +345,28 @@ export const useFailedJobStore = defineStore({
             switch (type)
             {
                 /**
+                 * Create a record, hence method is `POST`
+                 * https://docs.vaah.dev/guide/laravel.html#create-one-or-many-records
+                 */
+                case 'create-and-new':
+                case 'create-and-close':
+                case 'create-and-clone':
+                    options.method = 'POST';
+                    options.params = item;
+                    break;
+
+                /**
+                 * Update a record with many columns, hence method is `PUT`
+                 * https://docs.vaah.dev/guide/laravel.html#update-a-record-update-soft-delete-status-change-etc
+                 */
+                case 'save':
+                case 'save-and-close':
+                case 'save-and-clone':
+                    options.method = 'PUT';
+                    options.params = item;
+                    ajax_url += '/'+item.id
+                    break;
+                /**
                  * Delete a record, hence method is `DELETE`
                  * and no need to send entire `item` object
                  * https://docs.vaah.dev/guide/laravel.html#delete-a-record-hard-deleted
@@ -343,6 +408,21 @@ export const useFailedJobStore = defineStore({
         {
             switch (this.form.action)
             {
+                case 'create-and-new':
+                case 'save-and-new':
+                    this.setActiveItemAsEmpty();
+                    break;
+                case 'create-and-close':
+                case 'save-and-close':
+                    this.setActiveItemAsEmpty();
+                    this.$router.push({name: 'jobs.index'});
+                    break;
+                case 'save-and-clone':
+                    this.item.id = null;
+                    break;
+                case 'trash':
+                    this.item = null;
+                    break;
                 case 'delete':
                     this.item = null;
                     this.toList();
@@ -504,16 +584,34 @@ export const useFailedJobStore = defineStore({
             await this.updateUrlQueryString(this.query);
         },
         //---------------------------------------------------------------------
+        closeForm()
+        {
+            this.$router.push({name: 'jobs.index'})
+        },
+        //---------------------------------------------------------------------
         toList()
         {
             this.item = vaah().clone(this.assets.empty_item);
-            this.$router.push({name: 'failedjobs.index'})
+            this.$router.push({name: 'jobs.index'})
+        },
+        //---------------------------------------------------------------------
+        toForm()
+        {
+            this.item = vaah().clone(this.assets.empty_item);
+            this.getFormMenu();
+            this.$router.push({name: 'jobs.form'})
         },
         //---------------------------------------------------------------------
         toView(item)
         {
             this.item = vaah().clone(item);
-            this.$router.push({name: 'failedjobs.view', params:{id:item.id}})
+            this.$router.push({name: 'jobs.view', params:{id:item.id}})
+        },
+        //---------------------------------------------------------------------
+        toEdit(item)
+        {
+            this.item = item;
+            this.$router.push({name: 'jobs.form', params:{id:item.id}})
         },
         //---------------------------------------------------------------------
         isViewLarge()
@@ -640,6 +738,30 @@ export const useFailedJobStore = defineStore({
             {
                 form_menu = [
                     {
+                        label: 'Save & Close',
+                        icon: 'pi pi-check',
+                        command: () => {
+
+                            this.itemAction('save-and-close');
+                        }
+                    },
+                    {
+                        label: 'Save & Clone',
+                        icon: 'pi pi-copy',
+                        command: () => {
+
+                            this.itemAction('save-and-clone');
+
+                        }
+                    },
+                    {
+                        label: 'Trash',
+                        icon: 'pi pi-times',
+                        command: () => {
+                            this.itemAction('trash');
+                        }
+                    },
+                    {
                         label: 'Delete',
                         icon: 'pi pi-trash',
                         command: () => {
@@ -650,6 +772,22 @@ export const useFailedJobStore = defineStore({
 
             } else{
                 form_menu = [
+                    {
+                        label: 'Create & Close',
+                        icon: 'pi pi-check',
+                        command: () => {
+                            this.itemAction('create-and-close');
+                        }
+                    },
+                    {
+                        label: 'Create & Clone',
+                        icon: 'pi pi-copy',
+                        command: () => {
+
+                            this.itemAction('create-and-clone');
+
+                        }
+                    },
                     {
                         label: 'Reset',
                         icon: 'pi pi-refresh',
@@ -672,12 +810,12 @@ export const useFailedJobStore = defineStore({
 
         },
         //---------------------------------------------------------------------
-        viewFailedJobsContent(content,heading)
+        viewPayloads(content)
         {
-            this.failedJobContentHeading= heading;
-            this.failedJobContent = `<pre class="is-size-6">`+JSON.stringify(content, null, 2)+ `</pre>`;
-            this.failedJobModal=true
+            this.payloadContent = `<pre class="is-size-6">`+JSON.stringify(content, null, 2)+ `</pre>`;
+            this.payloadModal=true
         },
+        //---------------------------------------------------------------------
     }
 });
 
@@ -685,5 +823,5 @@ export const useFailedJobStore = defineStore({
 
 // Pinia hot reload
 if (import.meta.hot) {
-    import.meta.hot.accept(acceptHMRUpdate(useFailedJobStore, import.meta.hot))
+    import.meta.hot.accept(acceptHMRUpdate(useJobStore, import.meta.hot))
 }

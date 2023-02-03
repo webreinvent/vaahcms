@@ -1,6 +1,6 @@
 <?php
 
-namespace WebReinvent\VaahCms\Http\Controllers\Settings;
+namespace WebReinvent\VaahCms\Http\Controllers\Backend\Settings;
 
 
 use Illuminate\Http\Request;
@@ -15,9 +15,10 @@ use WebReinvent\VaahCms\Libraries\VaahBackup;
 use WebReinvent\VaahCms\Libraries\VaahHelper;
 use WebReinvent\VaahCms\Libraries\VaahSetup;
 use WebReinvent\VaahCms\Models\Role;
+use WebReinvent\VaahCms\Models\User;
 
 
-class EnvController extends Controller
+class UserSettingController extends Controller
 {
 
     //----------------------------------------------------------
@@ -38,15 +39,8 @@ class EnvController extends Controller
             return response()->json($response);
         }
 
-
-        $data['is_installed'] = VaahSetup::isInstalled();
-        $data['environments'] = vh_environments();
         $data['timezones'] = vh_get_timezones();
-        $data['database_types'] = vh_database_types();
-        $data['mail_encryption_types'] = vh_mail_encryption_types();
-        $data['mail_sample_settings'] = vh_mail_sample_settings();
         $data['country_calling_codes'] = vh_get_countries_calling_codes();
-        $data['app_url'] = url("/");
 
         $response['success'] = true;
         $response['data'] = $data;
@@ -65,19 +59,25 @@ class EnvController extends Controller
             return response()->json($response);
         }
 
-        $data = [];
+        $fields = Setting::where('category','user_setting')
+            ->where('label','field')
+            ->select('id','key','label','type','value')->get();
 
-        $data['env_file'] = VaahSetup::getActiveEnvFileName();
-        $data['list'] = VaahSetup::getEnvFileVariables(null, 'list');
+        $custom_fields = Setting::where('category','user_setting')
+            ->where('label','custom_fields')
+            ->select('id','key','label','type','value')
+            ->first();
 
         $response['success'] = true;
-        $response['data'] = $data;
+        $response['data']['list']['fields'] = $fields;
+        $response['data']['list']['custom_fields'] = $custom_fields;
 
         return response()->json($response);
 
     }
+
     //----------------------------------------------------------
-    public function downloadFile(Request $request,$file_name)
+    public function storeCustomField(Request $request)
     {
 
         if(!\Auth::user()->hasPermission('has-access-of-setting-section'))
@@ -88,18 +88,40 @@ class EnvController extends Controller
             return response()->json($response);
         }
 
-        if(!$file_name || !File::exists(base_path('/'.$file_name))){
-            return 'No File Found.';
+        $inputs = $request->item;
+
+
+        $rules = array(
+            'value.*.name' => 'required',
+        );
+        $validator = \Validator::make( $inputs, $rules);
+        if ( $validator->fails() ) {
+
+            $errors             = errorsToArray($validator->errors());
+            $response['success'] = false;
+            $response['errors'] = $errors;
+            return $response;
         }
 
-        $file_path =  base_path('/'.$file_name);
+        $input = $request->item;
 
-        return response()->download($file_path);
+        if($input['id']){
+            Setting::where('id',$input['id'])->update($input);
+        }else{
+            $item = new Setting();
+            $item->fill($input);
+            $item->save();
+        }
+
+        $response['success'] = true;
+        $response['messages'][] = 'Updated';
+
+        return response()->json($response);
 
     }
 
     //----------------------------------------------------------
-    public function store(Request $request)
+    public function storeField(Request $request)
     {
 
         if(!\Auth::user()->hasPermission('has-access-of-setting-section'))
@@ -110,13 +132,12 @@ class EnvController extends Controller
             return response()->json($response);
         }
 
-        $response = VaahSetup::generateEnvFile($request, 'list');
+        $input = $request->item;
 
-        if(isset($response['success']) && $response['success'])
-        {
-            VaahHelper::clearCache();
-            $response['data']['redirect_url'] = route('vh.backend');
-        }
+        Setting::where('id',$input['id'])->update($input);
+
+        $response['success'] = true;
+        $response['data']['item'] = $input;
 
         return response()->json($response);
 

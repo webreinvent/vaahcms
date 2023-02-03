@@ -1,6 +1,6 @@
 <script  setup>
 
-import { useJobStore } from '../../../../stores/store-jobs'
+import { useJobStore } from '../../../../stores/advanced/store-jobs'
 import VhFieldVertical from '../../../../vaahvue/vue-three/primeflex/VhFieldVertical.vue';
 
 
@@ -47,10 +47,39 @@ const store = useJobStore();
 
             <VhFieldVertical >
 
-            </VhFieldVertical>
 
-            <VhFieldVertical >
+                <template #label>
+                    <b>Queue:</b>
+                </template>
 
+                <div class="field-radiobutton">
+                    <RadioButton name="default"
+                                 data-testid="jobs-queue_defaut"
+                                 value="default"
+                                 v-model="store.query.filter.queue" />
+                    <label for="default">Default</label>
+                </div>
+                <div class="field-radiobutton">
+                    <RadioButton name="high"
+                                 data-testid="jobs-queue_high"
+                                 value="high"
+                                 v-model="store.query.filter.queue" />
+                    <label for="high">High</label>
+                </div>
+                <div class="field-radiobutton">
+                    <RadioButton name="medium"
+                                 data-testid="jobs-queue_medium"
+                                 value="medium"
+                                 v-model="store.query.filter.queue" />
+                    <label for="medium">Medium</label>
+                </div>
+                <div class="field-radiobutton">
+                    <RadioButton name="low"
+                                 data-testid="jobs-queue_low"
+                                 value="low"
+                                 v-model="store.query.filter.queue" />
+                    <label for="low">Low</label>
+                </div>
             </VhFieldVertical>
 
 

@@ -1,17 +1,17 @@
 <script setup>
-import {vaah} from '../vaahvue/pinia/vaah.js'
-import {useRootStore} from '../stores/root.js'
+    import {vaah} from '../vaahvue/pinia/vaah.js'
+    import {useRootStore} from '../stores/root.js'
 
-import { useToast } from "primevue/usetoast";
-import { useConfirm } from "primevue/useconfirm";
+    import { useToast } from "primevue/usetoast";
+    import { useConfirm } from "primevue/useconfirm";
 
-const toast = useToast();
-const confirm = useConfirm();
-const useVaah = vaah();
-const root = useRootStore();
+    const toast = useToast();
+    const confirm = useConfirm();
+    const useVaah = vaah();
+    const root = useRootStore();
 
-useVaah.setToast(toast);
-useVaah.setConfirm(confirm);
+    useVaah.setToast(toast);
+    useVaah.setConfirm(confirm);
 </script>
 
 
@@ -34,7 +34,18 @@ useVaah.setConfirm(confirm);
             </template>
         </Toast>
 
-        <ConfirmDialog class="p-container-confirm-dialog"/>
+        <ConfirmDialog :style="{width: '40vw'}"
+                       class="p-container-confirm-dialog text-red-200">
+            <template #message="slotProps">
+
+                <i :class="slotProps.message.icon+' text-'+slotProps.message.acceptClass+'-500'"
+                   class="p-confirm-dialog-icon "></i>
+                <span :class="'text-'+slotProps.message.acceptClass+'-500'"
+                      class="p-confirm-dialog-message"
+                      v-html="slotProps.message.message">
+                </span>
+            </template>
+        </ConfirmDialog>
         <RouterView />
     </div>
 </template>
