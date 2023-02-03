@@ -18,13 +18,13 @@ include('backend/setup.php');
 include('backend/settings.php');
 include('backend/modules.php');
 include('backend/themes.php');
-include('backend/media.php');
 include('backend/profile.php');
 include('backend/advanced.php');
 include('backend/routes-roles.php');
 include('backend/routes-permissions.php');
 include('backend/routes-users.php');
 include('backend/routes-taxonomies.php');
+include('backend/routes-media.php');
 
 
 

@@ -10,6 +10,7 @@ import permissions from "./vue-routes-permissions";
 import settings from "./vue-routes-settings";
 import registrations from "./vue-routes-registrations";
 import taxonomies from "./vue-routes-taxonomies";
+import media from "./vue-routes-media";
 
 routes = routes.concat(ui);
 routes = routes.concat(public_routes);
@@ -21,5 +22,6 @@ routes = routes.concat(permissions);
 routes = routes.concat(settings);
 routes = routes.concat(registrations);
 routes = routes.concat(taxonomies);
+routes = routes.concat(media);
 
 export default routes;
