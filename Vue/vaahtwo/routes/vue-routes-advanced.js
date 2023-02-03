@@ -6,6 +6,8 @@ import AdvancedLayout from "../pages/advanced/AdvancedLayout.vue";
 import List from '../pages/advanced/jobs/List.vue'
 import Form from '../pages/advanced/jobs/Form.vue'
 import Item from '../pages/advanced/jobs/Item.vue'
+import FailedJobList from '../pages/advanced/failedjobs/List.vue'
+import FailedJobItem from '../pages/advanced/failedjobs/Item.vue'
 
 routes_list = {
 
@@ -35,6 +37,21 @@ routes_list = {
                             path: 'view/:id?',
                             name: 'jobs.view',
                             component: Item,
+                            props: true,
+                        }
+                    ]
+                },
+                {
+
+                    path: 'failedjobs',
+                    name: 'failedjobs.index',
+                    component: FailedJobList,
+                    props: true,
+                    children: [
+                        {
+                            path: 'view/:id?',
+                            name: 'faiedjobs.view',
+                            component: FailedJobItem,
                             props: true,
                         }
                     ]

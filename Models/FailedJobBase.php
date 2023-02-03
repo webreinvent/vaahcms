@@ -1,4 +1,4 @@
-<?php namespace WebReinvent\VaahCms\Entities;
+<?php namespace WebReinvent\VaahCms\Models;
 
 use Carbon\Carbon;
 use DateTimeInterface;
@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
 
 
-class FailedJob extends Model {
+class FailedJobBase extends Model {
 
 
     //-------------------------------------------------
@@ -26,50 +26,17 @@ class FailedJob extends Model {
     //-------------------------------------------------
     protected $appends  = [
     ];
-    //-------------------------------------------------
 
-
-    //-------------------------------------------------
-    protected function serializeDate(DateTimeInterface $date)
-    {
-        $date_time_format = config('settings.global.datetime_format');
-
-        return $date->format($date_time_format);
-
-    }
     //-------------------------------------------------
     public function getPayloadAttribute($value)
     {
         return json_decode($value);
     }
-    //-------------------------------------------------
-    public function getTableColumns() {
-        return $this->getConnection()->getSchemaBuilder()
-            ->getColumnListing($this->getTable());
-    }
-    //-------------------------------------------------
-    public function scopeExclude($query, $columns)
-    {
-        return $query->select( array_diff( $this->getTableColumns(),$columns) );
-    }
 
     //-------------------------------------------------
-    public function scopeBetweenDates($query, $from, $to)
+    public function getExceptionAttribute($value)
     {
-
-        if($from)
-        {
-            $from = Carbon::parse($from)
-                ->startOfDay()
-                ->toDateTimeString();
-        }
-        if($to)
-        {
-            $to = Carbon::parse($to)
-                ->endOfDay()
-                ->toDateTimeString();
-        }
-        $query->whereBetween('failed_at',[$from,$to]);
+        return json_decode($value);
     }
     //-------------------------------------------------
     public static function getList($request)
