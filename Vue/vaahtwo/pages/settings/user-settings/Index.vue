@@ -64,11 +64,7 @@ onMounted(async () => {
                         <DataTable :value="store.field_list" class="p-datatable-sm" showGridlines responsiveLayout="scroll">
                             <Column field="fieldName" header="Field Name">
                                 <template #body="slotProps">
-<<<<<<< 2.x-develop
                                     {{ vaah().toLabel(slotProps.data.key) }}
-=======
-                                    {{ slotProps.data.key }}
->>>>>>> Update: user-settings modification list fetched
                                 </template>
                             </Column>
                             <Column field="visibilityStatus" header="Is Hidden">
