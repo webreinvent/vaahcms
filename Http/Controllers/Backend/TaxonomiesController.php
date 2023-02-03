@@ -59,6 +59,7 @@ class TaxonomiesController extends Controller
             ->get();
 
         $data['actions'] = [];
+        $data['countries'] = vh_get_country_list();
         $data['types'] = $taxonomy_types->toArray();
 
         $response['success'] = true;
