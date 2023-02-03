@@ -13,6 +13,7 @@ import FailedJobList from '../pages/advanced/failedjobs/List.vue'
 import FailedJobItem from '../pages/advanced/failedjobs/Item.vue'
 import BatchList from '../pages/advanced/batches/List.vue'
 
+
 routes_list = {
 
     path: '/vaah/advanced/',
@@ -24,6 +25,27 @@ routes_list = {
             component: AdvancedLayout,
             props: true,
             children: [
+                {
+
+                    path: 'logs',
+                    name: 'logs.index',
+                    component: LogList,
+                    props: true,
+                    children: [
+                        {
+                            path: 'form/:id?',
+                            name: 'logs.form',
+                            component: LogForm,
+                            props: true,
+                        },
+                        {
+                            path: 'view/:name?',
+                            name: 'logs.view',
+                            component: LogItem,
+                            props: true,
+                        }
+                    ]
+                },
                 {
 
                     path: 'jobs',
@@ -46,27 +68,28 @@ routes_list = {
                     ]
                 },
                 {
-                    path: 'batches',
-                    name: 'batches.index',
-                    component: BatchList,
+
+                    path: 'failedjobs',
+                    name: 'failedjobs.index',
+                    component: FailedJobList,
                     props: true,
                     children: [
                         {
-                            path: 'form/:id?',
-                            name: 'batches.form',
-                            component: Form,
-                            props: true,
-                        },
-                        {
                             path: 'view/:id?',
-                            name: 'batches.view',
-                            component: Item,
+                            name: 'faiedjobs.view',
+                            component: FailedJobItem,
                             props: true,
                         }
                     ]
+                },
+                {
+                    path: 'batches',
+                    name: 'batches.index',
+                    component: BatchList,
+                    props: true
                 }
             ]
-        },
+        }
     ]
 };
 
