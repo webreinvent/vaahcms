@@ -6,7 +6,7 @@ use Closure;
 use Illuminate\Http\Request;
 use Session;
 use Illuminate\Support\Facades\Auth;
-use WebReinvent\VaahCms\Entities\Theme;
+use WebReinvent\VaahCms\Models\Theme;
 
 class VerifyAuth
 {
@@ -19,7 +19,7 @@ class VerifyAuth
      */
     public function handle(Request $request, Closure $next)
     {
-        
+
         if(auth()->check()){
 
             $user = auth()->user();

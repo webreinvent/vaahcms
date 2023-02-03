@@ -6,7 +6,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
-use WebReinvent\VaahCms\Entities\Theme;
+use WebReinvent\VaahCms\Models\Theme;
 
 class ThemesController extends Controller
 {
@@ -22,7 +22,7 @@ class ThemesController extends Controller
     //----------------------------------------------------------
 
     //----------------------------------------------------------
-    public function assets(Request $request)
+    public function getAssets(Request $request)
     {
 
         if(!\Auth::user()->hasPermission('has-access-of-theme-section'))
@@ -50,7 +50,6 @@ class ThemesController extends Controller
     //----------------------------------------------------------
     public function getList(Request $request)
     {
-
         if(!\Auth::user()->hasPermission('has-access-of-theme-section'))
         {
             $response['success'] = false;
@@ -63,12 +62,13 @@ class ThemesController extends Controller
 
         $list = Theme::orderBy('created_at', 'DESC');
 
-        if($request->has('q'))
+
+        if($request->filter && array_key_exists('q',$request->filter))
         {
             $list->where(function ($s) use ($request) {
-                $s->where('name', 'LIKE', '%'.$request->q.'%')
-                    ->orWhere('slug', 'LIKE', '%'.$request->q.'%')
-                    ->orWhere('title', 'LIKE', '%'.$request->q.'%');
+                $s->where('name', 'LIKE', '%'.$request->filter['q'].'%')
+                    ->orWhere('slug', 'LIKE', '%'.$request->filter['q'].'%')
+                    ->orWhere('title', 'LIKE', '%'.$request->filter['q'].'%');
             });
         }
 
@@ -101,10 +101,11 @@ class ThemesController extends Controller
         return response()->json($response);
 
     }
+
     //----------------------------------------------------------
+
     public function getItem(Request $request, $id)
     {
-
         if(!\Auth::user()->hasPermission('can-read-theme'))
         {
             $response['success'] = false;
@@ -119,7 +120,6 @@ class ThemesController extends Controller
     //----------------------------------------------------------
     public function download(Request $request)
     {
-
         if(!\Auth::user()->hasPermission('can-install-theme'))
         {
             $response['success'] = false;
@@ -150,7 +150,6 @@ class ThemesController extends Controller
     //----------------------------------------------------------
     public function installUpdates(Request $request)
     {
-
         if(!\Auth::user()->hasPermission('can-update-theme'))
         {
             $response['success'] = false;
@@ -181,8 +180,13 @@ class ThemesController extends Controller
     }
 
     //----------------------------------------------------------
-    public function actions(Request $request)
+    public function actions(Request $request,$id,$action)
     {
+        $request->merge([
+            'inputs' => ['id' => $id],
+            'action' => $action
+        ]);
+
         $rules = array(
             'action' => 'required',
             'inputs' => 'required',
@@ -201,13 +205,12 @@ class ThemesController extends Controller
         $data = [];
         $inputs = $request->inputs;
 
-
         /*
          * Call method from module setup controller
          */
         $theme = Theme::find($inputs['id']);
 
-        $method_name = str_replace("_", " ", $request->action);
+        $method_name = str_replace("_", " ", $action);
         $method_name = ucwords($method_name);
         $method_name = lcfirst(str_replace(" ", "", $method_name));
 
@@ -217,9 +220,8 @@ class ThemesController extends Controller
             return response()->json($response);
         }
 
-        switch($request->action)
+        switch($action)
         {
-
             //---------------------------------------
             case 'activate':
                 if(!\Auth::user()->hasPermission('can-activate-theme'))
@@ -316,7 +318,15 @@ class ThemesController extends Controller
 
     }
     //----------------------------------------------------------
+    public function itemAction(Request $request,$id,$action)
+    {
+        return Theme::itemAction($request,$id,$action);
+    }
     //----------------------------------------------------------
-
-
+    public function deleteItem(Request $request,$id)
+    {
+        $theme = Theme::where('id',$id)->first();
+        return Theme::deleteItem($theme->slug);
+    }
+    //----------------------------------------------------------
 }

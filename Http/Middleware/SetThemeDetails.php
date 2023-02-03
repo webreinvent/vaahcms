@@ -5,7 +5,7 @@ namespace WebReinvent\VaahCms\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use WebReinvent\VaahCms\Entities\Theme;
+use WebReinvent\VaahCms\Models\Theme;
 
 class SetThemeDetails
 {

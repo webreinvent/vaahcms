@@ -1,18 +1,22 @@
-<?php namespace WebReinvent\VaahCms\Entities;
+<?php namespace WebReinvent\VaahCms\Models;
 
 use DateTimeInterface;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
+use WebReinvent\VaahCms\Entities\Migration;
+use WebReinvent\VaahCms\Entities\Module;
+use WebReinvent\VaahCms\Entities\Setting;
 use ZanySoft\Zip\Zip;
 
 
-class Theme extends Model {
+class ThemeBase extends Model {
 
     use SoftDeletes;
     //-------------------------------------------------
     protected $table = 'vh_themes';
+
     //-------------------------------------------------
     protected $dates = [
         'update_checked_at',
@@ -47,9 +51,6 @@ class Theme extends Model {
 
     //-------------------------------------------------
 
-
-
-    //-------------------------------------------------
     protected function serializeDate(DateTimeInterface $date)
     {
         $date_time_format = config('settings.global.datetime_format');
@@ -698,8 +699,9 @@ class Theme extends Model {
         copy($download_link, $zip_file);
 
         try{
-            Zip::check($zip_file);
-            $zip = Zip::open($zip_file);
+            $zip = new Zip;
+            $zip->check($zip_file);
+            $zip = $zip->open($zip_file);
             $zip_content_list = $zip->listFiles();
             $zip->extract($vaahcms_path);
             $zip->close();
@@ -744,8 +746,8 @@ class Theme extends Model {
         copy($download_link, $zip_file);
 
         try{
-            Zip::check($zip_file);
-            $zip = Zip::open($zip_file);
+            (new Zip)->check($zip_file);
+            $zip = (new Zip)->open($zip_file);
             $zip_content_list = $zip->listFiles();
             $zip->extract($vaahcms_path);
             $zip->close();
@@ -902,19 +904,4 @@ class Theme extends Model {
         return true;
     }
     //-------------------------------------------------
-
-    public static function getDefault()
-    {
-
-    }
-
-    //-------------------------------------------------
-
-    //-------------------------------------------------
-    //-------------------------------------------------
-    //-------------------------------------------------
-    //-------------------------------------------------
-    //-------------------------------------------------
-    //-------------------------------------------------
-
 }
