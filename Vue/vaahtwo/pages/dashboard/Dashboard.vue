@@ -67,7 +67,7 @@ const key = ref();
                             </ul>
                         </div>
 
-                        <Divider></Divider>
+                        <Divider />
 
                         <template v-if="store && store.dashboard_items && store.dashboard_items.success"
                                   v-for="module in store.dashboard_items.success"
@@ -116,14 +116,14 @@ const key = ref();
                 </template>
             </template>
 
-            <Accordion :multiple="true" :activeIndex="store.active_index">
-                <template v-if="store && store.dashboard_items && store.dashboard_items.success"
-                          v-for="module in store.dashboard_items.success"
+            <template v-if="store && store.dashboard_items && store.dashboard_items.success"
+                      v-for="(module, index) in store.dashboard_items.success" :key="index"
+            >
+                <template v-if="module.expanded_item"
+                          v-for="(item, index) in module.expanded_item"
+                          :key="index"
                 >
-                    <template v-if="module.expanded_item"
-                              v-for="item in module.expanded_item"
-                    >
-
+                    <Accordion :multiple="true" :activeIndex="store.active_index">
                         <AccordionTab header="item.title">
                             <template v-if="item.type === 'content' ">
                                 <div v-if="!item.is_job_enabled">
@@ -141,62 +141,125 @@ const key = ref();
                                     {{ item.description }}
                                 </p>
 
+                                <Divider />
+
                                 <div class="flex justify-content-evenly align-items-center align-items-center">
                                     <template v-for="f_item in item.footer">
-                                        <a href="" class="text-center" @click="store.goToLink(f_item.link)">
-                                            <i class="mr-2 pi" :class="f_item.icon"></i>
+                                        <a href="" class="text-center"
+                                           @click="store.goToLink(f_item.link)"
+                                        >
+                                            <i class="mr-2 pi" :class="f_item.icon" />
                                             {{ f_item.count }} {{ f_item.name }}
                                         </a>
 
-                                        <Divider layout="vertical"></Divider>
+                                        <Divider layout="vertical" />
                                     </template>
-                                &nbsp;</div>
+                                </div>
 
-                                <Divider></Divider>
+                                <Divider />
+                            </template>
+
+                            <template v-if=" item.type === 'list' ">
+                                <template v-for="(log, index) in item.list"
+                                          v-if="index < item.list_limit"
+                                >
+                                    <div class="flex justify-content-between">
+                                        <a href="" @click="store.goToLink(item.link+'details/'+log.name)">
+                                            {{ log.name }}
+                                        </a>
+                                        <a href="" @click="store.goToLink(item.link+'details/'+log.name)">
+                                            View
+                                        </a>
+                                    </div>
+                                </template>
                             </template>
                         </AccordionTab>
-                    </template>
+                    </Accordion>
                 </template>
-            </Accordion>
+            </template>
 
-            <Accordion :multiple="true" :activeIndex="store.active_index">
-                <AccordionTab header="Jobs">
-                    <Message severity="error" :closable="false" icon="null">
-                        Enable <b>Laravel Queues</b> to run your jobs
-                        <a href="" @click="store.goToLink(root.current_url+'#/vaah/settings/general')">
-                            View Setting
-                        </a>
-                    </Message>
-                    <p class="text-sm">
-                        Tasks that is kept in the queue to be performed one after another. Queues allow you to defer the processing of a time consuming task, such as sending an e-mail, until a later time which drastically speeds up web requests to your application.
-                    </p>
+<!--            <Accordion :multiple="true" :activeIndex="store.active_index">-->
+<!--                <template v-if="store && store.dashboard_items && store.dashboard_items.success"-->
+<!--                          v-for="module in store.dashboard_items.success"-->
+<!--                >-->
 
-                    <Divider></Divider>
+<!--                    <template v-if="module.expanded_item"-->
+<!--                              v-for="item in module.expanded_item"-->
+<!--                    >-->
 
-                    <div class="flex justify-content-evenly align-items-center align-items-center">
-                        <a href="" class="text-center">
-                            <i class="pi pi-envelope mr-2"></i>
-                            4 Pending
-                        </a>
+<!--                        <AccordionTab header="item.title">-->
+<!--                            <template v-if="item.type === 'content' ">-->
+<!--                                <div v-if="!item.is_job_enabled">-->
+<!--                                    <Message severity="error" :closable="false">-->
+<!--                                        Enable <b>Laravel Queues</b> to run your jobs-->
+<!--                                        <a @click="store.goToLink(root.current_url+'#/vaah/settings/general')"-->
+<!--                                           href=""-->
+<!--                                        >-->
+<!--                                            View Setting-->
+<!--                                        </a>-->
+<!--                                    </Message>-->
+<!--                                </div>-->
 
-                        <Divider layout="vertical"></Divider>
+<!--                                <p class="text-sm">-->
+<!--                                    {{ item.description }}-->
+<!--                                </p>-->
 
-                        <a href="" class="text-center">
-                            <i class="pi pi-ban mr-2 text-red-500"></i>
-                            0 Failed
-                        </a>
-                    </div>
-                </AccordionTab>
+<!--                                <div class="flex justify-content-evenly align-items-center align-items-center">-->
+<!--                                    <template v-for="f_item in item.footer">-->
+<!--                                        <a href="" class="text-center" @click="store.goToLink(f_item.link)">-->
+<!--                                            <i class="mr-2 pi" :class="f_item.icon"></i>-->
+<!--                                            {{ f_item.count }} {{ f_item.name }}-->
+<!--                                        </a>-->
 
-                <AccordionTab header="Laravel logs (1)">
-                    <div class="flex justify-content-between">
-                        <p class="text-sm text-red-500">
-                            laravel-2022-10-12.log
-                        </p>
-                        <a href="" class="text-sm">View</a>
-                    </div>
-                </AccordionTab>
-            </Accordion>
+<!--                                        <Divider layout="vertical"></Divider>-->
+<!--                                    </template>-->
+<!--                                &nbsp;</div>-->
+
+<!--                                <Divider></Divider>-->
+<!--                            </template>-->
+<!--                        </AccordionTab>-->
+<!--                    </template>-->
+<!--                </template>-->
+<!--            </Accordion>-->
+
+<!--            <Accordion :multiple="true" :activeIndex="store.active_index">-->
+<!--                <AccordionTab header="Jobs">-->
+<!--                    <Message severity="error" :closable="false" icon="null">-->
+<!--                        Enable <b>Laravel Queues</b> to run your jobs-->
+<!--                        <a href="" @click="store.goToLink(root.current_url+'#/vaah/settings/general')">-->
+<!--                            View Setting-->
+<!--                        </a>-->
+<!--                    </Message>-->
+<!--                    <p class="text-sm">-->
+<!--                        Tasks that is kept in the queue to be performed one after another. Queues allow you to defer the processing of a time consuming task, such as sending an e-mail, until a later time which drastically speeds up web requests to your application.-->
+<!--                    </p>-->
+
+<!--                    <Divider></Divider>-->
+
+<!--                    <div class="flex justify-content-evenly align-items-center align-items-center">-->
+<!--                        <a href="" class="text-center">-->
+<!--                            <i class="pi pi-envelope mr-2"></i>-->
+<!--                            4 Pending-->
+<!--                        </a>-->
+
+<!--                        <Divider layout="vertical"></Divider>-->
+
+<!--                        <a href="" class="text-center">-->
+<!--                            <i class="pi pi-ban mr-2 text-red-500"></i>-->
+<!--                            0 Failed-->
+<!--                        </a>-->
+<!--                    </div>-->
+<!--                </AccordionTab>-->
+
+<!--                <AccordionTab header="Laravel logs (1)">-->
+<!--                    <div class="flex justify-content-between">-->
+<!--                        <p class="text-sm text-red-500">-->
+<!--                            laravel-2022-10-12.log-->
+<!--                        </p>-->
+<!--                        <a href="" class="text-sm">View</a>-->
+<!--                    </div>-->
+<!--                </AccordionTab>-->
+<!--            </Accordion>-->
         </div>
     </div>
 
