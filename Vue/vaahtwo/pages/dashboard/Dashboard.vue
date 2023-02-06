@@ -112,6 +112,7 @@ const key = ref();
                     <Button :label="h_item.name"
                             :icon="h_item.icon"
                             class="p-button-sm p-button-outlined mr-2 mb-3 pi"
+                            @click="store.goToLink(h_item.link,h_item.open_in_new_tab?h_item.open_in_new_tab:null)"
                     />
                 </template>
             </template>
