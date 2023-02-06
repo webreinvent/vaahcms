@@ -175,6 +175,16 @@ const key = ref();
                                         </a>
                                     </div>
                                 </template>
+
+                                <template v-if="item.list.length === 0">
+                                    <p class="text-sm">
+                                        {{ item.empty_response_note }}
+                                    </p>
+                                </template>
+
+                                <template v-if="item.list.length > item.list_limit">
+                                    <a href="" @click="store.goToLink(item.link)">{{ item.link_text }}</a>
+                                </template>
                             </template>
                         </AccordionTab>
                     </Accordion>
