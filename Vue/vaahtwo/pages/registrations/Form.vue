@@ -224,7 +224,7 @@ const toggleFormMenu = (event) => {
                                  v-model="store.item.phone"
                                  :useGrouping="false"
                                  name="register-phone"
-                                data-testid="register-phone"
+                                 data-testid="register-phone"
                     />
                 </VhField>
 
@@ -266,15 +266,16 @@ const toggleFormMenu = (event) => {
                 </VhField>
 
                 <VhField label="Country" v-if="!store.isHidden('country')">
-                      <Dropdown v-model="store.item.country"
-                                :options="store.assets.countries"
-                                optionLabel="name"
-                                optionValue="name"
-                                :filter="true"
-                                placeholder="Enter your country"
-                                :showClear="true"
-                                data-testid="register-country"
-                      />
+                    <AutoComplete class="w-full"
+                                  v-model="store.item.country"
+                                  :suggestions="store.filtered_country_codes"
+                                  @complete="store.searchCountryCode"
+                                  @item-select="store.onSelectCountryCode"
+                                  placeholder="Enter Your Country"
+                                  optionLabel="name"
+                                  name="account-country"
+                                  data-testid="register-country"
+                    />
                 </VhField>
 
                 <VhField label="Status">
