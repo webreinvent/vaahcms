@@ -141,29 +141,8 @@ class MediaBase extends Model {
     {
         return $query->select( array_diff( $this->getTableColumns(),$columns) );
     }
-
     //-------------------------------------------------
-    public function scopeBetweenDates($query, $from, $to)
-    {
 
-        if($from)
-        {
-            $from = Carbon::parse($from)
-                ->startOfDay()
-                ->toDateTimeString();
-        }
-
-        if($to)
-        {
-            $to = Carbon::parse($to)
-                ->endOfDay()
-                ->toDateTimeString();
-        }
-
-        $query->whereBetween('created_at',[$from,$to]);
-    }
-
-    //-------------------------------------------------
     public function updatedByUser()
     {
         return $this->belongsTo(' WebReinvent\VaahCms\Models\User',
@@ -186,7 +165,6 @@ class MediaBase extends Model {
     //-------------------------------------------------
     public static function createItem($request)
     {
-
         $rules = array(
             'name' => 'required',
             'mime_type' => 'required',
@@ -240,12 +218,12 @@ class MediaBase extends Model {
 
         if(isset($request->filter['from']) && isset($request->filter['to']))
         {
-            $list->betweenDates($request->filter['from'],$request->filter['to']);
+            $list->whereBetween('created_at',[$request->filter['from'],$request->filter['to']]);
+//            $list->betweenDates($request->filter['from'],$request->filter['to']);
         }
 
         if(isset($request->filter['month']))
         {
-
             $date = date_parse($request->filter['month']);
             $month = $date['month'];
 
