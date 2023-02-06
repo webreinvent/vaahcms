@@ -73,6 +73,8 @@ export const useRegistrationStore = defineStore({
             {name:'Others',value:'o',icon: ''},
         ],
 
+        filtered_country_codes: [],
+
     }),
     getters: {
 
@@ -959,11 +961,30 @@ export const useRegistrationStore = defineStore({
         //---------------------------------------------------------------------
         isHidden(key) {
             if (this.assets && this.assets.fields && this.assets.fields[key]) {
-                console.log(key, '------>', this.assets.fields[key].to_registration, typeof(this.assets.fields[key].to_registration))
                 return this.assets.fields[key].to_registration
             }
 
             return false;
+        },
+        //---------------------------------------------------------------------
+        searchCountryCode: function (event){
+            this.country_name_object = null;
+            this.country = null;
+
+            setTimeout(() => {
+                if (!event.query.trim().length) {
+                    this.filtered_country_codes = this.assets.countries;
+                }
+                else {
+                    this.filtered_country_codes = this.assets.countries.filter((country) => {
+                        return country.name.toLowerCase().startsWith(event.query.toLowerCase());
+                    });
+                }
+            }, 250);
+        },
+        //---------------------------------------------------------------------
+        onSelectCountryCode: function (event){
+            this.item.country = event.value.name;
         },
         //---------------------------------------------------------------------
     }
