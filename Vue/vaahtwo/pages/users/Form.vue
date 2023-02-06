@@ -2,6 +2,7 @@
 import {onMounted, ref, watch} from "vue";
 import { useUserStore } from '../../stores/store-users'
 import { useRootStore } from '../../stores/root'
+import { vaah } from "../../vaahvue/pinia/vaah"
 
 import VhField from './../../vaahvue/vue-three/primeflex/VhField.vue'
 import {useRoute} from 'vue-router';
@@ -10,6 +11,7 @@ import {useRoute} from 'vue-router';
 const store = useUserStore();
 const root = useRootStore();
 const route = useRoute();
+const useVaah = vaah();
 
 onMounted(async () => {
     if (route.params && route.params.id) {
@@ -321,6 +323,24 @@ const toggleFormMenu = (event) => {
                                   option-value="value"
                     />
                 </VhField>
+
+                <template v-if="store.assets && store.assets.custom_fields"
+                          v-for="(custom_field,key) in store.assets.custom_fields.value"
+                          :key="key"
+                >
+                    <VhField :label="useVaah.toLabel(custom_field.name)" v-if="!custom_field.is_hidden">
+                        <InputText class="w-full"
+                                   :name=" 'account-meta_'+custom_field.name"
+                                   :data-testid="'account-meta_'+custom_field.name"
+                                   :type="custom_field.type"
+                                   :min="custom_field.min"
+                                   :max="custom_field.max"
+                                   :minlength="custom_field.minlength"
+                                   :maxlength="custom_field.maxlength"
+                                   v-model="store.item.meta"
+                        />
+                    </VhField>
+                </template>
 
             </div>
         </Panel>
