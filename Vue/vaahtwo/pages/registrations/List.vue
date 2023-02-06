@@ -68,14 +68,12 @@ onMounted(async () => {
                 </template>
 
                 <template #icons>
-
-                    <Button
-                        @click="store.toForm()"
-                        data-testid="register-to_create_form">
-                        <i class="pi pi-plus mr-1"></i>
-                        Create
-                    </Button>
-
+                    <Button label="Create"
+                            icon="pi pi-plus"
+                            @click="store.toForm()"
+                            v-if="store.hasPermission('can-create-registrations')"
+                            data-testid="register-to_create_form"
+                    />
                 </template>
 
                 <Actions/>
