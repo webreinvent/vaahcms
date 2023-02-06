@@ -270,17 +270,16 @@ const toggleFormMenu = (event) => {
                     />
                 </VhField>
 
-                <VhField label="Country">
+                <VhField label="Country" v-if="!store.isHidden('country')">
                       <Dropdown v-model="store.item.country"
-                              :options="store.assets.countries"
-                              optionLabel="name"
-                              optionValue="name"
-                              :filter="true"
-                              placeholder="- Select a country -"
-                              :showClear="true"
-                               data-testid="register-country"
-                      >
-                    </Dropdown>
+                                :options="store.assets.countries"
+                                optionLabel="name"
+                                optionValue="name"
+                                :filter="true"
+                                placeholder="Enter your country"
+                                :showClear="true"
+                                data-testid="register-country"
+                      />
                 </VhField>
 
                 <VhField label="Status">
