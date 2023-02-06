@@ -2,7 +2,7 @@
 
 Route::group(
     [
-        'prefix' => 'backend/vaah/media',
+        'prefix' => 'backend/vaah/manage/media',
 
         'middleware' => ['web', 'has.backend.access'],
 
