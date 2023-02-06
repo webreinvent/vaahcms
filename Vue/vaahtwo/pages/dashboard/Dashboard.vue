@@ -124,10 +124,13 @@ const key = ref();
                           :key="index"
                 >
                     <Accordion :multiple="true" :activeIndex="store.active_index">
-                        <AccordionTab header="item.title">
+                        <AccordionTab :header="item.title" :key="item.title">
                             <template v-if="item.type === 'content' ">
                                 <div v-if="!item.is_job_enabled">
-                                    <Message severity="error" :closable="false">
+                                    <Message severity="error"
+                                             :closable="false"
+                                             icon="null"
+                                    >
                                         Enable <b>Laravel Queues</b> to run your jobs
                                         <a @click="store.goToLink(root.current_url+'#/vaah/settings/general')"
                                            href=""
@@ -177,92 +180,8 @@ const key = ref();
                     </Accordion>
                 </template>
             </template>
-
-<!--            <Accordion :multiple="true" :activeIndex="store.active_index">-->
-<!--                <template v-if="store && store.dashboard_items && store.dashboard_items.success"-->
-<!--                          v-for="module in store.dashboard_items.success"-->
-<!--                >-->
-
-<!--                    <template v-if="module.expanded_item"-->
-<!--                              v-for="item in module.expanded_item"-->
-<!--                    >-->
-
-<!--                        <AccordionTab header="item.title">-->
-<!--                            <template v-if="item.type === 'content' ">-->
-<!--                                <div v-if="!item.is_job_enabled">-->
-<!--                                    <Message severity="error" :closable="false">-->
-<!--                                        Enable <b>Laravel Queues</b> to run your jobs-->
-<!--                                        <a @click="store.goToLink(root.current_url+'#/vaah/settings/general')"-->
-<!--                                           href=""-->
-<!--                                        >-->
-<!--                                            View Setting-->
-<!--                                        </a>-->
-<!--                                    </Message>-->
-<!--                                </div>-->
-
-<!--                                <p class="text-sm">-->
-<!--                                    {{ item.description }}-->
-<!--                                </p>-->
-
-<!--                                <div class="flex justify-content-evenly align-items-center align-items-center">-->
-<!--                                    <template v-for="f_item in item.footer">-->
-<!--                                        <a href="" class="text-center" @click="store.goToLink(f_item.link)">-->
-<!--                                            <i class="mr-2 pi" :class="f_item.icon"></i>-->
-<!--                                            {{ f_item.count }} {{ f_item.name }}-->
-<!--                                        </a>-->
-
-<!--                                        <Divider layout="vertical"></Divider>-->
-<!--                                    </template>-->
-<!--                                &nbsp;</div>-->
-
-<!--                                <Divider></Divider>-->
-<!--                            </template>-->
-<!--                        </AccordionTab>-->
-<!--                    </template>-->
-<!--                </template>-->
-<!--            </Accordion>-->
-
-<!--            <Accordion :multiple="true" :activeIndex="store.active_index">-->
-<!--                <AccordionTab header="Jobs">-->
-<!--                    <Message severity="error" :closable="false" icon="null">-->
-<!--                        Enable <b>Laravel Queues</b> to run your jobs-->
-<!--                        <a href="" @click="store.goToLink(root.current_url+'#/vaah/settings/general')">-->
-<!--                            View Setting-->
-<!--                        </a>-->
-<!--                    </Message>-->
-<!--                    <p class="text-sm">-->
-<!--                        Tasks that is kept in the queue to be performed one after another. Queues allow you to defer the processing of a time consuming task, such as sending an e-mail, until a later time which drastically speeds up web requests to your application.-->
-<!--                    </p>-->
-
-<!--                    <Divider></Divider>-->
-
-<!--                    <div class="flex justify-content-evenly align-items-center align-items-center">-->
-<!--                        <a href="" class="text-center">-->
-<!--                            <i class="pi pi-envelope mr-2"></i>-->
-<!--                            4 Pending-->
-<!--                        </a>-->
-
-<!--                        <Divider layout="vertical"></Divider>-->
-
-<!--                        <a href="" class="text-center">-->
-<!--                            <i class="pi pi-ban mr-2 text-red-500"></i>-->
-<!--                            0 Failed-->
-<!--                        </a>-->
-<!--                    </div>-->
-<!--                </AccordionTab>-->
-
-<!--                <AccordionTab header="Laravel logs (1)">-->
-<!--                    <div class="flex justify-content-between">-->
-<!--                        <p class="text-sm text-red-500">-->
-<!--                            laravel-2022-10-12.log-->
-<!--                        </p>-->
-<!--                        <a href="" class="text-sm">View</a>-->
-<!--                    </div>-->
-<!--                </AccordionTab>-->
-<!--            </Accordion>-->
         </div>
     </div>
-
 </template>
 
 
