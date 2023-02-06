@@ -45,13 +45,14 @@ class UsersController extends Controller
             $data['empty_item'][$column] = null;
         }
 
-        $countRole = Role::all()->count();
+        $roles_count = Role::all()->count();
 
         $data['actions'] = [];
         $data['name_titles'] = vh_name_titles();
         $data['countries'] = vh_get_country_list();
         $data['timezones'] = vh_get_timezones();
-        $data['totalRole'] = $countRole;
+        $data['fields'] = User::getUserSettings();
+        $data['totalRole'] = $roles_count;
         $response['success'] = true;
         $response['data'] = $data;
 

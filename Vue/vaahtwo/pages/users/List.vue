@@ -67,6 +67,7 @@ onMounted(async () => {
                                 label="Create"
                                 icon="pi pi-plus"
                                 @click="store.toForm()"
+                                v-if="store.hasPermission('can-create-users')"
                         />
 
                         <Button class="p-button-sm"
