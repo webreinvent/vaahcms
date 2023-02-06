@@ -17,7 +17,7 @@ const key = ref();
 </script>
 
 <template>
-    <div class="grid dashboard">
+    <div v-if="root.assets && store.dashboard_items" class="grid dashboard">
         <div class="col-12 md:col-8">
 
             <Card>
@@ -85,7 +85,7 @@ const key = ref();
 
                                             <p class="text-sm font-semibold mt-3">{{ item.label }}</p>
                                             <h6 class="text-xl font-semibold my-1">{{ item.count }}</h6>
-                                            <a href="" @click="store.goToLink(item.link, item.open_in_new_tab ? item.open_in_new_tab : null)"
+                                            <a href="javascript:void(0)" @click="store.goToLink(item.link, item.open_in_new_tab ?? null)"
                                                class="text-sm">
                                                 View Details
                                             </a>

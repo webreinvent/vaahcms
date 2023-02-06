@@ -131,10 +131,13 @@ export const useRegistrationStore = defineStore({
             //watch routes
             watch(route, (newVal,oldVal) =>
                 {
+
+                    // console.log(oldVal,'---->test',newVal);
+
                     this.route = newVal;
-                    if(newVal.params.id){
+                    /*if(newVal.params.id){
                         this.getItem(newVal.params.id);
-                    }
+                    }*/
                     this.setViewAndWidth(newVal.name);
                 }, { deep: true }
             )

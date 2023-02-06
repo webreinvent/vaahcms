@@ -20,15 +20,6 @@ class Module extends ModuleBase
     ];
 
     //-------------------------------------------------
-    protected $fillable = [
-        'uuid',
-        'name',
-        'slug',
-        'is_active',
-        'created_by',
-        'updated_by',
-        'deleted_by',
-    ];
 
     //-------------------------------------------------
     protected $appends = [
