@@ -7,7 +7,7 @@ let model_namespace = 'WebReinvent\\VaahCms\\Models\\Media';
 
 
 let base_url = document.getElementsByTagName('base')[0].getAttribute("href");
-let ajax_url = base_url + "/vaah/media";
+let ajax_url = base_url + "/vaah/manage/media";
 
 let empty_states = {
     query: {
@@ -161,7 +161,7 @@ export const useMediaStore = defineStore({
         watchItem()
         {
             if(this.item){
-                    watch(() => this.item.name, (newVal,oldVal) =>
+                    watch(this.item.name, (newVal,oldVal) =>
                         {
                             if(newVal && newVal !== "")
                             {
@@ -234,7 +234,7 @@ export const useMediaStore = defineStore({
             }
         },
         //---------------------------------------------------------------------
-        async getItemAfter(data, res)
+        async getItemAfter(data)
         {
             if(data)
             {
@@ -242,6 +242,7 @@ export const useMediaStore = defineStore({
             }else{
                 this.$router.push({name: 'media.index'});
             }
+
             await this.getItemMenu();
             await this.getFormMenu();
         },
