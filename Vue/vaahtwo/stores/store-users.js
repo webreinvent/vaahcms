@@ -1109,7 +1109,6 @@ export const useUserStore = defineStore({
         //---------------------------------------------------------------------
         isHidden(key) {
             if (this.assets && this.assets.fields && this.assets.fields[key]) {
-                console.log(key , ' ------> ', this.assets.fields[key].is_hidden, typeof(this.assets.fields[key].is_hidden))
                 return this.assets.fields[key].is_hidden
             }
 
