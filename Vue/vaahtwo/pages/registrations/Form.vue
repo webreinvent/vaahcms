@@ -270,17 +270,17 @@ const toggleFormMenu = (event) => {
                     />
                 </VhField>
 
-                <VhField label="Country" v-if="!store.isHidden('country')">
-                    <AutoComplete class="w-full"
-                                  v-model="store.item.country"
-                                  :suggestions="store.filtered_country_codes"
-                                  @complete="store.searchCountryCode"
-                                  @item-select="store.onSelectCountryCode"
-                                  placeholder="Enter Your Country"
-                                  optionLabel="name"
-                                  name="account-country"
-                                  data-testid="register-country"
-                    />
+                <VhField label="Country">
+                      <Dropdown v-model="store.item.country"
+                              :options="store.assets.countries"
+                              optionLabel="name"
+                              optionValue="name"
+                              :filter="true"
+                              placeholder="- Select a country -"
+                              :showClear="true"
+                               data-testid="register-country"
+                      >
+                    </Dropdown>
                 </VhField>
 
                 <VhField label="Status">
@@ -294,23 +294,7 @@ const toggleFormMenu = (event) => {
                     />
                 </VhField>
 
-                <p>---> {{ store.item.meta }} </p>
-                <template v-if="store.assets && store.assets.custom_fields"
-                          v-for="(custom_field,key) in store.assets.custom_fields.value"
-                          :key="key"
-                >
-                    <VhField :label="useVaah.toLabel(custom_field.name)" >
-                        <InputText class="w-full"
-                                   :name=" 'register-meta_'+custom_field.name"
-                                   :data-testid="'register-meta_'+custom_field.name"
-                                   :type="custom_field.type"
-                                   :min="custom_field.min"
-                                   :max="custom_field.max"
-                                   :minlength="custom_field.minlength"
-                                   :maxlength="custom_field.maxlength"
-                        />
-                    </VhField>
-                </template>
+
             </div>
         </Panel>
     </div>
