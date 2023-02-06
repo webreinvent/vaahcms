@@ -3,6 +3,7 @@ namespace WebReinvent\VaahCms\Http\Controllers\Backend;
 
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use WebReinvent\VaahCms\Entities\Setting;
 use WebReinvent\VaahCms\Models\Role;
 use WebReinvent\VaahCms\Models\User;
 
@@ -51,6 +52,8 @@ class UsersController extends Controller
         $data['name_titles'] = vh_name_titles();
         $data['countries'] = vh_get_country_list();
         $data['timezones'] = vh_get_timezones();
+        $data['custom_fields'] = Setting::where('category','user_setting')
+            ->where('label','custom_fields')->first();
         $data['fields'] = User::getUserSettings();
         $data['totalRole'] = $roles_count;
         $response['success'] = true;
