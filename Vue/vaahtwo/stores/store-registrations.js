@@ -1,7 +1,8 @@
-import {watch} from 'vue'
-import {acceptHMRUpdate, defineStore} from 'pinia'
+import { watch } from 'vue'
+import { acceptHMRUpdate, defineStore } from 'pinia'
 import qs from 'qs'
-import {vaah} from '../vaahvue/pinia/vaah'
+import { vaah } from '../vaahvue/pinia/vaah'
+import { useRootStore } from "./root";
 
 let model_namespace = 'WebReinvent\\VaahCms\\Models\\Registration';
 
@@ -949,7 +950,21 @@ export const useRegistrationStore = defineStore({
                 await this.getList()
                 this.getItemMenu();
             }
-        }
+        },
+        //---------------------------------------------------------------------
+        hasPermission(slug) {
+            const root = useRootStore();
+            return vaah().hasPermission(root.permissions, slug);
+        },
+        //---------------------------------------------------------------------
+        isHidden(key) {
+            if (this.assets && this.assets.fields && this.assets.fields[key]) {
+                console.log(key, '------>', this.assets.fields[key].to_registration, typeof(this.assets.fields[key].to_registration))
+                return this.assets.fields[key].to_registration
+            }
+
+            return false;
+        },
         //---------------------------------------------------------------------
     }
 });
