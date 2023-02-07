@@ -10,32 +10,7 @@ use WebReinvent\VaahCms\Entities\User;
 
 class FailedJob extends FailedJobBase
 {
-
-//    use SoftDeletes;
     use CrudWithUuidObservantTrait;
-
-    //-------------------------------------------------
-    protected $table = 'failed_jobs';
-    //-------------------------------------------------
-    protected $dates = [
-        'created_at',
-        'updated_at',
-        'deleted_at'
-    ];
-    //-------------------------------------------------
-    protected $fillable = [
-        'uuid',
-        'name',
-        'slug',
-        'is_active',
-        'created_by',
-        'updated_by',
-        'deleted_by',
-    ];
-
-    //-------------------------------------------------
-    protected $appends = [
-    ];
 
     //-------------------------------------------------
     protected function serializeDate(DateTimeInterface $date)

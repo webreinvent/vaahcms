@@ -9,8 +9,8 @@ use WebReinvent\VaahCms\Entities\Setting;
 use WebReinvent\VaahCms\Entities\Migration;
 use ZanySoft\Zip\Zip;
 
-class ModuleBase extends Model {
-
+class ModuleBase extends Model
+{
     use SoftDeletes;
     //-------------------------------------------------
     protected $table = 'vh_modules';
@@ -51,9 +51,7 @@ class ModuleBase extends Model {
     protected function serializeDate(DateTimeInterface $date)
     {
         $date_time_format = config('settings.global.datetime_format');
-
         return $date->format($date_time_format);
-
     }
 
     //-------------------------------------------------
