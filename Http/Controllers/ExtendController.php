@@ -361,15 +361,15 @@ class ExtendController extends Controller
                         'name' => 'Pending',
                         'count' => Job::count(),
                         'type' => 'info',
-                        'icon' => 'envelope',
+                        'icon' => 'pi pi-envelope',
                         'link' => self::$link."/advanced/jobs/",
                     ],
                     [
                         'name' => 'Failed',
                         'count' => FailedJob::count(),
                         'type' => 'danger',
-                        'icon' => 'ban',
-                        'link' => self::$link."/advanced/jobs-failed/",
+                        'icon' => 'pi pi-ban text-red-500',
+                        'link' => self::$link."/advanced/failedjobs/",
                     ]
                 ]
             ],
