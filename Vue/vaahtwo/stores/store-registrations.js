@@ -1,7 +1,8 @@
-import {watch} from 'vue'
-import {acceptHMRUpdate, defineStore} from 'pinia'
+import { watch } from 'vue'
+import { acceptHMRUpdate, defineStore } from 'pinia'
 import qs from 'qs'
-import {vaah} from '../vaahvue/pinia/vaah'
+import { vaah } from '../vaahvue/pinia/vaah'
+import { useRootStore } from "./root";
 
 let model_namespace = 'WebReinvent\\VaahCms\\Models\\Registration';
 
@@ -72,6 +73,8 @@ export const useRegistrationStore = defineStore({
             {name:'Others',value:'o',icon: ''},
         ],
 
+        filtered_country_codes: [],
+
     }),
     getters: {
 
@@ -106,7 +109,7 @@ export const useRegistrationStore = defineStore({
                     break;
                 default:
                     this.view = 'small';
-                    this.list_view_width = 8;
+                    this.list_view_width = 7;
                     break
             }
         },
@@ -952,7 +955,40 @@ export const useRegistrationStore = defineStore({
                 await this.getList()
                 this.getItemMenu();
             }
-        }
+        },
+        //---------------------------------------------------------------------
+        hasPermission(slug) {
+            const root = useRootStore();
+            return vaah().hasPermission(root.permissions, slug);
+        },
+        //---------------------------------------------------------------------
+        isHidden(key) {
+            if (this.assets && this.assets.fields && this.assets.fields[key]) {
+                return this.assets.fields[key].to_registration
+            }
+
+            return false;
+        },
+        //---------------------------------------------------------------------
+        searchCountryCode: function (event){
+            this.country_name_object = null;
+            this.country = null;
+
+            setTimeout(() => {
+                if (!event.query.trim().length) {
+                    this.filtered_country_codes = this.assets.countries;
+                }
+                else {
+                    this.filtered_country_codes = this.assets.countries.filter((country) => {
+                        return country.name.toLowerCase().startsWith(event.query.toLowerCase());
+                    });
+                }
+            }, 250);
+        },
+        //---------------------------------------------------------------------
+        onSelectCountryCode: function (event){
+            this.item.country = event.value.name;
+        },
         //---------------------------------------------------------------------
     }
 });

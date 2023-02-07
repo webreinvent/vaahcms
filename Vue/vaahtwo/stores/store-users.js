@@ -1107,6 +1107,14 @@ export const useUserStore = defineStore({
             return vaah().hasPermission(root.permissions, slug);
         },
         //---------------------------------------------------------------------
+        isHidden(key) {
+            if (this.assets && this.assets.fields && this.assets.fields[key]) {
+                return this.assets.fields[key].is_hidden
+            }
+
+            return false;
+        },
+        //---------------------------------------------------------------------
         showProgress()
         {
             this.show_progress_bar = true;

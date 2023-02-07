@@ -40,6 +40,7 @@ class Registration extends RegistrationBase
 
     //-------------------------------------------------
     protected $appends = [
+        'name'
     ];
 
 

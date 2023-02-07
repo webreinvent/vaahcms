@@ -36,55 +36,46 @@ const toggleBulkMenuState = (event) => {
             <div v-if="store.view === 'large'">
 
                 <!--selected_menu-->
-                <Button
-                    type="button"
-                    @click="toggleSelectedMenuState"
-                    aria-haspopup="true"
-                    aria-controls="overlay_menu"
-                    data-testid="register-toggle_list_selected_menu"
+                <Button class="p-button-sm"
+                        icon="pi pi-angle-down"
+                        @click="toggleSelectedMenuState"
+                        aria-haspopup="true"
+                        aria-controls="overlay_menu"
+                        data-testid="register-toggle_list_selected_menu"
                 >
-                    <span> Actions </span>
-                    <i class="pi pi-angle-down"></i>
                     <Badge v-if="store.action.items.length > 0"
-                           :value="store.action.items.length" />
+                           :value="store.action.items.length"
+                    />
                 </Button>
+
                 <Menu ref="selected_menu_state"
                       :model="store.list_selected_menu"
-                      :popup="true" />
+                      :popup="true"
+                />
                 <!--/selected_menu-->
 
                 <!--bulk_menu-->
-                <Button
-                    type="button"
-                    @click="toggleBulkMenuState"
-                    aria-haspopup="true"
-                    aria-controls="bulk_menu_state"
-                    class="ml-1"
-                    data-testid="register-toggle_list_bulk_menu"
+                <Button class="p-button-sm ml-1"
+                        icon="pi pi-ellipsis-h"
+                        @click="toggleBulkMenuState"
+                        aria-haspopup="true"
+                        aria-controls="bulk_menu_state"
+                        data-testid="register-toggle_list_bulk_menu"
                 >
-<!--                    <i class="pi pi-ellipsis-h"></i>-->
-                    <span> Bulk Actions </span>
-                    <i class="pi pi-angle-down"></i>
-<!--                    <i class="pi pi-ellipsis-h"></i>-->
                 </Button>
+
                 <Menu ref="bulk_menu_state"
                       :model="store.list_bulk_menu"
                       :popup="true" />
                 <!--/bulk_menu-->
-
             </div>
             <!--/left-->
 
             <!--right-->
-            <div >
-
-
+            <div>
                 <div class="grid p-fluid">
-
-
                     <div class="col-12">
                         <div class="p-inputgroup ">
-
                             <InputText v-model="store.query.filter.q"
                                        @keyup.enter="store.delayedSearch()"
                                        @keyup.enter.native="store.delayedSearch()"
@@ -92,43 +83,37 @@ const toggleBulkMenuState = (event) => {
                                        placeholder="Search"
                                        name="register-search_query_filter_q"
                                        data-testid="register-search_query_filter_q"
+                                       class="p-inputtext-sm"
                             />
-                            <Button @click="store.delayedSearch()"
+
+                            <Button class="p-button-sm"
+                                    @click="store.delayedSearch()"
                                     icon="pi pi-search"
                                     data-testid="register-search_icon_query_filter_q"
                             />
-                            <Button
-                                type="button"
-                                class="p-button-sm"
-                                @click="store.show_filters = true"
-                                data-testid="register-show_filters"
+
+                            <Button label="Filters"
+                                    class="p-button-sm"
+                                    @click="store.show_filters = true"
+                                    data-testid="register-show_filters"
                             >
-                                Filters
-                                <Badge v-if="store.count_filters > 0" :value="store.count_filters"></Badge>
+                                <Badge v-if="store.count_filters > 0" :value="store.count_filters" />
                             </Button>
 
-                            <Button
-                                type="button"
-                                icon="pi pi-filter-slash"
-                                class="p-button-sm"
-                                label="Reset"
-                                @click="store.resetQuery()"
-                                data-testid="register-reset_query"
+                            <Button icon="pi pi-filter-slash"
+                                    class="p-button-sm"
+                                    label="Reset"
+                                    @click="store.resetQuery()"
+                                    data-testid="register-reset_query"
                             />
-
                         </div>
                     </div>
 
-
                     <Filters/>
-
                 </div>
-
             </div>
             <!--/right-->
-
         </div>
         <!--/actions-->
-
     </div>
 </template>
