@@ -328,23 +328,47 @@ const toggleFormMenu = (event) => {
                           v-for="(custom_field,key) in store.assets.custom_fields.value"
                           :key="key"
                 >
-                    <VhField :label="useVaah.toLabel(custom_field.name)" v-if="!custom_field.is_hidden">
-                        <InputText class="w-full"
-                                   :name=" 'account-meta_'+custom_field.name"
-                                   :data-testid="'account-meta_'+custom_field.name"
+                    <VhField :label="useVaah.toLabel(custom_field.name)"
+                             v-if="!custom_field.is_hidden">
+                        <Textarea v-if="custom_field.type === 'textarea'"
+                                  class="w-full"
+                                  rows="5"
+                                  cols="30"
+                                  :name=" 'account-meta_'+custom_field.slug"
+                                  :data-testid="'account-meta_'+custom_field.slug"
+                                  :min="custom_field.min"
+                                  :max="custom_field.max"
+                                  :minlength="custom_field.minlength"
+                                  :maxlength="custom_field.maxlength"
+                                  v-model="store.item.meta[custom_field.slug]"
+                        />
+
+                        <Password v-else-if="custom_field.type === 'password'"
+                                  class="w-full"
+                                  :name=" 'account-meta_'+custom_field.slug"
+                                  :data-testid="'account-meta_'+custom_field.slug"
+                                  :min="custom_field.min"
+                                  :max="custom_field.max"
+                                  :minlength="custom_field.minlength"
+                                  :maxlength="custom_field.maxlength"
+                                  v-model="store.item.meta[custom_field.slug]"
+                                  toggleMask
+                        />
+
+                        <InputText v-else
+                                   class="w-full"
+                                   :name=" 'account-meta_'+custom_field.slug"
+                                   :data-testid="'account-meta_'+custom_field.slug"
                                    :type="custom_field.type"
                                    :min="custom_field.min"
                                    :max="custom_field.max"
                                    :minlength="custom_field.minlength"
                                    :maxlength="custom_field.maxlength"
-                                   v-model="store.item.meta"
+                                   v-model="store.item.meta[custom_field.slug]"
                         />
                     </VhField>
                 </template>
-
             </div>
         </Panel>
-
     </div>
-
 </template>

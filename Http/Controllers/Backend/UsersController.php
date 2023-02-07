@@ -46,14 +46,20 @@ class UsersController extends Controller
             $data['empty_item'][$column] = null;
         }
 
+        $custom_fields = Setting::where('category','user_setting')
+            ->where('label','custom_fields')->first();
+
+        foreach ($custom_fields['value'] as $custom_field) {
+            $data['empty_item']['meta'][$custom_field->slug] = null;
+        }
+
         $roles_count = Role::all()->count();
 
         $data['actions'] = [];
         $data['name_titles'] = vh_name_titles();
         $data['countries'] = vh_get_country_list();
         $data['timezones'] = vh_get_timezones();
-        $data['custom_fields'] = Setting::where('category','user_setting')
-            ->where('label','custom_fields')->first();
+        $data['custom_fields'] = $custom_fields;
         $data['fields'] = User::getUserSettings();
         $data['totalRole'] = $roles_count;
         $response['success'] = true;

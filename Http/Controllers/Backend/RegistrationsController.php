@@ -47,6 +47,13 @@ class RegistrationsController extends Controller
             $data['empty_item'][$column] = null;
         }
 
+        $custom_fields = Setting::where('category','user_setting')
+            ->where('label','custom_fields')->first();
+
+        foreach ($custom_fields['value'] as $custom_field) {
+            $data['empty_item']['meta'][$custom_field->slug] = null;
+        }
+
         $data['actions'] = [];
 
 //      field copied from Http/Registration controller 's assets methods
@@ -58,8 +65,7 @@ class RegistrationsController extends Controller
         $data['bulk_actions'] = vh_general_bulk_actions();
         $data['name_titles'] = vh_name_titles();
         $data['fields'] = User::getUserSettings();
-        $data['custom_fields'] = Setting::where('category','user_setting')
-            ->where('label','custom_fields')->first();
+        $data['custom_fields'] = $custom_fields;
         //      field copied from Http/Registration controller 's assets methods
 
 
