@@ -925,6 +925,15 @@ export const useMediaStore = defineStore({
             this.item = this.assets.empty_item;
         },
         //---------------------------------------------------------------------
+        openUploader($event)
+        {
+            let removeButton = $event.target.className.includes('p-fileupload-file-remove') || $event.target.className.includes('pi-times'); //document.querySelector('.p-times');
+
+            if (removeButton !== null || removeButton !== "") {
+                let ele = document.querySelector('.p-fileupload > input[type=file]');
+                ele.click();
+            }
+        }
     }
 });
 

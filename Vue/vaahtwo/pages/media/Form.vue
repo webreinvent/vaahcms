@@ -87,6 +87,7 @@ const toggleFormMenu = (event) => {
                     </span>
                     <div v-if="!store.item.id" class="field mb-4 relative">
                         <FileUpload v-model="store.item.url"
+                                    @click="store.openUploader($event)"
                                     @select="store.upload($event,store.item)"
                                     @remove="store.upload($event,store.item)">
                             <template #empty>
