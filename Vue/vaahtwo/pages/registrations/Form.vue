@@ -31,7 +31,7 @@ const toggleFormMenu = (event) => {
 
 </script>
 <template>
-    <div class="col-4" >
+    <div class="col-5" >
         <Panel>
             <Message severity="error"
                          class="p-container-message"
@@ -59,7 +59,7 @@ const toggleFormMenu = (event) => {
                 <div class="flex flex-row">
                     <div class="p-panel-title">
                         <span v-if="store.item && store.item.id">
-                            Update
+                            {{ store.item.name }}
                         </span>
                         <span v-else>
                             Create
@@ -70,11 +70,18 @@ const toggleFormMenu = (event) => {
 
             <template #icons>
                 <div class="p-inputgroup">
+                    <Button v-if="store.item && store.item.id"
+                            class="p-button-sm"
+                            :label=" '#' + store.item.id "
+                            @click="useVaah.copy(store.item.id)"
+                    />
+
                     <Button label="Save"
                             v-if="store.item && store.item.id && store.hasPermission('can-update-registrations')"
                             @click="store.itemAction('save')"
-                            icon="pi pi-save"
+                            icon="pi pi-pencil"
                             data-testid="register-form_item_action_save"
+                            class="p-button-sm"
                     />
 
                     <Button v-else-if="store.hasPermission('can-create-registrations')"
@@ -82,6 +89,14 @@ const toggleFormMenu = (event) => {
                             @click="store.itemAction('create-and-new')"
                             icon="pi pi-save"
                             data-testid="register-form_item_action_create_and_new"
+                            class="p-button-sm"
+                    />
+
+                    <Button v-if="store.item && store.item.id"
+                            class="p-button-sm"
+                            icon="pi pi-eye"
+                            v-tooltip.top="'View'"
+                            @click="store.toView(store.item)"
                     />
 
                     <!--form_menu-->
@@ -89,6 +104,7 @@ const toggleFormMenu = (event) => {
                             @click="toggleFormMenu"
                             aria-haspopup="true"
                             data-testid="register-form_toggle_form_menu_list"
+                            class="p-button-sm"
                     />
 
                     <Menu ref="form_menu"
@@ -97,7 +113,7 @@ const toggleFormMenu = (event) => {
                     />
                     <!--/form_menu-->
 
-                    <Button class="p-button-primary"
+                    <Button class="p-button-sm"
                             icon="pi pi-times"
                             @click="store.toList()"
                             data-testid="register-form_to_list"
@@ -160,6 +176,7 @@ const toggleFormMenu = (event) => {
                               optionValue="slug"
                               placeholder="Select a title"
                               data-testid="register-title"
+                              class="w-full"
                     />
                 </VhField>
 
@@ -267,6 +284,7 @@ const toggleFormMenu = (event) => {
                               :showIcon="true"
                               dateFormat="mm-dd-yy"
                               data-testid="register-birth"
+                              class="w-full"
                     />
                 </VhField>
 
@@ -294,15 +312,14 @@ const toggleFormMenu = (event) => {
                     />
                 </VhField>
 
-                <p>---> {{ store.item.meta }} </p>
                 <template v-if="store.assets && store.assets.custom_fields"
                           v-for="(custom_field,key) in store.assets.custom_fields.value"
                           :key="key"
                 >
-                    <VhField :label="useVaah.toLabel(custom_field.name)" >
+                    <VhField :label="useVaah.toLabel(custom_field.name)">
                         <InputText class="w-full"
-                                   :name=" 'register-meta_'+custom_field.name"
-                                   :data-testid="'register-meta_'+custom_field.name"
+                                   :name=" 'register-meta_' + custom_field.slug"
+                                   :data-testid="'register-meta_'+custom_field.slug"
                                    :type="custom_field.type"
                                    :min="custom_field.min"
                                    :max="custom_field.max"
@@ -315,4 +332,3 @@ const toggleFormMenu = (event) => {
         </Panel>
     </div>
 </template>
-<!--v-model="store.item.meta[custom_field.slug]"-->

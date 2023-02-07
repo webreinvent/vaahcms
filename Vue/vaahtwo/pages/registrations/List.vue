@@ -73,6 +73,7 @@ onMounted(async () => {
                             @click="store.toForm()"
                             v-if="store.hasPermission('can-create-registrations')"
                             data-testid="register-to_create_form"
+                            class="p-button-sm"
                     />
                 </template>
 
