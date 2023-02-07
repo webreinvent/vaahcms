@@ -293,11 +293,12 @@ const toggleFormMenu = (event) => {
                     />
                 </VhField>
 
+                <p>---> {{ store.item.meta }} </p>
                 <template v-if="store.assets && store.assets.custom_fields"
                           v-for="(custom_field,key) in store.assets.custom_fields.value"
                           :key="key"
                 >
-                    <VhField :label="useVaah.toLabel(custom_field.name)" v-if="!custom_field.is_hidden">
+                    <VhField :label="useVaah.toLabel(custom_field.name)" >
                         <InputText class="w-full"
                                    :name=" 'register-meta_'+custom_field.name"
                                    :data-testid="'register-meta_'+custom_field.name"
@@ -306,7 +307,6 @@ const toggleFormMenu = (event) => {
                                    :max="custom_field.max"
                                    :minlength="custom_field.minlength"
                                    :maxlength="custom_field.maxlength"
-                                   v-model="store.item.meta"
                         />
                     </VhField>
                 </template>
