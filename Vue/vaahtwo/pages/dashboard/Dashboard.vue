@@ -19,7 +19,6 @@ const key = ref();
 <template>
     <div v-if="root.assets && store.dashboard_items" class="grid dashboard">
         <div class="col-12 md:col-8">
-
             <Card>
                 <template #content>
                     <h5 class="text-xl font-semibold">Welcome to Vaah<b>cms</b></h5>
@@ -27,8 +26,18 @@ const key = ref();
                     <div class="grid mt-4">
                         <div class="col-12 md:col-4">
                             <h6 class="font-semibold mb-4">Get Started</h6>
-                            <Button label="Go to Theme" />
-                            <p class="text-sm mt-1">or,<a href="https://docs.vaah.dev/vaahcms/theme/introduction.html" target="_blank">create your own theme</a></p>
+                            <Button @click="store.goToLink(root.base_url + '#/vaah/themes/')">
+                                <span v-if="store.dashboard_items && store.dashboard_items.success && store.dashboard_items.success.vaahcms && store.dashboard_items.success.vaahcms.has_activated_theme">
+                                     Go To Theme
+                                </span>
+                                <span v-else>
+                                    Activate Theme
+                                </span>
+                            </Button>
+                            <p class="text-sm mt-1">
+                                or, <a href="https://docs.vaah.dev/vaahcms/theme/introduction.html" target="_blank">
+                                create your own theme</a>
+                            </p>
                         </div>
 
                         <div class="col-12 md:col-4">
