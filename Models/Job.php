@@ -10,33 +10,7 @@ use WebReinvent\VaahCms\Entities\User;
 
 class Job extends JobBase
 {
-
     use CrudWithUuidObservantTrait;
-
-    //-------------------------------------------------
-    protected $table = 'jobs';
-    //-------------------------------------------------
-    protected $dates = [
-        'created_at',
-        'updated_at',
-        'deleted_at'
-    ];
-    //-------------------------------------------------
-    protected $fillable = [
-        'uuid',
-        'name',
-        'slug',
-        'is_active',
-        'created_by',
-        'updated_by',
-        'deleted_by',
-    ];
-
-    //-------------------------------------------------
-    protected $appends = [
-    ];
-
-    //-------------------------------------------------
 
     public function createdByUser()
     {

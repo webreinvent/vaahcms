@@ -7,8 +7,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
 
 
-class BatchBase extends Model {
-
+class BatchBase extends Model
+{
     //-------------------------------------------------
     protected $table = 'job_batches';
     //-------------------------------------------------
