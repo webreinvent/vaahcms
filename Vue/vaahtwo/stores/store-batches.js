@@ -134,9 +134,9 @@ export const useBatchStore = defineStore({
             watch(route, (newVal,oldVal) =>
                 {
                     this.route = newVal;
-                    if(newVal.params.id){
-                        this.getItem(newVal.params.id);
-                    }
+                    // if(newVal.params.id){
+                    //     this.getItem(newVal.params.id);
+                    // }
                     this.setViewAndWidth(newVal.name);
                 }, { deep: true }
             )

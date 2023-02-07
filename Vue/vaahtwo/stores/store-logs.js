@@ -114,9 +114,9 @@ export const useLogStore = defineStore({
             watch(route, (newVal,oldVal) =>
                 {
                     this.route = newVal;
-                    if(newVal.params.name){
-                        this.getItem(newVal.params.name);
-                    }
+                    // if(newVal.params.name){
+                    //     this.getItem(newVal.params.name);
+                    // }
                     this.setViewAndWidth(newVal.name);
                 }, { deep: true }
             )
