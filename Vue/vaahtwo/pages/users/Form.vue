@@ -250,15 +250,15 @@ const toggleFormMenu = (event) => {
                 </VhField>
 
                 <VhField label="Timezone" v-if="!store.isHidden('timezone')">
-                    <AutoComplete class="w-full"
-                                  v-model="store.item.timezone"
-                                  :suggestions="store.filtered_timezone_codes"
-                                  @complete="store.searchTimezoneCode"
-                                  @item-select="store.onSelectTimezoneCode"
-                                  placeholder="Enter Your Timezone"
-                                  optionLabel="name"
-                                  name="account-timezone"
-                                  data-testid="account-timezone"
+                    <Dropdown v-model="store.item.timezone"
+                              :options="store.assets.timezones"
+                              optionLabel="name"
+                              optionValue="slug"
+                              :filter="true"
+                              placeholder="Enter Your Timezone"
+                              :showClear="true"
+                              data-testid="account-timezone"
+                              class="w-full"
                     />
                 </VhField>
 
