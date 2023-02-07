@@ -10,8 +10,6 @@ use WebReinvent\VaahCms\Models\TaxonomyType;
 
 class TaxonomiesController extends Controller
 {
-
-
     //----------------------------------------------------------
     public function __construct()
     {
