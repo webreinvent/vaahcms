@@ -7,9 +7,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
 
 
-class JobBase extends Model {
-
-
+class JobBase extends Model
+{
     //-------------------------------------------------
     protected $table = 'jobs';
     //-------------------------------------------------

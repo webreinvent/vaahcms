@@ -10,42 +10,7 @@ use WebReinvent\VaahCms\Models\User;
 
 class Permission extends PermissionBase
 {
-
-    use SoftDeletes;
-    use CrudWithUuidObservantTrait;
-
     //-------------------------------------------------
-    protected $table = 'vh_permissions';
-    //-------------------------------------------------
-    protected $dates = [
-        'created_at',
-        'updated_at',
-        'deleted_at'
-    ];
-    //-------------------------------------------------
-    protected $fillable = [
-        'uuid',
-        'name',
-        'slug',
-        'is_active',
-        'created_by',
-        'updated_by',
-        'deleted_by',
-    ];
-
-    //-------------------------------------------------
-    protected $appends = [
-    ];
-
-    //-------------------------------------------------
-    protected function serializeDate(DateTimeInterface $date)
-    {
-        $date_time_format = config('settings.global.datetime_format');
-        return $date->format($date_time_format);
-    }
-
-    //-------------------------------------------------
-
     public function createdByUser()
     {
         return $this->belongsTo(User::class,

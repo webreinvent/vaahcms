@@ -12,59 +12,6 @@ use WebReinvent\VaahCms\Traits\CrudWithUuidObservantTrait;
 class User extends UserBase
 {
 
-    use SoftDeletes;
-    use CrudWithUuidObservantTrait;
-
-    //-------------------------------------------------
-    //-------------------------------------------------
-    protected $dates = [
-        "last_login_at", "api_token_used_at",
-        "affiliate_code_used_at", "reset_password_code_sent_at",
-        "reset_password_code_used_at",
-        "birth", "activated_at",
-        "created_at","updated_at","deleted_at"
-    ];
-    //------------------------------------------------
-    protected $dateFormat = 'Y-m-d H:i:s';
-    //-------------------------------------------------
-    protected $fillable = [
-        "uuid","email","username","display_name","title","designation",
-        "first_name","middle_name","last_name", "password",
-        "gender","country_calling_code","phone", "bio",
-        "website","timezone",
-        "alternate_email","avatar_url","birth",
-        "country","country_code","last_login_at","last_login_ip",
-        "remember_token", "login_otp", "api_token","api_token_used_at",
-        "api_token_used_ip","is_active","activated_at","status",
-        "affiliate_code","affiliate_code_used_at","reset_password_code",
-        "reset_password_code_sent_at","reset_password_code_used_at",
-        'foreign_user_id',"meta","created_ip","created_by",
-        "updated_by","deleted_by"
-    ];
-    //------------------------------------------------
-    protected $hidden = [
-        'password',
-        'login_otp',
-        'remember_token',
-        'api_token',
-        'api_token_used_at',
-        'api_token_used_ip',
-        'reset_password_code',
-    ];
-    //-------------------------------------------------
-    protected $appends = [
-        'name'
-    ];
-
-    //-------------------------------------------------
-    protected function serializeDate(DateTimeInterface $date)
-    {
-        $date_time_format = config('settings.global.datetime_format');
-        return $date->format($date_time_format);
-    }
-
-    //-------------------------------------------------
-
     public function createdByUser()
     {
         return $this->belongsTo(User::class,

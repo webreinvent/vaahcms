@@ -50,7 +50,7 @@ class PermissionBase extends Model {
 
     //-------------------------------------------------
 
-protected $excluded_columns = [];
+    protected $excluded_columns = [];
 
     //-------------------------------------------------
     protected function serializeDate(DateTimeInterface $date)

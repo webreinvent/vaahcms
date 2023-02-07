@@ -15,19 +15,6 @@ class Batch extends BatchBase
 
     //-------------------------------------------------
 
-    //-------------------------------------------------
-    protected $appends = [
-    ];
-
-    //-------------------------------------------------
-    protected function serializeDate(DateTimeInterface $date)
-    {
-        $date_time_format = config('settings.global.datetime_format');
-        return $date->format($date_time_format);
-    }
-
-    //-------------------------------------------------
-
     public function createdByUser()
     {
         return $this->belongsTo(User::class,

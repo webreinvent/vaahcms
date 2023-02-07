@@ -11,53 +11,6 @@ use WebReinvent\VaahCms\Models\User;
 
 class Media extends MediaBase
 {
-
-    use SoftDeletes;
-    use CrudWithUuidObservantTrait;
-
-    //-------------------------------------------------
-    protected $dates = [
-        'created_at',
-        'updated_at',
-        'deleted_at'
-    ];
-    //-------------------------------------------------
-    protected $fillable = [
-        'name',
-        'original_name',
-        'uuid',
-        'mime_type',
-        'extension',
-        'path',
-        'url',
-        'url_thumbnail',
-        'size',
-        'title',
-        'caption',
-        'alt_text',
-        'is_hidden',
-        'is_downloadable',
-        'download_url',
-        'download_requires_login',
-        'meta',
-        'created_by',
-        'updated_by',
-        'deleted_by'
-    ];
-
-    //-------------------------------------------------
-    protected $appends = [
-    ];
-
-    //-------------------------------------------------
-    protected function serializeDate(DateTimeInterface $date)
-    {
-        $date_time_format = config('settings.global.datetime_format');
-        return $date->format($date_time_format);
-    }
-
-    //-------------------------------------------------
-
     public function createdByUser()
     {
         return $this->belongsTo(User::class,

@@ -10,29 +10,6 @@ use WebReinvent\VaahCms\Models\ModuleBase;
 
 class Module extends ModuleBase
 {
-    use SoftDeletes;
-
-    //-------------------------------------------------
-    protected $dates = [
-        'created_at',
-        'updated_at',
-        'deleted_at'
-    ];
-
-    //-------------------------------------------------
-
-    //-------------------------------------------------
-    protected $appends = [
-    ];
-
-    //-------------------------------------------------
-    protected function serializeDate(DateTimeInterface $date)
-    {
-        $date_time_format = config('settings.global.datetime_format');
-        return $date->format($date_time_format);
-    }
-
-    //-------------------------------------------------
     public function createdByUser()
     {
         return $this->belongsTo(User::class,
