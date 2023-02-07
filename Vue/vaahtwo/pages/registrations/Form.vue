@@ -215,8 +215,9 @@ const toggleFormMenu = (event) => {
                               :options="store.assets.country_calling_code"
                               optionLabel='calling_code'
                               optionValue='calling_code'
-                              placeholder="- Select a country code -"
+                              placeholder="Enter your country code"
                               data-testid="register-country_calling_code"
+                              class="w-full"
                     >
                     </Dropdown>
                 </VhField>
@@ -227,6 +228,7 @@ const toggleFormMenu = (event) => {
                                  :useGrouping="false"
                                  name="register-phone"
                                  data-testid="register-phone"
+                                 class="w-full"
                     />
                 </VhField>
 
@@ -247,6 +249,7 @@ const toggleFormMenu = (event) => {
                               placeholder="Enter Your Timezone"
                               :showClear="true"
                               data-testid="register-timezone"
+                              class="w-full"
                     />
                 </VhField>
 
@@ -291,11 +294,12 @@ const toggleFormMenu = (event) => {
                     />
                 </VhField>
 
+                <p>---> {{ store.item.meta }} </p>
                 <template v-if="store.assets && store.assets.custom_fields"
                           v-for="(custom_field,key) in store.assets.custom_fields.value"
                           :key="key"
                 >
-                    <VhField :label="useVaah.toLabel(custom_field.name)" v-if="!custom_field.is_hidden">
+                    <VhField :label="useVaah.toLabel(custom_field.name)" >
                         <InputText class="w-full"
                                    :name=" 'register-meta_'+custom_field.name"
                                    :data-testid="'register-meta_'+custom_field.name"
@@ -304,7 +308,6 @@ const toggleFormMenu = (event) => {
                                    :max="custom_field.max"
                                    :minlength="custom_field.minlength"
                                    :maxlength="custom_field.maxlength"
-                                   v-model="store.item.meta"
                         />
                     </VhField>
                 </template>
@@ -312,3 +315,4 @@ const toggleFormMenu = (event) => {
         </Panel>
     </div>
 </template>
+<!--v-model="store.item.meta[custom_field.slug]"-->
