@@ -6,7 +6,8 @@ Route::group(
 
         'middleware' => ['web', 'has.backend.access'],
 
-        'namespace' => 'WebReinvent\VaahCms\Http\Controllers',
+        'namespace' => 'WebReinvent\VaahCms\Http\Controllers\Backend
+        ',
 ],
 function () {
     /**

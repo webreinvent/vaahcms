@@ -1,6 +1,6 @@
 <?php
 
-namespace WebReinvent\VaahCms\Http\Controllers;
+namespace WebReinvent\VaahCms\Http\Controllers\Backend;
 
 use Carbon\Carbon;
 use Illuminate\Http\Request;
