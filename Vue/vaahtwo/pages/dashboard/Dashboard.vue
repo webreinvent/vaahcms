@@ -28,7 +28,7 @@ const key = ref();
                         <div class="col-12 md:col-4">
                             <h6 class="font-semibold mb-4">Get Started</h6>
                             <Button label="Go to Theme" />
-                            <p class="text-sm mt-1">or,<a>create your own theme</a></p>
+                            <p class="text-sm mt-1">or,<a href="https://docs.vaah.dev/vaahcms/theme/introduction.html" target="_blank">create your own theme</a></p>
                         </div>
 
                         <div class="col-12 md:col-4">
@@ -37,11 +37,13 @@ const key = ref();
                                 <template v-if="store && store.dashboard_items && store.dashboard_items.success"
                                           v-for="module in store.dashboard_items.success"
                                 >
-                                    <template v-for="n_module in module.next_steps">
+                                    <template v-for="next_step in module.next_steps">
                                         <li>
-                                            <a href="" @click="store.goToLink(n_item.link, n_item.open_in_new_tab ? n_item.open_in_new_tab : null)">
-                                                <i class="pi" :class="n_module.icon"></i>
-                                                {{ n_module.name }}
+                                            <a href="javascript:void(0)"
+                                               @click="store.goToLink(next_step.link, next_step.open_in_new_tab ?? null)"
+                                            >
+                                                <i class="pi" :class="next_step.icon"></i>
+                                                {{ next_step.name }}
                                             </a>
                                         </li>
                                     </template>
@@ -55,11 +57,11 @@ const key = ref();
                                 <template v-if="store && store.dashboard_items && store.dashboard_items.success"
                                           v-for="module in store.dashboard_items.success"
                                 >
-                                    <template v-for="n_module in module.actions">
+                                    <template v-for="action in module.actions">
                                         <li>
-                                            <a href="" @click="store.goToLink(n_item.link, n_item.open_in_new_tab ? n_item.open_in_new_tab : null)">
-                                                <i class="pi" :class="n_module.icon"></i>
-                                                {{ n_module.name }}
+                                            <a href="javascript:void(0)" @click="store.goToLink(action.link, action.open_in_new_tab ?? null)">
+                                                <i class="pi" :class="action.icon"></i>
+                                                {{ action.name }}
                                             </a>
                                         </li>
                                     </template>
@@ -126,15 +128,15 @@ const key = ref();
                 >
                     <Accordion :multiple="true" :activeIndex="store.active_index">
                         <AccordionTab :header="item.title" :key="item.title">
-                            <template v-if="item.type === 'content' ">
+                            <template v-if="item.type === 'content'">
                                 <div v-if="!item.is_job_enabled">
                                     <Message severity="error"
                                              :closable="false"
                                              icon="null"
                                     >
                                         Enable <b>Laravel Queues</b> to run your jobs
-                                        <a @click="store.goToLink(root.current_url+'#/vaah/settings/general')"
-                                           href=""
+                                        <a @click="store.goToLink(root.base_url+'#/vaah/settings/general')"
+                                           href="javascript:void(0)"
                                         >
                                             View Setting
                                         </a>
@@ -149,10 +151,10 @@ const key = ref();
 
                                 <div class="flex justify-content-evenly align-items-center align-items-center">
                                     <template v-for="f_item in item.footer">
-                                        <a href="" class="text-center"
+                                        <a href="javascript:void(0)" class="text-center"
                                            @click="store.goToLink(f_item.link)"
                                         >
-                                            <i class="mr-2 pi" :class="f_item.icon" />
+                                            <i class="mr-2 pi pi-" :class="f_item.icon" />
                                             {{ f_item.count }} {{ f_item.name }}
                                         </a>
 
@@ -168,13 +170,23 @@ const key = ref();
                                           v-if="index < item.list_limit"
                                 >
                                     <div class="flex justify-content-between">
-                                        <a href="" @click="store.goToLink(item.link+'details/'+log.name)">
+                                        <a href="javascript:void(0)"
+                                           @click="store.goToLink(item.link+'view/'+log.name)"
+                                           class="text-sm text-red-500"
+                                        >
                                             {{ log.name }}
                                         </a>
-                                        <a href="" @click="store.goToLink(item.link+'details/'+log.name)">
+
+                                        <a href="javascript:void(0)"
+                                           @click="store.goToLink(item.link+'view/'+log.name)"
+                                           class="text-sm"
+                                        >
                                             View
                                         </a>
+
                                     </div>
+
+                                    <Divider />
                                 </template>
 
                                 <template v-if="item.list.length === 0">
@@ -184,7 +196,12 @@ const key = ref();
                                 </template>
 
                                 <template v-if="item.list.length > item.list_limit">
-                                    <a href="" @click="store.goToLink(item.link)">{{ item.link_text }}</a>
+                                    <a href="javascript:void(0)"
+                                       @click="store.goToLink(item.link)"
+                                       class="flex justify-content-center"
+                                    >
+                                        {{ item.link_text }}
+                                    </a>
                                 </template>
                             </template>
                         </AccordionTab>
