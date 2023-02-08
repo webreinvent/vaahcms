@@ -4,8 +4,6 @@ let routes_list= [];
 import LayoutBackend from "../layouts/Backend.vue";
 import AdvancedLayout from "../pages/advanced/AdvancedLayout.vue";
 import JobList from '../pages/advanced/jobs/List.vue'
-import JobForm from '../pages/advanced/jobs/Form.vue'
-import JobItem from '../pages/advanced/jobs/Item.vue'
 import LogList from '../pages/advanced/logs/List.vue'
 import LogForm from '../pages/advanced/logs/Form.vue'
 import LogItem from '../pages/advanced/logs/Item.vue'
@@ -52,20 +50,6 @@ routes_list = {
                     name: 'jobs.index',
                     component: JobList,
                     props: true,
-                    children: [
-                        {
-                            path: 'form/:id?',
-                            name: 'jobs.form',
-                            component: JobForm,
-                            props: true,
-                        },
-                        {
-                            path: 'view/:id?',
-                            name: 'jobs.view',
-                            component: JobItem,
-                            props: true,
-                        }
-                    ]
                 },
                 {
 
