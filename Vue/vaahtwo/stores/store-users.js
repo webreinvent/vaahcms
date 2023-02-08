@@ -114,6 +114,7 @@ export const useUserStore = defineStore({
         user_roles_menu: null,
         user_roles_query: vaah().clone(empty_states.user_roles_query),
         is_btn_loading: false,
+        custom_fields_data:[],
     }),
     getters: {
 
@@ -515,6 +516,9 @@ export const useUserStore = defineStore({
         itemAction(type, item=null){
             if(!item)
             {
+                // if(this.custom_fields_data){
+                //     this.item.meta = {"custom_fields_data":this.custom_fields_data};
+                // }
                 item = this.item;
             }
 
@@ -539,6 +543,7 @@ export const useUserStore = defineStore({
                 case 'create-and-new':
                 case 'create-and-close':
                 case 'create-and-clone':
+                    // console.log(item);return
                     options.method = 'POST';
                     options.params = item;
                     break;
@@ -1019,7 +1024,24 @@ export const useUserStore = defineStore({
         },
         //--------------------------------------------------------------------
         onUpload(){
+            this.user_avatar = e.files[0];
 
+            let formData = new FormData();
+
+            formData.append('file', this.user_avatar);
+            formData.append('folder_path', 'public/media');
+
+            vaah().ajax(
+                this.ajax_url+'/upload',
+                this.uploadAfter,
+                {
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    },
+                    method: 'post',
+                    params:  formData
+                }
+            );
         },
         //---------------------------------------------------------------------
         async getFormMenu()
@@ -1123,6 +1145,12 @@ export const useUserStore = defineStore({
         hideProgress()
         {
             this.show_progress_bar = false;
+        },
+        checkHidden(item)
+        {
+            let select_array = vaah().findInArrayByKey(this.assets.custom_fields.value, 'slug', item);
+            console.log(select_array);
+            return select_array.is_hidden;
         }
         //---------------------------------------------------------------------
     }
@@ -1134,3 +1162,6 @@ export const useUserStore = defineStore({
 if (import.meta.hot) {
     import.meta.hot.accept(acceptHMRUpdate(useUserStore, import.meta.hot))
 }
+
+
+

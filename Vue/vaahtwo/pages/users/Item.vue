@@ -122,9 +122,15 @@ const toggleItemMenu = (event) => {
                 <div class="p-datatable p-component p-datatable-responsive-scroll p-datatable-striped p-datatable-sm">
                     <table class="p-datatable-table">
                         <tbody class="p-datatable-tbody">
+                        <Avatar v-if="store.item.avatar" size="xlarge"
+                                shape="circle"
+                                :image="store.item.avatar"
+                                alt="Avatar"
+                        />
                             <template v-for="(value, column) in store.item ">
 
-                                <template v-if="column === 'created_by' || column === 'updated_by'" />
+                                <template v-if="column === 'avatar_url' || column === 'avatar' || column === 'country_code'" />
+                                <template v-else-if="column === 'created_by' || column === 'updated_by'" />
 
                                 <template v-else-if="column === 'id' || column === 'uuid'">
                                     <VhViewRow :label="column"
@@ -147,7 +153,20 @@ const toggleItemMenu = (event) => {
                                                type="yes-no"
                                     />
                                 </template>
-
+                                <template v-else-if="column === 'bio'">
+                                    <tr>
+                                        <td style="font-weight:bold">{{vaah().toLabel(column)}}</td>
+                                        <td><span v-html="value"></span></td>
+                                    </tr>
+                                </template>
+                                <template v-else-if="column === 'meta'">
+                                    <template v-for="(custom_fields,index) in value">
+                                        <VhViewRow :label="index"
+                                                   :value="custom_fields"
+                                                   v-if="!store.checkHidden(index)"
+                                        />
+                                    </template>
+                                </template>
                                 <template v-else>
                                     <VhViewRow :label="column"
                                                :value="value"
