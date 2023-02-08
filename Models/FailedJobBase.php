@@ -51,12 +51,12 @@ class FailedJobBase extends Model {
 
         }
 
-        if(isset($request->q) && $request->q)
+        if(isset($request->filter['q']) && $request->filter['q'])
         {
             $list->where(function ($q) use ($request){
-                $q->where('queue', 'LIKE', '%'.$request->q.'%')
-                    ->orWhere('connection', 'LIKE', '%'.$request->q.'%')
-                    ->orWhere('id', 'LIKE', '%'.$request->q.'%');
+                $q->where('queue', 'LIKE', '%'.$request->filter['q'].'%')
+                    ->orWhere('connection', 'LIKE', '%'.$request->filter['q'].'%')
+                    ->orWhere('id', 'LIKE', '%'.$request->filter['q'].'%');
             });
         }
 

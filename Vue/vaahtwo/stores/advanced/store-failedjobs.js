@@ -19,6 +19,8 @@ let empty_states = {
             trashed: null,
             sort: null,
         },
+        from: null,
+        to: null,
     },
     action: {
         type: null,
@@ -65,11 +67,9 @@ export const useFailedJobStore = defineStore({
         form_menu_list: [],
         failedJobModal:false,
         failedJobContent:null,
-        failedJobContentHeading:null
+        failedJobContentHeading:null,
+        dates: []
     }),
-    getters: {
-
-    },
     actions: {
         //---------------------------------------------------------------------
         async onLoad(route)
@@ -197,7 +197,7 @@ export const useFailedJobStore = defineStore({
         {
             if(data)
             {
-                this.list = data;
+                this.list = data.list;
             }
         },
         //---------------------------------------------------------------------
@@ -276,6 +276,14 @@ export const useFailedJobStore = defineStore({
             );
         },
         //---------------------------------------------------------------------
+        async updateListAfter(data) {
+            if(data)
+            {
+                this.action = vaah().clone(this.empty_action);
+                await this.getList();
+            }
+        },
+        //---------------------------------------------------------------------
         itemAction(type, item=null){
             if(!item)
             {
@@ -323,7 +331,7 @@ export const useFailedJobStore = defineStore({
             );
         },
         //---------------------------------------------------------------------
-        async itemActionAfter(data, res)
+        async itemActionAfter(data)
         {
             if(data)
             {
@@ -496,19 +504,17 @@ export const useFailedJobStore = defineStore({
             {
                 this.query.filter[key] = null;
             }
+            for(let key in this.query)
+            {
+                if (key === 'filter') continue;
+                this.query[key] = null;
+            }
             await this.updateUrlQueryString(this.query);
         },
         //---------------------------------------------------------------------
         toList()
         {
-            this.item = vaah().clone(this.assets.empty_item);
             this.$router.push({name: 'failedjobs.index'})
-        },
-        //---------------------------------------------------------------------
-        toView(item)
-        {
-            this.item = vaah().clone(item);
-            this.$router.push({name: 'failedjobs.view', params:{id:item.id}})
         },
         //---------------------------------------------------------------------
         isViewLarge()
@@ -673,6 +679,19 @@ export const useFailedJobStore = defineStore({
             this.failedJobContent = `<pre class="is-size-6">`+JSON.stringify(content, null, 2)+ `</pre>`;
             this.failedJobModal=true
         },
+        setDateRange()
+        {
+            if (this.dates2.length > 0) {
+                let current_datetime = new Date(this.dates2[0]);
+                this.query.from = current_datetime.getFullYear() + "-" + (current_datetime.getMonth() + 1) + "-" + current_datetime.getDate();
+
+                current_datetime = new Date(this.dates2[1]);
+                this.query.to = current_datetime.getFullYear() + "-" + (current_datetime.getMonth() + 1) + "-" + current_datetime.getDate();
+
+                this.getList();
+            }
+        },
+        //-------------------------------------------------------
     }
 });
 
