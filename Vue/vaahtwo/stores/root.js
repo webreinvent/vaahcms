@@ -196,7 +196,7 @@ export const useRootStore = defineStore({
                 },
                 {
                     label: 'No',
-                    value: null
+                    value: 0
                 }
             ]
         },

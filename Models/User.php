@@ -305,7 +305,7 @@ class User extends UserBase
                 $item->uuid = Str::uuid();
             }
         }
-        if($inputs['is_active'] == 'active'){
+        if($inputs['is_active'] == '1'){
             $inputs['is_active'] = 1;
         }else{
             $inputs['is_active'] = 0;
