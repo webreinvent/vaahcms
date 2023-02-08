@@ -1,7 +1,7 @@
 import {watch} from 'vue'
 import {acceptHMRUpdate, defineStore} from 'pinia'
 import qs, {stringify} from 'qs'
-import {vaah} from '../vaahvue/pinia/vaah'
+import {vaah} from '../../vaahvue/pinia/vaah'
 
 let model_namespace = 'WebReinvent\\VaahCms\\Models\\Batch';
 

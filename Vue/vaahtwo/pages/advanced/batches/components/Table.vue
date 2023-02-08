@@ -1,6 +1,6 @@
 <script setup>
 import { vaah } from '../../../../vaahvue/pinia/vaah'
-import { useBatchStore } from '../../../../stores/store-batches'
+import { useBatchStore } from '../../../../stores/advanced/store-batches'
 
 const store = useBatchStore();
 const useVaah = vaah();

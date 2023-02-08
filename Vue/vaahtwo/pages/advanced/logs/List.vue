@@ -2,7 +2,7 @@
 import {onMounted, reactive, ref} from "vue";
 import {useRoute} from 'vue-router';
 
-import {useLogStore} from '../../../stores/store-logs'
+import {useLogStore} from '../../../stores/advanced/store-logs'
 
 import Actions from "./components/Actions.vue";
 import Table from "./components/Table.vue";

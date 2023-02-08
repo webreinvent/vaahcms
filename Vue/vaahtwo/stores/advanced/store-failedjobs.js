@@ -179,11 +179,6 @@ export const useFailedJobStore = defineStore({
                 {
                     this.query.rows = data.rows;
                 }
-
-                if(this.route.params && !this.route.params.id){
-                    this.item = vaah().clone(data.empty_item);
-                }
-
             }
         },
         //---------------------------------------------------------------------

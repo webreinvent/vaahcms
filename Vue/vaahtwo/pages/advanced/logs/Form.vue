@@ -1,6 +1,6 @@
 <script setup>
 import {onMounted, ref, watch} from "vue";
-import { useLogStore } from '../../../stores/store-logs'
+import { useLogStore } from '../../../stores/advanced/store-logs'
 
 import VhField from '../../../vaahvue/vue-three/primeflex/VhField.vue'
 import {useRoute} from 'vue-router';

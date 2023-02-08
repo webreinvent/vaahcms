@@ -1,6 +1,6 @@
 <script  setup>
 
-import { useLogStore } from '../../../../stores/store-logs'
+import { useLogStore } from '../../../../stores/advanced/store-logs'
 import VhFieldVertical from '../../../../vaahvue/vue-three/primeflex/VhFieldVertical.vue';
 
 

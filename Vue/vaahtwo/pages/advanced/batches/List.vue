@@ -2,7 +2,7 @@
 import {onMounted, reactive, ref} from "vue";
 import {useRoute} from 'vue-router';
 
-import {useBatchStore} from '../../../stores/store-batches'
+import {useBatchStore} from '../../../stores/advanced/store-batches'
 
 import Actions from "./components/Actions.vue";
 import Table from "./components/Table.vue";

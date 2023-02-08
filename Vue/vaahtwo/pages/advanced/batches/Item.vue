@@ -2,7 +2,7 @@
 import {onMounted, ref, watch} from "vue";
 import {useRoute} from 'vue-router';
 
-import { useBatchStore } from '../../../stores/store-batches'
+import { useBatchStore } from '../../../stores/advanced/store-batches'
 
 import VhViewRow from '../../../vaahvue/vue-three/primeflex/VhViewRow.vue';
 const store = useBatchStore();
