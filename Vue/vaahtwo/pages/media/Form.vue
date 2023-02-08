@@ -37,43 +37,48 @@ const toggleFormMenu = (event) => {
                             Create
                         </span>
                     </h5>
+
                     <div class="p-inputgroup justify-content-end">
                         <Button label="Save"
                                 v-if="store.item && store.item.id"
                                 data-testid="media-save"
                                 @click="store.itemAction('save')"
-                                icon="pi pi-save"/>
+                                icon="pi pi-save"
+                                class="p-button-sm"
+                        />
 
                         <Button label="Create & New"
                                 v-else
                                 @click="store.itemAction('create-and-new')"
                                 data-testid="media-create-and-new"
-                                icon="pi pi-save"/>
+                                icon="pi pi-save"
+                                class="p-button-sm"
+                        />
                         <!--form_menu-->
-                        <Button
-                            type="button"
-                            @click="toggleFormMenu"
-                            data-testid="media-form-menu"
-                            icon="pi pi-angle-down"
-                            aria-haspopup="true"/>
+                        <Button class="p-button-sm"
+                                @click="toggleFormMenu"
+                                data-testid="media-form-menu"
+                                icon="pi pi-angle-down"
+                                aria-haspopup="true"
+                        />
 
                         <Menu ref="form_menu"
                               :model="store.form_menu_list"
                               :popup="true" />
                         <!--/form_menu-->
 
-                        <Button class="p-button-primary"
+                        <Button class="p-button-sm"
                                 v-if="store.item && store.item.id"
                                 icon="pi pi-eye"
                                 data-testid="media-to-view"
-                                @click="store.toView(store.item)">
-                        </Button>
+                                @click="store.toView(store.item)"
+                        />
 
-                        <Button class="p-button-primary"
+                        <Button class="p-button-sm"
                                 icon="pi pi-times"
                                 data-testid="media-to-list"
-                                @click="store.toList()">
-                        </Button>
+                                @click="store.toList()"
+                        />
                     </div>
                     <TieredMenu :model="store.form_menu_list" ref="menu" :popup="true">
                     </TieredMenu>

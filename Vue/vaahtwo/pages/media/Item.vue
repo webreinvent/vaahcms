@@ -56,59 +56,51 @@ const toggleItemMenu = (event) => {
 
 </script>
 <template>
-
     <div class="col-6" >
-
         <Panel v-if="store && store.item">
-
             <template class="p-1" #header>
-
                 <div class="flex flex-row">
-
                     <div class="p-panel-title">
                         {{store.item.name}}
                     </div>
-
                 </div>
-
             </template>
 
             <template #icons>
-
-
                 <div class="p-inputgroup">
-                    <Button @click="$vaah.copy(store.item.id)" class="p-button-outlined">
-                        #{{ store.item.id }}
-                    </Button>
+                    <Button @click="$vaah.copy(store.item.id)"
+                            class="p-button-sm"
+                            :label="'#' + store.item.id"
+                    />
+
                     <Button label="Edit"
+                            class="p-button-sm"
                             @click="store.toEdit(store.item)"
                             data-testid="media-item-to-edit"
-                            icon="pi pi-save"/>
+                            icon="pi pi-pencil"
+                    />
 
                     <!--item_menu-->
-                    <Button
-                        type="button"
-                        @click="toggleItemMenu"
-                        data-testid="media-item-menu"
-                        icon="pi pi-angle-down"
-                        aria-haspopup="true"/>
+                    <Button class="p-button-sm"
+                            @click="toggleItemMenu"
+                            data-testid="media-item-menu"
+                            icon="pi pi-angle-down"
+                            aria-haspopup="true"
+                    />
 
                     <Menu ref="item_menu_state"
                           :model="store.item_menu_list"
-                          :popup="true" />
+                          :popup="true"
+                    />
                     <!--/item_menu-->
 
-                    <Button class="p-button-primary"
+                    <Button class="p-button-sm"
                             icon="pi pi-times"
                             data-testid="media-item-to-list"
-                            @click="store.toList()"/>
-
+                            @click="store.toList()"
+                    />
                 </div>
-
-
-
             </template>
-
 
             <div v-if="store.item">
 
