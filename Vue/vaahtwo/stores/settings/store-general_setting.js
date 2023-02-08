@@ -73,9 +73,9 @@ export const useGeneralStore = defineStore({
         social_media_links: null,
         add_link: null,
         show_link_input: true,
-        date_format_options: ['Y-m-d', 'y/m/d', 'y.m.d', 'Custom'],
-        time_format_options: ['H:i:s', 'h:i A', 'h:i:s A', 'Custom'],
-        date_time_format_options: ['Y-m-d H:i:s', 'Y-m-d h:i A', 'd-M-Y H:i', 'Custom'],
+        date_format_options: ['Y-m-d', 'y/m/d', 'y.m.d', 'custom'],
+        time_format_options: ['H:i:s', 'h:i A', 'h:i:s A', 'custom'],
+        date_time_format_options: ['Y-m-d H:i:s', 'Y-m-d h:i A', 'd-M-Y H:i', 'custom'],
         meta_tag: null,
         script_tag:{
             script_after_body_start:null,
@@ -98,7 +98,7 @@ export const useGeneralStore = defineStore({
             if(this.assets_is_fetching === true){
                 this.assets_is_fetching = false;
 
-                vaah().ajax(
+                await vaah().ajax(
                     this.ajax_url+'/assets',
                     this.afterGetAssets,
                 );
@@ -134,6 +134,8 @@ export const useGeneralStore = defineStore({
                 this.social_media_links = data.links;
                 this.script_tag = data.scripts;
                 this.meta_tag = data.meta_tags;
+                this.list.maximum_number_of_forgot_password_attempts_per_session = parseInt(this.list.maximum_number_of_forgot_password_attempts_per_session);
+                this.list.maximum_number_of_login_attempts_per_session = parseInt(this.list.maximum_number_of_login_attempts_per_session);
             }
         },
         //---------------------------------------------------------------------
@@ -156,7 +158,7 @@ export const useGeneralStore = defineStore({
             vaah().toastErrors(['Removed']);
         },
         //---------------------------------------------------------------------
-        storeSiteSettings() {
+        async storeSiteSettings() {
             let options = {
                 method: 'post',
                 params:{
@@ -165,14 +167,14 @@ export const useGeneralStore = defineStore({
             };
 
             let ajax_url = this.ajax_url+'/store/site/settings';
-            vaah().ajax(ajax_url, this.storeSiteSettingsAfter, options);
+            await vaah().ajax(ajax_url, this.storeSiteSettingsAfter, options);
         },
         //---------------------------------------------------------------------
         storeSiteSettingsAfter(){
             this.getList();
         },
         //---------------------------------------------------------------------
-        storeLinks(){
+        async storeLinks(){
             let options = {
                 method: 'post',
             };
@@ -180,14 +182,14 @@ export const useGeneralStore = defineStore({
             options.params = { links: this.social_media_links };
 
             let ajax_url = this.ajax_url+'/store/links';
-            vaah().ajax(ajax_url, this.storeLinksAfter, options);
+            await vaah().ajax(ajax_url, this.storeLinksAfter, options);
         },
         //---------------------------------------------------------------------
         storeLinksAfter(){
             this.getList();
         },
         //---------------------------------------------------------------------
-        storeScript(){
+        async storeScript(){
             let options = {
                 method: 'post',
             };
@@ -195,7 +197,7 @@ export const useGeneralStore = defineStore({
             options.params = { list: this.script_tag };
 
             let ajax_url = this.ajax_url+'/store/site/settings';
-            vaah().ajax(ajax_url, this.storeScriptAfter, options);
+            await vaah().ajax(ajax_url, this.storeScriptAfter, options);
         },
         //---------------------------------------------------------------------
         storeScriptAfter(){
@@ -248,7 +250,7 @@ export const useGeneralStore = defineStore({
 
         },
         //---------------------------------------------------------------------
-        storeTags() {
+        async storeTags() {
             let options = {
                 method: 'post',
                 params: {
@@ -257,28 +259,28 @@ export const useGeneralStore = defineStore({
             };
 
             let ajax_url = this.ajax_url+'/store/meta/tags';
-            vaah().ajax(ajax_url, this.storeTagsAfter, options);
+            await vaah().ajax(ajax_url, this.storeTagsAfter, options);
         },
         //---------------------------------------------------------------------
         storeTagsAfter(data, res) {
             this.getList();
         },
         //---------------------------------------------------------------------
-        clearCache() {
+        async clearCache() {
 
             let options = {
                 method: 'get',
             };
 
             let ajax_url = this.base_url+'/clear/cache';
-            vaah().ajax(ajax_url, this.clearCacheAfter, options);
+            await vaah().ajax(ajax_url, this.clearCacheAfter, options);
         },
         //---------------------------------------------------------------------
         clearCacheAfter(data, res) {
             window.location.reload(true);
         },
         //---------------------------------------------------------------------
-        removeMetaTags(tag){
+        async removeMetaTags(tag){
             if(tag.id)
             {
                 this.meta_tag = vaah().removeInArrayByKey(this.meta_tag, tag, 'id');
@@ -286,7 +288,7 @@ export const useGeneralStore = defineStore({
                     method: 'POST',
                     params: tag
                 };
-                vaah().ajax(
+                await vaah().ajax(
                     this.ajax_url+'/delete/meta/tag',
                     null,
                     options
@@ -432,7 +434,7 @@ export const useGeneralStore = defineStore({
             }
             else {
                 this.filtered_registration_roles = this.assets.roles.filter((roles) => {
-                    return roles.name.toLowerCase().startsWith(event.query.toLowerCase());
+                    return roles.toLowerCase().startsWith(event.query.toLowerCase());
                 });
             }
         },
@@ -442,7 +444,7 @@ export const useGeneralStore = defineStore({
             }
             else {
                 this.filtered_allowed_files = this.assets.file_types.filter((files) => {
-                    return files.name.toLowerCase().startsWith(event.query.toLowerCase());
+                    return files.toLowerCase().startsWith(event.query.toLowerCase());
                 });
             }
         },

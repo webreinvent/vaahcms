@@ -1,6 +1,6 @@
 <script  setup>
 import {ref, reactive, watch, onMounted} from 'vue';
-import { useLogStore } from '../../../../stores/store-logs'
+import { useLogStore } from '../../../../stores/advanced/store-logs'
 
 import Filters from './Filters.vue'
 

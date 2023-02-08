@@ -35,11 +35,20 @@ class GeneralController extends Controller
 
             return response()->json($response);
         }
+        $role_data = [];
+        foreach (Role::getActiveRoles() as $key => $value){
+            $role_data[$key] = $value->name;
+        }
+
+        $vh_file_types_data = [];
+        foreach (vh_file_types() as $key => $value){
+            $vh_file_types_data[$key] = $value['slug'];
+        }
 
         $response['success'] = true;
         $response['data']['base_url'] = url('/');
-        $response['data']['roles'] = Role::getActiveRoles();
-        $response['data']['file_types'] = vh_file_types();
+        $response['data']['roles'] = $role_data;
+        $response['data']['file_types'] = $vh_file_types_data;
         $response['data']['vh_meta_attributes'] = vh_meta_attributes();
         $response['data']['languages'] = Language::select('name', 'locale_code_iso_639')->get();
 

@@ -1,7 +1,7 @@
 import {watch} from 'vue'
 import {acceptHMRUpdate, defineStore} from 'pinia'
 import qs from 'qs'
-import {vaah} from '../vaahvue/pinia/vaah'
+import {vaah} from '../../vaahvue/pinia/vaah'
 
 let model_namespace = 'WebReinvent\\VaahCms\\Models\\Log';
 
@@ -114,9 +114,9 @@ export const useLogStore = defineStore({
             watch(route, (newVal,oldVal) =>
                 {
                     this.route = newVal;
-                    // if(newVal.params.name){
-                    //     this.getItem(newVal.params.name);
-                    // }
+                    /*if(newVal.params.name){
+                        this.getItem(newVal.params.name);
+                    }*/
                     this.setViewAndWidth(newVal.name);
                 }, { deep: true }
             )
@@ -166,10 +166,6 @@ export const useLogStore = defineStore({
                 if(data.rows)
                 {
                     this.query.rows = data.rows;
-                }
-
-                if(this.route.params && !this.route.params.name){
-                    this.item = vaah().clone(data.empty_item);
                 }
 
             }
@@ -636,7 +632,7 @@ export const useLogStore = defineStore({
         //---------------------------------------------------------------------
         toList()
         {
-            this.item = vaah().clone(this.assets.empty_item);
+            this.item = null;
             this.$router.push({name: 'logs.index'})
         },
         //---------------------------------------------------------------------
@@ -649,7 +645,7 @@ export const useLogStore = defineStore({
         //---------------------------------------------------------------------
         toView(item)
         {
-            this.item = vaah().clone(item);
+            this.getItem(item.name);
             this.$router.push({name: 'logs.view', params:{name:item.name}})
         },
         //---------------------------------------------------------------------

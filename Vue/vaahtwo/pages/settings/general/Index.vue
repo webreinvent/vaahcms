@@ -116,23 +116,18 @@ onMounted(async () => {
                                               v-model="store.list.registration_roles"
                                               :suggestions="store.filtered_registration_roles"
                                               @complete="store.searchRegistrationRoles($event)"
-                                              optionValue="name"
-                                              optionLabel="name"
+
                                               data-testid="general-registration_roles"
                                               placeholder="Search"/>
                                     </div>
                                     <div class="col-12 p-fluid">
                                         <h5 class="p-1 text-xs mb-1">Allowed file types for upload</h5>
-                                        <Chips v-model="store.list.upload_allowed_files"
-                                               id="allowed-files"
-                                               data-testid="general-allowed_files"
-                                               inputClass="w-full" class="w-full"></Chips>
+
                                         <AutoComplete :multiple="true"
                                               v-model="store.list.upload_allowed_files"
                                               :suggestions="store.filtered_allowed_files"
                                               @complete="store.searchAllowedFiles($event)"
-                                              optionValue="slug"
-                                              optionLabel="name"
+
                                               data-testid="general-allowed_files"
                                               placeholder="Search"/>
                                     </div>
@@ -145,15 +140,15 @@ onMounted(async () => {
                                         <div class="p-inputgroup">
                                             <div class="field-radiobutton mr-2">
                                                 <RadioButton inputId="copyright-app-name"
-                                                             name="city"
-                                                             value="app-name"
+                                                             name="copyright_text"
+                                                             value="app_name"
                                                              data-testid="general-copyright"
                                                              v-model="store.list.copyright_text" />
                                                 <label for="copyright-app-name">Use App Name</label>
                                             </div>
                                             <div class="field-radiobutton">
                                                 <RadioButton inputId="copyright-custom"
-                                                             name="city"
+                                                             name="copyright_text"
                                                              value="custom"
                                                              data-testid="general-copyright_custom"
                                                              v-model="store.list.copyright_text" />
@@ -166,7 +161,7 @@ onMounted(async () => {
                                         </div>
                                         <InputText class="w-full" v-if="store.list.copyright_text === 'custom'"
                                                    data-testid="general-copyright_custom_filed"
-                                                   v-model="store.list.copyright_text"
+                                                   v-model="store.list.copyright_text_custom"
                                                    placeholder="Enter Custom Text"></InputText>
 
                                     </div>
@@ -175,15 +170,15 @@ onMounted(async () => {
                                         <div class="p-inputgroup">
                                             <div class="field-radiobutton mr-2">
                                                 <RadioButton inputId="copyright-link"
-                                                             name="city"
-                                                             value="app-name"
+                                                             name="copyright_link"
+                                                             value="app_url"
                                                              data-testid="general-copyright_link"
                                                              v-model="store.list.copyright_link" />
                                                 <label for="copyright-link">Use App Url</label>
                                             </div>
                                             <div class="field-radiobutton">
                                                 <RadioButton inputId="copyright-custom_link"
-                                                             name="city"
+                                                             name="copyright_link"
                                                              value="custom"
                                                              data-testid="general-copyright_custom_link"
                                                              v-model="store.list.copyright_link" />
@@ -197,6 +192,7 @@ onMounted(async () => {
                                         <InputText class="w-full"
                                                    data-testid="general-copyright_custom_link_field"
                                                    v-if="store.list.copyright_link === 'custom'"
+                                                   v-model="store.list.copyright_link_custom"
                                                    placeholder="Enter Custom Link"></InputText>
 
                                     </div>
@@ -206,14 +202,16 @@ onMounted(async () => {
                                             <div class="field-radiobutton mr-2">
                                                 <RadioButton inputId="copyright-year"
                                                              data-testid="general-copyright_year"
-                                                             name="city" value="app-name"
+                                                             name="copyright_year"
+                                                             value="use_current_year"
                                                              v-model="store.list.copyright_year" />
                                                 <label for="copyright-year">Use Current year</label>
                                             </div>
                                             <div class="field-radiobutton">
                                                 <RadioButton inputId="copyright-custom_year"
                                                              data-testid="general-copyright_year_custom"
-                                                             name="city" value="custom"
+                                                             name="copyright_year"
+                                                             value="custom"
                                                              v-model="store.list.copyright_year" />
                                                 <label for="copyright-custom_year">Custom</label>
                                             </div>
@@ -222,7 +220,8 @@ onMounted(async () => {
                                                     @click="store.getCopy('copyright_year')"
                                             />
                                         </div>
-                                        <Calendar inputId="yearpicker" v-model="date10" view="year"
+                                        <Calendar inputId="yearpicker"
+                                                  v-model="store.list.copyright_year_custom" view="year"
                                                   dateFormat="yy"
                                                   data-testid="general-copyright_yearcalender"
                                                   v-if="store.list.copyright_year === 'custom'"
@@ -332,8 +331,9 @@ onMounted(async () => {
                                               data-testid="general-date_format"
                                               :options="store.date_format_options"></Dropdown>
                                     <InputText placeholder="Enter Custom date format"
+                                               v-model="store.list.date_format_custom"
                                                data-testid="general-date_format_custom"
-                                               v-if="store.list.date_format === 'Custom'"></InputText>
+                                               v-if="store.list.date_format === 'custom'"></InputText>
                                     <Button icon="pi pi-copy"
                                             data-testid="general-date_format_copy"
                                             @click="store.getCopy('date_format')"/>
@@ -346,8 +346,9 @@ onMounted(async () => {
                                               data-testid="general-time_format"
                                               :options="store.time_format_options"></Dropdown>
                                     <InputText placeholder="Enter Custom time format"
+                                               v-model="store.list.time_format_custom"
                                                data-testid="general-time_format_custom"
-                                               v-if="store.list.time_format === 'Custom'"></InputText>
+                                               v-if="store.list.time_format === 'custom'"></InputText>
                                     <Button icon="pi pi-copy"
                                             data-testid="general-time_format_copy"
                                             @click="store.getCopy('time_format')"/>
@@ -360,8 +361,9 @@ onMounted(async () => {
                                               data-testid="general-datetime_format"
                                               :options="store.date_time_format_options"></Dropdown>
                                     <InputText placeholder="Enter Custom date-time format"
+                                               v-model="store.list.datetime_format_custom"
                                                data-testid="general-datetime_format_custom"
-                                               v-if="store.list.datetime_format === 'Custom'"></InputText>
+                                               v-if="store.list.datetime_format === 'custom'"></InputText>
                                     <Button icon="pi pi-copy"
                                             data-testid="general-datetime_format_copy"
                                             @click="store.getCopy('datetime_format')"/>

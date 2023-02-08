@@ -1,6 +1,6 @@
 <script setup>
 import {vaah} from '../../../../vaahvue/pinia/vaah'
-import {useLogStore} from '../../../../stores/store-logs'
+import {useLogStore} from '../../../../stores/advanced/store-logs'
 import {useRoute} from 'vue-router';
 
 const store = useLogStore();
