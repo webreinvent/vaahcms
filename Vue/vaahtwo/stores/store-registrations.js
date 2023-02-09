@@ -134,15 +134,13 @@ export const useRegistrationStore = defineStore({
         watchRoutes(route)
         {
             //watch routes
-            watch(route, (newVal,oldVal) =>
+            this.watch_stopper = watch(route, (newVal,oldVal) =>
                 {
                     if(this.watch_stopper && !newVal.name.includes(this.route_prefix)){
                         this.watch_stopper();
 
                         return false;
                     }
-
-                    // console.log(oldVal,'---->test',newVal);
 
                     this.route = newVal;
                     if(newVal.params.id){
