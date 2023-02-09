@@ -453,6 +453,7 @@ export const useMediaStore = defineStore({
                     break;
                 case 'trash':
                     this.item = null;
+                    this.toList();
                     break;
                 case 'delete':
                     this.item = null;

@@ -80,11 +80,6 @@ class MediaController extends Controller
         return Media::deleteList($request);
     }
     //----------------------------------------------------------
-    public function createItem(Request $request)
-    {
-        return Media::createItem($request);
-    }
-    //----------------------------------------------------------
     public function getItem(Request $request, $id)
     {
         return Media::getItem($id);
@@ -246,20 +241,6 @@ class MediaController extends Controller
         return response()->json($response);
     }
     //----------------------------------------------------------
-    public function postStore(Request $request)
-    {
 
-        if(!\Auth::user()->hasPermission('can-update-media'))
-        {
-            $response['success'] = false;
-            $response['errors'][] = trans("vaahcms::messages.permission_denied");
-
-            return response()->json($response);
-        }
-
-        $response = Media::postStore($request);
-        return response()->json($response);
-    }
-    //----------------------------------------------------------
 
 }
