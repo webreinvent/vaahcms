@@ -66,6 +66,8 @@ export const useRegistrationStore = defineStore({
         item_menu_state: null,
         form_menu_list: [],
         item_status:null,
+        meta_content:null,
+        display_meta_modal:false,
 
         gender_options: [
             {name:'Male',value:'m',icon: ''},
@@ -324,7 +326,7 @@ export const useRegistrationStore = defineStore({
         },
         //---------------------------------------------------------------------
         itemAction(type, item=null){
-
+            console.log(this.item);
 
             if(!item)
             {
@@ -989,6 +991,18 @@ export const useRegistrationStore = defineStore({
         onSelectCountryCode: function (event){
             this.item.country = event.value.name;
         },
+        //---------------------------------------------------------------------
+        checkHidden(item)
+        {
+            let select_array = vaah().findInArrayByKey(this.assets.custom_fields.value, 'slug', item);
+            console.log(select_array);
+            return select_array.is_hidden;
+        },
+        //---------------------------------------------------------------------
+        openModal(item){
+            this.meta_content = JSON.stringify(item,null,2);
+            this.display_meta_modal=true;
+        }
         //---------------------------------------------------------------------
     }
 });

@@ -112,8 +112,10 @@ export const useUserStore = defineStore({
         ],
 
         user_roles_menu: null,
+        meta_content: null,
         user_roles_query: vaah().clone(empty_states.user_roles_query),
         is_btn_loading: false,
+        display_meta_modal: false,
         custom_fields_data:[],
     }),
     getters: {
@@ -1146,11 +1148,19 @@ export const useUserStore = defineStore({
         {
             this.show_progress_bar = false;
         },
+        //---------------------------------------------------------------------
         checkHidden(item)
         {
-            let select_array = vaah().findInArrayByKey(this.assets.custom_fields.value, 'slug', item);
-            console.log(select_array);
-            return select_array.is_hidden;
+            if (this.assets && this.assets.custom_fields){
+                let select_array = vaah().findInArrayByKey(this.assets.custom_fields.value, 'slug', item);
+                return select_array.is_hidden;
+            }
+            return false;
+        },
+        //---------------------------------------------------------------------
+        openModal(item){
+            this.meta_content = JSON.stringify(item,null,2);
+            this.display_meta_modal=true;
         }
         //---------------------------------------------------------------------
     }
