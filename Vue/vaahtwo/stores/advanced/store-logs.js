@@ -295,42 +295,6 @@ export const useLogStore = defineStore({
             return true;
         },
         //---------------------------------------------------------------------
-        async updateList(type = null){
-
-            if(!type && this.action.type)
-            {
-                type = this.action.type;
-            } else{
-                this.action.type = type;
-            }
-
-            if(!this.isListActionValid())
-            {
-                return false;
-            }
-
-
-            let method = 'PUT';
-
-            switch (type)
-            {
-                case 'delete':
-                    method = 'DELETE';
-                    break;
-            }
-
-            let options = {
-                params: this.action,
-                method: method,
-                show_success: false
-            };
-            await vaah().ajax(
-                this.ajax_url,
-                this.updateListAfter,
-                options
-            );
-        },
-        //---------------------------------------------------------------------
         async updateListAfter(data, res) {
             if(data)
             {
@@ -477,16 +441,6 @@ export const useLogStore = defineStore({
                     this.item = null;
                     this.toList();
                     break;
-            }
-        },
-        //---------------------------------------------------------------------
-        async toggleIsActive(item)
-        {
-            if(item.is_active)
-            {
-                await this.itemAction('activate', item);
-            } else{
-                await this.itemAction('deactivate', item);
             }
         },
         //---------------------------------------------------------------------
