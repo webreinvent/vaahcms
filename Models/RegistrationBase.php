@@ -35,8 +35,8 @@ class RegistrationBase extends Model
         "alternate_email","avatar_url","birth", "country","country_code",
         "status","activation_code", "activation_code_sent_at",
         "activated_ip","invited_by", "invited_at",
-        "invited_for_key", "invited_for_value", "user_id",
-        "user_created_at", "created_ip", "registration_id", "meta",
+        "invited_for_key", "invited_for_value", "vh_user_id",
+        "user_created_at", "created_ip", "meta",
         "created_by", "updated_by","deleted_by"
 
     ];
