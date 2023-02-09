@@ -463,25 +463,4 @@ class Batch extends BatchBase
     }
     //-------------------------------------------------
 
-    //-------------------------------------------------
-//    public function scopeBetweenDates($query, $from, $to)
-//    {
-//
-//        if ($from) {
-//            $from = \Carbon::parse($from)
-//                ->startOfDay()
-//                ->toDateTimeString();
-//        }
-//
-//        if ($to) {
-//            $to = \Carbon::parse($to)
-//                ->endOfDay()
-//                ->toDateTimeString();
-//        }
-//
-//        $query->whereBetween('updated_at', [$from, $to]);
-//    }
-    //-------------------------------------------------
-
-
 }
