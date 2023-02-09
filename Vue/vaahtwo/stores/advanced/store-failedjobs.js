@@ -302,18 +302,6 @@ export const useFailedJobStore = defineStore({
             {
                 this.item = data;
                 await this.getList();
-                await this.formActionAfter();
-            }
-        },
-        //---------------------------------------------------------------------
-        async formActionAfter ()
-        {
-            switch (this.form.action)
-            {
-                case 'delete':
-                    this.item = null;
-                    this.toList();
-                    break;
             }
         },
         //---------------------------------------------------------------------
