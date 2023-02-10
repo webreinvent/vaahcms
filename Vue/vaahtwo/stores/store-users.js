@@ -627,6 +627,8 @@ export const useUserStore = defineStore({
                     break;
                 case 'save-and-clone':
                     this.item.id = null;
+                    this.route.params.id = null;
+                    this.$router.push({name: 'users.form'});
                     break;
                 case 'trash':
                     this.item = null;
