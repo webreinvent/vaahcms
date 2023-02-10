@@ -104,20 +104,6 @@ class ThemesController extends Controller
 
     //----------------------------------------------------------
 
-    public function getItem(Request $request, $id)
-    {
-        if(!\Auth::user()->hasPermission('can-read-theme'))
-        {
-            $response['success'] = false;
-            $response['errors'][] = trans("vaahcms::messages.permission_denied");
-
-            return response()->json($response);
-        }
-
-        $response = Theme::getItem($id);
-        return response()->json($response);
-    }
-    //----------------------------------------------------------
     public function download(Request $request)
     {
         if(!\Auth::user()->hasPermission('can-install-theme'))
@@ -316,11 +302,6 @@ class ThemesController extends Controller
 
         return response()->json($response);
 
-    }
-    //----------------------------------------------------------
-    public function itemAction(Request $request,$id,$action)
-    {
-        return Theme::itemAction($request,$id,$action);
     }
     //----------------------------------------------------------
     public function deleteItem(Request $request,$id)

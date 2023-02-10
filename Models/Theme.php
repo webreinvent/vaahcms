@@ -66,47 +66,7 @@ class Theme extends ThemeBase
     }
 
     //-------------------------------------------------
-    public static function createItem($request)
-    {
 
-        $inputs = $request->all();
-
-        $validation = self::validation($inputs);
-        if (!$validation['success']) {
-            return $validation;
-        }
-
-
-        // check if name exist
-        $item = self::where('name', $inputs['name'])->withTrashed()->first();
-
-        if ($item) {
-            $response['success'] = false;
-            $response['messages'][] = "This name is already exist.";
-            return $response;
-        }
-
-        // check if slug exist
-        $item = self::where('slug', $inputs['slug'])->withTrashed()->first();
-
-        if ($item) {
-            $response['success'] = false;
-            $response['messages'][] = "This slug is already exist.";
-            return $response;
-        }
-
-        $item = new self();
-        $item->fill($inputs);
-        $item->slug = Str::slug($inputs['slug']);
-        $item->save();
-
-        $response = self::getItem($item->id);
-        $response['messages'][] = 'Saved successfully.';
-        return $response;
-
-    }
-
-    //-------------------------------------------------
     public function scopeGetSorted($query, $filter)
     {
 
@@ -364,69 +324,6 @@ class Theme extends ThemeBase
         return $response;
     }
     //-------------------------------------------------
-    public static function getItem($id)
-    {
-
-        $item = self::where('id', $id)
-            ->with(['createdByUser', 'updatedByUser', 'deletedByUser'])
-            ->withTrashed()
-            ->first();
-
-        if(!$item)
-        {
-            $response['success'] = false;
-            $response['errors'][] = 'Record not found with ID: '.$id;
-            return $response;
-        }
-        $response['success'] = true;
-        $response['data'] = $item;
-
-        return $response;
-
-    }
-    //-------------------------------------------------
-    public static function updateItem($request, $id)
-    {
-        $inputs = $request->all();
-
-        $validation = self::validation($inputs);
-        if (!$validation['success']) {
-            return $validation;
-        }
-
-        // check if name exist
-        $item = self::where('id', '!=', $inputs['id'])
-            ->withTrashed()
-            ->where('name', $inputs['name'])->first();
-
-        if ($item) {
-            $response['success'] = false;
-            $response['messages'][] = "This name is already exist.";
-            return $response;
-        }
-
-        // check if slug exist
-        $item = self::where('id', '!=', $inputs['id'])
-            ->withTrashed()
-            ->where('slug', $inputs['slug'])->first();
-
-        if ($item) {
-            $response['success'] = false;
-            $response['messages'][] = "This slug is already exist.";
-            return $response;
-        }
-
-        $item = self::where('id', $id)->withTrashed()->first();
-        $item->fill($inputs);
-        $item->slug = Str::slug($inputs['slug']);
-        $item->save();
-
-        $response = self::getItem($item->id);
-        $response['messages'][] = 'Saved successfully.';
-        return $response;
-
-    }
-    //-------------------------------------------------
 
     public static function itemAction($request, $id, $type): array
     {
@@ -485,16 +382,4 @@ class Theme extends ThemeBase
     }
 
     //-------------------------------------------------
-    public static function getActiveItems()
-    {
-        $item = self::where('is_active', 1)
-            ->first();
-        return $item;
-    }
-
-    //-------------------------------------------------
-    //-------------------------------------------------
-    //-------------------------------------------------
-
-
 }
