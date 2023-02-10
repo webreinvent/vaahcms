@@ -65,7 +65,7 @@ function vh_get_theme_setting_value($settings, $key)
 //-----------------------------------------------------------------------------------
 function vh_get_active_theme_namespace()
 {
-    $theme = \WebReinvent\VaahCms\Entities\Theme::whereNotNull('is_active')->first();
+    $theme = \WebReinvent\VaahCms\Models\Theme::whereNotNull('is_active')->first();
     if($theme)
     {
         return $theme->slug."::";
@@ -130,7 +130,7 @@ function vh_get_theme_from_slug($theme_slug=null)
         return $theme_slug;
     }
 
-    $db_theme = \WebReinvent\VaahCms\Entities\Theme::whereNotNull('is_active')
+    $db_theme = \WebReinvent\VaahCms\Models\Theme::whereNotNull('is_active')
         ->whereNotNull('is_default')
         ->first();
 
@@ -196,9 +196,9 @@ function vh_get_page_templates($theme_slug=null)
 {
     if(is_null($theme_slug))
     {
-        $theme = \WebReinvent\VaahCms\Entities\Theme::whereNotNull('is_active')->first();
+        $theme = \WebReinvent\VaahCms\Models\Theme::whereNotNull('is_active')->first();
     } else{
-        $theme = \WebReinvent\VaahCms\Entities\Theme::where('slug', $theme_slug)->first();
+        $theme = \WebReinvent\VaahCms\Models\Theme::where('slug', $theme_slug)->first();
     }
 
     $path = vh_get_theme_view_path($theme->name)."/page-templates";
