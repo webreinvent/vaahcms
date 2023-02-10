@@ -30,7 +30,6 @@ class RoleBase extends Model {
         'uuid',
         'name',
         'slug',
-        'type',
         'details',
         'count_users',
         'count_permissions',
