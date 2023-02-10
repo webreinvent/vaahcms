@@ -156,8 +156,8 @@ const openViewModal = () => {
                        stripedRows
                        responsiveLayout="scroll"
             >
-                <Column field="name"
-                        header="Name"
+                <Column field="role"
+                        header="Role"
                 >
 
                     <template #body="prop" >
