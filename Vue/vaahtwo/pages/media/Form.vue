@@ -107,13 +107,41 @@ const toggleFormMenu = (event) => {
                         <Textarea id="caption" class="w-full" v-model="store.item.caption"></Textarea>
                         <label for="caption">Caption</label>
                     </span>
-                    <p class="text-xs text-gray-600 ml-2 mb-1 mt-3">Is this a downloadable media?</p>
-                    <SelectButton
-                        v-model="store.item.is_downloadable"
-                        :options="store.download_options"
-                        option-value="value"
-                        option-label="label">
-                    </SelectButton>
+                    <span class="p-float-label">
+                        <p class="text-xs text-gray-600 ml-2 mb-1 mt-3">Is this a downloadable media?</p>
+                        <SelectButton
+                            v-model="store.item.is_downloadable"
+                            :options="store.download_options"
+                            option-value="value"
+                            option-label="label">
+                        </SelectButton>
+                    </span>
+                    <span class="p-float-label" v-if="store.item.is_downloadable">
+                        <span class="p-buttonset">
+                            <span class="p-float-label">
+                                <InputText id="download_url" class="col-10" v-model="store.item.download_url"></InputText>
+                                <label for="download_url">Download Url</label>
+                                <Button v-if="store.downloadable_slug_available"
+                                        data-testid="media-list-check_url_availability"
+                                        @click="store.isDownloadableSlugAvailable"
+                                        class="p-button-success"
+                                        icon="pi pi-check"
+                                />
+                                <Button v-else
+                                        data-testid="media-list-check_url_availability"
+                                        @click="store.isDownloadableSlugAvailable"
+                                        icon="pi pi-question"
+                                />
+                                <Button data-testid="media-list-reload"
+                                        @click="store.getCopy('redirect_after_frontend_login')"
+                                        icon="pi pi-copy"
+                                />
+                            </span>
+                        </span>
+                    </span>
+                    <span class="p-float-label" v-if="store.item.is_downloadable">
+                        {{ store.assets.download_url+store.item.download_url }}
+                    </span>
                 </div>
             </template>
         </Card>
