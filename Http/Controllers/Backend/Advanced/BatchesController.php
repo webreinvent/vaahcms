@@ -55,11 +55,6 @@ class BatchesController extends Controller
         return response()->json($response);
     }
     //----------------------------------------------------------
-    public function updateList(Request $request)
-    {
-        return Batch::updateList($request);
-    }
-    //----------------------------------------------------------
     public function listAction(Request $request, $type)
     {
         return Batch::listAction($request, $type);
@@ -68,21 +63,6 @@ class BatchesController extends Controller
     public function deleteList(Request $request)
     {
         return Batch::deleteList($request);
-    }
-    //----------------------------------------------------------
-    public function createItem(Request $request)
-    {
-        return Batch::createItem($request);
-    }
-    //----------------------------------------------------------
-    public function getItem(Request $request, $id)
-    {
-        return Batch::getItem($id);
-    }
-    //----------------------------------------------------------
-    public function updateItem(Request $request,$id)
-    {
-        return Batch::updateItem($request,$id);
     }
     //----------------------------------------------------------
     public function deleteItem(Request $request,$id)
@@ -97,6 +77,5 @@ class BatchesController extends Controller
         return Batch::itemAction($request,$id,$action);
     }
     //----------------------------------------------------------
-
 
 }
