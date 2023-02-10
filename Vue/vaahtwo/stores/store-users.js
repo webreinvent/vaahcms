@@ -599,6 +599,11 @@ export const useUserStore = defineStore({
                     options.params = item;
                     ajax_url += '/'+item.id
                     break;
+                case 'save-and-new':
+                    options.method = 'PUT';
+                    options.params = item;
+                    ajax_url += '/'+item.id
+                    break;
                 /**
                  * Delete a record, hence method is `DELETE`
                  * and no need to send entire `item` object
@@ -646,6 +651,8 @@ export const useUserStore = defineStore({
                 case 'create-and-new':
                 case 'save-and-new':
                     this.setActiveItemAsEmpty();
+                    this.route.params.id = null;
+                    this.$router.push({name: 'users.form'});
                     break;
                 case 'create-and-close':
                 case 'save-and-close':
@@ -1100,6 +1107,15 @@ export const useUserStore = defineStore({
                         command: () => {
 
                             this.itemAction('save-and-clone');
+
+                        }
+                    },
+                    {
+                        label: 'Save & New',
+                        icon: 'pi pi-plus',
+                        command: () => {
+
+                            this.itemAction('save-and-new');
 
                         }
                     },
