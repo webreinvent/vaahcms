@@ -72,4 +72,11 @@ Route::group(
 
         Route::post('/actions/{action_name}', 'UsersController@postActions')
             ->name('backend.vaah.users.actions');
+        //---------------------------------------------------------
+        Route::post('/avatar/store', 'UsersController@storeAvatar')
+            ->name('backend.vaah.users.avatar.store');
+        //---------------------------------------------------------
+        Route::post('/avatar/remove', 'UsersController@removeAvatar')
+            ->name('backend.vaah.users.avatar.remove');
+        //---------------------------------------------------------
     });

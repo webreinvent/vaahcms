@@ -178,7 +178,7 @@ export const useUserStore = defineStore({
             //watch routes
             this.watch_stopper = watch(route, (newVal,oldVal) =>
                 {
-                    
+
                     if(this.watch_stopper && !newVal.name.includes(this.route_prefix)){
                         this.watch_stopper();
 
@@ -319,6 +319,33 @@ export const useUserStore = defineStore({
             }
             this.getItemMenu();
             await this.getFormMenu();
+        },
+        //---------------------------------------------------------------------
+        storeAvatar(data) {
+
+            data.user_id = this.item.id;
+
+            let option = {
+                params: data,
+                method: 'post'
+            };
+
+            let url = ajax_url+'/avatar/store';
+
+            vaah().ajax(
+                url,
+                this.storeAvatarAfter,
+                option
+            );
+
+        },
+        //---------------------------------------------------------------------
+        storeAvatarAfter(data, res)
+        {
+            if(data){
+                this.item.avatar = data.avatar;
+                this.item.avatar_url = data.avatar_url;
+            }
         },
         //---------------------------------------------------------------------
         isListActionValid()
