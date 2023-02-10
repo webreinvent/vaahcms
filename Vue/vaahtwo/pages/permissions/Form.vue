@@ -59,12 +59,6 @@ const toggleFormMenu = (event) => {
                             @click="store.itemAction('save')"
                     />
 
-                    <Button class="p-button-sm"
-                            icon="pi pi-eye"
-                            v-tooltip.top="'View'"
-                            @click="store.toView(store.item)"
-                    />
-
                     <!--form_menu-->
                     <Button class="p-button-sm"
                             icon="pi pi-angle-down"
@@ -78,6 +72,12 @@ const toggleFormMenu = (event) => {
                           :popup="true"
                     />
                     <!--/form_menu-->
+
+                    <Button class="p-button-sm"
+                            icon="pi pi-eye"
+                            v-tooltip.top="'View'"
+                            @click="store.toView(store.item)"
+                    />
 
                     <Button class="p-button-sm"
                             icon="pi pi-times"
