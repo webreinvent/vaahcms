@@ -5,6 +5,7 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use WebReinvent\VaahCms\Entities\Setting;
 use WebReinvent\VaahCms\Models\Role;
+use WebReinvent\VaahCms\Models\TaxonomyBase;
 use WebReinvent\VaahCms\Models\User;
 
 
@@ -62,6 +63,8 @@ class UsersController extends Controller
         $data['custom_fields'] = $custom_fields;
         $data['fields'] = User::getUserSettings();
         $data['totalRole'] = $roles_count;
+        $data['country_code'] = vh_get_country_list();
+        $data['registration_statuses'] = TaxonomyBase::getTaxonomyByType('registrations');
         $response['success'] = true;
         $response['data'] = $data;
 
@@ -170,7 +173,7 @@ class UsersController extends Controller
         return response()->json($response);
 
     }
-
+    //----------------------------------------------------------
     public function postActions(Request $request, $action){
 
         $rules = array(
@@ -273,7 +276,27 @@ class UsersController extends Controller
 
         return response()->json($response);
     }
+    //----------------------------------------------------------
+    public function getProfile(Request $request)
+    {
 
+        $data['profile'] = User::find(\Auth::user()->id);
+
+        $response['status'] = 'success';
+        $response['data'] = $data;
+        if(env('APP_DEBUG'))
+        {
+            $response['hint'][] = '';
+        }
+
+        return response()->json($response);
+
+    }
+    public function storeProfile(Request $request)
+    {
+        $response = User::storeProfile($request);
+        return response()->json($response);
+    }
 
 
 }

@@ -55,17 +55,6 @@ const toggleItemMenu = (event) => {
 };
 //--------/toggle item menu
 
-//--------modal
-const display_meta_modal = ref(false);
-
-const openModal = () => {
-    display_meta_modal.value = true;
-};
-
-const closeModal = () => {
-    display_meta_modal.value = false;
-}
-//--------/modal
 
 //--------/toggle status menu
 const item_status=ref();
@@ -216,14 +205,14 @@ const toggleStatusesMenu = (event) => {
                                                     class="p-button-outlined p-button-secondary p-button-sm"
                                                     data-testid="register-view_toggle_statuses_menu"
                                                     @click="toggleStatusesMenu"
-                                                    aria-controls="overlay_menu"
+                                                    aria-controls="status_menu"
                                             />
 
                                             <Menu v-if="store.assets && store.assets.registration_statuses"
                                                   ref="item_status"
                                                   :model="store.assets.registration_statuses"
                                                   :popup="true"
-                                                  id="overlay_menu"
+                                                  id="status_menu"
                                             />
 
                                             <Button v-if="value == 'email-verification-pending'"
