@@ -32,20 +32,20 @@ function () {
 
 
     /**
-     * Create Item
-     */
-    Route::post('/', 'ModulesController@createItem')
-        ->name('vh.backend.vaah.modules.create');
+//     * Create Item
+//     */
+//    Route::post('/', 'ModulesController@createItem')
+//        ->name('vh.backend.vaah.modules.create');
     /**
      * Get Item
      */
     Route::get('/{id}', 'ModulesController@getItem')
         ->name('vh.backend.vaah.modules.read');
-    /**
-     * Update Item
-     */
-    Route::match(['put', 'patch'], '/{id}', 'ModulesController@updateItem')
-        ->name('vh.backend.vaah.modules.update');
+//    /**
+//     * Update Item
+//     */
+//    Route::match(['put', 'patch'], '/{id}', 'ModulesController@updateItem')
+//        ->name('vh.backend.vaah.modules.update');
     /**
      * Delete Item
      */
