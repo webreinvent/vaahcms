@@ -750,48 +750,5 @@ class ModuleBase extends Model
         return $response;
 
     }
-
     //-------------------------------------------------
-    public static function bulkStatusChange($request)
-    {
-
-
-        if(!$request->has('inputs'))
-        {
-            $response['success'] = false;
-            $response['errors'][] = 'Select IDs';
-            return $response;
-        }
-
-        if(!$request->has('data'))
-        {
-            $response['success'] = false;
-            $response['errors'][] = 'Select Status';
-            return $response;
-        }
-
-        foreach($request->inputs as $id)
-        {
-            $item = static::find($id);
-            if($request->data['status'] == 1)
-            {
-                Module::activateItem($item->slug);
-            }
-
-            $item->status = $request->data['status'];
-            $item->save();
-        }
-
-        $response['success'] = true;
-        $response['data'] = [];
-        $response['messages'][] = trans('vaahcms-general.action_successful');
-
-        return $response;
-
-
-    }
-    //-------------------------------------------------
-    //-------------------------------------------------
-    //-------------------------------------------------
-
 }
