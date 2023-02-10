@@ -1167,7 +1167,15 @@ export const useUserStore = defineStore({
         openModal(item){
             this.meta_content = JSON.stringify(item,null,2);
             this.display_meta_modal=true;
-        }
+        },
+        //---------------------------------------------------------------------
+        setIsActiveStatus() {
+            if (this.item.status === 'active') {
+                this.item.is_active = 1;
+            } else {
+                this.item.is_active = 0;
+            }
+        },
         //---------------------------------------------------------------------
     }
 });
