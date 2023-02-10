@@ -52,33 +52,13 @@ Route::group(
          */
         Route::get('/', 'BatchesController@getList')
             ->name('vh.backend.vaah.batches.list');
-        /**
-         * Update List
-         */
-        Route::match(['put', 'patch'], '/', 'BatchesController@updateList')
-            ->name('vh.backend.vaah.batches.list.update');
+
         /**
          * Delete List
          */
         Route::delete('/', 'BatchesController@deleteList')
             ->name('vh.backend.vaah.batches.list.delete');
 
-
-        /**
-         * Create Item
-         */
-        Route::post('/', 'BatchesController@createItem')
-            ->name('vh.backend.vaah.batches.create');
-        /**
-         * Get Item
-         */
-        Route::get('/{id}', 'BatchesController@getItem')
-            ->name('vh.backend.vaah.batches.read');
-        /**
-         * Update Item
-         */
-        Route::match(['put', 'patch'], '/{id}', 'BatchesController@updateItem')
-            ->name('vh.backend.vaah.batches.update');
         /**
          * Delete Item
          */
