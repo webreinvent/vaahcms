@@ -408,6 +408,11 @@ export const useRoleStore = defineStore({
                     options.params = item;
                     ajax_url += '/'+item.id
                     break;
+                case 'save-and-new':
+                    options.method = 'PUT';
+                    options.params = item;
+                    ajax_url += '/'+item.id
+                    break;
                 /**
                  * Delete a record, hence method is `DELETE`
                  * and no need to send entire `item` object
@@ -457,6 +462,8 @@ export const useRoleStore = defineStore({
                 case 'create-and-new':
                 case 'save-and-new':
                     this.setActiveItemAsEmpty();
+                    this.route.params.id = null;
+                    this.$router.push({name: 'roles.form'});
                     break;
                 case 'create-and-close':
                 case 'save-and-close':
@@ -1091,6 +1098,15 @@ export const useRoleStore = defineStore({
                         command: () => {
 
                             this.itemAction('save-and-clone');
+
+                        }
+                    },
+                    {
+                        label: 'Save & New',
+                        icon: 'pi pi-plus',
+                        command: () => {
+
+                            this.itemAction('save-and-new');
 
                         }
                     },
