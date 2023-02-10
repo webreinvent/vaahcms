@@ -181,22 +181,6 @@ Route::group(
         Route::delete('/', 'FailedJobsController@deleteList')
             ->name('vh.backend.vaah.failedjobs.list.delete');
 
-
-        /**
-         * Create Item
-         */
-        Route::post('/', 'FailedJobsController@createItem')
-            ->name('vh.backend.vaah.failedjobs.create');
-        /**
-         * Get Item
-         */
-        Route::get('/{id}', 'FailedJobsController@getItem')
-            ->name('vh.backend.vaah.failedjobs.read');
-        /**
-         * Update Item
-         */
-        Route::match(['put', 'patch'], '/{id}', 'FailedJobsController@updateItem')
-            ->name('vh.backend.vaah.failedjobs.update');
         /**
          * Delete Item
          */
