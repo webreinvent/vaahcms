@@ -57,11 +57,7 @@ class JobsController extends Controller
         return Job::getList($request);
     }
     //----------------------------------------------------------
-//    public function updateList(Request $request)
-//    {
-//        return Job::updateList($request);
-//    }
-    //----------------------------------------------------------
+
     public function listAction(Request $request, $type)
     {
         return Job::listAction($request, $type);
@@ -70,11 +66,6 @@ class JobsController extends Controller
     public function deleteList(Request $request)
     {
         return Job::deleteList($request);
-    }
-    //----------------------------------------------------------
-    public function getItem(Request $request, $id)
-    {
-        return Job::getItem($id);
     }
     //----------------------------------------------------------
     public function deleteItem(Request $request,$id)
