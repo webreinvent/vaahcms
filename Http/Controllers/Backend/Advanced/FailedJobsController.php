@@ -72,21 +72,6 @@ class FailedJobsController extends Controller
         return FailedJob::deleteList($request);
     }
     //----------------------------------------------------------
-    public function createItem(Request $request)
-    {
-        return FailedJob::createItem($request);
-    }
-    //----------------------------------------------------------
-    public function getItem(Request $request, $id)
-    {
-        return FailedJob::getItem($id);
-    }
-    //----------------------------------------------------------
-    public function updateItem(Request $request,$id)
-    {
-        return FailedJob::updateItem($request,$id);
-    }
-    //----------------------------------------------------------
     public function deleteItem(Request $request,$id)
     {
         return FailedJob::deleteItem($request,$id);
