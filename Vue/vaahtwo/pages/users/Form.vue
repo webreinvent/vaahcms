@@ -333,9 +333,10 @@ const toggleFormMenu = (event) => {
                               :options="store.status_options"
                               optionLabel="label"
                               optionValue="value"
-                              id="country-code"
+                              id="account-status"
                               name="account-status"
                               data-testid="account-status"
+                              @change="store.setIsActiveStatus"
                     />
                 </VhField>
 
