@@ -30,22 +30,6 @@ function () {
     Route::delete('/', 'ThemesController@deleteList')
         ->name('vh.backend.vaah.themes.list.delete');
 
-
-    /**
-     * Create Item
-     */
-    Route::post('/', 'ThemesController@createItem')
-        ->name('vh.backend.vaah.themes.create');
-    /**
-     * Get Item
-     */
-    Route::get('/{id}', 'ThemesController@getItem')
-        ->name('vh.backend.vaah.themes.read');
-    /**
-     * Update Item
-     */
-    Route::match(['put', 'patch'], '/{id}', 'ThemesController@updateItem')
-        ->name('vh.backend.vaah.themes.update');
     /**
      * Delete Item
      */
