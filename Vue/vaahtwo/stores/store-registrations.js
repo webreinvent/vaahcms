@@ -70,6 +70,7 @@ export const useRegistrationStore = defineStore({
         item_status:null,
         meta_content:null,
         display_meta_modal:false,
+        is_btn_loading: false,
 
         gender_options: [
             {name:'Male',value:'m',icon: ''},
@@ -209,6 +210,8 @@ export const useRegistrationStore = defineStore({
             {
                 this.list = data;
             }
+
+            this.is_btn_loading = false;
         },
         //---------------------------------------------------------------------
 
@@ -1007,7 +1010,13 @@ export const useRegistrationStore = defineStore({
         openModal(item){
             this.meta_content = JSON.stringify(item,null,2);
             this.display_meta_modal=true;
-        }
+        },
+        //---------------------------------------------------------------------
+        async sync() {
+            this.is_btn_loading = true;
+
+            await this.getList();
+        },
         //---------------------------------------------------------------------
     }
 });
