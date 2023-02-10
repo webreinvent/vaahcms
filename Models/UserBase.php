@@ -1143,14 +1143,14 @@ class UserBase extends Authenticatable
             $inputs['username'] = Str::slug($inputs['email']);
         }
 
-        if ($inputs['is_active'] == '1') {
+        if ($inputs['is_active'] === '1' || $inputs['is_active'] === 1 ) {
             $inputs['is_active'] = 1;
         } else {
             $inputs['is_active'] = 0;
         }
 
         $inputs['created_ip'] = request()->ip();
-//        dd($inputs['meta']);
+
         $reg = new static();
         $reg->fill($inputs);
         $reg->save();
