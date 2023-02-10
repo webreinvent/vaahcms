@@ -57,6 +57,8 @@ export const useBatchStore = defineStore({
             delay_timer: 0 // time delay in milliseconds
         },
         route: null,
+        watch_stopper: null,
+        route_prefix: 'batches.',
         view: 'large',
         show_filters: false,
         list_view_width: 12,
@@ -69,14 +71,8 @@ export const useBatchStore = defineStore({
         count_filters: 0,
         list_selected_menu: [],
         list_bulk_menu: [],
-        item_menu_list: [],
-        item_menu_state: null,
-        form_menu_list: [],
         dates: []
     }),
-    getters: {
-
-    },
     actions: {
         //---------------------------------------------------------------------
         async onLoad(route)
@@ -87,30 +83,10 @@ export const useBatchStore = defineStore({
             this.route = route;
 
             /**
-             * Update with view and list css column number
-             */
-            this.setViewAndWidth(route.name);
-
-            /**
              * Update query state with the query parameters of url
              */
             this.updateQueryFromUrl(route);
 
-        },
-        //---------------------------------------------------------------------
-        setViewAndWidth(route_name)
-        {
-            switch(route_name)
-            {
-                case 'batches.index':
-                    this.view = 'large';
-                    this.list_view_width = 12;
-                    break;
-                default:
-                    this.view = 'small';
-                    this.list_view_width = 6;
-                    break
-            }
         },
         //---------------------------------------------------------------------
         async updateQueryFromUrl(route)
@@ -131,13 +107,17 @@ export const useBatchStore = defineStore({
         watchRoutes(route)
         {
             //watch routes
-            watch(route, (newVal,oldVal) =>
+            this.watch_stopper = watch(route, (newVal,oldVal) =>
                 {
+                    if(this.watch_stopper && !newVal.name.includes(this.route_prefix)){
+                        this.watch_stopper();
+
+                        return false;
+                    }
                     this.route = newVal;
-                    // if(newVal.params.id){
-                    //     this.getItem(newVal.params.id);
-                    // }
-                    this.setViewAndWidth(newVal.name);
+                    if(newVal.params.id){
+                        this.getItem(newVal.params.id);
+                    }
                 }, { deep: true }
             )
         },
@@ -210,28 +190,6 @@ export const useBatchStore = defineStore({
             }
         },
         //---------------------------------------------------------------------
-
-        async getItem(id) {
-            if(id){
-                await vaah().ajax(
-                    ajax_url+'/'+id,
-                    this.getItemAfter
-                );
-            }
-        },
-        //---------------------------------------------------------------------
-        async getItemAfter(data, res)
-        {
-            if(data)
-            {
-                this.item = data;
-            } else {
-                this.$router.push({name: 'batches.index'});
-            }
-            await this.getItemMenu();
-            await this.getFormMenu();
-        },
-        //---------------------------------------------------------------------
         isListActionValid()
         {
             if(!this.action.type)
@@ -249,42 +207,6 @@ export const useBatchStore = defineStore({
             return true;
         },
         //---------------------------------------------------------------------
-        async updateList(type = null){
-
-            if(!type && this.action.type)
-            {
-                type = this.action.type;
-            } else{
-                this.action.type = type;
-            }
-
-            if(!this.isListActionValid())
-            {
-                return false;
-            }
-
-
-            let method = 'PUT';
-
-            switch (type)
-            {
-                case 'delete':
-                    method = 'DELETE';
-                    break;
-            }
-
-            let options = {
-                params: this.action,
-                method: method,
-                show_success: false
-            };
-            await vaah().ajax(
-                this.ajax_url,
-                this.updateListAfter,
-                options
-            );
-        },
-        //---------------------------------------------------------------------
         async updateListAfter(data, res) {
             if(data)
             {
@@ -293,8 +215,7 @@ export const useBatchStore = defineStore({
             }
         },
         //---------------------------------------------------------------------
-        async listAction(type = null){
-
+        async listAction(type = null) {
             if(!type && this.action.type)
             {
                 type = this.action.type;
@@ -330,122 +251,12 @@ export const useBatchStore = defineStore({
             );
         },
         //---------------------------------------------------------------------
-        itemAction(type, item=null){
-            if(!item)
-            {
-                item = this.item;
-            }
-            if (!type) {
-                type = this.form.action;
-            }
-            this.form.action = type;
-
-            let ajax_url = this.ajax_url;
-
-            let options = {
-                method: 'post',
-            };
-
-            /**
-             * Learn more about http request methods at
-             * https://www.youtube.com/watch?v=tkfVQK6UxDI
-             */
-            switch (type)
-            {
-                /**
-                 * Create a record, hence method is `POST`
-                 * https://docs.vaah.dev/guide/laravel.html#create-one-or-many-records
-                 */
-                case 'create-and-new':
-                case 'create-and-close':
-                case 'create-and-clone':
-                    options.method = 'POST';
-                    options.params = item;
-                    break;
-
-                /**
-                 * Update a record with many columns, hence method is `PUT`
-                 * https://docs.vaah.dev/guide/laravel.html#update-a-record-update-soft-delete-status-change-etc
-                 */
-                case 'save':
-                case 'save-and-close':
-                case 'save-and-clone':
-                    options.method = 'PUT';
-                    options.params = item;
-                    ajax_url += '/'+item.id
-                    break;
-                /**
-                 * Delete a record, hence method is `DELETE`
-                 * and no need to send entire `item` object
-                 * https://docs.vaah.dev/guide/laravel.html#delete-a-record-hard-deleted
-                 */
-                case 'delete':
-                    options.method = 'DELETE';
-                    options.params = { data: {}};
-                    ajax_url += '/'+item.id
-                    break;
-                /**
-                 * Update a record's one column or very few columns,
-                 * hence the method is `PATCH`
-                 * https://docs.vaah.dev/guide/laravel.html#update-a-record-update-soft-delete-status-change-etc
-                 */
-                default:
-                    options.method = 'PATCH';
-                    ajax_url += '/'+item.id+'/action/'+type;
-                    break;
-            }
-
-            vaah().ajax(
-                ajax_url,
-                this.itemActionAfter,
-                options
-            );
-        },
-        //---------------------------------------------------------------------
         async itemActionAfter(data, res)
         {
             if(data)
             {
                 this.item = data;
                 await this.getList();
-                await this.formActionAfter();
-                this.getItemMenu();
-            }
-        },
-        //---------------------------------------------------------------------
-        async formActionAfter ()
-        {
-            switch (this.form.action)
-            {
-                case 'create-and-new':
-                case 'save-and-new':
-                    this.setActiveItemAsEmpty();
-                    break;
-                case 'create-and-close':
-                case 'save-and-close':
-                    this.setActiveItemAsEmpty();
-                    this.$router.push({name: 'batches.index'});
-                    break;
-                case 'save-and-clone':
-                    this.item.id = null;
-                    break;
-                case 'trash':
-                    this.item = null;
-                    break;
-                case 'delete':
-                    this.item = null;
-                    this.toList();
-                    break;
-            }
-        },
-        //---------------------------------------------------------------------
-        async toggleIsActive(item)
-        {
-            if(item.is_active)
-            {
-                await this.itemAction('activate', item);
-            } else{
-                await this.itemAction('deactivate', item);
             }
         },
         //---------------------------------------------------------------------
@@ -601,33 +412,9 @@ export const useBatchStore = defineStore({
             await this.updateUrlQueryString(this.query);
         },
         //---------------------------------------------------------------------
-        closeForm()
-        {
-            this.$router.push({name: 'batches.index'})
-        },
-        //---------------------------------------------------------------------
         toList()
         {
             this.$router.push({name: 'batches.index'})
-        },
-        //---------------------------------------------------------------------
-        toForm()
-        {
-            this.item = vaah().clone(this.assets.empty_item);
-            this.getFormMenu();
-            this.$router.push({name: 'batches.form'})
-        },
-        //---------------------------------------------------------------------
-        toView(item)
-        {
-            this.item = vaah().clone(item);
-            this.$router.push({name: 'batches.view', params:{id:item.id}})
-        },
-        //---------------------------------------------------------------------
-        toEdit(item)
-        {
-            this.item = item;
-            this.$router.push({name: 'batches.form', params:{id:item.id}})
         },
         //---------------------------------------------------------------------
         isViewLarge()
@@ -659,17 +446,6 @@ export const useBatchStore = defineStore({
             return width+'px';
         },
         //---------------------------------------------------------------------
-        getActionLabel()
-        {
-            let text = null;
-            if(this.isViewLarge())
-            {
-                text = 'Actions';
-            }
-
-            return text;
-        },
-        //---------------------------------------------------------------------
         async getListSelectedMenu()
         {
             this.list_selected_menu = [
@@ -697,44 +473,6 @@ export const useBatchStore = defineStore({
             ];
         },
         //---------------------------------------------------------------------
-        getItemMenu()
-        {
-            let item_menu = [];
-
-            if(this.item && this.item.deleted_at)
-            {
-
-                item_menu.push({
-                    label: 'Restore',
-                    icon: 'pi pi-refresh',
-                    command: () => {
-                        this.itemAction('restore');
-                    }
-                });
-            }
-
-            if(this.item && this.item.id && !this.item.deleted_at)
-            {
-                item_menu.push({
-                    label: 'Trash',
-                    icon: 'pi pi-times',
-                    command: () => {
-                        this.itemAction('trash');
-                    }
-                });
-            }
-
-            item_menu.push({
-                label: 'Delete',
-                icon: 'pi pi-trash',
-                command: () => {
-                    this.confirmDeleteItem('delete');
-                }
-            });
-
-            this.item_menu_list = item_menu;
-        },
-        //---------------------------------------------------------------------
         confirmDeleteItem()
         {
             this.form.type = 'delete';
@@ -746,85 +484,6 @@ export const useBatchStore = defineStore({
             this.itemAction('delete', this.item);
         },
         //---------------------------------------------------------------------
-        async getFormMenu()
-        {
-            let form_menu = [];
-
-            if(this.item && this.item.id)
-            {
-                form_menu = [
-                    {
-                        label: 'Save & Close',
-                        icon: 'pi pi-check',
-                        command: () => {
-
-                            this.itemAction('save-and-close');
-                        }
-                    },
-                    {
-                        label: 'Save & Clone',
-                        icon: 'pi pi-copy',
-                        command: () => {
-
-                            this.itemAction('save-and-clone');
-
-                        }
-                    },
-                    {
-                        label: 'Trash',
-                        icon: 'pi pi-times',
-                        command: () => {
-                            this.itemAction('trash');
-                        }
-                    },
-                    {
-                        label: 'Delete',
-                        icon: 'pi pi-trash',
-                        command: () => {
-                            this.confirmDeleteItem('delete');
-                        }
-                    },
-                ];
-
-            } else{
-                form_menu = [
-                    {
-                        label: 'Create & Close',
-                        icon: 'pi pi-check',
-                        command: () => {
-                            this.itemAction('create-and-close');
-                        }
-                    },
-                    {
-                        label: 'Create & Clone',
-                        icon: 'pi pi-copy',
-                        command: () => {
-
-                            this.itemAction('create-and-clone');
-
-                        }
-                    },
-                    {
-                        label: 'Reset',
-                        icon: 'pi pi-refresh',
-                        command: () => {
-                            this.setActiveItemAsEmpty();
-                        }
-                    }
-                ];
-            }
-
-            form_menu.push({
-                label: 'Fill',
-                icon: 'pi pi-pencil',
-                command: () => {
-                    this.getFaker();
-                }
-            },)
-
-            this.form_menu_list = form_menu;
-
-        },
         getJobProgress(item,type) {
             let d = item;
 
@@ -863,7 +522,80 @@ export const useBatchStore = defineStore({
 
                 this.getList();
             }
-        }
+        },
+        //-------------------------------------------------------
+        itemAction(type, item=null){
+            if(!item)
+            {
+                item = this.item;
+            }
+            if (!type) {
+                type = this.form.action;
+            }
+            this.form.action = type;
+
+            let ajax_url = this.ajax_url;
+
+            let options = {
+                method: 'post',
+            };
+
+            /**
+             * Learn more about http request methods at
+             * https://www.youtube.com/watch?v=tkfVQK6UxDI
+             */
+            switch (type)
+            {
+                /**
+                 * Create a record, hence method is `POST`
+                 * https://docs.vaah.dev/guide/laravel.html#create-one-or-many-records
+                 */
+                case 'create-and-new':
+                case 'create-and-close':
+                case 'create-and-clone':
+                    options.method = 'POST';
+                    options.params = item;
+                    break;
+
+                /**
+                 * Update a record with many columns, hence method is `PUT`
+                 * https://docs.vaah.dev/guide/laravel.html#update-a-record-update-soft-delete-status-change-etc
+                 */
+                case 'save':
+                case 'save-and-close':
+                case 'save-and-clone':
+                    options.method = 'PUT';
+                    options.params = item;
+                    ajax_url += '/'+item.id
+                    break;
+                /**
+                 * Delete a record, hence method is `DELETE`
+                 * and no need to send entire `item` object
+                 * https://docs.vaah.dev/guide/laravel.html#delete-a-record-hard-deleted
+                 */
+                case 'delete':
+                    options.method = 'DELETE';
+                    options.params = { data: {}};
+                    ajax_url += '/'+item.id
+                    break;
+                /**
+                 * Update a record's one column or very few columns,
+                 * hence the method is `PATCH`
+                 * https://docs.vaah.dev/guide/laravel.html#update-a-record-update-soft-delete-status-change-etc
+                 */
+                default:
+                    options.method = 'PATCH';
+                    ajax_url += '/'+item.id+'/action/'+type;
+                    break;
+            }
+
+            vaah().ajax(
+                ajax_url,
+                this.itemActionAfter,
+                options
+            );
+        },
+        //---------------------------------------------------------------------
     }
 });
 

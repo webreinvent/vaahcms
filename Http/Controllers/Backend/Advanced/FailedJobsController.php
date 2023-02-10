@@ -92,11 +92,4 @@ class FailedJobsController extends Controller
         return FailedJob::deleteItem($request,$id);
     }
     //----------------------------------------------------------
-    public function itemAction(Request $request,$id,$action)
-    {
-        return FailedJob::itemAction($request,$id,$action);
-    }
-    //----------------------------------------------------------
-
-
 }

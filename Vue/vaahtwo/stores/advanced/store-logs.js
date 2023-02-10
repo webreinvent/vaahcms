@@ -47,6 +47,8 @@ export const useLogStore = defineStore({
             delay_timer: 0 // time delay in milliseconds
         },
         route: null,
+        watch_stopper: null,
+        route_prefix: 'logs.',
         view: 'large',
         show_filters: false,
         list_view_width: 12,
@@ -111,12 +113,18 @@ export const useLogStore = defineStore({
         watchRoutes(route)
         {
             //watch routes
-            watch(route, (newVal,oldVal) =>
+            this.watch_stopper = watch(route, (newVal,oldVal) =>
                 {
+                    if(this.watch_stopper && !newVal.name.includes(this.route_prefix)){
+                        this.watch_stopper();
+
+                        return false;
+                    }
+
                     this.route = newVal;
-                    /*if(newVal.params.name){
+                    if(newVal.params.name){
                         this.getItem(newVal.params.name);
-                    }*/
+                    }
                     this.setViewAndWidth(newVal.name);
                 }, { deep: true }
             )
@@ -212,7 +220,6 @@ export const useLogStore = defineStore({
                 this.$router.push({name: 'logs.index'});
             }
             await this.getItemMenu();
-            await this.getFormMenu();
         },
         //---------------------------------------------------------------------
         clearFile: function(item)
@@ -285,42 +292,6 @@ export const useLogStore = defineStore({
             }
 
             return true;
-        },
-        //---------------------------------------------------------------------
-        async updateList(type = null){
-
-            if(!type && this.action.type)
-            {
-                type = this.action.type;
-            } else{
-                this.action.type = type;
-            }
-
-            if(!this.isListActionValid())
-            {
-                return false;
-            }
-
-
-            let method = 'PUT';
-
-            switch (type)
-            {
-                case 'delete':
-                    method = 'DELETE';
-                    break;
-            }
-
-            let options = {
-                params: this.action,
-                method: method,
-                show_success: false
-            };
-            await vaah().ajax(
-                this.ajax_url,
-                this.updateListAfter,
-                options
-            );
         },
         //---------------------------------------------------------------------
         async updateListAfter(data, res) {
@@ -472,16 +443,6 @@ export const useLogStore = defineStore({
             }
         },
         //---------------------------------------------------------------------
-        async toggleIsActive(item)
-        {
-            if(item.is_active)
-            {
-                await this.itemAction('activate', item);
-            } else{
-                await this.itemAction('deactivate', item);
-            }
-        },
-        //---------------------------------------------------------------------
         async paginate(event) {
             this.query.page = event.page+1;
             await this.getList();
@@ -625,22 +586,10 @@ export const useLogStore = defineStore({
             await this.updateUrlQueryString(this.query);
         },
         //---------------------------------------------------------------------
-        closeForm()
-        {
-            this.$router.push({name: 'logs.index'})
-        },
-        //---------------------------------------------------------------------
         toList()
         {
             this.item = null;
             this.$router.push({name: 'logs.index'})
-        },
-        //---------------------------------------------------------------------
-        toForm()
-        {
-            this.item = vaah().clone(this.assets.empty_item);
-            this.getFormMenu();
-            this.$router.push({name: 'logs.form'})
         },
         //---------------------------------------------------------------------
         toView(item)
@@ -648,13 +597,6 @@ export const useLogStore = defineStore({
             this.getItem(item.name);
             this.$router.push({name: 'logs.view', params:{name:item.name}})
         },
-        //---------------------------------------------------------------------
-        toEdit(item)
-        {
-            this.item = item;
-            this.$router.push({name: 'logs.form', params:{id:item.id}})
-        },
-        //---------------------------------------------------------------------
         isViewLarge()
         {
             return this.view === 'large';
@@ -769,86 +711,6 @@ export const useLogStore = defineStore({
         confirmDeleteItemAfter()
         {
             this.itemAction('delete', this.item);
-        },
-        //---------------------------------------------------------------------
-        async getFormMenu()
-        {
-            let form_menu = [];
-
-            if(this.item && this.item.id)
-            {
-                form_menu = [
-                    {
-                        label: 'Save & Close',
-                        icon: 'pi pi-check',
-                        command: () => {
-
-                            this.itemAction('save-and-close');
-                        }
-                    },
-                    {
-                        label: 'Save & Clone',
-                        icon: 'pi pi-copy',
-                        command: () => {
-
-                            this.itemAction('save-and-clone');
-
-                        }
-                    },
-                    {
-                        label: 'Trash',
-                        icon: 'pi pi-times',
-                        command: () => {
-                            this.itemAction('trash');
-                        }
-                    },
-                    {
-                        label: 'Delete',
-                        icon: 'pi pi-trash',
-                        command: () => {
-                            this.confirmDeleteItem('delete');
-                        }
-                    },
-                ];
-
-            } else{
-                form_menu = [
-                    {
-                        label: 'Create & Close',
-                        icon: 'pi pi-check',
-                        command: () => {
-                            this.itemAction('create-and-close');
-                        }
-                    },
-                    {
-                        label: 'Create & Clone',
-                        icon: 'pi pi-copy',
-                        command: () => {
-
-                            this.itemAction('create-and-clone');
-
-                        }
-                    },
-                    {
-                        label: 'Reset',
-                        icon: 'pi pi-refresh',
-                        command: () => {
-                            this.setActiveItemAsEmpty();
-                        }
-                    }
-                ];
-            }
-
-            form_menu.push({
-                label: 'Fill',
-                icon: 'pi pi-pencil',
-                command: () => {
-                    this.getFaker();
-                }
-            },)
-
-            this.form_menu_list = form_menu;
-
         },
         //---------------------------------------------------------------------
         viewPayloads(content)
