@@ -21,12 +21,12 @@ export const useRootStore = defineStore({
         permissions: null,
         top_menu_items: [
             {
-                to:'/',
+                to:'/vaah',
                 title:'',
                 icon:'pi pi-home'
             },
             {
-                to:'/',
+                to:'/vaah',
                 title:'',
                 icon:'pi pi-link'
             }
@@ -205,14 +205,17 @@ export const useRootStore = defineStore({
         {
             this.$router.push({path: path})
         },
+        //-----------------------------------------------------------------------
         showProgress()
         {
             this.show_progress_bar = true;
         },
+        //-----------------------------------------------------------------------
         hideProgress()
         {
             this.show_progress_bar = false;
         },
+        //-----------------------------------------------------------------------
         async markAsRead(item, dismiss=false){
 
             let options = {
@@ -228,6 +231,7 @@ export const useRootStore = defineStore({
                 options
             );
         },
+        //-----------------------------------------------------------------------
         markAsReadAfter(data, res){
             let item  = this.active_item;
 
@@ -240,7 +244,6 @@ export const useRootStore = defineStore({
                 window.location.href = item.meta.action.link;
             }
         }
-
     }
 })
 
