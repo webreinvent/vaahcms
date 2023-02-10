@@ -1,14 +1,14 @@
 <script setup>
 import {reactive, ref, watch } from 'vue';
 import {vaah} from '../../../vaahvue/pinia/vaah'
-import { useArtistStore } from '../../../stores/store-artists'
+import { useUserStore } from '../../../stores/store-users'
 import axios from 'axios';
 /**----------------------
  * Props
  */
 
 const upload_refs = ref([])
-const store = useArtistStore();
+const store = useUserStore();
 
 const temp_setter = ref(store.reset_uploader);
 
@@ -95,21 +95,21 @@ function uploadFile(e){
             }
         }).then(res=>{
             upload_refs.value.uploadedFiles[0] = file;
-            store.item[props.store_label] = res.data.data.url;
+            store.storeAvatar(res.data.data);
         });
     })
 
 }
 function removeFile(e){
 
-     store.item[props.store_label] = null;
+     // store.item[props.store_label] = null;
 
 }
 
 function selectFile (data){
 
-    let temp_file = upload_refs.value.files[upload_refs.value.files.length-1]
-    store.item[props.store_label] = null;
+    let temp_file = upload_refs.value.files[upload_refs.value.files.length-1];
+    // store.item[props.store_label] = null;
     upload_refs.value.files = [];
     upload_refs.value.uploadedFiles = [];
     upload_refs.value.files[0] = temp_file;
