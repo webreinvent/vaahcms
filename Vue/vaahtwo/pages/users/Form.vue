@@ -113,7 +113,6 @@ const toggleFormMenu = (event) => {
                                 accept="image/*"
                                 :maxFileSize="1000000"
                                 @upload="store.onUpload"
-                                @uploader="myUploader"
                     />
                 </div>
 
@@ -212,6 +211,19 @@ const toggleFormMenu = (event) => {
                     </SelectButton>
                 </VhField>
 
+                <VhField label="Country" v-if="!store.isHidden('country')">
+                    <AutoComplete class="w-full"
+                                  v-model="store.item.country"
+                                  :suggestions="store.filtered_country_codes"
+                                  @complete="store.searchCountryCode"
+                                  @item-select="store.onSelectCountryCode"
+                                  placeholder="Enter Your Country"
+                                  optionLabel="name"
+                                  name="account-country"
+                                  data-testid="account-country"
+                    />
+                </VhField>
+
                 <VhField label="Country Code" v-if="!store.isHidden('country_calling_code')">
                     <Dropdown class="w-full"
                               v-model="store.item.country_calling_code"
@@ -278,19 +290,8 @@ const toggleFormMenu = (event) => {
                               autocomplete="off"
                               name="account-birth"
                               data-testid="account-birth"
-                    />
-                </VhField>
-
-                <VhField label="Country" v-if="!store.isHidden('country')">
-                    <AutoComplete class="w-full"
-                                  v-model="store.item.country"
-                                  :suggestions="store.filtered_country_codes"
-                                  @complete="store.searchCountryCode"
-                                  @item-select="store.onSelectCountryCode"
-                                  placeholder="Enter Your Country"
-                                  optionLabel="name"
-                                  name="account-country"
-                                  data-testid="account-country"
+                              dateFormat="dd-mm-yy"
+                              :showTime="false"
                     />
                 </VhField>
 
