@@ -161,10 +161,14 @@ const openViewModal = () => {
                 >
 
                     <template #body="prop" >
-                        <Button :label="prop.data.name"
-                                class="p-button-text"
-                                @click="vaah().copy(prop.data.slug)"
+
+                        {{ prop.data.name }}
+
+                        <Button class="p-button-tiny p-button-text"
+                                data-testid="taxonomies-table-to-edit"
                                 v-tooltip.top="'Copy Slug'"
+                                @click="useVaah.copy(prop.data.slug)"
+                                icon="pi pi-copy"
                         />
 
                     </template>
