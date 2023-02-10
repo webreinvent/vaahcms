@@ -178,7 +178,7 @@ export const useUserStore = defineStore({
             //watch routes
             this.watch_stopper = watch(route, (newVal,oldVal) =>
                 {
-                    
+
                     if(this.watch_stopper && !newVal.name.includes(this.route_prefix)){
                         this.watch_stopper();
 
@@ -963,7 +963,7 @@ export const useUserStore = defineStore({
             ];
         },
         //---------------------------------------------------------------------
-        getItemMenu()
+        async getItemMenu()
         {
             let item_menu = [];
 
@@ -992,13 +992,6 @@ export const useUserStore = defineStore({
 
             item_menu.push({
                 label: 'Delete',
-                icon: 'pi pi-trash',
-                command: () => {
-                    this.confirmDeleteItem('delete');
-                }
-            });
-            item_menu.push({
-                label: 'Active All',
                 icon: 'pi pi-trash',
                 command: () => {
                     this.confirmDeleteItem('delete');
