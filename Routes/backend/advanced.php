@@ -122,23 +122,13 @@ Route::group(
          */
         Route::get('/', 'JobsController@getList')
             ->name('vh.backend.vaah.jobs.list');
-        /**
-         * Update List
-         */
-        Route::match(['put', 'patch'], '/', 'JobsController@updateList')
-            ->name('vh.backend.vaah.jobs.list.update');
+
         /**
          * Delete List
          */
         Route::delete('/', 'JobsController@deleteList')
             ->name('vh.backend.vaah.jobs.list.delete');
 
-
-        /**
-         * Create Item
-         */
-        Route::post('/', 'JobsController@createItem')
-            ->name('vh.backend.vaah.jobs.create');
         /**
          * Delete Item
          */
