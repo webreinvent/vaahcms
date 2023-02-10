@@ -66,47 +66,6 @@ class Module extends ModuleBase
     }
 
     //-------------------------------------------------
-    public static function createItem($request)
-    {
-
-        $inputs = $request->all();
-
-        $validation = self::validation($inputs);
-        if (!$validation['success']) {
-            return $validation;
-        }
-
-
-        // check if name exist
-        $item = self::where('name', $inputs['name'])->withTrashed()->first();
-
-        if ($item) {
-            $response['success'] = false;
-            $response['messages'][] = "This name is already exist.";
-            return $response;
-        }
-
-        // check if slug exist
-        $item = self::where('slug', $inputs['slug'])->withTrashed()->first();
-
-        if ($item) {
-            $response['success'] = false;
-            $response['messages'][] = "This slug is already exist.";
-            return $response;
-        }
-
-        $item = new self();
-        $item->fill($inputs);
-        $item->slug = Str::slug($inputs['slug']);
-        $item->save();
-
-        $response = self::getItem($item->id);
-        $response['messages'][] = 'Saved successfully.';
-        return $response;
-
-    }
-
-    //-------------------------------------------------
     public function scopeGetSorted($query, $filter)
     {
 
@@ -209,63 +168,7 @@ class Module extends ModuleBase
     }
 
     //-------------------------------------------------
-    public static function updateList($request)
-    {
 
-        $inputs = $request->all();
-
-        $rules = array(
-            'type' => 'required',
-        );
-
-        $messages = array(
-            'type.required' => 'Action type is required',
-        );
-
-
-        $validator = \Validator::make($inputs, $rules, $messages);
-        if ($validator->fails()) {
-
-            $errors = errorsToArray($validator->errors());
-            $response['success'] = false;
-            $response['errors'] = $errors;
-            return $response;
-        }
-
-        if(isset($inputs['items']))
-        {
-            $items_id = collect($inputs['items'])
-                ->pluck('id')
-                ->toArray();
-        }
-
-
-        $items = self::whereIn('id', $items_id)
-            ->withTrashed();
-
-        switch ($inputs['type']) {
-            case 'deactivate':
-                $items->update(['is_active' => null]);
-                break;
-            case 'activate':
-                $items->update(['is_active' => 1]);
-                break;
-            case 'trash':
-                self::whereIn('id', $items_id)->delete();
-                break;
-            case 'restore':
-                self::whereIn('id', $items_id)->restore();
-                break;
-        }
-
-        $response['success'] = true;
-        $response['data'] = true;
-        $response['messages'][] = 'Action was successful.';
-
-        return $response;
-    }
-
-    //-------------------------------------------------
     public static function deleteList($request): array
     {
         $inputs = $request->all();
@@ -475,14 +378,6 @@ class Module extends ModuleBase
         $response['success'] = true;
         return $response;
 
-    }
-
-    //-------------------------------------------------
-    public static function getActiveItems()
-    {
-        $item = self::where('is_active', 1)
-            ->first();
-        return $item;
     }
 
     //-------------------------------------------------
