@@ -241,6 +241,39 @@ class MediaController extends Controller
         return response()->json($response);
     }
     //----------------------------------------------------------
+    public function isDownloadableSlugAvailable(Request $request)
+    {
+        $rules = array(
+            'download_url' => 'required',
+        );
 
+        $validator = \Validator::make( $request->all(), $rules);
+        if ( $validator->fails() ) {
+
+            $errors             = errorsToArray($validator->errors());
+            $response['status'] = 'failed';
+            $response['errors'] = $errors;
+            return response()->json($response);
+        }
+
+        $data = [];
+
+        $exist = Media::where('download_url', $request->download_url)->first();
+
+        if(!$exist)
+        {
+            $response['status'] = 'success';
+            $response['messages'][] = 'Url is available';
+            $response['data'] = true;
+        } else
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = 'Url is taken';
+        }
+
+        return response()->json($response);
+
+    }
+    //----------------------------------------------------------
 
 }

@@ -69,5 +69,8 @@ function () {
     Route::post( '/upload', 'MediaController@upload' )
         ->name( 'vh.backend.media.upload' );
     //------------------------------------------------
+    Route::post('/downloadable/slug/available', 'MediaController@isDownloadableSlugAvailable')
+        ->name('backend.vaah.media.downloadable.slug.available');
+    //---------------------------------------------------------
 
 });
