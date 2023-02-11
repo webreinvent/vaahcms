@@ -4,6 +4,7 @@ import {useRoute} from 'vue-router';
 
 import {useProfileStore} from '../../stores/store-profile'
 import { useRootStore } from "../../stores/root";
+import FileUploader from "./components/FileUploader.vue";
 
 const store = useProfileStore();
 const route = useRoute();
@@ -26,7 +27,7 @@ onMounted(async () => {
 });
 </script>
 <template>
-    <div class="grid justify-content-center is-relative profile">
+    <div v-if="root && root.assets" class="grid justify-content-center is-relative profile">
         <div class="col-4">
             <h5 class="mb-2">Public Avatar</h5>
             <p class="text-sm">You can upload your avatar here or change it at</p>
@@ -40,12 +41,16 @@ onMounted(async () => {
                                 v-if="store.profile"
                                 class="mr-3"
                                 shape="circle"
-                                size="xlarge"/>
-                        <FileUpload mode="basic"
-                                    v-if="root.assets && root.assets.urls"
-                                    accept="image/*"
-                                    @uploader="store.storeAvatar"
-                                    :url="root.assets.urls.upload" />
+                                size="xlarge">
+                        </Avatar>
+
+                        <div class="w-max">
+                            <FileUploader placeholder="Upload Avatar"
+                                          :is_basic="true"
+                                          :auto_upload="true"
+                                          :uploadUrl="root.assets.urls.upload" >
+                            </FileUploader>
+                        </div>
                     </div>
                 </template>
             </Card>
