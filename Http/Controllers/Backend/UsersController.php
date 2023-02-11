@@ -292,11 +292,61 @@ class UsersController extends Controller
         return response()->json($response);
 
     }
+    //----------------------------------------------------------
     public function storeProfile(Request $request)
     {
-        $response = User::storeProfile($request);
+        if(!\Auth::user()->hasPermission('can-update-users'))
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+            return response()->json($response);
+        }
+
+        $rules = array(
+            'user_id' => 'required',
+        );
+
+        $validator = \Validator::make( $request->all(), $rules);
+        if ( $validator->fails() ) {
+
+            $errors             = errorsToArray($validator->errors());
+            $response['status'] = 'failed';
+            $response['errors'] = $errors;
+            return response()->json($response);
+        }
+
+        $response = User::storeAvatar($request, $request->user_id);
         return response()->json($response);
     }
+    //----------------------------------------------------------
+    public function removeAvatar(Request $request)
+    {
 
+        if(!\Auth::user()->hasPermission('can-update-users'))
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+            return response()->json($response);
+        }
+
+        $rules = array(
+            'user_id' => 'required',
+        );
+
+        $validator = \Validator::make( $request->all(), $rules);
+        if ( $validator->fails() ) {
+
+            $errors             = errorsToArray($validator->errors());
+            $response['status'] = 'failed';
+            $response['errors'] = $errors;
+            return response()->json($response);
+        }
+
+
+        $response = User::removeAvatar($request->user_id);
+        return response()->json($response);
+    }
 
 }

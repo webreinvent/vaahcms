@@ -3,6 +3,8 @@ import {onMounted, ref, watch} from "vue";
 import { useUserStore } from '../../stores/store-users'
 import { useRootStore } from '../../stores/root'
 import { vaah } from "../../vaahvue/pinia/vaah"
+import FileUploader from "./components/FileUploader.vue";
+
 
 import VhField from './../../vaahvue/vue-three/primeflex/VhField.vue'
 import {useRoute} from 'vue-router';
@@ -99,21 +101,25 @@ const toggleFormMenu = (event) => {
 
 
             <div v-if="store.item && store.assets">
-                <div class="field mb-4 flex justify-content-between align-items-center" v-if="root && root.assets">
-                    <img src="https://img.site/p/100/100/BDC3C8/solid-box"
+                <div class="field mb-4 flex justify-content-between align-items-center"
+                     v-if="root && root.assets && store.item.id">
+
+                    <img v-if="store.item.avatar"
+                         :src="store.item.avatar"
                          alt=""
                          width="64"
                          height="64"
                          style="border-radius: 50%"
                     >
 
-                    <FileUpload mode="basic"
-                                name="demo[]"
-                                :url="root.assets.urls.upload"
-                                accept="image/*"
-                                :maxFileSize="1000000"
-                                @upload="store.onUpload"
-                    />
+                    <div class="w-max">
+                        <FileUploader placeholder="Upload Avatar"
+                                      :is_basic="true"
+                                      :auto_upload="true"
+                                      :uploadUrl="root.assets.urls.upload" >
+                        </FileUploader>
+                    </div>
+
                 </div>
 
                 <VhField label="Email">
