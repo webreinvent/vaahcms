@@ -158,6 +158,26 @@ export const useProfileStore = defineStore({
 
         },
         //---------------------------------------------------------------------
+        async removeAvatar(){
+            let options = {
+                method:'post'
+            };
+
+            await vaah().ajax(
+                this.ajax_url+'/avatar/remove',
+                this.removeAvatarAfter,
+                options
+            );
+        },
+        //---------------------------------------------------------------------
+        removeAvatarAfter(data, res) {
+            if(data){
+                this.profile.avatar = data.avatar;
+                this.profile.avatar_url = data.avatar_url;
+            }
+
+        },
+        //---------------------------------------------------------------------
 
     }
 })

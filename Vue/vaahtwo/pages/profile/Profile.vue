@@ -27,7 +27,7 @@ onMounted(async () => {
 });
 </script>
 <template>
-    <div v-if="root && root.assets" class="grid justify-content-center is-relative profile">
+    <div v-if="root && root.assets && store.profile" class="grid justify-content-center is-relative profile">
         <div class="col-4">
             <h5 class="mb-2">Public Avatar</h5>
             <p class="text-sm">You can upload your avatar here or change it at</p>
@@ -45,13 +45,21 @@ onMounted(async () => {
                         </Avatar>
 
                         <div class="w-max">
-                            <FileUploader placeholder="Upload Avatar"
+                            <FileUploader v-if="root.assets.urls"
+                                          placeholder="Upload Avatar"
                                           :is_basic="true"
                                           :auto_upload="true"
                                           :uploadUrl="root.assets.urls.upload" >
                             </FileUploader>
                         </div>
                     </div>
+                </template>
+
+                <template v-if="store.profile.avatar_url" #footer>
+                    <Button class="p-button-sm w-max"
+                            data-testid="profile-save"
+                            @click="store.removeAvatar"
+                            label="Remove"></Button>
                 </template>
             </Card>
         </div>
