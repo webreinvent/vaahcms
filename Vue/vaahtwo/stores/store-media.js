@@ -83,6 +83,7 @@ export const useMediaStore = defineStore({
         menu_options: [],
         dates2: [],
         is_btn_loading: false,
+        downloadable_slug_available: ''
     }),
     getters: {
 
@@ -184,7 +185,6 @@ export const useMediaStore = defineStore({
         },
         //---------------------------------------------------------------------
         async getAssets() {
-
             if(this.assets_is_fetching === true){
                 this.assets_is_fetching = false;
 
@@ -245,6 +245,7 @@ export const useMediaStore = defineStore({
         //---------------------------------------------------------------------
         async getItemAfter(data)
         {
+            console.log(data);
             if(data)
             {
                 this.item = data;
@@ -943,7 +944,32 @@ export const useMediaStore = defineStore({
                 let ele = document.querySelector('.p-fileupload > input[type=file]');
                 ele.click();
             }
-        }
+        },
+        //---------------------------------------------------------------------
+        isDownloadableSlugAvailable() {
+            this.downloadable_slug_available = null;
+            let options = {
+                params : { download_url: this.item.download_url},
+                method: 'post',
+            };
+
+            let url = this.ajax_url+'/downloadable/slug/available';
+            vaah().ajax(url, this.isDownloadableSlugAvailableAfter, options);
+        },
+        //---------------------------------------------------------------------
+        isDownloadableSlugAvailableAfter(data) {
+            if(data){
+                this.downloadable_slug_available = data;
+            }
+        },
+        //---------------------------------------------------------------------
+        getCopy(value)
+        {
+            let text =  "{!! config('settings.global."+value+"'); !!}";
+            navigator.clipboard.writeText(text);
+            vaah().toastSuccess(['Copied']);
+        },
+        //---------------------------------------------------------------------
     }
 });
 
