@@ -77,7 +77,8 @@ import ScrollPanel from 'primevue/scrollpanel';
 import ScrollTop from 'primevue/scrolltop';
 import Skeleton from 'primevue/skeleton';
 import Slider from 'primevue/slider';
-import Sidebar from 'primevue/sidebar';
+import Sidebar from './components/molecules/Sidebar.vue';
+import TopMenu from './components/molecules/Topnav.vue';
 import SpeedDial from 'primevue/speeddial';
 import SplitButton from 'primevue/splitbutton';
 import Splitter from 'primevue/splitter';
@@ -108,7 +109,7 @@ import VueHighlightJS from 'vue3-highlightjs'
 import 'highlight.js/styles/solarized-light.css'
 
 //-------------APP
-import App from "./layouts/App.vue"
+import App from "./layouts/AppExtend.vue"
 import router from './routes/router'
 
 const app = createApp(App);
@@ -119,7 +120,7 @@ pinia.use(({ store }) => {
 });
 app.use(pinia);
 app.use(PiniaVuePlugin);
-app.use(router);
+// app.use(router);
 //-------------/APP
 
 
@@ -202,7 +203,8 @@ app.component('SelectButton', SelectButton);
 app.component('ScrollPanel', ScrollPanel);
 app.component('ScrollTop', ScrollTop);
 app.component('Slider', Slider);
-app.component('Sidebar', Sidebar);
+app.component('sidebar', Sidebar);
+app.component('top-menu', TopMenu);
 app.component('Skeleton', Skeleton);
 app.component('SpeedDial', SpeedDial);
 app.component('SplitButton', SplitButton);
@@ -228,7 +230,7 @@ app.component('VirtualScroller', VirtualScroller);
 //-------------/PrimeVue Use
 
 
-app.mount('#themeVaahTwo');
+app.mount('#themeVaahTwoExtend');
 
 
 export { app }
