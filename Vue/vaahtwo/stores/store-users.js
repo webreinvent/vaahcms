@@ -626,6 +626,11 @@ export const useUserStore = defineStore({
                     options.params = item;
                     ajax_url += '/'+item.id
                     break;
+                case 'save-and-new':
+                    options.method = 'PUT';
+                    options.params = item;
+                    ajax_url += '/'+item.id
+                    break;
                 /**
                  * Delete a record, hence method is `DELETE`
                  * and no need to send entire `item` object
@@ -673,6 +678,8 @@ export const useUserStore = defineStore({
                 case 'create-and-new':
                 case 'save-and-new':
                     this.setActiveItemAsEmpty();
+                    this.route.params.id = null;
+                    this.$router.push({name: 'users.form'});
                     break;
                 case 'create-and-close':
                 case 'save-and-close':
@@ -681,6 +688,8 @@ export const useUserStore = defineStore({
                     break;
                 case 'save-and-clone':
                     this.item.id = null;
+                    this.route.params.id = null;
+                    this.$router.push({name: 'users.form'});
                     break;
                 case 'trash':
                     this.item = null;
@@ -1017,7 +1026,7 @@ export const useUserStore = defineStore({
             ];
         },
         //---------------------------------------------------------------------
-        getItemMenu()
+        async getItemMenu()
         {
             let item_menu = [];
 
@@ -1046,13 +1055,6 @@ export const useUserStore = defineStore({
 
             item_menu.push({
                 label: 'Delete',
-                icon: 'pi pi-trash',
-                command: () => {
-                    this.confirmDeleteItem('delete');
-                }
-            });
-            item_menu.push({
-                label: 'Active All',
                 icon: 'pi pi-trash',
                 command: () => {
                     this.confirmDeleteItem('delete');
@@ -1132,6 +1134,15 @@ export const useUserStore = defineStore({
                         command: () => {
 
                             this.itemAction('save-and-clone');
+
+                        }
+                    },
+                    {
+                        label: 'Save & New',
+                        icon: 'pi pi-plus',
+                        command: () => {
+
+                            this.itemAction('save-and-new');
 
                         }
                     },
@@ -1226,7 +1237,15 @@ export const useUserStore = defineStore({
         openModal(item){
             this.meta_content = JSON.stringify(item,null,2);
             this.display_meta_modal=true;
-        }
+        },
+        //---------------------------------------------------------------------
+        setIsActiveStatus() {
+            if (this.item.status === 'active') {
+                this.item.is_active = 1;
+            } else {
+                this.item.is_active = 0;
+            }
+        },
         //---------------------------------------------------------------------
     }
 });

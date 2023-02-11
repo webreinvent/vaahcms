@@ -5,6 +5,7 @@ use DateTimeInterface;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use WebReinvent\VaahCms\Models\Permission;
 use WebReinvent\VaahCms\Models\User;
@@ -30,7 +31,6 @@ class RoleBase extends Model {
         'uuid',
         'name',
         'slug',
-        'type',
         'details',
         'count_users',
         'count_permissions',
@@ -458,6 +458,9 @@ class RoleBase extends Model {
                 $q->where('first_name', 'LIKE', '%' . $request->q . '%')
                     ->orWhere('middle_name', 'LIKE', '%' . $request->q . '%')
                     ->orWhere('last_name', 'LIKE', '%' . $request->q . '%')
+                    ->orWhere(DB::raw('concat(first_name," ",middle_name," ",last_name)'), 'like', '%' . $request->q . '%')
+                    ->orWhere(DB::raw('concat(first_name," ",last_name)'), 'like', '%' . $request->q . '%')
+                    ->orWhere('display_name', 'like', '%' . $request->q . '%')
                     ->orWhere('email', 'LIKE', '%' . $request->q .'%');
             });
         } else {

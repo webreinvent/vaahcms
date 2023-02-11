@@ -68,13 +68,20 @@ onMounted(async () => {
                 </template>
 
                 <template #icons>
-                    <Button label="Create"
-                            icon="pi pi-plus"
-                            @click="store.toForm()"
-                            v-if="store.hasPermission('can-create-registrations')"
-                            data-testid="register-to_create_form"
-                            class="p-button-sm"
-                    />
+                    <div class="p-inputgroup">
+                        <Button class="p-button-sm"
+                                label="Create"
+                                icon="pi pi-plus"
+                                @click="store.toForm()"
+                                v-if="store.hasPermission('can-create-registrations')"
+                        />
+
+                        <Button class="p-button-sm"
+                                icon="pi pi-refresh"
+                                :loading="store.is_btn_loading"
+                                @click="store.sync()"
+                        />
+                    </div>
                 </template>
 
                 <Actions/>

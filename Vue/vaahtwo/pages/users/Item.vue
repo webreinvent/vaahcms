@@ -43,6 +43,8 @@ onMounted(async () => {
         }, { deep: true }
     )*/
 
+    await store.getItemMenu();
+
 });
 
 //--------toggle item menu
@@ -74,14 +76,14 @@ const toggleItemMenu = (event) => {
                     <Button label="Edit"
                             @click="store.toEdit(store.item)"
                             icon="pi pi-pencil"
+                            class="p-button-sm"
                     />
 
                     <!--item_menu-->
-                    <Button
-                        type="button"
-                        @click="toggleItemMenu"
-                        icon="pi pi-angle-down"
-                        aria-haspopup="true"
+                    <Button class="p-button-sm"
+                            @click="toggleItemMenu"
+                            icon="pi pi-angle-down"
+                            aria-haspopup="true"
                     />
 
                     <Menu ref="item_menu_state"
@@ -90,7 +92,7 @@ const toggleItemMenu = (event) => {
                     />
                     <!--/item_menu-->
 
-                    <Button class="p-button-primary"
+                    <Button class="p-button-sm"
                             icon="pi pi-times"
                             @click="store.toList()"
                     />

@@ -30,21 +30,22 @@ const useVaah = vaah();
             <Column field="name"
                     header="Name"
                     :sortable="true"
-                    >
-                <template #body="prop">
-                    {{ prop.data.name }}
-                </template>
-            </Column>
-
-             <Column field="email"
-                    header="Email"
-                    :sortable="true">
+            >
                 <template #body="prop">
                     <Badge v-if="prop.data.deleted_at"
                            value="Trashed"
                            severity="danger"
                     />
 
+                    {{ prop.data.name }}
+                </template>
+            </Column>
+
+             <Column field="email"
+                    header="Email"
+                    :sortable="true"
+             >
+                <template #body="prop">
                     {{ prop.data.email }}
                 </template>
             </Column>
@@ -54,11 +55,6 @@ const useVaah = vaah();
                     :sortable="false"
              >
                 <template #body="prop">
-                    <Badge v-if="prop.data.deleted_at"
-                           value="Trashed"
-                           severity="danger"
-                    />
-
                     <Tag class="mr-2" severity="success"  v-if="prop.data.status">
                         {{ prop.data.status }}
                     </Tag>
@@ -68,7 +64,8 @@ const useVaah = vaah();
              <Column field="updated_at" header="Updated"
                      v-if="store.isViewLarge()"
                      style="width:150px;"
-                     :sortable="true">
+                     :sortable="true"
+             >
                  <template #body="prop">
                      {{ useVaah.ago(prop.data.updated_at) }}
                  </template>
@@ -79,12 +76,7 @@ const useVaah = vaah();
                     v-if="store.isViewLarge()"
                     :sortable="true"
              >
-                <template #body="prop"  >
-                    <Badge v-if="prop.data.deleted_at"
-                           value="Trashed"
-                           severity="danger"
-                    />
-
+                <template #body="prop">
                     <Tag severity="primary"
                          class="mr-2"
                          v-if="prop.data.gender && prop.data.gender=='m'"

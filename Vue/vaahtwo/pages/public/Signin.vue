@@ -76,7 +76,7 @@ onMounted(async () => {
                                     data-testid="signin-generate_otp_btn"
                                     label="Generate OTP"
                                     class="mb-5"
-                                    :loading="auth.is_btn_loading"
+                                    :loading="auth.is_otp_btn_loading"
                                     @click="auth.generateOTP()" />
                                 <div class="p-float-label field">
                                     <InputText

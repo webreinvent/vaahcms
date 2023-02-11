@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Str;
+use WebReinvent\VaahCms\Entities\Notification;
 use WebReinvent\VaahCms\Entities\Setting;
 use WebReinvent\VaahCms\Jobs\ProcessMails;
 use WebReinvent\VaahCms\Jobs\ProcessNotifications;
@@ -1142,14 +1143,14 @@ class UserBase extends Authenticatable
             $inputs['username'] = Str::slug($inputs['email']);
         }
 
-        if ($inputs['is_active'] == '1') {
+        if ($inputs['is_active'] === '1' || $inputs['is_active'] === 1 ) {
             $inputs['is_active'] = 1;
         } else {
             $inputs['is_active'] = 0;
         }
 
         $inputs['created_ip'] = request()->ip();
-//        dd($inputs['meta']);
+
         $reg = new static();
         $reg->fill($inputs);
         $reg->save();

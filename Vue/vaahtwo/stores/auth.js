@@ -36,6 +36,7 @@ export const useAuthStore = defineStore({
             max_attempts: 5,
             is_password_disabled: null,
         },
+        is_otp_btn_loading: false,
     }),
     getters: {},
     actions: {
@@ -147,7 +148,7 @@ export const useAuthStore = defineStore({
         },
         //-----------------------------------------------------------------------
         generateOTP: function () {
-            this.is_btn_loading = true;
+            this.is_otp_btn_loading = true;
 
             let params = {
                 params: this.sign_in_items,

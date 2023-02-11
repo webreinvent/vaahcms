@@ -73,13 +73,6 @@ const toggleFormMenu = (event) => {
                             @click="store.itemAction('create-and-new')"
                     />
 
-                    <Button v-if="store.item && store.item.id"
-                            class="p-button-sm"
-                            icon="pi pi-eye"
-                            v-tooltip.top="'View'"
-                            @click="store.toView(store.item)"
-                    />
-
                     <!--form_menu-->
                     <Button class="p-button-sm"
                             icon="pi pi-angle-down"
@@ -94,6 +87,12 @@ const toggleFormMenu = (event) => {
                     />
                     <!--/form_menu-->
 
+                    <Button v-if="store.item && store.item.id"
+                            class="p-button-sm"
+                            icon="pi pi-eye"
+                            v-tooltip.top="'View'"
+                            @click="store.toView(store.item)"
+                    />
 
                     <Button class="p-button-sm"
                             icon="pi pi-times"

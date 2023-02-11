@@ -70,6 +70,7 @@ export const useRegistrationStore = defineStore({
         item_status:null,
         meta_content:null,
         display_meta_modal:false,
+        is_btn_loading: false,
 
         gender_options: [
             {name:'Male',value:'m',icon: ''},
@@ -209,6 +210,8 @@ export const useRegistrationStore = defineStore({
             {
                 this.list = data;
             }
+
+            this.is_btn_loading = false;
         },
         //---------------------------------------------------------------------
 
@@ -375,6 +378,11 @@ export const useRegistrationStore = defineStore({
                     options.params = item;
                     ajax_url += '/'+item.id
                     break;
+                case 'save-and-new':
+                    options.method = 'PUT';
+                    options.params = item;
+                    ajax_url += '/'+item.id
+                    break;
                 /**
                  * Delete a record, hence method is `DELETE`
                  * and no need to send entire `item` object
@@ -429,6 +437,8 @@ export const useRegistrationStore = defineStore({
                     break;
                 case 'save-and-new':
                     this.setActiveItemAsEmpty();
+                    this.route.params.id = null;
+                    this.$router.push({name: 'registrations.form'});
                     break;
                 case 'create-and-close':
                 case 'save-and-close':
@@ -880,6 +890,15 @@ export const useRegistrationStore = defineStore({
                         }
                     },
                     {
+                        label: 'Save & New',
+                        icon: 'pi pi-plus',
+                        command: () => {
+
+                            this.itemAction('save-and-new');
+
+                        }
+                    },
+                    {
                         label: 'Trash',
                         icon: 'pi pi-times',
                         command: () => {
@@ -1007,7 +1026,13 @@ export const useRegistrationStore = defineStore({
         openModal(item){
             this.meta_content = JSON.stringify(item,null,2);
             this.display_meta_modal=true;
-        }
+        },
+        //---------------------------------------------------------------------
+        async sync() {
+            this.is_btn_loading = true;
+
+            await this.getList();
+        },
         //---------------------------------------------------------------------
     }
 });

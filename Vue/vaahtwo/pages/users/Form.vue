@@ -54,13 +54,21 @@ const toggleFormMenu = (event) => {
 
             <template #icons>
                 <div class="p-inputgroup">
+                    <Button v-if="store.item && store.item.id"
+                            class="p-button-sm"
+                            :label=" '#' + store.item.id "
+                            @click="useVaah.copy(store.item.id)"
+                    />
+
                     <Button label="Save"
+                            class="p-button-sm"
                             v-if="store.item && store.item.id && store.hasPermission('can-update-users')"
                             @click="store.itemAction('save')"
                             icon="pi pi-save"
                     />
 
                     <Button label="Create & New"
+                            class="p-button-sm"
                             v-else
                             @click="store.itemAction('create-and-new')"
                             icon="pi pi-save"
@@ -69,7 +77,7 @@ const toggleFormMenu = (event) => {
 
 
                     <!--form_menu-->
-                    <Button type="button"
+                    <Button class="p-button-sm"
                             @click="toggleFormMenu"
                             icon="pi pi-angle-down"
                             aria-haspopup="true"
@@ -89,10 +97,10 @@ const toggleFormMenu = (event) => {
                             @click="store.toView(store.item)"
                     />
 
-                    <Button class="p-button-primary"
+                    <Button class="p-button-sm"
                             icon="pi pi-times"
-                            @click="store.toList()">
-                    </Button>
+                            @click="store.toList()"
+                    />
                 </div>
 
 
@@ -325,9 +333,10 @@ const toggleFormMenu = (event) => {
                               :options="store.status_options"
                               optionLabel="label"
                               optionValue="value"
-                              id="country-code"
+                              id="account-status"
                               name="account-status"
                               data-testid="account-status"
+                              @change="store.setIsActiveStatus"
                     />
                 </VhField>
 
