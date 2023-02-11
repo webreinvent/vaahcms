@@ -112,6 +112,13 @@ const toggleFormMenu = (event) => {
                          style="border-radius: 50%"
                     >
 
+                    <div v-if="store.item.avatar_url">
+                        <Button class="p-button-sm w-max"
+                                data-testid="profile-save"
+                                @click="store.removeAvatar"
+                                label="Remove"></Button>
+                    </div>
+
                     <div class="w-max">
                         <FileUploader placeholder="Upload Avatar"
                                       :is_basic="true"
@@ -121,6 +128,8 @@ const toggleFormMenu = (event) => {
                     </div>
 
                 </div>
+
+
 
                 <VhField label="Email">
                     <InputText class="w-full"

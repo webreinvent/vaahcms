@@ -1,13 +1,22 @@
 let routes= [];
 let routes_list= [];
 
+import LayoutBackend from "../layouts/Backend.vue";
 import Profile from '../pages/profile/Profile.vue'
 
 routes_list = {
-    path: '/vaah/profile',
-    name: 'profile',
-    component: Profile,
+
+    path: '/vaah/users/',
+    component: LayoutBackend,
     props: true,
+    children: [
+        {
+            path: '/vaah/profile',
+            name: 'profile',
+            component: Profile,
+            props: true,
+        }
+    ]
 };
 
 routes.push(routes_list);

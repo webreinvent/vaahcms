@@ -293,7 +293,7 @@ class UsersController extends Controller
 
     }
     //----------------------------------------------------------
-    public function storeProfile(Request $request)
+    public function storeAvatar(Request $request)
     {
         if(!\Auth::user()->hasPermission('can-update-users'))
         {
@@ -346,6 +346,40 @@ class UsersController extends Controller
 
 
         $response = User::removeAvatar($request->user_id);
+        return response()->json($response);
+    }
+    //----------------------------------------------------------
+    public function storeProfile(Request $request)
+    {
+        $response = User::storeProfile($request);
+        return response()->json($response);
+    }
+    //----------------------------------------------------------
+    public function storeProfilePassword(Request $request)
+    {
+        $response = User::storePassword($request);
+
+        if($response['success'] == 'true')
+        {
+            \Auth::logout();
+
+            $response['data']['redirect_url'] = route('vh.backend');
+        }
+
+        return response()->json($response);
+    }
+
+
+    //----------------------------------------------------------
+    public function storeProfileAvatar(Request $request)
+    {
+        $response = User::storeAvatar($request);
+        return response()->json($response);
+    }
+    //----------------------------------------------------------
+    public function removeProfileAvatar(Request $request)
+    {
+        $response = User::removeAvatar();
         return response()->json($response);
     }
 
