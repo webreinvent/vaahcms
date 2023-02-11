@@ -294,14 +294,6 @@ class UsersController extends Controller
     }
     public function storeProfile(Request $request)
     {
-        $response = User::storeProfile($request);
-        return response()->json($response);
-    }
-
-    //----------------------------------------------------------
-    public function storeAvatar(Request $request)
-    {
-
         if(!\Auth::user()->hasPermission('can-update-users'))
         {
             $response['status'] = 'failed';
