@@ -13,6 +13,7 @@ import media from "./vue-routes-media";
 import taxonomies from "./vue-routes-taxonomies";
 import modules from "./vue-routes-modules";
 import themes from "./vue-routes-themes";
+import profile from "./vue-routes-profile";
 
 routes = routes.concat(ui);
 routes = routes.concat(public_routes);
@@ -27,5 +28,6 @@ routes = routes.concat(media);
 routes = routes.concat(taxonomies);
 routes = routes.concat(modules);
 routes = routes.concat(themes);
+routes = routes.concat(profile);
 
 export default routes;

@@ -2,12 +2,12 @@
 Route::group(
     [
         'prefix' => 'backend/vaah/profile',
-        'namespace'  => 'WebReinvent\VaahCms\Http\Controllers',
+        'namespace'  => 'WebReinvent\VaahCms\Http\Controllers\Backend',
         'middleware' => ['web', 'has.backend.access'],
     ],
     function () {
         //---------------------------------------------------------
-        Route::post('/', 'UsersController@getProfile')
+        Route::post('/profile', 'UsersController@getProfile')
             ->name('backend.vaah.profile');
         //---------------------------------------------------------
         Route::post('/assets', 'UsersController@getAssets')
