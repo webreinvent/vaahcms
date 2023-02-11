@@ -292,6 +292,7 @@ class UsersController extends Controller
         return response()->json($response);
 
     }
+    //----------------------------------------------------------
     public function storeProfile(Request $request)
     {
         if(!\Auth::user()->hasPermission('can-update-users'))
