@@ -348,6 +348,33 @@ export const useUserStore = defineStore({
             }
         },
         //---------------------------------------------------------------------
+        removeAvatar() {
+
+            let option = {
+                params: {
+                    user_id: this.item.id
+                },
+                method: 'post'
+            };
+
+            let url = ajax_url+'/avatar/remove';
+
+            vaah().ajax(
+                url,
+                this.removeAvatarAfter,
+                option
+            );
+
+        },
+        //---------------------------------------------------------------------
+        removeAvatarAfter(data, res)
+        {
+            if(data){
+                this.item.avatar = data.avatar;
+                this.item.avatar_url = data.avatar_url;
+            }
+        },
+        //---------------------------------------------------------------------
         isListActionValid()
         {
 
