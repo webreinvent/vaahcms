@@ -151,9 +151,15 @@ class User extends UserBase
         }
 
         $items_id = collect($inputs['items'])->pluck('id')->toArray();
-        self::whereIn('id', $items_id)->forceDelete();
 
+        foreach($items_id as $id) {
+            $item = self::query()->where('id', $id)->withTrashed()->first();
 
+            if ($item) {
+                $item->roles()->detach();
+                $item->forceDelete();
+            }
+        }
 
         $response['success'] = true;
         $response['data'] = true;
