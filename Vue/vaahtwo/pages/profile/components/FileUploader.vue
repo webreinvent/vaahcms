@@ -1,14 +1,14 @@
 <script setup>
 import {reactive, ref, watch } from 'vue';
 import {vaah} from '../../../vaahvue/pinia/vaah'
-import { useUserStore } from '../../../stores/store-users'
+import { useProfileStore } from '../../../stores/store-profile'
 import axios from 'axios';
 /**----------------------
  * Props
  */
 
 const upload_refs = ref([])
-const store = useUserStore();
+const store = useProfileStore();
 
 const temp_setter = ref(store.reset_uploader);
 

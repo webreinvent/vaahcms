@@ -349,4 +349,18 @@ class UsersController extends Controller
         return response()->json($response);
     }
 
+
+    //----------------------------------------------------------
+    public function storeProfileAvatar(Request $request)
+    {
+        $response = User::storeAvatar($request);
+        return response()->json($response);
+    }
+    //----------------------------------------------------------
+    public function removeProfileAvatar(Request $request)
+    {
+        $response = User::removeAvatar();
+        return response()->json($response);
+    }
+
 }

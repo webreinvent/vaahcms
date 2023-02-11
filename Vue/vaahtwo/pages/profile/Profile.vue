@@ -36,7 +36,7 @@ onMounted(async () => {
         <div class="col-5">
             <Card>
                 <template #content>
-                    <div class="flex">
+                    <div class="field mb-4 flex justify-content-between align-items-center">
                         <Avatar :image="store.profile.avatar"
                                 v-if="store.profile"
                                 class="mr-3"
