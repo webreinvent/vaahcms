@@ -147,6 +147,7 @@ const toggleFormMenu = (event) => {
                                toggleMask
                                name="register-password"
                                data-testid="register-password"
+                               inputClass="w-full"
                     />
                 </VhField>
 
@@ -157,6 +158,7 @@ const toggleFormMenu = (event) => {
                                toggleMask
                                name="register-password"
                                data-testid="register-password"
+                               inputClass="w-full"
                     />
                 </VhField>
 
@@ -298,6 +300,7 @@ const toggleFormMenu = (event) => {
                                   optionLabel="name"
                                   name="account-country"
                                   data-testid="register-country"
+                                  inputClass="w-full"
                     />
                 </VhField>
 
@@ -342,6 +345,7 @@ const toggleFormMenu = (event) => {
                                   :maxlength="custom_field.maxlength"
                                   v-model="store.item.meta[custom_field.slug]"
                                   toggleMask
+                                  inputClass="w-full"
                         />
 
                         <InputText v-else
