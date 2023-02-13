@@ -322,6 +322,7 @@ export const vaah = defineStore({
             if(typeof str === 'string' )
             {
                 str = str.replace(/_/g, " ");
+                str = str.replace(/-/g, " ");
                 str = this.toUpperCaseWords(str);
                 return str;
             }
