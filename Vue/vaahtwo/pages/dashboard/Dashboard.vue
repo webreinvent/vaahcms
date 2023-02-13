@@ -21,12 +21,14 @@ const key = ref();
         <div class="col-12 md:col-8">
             <Card>
                 <template #content>
-                    <h5 class="text-xl font-semibold">Welcome to Vaah<b>cms</b></h5>
+                    <h5 class="text-xl font-semibold mb-1">Welcome to Vaah<b>Cms</b></h5>
                     <p>We've assembled some links to get you started:</p>
                     <div class="grid mt-4">
                         <div class="col-12 md:col-4">
-                            <h6 class="font-semibold mb-4">Get Started</h6>
-                            <Button @click="store.goToLink(root.base_url + '#/vaah/themes/')">
+                            <h6 class="font-semibold mb-2 text-sm">Get Started</h6>
+                            <Button @click="store.goToLink(root.base_url + '#/vaah/themes/')"
+                                    class="p-button-sm is-light"
+                            >
                                 <span v-if="store.dashboard_items && store.dashboard_items.success && store.dashboard_items.success.vaahcms && store.dashboard_items.success.vaahcms.has_activated_theme">
                                      Go To Theme
                                 </span>
@@ -41,7 +43,7 @@ const key = ref();
                         </div>
 
                         <div class="col-12 md:col-4">
-                            <h6 class="font-semibold mb-4">Next Steps</h6>
+                            <h6 class="font-semibold mb-2 ml-5 text-sm">Next Steps</h6>
                             <ul class="links-list">
                                 <template v-if="store && store.dashboard_items && store.dashboard_items.success"
                                           v-for="module in store.dashboard_items.success"
@@ -61,7 +63,7 @@ const key = ref();
                         </div>
 
                         <div class="col-12 md:col-4">
-                            <h6 class="font-semibold mb-4">More Actions</h6>
+                            <h6 class="font-semibold mb-2 ml-5 text-sm">More Actions</h6>
                             <ul class="links-list">
                                 <template v-if="store && store.dashboard_items && store.dashboard_items.success"
                                           v-for="module in store.dashboard_items.success"
@@ -220,5 +222,11 @@ const key = ref();
         </div>
     </div>
 </template>
+
+<style scoped>
+ul {
+    list-style-type: none;
+}
+</style>
 
 

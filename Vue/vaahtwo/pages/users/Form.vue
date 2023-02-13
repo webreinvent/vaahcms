@@ -137,13 +137,12 @@ const toggleFormMenu = (event) => {
 
                 </div>
 
-
-
                 <VhField label="Email">
                     <InputText class="w-full"
                                v-model="store.item.email"
                                name="account-email"
                                data-testid="account-email"
+                               type="email"
                     />
                 </VhField>
 
