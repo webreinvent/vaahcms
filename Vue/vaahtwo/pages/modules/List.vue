@@ -55,9 +55,11 @@ onMounted(async () => {
                         <h5 class="font-semibold text-lg">
                             Modules
                             <Badge v-if="store.list && store.list.total > 0"
-                                   :value="store.list.total">
-                            </Badge>
+                                   :value="store.list.total"
+                            />
+
                         </h5>
+
                         <div class="p-inputgroup justify-content-end">
                             <Button class="p-button-sm"
                                     tag="router-link"
@@ -65,22 +67,25 @@ onMounted(async () => {
                                     icon="pi pi-plus"
                                     label="Install"
                                     data-testid="modules-list-action-install"
-                                    v-if="store.hasPermission('can-install-theme')">
-                            </Button>
+                                    v-if="store.hasPermission('can-install-theme')"
+                            />
+
                             <Button class="p-button-sm"
                                     :loading="store.is_fetching_updates"
                                     @click="store.checkUpdate()"
                                     icon="pi pi-download"
                                     label="Check Updates"
                                     data-testid="modules-list-action-check_updates"
-                                    v-if="store.hasPermission('can-update-theme')">
-                            </Button>
+                                    v-if="store.hasPermission('can-update-theme')"
+                            />
+
                             <Button class="p-button-sm"
                                     @click="store.sync()"
                                     :loading="store.is_btn_loading"
                                     data-testid="modules-list-action-refresh"
-                                    icon="pi pi-refresh">
-                            </Button>
+                                    icon="pi pi-refresh"
+                            />
+
                         </div>
                     </div>
                 </template>

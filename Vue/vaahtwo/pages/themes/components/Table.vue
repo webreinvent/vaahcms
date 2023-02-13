@@ -73,8 +73,8 @@ const toggle = ref();
                     </div>
                 </div>
             </div>
+            <Divider />
         </div>
-        <Divider />
 
         <!--paginator-->
         <Paginator v-model:rows="store.query.rows"

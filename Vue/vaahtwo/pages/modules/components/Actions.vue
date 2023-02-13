@@ -40,8 +40,8 @@ const toggleBulkMenuState = (event) => {
                           optionLabel="name"
                           optionValue="value"
                           data-testid="modules-actions-status-dropdown"
-                          placeholder="Select a filter">
-                </Dropdown>
+                          placeholder="Select a filter"
+                />
             </div>
             <!--/left-->
 
@@ -53,21 +53,22 @@ const toggleBulkMenuState = (event) => {
                                @keyup.enter.native="store.delayedSearch()"
                                @keyup.13="store.getList()"
                                data-testid="modules-actions-search"
-                               placeholder="Search"/>
-                    <Button
-                        type="button"
-                        class="p-button-sm"
-                        data-testid="modules-actions-search-filters"
-                        @click="store.delayedSearch()">
-                        Filters
-                    </Button>
-                    <Button
-                        type="button"
-                        icon="pi pi-filter-slash"
-                        data-testid="modules-actions-reset-filters"
-                        class="p-button-sm"
-                        label="Reset"
-                        @click="store.resetQuery()" />
+                               placeholder="Search"
+                               class="p-inputtext-sm"
+                    />
+
+                    <Button class="p-button-sm"
+                            label="Filters"
+                            data-testid="modules-actions-search-filters"
+                            @click="store.delayedSearch()"
+                    />
+
+                    <Button class="p-button-sm"
+                            icon="pi pi-filter-slash"
+                            data-testid="modules-actions-reset-filters"
+                            label="Reset"
+                            @click="store.resetQuery()"
+                    />
                 </div>
             </div>
 

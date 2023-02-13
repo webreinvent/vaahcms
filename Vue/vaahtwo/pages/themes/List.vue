@@ -61,23 +61,26 @@ onMounted(async () => {
                                     icon="pi pi-plus"
                                     class="p-button-sm"
                                     data-testid="themes-list-install"
-                                    label="Install">
-                            </Button>
+                                    label="Install"
+                            />
+
                             <Button :loading="store.is_fetching_updates"
                                     v-if="store.hasPermission('can-update-theme')"
                                     @click="store.checkUpdate()"
                                     icon="pi pi-download"
                                     class="p-button-sm"
                                     data-testid="themes-list-check_updated"
-                                    label="Check Updates">
-                            </Button>
+                                    label="Check Updates"
+                            />
+
                             <Button type="is-light"
                                     @click="store.sync()"
                                     :loading="store.is_btn_loading"
                                     class="p-button-sm"
                                     data-testid="themes-list-refresh"
-                                    icon="pi pi-refresh">
-                            </Button>
+                                    icon="pi pi-refresh"
+                            />
+
                         </div>
                     </div>
                 </template>
