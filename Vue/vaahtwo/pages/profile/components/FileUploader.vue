@@ -64,11 +64,11 @@ const props = defineProps({
 });
 
 
-watch(store.reset_uploader, async (new_val, old_val) => {
-    console.log('watch',new_val);
-    upload_refs.value.files = [];
-    upload_refs.value.uploadedFiles = [];
-})
+    // watch(store.reset_uploader, async (new_val, old_val) => {
+    //     // console.log('watch',new_val);
+    //     upload_refs.value.files = [];
+    //     upload_refs.value.uploadedFiles = [];
+    // })
 
 /**----------------------
  * Data
@@ -79,7 +79,10 @@ const emit = defineEmits();
  * Methods
  */
 function uploadFile(e){
-
+    if(upload_refs.value.files[0]['size'] > props.maxFileSize){
+        vaah().toastErrors(['Invalid. File size should be smaller than 200kb']);
+        return;
+    }
     let uploaded_files = upload_refs.value.files;
 
     upload_refs.value.files = [];
@@ -107,12 +110,12 @@ function removeFile(e){
 }
 
 function selectFile (data){
-
     let temp_file = upload_refs.value.files[upload_refs.value.files.length-1];
     // store.item[props.store_label] = null;
     upload_refs.value.files = [];
     upload_refs.value.uploadedFiles = [];
     upload_refs.value.files[0] = temp_file;
+
 
 }
 
