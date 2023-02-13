@@ -224,7 +224,7 @@ function vh_block($block_slug = null)
 function vh_location_blocks($location_slug = null)
 {
 
-    $data = \WebReinvent\VaahCms\Entities\ThemeLocation::getLocationData(
+    $data = \WebReinvent\VaahCms\Models\ThemeLocation::getLocationData(
         $location_slug,
         'true',
     null,'block');
@@ -235,7 +235,7 @@ function vh_location_blocks($location_slug = null)
 function vh_location($location_slug, $html=false, $type='bulma')
 {
 
-    $data = \WebReinvent\VaahCms\Entities\ThemeLocation::getLocationData($location_slug, $html, $type,
+    $data = \WebReinvent\VaahCms\Models\ThemeLocation::getLocationData($location_slug, $html, $type,
         'menu');
 
 
