@@ -158,18 +158,18 @@ const toggleItemMenu = (event) => {
                                 <template v-else-if="column === 'bio' && !store.isHidden(column)">
                                     <tr>
                                         <td style="font-weight:bold">{{vaah().toLabel(column)}}</td>
-                                        <td><span v-html="value"></span></td>
+                                        <td>
+                                            <Button class="p-button-secondary p-button-outlined p-button-rounded p-button-sm"
+                                                    label="View"
+                                                    icon="pi pi-eye"
+                                                    @click="store.displayBioModal(value)"
+                                                    v-if="value"
+                                            />
+                                        </td>
                                     </tr>
                                 </template>
-<!--                                <template v-else-if="column === 'meta'">-->
-<!--                                    <template v-for="(custom_fields,index) in value">-->
-<!--                                        <VhViewRow :label="index"-->
-<!--                                                   :value="custom_fields"-->
-<!--                                                   v-if="!store.checkHidden(index)"-->
-<!--                                        />-->
-<!--                                    </template>-->
-<!--                                </template>-->
-                                <template v-else-if="column === 'meta'">
+
+                                <template v-else-if="column === 'meta' && !store.isHidden(column)">
                                     <tr>
                                         <td><b>Meta</b></td>
                                         <td v-if="value">
@@ -203,5 +203,13 @@ const toggleItemMenu = (event) => {
                 </div>
             </div>
         </Panel>
+
+        <Dialog header="Bio"
+                v-model:visible="store.display_bio_modal"
+                :breakpoints="{'960px': '75vw', '640px': '90vw'}" :style="{width: '50vw'}"
+                :modal="true"
+        >
+            <p class="m-3" v-html="store.bio_modal_data" />
+        </Dialog>
     </div>
 </template>

@@ -159,12 +159,21 @@ const toggleStatusesMenu = (event) => {
                                            data-testid="register-view_user_copy"
                                 />
                             </template>
+
                             <template v-else-if="column === 'bio'">
                                 <tr>
-                                    <td style="font-weight:bold">{{vaah().toLabel(column)}}</td>
-                                    <td><span v-html="value"></span></td>
+                                    <td style="font-weight:bold">{{ vaah().toLabel(column) }}</td>
+                                    <td>
+                                        <Button class="p-button-secondary p-button-outlined p-button-rounded p-button-sm"
+                                                label="View"
+                                                icon="pi pi-eye"
+                                                @click="store.displayBioModal(value)"
+                                                v-if="value"
+                                        />
+                                    </td>
                                 </tr>
                             </template>
+
                             <template v-else-if="column === 'meta'">
                                 <tr>
                                     <td><b>Meta</b></td>
@@ -185,9 +194,7 @@ const toggleStatusesMenu = (event) => {
                                 >
                                     <p class="m-0" v-html="'<pre>'+store.meta_content+'<pre>'"></p>
                                 </Dialog>
-
                             </template>
-
 
                             <template v-else-if="column === 'status'" >
                                 <tr>
@@ -271,6 +278,13 @@ const toggleStatusesMenu = (event) => {
             </div>
         </Panel>
 
+        <Dialog header="Bio"
+                v-model:visible="store.display_bio_modal"
+                :breakpoints="{'960px': '75vw', '640px': '90vw'}" :style="{width: '50vw'}"
+                :modal="true"
+        >
+            <p class="m-3" v-html="store.bio_modal_data" />
+        </Dialog>
     </div>
 
 </template>
