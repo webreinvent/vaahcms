@@ -47,6 +47,7 @@ onMounted(async () => {
                         <div class="w-max">
                             <FileUploader v-if="root.assets.urls"
                                           placeholder="Upload Avatar"
+                                          :maxFileSize="200000"
                                           :is_basic="true"
                                           :auto_upload="true"
                                           :uploadUrl="root.assets.urls.upload" >
@@ -131,7 +132,7 @@ onMounted(async () => {
                     </span>
                     <span class="p-float-label">
                         <AutoComplete v-model="store.profile.country"
-                                      :suggestions="store.filtered_country_codes"
+                                      :suggestions="store.filtered_country"
                                       id="country"
                                       @complete="store.searchCountry($event)"
                                       @item-select="store.setCountry($event)"
@@ -143,17 +144,22 @@ onMounted(async () => {
                         <label for="country">Country</label>
                     </span>
                     <span class="p-float-label">
-                           <Dropdown v-model="store.profile.country_calling_code"
-                                     :options="store.assets.country_code"
-                                     optionLabel='calling_code'
-                                     optionValue='calling_code'
-                                     id="country-code"
-                                     data-testid="profile-country_code"
-                                     class="w-full"/>
+                        <AutoComplete class="w-full"
+                                      v-model="store.profile.country_calling_code"
+                                      :suggestions="store.filtered_country_codes"
+                                      @complete="store.searchCountryCode($event)"
+                                      @item-select="store.setCountryCode($event)"
+                                      placeholder="Enter Your Country"
+                                      optionLabel="calling_code"
+                                      optionValue='calling_code'
+                                      name="account-country"
+                                      data-testid="register-country"
+                        />
+
                            <label for="country-code">Country Code</label>
                     </span>
                     <span class="p-float-label">
-                            <InputNumber id="phone"
+                            <InputText id="phone"
                                        class="w-full"
                                        v-model="store.profile.phone"
                                        data-testid="profile-phone"
@@ -187,14 +193,12 @@ onMounted(async () => {
                         <label for="alternate-email">Alternate Email</label>
                     </span>
                     <span class="p-float-label">
-                        <Calendar id="dob"
-                                  inputId="dateformat"
+                        <Calendar inputId="dateformat"
                                   v-model="store.profile.birth"
-                                  autocomplete="off"
                                   dateFormat="mm-dd-yy"
                                   data-testid="profile-dob"
                                   class="w-full"/>
-                        <label for="dob">Date of birth</label>
+                        <label for="dateformat">Date of birth</label>
                     </span>
                     <span class="p-float-label">
                         <Editor v-model="store.profile.bio"
