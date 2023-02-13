@@ -6,8 +6,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 use WebReinvent\VaahCms\Entities\Migration;
-use WebReinvent\VaahCms\Entities\Module;
 use WebReinvent\VaahCms\Entities\Setting;
+use WebReinvent\VaahCms\Models\Module;
 use ZanySoft\Zip\Zip;
 
 
