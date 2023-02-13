@@ -245,6 +245,7 @@ const toggleFormMenu = (event) => {
                                   optionLabel="name"
                                   name="account-country"
                                   data-testid="account-country"
+                                  inputClass="w-full"
                     />
                 </VhField>
 
