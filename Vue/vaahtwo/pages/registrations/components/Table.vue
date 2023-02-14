@@ -17,6 +17,7 @@ const useVaah = vaah();
                     v-model:selection="store.action.items"
                     stripedRows
                     responsiveLayout="scroll"
+                    :rowClass="store.rowClass"
          >
              <Column selectionMode="multiple"
                     v-if="store.isViewLarge()"
@@ -117,7 +118,7 @@ const useVaah = vaah();
                     <div class="p-inputgroup">
                         <Button class="p-button-tiny p-button-text"
                                 v-tooltip.top="'View'"
-                                @click="store.toView(prop.data)"
+                                @click="store.toView($event,prop.data)"
                                 icon="pi pi-eye"
                                 data-testid="register-table_to_view"
                         />
