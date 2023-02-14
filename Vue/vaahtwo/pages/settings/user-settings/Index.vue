@@ -99,7 +99,7 @@ onMounted(async () => {
                         </DataTable>
                     </AccordionTab>
 
-                    <AccordionTab >
+                    <AccordionTab>
                         <template #header>
                             <div class="w-full">
                                 <div>
