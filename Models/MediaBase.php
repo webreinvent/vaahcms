@@ -258,34 +258,7 @@ class MediaBase extends Model {
     }
 
     //-------------------------------------------------
-    public static function getItem($request)
-    {
 
-        if(!\Auth::user()->hasPermission('can-manage-registrations') &&
-            !\Auth::user()->hasPermission('can-update-registrations') &&
-            !\Auth::user()->hasPermission('can-create-registrations') &&
-            !\Auth::user()->hasPermission('can-read-registrations'))
-        {
-            $response['success'] = false;
-            $response['errors'][] = trans("vaahcms::messages.permission_denied");
-            return $response;
-        }
-
-        $item = static::where('id', $request->id);
-        $item->withTrashed();
-        $item->with(['createdByUser', 'updatedByUser', 'deletedByUser']);
-        $item = $item->first();
-
-        $response['success'] = true;
-        $response['data']['item'] = $item;
-
-        return $response;
-
-    }
-
-    //-------------------------------------------------
-
-    //-------------------------------------------------
     public static function postStore($request)
     {
 

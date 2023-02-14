@@ -68,18 +68,22 @@ onMounted(async () => {
                 </template>
 
                 <template #icons>
-
-                    <Button data-testid="media-list-create"
-                            @click="store.toForm()">
-                        <i class="pi pi-plus mr-2"></i>
-                        Create
-                    </Button>
-                    <Button data-testid="media-list-reload"
-                            @click="store.reload()"
-                            :loading="store.is_btn_loading"
-                            icon="pi pi-refresh"
-                            class="ml-1">
-                    </Button>
+                    <span class="p-buttonset">
+                        <Button data-testid="media-list-create"
+                                @click="store.toForm()"
+                                icon="pi pi-plus"
+                                label="Create"
+                                class="p-button-sm"
+                        >
+                        </Button>
+                        <Button data-testid="media-list-reload"
+                                @click="store.reload()"
+                                :loading="store.is_btn_loading"
+                                icon="pi pi-refresh"
+                                class="p-button-sm"
+                        >
+                        </Button>
+                    </span>
                 </template>
 
                 <Actions/>

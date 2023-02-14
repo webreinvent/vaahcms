@@ -4,13 +4,9 @@ let routes_list= [];
 import LayoutBackend from "../layouts/Backend.vue";
 import AdvancedLayout from "../pages/advanced/AdvancedLayout.vue";
 import JobList from '../pages/advanced/jobs/List.vue'
-import JobForm from '../pages/advanced/jobs/Form.vue'
-import JobItem from '../pages/advanced/jobs/Item.vue'
 import LogList from '../pages/advanced/logs/List.vue'
-import LogForm from '../pages/advanced/logs/Form.vue'
 import LogItem from '../pages/advanced/logs/Item.vue'
 import FailedJobList from '../pages/advanced/failedjobs/List.vue'
-import FailedJobItem from '../pages/advanced/failedjobs/Item.vue'
 import BatchList from '../pages/advanced/batches/List.vue'
 
 
@@ -33,12 +29,6 @@ routes_list = {
                     props: true,
                     children: [
                         {
-                            path: 'form/:id?',
-                            name: 'logs.form',
-                            component: LogForm,
-                            props: true,
-                        },
-                        {
                             path: 'view/:name?',
                             name: 'logs.view',
                             component: LogItem,
@@ -52,20 +42,6 @@ routes_list = {
                     name: 'jobs.index',
                     component: JobList,
                     props: true,
-                    children: [
-                        {
-                            path: 'form/:id?',
-                            name: 'jobs.form',
-                            component: JobForm,
-                            props: true,
-                        },
-                        {
-                            path: 'view/:id?',
-                            name: 'jobs.view',
-                            component: JobItem,
-                            props: true,
-                        }
-                    ]
                 },
                 {
 
@@ -73,14 +49,6 @@ routes_list = {
                     name: 'failedjobs.index',
                     component: FailedJobList,
                     props: true,
-                    children: [
-                        {
-                            path: 'view/:id?',
-                            name: 'faiedjobs.view',
-                            component: FailedJobItem,
-                            props: true,
-                        }
-                    ]
                 },
                 {
                     path: 'batches',

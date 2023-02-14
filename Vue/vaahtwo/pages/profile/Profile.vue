@@ -4,6 +4,7 @@ import {useRoute} from 'vue-router';
 
 import {useProfileStore} from '../../stores/store-profile'
 import { useRootStore } from "../../stores/root";
+import FileUploader from "./components/FileUploader.vue";
 
 const store = useProfileStore();
 const route = useRoute();
@@ -26,7 +27,7 @@ onMounted(async () => {
 });
 </script>
 <template>
-    <div class="grid justify-content-center is-relative profile">
+    <div v-if="root && root.assets && store.profile" class="grid justify-content-center is-relative profile">
         <div class="col-4">
             <h5 class="mb-2">Public Avatar</h5>
             <p class="text-sm">You can upload your avatar here or change it at</p>
@@ -35,18 +36,31 @@ onMounted(async () => {
         <div class="col-5">
             <Card>
                 <template #content>
-                    <div class="flex">
+                    <div class="field mb-4 flex justify-content-between align-items-center">
                         <Avatar :image="store.profile.avatar"
                                 v-if="store.profile"
                                 class="mr-3"
                                 shape="circle"
-                                size="xlarge"/>
-                        <FileUpload mode="basic"
-                                    v-if="root.assets && root.assets.urls"
-                                    accept="image/*"
-                                    @uploader="store.storeAvatar"
-                                    :url="root.assets.urls.upload" />
+                                size="xlarge">
+                        </Avatar>
+
+                        <div class="w-max">
+                            <FileUploader v-if="root.assets.urls"
+                                          placeholder="Upload Avatar"
+                                          :maxFileSize="200000"
+                                          :is_basic="true"
+                                          :auto_upload="true"
+                                          :uploadUrl="root.assets.urls.upload" >
+                            </FileUploader>
+                        </div>
                     </div>
+                </template>
+
+                <template v-if="store.profile.avatar_url" #footer>
+                    <Button class="p-button-sm w-max"
+                            data-testid="profile-save"
+                            @click="store.removeAvatar"
+                            label="Remove"></Button>
                 </template>
             </Card>
         </div>
@@ -118,7 +132,7 @@ onMounted(async () => {
                     </span>
                     <span class="p-float-label">
                         <AutoComplete v-model="store.profile.country"
-                                      :suggestions="store.filtered_country_codes"
+                                      :suggestions="store.filtered_country"
                                       id="country"
                                       @complete="store.searchCountry($event)"
                                       @item-select="store.setCountry($event)"
@@ -130,17 +144,22 @@ onMounted(async () => {
                         <label for="country">Country</label>
                     </span>
                     <span class="p-float-label">
-                           <Dropdown v-model="store.profile.country_calling_code"
-                                     :options="store.assets.country_code"
-                                     optionLabel='calling_code'
-                                     optionValue='calling_code'
-                                     id="country-code"
-                                     data-testid="profile-country_code"
-                                     class="w-full"/>
+                        <AutoComplete class="w-full"
+                                      v-model="store.profile.country_calling_code"
+                                      :suggestions="store.filtered_country_codes"
+                                      @complete="store.searchCountryCode($event)"
+                                      @item-select="store.setCountryCode($event)"
+                                      placeholder="Enter Your Country"
+                                      optionLabel="calling_code"
+                                      optionValue='calling_code'
+                                      name="account-country"
+                                      data-testid="register-country"
+                        />
+
                            <label for="country-code">Country Code</label>
                     </span>
                     <span class="p-float-label">
-                            <InputNumber id="phone"
+                            <InputText id="phone"
                                        class="w-full"
                                        v-model="store.profile.phone"
                                        data-testid="profile-phone"
@@ -174,14 +193,12 @@ onMounted(async () => {
                         <label for="alternate-email">Alternate Email</label>
                     </span>
                     <span class="p-float-label">
-                        <Calendar id="dob"
-                                  inputId="dateformat"
+                        <Calendar inputId="dateformat"
                                   v-model="store.profile.birth"
-                                  autocomplete="off"
                                   dateFormat="mm-dd-yy"
                                   data-testid="profile-dob"
                                   class="w-full"/>
-                        <label for="dob">Date of birth</label>
+                        <label for="dateformat">Date of birth</label>
                     </span>
                     <span class="p-float-label">
                         <Editor v-model="store.profile.bio"

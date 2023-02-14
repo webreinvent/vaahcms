@@ -155,36 +155,6 @@ class FailedJob extends FailedJobBase
 
     }
     //-------------------------------------------------
-    public static function getList($request)
-    {
-        $list = self::getSorted($request->filter);
-        $list->searchFilter($request->filter);
-        if(isset($request->filter['range'])){
-            $from = $request->filter['range'][0];
-            $to = $request->filter['range'][1];
-            echo $from;
-            $list->betweenDates($from,$to);
-        }
-
-
-        $rows = config('vaahcms.per_page');
-
-        if($request->has('rows'))
-        {
-            $rows = $request->rows;
-        }
-
-        $list = $list->paginate($rows);
-
-        $response['success'] = true;
-        $response['data'] = $list;
-
-        return $response;
-
-
-    }
-
-    //-------------------------------------------------
     public static function updateList($request)
     {
 
@@ -448,16 +418,7 @@ class FailedJob extends FailedJobBase
 
     }
 
-    //-------------------------------------------------
-    public static function getActiveItems()
-    {
-        $item = self::where('is_active', 1)
-            ->first();
-        return $item;
-    }
 
-    //-------------------------------------------------
-    //-------------------------------------------------
     //-------------------------------------------------
 
 

@@ -25,8 +25,7 @@ onMounted(async () => {
     /**
      * Fetch the record from the database
      */
-    if(!store.item)
-    {
+    if(route.params && route.params.id) {
         await store.getItem(route.params.id);
     }
 
@@ -76,7 +75,7 @@ const toggleItemMenu = (event) => {
 
                     <Button class="p-button-sm"
                             label="Edit"
-                            icon="pi pi-save"
+                            icon="pi pi-pencil"
                             @click="store.toEdit(store.item)"
                     />
 

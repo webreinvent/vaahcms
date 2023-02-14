@@ -19,6 +19,8 @@ let empty_states = {
             trashed: null,
             sort: null,
         },
+        from: null,
+        to: null,
     },
     action: {
         type: null,
@@ -48,6 +50,8 @@ export const useFailedJobStore = defineStore({
             delay_timer: 0 // time delay in milliseconds
         },
         route: null,
+        watch_stopper: null,
+        route_prefix: 'failedjobs.',
         view: 'large',
         show_filters: false,
         list_view_width: 12,
@@ -65,11 +69,9 @@ export const useFailedJobStore = defineStore({
         form_menu_list: [],
         failedJobModal:false,
         failedJobContent:null,
-        failedJobContentHeading:null
+        failedJobContentHeading:null,
+        dates: []
     }),
-    getters: {
-
-    },
     actions: {
         //---------------------------------------------------------------------
         async onLoad(route)
@@ -80,29 +82,9 @@ export const useFailedJobStore = defineStore({
             this.route = route;
 
             /**
-             * Update with view and list css column number
-             */
-            this.setViewAndWidth(route.name);
-
-            /**
              * Update query state with the query parameters of url
              */
             this.updateQueryFromUrl(route);
-        },
-        //---------------------------------------------------------------------
-        setViewAndWidth(route_name)
-        {
-            switch(route_name)
-            {
-                case 'failedjobs.index':
-                    this.view = 'large';
-                    this.list_view_width = 12;
-                    break;
-                default:
-                    this.view = 'small';
-                    this.list_view_width = 6;
-                    break
-            }
         },
         //---------------------------------------------------------------------
         async updateQueryFromUrl(route)
@@ -123,13 +105,18 @@ export const useFailedJobStore = defineStore({
         watchRoutes(route)
         {
             //watch routes
-            watch(route, (newVal,oldVal) =>
+            this.watch_stopper = watch(route, (newVal,oldVal) =>
                 {
+                    if(this.watch_stopper && !newVal.name.includes(this.route_prefix)){
+                        this.watch_stopper();
+
+                        return false;
+                    }
+
                     this.route = newVal;
-                    // if(newVal.params.id){
-                    //     this.getItem(newVal.params.id);
-                    // }
-                    this.setViewAndWidth(newVal.name);
+                    if(newVal.params.id){
+                        this.getItem(newVal.params.id);
+                    }
                 }, { deep: true }
             )
         },
@@ -197,30 +184,8 @@ export const useFailedJobStore = defineStore({
         {
             if(data)
             {
-                this.list = data;
+                this.list = data.list;
             }
-        },
-        //---------------------------------------------------------------------
-
-        async getItem(id) {
-            if(id){
-                await vaah().ajax(
-                    ajax_url+'/'+id,
-                    this.getItemAfter
-                );
-            }
-        },
-        //---------------------------------------------------------------------
-        async getItemAfter(data, res)
-        {
-            if(data)
-            {
-                this.item = data;
-            }else{
-                this.$router.push({name: 'failedjobs.index'});
-            }
-            await this.getItemMenu();
-            await this.getFormMenu();
         },
         //---------------------------------------------------------------------
         isListActionValid()
@@ -276,6 +241,14 @@ export const useFailedJobStore = defineStore({
             );
         },
         //---------------------------------------------------------------------
+        async updateListAfter(data) {
+            if(data)
+            {
+                this.action = vaah().clone(this.empty_action);
+                await this.getList();
+            }
+        },
+        //---------------------------------------------------------------------
         itemAction(type, item=null){
             if(!item)
             {
@@ -323,35 +296,12 @@ export const useFailedJobStore = defineStore({
             );
         },
         //---------------------------------------------------------------------
-        async itemActionAfter(data, res)
+        async itemActionAfter(data)
         {
             if(data)
             {
                 this.item = data;
                 await this.getList();
-                await this.formActionAfter();
-                this.getItemMenu();
-            }
-        },
-        //---------------------------------------------------------------------
-        async formActionAfter ()
-        {
-            switch (this.form.action)
-            {
-                case 'delete':
-                    this.item = null;
-                    this.toList();
-                    break;
-            }
-        },
-        //---------------------------------------------------------------------
-        async toggleIsActive(item)
-        {
-            if(item.is_active)
-            {
-                await this.itemAction('activate', item);
-            } else{
-                await this.itemAction('deactivate', item);
             }
         },
         //---------------------------------------------------------------------
@@ -366,47 +316,10 @@ export const useFailedJobStore = defineStore({
             await this.getList();
         },
         //---------------------------------------------------------------------
-        async getFaker () {
-            let params = {
-                model_namespace: this.model,
-                except: this.assets.fillable.except,
-            };
 
-            let url = this.base_url+'/faker';
-
-            let options = {
-                params: params,
-                method: 'post',
-            };
-
-            vaah().ajax(
-                url,
-                this.getFakerAfter,
-                options
-            );
-        },
-        //---------------------------------------------------------------------
-        getFakerAfter: function (data, res) {
-            if(data)
-            {
-                let self = this;
-                Object.keys(data.fill).forEach(function(key) {
-                    self.item[key] = data.fill[key];
-                });
-            }
-        },
-
-        //---------------------------------------------------------------------
-
-        //---------------------------------------------------------------------
         onItemSelection(items)
         {
             this.action.items = items;
-        },
-        //---------------------------------------------------------------------
-        setActiveItemAsEmpty()
-        {
-            this.item = vaah().clone(this.assets.empty_item);
         },
         //---------------------------------------------------------------------
         confirmDelete()
@@ -496,19 +409,17 @@ export const useFailedJobStore = defineStore({
             {
                 this.query.filter[key] = null;
             }
+            for(let key in this.query)
+            {
+                if (key === 'filter') continue;
+                this.query[key] = null;
+            }
             await this.updateUrlQueryString(this.query);
         },
         //---------------------------------------------------------------------
         toList()
         {
-            this.item = vaah().clone(this.assets.empty_item);
             this.$router.push({name: 'failedjobs.index'})
-        },
-        //---------------------------------------------------------------------
-        toView(item)
-        {
-            this.item = vaah().clone(item);
-            this.$router.push({name: 'failedjobs.view', params:{id:item.id}})
         },
         //---------------------------------------------------------------------
         isViewLarge()
@@ -578,44 +489,6 @@ export const useFailedJobStore = defineStore({
             ];
         },
         //---------------------------------------------------------------------
-        getItemMenu()
-        {
-            let item_menu = [];
-
-            if(this.item && this.item.deleted_at)
-            {
-
-                item_menu.push({
-                    label: 'Restore',
-                    icon: 'pi pi-refresh',
-                    command: () => {
-                        this.itemAction('restore');
-                    }
-                });
-            }
-
-            if(this.item && this.item.id && !this.item.deleted_at)
-            {
-                item_menu.push({
-                    label: 'Trash',
-                    icon: 'pi pi-times',
-                    command: () => {
-                        this.itemAction('trash');
-                    }
-                });
-            }
-
-            item_menu.push({
-                label: 'Delete',
-                icon: 'pi pi-trash',
-                command: () => {
-                    this.confirmDeleteItem('delete');
-                }
-            });
-
-            this.item_menu_list = item_menu;
-        },
-        //---------------------------------------------------------------------
         confirmDeleteItem()
         {
             this.form.type = 'delete';
@@ -627,52 +500,25 @@ export const useFailedJobStore = defineStore({
             this.itemAction('delete', this.item);
         },
         //---------------------------------------------------------------------
-        async getFormMenu()
-        {
-            let form_menu = [];
-
-            if(this.item && this.item.id)
-            {
-                form_menu = [
-                    {
-                        label: 'Delete',
-                        icon: 'pi pi-trash',
-                        command: () => {
-                            this.confirmDeleteItem('delete');
-                        }
-                    },
-                ];
-
-            } else{
-                form_menu = [
-                    {
-                        label: 'Reset',
-                        icon: 'pi pi-refresh',
-                        command: () => {
-                            this.setActiveItemAsEmpty();
-                        }
-                    }
-                ];
-            }
-
-            form_menu.push({
-                label: 'Fill',
-                icon: 'pi pi-pencil',
-                command: () => {
-                    this.getFaker();
-                }
-            },)
-
-            this.form_menu_list = form_menu;
-
-        },
-        //---------------------------------------------------------------------
         viewFailedJobsContent(content,heading)
         {
             this.failedJobContentHeading= heading;
             this.failedJobContent = `<pre class="is-size-6">`+JSON.stringify(content, null, 2)+ `</pre>`;
             this.failedJobModal=true
         },
+        setDateRange()
+        {
+            if (this.dates2.length > 0) {
+                let current_datetime = new Date(this.dates2[0]);
+                this.query.from = current_datetime.getFullYear() + "-" + (current_datetime.getMonth() + 1) + "-" + current_datetime.getDate();
+
+                current_datetime = new Date(this.dates2[1]);
+                this.query.to = current_datetime.getFullYear() + "-" + (current_datetime.getMonth() + 1) + "-" + current_datetime.getDate();
+
+                this.getList();
+            }
+        },
+        //-------------------------------------------------------
     }
 });
 

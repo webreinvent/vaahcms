@@ -81,7 +81,7 @@ const toggleItemMenu = (event) => {
                     />
                     <!--/item_menu-->
 
-                    <Button class="p-button-primary"
+                    <Button class="p-button-sm"
                             icon="pi pi-times"
                             @click="store.toList()"
                     />
@@ -126,10 +126,14 @@ const toggleItemMenu = (event) => {
                                     header="Roles"
                             >
                                 <template #body="prop">
-                                   <Button class="p-button-text text-left"
-                                           :label="prop.data.name"
-                                           @click="useVaah.copy(prop.data.slug)"
-                                   />
+                                    {{ prop.data.name }}
+
+                                    <Button class="p-button-tiny p-button-text"
+                                            data-testid="taxonomies-table-to-edit"
+                                            v-tooltip.top="'Copy Slug'"
+                                            @click="useVaah.copy(prop.data.slug)"
+                                            icon="pi pi-copy"
+                                    />
                                 </template>
                             </Column>
 

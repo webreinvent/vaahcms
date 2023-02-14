@@ -67,6 +67,8 @@ export const useRoleStore = defineStore({
             delay_timer: 0 // time delay in milliseconds
         },
         route: null,
+        watch_stopper: null,
+        route_prefix: 'roles.',
         view: 'large',
         show_filters: false,
         list_view_width: 12,
@@ -152,12 +154,18 @@ export const useRoleStore = defineStore({
         watchRoutes(route)
         {
             //watch routes
-            watch(route, (newVal,oldVal) =>
+            this.watch_stopper = watch(route, (newVal,oldVal) =>
                 {
+                    if(this.watch_stopper && !newVal.name.includes(this.route_prefix)){
+                        this.watch_stopper();
+
+                        return false;
+                    }
+
                     this.route = newVal;
-                    // if (newVal.params.id) {
-                    //     this.getItem(newVal.params.id);
-                    // }
+                    if (newVal.params.id) {
+                        this.getItem(newVal.params.id);
+                    }
                     this.setViewAndWidth(newVal.name);
                 }, { deep: true }
             )
@@ -400,6 +408,11 @@ export const useRoleStore = defineStore({
                     options.params = item;
                     ajax_url += '/'+item.id
                     break;
+                case 'save-and-new':
+                    options.method = 'PUT';
+                    options.params = item;
+                    ajax_url += '/'+item.id
+                    break;
                 /**
                  * Delete a record, hence method is `DELETE`
                  * and no need to send entire `item` object
@@ -449,6 +462,8 @@ export const useRoleStore = defineStore({
                 case 'create-and-new':
                 case 'save-and-new':
                     this.setActiveItemAsEmpty();
+                    this.route.params.id = null;
+                    this.$router.push({name: 'roles.form'});
                     break;
                 case 'create-and-close':
                 case 'save-and-close':
@@ -457,6 +472,8 @@ export const useRoleStore = defineStore({
                     break;
                 case 'save-and-clone':
                     this.item.id = null;
+                    this.route.params.id = null;
+                    this.$router.push({name: 'roles.form'});
                     break;
                 case 'trash':
                     this.item = null;
@@ -1081,6 +1098,15 @@ export const useRoleStore = defineStore({
                         command: () => {
 
                             this.itemAction('save-and-clone');
+
+                        }
+                    },
+                    {
+                        label: 'Save & New',
+                        icon: 'pi pi-plus',
+                        command: () => {
+
+                            this.itemAction('save-and-new');
 
                         }
                     },

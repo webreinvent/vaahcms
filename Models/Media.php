@@ -143,32 +143,7 @@ class Media extends MediaBase
         });
 
     }
-    //-------------------------------------------------
-//    public static function getList($request)
-//    {
-//        $list = self::getSorted($request->filter);
-//        $list->isActiveFilter($request->filter);
-//        $list->trashedFilter($request->filter);
-//        $list->searchFilter($request->filter);
-//
-//        $rows = config('vaahcms.per_page');
-//
-//        if($request->has('rows'))
-//        {
-//            $rows = $request->rows;
-//        }
-//
-//        $list = $list->paginate($rows);
-//
-//        $response['success'] = true;
-//        $response['data'] = $list;
-//
-//        return $response;
-//
-//
-//    }
-//
-//    //-------------------------------------------------
+
     public static function updateList($request)
     {
 
@@ -326,6 +301,15 @@ class Media extends MediaBase
     //-------------------------------------------------
     public static function getItem($id)
     {
+        if(!\Auth::user()->hasPermission('can-manage-registrations') &&
+            !\Auth::user()->hasPermission('can-update-registrations') &&
+            !\Auth::user()->hasPermission('can-create-registrations') &&
+            !\Auth::user()->hasPermission('can-read-registrations'))
+        {
+            $response['success'] = false;
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+            return $response;
+        }
 
         $item = self::where('id', $id)
             ->with(['createdByUser', 'updatedByUser', 'deletedByUser'])
@@ -408,16 +392,6 @@ class Media extends MediaBase
     {
         switch($type)
         {
-            case 'activate':
-                self::where('id', $id)
-                    ->withTrashed()
-                    ->update(['is_active' => 1]);
-                break;
-            case 'deactivate':
-                self::where('id', $id)
-                    ->withTrashed()
-                    ->update(['is_active' => null]);
-                break;
             case 'trash':
                 self::find($id)->delete();
                 break;
@@ -453,15 +427,6 @@ class Media extends MediaBase
 
     }
 
-    //-------------------------------------------------
-    public static function getActiveItems()
-    {
-        $item = self::where('is_active', 1)
-            ->first();
-        return $item;
-    }
-
-    //-------------------------------------------------
     //-------------------------------------------------
     //-------------------------------------------------
 

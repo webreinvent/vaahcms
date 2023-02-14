@@ -80,11 +80,6 @@ class MediaController extends Controller
         return Media::deleteList($request);
     }
     //----------------------------------------------------------
-    public function createItem(Request $request)
-    {
-        return Media::createItem($request);
-    }
-    //----------------------------------------------------------
     public function getItem(Request $request, $id)
     {
         return Media::getItem($id);
@@ -246,19 +241,38 @@ class MediaController extends Controller
         return response()->json($response);
     }
     //----------------------------------------------------------
-    public function postStore(Request $request)
+    public function isDownloadableSlugAvailable(Request $request)
     {
+        $rules = array(
+            'download_url' => 'required',
+        );
 
-        if(!\Auth::user()->hasPermission('can-update-media'))
-        {
-            $response['success'] = false;
-            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+        $validator = \Validator::make( $request->all(), $rules);
+        if ( $validator->fails() ) {
 
+            $errors             = errorsToArray($validator->errors());
+            $response['status'] = 'failed';
+            $response['errors'] = $errors;
             return response()->json($response);
         }
 
-        $response = Media::postStore($request);
+        $data = [];
+
+        $exist = Media::where('download_url', $request->download_url)->first();
+
+        if(!$exist)
+        {
+            $response['status'] = 'success';
+            $response['messages'][] = 'Url is available';
+            $response['data'] = true;
+        } else
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = 'Url is taken';
+        }
+
         return response()->json($response);
+
     }
     //----------------------------------------------------------
 

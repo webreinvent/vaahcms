@@ -163,7 +163,7 @@ const openDetailsViewModal = () => {
                         header="Email"
                 >
                     <template #body="prop">
-                        {{ prop.data.email }}l
+                        {{ prop.data.email }}
                     </template>
                 </Column>
 

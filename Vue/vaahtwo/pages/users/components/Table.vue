@@ -69,6 +69,7 @@ const useVaah = vaah();
             <Column v-if="store.isViewLarge()"
                     field="is_active"
                     header="Is Active"
+                    :sortable="false"
                     style="width:100px;"
             >
                 <template #body="prop">

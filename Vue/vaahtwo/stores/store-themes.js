@@ -50,6 +50,8 @@ export const useThemeStore = defineStore({
             delay_timer: 0 // time delay in milliseconds
         },
         route: null,
+        watch_stopper: null,
+        route_prefix: 'themes.',
         view: 'large',
         show_filters: false,
         list_view_width: 12,
@@ -134,12 +136,18 @@ export const useThemeStore = defineStore({
         watchRoutes(route)
         {
             //watch routes
-            watch(route, (newVal,oldVal) =>
+            this.watch_stopper = watch(route, (newVal,oldVal) =>
                 {
+                    if(this.watch_stopper && !newVal.name.includes(this.route_prefix)){
+                        this.watch_stopper();
+
+                        return false;
+                    }
+
                     this.route = newVal;
-                    // if(newVal.params.id){
-                    //     this.getItem(newVal.params.id);
-                    // }
+                    if(newVal.params.id){
+                        this.getItem(newVal.params.id);
+                    }
                     this.setViewAndWidth(newVal.name);
                 }, { deep: true }
             )

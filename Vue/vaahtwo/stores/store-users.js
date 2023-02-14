@@ -60,6 +60,8 @@ export const useUserStore = defineStore({
             delay_timer: 0 // time delay in milliseconds
         },
         route: null,
+        watch_stopper: null,
+        route_prefix: 'users.',
         view: 'large',
         show_filters: false,
         list_view_width: 12,
@@ -174,15 +176,24 @@ export const useUserStore = defineStore({
         watchRoutes(route)
         {
             //watch routes
-            watch(route, (newVal,oldVal) =>
+            this.watch_stopper = watch(route, (newVal,oldVal) =>
                 {
+
+                    if(this.watch_stopper && !newVal.name.includes(this.route_prefix)){
+                        this.watch_stopper();
+
+                        return false;
+                    }
+
                     this.route = newVal;
-                    // if (newVal.params.id) {
-                    //     this.getItem(newVal.params.id);
-                    // }
+                    if (newVal.params.id) {
+                        this.getItem(newVal.params.id);
+                    }
                     this.setViewAndWidth(newVal.name);
                 }, { deep: true }
             )
+
+
         },
         //---------------------------------------------------------------------
         watchStates()
@@ -308,6 +319,60 @@ export const useUserStore = defineStore({
             }
             this.getItemMenu();
             await this.getFormMenu();
+        },
+        //---------------------------------------------------------------------
+        storeAvatar(data) {
+
+            data.user_id = this.item.id;
+
+            let option = {
+                params: data,
+                method: 'post'
+            };
+
+            let url = ajax_url+'/avatar/store';
+
+            vaah().ajax(
+                url,
+                this.storeAvatarAfter,
+                option
+            );
+
+        },
+        //---------------------------------------------------------------------
+        storeAvatarAfter(data, res)
+        {
+            if(data){
+                this.item.avatar = data.avatar;
+                this.item.avatar_url = data.avatar_url;
+            }
+        },
+        //---------------------------------------------------------------------
+        removeAvatar() {
+
+            let option = {
+                params: {
+                    user_id: this.item.id
+                },
+                method: 'post'
+            };
+
+            let url = ajax_url+'/avatar/remove';
+
+            vaah().ajax(
+                url,
+                this.removeAvatarAfter,
+                option
+            );
+
+        },
+        //---------------------------------------------------------------------
+        removeAvatarAfter(data, res)
+        {
+            if(data){
+                this.item.avatar = data.avatar;
+                this.item.avatar_url = data.avatar_url;
+            }
         },
         //---------------------------------------------------------------------
         isListActionValid()
@@ -561,6 +626,11 @@ export const useUserStore = defineStore({
                     options.params = item;
                     ajax_url += '/'+item.id
                     break;
+                case 'save-and-new':
+                    options.method = 'PUT';
+                    options.params = item;
+                    ajax_url += '/'+item.id
+                    break;
                 /**
                  * Delete a record, hence method is `DELETE`
                  * and no need to send entire `item` object
@@ -608,6 +678,8 @@ export const useUserStore = defineStore({
                 case 'create-and-new':
                 case 'save-and-new':
                     this.setActiveItemAsEmpty();
+                    this.route.params.id = null;
+                    this.$router.push({name: 'users.form'});
                     break;
                 case 'create-and-close':
                 case 'save-and-close':
@@ -616,6 +688,8 @@ export const useUserStore = defineStore({
                     break;
                 case 'save-and-clone':
                     this.item.id = null;
+                    this.route.params.id = null;
+                    this.$router.push({name: 'users.form'});
                     break;
                 case 'trash':
                     this.item = null;
@@ -952,7 +1026,7 @@ export const useUserStore = defineStore({
             ];
         },
         //---------------------------------------------------------------------
-        getItemMenu()
+        async getItemMenu()
         {
             let item_menu = [];
 
@@ -981,13 +1055,6 @@ export const useUserStore = defineStore({
 
             item_menu.push({
                 label: 'Delete',
-                icon: 'pi pi-trash',
-                command: () => {
-                    this.confirmDeleteItem('delete');
-                }
-            });
-            item_menu.push({
-                label: 'Active All',
                 icon: 'pi pi-trash',
                 command: () => {
                     this.confirmDeleteItem('delete');
@@ -1067,6 +1134,15 @@ export const useUserStore = defineStore({
                         command: () => {
 
                             this.itemAction('save-and-clone');
+
+                        }
+                    },
+                    {
+                        label: 'Save & New',
+                        icon: 'pi pi-plus',
+                        command: () => {
+
+                            this.itemAction('save-and-new');
 
                         }
                     },
@@ -1161,7 +1237,15 @@ export const useUserStore = defineStore({
         openModal(item){
             this.meta_content = JSON.stringify(item,null,2);
             this.display_meta_modal=true;
-        }
+        },
+        //---------------------------------------------------------------------
+        setIsActiveStatus() {
+            if (this.item.status === 'active') {
+                this.item.is_active = 1;
+            } else {
+                this.item.is_active = 0;
+            }
+        },
         //---------------------------------------------------------------------
     }
 });

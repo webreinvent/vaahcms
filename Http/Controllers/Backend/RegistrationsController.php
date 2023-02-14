@@ -42,16 +42,17 @@ class RegistrationsController extends Controller
             $fillable, $data['fillable']['except']
         );
 
-        foreach ($fillable as $column)
-        {
+        foreach ($fillable as $column) {
             $data['empty_item'][$column] = null;
         }
 
-        $custom_fields = Setting::where('category','user_setting')
+        $custom_fields = Setting::query()->where('category','user_setting')
             ->where('label','custom_fields')->first();
 
-        foreach ($custom_fields['value'] as $custom_field) {
-            $data['empty_item']['meta'][$custom_field->slug] = null;
+        if (isset($custom_fields)) {
+            foreach ($custom_fields['value'] as $custom_field) {
+                $data['empty_item']['meta'][$custom_field->slug] = null;
+            }
         }
 
         $data['actions'] = [];
