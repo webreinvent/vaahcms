@@ -150,7 +150,6 @@ class WelcomeController extends Controller
         }
 
         $model = $request->model_namespace;
-
         $model = new $model();
 
         $table = $model->getTable();
