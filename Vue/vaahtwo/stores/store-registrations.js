@@ -79,9 +79,7 @@ export const useRegistrationStore = defineStore({
         ],
 
         filtered_country_codes: [],
-        display_bio_modal: null,
-        bio_modal_data: null,
-
+        row_active:null,
     }),
     getters: {
 
@@ -336,7 +334,7 @@ export const useRegistrationStore = defineStore({
         },
         //---------------------------------------------------------------------
         itemAction(type, item=null){
-            console.log(this.item);
+            // console.log(this.item);
 
             if(!item)
             {
@@ -635,6 +633,7 @@ export const useRegistrationStore = defineStore({
         //---------------------------------------------------------------------
         toView(item)
         {
+            this.row_active = 'is-selected';
             this.item = vaah().clone(item);
             this.$router.push({name: 'registrations.view', params:{id:item.id}})
         },
@@ -1021,7 +1020,7 @@ export const useRegistrationStore = defineStore({
         checkHidden(item)
         {
             let select_array = vaah().findInArrayByKey(this.assets.custom_fields.value, 'slug', item);
-            console.log(select_array);
+            // console.log(select_array);
             return select_array.is_hidden;
         },
         //---------------------------------------------------------------------
