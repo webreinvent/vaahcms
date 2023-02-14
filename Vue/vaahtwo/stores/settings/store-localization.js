@@ -71,7 +71,7 @@ export const useLocalizationStore = defineStore({
         name: null,
         icon_copy: "<b-icon icon='trash'></b-icon>",
         languages:null,
-        categories:[{name:'Select a Filter', value:null}],
+        categories:[],
         filterOptions:null,
         show_add_language:false,
         show_add_category:false,

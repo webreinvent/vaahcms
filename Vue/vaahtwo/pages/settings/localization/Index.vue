@@ -151,7 +151,6 @@ onMounted(async () => {
                         </Dropdown>
                         <Dropdown v-model="store.query_string.filter"
                                   :options="[
-                                       {name:'Select a Filter', value:null},
                                        {name:'Empty value', value:'empty'},
                                        {name:'Filled value', value:'filled'}
                                   ]"
