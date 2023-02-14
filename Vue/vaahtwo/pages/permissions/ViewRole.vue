@@ -227,7 +227,8 @@ const openViewModal = () => {
 
             <!--paginator-->
             <Paginator v-if="store && store.permission_roles"
-                       v-model:rows="store.permission_roles_query.rows"
+                       v-model:first="store.rolesFirstElement"
+                       :rows="store.permission_roles_query.rows"
                        :totalRecords="store.permission_roles.list.total"
                        @page="store.rolePaginate($event)"
                        :rowsPerPageOptions="store.rows_per_page"
@@ -238,3 +239,4 @@ const openViewModal = () => {
         <DynamicDialog />
     </div>
 </template>
+
