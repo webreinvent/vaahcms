@@ -17,17 +17,18 @@ const useVaah = vaah();
                     v-model:selection="store.action.items"
                     stripedRows
                     responsiveLayout="scroll"
+                    :rowClass="store.rowClass"
          >
-            <Column selectionMode="multiple"
+             <Column selectionMode="multiple"
                     v-if="store.isViewLarge()"
                     headerStyle="width: 3em"
             >
             </Column>
 
-            <Column field="id" header="ID" :style="{width: store.getIdWidth()}" :sortable="true">
-            </Column>
+             <Column field="id" header="ID" :style="{width: store.getIdWidth()}" :sortable="true">
+             </Column>
 
-            <Column field="name"
+             <Column field="name"
                     header="Name"
                     :sortable="true"
             >
@@ -109,7 +110,7 @@ const useVaah = vaah();
                 </template>
             </Column>
 
-            <Column field="actions" style="width:150px;"
+             <Column field="actions" style="width:150px;"
                     :style="{width: store.getActionWidth() }"
                     :header="store.getActionLabel()"
             >
@@ -117,7 +118,7 @@ const useVaah = vaah();
                     <div class="p-inputgroup">
                         <Button class="p-button-tiny p-button-text"
                                 v-tooltip.top="'View'"
-                                @click="store.toView(prop.data)"
+                                @click="store.toView($event,prop.data)"
                                 icon="pi pi-eye"
                                 data-testid="register-table_to_view"
                         />
@@ -163,3 +164,8 @@ const useVaah = vaah();
         <!--/paginator-->
     </div>
 </template>
+<style scoped lang="scss">
+::v-deep(.row-accessories) {
+    background-color: rgba(0,0,0,.15) !important;
+}
+</style>
