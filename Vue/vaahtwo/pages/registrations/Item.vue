@@ -140,14 +140,40 @@ const toggleStatusesMenu = (event) => {
                         <template v-for="(value, column) in store.item ">
                             <template v-if="column === 'created_by' || column === 'updated_by'"/>
 
-                            <template v-else-if="column === 'id' || column === 'uuid'|| column === 'email' ||
-                                                 column === 'username' || column === 'phone' ||
-                                                 column === 'activation_code' ||column === 'alternate_email' "
+                            <template v-else-if="column === 'id' || column === 'uuid'|| column === 'first_name' ||
+                                                 column === 'email' || column === 'username' ||
+                                                 column === 'phone' || column === 'activation_code' ||
+                                                 column === 'alternate_email'"
                             >
                                 <VhViewRow :label="column"
                                            :value="value"
-                                           :can_copy="true"
+                                           :can_copy="false"
                                            data-testid="register-view_copy"
+                                           v-if="!store.isHidden(column)"
+                                />
+                            </template>
+
+                            <template v-else-if="column === 'middle_name' || column === 'last_name'||
+                                                 column === 'website' || column === 'timezone' ||
+                                                 column === 'country_calling_code' ||column === 'title' ||
+                                                 column === 'designation'"
+                            >
+                                <VhViewRow :label="column"
+                                           :value="value"
+                                           :can_copy="false"
+                                           data-testid="register-view_copy"
+                                           v-if="!store.isHidden(column)"
+                                />
+                            </template>
+
+                            <template v-else-if="column === 'birth' || column === 'foreign_user_id' ||
+                                                 column === 'display_name'"
+                            >
+                                <VhViewRow :label="column"
+                                           :value="value"
+                                           :can_copy="false"
+                                           data-testid="register-view_copy"
+                                           v-if="!store.isHidden(column)"
                                 />
                             </template>
 
@@ -161,7 +187,7 @@ const toggleStatusesMenu = (event) => {
                             </template>
 
                             <template v-else-if="column === 'bio'">
-                                <tr>
+                                <tr v-if="!store.isHidden(column)">
                                     <td style="font-weight:bold">{{ vaah().toLabel(column) }}</td>
                                     <td>
                                         <Button class="p-button-secondary p-button-outlined p-button-rounded p-button-sm"
@@ -249,14 +275,13 @@ const toggleStatusesMenu = (event) => {
                                 </tr>
                             </template>
 
-
                             <template v-else-if="column === 'gender'">
-                                <tr>
+                                <tr v-if="!store.isHidden(column)">
                                     <td><b>Gender</b></td>
                                     <td v-if="value">
-                                        <Badge severity="primary" class="mr-2" v-if="value=='m'">Male</Badge>
-                                        <Badge severity="primary" class="mr-2" v-if="value=='f'">Female</Badge>
-                                        <Badge severity="primary" class="mr-2" v-if="value=='o'">Others</Badge>
+                                        <Tag severity="primary" value="Male" class="mr-2" v-if="value==='m'" />
+                                        <Tag severity="primary" value="Female" class="mr-2" v-else-if="value==='f'" />
+                                        <Tag severity="primary" value="Others" class="mr-2" v-else-if="value==='o'" />
                                     </td>
                                 </tr>
                             </template>

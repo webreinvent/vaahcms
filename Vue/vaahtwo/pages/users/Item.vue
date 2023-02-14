@@ -149,13 +149,13 @@ const toggleItemMenu = (event) => {
                                     />
                                 </template>
 
-                                <template v-else-if="column === 'is_active' && !store.isHidden(column)">
+                                <template v-else-if="column === 'is_active'">
                                     <VhViewRow :label="column"
                                                :value="value"
                                                type="yes-no"
                                     />
                                 </template>
-                                <template v-else-if="column === 'bio' && !store.isHidden(column)">
+                                <template v-else-if="column === 'bio' && !store.isHidden('bio')">
                                     <tr>
                                         <td style="font-weight:bold">{{vaah().toLabel(column)}}</td>
                                         <td>
@@ -169,7 +169,7 @@ const toggleItemMenu = (event) => {
                                     </tr>
                                 </template>
 
-                                <template v-else-if="column === 'meta' && !store.isHidden(column)">
+                                <template v-else-if="column === 'meta'">
                                     <tr>
                                         <td><b>Meta</b></td>
                                         <td v-if="value">
