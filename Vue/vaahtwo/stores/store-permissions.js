@@ -28,8 +28,8 @@ let empty_states = {
     },
     permission_roles_query: {
         q: null,
-        page: null,
-        rows: null,
+        page: 1,
+        rows: 20,
     }
 };
 
@@ -98,6 +98,7 @@ export const usePermissionStore = defineStore({
              */
             this.setViewAndWidth(route.name);
             this.firstElement = ((this.query.page - 1) * this.query.rows);
+            this.rolesFirstElement = ((this.permission_roles_query.page - 1) * this.permission_roles_query.rows);
 
             /**
              * Update query state with the query parameters of url
@@ -191,13 +192,16 @@ export const usePermissionStore = defineStore({
                 this.assets = data;
                 if(data.rows)
                 {
+                    if (this.urlContains('role')) {
+                        this.permission_roles_query.rows = this.permission_roles_query.rows ? parseInt(this.permission_roles_query.rows) : data.rows;
+                    }
+
                     if (!this.query.rows) {
                         this.query.rows = data.rows;
                     } else {
                         this.query.rows = parseInt(this.query.rows);
                     }
 
-                    this.permission_roles_query.rows = data.rows
                 }
 
                 if(this.route.params && !this.route.params.id){
@@ -566,6 +570,7 @@ export const usePermissionStore = defineStore({
         //---------------------------------------------------------------------
         async rolePaginate(event) {
             this.permission_roles_query.page = event.page + 1;
+            this.permission_roles_query.rows = event.rows;
             await this.getItemRoles();
         },
         //---------------------------------------------------------------------
@@ -1040,8 +1045,11 @@ export const usePermissionStore = defineStore({
         hideProgress()
         {
             this.show_progress_bar = false;
-        }
+        },
         //---------------------------------------------------------------------
+        urlContains(param) {
+            return this.route.path.includes(param);
+        }
         //---------------------------------------------------------------------
     }
 });

@@ -291,14 +291,19 @@ class PermissionBase extends Model {
                 $q->where('name', 'LIKE', '%'.$request->q.'%')
                     ->orWhere('slug', 'LIKE', '%'.$request->q.'%');
             });
-        } else
-        {
+        } else {
             $list = $item->roles();
         }
 
         $list->orderBy('pivot_is_active', 'desc');
 
-        $list = $list->paginate(config('vaahcms.per_page'));
+        $rows = config('vaahcms.per_page');
+
+        if ($request->has('rows')) {
+            $rows = $request->rows;
+        }
+
+        $list = $list->paginate($rows);
 
         foreach ($list as $role){
 
