@@ -54,7 +54,7 @@ const sidebar_menu_items = ref([
 
 onMounted(async () => {
 
-    store.getGeneralAssets();
+    store.getAssets();
 
 });
 
