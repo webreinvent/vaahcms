@@ -137,13 +137,12 @@ const toggleFormMenu = (event) => {
 
                 </div>
 
-
-
                 <VhField label="Email">
                     <InputText class="w-full"
                                v-model="store.item.email"
                                name="account-email"
                                data-testid="account-email"
+                               type="email"
                     />
                 </VhField>
 
@@ -162,6 +161,8 @@ const toggleFormMenu = (event) => {
                               id="password"
                               name="account-password"
                               data-testid="account-password"
+                              inputClass="w-full"
+                              toggleMask
                     />
                 </VhField>
 
@@ -244,6 +245,7 @@ const toggleFormMenu = (event) => {
                                   optionLabel="name"
                                   name="account-country"
                                   data-testid="account-country"
+                                  inputClass="w-full"
                     />
                 </VhField>
 
@@ -369,7 +371,6 @@ const toggleFormMenu = (event) => {
                         />
 
                         <Password v-else-if="custom_field.type === 'password'"
-                                  class="w-full"
                                   :name=" 'account-meta_'+custom_field.slug"
                                   :data-testid="'account-meta_'+custom_field.slug"
                                   :min="custom_field.min"
@@ -378,6 +379,8 @@ const toggleFormMenu = (event) => {
                                   :maxlength="custom_field.maxlength"
                                   v-model="store.item.meta[custom_field.slug]"
                                   toggleMask
+                                  class="w-full"
+                                  inputClass="w-full"
                         />
 
                         <InputText v-else

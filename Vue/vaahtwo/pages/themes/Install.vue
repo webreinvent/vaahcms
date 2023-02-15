@@ -54,22 +54,24 @@ onMounted(async () => {
                     <div class="flex justify-content-between align-items-center">
                         <h5 class="white-space-nowrap font-semibold text-lg">Install Themes</h5>
                         <div class="p-inputgroup justify-content-end w-6">
-                                <span class="p-input-icon-left">
-                                    <i class="pi pi-search" />
-                                    <InputText placeholder="Search"
-                                               class="w-full"
-                                               type="search"
-                                               icon="search"
-                                               v-model="store.q"
-                                               @input="store.delayedSearch"
-                                               data-testid="themes-install-action-search"
-                                               @keyup.enter.prevent="store.delayedSearch">
-                                    </InputText>
-                                </span>
-                            <Button class="p-button-outlined"
+                            <span class="p-input-icon-left">
+                                <i class="pi pi-search" />
+                                <InputText placeholder="Search"
+                                           class="w-full p-inputtext-sm"
+                                           type="search"
+                                           icon="search"
+                                           v-model="store.q"
+                                           @input="store.delayedSearch"
+                                           data-testid="themes-install-action-search"
+                                           @keyup.enter.prevent="store.delayedSearch"
+                                />
+                            </span>
+
+                            <Button class="p-button-sm"
                                     @click="store.closeInstallTheme()"
                                     data-testid="themes-install-action-close"
-                                    icon="pi pi-times"></Button>
+                                    icon="pi pi-times"
+                            />
                         </div>
                     </div>
                 </template>

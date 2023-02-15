@@ -54,23 +54,22 @@ const toggleBulkMenuState = (event) => {
                                    @keyup.enter.native="store.delayedSearch()"
                                    @keyup.13="store.delayedSearch()"
                                    data-testid="themes-actions-search-input"
-                                   placeholder="Search"/>
-                        <Button
-                            type="button"
-                            class="p-button-sm"
-                            data-testid="themes-actions-search-button"
-                            @click="store.delayedSearch()"
-                            label="Filter">
-                            Filters
-                        </Button>
+                                   placeholder="Search"
+                                   class="p-inputtext-sm"
+                        />
 
-                        <Button
-                            type="button"
-                            icon="pi pi-filter-slash"
-                            data-testid="themes-actions-reset-filters"
-                            class="p-button-sm"
-                            label="Reset"
-                            @click="store.resetQuery()" />
+                        <Button class="p-button-sm"
+                                data-testid="themes-actions-search-button"
+                                @click="store.delayedSearch()"
+                                label="Filters"
+                        />
+
+                        <Button class="p-button-sm"
+                                icon="pi pi-filter-slash"
+                                data-testid="themes-actions-reset-filters"
+                                label="Reset"
+                                @click="store.resetQuery()"
+                        />
                     </div>
                 </div>
             <!--/right-->

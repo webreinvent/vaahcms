@@ -119,6 +119,8 @@ export const useUserStore = defineStore({
         is_btn_loading: false,
         display_meta_modal: false,
         custom_fields_data:[],
+        display_bio_modal: null,
+        bio_modal_data: null,
     }),
     getters: {
 
@@ -1245,6 +1247,11 @@ export const useUserStore = defineStore({
             } else {
                 this.item.is_active = 0;
             }
+        },
+        //---------------------------------------------------------------------
+        async displayBioModal(item) {
+            this.display_bio_modal = true;
+            this.bio_modal_data = item;
         },
         //---------------------------------------------------------------------
     }

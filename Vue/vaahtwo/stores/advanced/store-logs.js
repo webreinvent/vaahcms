@@ -66,6 +66,7 @@ export const useLogStore = defineStore({
         form_menu_list: [],
         payloadModal:false,
         payloadContent:null,
+        is_btn_loading: false,
     }),
     getters: {
 
@@ -209,8 +210,7 @@ export const useLogStore = defineStore({
             }
         },
         //---------------------------------------------------------------------
-        async getItemAfter(data, res)
-        {
+        async getItemAfter(data, res) {
 
             if(data)
             {
@@ -450,12 +450,15 @@ export const useLogStore = defineStore({
         //---------------------------------------------------------------------
         async reload()
         {
+            this.is_btn_loading = true;
             await this.getAssets();
             await this.getList();
 
             if(this.item){
-                this.getItem(this.item.name);
+                await this.getItem(this.item.name);
             }
+
+            this.is_btn_loading = false;
         },
         //---------------------------------------------------------------------
         async getFaker () {

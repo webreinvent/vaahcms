@@ -69,7 +69,9 @@ onMounted(async () => {
 
                 <template #icons>
                     <Button icon="pi pi-refresh" @click="store.reload()"
-                            class="p-button-sm p-button-rounded p-button-text" />
+                            class="p-button-sm"
+                            :loading="store.is_btn_loading"
+                    />
                 </template>
 
 

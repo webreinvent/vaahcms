@@ -55,9 +55,23 @@ const useVaah = vaah();
                     :sortable="false"
              >
                 <template #body="prop">
-                    <Tag class="mr-2" severity="success"  v-if="prop.data.status">
-                        {{ prop.data.status }}
-                    </Tag>
+                    <Tag v-if="prop.data.status === 'email-verified' "
+                         class="mr-2"
+                         severity="success"
+                         :value="useVaah.toLabel(prop.data.status)"
+                    />
+
+                    <Tag v-else-if="prop.data.status === 'email-verification-pending' "
+                         class="mr-2"
+                         severity="danger"
+                         :value="useVaah.toLabel(prop.data.status)"
+                    />
+
+                    <Tag v-else
+                         class="mr-2"
+                         severity="info"
+                         :value="useVaah.toLabel(prop.data.status)"
+                    />
                 </template>
             </Column>
 
@@ -80,22 +94,18 @@ const useVaah = vaah();
                     <Tag severity="primary"
                          class="mr-2"
                          v-if="prop.data.gender && prop.data.gender=='m'"
-                    >
-                         Male
-                    </Tag>
+                         value="Male"
+                    />
 
                     <Tag severity="primary"
                          class="mr-2"
                          v-if="prop.data.gender && prop.data.gender=='f'"
-                    >
-                        Female
-                    </Tag>
-
+                         value="Female"
+                    />
                     <Tag severity="primary"
                          class="mr-2" v-if="prop.data.gender && prop.data.gender=='o'"
-                    >
-                        Other
-                    </Tag>
+                         value="others"
+                    />
                 </template>
             </Column>
 

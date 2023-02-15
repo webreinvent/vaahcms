@@ -33,23 +33,22 @@ onMounted(async () => {
     <div>
         <Card>
             <template #header>
-                <div class="flex">
-                    <div class="col-12 md:col-6">
-                        <h4 class=" font-semibold text-lg">User Settings</h4>
-                    </div>
+                <div class="flex justify-content-between align-items-center w-full">
+                    <h5 class=" font-semibold text-lg">User Settings</h5>
 
-                    <div class="col-12 md:col-6 flex justify-content-end">
+                    <div class="justify-content-end">
                         <Button label="Expand all"
                                 icon="pi pi-angle-double-down"
                                 data-testid="setting-tabs_expand"
                                 @click="store.expandAll"
-                                class="p-button-text p-button-secondary"
+                                class="p-button-sm mr-2"
                         />
+
                         <Button label="Collapse all"
                                 icon="pi pi-angle-double-up"
                                 data-testid="setting-tabs_close"
                                 @click="store.collapseAll"
-                                class="p-button-text p-button-secondary"
+                                class="p-button-sm"
                         />
                     </div>
                 </div>
@@ -82,7 +81,8 @@ onMounted(async () => {
                                     <InputSwitch v-model="slotProps.data.value.is_hidden"
                                                  data-testid="setting-field_is_hidden"
                                                  class="is-small"
-                                                 @input="store.storeField(slotProps.data)"/>
+                                                 @input="store.storeField(slotProps.data)"
+                                    />
                                 </template>
                             </Column>
 
@@ -92,12 +92,14 @@ onMounted(async () => {
                                               @input="store.storeField(slotProps.data)"
                                               data-testid="setting-field_to_registration"
                                               :binary="true"
-                                              class="is-small"/>
+                                              class="is-small"
+                                    />
                                 </template>
                             </Column>
                         </DataTable>
                     </AccordionTab>
-                    <AccordionTab >
+
+                    <AccordionTab>
                         <template #header>
                             <div class="w-full">
                                 <div>

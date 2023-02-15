@@ -79,6 +79,8 @@ export const useRegistrationStore = defineStore({
         ],
 
         filtered_country_codes: [],
+        display_bio_modal: null,
+        bio_modal_data: null,
 
     }),
     getters: {
@@ -1032,6 +1034,11 @@ export const useRegistrationStore = defineStore({
             this.is_btn_loading = true;
 
             await this.getList();
+        },
+        //---------------------------------------------------------------------
+        async displayBioModal(item) {
+            this.display_bio_modal = true;
+            this.bio_modal_data = item;
         },
         //---------------------------------------------------------------------
     }

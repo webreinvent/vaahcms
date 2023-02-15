@@ -149,26 +149,26 @@ const toggleItemMenu = (event) => {
                                     />
                                 </template>
 
-                                <template v-else-if="column === 'is_active' && !store.isHidden(column)">
+                                <template v-else-if="column === 'is_active'">
                                     <VhViewRow :label="column"
                                                :value="value"
                                                type="yes-no"
                                     />
                                 </template>
-                                <template v-else-if="column === 'bio' && !store.isHidden(column)">
+                                <template v-else-if="column === 'bio' && !store.isHidden('bio')">
                                     <tr>
                                         <td style="font-weight:bold">{{vaah().toLabel(column)}}</td>
-                                        <td><span v-html="value"></span></td>
+                                        <td>
+                                            <Button class="p-button-secondary p-button-outlined p-button-rounded p-button-sm"
+                                                    label="View"
+                                                    icon="pi pi-eye"
+                                                    @click="store.displayBioModal(value)"
+                                                    v-if="value"
+                                            />
+                                        </td>
                                     </tr>
                                 </template>
-<!--                                <template v-else-if="column === 'meta'">-->
-<!--                                    <template v-for="(custom_fields,index) in value">-->
-<!--                                        <VhViewRow :label="index"-->
-<!--                                                   :value="custom_fields"-->
-<!--                                                   v-if="!store.checkHidden(index)"-->
-<!--                                        />-->
-<!--                                    </template>-->
-<!--                                </template>-->
+
                                 <template v-else-if="column === 'meta'">
                                     <tr>
                                         <td><b>Meta</b></td>
@@ -203,5 +203,13 @@ const toggleItemMenu = (event) => {
                 </div>
             </div>
         </Panel>
+
+        <Dialog header="Bio"
+                v-model:visible="store.display_bio_modal"
+                :breakpoints="{'960px': '75vw', '640px': '90vw'}" :style="{width: '50vw'}"
+                :modal="true"
+        >
+            <p class="m-3" v-html="store.bio_modal_data" />
+        </Dialog>
     </div>
 </template>

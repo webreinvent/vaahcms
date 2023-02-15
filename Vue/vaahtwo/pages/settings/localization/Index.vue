@@ -32,20 +32,28 @@ onMounted(async () => {
                             label="Add Language"
                             data-testid="localization-add_language"
                             @click="store.toggleLanguageForm"
-                    ></Button>
+                            class="p-button-sm"
+                    />
+
                     <Button icon="pi pi-plus"
                             label="Add Category"
                             data-testid="localization-add_category"
                             @click="store.toggleCategoryForm"
-                    ></Button>
+                            class="p-button-sm"
+                    />
+
                     <Button label="Reset"
                             @click="store.removeQueryString"
                             data-testid="localization-reset"
-                    ></Button>
+                            class="p-button-sm"
+                    />
+
                     <Button icon="pi pi-refresh"
-                            label="Sync"
                             data-testid="localization-sync"
-                            @click="store.sync()"></Button>
+                            @click="store.sync()"
+                            class="p-button-sm"
+                            v-tooltip.top="'Sync'"
+                    />
                 </div>
             </div>
         </template>
@@ -131,7 +139,7 @@ onMounted(async () => {
                               placeholder="Select a Language" >
                     </Dropdown>
                 </div>
-                <div class="col-8">
+                <div class="col-5">
                     <div class="p-inputgroup ">
                         <Dropdown v-model="store.query_string.cat_id"
                                   :data-testid="'localization-category_filter'"
@@ -143,7 +151,6 @@ onMounted(async () => {
                         </Dropdown>
                         <Dropdown v-model="store.query_string.filter"
                                   :options="[
-                                       {name:'Select a Filter', value:null},
                                        {name:'Empty value', value:'empty'},
                                        {name:'Filled value', value:'filled'}
                                   ]"
