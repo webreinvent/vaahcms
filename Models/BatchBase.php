@@ -124,7 +124,7 @@ class BatchBase extends Model
         }
 
         if ($request->has('date_filter_by')) {
-            $data['list'] = $list->orderBy($request->filter['date_filter_by'],'desc')->paginate($rows);
+            $data['list'] = $list->orderBy($request->date_filter_by,'desc')->paginate($rows);
         } else {
             $data['list'] = $list->orderBy('created_at','desc')->paginate($rows);
         }
