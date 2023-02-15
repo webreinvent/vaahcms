@@ -31,6 +31,8 @@ let empty_states = {
 export const useTaxonomyStore = defineStore({
     id: 'taxonomies',
     state: () => ({
+        page: 1,
+        rows: 20,
         base_url: base_url,
         ajax_url: ajax_url,
         model: model_namespace,
@@ -622,7 +624,8 @@ export const useTaxonomyStore = defineStore({
             {
                 this.query.filter[key] = null;
             }
-            this.query = this.empty_query;
+            this.query.page = this.page;
+            this.query.rows = this.rows;
             await this.updateUrlQueryString(this.query);
         },
         //---------------------------------------------------------------------
