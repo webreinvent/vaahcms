@@ -53,6 +53,7 @@ onMounted(async () => {
                             @click="store.sync()"
                             class="p-button-sm"
                             v-tooltip.top="'Sync'"
+                            :loading="store.btn_is_loading"
                     />
                 </div>
             </div>
@@ -79,18 +80,20 @@ onMounted(async () => {
                                             v-model="store.new_language.name"
                                             data-testid="localization-new_language_name"
                                             placeholder="Name"
-                                        ></inputText>
+                                        />
+
                                         <inputText
                                             name="localization-language-local-code-iso-639"
                                             data-testid="localization-new_language_code"
                                             v-model="store.new_language.locale_code_iso_639"
                                             placeholder="Locale ISO 639 Code"
-                                        ></inputText>
+                                        />
+
                                         <Button @click="store.storeLanguage"
                                                 icon="pi pi-plus"
                                                 data-testid="localization-new_language_save"
                                                 label="save"
-                                        ></Button>
+                                        />
                                     </div>
                                 </div>
                             </div>
@@ -136,8 +139,9 @@ onMounted(async () => {
                               optionLabel="option_label"
                               optionValue="id"
                               @change="store.getList()"
-                              placeholder="Select a Language" >
-                    </Dropdown>
+                              placeholder="Select a Language"
+                    />
+
                 </div>
                 <div class="col-5">
                     <div class="p-inputgroup ">
