@@ -117,7 +117,8 @@ const useVaah = vaah();
         <Divider />
 
         <!--paginator-->
-        <Paginator v-model:rows="store.query.rows"
+        <Paginator v-model:first="store.firstElement"
+                   :rows="store.query.rows"
                    :totalRecords="store.list.total"
                    @page="store.paginate($event)"
                    :rowsPerPageOptions="store.rows_per_page">
