@@ -33,6 +33,8 @@ let empty_states = {
 export const useBatchStore = defineStore({
     id: 'batches',
     state: () => ({
+        page: 1,
+        rows: 20,
         dialogContent: null,
         displayDetail: false,
         displayFailedIds: false,
@@ -44,7 +46,7 @@ export const useBatchStore = defineStore({
         assets_is_fetching: true,
         app: null,
         assets: null,
-        rows_per_page: [10,20,30,50,100,500],
+        rows_per_page: [2,10,20,30,50,100,500],
         list: null,
         item: null,
         fillable:null,
@@ -72,7 +74,7 @@ export const useBatchStore = defineStore({
         list_selected_menu: [],
         list_bulk_menu: [],
         dates: [],
-        is_btn_loading: false,
+        firstElement: null,
     }),
     actions: {
         //---------------------------------------------------------------------
@@ -81,7 +83,9 @@ export const useBatchStore = defineStore({
             /**
              * Set initial routes
              */
+
             this.route = route;
+            this.firstElement = ((this.query.page - 1) * this.query.rows);
 
             /**
              * Update query state with the query parameters of url
@@ -166,7 +170,11 @@ export const useBatchStore = defineStore({
                 this.assets = data;
                 if(data.rows)
                 {
-                    this.query.rows = data.rows;
+                    if (!this.query.rows) {
+                        this.query.rows = data.rows;
+                    } else {
+                        this.query.rows = parseInt(this.query.rows);
+                    }
                 }
             }
         },
@@ -175,7 +183,7 @@ export const useBatchStore = defineStore({
             let options = {
                 query: vaah().clone(this.query)
             };
-
+            await this.updateUrlQueryString(this.query);
             await vaah().ajax(
                 this.ajax_url,
                 await this.getListAfter,
@@ -188,6 +196,7 @@ export const useBatchStore = defineStore({
 
             if (data) {
                 this.list = data.list;
+                this.firstElement = ((this.query.page - 1) * this.query.rows);
             }
         },
         //---------------------------------------------------------------------
@@ -263,6 +272,8 @@ export const useBatchStore = defineStore({
         //---------------------------------------------------------------------
         async paginate(event) {
             this.query.page = event.page+1;
+            this.query.rows = event.rows;
+            this.firstElement = ((this.query.page - 1) * this.query.rows);
             await this.getList();
         },
         //---------------------------------------------------------------------
@@ -409,6 +420,9 @@ export const useBatchStore = defineStore({
             }
 
             this.dates2 = null;
+
+            this.query.page = this.page;
+            this.query.rows = this.rows;
 
             await this.updateUrlQueryString(this.query);
         },
