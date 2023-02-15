@@ -53,7 +53,7 @@ let empty_states = {
 };
 
 export const useSettingStore = defineStore({
-    id: 'roles',
+    id: 'settings',
     state: () => ({
         base_url: base_url,
         ajax_url: ajax_url,
