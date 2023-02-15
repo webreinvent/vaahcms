@@ -219,7 +219,6 @@ class MediaBase extends Model {
         if(isset($request->filter['from']) && isset($request->filter['to']))
         {
             $list->whereBetween('created_at',[$request->filter['from'],$request->filter['to']]);
-//            $list->betweenDates($request->filter['from'],$request->filter['to']);
         }
 
         if(isset($request->filter['month']))
