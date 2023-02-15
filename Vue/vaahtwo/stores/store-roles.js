@@ -12,8 +12,8 @@ let ajax_url = base_url + "/vaah/roles";
 
 let empty_states = {
     query: {
-        page: null,
-        rows: null,
+        page: 1,
+        rows: 20,
         filter: {
             q: null,
             is_active: null,
@@ -97,6 +97,7 @@ export const useRoleStore = defineStore({
         role_permissions_query: vaah().clone(empty_states.role_permissions_query),
         role_users_query: vaah().clone(empty_states.role_users_query),
         is_btn_loading: false,
+        firstElement: null,
     }),
     getters: {
 
@@ -114,7 +115,7 @@ export const useRoleStore = defineStore({
              * Update with view and list css column number
              */
             this.setViewAndWidth(route.name);
-
+            this.firstElement = ((this.query.page - 1) * this.query.rows);
             /**
              * Update query state with the query parameters of url
              */
@@ -211,9 +212,14 @@ export const useRoleStore = defineStore({
                 this.assets = data;
                 if(data.rows)
                 {
-                    this.query.rows = data.rows;
+                    if (!this.query.rows) {
+                        this.query.rows = data.rows;
+                    } else {
+                        this.query.rows = parseInt(this.query.rows);
+                    }
                     this.role_permissions_query.rows = data.rows;
                     this.role_users_query.rows = data.rows;
+                    this.firstElement = this.query.rows * (this.query.page - 1);
                 }
 
                 if(this.route.params && !this.route.params.id){
@@ -227,7 +233,7 @@ export const useRoleStore = defineStore({
             let options = {
                 query: vaah().clone(this.query)
             };
-
+            await this.updateUrlQueryString(this.query);
             await vaah().ajax(
                 this.ajax_url,
                 this.afterGetList,
@@ -497,6 +503,7 @@ export const useRoleStore = defineStore({
         //---------------------------------------------------------------------
         async paginate(event) {
             this.query.page = event.page+1;
+            this.query.rows = event.rows;
             await this.getList();
         },
         //---------------------------------------------------------------------
@@ -640,6 +647,9 @@ export const useRoleStore = defineStore({
             {
                 this.query.filter[key] = null;
             }
+
+            this.query = this.empty_query;
+
             await this.updateUrlQueryString(this.query);
         },
         //---------------------------------------------------------------------
