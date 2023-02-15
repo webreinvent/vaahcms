@@ -11,8 +11,8 @@ let ajax_url = base_url + "/vaah/manage/media";
 
 let empty_states = {
     query: {
-        page: null,
-        rows: null,
+        page: 1,
+        rows: 20,
         filter: {
             q: null,
             is_active: null,
@@ -83,7 +83,8 @@ export const useMediaStore = defineStore({
         menu_options: [],
         dates2: [],
         is_btn_loading: false,
-        downloadable_slug_available: ''
+        downloadable_slug_available: '',
+        firstElement: null
     }),
     getters: {
 
@@ -202,7 +203,11 @@ export const useMediaStore = defineStore({
                 this.assets = data;
                 if(data.rows)
                 {
-                    this.query.rows = data.rows;
+                    if (!this.query.rows) {
+                        this.query.rows = data.rows;
+                    } else {
+                        this.query.rows = parseInt(this.query.rows);
+                    }
                 }
 
                 if(this.route.params && !this.route.params.id){
@@ -216,7 +221,7 @@ export const useMediaStore = defineStore({
             let options = {
                 query: vaah().clone(this.query)
             };
-
+            await this.updateUrlQueryString(this.query);
             await vaah().ajax(
                 this.ajax_url,
                 this.afterGetList,
@@ -230,6 +235,7 @@ export const useMediaStore = defineStore({
             if(data)
             {
                 this.list = data.list;
+                this.firstElement = this.query.rows * (this.query.page - 1);
             }
         },
         //---------------------------------------------------------------------
@@ -475,6 +481,8 @@ export const useMediaStore = defineStore({
         //---------------------------------------------------------------------
         async paginate(event) {
             this.query.page = event.page+1;
+            this.query.rows = event.rows;
+            this.firstElement = this.query.rows * (this.query.page - 1);
             await this.getList();
         },
         //---------------------------------------------------------------------
