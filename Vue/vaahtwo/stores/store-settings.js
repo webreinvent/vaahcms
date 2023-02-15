@@ -203,19 +203,19 @@ export const useSettingStore = defineStore({
             });
         },
         //---------------------------------------------------------------------
-        async getGeneralAssets() {
+        async getAssets() {
 
             if(this.assets_is_fetching === true){
                 this.assets_is_fetching = false;
 
                 vaah().ajax(
                     this.ajax_url+'/general/assets',
-                    this.afterGetGeneralAssets,
+                    this.afterGetAssets,
                 );
             }
         },
         //---------------------------------------------------------------------
-        afterGetGeneralAssets(data, res)
+        afterGetAssets(data, res)
         {
             if(data)
             {

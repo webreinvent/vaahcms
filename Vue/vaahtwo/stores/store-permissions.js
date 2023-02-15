@@ -12,8 +12,8 @@ let ajax_url = base_url + "/vaah/permissions";
 
 let empty_states = {
     query: {
-        page: null,
-        rows: null,
+        page: 1,
+        rows: 20,
         filter: {
             q: null,
             is_active: null,
@@ -28,8 +28,8 @@ let empty_states = {
     },
     permission_roles_query: {
         q: null,
-        page: null,
-        rows: null,
+        page: 1,
+        rows: 20,
     }
 };
 
@@ -79,6 +79,7 @@ export const usePermissionStore = defineStore({
         active_permission_role : null,
         permission_roles_query: vaah().clone(empty_states.permission_roles_query),
         is_btn_loading: false,
+        firstElement: null
     }),
     getters: {
 
@@ -96,11 +97,14 @@ export const usePermissionStore = defineStore({
              * Update with view and list css column number
              */
             this.setViewAndWidth(route.name);
+            this.firstElement = ((this.query.page - 1) * this.query.rows);
+            this.rolesFirstElement = ((this.permission_roles_query.page - 1) * this.permission_roles_query.rows);
 
             /**
              * Update query state with the query parameters of url
              */
             this.updateQueryFromUrl(route);
+
         },
         //---------------------------------------------------------------------
         setViewAndWidth(route_name)
@@ -182,13 +186,22 @@ export const usePermissionStore = defineStore({
         //---------------------------------------------------------------------
         afterGetAssets(data, res)
         {
+
             if(data)
             {
                 this.assets = data;
                 if(data.rows)
                 {
-                    this.query.rows = data.rows;
-                    this.permission_roles_query.rows = data.rows
+                    if (this.urlContains('role')) {
+                        this.permission_roles_query.rows = this.permission_roles_query.rows ? parseInt(this.permission_roles_query.rows) : data.rows;
+                    }
+
+                    if (!this.query.rows) {
+                        this.query.rows = data.rows;
+                    } else {
+                        this.query.rows = parseInt(this.query.rows);
+                    }
+
                 }
 
                 if(this.route.params && !this.route.params.id){
@@ -202,6 +215,7 @@ export const usePermissionStore = defineStore({
             let options = {
                 query: vaah().clone(this.query)
             };
+            await this.updateUrlQueryString(this.query);
             await vaah().ajax(
                 this.ajax_url,
                 this.afterGetList,
@@ -218,6 +232,7 @@ export const usePermissionStore = defineStore({
                 this.list = data;
                 this.total_roles = res.data.total_roles;
                 this.total_users = res.data.total_users;
+                this.firstElement = this.query.rows * (this.query.page - 1);
             }
         },
         //---------------------------------------------------------------------
@@ -548,11 +563,14 @@ export const usePermissionStore = defineStore({
         //---------------------------------------------------------------------
         async paginate(event) {
             this.query.page = event.page+1;
+            this.query.rows = event.rows;
+            this.firstElement = this.query.rows * (this.query.page - 1);
             await this.getList();
         },
         //---------------------------------------------------------------------
         async rolePaginate(event) {
             this.permission_roles_query.page = event.page + 1;
+            this.permission_roles_query.rows = event.rows;
             await this.getItemRoles();
         },
         //---------------------------------------------------------------------
@@ -696,6 +714,9 @@ export const usePermissionStore = defineStore({
             {
                 this.query.filter[key] = null;
             }
+
+            this.query = this.empty_query;
+
             await this.updateUrlQueryString(this.query);
         },
         //---------------------------------------------------------------------
@@ -1024,8 +1045,11 @@ export const usePermissionStore = defineStore({
         hideProgress()
         {
             this.show_progress_bar = false;
-        }
+        },
         //---------------------------------------------------------------------
+        urlContains(param) {
+            return this.route.path.includes(param);
+        }
         //---------------------------------------------------------------------
     }
 });
