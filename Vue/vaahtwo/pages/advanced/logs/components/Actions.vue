@@ -9,6 +9,8 @@ const store = useLogStore();
 onMounted(async () => {
     store.getListSelectedMenu();
     store.getListBulkMenu();
+
+    await store.getLogsFileTypes();
 });
 
 //--------selected_menu_state
@@ -28,13 +30,20 @@ const toggleBulkMenuState = (event) => {
 
 <template>
     <div>
-
         <!--actions-->
         <div class="p-inputgroup">
-            <InputText placeholder="Enter Search Terms"/>
+            <InputText placeholder="Search"/>
             <Button icon="pi pi-search" class="p-button-primary"/>
         </div>
-        <!--/actions-->
 
+        <MultiSelect v-model="store.query.filter.file_type"
+                     :options="store.logs_file_types"
+                     optionLabel="name" placeholder="Filter By Extension"
+                     display="chip"
+                     class="w-full mt-2"
+                     optionValue="value"
+                     @change="store.getList()"
+        />
+        <!--/actions-->
     </div>
 </template>

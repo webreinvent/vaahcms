@@ -77,14 +77,13 @@ class LogsController extends Controller
             if(count($files) > 0)
             {
                 foreach ($files as $file) {
-
-                    if ($request->has('file_type') && $request->file_type
-                        && count($request->file_type) > 0 ) {
+                    if ($request['filter'] && $request['filter']['file_type']
+                        && count($request['filter']['file_type']) > 0 ) {
 
                         $file_name_array = explode(".", $file);
 
                         if (count($file_name_array) > 1
-                            && in_array('.'.$file_name_array[1], $request->file_type) ) {
+                            && in_array('.'.$file_name_array[1], $request['filter']['file_type']) ) {
 
                             if ($request->has('q') && $request->q) {
                                 if (stripos($file, $request->q) !== FALSE) {
@@ -128,8 +127,6 @@ class LogsController extends Controller
                         $i++;
 
                     }
-
-
                 }
             }
         }

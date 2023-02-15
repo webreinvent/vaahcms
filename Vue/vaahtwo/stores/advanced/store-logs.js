@@ -17,6 +17,7 @@ let empty_states = {
             is_active: null,
             trashed: null,
             sort: null,
+            file_type: [],
         },
     },
     action: {
@@ -68,6 +69,8 @@ export const useLogStore = defineStore({
         payloadContent:null,
         is_btn_loading: false,
         menu_items: [],
+        logs_file_types: [],
+        file_types: [],
     }),
     getters: {
 
@@ -722,6 +725,31 @@ export const useLogStore = defineStore({
                     command: async () => {
                         this.confirmDeleteAll();
                     }
+                },
+            ]
+        },
+        //---------------------------------------------------------------------
+        async getLogsFileTypes() {
+            return this.logs_file_types = [
+                {
+                    name: ".csv",
+                    value: ".csv",
+                },
+                {
+                    name: ".log",
+                    value: ".log",
+                },
+                {
+                    name: ".pdf",
+                    value: ".pdf",
+                },
+                {
+                    name: ".xlsx",
+                    value: ".xlsx",
+                },
+                {
+                    name: ".xml",
+                    value: ".xml",
                 },
             ]
         },
