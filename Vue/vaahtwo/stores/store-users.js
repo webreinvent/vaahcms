@@ -47,7 +47,7 @@ export const useUserStore = defineStore({
         user_roles:null,
         displayModal:false,
         modalData:null,
-        rows_per_page: [10,20,30,50,100,500],
+        rows_per_page: [1,10,20,30,50,100,500],
         list: null,
         item: null,
         fillable:null,
