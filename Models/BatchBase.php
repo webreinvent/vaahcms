@@ -122,11 +122,17 @@ class BatchBase extends Model
                 $q->orWhere('id', 'LIKE', '%'.$request->q.'%');
             });
         }
+        $rows = config('vaahcms.per_page');
+
+        if($request->has('rows'))
+        {
+            $rows = $request->rows;
+        }
 
         if ($request->has('date_filter_by')) {
-            $data['list'] = $list->orderBy($request->date_filter_by,'desc')->paginate(config('vaahcms.per_page'));
+            $data['list'] = $list->orderBy($request->date_filter_by,'desc')->paginate($rows);
         } else {
-            $data['list'] = $list->orderBy('created_at','desc')->paginate(config('vaahcms.per_page'));
+            $data['list'] = $list->orderBy('created_at','desc')->paginate($rows);
         }
 
 
