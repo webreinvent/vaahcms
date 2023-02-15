@@ -342,6 +342,10 @@ export const useRegistrationStore = defineStore({
             );
         },
         //---------------------------------------------------------------------
+        toggle(event) {
+            this.$refs.menu_test.toggle(event);
+        },
+        //---------------------------------------------------------------------
         itemAction(type, item=null){
             // console.log(this.item);
 
