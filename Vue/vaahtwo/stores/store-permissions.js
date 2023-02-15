@@ -79,7 +79,8 @@ export const usePermissionStore = defineStore({
         active_permission_role : null,
         permission_roles_query: vaah().clone(empty_states.permission_roles_query),
         is_btn_loading: false,
-        firstElement: null
+        firstElement: null,
+        rolesFirstElement: null
     }),
     getters: {
 
