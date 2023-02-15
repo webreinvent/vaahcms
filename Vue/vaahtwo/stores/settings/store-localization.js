@@ -78,6 +78,7 @@ export const useLocalizationStore = defineStore({
         selected_category:null,
         selected_language:null,
         new_variable:null,
+        btn_is_loading: false,
     }),
     getters: {
 
@@ -185,6 +186,7 @@ export const useLocalizationStore = defineStore({
         //---------------------------------------------------------------------
         afterGetList: function (data, res)
         {
+            this.btn_is_loading = false;
             if(data)
             {
                 this.list = data.list;
@@ -361,8 +363,9 @@ export const useLocalizationStore = defineStore({
             this.show_add_category = !this.show_add_category;
         },
         //---------------------------------------------------------------------
-        sync() {
-            this.getList(this.query_string.page,true);
+        async sync() {
+            this.btn_is_loading = true;
+            await this.getList(this.query_string.page,true);
         },
         //---------------------------------------------------------------------
         removeQueryString()
