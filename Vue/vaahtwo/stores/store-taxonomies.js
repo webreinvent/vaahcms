@@ -624,8 +624,7 @@ export const useTaxonomyStore = defineStore({
             {
                 this.query.filter[key] = null;
             }
-            this.query.page = this.page;
-            this.query.rows = this.rows;
+            this.query = this.empty_query;
             await this.updateUrlQueryString(this.query);
         },
         //---------------------------------------------------------------------
