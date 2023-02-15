@@ -1,6 +1,6 @@
 <script setup>
 import { useGeneralStore } from "../../../../stores/settings/store-general_setting";
-import { vaah } from "../../../../../../../../VaahCms/Modules/VueThree/Vue/vaahvue/pinia/vaah";
+import { vaah } from "../../../../vaahvue/pinia/vaah";
 
 const store = useGeneralStore();
 const useVaah = vaah();
