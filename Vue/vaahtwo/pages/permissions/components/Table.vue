@@ -47,6 +47,7 @@ const useVaah = vaah();
                      header="Slug"
                     :sortable="true"
                      v-if="store.isViewLarge()"
+                     class="flex align-items-center"
              >
                 <template #body="prop" class="text-xs">
                     {{ prop.data.slug }}

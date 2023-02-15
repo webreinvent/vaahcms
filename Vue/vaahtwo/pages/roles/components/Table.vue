@@ -41,6 +41,7 @@ const useVaah = vaah();
                      field="slug"
                      header="Slug"
                      :sortable="true"
+                     class="flex align-items-center"
              >
                  <template #body="prop">
                      {{ prop.data.slug }}
