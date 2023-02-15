@@ -10,8 +10,8 @@ let ajax_url = base_url + "/vaah/jobs";
 
 let empty_states = {
     query: {
-        page: null,
-        rows: null,
+        page: 1,
+        rows: 20,
         filter: {
             q: null,
             is_active: null,
@@ -29,6 +29,8 @@ let empty_states = {
 export const useJobStore = defineStore({
     id: 'jobs',
     state: () => ({
+        page: 1,
+        rows: 20,
         base_url: base_url,
         ajax_url: ajax_url,
         model: model_namespace,
@@ -67,6 +69,7 @@ export const useJobStore = defineStore({
         form_menu_list: [],
         payloadModal:false,
         payloadContent:null,
+        firstElement: null
     }),
     actions: {
         //---------------------------------------------------------------------
@@ -76,7 +79,7 @@ export const useJobStore = defineStore({
              * Set initial routes
              */
             this.route = route;
-
+            this.firstElement = ((this.query.page - 1) * this.query.rows);
             /**
              * Update query state with the query parameters of url
              */
@@ -145,7 +148,11 @@ export const useJobStore = defineStore({
                 this.assets = data;
                 if(data.rows)
                 {
-                    this.query.rows = data.rows;
+                    if (!this.query.rows) {
+                        this.query.rows = data.rows;
+                    } else {
+                        this.query.rows = parseInt(this.query.rows);
+                    }
                 }
 
             }
@@ -155,6 +162,7 @@ export const useJobStore = defineStore({
             let options = {
                 query: vaah().clone(this.query)
             };
+            await this.updateUrlQueryString(this.query);
             await vaah().ajax(
                 this.ajax_url,
                 this.afterGetList,
@@ -167,6 +175,7 @@ export const useJobStore = defineStore({
             if(data)
             {
                 this.list = data;
+                this.firstElement = ((this.query.page - 1) * this.query.rows);
             }
         },
         //---------------------------------------------------------------------
@@ -289,6 +298,8 @@ export const useJobStore = defineStore({
         //---------------------------------------------------------------------
         async paginate(event) {
             this.query.page = event.page+1;
+            this.query.rows = event.rows;
+            this.firstElement = this.query.rows * (this.query.page - 1);
             await this.getList();
         },
         //---------------------------------------------------------------------
@@ -390,6 +401,9 @@ export const useJobStore = defineStore({
             {
                 this.query.filter[key] = null;
             }
+
+            this.query.page = this.page;
+            this.query.rows = this.rows;
             await this.updateUrlQueryString(this.query);
         },
         //---------------------------------------------------------------------
