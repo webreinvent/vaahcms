@@ -164,7 +164,7 @@ const toggleItemMenu = (event) => {
                                        type="yes-no"
                             />
                         </template>
-                        <template v-else-if="column === 'size'">
+                        <template v-else-if="column === 'size'" >
                             <tr>
                                 <td><b>{{ vaah().toLabel(column) }}</b></td>
                                 <td colspan="2">
@@ -172,7 +172,7 @@ const toggleItemMenu = (event) => {
                                 </td>
                             </tr>
                         </template>
-                        <template v-else-if="column === 'url' || column === 'url_thumbnail'">
+                        <template v-else-if="column === 'url' || column === 'url_thumbnail' || column === 'path'">
                             <tr>
                                 <td><b>{{ vaah().toLabel(column) }}</b></td>
                                 <td style="word-break: break-all;">{{ value }}</td>

@@ -66,6 +66,7 @@ const openTaxonomyTypeModal = () => {
             </Column>
 
             <Column field="slug" header="Slug"
+                    class="flex align-items-center"
                     :sortable="true"
             >
                 <template #body="prop">

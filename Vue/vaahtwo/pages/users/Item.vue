@@ -134,7 +134,13 @@ const toggleItemMenu = (event) => {
                                 <template v-if="column === 'avatar_url' || column === 'avatar' || column === 'country_code'" />
                                 <template v-else-if="column === 'created_by' || column === 'updated_by'" />
 
-                                <template v-else-if="column === 'id' || column === 'uuid'">
+                                <template v-else-if="column === 'id' ||
+                                                     column === 'uuid' ||
+                                                     column === 'email' ||
+                                                     column === 'username' ||
+                                                     column === 'phone' ||
+                                                     column === 'alternate_email' ||
+                                                     column === 'registration_id'">
                                     <VhViewRow :label="column"
                                                :value="value"
                                                :can_copy="true"

@@ -140,14 +140,18 @@ const toggleStatusMenu = (event) => {
                         <template v-for="(value, column) in store.item ">
                             <template v-if="column === 'created_by' || column === 'updated_by'"/>
 
-                            <template v-else-if="column === 'id' || column === 'uuid'|| column === 'first_name' ||
-                                                 column === 'email' || column === 'username' ||
-                                                 column === 'phone' || column === 'activation_code' ||
+                            <template v-else-if="column === 'id' ||
+                                                 column === 'uuid'||
+                                                 column === 'first_name' ||
+                                                 column === 'email' ||
+                                                 column === 'username' ||
+                                                 column === 'phone' ||
+                                                 column === 'activation_code' ||
                                                  column === 'alternate_email'"
                             >
                                 <VhViewRow :label="column"
                                            :value="value"
-                                           :can_copy="false"
+                                           :can_copy="true"
                                            data-testid="register-view_copy"
                                            v-if="!store.isHidden(column)"
                                 />
