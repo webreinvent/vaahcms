@@ -31,6 +31,8 @@ let empty_states = {
 export const useFailedJobStore = defineStore({
     id: 'failedjobs',
     state: () => ({
+        page: 1,
+        rows: 20,
         base_url: base_url,
         ajax_url: ajax_url,
         model: model_namespace,
@@ -71,7 +73,7 @@ export const useFailedJobStore = defineStore({
         failedJobContent:null,
         failedJobContentHeading:null,
         dates: [],
-        is_btn_loading: false,
+        firstElement: null
     }),
     actions: {
         //---------------------------------------------------------------------
@@ -81,7 +83,7 @@ export const useFailedJobStore = defineStore({
              * Set initial routes
              */
             this.route = route;
-
+            this.firstElement = ((this.query.page - 1) * this.query.rows);
             /**
              * Update query state with the query parameters of url
              */
@@ -165,7 +167,11 @@ export const useFailedJobStore = defineStore({
                 this.assets = data;
                 if(data.rows)
                 {
-                    this.query.rows = data.rows;
+                    if (!this.query.rows) {
+                        this.query.rows = data.rows;
+                    } else {
+                        this.query.rows = parseInt(this.query.rows);
+                    }
                 }
             }
         },
@@ -174,7 +180,7 @@ export const useFailedJobStore = defineStore({
             let options = {
                 query: vaah().clone(this.query)
             };
-
+            await this.updateUrlQueryString(this.query);
             await vaah().ajax(
                 this.ajax_url,
                 await this.getListAfter,
@@ -188,6 +194,7 @@ export const useFailedJobStore = defineStore({
 
             if(data) {
                 this.list = data.list;
+                this.firstElement = this.query.rows * (this.query.page - 1);
             }
         },
         //---------------------------------------------------------------------
@@ -310,6 +317,8 @@ export const useFailedJobStore = defineStore({
         //---------------------------------------------------------------------
         async paginate(event) {
             this.query.page = event.page+1;
+            this.query.rows = event.rows;
+            this.firstElement = this.query.rows * (this.query.page - 1);
             await this.getList();
         },
         //---------------------------------------------------------------------
@@ -417,6 +426,10 @@ export const useFailedJobStore = defineStore({
                 if (key === 'filter') continue;
                 this.query[key] = null;
             }
+
+            this.query.page = this.page;
+            this.query.rows = this.rows;
+
             await this.updateUrlQueryString(this.query);
         },
         //---------------------------------------------------------------------
