@@ -254,7 +254,7 @@ class LogsController extends Controller
                 break;
 
             //------------------------------------
-            case 'bulk-delete':
+            case 'delete':
 
                 VaahFiles::deleteFile($request->path);
 

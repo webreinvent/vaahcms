@@ -255,7 +255,7 @@ export const useLogStore = defineStore({
             }
 
             vaah().ajax(
-                ajax_url+'/actions/bulk-delete-all',
+                ajax_url+'/actions/delete',
                 await this.deleteItemAfter,
                 params
             );
@@ -264,9 +264,6 @@ export const useLogStore = defineStore({
         async deleteItemAfter (data, res) {
             if(data && data.message === 'success'){
                 await this.getList();
-                if(this.item){
-                    await this.getItem(this.item.name);
-                }
             }
         },
         //---------------------------------------------------------------------
