@@ -127,6 +127,7 @@ const toggleFormMenu = (event) => {
                                         @click="store.isDownloadableSlugAvailable"
                                         class="p-button-success"
                                         icon="pi pi-check"
+                                        v-tooltip.top=" 'Check Availability' "
                                 />
                                 <Button v-else
                                         data-testid="media-list-check_url_availability"
@@ -136,6 +137,7 @@ const toggleFormMenu = (event) => {
                                 <Button data-testid="media-copy_download_url"
                                         @click="store.copyDownloadUrl()"
                                         icon="pi pi-copy"
+                                        v-tooltip.top=" 'Copy Download Link' "
                                 />
                             </span>
                         </span>
