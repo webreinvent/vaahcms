@@ -18,11 +18,10 @@ let empty_states = {
             is_active: null,
             trashed: null,
             sort: null,
+            from: null,
+            to: null,
+            date_filter_by: null
         },
-        q: null,
-        from: null,
-        to: null,
-        date_filter_by: null
     },
     action: {
         type: null,
@@ -129,7 +128,7 @@ export const useBatchStore = defineStore({
         //---------------------------------------------------------------------
         watchStates()
         {
-            watch(this.query, (newVal,oldVal) =>
+            watch(this.query.filter, (newVal,oldVal) =>
                 {
                     this.delayedSearch();
                 },{deep: true}
@@ -416,6 +415,7 @@ export const useBatchStore = defineStore({
 
             for(let key in this.query)
             {
+                if (key === 'filter') continue;
                 this.query[key] = null;
             }
 
@@ -530,10 +530,10 @@ export const useBatchStore = defineStore({
         {
             if (this.dates2.length > 0) {
                 let current_datetime = new Date(this.dates2[0]);
-                this.query.from = current_datetime.getFullYear() + "-" + (current_datetime.getMonth() + 1) + "-" + current_datetime.getDate();
+                this.query.filter.from = current_datetime.getFullYear() + "-" + (current_datetime.getMonth() + 1) + "-" + current_datetime.getDate();
 
                 current_datetime = new Date(this.dates2[1]);
-                this.query.to = current_datetime.getFullYear() + "-" + (current_datetime.getMonth() + 1) + "-" + current_datetime.getDate();
+                this.query.filter.to = current_datetime.getFullYear() + "-" + (current_datetime.getMonth() + 1) + "-" + current_datetime.getDate();
 
                 this.getList();
             }
