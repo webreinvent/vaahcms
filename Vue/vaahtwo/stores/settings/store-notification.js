@@ -206,7 +206,7 @@ export const useNotificationStore = defineStore({
 
         },
         //---------------------------------------------------------------------
-        addSubject: function () {
+        addSubject() {
             let sort = 0;
             if(this.active_notification.contents && this.active_notification.contents.mail)
             {
@@ -224,7 +224,7 @@ export const useNotificationStore = defineStore({
             this.active_notification.contents.mail.push(line);
         },
         //---------------------------------------------------------------------
-        addFrom: function () {
+        addFrom() {
             let sort = 0;
             if(this.active_notification.contents && this.active_notification.contents.mail)
             {
