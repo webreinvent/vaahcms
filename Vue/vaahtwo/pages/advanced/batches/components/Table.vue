@@ -141,7 +141,8 @@ const useVaah = vaah();
                 </Card>
         </Dialog>
         <!--paginator-->
-        <Paginator v-model:rows="store.query.rows"
+        <Paginator v-model:first="store.firstElement"
+                   :rows="store.query.rows"
                    data-testid="batch-table-paginator"
                    :totalRecords="store.list.total"
                    @page="store.paginate($event)"

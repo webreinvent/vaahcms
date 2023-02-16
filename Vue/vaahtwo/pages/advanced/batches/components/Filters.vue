@@ -24,21 +24,21 @@ const dateColumns = [
                     <RadioButton name="sort-descending"
                                  data-testid="batches-filters-created_at"
                                  value="created_at"
-                                 v-model="store.query.date_filter_by"/>
+                                 v-model="store.query.filter.date_filter_by"/>
                     <label for="sort-descending">Created</label>
                 </div>
                 <div class="field-radiobutton">
                     <RadioButton name="sort-descending"
                                  data-testid="batches-filters-cancelled_at"
                                  value="cancelled_at"
-                                 v-model="store.query.date_filter_by" />
+                                 v-model="store.query.filter.date_filter_by" />
                     <label for="sort-descending">Cancelled</label>
                 </div>
                 <div class="field-radiobutton">
                     <RadioButton name="sort-descending"
                                  data-testid="batches-filters-finished_at"
                                  value="finished_at"
-                                 v-model="store.query.date_filter_by"/>
+                                 v-model="store.query.filter.date_filter_by"/>
                     <label for="sort-descending">Finished</label>
                 </div>
             </VhFieldVertical>
