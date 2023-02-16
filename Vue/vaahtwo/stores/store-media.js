@@ -963,11 +963,11 @@ export const useMediaStore = defineStore({
             }
         },
         //---------------------------------------------------------------------
-        getCopy(value)
+        copyDownloadUrl()
         {
-            let text =  "{!! config('settings.global."+value+"'); !!}";
-            navigator.clipboard.writeText(text);
-            vaah().toastSuccess(['Copied']);
+            const text =  this.assets.download_url + this.item.download_url
+
+            vaah().copy(text);
         },
         //---------------------------------------------------------------------
     }

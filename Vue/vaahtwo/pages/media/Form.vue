@@ -133,13 +133,14 @@ const toggleFormMenu = (event) => {
                                         @click="store.isDownloadableSlugAvailable"
                                         icon="pi pi-question"
                                 />
-                                <Button data-testid="media-list-reload"
-                                        @click="store.getCopy('redirect_after_frontend_login')"
+                                <Button data-testid="media-copy_download_url"
+                                        @click="store.copyDownloadUrl()"
                                         icon="pi pi-copy"
                                 />
                             </span>
                         </span>
                     </span>
+
                     <span class="p-float-label" v-if="store.item.is_downloadable">
                         {{ store.assets.download_url+store.item.download_url }}
                     </span>
