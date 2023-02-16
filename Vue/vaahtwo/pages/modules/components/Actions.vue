@@ -2,8 +2,6 @@
 import {ref, reactive, watch, onMounted} from 'vue';
 import { useModuleStore } from '../../../stores/store-modules'
 
-import Filters from './Filters.vue'
-
 const store = useModuleStore();
 
 onMounted(async () => {
@@ -35,7 +33,7 @@ const toggleBulkMenuState = (event) => {
             <!--left-->
 
             <div class="col-4 mb-5">
-                <Dropdown v-model="store.query.status"
+                <Dropdown v-model="store.query.filter.status"
                           :options="store.statusList"
                           optionLabel="name"
                           optionValue="value"
@@ -48,7 +46,7 @@ const toggleBulkMenuState = (event) => {
             <!--right-->
             <div class="col-5 col-offset-3 mb-5">
                 <div class="p-inputgroup">
-                    <InputText v-model="store.query.q"
+                    <InputText v-model="store.query.filter.q"
                                @keyup.enter="store.delayedSearch()"
                                @keyup.enter.native="store.delayedSearch()"
                                @keyup.13="store.getList()"

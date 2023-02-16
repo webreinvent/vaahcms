@@ -100,11 +100,12 @@ const importSampleDataModal = (item) => {
         <!--/table-->
 
         <!--paginator-->
-        <Paginator v-model:rows="store.query.rows"
-                   :totalRecords="store.list.total"
+        <Paginator v-model:first="store.firstElement"
+                    :rows="store.query.rows"
+                   :totalRecords="store.stats.all"
                    @page="store.paginate($event)"
-                   :rowsPerPageOptions="store.rows_per_page">
-        </Paginator>
+                   :rows-per-page-options="store.rows_per_page"
+        />
         <!--/paginator-->
 
         <ConfirmDialog group="templating" class="is-small"

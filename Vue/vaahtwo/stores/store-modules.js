@@ -17,9 +17,8 @@ let empty_states = {
             is_active: null,
             trashed: null,
             sort: null,
+            status: null
         },
-        q: null,
-        status: null
     },
     action: {
         type: null,
@@ -30,13 +29,15 @@ let empty_states = {
 export const useModuleStore = defineStore({
     id: 'modules',
     state: () => ({
+        page: 1,
+        rows: 20,
         base_url: base_url,
         ajax_url: ajax_url,
         model: model_namespace,
         assets_is_fetching: true,
         app: null,
         assets: null,
-        rows_per_page: [10,20,30,50,100,500],
+        rows_per_page: [1,2,10,20,30,50,100,500],
         list: null,
         item: null,
         fillable:null,
@@ -83,7 +84,9 @@ export const useModuleStore = defineStore({
             {name: 'Inactive', value: 'inactive'},
             {name: 'Update Available', value: 'update_available'}
 
-        ]
+        ],
+        firstElement: null,
+        stats: null
     }),
     getters: {
 
@@ -96,12 +99,10 @@ export const useModuleStore = defineStore({
              * Set initial routes
              */
             this.route = route;
-
             /**
              * Update with view and list css column number
              */
             this.setViewAndWidth(route.name);
-
             /**
              * Update query state with the query parameters of url
              */
@@ -160,7 +161,7 @@ export const useModuleStore = defineStore({
         //---------------------------------------------------------------------
         watchStates()
         {
-            watch(this.query, (newVal,oldVal) =>
+            watch(this.query.filter, (newVal,oldVal) =>
                 {
                     this.delayedSearch();
                 },{deep: true}
@@ -169,22 +170,22 @@ export const useModuleStore = defineStore({
         //---------------------------------------------------------------------
         watchItem()
         {
-            if(this.item){
-                    watch(() => this.item.name, (newVal,oldVal) =>
+            if (this.item) {
+                watch(() => this.item.name, (newVal,oldVal) =>
+                    {
+                        if(newVal && newVal !== "")
                         {
-                            if(newVal && newVal !== "")
-                            {
-                                this.item.name = vaah().capitalising(newVal);
-                                this.item.slug = vaah().strToSlug(newVal);
-                            }
-                        },{deep: true}
-                    )
-                }
+                            this.item.name = vaah().capitalising(newVal);
+                            this.item.slug = vaah().strToSlug(newVal);
+                        }
+                    },{deep: true}
+                )
+            }
         },
         //---------------------------------------------------------------------
         async getAssets()
         {
-            if(this.assets_is_fetching === true){
+            if (this.assets_is_fetching === true) {
                 this.assets_is_fetching = false;
 
                 vaah().ajax(
@@ -196,12 +197,15 @@ export const useModuleStore = defineStore({
         //---------------------------------------------------------------------
         afterGetAssets(data)
         {
-            if(data)
+            if (data)
             {
                 this.assets = data;
-                if(data.rows)
-                {
-                    this.query.rows = data.rows;
+                if (data.rows) {
+                    if (!this.query.rows) {
+                        this.query.rows = parseInt(data.rows);
+                    } else {
+                        this.query.rows = parseInt(this.query.rows);
+                    }
                 }
             }
         },
@@ -210,6 +214,8 @@ export const useModuleStore = defineStore({
             let options = {
                 query: vaah().clone(this.query)
             };
+
+            await this.updateUrlQueryString(this.query);
 
             await vaah().ajax(
                 this.ajax_url,
@@ -221,9 +227,12 @@ export const useModuleStore = defineStore({
         afterGetList(data)
         {
             this.is_btn_loading = false;
-            if(data)
+
+            if (data)
             {
                 this.list = data.list.data;
+                this.stats = data.stats;
+                this.firstElement = ((this.query.page - 1) * this.query.rows);
             }
         },
         //---------------------------------------------------------------------
@@ -339,6 +348,7 @@ export const useModuleStore = defineStore({
                 method: method,
                 show_success: false
             };
+
             await vaah().ajax(
                 url,
                 this.updateListAfter,
@@ -469,6 +479,10 @@ export const useModuleStore = defineStore({
         //---------------------------------------------------------------------
         async paginate(event) {
             this.query.page = event.page+1;
+            this.query.rows = event.rows;
+
+            this.firstElement = ((this.query.page - 1) * this.query.rows);
+
             await this.getList();
         },
         //---------------------------------------------------------------------
@@ -545,15 +559,15 @@ export const useModuleStore = defineStore({
             this.action.items = [];
             clearTimeout(this.search.delay_timer);
             this.search.delay_timer = setTimeout(async function() {
-                if ((self.query.q !== null && self.query.q !== undefined)
-                    || (self.query.status !== '' && self.query.status !== null && self.query.status !== undefined)
+                if ((self.query.filter.q !== null && self.query.filter.q !== undefined)
+                    || (self.query.filter.status !== '' && self.query.filter.status !== null && self.query.filter.status !== undefined)
                 ) {
                     await self.updateUrlQueryString(self.query);
                     await self.getList();
                 }
 
-                if (self.modules.query_string.q !== null && self.modules.query_string.q !== undefined) {
-                    await self.updateUrlQueryString(self.query);
+                if (self.modules.query_string.q !== '' && self.modules.query_string.q !== null && self.modules.query_string.q !== undefined) {
+                    await self.updateUrlQueryString(self.modules.query_string);
                     await self.getModules();
                 }
 
@@ -624,6 +638,9 @@ export const useModuleStore = defineStore({
                 if (key === 'filter') continue;
                 this.query[key] = null;
             }
+
+            this.query.page = this.page;
+            this.query.rows = this.rows;
             await this.updateUrlQueryString(this.query);
         },
         //---------------------------------------------------------------------
