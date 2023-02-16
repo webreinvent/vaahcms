@@ -32,8 +32,19 @@ const toggleBulkMenuState = (event) => {
     <div>
         <!--actions-->
         <div class="p-inputgroup">
-            <InputText placeholder="Search"/>
-            <Button icon="pi pi-search" class="p-button-primary"/>
+            <InputText class="p-inputtext-sm"
+                       inputClass="w-full"
+                       v-model="store.query.filter.q"
+                       @keyup.enter="store.delayedSearch()"
+                       @keyup.enter.native="store.delayedSearch()"
+                       @keyup.13="store.delayedSearch()"
+                       placeholder="Search"
+            />
+
+            <Button label="Reset"
+                    class="p-button-sm"
+                    @click="store.resetSearch"
+            />
         </div>
 
         <MultiSelect v-model="store.query.filter.file_type"

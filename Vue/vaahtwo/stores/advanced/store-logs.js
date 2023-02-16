@@ -137,11 +137,11 @@ export const useLogStore = defineStore({
         //---------------------------------------------------------------------
         watchStates()
         {
-            watch(this.query.filter, (newVal,oldVal) =>
+            watch(this.query.filter, async (newVal,oldVal) =>
                 {
-                    this.delayedSearch();
+                    await this.delayedSearch();
                 },{deep: true}
-            )
+            );
         },
         //---------------------------------------------------------------------
         watchItem()
@@ -519,6 +519,11 @@ export const useLogStore = defineStore({
                 await self.updateUrlQueryString(self.query);
                 await self.getList();
             }, this.search.delay_time);
+        },
+        //---------------------------------------------------------------------
+        async resetSearch() {
+            this.query.filter.q = null;
+            await this.getList();
         },
         //---------------------------------------------------------------------
         async updateUrlQueryString(query)

@@ -77,8 +77,9 @@ class LogsController extends Controller
             if(count($files) > 0)
             {
                 foreach ($files as $file) {
-                    if ($request['filter'] && $request['filter']['file_type']
-                        && count($request['filter']['file_type']) > 0 ) {
+                    if ($request['filter'] && isset($request['filter']['file_type'])
+                        && count($request['filter']['file_type']) > 0)
+                    {
 
                         $file_name_array = explode(".", $file);
 
@@ -105,8 +106,9 @@ class LogsController extends Controller
 
 
                         }
-                    } elseif ($request->has('q') && $request->q) {
-                        if (stripos($file, $request->q) === FALSE) {
+                    } elseif ($request['filter'] && $request['filter']['q']) {
+
+                        if (stripos($file, $request['filter']['q']) === FALSE) {
                             continue;
                         }
                         $list[] = [
