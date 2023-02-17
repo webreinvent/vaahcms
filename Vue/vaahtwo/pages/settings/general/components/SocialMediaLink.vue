@@ -28,7 +28,7 @@ const useVaah = vaah();
                             data-testid="general-link_copy"
                             :disabled="!item.id"
                             @click="store.getCopy(item.key)"
-                            class=" p-button-sm"
+                            class="p-button-sm"
                     />
 
                     <Button icon="pi pi-trash"

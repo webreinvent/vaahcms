@@ -20,7 +20,6 @@ const store = useGeneralStore();
                     <Button icon="pi pi-copy"
                             data-testid="general-script_head_start_copy"
                             @click="store.getCopy('script_after_head_start')"
-                            class="has-max-height"
                     />
                 </div>
             </div>
@@ -38,7 +37,6 @@ const store = useGeneralStore();
                     <Button icon="pi pi-copy"
                             data-testid="general-script_head_close_copy"
                             @click="store.getCopy('script_before_head_close')"
-                            class="has-max-height"
                     />
                 </div>
             </div>
@@ -55,7 +53,6 @@ const store = useGeneralStore();
                     <Button icon="pi pi-copy"
                             data-testid="general-script_body_start_copy"
                             @click="store.getCopy('script_after_body_start')"
-                            class="has-max-height"
                     />
                 </div>
             </div>
@@ -73,7 +70,6 @@ const store = useGeneralStore();
                     <Button icon="pi pi-copy"
                             data-testid="general-script_body_close_copy"
                             @click="store.getCopy('script_before_body_close')"
-                            class="has-max-height"
                     />
                 </div>
             </div>
