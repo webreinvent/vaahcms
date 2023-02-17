@@ -185,7 +185,7 @@ export const useBatchStore = defineStore({
         //---------------------------------------------------------------------
         async getListAfter(data) {
             this.is_btn_loading = false;
-            
+
             if (data) {
                 this.list = data.list;
             }

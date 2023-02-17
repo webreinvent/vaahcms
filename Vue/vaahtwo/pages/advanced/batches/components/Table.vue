@@ -158,5 +158,4 @@ const useVaah = vaah();
         </Paginator>
         <!--/paginator-->
     </div>
-
 </template>
