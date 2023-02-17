@@ -30,9 +30,9 @@ const toggleFormMenu = (event) => {
         <Card>
             <template #header>
                 <div class="flex justify-content-between align-items-center">
-                    <h5 class="font-semibold text-lg">
+                    <h5 class="font-semibold text-sm">
                         <span v-if="store.item && store.item.id">
-                            Update
+                            {{ store.item.name }}
                         </span>
                         <span v-else>
                             Create
