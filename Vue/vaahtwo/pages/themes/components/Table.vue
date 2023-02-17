@@ -102,8 +102,9 @@ const importSampleDataModal = (item) => {
         </div>
 
         <!--paginator-->
-        <Paginator v-model:rows="store.query.rows"
-                   :totalRecords="store.list.total"
+        <Paginator v-model:first="store.firstElement"
+                   :rows="store.query.rows"
+                   :totalRecords="store.stats.all"
                    @page="store.paginate($event)"
                    data-testid="themes-list-pagination"
                    :rowsPerPageOptions="store.rows_per_page">

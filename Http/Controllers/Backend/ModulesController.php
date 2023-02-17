@@ -65,7 +65,7 @@ class ModulesController extends Controller
 
         if($request->has('filter'))
         {
-            if(isset($request->filter['q'])) {
+            if(array_key_exists('q',$request->filter)) {
                 $list->where(function ($s) use ($request) {
                     $s->where('name', 'LIKE', '%'.$request->filter['q'].'%')
                         ->orWhere('slug', 'LIKE', '%'.$request->filter['q'].'%')
@@ -73,7 +73,7 @@ class ModulesController extends Controller
                 });
             }
 
-            if(isset($request->filter['status']) && $request->filter['status'] != 'all')
+            if(array_key_exists('status',$request->filter) && $request->filter['status'] != 'all')
             {
                 switch ($request->filter['status'])
                 {
@@ -91,7 +91,7 @@ class ModulesController extends Controller
         }
 
 
-        $stats['all'] = Module::count();
+        $stats['all'] = $list->count();
         $stats['active'] = Module::active()->count();
         $stats['inactive'] = Module::inactive()->count();
         $stats['update_available'] = Module::updateAvailable()->count();
