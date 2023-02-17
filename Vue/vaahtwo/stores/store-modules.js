@@ -86,7 +86,12 @@ export const useModuleStore = defineStore({
 
         ],
         firstElement: null,
-        stats: null
+        stats: null,
+        firstThemeElement: null,
+        modules_query: {
+            page: null,
+            query: null
+        }
     }),
     getters: {
 
@@ -232,6 +237,11 @@ export const useModuleStore = defineStore({
             {
                 this.list = data.list.data;
                 this.stats = data.stats;
+
+                if (this.query.rows) {
+                    this.query.rows = parseInt(this.query.rows);
+                }
+
                 this.firstElement = ((this.query.page - 1) * this.query.rows);
             }
         },
@@ -480,10 +490,14 @@ export const useModuleStore = defineStore({
         async paginate(event) {
             this.query.page = event.page+1;
             this.query.rows = event.rows;
-
             this.firstElement = ((this.query.page - 1) * this.query.rows);
-
             await this.getList();
+        },
+        //---------------------------------------------------------------------
+        async modulesPaginate(event) {
+            this.modules_query.page = event.page + 1;
+            this.modules_query.rows = event.rows;
+            await this.getModules();
         },
         //---------------------------------------------------------------------
         async reload()
@@ -947,6 +961,7 @@ export const useModuleStore = defineStore({
             if(data)
             {
                 this.modules.list = data.list;
+                this.modules_query.rows = parseInt(this.modules.per_page);
             }
         },
         //---------------------------------------------------------------------

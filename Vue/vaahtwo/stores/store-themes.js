@@ -20,7 +20,8 @@ let empty_states = {
             trashed: null,
             sort: null,
             status: null
-        }
+        },
+        q: null
     },
     action: {
         type: null,
@@ -73,7 +74,6 @@ export const useThemeStore = defineStore({
         is_btn_loading: false,
         list_is_loading: false,
         themes: [],
-        q: null,
         module: null,
         statusList: [
             {name: 'All', value: 'all'},
@@ -82,7 +82,11 @@ export const useThemeStore = defineStore({
             {name: 'Updates Available', value: 'update_available'}
         ],
         firstElement: null,
-        stats: null
+        stats: null,
+        themes_query: {
+            page: null,
+            query: null
+        }
     }),
     getters: {
 
@@ -230,6 +234,11 @@ export const useThemeStore = defineStore({
             {
                 this.list = data.list.data;
                 this.stats = data.stats;
+
+                if (this.query.rows) {
+                    this.query.rows = parseInt(this.query.rows);
+                }
+
                 this.firstElement = ((this.query.page - 1) * this.query.rows);
             }
         },
@@ -476,6 +485,12 @@ export const useThemeStore = defineStore({
             this.query.rows = event.rows;
             this.firstElement = ((this.query.page - 1) * this.query.rows);
             await this.getList();
+        },
+        //---------------------------------------------------------------------
+        async themesPaginate(event) {
+            this.themes_query.page = event.page + 1;
+            this.themes_query.rows = event.rows;
+            await this.getThemes();
         },
         //---------------------------------------------------------------------
         async reload()
@@ -939,15 +954,17 @@ export const useThemeStore = defineStore({
             let options = {
                 query: {
                     page: 1,
-                    q: this.q
+                    q: this.query.q
                 }
             };
             vaah().ajax(url, this.getThemesAfter,options);
         },
-        getThemesAfter(data) {
-            if(data)
+        getThemesAfter(data)
+        {
+            if (data)
             {
                 this.themes = data.list;
+                this.themes_query.rows = parseInt(this.themes.per_page);
             }
         },
         //---------------------------------------------------------------------
