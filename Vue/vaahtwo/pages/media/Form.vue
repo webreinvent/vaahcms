@@ -82,7 +82,7 @@ const toggleFormMenu = (event) => {
             <template #content>
                 <div class="form">
                     <span class="p-float-label">
-                        <InputText id="name" class="w-full" v-model="store.item.name"></InputText>
+                        <InputText id="name" class="w-full p-inputtext-sm" v-model="store.item.name" />
                         <label for="name">Name</label>
                     </span>
                     <div v-if="!store.item.id" class="field mb-4 relative">
@@ -97,11 +97,14 @@ const toggleFormMenu = (event) => {
                         </FileUpload>
                     </div>
                     <span class="p-float-label">
-                        <InputText id="title" class="w-full" v-model="store.item.title"></InputText>
+                        <InputText id="title" class="w-full p-inputtext-sm" v-model="store.item.title" />
                         <label for="title">Title</label>
                     </span>
                     <span class="p-float-label">
-                        <InputText id="alt-text" class="w-full"  v-model="store.item.alt_text"></InputText>
+                        <InputText id="alt-text" class="w-full"
+                                   v-model="store.item.alt_text"
+                        />
+
                         <label for="alt-text">Alternate Text</label>
                     </span>
                     <span class="p-float-label mb-0">
@@ -120,24 +123,33 @@ const toggleFormMenu = (event) => {
                     <span class="p-float-label" v-if="store.item.is_downloadable">
                         <span class="p-buttonset">
                             <span class="p-float-label">
-                                <InputText id="download_url" class="col-10" v-model="store.item.download_url"></InputText>
+                                <InputText id="download_url" class="col-10 p-inputtext-sm"
+                                           v-model="store.item.download_url"
+                                />
+
                                 <label for="download_url">Download Url</label>
+
                                 <Button v-if="store.downloadable_slug_available"
                                         data-testid="media-list-check_url_availability"
                                         @click="store.isDownloadableSlugAvailable"
-                                        class="p-button-success"
+                                        class="p-button-success p-button-sm"
                                         icon="pi pi-check"
-                                        v-tooltip.top=" 'Check Availability' "
+                                        v-tooltip.top=" 'Download URL Available' "
                                 />
+
                                 <Button v-else
                                         data-testid="media-list-check_url_availability"
                                         @click="store.isDownloadableSlugAvailable"
                                         icon="pi pi-question"
+                                        class="p-button-sm"
+                                        v-tooltip.top=" 'Check Availability' "
                                 />
+
                                 <Button data-testid="media-copy_download_url"
                                         @click="store.copyDownloadUrl()"
                                         icon="pi pi-copy"
                                         v-tooltip.top=" 'Copy Download Link' "
+                                        class="p-button-sm"
                                 />
                             </span>
                         </span>
