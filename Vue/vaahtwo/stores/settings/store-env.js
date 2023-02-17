@@ -56,6 +56,7 @@ export const useEnvStore = defineStore({
         form_menu_list: [],
         env_file: null,
         new_variable:null,
+        is_btn_loading: false,
     }),
     getters: {
 
@@ -106,12 +107,12 @@ export const useEnvStore = defineStore({
 
             await vaah().ajax(
                 this.ajax_url+'/list',
-                this.afterGetList,
+                this.getListAfter,
                 options
             );
         },
         //---------------------------------------------------------------------
-        afterGetList: function (data, res)
+        getListAfter: function (data, res)
         {
             this.is_btn_loading = false;
             this.query.recount = null;
@@ -304,6 +305,10 @@ export const useEnvStore = defineStore({
             window.location.href = this.ajax_url+"/download-file/"+file_name;
         },
         //---------------------------------------------------------------------
+        async sync() {
+            this.is_btn_loading = true;
+            await this.getList();
+        },
         //---------------------------------------------------------------------
 
     }

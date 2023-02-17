@@ -43,12 +43,14 @@ onMounted(async () => {
                 <div>
                     <Button icon="pi pi-download"
                             class="mr-2 p-button-sm"
-                            @click="store.downloadFile(store.env_file)">
-                    </Button>
+                            @click="store.downloadFile(store.env_file)"
+                    />
+
                     <Button icon="pi pi-refresh"
                             class="p-button-sm"
-                            @click="store.getList()">
-                    </Button>
+                            @click="store.sync"
+                            :loading="store.is_btn_loading"
+                    />
                 </div>
             </div>
         </template>
