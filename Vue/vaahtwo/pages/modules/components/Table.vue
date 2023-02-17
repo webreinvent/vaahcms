@@ -42,7 +42,7 @@ const importSampleDataModal = (item) => {
                             <div class="flex justify-content-end">
                                 <Button v-if="item.is_active && store.hasPermission('can-deactivate-module')"
                                         data-testid="modules-table-action-deactivate"
-                                        class="mr-2 p-button-sm"
+                                        class="mr-2 p-button-sm bg-yellow-400 text-color"
                                         label="Deactivate"
                                         v-tooltip.top="'Deactivate Module'"
                                         @click="store.toggleIsActive(item)"
