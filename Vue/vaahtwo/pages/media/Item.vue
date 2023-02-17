@@ -45,6 +45,10 @@ onMounted(async () => {
         }, { deep: true }
     )*/
 
+    if(route.params && route.params.id) {
+        await store.getItem(route.params.id);
+    }
+
 });
 
 //--------toggle item menu
