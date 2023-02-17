@@ -165,6 +165,7 @@ onMounted(async () => {
                         />
 
                         <Button label="Reset"
+                                icon="pi pi-filter-slash"
                                 @click="store.removeQueryString"
                                 data-testid="localization-reset"
                                 class="p-button-sm"
