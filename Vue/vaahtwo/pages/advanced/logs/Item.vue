@@ -64,14 +64,29 @@ const toggleItemMenu = (event) => {
             </template>
 
             <template #icons>
-                <Button icon="pi pi-trash" @click="store.clearFile(store.item)"
-                        class="p-button-sm p-button-rounded p-button-text" />
-                <Button icon="pi pi-download" @click="store.downloadFile(store.item)"
-                        class="p-button-sm p-button-rounded p-button-text" />
-                <Button icon="pi pi-refresh" @click="store.getItem(store.item.name)"
-                        class="p-button-sm p-button-rounded p-button-text" />
-                <Button icon="pi pi-times" @click="store.toList()"
-                        class="p-button-sm p-button-rounded p-button-text" />
+                <Button icon="pi pi-trash"
+                        @click="store.confirmClearFile(store.item)"
+                        class="p-button-sm p-button-rounded p-button-text"
+                        v-tooltip.top=" 'Clear File' "
+                />
+
+                <Button icon="pi pi-download"
+                        @click="store.downloadFile(store.item)"
+                        class="p-button-sm p-button-rounded p-button-text"
+                        v-tooltip.top=" 'Download File' "
+                />
+
+                <Button icon="pi pi-refresh"
+                        @click="store.getItem(store.item.name)"
+                        class="p-button-sm p-button-rounded p-button-text"
+                        v-tooltip.top=" 'Reload' "
+                />
+
+                <Button icon="pi pi-times"
+                        @click="store.toList()"
+                        class="p-button-sm p-button-rounded p-button-text"
+                        v-tooltip.top=" 'Close' "
+                />
             </template>
 
             <div class="card">
@@ -80,11 +95,8 @@ const toggleItemMenu = (event) => {
                         <table v-if="store.item.logs" class="p-datatable">
                             <tr v-for="log in store.item.logs">
                                 <td>
-
                                     <div class="level is-marginless">
-
                                         <div class="level-left">
-
                                             <div class="level-item">
                                                 <Tag class="mb-2 bg-black-alpha-90 border-noround text-xs">TYPE</Tag>
                                                 <Tag class="mr-2 mb-2 border-noround" :value="log.type"></Tag>
@@ -97,13 +109,15 @@ const toggleItemMenu = (event) => {
                                             </div>
 
                                             <div class="level-item">
-                                                <Tag class="mb-2 bg-black-alpha-90 border-noround">ENV</Tag>
+                                                <Tag class="mb-2 bg-black-alpha-90 border-noround"
+                                                     value="ENV"
+                                                />
+
                                                 <Tag class="mr-2 mb-2 border-noround"
-                                                     :value="log.env"></Tag>
+                                                     :value="log.env"
+                                                />
                                             </div>
-
                                         </div>
-
                                     </div>
 
                                     <small>
@@ -113,6 +127,7 @@ const toggleItemMenu = (event) => {
                             </tr>
                         </table>
                     </TabPanel>
+
                     <TabPanel header="Raw">
                         <small v-if="store.item.content"
                             style="max-height: 768px; overflow: auto;"
@@ -120,9 +135,6 @@ const toggleItemMenu = (event) => {
                     </TabPanel>
                 </TabView>
             </div>
-
-
         </Panel>
     </div>
-
 </template>

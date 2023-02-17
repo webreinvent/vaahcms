@@ -226,10 +226,14 @@ export const useLogStore = defineStore({
             await this.getItemMenu();
         },
         //---------------------------------------------------------------------
-        clearFile: function(item)
-        {
+        confirmClearFile(item){
+            this.item = item;
+            vaah().confirmDialogDelete(this.clearFile);
+        },
+        //---------------------------------------------------------------------
+        clearFile() {
             let params = {
-                params:item,
+                params: this.item,
                 method:'POST'
             }
 
@@ -241,8 +245,7 @@ export const useLogStore = defineStore({
         },
 
         //---------------------------------------------------------------------
-        clearFileAfter: function(data, res)
-        {
+        clearFileAfter(data, res) {
             if(data && data.message === 'success'){
                 this.getItem(this.item.name);
             }
