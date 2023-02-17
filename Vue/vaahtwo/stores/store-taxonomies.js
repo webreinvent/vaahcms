@@ -155,21 +155,6 @@ export const useTaxonomyStore = defineStore({
             )
         },
         //---------------------------------------------------------------------
-        watchItem()
-        {
-            if(this.item){
-                    watch(() => this.item.name, (newVal,oldVal) =>
-                        {
-                            if(newVal && newVal !== "")
-                            {
-                                // this.item.name = vaah().capitalising(newVal);
-                                this.item.slug = vaah().strToSlug(newVal);
-                            }
-                        },{deep: true}
-                    )
-                }
-        },
-        //---------------------------------------------------------------------
         async getAssets() {
 
             if(this.assets_is_fetching === true){
@@ -415,6 +400,10 @@ export const useTaxonomyStore = defineStore({
                 await this.getList();
                 await this.formActionAfter();
                 this.getItemMenu();
+
+                if (this.route.params && this.route.params.id) {
+                    await this.getItem(this.route.params.id);
+                }
             }
         },
         //---------------------------------------------------------------------
@@ -431,11 +420,13 @@ export const useTaxonomyStore = defineStore({
                     this.setActiveItemAsEmpty();
                     this.$router.push({name: 'taxonomies.index'});
                     break;
+                case 'create-and-clone':
                 case 'save-and-clone':
                     this.item.id = null;
                     break;
                 case 'trash':
                     this.item = null;
+                    console.log(this.item);
                     break;
                 case 'delete':
                     this.item = null;
@@ -923,9 +914,9 @@ export const useTaxonomyStore = defineStore({
             this.taxonomy_type_items.parent_id = e.id;
         },
         //---------------------------------------------------------------------
-        async selectedParent(e) {
-            this.item.vh_taxonomy_type_id = e.id;
-            this.item.type = e.data;
+        async selectedParent(event) {
+            this.item.vh_taxonomy_type_id = event.id;
+            this.item.type = event.data;
         },
         //---------------------------------------------------------------------
         async searchCountry(event) {
@@ -940,6 +931,11 @@ export const useTaxonomyStore = defineStore({
                 }
             }, 250);
         },
+        //---------------------------------------------------------------------
+        strToSlug(name)
+        {
+            return vaah().strToSlug(name);
+        }
         //---------------------------------------------------------------------
     }
 });

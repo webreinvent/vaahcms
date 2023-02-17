@@ -36,15 +36,17 @@ const toggleBulkMenuState = (event) => {
             <div v-if="store.view === 'large'">
 
                 <!--selected_menu-->
-                <Button
-                    type="button"
-                    @click="toggleSelectedMenuState"
-                    data-testid="media-actions-menu"
-                    aria-haspopup="true"
-                    aria-controls="overlay_menu">
-                    <i class="pi pi-angle-down"></i>
+                <Button class="p-button-sm"
+                        icon="pi pi-angle-down"
+                        data-testid="media-actions-menu"
+                        type="button"
+                        aria-haspopup="true"
+                        aria-controls="overlay_menu"
+                        @click="toggleSelectedMenuState"
+                >
                     <Badge v-if="store.action.items.length > 0"
-                           :value="store.action.items.length" />
+                           :value="store.action.items.length"
+                    />
                 </Button>
                 <Menu ref="selected_menu_state"
                       :model="store.list_selected_menu"
@@ -52,15 +54,14 @@ const toggleBulkMenuState = (event) => {
                 <!--/selected_menu-->
 
                 <!--bulk_menu-->
-                <Button
-                    type="button"
-                    @click="toggleBulkMenuState"
-                    data-testid="media-actions-bulk-menu"
-                    aria-haspopup="true"
-                    aria-controls="bulk_menu_state"
-                    class="ml-1">
-                    <i class="pi pi-ellipsis-h"></i>
-                </Button>
+                <Button class="ml-1 p-button-sm"
+                        icon="pi pi-ellipsis-h"
+                        data-testid="media-actions-bulk-menu"
+                        type="button"
+                        aria-haspopup="true"
+                        aria-controls="bulk_menu_state"
+                        @click="toggleBulkMenuState"
+                />
                 <Menu ref="bulk_menu_state"
                       :model="store.list_bulk_menu"
                       :popup="true" />
@@ -80,12 +81,14 @@ const toggleBulkMenuState = (event) => {
                         <div class="p-inputgroup ">
 
                             <InputText v-model="store.query.filter.q"
+                                       class="p-inputtext-sm"
                                        @keyup.enter="store.delayedSearch()"
                                        @keyup.enter.native="store.delayedSearch()"
                                        @keyup.13="store.delayedSearch()"
                                        data-testid="media-actions-search"
                                        placeholder="Search"/>
                             <Button @click="store.delayedSearch()"
+                                    class="p-button-sm"
                                     data-testid="media-actions-search-button"
                                     icon="pi pi-search"/>
                             <Button

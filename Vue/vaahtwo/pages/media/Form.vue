@@ -31,7 +31,7 @@ const toggleFormMenu = (event) => {
                 <div class="flex justify-content-between align-items-center">
                     <h5 class="font-semibold text-lg">
                         <span v-if="store.item && store.item.id">
-                            Update
+                            {{ store.item.name }}
                         </span>
                         <span v-else>
                             Create
