@@ -39,7 +39,7 @@ export const useThemeStore = defineStore({
         assets_is_fetching: true,
         app: null,
         assets: null,
-        rows_per_page: [1,2,10,20,30,50,100,500],
+        rows_per_page: [10,20,30,50,100,500],
         list: null,
         item: null,
         fillable:null,
