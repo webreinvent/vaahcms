@@ -59,8 +59,6 @@ class ThemesController extends Controller
             return response()->json($response);
         }
 
-        Theme::syncAll();
-
         $list = Theme::orderBy('created_at', 'DESC');
 
 
