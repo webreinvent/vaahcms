@@ -127,15 +127,16 @@ onMounted(async () => {
                                         <div class="content-div"
                                         >
                                             <div class="p-inputgroup mb-3">
-                                                <Button label=":::" class="drag"
+                                                <Button label=":::"
+                                                        class="drag p-button-sm"
                                                         data-testid="setting-customfield_drag_btn"
                                                 />
-                                                <InputText class="w-2"
+                                                <InputText class="w-2 p-inputtext-sm"
                                                            :model-value="vaah().toLabel(element.type)"
                                                            disabled
                                                 />
 
-                                                <InputText class="w-6"
+                                                <InputText class="w-6 p-inputtext-sm"
                                                            v-model="element.name"
                                                            data-testid="setting-customfield_name"
                                                            @input="store.onInputFieldName(element)"
@@ -145,11 +146,13 @@ onMounted(async () => {
                                                 <Button icon="pi pi-cog p-button-sm"
                                                         data-testid="setting-customfield_toggle"
                                                         @click="store.toggleFieldOptions"
+                                                        class="p-button-sm"
                                                 />
 
                                                 <Button icon="pi pi-trash p-button-sm"
                                                         data-testid="setting-customfield_remove"
                                                         @click="store.deleteGroupField(index)"
+                                                        class="p-button-sm"
                                                 />
                                             </div>
 
@@ -158,7 +161,7 @@ onMounted(async () => {
                                                     <table class="p-datatable-table">
                                                         <tbody class="p-datatable-tbody">
                                                             <tr>
-                                                                <td>Is hidden</td>
+                                                                <td>Is hidden</td>\
 
                                                                 <td>
                                                                     <InputSwitch v-model="element.is_hidden"
@@ -176,7 +179,8 @@ onMounted(async () => {
                                                                     <InputSwitch v-model="element.to_registration"
                                                                                  data-testid="setting-customfield_to_registration"
                                                                                  v-bind:false-value="0"
-                                                                                 v-bind:true-value="1" />
+                                                                                 v-bind:true-value="1"
+                                                                    />
                                                                 </td>
                                                             </tr>
 
@@ -198,7 +202,7 @@ onMounted(async () => {
                                                                 <td>
                                                                     <InputNumber v-model="element.minlength"
                                                                                  data-testid="setting-customfield_minlength"
-                                                                                 class="w-full"
+                                                                                 class="w-full p-inputtext-sm"
                                                                     />
                                                                 </td>
                                                             </tr>
@@ -208,7 +212,7 @@ onMounted(async () => {
                                                                 <td>
                                                                     <InputNumber v-model="element.maxlength"
                                                                                  data-testid="setting-customfield_maxlength"
-                                                                                 class="w-full"
+                                                                                 class="w-full p-inputtext-sm"
                                                                     />
                                                                 </td>
                                                             </tr>
@@ -246,12 +250,14 @@ onMounted(async () => {
                                               :options="store.field_types"
                                               optionLabel="name" optionValue="value"
                                               placeholder="Select a type"
+                                              inputClass="p-inputtext-sm"
                                     />
 
                                     <Button label="Add"
                                             :disabled="!store.selected_field_type"
                                             data-testid="setting-customfield_field_add"
                                             @click="store.addCustomField"
+                                            class="p-button-sm"
                                     />
                                 </div>
                             </div>
@@ -270,6 +276,7 @@ onMounted(async () => {
         </Card>
     </div>
 </template>
+
 <style>
 .inactive{
     display: none;
