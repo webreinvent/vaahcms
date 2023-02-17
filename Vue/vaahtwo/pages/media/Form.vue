@@ -2,10 +2,11 @@
 import {onMounted, ref} from "vue";
 import { useMediaStore } from '../../stores/store-media'
 import {useRoute} from 'vue-router';
-
+import { vaah } from "../../vaahvue/pinia/vaah";
 
 const store = useMediaStore();
 const route = useRoute();
+const useVaah = vaah();
 
 onMounted(async () => {
     if(route.params && route.params.id)
@@ -38,6 +39,13 @@ const toggleFormMenu = (event) => {
                         </span>
                     </h5>
                     <div class="p-inputgroup justify-content-end">
+                        <Button v-if="store.item && store.item.id"
+                                class="p-button-sm"
+                                :label=" '#' + store.item.id "
+                                data-testid="media-id"
+                                @click="useVaah.copy(store.item.id)"
+                        />
+
                         <Button label="Save"
                                 v-if="store.item && store.item.id"
                                 data-testid="media-save"
