@@ -2,12 +2,12 @@
 import {onMounted, ref, watch} from "vue";
 import {useRoute} from 'vue-router';
 import {vaah} from '../../vaahvue/pinia/vaah';
-
 import { useMediaStore } from '../../stores/store-media';
-
 import VhViewRow from '../../vaahvue/vue-three/primeflex/VhViewRow.vue';
+
 const store = useMediaStore();
 const route = useRoute();
+const useVaah = vaah();
 
 onMounted(async () => {
 
@@ -81,9 +81,11 @@ const toggleItemMenu = (event) => {
 
 
                 <div class="p-inputgroup">
-                    <Button @click="$vaah.copy(store.item.id)" class="p-button-outlined">
-                        #{{ store.item.id }}
-                    </Button>
+                    <Button :label=" '#' + store.item.id "
+                            @click="useVaah.copy(store.item.id)"
+                            data-testid="media-item-id"
+                    />
+
                     <Button label="Edit"
                             @click="store.toEdit(store.item)"
                             data-testid="media-item-to-edit"
