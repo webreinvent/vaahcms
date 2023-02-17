@@ -59,13 +59,12 @@ onMounted(async () => {
                         <div >
                             <b class="mr-1">Failed Jobs</b>
                             <Badge v-if="store.list && store.list.total > 0"
-                                   :value="store.list.total">
-                            </Badge>
+                                   :value="store.list.total"
+                            />
                         </div>
-
                     </div>
-
                 </template>
+
                 <template #icons>
                     <div class="p-inputgroup">
                         <Button class="p-button-sm"
@@ -77,18 +76,14 @@ onMounted(async () => {
                     </div>
                 </template>
 
-                <Actions/>
+                <Actions />
 
                 <br/>
 
-                <Table/>
-
+                <Table />
             </Panel>
         </div>
 
         <RouterView/>
-
     </div>
-
-
 </template>
