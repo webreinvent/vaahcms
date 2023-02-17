@@ -960,7 +960,7 @@ export const useModuleStore = defineStore({
             if(data)
             {
                 this.modules.list = data.list;
-                this.modules_query.rows = parseInt(this.modules.per_page);
+                this.modules_query.rows = parseInt(this.modules.list.per_page);
             }
         },
         //---------------------------------------------------------------------
