@@ -38,10 +38,11 @@ const toggleBulkMenuState = (event) => {
                 <!--selected_menu-->
                 <Button class="p-button-sm"
                         icon="pi pi-angle-down"
-                        @click="toggleSelectedMenuState"
                         data-testid="media-actions-menu"
+                        type="button"
                         aria-haspopup="true"
                         aria-controls="overlay_menu"
+                        @click="toggleSelectedMenuState"
                 >
                     <Badge v-if="store.action.items.length > 0"
                            :value="store.action.items.length"
@@ -54,14 +55,14 @@ const toggleBulkMenuState = (event) => {
                 <!--/selected_menu-->
 
                 <!--bulk_menu-->
-                <Button class="p-button-sm ml-1"
+                <Button class="ml-1 p-button-sm"
                         icon="pi pi-ellipsis-h"
-                        @click="toggleBulkMenuState"
                         data-testid="media-actions-bulk-menu"
+                        type="button"
                         aria-haspopup="true"
                         aria-controls="bulk_menu_state"
+                        @click="toggleBulkMenuState"
                 />
-
                 <Menu ref="bulk_menu_state"
                       :model="store.list_bulk_menu"
                       :popup="true"
@@ -76,6 +77,7 @@ const toggleBulkMenuState = (event) => {
                     <div class="col-12">
                         <div class="p-inputgroup">
                             <InputText v-model="store.query.filter.q"
+                                       class="p-inputtext-sm"
                                        @keyup.enter="store.delayedSearch()"
                                        @keyup.enter.native="store.delayedSearch()"
                                        @keyup.13="store.delayedSearch()"
@@ -85,6 +87,7 @@ const toggleBulkMenuState = (event) => {
                             />
 
                             <Button @click="store.delayedSearch()"
+                                    class="p-button-sm"
                                     data-testid="media-actions-search-button"
                                     icon="pi pi-search"
                                     class="p-button-sm"

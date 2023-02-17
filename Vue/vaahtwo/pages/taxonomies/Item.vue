@@ -66,7 +66,7 @@ const toggleItemMenu = (event) => {
                 <div class="flex flex-row">
 
                     <div class="p-panel-title">
-                        #{{store.item.id}}
+                        {{store.item.name}}
                     </div>
 
                 </div>

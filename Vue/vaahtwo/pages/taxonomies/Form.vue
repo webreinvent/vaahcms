@@ -6,18 +6,18 @@ import { useRoute } from 'vue-router';
 import VhField from './../../vaahvue/vue-three/primeflex/VhField.vue'
 import { useDialog } from "primevue/usedialog";
 import TaxonomyTypeModal from "./components/TaxonomyTypeModal.vue";
+import {vaah} from "../../vaahvue/pinia/vaah";
 
 const store = useTaxonomyStore();
 const root = useRootStore();
 const route = useRoute();
+const useVaah = vaah();
 
 onMounted(async () => {
     if(route.params && route.params.id)
     {
         await store.getItem(route.params.id);
     }
-
-    await store.watchItem();
 
     /**
      * Fetch the permissions from the database
@@ -29,6 +29,12 @@ onMounted(async () => {
      */
     await root.getIsActiveStatusOptions();
 });
+
+watch(store.item, async (newVal, oldVal) => {
+    if(newVal.name){
+        store.item.slug = store.strToSlug(newVal.name);
+    }
+})
 
 //--------form_menu
 const form_menu = ref();
@@ -134,14 +140,13 @@ const openTaxonomyTypeModal = () => {
             </template>
 
             <div v-if="store.item">
-
                 <VhField label="Type">
                     <div class="p-inputgroup">
                         <TreeSelect class="w-full"
                                     v-model="selectedParentID"
                                     :options="store.assets.types"
                                     placeholder="Select a Parent"
-                                    @node-select="store.selectedParent"
+                                    @node-select="store.selectedParent($event)"
                         />
 
                         <Button v-if="store.hasPermission('can-manage-taxonomy-types')"
