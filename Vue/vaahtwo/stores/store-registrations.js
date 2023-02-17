@@ -31,13 +31,15 @@ let empty_states = {
 export const useRegistrationStore = defineStore({
     id: 'registrations',
     state: () => ({
+        page: 1,
+        rows: 20,
         base_url: base_url,
         ajax_url: ajax_url,
         model: model_namespace,
         assets_is_fetching: true,
         app: null,
         assets: null,
-        rows_per_page: [10,20,30,50,100,500],
+        rows_per_page: [1,2,10,20,30,50,100,500],
         list: null,
         item: null,
         fillable:null,
@@ -81,7 +83,7 @@ export const useRegistrationStore = defineStore({
         filtered_country_codes: [],
         display_bio_modal: null,
         bio_modal_data: null,
-
+        firstElement: null
     }),
     getters: {
 
@@ -181,11 +183,14 @@ export const useRegistrationStore = defineStore({
         {
             if(data)
             {
-
                 this.assets = data;
                 if(data.rows)
                 {
-                    this.query.rows = data.rows;
+                    if (!this.query.rows) {
+                        this.query.rows = data.rows;
+                    } else {
+                        this.query.rows = parseInt(this.query.rows);
+                    }
                 }
 
                 if(this.route.params && !this.route.params.id){
@@ -199,6 +204,9 @@ export const useRegistrationStore = defineStore({
             let options = {
                 query: vaah().clone(this.query)
             };
+
+            await this.updateUrlQueryString(this.query);
+
             await vaah().ajax(
                 this.ajax_url,
                 this.afterGetList,
@@ -211,6 +219,7 @@ export const useRegistrationStore = defineStore({
             if(data)
             {
                 this.list = data;
+                this.firstElement = this.query.rows * (this.query.page - 1);
             }
 
             this.is_btn_loading = false;
@@ -473,6 +482,8 @@ export const useRegistrationStore = defineStore({
         //---------------------------------------------------------------------
         async paginate(event) {
             this.query.page = event.page+1;
+            this.query.rows = event.rows;
+            this.firstElement = this.query.rows * (this.query.page - 1);
             await this.getList();
         },
         //---------------------------------------------------------------------
@@ -612,6 +623,10 @@ export const useRegistrationStore = defineStore({
             {
                 this.query.filter[key] = null;
             }
+
+            this.query.page = this.page;
+            this.query.rows = this.rows;
+
             await this.updateUrlQueryString(this.query);
         },
         //---------------------------------------------------------------------
