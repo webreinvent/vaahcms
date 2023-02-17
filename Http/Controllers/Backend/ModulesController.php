@@ -59,8 +59,6 @@ class ModulesController extends Controller
             return response()->json($response);
         }
 
-        Module::syncAllModules();
-
         $list = Module::orderBy('created_at', 'DESC');
 
         if($request->has('filter'))
@@ -89,7 +87,6 @@ class ModulesController extends Controller
                 }
             }
         }
-
 
         $stats['all'] = $list->count();
         $stats['active'] = Module::active()->count();

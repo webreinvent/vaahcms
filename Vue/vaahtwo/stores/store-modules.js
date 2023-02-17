@@ -232,7 +232,6 @@ export const useModuleStore = defineStore({
         afterGetList(data)
         {
             this.is_btn_loading = false;
-
             if (data)
             {
                 this.list = data.list.data;
@@ -982,6 +981,7 @@ export const useModuleStore = defineStore({
         },
         //---------------------------------------------------------------------
         isInstalled(item) {
+
             return vaah().existInArray(this.assets.installed, item.slug);
         },
         //---------------------------------------------------------------------
@@ -1036,13 +1036,13 @@ export const useModuleStore = defineStore({
             vaah().ajax(url, this.installAfter, options);
         },
         //---------------------------------------------------------------------
-        installAfter(data) {
+        async installAfter(data) {
             if(data)
             {
                 this.modules.active_download = null;
                 this.assets_is_fetching = true;
-                this.getList();
-                this.getAssets();
+                await this.getList();
+                await this.getAssets();
             }
         },
         //---------------------------------------------------------------------

@@ -230,7 +230,7 @@ export const useThemeStore = defineStore({
         afterGetList: function (data, res)
         {
             this.is_btn_loading = false;
-            if(data)
+            if (data)
             {
                 this.list = data.list.data;
                 this.stats = data.stats;
@@ -982,13 +982,13 @@ export const useThemeStore = defineStore({
             vaah().ajax(url, this.installAfter, options);
         },
         //---------------------------------------------------------------------
-        installAfter(data) {
+        async installAfter(data) {
             if(data)
             {
                 this.themes.active_download = null;
                 this.assets_is_fetching = true;
-                this.getList();
-                this.getAssets();
+                await this.getAssets();
+                await this.getList();
             }
         },
         closeInstallTheme() {
