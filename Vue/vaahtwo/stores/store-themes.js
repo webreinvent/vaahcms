@@ -19,8 +19,8 @@ let empty_states = {
             is_active: null,
             trashed: null,
             sort: null,
-        },
-        status: null
+            status: null
+        }
     },
     action: {
         type: null,
@@ -31,13 +31,15 @@ let empty_states = {
 export const useThemeStore = defineStore({
     id: 'themes',
     state: () => ({
+        page: 1,
+        rows: 20,
         base_url: base_url,
         ajax_url: ajax_url,
         model: model_namespace,
         assets_is_fetching: true,
         app: null,
         assets: null,
-        rows_per_page: [10,20,30,50,100,500],
+        rows_per_page: [1,2,10,20,30,50,100,500],
         list: null,
         item: null,
         fillable:null,
@@ -71,7 +73,7 @@ export const useThemeStore = defineStore({
         is_btn_loading: false,
         list_is_loading: false,
         themes: [],
-        q: '',
+        q: null,
         module: null,
         statusList: [
             {name: 'All', value: 'all'},
@@ -79,6 +81,8 @@ export const useThemeStore = defineStore({
             {name: 'Inactive', value: 'inactive'},
             {name: 'Updates Available', value: 'update_available'}
         ],
+        firstElement: null,
+        stats: null
     }),
     getters: {
 
@@ -155,7 +159,7 @@ export const useThemeStore = defineStore({
         //---------------------------------------------------------------------
         watchStates()
         {
-            watch(this.query, (newVal,oldVal) =>
+            watch(this.query.filter, (newVal,oldVal) =>
                 {
                     this.delayedSearch();
                 },{deep: true}
@@ -196,7 +200,11 @@ export const useThemeStore = defineStore({
                 this.assets = data;
                 if(data.rows)
                 {
-                    this.query.rows = data.rows;
+                    if (!this.query.rows) {
+                        this.query.rows = parseInt(data.rows);
+                    } else {
+                        this.query.rows = parseInt(this.query.rows);
+                    }
                 }
             }
         },
@@ -205,6 +213,9 @@ export const useThemeStore = defineStore({
             let options = {
                 query: vaah().clone(this.query)
             };
+
+            await this.updateUrlQueryString(this.query);
+
             await vaah().ajax(
                 this.ajax_url,
                 this.afterGetList,
@@ -218,6 +229,8 @@ export const useThemeStore = defineStore({
             if(data)
             {
                 this.list = data.list.data;
+                this.stats = data.stats;
+                this.firstElement = ((this.query.page - 1) * this.query.rows);
             }
         },
         //---------------------------------------------------------------------
@@ -460,6 +473,8 @@ export const useThemeStore = defineStore({
         //---------------------------------------------------------------------
         async paginate(event) {
             this.query.page = event.page+1;
+            this.query.rows = event.rows;
+            this.firstElement = ((this.query.page - 1) * this.query.rows);
             await this.getList();
         },
         //---------------------------------------------------------------------
@@ -538,10 +553,13 @@ export const useThemeStore = defineStore({
             this.search.delay_timer = setTimeout(async function() {
                 await self.updateUrlQueryString(self.query);
 
-                if (self.query.q !== null) {
+                if (self.query.q !== null && self.query.q !== undefined) {
                     await self.getThemes();
                 }
-                if (self.query.filter.q !== null || self.query.status !== null) {
+
+                if ((self.query.filter.q !== null && self.query.filter.q !== undefined && self.query.filter.q !== '')
+                    || (self.query.filter.status !== null && self.query.filter.status !== undefined && self.query.filter.status !== ''))
+                {
                     await self.getList();
                 }
             }, this.search.delay_time);
@@ -622,6 +640,10 @@ export const useThemeStore = defineStore({
                 if (key === 'filter') continue;
                 this.query[key] = null;
             }
+
+            this.query.page = this.page;
+            this.query.rows = this.rows;
+
             await this.updateUrlQueryString(this.query);
         },
         //---------------------------------------------------------------------
