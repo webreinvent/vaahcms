@@ -66,7 +66,7 @@ onMounted(async () => {
                                 data-testid="jobs-content-refresh"
                                 icon="pi pi-refresh"
                                 :loading="store.is_btn_loading"
-                                @click="store.getList()"
+                                @click="store.sync"
                         />
                     </div>
                 </template>
