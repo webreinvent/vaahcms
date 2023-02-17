@@ -82,48 +82,47 @@ const toggleItemMenu = (event) => {
 
                 <div class="p-inputgroup">
                     <Button :label=" '#' + store.item.id "
+                            class="p-button-sm"
                             @click="useVaah.copy(store.item.id)"
                             data-testid="media-item-id"
                     />
 
                     <Button label="Edit"
+                            class="p-button-sm"
                             @click="store.toEdit(store.item)"
                             data-testid="media-item-to-edit"
-                            icon="pi pi-save"/>
+                            icon="pi pi-pencil"
+                    />
 
                     <!--item_menu-->
-                    <Button
-                        type="button"
-                        @click="toggleItemMenu"
-                        data-testid="media-item-menu"
-                        icon="pi pi-angle-down"
-                        aria-haspopup="true"/>
+                    <Button class="p-button-sm"
+                            @click="toggleItemMenu"
+                            data-testid="media-item-menu"
+                            icon="pi pi-angle-down"
+                            aria-haspopup="true"
+                    />
 
                     <Menu ref="item_menu_state"
                           :model="store.item_menu_list"
-                          :popup="true" />
+                          :popup="true"
+                    />
                     <!--/item_menu-->
 
-                    <Button class="p-button-primary"
+                    <Button class="p-button-sm"
                             icon="pi pi-times"
                             data-testid="media-item-to-list"
-                            @click="store.toList()"/>
-
+                            @click="store.toList()"
+                    />
                 </div>
-
-
-
             </template>
 
-
             <div v-if="store.item">
-
                 <Message severity="error"
                          class="p-container-message"
                          :closable="false"
                          icon="pi pi-trash"
-                         v-if="store.item.deleted_at">
-
+                         v-if="store.item.deleted_at"
+                >
                     <div class="flex align-items-center justify-content-between">
 
                         <div class="">
@@ -134,76 +133,72 @@ const toggleItemMenu = (event) => {
                             <Button label="Restore"
                                     class="p-button-sm"
                                     data-testid="media-item-restore"
-                                    @click="store.itemAction('restore')">
-                            </Button>
+                                    @click="store.itemAction('restore')"
+                            />
                         </div>
-
                     </div>
-
                 </Message>
 
                 <div class="p-datatable p-component p-datatable-responsive-scroll p-datatable-striped p-datatable-sm">
-                <table class="p-datatable-table">
-                    <tbody class="p-datatable-tbody">
-                    <template v-for="(value, column) in store.item ">
+                    <table class="p-datatable-table">
+                        <tbody class="p-datatable-tbody">
+                            <template v-for="(value, column) in store.item ">
 
-                        <template v-if="column === 'created_by' || column === 'updated_by'">
-                        </template>
+                                <template v-if="column === 'created_by' || column === 'updated_by'">
+                                </template>
 
-                        <template v-else-if="column === 'id' || column === 'uuid'">
-                            <VhViewRow :label="column"
-                                       :value="value"
-                                       :can_copy="true"
-                            />
-                        </template>
+                                <template v-else-if="column === 'id' || column === 'uuid'">
+                                    <VhViewRow :label="column"
+                                               :value="value"
+                                               :can_copy="true"
+                                    />
+                                </template>
 
-                        <template v-else-if="(column === 'created_by_user' || column === 'updated_by_user'  || column === 'deleted_by_user')
-                                            && (typeof value === 'object' && value !== null)">
-                            <VhViewRow :label="column"
-                                       :value="value"
-                                       type="user"
-                            />
-                        </template>
+                                <template v-else-if="(column === 'created_by_user' || column === 'updated_by_user'  || column === 'deleted_by_user')
+                                                    && (typeof value === 'object' && value !== null)">
+                                    <VhViewRow :label="column"
+                                               :value="value"
+                                               type="user"
+                                    />
+                                </template>
 
-                        <template v-else-if="column === 'is_active' || column === 'is_downloadable' || column === 'download_requires_login'">
-                            <VhViewRow :label="column"
-                                       :value="value"
-                                       type="yes-no"
-                            />
-                        </template>
-                        <template v-else-if="column === 'size'">
-                            <tr>
-                                <td><b>{{ vaah().toLabel(column) }}</b></td>
-                                <td colspan="2">
-                                    <Tag severity="primary">{{ store.toKb(value) }}</Tag>
-                                </td>
-                            </tr>
-                        </template>
+                                <template v-else-if="column === 'is_active' || column === 'is_downloadable' || column === 'download_requires_login'">
+                                    <VhViewRow :label="column"
+                                               :value="value"
+                                               type="yes-no"
+                                    />
+                                </template>
 
-                        <template v-else-if="column === 'url' || column === 'url_thumbnail' || column === 'download_url_full' ">
-                            <tr>
-                                <td><b>{{ vaah().toLabel(column) }}</b></td>
-                                <td style="word-break: break-all;">{{ value }}</td>
-                                <td><Button icon="pi pi-external-link"
-                                            @click="store.openImage(value)"
-                                            class="p-button-text p-button-sm"/>
-                                </td>
-                            </tr>
-                        </template>
-                        <template v-else>
-                            <VhViewRow :label="column"
-                                       :value="value"
-                                       />
-                        </template>
-                    </template>
-                    </tbody>
+                                <template v-else-if="column === 'size'">
+                                    <tr>
+                                        <td><b>{{ vaah().toLabel(column) }}</b></td>
+                                        <td colspan="2">
+                                            <Tag severity="primary">{{ store.toKb(value) }}</Tag>
+                                        </td>
+                                    </tr>
+                                </template>
 
-                </table>
+                                <template v-else-if="column === 'url' || column === 'url_thumbnail' || column === 'download_url_full' ">
+                                    <tr>
+                                        <td><b>{{ vaah().toLabel(column) }}</b></td>
+                                        <td style="word-break: break-all;">{{ value }}</td>
+                                        <td><Button icon="pi pi-external-link"
+                                                    @click="store.openImage(value)"
+                                                    class="p-button-text p-button-sm"/>
+                                        </td>
+                                    </tr>
+                                </template>
 
+                                <template v-else>
+                                    <VhViewRow :label="column"
+                                               :value="value"
+                                   />
+                                </template>
+                            </template>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </Panel>
-
     </div>
-
 </template>

@@ -16,15 +16,14 @@ const useVaah = vaah();
                    class="p-datatable-sm"
                    v-model:selection="store.action.items"
                    stripedRows
-                   responsiveLayout="scroll">
-
+                   responsiveLayout="scroll"
+         >
             <Column selectionMode="multiple"
                     v-if="store.isViewLarge()"
-                    headerStyle="width: 3em">
-            </Column>
+                    headerStyle="width: 3em"
+            />
 
-            <Column field="id" header="ID" :style="{width: store.getIdWidth()}">
-            </Column>
+            <Column field="id" header="ID" :style="{width: store.getIdWidth()}" />
 
              <Column field="thumbnail" header="Thumbnail">
                  <template #body="prop">
@@ -54,10 +53,10 @@ const useVaah = vaah();
                 </template>
             </Column>
 
-
             <Column field="updated_at" header="Updated"
                     v-if="store.isViewLarge()"
-                    style="width:150px;">
+                    style="width:150px;"
+            >
                 <template #body="prop">
                     {{useVaah.ago(prop.data.updated_at)}}
                 </template>
@@ -65,7 +64,8 @@ const useVaah = vaah();
 
             <Column field="actions" style="width:150px;"
                     :style="{width: store.getActionWidth() }"
-                    :header="store.getActionLabel()">
+                    :header="store.getActionLabel()"
+            >
                 <template #body="prop">
                     <div class="p-inputgroup">
                         <Button class="p-button-tiny p-button-text"
@@ -75,42 +75,41 @@ const useVaah = vaah();
                                 value="Open"
                                 url="prop.data.url"
                                 @click="store.openImage(prop.data.url)"
-                                target="_blank"/>
+                                target="_blank"
+                        />
+
                         <Button class="p-button-tiny p-button-text"
                                 data-testid="media-table-to-view"
                                 v-tooltip.top="'View'"
                                 @click="store.toView(prop.data)"
-                                icon="pi pi-eye" />
+                                icon="pi pi-eye"
+                        />
 
                         <Button class="p-button-tiny p-button-text"
                                 data-testid="media-table-to-edit"
                                 v-tooltip.top="'Update'"
                                 @click="store.toEdit(prop.data)"
-                                icon="pi pi-pencil" />
+                                icon="pi pi-pencil"
+                        />
 
                         <Button class="p-button-tiny p-button-danger p-button-text"
                                 data-testid="media-table-action-trash"
                                 v-if="store.isViewLarge() && !prop.data.deleted_at"
                                 @click="store.itemAction('trash', prop.data)"
                                 v-tooltip.top="'Trash'"
-                                icon="pi pi-trash" />
+                                icon="pi pi-trash"
+                        />
 
                         <Button class="p-button-tiny p-button-success p-button-text"
                                 data-testid="media-table-action-restore"
                                 v-if="store.isViewLarge() && prop.data.deleted_at"
                                 @click="store.itemAction('restore', prop.data)"
                                 v-tooltip.top="'Restore'"
-                                icon="pi pi-replay" />
-
-
+                                icon="pi pi-replay"
+                        />
                     </div>
-
                 </template>
-
-
             </Column>
-
-
         </DataTable>
         <!--/table-->
 
@@ -123,7 +122,5 @@ const useVaah = vaah();
                    :rowsPerPageOptions="store.rows_per_page">
         </Paginator>
         <!--/paginator-->
-
     </div>
-
 </template>

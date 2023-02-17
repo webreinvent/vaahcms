@@ -47,24 +47,18 @@ onMounted(async () => {
 
 </script>
 <template>
-
     <div class="grid" v-if="store.assets">
-
         <div :class="'col-'+store.list_view_width">
             <Panel>
-
                 <template class="p-1" #header>
-
                     <div class="flex flex-row">
-                        <div >
+                        <div>
                             <b class="mr-1">Media</b>
                             <Badge v-if="store.list && store.list.total > 0"
-                                   :value="store.list.total">
-                            </Badge>
+                                   :value="store.list.total"
+                            />
                         </div>
-
                     </div>
-
                 </template>
 
                 <template #icons>
@@ -74,15 +68,14 @@ onMounted(async () => {
                                 icon="pi pi-plus"
                                 label="Create"
                                 class="p-button-sm"
-                        >
-                        </Button>
+                        />
+
                         <Button data-testid="media-list-reload"
                                 @click="store.reload()"
                                 :loading="store.is_btn_loading"
                                 icon="pi pi-refresh"
                                 class="p-button-sm"
-                        >
-                        </Button>
+                        />
                     </span>
                 </template>
 
@@ -91,13 +84,9 @@ onMounted(async () => {
                 <br/>
 
                 <Table/>
-
             </Panel>
         </div>
 
         <RouterView/>
-
     </div>
-
-
 </template>
