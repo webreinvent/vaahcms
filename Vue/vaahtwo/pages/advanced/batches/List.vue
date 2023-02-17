@@ -46,6 +46,7 @@ onMounted(async () => {
 });
 
 </script>
+
 <template>
     <div class="grid" v-if="store.assets">
         <div :class="'col-'+store.list_view_width">
@@ -58,14 +59,15 @@ onMounted(async () => {
                                    :value="store.list.total">
                             </Badge>
                         </div>
-                        <div>
-                            <Button class="p-button-outlined"
-                                    @click="store.getList"
-                                    data-testid="batches-list-refresh">
-                            <span class="pi pi-refresh"></span>
-                        </Button>
-                    </div>
 
+                        <div>
+                            <Button class="p-button-sm"
+                                    icon="pi pi-refresh"
+                                    @click="store.sync"
+                                    data-testid="batches-list-refresh"
+                                    :loading="store.is_btn_loading"
+                            />
+                        </div>
                     </div>
                 </template>
 
