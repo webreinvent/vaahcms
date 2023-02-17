@@ -60,7 +60,7 @@ onMounted(async () => {
                                            class="w-full p-inputtext-sm"
                                            type="search"
                                            icon="search"
-                                           v-model="store.q"
+                                           v-model="store.query.q"
                                            @input="store.delayedSearch"
                                            data-testid="themes-install-action-search"
                                            @keyup.enter.prevent="store.delayedSearch"
@@ -107,11 +107,11 @@ onMounted(async () => {
             </Card>
         </div>
 
-        <Paginator v-model:rows="store.query.rows"
+        <Paginator v-model:rows="store.themes_query.rows"
                    :totalRecords="store.themes.total"
-                   @page="store.paginate($event)"
+                   @page="store.themesPaginate($event)"
                    data-testid="themes-install-action-pagination"
-                   :rowsPerPageOptions="store.themes.rows_per_page">
+                   :rowsPerPageOptions="store.rows_per_page">
         </Paginator>
     </div>
 </template>
