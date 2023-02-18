@@ -30,6 +30,7 @@ onMounted(async () => {
     await store.getList();
 });
 </script>
+
 <template>
     <div>
         <Card>

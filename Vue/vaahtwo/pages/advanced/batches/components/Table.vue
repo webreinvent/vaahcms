@@ -17,14 +17,14 @@ const useVaah = vaah();
                    v-model:selection="store.action.items"
                     data-testid="batches-table-checkbox"
                    stripedRows
-                   responsiveLayout="scroll">
-
+                   responsiveLayout="scroll"
+         >
             <Column selectionMode="multiple"
                     v-if="store.isViewLarge()"
-                    headerStyle="width: 3em">
-            </Column>
+                    headerStyle="width: 3em"
+            />
 
-            <Column field="id" header="ID" :style="{width: store.getIdWidth()}"></Column>
+            <Column field="id" header="ID" :style="{width: store.getIdWidth()}" :sortable="true" />
 
             <Column field="name" header="" style="width: 30%;">
                 <template #body="prop">
@@ -47,11 +47,13 @@ const useVaah = vaah();
 
              <Column field="actions" style="width:150px;"
                      :style="{width: store.getActionWidth() }"
-                     header="Detail">
+                     header="Detail"
+             >
                  <template #body="prop">
                      <Button class="p-button-rounded p-button-sm p-button-outlined"
                              data-testid="batches-table-options"
-                             @click="store.displayBatchDetails(prop.data.options)">
+                             @click="store.displayBatchDetails(prop.data.options)"
+                     >
                          <span class="pi pi-eye mr-1"></span>
                          <span>View</span>
                      </Button>
@@ -60,49 +62,53 @@ const useVaah = vaah();
 
              <Column field="failed_job_ids" header="Failed Job Ids"
                      v-if="store.isViewLarge()"
-                     style="width:150px;">
-
+                     style="width:150px;"
+             >
                  <template #body="prop">
                      <Button class="p-button-sm p-button-outlined p-button-rounded"
                              data-testid="batches-table-failed-ids"
-                             @click="store.displayFailedIdDetails(prop.data.failed_job_ids)">
+                             @click="store.displayFailedIdDetails(prop.data.failed_job_ids)"
+                     >
                          <span class="pi pi-eye mr-1"></span>
                          <span>{{ prop.data.failed_job_ids.length }}</span>
                      </Button>
                  </template>
-
              </Column>
 
              <Column field="cancelled_at" header="Cancelled At"
                      v-if="store.isViewLarge()"
-                     style="width:150px;">
-
+                     :sortable="true"
+                     style="width:150px;"
+             >
                  <template #body="prop">
-                     {{useVaah.ago(prop.data.cancelled_at)}}
+                     {{ useVaah.ago(prop.data.cancelled_at) }}
                  </template>
              </Column>
 
-             <Column field="created_at" header="Created At"
+             <Column field="created_at"
+                     header="Created At"
                      v-if="store.isViewLarge()"
-                     style="width:150px;">
-
+                     style="width:150px;"
+                     :sortable="true"
+             >
                  <template #body="prop">
-                     {{useVaah.ago(prop.data.created_at)}}
+                     {{ useVaah.ago(prop.data.created_at) }}
                  </template>
-
              </Column>
+
              <Column field="finished_at" header="Finished At"
                      v-if="store.isViewLarge()"
-                     style="width:150px;">
-
+                     style="width:150px;"
+                     :sortable="true"
+             >
                  <template #body="prop">
-                     {{useVaah.ago(prop.data.finished_at)}}
+                     {{ useVaah.ago(prop.data.finished_at) }}
                  </template>
              </Column>
 
              <Column v-if="store.isViewLarge()"
-                     style="width:150px;">
-
+                     style="width:150px;"
+             >
                  <template #body="prop">
                      <Button class="p-button-rounded p-button-text"
                              @click="store.deleteItem(prop.data)"
@@ -116,6 +122,7 @@ const useVaah = vaah();
         <!--/table-->
 
         <Divider />
+
         <Dialog header="Options"
                 v-model:visible="store.displayDetail"
                 data-testid="batch-table-detail_dialog"
@@ -128,6 +135,7 @@ const useVaah = vaah();
                     </template>
                 </Card>
         </Dialog>
+
         <Dialog header="Failed Ids"
                 v-model:visible="store.displayFailedIds"
                 data-testid="batch-table-failed_ids_dialog"
@@ -140,6 +148,7 @@ const useVaah = vaah();
                     </template>
                 </Card>
         </Dialog>
+
         <!--paginator-->
         <Paginator v-model:rows="store.query.rows"
                    data-testid="batch-table-paginator"
@@ -149,5 +158,4 @@ const useVaah = vaah();
         </Paginator>
         <!--/paginator-->
     </div>
-
 </template>

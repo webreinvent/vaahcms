@@ -79,7 +79,7 @@ const toggleFormMenu = (event) => {
                     <Button label="Save"
                             v-if="store.item && store.item.id && store.hasPermission('can-update-registrations')"
                             @click="store.itemAction('save')"
-                            icon="pi pi-pencil"
+                            icon="pi pi-save"
                             data-testid="register-form_item_action_save"
                             class="p-button-sm"
                     />

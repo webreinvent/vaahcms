@@ -17,6 +17,7 @@ const store = useGeneralStore();
                               optionValue="slug"
                               data-testid="general-metatags_attributes"
                               placeholder="Select any"
+                              inputClass="p-inputtext-sm"
                     />
 
                     <InputText v-model="item.value.attribute_value"
@@ -28,11 +29,13 @@ const store = useGeneralStore();
 
                     <InputText v-model="item.value.content"
                                data-testid="general-metatags_attributes_content"
+                               class="p-inputtext-sm"
                     />
 
                     <Button icon="pi pi-trash"
                             data-testid="general-remove_tag"
                             @click="store.removeMetaTags(item)"
+                            class="p-button-sm"
                     />
                 </div>
             </div>
@@ -43,16 +46,19 @@ const store = useGeneralStore();
                             data-testid="general-add_newtag"
                             @click="store.addMetaTags"
                             label="Add Meta Tag"
+                            class="p-button-sm"
                     />
 
                     <Button label="Save"
                             @click="store.storeTags"
                             data-testid="general-meta_tag-save"
+                            class="p-button-sm"
                     />
 
                     <Button icon="pi pi-copy"
                             data-testid="general-meta_tag_copy"
                             @click="store.getCopy('meta_tags')"
+                            class="p-button-sm"
                     />
                 </div>
             </div>
@@ -68,10 +74,12 @@ const store = useGeneralStore();
                               optionLabel="name"
                               optionValue="value"
                               placeholder="Select a type"
+                              inputClass="p-inputtext-sm"
                     />
 
                     <Button label="Generate"
                             @click="store.generateTags"
+                            class="p-button-sm"
                     />
                 </div>
             </div>

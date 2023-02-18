@@ -71,7 +71,8 @@ export const useBatchStore = defineStore({
         count_filters: 0,
         list_selected_menu: [],
         list_bulk_menu: [],
-        dates: []
+        dates: [],
+        is_btn_loading: false,
     }),
     actions: {
         //---------------------------------------------------------------------
@@ -177,15 +178,15 @@ export const useBatchStore = defineStore({
 
             await vaah().ajax(
                 this.ajax_url,
-                this.afterGetList,
+                await this.getListAfter,
                 options
             );
         },
         //---------------------------------------------------------------------
-        afterGetList(data)
-        {
-            if (data)
-            {
+        async getListAfter(data) {
+            this.is_btn_loading = false;
+
+            if (data) {
                 this.list = data.list;
             }
         },
@@ -595,6 +596,11 @@ export const useBatchStore = defineStore({
                 options
             );
         },
+        //---------------------------------------------------------------------
+        async sync() {
+            this.is_btn_loading = true;
+            await this.getList();
+        }
         //---------------------------------------------------------------------
     }
 });

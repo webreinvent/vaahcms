@@ -432,7 +432,12 @@ export const useMediaStore = defineStore({
                 await this.getList();
                 await this.formActionAfter();
                 this.getItemMenu();
-                this.getFormMenu();
+                await this.getFormMenu();
+
+                if (this.route && this.route.params && this.route.params.id) {
+                    this.$router.push({name: 'media.view'});
+                    await this.getItem(this.route.params.id);
+                }
             }
         },
         //---------------------------------------------------------------------
@@ -963,11 +968,11 @@ export const useMediaStore = defineStore({
             }
         },
         //---------------------------------------------------------------------
-        getCopy(value)
+        copyDownloadUrl()
         {
-            let text =  "{!! config('settings.global."+value+"'); !!}";
-            navigator.clipboard.writeText(text);
-            vaah().toastSuccess(['Copied']);
+            const text =  this.assets.download_url + this.item.download_url
+
+            vaah().copy(text);
         },
         //---------------------------------------------------------------------
     }

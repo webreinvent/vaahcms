@@ -14,12 +14,14 @@ const store = useGeneralStore();
                     <div class="p-inputgroup">
                         <InputText v-model="store.list.site_title"
                                    data-testid="general-site_title"
-                                   class="" id="site-title"
+                                   class="p-inputtext-sm"
+                                   id="site-title"
                         />
 
                         <Button icon="pi pi-copy"
                                 data-testid="general-site_title_copy"
                                 @click="store.getCopy('site_title')"
+                                class="p-button-sm"
                         />
                     </div>
                 </div>
@@ -33,6 +35,7 @@ const store = useGeneralStore();
                               data-testid="general-site_language"
                               optionValue="locale_code_iso_639"
                               placeholder="Select a Language"
+                              inputClass="p-inputtext-sm"
                     />
                 </div>
 
@@ -42,17 +45,20 @@ const store = useGeneralStore();
                     <div class="p-inputgroup">
                         <InputText v-model="store.list.redirect_after_frontend_login"
                                    data-testid="general-login_redirection"
+                                   class="p-inputtext-sm"
                         />
 
                         <Button icon="pi pi-copy"
                                 data-testid="general-login_redirection_copy"
                                 @click="store.getCopy('redirect_after_frontend_login')"
+                                class="p-button-sm"
                         />
                     </div>
                 </div>
 
                 <div class="col-12">
                     <h5 class="p-1 text-xs mb-1">Meta Description</h5>
+
                     <div class="p-inputgroup">
                         <Textarea v-model="store.list.site_description"
                                   :autoResize="true"
@@ -62,7 +68,7 @@ const store = useGeneralStore();
                         <Button icon="pi pi-copy"
                                 data-testid="general-site_description_copy"
                                 @click="store.getCopy('site_description')"
-                                class="has-max-height"/>
+                        />
                     </div>
                 </div>
 
@@ -76,11 +82,13 @@ const store = useGeneralStore();
                                       optionValue="value"
                                       data-testid="general-visibility"
                                       aria-labelledby="single"
+                                      class="p-button-sm"
                         />
 
                         <Button icon="pi pi-copy"
                                 data-testid="general-visibility_copy"
                                 @click="store.getCopy('vh_search_engine_visibility')"
+                                class="p-button-sm"
                         />
                     </div>
                 </div>
@@ -94,16 +102,18 @@ const store = useGeneralStore();
                                   @complete="store.searchRegistrationRoles($event)"
                                   data-testid="general-registration_roles"
                                   placeholder="Search"
+                                  class="p-inputtext-sm"
                     />
                 </div>
 
                 <div class="col-12 p-fluid">
                     <h5 class="p-1 text-xs mb-1">Allowed file types for upload</h5>
+
                     <AutoComplete :multiple="true"
                                   v-model="store.list.upload_allowed_files"
                                   :suggestions="store.filtered_allowed_files"
                                   @complete="store.searchAllowedFiles($event)"
-
+                                  class="p-inputtext-sm"
                                   data-testid="general-allowed_files"
                                   placeholder="Search"
                     />
@@ -185,7 +195,7 @@ const store = useGeneralStore();
                         />
                     </div>
 
-                    <InputText class="w-full"
+                    <InputText class="w-full p-inputtext-sm"
                                data-testid="general-copyright_custom_link_field"
                                v-if="store.list.copyright_link === 'custom'"
                                v-model="store.list.copyright_link_custom"
@@ -195,6 +205,7 @@ const store = useGeneralStore();
 
                 <div class="col-12">
                     <h5 class="p-1 text-xs mb-1">Copyright Year</h5>
+
                     <div class="p-inputgroup">
                         <div class="field-radiobutton mr-2">
                             <RadioButton inputId="copyright-year"
@@ -245,6 +256,7 @@ const store = useGeneralStore();
                                      v-model="store.list.maximum_number_of_forgot_password_attempts_per_session"
                                      data-testid="general-forgotpassword_attempts"
                                      :useGrouping="false"
+                                     class="p-inputtext-sm"
                         />
 
                         <Button icon="pi pi-copy"
@@ -261,11 +273,13 @@ const store = useGeneralStore();
                                      data-testid="general-login_attempts"
                                      v-model="store.list.maximum_number_of_login_attempts_per_session"
                                      :useGrouping="false"
+                                     class="p-inputtext-sm"
                         />
 
                         <Button icon="pi pi-copy"
                                 data-testid="general-login_attempts_copy"
                                 @click="store.getCopy('maximum_number_of_login_attempts_per_session')"
+                                class="p-button-sm"
                         />
                     </div>
                 </div>
@@ -318,18 +332,21 @@ const store = useGeneralStore();
                                       optionValue="value"
                                       :options="store.redirect_after_logout_options"
                                       data-testid="general-redirect_logout"
-                                      aria-labelledby="single" class="p-button-sm"
+                                      aria-labelledby="single"
+                                      class="p-button-sm"
                         />
 
                         <InputText placeholder="Enter Redirection Link"
                                    v-model="store.list.redirect_after_backend_logout_url"
                                    data-testid="general-redirect_logout_custom"
                                    :disabled="store.list.redirect_after_backend_logout !== 'custom'"
+                                   class="p-inputtext-sm"
                         />
 
                         <Button icon="pi pi-copy"
                                 data-testid="general-backend_logout_copy"
                                 @click="store.getCopy('redirect_after_backend_logout')"
+                                class="p-button-sm"
                         />
                     </div>
                 </div>

@@ -70,7 +70,8 @@ export const useFailedJobStore = defineStore({
         failedJobModal:false,
         failedJobContent:null,
         failedJobContentHeading:null,
-        dates: []
+        dates: [],
+        is_btn_loading: false,
     }),
     actions: {
         //---------------------------------------------------------------------
@@ -173,17 +174,19 @@ export const useFailedJobStore = defineStore({
             let options = {
                 query: vaah().clone(this.query)
             };
+
             await vaah().ajax(
                 this.ajax_url,
-                this.afterGetList,
+                await this.getListAfter,
                 options
             );
         },
         //---------------------------------------------------------------------
-        afterGetList: function (data, res)
+        async getListAfter (data, res)
         {
-            if(data)
-            {
+            this.is_btn_loading = false;
+
+            if(data) {
                 this.list = data.list;
             }
         },
@@ -518,6 +521,11 @@ export const useFailedJobStore = defineStore({
                 this.getList();
             }
         },
+        //-------------------------------------------------------
+        async sync() {
+            this.is_btn_loading = true;
+            await this.getList();
+        }
         //-------------------------------------------------------
     }
 });

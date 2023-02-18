@@ -35,6 +35,7 @@ onMounted(async () => {
             <div class="flex justify-content-between align-items-center">
                 <div>
                     <h5 class="font-semibold text-lg inline mr-2">Environment Variables</h5>
+
                     <Tag class="mr-2">
                         <p class="font-semibold">{{store.env_file}}</p>
                     </Tag>
@@ -42,15 +43,18 @@ onMounted(async () => {
                 <div>
                     <Button icon="pi pi-download"
                             class="mr-2 p-button-sm"
-                            @click="store.downloadFile(store.env_file)">
-                    </Button>
+                            @click="store.downloadFile(store.env_file)"
+                    />
+
                     <Button icon="pi pi-refresh"
                             class="p-button-sm"
-                            @click="store.getList()">
-                    </Button>
+                            @click="store.sync"
+                            :loading="store.is_btn_loading"
+                    />
                 </div>
             </div>
         </template>
+
         <template #content>
             <div class="grid justify-content-start">
                 <div class="col-12 md:col-6" v-for="(item,index) in store.list">
@@ -61,57 +65,59 @@ onMounted(async () => {
                                       v-model="item.value"
                                       :disabled="store.isDisable(item)"
                                       toggleMask
-                                      class="has-min-height"
+                                      class="p-inputtext-sm"
                                       :data-testid="'env-'+item.key"
-                            ></password>
+                            />
+
                             <InputText v-else
                                        v-model="item.value"
                                        :disabled="store.isDisable(item)"
-                                       class="has-min-height"
+                                       class="p-inputtext-sm"
                                        :data-testid="'env-'+item.key"
-                            ></InputText>
+                            />
+
                             <Button icon="pi pi-copy"
-                                    class=" has-max-height"
+                                    class="p-button-sm"
                                     @click="store.getCopy(item.value)"
-                            ></Button>
+                            />
+
                             <Button icon="pi pi-trash"
-                                    class="p-button-danger has-max-height"
+                                    class="p-button-danger p-button-sm"
                                     @click="store.removeVariable(item)"
-                            ></Button>
+                            />
                         </div>
                     </form>
                 </div>
             </div>
+
             <div class="grid justify-content-start mt-5">
                 <div class="col-12 md:col-6">
                     <div class="p-inputgroup">
                         <InputText :autoResize="true"
                                    v-model="store.new_variable"
-                                   class="has-min-height"
+                                   class="p-inputtext-sm"
                                    :data-testid="'env-add_variable'"
-                        ></InputText>
-                        <Button label="Add Env Variable" icon="pi pi-plus"
+                        />
+
+                        <Button label="Add Env Variable"
+                                icon="pi pi-plus"
                                 @click="store.addVariable"
                                 :disabled="!store.new_variable"
-                        ></Button>
+                                class="p-button-sm"
+                        />
                     </div>
                 </div>
+
                 <div class="col-12 md:col-6">
                     <div class="p-inputgroup justify-content-end">
                         <Button label="Save"
                                 icon="pi pi-save"
                                 @click="store.confirmChanges"
-                        ></Button>
+                                class="p-button-sm"
+                        />
                     </div>
                 </div>
             </div>
         </template>
     </Card>
-
 </template>
-
-
-
-<style scoped>
-
-</style>

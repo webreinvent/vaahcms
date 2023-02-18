@@ -67,6 +67,7 @@ export const useJobStore = defineStore({
         form_menu_list: [],
         payloadModal:false,
         payloadContent:null,
+        is_btn_loading: false,
     }),
     actions: {
         //---------------------------------------------------------------------
@@ -157,15 +158,15 @@ export const useJobStore = defineStore({
             };
             await vaah().ajax(
                 this.ajax_url,
-                this.afterGetList,
+                await this.getListAfter,
                 options
             );
         },
         //---------------------------------------------------------------------
-        afterGetList: function (data, res)
-        {
-            if(data)
-            {
+        async getListAfter(data, res) {
+            this.is_btn_loading = false;
+
+            if(data) {
                 this.list = data;
             }
         },
@@ -481,6 +482,11 @@ export const useJobStore = defineStore({
         {
             this.payloadContent = `<pre class="is-size-6">`+JSON.stringify(content, null, 2)+ `</pre>`;
             this.payloadModal=true
+        },
+        //---------------------------------------------------------------------
+        async sync() {
+            this.is_btn_loading = true;
+            await this.getList();
         },
         //---------------------------------------------------------------------
     }

@@ -17,6 +17,7 @@ let empty_states = {
             is_active: null,
             trashed: null,
             sort: null,
+            file_type: [],
         },
     },
     action: {
@@ -67,6 +68,9 @@ export const useLogStore = defineStore({
         payloadModal:false,
         payloadContent:null,
         is_btn_loading: false,
+        menu_items: [],
+        logs_file_types: [],
+        file_types: [],
     }),
     getters: {
 
@@ -133,11 +137,11 @@ export const useLogStore = defineStore({
         //---------------------------------------------------------------------
         watchStates()
         {
-            watch(this.query.filter, (newVal,oldVal) =>
+            watch(this.query.filter, async (newVal,oldVal) =>
                 {
-                    this.delayedSearch();
+                    await this.delayedSearch();
                 },{deep: true}
-            )
+            );
         },
         //---------------------------------------------------------------------
         watchItem()
@@ -222,10 +226,14 @@ export const useLogStore = defineStore({
             await this.getItemMenu();
         },
         //---------------------------------------------------------------------
-        clearFile: function(item)
-        {
+        confirmClearFile(item){
+            this.item = item;
+            vaah().confirmDialogDelete(this.clearFile);
+        },
+        //---------------------------------------------------------------------
+        clearFile() {
             let params = {
-                params:item,
+                params: this.item,
                 method:'POST'
             }
 
@@ -237,48 +245,36 @@ export const useLogStore = defineStore({
         },
 
         //---------------------------------------------------------------------
-        clearFileAfter: function(data, res)
-        {
+        clearFileAfter(data, res) {
             if(data && data.message === 'success'){
                 this.getItem(this.item.name);
             }
         },
         //---------------------------------------------------------------------
-        deleteItem: function () {
-
+        async deleteItem () {
             let params = {
                 params:this.item,
                 method:'POST'
             }
 
             vaah().ajax(
-                ajax_url+'/actions/bulk-delete',
-                this.deleteItemAfter,
+                ajax_url+'/actions/delete',
+                await this.deleteItemAfter,
                 params
             );
-
-
-
         },
         //---------------------------------------------------------------------
-        deleteItemAfter: function (data, res) {
-
+        async deleteItemAfter (data, res) {
             if(data && data.message === 'success'){
-                this.getList();
-                if(this.item){
-                    this.getItem(this.item.name);
-                }
+                await this.getList();
             }
         },
         //---------------------------------------------------------------------
-
         async downloadFile(item) {
             window.location.href = this.ajax_url+"/download-file/"+item.name;
         },
         //---------------------------------------------------------------------
-        isListActionValid()
-        {
-
+        isListActionValid() {
             if(!this.action.type)
             {
                 vaah().toastErrors(['Select an action type']);
@@ -321,7 +317,8 @@ export const useLogStore = defineStore({
                     method = 'DELETE';
                     break;
                 case 'delete-all':
-                    method = 'DELETE';
+                    method = 'POST';
+                    url = this.ajax_url+'/actions/bulk-delete-all'
                     break;
             }
 
@@ -510,8 +507,7 @@ export const useLogStore = defineStore({
             vaah().confirmDialogDelete(this.deleteItem);
         },
         //---------------------------------------------------------------------
-        confirmDeleteAll()
-        {
+        async confirmDeleteAll() {
             this.action.type = 'delete-all';
             vaah().confirmDialogDelete(this.listAction);
         },
@@ -526,6 +522,11 @@ export const useLogStore = defineStore({
                 await self.updateUrlQueryString(self.query);
                 await self.getList();
             }, this.search.delay_time);
+        },
+        //---------------------------------------------------------------------
+        async resetSearch() {
+            this.query.filter.q = null;
+            await this.getList();
         },
         //---------------------------------------------------------------------
         async updateUrlQueryString(query)
@@ -720,6 +721,42 @@ export const useLogStore = defineStore({
         {
             this.payloadContent = `<pre class="is-size-6">`+JSON.stringify(content, null, 2)+ `</pre>`;
             this.payloadModal=true
+        },
+        //---------------------------------------------------------------------
+        async getMenuItems() {
+            this.menu_items = [
+                {
+                    label: 'Delete All',
+                    command: async () => {
+                        this.confirmDeleteAll();
+                    }
+                },
+            ]
+        },
+        //---------------------------------------------------------------------
+        async getLogsFileTypes() {
+            return this.logs_file_types = [
+                {
+                    name: ".csv",
+                    value: ".csv",
+                },
+                {
+                    name: ".log",
+                    value: ".log",
+                },
+                {
+                    name: ".pdf",
+                    value: ".pdf",
+                },
+                {
+                    name: ".xlsx",
+                    value: ".xlsx",
+                },
+                {
+                    name: ".xml",
+                    value: ".xml",
+                },
+            ]
         },
         //---------------------------------------------------------------------
     }

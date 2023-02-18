@@ -13,7 +13,6 @@ const route = useRoute();
 import { useConfirm } from "primevue/useconfirm";
 const confirm = useConfirm();
 
-
 onMounted(async () => {
     /**
      * call onLoad action when List view loads
@@ -44,56 +43,47 @@ onMounted(async () => {
      */
     await store.getList();
 });
-
 </script>
+
 <template>
-
     <div class="grid" v-if="store.assets">
-
         <div :class="'col-'+store.list_view_width">
             <Panel>
-
                 <template class="p-1" #header>
-
                     <div class="flex flex-row">
                         <div >
                             <b class="mr-1">Jobs</b>
                             <Badge v-if="store.list && store.list.total > 0"
-                                   :value="store.list.total">
-                            </Badge>
+                                   :value="store.list.total"
+                            />
                         </div>
-
-
                     </div>
                 </template>
+
                 <template #icons>
                     <div class="p-inputgroup">
                         <Button class="p-button-sm"
                                 data-testid="jobs-content-refresh"
                                 icon="pi pi-refresh"
                                 :loading="store.is_btn_loading"
-                                @click="store.getList()"
+                                @click="store.sync"
                         />
                     </div>
                 </template>
+
                 <Message :closable="false">
                     This list consist of only queued/pending jobs.
                     Completed jobs gets deleted automatically .
                 </Message>
 
-
-                <Actions/>
+                <Actions />
 
                 <br/>
 
                 <Table/>
-
             </Panel>
         </div>
 
         <RouterView/>
-
     </div>
-
-
 </template>

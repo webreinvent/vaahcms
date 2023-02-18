@@ -1,6 +1,6 @@
 <script setup>
 import { useGeneralStore } from "../../../../stores/settings/store-general_setting";
-import { vaah } from "../../../../../../../../VaahCms/Modules/VueThree/Vue/vaahvue/pinia/vaah";
+import { vaah } from "../../../../vaahvue/pinia/vaah";
 
 const store = useGeneralStore();
 const useVaah = vaah();
@@ -28,7 +28,7 @@ const useVaah = vaah();
                             data-testid="general-link_copy"
                             :disabled="!item.id"
                             @click="store.getCopy(item.key)"
-                            class=" p-button-sm"
+                            class="p-button-sm"
                     />
 
                     <Button icon="pi pi-trash"

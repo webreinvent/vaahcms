@@ -13,6 +13,7 @@ const store = useGeneralStore();
                 <Dropdown v-model="store.list.date_format"
                           data-testid="general-date_format"
                           :options="store.date_format_options"
+                          inputClass="p-inputtext-sm"
                 />
 
                 <InputText placeholder="Enter Custom date format"
@@ -37,6 +38,7 @@ const store = useGeneralStore();
                 <Dropdown v-model="store.list.time_format"
                           data-testid="general-time_format"
                           :options="store.time_format_options"
+                          inputClass="p-inputtext-sm"
                 />
 
                 <InputText placeholder="Enter Custom time format"
@@ -60,17 +62,20 @@ const store = useGeneralStore();
                 <Dropdown v-model="store.list.datetime_format"
                           data-testid="general-datetime_format"
                           :options="store.date_time_format_options"
+                          inputClass="p-inputtext-sm"
                 />
 
                 <InputText placeholder="Enter Custom date-time format"
                            v-model="store.list.datetime_format_custom"
                            data-testid="general-datetime_format_custom"
                            v-if="store.list.datetime_format === 'custom'"
+                           class="p-inputtext-sm"
                 />
 
                 <Button icon="pi pi-copy"
                         data-testid="general-datetime_format_copy"
                         @click="store.getCopy('datetime_format')"
+                        class="p-button-sm"
                 />
             </div>
         </div>

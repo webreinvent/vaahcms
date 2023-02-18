@@ -4,6 +4,7 @@ use Carbon\Carbon;
 use DateTimeInterface;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use WebReinvent\VaahCms\Traits\CrudWithUuidObservantTrait;
 use WebReinvent\VaahCms\Models\MediaBase;
@@ -11,6 +12,10 @@ use WebReinvent\VaahCms\Models\User;
 
 class Media extends MediaBase
 {
+    protected $appends  = [
+        'type', 'size_for_humans', 'download_url_full'
+    ];
+
     public function createdByUser()
     {
         return $this->belongsTo(User::class,
@@ -301,11 +306,7 @@ class Media extends MediaBase
     //-------------------------------------------------
     public static function getItem($id)
     {
-        if(!\Auth::user()->hasPermission('can-manage-registrations') &&
-            !\Auth::user()->hasPermission('can-update-registrations') &&
-            !\Auth::user()->hasPermission('can-create-registrations') &&
-            !\Auth::user()->hasPermission('can-read-registrations'))
-        {
+        if(!Auth::user()->hasPermission('has-access-of-media-section')) {
             $response['success'] = false;
             $response['errors'][] = trans("vaahcms::messages.permission_denied");
             return $response;

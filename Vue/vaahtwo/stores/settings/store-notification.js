@@ -62,6 +62,7 @@ export const useNotificationStore = defineStore({
             name: null,
         },
         searched_notification_variables:null,
+       notification: null,
     }),
     getters: {},
     actions: {
@@ -114,12 +115,14 @@ export const useNotificationStore = defineStore({
         },
         //---------------------------------------------------------------------
         async showNotificationSettings(item) {
-            this.active_notification = vaah().findInArrayByKey(this.notifications, 'id', item.id)
+            this.active_notification = vaah().findInArrayByKey(this.notifications, 'id', item.id);
+
             let options = {
                 method: 'post',
-                query: item
+                query:  item,
             };
-            await vaah().ajax(
+
+            vaah().ajax(
                 this.ajax_url + '/list',
                 this.afterShowNotificationSettings,
                 options
@@ -203,7 +206,7 @@ export const useNotificationStore = defineStore({
 
         },
         //---------------------------------------------------------------------
-        addSubject: function () {
+        addSubject() {
             let sort = 0;
             if(this.active_notification.contents && this.active_notification.contents.mail)
             {
@@ -221,7 +224,7 @@ export const useNotificationStore = defineStore({
             this.active_notification.contents.mail.push(line);
         },
         //---------------------------------------------------------------------
-        addFrom: function () {
+        addFrom() {
             let sort = 0;
             if(this.active_notification.contents && this.active_notification.contents.mail)
             {
@@ -460,7 +463,17 @@ export const useNotificationStore = defineStore({
             }
         },
         //---------------------------------------------------------------------
+        async callShowNotificationSettings() {
+            // this.active_notification = this.notification;
+            const item = vaah().findInArrayByKey(this.assets.notifications, 'id', this.notification);
+            await this.showNotificationSettings(item);
+        },
         //---------------------------------------------------------------------
+        async clearNotificationSearch() {
+            this.notification = null;
+            this.active_notification = null;
+            await this.getAssets();
+        },
         //---------------------------------------------------------------------
 
     }
