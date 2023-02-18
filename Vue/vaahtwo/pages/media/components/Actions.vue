@@ -83,14 +83,12 @@ const toggleBulkMenuState = (event) => {
                                        @keyup.13="store.delayedSearch()"
                                        data-testid="media-actions-search"
                                        placeholder="Search"
-                                       class="p-inputtext-sm"
                             />
 
                             <Button @click="store.delayedSearch()"
                                     class="p-button-sm"
                                     data-testid="media-actions-search-button"
                                     icon="pi pi-search"
-                                    class="p-button-sm"
                             />
 
                             <Button class="p-button-sm"
