@@ -1,8 +1,9 @@
 import { watch } from 'vue'
 import { acceptHMRUpdate, defineStore } from 'pinia'
+import qs from 'qs'
 import { vaah } from '../vaahvue/pinia/vaah'
 import { useRootStore } from "./root";
-import qs from 'qs'
+
 
 let model_namespace = 'WebReinvent\\VaahCms\\Models\\Role';
 
@@ -476,6 +477,7 @@ export const useRoleStore = defineStore({
                     this.setActiveItemAsEmpty();
                     this.$router.push({name: 'roles.index'});
                     break;
+                case 'create-and-clone':
                 case 'save-and-clone':
                     this.item.id = null;
                     this.route.params.id = null;

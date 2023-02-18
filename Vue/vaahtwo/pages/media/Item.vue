@@ -162,12 +162,37 @@ const toggleItemMenu = (event) => {
                                     />
                                 </template>
 
-                                <template v-else-if="column === 'is_active' || column === 'is_downloadable' || column === 'download_requires_login'">
-                                    <VhViewRow :label="column"
-                                               :value="value"
-                                               type="yes-no"
-                                    />
-                                </template>
+                        <template v-else-if="column === 'is_active' || column === 'is_downloadable' || column === 'download_requires_login'">
+                            <VhViewRow :label="column"
+                                       :value="value"
+                                       type="yes-no"
+                            />
+                        </template>
+                        <template v-else-if="column === 'size'" >
+                            <tr>
+                                <td><b>{{ vaah().toLabel(column) }}</b></td>
+                                <td colspan="2">
+                                    <Tag severity="primary">{{ store.toKb(value) }}</Tag>
+                                </td>
+                            </tr>
+                        </template>
+                        <template v-else-if="column === 'url' || column === 'url_thumbnail' || column === 'path'">
+                            <tr>
+                                <td><b>{{ vaah().toLabel(column) }}</b></td>
+                                <td style="word-break: break-all;">{{ value }}</td>
+                                <td><Button icon="pi pi-external-link"
+                                            @click="store.openImage(value)"
+                                            class="p-button-text p-button-sm"/>
+                                </td>
+                            </tr>
+                        </template>
+                        <template v-else>
+                            <VhViewRow :label="column"
+                                       :value="value"
+                                       />
+                        </template>
+                    </template>
+                    </tbody>
 
                                 <template v-else-if="column === 'size'">
                                     <tr>

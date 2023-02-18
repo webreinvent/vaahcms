@@ -18,16 +18,16 @@ const useVaah = vaah();
                     stripedRows
                     responsiveLayout="scroll"
          >
-            <Column selectionMode="multiple"
+             <Column selectionMode="multiple"
                     v-if="store.isViewLarge()"
                     headerStyle="width: 3em"
             >
             </Column>
 
-            <Column field="id" header="ID" :style="{width: store.getIdWidth()}" :sortable="true">
-            </Column>
+             <Column field="id" header="ID" :style="{width: store.getIdWidth()}" :sortable="true">
+             </Column>
 
-            <Column field="name"
+             <Column field="name"
                     header="Name"
                     :sortable="true"
             >
@@ -109,7 +109,7 @@ const useVaah = vaah();
                 </template>
             </Column>
 
-            <Column field="actions" style="width:150px;"
+             <Column field="actions" style="width:150px;"
                     :style="{width: store.getActionWidth() }"
                     :header="store.getActionLabel()"
             >
@@ -163,3 +163,8 @@ const useVaah = vaah();
         <!--/paginator-->
     </div>
 </template>
+<style scoped lang="scss">
+::v-deep(.row-accessories) {
+    background-color: rgba(0,0,0,.15) !important;
+}
+</style>

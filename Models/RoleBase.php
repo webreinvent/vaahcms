@@ -271,7 +271,7 @@ class RoleBase extends Model {
         self::recountRelations();
 
         $response['success'] = true;
-        $response['data']['item'] = $role;
+        $response['data'] = $role;
         $response['messages'][] = trans('vaahcms-general.saved_successfully');
         return $response;
 

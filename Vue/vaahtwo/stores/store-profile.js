@@ -22,6 +22,7 @@ export const useProfileStore = defineStore({
         permissions: null,
         gender: null,
         filtered_timezone: null,
+        filtered_country: null,
         filtered_country_codes: null,
         reset_password: {
             current_password:null,
@@ -91,18 +92,38 @@ export const useProfileStore = defineStore({
 
             setTimeout(() => {
                 if (!event.query.trim().length) {
-                    this.filtered_country_codes = this.assets.countries;
+                    this.filtered_country = this.assets.countries;
                 }
                 else {
-                    this.filtered_country_codes = this.assets.countries.filter((country) => {
+                    this.filtered_country = this.assets.countries.filter((country) => {
                         return country.name.toLowerCase().startsWith(event.query.toLowerCase());
                     });
                 }
             }, 250);
         },
         //---------------------------------------------------------------------
+        searchCountryCode(event){
+            this.country_name_object = null;
+            this.country = null;
+
+            setTimeout(() => {
+                if (!event.query.trim().length) {
+                    this.filtered_country_codes = this.assets.country_code;
+                }
+                else {
+                    this.filtered_country_codes = this.assets.country_code.filter((country_calling_code) => {
+                        return country_calling_code.name.toLowerCase().startsWith(event.query.toLowerCase());
+                    });
+                }
+            }, 250);
+        },
+        //---------------------------------------------------------------------
         setCountry(event){
+            console.log(this.profile.country);
             this.profile.country = event.value.name;
+        },
+        setCountryCode(event){
+            this.profile.country_calling_code = event.value.calling_code;
         },
         //---------------------------------------------------------------------
         async storeProfile(){

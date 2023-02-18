@@ -595,9 +595,6 @@ export const useUserStore = defineStore({
         itemAction(type, item=null){
             if(!item)
             {
-                // if(this.custom_fields_data){
-                //     this.item.meta = {"custom_fields_data":this.custom_fields_data};
-                // }
                 item = this.item;
             }
 

@@ -205,14 +205,13 @@ class TaxonomyBase extends Model {
         if($inputs['parent'] && (is_array($inputs['parent']) || is_object($inputs['parent']))){
             $inputs['parent_id'] = $inputs['parent']['id'];
         }
-
         $item = new self();
         $item->fill($inputs);
         $item->slug = Str::slug($inputs['slug']);
         $item->save();
 
         $response['success'] = true;
-        $response['data']['item'] = $item;
+        $response['data'] = $item;
         $response['messages'][] = trans('vaahcms-general.saved_successfully');
         return $response;
 

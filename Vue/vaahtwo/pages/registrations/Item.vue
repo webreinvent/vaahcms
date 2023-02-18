@@ -59,7 +59,7 @@ const toggleItemMenu = (event) => {
 //--------/toggle status menu
 const item_status=ref();
 
-const toggleStatusesMenu = (event) => {
+const toggleStatusMenu = (event) => {
     item_status.value.toggle(event);
 };
 
@@ -140,14 +140,18 @@ const toggleStatusesMenu = (event) => {
                         <template v-for="(value, column) in store.item ">
                             <template v-if="column === 'created_by' || column === 'updated_by'"/>
 
-                            <template v-else-if="column === 'id' || column === 'uuid'|| column === 'first_name' ||
-                                                 column === 'email' || column === 'username' ||
-                                                 column === 'phone' || column === 'activation_code' ||
+                            <template v-else-if="column === 'id' ||
+                                                 column === 'uuid'||
+                                                 column === 'first_name' ||
+                                                 column === 'email' ||
+                                                 column === 'username' ||
+                                                 column === 'phone' ||
+                                                 column === 'activation_code' ||
                                                  column === 'alternate_email'"
                             >
                                 <VhViewRow :label="column"
                                            :value="value"
-                                           :can_copy="false"
+                                           :can_copy="true"
                                            data-testid="register-view_copy"
                                            v-if="!store.isHidden(column)"
                                 />
@@ -237,7 +241,7 @@ const toggleStatusesMenu = (event) => {
                                                     aria-haspopup="true"
                                                     class="p-button-outlined p-button-secondary p-button-sm"
                                                     data-testid="register-view_toggle_statuses_menu"
-                                                    @click="toggleStatusesMenu"
+                                                    @click="toggleStatusMenu"
                                                     aria-controls="status_menu"
                                             />
 
@@ -272,6 +276,12 @@ const toggleStatusesMenu = (event) => {
                                             />
                                         </div>
                                     </td>
+                                </tr>
+                                <tr>
+                                    <Button type="button" label="Toggle" @click="store.toggle" />
+                                    <TieredMenu ref="menu_test"
+                                                :model="store.assets.registration_statuses"
+                                                :popup="true" />
                                 </tr>
                             </template>
 

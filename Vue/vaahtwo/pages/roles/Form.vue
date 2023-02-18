@@ -102,7 +102,6 @@ const toggleFormMenu = (event) => {
             </template>
 
             <div v-if="store.item">
-
                 <VhField label="Name">
                     <InputText class="w-full" v-model="store.item.name" />
                 </VhField>

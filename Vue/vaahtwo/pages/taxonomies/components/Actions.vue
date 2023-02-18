@@ -87,6 +87,7 @@ const toggleBulkMenuState = (event) => {
                             />
 
                             <Button @click="store.delayedSearch()"
+                                    class="p-button-sm"
                                     data-testid="taxonomies-actions-search-button"
                                     icon="pi pi-search"
                             />
