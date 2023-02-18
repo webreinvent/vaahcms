@@ -99,34 +99,34 @@ class BatchBase extends Model
     {
         $list = self::orderBy('created_at', 'DESC');
 
-        if($request['trashed'] == 'true')
+        if(isset($request->filter['from']) && $request->filter['from']
+            && isset($request->filter['to']) && $request->filter['to'])
         {
-            $list->withTrashed();
-        }
-
-        if(isset($request->from) && $request->from
-            && isset($request->to) && $request->to)
-        {
-            if(isset($request->date_filter_by) && $request->date_filter_by){
-                $list->betweenDates($request['from'],$request['to'],$request->date_filter_by);
+            if(isset($request->filter['date_filter_by']) && $request->filter['date_filter_by']){
+                $list->betweenDates($request->filter['from'],$request->filter['to'],$request->filter['date_filter_by']);
             } else {
-                $list->betweenDates($request['from'],$request['to']);
+                $list->betweenDates($request->filter['from'],$request->filter['to']);
             }
         }
 
-
-        if(isset($request->q) && $request->q)
+        if(isset($request->filter['q']) && $request->filter['q'])
         {
             $list->where(function ($q) use ($request){
-                $q->where('name', 'LIKE', '%'.$request->q.'%');
-                $q->orWhere('id', 'LIKE', '%'.$request->q.'%');
+                $q->where('name', 'LIKE', '%'.$request->filter['q'].'%');
+                $q->orWhere('id', 'LIKE', '%'.$request->filter['q'].'%');
             });
+        }
+        $rows = config('vaahcms.per_page');
+
+        if($request->has('rows'))
+        {
+            $rows = $request->rows;
         }
 
         if ($request->has('date_filter_by')) {
-            $data['list'] = $list->orderBy($request->date_filter_by,'desc')->paginate(config('vaahcms.per_page'));
+            $data['list'] = $list->orderBy($request->filter['date_filter_by'],'desc')->paginate($rows);
         } else {
-            $data['list'] = $list->orderBy('created_at','desc')->paginate(config('vaahcms.per_page'));
+            $data['list'] = $list->orderBy('created_at','desc')->paginate($rows);
         }
 
 

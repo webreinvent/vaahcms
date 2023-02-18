@@ -42,7 +42,7 @@ const importSampleDataModal = (item) => {
                             <div class="flex justify-content-end">
                                 <Button v-if="item.is_active && store.hasPermission('can-deactivate-module')"
                                         data-testid="modules-table-action-deactivate"
-                                        class="mr-2 p-button-sm"
+                                        class="mr-2 p-button-sm bg-yellow-400 text-color"
                                         label="Deactivate"
                                         v-tooltip.top="'Deactivate Module'"
                                         @click="store.toggleIsActive(item)"
@@ -100,11 +100,12 @@ const importSampleDataModal = (item) => {
         <!--/table-->
 
         <!--paginator-->
-        <Paginator v-model:rows="store.query.rows"
-                   :totalRecords="store.list.total"
+        <Paginator v-model:first="store.firstElement"
+                    :rows="store.query.rows"
+                   :totalRecords="store.stats.all"
                    @page="store.paginate($event)"
-                   :rowsPerPageOptions="store.rows_per_page">
-        </Paginator>
+                   :rows-per-page-options="store.rows_per_page"
+        />
         <!--/paginator-->
 
         <ConfirmDialog group="templating" class="is-small"

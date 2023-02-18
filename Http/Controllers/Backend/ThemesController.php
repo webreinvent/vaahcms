@@ -38,6 +38,7 @@ class ThemesController extends Controller
         $data['vaahcms_api_route'] = config('vaahcms.api_route');
         $data['debug'] = config('vaahcms.debug');
         $data['installed'] = Theme::select('slug')->get()->pluck('slug')->toArray();
+        $data['rows'] = config('vaahcms.per_page');
 
         $response['success'] = true;
         $response['data'] = $data;
@@ -58,44 +59,54 @@ class ThemesController extends Controller
             return response()->json($response);
         }
 
-        Theme::syncAll();
-
         $list = Theme::orderBy('created_at', 'DESC');
 
 
-        if($request->filter && array_key_exists('q',$request->filter))
+        if ($request->has('filter'))
         {
-            $list->where(function ($s) use ($request) {
-                $s->where('name', 'LIKE', '%'.$request->filter['q'].'%')
-                    ->orWhere('slug', 'LIKE', '%'.$request->filter['q'].'%')
-                    ->orWhere('title', 'LIKE', '%'.$request->filter['q'].'%');
-            });
-        }
-
-        if($request->has('status') && $request->get('status') != 'all')
-        {
-            switch ($request->status)
+            if (array_key_exists('q',$request->filter))
             {
-                case 'active':
-                    $list->active();
-                    break;
-                case 'inactive':
-                    $list->inactive();
-                    break;
-                case 'update_available':
-                    $list->updateavailable();
-                    break;
+                $list->where(function ($s) use ($request) {
+                    $s->where('name', 'LIKE', '%'.$request->filter['q'].'%')
+                        ->orWhere('slug', 'LIKE', '%'.$request->filter['q'].'%')
+                        ->orWhere('title', 'LIKE', '%'.$request->filter['q'].'%');
+                });
+            }
+
+            if(array_key_exists('status',$request->filter) && $request->filter['status'] != 'all')
+            {
+                switch ($request->filter['status'])
+                {
+                    case 'active':
+                        $list->active();
+                        break;
+                    case 'inactive':
+                        $list->inactive();
+                        break;
+                    case 'update_available':
+                        $list->updateavailable();
+                        break;
+                }
             }
         }
 
-        $stats['all'] = Theme::count();
+
+        $stats['all'] = $list->count();
         $stats['active'] = Theme::active()->count();
         $stats['inactive'] = Theme::inactive()->count();
         $stats['update_available'] = Theme::updateAvailable()->count();
 
 
         $response['success'] = true;
-        $response['data']['list'] = $list->paginate(config('vaahcms.per_page'));
+
+        $rows = config('vaahcms.per_page');
+
+        if ($request->rows)
+        {
+            $rows = $request->rows;
+        }
+
+        $response['data']['list'] = $list->paginate($rows);
         $response['data']['stats'] = $stats;
 
         return response()->json($response);

@@ -12,8 +12,8 @@ let ajax_url = base_url + "/vaah/manage/taxonomies";
 
 let empty_states = {
     query: {
-        page: null,
-        rows: null,
+        page: 1,
+        rows: 20,
         filter: {
             q: null,
             is_active: null,
@@ -31,6 +31,8 @@ let empty_states = {
 export const useTaxonomyStore = defineStore({
     id: 'taxonomies',
     state: () => ({
+        page: 1,
+        rows: 20,
         base_url: base_url,
         ajax_url: ajax_url,
         model: model_namespace,
@@ -40,7 +42,7 @@ export const useTaxonomyStore = defineStore({
         rows_per_page: [10,20,30,50,100,500],
         list: null,
         item: null,
-        fillable:null,
+        fillable: null,
         empty_query:empty_states.query,
         empty_action:empty_states.action,
         query: vaah().clone(empty_states.query),
@@ -72,6 +74,7 @@ export const useTaxonomyStore = defineStore({
             name: null,
             parent_id: null,
         },
+        firstElement: null,
     }),
     getters: {
 
@@ -89,7 +92,7 @@ export const useTaxonomyStore = defineStore({
              * Update with view and list css column number
              */
             this.setViewAndWidth(route.name);
-
+            this.firstElement = ((this.query.page - 1) * this.query.rows);
             /**
              * Update query state with the query parameters of url
              */
@@ -189,7 +192,11 @@ export const useTaxonomyStore = defineStore({
                 this.assets = data;
                 if(data.rows)
                 {
-                    this.query.rows = data.rows;
+                    if (!this.query.rows) {
+                        this.query.rows = data.rows;
+                    } else {
+                        this.query.rows = parseInt(this.query.rows);
+                    }
                 }
 
                 if(this.route.params && !this.route.params.id){
@@ -203,6 +210,7 @@ export const useTaxonomyStore = defineStore({
             let options = {
                 query: vaah().clone(this.query)
             };
+            await this.updateUrlQueryString(this.query);
             await vaah().ajax(
                 this.ajax_url,
                 this.getListAfter,
@@ -214,6 +222,7 @@ export const useTaxonomyStore = defineStore({
         {
             if (data) {
                 this.list = data;
+                this.firstElement = this.query.rows * (this.query.page - 1);
             }
 
             this.is_btn_loading = false;
@@ -456,6 +465,8 @@ export const useTaxonomyStore = defineStore({
         //---------------------------------------------------------------------
         async paginate(event) {
             this.query.page = event.page+1;
+            this.query.rows = event.rows;
+            this.firstElement = this.query.rows * (this.query.page - 1);
             await this.getList();
         },
         //---------------------------------------------------------------------
@@ -613,6 +624,8 @@ export const useTaxonomyStore = defineStore({
             {
                 this.query.filter[key] = null;
             }
+            this.query.page = this.page;
+            this.query.rows = this.rows;
             await this.updateUrlQueryString(this.query);
         },
         //---------------------------------------------------------------------

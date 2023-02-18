@@ -12,8 +12,8 @@ let ajax_url = base_url + "/users";
 
 let empty_states = {
     query: {
-        page: null,
-        rows: null,
+        page: 1,
+        rows: 20,
         filter: {
             q: null,
             is_active: null,
@@ -121,6 +121,8 @@ export const useUserStore = defineStore({
         custom_fields_data:[],
         display_bio_modal: null,
         bio_modal_data: null,
+        firstElement: null,
+        rolesFirstElement: null
     }),
     getters: {
 
@@ -138,7 +140,8 @@ export const useUserStore = defineStore({
              * Update with view and list css column number
              */
             this.setViewAndWidth(route.name);
-
+            this.firstElement = ((this.query.page - 1) * this.query.rows);
+            this.rolesFirstElement = ((this.user_roles_query.page - 1) * this.user_roles_query.rows);
             /**
              * Update query state with the query parameters of url
              */
@@ -230,7 +233,11 @@ export const useUserStore = defineStore({
                 this.assets = data;
 
                 if (data.rows) {
-                    this.query.rows = data.rows;
+                    if (!this.query.rows) {
+                        this.query.rows = data.rows;
+                    } else {
+                        this.query.rows = parseInt(this.query.rows);
+                    }
                     this.user_roles_query.rows = data.rows;
                 }
 
@@ -285,6 +292,7 @@ export const useUserStore = defineStore({
             let options = {
                 query: vaah().clone(this.query)
             };
+            await this.updateUrlQueryString(this.query);
             await vaah().ajax(
                 this.ajax_url,
                 await this.afterGetList,
@@ -299,6 +307,7 @@ export const useUserStore = defineStore({
 
             if (data) {
                 this.list = data;
+                this.firstElement = this.query.rows * (this.query.page - 1);
             }
         },
         //---------------------------------------------------------------------
@@ -477,6 +486,7 @@ export const useUserStore = defineStore({
         //---------------------------------------------------------------------
         async userRolesPaginate(event) {
             this.user_roles_query.page = event.page + 1;
+            this.user_roles_query.rows = event.rows;
             await this.getUserRoles();
         },
         //---------------------------------------------------------------------
@@ -715,6 +725,8 @@ export const useUserStore = defineStore({
         //---------------------------------------------------------------------
         async paginate(event) {
             this.query.page = event.page+1;
+            this.query.rows = event.rows;
+            this.firstElement = this.query.rows * (this.query.page - 1);
             await this.getList();
         },
         //---------------------------------------------------------------------

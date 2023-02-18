@@ -137,8 +137,7 @@ class UsersController extends Controller
         return User::itemAction($request,$id,$action);
     }
     //----------------------------------------------------------
-    public function getItemRoles(Request $request,$id){
-
+    public function getItemRoles(Request $request,$id) {
         $item = User::withTrashed()->where('id', $id)->first();
 
         $response['data']['item'] = $item;
@@ -156,8 +155,13 @@ class UsersController extends Controller
         }
 
         $list->orderBy('pivot_is_active', 'desc');
+        $rows = config('vaahcms.per_page');
 
-        $list = $list->paginate(config('vaahcms.per_page'));
+        if ($request->rows) {
+            $rows = $request->rows;
+        }
+
+        $list = $list->paginate($rows);
 
 
         foreach ($list as $role){

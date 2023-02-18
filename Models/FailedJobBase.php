@@ -60,7 +60,14 @@ class FailedJobBase extends Model {
             });
         }
 
-        $data['list'] = $list->paginate(config('vaahcms.per_page'));
+        $rows = config('vaahcms.per_page');
+
+        if($request->has('rows'))
+        {
+            $rows = $request->rows;
+        }
+
+        $data['list'] = $list->paginate($rows);
 
         $response['success'] = true;
         $response['data'] = $data;

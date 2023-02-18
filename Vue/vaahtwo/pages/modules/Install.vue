@@ -100,9 +100,11 @@ onMounted(async () => {
             </Card>
         </div>
 
-        <Paginator v-model:rows="store.query.rows"
+        <Paginator v-model:rows="store.modules_query.rows"
                    :totalRecords="store.modules.list.total"
-                   @page="store.paginate($event)">
-        </Paginator>
+                   @page="store.modulesPaginate($event)"
+                   data-testid="modules-install-action-pagination"
+                   :rowsPerPageOptions="store.rows_per_page"
+        />
     </div>
 </template>

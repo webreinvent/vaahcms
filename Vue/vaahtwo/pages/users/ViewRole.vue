@@ -184,7 +184,8 @@ const toggleItemMenu = (event) => {
                         </DataTable>
 
                         <!--paginator-->
-                        <Paginator v-model:rows="store.user_roles_query.rows"
+                        <Paginator v-model:first="store.rolesFirstElement"
+                                   :rows="store.user_roles_query.rows"
                                    :totalRecords="store.user_roles.list.total"
                                    @page="store.userRolesPaginate($event)"
                                    :rowsPerPageOptions="store.rows_per_page">

@@ -18,11 +18,10 @@ let empty_states = {
             is_active: null,
             trashed: null,
             sort: null,
+            from: null,
+            to: null,
+            date_filter_by: null
         },
-        q: null,
-        from: null,
-        to: null,
-        date_filter_by: null
     },
     action: {
         type: null,
@@ -33,6 +32,8 @@ let empty_states = {
 export const useBatchStore = defineStore({
     id: 'batches',
     state: () => ({
+        page: 1,
+        rows: 20,
         dialogContent: null,
         displayDetail: false,
         displayFailedIds: false,
@@ -44,7 +45,7 @@ export const useBatchStore = defineStore({
         assets_is_fetching: true,
         app: null,
         assets: null,
-        rows_per_page: [10,20,30,50,100,500],
+        rows_per_page: [2,10,20,30,50,100,500],
         list: null,
         item: null,
         fillable:null,
@@ -72,7 +73,7 @@ export const useBatchStore = defineStore({
         list_selected_menu: [],
         list_bulk_menu: [],
         dates: [],
-        is_btn_loading: false,
+        firstElement: null,
     }),
     actions: {
         //---------------------------------------------------------------------
@@ -81,7 +82,9 @@ export const useBatchStore = defineStore({
             /**
              * Set initial routes
              */
+
             this.route = route;
+            this.firstElement = ((this.query.page - 1) * this.query.rows);
 
             /**
              * Update query state with the query parameters of url
@@ -125,7 +128,7 @@ export const useBatchStore = defineStore({
         //---------------------------------------------------------------------
         watchStates()
         {
-            watch(this.query, (newVal,oldVal) =>
+            watch(this.query.filter, (newVal,oldVal) =>
                 {
                     this.delayedSearch();
                 },{deep: true}
@@ -166,7 +169,11 @@ export const useBatchStore = defineStore({
                 this.assets = data;
                 if(data.rows)
                 {
-                    this.query.rows = data.rows;
+                    if (!this.query.rows) {
+                        this.query.rows = data.rows;
+                    } else {
+                        this.query.rows = parseInt(this.query.rows);
+                    }
                 }
             }
         },
@@ -175,7 +182,7 @@ export const useBatchStore = defineStore({
             let options = {
                 query: vaah().clone(this.query)
             };
-
+            await this.updateUrlQueryString(this.query);
             await vaah().ajax(
                 this.ajax_url,
                 await this.getListAfter,
@@ -188,6 +195,7 @@ export const useBatchStore = defineStore({
 
             if (data) {
                 this.list = data.list;
+                this.firstElement = ((this.query.page - 1) * this.query.rows);
             }
         },
         //---------------------------------------------------------------------
@@ -263,6 +271,8 @@ export const useBatchStore = defineStore({
         //---------------------------------------------------------------------
         async paginate(event) {
             this.query.page = event.page+1;
+            this.query.rows = event.rows;
+            this.firstElement = ((this.query.page - 1) * this.query.rows);
             await this.getList();
         },
         //---------------------------------------------------------------------
@@ -405,10 +415,14 @@ export const useBatchStore = defineStore({
 
             for(let key in this.query)
             {
+                if (key === 'filter') continue;
                 this.query[key] = null;
             }
 
             this.dates2 = null;
+
+            this.query.page = this.page;
+            this.query.rows = this.rows;
 
             await this.updateUrlQueryString(this.query);
         },
@@ -516,10 +530,10 @@ export const useBatchStore = defineStore({
         {
             if (this.dates2.length > 0) {
                 let current_datetime = new Date(this.dates2[0]);
-                this.query.from = current_datetime.getFullYear() + "-" + (current_datetime.getMonth() + 1) + "-" + current_datetime.getDate();
+                this.query.filter.from = current_datetime.getFullYear() + "-" + (current_datetime.getMonth() + 1) + "-" + current_datetime.getDate();
 
                 current_datetime = new Date(this.dates2[1]);
-                this.query.to = current_datetime.getFullYear() + "-" + (current_datetime.getMonth() + 1) + "-" + current_datetime.getDate();
+                this.query.filter.to = current_datetime.getFullYear() + "-" + (current_datetime.getMonth() + 1) + "-" + current_datetime.getDate();
 
                 this.getList();
             }
