@@ -74,7 +74,7 @@ const openTaxonomyTypeModal = () => {
         <Panel>
             <template class="p-1" #header>
                 <div class="flex flex-row">
-                    <div class="p-panel-title">
+                        <div class="p-panel-title">
                         <span v-if="store.item && store.item.id">
                             {{ store.item.name }}
                         </span>

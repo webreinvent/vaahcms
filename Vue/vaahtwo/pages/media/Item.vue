@@ -179,6 +179,12 @@ const toggleItemMenu = (event) => {
                                         </td>
                                     </tr>
                                 </template>
+                                <template v-else-if="column === 'path'">
+                                    <tr>
+                                        <td><b>{{ vaah().toLabel(column) }}</b></td>
+                                        <td style="word-break: break-all;">{{ value }}</td>
+                                    </tr>
+                                </template>
 
                                 <template v-else-if="column === 'url' ||
                                 column === 'url_thumbnail' || column === 'download_url_full' ">
