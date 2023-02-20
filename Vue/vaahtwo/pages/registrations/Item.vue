@@ -48,22 +48,17 @@ onMounted(async () => {
 });
 
 //--------toggle item menu
-const item_menu_state = ref();
-
-const toggleItemMenu = (event) => {
-    item_menu_state.value.toggle(event);
-};
-//--------/toggle item menu
-
-
-//--------/toggle status menu
-const item_status=ref();
-
-const toggleStatusMenu = (event) => {
-    item_status.value.toggle(event);
+// const item_menu_state = ref();
+//
+// const toggleItemMenu = (event) => {
+//     item_menu_state.value.toggle(event);
+// };
+const item_menu_state_one = ref();
+const toggleItemMenuOne = (event) => {
+    item_menu_state_one.value.toggle(event);
 };
 
-//--------/toggle status menu
+
 </script>
 
 <template>
@@ -102,6 +97,7 @@ const toggleStatusMenu = (event) => {
                     <Menu ref="item_menu_state"
                           :model="store.item_menu_list"
                           :popup="true" />
+
                     <!--/item_menu-->
 
                     <Button class="p-button-sm"
@@ -227,61 +223,67 @@ const toggleStatusMenu = (event) => {
                             </template>
 
                             <template v-else-if="column === 'status'" >
+<!--                                <tr>-->
+<!--                                    <td><b>Status</b></td>-->
+<!--                                    <td v-if="value">-->
+<!--                                        <div class="p-inputgroup">-->
+<!--                                            <Button :label="value"-->
+<!--                                                    v-if="value"-->
+<!--                                                    class="p-button-outlined p-button-secondary p-button-sm"-->
+<!--                                                    disabled="disabled"-->
+<!--                                            />-->
+
+<!--                                            <Button icon="pi pi-angle-down"-->
+<!--                                                    class="p-button-outlined p-button-secondary p-button-sm"-->
+<!--                                                    data-testid="register-view_toggle_statuses_menu"-->
+<!--                                                    @click="store.toggleStatusMenu"-->
+<!--                                            />-->
+
+<!--                                            <Menu v-if="store.assets && store.assets.registration_statuses"-->
+<!--                                                  ref="item_status"-->
+<!--                                                  :model="store.registrationStatus()"-->
+<!--                                                  :popup="true"-->
+<!--                                            />-->
+
+<!--                                            <Button v-if="value == 'email-verification-pending'"-->
+<!--                                                    label="Resend Verification Email"-->
+<!--                                                    class="p-button-info p-button-sm"-->
+<!--                                                    @click="store.sendVerificationEmail()"-->
+<!--                                                    data-testid="register-view_send_verification_email"-->
+<!--                                            />-->
+
+<!--                                            <Button v-if="value == 'email-verified'"-->
+<!--                                                    label="Create User"-->
+<!--                                                    class="p-button-success p-button-sm"-->
+<!--                                                     @click="store.confirmCreateUser()"-->
+<!--                                                    data-testid="register-view_confirm_create_user"-->
+<!--                                            />-->
+
+<!--                                            <Button v-if="value == 'email-verified'"-->
+<!--                                                    type="button"-->
+<!--                                                    @click=""-->
+<!--                                                    icon="pi pi-angle-down"-->
+<!--                                                    aria-haspopup="true"-->
+<!--                                                    class="p-button-success p-button-sm"-->
+<!--                                                    data-testid="register-view_email_verified"-->
+<!--                                            />-->
+<!--                                        </div>-->
+<!--                                    </td>-->
+<!--                                </tr>-->
                                 <tr>
-                                    <td><b>Status</b></td>
-                                    <td v-if="value">
-                                        <div class="p-inputgroup">
-                                            <Button :label="value"
-                                                    v-if="value"
-                                                    class="p-button-outlined p-button-secondary p-button-sm"
-                                                    disabled="disabled"
-                                            />
+                                    <td>
+                                        <Button class="p-button-sm"
+                                                @click="toggleItemMenuOne"
+                                                icon="pi pi-angle-down"
+                                                lable="Toggle"
+                                                aria-haspopup="true"
+                                                data-testid="register-view_toggle_item_status_list"
+                                        />
 
-                                            <Button icon="pi pi-angle-down"
-                                                    aria-haspopup="true"
-                                                    class="p-button-outlined p-button-secondary p-button-sm"
-                                                    data-testid="register-view_toggle_statuses_menu"
-                                                    @click="toggleStatusMenu"
-                                                    aria-controls="status_menu"
-                                            />
-
-                                            <Menu v-if="store.assets && store.assets.registration_statuses"
-                                                  ref="item_status"
-                                                  :model="store.assets.registration_statuses"
-                                                  :popup="true"
-                                                  id="status_menu"
-                                            />
-
-                                            <Button v-if="value == 'email-verification-pending'"
-                                                    label="Resend Verification Email"
-                                                    class="p-button-info p-button-sm"
-                                                    @click="store.sendVerificationEmail()"
-                                                    data-testid="register-view_send_verification_email"
-                                            />
-
-                                            <Button v-if="value == 'email-verified'"
-                                                    label="Create User"
-                                                    class="p-button-success p-button-sm"
-                                                     @click="store.confirmCreateUser()"
-                                                    data-testid="register-view_confirm_create_user"
-                                            />
-
-                                            <Button v-if="value == 'email-verified'"
-                                                    type="button"
-                                                    @click=""
-                                                    icon="pi pi-angle-down"
-                                                    aria-haspopup="true"
-                                                    class="p-button-success p-button-sm"
-                                                    data-testid="register-view_email_verified"
-                                            />
-                                        </div>
+                                        <Menu ref="item_menu_state_one"
+                                              :model="store.registrationStatus()"
+                                              :popup="true" />
                                     </td>
-                                </tr>
-                                <tr>
-                                    <Button type="button" label="Toggle" @click="store.toggle" />
-                                    <TieredMenu ref="menu_test"
-                                                :model="store.assets.registration_statuses"
-                                                :popup="true" />
                                 </tr>
                             </template>
 
