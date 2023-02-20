@@ -2,6 +2,7 @@ import { watch } from 'vue';
 import {acceptHMRUpdate, defineStore} from 'pinia';
 import qs from 'qs';
 import {vaah} from '../vaahvue/pinia/vaah';
+import {useRootStore} from "./root";
 
 let model_namespace = 'WebReinvent\\VaahCms\\Models\\Media';
 
@@ -171,22 +172,6 @@ export const useMediaStore = defineStore({
             )
         },
         //---------------------------------------------------------------------
-        watchItem()
-        {
-            if(this.item){
-                    watch(this.item.name, (newVal,oldVal) =>
-                        {
-                            if(newVal && newVal !== "")
-                            {
-                                this.item.name = vaah().toUpperCaseWords(newVal);
-
-                                this.item.slug = vaah().strToSlug(newVal);
-                            }
-                        },{deep: true}
-                    )
-                }
-        },
-        //---------------------------------------------------------------------
         async getAssets() {
             if(this.assets_is_fetching === true){
                 this.assets_is_fetching = false;
@@ -253,7 +238,6 @@ export const useMediaStore = defineStore({
         //---------------------------------------------------------------------
         async getItemAfter(data)
         {
-            console.log(data);
             if(data)
             {
                 this.item = data;
@@ -443,7 +427,7 @@ export const useMediaStore = defineStore({
                 await this.getFormMenu();
 
                 if (this.route && this.route.params && this.route.params.id) {
-                    this.$router.push({name: 'media.view'});
+                    // this.$router.push({name: 'media.view'});
                     await this.getItem(this.route.params.id);
                 }
             }
@@ -462,12 +446,12 @@ export const useMediaStore = defineStore({
                     this.setActiveItemAsEmpty();
                     this.$router.push({name: 'media.index'});
                     break;
+                case 'create-and-clone':
                 case 'save-and-clone':
                     this.item.id = null;
                     break;
                 case 'trash':
                     this.item = null;
-                    this.toList();
                     break;
                 case 'delete':
                     this.item = null;
