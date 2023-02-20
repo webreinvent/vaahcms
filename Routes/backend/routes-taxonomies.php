@@ -74,13 +74,13 @@ function () {
     /**
      * Delete taxonomy type
      */
-    Route::post( 'delete-taxonomy-type', 'TaxonomiesController@deleteTaxonomyType' )
+    Route::post( '/delete-taxonomy-type', 'TaxonomiesController@deleteTaxonomyType' )
         ->name( 'vh.backend.leads.taxonomies.deleteTaxonomyType' );
 
     /**
      * Update taxonomy type
      */
-    Route::post( 'update-taxonomy-type', 'TaxonomiesController@updateTaxonomyType' )
+    Route::post( '/update-taxonomy-type', 'TaxonomiesController@updateTaxonomyType' )
         ->name( 'vh.backend.leads.taxonomies.updateTaxonomyType' );
 
     /**

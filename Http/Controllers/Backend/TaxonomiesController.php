@@ -186,7 +186,6 @@ class TaxonomiesController extends Controller
     //----------------------------------------------------------
     public function updateTaxonomyType(Request $request)
     {
-
         if (!Auth::user()->hasPermission('can-manage-taxonomy-type')) {
             $response['success'] = false;
             $response['errors'][] = trans("vaahcms::messages.permission_denied");
