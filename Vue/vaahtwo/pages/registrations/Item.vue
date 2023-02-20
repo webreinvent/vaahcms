@@ -231,7 +231,7 @@ const toggleStatusMenu = (event) => {
                                     <td><b>Status</b></td>
                                     <td v-if="value">
                                         <div class="p-inputgroup">
-                                            <Button :label="value"
+                                            <Button :label="useVaah.toLabel(value)"
                                                     v-if="value"
                                                     class="p-button-outlined p-button-secondary p-button-sm"
                                                     disabled="disabled"
@@ -245,28 +245,28 @@ const toggleStatusMenu = (event) => {
                                                     aria-controls="status_menu"
                                             />
 
-                                            <Menu v-if="store.assets && store.assets.registration_statuses"
+                                            <Menu v-if="store && store.assets && store.assets.registration_statuses"
                                                   ref="item_status"
                                                   :model="store.assets.registration_statuses"
                                                   :popup="true"
                                                   id="status_menu"
                                             />
 
-                                            <Button v-if="value == 'email-verification-pending'"
+                                            <Button v-if="value === 'email-verification-pending'"
                                                     label="Resend Verification Email"
                                                     class="p-button-info p-button-sm"
                                                     @click="store.sendVerificationEmail()"
                                                     data-testid="register-view_send_verification_email"
                                             />
 
-                                            <Button v-if="value == 'email-verified'"
+                                            <Button v-if="value === 'email-verified'"
                                                     label="Create User"
                                                     class="p-button-success p-button-sm"
                                                      @click="store.confirmCreateUser()"
                                                     data-testid="register-view_confirm_create_user"
                                             />
 
-                                            <Button v-if="value == 'email-verified'"
+                                            <Button v-if="value === 'email-verified'"
                                                     type="button"
                                                     @click=""
                                                     icon="pi pi-angle-down"
@@ -277,7 +277,8 @@ const toggleStatusMenu = (event) => {
                                         </div>
                                     </td>
                                 </tr>
-                                <tr>
+
+                                <tr v-if="store && store.assets && store.assets.regisgration_statuses">
                                     <Button type="button" label="Toggle" @click="store.toggle" />
                                     <TieredMenu ref="menu_test"
                                                 :model="store.assets.registration_statuses"
