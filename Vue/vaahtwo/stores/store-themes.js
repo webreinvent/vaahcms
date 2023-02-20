@@ -12,8 +12,8 @@ import { useRootStore } from "./root"
 
 let empty_states = {
     query: {
-        page: null,
-        rows: null,
+        page: 1,
+        rows: 20,
         filter: {
             q: null,
             is_active: null,

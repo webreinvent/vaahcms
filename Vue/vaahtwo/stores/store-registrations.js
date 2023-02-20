@@ -6,14 +6,13 @@ import { useRootStore } from "./root";
 
 let model_namespace = 'WebReinvent\\VaahCms\\Models\\Registration';
 
-
 let base_url = document.getElementsByTagName('base')[0].getAttribute("href");
 let ajax_url = base_url + "/vaah/registrations";
 
 let empty_states = {
     query: {
-        page: null,
-        rows: null,
+        page: 1,
+        rows: 20,
         filter: {
             q: null,
             is_active: null,
@@ -39,7 +38,7 @@ export const useRegistrationStore = defineStore({
         assets_is_fetching: true,
         app: null,
         assets: null,
-        rows_per_page: [1,2,10,20,30,50,100,500],
+        rows_per_page: [10,20,30,50,100,500],
         list: null,
         item: null,
         fillable:null,
@@ -82,7 +81,8 @@ export const useRegistrationStore = defineStore({
 
         filtered_country_codes: [],
         row_active:null,
-        registration_statuses:null,
+        display_bio_modal: null,
+        bio_modal_data: null
     }),
     getters: {
 
@@ -196,7 +196,7 @@ export const useRegistrationStore = defineStore({
                 if(this.route.params && !this.route.params.id){
                     this.item = vaah().clone(data.empty_item);
                 }
-
+                console.log(this.assets);
             }
         },
         //---------------------------------------------------------------------
@@ -342,10 +342,6 @@ export const useRegistrationStore = defineStore({
                 this.updateListAfter,
                 options
             );
-        },
-        //---------------------------------------------------------------------
-        toggle(event) {
-            this.$refs.menu_test.toggle(event);
         },
         //---------------------------------------------------------------------
         itemAction(type, item=null){
@@ -1052,37 +1048,61 @@ export const useRegistrationStore = defineStore({
         //---------------------------------------------------------------------
         async sync() {
             this.is_btn_loading = true;
-
             await this.getList();
         },
         //---------------------------------------------------------------------
-        async displayBioModal(item) {
+        displayBioModal(item) {
             this.display_bio_modal = true;
             this.bio_modal_data = item;
         },
         //---------------------------------------------------------------------
-        changeStatus(status) {
-            this.item.status=status;
-            this.itemAction('save');
+        registrationStatus() {
+            return [
+                {
+                    label: 'Options',
+                    items: [{
+                        label: 'Update',
+                        icon: 'pi pi-refresh',
+                        command: () => {
+                            toast.add({severity:'success', summary:'Updated', detail:'Data Updated', life: 3000});
+                        }
+                    },
+                        {
+                            label: 'Delete',
+                            icon: 'pi pi-times',
+                            command: () => {
+                                toast.add({ severity: 'warn', summary: 'Delete', detail: 'Data Deleted', life: 3000});
+                            }
+                        }
+                    ]},
+                {
+                    label: 'Navigate',
+                    items: [{
+                        label: 'Vue Website',
+                        icon: 'pi pi-external-link',
+                        url: 'https://vuejs.org/'
+                    },
+                        {
+                            label: 'Router',
+                            icon: 'pi pi-upload',
+                            command: () => {
+                                window.location.hash = "/fileupload"
+                            }
+                        }
+                    ]}
+            ];
+
         },
         //---------------------------------------------------------------------
-        setRegistrationStatuses(){
-            let list=[];
-            if(store.assets && store.assets.registration_statuses){
-                store.assets.registration_statuses.forEach(function(key,index){
-                    list.push({
-                        label: key.name,
-                        command: () => {
-                            store.changeStatus(key.slug);
-                        }
-                    });
-                    this.registration_statuses ={
-                        label: 'status-list',
-                        items: list
-                    };
-                });
-            }
-        }
+        toggleStatusMenu(event) {
+            console.log(this.$refs);
+            // this.item_status.toggle(event);
+        },
+        //---------------------------------------------------------------------
+        toggle(event) {
+            console.log(this.$refs);
+            this.$refs.menu_test.toggle(event);
+        },
         //---------------------------------------------------------------------
     }
 });

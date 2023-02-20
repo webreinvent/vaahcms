@@ -11,8 +11,8 @@ let ajax_url = base_url + "/vaah/batches";
 
 let empty_states = {
     query: {
-        page: null,
-        rows: null,
+        page: 1,
+        rows: 20,
         filter: {
             q: null,
             is_active: null,
@@ -45,7 +45,7 @@ export const useBatchStore = defineStore({
         assets_is_fetching: true,
         app: null,
         assets: null,
-        rows_per_page: [2,10,20,30,50,100,500],
+        rows_per_page: [10,20,30,50,100,500],
         list: null,
         item: null,
         fillable:null,
