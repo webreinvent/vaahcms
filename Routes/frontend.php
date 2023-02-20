@@ -53,11 +53,11 @@ Route::group(
     [
         'prefix'     => 'media',
         'middleware' => ['web'],
-        'namespace'  => 'WebReinvent\VaahCms\Http\Controllers'
+        'namespace'  => 'WebReinvent\VaahCms\Http\Controllers\backend'
     ],
     function () {
         //------------------------------------------------
-        Route::post( '/download/{slug?}', 'MediaController@upload' )
+        Route::get( '/download/{slug?}', 'MediaController@itemDownload' )
             ->name( 'vh.frontend.media.download' );
         //------------------------------------------------
     });
