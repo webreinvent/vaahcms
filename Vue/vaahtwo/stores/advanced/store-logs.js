@@ -201,10 +201,9 @@ export const useLogStore = defineStore({
         //---------------------------------------------------------------------
         afterGetList: function (data, res)
         {
-
-            if(data && data.list)
-            {
+            if (data && data.list) {
                 this.list = data.list;
+                this.query.rows = this.rows;
                 this.firstElement = this.query.rows * (this.query.page - 1);
             }
         },

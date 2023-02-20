@@ -21,7 +21,6 @@ class LogsController extends Controller
 
     public function getAssets(Request $request)
     {
-
         $data = [];
 
         $data['permission'] = [];
@@ -134,7 +133,9 @@ class LogsController extends Controller
         }
 
         $response['success'] = true;
+        $response['data']['rows'] = config('vaahcms.per_page');
         $response['data']['list'] = array_reverse($list);
+        $response['data']['total'] = count($list);
 
         return response()->json($response);
     }
