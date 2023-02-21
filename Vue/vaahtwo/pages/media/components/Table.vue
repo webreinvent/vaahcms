@@ -26,8 +26,9 @@ const useVaah = vaah();
             <Column field="id" :sortable="true" header="ID" :style="{width: store.getIdWidth()}" />
 
              <Column field="thumbnail" header="Thumbnail">
-                 <template #body="prop">
-                     <Image :src="prop.data.url_thumbnail" />
+                 <template #body="prop" >
+                     <Image v-if="prop.data.url_thumbnail" :src="prop.data.url_thumbnail" />
+                     <i v-else class="pi pi-file"></i>
                  </template>
              </Column>
 

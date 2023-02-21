@@ -111,7 +111,8 @@ class MediaController extends Controller
     public function itemDownload(Request $request,$slug)
     {
         $media_data = Media::where('download_url', $slug)->first();
-        return response()->download($media_data->url);
+//        $headers = array('Content-Type' => File::mimeType($media_data->url));
+        return response()->download(storage_path(str_replace('storage','',$media_data->path)));
     }
     //----------------------------------------------------------
     public function upload(Request $request)
