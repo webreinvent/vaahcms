@@ -59,9 +59,9 @@ const route = useRoute();
         <Divider/>
 
         <!--paginator-->
-        <Paginator v-model:first="store.firstElement"
+        <Paginator v-model:first="store.first_element"
                    :rows="store.query.rows"
-                   :totalRecords="store.listTotal"
+                   :totalRecords="store.list_total"
                    @page="store.paginate($event)"
                    :rowsPerPageOptions="store.rows_per_page" />
         <!--/paginator-->
