@@ -153,6 +153,7 @@ export const useGeneralStore = defineStore({
                 this.social_media_links = vaah().removeInArrayByKey(this.social_media_links, item, 'id');
             } else
             {
+                console.log(item);
                 this.social_media_links = vaah().removeInArrayByKey(this.social_media_links, item, 'count');
             }
             vaah().toastErrors(['Removed']);
