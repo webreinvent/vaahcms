@@ -70,7 +70,7 @@ export const useLogStore = defineStore({
         payloadModal: false,
         payloadContent: null,
         is_btn_loading: false,
-        firstElement: null,
+        first_element: null,
         listTotal: null
     }),
     getters: {
@@ -84,6 +84,8 @@ export const useLogStore = defineStore({
              * Set initial routes
              */
             this.route = route;
+
+            this.updateQueryFromUrl(route);
         },
         //---------------------------------------------------------------------
         setViewAndWidth(route_name)
@@ -161,10 +163,9 @@ export const useLogStore = defineStore({
         },
         //---------------------------------------------------------------------
         async getAssets() {
-            console.log('getAssets');
             if(this.assets_is_fetching === true){
                 this.assets_is_fetching = false;
-                await this.updateUrlQueryString(this.query);
+
                 vaah().ajax(
                     this.ajax_url+'/assets',
                     this.afterGetAssets,
@@ -174,7 +175,6 @@ export const useLogStore = defineStore({
         //---------------------------------------------------------------------
         afterGetAssets(data)
         {
-            console.log('afterGetAssets');
             if (data)
             {
                 this.assets = data;
@@ -195,7 +195,6 @@ export const useLogStore = defineStore({
             let options = {
                 query: vaah().clone(this.query)
             };
-            console.log('getList');
             await this.updateUrlQueryString(this.query);
 
             await vaah().ajax(
@@ -207,11 +206,10 @@ export const useLogStore = defineStore({
         //---------------------------------------------------------------------
         afterGetList(data, res)
         {
-            console.log('afterGetList');
             if (data && data.list) {
                 this.list = data.list;
-                this.listTotal = data.total;
-                this.firstElement = ((this.query.page - 1) * this.query.rows);
+                this.list_total = data.list.length;
+                this.first_element = ((this.query.page - 1) * this.query.rows);
             }
         },
         //---------------------------------------------------------------------
@@ -454,7 +452,7 @@ export const useLogStore = defineStore({
         async paginate(event) {
             this.query.page = event.page+1;
             this.query.rows = event.rows;
-            this.firstElement = ((this.query.page - 1) * this.query.rows);
+            this.first_element = ((this.query.page - 1) * this.query.rows);
             await this.getList();
         },
         //---------------------------------------------------------------------
