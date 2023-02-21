@@ -2,11 +2,12 @@
 
 import { useTaxonomyStore } from "../../../stores/store-taxonomies";
 import { ref } from "vue";
+import { vaah } from "../../../vaahvue/pinia/vaah";
 import draggable from 'vuedraggable'
 import { TreeView } from "@grapoza/vue-tree";
 
 const store = useTaxonomyStore();
-
+const useVaah = vaah();
 const selectedNode = ref();
 const editLabel = ref(false);
 
@@ -60,15 +61,22 @@ const modelDefaults = {
 
         <Divider />
 
-<!--        <Tree :value="store.assets.types" selectionMode="single" />-->
-
         <div class="draggable-tree-list" v-if="store && store.assets && store.assets.types">
-            <TreeView :initial-model="store.assets.types" :model-defaults="modelDefaults">
+            <TreeView :initial-model="store.assets.types"
+                      :model-defaults="modelDefaults"
+            >
                 <template v-slot:text="{ model, customClasses }">
                     <div class="list-item">
                         <span>
-                            <p class="inline" v-if="!editLabel">{{ model.label }}</p>
-                            <InputText @input="store.setTaxonomyTypeName(model.label)"
+                            <p class="inline cursor-pointer"
+                               v-if="!editLabel"
+                               @click="useVaah.copy(model.data)"
+                               v-tooltip.top=" 'Copy Slug' "
+                            >
+                                <span><i class="pi pi-folder mr-1"></i> {{ model.label }} </span>
+                            </p>
+
+                            <InputText @input="store.setTaxonomyTypeNewName(model.label)"
                                        v-model="model.label"
                                        v-if="editLabel"
                             />
