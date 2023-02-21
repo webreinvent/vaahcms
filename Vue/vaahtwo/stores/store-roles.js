@@ -478,6 +478,8 @@ export const useRoleStore = defineStore({
                     this.$router.push({name: 'roles.index'});
                     break;
                 case 'create-and-clone':
+                    this.item.id = null;
+                    break;
                 case 'save-and-clone':
                     this.item.id = null;
                     this.route.params.id = null;
