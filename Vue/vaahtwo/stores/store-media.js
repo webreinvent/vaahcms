@@ -525,6 +525,8 @@ export const useMediaStore = defineStore({
         setActiveItemAsEmpty()
         {
             this.item = vaah().clone(this.assets.empty_item);
+            let element = document.querySelector('.p-fileupload-file-remove');
+            element.click();
         },
         //---------------------------------------------------------------------
         confirmDelete()
@@ -914,7 +916,9 @@ export const useMediaStore = defineStore({
         uploadAfter(data) {
 
             if (data && data.original_name) {
+                let name = this.item.name;
                 this.item = data;
+                this.item.name = name;
             }
         },
         //---------------------------------------------------------------------
