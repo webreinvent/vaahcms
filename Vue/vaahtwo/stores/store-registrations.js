@@ -1056,51 +1056,44 @@ export const useRegistrationStore = defineStore({
         },
         //---------------------------------------------------------------------
         registrationStatus() {
-            return [
-                {
-                    label: 'Options',
-                    items: [{
-                        label: 'Update',
-                        icon: 'pi pi-refresh',
-                        command: () => {
-                            toast.add({severity:'success', summary:'Updated', detail:'Data Updated', life: 3000});
-                        }
-                    },
-                        {
-                            label: 'Delete',
-                            icon: 'pi pi-times',
-                            command: () => {
-                                toast.add({ severity: 'warn', summary: 'Delete', detail: 'Data Deleted', life: 3000});
-                            }
-                        }
-                    ]},
-                {
-                    label: 'Navigate',
-                    items: [{
-                        label: 'Vue Website',
-                        icon: 'pi pi-external-link',
-                        url: 'https://vuejs.org/'
-                    },
-                        {
-                            label: 'Router',
-                            icon: 'pi pi-upload',
-                            command: () => {
-                                window.location.hash = "/fileupload"
-                            }
-                        }
-                    ]}
-            ];
+            const store = this;
+            let itemList = [];
 
+            this.assets.registration_statuses.forEach(function(key,index) {
+                itemList.push({
+                    label: key.name,
+                    command: () => {
+                        store.changeStatus(key.slug);
+                    }
+                });
+            });
+
+            return [{
+                label: 'registration_statuses',
+                items: itemList
+            }];
         },
         //---------------------------------------------------------------------
-        toggleStatusMenu(event) {
-            console.log(this.$refs);
-            // this.item_status.toggle(event);
+        changeStatus(status) {
+            let options = {
+                method: 'post',
+                params : {
+                    items : [this.item]
+                }
+            };
+
+            let url = this.ajax_url+'/action/'+status;
+
+            vaah().ajax(url, this.changeStatusAfter, options);
         },
         //---------------------------------------------------------------------
-        toggle(event) {
-            console.log(this.$refs);
-            this.$refs.menu_test.toggle(event);
+        changeStatusAfter(data) {
+            if (data)
+            {
+                this.getAssets();
+                this.getList();
+                this.getItem();
+            }
         },
         //---------------------------------------------------------------------
     }
