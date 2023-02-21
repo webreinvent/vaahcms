@@ -128,8 +128,14 @@ const toggleFormMenu = (event) => {
                                v-model="store.item.email"
                                name="register-email"
                                data-testid="register-email"
-
+                               @input="store.validateEmail(store.item.email)"
                     />
+
+                    <span v-if="store.email_validation_message === false"
+                          class="text-xs text-red-500"
+                    >
+                        Please include a '@domain' in the email address. {{ store.item.email }} is lacking a "@domain" in the address.
+                    </span>
                 </VhField>
 
                 <VhField label="Username">

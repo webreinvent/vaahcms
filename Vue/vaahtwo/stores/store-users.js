@@ -122,7 +122,8 @@ export const useUserStore = defineStore({
         display_bio_modal: null,
         bio_modal_data: null,
         firstElement: null,
-        rolesFirstElement: null
+        rolesFirstElement: null,
+        email_validation_message: null,
     }),
     getters: {
 
@@ -1261,6 +1262,10 @@ export const useUserStore = defineStore({
         async displayBioModal(item) {
             this.display_bio_modal = true;
             this.bio_modal_data = item;
+        },
+        //---------------------------------------------------------------------
+        validateEmail(value) {
+            return this.email_validation_message = vaah().validateEmail(value);
         },
         //---------------------------------------------------------------------
     }
