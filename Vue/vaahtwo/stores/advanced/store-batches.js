@@ -34,11 +34,9 @@ export const useBatchStore = defineStore({
     state: () => ({
         page: 1,
         rows: 20,
-        dialogContent: null,
-        displayDetail: false,
-        displayFailedIds: false,
-        dateColumnName: 'created_at',
-        range: null,
+        dialog_content: null,
+        display_detail: false,
+        display_failed_ids: false,
         base_url: base_url,
         ajax_url: ajax_url,
         model: model_namespace,
@@ -73,7 +71,7 @@ export const useBatchStore = defineStore({
         list_selected_menu: [],
         list_bulk_menu: [],
         dates: [],
-        firstElement: null,
+        first_element: null,
     }),
     actions: {
         //---------------------------------------------------------------------
@@ -84,7 +82,7 @@ export const useBatchStore = defineStore({
              */
 
             this.route = route;
-            this.firstElement = ((this.query.page - 1) * this.query.rows);
+            this.first_element = ((this.query.page - 1) * this.query.rows);
 
             /**
              * Update query state with the query parameters of url
@@ -195,7 +193,7 @@ export const useBatchStore = defineStore({
 
             if (data) {
                 this.list = data.list;
-                this.firstElement = ((this.query.page - 1) * this.query.rows);
+                this.first_element = ((this.query.page - 1) * this.query.rows);
             }
         },
         //---------------------------------------------------------------------
@@ -272,7 +270,7 @@ export const useBatchStore = defineStore({
         async paginate(event) {
             this.query.page = event.page+1;
             this.query.rows = event.rows;
-            this.firstElement = ((this.query.page - 1) * this.query.rows);
+            this.first_element = ((this.query.page - 1) * this.query.rows);
             await this.getList();
         },
         //---------------------------------------------------------------------
@@ -513,12 +511,12 @@ export const useBatchStore = defineStore({
             }
         },
         displayBatchDetails(content) {
-            this.dialogContent = `<pre class="is-size-6">`+content+`</pre>`;
-            this.displayDetail = true;
+            this.dialog_content = `<pre class="is-size-6">`+content+`</pre>`;
+            this.display_detail = true;
         },
         displayFailedIdDetails(content) {
-            this.dialogContent = `<pre class="is-size-6">`+JSON.stringify(content)+`</pre>`;
-            this.displayFailedIds = true;
+            this.dialog_content = `<pre class="is-size-6">`+JSON.stringify(content)+`</pre>`;
+            this.display_failed_ids = true;
         },
         deleteItem(item) {
             this.item = item;

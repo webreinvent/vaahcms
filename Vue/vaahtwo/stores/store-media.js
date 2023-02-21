@@ -71,7 +71,6 @@ export const useMediaStore = defineStore({
         item_menu_list: [],
         item_menu_state: null,
         form_menu_list: [],
-        downloadOption: null,
         download_options:[
             {
                 label:'Yes',
@@ -86,7 +85,7 @@ export const useMediaStore = defineStore({
         dates2: [],
         is_btn_loading: false,
         downloadable_slug_available: '',
-        firstElement: null
+        first_element: null
     }),
     getters: {
 
@@ -237,7 +236,7 @@ export const useMediaStore = defineStore({
             if(data)
             {
                 this.list = data.list;
-                this.firstElement = this.query.rows * (this.query.page - 1);
+                this.first_element = this.query.rows * (this.query.page - 1);
             }
         },
         //---------------------------------------------------------------------
@@ -489,7 +488,7 @@ export const useMediaStore = defineStore({
         async paginate(event) {
             this.query.page = event.page+1;
             this.query.rows = event.rows;
-            this.firstElement = this.query.rows * (this.query.page - 1);
+            this.first_element = this.query.rows * (this.query.page - 1);
             await this.getList();
         },
         //---------------------------------------------------------------------

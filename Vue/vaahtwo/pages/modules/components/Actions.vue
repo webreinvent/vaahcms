@@ -34,7 +34,7 @@ const toggleBulkMenuState = (event) => {
 
             <div class="col-4 mb-5">
                 <Dropdown v-model="store.query.filter.status"
-                          :options="store.statusList"
+                          :options="store.status_list"
                           optionLabel="name"
                           optionValue="value"
                           data-testid="modules-actions-status-dropdown"

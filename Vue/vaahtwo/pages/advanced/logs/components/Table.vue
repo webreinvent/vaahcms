@@ -68,16 +68,15 @@ const route = useRoute();
 
     </div>
     <Dialog header="Payload"
-            v-model:visible="store.payloadModal"
+            v-model:visible="store.payload_modal"
             :style="{width: '40%'}"
     >
 
         <Card class="w-max">
             <template #content>
-                <span v-html="store.payloadContent"></span>
+                <span v-html="store.payload_content"></span>
             </template>
         </Card>
-
 
     </Dialog>
 

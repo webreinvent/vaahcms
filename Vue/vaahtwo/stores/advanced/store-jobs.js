@@ -67,9 +67,9 @@ export const useJobStore = defineStore({
         item_menu_list: [],
         item_menu_state: null,
         form_menu_list: [],
-        payloadModal:false,
-        payloadContent:null,
-        firstElement: null
+        payload_modal:false,
+        payload_content:null,
+        first_element: null
     }),
     actions: {
         //---------------------------------------------------------------------
@@ -79,7 +79,7 @@ export const useJobStore = defineStore({
              * Set initial routes
              */
             this.route = route;
-            this.firstElement = ((this.query.page - 1) * this.query.rows);
+            this.first_element = ((this.query.page - 1) * this.query.rows);
             /**
              * Update query state with the query parameters of url
              */
@@ -175,7 +175,7 @@ export const useJobStore = defineStore({
 
             if(data) {
                 this.list = data;
-                this.firstElement = ((this.query.page - 1) * this.query.rows);
+                this.first_element = ((this.query.page - 1) * this.query.rows);
             }
         },
         //---------------------------------------------------------------------
@@ -299,7 +299,7 @@ export const useJobStore = defineStore({
         async paginate(event) {
             this.query.page = event.page+1;
             this.query.rows = event.rows;
-            this.firstElement = this.query.rows * (this.query.page - 1);
+            this.first_element = this.query.rows * (this.query.page - 1);
             await this.getList();
         },
         //---------------------------------------------------------------------
@@ -493,8 +493,8 @@ export const useJobStore = defineStore({
 
         viewPayloads(content)
         {
-            this.payloadContent = `<pre class="is-size-6">`+JSON.stringify(content, null, 2)+ `</pre>`;
-            this.payloadModal=true
+            this.payload_content = `<pre class="is-size-6">`+JSON.stringify(content, null, 2)+ `</pre>`;
+            this.payload_modal=true
         },
         //---------------------------------------------------------------------
         async sync() {
