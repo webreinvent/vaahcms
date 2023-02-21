@@ -99,7 +99,7 @@ const useVaah = vaah();
         <Divider/>
 
         <!--paginator-->
-        <Paginator v-model:first="store.firstElement"
+        <Paginator v-model:first="store.first_element"
                    :rows="store.query.rows"
                    :totalRecords="store.list.total"
                    @page="store.paginate($event)"
@@ -109,12 +109,12 @@ const useVaah = vaah();
     </div>
 
     <Dialog header="Payload"
-            v-model:visible="store.payloadModal"
+            v-model:visible="store.payload_modal"
             :style="{width: '40%'}"
     >
         <Card class="w-max">
             <template #content>
-                <span v-html="store.payloadContent"></span>
+                <span v-html="store.payload_content"></span>
             </template>
         </Card>
     </Dialog>

@@ -75,13 +75,13 @@ export const useThemeStore = defineStore({
         list_is_loading: false,
         themes: [],
         module: null,
-        statusList: [
+        status_list: [
             {name: 'All', value: 'all'},
             {name: 'Active', value: 'active'},
             {name: 'Inactive', value: 'inactive'},
             {name: 'Updates Available', value: 'update_available'}
         ],
-        firstElement: null,
+        first_element: null,
         stats: null,
         themes_query: {
             page: null,
@@ -239,7 +239,7 @@ export const useThemeStore = defineStore({
                     this.query.rows = parseInt(this.query.rows);
                 }
 
-                this.firstElement = ((this.query.page - 1) * this.query.rows);
+                this.first_element = ((this.query.page - 1) * this.query.rows);
             }
         },
         //---------------------------------------------------------------------
@@ -483,7 +483,7 @@ export const useThemeStore = defineStore({
         async paginate(event) {
             this.query.page = event.page+1;
             this.query.rows = event.rows;
-            this.firstElement = ((this.query.page - 1) * this.query.rows);
+            this.first_element = ((this.query.page - 1) * this.query.rows);
             await this.getList();
         },
         //---------------------------------------------------------------------

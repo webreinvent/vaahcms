@@ -74,8 +74,7 @@ export const useTaxonomyStore = defineStore({
             name: null,
             parent_id: null,
         },
-        firstElement: null,
-        taxonomy_type_new_name: null,
+        first_element: null,
     }),
     getters: {
 
@@ -93,7 +92,7 @@ export const useTaxonomyStore = defineStore({
              * Update with view and list css column number
              */
             this.setViewAndWidth(route.name);
-            this.firstElement = ((this.query.page - 1) * this.query.rows);
+            this.first_element = ((this.query.page - 1) * this.query.rows);
             /**
              * Update query state with the query parameters of url
              */
@@ -208,7 +207,7 @@ export const useTaxonomyStore = defineStore({
         {
             if (data) {
                 this.list = data;
-                this.firstElement = this.query.rows * (this.query.page - 1);
+                this.first_element = this.query.rows * (this.query.page - 1);
             }
 
             this.is_btn_loading = false;
@@ -458,7 +457,7 @@ export const useTaxonomyStore = defineStore({
         async paginate(event) {
             this.query.page = event.page+1;
             this.query.rows = event.rows;
-            this.firstElement = this.query.rows * (this.query.page - 1);
+            this.first_element = this.query.rows * (this.query.page - 1);
             await this.getList();
         },
         //---------------------------------------------------------------------

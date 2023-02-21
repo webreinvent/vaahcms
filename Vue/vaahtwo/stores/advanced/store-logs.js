@@ -67,8 +67,8 @@ export const useLogStore = defineStore({
         item_menu_list: [],
         item_menu_state: null,
         form_menu_list: [],
-        payloadModal: false,
-        payloadContent: null,
+        payload_modal: false,
+        payload_content: null,
         is_btn_loading: false,
         first_element: null,
         listTotal: null
@@ -734,8 +734,8 @@ export const useLogStore = defineStore({
         //---------------------------------------------------------------------
         viewPayloads(content)
         {
-            this.payloadContent = `<pre class="is-size-6">`+JSON.stringify(content, null, 2)+ `</pre>`;
-            this.payloadModal=true
+            this.payload_content = `<pre class="is-size-6">`+JSON.stringify(content, null, 2)+ `</pre>`;
+            this.payload_modal=true
         },
         //---------------------------------------------------------------------
         async getMenuItems() {

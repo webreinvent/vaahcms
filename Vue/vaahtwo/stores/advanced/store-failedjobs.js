@@ -69,11 +69,11 @@ export const useFailedJobStore = defineStore({
         item_menu_list: [],
         item_menu_state: null,
         form_menu_list: [],
-        failedJobModal:false,
-        failedJobContent:null,
-        failedJobContentHeading:null,
+        failed_job_modal:false,
+        failed_job_content:null,
+        failed_job_content_heading:null,
         dates: [],
-        firstElement: null
+        first_element: null
     }),
     actions: {
         //---------------------------------------------------------------------
@@ -83,7 +83,7 @@ export const useFailedJobStore = defineStore({
              * Set initial routes
              */
             this.route = route;
-            this.firstElement = ((this.query.page - 1) * this.query.rows);
+            this.first_element = ((this.query.page - 1) * this.query.rows);
             /**
              * Update query state with the query parameters of url
              */
@@ -194,7 +194,7 @@ export const useFailedJobStore = defineStore({
 
             if(data) {
                 this.list = data.list;
-                this.firstElement = this.query.rows * (this.query.page - 1);
+                this.first_element = this.query.rows * (this.query.page - 1);
             }
         },
         //---------------------------------------------------------------------
@@ -318,7 +318,7 @@ export const useFailedJobStore = defineStore({
         async paginate(event) {
             this.query.page = event.page+1;
             this.query.rows = event.rows;
-            this.firstElement = this.query.rows * (this.query.page - 1);
+            this.first_element = this.query.rows * (this.query.page - 1);
             await this.getList();
         },
         //---------------------------------------------------------------------
@@ -518,9 +518,9 @@ export const useFailedJobStore = defineStore({
         //---------------------------------------------------------------------
         viewFailedJobsContent(content,heading)
         {
-            this.failedJobContentHeading= heading;
-            this.failedJobContent = `<pre class="is-size-6">`+JSON.stringify(content, null, 2)+ `</pre>`;
-            this.failedJobModal=true
+            this.failed_job_content_heading= heading;
+            this.failed_job_content = `<pre class="is-size-6">`+JSON.stringify(content, null, 2)+ `</pre>`;
+            this.failed_job_modal=true
         },
         setDateRange()
         {
