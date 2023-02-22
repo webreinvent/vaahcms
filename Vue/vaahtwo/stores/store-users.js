@@ -122,7 +122,12 @@ export const useUserStore = defineStore({
         display_bio_modal: null,
         bio_modal_data: null,
         firstElement: null,
-        rolesFirstElement: null
+        rolesFirstElement: null,
+        email_error:{
+            class:'',
+            msg:''
+
+        }
     }),
     getters: {
 
@@ -1262,6 +1267,14 @@ export const useUserStore = defineStore({
             this.display_bio_modal = true;
             this.bio_modal_data = item;
         },
+        //---------------------------------------------------------------------
+        validateEmail() {
+            if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(this.item.email)) {
+                this.email_error = { class: '',msg:''};
+            } else {
+                this.email_error = { class: 'p-invalid',msg:'Please enter a valid email address'};
+            }
+        }
         //---------------------------------------------------------------------
     }
 });

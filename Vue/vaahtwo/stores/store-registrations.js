@@ -82,6 +82,7 @@ export const useRegistrationStore = defineStore({
 
         filtered_country_codes: [],
         row_active:null,
+        registration_statuses:null,
     }),
     getters: {
 
@@ -184,6 +185,7 @@ export const useRegistrationStore = defineStore({
                 this.assets = data;
                 if(data.rows)
                 {
+                    // this.setRegistrationStatuses();
                     if (!this.query.rows) {
                         this.query.rows = data.rows;
                     } else {
@@ -1058,6 +1060,29 @@ export const useRegistrationStore = defineStore({
             this.display_bio_modal = true;
             this.bio_modal_data = item;
         },
+        //---------------------------------------------------------------------
+        changeStatus(status) {
+            this.item.status=status;
+            this.itemAction('save');
+        },
+        //---------------------------------------------------------------------
+        setRegistrationStatuses(){
+            let list=[];
+            if(store.assets && store.assets.registration_statuses){
+                store.assets.registration_statuses.forEach(function(key,index){
+                    list.push({
+                        label: key.name,
+                        command: () => {
+                            store.changeStatus(key.slug);
+                        }
+                    });
+                    this.registration_statuses ={
+                        label: 'status-list',
+                        items: list
+                    };
+                });
+            }
+        }
         //---------------------------------------------------------------------
     }
 });

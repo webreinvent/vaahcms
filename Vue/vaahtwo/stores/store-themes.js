@@ -982,6 +982,28 @@ export const useThemeStore = defineStore({
             vaah().ajax(url, this.installAfter, options);
         },
         //---------------------------------------------------------------------
+        async actions(action, theme) {
+            console.log(action);
+            let options = {
+                params : {
+                    action: action,
+                    inputs: theme
+                },
+                method: 'post'
+            };
+            let url = this.ajax_url+'/actions';
+            await vaah().ajax(url, this.actionsAfter, options);
+        },
+        //---------------------------------------------------------------------
+        actionsAfter(data, res) {
+
+            if(data)
+            {
+                this.getAssets();
+            }
+
+        },
+        //---------------------------------------------------------------------
         async installAfter(data) {
             if(data)
             {

@@ -153,7 +153,6 @@ export const useGeneralStore = defineStore({
                 this.social_media_links = vaah().removeInArrayByKey(this.social_media_links, item, 'id');
             } else
             {
-                console.log(item);
                 this.social_media_links = vaah().removeInArrayByKey(this.social_media_links, item, 'count');
             }
             vaah().toastErrors(['Removed']);
@@ -220,7 +219,21 @@ export const useGeneralStore = defineStore({
             if (!this.show_link_input) {
                 return this.show_link_input = true;
             } else if (this.show_link_input && this.add_link !== "" && this.add_link !== null) {
-                this.social_media_links.push({label: this.add_link});
+                let count = this.social_media_links.length;
+
+                let item = {
+                    id: null,
+                    count: count,
+                    category: "global",
+                    label: this.add_link,
+                    excerpt: null,
+                    type: "link",
+                    key: "link_"+count,
+                    value: null,
+                    created_at: null,
+                    updated_at: null,
+                };
+                this.social_media_links.push(item);
                 this.add_link = null;
                 return this.show_link_input = true;
             }
@@ -445,7 +458,7 @@ export const useGeneralStore = defineStore({
             }
             else {
                 this.filtered_allowed_files = this.assets.file_types.filter((files) => {
-                    return files.toLowerCase().startsWith(event.query.toLowerCase());
+                    return files.toLowerCase().search(event.query.toLowerCase());
                 });
             }
         },
