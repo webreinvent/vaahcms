@@ -420,7 +420,7 @@ class Registration extends RegistrationBase
             case 'email-verification-pending':
             case 'email-verified':
             case 'user-created':
-                $items->update(['status' => $type]);
+                self::query()->update(['status' => $type]);
                 break;
         }
 

@@ -40,7 +40,7 @@ export const useRegistrationStore = defineStore({
         assets: null,
         rows_per_page: [10,20,30,50,100,500],
         list: null,
-        item: null,
+        item: {},
         fillable:null,
         empty_query:empty_states.query,
         empty_action:empty_states.action,
@@ -196,7 +196,6 @@ export const useRegistrationStore = defineStore({
                 if(this.route.params && !this.route.params.id){
                     this.item = vaah().clone(data.empty_item);
                 }
-                console.log(this.assets);
             }
         },
         //---------------------------------------------------------------------
@@ -240,7 +239,7 @@ export const useRegistrationStore = defineStore({
             if(data)
             {
                 this.item = data;
-            }else{
+            } else {
                 this.$router.push({name: 'registrations.index'});
             }
             this.getItemMenu();
@@ -345,9 +344,7 @@ export const useRegistrationStore = defineStore({
         },
         //---------------------------------------------------------------------
         itemAction(type, item=null){
-            // console.log(this.item);
-
-            if(!item)
+           if(!item)
             {
                 item = this.item;
             }
@@ -1037,7 +1034,6 @@ export const useRegistrationStore = defineStore({
         checkHidden(item)
         {
             let select_array = vaah().findInArrayByKey(this.assets.custom_fields.value, 'slug', item);
-            // console.log(select_array);
             return select_array.is_hidden;
         },
         //---------------------------------------------------------------------
@@ -1057,6 +1053,7 @@ export const useRegistrationStore = defineStore({
         },
         //---------------------------------------------------------------------
         registrationStatus() {
+            if (!this.assets) return;
             const store = this;
             let itemList = [];
 
@@ -1076,24 +1073,61 @@ export const useRegistrationStore = defineStore({
         },
         //---------------------------------------------------------------------
         changeStatus(status) {
-            let options = {
-                method: 'post',
-                params : {
-                    items : [this.item]
-                }
-            };
-
-            let url = this.ajax_url+'/action/'+status;
-
-            vaah().ajax(url, this.changeStatusAfter, options);
+            this.item.status=status;
+            this.itemAction('save');
         },
         //---------------------------------------------------------------------
-        changeStatusAfter(data) {
-            if (data)
+        confirmCreateUser(item=null){
+            if(!item)
             {
-                this.getAssets();
-                this.getList();
-                this.getItem();
+                item = this.item;
+            }
+            let ajax_url = this.ajax_url+'/'+item.id+'/'+'createUser';
+            let options = {
+                method:'post',
+            };
+            options.params=[item.id];
+
+            vaah().ajax(
+                ajax_url,
+                this.confirmCreateUserAfter,
+                options
+            );
+        },
+        //---------------------------------------------------------------------
+        async confirmCreateUserAfter(data, res){
+            if(data)
+            {
+                this.item = data.item;
+                await this.getList()
+                this.getItemMenu();
+            }
+        },
+        //---------------------------------------------------------------------
+        sendVerificationEmail(item=null){
+            if(!item)
+            {
+                item = this.item;
+            }
+            let ajax_url = this.ajax_url+'/'+item.id+'/'+'send-verification-mail';
+            let options = {
+                method:'PATCH',
+            };
+            options.params=[item.id];
+
+            vaah().ajax(
+                ajax_url,
+                this.sendVerificationEmailAfter,
+                options
+            );
+        },
+        //---------------------------------------------------------------------
+        async sendVerificationEmailAfter(data, res){
+            if(data)
+            {
+                this.item = data.item;
+                await this.getList()
+                this.getItemMenu();
             }
         },
         //---------------------------------------------------------------------

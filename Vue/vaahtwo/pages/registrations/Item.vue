@@ -51,7 +51,6 @@ onMounted(async () => {
 const item_menu_state = ref();
 
 const toggleItemMenu = (event) => {
-    console.log(item_menu_state.value.toggle);
     item_menu_state.value.toggle(event);
 };
 
@@ -235,7 +234,8 @@ const toggleStatusMenu = (event) => {
                                                     disabled="disabled"
                                             />
 
-                                            <Button class="p-button-outlined p-button-secondary p-button-sm"
+                                            <Button v-if="store.assets && store.assets.registration_statuses"
+                                                    class="p-button-outlined p-button-secondary p-button-sm"
                                                     @click="toggleStatusMenu"
                                                     icon="pi pi-angle-down"
                                                     aria-haspopup="true"

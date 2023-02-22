@@ -126,6 +126,19 @@ class RegistrationsController extends Controller
     {
         return Registration::sendVerificationEmail($request, $id);
     }
+    public function createUser(Request $request,$id)
+    {
+        if(!\Auth::user()->hasPermission('can-create-users-from-registrations'))
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
 
+            return $response;
+        }
+
+        $response = Registration::createUser($id);
+        return response()->json($response);
+    }
+    //----------------------------------------------------------
 
 }
