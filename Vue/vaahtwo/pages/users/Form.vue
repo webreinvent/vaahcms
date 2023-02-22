@@ -147,19 +147,15 @@ const toggleFormMenu = (event) => {
                 </div>
 
                 <VhField label="Email">
-                    <InputText class="w-full"
+                    <InputText :class="'w-full '+ store.email_error.class"
                                v-model="store.item.email"
+                               @input="store.validateEmail"
                                name="account-email"
                                data-testid="account-email"
                                type="email"
-                               @input="store.validateEmail(store.item.email)"
+                               aria-describedby="email-error"
                     />
-
-                    <span v-if="store.email_validation_message === false"
-                          class="text-xs text-red-500"
-                    >
-                        Please include a '@domain.com' in the email address. {{ store.item.email }} is lacking a "@domain.com" in the address.
-                    </span>
+                    <small id="email-error" class="p-error">{{ store.email_error.msg }}</small>
                 </VhField>
 
                 <VhField label="Username">

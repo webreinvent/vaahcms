@@ -60,7 +60,7 @@ const toggleItemMenu = (event) => {
 const item_status=ref();
 
 const toggleStatusMenu = (event) => {
-    item_status.value.toggle(event);
+    item_status.value[0].toggle(event);
 };
 
 //--------/toggle status menu
@@ -245,9 +245,8 @@ const toggleStatusMenu = (event) => {
                                                     aria-controls="status_menu"
                                             />
 
-                                            <Menu v-if="store && store.assets && store.assets.registration_statuses"
-                                                  ref="item_status"
-                                                  :model="store.assets.registration_statuses"
+                                            <Menu ref="item_status"
+                                                  :model="store.registration_statuses"
                                                   :popup="true"
                                                   id="status_menu"
                                             />
@@ -277,13 +276,12 @@ const toggleStatusMenu = (event) => {
                                         </div>
                                     </td>
                                 </tr>
-
-                                <tr v-if="store && store.assets && store.assets.regisgration_statuses">
-                                    <Button type="button" label="Toggle" @click="store.toggle" />
-                                    <TieredMenu ref="menu_test"
-                                                :model="store.assets.registration_statuses"
-                                                :popup="true" />
-                                </tr>
+<!--                                <tr>-->
+<!--                                    <Button type="button" label="Toggle" @click="store.toggle" />-->
+<!--                                    <TieredMenu ref="menu_test"-->
+<!--                                                :model="store.assets.registration_statuses"-->
+<!--                                                :popup="true" />-->
+<!--                                </tr>-->
                             </template>
 
                             <template v-else-if="column === 'gender'">
