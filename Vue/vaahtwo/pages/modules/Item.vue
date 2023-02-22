@@ -1,12 +1,13 @@
 <script setup>
 import {onMounted, ref, watch} from "vue";
 import {useRoute} from 'vue-router';
-
+import { vaah } from "../../vaahvue/pinia/vaah";
 import { useModuleStore } from '../../stores/store-modules'
 
 import VhViewRow from '../../vaahvue/vue-three/primeflex/VhViewRow.vue';
 const store = useModuleStore();
 const route = useRoute();
+const useVaah = vaah();
 
 onMounted(async () => {
 
@@ -63,22 +64,23 @@ const toggleItemMenu = (event) => {
             <template class="p-1" #header>
                 <div class="flex flex-row w-full">
                     <div class="p-panel-title font-semibold text-lg flex align-items-center">
-                        Module
-                    </div>
-                    <div class="flex w-full justify-content-end">
-                        <div class="font-semibold text-lg p-2 flex align-items-center">
-                            #{{store.item.id}}
-                        </div>
+                        {{ store.item.name }}
                     </div>
                 </div>
             </template>
 
             <template #icons>
                 <div class="p-inputgroup">
-                    <Button class="p-button-primary"
+                    <Button class="p-button-sm"
+                            :label=" '#' + store.item.id"
+                            @click="useVaah.copy(store.item.id)"
+                    />
+
+                    <Button class="p-button-sm"
                             icon="pi pi-times"
                             data-testid="modules-item-to-list"
-                            @click="store.toList()"/>
+                            @click="store.toList()"
+                    />
                 </div>
             </template>
 

@@ -89,6 +89,12 @@ const importSampleDataModal = (item) => {
                                         v-tooltip.top="'Trash'"
                                         icon="pi pi-trash"
                                 />
+
+                                <Button class="p-button-sm ml-2"
+                                        icon="pi pi-eye"
+                                        v-tooltip.top=" 'View' "
+                                        @click="store.toView(item)"
+                                />
                             </div>
                         </div>
 
