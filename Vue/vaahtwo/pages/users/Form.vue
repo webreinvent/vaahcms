@@ -138,12 +138,15 @@ const toggleFormMenu = (event) => {
                 </div>
 
                 <VhField label="Email">
-                    <InputText class="w-full"
+                    <InputText :class="'w-full '+ store.email_error.class"
                                v-model="store.item.email"
+                               @input="store.validateEmail"
                                name="account-email"
                                data-testid="account-email"
                                type="email"
+                               aria-describedby="email-error"
                     />
+                    <small id="email-error" class="p-error">{{ store.email_error.msg }}</small>
                 </VhField>
 
                 <VhField label="Username">

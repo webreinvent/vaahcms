@@ -78,7 +78,7 @@ const importSampleDataModal = (item) => {
                                 class="mr-2 p-button-sm"
                                 v-tooltip.top="'Mark this theme as Default'"
                                 data-testid="themes-table-action-mark_default"
-                                @click="store.itemAction('make_default', item)"
+                                @click="store.action('make_default', item)"
                                 label="Make Default"
                         />
 
