@@ -204,11 +204,13 @@ const openTaxonomyTypeModal = () => {
                 </VhField>
 
                 <VhField label="Seo Keywords">
-                    <InputText class="w-full"
-                               name="taxonomies-seo-keywords"
-                               data-testid="taxonomies-seo-keywords"
-                               v-model="store.item.seo_keywords"
+                    <Chips separator=","
+                           inputClass="w-full"
+                           name="taxonomies-seo-keywords"
+                           data-testid="taxonomies-seo-keywords"
+                           v-model="store.item.seo_keywords"
                     />
+
                 </VhField>
 
                 <VhField label="Seo Description">
