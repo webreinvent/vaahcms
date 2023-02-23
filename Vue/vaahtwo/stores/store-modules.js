@@ -90,7 +90,8 @@ export const useModuleStore = defineStore({
         modules_query: {
             page: null,
             query: null
-        }
+        },
+        is_installing: -1
     }),
     getters: {
 
@@ -446,6 +447,7 @@ export const useModuleStore = defineStore({
                 await this.formActionAfter();
                 this.getItemMenu();
             }
+            this.is_installing = -1;
         },
         //---------------------------------------------------------------------
         async formActionAfter ()
@@ -475,12 +477,14 @@ export const useModuleStore = defineStore({
             }
         },
         //---------------------------------------------------------------------
-        async toggleIsActive(item)
+        async toggleIsActive(item,index)
         {
+            this.is_installing = index;
+
             if(item.is_active)
             {
                 await this.itemAction('deactivate', item);
-            } else{
+            } else {
                 await this.itemAction('activate', item);
             }
         },
@@ -1105,7 +1109,9 @@ export const useModuleStore = defineStore({
             vaah().ajax(url, this.publishAssetsAfter, options);
         },
         //---------------------------------------------------------------------
-        publishAssetsAfter(data) {},
+        publishAssetsAfter(data) {
+            this.getList();
+        },
         //---------------------------------------------------------------------
 
     }
