@@ -13,18 +13,20 @@ class CreateVhMigrationsTable extends Migration
      */
     public function up()
     {
-        Schema::create('vh_migrations', function (Blueprint $table) {
+        if (!Schema::hasTable('vh_migrations')) {
+            Schema::create('vh_migrations', function (Blueprint $table) {
 
-            $table->increments('id');
-            $table->integer('migrationable_id')->nullable();
-            $table->string('migrationable_type')->nullable();
+                $table->increments('id');
+                $table->integer('migrationable_id')->nullable();
+                $table->string('migrationable_type')->nullable();
 
-            $table->integer('migration_id')->nullable();
-            $table->integer('batch')->nullable();
+                $table->integer('migration_id')->nullable();
+                $table->integer('batch')->nullable();
 
-            $table->timestamps();
+                $table->timestamps();
 
-        });
+            });
+        }
     }
 
     /**

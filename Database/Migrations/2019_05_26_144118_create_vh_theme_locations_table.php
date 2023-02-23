@@ -13,19 +13,21 @@ class CreateVhThemeLocationsTable extends Migration
      */
     public function up()
     {
-        Schema::create('vh_theme_locations', function (Blueprint $table) {
-            $table->bigIncrements('id')->unsigned();
+        if (!Schema::hasTable('vh_theme_locations')) {
+            Schema::create('vh_theme_locations', function (Blueprint $table) {
+                $table->bigIncrements('id')->unsigned();
 
-            $table->integer('vh_theme_id')->nullable()->index();
+                $table->integer('vh_theme_id')->nullable()->index();
 
-            $table->string('type')->nullable()->index();
-            $table->string('name',150)->nullable();
-            $table->string('slug',150)->nullable()->index();
-            $table->string('excerpt')->nullable();
-            $table->timestamps();
+                $table->string('type')->nullable()->index();
+                $table->string('name', 150)->nullable();
+                $table->string('slug', 150)->nullable()->index();
+                $table->string('excerpt')->nullable();
+                $table->timestamps();
 
-            $table->index(['created_at', 'updated_at']);
-        });
+                $table->index(['created_at', 'updated_at']);
+            });
+        }
     }
 
     /**
