@@ -86,7 +86,8 @@ export const useThemeStore = defineStore({
         themes_query: {
             page: null,
             query: null
-        }
+        },
+        is_installing: -1
     }),
     getters: {
 
@@ -362,7 +363,8 @@ export const useThemeStore = defineStore({
             );
         },
         //---------------------------------------------------------------------
-        itemAction(type, item=null){
+        itemAction(type, item=null)
+        {
             if(!item)
             {
                 item = this.item;
@@ -433,7 +435,7 @@ export const useThemeStore = defineStore({
         //---------------------------------------------------------------------
         async itemActionAfter(data, res)
         {
-            if(data)
+            if (data)
             {
                 this.assets_is_fetching = true;
                 await this.getAssets();
@@ -441,6 +443,8 @@ export const useThemeStore = defineStore({
                 this.item = data;
                 await this.formActionAfter();
             }
+
+            this.is_installing = -1;
         },
         //---------------------------------------------------------------------
         async formActionAfter ()
@@ -471,8 +475,10 @@ export const useThemeStore = defineStore({
             }
         },
         //---------------------------------------------------------------------
-        async toggleIsActive(item)
+        async toggleIsActive(item,index)
         {
+            this.is_installing = index;
+
             if(item.is_active) {
                 await this.itemAction('deactivate', item);
             } else {
@@ -974,6 +980,7 @@ export const useThemeStore = defineStore({
         //---------------------------------------------------------------------
         install(module) {
             this.themes.active_download = module;
+
             let options = {
                 params: module,
                 method: 'post'
@@ -982,8 +989,17 @@ export const useThemeStore = defineStore({
             vaah().ajax(url, this.installAfter, options);
         },
         //---------------------------------------------------------------------
+        async installAfter(data) {
+            if(data)
+            {
+                this.themes.active_download = null;
+                this.assets_is_fetching = true;
+                await this.getAssets();
+                await this.getList();
+            }
+        },
+        //---------------------------------------------------------------------
         async actions(action, theme) {
-            console.log(action);
             let options = {
                 params : {
                     action: action,
@@ -1004,15 +1020,6 @@ export const useThemeStore = defineStore({
 
         },
         //---------------------------------------------------------------------
-        async installAfter(data) {
-            if(data)
-            {
-                this.themes.active_download = null;
-                this.assets_is_fetching = true;
-                await this.getAssets();
-                await this.getList();
-            }
-        },
         closeInstallTheme() {
             this.list_view_width = '12';
             this.$router.push({name: 'themes.index'});
@@ -1026,6 +1033,24 @@ export const useThemeStore = defineStore({
             const root = useRootStore();
             return vaah().hasPermission(root.permissions, slug);
         },
+        //----------------------------------------------------------------------
+        publishAssets(item) {
+
+            let options = {
+                method: 'POST',
+                params: {
+                    slug: item.slug
+                }
+            };
+
+            let url = this.ajax_url+'/publish/assets';
+            vaah().ajax(url, this.publishAssetsAfter, options);
+        },
+        //---------------------------------------------------------------------
+        publishAssetsAfter(data) {
+            this.getList();
+        },
+        //---------------------------------------------------------------------
     }
 });
 

@@ -376,4 +376,30 @@ class ThemesController extends Controller
         return response()->json($response);
     }
     //----------------------------------------------------------
+    public function publishAssets(Request $request)
+    {
+        try {
+            $theme = Theme::slug($request->slug)->first();
+
+            $message = Theme::copyAssets($theme);
+
+            if ($message) {
+                $theme->is_assets_published = 1;
+                $theme->save();
+                $response['status'] = "success";
+                $response['messages'][] = "Assets published.";
+
+                return $response;
+            }
+
+            $response['status'] = "danger";
+            $response['messages'][] = "Something went wrong.";
+            return $response;
+        } catch(\Exception $e) {
+            $response['success'] = false;
+            $response['errors'][] = $e->getMessage();
+            return $response;
+        }
+    }
+    //----------------------------------------------------------
 }

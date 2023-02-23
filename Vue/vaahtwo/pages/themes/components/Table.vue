@@ -30,7 +30,7 @@ const importSampleDataModal = (item) => {
 <template>
 
     <div v-if="store.list">
-        <div class="col-12" v-for="item in store.list">
+        <div class="col-12" v-for="(item, index) in store.list">
             <div class="grid">
                 <div class="col-12 md:col-5">
                     <h5 class="font-semibold text-xl inline">{{ item.name }}</h5>
@@ -54,15 +54,17 @@ const importSampleDataModal = (item) => {
 
                     <div class="flex justify-content-end">
                         <Button v-if="item.is_active && store.hasPermission('can-deactivate-theme')"
-                                class="mr-2 p-button-sm"
-                                @click="store.toggleIsActive(item)"
+                                class="mr-2 p-button-sm bg-yellow-400 text-color"
+                                :loading="store.is_installing === index"
+                                @click="store.toggleIsActive(item,index)"
                                 data-testid="themes-table-action-deactivate"
                                 label="Deactivate"
                         />
 
                         <Button v-if="!item.is_active && store.hasPermission('can-activate-theme')"
                                 class="mr-2 p-button-sm"
-                                @click="store.toggleIsActive(item)"
+                                :loading="store.is_installing === index"
+                                @click="store.toggleIsActive(item,index)"
                                 data-testid="themes-table-action-activate"
                                 label="Activate"
                         />
@@ -80,6 +82,14 @@ const importSampleDataModal = (item) => {
                                 data-testid="themes-table-action-mark_default"
                                 @click="store.action('make_default', item)"
                                 label="Make Default"
+                        />
+
+                        <Button class="mr-2 p-button-info p-button-sm"
+                                label="Publish Assets"
+                                data-testid="modules-table-action-install-update"
+                                @click="store.publishAssets(item)"
+                                v-tooltip.top="'Publish Assets'"
+                                v-if="!item.is_assets_published && store.hasPermission('can-install-theme')"
                         />
 
                         <Button v-if="item.is_active && store.hasPermission('can-import-sample-data-in-theme')"

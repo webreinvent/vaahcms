@@ -25,7 +25,7 @@ const importSampleDataModal = (item) => {
         <div class="col">
             <div class="grid">
                 <div class="col-12">
-                    <div class="grid" v-for="item in store.list">
+                    <div class="grid" v-for="(item,index) in store.list">
                         <div class="col-12 md:col-5">
                             <h5 class="font-semibold text-xl inline">{{ item.name }}</h5>
                             <Tag value="Default" v-if="item.is_default" severity="success" class="ml-2" rounded />
@@ -44,8 +44,9 @@ const importSampleDataModal = (item) => {
                                         data-testid="modules-table-action-deactivate"
                                         class="mr-2 p-button-sm bg-yellow-400 text-color"
                                         label="Deactivate"
+                                        :loading="store.is_installing === index"
                                         v-tooltip.top="'Deactivate Module'"
-                                        @click="store.toggleIsActive(item)"
+                                        @click="store.toggleIsActive(item,index)"
                                 />
 
                                 <Button v-if="!item.is_active && store.hasPermission('can-activate-module')"
@@ -53,7 +54,8 @@ const importSampleDataModal = (item) => {
                                         v-tooltip.top="'Activate Module'"
                                         label="Activate"
                                         class="mr-2 p-button-sm"
-                                        @click="store.toggleIsActive(item)"
+                                        :loading="store.is_installing === index"
+                                        @click="store.toggleIsActive(item,index)"
                                 />
 
                                 <Button v-if="item.is_active && store.hasPermission('can-import-sample-data-in-module')"
