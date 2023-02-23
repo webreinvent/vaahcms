@@ -28,6 +28,8 @@ onMounted(async () => {
      * Fetch is_active select button's options and values
      */
     await root.getIsActiveStatusOptions();
+
+    await store.getFormMenu();
 });
 
 watch(store.item, async (newVal, oldVal) => {
