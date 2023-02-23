@@ -28,6 +28,8 @@ onMounted(async () => {
      * Fetch is_active select button's options and values
      */
     await root.getIsActiveStatusOptions();
+
+    await store.getFormMenu();
 });
 
 watch(store.item, async (newVal, oldVal) => {
@@ -204,11 +206,13 @@ const openTaxonomyTypeModal = () => {
                 </VhField>
 
                 <VhField label="Seo Keywords">
-                    <InputText class="w-full"
-                               name="taxonomies-seo-keywords"
-                               data-testid="taxonomies-seo-keywords"
-                               v-model="store.item.seo_keywords"
+                    <Chips separator=","
+                           inputClass="w-full"
+                           name="taxonomies-seo-keywords"
+                           data-testid="taxonomies-seo-keywords"
+                           v-model="store.item.seo_keywords"
                     />
+
                 </VhField>
 
                 <VhField label="Seo Description">

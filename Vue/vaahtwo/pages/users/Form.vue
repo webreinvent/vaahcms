@@ -1,5 +1,5 @@
 <script setup>
-import {onMounted, ref, watch} from "vue";
+import {onMounted, ref, watch, watchEffect} from "vue";
 import { useUserStore } from '../../stores/store-users'
 import { useRootStore } from '../../stores/root'
 import { vaah } from "../../vaahvue/pinia/vaah"
@@ -24,6 +24,15 @@ onMounted(async () => {
 
     root.getIsActiveStatusOptions();
 });
+
+
+if (store && store.item && store.item.email) {
+    watchEffect(store.item.email, (currentValue, oldValue) => {
+        alert(currentValue);
+        store.item.email = currentValue;
+        store.validateEmail(currentValue);
+    });
+}
 
 const myUploader = ref();
 
@@ -143,7 +152,14 @@ const toggleFormMenu = (event) => {
                                name="account-email"
                                data-testid="account-email"
                                type="email"
+                               @input="store.validateEmail(store.item.email)"
                     />
+
+                    <span v-if="store.email_validation_message === false"
+                          class="text-xs text-red-500"
+                    >
+                        Please include a '@domain.com' in the email address. {{ store.item.email }} is lacking a "@domain.com" in the address.
+                    </span>
                 </VhField>
 
                 <VhField label="Username">

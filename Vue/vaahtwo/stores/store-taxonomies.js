@@ -75,6 +75,7 @@ export const useTaxonomyStore = defineStore({
             parent_id: null,
         },
         firstElement: null,
+        taxonomy_type_new_name: null,
     }),
     getters: {
 
@@ -948,7 +949,61 @@ export const useTaxonomyStore = defineStore({
         strToSlug(name)
         {
             return vaah().strToSlug(name);
-        }
+        },
+        //---------------------------------------------------------------------
+        async deleteTaxonomyType(item) {
+
+            console.log(item)
+
+            const url = this.ajax_url + '/delete-taxonomy-type';
+            let options = {
+                params: item,
+                method: 'POST',
+            }
+
+            await vaah().ajax(
+                url,
+                await this.deleteTaxonomyTypeAfter,
+                options
+            );
+        },
+        //---------------------------------------------------------------------
+        async deleteTaxonomyTypeAfter(data, res) {
+            if (data) {
+                this.reload();
+            }
+        },
+        //---------------------------------------------------------------------
+        setTaxonomyTypeNewName(name) {
+            this.taxonomy_type_new_name = name;
+        },
+        //---------------------------------------------------------------------
+        async updateTaxonomyType(id) {
+            const url = this.ajax_url + '/update-taxonomy-type';
+
+            const params = {
+                id: id,
+                newName: this.taxonomy_type_new_name
+            }
+            let options = {
+                params: params,
+                method: 'POST',
+            }
+
+            await vaah().ajax(
+                url,
+                await this.updateTaxonomyTypeAfter,
+                options
+            );
+        },
+        //---------------------------------------------------------------------
+        async updateTaxonomyTypeAfter(data, res) {
+            if (data) {
+                this.reload();
+            }
+        },
+        //---------------------------------------------------------------------
+
         //---------------------------------------------------------------------
     }
 });

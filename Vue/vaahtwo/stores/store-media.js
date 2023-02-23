@@ -457,7 +457,9 @@ export const useMediaStore = defineStore({
                 case 'save-and-new':
                     this.setActiveItemAsEmpty();
                     break;
-                case 'create-and-close':
+                case 'create-and-clone':
+                    this.item.id = null;
+                    break;
                 case 'save-and-close':
                     this.setActiveItemAsEmpty();
                     this.$router.push({name: 'media.index'});

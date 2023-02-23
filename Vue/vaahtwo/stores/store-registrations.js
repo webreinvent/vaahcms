@@ -82,6 +82,7 @@ export const useRegistrationStore = defineStore({
 
         filtered_country_codes: [],
         row_active:null,
+        email_validation_message: null,
     }),
     getters: {
 
@@ -1057,6 +1058,10 @@ export const useRegistrationStore = defineStore({
         async displayBioModal(item) {
             this.display_bio_modal = true;
             this.bio_modal_data = item;
+        },
+        //---------------------------------------------------------------------
+        validateEmail(value) {
+            return this.email_validation_message = vaah().validateEmail(value);
         },
         //---------------------------------------------------------------------
     }
