@@ -376,7 +376,6 @@ class Registration extends RegistrationBase
                 ->withTrashed();
         }
 
-
         switch ($type) {
             case 'deactivate':
                 if($items->count() > 0) {
@@ -418,12 +417,11 @@ class Registration extends RegistrationBase
             case 'delete-all':
                 self::withTrashed()->forceDelete();
                 break;
-             case 'email-verification-pending':
-             case 'email-verified':
-             case 'user-created':
+            case 'email-verification-pending':
+            case 'email-verified':
+            case 'user-created':
                 self::query()->update(['status' => $type]);
                 break;
-
         }
 
         $response['success'] = true;

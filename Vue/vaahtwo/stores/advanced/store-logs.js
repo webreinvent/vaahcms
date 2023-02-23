@@ -67,10 +67,11 @@ export const useLogStore = defineStore({
         item_menu_list: [],
         item_menu_state: null,
         form_menu_list: [],
-        payloadModal:false,
-        payloadContent:null,
+        payload_modal: false,
+        payload_content: null,
         is_btn_loading: false,
-        firstElement: null
+        first_element: null,
+        listTotal: null
     }),
     getters: {
 
@@ -83,7 +84,8 @@ export const useLogStore = defineStore({
              * Set initial routes
              */
             this.route = route;
-            this.firstElement = this.query.rows * (this.query.page - 1);
+
+            this.updateQueryFromUrl(route);
         },
         //---------------------------------------------------------------------
         setViewAndWidth(route_name)
@@ -161,7 +163,6 @@ export const useLogStore = defineStore({
         },
         //---------------------------------------------------------------------
         async getAssets() {
-
             if(this.assets_is_fetching === true){
                 this.assets_is_fetching = false;
 
@@ -172,16 +173,21 @@ export const useLogStore = defineStore({
             }
         },
         //---------------------------------------------------------------------
-        afterGetAssets(data, res)
+        afterGetAssets(data)
         {
-            if(data)
+            if (data)
             {
                 this.assets = data;
-                if(data.rows)
+                if (data.rows)
                 {
-                    this.query.rows = data.rows;
-                }
+                    this.query.page = this.page;
 
+                    if (!this.query.rows) {
+                        this.query.rows = data.rows;
+                    } else {
+                        this.query.rows = parseInt(this.query.rows);
+                    }
+                }
             }
         },
         //---------------------------------------------------------------------
@@ -189,7 +195,6 @@ export const useLogStore = defineStore({
             let options = {
                 query: vaah().clone(this.query)
             };
-
             await this.updateUrlQueryString(this.query);
 
             await vaah().ajax(
@@ -199,13 +204,12 @@ export const useLogStore = defineStore({
             );
         },
         //---------------------------------------------------------------------
-        afterGetList: function (data, res)
+        afterGetList(data, res)
         {
-
-            if(data && data.list)
-            {
+            if (data && data.list) {
                 this.list = data.list;
-                this.firstElement = this.query.rows * (this.query.page - 1);
+                this.list_total = data.list.length;
+                this.first_element = ((this.query.page - 1) * this.query.rows);
             }
         },
         //---------------------------------------------------------------------
@@ -270,7 +274,7 @@ export const useLogStore = defineStore({
         },
         //---------------------------------------------------------------------
         async deleteItemAfter (data, res) {
-            if(data && data.message === 'success'){
+            if (data && data.message === 'success') {
                 await this.getList();
             }
         },
@@ -410,7 +414,7 @@ export const useLogStore = defineStore({
         //---------------------------------------------------------------------
         async itemActionAfter(data, res)
         {
-            if(data)
+            if (data)
             {
                 this.item = data;
                 await this.getList();
@@ -419,7 +423,7 @@ export const useLogStore = defineStore({
             }
         },
         //---------------------------------------------------------------------
-        async formActionAfter ()
+        async formActionAfter()
         {
             switch (this.form.action)
             {
@@ -448,7 +452,7 @@ export const useLogStore = defineStore({
         async paginate(event) {
             this.query.page = event.page+1;
             this.query.rows = event.rows;
-            this.firstElement = this.query.rows * (this.query.page - 1);
+            this.first_element = ((this.query.page - 1) * this.query.rows);
             await this.getList();
         },
         //---------------------------------------------------------------------
@@ -458,7 +462,7 @@ export const useLogStore = defineStore({
             await this.getAssets();
             await this.getList();
 
-            if(this.item){
+            if(this.item) {
                 await this.getItem(this.item.name);
             }
 
@@ -730,8 +734,8 @@ export const useLogStore = defineStore({
         //---------------------------------------------------------------------
         viewPayloads(content)
         {
-            this.payloadContent = `<pre class="is-size-6">`+JSON.stringify(content, null, 2)+ `</pre>`;
-            this.payloadModal=true
+            this.payload_content = `<pre class="is-size-6">`+JSON.stringify(content, null, 2)+ `</pre>`;
+            this.payload_modal=true
         },
         //---------------------------------------------------------------------
         async getMenuItems() {

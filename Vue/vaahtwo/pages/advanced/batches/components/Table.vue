@@ -124,33 +124,33 @@ const useVaah = vaah();
         <Divider />
 
         <Dialog header="Options"
-                v-model:visible="store.displayDetail"
+                v-model:visible="store.display_detail"
                 data-testid="batch-table-detail_dialog"
                 :breakpoints="{'960px': '75vw', '640px': '90vw'}"
                 :style="{width: '50vw'}"
         >
                 <Card class="w-max">
                     <template #content>
-                        <span v-html="store.dialogContent"></span>
+                        <span v-html="store.dialog_content"></span>
                     </template>
                 </Card>
         </Dialog>
 
         <Dialog header="Failed Ids"
-                v-model:visible="store.displayFailedIds"
+                v-model:visible="store.display_failed_ids"
                 data-testid="batch-table-failed_ids_dialog"
                 :breakpoints="{'960px': '75vw', '640px': '90vw'}"
                 :style="{width: '50vw'}"
         >
                 <Card class="w-max">
                     <template #content>
-                        <span v-html="store.dialogContent"></span>
+                        <span v-html="store.dialog_content"></span>
                     </template>
                 </Card>
         </Dialog>
 
         <!--paginator-->
-        <Paginator v-model:first="store.firstElement"
+        <Paginator v-model:first="store.first_element"
                    :rows="store.query.rows"
                    data-testid="batch-table-paginator"
                    :totalRecords="store.list.total"

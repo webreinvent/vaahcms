@@ -59,26 +59,24 @@ const route = useRoute();
         <Divider/>
 
         <!--paginator-->
-        <Paginator v-model:first="store.firstElement"
+        <Paginator v-model:first="store.first_element"
                    :rows="store.query.rows"
-                   :totalRecords="store.list.total"
+                   :totalRecords="store.list_total"
                    @page="store.paginate($event)"
-                   :rowsPerPageOptions="store.rows_per_page">
-        </Paginator>
+                   :rowsPerPageOptions="store.rows_per_page" />
         <!--/paginator-->
 
     </div>
     <Dialog header="Payload"
-            v-model:visible="store.payloadModal"
+            v-model:visible="store.payload_modal"
             :style="{width: '40%'}"
     >
 
         <Card class="w-max">
             <template #content>
-                <span v-html="store.payloadContent"></span>
+                <span v-html="store.payload_content"></span>
             </template>
         </Card>
-
 
     </Dialog>
 

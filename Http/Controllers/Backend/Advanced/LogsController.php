@@ -21,7 +21,6 @@ class LogsController extends Controller
 
     public function getAssets(Request $request)
     {
-
         $data = [];
 
         $data['permission'] = [];

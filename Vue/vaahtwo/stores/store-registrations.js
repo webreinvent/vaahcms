@@ -6,14 +6,13 @@ import { useRootStore } from "./root";
 
 let model_namespace = 'WebReinvent\\VaahCms\\Models\\Registration';
 
-
 let base_url = document.getElementsByTagName('base')[0].getAttribute("href");
 let ajax_url = base_url + "/vaah/registrations";
 
 let empty_states = {
     query: {
-        page: null,
-        rows: null,
+        page: 1,
+        rows: 20,
         filter: {
             q: null,
             is_active: null,
@@ -39,9 +38,9 @@ export const useRegistrationStore = defineStore({
         assets_is_fetching: true,
         app: null,
         assets: null,
-        rows_per_page: [1,2,10,20,30,50,100,500],
+        rows_per_page: [10,20,30,50,100,500],
         list: null,
-        item: null,
+        item: {},
         fillable:null,
         empty_query:empty_states.query,
         empty_action:empty_states.action,
@@ -82,7 +81,8 @@ export const useRegistrationStore = defineStore({
 
         filtered_country_codes: [],
         row_active:null,
-        registration_statuses:null,
+        display_bio_modal: null,
+        bio_modal_data: null
     }),
     getters: {
 
@@ -196,7 +196,6 @@ export const useRegistrationStore = defineStore({
                 if(this.route.params && !this.route.params.id){
                     this.item = vaah().clone(data.empty_item);
                 }
-
             }
         },
         //---------------------------------------------------------------------
@@ -240,7 +239,7 @@ export const useRegistrationStore = defineStore({
             if(data)
             {
                 this.item = data;
-            }else{
+            } else {
                 this.$router.push({name: 'registrations.index'});
             }
             this.getItemMenu();
@@ -344,14 +343,8 @@ export const useRegistrationStore = defineStore({
             );
         },
         //---------------------------------------------------------------------
-        toggle(event) {
-            this.$refs.menu_test.toggle(event);
-        },
-        //---------------------------------------------------------------------
         itemAction(type, item=null){
-            // console.log(this.item);
-
-            if(!item)
+           if(!item)
             {
                 item = this.item;
             }
@@ -1041,7 +1034,6 @@ export const useRegistrationStore = defineStore({
         checkHidden(item)
         {
             let select_array = vaah().findInArrayByKey(this.assets.custom_fields.value, 'slug', item);
-            // console.log(select_array);
             return select_array.is_hidden;
         },
         //---------------------------------------------------------------------
@@ -1052,13 +1044,32 @@ export const useRegistrationStore = defineStore({
         //---------------------------------------------------------------------
         async sync() {
             this.is_btn_loading = true;
-
             await this.getList();
         },
         //---------------------------------------------------------------------
-        async displayBioModal(item) {
+        displayBioModal(item) {
             this.display_bio_modal = true;
             this.bio_modal_data = item;
+        },
+        //---------------------------------------------------------------------
+        registrationStatus() {
+            if (!this.assets) return;
+            const store = this;
+            let itemList = [];
+
+            this.assets.registration_statuses.forEach(function(key,index) {
+                itemList.push({
+                    label: key.name,
+                    command: () => {
+                        store.changeStatus(key.slug);
+                    }
+                });
+            });
+
+            return [{
+                label: 'registration_statuses',
+                items: itemList
+            }];
         },
         //---------------------------------------------------------------------
         changeStatus(status) {
@@ -1066,23 +1077,59 @@ export const useRegistrationStore = defineStore({
             this.itemAction('save');
         },
         //---------------------------------------------------------------------
-        setRegistrationStatuses(){
-            let list=[];
-            if(store.assets && store.assets.registration_statuses){
-                store.assets.registration_statuses.forEach(function(key,index){
-                    list.push({
-                        label: key.name,
-                        command: () => {
-                            store.changeStatus(key.slug);
-                        }
-                    });
-                    this.registration_statuses ={
-                        label: 'status-list',
-                        items: list
-                    };
-                });
+        confirmCreateUser(item=null){
+            if(!item)
+            {
+                item = this.item;
             }
-        }
+            let ajax_url = this.ajax_url+'/'+item.id+'/'+'createUser';
+            let options = {
+                method:'post',
+            };
+            options.params=[item.id];
+
+            vaah().ajax(
+                ajax_url,
+                this.confirmCreateUserAfter,
+                options
+            );
+        },
+        //---------------------------------------------------------------------
+        async confirmCreateUserAfter(data, res){
+            if(data)
+            {
+                this.item = data.item;
+                await this.getList()
+                this.getItemMenu();
+            }
+        },
+        //---------------------------------------------------------------------
+        sendVerificationEmail(item=null){
+            if(!item)
+            {
+                item = this.item;
+            }
+            let ajax_url = this.ajax_url+'/'+item.id+'/'+'send-verification-mail';
+            let options = {
+                method:'PATCH',
+            };
+            options.params=[item.id];
+
+            vaah().ajax(
+                ajax_url,
+                this.sendVerificationEmailAfter,
+                options
+            );
+        },
+        //---------------------------------------------------------------------
+        async sendVerificationEmailAfter(data, res){
+            if(data)
+            {
+                this.item = data.item;
+                await this.getList()
+                this.getItemMenu();
+            }
+        },
         //---------------------------------------------------------------------
     }
 });
