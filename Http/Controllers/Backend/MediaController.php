@@ -108,6 +108,13 @@ class MediaController extends Controller
         return Media::itemAction($request,$id,$action);
     }
     //----------------------------------------------------------
+    public function itemDownload(Request $request,$slug)
+    {
+        $media_data = Media::where('download_url', $slug)->first();
+//        $headers = array('Content-Type' => File::mimeType($media_data->url));
+        return response()->download(storage_path(str_replace('storage','',$media_data->path)));
+    }
+    //----------------------------------------------------------
     public function upload(Request $request)
     {
         $allowed_file_upload_size = config('vaahcms.allowed_file_upload_size');

@@ -23,11 +23,12 @@ const useVaah = vaah();
                     headerStyle="width: 3em"
             />
 
-            <Column field="id" header="ID" :style="{width: store.getIdWidth()}" />
+            <Column field="id" :sortable="true" header="ID" :style="{width: store.getIdWidth()}" />
 
              <Column field="thumbnail" header="Thumbnail">
-                 <template #body="prop">
-                     <Image :src="prop.data.url_thumbnail" />
+                 <template #body="prop" >
+                     <Image v-if="prop.data.url_thumbnail" :src="prop.data.url_thumbnail" />
+                     <i v-else class="pi pi-file"></i>
                  </template>
              </Column>
 
@@ -54,6 +55,7 @@ const useVaah = vaah();
             </Column>
 
             <Column field="updated_at" header="Updated"
+                    :sortable="true"
                     v-if="store.isViewLarge()"
                     style="width:150px;"
             >

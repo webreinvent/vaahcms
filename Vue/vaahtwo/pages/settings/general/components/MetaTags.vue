@@ -8,7 +8,7 @@ const store = useGeneralStore();
     <div v-if="store">
         <div class="grid">
             <div class="col-12" v-if="store.meta_tag" v-for="(item,index) in store.meta_tag">
-                <h5 class="p-1 text-xs mb-1">Meta Tag</h5>
+                <h5 class="p-1 text-xs mb-1">{{item.label}}</h5>
 
                 <div class="p-inputgroup">
                     <Dropdown v-model="item.value.attribute"

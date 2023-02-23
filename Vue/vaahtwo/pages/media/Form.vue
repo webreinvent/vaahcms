@@ -14,7 +14,6 @@ onMounted(async () => {
         await store.getItem(route.params.id);
     }
     store.getFormMenu();
-    await store.watchItem();
 });
 
 //--------form_menu
@@ -26,83 +25,84 @@ const toggleFormMenu = (event) => {
 
 </script>
 <template>
-    <div class="col-12 md:col-6">
-        <Card>
-            <template #header>
-                <div class="flex justify-content-between align-items-center">
-                    <h5 class="font-semibold text-sm">
+    <div class="col-6">
+        <Panel>
+            <template class="p-1" #header>
+                <div class="flex flex-row">
+                    <div class="font-semibold text-sm">
                         <span v-if="store.item && store.item.id">
                             {{ store.item.name }}
                         </span>
                         <span v-else>
                             Create
                         </span>
-                    </h5>
-
-                    <div class="p-inputgroup justify-content-end">
-                        <Button v-if="store.item && store.item.id"
-                                class="p-button-sm"
-                                :label=" '#' + store.item.id "
-                                data-testid="media-id"
-                                @click="useVaah.copy(store.item.id)"
-                        />
-
-                        <Button label="Save"
-                                v-if="store.item && store.item.id"
-                                data-testid="media-save"
-                                @click="store.itemAction('save')"
-                                icon="pi pi-save"
-                                class="p-button-sm"
-                        />
-
-                        <Button label="Create & New"
-                                v-else
-                                @click="store.itemAction('create-and-new')"
-                                data-testid="media-create-and-new"
-                                icon="pi pi-save"
-                                class="p-button-sm"
-                        />
-
-                        <!--form_menu-->
-                        <Button class="p-button-sm"
-                                @click="toggleFormMenu"
-                                data-testid="media-form-menu"
-                                icon="pi pi-angle-down"
-                                aria-haspopup="true"
-                        />
-
-                        <Menu ref="form_menu"
-                              :model="store.form_menu_list"
-                              :popup="true" />
-                        <!--form_menu-->
-
-                        <Button class="p-button-sm"
-                                v-if="store.item && store.item.id"
-                                icon="pi pi-eye"
-                                data-testid="media-to-view"
-                                @click="store.toView(store.item)"
-                        />
-
-                        <Button class="p-button-primary"
-                                icon="pi pi-times"
-                                data-testid="media-to-list"
-                                @click="store.toList()"
-                        />
                     </div>
+                </div>
+            </template>
+            <template #icons>
+                <div class="p-inputgroup">
+                    <Button v-if="store.item && store.item.id"
+                            class="p-button-sm"
+                            :label=" '#' + store.item.id "
+                            data-testid="media-id"
+                            @click="useVaah.copy(store.item.id)"
+                    />
 
-                    <TieredMenu :model="store.form_menu_list" ref="menu" :popup="true" />
+                    <Button label="Save"
+                            v-if="store.item && store.item.id"
+                            data-testid="media-save"
+                            @click="store.itemAction('save')"
+                            icon="pi pi-save"
+                            class="p-button-sm"
+                    />
+
+                    <Button label="Create & New"
+                            v-else
+                            @click="store.itemAction('create-and-new')"
+                            data-testid="media-create-and-new"
+                            icon="pi pi-save"
+                            class="p-button-sm"
+                    />
+
+                    <!--form_menu-->
+                    <Button class="p-button-sm"
+                            icon="pi pi-angle-down"
+                            type="button"
+                            data="media-form-menu"
+                            aria-haspopup="true"
+                            @click="toggleFormMenu"
+                    />
+
+                    <Menu ref="form_menu"
+                          :model="store.form_menu_list"
+                          :popup="true"
+                    />
+                    <!--/form_menu-->
+
+                    <Button class="p-button-sm"
+                            v-if="store.item && store.item.id"
+                            icon="pi pi-eye"
+                            data-testid="media-to-view"
+                            @click="store.toView(store.item)"
+                    />
+
+                    <Button class="p-button-sm"
+                            icon="pi pi-times"
+                            data-testid="media-to-list"
+                            @click="store.toList()"
+                    />
                 </div>
             </template>
 
-            <template #content>
-                <div class="form">
-                    <span class="p-float-label">
+            <div v-if="store.item" class="form">
+                    <span class="p-float-label mt-2">
                         <InputText id="name" class="w-full p-inputtext-sm" v-model="store.item.name" />
                         <label for="name">Name</label>
                     </span>
 
                     <div v-if="!store.item.id" class="field mb-4 relative">
                         <FileUpload v-model="store.item.url"
+                                    url="storage/media"
                                     :auto="true"
                                     @click="store.openUploader($event)"
                                     @select="store.upload($event,store.item)"
@@ -144,7 +144,7 @@ const toggleFormMenu = (event) => {
                     <span class="p-float-label" v-if="store.item.is_downloadable">
                         <span class="p-buttonset">
                             <span class="p-float-label">
-                                <InputText id="download_url" class="col-10 p-inputtext-sm"
+                                <InputText id="download_url" class="col-9 p-inputtext-sm"
                                            v-model="store.item.download_url"
                                 />
 
@@ -162,6 +162,7 @@ const toggleFormMenu = (event) => {
                                         data-testid="media-list-check_url_availability"
                                         @click="store.isDownloadableSlugAvailable"
                                         icon="pi pi-question"
+                                        :disabled="!store.item.download_url"
                                         class="p-button-sm"
                                         v-tooltip.top=" 'Check Availability' "
                                 />
@@ -171,16 +172,17 @@ const toggleFormMenu = (event) => {
                                         icon="pi pi-copy"
                                         v-tooltip.top=" 'Copy Download Link' "
                                         class="p-button-sm"
+                                        :disabled="!store.item.download_url"
                                 />
                             </span>
                         </span>
                     </span>
 
-                    <span class="p-float-label" v-if="store.item.is_downloadable">
+                    <span class="p-float-label" v-if="store.item.is_downloadable && store.item.download_url">
                         {{ store.assets.download_url+store.item.download_url }}
                     </span>
                 </div>
-            </template>
-        </Card>
+
+        </Panel>
     </div>
 </template>
