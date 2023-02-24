@@ -482,7 +482,7 @@ export const useModuleStore = defineStore({
             }
         },
         //---------------------------------------------------------------------
-        async toggleIsActive(item,index)
+        async toggleIsActive(item)
         {
             if(item.is_active)
             {

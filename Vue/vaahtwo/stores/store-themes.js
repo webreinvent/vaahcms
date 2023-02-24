@@ -86,10 +86,7 @@ export const useThemeStore = defineStore({
         themes_query: {
             page: null,
             query: null
-        },
-        is_installing: -1,
         active_action: [],
-        index: -1
     }),
     getters: {
 
