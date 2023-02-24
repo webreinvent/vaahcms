@@ -21,7 +21,7 @@ class BatchesController extends Controller
 
     public function getAssets(Request $request)
     {
-        
+
         try{
 
             if(!\Auth::user()->hasPermission('has-access-of-advanced-section'))
