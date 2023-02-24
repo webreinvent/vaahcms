@@ -13,6 +13,7 @@ export default {
     state: {
         ajax_url: ajax_url,
         assets: null,
+        active_actions: [],
         assets_is_fetching: false,
         list: null,
         list_is_empty: false,

@@ -50,9 +50,9 @@
 
 
 </head>
-<body class="@if(isset($data->body_class)){{$data->body_class}}@endif has-background-white-bis">
+<body class="@if(isset($data->body_class)){{$data->body_class}}@endif bulma has-background-white-bis">
 
-<div class="bulma">
+<div>
     @include("vaahcms::backend.vaahone.components.errors")
     @include("vaahcms::backend.vaahone.components.flash")
 

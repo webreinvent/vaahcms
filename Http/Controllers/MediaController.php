@@ -131,8 +131,14 @@ class MediaController extends Controller
 
         }catch(\Exception $e)
         {
+            $response = [];
             $response['status'] = 'failed';
-            $response['errors'][] = $e->getMessage();
+            if(env('APP_DEBUG')){
+                $response['errors'][] = $e->getMessage();
+                $response['hint'] = $e->getTrace();
+            } else{
+                $response['errors'][] = 'Something went wrong.';
+            }
         }
 
         return response()->json($response);
@@ -142,58 +148,85 @@ class MediaController extends Controller
     public function getAssets(Request $request)
     {
 
-        if(!\Auth::user()->hasPermission('has-access-of-media-section'))
-        {
+        try{
+
+            if(!\Auth::user()->hasPermission('has-access-of-media-section'))
+            {
+                $response['status'] = 'failed';
+                $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+                return response()->json($response);
+            }
+
+
+            $year_and_month = Media::getDateList();
+
+            $data['bulk_actions'] = vh_general_bulk_actions();
+            $data['allowed_file_types'] = vh_file_pond_allowed_file_type();
+            $data['download_url'] = route('vh.frontend.media.download').'/';
+            $data['date'] = $year_and_month;
+
+            $response['status'] = 'success';
+            $response['data'] = $data;
+
+        }catch (\Exception $e){
+            $response = [];
             $response['status'] = 'failed';
-            $response['errors'][] = trans("vaahcms::messages.permission_denied");
-
-            return response()->json($response);
+            if(env('APP_DEBUG')){
+                $response['errors'][] = $e->getMessage();
+                $response['hint'] = $e->getTrace();
+            } else{
+                $response['errors'][] = 'Something went wrong.';
+            }
         }
-
-
-        $year_and_month = Media::getDateList();
-
-        $data['bulk_actions'] = vh_general_bulk_actions();
-        $data['allowed_file_types'] = vh_file_pond_allowed_file_type();
-        $data['download_url'] = route('vh.frontend.media.download').'/';
-        $data['date'] = $year_and_month;
-
-        $response['status'] = 'success';
-        $response['data'] = $data;
 
         return response()->json($response);
     }
     //----------------------------------------------------------
     public function isDownloadableSlugAvailable(Request $request)
     {
-        $rules = array(
-            'download_url' => 'required',
-        );
+
+        try{
+
+            $rules = array(
+                'download_url' => 'required',
+            );
 
 
-        $validator = \Validator::make( $request->all(), $rules);
-        if ( $validator->fails() ) {
+            $validator = \Validator::make( $request->all(), $rules);
+            if ( $validator->fails() ) {
 
-            $errors             = errorsToArray($validator->errors());
+                $errors             = errorsToArray($validator->errors());
+                $response['status'] = 'failed';
+                $response['errors'] = $errors;
+                return response()->json($response);
+            }
+
+            $data = [];
+
+            $exist = Media::where('download_url', $request->download_url)
+                ->first();
+
+            if(!$exist)
+            {
+                $response['status'] = 'success';
+                $response['messages'][] = 'Url is available';
+                $response['data'] = true;
+            } else
+            {
+                $response['status'] = 'failed';
+                $response['errors'][] = 'Url is taken';
+            }
+
+        }catch (\Exception $e){
+            $response = [];
             $response['status'] = 'failed';
-            $response['errors'] = $errors;
-            return response()->json($response);
-        }
-
-        $data = [];
-
-        $exist = Media::where('download_url', $request->download_url)
-            ->first();
-
-        if(!$exist)
-        {
-            $response['status'] = 'success';
-            $response['messages'][] = 'Url is available';
-            $response['data'] = true;
-        } else
-        {
-            $response['status'] = 'failed';
-            $response['errors'][] = 'Url is taken';
+            if(env('APP_DEBUG')){
+                $response['errors'][] = $e->getMessage();
+                $response['hint'] = $e->getTrace();
+            } else{
+                $response['errors'][] = 'Something went wrong.';
+            }
         }
 
         return response()->json($response);
@@ -203,30 +236,58 @@ class MediaController extends Controller
     public function postCreate(Request $request)
     {
 
-        if(!\Auth::user()->hasPermission('can-create-media'))
-        {
+        try{
+
+            if(!\Auth::user()->hasPermission('can-create-media'))
+            {
+                $response['status'] = 'failed';
+                $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+                return response()->json($response);
+            }
+
+            $response = Media::createItem($request);
+
+        }catch (\Exception $e){
+            $response = [];
             $response['status'] = 'failed';
-            $response['errors'][] = trans("vaahcms::messages.permission_denied");
-
-            return response()->json($response);
+            if(env('APP_DEBUG')){
+                $response['errors'][] = $e->getMessage();
+                $response['hint'] = $e->getTrace();
+            } else{
+                $response['errors'][] = 'Something went wrong.';
+            }
         }
-
-        $response = Media::createItem($request);
 
         return response()->json($response);
     }
     //----------------------------------------------------------
     public function getList(Request $request)
     {
-        if(!\Auth::user()->hasPermission('has-access-of-media-section'))
-        {
-            $response['status'] = 'failed';
-            $response['errors'][] = trans("vaahcms::messages.permission_denied");
 
-            return response()->json($response);
+        try{
+
+            if(!\Auth::user()->hasPermission('has-access-of-media-section'))
+            {
+                $response['status'] = 'failed';
+                $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+                return response()->json($response);
+            }
+
+            $response = Media::getList($request);
+
+        }catch (\Exception $e){
+            $response = [];
+            $response['status'] = 'failed';
+            if(env('APP_DEBUG')){
+                $response['errors'][] = $e->getMessage();
+                $response['hint'] = $e->getTrace();
+            } else{
+                $response['errors'][] = 'Something went wrong.';
+            }
         }
 
-        $response = Media::getList($request);
         return response()->json($response);
     }
 
@@ -234,80 +295,121 @@ class MediaController extends Controller
     public function getItem(Request $request, $id)
     {
 
-        if(!\Auth::user()->hasPermission('can-read-media'))
-        {
-            $response['status'] = 'failed';
-            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+        try{
 
-            return response()->json($response);
+            if(!\Auth::user()->hasPermission('can-read-media'))
+            {
+                $response['status'] = 'failed';
+                $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+                return response()->json($response);
+            }
+
+            $request->merge(['id'=>$id]);
+            $response = Media::getItem($request);
+
+        }catch (\Exception $e){
+            $response = [];
+            $response['status'] = 'failed';
+            if(env('APP_DEBUG')){
+                $response['errors'][] = $e->getMessage();
+                $response['hint'] = $e->getTrace();
+            } else{
+                $response['errors'][] = 'Something went wrong.';
+            }
         }
 
-        $request->merge(['id'=>$id]);
-        $response = Media::getItem($request);
         return response()->json($response);
     }
     //----------------------------------------------------------
     public function postStore(Request $request)
     {
 
-        if(!\Auth::user()->hasPermission('can-update-media'))
-        {
-            $response['status'] = 'failed';
-            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+        try{
 
-            return response()->json($response);
+            if(!\Auth::user()->hasPermission('can-update-media'))
+            {
+                $response['status'] = 'failed';
+                $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+                return response()->json($response);
+            }
+
+            $response = Media::postStore($request);
+
+        }catch (\Exception $e){
+            $response = [];
+            $response['status'] = 'failed';
+            if(env('APP_DEBUG')){
+                $response['errors'][] = $e->getMessage();
+                $response['hint'] = $e->getTrace();
+            } else{
+                $response['errors'][] = 'Something went wrong.';
+            }
         }
 
-        $response = Media::postStore($request);
         return response()->json($response);
     }
     //----------------------------------------------------------
     public function postActions(Request $request, $action)
     {
 
-        $rules = array(
-            'inputs' => 'required',
-        );
+        try{
 
-        $validator = \Validator::make( $request->all(), $rules);
-        if ( $validator->fails() ) {
+            $rules = array(
+                'inputs' => 'required',
+            );
 
-            $errors             = errorsToArray($validator->errors());
+            $validator = \Validator::make( $request->all(), $rules);
+            if ( $validator->fails() ) {
+
+                $errors             = errorsToArray($validator->errors());
+                $response['status'] = 'failed';
+                $response['errors'] = $errors;
+                return response()->json($response);
+            }
+
+            $response = [];
+
+            switch ($action)
+            {
+
+                //------------------------------------
+                case 'bulk-change-status':
+                    $response = Media::bulkStatusChange($request);
+                    break;
+                //------------------------------------
+                case 'bulk-trash':
+
+                    $response = Media::bulkTrash($request);
+
+                    break;
+                //------------------------------------
+                case 'bulk-restore':
+
+                    $response = Media::bulkRestore($request);
+
+                    break;
+
+                //------------------------------------
+                case 'bulk-delete':
+
+                    $response = Media::bulkDelete($request);
+
+                    break;
+                //------------------------------------
+
+            }
+
+        }catch (\Exception $e){
+            $response = [];
             $response['status'] = 'failed';
-            $response['errors'] = $errors;
-            return response()->json($response);
-        }
-
-        $response = [];
-
-        switch ($action)
-        {
-
-            //------------------------------------
-            case 'bulk-change-status':
-                $response = Media::bulkStatusChange($request);
-                break;
-            //------------------------------------
-            case 'bulk-trash':
-
-                $response = Media::bulkTrash($request);
-
-                break;
-            //------------------------------------
-            case 'bulk-restore':
-
-                $response = Media::bulkRestore($request);
-
-                break;
-
-            //------------------------------------
-            case 'bulk-delete':
-
-                $response = Media::bulkDelete($request);
-
-                break;
-            //------------------------------------
-
+            if(env('APP_DEBUG')){
+                $response['errors'][] = $e->getMessage();
+                $response['hint'] = $e->getTrace();
+            } else{
+                $response['errors'][] = 'Something went wrong.';
+            }
         }
 
         return response()->json($response);

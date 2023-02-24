@@ -29,105 +29,118 @@ class JsonController extends Controller
     public function getPublicAssets(Request $request)
     {
 
-        $data['timezone'] = config('app.timezone');
+        try{
 
-        $v_version = config('vaahcms.version');
+            $data['timezone'] = config('app.timezone');
 
-        if(env('VAAHCMS_VERSION')){
-            $v_version = env('VAAHCMS_VERSION');
-        }
+            $v_version = config('vaahcms.version');
 
-        $data['versions'] = [
-            'laravel_version' => Application::VERSION,
-            'php_version' => PHP_VERSION,
-            'vaahcms_version' => $v_version
-        ];
+            if(env('VAAHCMS_VERSION')){
+                $v_version = env('VAAHCMS_VERSION');
+            }
 
-        $data['vaahcms'] = [
-            'name' => config('vaahcms.app_name'),
-            'slug' => config('vaahcms.app_slug'),
-            'version' => $v_version,
-            'website' => config('vaahcms.website'),
-            'docs' => config('vaahcms.documentation'),
-        ];
-
-        $data['settings'] = [
-            'is_mail_settings_not_set' => $this->isMailSettingsNotSet(),
-            'max_attempts_of_login' => config('settings.global.maximum_number_of_login_attempts_per_session'),
-            'max_attempts_of_forgot_password' => config('settings.global.maximum_number_of_forgot_password_attempts_per_session'),
-        ];
-
-        $data['server'] = [
-            'host' => $request->getHost(),
-            'current_year' => \Carbon::now()->format('Y'),
-            'current_date' => \Carbon::now()->format('Y-m-d'),
-            'current_time' => \Carbon::now()->format('H:i:s'),
-            'current_date_time' => \Carbon::now()->format('Y-m-d H:i:s'),
-            'http' => 'http://',
-        ];
-
-        if(\Request::secure())
-        {
-            $data['server']['http'] = 'https://';
-        }
-
-        //-----Vue Errors----------------------
-        /*
-         * To Set Errors:
-         * session(['vue_errors'=>$response['errors']]);
-         */
-        $data['vue_errors'] = null;
-        $vue_errors = session()->get('vue_errors');
-        if(isset($vue_errors) && count($vue_errors) > 0)
-        {
-            $data['vue_errors'] = $vue_errors;
-        }
-        \Session::forget('vue_errors');
-        //-----Vue Errors----------------------
-
-        //-----Vue Messages----------------------
-        /*
-         * To Set messages:
-         * session(['vue_messages'=>$response['messages']]);
-         */
-        $data['vue_messages'] = null;
-        $vue_messages = session()->get('vue_messages');
-        if(isset($vue_messages) && count($vue_messages) > 0)
-        {
-            $data['vue_messages'] = $vue_messages;
-        }
-        \Session::forget('vue_messages');
-        //-----/Vue Messages----------------------
-
-
-        if(\Auth::check())
-        {
-            $data['auth_user'] = [
-                'name' => \Auth::user()->name,
-                'email' => \Auth::user()->email,
+            $data['versions'] = [
+                'laravel_version' => Application::VERSION,
+                'php_version' => PHP_VERSION,
+                'vaahcms_version' => $v_version
             ];
 
-            //-----Vue Backend Notices----------------------
-            $data['vue_notices'] = Notified::viaBackend();
-            //-----/Vue Backend Notices----------------------
+            $data['vaahcms'] = [
+                'name' => config('vaahcms.app_name'),
+                'slug' => config('vaahcms.app_slug'),
+                'version' => $v_version,
+                'website' => config('vaahcms.website'),
+                'docs' => config('vaahcms.documentation'),
+            ];
 
-            $data['extended_views'] = $this->getExtendedViews();
+            $data['settings'] = [
+                'is_mail_settings_not_set' => $this->isMailSettingsNotSet(),
+                'max_attempts_of_login' => config('settings.global.maximum_number_of_login_attempts_per_session'),
+                'max_attempts_of_forgot_password' => config('settings.global.maximum_number_of_forgot_password_attempts_per_session'),
+            ];
 
+            $data['server'] = [
+                'host' => $request->getHost(),
+                'current_year' => \Carbon::now()->format('Y'),
+                'current_date' => \Carbon::now()->format('Y-m-d'),
+                'current_time' => \Carbon::now()->format('H:i:s'),
+                'current_date_time' => \Carbon::now()->format('Y-m-d H:i:s'),
+                'http' => 'http://',
+            ];
+
+            if(\Request::secure())
+            {
+                $data['server']['http'] = 'https://';
+            }
+
+            //-----Vue Errors----------------------
+            /*
+             * To Set Errors:
+             * session(['vue_errors'=>$response['errors']]);
+             */
+            $data['vue_errors'] = null;
+            $vue_errors = session()->get('vue_errors');
+            if(isset($vue_errors) && count($vue_errors) > 0)
+            {
+                $data['vue_errors'] = $vue_errors;
+            }
+            \Session::forget('vue_errors');
+            //-----Vue Errors----------------------
+
+            //-----Vue Messages----------------------
+            /*
+             * To Set messages:
+             * session(['vue_messages'=>$response['messages']]);
+             */
+            $data['vue_messages'] = null;
+            $vue_messages = session()->get('vue_messages');
+            if(isset($vue_messages) && count($vue_messages) > 0)
+            {
+                $data['vue_messages'] = $vue_messages;
+            }
+            \Session::forget('vue_messages');
+            //-----/Vue Messages----------------------
+
+
+            if(\Auth::check())
+            {
+                $data['auth_user'] = [
+                    'name' => \Auth::user()->name,
+                    'email' => \Auth::user()->email,
+                ];
+
+                //-----Vue Backend Notices----------------------
+                $data['vue_notices'] = Notified::viaBackend();
+                //-----/Vue Backend Notices----------------------
+
+                $data['extended_views'] = $this->getExtendedViews();
+
+            }
+
+
+            $data['urls']['public'] = url("/");
+            $data['urls']['theme'] = vh_get_backend_theme_url();
+            $data['urls']['image'] = vh_get_backend_theme_image_url();
+            $data['urls']['upload'] = route('vh.backend.media.upload');
+            $data['urls']['dashboard'] = route('vh.backend')."#/vaah";
+
+
+            $data['backend_logo_url'] = vh_backend_logo();
+
+
+            $response['status'] = 'success';
+            $response['data'] = $data;
+
+        }catch (\Exception $e){
+            $response = [];
+            $response['status'] = 'failed';
+            if(env('APP_DEBUG')){
+                $response['errors'][] = $e->getMessage();
+                $response['hint'] = $e->getTrace();
+            } else{
+                $response['errors'][] = 'Something went wrong.';
+            }
         }
-
-
-        $data['urls']['public'] = url("/");
-        $data['urls']['theme'] = vh_get_backend_theme_url();
-        $data['urls']['image'] = vh_get_backend_theme_image_url();
-        $data['urls']['upload'] = route('vh.backend.media.upload');
-        $data['urls']['dashboard'] = route('vh.backend')."#/vaah";
-
-
-        $data['backend_logo_url'] = vh_backend_logo();
-
-
-        $response['status'] = 'success';
-        $response['data'] = $data;
 
         return response()->json($response);
 
@@ -137,18 +150,28 @@ class JsonController extends Controller
     public function isLoggedIn(Request $request)
     {
 
+        try{
 
-        $data = [];
+            $is_logged = false;
 
-        $is_logged = false;
+            if(\Auth::check())
+            {
+                $is_logged = true;
+            }
 
-        if(\Auth::check())
-        {
-            $is_logged = true;
+            $response['status'] = 'success';
+            $response['data']['is_logged_in'] = $is_logged;
+
+        }catch (\Exception $e){
+            $response = [];
+            $response['status'] = 'failed';
+            if(env('APP_DEBUG')){
+                $response['errors'][] = $e->getMessage();
+                $response['hint'] = $e->getTrace();
+            } else{
+                $response['errors'][] = 'Something went wrong.';
+            }
         }
-
-        $response['status'] = 'success';
-        $response['data']['is_logged_in'] = $is_logged;
 
         return response()->json($response);
 
@@ -185,18 +208,28 @@ class JsonController extends Controller
     public function getPermissions(Request $request)
     {
 
+        try{
 
-        $data = [];
+            if(!\Auth::check())
+            {
+                $response['status'] = 'failed';
+                $response['errors'] = [];
+                return response()->json($response);
+            }
 
-        if(!\Auth::check())
-        {
+            $response['status'] = 'success';
+            $response['data']['list'] = \Auth::user()->permissions(true);
+
+        }catch (\Exception $e){
+            $response = [];
             $response['status'] = 'failed';
-            $response['errors'] = [];
-            return response()->json($response);
+            if(env('APP_DEBUG')){
+                $response['errors'][] = $e->getMessage();
+                $response['hint'] = $e->getTrace();
+            } else{
+                $response['errors'][] = 'Something went wrong.';
+            }
         }
-
-        $response['status'] = 'success';
-        $response['data']['list'] = \Auth::user()->permissions(true);
 
         return response()->json($response);
 

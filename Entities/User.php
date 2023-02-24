@@ -597,7 +597,6 @@ class User extends Authenticatable
         }
 
         $inputs = $request->all();
-        $inputs['email'] = trim($inputs['email']);
 
         $rules = array(
             'email' => 'required|max:150',
@@ -606,6 +605,7 @@ class User extends Authenticatable
             'email.required' => trans('vaahcms-login.email_or_username_required'),
             'email.max' => trans('vaahcms-login.email_or_username_limit'),
         );
+
         $validator = \Validator::make($inputs, $rules, $messages);
 
         if ($validator->fails())
@@ -615,6 +615,8 @@ class User extends Authenticatable
             $response['errors'] = $errors;
             return $response;
         }
+
+        $inputs['email'] = trim($inputs['email']);
 
         $user = self::where('email', $inputs['email'])->first();
 
@@ -1096,13 +1098,20 @@ class User extends Authenticatable
         }
 
         // check if already exist
-        $user = self::where('email',$inputs['email'])->first();
+        $user = self::where('eail',$inputs['email'])->first();
 
         if($user)
         {
             $response['status'] = 'failed';
             $response['errors'][] = trans('vaahcms-user.email_already_registered');
             return $response;
+        }
+
+
+
+        if(!isset($inputs['username']))
+        {
+            $inputs['username'] = Str::slug($inputs['email']);
         }
 
         // check if username already exist
@@ -1113,11 +1122,6 @@ class User extends Authenticatable
             $response['status'] = 'failed';
             $response['errors'][] = trans('vaahcms-user.username_already_registered');
             return $response;
-        }
-
-        if(!isset($inputs['username']))
-        {
-            $inputs['username'] = Str::slug($inputs['email']);
         }
 
         if(!isset($inputs['status']))

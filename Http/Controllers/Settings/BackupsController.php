@@ -36,21 +36,48 @@ class BackupsController extends Controller
         $response['status'] = 'success';
         $response['data']['roles'] = Role::getActiveRoles();
 
+
+        try{
+
+        }catch (\Exception $e){
+            $response = [];
+            $response['status'] = 'failed';
+            if(env('APP_DEBUG')){
+                $response['errors'][] = $e->getMessage();
+                $response['hint'] = $e->getTrace();
+            } else{
+                $response['errors'][] = 'Something went wrong.';
+            }
+        }
+
         return response()->json($response);
     }
     //----------------------------------------------------------
     public function getList(Request $request)
     {
 
-        if(!\Auth::user()->hasPermission('has-access-of-setting-section'))
-        {
+        try{
+
+            if(!\Auth::user()->hasPermission('has-access-of-setting-section'))
+            {
+                $response['status'] = 'failed';
+                $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+                return response()->json($response);
+            }
+
+            $response = VaahBackup::create($request);
+
+        }catch (\Exception $e){
+            $response = [];
             $response['status'] = 'failed';
-            $response['errors'][] = trans("vaahcms::messages.permission_denied");
-
-            return response()->json($response);
+            if(env('APP_DEBUG')){
+                $response['errors'][] = $e->getMessage();
+                $response['hint'] = $e->getTrace();
+            } else{
+                $response['errors'][] = 'Something went wrong.';
+            }
         }
-
-        $response = VaahBackup::create($request);
 
         return response()->json($response);
     }

@@ -69,18 +69,31 @@ class SetupController extends Controller
     public function getAssets(Request $request)
     {
 
-        $data['is_installed'] = VaahSetup::isInstalled();
-        $data['environments'] = vh_environments();
-        $data['timezones'] = vh_get_timezones();
-        $data['database_types'] = vh_database_types();
-        $data['mail_encryption_types'] = vh_mail_encryption_types();
-        $data['mail_sample_settings'] = vh_mail_sample_settings();
-        $data['country_calling_codes'] = vh_get_countries_calling_codes();
-        $data['env_file'] = env('ENV_FILE');
-        $data['app_url'] = url("/");
+        try{
 
-        $response['status'] = 'success';
-        $response['data'] = $data;
+            $data['is_installed'] = VaahSetup::isInstalled();
+            $data['environments'] = vh_environments();
+            $data['timezones'] = vh_get_timezones();
+            $data['database_types'] = vh_database_types();
+            $data['mail_encryption_types'] = vh_mail_encryption_types();
+            $data['mail_sample_settings'] = vh_mail_sample_settings();
+            $data['country_calling_codes'] = vh_get_countries_calling_codes();
+            $data['env_file'] = env('ENV_FILE');
+            $data['app_url'] = url("/");
+
+            $response['status'] = 'success';
+            $response['data'] = $data;
+
+        }catch (\Exception $e){
+            $response = [];
+            $response['status'] = 'failed';
+            if(env('APP_DEBUG')){
+                $response['errors'][] = $e->getMessage();
+                $response['hint'] = $e->getTrace();
+            } else{
+                $response['errors'][] = 'Something went wrong.';
+            }
+        }
 
         return response()->json($response);
 
@@ -89,41 +102,53 @@ class SetupController extends Controller
     public function appSetupStatus(Request $request)
     {
 
+        try{
 
-        $data['is_db_connected'] = VaahSetup::isDBConnected();
-        $data['is_db_migrated'] = VaahSetup::isDBMigrated();
-        $data['is_admin_created'] = VaahSetup::isInstalled();
-        $data['is_user_administrator'] = false;
+            $data['is_db_connected'] = VaahSetup::isDBConnected();
+            $data['is_db_migrated'] = VaahSetup::isDBMigrated();
+            $data['is_admin_created'] = VaahSetup::isInstalled();
+            $data['is_user_administrator'] = false;
 
-        $data['stage'] = 'unknown';
+            $data['stage'] = 'unknown';
 
-        if(VaahSetup::isDBConnected())
-        {
-            $data['stage'] = 'database';
-        }
-
-        if(VaahSetup::isDBMigrated())
-        {
-            $data['stage'] = 'migrated';
-        }
-
-        if(VaahSetup::isSuperAdminCreated())
-        {
-            $data['stage'] = 'installed';
-
-            if(\Auth::check())
+            if(VaahSetup::isDBConnected())
             {
-                if(\Auth::user()->hasRole('super-administrator'))
+                $data['stage'] = 'database';
+            }
+
+            if(VaahSetup::isDBMigrated())
+            {
+                $data['stage'] = 'migrated';
+            }
+
+            if(VaahSetup::isSuperAdminCreated())
+            {
+                $data['stage'] = 'installed';
+
+                if(\Auth::check())
                 {
-                    $data['is_user_administrator'] = true;
+                    if(\Auth::user()->hasRole('super-administrator'))
+                    {
+                        $data['is_user_administrator'] = true;
+                    }
                 }
             }
+
+
+
+            $response['status'] = 'success';
+            $response['data'] = $data;
+
+        }catch (\Exception $e){
+            $response = [];
+            $response['status'] = 'failed';
+            if(env('APP_DEBUG')){
+                $response['errors'][] = $e->getMessage();
+                $response['hint'] = $e->getTrace();
+            } else{
+                $response['errors'][] = 'Something went wrong.';
+            }
         }
-
-
-
-        $response['status'] = 'success';
-        $response['data'] = $data;
 
         return response()->json($response);
     }
@@ -219,65 +244,107 @@ class SetupController extends Controller
     public function testDBConnection(Request $request)
     {
 
-        if(VaahSetup::isInstalled())
-        {
+        try{
+
+            if(VaahSetup::isInstalled())
+            {
+                $response['status'] = 'failed';
+                $response['errors'][] = 'Application is already installed.';
+                return response()->json($response);
+            }
+
+
+            $response = VaahSetup::verifyAppUrl($request);
+
+            if($response['status'] == 'failed')
+            {
+                return response()->json($response);
+            }
+
+            $response = VaahHelper::testDBConnection($request);
+
+        }catch (\Exception $e){
+            $response = [];
             $response['status'] = 'failed';
-            $response['errors'][] = 'Application is already installed.';
-            return response()->json($response);
+            if(env('APP_DEBUG')){
+                $response['errors'][] = $e->getMessage();
+                $response['hint'] = $e->getTrace();
+            } else{
+                $response['errors'][] = 'Something went wrong.';
+            }
         }
-
-
-        $response = VaahSetup::verifyAppUrl($request);
-
-        if($response['status'] == 'failed')
-        {
-            return response()->json($response);
-        }
-
-        $response = VaahHelper::testDBConnection($request);
 
         return response()->json($response);
     }
     //----------------------------------------------------------
     public function sendTestEmail(Request $request)
     {
-        $response = VaahHelper::sendTestEmail($request);
+
+        try{
+
+            $response = VaahHelper::sendTestEmail($request);
+
+        }catch (\Exception $e){
+            $response = [];
+            $response['status'] = 'failed';
+            if(env('APP_DEBUG')){
+                $response['errors'][] = $e->getMessage();
+                $response['hint'] = $e->getTrace();
+            } else{
+                $response['errors'][] = 'Something went wrong.';
+            }
+        }
+
         return response()->json($response);
     }
     //----------------------------------------------------------
     public function getConfigurations(Request $request)
     {
-        $rules = array(
-            'app_env' => 'required',
-        );
 
-        $validator = \Validator::make( $request->all(), $rules);
-        if ( $validator->fails() ) {
+        try{
 
-            $errors             = errorsToArray($validator->errors());
+            $rules = array(
+                'app_env' => 'required',
+            );
+
+            $validator = \Validator::make( $request->all(), $rules);
+            if ( $validator->fails() ) {
+
+                $errors             = errorsToArray($validator->errors());
+                $response['status'] = 'failed';
+                $response['errors'] = $errors;
+                return response()->json($response);
+            }
+
+            $data = [];
+
+            $env_file = '.env.'.$request->app_env;
+
+            $file_path = base_path($env_file);
+
+            if(!file_exists($file_path))
+            {
+                $response['status'] = 'failed';
+                $response['errors'] = [];
+                return response()->json($response);
+            }
+
+            //$params = vh_env_file_to_array($file_path, true);
+            $params = VaahSetup::getEnvFileVariables($env_file, 'key_value', true);
+
+            $response['status'] = 'success';
+            $response['data'] = $params;
+
+        }catch (\Exception $e){
+            $response = [];
             $response['status'] = 'failed';
-            $response['errors'] = $errors;
-            return response()->json($response);
+            if(env('APP_DEBUG')){
+                $response['errors'][] = $e->getMessage();
+                $response['hint'] = $e->getTrace();
+            } else{
+                $response['errors'][] = 'Something went wrong.';
+            }
         }
-
-        $data = [];
-
-        $env_file = '.env.'.$request->app_env;
-
-        $file_path = base_path($env_file);
-
-        if(!file_exists($file_path))
-        {
-            $response['status'] = 'failed';
-            $response['errors'] = [];
-            return response()->json($response);
-        }
-
-        //$params = vh_env_file_to_array($file_path, true);
-        $params = VaahSetup::getEnvFileVariables($env_file, 'key_value', true);
-
-        $response['status'] = 'success';
-        $response['data'] = $params;
 
         return response()->json($response);
 
@@ -286,87 +353,86 @@ class SetupController extends Controller
     public function testConfigurations(Request $request)
     {
 
-        $rules = array(
-            'app_env' => 'required',
-            'app_name' => 'required',
-            'app_timezone' => 'required',
-        );
+        try{
 
-        $validator = \Validator::make( $request->all(), $rules);
-        if ( $validator->fails() ) {
-            $errors             = errorsToArray($validator->errors());
-            $response['status'] = 'failed';
-            $response['errors'] = $errors;
-            return $response;
-        }
+            $rules = array(
+                'app_env' => 'required',
+                'app_name' => 'required',
+                'app_timezone' => 'required',
+            );
 
-        //verify database connection
-        if(!$request->has('db_is_valid') || $request->db_is_valid != true)
-        {
-            $response['status'] = 'failed';
-            $response['errors'][] = 'Test the database configuration';
-            return response()->json($response);
-        }
+            $validator = \Validator::make( $request->all(), $rules);
+            if ( $validator->fails() ) {
+                $errors             = errorsToArray($validator->errors());
+                $response['status'] = 'failed';
+                $response['errors'] = $errors;
+                return $response;
+            }
 
-
-        //verify mail configuration if set
-        /*if($request->has('mail_is_valid') && $request->mail_is_valid == false)
-        {
-            if($request->has('mail_provider') && !empty($request->mail_provider))
+            //verify database connection
+            if(!$request->has('db_is_valid') || $request->db_is_valid != true)
             {
                 $response['status'] = 'failed';
-                $response['errors'][] = 'Test the mail configuration';
+                $response['errors'][] = 'Test the database configuration';
                 return response()->json($response);
             }
-        }*/
 
+            $response = VaahSetup::verifyAppUrl($request);
 
-
-        $response = VaahSetup::verifyAppUrl($request);
-
-        if($response['status'] == 'failed')
-        {
-            return response()->json($response);
-        }
-
-        $reflector = new \ReflectionClass(\WebReinvent\VaahCms\VaahCmsServiceProvider::class);
-
-        $ref_path = str_replace("VaahCmsServiceProvider.php","",$reflector->getFileName());
-
-        $path =$ref_path .'composer.json';
-
-        $config_data = json_decode(file_get_contents($path), true);
-
-        $request->request->add(['vaahcms_version' => $config_data['version']]);
-
-        //generate env file
-        $response = VaahSetup::generateEnvFile($request);
-        if($response['status'] == 'failed')
-        {
-            return response()->json($response);
-        }
-
-        //generate vaahcms.json file
-        if(!VaahSetup::isAppUrlExistInVaahCmsJson($request))
-        {
-            $response = VaahSetup::createVaahCmsJsonFile($request);
-            if ($response['status'] == 'failed') {
+            if($response['status'] == 'failed')
+            {
                 return response()->json($response);
             }
-        }
 
-        //publish vaahcms configurations
-        VaahSetup::publishConfig();
+            $reflector = new \ReflectionClass(\WebReinvent\VaahCms\VaahCmsServiceProvider::class);
 
-        $data = [];
-        $response = [];
+            $ref_path = str_replace("VaahCmsServiceProvider.php","",$reflector->getFileName());
 
-        $response['status'] = 'success';
-        $response['messages'][] = 'Configuration Saved';
-        $response['data'] = $data;
-        if(env('APP_DEBUG'))
-        {
-            $response['hint'][] = '';
+            $path =$ref_path .'composer.json';
+
+            $config_data = json_decode(file_get_contents($path), true);
+
+            $request->request->add(['vaahcms_version' => $config_data['version']]);
+
+            //generate env file
+            $response = VaahSetup::generateEnvFile($request);
+            if($response['status'] == 'failed')
+            {
+                return response()->json($response);
+            }
+
+            //generate vaahcms.json file
+            if(!VaahSetup::isAppUrlExistInVaahCmsJson($request))
+            {
+                $response = VaahSetup::createVaahCmsJsonFile($request);
+                if ($response['status'] == 'failed') {
+                    return response()->json($response);
+                }
+            }
+
+            //publish vaahcms configurations
+            VaahSetup::publishConfig();
+
+            $data = [];
+            $response = [];
+
+            $response['status'] = 'success';
+            $response['messages'][] = 'Configuration Saved';
+            $response['data'] = $data;
+            if(env('APP_DEBUG'))
+            {
+                $response['hint'][] = '';
+            }
+
+        }catch (\Exception $e){
+            $response = [];
+            $response['status'] = 'failed';
+            if(env('APP_DEBUG')){
+                $response['errors'][] = $e->getMessage();
+                $response['hint'] = $e->getTrace();
+            } else{
+                $response['errors'][] = 'Something went wrong.';
+            }
         }
 
         return response()->json($response);
@@ -376,18 +442,30 @@ class SetupController extends Controller
     public function getRequiredConfigurations()
     {
 
-        $active_env_file = VaahSetup::getActiveEnvFileName();
+        try{
 
-        $env_params = vh_env_file_to_array(base_path('/'.$active_env_file), true);
+            $active_env_file = VaahSetup::getActiveEnvFileName();
 
-        $response['status'] = 'success';
-        $response['data']['app_key'] = $env_params['app_key'];
-        $response['data']['app_vaahcms_env'] = "";
-        if(isset($env_params['app_vaahcms_env']))
-        {
-            $response['data']['app_vaahcms_env'] = $env_params['app_vaahcms_env'];
+            $env_params = vh_env_file_to_array(base_path('/'.$active_env_file), true);
+
+            $response['status'] = 'success';
+            $response['data']['app_key'] = $env_params['app_key'];
+            $response['data']['app_vaahcms_env'] = "";
+            if(isset($env_params['app_vaahcms_env']))
+            {
+                $response['data']['app_vaahcms_env'] = $env_params['app_vaahcms_env'];
+            }
+
+        }catch (\Exception $e){
+            $response = [];
+            $response['status'] = 'failed';
+            if(env('APP_DEBUG')){
+                $response['errors'][] = $e->getMessage();
+                $response['hint'] = $e->getTrace();
+            } else{
+                $response['errors'][] = 'Something went wrong.';
+            }
         }
-
 
         return response()->json($response);
     }
@@ -463,77 +541,104 @@ class SetupController extends Controller
     //----------------------------------------------------------
     public function getDependencies(Request $request)
     {
-        $response['status'] = 'success';
-        $response['data']['list'] = VaahSetup::getDependencies();
+
+        try{
+
+            $response['status'] = 'success';
+            $response['data']['list'] = VaahSetup::getDependencies();
+
+        }catch (\Exception $e){
+            $response = [];
+            $response['status'] = 'failed';
+            if(env('APP_DEBUG')){
+                $response['errors'][] = $e->getMessage();
+                $response['hint'] = $e->getTrace();
+            } else{
+                $response['errors'][] = 'Something went wrong.';
+            }
+        }
+
         return response()->json($response);
     }
     //----------------------------------------------------------
     public function installDependencies(Request $request)
     {
 
+        try{
 
-        $rules = array(
-            'name' => 'required',
-            'slug' => 'required',
-            'type' => 'required',
-            'source' => 'required',
-        );
+            $rules = array(
+                'name' => 'required',
+                'slug' => 'required',
+                'type' => 'required',
+                'source' => 'required',
+            );
 
-        $validator = \Validator::make( $request->all(), $rules);
-        if ( $validator->fails() ) {
+            $validator = \Validator::make( $request->all(), $rules);
+            if ( $validator->fails() ) {
 
-            $errors             = errorsToArray($validator->errors());
+                $errors             = errorsToArray($validator->errors());
+                $response['status'] = 'failed';
+                $response['errors'] = $errors;
+                return response()->json($response);
+            }
+
+            $inputs = $request->all();
+
+            if($request->type=='module')
+            {
+
+                if($request->source=='vaahcms')
+                {
+                    $response = $this->downloadOfficialModule($request);
+                } else{
+                    $response = Module::download($request->name, $request->download_link);
+                }
+
+                if($response['status'] == 'success')
+                {
+                    Module::syncAllModules();
+                    Module::activateItem($request->slug);
+                }
+
+                if($response['status'] == 'success' && $request->import_sample_data)
+                {
+                    Module::importSampleData($request->slug);
+                }
+
+
+            } else if($request->type=='theme')
+            {
+
+                if($request->source=='vaahcms')
+                {
+                    $response = $this->downloadOfficialTheme($request);
+                } else{
+                    $response = Theme::download($request->name, $request->download_link);
+                }
+
+                if($response['status'] == 'success')
+                {
+                    Theme::syncAll();
+                    Theme::activateItem($request->slug, true);
+
+                }
+
+                if($response['status'] == 'success' && $request->import_sample_data)
+                {
+                    Theme::importSampleData($request->slug);
+                }
+
+            }
+
+        }catch (\Exception $e){
+            $response = [];
             $response['status'] = 'failed';
-            $response['errors'] = $errors;
-            return response()->json($response);
-        }
-
-        $inputs = $request->all();
-
-        if($request->type=='module')
-        {
-
-            if($request->source=='vaahcms')
-            {
-                $response = $this->downloadOfficialModule($request);
+            if(env('APP_DEBUG')){
+                $response['errors'][] = $e->getMessage();
+                $response['hint'] = $e->getTrace();
             } else{
-                $response = Module::download($request->name, $request->download_link);
+                $response['errors'][] = 'Something went wrong.';
             }
-
-            if($response['status'] == 'success')
-            {
-                Module::syncAllModules();
-                Module::activateItem($request->slug);
-            }
-
-            if($response['status'] == 'success' && $request->import_sample_data)
-            {
-                Module::importSampleData($request->slug);
-            }
-
-
-        } else if($request->type=='theme')
-        {
-
-            if($request->source=='vaahcms')
-            {
-                $response = $this->downloadOfficialTheme($request);
-            } else{
-                $response = Theme::download($request->name, $request->download_link);
-            }
-
-            if($response['status'] == 'success')
-            {
-                Theme::syncAll();
-                Theme::activateItem($request->slug, true);
-
-            }
-
-            if($response['status'] == 'success' && $request->import_sample_data)
-            {
-                Theme::importSampleData($request->slug);
-            }
-
         }
 
         return response()->json($response);
@@ -542,15 +647,28 @@ class SetupController extends Controller
     public function downloadOfficialModule($request)
     {
 
-        $details = Module::getOfficialDetails($request->slug);
+        try{
 
-        if($details['status'] == 'failed')
-        {
-            return $details;
+            $details = Module::getOfficialDetails($request->slug);
 
+            if($details['status'] == 'failed')
+            {
+                return $details;
+
+            }
+
+            $response = Module::download($request->name, $details['data']['download_link']);
+
+        }catch (\Exception $e){
+            $response = [];
+            $response['status'] = 'failed';
+            if(env('APP_DEBUG')){
+                $response['errors'][] = $e->getMessage();
+                $response['hint'] = $e->getTrace();
+            } else{
+                $response['errors'][] = 'Something went wrong.';
+            }
         }
-
-        $response = Module::download($request->name, $details['data']['download_link']);
 
         return $response;
 
@@ -559,15 +677,28 @@ class SetupController extends Controller
     public function downloadOfficialTheme($request)
     {
 
-        $details = Theme::getOfficialDetails($request->slug);
+        try{
 
-        if($details['status'] == 'failed')
-        {
-            return $details;
+            $details = Theme::getOfficialDetails($request->slug);
 
+            if($details['status'] == 'failed')
+            {
+                return $details;
+
+            }
+
+            $response = Theme::download($request->name, $details['data']['download_link']);
+
+        }catch (\Exception $e){
+            $response = [];
+            $response['status'] = 'failed';
+            if(env('APP_DEBUG')){
+                $response['errors'][] = $e->getMessage();
+                $response['hint'] = $e->getTrace();
+            } else{
+                $response['errors'][] = 'Something went wrong.';
+            }
         }
-
-        $response = Theme::download($request->name, $details['data']['download_link']);
 
         return $response;
 
@@ -576,31 +707,42 @@ class SetupController extends Controller
     public function checkSetupStatus()
     {
 
-        //check database connection
+        try{
+
+            //check users table
+            if(!\Schema::hasTable('vh_users'))
+            {
+                $response['status'] = 'success';
+                $response['data']['active_step'] = 'database';
+                return response()->json($response);
+            }
+
+            $any_super_admin_exist = User::countSuperAdministrators();
+
+            if($any_super_admin_exist > 0)
+            {
+                $response['status'] = 'success';
+                $response['messages'][] = trans("vaahcms::messages.setup_completed");
+                $response['data']['flash_message'] = trans("vaahcms::messages.setup_completed");
+                $response['data']['active_step'] = 'completed';
+                return response()->json($response);
+            }
 
 
-        //check users table
-        if(!\Schema::hasTable('vh_users'))
-        {
             $response['status'] = 'success';
             $response['data']['active_step'] = 'database';
-            return response()->json($response);
+
+
+        }catch (\Exception $e){
+            $response = [];
+            $response['status'] = 'failed';
+            if(env('APP_DEBUG')){
+                $response['errors'][] = $e->getMessage();
+                $response['hint'] = $e->getTrace();
+            } else{
+                $response['errors'][] = 'Something went wrong.';
+            }
         }
-
-        $any_super_admin_exist = User::countSuperAdministrators();
-
-        if($any_super_admin_exist > 0)
-        {
-            $response['status'] = 'success';
-            $response['messages'][] = trans("vaahcms::messages.setup_completed");
-            $response['data']['flash_message'] = trans("vaahcms::messages.setup_completed");
-            $response['data']['active_step'] = 'completed';
-            return response()->json($response);
-        }
-
-
-        $response['status'] = 'success';
-        $response['data']['active_step'] = 'database';
 
         return response()->json($response);
     }
@@ -611,65 +753,79 @@ class SetupController extends Controller
     //----------------------------------------------------------
     public function storeAdmin(Request $request)
     {
-        $rules = array(
-            'first_name' => 'required',
-            'last_name' => 'required',
-            'email' => 'required',
-            'username' => 'required',
-            'password' => 'required',
-            'country_calling_code' => 'required',
-            'phone' => 'required',
-        );
 
-        $validator = \Validator::make( $request->all(), $rules);
-        if ( $validator->fails() ) {
+        try{
+            $rules = array(
+                'first_name' => 'required',
+                'last_name' => 'required',
+                'email' => 'required',
+                'username' => 'required',
+                'password' => 'required',
+                'country_calling_code' => 'required',
+                'phone' => 'required',
+            );
 
-            $errors             = errorsToArray($validator->errors());
+            $validator = \Validator::make( $request->all(), $rules);
+            if ( $validator->fails() ) {
+
+                $errors             = errorsToArray($validator->errors());
+                $response['status'] = 'failed';
+                $response['errors'] = $errors;
+                return response()->json($response);
+            }
+
+            $any_super_admin_exist = User::countSuperAdministrators();
+
+            if($any_super_admin_exist > 0)
+            {
+                $response['status'] = 'failed';
+                $response['errors'][] = trans("vaahcms::messages.permission_denied");
+                return response()->json($response);
+            }
+
+            $user = new User();
+            $user->fill($request->all());
+            $user->is_active = 1;
+            $user->password = $request->password;
+            $user->activated_at = \Carbon::now();
+            $user->status = 'active';
+            $user->created_ip = \Request::ip();
+            $user->save();
+
+            $role = Role::where('slug', 'super-administrator')->first();
+
+            if(!$role)
+            {
+                $response['status'] = 'failed';
+                $response['errors'][] = \Lang::get('vaahcms::messages.not_exist', ['key' => 'role slug', 'value' => 'super-administrator']);;
+                return response()->json($response);
+            }
+
+            Role::syncRolesWithUsers();
+            Permission::syncPermissionsWithRoles();
+
+            Permission::recountRelations();
+            Role::recountRelations();
+
+            $role->users()->updateExistingPivot($user['id'], array('is_active' => 1));
+
+            $response['status'] = 'success';
+            $response['messages'][] = trans("vaahcms::messages.setup_completed");
+            $response['data']['flash_message'] =  trans("vaahcms::messages.setup_completed");
+            $response['data']['active_step'] = 'completed';
+            $response['data']['redirect_url'] = \URL::route('vh.backend');
+
+
+        }catch (\Exception $e){
+            $response = [];
             $response['status'] = 'failed';
-            $response['errors'] = $errors;
-            return response()->json($response);
+            if(env('APP_DEBUG')){
+                $response['errors'][] = $e->getMessage();
+                $response['hint'] = $e->getTrace();
+            } else{
+                $response['errors'][] = 'Something went wrong.';
+            }
         }
-
-        $any_super_admin_exist = User::countSuperAdministrators();
-
-        if($any_super_admin_exist > 0)
-        {
-            $response['status'] = 'failed';
-            $response['errors'][] = trans("vaahcms::messages.permission_denied");
-            return response()->json($response);
-        }
-
-        $user = new User();
-        $user->fill($request->all());
-        $user->is_active = 1;
-        $user->password = $request->password;
-        $user->activated_at = \Carbon::now();
-        $user->status = 'active';
-        $user->created_ip = \Request::ip();
-        $user->save();
-
-        $role = Role::where('slug', 'super-administrator')->first();
-
-        if(!$role)
-        {
-            $response['status'] = 'failed';
-            $response['errors'][] = \Lang::get('vaahcms::messages.not_exist', ['key' => 'role slug', 'value' => 'super-administrator']);;
-            return response()->json($response);
-        }
-
-        Role::syncRolesWithUsers();
-        Permission::syncPermissionsWithRoles();
-
-        Permission::recountRelations();
-        Role::recountRelations();
-
-        $role->users()->updateExistingPivot($user['id'], array('is_active' => 1));
-
-        $response['status'] = 'success';
-        $response['messages'][] = trans("vaahcms::messages.setup_completed");
-        $response['data']['flash_message'] =  trans("vaahcms::messages.setup_completed");
-        $response['data']['active_step'] = 'completed';
-        $response['data']['redirect_url'] = \URL::route('vh.backend');
 
         return response()->json($response);
 
@@ -706,8 +862,14 @@ class SetupController extends Controller
             return $response;
         }catch(\Exception $e)
         {
+            $response = [];
             $response['status'] = 'failed';
-            $response['errors'][] = $e->getMessage();
+            if(env('APP_DEBUG')){
+                $response['errors'][] = $e->getMessage();
+                $response['hint'] = $e->getTrace();
+            } else{
+                $response['errors'][] = 'Something went wrong.';
+            }
             return $response;
         }
     }
@@ -724,8 +886,14 @@ class SetupController extends Controller
             return $response;
         }catch(\Exception $e)
         {
+            $response = [];
             $response['status'] = 'failed';
-            $response['errors'][] = $e->getMessage();
+            if(env('APP_DEBUG')){
+                $response['errors'][] = $e->getMessage();
+                $response['hint'] = $e->getTrace();
+            } else{
+                $response['errors'][] = 'Something went wrong.';
+            }
             return $response;
         }
     }

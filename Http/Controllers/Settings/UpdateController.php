@@ -36,53 +36,67 @@ class UpdateController extends Controller
     public function storeUpdate(Request $request)
     {
 
-        if(!\Auth::user()->hasPermission('has-access-of-setting-section'))
-        {
-            $response['status'] = 'failed';
-            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+        try{
 
-            return response()->json($response);
-        }
-
-        $settings = [
-            [
-                "category"=>'global',
-                "key"=> 'update_checked_at',
-                "value"=> \Carbon::now()->format('Y-m-d H:i:s'),
-            ],
-            [
-                "category"=>'global',
-                "key"=> 'is_update_available',
-                "value"=> $request->update_available,
-            ],
-            [
-                "category"=>'global',
-                "key"=> 'latest_remote_version',
-                "value"=> $request->remote_version,
-            ],
-        ];
-
-        foreach ($settings as $setting)
-        {
-            $stored_settings = Setting::where('category', $setting['category'])
-            ->where('key', $setting['key'])
-            ->first();
-
-            if(!$stored_settings)
+            if(!\Auth::user()->hasPermission('has-access-of-setting-section'))
             {
-                $stored_settings = new Setting();
+                $response['status'] = 'failed';
+                $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+                return response()->json($response);
             }
 
-            $stored_settings->fill($setting);
-            $stored_settings->save();
+            $settings = [
+                [
+                    "category"=>'global',
+                    "key"=> 'update_checked_at',
+                    "value"=> \Carbon::now()->format('Y-m-d H:i:s'),
+                ],
+                [
+                    "category"=>'global',
+                    "key"=> 'is_update_available',
+                    "value"=> $request->update_available,
+                ],
+                [
+                    "category"=>'global',
+                    "key"=> 'latest_remote_version',
+                    "value"=> $request->remote_version,
+                ],
+            ];
+
+            foreach ($settings as $setting)
+            {
+                $stored_settings = Setting::where('category', $setting['category'])
+                    ->where('key', $setting['key'])
+                    ->first();
+
+                if(!$stored_settings)
+                {
+                    $stored_settings = new Setting();
+                }
+
+                $stored_settings->fill($setting);
+                $stored_settings->save();
+            }
+
+            if($request->has('update_available') && $request->update_available){
+                self::createBackendNotificationForUpdate($request);
+            }
+
+            $response['status'] = 'success';
+            $response['data'][] = '';
+
+        }catch (\Exception $e){
+            $response = [];
+            $response['status'] = 'failed';
+            if(env('APP_DEBUG')){
+                $response['errors'][] = $e->getMessage();
+                $response['hint'] = $e->getTrace();
+            } else{
+                $response['errors'][] = 'Something went wrong.';
+            }
         }
 
-        if($request->has('update_available') && $request->update_available){
-            self::createBackendNotificationForUpdate($request);
-        }
-
-        $response['status'] = 'success';
-        $response['data'][] = '';
         return $response;
 
 
@@ -103,8 +117,14 @@ class UpdateController extends Controller
             return $this->runCommand("composer", "update");
         }catch(\Exception $e)
         {
+            $response = [];
             $response['status'] = 'failed';
-            $response['errors'][] = $e->getMessage();
+            if(env('APP_DEBUG')){
+                $response['errors'][] = $e->getMessage();
+                $response['hint'] = $e->getTrace();
+            } else{
+                $response['errors'][] = 'Something went wrong.';
+            }
             return $response;
         }
     }
@@ -148,8 +168,14 @@ class UpdateController extends Controller
             return $res;
         }catch(\Exception $e)
         {
+            $response = [];
             $response['status'] = 'failed';
-            $response['errors'][] = $e->getMessage();
+            if(env('APP_DEBUG')){
+                $response['errors'][] = $e->getMessage();
+                $response['hint'] = $e->getTrace();
+            } else{
+                $response['errors'][] = 'Something went wrong.';
+            }
             return $response;
         }
 
@@ -189,8 +215,14 @@ class UpdateController extends Controller
             return $res;
         }catch(\Exception $e)
         {
+            $response = [];
             $response['status'] = 'failed';
-            $response['errors'][] = $e->getMessage();
+            if(env('APP_DEBUG')){
+                $response['errors'][] = $e->getMessage();
+                $response['hint'] = $e->getTrace();
+            } else{
+                $response['errors'][] = 'Something went wrong.';
+            }
             return $response;
         }
 
@@ -218,8 +250,14 @@ class UpdateController extends Controller
             return $response;
         }catch(\Exception $e)
         {
+            $response = [];
             $response['status'] = 'failed';
-            $response['errors'][] = $e->getMessage();
+            if(env('APP_DEBUG')){
+                $response['errors'][] = $e->getMessage();
+                $response['hint'] = $e->getTrace();
+            } else{
+                $response['errors'][] = 'Something went wrong.';
+            }
             return $response;
         }
 
@@ -318,29 +356,42 @@ class UpdateController extends Controller
     public function runCommand($executor, $command)
     {
 
-        $buffer = null;
-        $output = null;
+        try{
 
-        $this->process = new Process([$executor, $command]);
+            $buffer = null;
+            $output = null;
 
-        if($executor == 'composer')
-        {
-            $this->process->setEnv(['COMPOSER_HOME' => base_path('vendor/bin/composer')]);
-            $this->process->setWorkingDirectory(base_path('/'));
+            $this->process = new Process([$executor, $command]);
+
+            if($executor == 'composer')
+            {
+                $this->process->setEnv(['COMPOSER_HOME' => base_path('vendor/bin/composer')]);
+                $this->process->setWorkingDirectory(base_path('/'));
+            }
+            $this->process->run();
+
+            if (!$this->process->isSuccessful()) {
+                $response['status'] = "failed";
+                $output .= $this->process->getErrorOutput();
+            } else{
+                $response['status'] = "success";
+                $output .= $this->process->getOutput();
+            }
+
+
+            $response['data']['buffer'] = $buffer;
+            $response['data']['output'] = $output;
+
+        }catch (\Exception $e){
+            $response = [];
+            $response['status'] = 'failed';
+            if(env('APP_DEBUG')){
+                $response['errors'][] = $e->getMessage();
+                $response['hint'] = $e->getTrace();
+            } else{
+                $response['errors'][] = 'Something went wrong.';
+            }
         }
-        $this->process->run();
-
-        if (!$this->process->isSuccessful()) {
-            $response['status'] = "failed";
-            $output .= $this->process->getErrorOutput();
-        } else{
-            $response['status'] = "success";
-            $output .= $this->process->getOutput();
-        }
-
-
-        $response['data']['buffer'] = $buffer;
-        $response['data']['output'] = $output;
 
         return $response;
     }

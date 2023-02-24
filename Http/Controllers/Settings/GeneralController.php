@@ -28,20 +28,34 @@ class GeneralController extends Controller
     public function getAssets(Request $request)
     {
 
-        if(!\Auth::user()->hasPermission('has-access-of-setting-section'))
-        {
+        try{
+
+            if(!\Auth::user()->hasPermission('has-access-of-setting-section'))
+            {
+                $response['status'] = 'failed';
+                $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+                return response()->json($response);
+            }
+
+            $response['status'] = 'success';
+            $response['data']['base_url'] = url('/');
+            $response['data']['roles'] = Role::getActiveRoles();
+            $response['data']['file_types'] = vh_file_types();
+            $response['data']['vh_meta_attributes'] = vh_meta_attributes();
+            $response['data']['languages'] = Language::select('name', 'locale_code_iso_639')->get();
+
+
+        }catch (\Exception $e){
+            $response = [];
             $response['status'] = 'failed';
-            $response['errors'][] = trans("vaahcms::messages.permission_denied");
-
-            return response()->json($response);
+            if(env('APP_DEBUG')){
+                $response['errors'][] = $e->getMessage();
+                $response['hint'] = $e->getTrace();
+            } else{
+                $response['errors'][] = 'Something went wrong.';
+            }
         }
-
-        $response['status'] = 'success';
-        $response['data']['base_url'] = url('/');
-        $response['data']['roles'] = Role::getActiveRoles();
-        $response['data']['file_types'] = vh_file_types();
-        $response['data']['vh_meta_attributes'] = vh_meta_attributes();
-        $response['data']['languages'] = Language::select('name', 'locale_code_iso_639')->get();
 
         return response()->json($response);
     }
@@ -49,23 +63,36 @@ class GeneralController extends Controller
     public function getList(Request $request)
     {
 
-        if(!\Auth::user()->hasPermission('has-access-of-setting-section'))
-        {
+        try{
+
+            if(!\Auth::user()->hasPermission('has-access-of-setting-section'))
+            {
+                $response['status'] = 'failed';
+                $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+                return response()->json($response);
+            }
+
+            $data = [];
+
+            $data['list'] = Setting::getGlobalSettings($request);
+            $data['links'] = Setting::getGlobalLinks($request);
+            $data['scripts'] = Setting::getGlobalScripts($request);
+            $data['meta_tags'] = Setting::getGlobalMetaTags($request);
+
+            $response['status'] = 'success';
+            $response['data'] = $data;
+
+        }catch (\Exception $e){
+            $response = [];
             $response['status'] = 'failed';
-            $response['errors'][] = trans("vaahcms::messages.permission_denied");
-
-            return response()->json($response);
+            if(env('APP_DEBUG')){
+                $response['errors'][] = $e->getMessage();
+                $response['hint'] = $e->getTrace();
+            } else{
+                $response['errors'][] = 'Something went wrong.';
+            }
         }
-
-        $data = [];
-
-        $data['list'] = Setting::getGlobalSettings($request);
-        $data['links'] = Setting::getGlobalLinks($request);
-        $data['scripts'] = Setting::getGlobalScripts($request);
-        $data['meta_tags'] = Setting::getGlobalMetaTags($request);
-
-        $response['status'] = 'success';
-        $response['data'] = $data;
 
         return response()->json($response);
 
@@ -74,37 +101,51 @@ class GeneralController extends Controller
     //----------------------------------------------------------
     public function storeSiteSettings(Request $request)
     {
+        try{
 
 
-        if(!\Auth::user()->hasPermission('has-access-of-setting-section'))
-        {
-            $response['status'] = 'failed';
-            $response['errors'][] = trans("vaahcms::messages.permission_denied");
-
-            return response()->json($response);
-        }
-
-        foreach ($request->list as $key => $value){
-            $setting = Setting::where('category', 'global')
-                ->where('key', $key)
-                ->first();
-            if(!$setting)
+            if(!\Auth::user()->hasPermission('has-access-of-setting-section'))
             {
-                $setting = new Setting();
-                $setting->key = $key;
-                $setting->value = $value;
-                $setting->category = 'global';
-                $setting->save();
+                $response['status'] = 'failed';
+                $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+                return response()->json($response);
             }
-            else{
-                Setting::where('category', 'global')
+
+            foreach ($request->list as $key => $value){
+                $setting = Setting::where('category', 'global')
                     ->where('key', $key)
-                    ->update(['value' => $value]);
+                    ->first();
+                if(!$setting)
+                {
+                    $setting = new Setting();
+                    $setting->key = $key;
+                    $setting->value = $value;
+                    $setting->category = 'global';
+                    $setting->save();
+                }
+                else{
+                    Setting::where('category', 'global')
+                        ->where('key', $key)
+                        ->update(['value' => $value]);
+                }
+            }
+            $response['status'] = 'success';
+            $response['data'][] = '';
+            $response['messages'][] = 'Settings successful saved';
+
+
+
+        }catch (\Exception $e){
+            $response = [];
+            $response['status'] = 'failed';
+            if(env('APP_DEBUG')){
+                $response['errors'][] = $e->getMessage();
+                $response['hint'] = $e->getTrace();
+            } else{
+                $response['errors'][] = 'Something went wrong.';
             }
         }
-        $response['status'] = 'success';
-        $response['data'][] = '';
-        $response['messages'][] = 'Settings successful saved';
 
         return $response;
 
@@ -113,68 +154,81 @@ class GeneralController extends Controller
     public function storeLinks(Request $request)
     {
 
-        if(!\Auth::user()->hasPermission('has-access-of-setting-section'))
-        {
-            $response['status'] = 'failed';
-            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+        try{
 
-            return response()->json($response);
-        }
-
-        $rules = array(
-            'links' => 'required',
-        );
-
-        $validator = \Validator::make( $request->all(), $rules);
-        if ( $validator->fails() ) {
-
-            $errors             = errorsToArray($validator->errors());
-            $response['status'] = 'failed';
-            $response['errors'] = $errors;
-            return response()->json($response);
-        }
-
-        $data = [];
-
-        $stored_link = Setting::where('category', 'global')
-            ->where('type', 'link')
-            ->get()->pluck('id')->toArray();
-
-        $input_links = collect($request->links)->pluck('id')->toArray();
-
-        $links_to_delete = array_diff($stored_link, $input_links);
-
-        if(count($links_to_delete)){
-            Setting::whereIn('id',$links_to_delete)->delete();
-        }
-
-        foreach ($request->links as $link)
-        {
-
-            $key = 'link_'.Str::slug($link['label'], '_');
-
-            $setting = Setting::where('category', 'global')
-                ->where('type', 'link')
-                ->where('key', $key)
-                ->first();
-
-            if(!$setting)
+            if(!\Auth::user()->hasPermission('has-access-of-setting-section'))
             {
-                $setting = new Setting();
-            }
-            $setting->fill($link);
-            $setting->key = $key;
-            $setting->category = 'global';
-            $setting->type = 'link';
-            $setting->save();
-        }
+                $response['status'] = 'failed';
+                $response['errors'][] = trans("vaahcms::messages.permission_denied");
 
-        $response['status'] = 'success';
-        $response['messages'][] = 'Saved';
-        $response['data'] = $data;
-        if(env('APP_DEBUG'))
-        {
-            $response['hint'][] = '';
+                return response()->json($response);
+            }
+
+            $rules = array(
+                'links' => 'required',
+            );
+
+            $validator = \Validator::make( $request->all(), $rules);
+            if ( $validator->fails() ) {
+
+                $errors             = errorsToArray($validator->errors());
+                $response['status'] = 'failed';
+                $response['errors'] = $errors;
+                return response()->json($response);
+            }
+
+            $data = [];
+
+            $stored_link = Setting::where('category', 'global')
+                ->where('type', 'link')
+                ->get()->pluck('id')->toArray();
+
+            $input_links = collect($request->links)->pluck('id')->toArray();
+
+            $links_to_delete = array_diff($stored_link, $input_links);
+
+            if(count($links_to_delete)){
+                Setting::whereIn('id',$links_to_delete)->delete();
+            }
+
+            foreach ($request->links as $link)
+            {
+
+                $key = 'link_'.Str::slug($link['label'], '_');
+
+                $setting = Setting::where('category', 'global')
+                    ->where('type', 'link')
+                    ->where('key', $key)
+                    ->first();
+
+                if(!$setting)
+                {
+                    $setting = new Setting();
+                }
+                $setting->fill($link);
+                $setting->key = $key;
+                $setting->category = 'global';
+                $setting->type = 'link';
+                $setting->save();
+            }
+
+            $response['status'] = 'success';
+            $response['messages'][] = 'Saved';
+            $response['data'] = $data;
+            if(env('APP_DEBUG'))
+            {
+                $response['hint'][] = '';
+            }
+
+        }catch (\Exception $e){
+            $response = [];
+            $response['status'] = 'failed';
+            if(env('APP_DEBUG')){
+                $response['errors'][] = $e->getMessage();
+                $response['hint'] = $e->getTrace();
+            } else{
+                $response['errors'][] = 'Something went wrong.';
+            }
         }
 
         return response()->json($response);
@@ -184,53 +238,66 @@ class GeneralController extends Controller
     public function storeMetaTags(Request $request)
     {
 
-        if(!\Auth::user()->hasPermission('has-access-of-setting-section'))
-        {
-            $response['status'] = 'failed';
-            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+        try{
 
-            return response()->json($response);
-        }
-
-        $rules = array(
-            'tags' => 'required',
-        );
-
-        $validator = \Validator::make( $request->all(), $rules);
-        if ( $validator->fails() ) {
-
-            $errors             = errorsToArray($validator->errors());
-            $response['status'] = 'failed';
-            $response['errors'] = $errors;
-            return response()->json($response);
-        }
-
-        $data = [];
-
-        foreach ($request->tags as $tag)
-        {
-
-            $setting = Setting::where('category', 'global')
-                ->where('type', 'meta_tags')
-                ->where('key', $tag['key'])
-                ->first();
-
-            if(!$setting)
+            if(!\Auth::user()->hasPermission('has-access-of-setting-section'))
             {
-                $setting = new Setting();
-            }
-            $setting->fill($tag);
-            $setting->category = 'global';
-            $setting->type = 'meta_tags';
-            $setting->save();
-        }
+                $response['status'] = 'failed';
+                $response['errors'][] = trans("vaahcms::messages.permission_denied");
 
-        $response['status'] = 'success';
-        $response['messages'][] = 'Saved';
-        $response['data'] = $data;
-        if(env('APP_DEBUG'))
-        {
-            $response['hint'][] = '';
+                return response()->json($response);
+            }
+
+            $rules = array(
+                'tags' => 'required',
+            );
+
+            $validator = \Validator::make( $request->all(), $rules);
+            if ( $validator->fails() ) {
+
+                $errors             = errorsToArray($validator->errors());
+                $response['status'] = 'failed';
+                $response['errors'] = $errors;
+                return response()->json($response);
+            }
+
+            $data = [];
+
+            foreach ($request->tags as $tag)
+            {
+
+                $setting = Setting::where('category', 'global')
+                    ->where('type', 'meta_tags')
+                    ->where('key', $tag['key'])
+                    ->first();
+
+                if(!$setting)
+                {
+                    $setting = new Setting();
+                }
+                $setting->fill($tag);
+                $setting->category = 'global';
+                $setting->type = 'meta_tags';
+                $setting->save();
+            }
+
+            $response['status'] = 'success';
+            $response['messages'][] = 'Saved';
+            $response['data'] = $data;
+            if(env('APP_DEBUG'))
+            {
+                $response['hint'][] = '';
+            }
+
+        }catch (\Exception $e){
+            $response = [];
+            $response['status'] = 'failed';
+            if(env('APP_DEBUG')){
+                $response['errors'][] = $e->getMessage();
+                $response['hint'] = $e->getTrace();
+            } else{
+                $response['errors'][] = 'Something went wrong.';
+            }
         }
 
         return response()->json($response);

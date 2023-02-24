@@ -432,6 +432,29 @@ class Theme extends Model {
         return $response;
     }
     //-------------------------------------------------
+    public static function publishAssets($slug)
+    {
+
+        $item = static::slug($slug)->first();
+
+        static::copyAssets($item);
+
+        $item->is_assets_published = 1;
+
+        $item->save();
+
+        $response['status'] = 'success';
+        $response['data']['item'] = $item;
+        $response['messages'][] = 'Theme is activated';
+
+        if(env('APP_DEBUG'))
+        {
+            $response['hint'][] = '';
+        }
+        return $response;
+
+    }
+    //-------------------------------------------------
     public static function activateItem($slug, $is_default=false)
     {
 
@@ -504,7 +527,7 @@ class Theme extends Model {
         $item->save();
 
         $response['status'] = 'success';
-        $response['data'][] = '';
+        $response['data']['item'] = $item;
         $response['messages'][] = 'Theme is activated';
 
         if(env('APP_DEBUG'))
@@ -521,7 +544,7 @@ class Theme extends Model {
         $item->is_active = null;
         $item->save();
         $response['status'] = 'success';
-        $response['data'][] = '';
+        $response['data']['item'] = $item;
         $response['messages'][] = trans('vaahcms-general.action_successful');
         if(env('APP_DEBUG'))
         {
@@ -602,7 +625,7 @@ class Theme extends Model {
             static::where('slug', $item->slug)->forceDelete();
 
             $response['status'] = 'success';
-            $response['data'][] = '';
+            $response['data']['item'] = $item;
             $response['messages'][] = trans('vaahcms-general.action_successful');
             if(env('APP_DEBUG'))
             {
@@ -795,6 +818,7 @@ class Theme extends Model {
             \Artisan::call($command, $params);
 
             $response['status'] = 'success';
+            $response['data']['item'] = $item;
             $response['messages'][] = 'Sample Data Successfully Imported';
         }catch(\Exception $e)
         {

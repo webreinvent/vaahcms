@@ -269,6 +269,12 @@
         "section": "module",
         "details": "This will allow user to read a module."
     },
+    {
+        "name": "Can Publish Assets of Module",
+        "module": "vaahcms",
+        "section": "module",
+        "details": "This will allow user to publish an assets of module."
+    },
 
     {
         "name": "Has Access Of Theme Section",
@@ -317,6 +323,12 @@
         "module": "vaahcms",
         "section": "theme",
         "details": "This will allow user to read a theme."
+    },
+    {
+        "name": "Can Publish Assets of Theme",
+        "module": "vaahcms",
+        "section": "theme",
+        "details": "This will allow user to publish an assets of theme."
     },
     {
         "name": "Has Access Of Advanced Section",

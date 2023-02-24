@@ -14,6 +14,22 @@ use Illuminate\Http\Request;
 */
 
 
+Route::post('login', [UserController::class, 'login']);
+Route::post('register', [UserController::class, 'register']);
+
+
+Route::group(
+    [
+        'prefix'     => 'api',
+        'namespace'  => 'WebReinvent\VaahCms\Http\Controllers\Api',
+    ],
+    function () {
+
+        Route::post( '/signin', 'AuthController@postSignIn' );
+        //------------------------------------------------
+        Route::post( '/signup', 'AuthController@postSignUp' );
+    });
+
 
 Route::group(
     [
