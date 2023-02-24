@@ -45,6 +45,18 @@
                             </b-button>
                         </p>
 
+                        <b-tooltip label="Publish Assets" type="is-dark">
+                            <p v-if="hasPermission('can-publish-assets-of-module')"
+                               class="control">
+                                <b-button v-if="props.row.is_active"
+                                          size="is-small"
+                                          type="is-info"
+                                          icon-left="upload"
+                                          @click="actions('publish_assets', props.row)">
+                                </b-button>
+                            </p>
+                        </b-tooltip>
+
                         <b-tooltip label="Import Sample Data" type="is-dark">
                             <p class="control" v-if="props.row.is_active && props.row.is_sample_data_available && hasPermission('can-import-sample-data-in-module')">
                                 <b-button size="is-small"

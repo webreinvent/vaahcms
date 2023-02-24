@@ -45,6 +45,18 @@
                             </b-button>
                         </p>
 
+                        <b-tooltip label="Publish Assets" type="is-dark">
+                            <p v-if="hasPermission('can-publish-assets-of-theme')"
+                               class="control">
+                                <b-button v-if="props.row.is_active"
+                                          size="is-small"
+                                          type="is-info"
+                                          icon-left="upload"
+                                          @click="actions('publish_assets', props.row)">
+                                </b-button>
+                            </p>
+                        </b-tooltip>
+
                         <b-tooltip label="This theme is marked as Default" v-if="props.row.is_default"
                                    type="is-dark">
                             <p v-if="hasPermission('can-activate-theme') && props.row.is_active"

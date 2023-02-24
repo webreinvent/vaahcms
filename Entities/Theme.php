@@ -432,6 +432,29 @@ class Theme extends Model {
         return $response;
     }
     //-------------------------------------------------
+    public static function publishAssets($slug)
+    {
+
+        $item = static::slug($slug)->first();
+
+        static::copyAssets($item);
+
+        $item->is_assets_published = 1;
+
+        $item->save();
+
+        $response['status'] = 'success';
+        $response['data'][] = '';
+        $response['messages'][] = 'Theme is activated';
+
+        if(env('APP_DEBUG'))
+        {
+            $response['hint'][] = '';
+        }
+        return $response;
+
+    }
+    //-------------------------------------------------
     public static function activateItem($slug, $is_default=false)
     {
 

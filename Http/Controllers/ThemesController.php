@@ -207,14 +207,17 @@ class ThemesController extends Controller
          */
         $theme = Theme::find($inputs['id']);
 
-        $method_name = str_replace("_", " ", $request->action);
-        $method_name = ucwords($method_name);
-        $method_name = lcfirst(str_replace(" ", "", $method_name));
 
-        $response = vh_theme_action($theme->name, 'SetupController@'.$method_name);
-        if($response['status'] == 'failed')
-        {
-            return response()->json($response);
+        if($request->action != 'publish_assets'){
+            $method_name = str_replace("_", " ", $request->action);
+            $method_name = ucwords($method_name);
+            $method_name = lcfirst(str_replace(" ", "", $method_name));
+
+            $response = vh_theme_action($theme->name, 'SetupController@'.$method_name);
+            if($response['status'] == 'failed')
+            {
+                return response()->json($response);
+            }
         }
 
         switch($request->action)
@@ -252,6 +255,17 @@ class ThemesController extends Controller
                     return response()->json($response);
                 }
                 $response = Theme::deactivateItem($theme->slug);
+                break;
+            //---------------------------------------
+            case 'publish_assets':
+                if(!\Auth::user()->hasPermission('can-publish-assets-of-theme'))
+                {
+                    $response['success'] = false;
+                    $response['messages'][] = trans("vaahcms::messages.permission_denied");
+
+                    return response()->json($response);
+                }
+                $response = Theme::publishAssets($theme->slug);
                 break;
             //---------------------------------------
 
