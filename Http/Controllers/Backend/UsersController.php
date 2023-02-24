@@ -329,8 +329,7 @@ class UsersController extends Controller
     //----------------------------------------------------------
     public function getItemRoles(Request $request, $id): JsonResponse
     {
-        if(!Auth::user()->hasPermission('can-read-users'))
-        {
+        if (!Auth::user()->hasPermission('can-read-users')) {
             $response['success'] = false;
             $response['errors'][] = trans("vaahcms::messages.permission_denied");
 
@@ -338,7 +337,7 @@ class UsersController extends Controller
         }
 
         try {
-            $item = User::query()->where('id', $id)->first()->withTrashed();
+            $item = User::withTrashed()->where('id', $id)->first();
 
             $response['data']['item'] = $item;
 
