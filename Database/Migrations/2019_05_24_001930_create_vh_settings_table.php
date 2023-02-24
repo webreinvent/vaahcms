@@ -53,7 +53,7 @@ class CreateVhSettingsTable extends Migration
 
                 $table->timestamps();
 
-                $table->softDeletes()->after('updated_at');
+                $table->softDeletes();
                 $table->index(['deleted_at']);
 
                 $table->index(['created_at', 'updated_at']);

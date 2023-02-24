@@ -360,6 +360,31 @@ class Module extends Model {
     //-------------------------------------------------
 
     //-------------------------------------------------
+    public static function publishAssets($slug)
+    {
+
+        $module = Module::slug($slug)->first();
+
+        //copy assets to public folder
+        Module::copyAssets($module);
+
+        $module->is_assets_published = 1;
+        $module->save();
+
+        $response['status'] = 'success';
+        $response['data'][] = '';
+        $response['messages'][] = 'Assets is published';
+
+        if(env('APP_DEBUG'))
+        {
+            $response['hint'][] = '';
+        }
+        return $response;
+
+    }
+    //-------------------------------------------------
+
+    //-------------------------------------------------
     public static function activateItem($slug)
     {
 
