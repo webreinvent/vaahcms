@@ -87,7 +87,9 @@ export const useThemeStore = defineStore({
             page: null,
             query: null
         },
-        is_installing: -1
+        is_installing: -1,
+        active_action: [],
+        index: -1
     }),
     getters: {
 
@@ -442,10 +444,9 @@ export const useThemeStore = defineStore({
                 await this.getList();
                 this.item = data;
                 await this.formActionAfter();
+                this.resetActivateBtnLoader(this.form.action,data.item)
             }
-
-            this.is_installing = -1;
-        },
+       },
         //---------------------------------------------------------------------
         async formActionAfter ()
         {
@@ -480,10 +481,17 @@ export const useThemeStore = defineStore({
             this.is_installing = index;
 
             if(item.is_active) {
+                this.active_action.push('deactivate_'+item.id);
                 await this.itemAction('deactivate', item);
             } else {
+                this.active_action.push('activate_'+item.id);
                 await this.itemAction('activate', item);
             }
+        },
+        //---------------------------------------------------------------------
+        async resetActivateBtnLoader(action,item) {
+            let index = this.active_action.indexOf(action+'_'+item.id);
+            this.active_action.splice(index,1);
         },
         //---------------------------------------------------------------------
         async paginate(event) {
@@ -1035,6 +1043,7 @@ export const useThemeStore = defineStore({
         },
         //----------------------------------------------------------------------
         publishAssets(item) {
+            this.active_action.push('publish_assets_'+item.id);
 
             let options = {
                 method: 'POST',
@@ -1049,8 +1058,13 @@ export const useThemeStore = defineStore({
         //---------------------------------------------------------------------
         publishAssetsAfter(data) {
             this.getList();
+            this.resetActivateBtnLoader('publish_assets',data.item);
         },
         //---------------------------------------------------------------------
+        makeDefault(item) {
+            this.active_action.push('make_default_'+item.id);
+            this.itemAction('make_default',item);
+        }
     }
 });
 

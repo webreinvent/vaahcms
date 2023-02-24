@@ -13,6 +13,7 @@ const importSampleDataModal = (item) => {
         header: 'Importing Sample Data',
         icon: 'pi pi-exclamation-triangle',
         accept: () => {
+            store.active_action.push('import_sample_data_'+item.id);
             store.itemAction('import_sample_data', item);
         },
     });
@@ -44,7 +45,7 @@ const importSampleDataModal = (item) => {
                                         data-testid="modules-table-action-deactivate"
                                         class="mr-2 p-button-sm bg-yellow-400 text-color"
                                         label="Deactivate"
-                                        :loading="store.is_installing === index"
+                                        :loading="store.active_action.includes('deactivate_'+item.id)"
                                         v-tooltip.top="'Deactivate Module'"
                                         @click="store.toggleIsActive(item,index)"
                                 />
@@ -54,8 +55,8 @@ const importSampleDataModal = (item) => {
                                         v-tooltip.top="'Activate Module'"
                                         label="Activate"
                                         class="mr-2 p-button-sm"
-                                        :loading="store.is_installing === index"
-                                        @click="store.toggleIsActive(item,index)"
+                                        :loading="store.active_action.includes('activate_'+item.id)"
+                                        @click="store.toggleIsActive(item)"
                                 />
 
                                 <Button v-if="item.is_active && store.hasPermission('can-import-sample-data-in-module')"
@@ -64,6 +65,7 @@ const importSampleDataModal = (item) => {
                                         label="Import Data"
                                         class="mr-2 p-button-sm"
                                         v-tooltip.top="'Import Data'"
+                                        :loading="store.active_action.includes('import_sample_data_'+item.id)"
                                         @click="importSampleDataModal(item)"
                                 />
 
@@ -79,6 +81,7 @@ const importSampleDataModal = (item) => {
                                 <Button class="mr-2 p-button-info p-button-sm"
                                         label="Publish Assets"
                                         data-testid="modules-table-action-install-update"
+                                        :loading="store.active_action.includes('publish_assets_'+item.id)"
                                         @click="store.publishAssets(item)"
                                         v-tooltip.top="'Publish Assets'"
                                         v-if="!item.is_assets_published && store.hasPermission('can-install-module')"

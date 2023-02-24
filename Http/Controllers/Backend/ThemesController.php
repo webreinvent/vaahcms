@@ -298,14 +298,14 @@ class ThemesController extends Controller
             $response = [];
             $response['success'] = false;
 
-            if (env('APP_DEBUG')) {
-                $response['errors'][] = $e->getMessage();
-                $response['hint'][] = $e->getTrace();
-            } else {
-                $response['messages'][] = 'Something went wrong.';
-            }
+                    return response()->json($response);
+                }
+                $response = Theme::deleteItem($theme->slug);
+                break;
+            //---------------------------------------
+            //---------------------------------------
         }
-
+        $response['data']['item'] = $theme;
         return response()->json($response);
     }
     //----------------------------------------------------------
@@ -382,6 +382,33 @@ class ThemesController extends Controller
             $theme = Theme::slug($request->slug)->first();
 
             $message = Theme::copyAssets($theme);
+
+            if ($message) {
+                $theme->is_assets_published = 1;
+                $theme->save();
+                $response['status'] = "success";
+                $response['messages'][] = "Assets published.";
+
+                return $response;
+            }
+
+            $response['status'] = "danger";
+            $response['messages'][] = "Something went wrong.";
+            return $response;
+        } catch(\Exception $e) {
+            $response['success'] = false;
+            $response['errors'][] = $e->getMessage();
+            return $response;
+        }
+    }
+    //----------------------------------------------------------
+    public function publishAssets(Request $request)
+    {
+        try {
+            $theme = Theme::slug($request->slug)->first();
+
+            $message = Theme::copyAssets($theme);
+            $response['data']['item'] = $theme;
 
             if ($message) {
                 $theme->is_assets_published = 1;
