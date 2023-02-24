@@ -12,7 +12,13 @@ html, .section, .hero, footer{
     background-color: $white-bis;
 }
 .bulma{
-
+#buefy-snackbar{
+    .notices{
+        &.has-custom-container{
+            position: fixed;
+        }
+    }
+}
     table{
         table-layout: fixed;
         th,td{

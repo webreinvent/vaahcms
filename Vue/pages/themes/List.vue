@@ -7,7 +7,7 @@
 
 
             <!--left-->
-            <div class="column" :class="page.list_view_class">
+            <div class="column" :class="{'is-8': !page.list_view}">
 
                 <div class="block" v-if="is_content_loading">
                     <Loader/>

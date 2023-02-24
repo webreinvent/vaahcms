@@ -27,22 +27,35 @@ class ModulesController extends Controller
     public function assets(Request $request)
     {
 
-        if(!\Auth::user()->hasPermission('has-access-of-module-section'))
-        {
+        try{
+
+            if(!\Auth::user()->hasPermission('has-access-of-module-section'))
+            {
+                $response['status'] = 'failed';
+                $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+                return response()->json($response);
+            }
+
+            Module::syncAllModules();
+
+            $data['vaahcms_api_route'] = config('vaahcms.api_route');
+            $data['debug'] = config('vaahcms.debug');
+            $data['installed'] = Module::select('slug')->get()->pluck('slug')->toArray();
+
+            $response['status'] = 'success';
+            $response['data'] = $data;
+
+        }catch (\Exception $e){
+            $response = [];
             $response['status'] = 'failed';
-            $response['errors'][] = trans("vaahcms::messages.permission_denied");
-
-            return response()->json($response);
+            if(env('APP_DEBUG')){
+                $response['errors'][] = $e->getMessage();
+                $response['hint'] = $e->getTrace();
+            } else{
+                $response['errors'][] = 'Something went wrong.';
+            }
         }
-
-        Module::syncAllModules();
-
-        $data['vaahcms_api_route'] = config('vaahcms.api_route');
-        $data['debug'] = config('vaahcms.debug');
-        $data['installed'] = Module::select('slug')->get()->pluck('slug')->toArray();
-
-        $response['status'] = 'success';
-        $response['data'] = $data;
 
         return response()->json($response);
 
@@ -53,52 +66,65 @@ class ModulesController extends Controller
     public function getList(Request $request)
     {
 
-        if(!\Auth::user()->hasPermission('has-access-of-module-section'))
-        {
-            $response['status'] = 'failed';
-            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+        try{
 
-            return response()->json($response);
-        }
-
-        Module::syncAllModules();
-
-        $list = Module::orderBy('created_at', 'DESC');
-
-        if($request->has('q'))
-        {
-            $list->where(function ($s) use ($request) {
-                $s->where('name', 'LIKE', '%'.$request->q.'%')
-                    ->orWhere('slug', 'LIKE', '%'.$request->q.'%')
-                    ->orWhere('title', 'LIKE', '%'.$request->q.'%');
-            });
-        }
-
-        if($request->has('status') && $request->get('status') != 'all')
-        {
-            switch ($request->status)
+            if(!\Auth::user()->hasPermission('has-access-of-module-section'))
             {
-                case 'active':
-                    $list->active();
-                    break;
-                case 'inactive':
-                    $list->inactive();
-                    break;
-                case 'update_available':
-                    $list->updateavailable();
-                    break;
+                $response['status'] = 'failed';
+                $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+                return response()->json($response);
+            }
+
+            Module::syncAllModules();
+
+            $list = Module::orderBy('created_at', 'DESC');
+
+            if($request->has('q'))
+            {
+                $list->where(function ($s) use ($request) {
+                    $s->where('name', 'LIKE', '%'.$request->q.'%')
+                        ->orWhere('slug', 'LIKE', '%'.$request->q.'%')
+                        ->orWhere('title', 'LIKE', '%'.$request->q.'%');
+                });
+            }
+
+            if($request->has('status') && $request->get('status') != 'all')
+            {
+                switch ($request->status)
+                {
+                    case 'active':
+                        $list->active();
+                        break;
+                    case 'inactive':
+                        $list->inactive();
+                        break;
+                    case 'update_available':
+                        $list->updateavailable();
+                        break;
+                }
+            }
+
+            $stats['all'] = Module::count();
+            $stats['active'] = Module::active()->count();
+            $stats['inactive'] = Module::inactive()->count();
+            $stats['update_available'] = Module::updateAvailable()->count();
+
+
+            $response['status'] = 'success';
+            $response['data']['list'] = $list->paginate(config('vaahcms.per_page'));
+            $response['data']['stats'] = $stats;
+
+        }catch (\Exception $e){
+            $response = [];
+            $response['status'] = 'failed';
+            if(env('APP_DEBUG')){
+                $response['errors'][] = $e->getMessage();
+                $response['hint'] = $e->getTrace();
+            } else{
+                $response['errors'][] = 'Something went wrong.';
             }
         }
-
-        $stats['all'] = Module::count();
-        $stats['active'] = Module::active()->count();
-        $stats['inactive'] = Module::inactive()->count();
-        $stats['update_available'] = Module::updateAvailable()->count();
-
-
-        $response['status'] = 'success';
-        $response['data']['list'] = $list->paginate(config('vaahcms.per_page'));
-        $response['data']['stats'] = $stats;
 
         return response()->json($response);
 
@@ -107,44 +133,71 @@ class ModulesController extends Controller
     public function getItem(Request $request, $id)
     {
 
-        if(!\Auth::user()->hasPermission('can-read-module'))
-        {
-            $response['status'] = 'failed';
-            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+        try{
 
-            return response()->json($response);
+            if(!\Auth::user()->hasPermission('can-read-module'))
+            {
+                $response['status'] = 'failed';
+                $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+                return response()->json($response);
+            }
+
+            $response = Module::getItem($id);
+
+        }catch (\Exception $e){
+            $response = [];
+            $response['status'] = 'failed';
+            if(env('APP_DEBUG')){
+                $response['errors'][] = $e->getMessage();
+                $response['hint'] = $e->getTrace();
+            } else{
+                $response['errors'][] = 'Something went wrong.';
+            }
         }
 
-        $response = Module::getItem($id);
         return response()->json($response);
     }
     //----------------------------------------------------------
     public function download(Request $request)
     {
 
-        if(!\Auth::user()->hasPermission('can-install-module'))
-        {
+        try{
+
+            if(!\Auth::user()->hasPermission('can-install-module'))
+            {
+                $response['status'] = 'failed';
+                $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+                return response()->json($response);
+            }
+
+            $rules = array(
+                'name' => 'required',
+                'download_link' => 'required',
+            );
+
+            $validator = \Validator::make( $request->toArray(), $rules);
+            if ( $validator->fails() ) {
+
+                $errors             = errorsToArray($validator->errors());
+                $response['status'] = 'failed';
+                $response['errors'] = $errors;
+                return response()->json($response);
+            }
+
+            $response = Module::download($request->name, $request->download_link);
+
+        }catch (\Exception $e){
+            $response = [];
             $response['status'] = 'failed';
-            $response['errors'][] = trans("vaahcms::messages.permission_denied");
-
-            return response()->json($response);
+            if(env('APP_DEBUG')){
+                $response['errors'][] = $e->getMessage();
+                $response['hint'] = $e->getTrace();
+            } else{
+                $response['errors'][] = 'Something went wrong.';
+            }
         }
-
-        $rules = array(
-            'name' => 'required',
-            'download_link' => 'required',
-        );
-
-        $validator = \Validator::make( $request->toArray(), $rules);
-        if ( $validator->fails() ) {
-
-            $errors             = errorsToArray($validator->errors());
-            $response['status'] = 'failed';
-            $response['errors'] = $errors;
-            return response()->json($response);
-        }
-
-        $response = Module::download($request->name, $request->download_link);
 
         return response()->json($response);
 
@@ -153,29 +206,43 @@ class ModulesController extends Controller
     //----------------------------------------------------------
     public function installUpdates(Request $request)
     {
-        if(!\Auth::user()->hasPermission('can-update-module'))
-        {
+
+        try{
+
+            if(!\Auth::user()->hasPermission('can-update-module'))
+            {
+                $response['status'] = 'failed';
+                $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+                return response()->json($response);
+            }
+
+            $rules = array(
+                'name' => 'required',
+                'download_link' => 'required',
+            );
+
+            $validator = \Validator::make( $request->toArray(), $rules);
+            if ( $validator->fails() ) {
+
+                $errors             = errorsToArray($validator->errors());
+                $response['status'] = 'failed';
+                $response['errors'] = $errors;
+                return response()->json($response);
+            }
+
+            $response = Module::installUpdates($request);
+
+        }catch (\Exception $e){
+            $response = [];
             $response['status'] = 'failed';
-            $response['errors'][] = trans("vaahcms::messages.permission_denied");
-
-            return response()->json($response);
+            if(env('APP_DEBUG')){
+                $response['errors'][] = $e->getMessage();
+                $response['hint'] = $e->getTrace();
+            } else{
+                $response['errors'][] = 'Something went wrong.';
+            }
         }
-
-        $rules = array(
-            'name' => 'required',
-            'download_link' => 'required',
-        );
-
-        $validator = \Validator::make( $request->toArray(), $rules);
-        if ( $validator->fails() ) {
-
-            $errors             = errorsToArray($validator->errors());
-            $response['status'] = 'failed';
-            $response['errors'] = $errors;
-            return response()->json($response);
-        }
-
-        $response = Module::installUpdates($request);
 
         return response()->json($response);
 
@@ -185,91 +252,124 @@ class ModulesController extends Controller
     //----------------------------------------------------------
     public function actions(Request $request)
     {
-        $rules = array(
-            'action' => 'required',
-            'inputs' => 'required',
-            'inputs.id' => 'required',
-        );
 
-        $validator = \Validator::make( $request->all(), $rules);
-        if ( $validator->fails() ) {
+        try{
 
-            $errors             = errorsToArray($validator->errors());
+            $rules = array(
+                'action' => 'required',
+                'inputs' => 'required',
+                'inputs.id' => 'required',
+            );
+
+            $validator = \Validator::make( $request->all(), $rules);
+            if ( $validator->fails() ) {
+
+                $errors             = errorsToArray($validator->errors());
+                $response['status'] = 'failed';
+                $response['errors'] = $errors;
+                return response()->json($response);
+            }
+
+            $data = [];
+            $inputs = $request->inputs;
+
+
+            /*
+             * Call method from module setup controller
+             */
+            $module = Module::find($inputs['id']);
+
+            if($request->action != 'publish_assets'){
+                $method_name = str_replace("_", " ", $request->action);
+                $method_name = ucwords($method_name);
+                $method_name = lcfirst(str_replace(" ", "", $method_name));
+
+                $response = vh_module_action($module->name, 'SetupController@'.$method_name);
+                if($response['status'] == 'failed')
+                {
+                    return response()->json($response);
+                }
+            }
+
+
+
+
+            switch($request->action)
+            {
+
+                //---------------------------------------
+                case 'activate':
+                    if(!\Auth::user()->hasPermission('can-activate-module'))
+                    {
+                        $response['status'] = 'failed';
+                        $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+                        return response()->json($response);
+                    }
+                    $response = Module::activateItem($module->slug);
+                    break;
+                //---------------------------------------
+                case 'deactivate':
+                    if(!\Auth::user()->hasPermission('can-deactivate-module'))
+                    {
+                        $response['status'] = 'failed';
+                        $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+                        return response()->json($response);
+                    }
+                    $response = Module::deactivateItem($module->slug);
+                    break;
+                //---------------------------------------
+                case 'publish_assets':
+                    if(!\Auth::user()->hasPermission('can-publish-assets-of-module'))
+                    {
+                        $response['success'] = false;
+                        $response['messages'][] = trans("vaahcms::messages.permission_denied");
+
+                        return response()->json($response);
+                    }
+                    $response = Module::publishAssets($module->slug);
+                    break;
+                //---------------------------------------
+                case 'import_sample_data':
+                    if(!\Auth::user()->hasPermission('can-import-sample-data-in-module'))
+                    {
+                        $response['status'] = 'failed';
+                        $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+                        return response()->json($response);
+                    }
+                    $response = Module::importSampleData($module->slug);
+                    break;
+                //---------------------------------------
+                case 'delete':
+                    if(!\Auth::user()->hasPermission('can-delete-module'))
+                    {
+                        $response['status'] = 'failed';
+                        $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+                        return response()->json($response);
+                    }
+                    $response = Module::deleteItem($module->slug);
+                    break;
+                //---------------------------------------
+                //---------------------------------------
+
+            }
+
+            if(isset($response['data'])){
+                $response['data']['action'] = $request->action;
+            }
+
+        }catch (\Exception $e){
+            $response = [];
             $response['status'] = 'failed';
-            $response['errors'] = $errors;
-            return response()->json($response);
-        }
-
-        $data = [];
-        $inputs = $request->inputs;
-
-
-        /*
-         * Call method from module setup controller
-         */
-        $module = Module::find($inputs['id']);
-
-        $method_name = str_replace("_", " ", $request->action);
-        $method_name = ucwords($method_name);
-        $method_name = lcfirst(str_replace(" ", "", $method_name));
-
-        $response = vh_module_action($module->name, 'SetupController@'.$method_name);
-        if($response['status'] == 'failed')
-        {
-            return response()->json($response);
-        }
-
-
-        switch($request->action)
-        {
-
-            //---------------------------------------
-            case 'activate':
-                if(!\Auth::user()->hasPermission('can-activate-module'))
-                {
-                    $response['status'] = 'failed';
-                    $response['errors'][] = trans("vaahcms::messages.permission_denied");
-
-                    return response()->json($response);
-                }
-                $response = Module::activateItem($module->slug);
-                break;
-            //---------------------------------------
-            case 'deactivate':
-                if(!\Auth::user()->hasPermission('can-deactivate-module'))
-                {
-                    $response['status'] = 'failed';
-                    $response['errors'][] = trans("vaahcms::messages.permission_denied");
-
-                    return response()->json($response);
-                }
-                $response = Module::deactivateItem($module->slug);
-                break;
-            //---------------------------------------
-            case 'import_sample_data':
-                if(!\Auth::user()->hasPermission('can-import-sample-data-in-module'))
-                {
-                    $response['status'] = 'failed';
-                    $response['errors'][] = trans("vaahcms::messages.permission_denied");
-
-                    return response()->json($response);
-                }
-                $response = Module::importSampleData($module->slug);
-                break;
-            //---------------------------------------
-            case 'delete':
-                if(!\Auth::user()->hasPermission('can-delete-module'))
-                {
-                    $response['status'] = 'failed';
-                    $response['errors'][] = trans("vaahcms::messages.permission_denied");
-
-                    return response()->json($response);
-                }
-                $response = Module::deleteItem($module->slug);
-                break;
-            //---------------------------------------
-            //---------------------------------------
-
+            if(env('APP_DEBUG')){
+                $response['errors'][] = $e->getMessage();
+                $response['hint'] = $e->getTrace();
+            } else{
+                $response['errors'][] = 'Something went wrong.';
+            }
         }
 
         return response()->json($response);
@@ -295,12 +395,26 @@ class ModulesController extends Controller
     public function getModulesSlugs(Request $request)
     {
 
-        $module_slugs = Module::all()->pluck('slug')->toArray();
+        try{
 
-        $module_slugs = implode($module_slugs,",");
+            $module_slugs = Module::all()->pluck('slug')->toArray();
 
-        $response['status'] = 'success';
-        $response['data'] = $module_slugs;
+            $module_slugs = implode($module_slugs,",");
+
+            $response['status'] = 'success';
+            $response['data'] = $module_slugs;
+
+        }catch (\Exception $e){
+            $response = [];
+            $response['status'] = 'failed';
+            if(env('APP_DEBUG')){
+                $response['errors'][] = $e->getMessage();
+                $response['hint'] = $e->getTrace();
+            } else{
+                $response['errors'][] = 'Something went wrong.';
+            }
+        }
+
         return response()->json($response);
 
     }
@@ -309,34 +423,48 @@ class ModulesController extends Controller
     public function updateModuleVersions(Request $request)
     {
 
-        if(!\Auth::user()->hasPermission('can-update-module'))
-        {
-            $response['status'] = 'failed';
-            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+        try{
 
-            return response()->json($response);
-        }
-
-        if(!$request->has('modules'))
-        {
-            $response['status'] = 'success';
-            return response()->json($response);
-        }
-
-        foreach($request->get('modules') as $module)
-        {
-            $installed_module = Module::where('slug', $module['slug'])->first();
-
-            if($installed_module->version_number < $module['version_number'])
+            if(!\Auth::user()->hasPermission('can-update-module'))
             {
-                $installed_module->is_update_available = 1;
-                $installed_module->update_checked_at = Carbon::now();
-                $installed_module->save();
+                $response['status'] = 'failed';
+                $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+                return response()->json($response);
             }
 
+            if(!$request->has('modules'))
+            {
+                $response['status'] = 'success';
+                return response()->json($response);
+            }
+
+            foreach($request->get('modules') as $module)
+            {
+                $installed_module = Module::where('slug', $module['slug'])->first();
+
+                if($installed_module->version_number < $module['version_number'])
+                {
+                    $installed_module->is_update_available = 1;
+                    $installed_module->update_checked_at = Carbon::now();
+                    $installed_module->save();
+                }
+
+            }
+
+            $response['status'] = 'success';
+
+        }catch (\Exception $e){
+            $response = [];
+            $response['status'] = 'failed';
+            if(env('APP_DEBUG')){
+                $response['errors'][] = $e->getMessage();
+                $response['hint'] = $e->getTrace();
+            } else{
+                $response['errors'][] = 'Something went wrong.';
+            }
         }
 
-        $response['status'] = 'success';
         return response()->json($response);
 
     }
@@ -345,28 +473,42 @@ class ModulesController extends Controller
     public function storeUpdates(Request $request)
     {
 
-        if(!\Auth::user()->hasPermission('can-update-module'))
-        {
+
+        try{
+
+            if(!\Auth::user()->hasPermission('can-update-module'))
+            {
+                $response['status'] = 'failed';
+                $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+                return response()->json($response);
+            }
+
+            $rules = array(
+                'modules' => 'required|array',
+            );
+
+            $validator = \Validator::make( $request->all(), $rules);
+            if ( $validator->fails() ) {
+
+                $errors             = errorsToArray($validator->errors());
+                $response['status'] = 'failed';
+                $response['errors'] = $errors;
+                return response()->json($response);
+            }
+
+            $response = Module::storeUpdates($request);
+
+        }catch (\Exception $e){
+            $response = [];
             $response['status'] = 'failed';
-            $response['errors'][] = trans("vaahcms::messages.permission_denied");
-
-            return response()->json($response);
+            if(env('APP_DEBUG')){
+                $response['errors'][] = $e->getMessage();
+                $response['hint'] = $e->getTrace();
+            } else{
+                $response['errors'][] = 'Something went wrong.';
+            }
         }
-
-        $rules = array(
-            'modules' => 'required|array',
-        );
-
-        $validator = \Validator::make( $request->all(), $rules);
-        if ( $validator->fails() ) {
-
-            $errors             = errorsToArray($validator->errors());
-            $response['status'] = 'failed';
-            $response['errors'] = $errors;
-            return response()->json($response);
-        }
-
-        $response = Module::storeUpdates($request);
 
         return response()->json($response);
 

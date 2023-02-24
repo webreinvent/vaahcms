@@ -99,6 +99,9 @@ export default {
         //---------------------------------------------------------------------
         delete: function (theme) {
             this.$Progress.start();
+
+            this.page.active_actions.push('delete-'+theme.id);
+
             let params = {
                 action: 'delete',
                 inputs: theme
@@ -124,11 +127,19 @@ export default {
                 this.getAssets();
                 this.getRootAssets();
                 this.$emit('eReloadList');
+
+                let index = this.page.active_actions.indexOf(data.action+'-'+data.item.id);
+                if (index !== -1) {
+                    this.page.active_actions.splice(index, 1);
+                }
             }
         },
         //---------------------------------------------------------------------
         actions: function (action, theme) {
             this.$Progress.start();
+
+            this.page.active_actions.push(action+'-'+theme.id);
+
             this.update('selected_item', theme);
             let params = {
                 action: action,
@@ -145,6 +156,11 @@ export default {
                 this.update('selected_item', null);
                 this.getRootAssets();
                 this.$emit('eReloadList');
+
+                let index = this.page.active_actions.indexOf(data.action+'-'+data.item.id);
+                if (index !== -1) {
+                    this.page.active_actions.splice(index, 1);
+                }
             }
 
         },
@@ -168,6 +184,9 @@ export default {
         //---------------------------------------------------------------------
         importSampleData: function (theme) {
             this.$Progress.start();
+
+            this.page.active_actions.push('import_sample_data-'+theme.id);
+
             let params = {
                 action: 'import_sample_data',
                 inputs: theme
@@ -181,6 +200,11 @@ export default {
             if(data)
             {
                 this.$emit('eReloadList');
+
+                let index = this.page.active_actions.indexOf(data.action+'-'+data.item.id);
+                if (index !== -1) {
+                    this.page.active_actions.splice(index, 1);
+                }
             }
 
         },

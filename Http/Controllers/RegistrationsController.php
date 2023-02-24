@@ -26,27 +26,41 @@ class RegistrationsController extends Controller
     public function getAssets(Request $request)
     {
 
-        if(!\Auth::user()->hasPermission('has-access-of-registrations-section'))
-        {
+        try{
+
+            if(!\Auth::user()->hasPermission('has-access-of-registrations-section'))
+            {
+                $response['status'] = 'failed';
+                $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+                return response()->json($response);
+            }
+
+            $data['country_calling_code'] = vh_get_country_list();
+            $data['countries'] = vh_get_country_list();
+            $data['timezones'] = vh_get_timezones();
+            $data['country_code'] = vh_get_country_list();
+            $data['registration_statuses'] = Taxonomy::getTaxonomyByType('registrations');
+            $data['bulk_actions'] = vh_general_bulk_actions();
+            $data['name_titles'] = vh_name_titles();
+            $data['fields'] = User::getUserSettings();
+            $data['custom_fields'] = Setting::where('category','user_setting')
+                ->where('label','custom_fields')->first();
+
+            $response['status'] = 'success';
+            $response['data'] = $data;
+
+
+        }catch (\Exception $e){
+            $response = [];
             $response['status'] = 'failed';
-            $response['errors'][] = trans("vaahcms::messages.permission_denied");
-
-            return response()->json($response);
+            if(env('APP_DEBUG')){
+                $response['errors'][] = $e->getMessage();
+                $response['hint'] = $e->getTrace();
+            } else{
+                $response['errors'][] = 'Something went wrong.';
+            }
         }
-
-        $data['country_calling_code'] = vh_get_country_list();
-        $data['countries'] = vh_get_country_list();
-        $data['timezones'] = vh_get_timezones();
-        $data['country_code'] = vh_get_country_list();
-        $data['registration_statuses'] = Taxonomy::getTaxonomyByType('registrations');
-        $data['bulk_actions'] = vh_general_bulk_actions();
-        $data['name_titles'] = vh_name_titles();
-        $data['fields'] = User::getUserSettings();
-        $data['custom_fields'] = Setting::where('category','user_setting')
-            ->where('label','custom_fields')->first();
-
-        $response['status'] = 'success';
-        $response['data'] = $data;
 
         return response()->json($response);
     }
@@ -54,20 +68,34 @@ class RegistrationsController extends Controller
     public function postCreate(Request $request)
     {
 
-        if(!\Auth::user()->hasPermission('can-create-registrations'))
-        {
+        try{
+
+            if(!\Auth::user()->hasPermission('can-create-registrations'))
+            {
+                $response['status'] = 'failed';
+                $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+                return response()->json($response);
+            }
+
+            $response = Registration::create($request);
+
+            if($response['status'] == 'success')
+            {
+                $list = Registration::getList($request);
+                $response['data']['list'] = $list['data']['list'];
+            }
+
+
+        }catch (\Exception $e){
+            $response = [];
             $response['status'] = 'failed';
-            $response['errors'][] = trans("vaahcms::messages.permission_denied");
-
-            return response()->json($response);
-        }
-
-        $response = Registration::create($request);
-
-        if($response['status'] == 'success')
-        {
-            $list = Registration::getList($request);
-            $response['data']['list'] = $list['data']['list'];
+            if(env('APP_DEBUG')){
+                $response['errors'][] = $e->getMessage();
+                $response['hint'] = $e->getTrace();
+            } else{
+                $response['errors'][] = 'Something went wrong.';
+            }
         }
 
         return response()->json($response);
@@ -75,17 +103,32 @@ class RegistrationsController extends Controller
     //----------------------------------------------------------
     public function getList(Request $request)
     {
-        if(!\Auth::user()->hasPermission('has-access-of-registrations-section'))
-        {
-            $response['status'] = 'failed';
-            $response['errors'][] = trans("vaahcms::messages.permission_denied");
 
-            return response()->json($response);
+        try{
+            if(!\Auth::user()->hasPermission('has-access-of-registrations-section'))
+            {
+                $response['status'] = 'failed';
+                $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+                return response()->json($response);
+            }
+
+            $excluded_columns = User::getUserSettings(true,true);
+
+            $response = Registration::getList($request,$excluded_columns);
+
+
+        }catch (\Exception $e){
+            $response = [];
+            $response['status'] = 'failed';
+            if(env('APP_DEBUG')){
+                $response['errors'][] = $e->getMessage();
+                $response['hint'] = $e->getTrace();
+            } else{
+                $response['errors'][] = 'Something went wrong.';
+            }
         }
 
-        $excluded_columns = User::getUserSettings(true,true);
-
-        $response = Registration::getList($request,$excluded_columns);
         return response()->json($response);
     }
 
@@ -93,47 +136,92 @@ class RegistrationsController extends Controller
     public function getItem(Request $request, $id)
     {
 
-        if(!\Auth::user()->hasPermission('can-read-registrations'))
-        {
-            $response['status'] = 'failed';
-            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+        try{
 
-            return response()->json($response);
+            if(!\Auth::user()->hasPermission('can-read-registrations'))
+            {
+                $response['status'] = 'failed';
+                $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+                return response()->json($response);
+            }
+
+            $excluded_columns = User::getUserSettings(true,true);
+
+            $request->merge(['id'=>$id]);
+            $response = Registration::getItem($request,$excluded_columns);
+
+
+        }catch (\Exception $e){
+            $response = [];
+            $response['status'] = 'failed';
+            if(env('APP_DEBUG')){
+                $response['errors'][] = $e->getMessage();
+                $response['hint'] = $e->getTrace();
+            } else{
+                $response['errors'][] = 'Something went wrong.';
+            }
         }
 
-        $excluded_columns = User::getUserSettings(true,true);
-
-        $request->merge(['id'=>$id]);
-        $response = Registration::getItem($request,$excluded_columns);
         return response()->json($response);
     }
     //----------------------------------------------------------
     public function createUser(Request $request,$id)
     {
-        if(!\Auth::user()->hasPermission('can-create-users-from-registrations'))
-        {
-            $response['status'] = 'failed';
-            $response['errors'][] = trans("vaahcms::messages.permission_denied");
 
-            return $response;
+        try{
+            if(!\Auth::user()->hasPermission('can-create-users-from-registrations'))
+            {
+                $response['status'] = 'failed';
+                $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+                return $response;
+            }
+
+            $response = Registration::createUser($id);
+
+
+        }catch (\Exception $e){
+            $response = [];
+            $response['status'] = 'failed';
+            if(env('APP_DEBUG')){
+                $response['errors'][] = $e->getMessage();
+                $response['hint'] = $e->getTrace();
+            } else{
+                $response['errors'][] = 'Something went wrong.';
+            }
         }
 
-        $response = Registration::createUser($id);
         return response()->json($response);
     }
     //----------------------------------------------------------
     public function postStore(Request $request)
     {
 
-        if(!\Auth::user()->hasPermission('can-update-registrations'))
-        {
-            $response['status'] = 'failed';
-            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+        try{
 
-            return response()->json($response);
+            if(!\Auth::user()->hasPermission('can-update-registrations'))
+            {
+                $response['status'] = 'failed';
+                $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+                return response()->json($response);
+            }
+
+            $response = Registration::postStore($request);
+
+
+        }catch (\Exception $e){
+            $response = [];
+            $response['status'] = 'failed';
+            if(env('APP_DEBUG')){
+                $response['errors'][] = $e->getMessage();
+                $response['hint'] = $e->getTrace();
+            } else{
+                $response['errors'][] = 'Something went wrong.';
+            }
         }
 
-        $response = Registration::postStore($request);
         return response()->json($response);
     }
     //----------------------------------------------------------
@@ -142,99 +230,114 @@ class RegistrationsController extends Controller
     public function postActions(Request $request, $action)
     {
 
-        $rules = array(
-            'inputs' => 'required',
-        );
+        try{
 
-        $validator = \Validator::make( $request->all(), $rules);
-        if ( $validator->fails() ) {
+            $rules = array(
+                'inputs' => 'required',
+            );
 
-            $errors             = errorsToArray($validator->errors());
+            $validator = \Validator::make( $request->all(), $rules);
+            if ( $validator->fails() ) {
+
+                $errors             = errorsToArray($validator->errors());
+                $response['status'] = 'failed';
+                $response['errors'] = $errors;
+                return response()->json($response);
+            }
+
+            $response = [];
+
+            switch ($action)
+            {
+
+                //------------------------------------
+                case 'bulk-change-status':
+
+                    if(!\Auth::user()->hasPermission('can-manage-registrations') &&
+                        !\Auth::user()->hasPermission('can-update-registrations'))
+                    {
+                        $response['status'] = 'failed';
+                        $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+                        return $response;
+                    }
+
+                    $response = Registration::bulkStatusChange($request);
+                    break;
+                //------------------------------------
+                case 'bulk-trash':
+
+                    if(!\Auth::user()->hasPermission('can-update-registrations'))
+                    {
+                        $response['status'] = 'failed';
+                        $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+                        return $response;
+                    }
+
+                    $response = Registration::bulkTrash($request);
+
+                    break;
+                //------------------------------------
+                case 'bulk-restore':
+
+                    if(!\Auth::user()->hasPermission('can-update-registrations'))
+                    {
+                        $response['status'] = 'failed';
+                        $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+                        return $response;
+                    }
+
+                    $response = Registration::bulkRestore($request);
+
+                    break;
+
+                //------------------------------------
+                case 'bulk-delete':
+
+                    if(!\Auth::user()->hasPermission('can-update-registrations') ||
+                        !\Auth::user()->hasPermission('can-delete-registrations'))
+                    {
+                        $response['status'] = 'failed';
+                        $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+                        return $response;
+                    }
+
+                    $response = Registration::bulkDelete($request);
+
+                    break;
+                //------------------------------------
+                case 'send-verification-mail':
+
+                    if(!\Auth::user()->hasPermission('can-manage-registrations') &&
+                        !\Auth::user()->hasPermission('can-update-registrations'))
+                    {
+                        $response['status'] = 'failed';
+                        $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+                        return $response;
+                    }
+
+                    $response = Registration::sendVerificationEmail($request);
+
+                    break;
+                //------------------------------------
+
+            }
+
+
+
+        }catch (\Exception $e){
+            $response = [];
             $response['status'] = 'failed';
-            $response['errors'] = $errors;
-            return response()->json($response);
-        }
-
-        $response = [];
-
-        switch ($action)
-        {
-
-            //------------------------------------
-            case 'bulk-change-status':
-
-                if(!\Auth::user()->hasPermission('can-manage-registrations') &&
-                    !\Auth::user()->hasPermission('can-update-registrations'))
-                {
-                    $response['status'] = 'failed';
-                    $response['errors'][] = trans("vaahcms::messages.permission_denied");
-
-                    return $response;
-                }
-
-                $response = Registration::bulkStatusChange($request);
-                break;
-            //------------------------------------
-            case 'bulk-trash':
-
-                if(!\Auth::user()->hasPermission('can-update-registrations'))
-                {
-                    $response['status'] = 'failed';
-                    $response['errors'][] = trans("vaahcms::messages.permission_denied");
-
-                    return $response;
-                }
-
-                $response = Registration::bulkTrash($request);
-
-                break;
-            //------------------------------------
-            case 'bulk-restore':
-
-                if(!\Auth::user()->hasPermission('can-update-registrations'))
-                {
-                    $response['status'] = 'failed';
-                    $response['errors'][] = trans("vaahcms::messages.permission_denied");
-
-                    return $response;
-                }
-
-                $response = Registration::bulkRestore($request);
-
-                break;
-
-            //------------------------------------
-            case 'bulk-delete':
-
-                if(!\Auth::user()->hasPermission('can-update-registrations') ||
-                    !\Auth::user()->hasPermission('can-delete-registrations'))
-                {
-                    $response['status'] = 'failed';
-                    $response['errors'][] = trans("vaahcms::messages.permission_denied");
-
-                    return $response;
-                }
-
-                $response = Registration::bulkDelete($request);
-
-                break;
-            //------------------------------------
-            case 'send-verification-mail':
-
-                if(!\Auth::user()->hasPermission('can-manage-registrations') &&
-                    !\Auth::user()->hasPermission('can-update-registrations'))
-                {
-                    $response['status'] = 'failed';
-                    $response['errors'][] = trans("vaahcms::messages.permission_denied");
-
-                    return $response;
-                }
-
-                $response = Registration::sendVerificationEmail($request);
-
-                break;
-            //------------------------------------
-
+            if(env('APP_DEBUG')){
+                $response['errors'][] = $e->getMessage();
+                $response['hint'] = $e->getTrace();
+            } else{
+                $response['errors'][] = 'Something went wrong.';
+            }
         }
 
         return response()->json($response);

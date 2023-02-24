@@ -1098,7 +1098,7 @@ class User extends Authenticatable
         }
 
         // check if already exist
-        $user = self::where('email',$inputs['email'])->first();
+        $user = self::where('eail',$inputs['email'])->first();
 
         if($user)
         {

@@ -30,48 +30,75 @@ class EnvController extends Controller
     public function getAssets(Request $request)
     {
 
-        if(!\Auth::user()->hasPermission('has-access-of-setting-section'))
-        {
+        try{
+
+            if(!\Auth::user()->hasPermission('has-access-of-setting-section'))
+            {
+                $response['status'] = 'failed';
+                $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+                return response()->json($response);
+            }
+
+
+            $data['is_installed'] = VaahSetup::isInstalled();
+            $data['environments'] = vh_environments();
+            $data['timezones'] = vh_get_timezones();
+            $data['database_types'] = vh_database_types();
+            $data['mail_encryption_types'] = vh_mail_encryption_types();
+            $data['mail_sample_settings'] = vh_mail_sample_settings();
+            $data['country_calling_codes'] = vh_get_countries_calling_codes();
+            $data['app_url'] = url("/");
+
+            $response['status'] = 'success';
+            $response['data'] = $data;
+
+        }catch (\Exception $e){
+            $response = [];
             $response['status'] = 'failed';
-            $response['errors'][] = trans("vaahcms::messages.permission_denied");
-
-            return response()->json($response);
+            if(env('APP_DEBUG')){
+                $response['errors'][] = $e->getMessage();
+                $response['hint'] = $e->getTrace();
+            } else{
+                $response['errors'][] = 'Something went wrong.';
+            }
         }
-
-
-        $data['is_installed'] = VaahSetup::isInstalled();
-        $data['environments'] = vh_environments();
-        $data['timezones'] = vh_get_timezones();
-        $data['database_types'] = vh_database_types();
-        $data['mail_encryption_types'] = vh_mail_encryption_types();
-        $data['mail_sample_settings'] = vh_mail_sample_settings();
-        $data['country_calling_codes'] = vh_get_countries_calling_codes();
-        $data['app_url'] = url("/");
-
-        $response['status'] = 'success';
-        $response['data'] = $data;
 
         return response()->json($response);
     }
     //----------------------------------------------------------
     public function getList(Request $request)
     {
+        try{
 
-        if(!\Auth::user()->hasPermission('has-access-of-setting-section'))
-        {
+            if(!\Auth::user()->hasPermission('has-access-of-setting-section'))
+            {
+                $response['status'] = 'failed';
+                $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+                return response()->json($response);
+            }
+
+            $data = [];
+
+            $data['env_file'] = VaahSetup::getActiveEnvFileName();
+            $data['list'] = VaahSetup::getEnvFileVariables(null, 'list');
+
+            $response['status'] = 'success';
+            $response['data'] = $data;
+
+
+
+        }catch (\Exception $e){
+            $response = [];
             $response['status'] = 'failed';
-            $response['errors'][] = trans("vaahcms::messages.permission_denied");
-
-            return response()->json($response);
+            if(env('APP_DEBUG')){
+                $response['errors'][] = $e->getMessage();
+                $response['hint'] = $e->getTrace();
+            } else{
+                $response['errors'][] = 'Something went wrong.';
+            }
         }
-
-        $data = [];
-
-        $data['env_file'] = VaahSetup::getActiveEnvFileName();
-        $data['list'] = VaahSetup::getEnvFileVariables(null, 'list');
-
-        $response['status'] = 'success';
-        $response['data'] = $data;
 
         return response()->json($response);
 
@@ -102,20 +129,33 @@ class EnvController extends Controller
     public function store(Request $request)
     {
 
-        if(!\Auth::user()->hasPermission('has-access-of-setting-section'))
-        {
+        try{
+
+            if(!\Auth::user()->hasPermission('has-access-of-setting-section'))
+            {
+                $response['status'] = 'failed';
+                $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+                return response()->json($response);
+            }
+
+            $response = VaahSetup::generateEnvFile($request, 'list');
+
+            if($response['status'] && $response['status'] == 'success')
+            {
+                VaahHelper::clearCache();
+                $response['data']['redirect_url'] = route('vh.backend');
+            }
+
+        }catch (\Exception $e){
+            $response = [];
             $response['status'] = 'failed';
-            $response['errors'][] = trans("vaahcms::messages.permission_denied");
-
-            return response()->json($response);
-        }
-
-        $response = VaahSetup::generateEnvFile($request, 'list');
-
-        if($response['status'] && $response['status'] == 'success')
-        {
-            VaahHelper::clearCache();
-            $response['data']['redirect_url'] = route('vh.backend');
+            if(env('APP_DEBUG')){
+                $response['errors'][] = $e->getMessage();
+                $response['hint'] = $e->getTrace();
+            } else{
+                $response['errors'][] = 'Something went wrong.';
+            }
         }
 
         return response()->json($response);
