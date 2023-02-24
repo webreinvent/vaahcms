@@ -372,7 +372,7 @@ class Module extends Model {
         $module->save();
 
         $response['status'] = 'success';
-        $response['data'][] = '';
+        $response['data']['item'] = $module;
         $response['messages'][] = 'Assets is published';
 
         if(env('APP_DEBUG'))
@@ -444,7 +444,7 @@ class Module extends Model {
         $module->save();
 
         $response['status'] = 'success';
-        $response['data'][] = '';
+        $response['data']['item'] = $module;
         $response['messages'][] = 'Module is activated';
 
         if(env('APP_DEBUG'))
@@ -461,7 +461,7 @@ class Module extends Model {
         $item->is_active = null;
         $item->save();
         $response['status'] = 'success';
-        $response['data'][] = '';
+        $response['data']['item'] = $item;
         $response['messages'][] = trans('vaahcms-general.action_successful');
         if(env('APP_DEBUG'))
         {
@@ -523,7 +523,7 @@ class Module extends Model {
             static::where('slug', $item->slug)->forceDelete();
 
             $response['status'] = 'success';
-            $response['data'][] = '';
+            $response['data']['item'] = $item;
             $response['messages'][] = trans('vaahcms-general.action_successful');
             if(env('APP_DEBUG'))
             {
@@ -733,6 +733,7 @@ class Module extends Model {
             \Artisan::call($command, $params);
 
             $response['status'] = 'success';
+            $response['data']['item'] = $module;
             $response['messages'][] = 'Sample Data Successfully Imported';
         }catch(\Exception $e)
         {

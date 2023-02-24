@@ -18,7 +18,7 @@ export default {
     {
         let obj = {
 
-            namespace: namespace
+            namespace: namespace,
 
         };
 
@@ -99,6 +99,8 @@ export default {
         //---------------------------------------------------------------------
         delete: function (module) {
             this.$Progress.start();
+
+            this.page.active_actions.push('delete-'+module.id);
             let params = {
                 action: 'delete',
                 inputs: module
@@ -124,11 +126,20 @@ export default {
                 this.getAssets();
                 this.getRootAssets();
                 this.$emit('eReloadList');
+
+
+                let index = this.page.active_actions.indexOf(data.action+'-'+data.item.id);
+                if (index !== -1) {
+                    this.page.active_actions.splice(index, 1);
+                }
             }
         },
         //---------------------------------------------------------------------
         actions: function (action, module) {
             this.$Progress.start();
+
+            this.page.active_actions.push(action+'-'+module.id);
+
             this.update('selected_item', module);
             let params = {
                 action: action,
@@ -145,6 +156,11 @@ export default {
                 this.update('selected_item', null);
                 this.getRootAssets();
                 this.$emit('eReloadList');
+
+                let index = this.page.active_actions.indexOf(data.action+'-'+data.item.id);
+                if (index !== -1) {
+                    this.page.active_actions.splice(index, 1);
+                }
             }
 
         },
@@ -168,6 +184,9 @@ export default {
         //---------------------------------------------------------------------
         importSampleData: function (module) {
             this.$Progress.start();
+
+            this.page.active_actions.push('import_sample_data-'+module.id);
+
             let params = {
                 action: 'import_sample_data',
                 inputs: module
@@ -181,6 +200,10 @@ export default {
             if(data)
             {
                 this.$emit('eReloadList');
+                let index = this.page.active_actions.indexOf(data.action+'-'+data.item.id);
+                if (index !== -1) {
+                    this.page.active_actions.splice(index, 1);
+                }
             }
 
         },
