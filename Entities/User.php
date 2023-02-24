@@ -1075,30 +1075,30 @@ class User extends Authenticatable
     public static function create($request)
     {
 
-        $inputs = $request->new_item;
-
-        $validate = self::validation($inputs);
-
-        if(isset($validate['status']) && $validate['status'] == 'failed')
-        {
-            return $validate;
-        }
-
-        $rules = array(
-            'password' => 'required',
-        );
-
-        $validator = \Validator::make( $inputs, $rules);
-        if ( $validator->fails() ) {
-
-            $errors             = errorsToArray($validator->errors());
-            $response['status'] = 'failed';
-            $response['errors'] = $errors;
-            return $response;
-        }
+//        $inputs = $request->new_item;
+//
+//        $validate = self::validation($inputs);
+//
+//        if(isset($validate['status']) && $validate['status'] == 'failed')
+//        {
+//            return $validate;
+//        }
+//
+//        $rules = array(
+//            'password' => 'required',
+//        );
+//
+//        $validator = \Validator::make( $inputs, $rules);
+//        if ( $validator->fails() ) {
+//
+//            $errors             = errorsToArray($validator->errors());
+//            $response['status'] = 'failed';
+//            $response['errors'] = $errors;
+//            return $response;
+//        }
 
         // check if already exist
-        $user = self::where('email',$inputs['email'])->first();
+        $user = self::where('eail',$inputs['email'])->first();
 
         if($user)
         {

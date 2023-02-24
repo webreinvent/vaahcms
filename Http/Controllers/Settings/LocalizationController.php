@@ -28,26 +28,39 @@ class LocalizationController extends Controller
     public function getAssets(Request $request)
     {
 
-        if(!\Auth::user()->hasPermission('has-access-of-setting-section'))
-        {
+        try{
+
+            if(!\Auth::user()->hasPermission('has-access-of-setting-section'))
+            {
+                $response['status'] = 'failed';
+                $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+                return response()->json($response);
+            }
+
+            $lang_list = Language::getLangList();
+
+            $response['status'] = 'success';
+            $response['data']['languages']['list'] = $lang_list;
+
+            $response['data']['languages']['default'] = Language::where('default',1)
+                ->first();
+
+
+            $response['data']['categories']['list'] = LanguageCategory::orderBy('name','asc')
+                ->get();
+            $response['data']['categories']['default']['id'] = null;
+
+        }catch (\Exception $e){
+            $response = [];
             $response['status'] = 'failed';
-            $response['errors'][] = trans("vaahcms::messages.permission_denied");
-
-            return response()->json($response);
+            if(env('APP_DEBUG')){
+                $response['errors'][] = $e->getMessage();
+                $response['hint'] = $e->getTrace();
+            } else{
+                $response['errors'][] = 'Something went wrong.';
+            }
         }
-
-        $lang_list = Language::getLangList();
-
-        $response['status'] = 'success';
-        $response['data']['languages']['list'] = $lang_list;
-
-        $response['data']['languages']['default'] = Language::where('default',1)
-            ->first();
-
-
-        $response['data']['categories']['list'] = LanguageCategory::orderBy('name','asc')
-            ->get();
-        $response['data']['categories']['default']['id'] = null;
 
         return response()->json($response);
     }
@@ -55,35 +68,62 @@ class LocalizationController extends Controller
     public function getList(Request $request)
     {
 
-        if(!\Auth::user()->hasPermission('has-access-of-setting-section'))
-        {
-            $response['status'] = 'failed';
-            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+        try{
 
-            return response()->json($response);
+            if(!\Auth::user()->hasPermission('has-access-of-setting-section'))
+            {
+                $response['status'] = 'failed';
+                $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+                return response()->json($response);
+            }
+
+            $response = LanguageString::getList($request);
+
+        }catch (\Exception $e){
+            $response = [];
+            $response['status'] = 'failed';
+            if(env('APP_DEBUG')){
+                $response['errors'][] = $e->getMessage();
+                $response['hint'] = $e->getTrace();
+            } else{
+                $response['errors'][] = 'Something went wrong.';
+            }
         }
 
-        $response = LanguageString::getList($request);
         return response()->json($response);
     }
     //----------------------------------------------------------
     public function generateLanguage(Request $request)
     {
 
-        if(!\Auth::user()->hasPermission('has-access-of-setting-section'))
-        {
+        try{
+
+            if(!\Auth::user()->hasPermission('has-access-of-setting-section'))
+            {
+                $response['status'] = 'failed';
+                $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+                return response()->json($response);
+            }
+
+            LanguageString::syncAndGenerateStrings($request);
+
+
+            $response = LanguageString::getList($request);
+
+            $response['messages'][] = "Language files successfully generated";
+
+        }catch (\Exception $e){
+            $response = [];
             $response['status'] = 'failed';
-            $response['errors'][] = trans("vaahcms::messages.permission_denied");
-
-            return response()->json($response);
+            if(env('APP_DEBUG')){
+                $response['errors'][] = $e->getMessage();
+                $response['hint'] = $e->getTrace();
+            } else{
+                $response['errors'][] = 'Something went wrong.';
+            }
         }
-
-        LanguageString::syncAndGenerateStrings($request);
-
-
-        $response = LanguageString::getList($request);
-
-        $response['messages'][] = "Language files successfully generated";
 
         return response()->json($response);
 
@@ -92,32 +132,59 @@ class LocalizationController extends Controller
     public function postStore(Request $request)
     {
 
-        if(!\Auth::user()->hasPermission('has-access-of-setting-section'))
-        {
-            $response['status'] = 'failed';
-            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+        try{
 
-            return response()->json($response);
+            if(!\Auth::user()->hasPermission('has-access-of-setting-section'))
+            {
+                $response['status'] = 'failed';
+                $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+                return response()->json($response);
+            }
+
+            $response = LanguageString::storeList($request);
+
+        }catch (\Exception $e){
+            $response = [];
+            $response['status'] = 'failed';
+            if(env('APP_DEBUG')){
+                $response['errors'][] = $e->getMessage();
+                $response['hint'] = $e->getTrace();
+            } else{
+                $response['errors'][] = 'Something went wrong.';
+            }
         }
 
-        $response = LanguageString::storeList($request);
         return response()->json($response);
     }
     //----------------------------------------------------------
     public function storeLanguage(Request $request)
     {
 
-        if(!\Auth::user()->hasPermission('has-access-of-setting-section'))
-        {
+        try{
+
+            if(!\Auth::user()->hasPermission('has-access-of-setting-section'))
+            {
+                $response['status'] = 'failed';
+                $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+                return response()->json($response);
+            }
+
+            $response = Language::store($request);
+
+            LanguageString::syncStrings($request);
+
+        }catch (\Exception $e){
+            $response = [];
             $response['status'] = 'failed';
-            $response['errors'][] = trans("vaahcms::messages.permission_denied");
-
-            return response()->json($response);
+            if(env('APP_DEBUG')){
+                $response['errors'][] = $e->getMessage();
+                $response['hint'] = $e->getTrace();
+            } else{
+                $response['errors'][] = 'Something went wrong.';
+            }
         }
-
-        $response = Language::store($request);
-
-        LanguageString::syncStrings($request);
 
         return response()->json($response);
 
@@ -126,17 +193,30 @@ class LocalizationController extends Controller
     public function storeCategory(Request $request)
     {
 
-        if(!\Auth::user()->hasPermission('has-access-of-setting-section'))
-        {
+        try{
+
+            if(!\Auth::user()->hasPermission('has-access-of-setting-section'))
+            {
+                $response['status'] = 'failed';
+                $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+                return response()->json($response);
+            }
+
+            $response = LanguageCategory::store($request);
+
+            LanguageString::syncStrings($request);
+
+        }catch (\Exception $e){
+            $response = [];
             $response['status'] = 'failed';
-            $response['errors'][] = trans("vaahcms::messages.permission_denied");
-
-            return response()->json($response);
+            if(env('APP_DEBUG')){
+                $response['errors'][] = $e->getMessage();
+                $response['hint'] = $e->getTrace();
+            } else{
+                $response['errors'][] = 'Something went wrong.';
+            }
         }
-
-        $response = LanguageCategory::store($request);
-
-        LanguageString::syncStrings($request);
 
         return response()->json($response);
 
@@ -145,26 +225,39 @@ class LocalizationController extends Controller
     public function postActions(Request $request, $action)
     {
 
-        if(!\Auth::user()->hasPermission('has-access-of-setting-section'))
-        {
+        try{
+
+            if(!\Auth::user()->hasPermission('has-access-of-setting-section'))
+            {
+                $response['status'] = 'failed';
+                $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+                return response()->json($response);
+            }
+
+            switch ($action)
+            {
+
+                //------------------------------------
+                case 'delete-language-string':
+
+                    $response = LanguageString::deleteItem($request);
+
+                    break;
+
+                //------------------------------------
+
+            }
+
+        }catch (\Exception $e){
+            $response = [];
             $response['status'] = 'failed';
-            $response['errors'][] = trans("vaahcms::messages.permission_denied");
-
-            return response()->json($response);
-        }
-
-        switch ($action)
-        {
-
-            //------------------------------------
-            case 'delete-language-string':
-
-                $response = LanguageString::deleteItem($request);
-
-                break;
-
-            //------------------------------------
-
+            if(env('APP_DEBUG')){
+                $response['errors'][] = $e->getMessage();
+                $response['hint'] = $e->getTrace();
+            } else{
+                $response['errors'][] = 'Something went wrong.';
+            }
         }
 
         return response()->json($response);

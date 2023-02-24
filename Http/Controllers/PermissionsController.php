@@ -23,56 +23,98 @@ class PermissionsController extends Controller
     public function getAssets(Request $request)
     {
 
-        if(!\Auth::user()->hasPermission('has-access-of-permissions-section'))
-        {
+        try{
+
+            if(!\Auth::user()->hasPermission('has-access-of-permissions-section'))
+            {
+                $response['status'] = 'failed';
+                $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+                return response()->json($response);
+            }
+
+            $module = Permission::withTrashed()->select('module')->get()->unique('module');
+
+            $data['country_calling_code'] = vh_get_country_list();
+            $data['country'] = vh_get_country_list();
+            $data['country_code'] = vh_get_country_list();
+            $data['registration_statuses'] = vh_registration_statuses();
+            $data['bulk_actions'] = vh_general_bulk_actions();
+            $data['name_titles'] = vh_name_titles();
+            $data['module'] = $module;
+
+            $response['status'] = 'success';
+            $response['data'] = $data;
+
+        }catch (\Exception $e){
+            $response = [];
             $response['status'] = 'failed';
-            $response['errors'][] = trans("vaahcms::messages.permission_denied");
-
-            return response()->json($response);
+            if(env('APP_DEBUG')){
+                $response['errors'][] = $e->getMessage();
+                $response['hint'] = $e->getTrace();
+            } else{
+                $response['errors'][] = 'Something went wrong.';
+            }
         }
-
-        $module = Permission::withTrashed()->select('module')->get()->unique('module');
-
-        $data['country_calling_code'] = vh_get_country_list();
-        $data['country'] = vh_get_country_list();
-        $data['country_code'] = vh_get_country_list();
-        $data['registration_statuses'] = vh_registration_statuses();
-        $data['bulk_actions'] = vh_general_bulk_actions();
-        $data['name_titles'] = vh_name_titles();
-        $data['module'] = $module;
-
-        $response['status'] = 'success';
-        $response['data'] = $data;
 
         return response()->json($response);
     }
     //----------------------------------------------------------
     public function getList(Request $request)
     {
-        if(!\Auth::user()->hasPermission('has-access-of-permissions-section'))
-        {
-            $response['status'] = 'failed';
-            $response['errors'][] = trans("vaahcms::messages.permission_denied");
 
-            return response()->json($response);
+        try{
+
+            if(!\Auth::user()->hasPermission('has-access-of-permissions-section'))
+            {
+                $response['status'] = 'failed';
+                $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+                return response()->json($response);
+            }
+
+            $response = Permission::getList($request);
+
+        }catch (\Exception $e){
+            $response = [];
+            $response['status'] = 'failed';
+            if(env('APP_DEBUG')){
+                $response['errors'][] = $e->getMessage();
+                $response['hint'] = $e->getTrace();
+            } else{
+                $response['errors'][] = 'Something went wrong.';
+            }
         }
 
-        $response = Permission::getList($request);
         return response()->json($response);
     }
     //----------------------------------------------------------
     public function getItem(Request $request, $id)
     {
 
-        if(!\Auth::user()->hasPermission('can-read-permissions'))
-        {
-            $response['status'] = 'failed';
-            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+        try{
 
-            return response()->json($response);
+            if(!\Auth::user()->hasPermission('can-read-permissions'))
+            {
+                $response['status'] = 'failed';
+                $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+                return response()->json($response);
+            }
+
+            $response = Permission::getItem($id);
+
+        }catch (\Exception $e){
+            $response = [];
+            $response['status'] = 'failed';
+            if(env('APP_DEBUG')){
+                $response['errors'][] = $e->getMessage();
+                $response['hint'] = $e->getTrace();
+            } else{
+                $response['errors'][] = 'Something went wrong.';
+            }
         }
 
-        $response = Permission::getItem($id);
         return response()->json($response);
 
     }
@@ -82,29 +124,56 @@ class PermissionsController extends Controller
     public function getItemRoles(Request $request, $id)
     {
 
-        if(!\Auth::user()->hasPermission('can-read-permissions'))
-        {
-            $response['status'] = 'failed';
-            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+        try{
 
-            return response()->json($response);
+            if(!\Auth::user()->hasPermission('can-read-permissions'))
+            {
+                $response['status'] = 'failed';
+                $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+                return response()->json($response);
+            }
+
+            $response = Permission::getItemRoles($request,$id);
+
+        }catch (\Exception $e){
+            $response = [];
+            $response['status'] = 'failed';
+            if(env('APP_DEBUG')){
+                $response['errors'][] = $e->getMessage();
+                $response['hint'] = $e->getTrace();
+            } else{
+                $response['errors'][] = 'Something went wrong.';
+            }
         }
 
-        $response = Permission::getItemRoles($request,$id);
         return response()->json($response);
     }
     //----------------------------------------------------------
     public function postStore(Request $request,$id)
     {
-        if(!\Auth::user()->hasPermission('can-update-permissions'))
-        {
-            $response['status'] = 'failed';
-            $response['errors'][] = trans("vaahcms::messages.permission_denied");
 
-            return response()->json($response);
+        try{
+            if(!\Auth::user()->hasPermission('can-update-permissions'))
+            {
+                $response['status'] = 'failed';
+                $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+                return response()->json($response);
+            }
+
+            $response = Permission::postStore($request,$id);
+        }catch (\Exception $e){
+            $response = [];
+            $response['status'] = 'failed';
+            if(env('APP_DEBUG')){
+                $response['errors'][] = $e->getMessage();
+                $response['hint'] = $e->getTrace();
+            } else{
+                $response['errors'][] = 'Something went wrong.';
+            }
         }
 
-        $response = Permission::postStore($request,$id);
         return response()->json($response);
     }
 
@@ -112,58 +181,73 @@ class PermissionsController extends Controller
     //----------------------------------------------------------
     public function postActions(Request $request, $action)
     {
-        $rules = array(
-            'inputs' => 'required',
-        );
 
-        $validator = \Validator::make( $request->all(), $rules);
-        if ( $validator->fails() ) {
+        try{
 
-            $errors             = errorsToArray($validator->errors());
+            $rules = array(
+                'inputs' => 'required',
+            );
+
+            $validator = \Validator::make( $request->all(), $rules);
+            if ( $validator->fails() ) {
+
+                $errors             = errorsToArray($validator->errors());
+                $response['status'] = 'failed';
+                $response['errors'] = $errors;
+                return response()->json($response);
+            }
+
+            $response = [];
+
+            $response['status'] = 'success';
+
+            $inputs = $request->all();
+
+            switch ($action)
+            {
+
+                //------------------------------------
+                case 'bulk-change-status':
+                    $response = Permission::bulkStatusChange($request);
+                    break;
+                //------------------------------------
+                case 'bulk-trash':
+
+                    $response = Permission::bulkTrash($request);
+
+                    break;
+                //------------------------------------
+                case 'bulk-restore':
+
+                    $response = Permission::bulkRestore($request);
+
+                    break;
+
+                //------------------------------------
+                case 'bulk-delete':
+
+                    $response = Permission::bulkDelete($request);
+
+                    break;
+                //------------------------------------
+                case 'toggle_role_active_status':
+
+                    $response = Permission::bulkChangeRoleStatus($request);
+
+                    break;
+                //------------------------------------
+            }
+
+
+        }catch (\Exception $e){
+            $response = [];
             $response['status'] = 'failed';
-            $response['errors'] = $errors;
-            return response()->json($response);
-        }
-
-        $response = [];
-
-        $response['status'] = 'success';
-
-        $inputs = $request->all();
-
-        switch ($action)
-        {
-
-            //------------------------------------
-            case 'bulk-change-status':
-                $response = Permission::bulkStatusChange($request);
-                break;
-            //------------------------------------
-            case 'bulk-trash':
-
-                $response = Permission::bulkTrash($request);
-
-                break;
-            //------------------------------------
-            case 'bulk-restore':
-
-                $response = Permission::bulkRestore($request);
-
-                break;
-
-            //------------------------------------
-            case 'bulk-delete':
-
-                $response = Permission::bulkDelete($request);
-
-                break;
-            //------------------------------------
-            case 'toggle_role_active_status':
-
-                $response = Permission::bulkChangeRoleStatus($request);
-
-                break;
-            //------------------------------------
+            if(env('APP_DEBUG')){
+                $response['errors'][] = $e->getMessage();
+                $response['hint'] = $e->getTrace();
+            } else{
+                $response['errors'][] = 'Something went wrong.';
+            }
         }
 
         return response()->json($response);
@@ -173,7 +257,21 @@ class PermissionsController extends Controller
 
     public function getModuleSections(Request $request)
     {
-        $response = Permission::getModuleSections($request);
+
+        try{
+            $response = Permission::getModuleSections($request);
+
+        }catch (\Exception $e){
+            $response = [];
+            $response['status'] = 'failed';
+            if(env('APP_DEBUG')){
+                $response['errors'][] = $e->getMessage();
+                $response['hint'] = $e->getTrace();
+            } else{
+                $response['errors'][] = 'Something went wrong.';
+            }
+        }
+
         return response()->json($response);
     }
     //----------------------------------------------------------
