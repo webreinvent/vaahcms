@@ -90,7 +90,8 @@ export const useModuleStore = defineStore({
         modules_query: {
             page: null,
             query: null
-        }
+        },
+        active_action: []
     }),
     getters: {
 
@@ -445,7 +446,13 @@ export const useModuleStore = defineStore({
 
                 await this.formActionAfter();
                 this.getItemMenu();
+                this.resetActivateBtnLoader(this.form.action,data.item);
             }
+        },
+        //---------------------------------------------------------------------
+        async resetActivateBtnLoader(action,item) {
+            let index = this.active_action.indexOf(action+'_'+item.id);
+            this.active_action.splice(index,1);
         },
         //---------------------------------------------------------------------
         async formActionAfter ()
@@ -475,12 +482,14 @@ export const useModuleStore = defineStore({
             }
         },
         //---------------------------------------------------------------------
-        async toggleIsActive(item)
+        async toggleIsActive(item,index)
         {
             if(item.is_active)
             {
+                this.active_action.push('deactivate_'+item.id);
                 await this.itemAction('deactivate', item);
-            } else{
+            } else {
+                this.active_action.push('activate_'+item.id);
                 await this.itemAction('activate', item);
             }
         },
@@ -1093,7 +1102,7 @@ export const useModuleStore = defineStore({
         },
         //----------------------------------------------------------------------
         publishAssets(item) {
-
+            this.active_action.push('publish_assets_'+item.id);
             let options = {
                 method: 'POST',
                 params: {
@@ -1105,7 +1114,10 @@ export const useModuleStore = defineStore({
             vaah().ajax(url, this.publishAssetsAfter, options);
         },
         //---------------------------------------------------------------------
-        publishAssetsAfter(data) {},
+        publishAssetsAfter(data) {
+            this.getList();
+            this.resetActivateBtnLoader(this.form.action,data.item);
+        },
         //---------------------------------------------------------------------
 
     }

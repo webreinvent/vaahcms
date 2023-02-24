@@ -86,7 +86,10 @@ export const useThemeStore = defineStore({
         themes_query: {
             page: null,
             query: null
-        }
+        },
+        is_installing: -1,
+        active_action: [],
+        index: -1
     }),
     getters: {
 
@@ -362,7 +365,8 @@ export const useThemeStore = defineStore({
             );
         },
         //---------------------------------------------------------------------
-        itemAction(type, item=null){
+        itemAction(type, item=null)
+        {
             if(!item)
             {
                 item = this.item;
@@ -433,15 +437,16 @@ export const useThemeStore = defineStore({
         //---------------------------------------------------------------------
         async itemActionAfter(data, res)
         {
-            if(data)
+            if (data)
             {
                 this.assets_is_fetching = true;
                 await this.getAssets();
                 await this.getList();
                 this.item = data;
                 await this.formActionAfter();
+                this.resetActivateBtnLoader(this.form.action,data.item)
             }
-        },
+       },
         //---------------------------------------------------------------------
         async formActionAfter ()
         {
@@ -474,10 +479,17 @@ export const useThemeStore = defineStore({
         async toggleIsActive(item)
         {
             if(item.is_active) {
+                this.active_action.push('deactivate_'+item.id);
                 await this.itemAction('deactivate', item);
             } else {
+                this.active_action.push('activate_'+item.id);
                 await this.itemAction('activate', item);
             }
+        },
+        //---------------------------------------------------------------------
+        async resetActivateBtnLoader(action,item) {
+            let index = this.active_action.indexOf(action+'_'+item.id);
+            this.active_action.splice(index,1);
         },
         //---------------------------------------------------------------------
         async paginate(event) {
@@ -974,6 +986,7 @@ export const useThemeStore = defineStore({
         //---------------------------------------------------------------------
         install(module) {
             this.themes.active_download = module;
+
             let options = {
                 params: module,
                 method: 'post'
@@ -982,8 +995,17 @@ export const useThemeStore = defineStore({
             vaah().ajax(url, this.installAfter, options);
         },
         //---------------------------------------------------------------------
+        async installAfter(data) {
+            if(data)
+            {
+                this.themes.active_download = null;
+                this.assets_is_fetching = true;
+                await this.getAssets();
+                await this.getList();
+            }
+        },
+        //---------------------------------------------------------------------
         async actions(action, theme) {
-            console.log(action);
             let options = {
                 params : {
                     action: action,
@@ -1004,15 +1026,6 @@ export const useThemeStore = defineStore({
 
         },
         //---------------------------------------------------------------------
-        async installAfter(data) {
-            if(data)
-            {
-                this.themes.active_download = null;
-                this.assets_is_fetching = true;
-                await this.getAssets();
-                await this.getList();
-            }
-        },
         closeInstallTheme() {
             this.list_view_width = '12';
             this.$router.push({name: 'themes.index'});
@@ -1026,6 +1039,30 @@ export const useThemeStore = defineStore({
             const root = useRootStore();
             return vaah().hasPermission(root.permissions, slug);
         },
+        //----------------------------------------------------------------------
+        publishAssets(item) {
+            this.active_action.push('publish_assets_'+item.id);
+
+            let options = {
+                method: 'POST',
+                params: {
+                    slug: item.slug
+                }
+            };
+
+            let url = this.ajax_url+'/publish/assets';
+            vaah().ajax(url, this.publishAssetsAfter, options);
+        },
+        //---------------------------------------------------------------------
+        publishAssetsAfter(data) {
+            this.getList();
+            this.resetActivateBtnLoader('publish_assets',data.item);
+        },
+        //---------------------------------------------------------------------
+        makeDefault(item) {
+            this.active_action.push('make_default_'+item.id);
+            this.itemAction('make_default',item);
+        }
     }
 });
 

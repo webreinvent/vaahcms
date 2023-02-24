@@ -63,4 +63,9 @@ function () {
     //------------------------------------------------
     Route::post( '/install/updates', 'ThemesController@installUpdates' )
         ->name( 'vh.backend.themes.install.updates' );
+    //------------------------------------------------
+    Route::any( '/publish/assets', 'ThemesController@publishAssets' )
+        ->name( 'vh.setup.publish.assets' );
+    //------------------------------------------------
+
 });
