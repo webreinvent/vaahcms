@@ -18,7 +18,7 @@ export default {
     {
         let obj = {
 
-            namespace: namespace,
+            namespace: namespace
 
         };
 

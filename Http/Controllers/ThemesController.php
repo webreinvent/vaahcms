@@ -296,6 +296,10 @@ class ThemesController extends Controller
 
         }
 
+        if(isset($response['data'])){
+            $response['data']['action'] = $request->action;
+        }
+
         return response()->json($response);
     }
 

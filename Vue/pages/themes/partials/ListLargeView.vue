@@ -10,7 +10,9 @@
             <template>
                 <b-table-column v-slot="props"  field="name" label="Theme">
 
-                    <h3 class="title is-5 has-margin-bottom-10">{{ props.row.title }}</h3>
+                    <h3 class="title is-5 has-margin-bottom-10">
+                        {{ props.row.title }}
+                    </h3>
 
                     <div class="content">
                         <p>{{ props.row.excerpt }}</p>
@@ -23,22 +25,30 @@
                 </b-table-column>
 
 
-                <b-table-column v-slot="props"  width="100" field="actions" label="" numeric>
+                <b-table-column v-slot="props"  width="100" field="actions"
+                                label="" numeric>
 
 
 
 
                     <b-field class="float-right" style="float: right;">
 
-                        <p v-if="hasPermission('can-activate-theme') || hasPermission('can-deactivate-theme')" class="control">
-                            <b-button v-if="props.row.is_active && hasPermission('can-deactivate-theme')"
+                        <p v-if="hasPermission('can-activate-theme')
+                        || hasPermission('can-deactivate-theme')"
+                           class="control">
+                            <b-button v-if="props.row.is_active
+                            && hasPermission('can-deactivate-theme')"
+                                      :loading="page.active_actions.includes('deactivate-'+props.row.id)"
                                       size="is-small"
                                       type="is-warning"
                                       @click="actions('deactivate', props.row)">
                                 Deactivate
                             </b-button>
 
-                            <b-button v-if="!props.row.is_active && hasPermission('can-activate-theme')" size="is-small"
+                            <b-button v-if="!props.row.is_active
+                            && hasPermission('can-activate-theme')"
+                                      :loading="page.active_actions.includes('activate-'+props.row.id)"
+                                      size="is-small"
                                       type="is-success"
                                       @click="actions('activate', props.row)">
                                 Activate
@@ -50,6 +60,7 @@
                             <p v-if="hasPermission('can-publish-assets-of-theme')"
                                class="control">
                                 <b-button v-if="props.row.is_active"
+                                          :loading="page.active_actions.includes('publish_assets-'+props.row.id)"
                                           size="is-small"
                                           type="is-info"
                                           icon-left="upload"
@@ -58,9 +69,11 @@
                             </p>
                         </b-tooltip>
 
-                        <b-tooltip label="This theme is marked as Default" v-if="props.row.is_default"
+                        <b-tooltip label="This theme is marked as Default"
+                                   v-if="props.row.is_default"
                                    type="is-dark">
-                            <p v-if="hasPermission('can-activate-theme') && props.row.is_active"
+                            <p v-if="hasPermission('can-activate-theme')
+                            && props.row.is_active"
                                class="control">
 
                                     <b-button
@@ -72,8 +85,10 @@
                             </p>
                         </b-tooltip>
 
-                        <b-tooltip label="Mark this theme as Default" v-else type="is-dark">
-                            <p v-if="hasPermission('can-activate-theme') && props.row.is_active"
+                        <b-tooltip label="Mark this theme as Default"
+                                   v-else type="is-dark">
+                            <p v-if="hasPermission('can-activate-theme')
+                            && props.row.is_active"
                                class="control">
 
                                 <b-button
@@ -93,6 +108,7 @@
                             <p class="control" >
 
                                 <b-button size="is-small"
+                                          :loading="page.active_actions.includes('import_sample_data-'+props.row.id)"
                                           icon-left="database"
                                           @click="confirmDataImport(props.row)"
                                           type="is-warning">
@@ -101,7 +117,8 @@
                             </p>
                         </b-tooltip>
 
-                        <b-tooltip  v-if="props.row.is_update_available && hasPermission('can-update-theme')"
+                        <b-tooltip  v-if="props.row.is_update_available
+                        && hasPermission('can-update-theme')"
                                     label="Download Updates" type="is-dark">
                             <p class="control">
 
@@ -115,10 +132,12 @@
                             </p>
                         </b-tooltip>
 
-                        <b-tooltip v-if="hasPermission('can-delete-theme')" label="Delete" type="is-dark">
+                        <b-tooltip v-if="hasPermission('can-delete-theme')"
+                                   label="Delete" type="is-dark">
                             <p  class="control">
 
                                 <b-button size="is-small"
+                                          :loading="page.active_actions.includes('delete-'+props.row.id)"
                                           icon-left="trash"
                                           @click="confirmDelete(props.row)"
                                           type="is-danger">
@@ -128,7 +147,8 @@
                         </b-tooltip>
 
 
-                        <b-tooltip v-if="hasPermission('can-read-theme')" label="View" type="is-dark">
+                        <b-tooltip v-if="hasPermission('can-read-theme')"
+                                   label="View" type="is-dark">
                             <p  class="control">
 
                                 <b-button size="is-small"
