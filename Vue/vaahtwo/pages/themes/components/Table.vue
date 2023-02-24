@@ -22,7 +22,6 @@ const importSampleDataModal = (item) => {
         icon: 'pi pi-exclamation-triangle',
         accept: () => {
             store.active_action.push('import_sample_data_'+item.id);
-            console.log(store.active_action);
             store.itemAction('import_sample_data', item);
         },
     });
