@@ -355,7 +355,7 @@ class RegistrationsController extends Controller
     public function createUser(Request $request,$id): JsonResponse
     {
         if (!Auth::user()->hasPermission('can-create-users-from-registrations')) {
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'][] = trans("vaahcms::messages.permission_denied");
 
             return response()->json($response);
