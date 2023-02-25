@@ -78,7 +78,7 @@ class TaxonomiesController extends Controller
     //----------------------------------------------------------
     public function getList(Request $request): JsonResponse
     {
-        if (!Auth::user()->hasPermission('can-read-media')) {
+        if (!Auth::user()->hasPermission('can-read-taxonomies')) {
             $response['success'] = false;
             $response['errors'][] = trans("vaahcms::messages.permission_denied");
 
@@ -104,8 +104,8 @@ class TaxonomiesController extends Controller
     //----------------------------------------------------------
     public function updateList(Request $request): JsonResponse
     {
-        if (!Auth::user()->hasPermission('can-update-media') ||
-            !Auth::user()->hasPermission('can-manage-media')
+        if (!Auth::user()->hasPermission('can-update-taxonomies') ||
+            !Auth::user()->hasPermission('can-manage-taxonomies')
         ) {
             $response['success'] = false;
             $response['errors'][] = trans("vaahcms::messages.permission_denied");
@@ -132,8 +132,8 @@ class TaxonomiesController extends Controller
     //----------------------------------------------------------
     public function listAction(Request $request, $type): JsonResponse
     {
-        if (!Auth::user()->hasPermission('can-update-media') ||
-            !Auth::user()->hasPermission('can-manage-media')
+        if (!Auth::user()->hasPermission('can-update-taxonomies') ||
+            !Auth::user()->hasPermission('can-manage-taxonomies')
         ) {
             $response['success'] = false;
             $response['errors'][] = trans("vaahcms::messages.permission_denied");
@@ -160,7 +160,7 @@ class TaxonomiesController extends Controller
     //----------------------------------------------------------
     public function deleteList(Request $request): JsonResponse
     {
-        if (!Auth::user()->hasPermission('can-delete-media')) {
+        if (!Auth::user()->hasPermission('can-delete-taxonomies')) {
             $response['success'] = false;
             $response['errors'][] = trans("vaahcms::messages.permission_denied");
 
@@ -186,7 +186,7 @@ class TaxonomiesController extends Controller
     //----------------------------------------------------------
     public function createItem(Request $request): JsonResponse
     {
-        if (!Auth::user()->hasPermission('can-create-media')) {
+        if (!Auth::user()->hasPermission('can-read-taxonomies')) {
             $response['success'] = false;
             $response['errors'][] = trans("vaahcms::messages.permission_denied");
 
@@ -212,7 +212,7 @@ class TaxonomiesController extends Controller
     //----------------------------------------------------------
     public function getItem(Request $request, $id): JsonResponse
     {
-        if (!Auth::user()->hasPermission('can-read-media')) {
+        if (!Auth::user()->hasPermission('can-read-taxonomies')) {
             $response['success'] = false;
             $response['errors'][] = trans("vaahcms::messages.permission_denied");
 
@@ -238,7 +238,7 @@ class TaxonomiesController extends Controller
     //----------------------------------------------------------
     public function updateItem(Request $request, $id): JsonResponse
     {
-        if (!Auth::user()->hasPermission('can-update-media')) {
+        if (!Auth::user()->hasPermission('can-update-taxonomies')) {
             $response['success'] = false;
             $response['errors'][] = trans("vaahcms::messages.permission_denied");
 
@@ -264,7 +264,7 @@ class TaxonomiesController extends Controller
     //----------------------------------------------------------
     public function deleteItem(Request $request, $id): JsonResponse
     {
-        if (!Auth::user()->hasPermission('can-delete-media')) {
+        if (!Auth::user()->hasPermission('can-delete-taxonomies')) {
             $response['success'] = false;
             $response['errors'][] = trans("vaahcms::messages.permission_denied");
 
@@ -290,8 +290,8 @@ class TaxonomiesController extends Controller
     //----------------------------------------------------------
     public function itemAction(Request $request, $id, $action): JsonResponse
     {
-        if (!Auth::user()->hasPermission('can-update-media') ||
-            !Auth::user()->hasPermission('can-manage-media')
+        if (!Auth::user()->hasPermission('can-update-taxonomies') ||
+            !Auth::user()->hasPermission('can-manage-taxonomies')
         ) {
             $response['success'] = false;
             $response['errors'][] = trans("vaahcms::messages.permission_denied");
@@ -553,6 +553,4 @@ class TaxonomiesController extends Controller
         return response()->json($response);
     }
     //----------------------------------------------------------
-
-
 }
