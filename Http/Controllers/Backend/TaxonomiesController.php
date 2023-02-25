@@ -1,24 +1,22 @@
 <?php namespace WebReinvent\VaahCms\Http\Controllers\Backend;
 
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
+
 use WebReinvent\VaahCms\Models\Taxonomy;
 use WebReinvent\VaahCms\Models\TaxonomyType;
-
 
 class TaxonomiesController extends Controller
 {
     //----------------------------------------------------------
     public function __construct()
     {
-
     }
-
     //----------------------------------------------------------
-
-    public function getAssets(Request $request)
+    public function getAssets(Request $request): JsonResponse
     {
         if (!Auth::user()->hasPermission('has-access-of-taxonomies-section')) {
             $response['success'] = false;
@@ -27,241 +25,503 @@ class TaxonomiesController extends Controller
             return response()->json($response);
         }
 
-        $data = [];
+        try {
+            $data = [];
 
-        $data['permission'] = [];
-        $data['rows'] = config('vaahcms.per_page');
+            $data['permission'] = [];
+            $data['rows'] = config('vaahcms.per_page');
 
-        $data['fillable']['except'] = [
-            'uuid',
-            'created_by',
-            'updated_by',
-            'deleted_by',
-        ];
+            $data['fillable']['except'] = [
+                'uuid',
+                'created_by',
+                'updated_by',
+                'deleted_by',
+            ];
 
-        $model = new Taxonomy();
-        $fillable = $model->getFillable();
-        $data['fillable']['columns'] = array_diff(
-            $fillable, $data['fillable']['except']
-        );
+            $model = new Taxonomy();
+            $fillable = $model->getFillable();
+            $data['fillable']['columns'] = array_diff(
+                $fillable, $data['fillable']['except']
+            );
 
-        foreach ($fillable as $column) {
-            $data['empty_item'][$column] = null;
+            foreach ($fillable as $column) {
+                $data['empty_item'][$column] = null;
+            }
+
+            $taxonomy_types = TaxonomyType::query()
+                ->whereNotNull('is_active')
+                ->whereNull('parent_id')
+                ->select('id', 'uuid as key', 'name as label', 'slug as data')
+                ->with(['children'])
+                ->get();
+
+            $data['actions'] = [];
+            $data['countries'] = vh_get_country_list();
+            $data['types'] = $taxonomy_types->toArray();
+
+            $response['success'] = true;
+            $response['data'] = $data;
+        } catch (\Exception $e) {
+            $response = [];
+            $response['success'] = false;
+
+            if (env('APP_DEBUG')) {
+                $response['errors'][] = $e->getMessage();
+                $response['hint'][] = $e->getTrace();
+            } else {
+                $response['messages'][] = 'Something went wrong.';
+            }
         }
 
-        $taxonomy_types = TaxonomyType::query()
-            ->whereNotNull('is_active')
-            ->whereNull('parent_id')
-            ->select('id', 'uuid as key', 'name as label', 'slug as data')
-            ->with(['children'])
-            ->get();
+        return response()->json($response);
+    }
+    //----------------------------------------------------------
+    public function getList(Request $request): JsonResponse
+    {
+        if (!Auth::user()->hasPermission('can-read-media')) {
+            $response['success'] = false;
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
 
-        $data['actions'] = [];
-        $data['countries'] = vh_get_country_list();
-        $data['types'] = $taxonomy_types->toArray();
+            return response()->json($response);
+        }
 
-        $response['success'] = true;
-        $response['data'] = $data;
+        try {
+            $response = Taxonomy::getList($request);
+        } catch (\Exception $e) {
+            $response = [];
+            $response['success'] = false;
 
-        return $response;
-    }
+            if (env('APP_DEBUG')) {
+                $response['errors'][] = $e->getMessage();
+                $response['hint'][] = $e->getTrace();
+            } else {
+                $response['messages'][] = 'Something went wrong.';
+            }
+        }
 
-    //----------------------------------------------------------
-    public function getList(Request $request)
-    {
-        return Taxonomy::getList($request);
+        return response()->json($response);
     }
     //----------------------------------------------------------
-    public function updateList(Request $request)
+    public function updateList(Request $request): JsonResponse
     {
-        return Taxonomy::updateList($request);
-    }
-    //----------------------------------------------------------
-    public function listAction(Request $request, $type)
-    {
-        return Taxonomy::listAction($request, $type);
-    }
-    //----------------------------------------------------------
-    public function deleteList(Request $request)
-    {
-        return Taxonomy::deleteList($request);
-    }
-    //----------------------------------------------------------
-    public function createItem(Request $request)
-    {
-        return Taxonomy::createItem($request);
-    }
-    //----------------------------------------------------------
-    public function getItem(Request $request, $id)
-    {
-        return Taxonomy::getItem($id);
-    }
-    //----------------------------------------------------------
-    public function updateItem(Request $request,$id)
-    {
-        return Taxonomy::updateItem($request,$id);
-    }
-    //----------------------------------------------------------
-    public function deleteItem(Request $request,$id)
-    {
-        return Taxonomy::deleteItem($request,$id);
-    }
-    //----------------------------------------------------------
-    public function itemAction(Request $request,$id,$action)
-    {
-        return Taxonomy::itemAction($request,$id,$action);
-    }
-    //----------------------------------------------------------
-    public function createTaxonomyType(Request $request)
-    {
+        if (!Auth::user()->hasPermission('can-update-media') ||
+            !Auth::user()->hasPermission('can-manage-media')
+        ) {
+            $response['success'] = false;
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
 
+            return response()->json($response);
+        }
+
+        try {
+            $response = Taxonomy::updateList($request);
+        } catch (\Exception $e) {
+            $response = [];
+            $response['success'] = false;
+
+            if (env('APP_DEBUG')) {
+                $response['errors'][] = $e->getMessage();
+                $response['hint'][] = $e->getTrace();
+            } else {
+                $response['messages'][] = 'Something went wrong.';
+            }
+        }
+
+        return response()->json($response);
+    }
+    //----------------------------------------------------------
+    public function listAction(Request $request, $type): JsonResponse
+    {
+        if (!Auth::user()->hasPermission('can-update-media') ||
+            !Auth::user()->hasPermission('can-manage-media')
+        ) {
+            $response['success'] = false;
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+            return response()->json($response);
+        }
+
+        try {
+            $response = Taxonomy::listAction($request, $type);
+        } catch (\Exception $e) {
+            $response = [];
+            $response['success'] = false;
+
+            if (env('APP_DEBUG')) {
+                $response['errors'][] = $e->getMessage();
+                $response['hint'][] = $e->getTrace();
+            } else {
+                $response['messages'][] = 'Something went wrong.';
+            }
+        }
+
+        return response()->json($response);
+    }
+    //----------------------------------------------------------
+    public function deleteList(Request $request): JsonResponse
+    {
+        if (!Auth::user()->hasPermission('can-delete-media')) {
+            $response['success'] = false;
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+            return response()->json($response);
+        }
+
+        try {
+            $response = Taxonomy::deleteList($request);
+        } catch (\Exception $e) {
+            $response = [];
+            $response['success'] = false;
+
+            if (env('APP_DEBUG')) {
+                $response['errors'][] = $e->getMessage();
+                $response['hint'][] = $e->getTrace();
+            } else {
+                $response['messages'][] = 'Something went wrong.';
+            }
+        }
+
+        return response()->json($response);
+    }
+    //----------------------------------------------------------
+    public function createItem(Request $request): JsonResponse
+    {
+        if (!Auth::user()->hasPermission('can-create-media')) {
+            $response['success'] = false;
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+            return response()->json($response);
+        }
+
+        try {
+            $response = Taxonomy::createItem($request);
+        } catch (\Exception $e) {
+            $response = [];
+            $response['success'] = false;
+
+            if (env('APP_DEBUG')) {
+                $response['errors'][] = $e->getMessage();
+                $response['hint'][] = $e->getTrace();
+            } else {
+                $response['messages'][] = 'Something went wrong.';
+            }
+        }
+
+        return response()->json($response);
+    }
+    //----------------------------------------------------------
+    public function getItem(Request $request, $id): JsonResponse
+    {
+        if (!Auth::user()->hasPermission('can-read-media')) {
+            $response['success'] = false;
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+            return response()->json($response);
+        }
+
+        try {
+            $response = Taxonomy::getItem($id);
+        } catch (\Exception $e) {
+            $response = [];
+            $response['success'] = false;
+
+            if (env('APP_DEBUG')) {
+                $response['errors'][] = $e->getMessage();
+                $response['hint'][] = $e->getTrace();
+            } else {
+                $response['messages'][] = 'Something went wrong.';
+            }
+        }
+
+        return response()->json($response);
+    }
+    //----------------------------------------------------------
+    public function updateItem(Request $request, $id): JsonResponse
+    {
+        if (!Auth::user()->hasPermission('can-update-media')) {
+            $response['success'] = false;
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+            return response()->json($response);
+        }
+
+        try {
+            $response = Taxonomy::updateItem($request, $id);
+        } catch (\Exception $e) {
+            $response = [];
+            $response['success'] = false;
+
+            if (env('APP_DEBUG')) {
+                $response['errors'][] = $e->getMessage();
+                $response['hint'][] = $e->getTrace();
+            } else {
+                $response['messages'][] = 'Something went wrong.';
+            }
+        }
+
+        return response()->json($response);
+    }
+    //----------------------------------------------------------
+    public function deleteItem(Request $request, $id): JsonResponse
+    {
+        if (!Auth::user()->hasPermission('can-delete-media')) {
+            $response['success'] = false;
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+            return response()->json($response);
+        }
+
+        try {
+            $response = Taxonomy::deleteItem($request, $id);
+        } catch (\Exception $e) {
+            $response = [];
+            $response['success'] = false;
+
+            if (env('APP_DEBUG')) {
+                $response['errors'][] = $e->getMessage();
+                $response['hint'][] = $e->getTrace();
+            } else {
+                $response['messages'][] = 'Something went wrong.';
+            }
+        }
+
+        return response()->json($response);
+    }
+    //----------------------------------------------------------
+    public function itemAction(Request $request, $id, $action): JsonResponse
+    {
+        if (!Auth::user()->hasPermission('can-update-media') ||
+            !Auth::user()->hasPermission('can-manage-media')
+        ) {
+            $response['success'] = false;
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+            return response()->json($response);
+        }
+
+        try {
+            $response = Taxonomy::itemAction($request, $id, $action);
+        } catch (\Exception $e) {
+            $response = [];
+            $response['success'] = false;
+
+            if (env('APP_DEBUG')) {
+                $response['errors'][] = $e->getMessage();
+                $response['hint'][] = $e->getTrace();
+            } else {
+                $response['messages'][] = 'Something went wrong.';
+            }
+        }
+
+        return response()->json($response);
+    }
+    //----------------------------------------------------------
+    public function createTaxonomyType(Request $request): JsonResponse
+    {
         if (!Auth::user()->hasPermission('can-manage-taxonomy-type')) {
             $response['success'] = false;
             $response['errors'][] = trans("vaahcms::messages.permission_denied");
 
-            return $response;
+            return response()->json($response);
         }
 
-        if (!$request->has('name') || !$request->name) {
+        try {
+            if (!$request->has('name') || !$request->name) {
+                $response['success'] = false;
+                $response['errors'][] = 'The name field is required.';
+                return response()->json($response);
+            }
+
+            $item = TaxonomyType::query()
+                ->where('name',$request->name)
+                ->withTrashed()
+                ->first();
+
+            if ($item) {
+                $response['success'] = false;
+                $response['errors'][] = "This name is already exist.";
+                return response()->json($response);
+            }
+
+            $add = new TaxonomyType();
+            $add->fill($request->all());
+            $add->slug = Str::slug($request->name);
+            $add->is_active = true;
+            $add->save();
+
+            $response['success'] = true;
+            $response['messages'][] = 'Successfully Added.';
+        } catch (\Exception $e) {
+            $response = [];
             $response['success'] = false;
-            $response['errors'][] = 'The name field is required.';
-            return $response;
+
+            if (env('APP_DEBUG')) {
+                $response['errors'][] = $e->getMessage();
+                $response['hint'][] = $e->getTrace();
+            } else {
+                $response['messages'][] = 'Something went wrong.';
+            }
         }
 
-        $item = TaxonomyType::where('name',$request->name)
-            ->withTrashed()->first();
-
-        if($item)
-        {
-            $response['success'] = false;
-            $response['errors'][] = "This name is already exist.";
-            return $response;
-        }
-
-        $add = new TaxonomyType();
-        $add->fill($request->all());
-        $add->slug = Str::slug($request->name);
-        $add->is_active = true;
-        $add->save();
-
-        $response['success'] = true;
-        $response['messages'][] = 'Successfully Added.';
-        return $response;
+        return response()->json($response);
     }
     //----------------------------------------------------------
-    public function deleteTaxonomyType(Request $request)
+    public function deleteTaxonomyType(Request $request): JsonResponse
     {
         if (!Auth::user()->hasPermission('can-manage-taxonomy-type')) {
             $response['success'] = false;
             $response['errors'][] = trans("vaahcms::messages.permission_denied");
 
-            return $response;
+            return response()->json($response);
         }
 
-        $item = TaxonomyType::where('id',$request->id)->with(['childrens'])
-            ->withTrashed()->first();
+        try {
+            $item = TaxonomyType::query()
+                ->where('id',$request->id)
+                ->with(['childrens'])
+                ->withTrashed()
+                ->first();
 
-        if(count($item->childrens) > 0){
-            self::deletechildrens($item->childrens);
+            if(count($item->childrens) > 0){
+                self::deletechildrens($item->childrens);
+            }
+
+            $item->forceDelete();
+
+            $response['success'] = true;
+            $response['messages'][] = 'Successfully Deleted.';
+        } catch (\Exception $e) {
+            $response = [];
+            $response['success'] = false;
+
+            if (env('APP_DEBUG')) {
+                $response['errors'][] = $e->getMessage();
+                $response['hint'][] = $e->getTrace();
+            } else {
+                $response['messages'][] = 'Something went wrong.';
+            }
         }
 
-        $item->forceDelete();
-
-        $response['success'] = true;
-        $response['messages'][] = 'Successfully Deleted.';
-        return $response;
+        return response()->json($response);
     }
     //----------------------------------------------------------
     public function deletechildrens($types)
     {
-        foreach ($types as $type){
-            if(count($type->childrens) > 0){
+        foreach ($types as $type) {
+            if (count($type->childrens) > 0) {
                 self::deletechildrens($type->childrens);
             }
 
             $type->forceDelete();
         }
-
     }
     //----------------------------------------------------------
-    public function updateTaxonomyType(Request $request)
+    public function updateTaxonomyType(Request $request): JsonResponse
     {
         if (!Auth::user()->hasPermission('can-manage-taxonomy-type')) {
             $response['success'] = false;
             $response['errors'][] = trans("vaahcms::messages.permission_denied");
 
-            return $response;
+            return response()->json($response);
         }
 
-        if (!$request->newName) {
-            $response['status']       = 'failed';
-            $response['errors'][]     = 'Name is required.';
-            return $response;
+        try {
+            if (!$request->newName) {
+                $response['status']       = 'failed';
+                $response['errors'][]     = 'Name is required.';
+                return $response;
+            }
+
+            $name_exist = TaxonomyType::query()
+                ->where('id','!=',$request->id)
+                ->where('name',$request->newName)->first();
+
+            if($name_exist){
+                $response['status']       = 'failed';
+                $response['errors'][]     = 'Name already exist.';
+                return response()->json($response);
+            }
+
+
+            $slug_exist = TaxonomyType::query()
+                ->where('id','!=',$request->id)
+                ->where('slug',Str::slug($request->newName))
+                ->first();
+
+            if ($slug_exist){
+                $response['status']       = 'failed';
+                $response['errors'][]     = 'Slug already exist.';
+                return response()->json($response);
+            }
+
+            $list = TaxonomyType::where('id',$request->id)->first();
+
+            $list->name = $request->newName;
+            $list->slug = Str::slug($request->newName);
+            $list->save();
+
+            $response['status'] = 'success';
+            $response['messages'][] = 'Updated Successfully.';
+        } catch (\Exception $e) {
+            $response = [];
+            $response['success'] = false;
+
+            if (env('APP_DEBUG')) {
+                $response['errors'][] = $e->getMessage();
+                $response['hint'][] = $e->getTrace();
+            } else {
+                $response['messages'][] = 'Something went wrong.';
+            }
         }
 
-
-        $name_exist = TaxonomyType::where('id','!=',$request->id)
-            ->where('name',$request->newName)->first();
-
-        if($name_exist){
-            $response['status']       = 'failed';
-            $response['errors'][]     = 'Name already exist.';
-            return $response;
-        }
-
-
-        $slug_exist = TaxonomyType::where('id','!=',$request->id)
-            ->where('slug',Str::slug($request->newName))->first();
-
-        if($slug_exist){
-            $response['status']       = 'failed';
-            $response['errors'][]     = 'Slug already exist.';
-            return $response;
-        }
-
-        $list = TaxonomyType::where('id',$request->id)->first();
-
-        $list->name = $request->newName;
-        $list->slug = Str::slug($request->newName);
-        $list->save();
-
-        $response['status']       = 'success';
-        $response['messages'][]   = 'Updated Successfully.';
-        return $response;
-
+        return response()->json($response);
     }
     //----------------------------------------------------------
-    public function updateTaxonomyTypePosition(Request $request)
+    public function updateTaxonomyTypePosition(Request $request): JsonResponse
     {
-
         if (!Auth::user()->hasPermission('can-manage-taxonomy-type')) {
             $response['success'] = false;
             $response['errors'][] = trans("vaahcms::messages.permission_denied");
 
-            return $response;
+            return response()->json($response);
         }
 
-        $parent_id = null;
+        try {
+            $parent_id = null;
 
-        if ($request->parent_id && $request->parent_id != 0) {
+            if ($request->parent_id && $request->parent_id != 0) {
 
-            $parent_id = $request->parent_id;
+                $parent_id = $request->parent_id;
+            }
+
+            $item = TaxonomyType::query()
+                ->where('id',$request->id)
+                ->first();
+
+            $item->parent_id = $parent_id;
+            $item->save();
+
+            $response['success'] = true;
+            $response['messages'][] = 'Updated Successfully.';
+        } catch (\Exception $e) {
+            $response = [];
+            $response['success'] = false;
+
+            if (env('APP_DEBUG')) {
+                $response['errors'][] = $e->getMessage();
+                $response['hint'][] = $e->getTrace();
+            } else {
+                $response['messages'][] = 'Something went wrong.';
+            }
         }
 
-        $item = TaxonomyType::where('id',$request->id)->first();
-
-        $item->parent_id = $parent_id;
-        $item->save();
-
-        $response['status']       = 'success';
-        $response['messages'][]   = 'Updated Successfully.';
-        return $response;
-
+        return response()->json($response);
     }
     //----------------------------------------------------------
-    public function getParents(Request $request,$id, $name=null)
+    public function getParents(Request $request, $id, $name=null): array
     {
-        $list = Taxonomy::where(function($q) use ($name){
+        $list = Taxonomy::query()
+            ->where(function($q) use ($name){
             $q->where('name', 'LIKE', '%'.$name.'%')
                 ->orWhere('slug', 'LIKE', '%'.$name.'%');
         })->where('vh_taxonomy_type_id', $id)
@@ -274,9 +534,23 @@ class TaxonomiesController extends Controller
 
     }
     //----------------------------------------------------------
-    public function getCountryById(Request $request, $id)
+    public function getCountryById(Request $request, $id): JsonResponse
     {
-        return Taxonomy::find($id);
+        try {
+            $response = Taxonomy::query()->find($id);
+        } catch (\Exception $e) {
+            $response = [];
+            $response['success'] = false;
+
+            if (env('APP_DEBUG')) {
+                $response['errors'][] = $e->getMessage();
+                $response['hint'][] = $e->getTrace();
+            } else {
+                $response['messages'][] = 'Something went wrong.';
+            }
+        }
+
+        return response()->json($response);
     }
     //----------------------------------------------------------
 
