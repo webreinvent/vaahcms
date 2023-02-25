@@ -118,6 +118,13 @@ class RegistrationsController extends Controller
     //----------------------------------------------------------
     public function updateList(Request $request): JsonResponse
     {
+        if (!Auth::user()->hasPermission('can-update-registrations')) {
+            $response['success'] = false;
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+            return response()->json($response);
+        }
+
         try {
             $response = Registration::updateList($request);
         } catch (\Exception $e) {
@@ -137,6 +144,15 @@ class RegistrationsController extends Controller
     //----------------------------------------------------------
     public function listAction(Request $request, $type): JsonResponse
     {
+        if (!Auth::user()->hasPermission('can-update-registrations') ||
+            !Auth::user()->hasPermission('can-manage-registrations')
+        ) {
+            $response['success'] = false;
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+            return response()->json($response);
+        }
+
         try {
             $response= Registration::listAction($request, $type);
         } catch (\Exception $e) {
@@ -156,6 +172,15 @@ class RegistrationsController extends Controller
     //----------------------------------------------------------
     public function deleteList(Request $request): JsonResponse
     {
+        if(!Auth::user()->hasPermission('can-update-registrations') ||
+            !Auth::user()->hasPermission('can-delete-registrations'))
+        {
+            $response['success'] = false;
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+            return response()->json($response);
+        }
+
         try {
             $response = Registration::deleteList($request);
         } catch (\Exception $e) {
@@ -175,6 +200,13 @@ class RegistrationsController extends Controller
     //----------------------------------------------------------
     public function createItem(Request $request): JsonResponse
     {
+         if (!Auth::user()->hasPermission('can-create-registrations')) {
+             $response['success'] = false;
+             $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+             return response()->json($response);
+         }
+
         try {
             $response = Registration::createItem($request);
         } catch (\Exception $e) {
@@ -194,6 +226,13 @@ class RegistrationsController extends Controller
     //----------------------------------------------------------
     public function getItem(Request $request, $id): JsonResponse
     {
+         if (!Auth::user()->hasPermission('can-read-registrations')) {
+             $response['success'] = false;
+             $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+             return response()->json($response);
+         }
+
         try {
             $response =  Registration::getItem($id);
         } catch (\Exception $e) {
@@ -213,6 +252,14 @@ class RegistrationsController extends Controller
     //----------------------------------------------------------
     public function updateItem(Request $request ,$id): JsonResponse
     {
+        if (!Auth::user()->hasPermission('can-update-registrations'))
+        {
+            $response['success'] = false;
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+            return response()->json($response);
+        }
+
         try {
             $response = Registration::updateItem($request, $id);
         } catch (\Exception $e) {
@@ -232,6 +279,15 @@ class RegistrationsController extends Controller
     //----------------------------------------------------------
     public function deleteItem(Request $request,$id): JsonResponse
     {
+        if (!Auth::user()->hasPermission('can-update-registrations') ||
+            !Auth::user()->hasPermission('can-delete-registrations'))
+        {
+            $response['success'] = false;
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+            return response()->json($response);
+        }
+
         try {
             $response = Registration::deleteItem($request, $id);
         } catch (\Exception $e) {
@@ -251,6 +307,15 @@ class RegistrationsController extends Controller
     //----------------------------------------------------------
     public function itemAction(Request $request, $id, $action): JsonResponse
     {
+        if (!Auth::user()->hasPermission('can-update-registrations') ||
+            !Auth::user()->hasPermission('can-manage-registrations')
+        ) {
+            $response['success'] = false;
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+            return response()->json($response);
+        }
+
         try {
             $response = Registration::itemAction($request, $id, $action);
         } catch (\Exception $e) {
@@ -296,7 +361,19 @@ class RegistrationsController extends Controller
             return response()->json($response);
         }
 
-        $response = Registration::createUser($id);
+        try {
+            $response = Registration::createUser($id);
+        }  catch (\Exception $e) {
+            $response = [];
+            $response['success'] = false;
+
+            if (env('APP_DEBUG')) {
+                $response['errors'][] = $e->getMessage();
+                $response['hint'][] = $e->getTrace();
+            } else {
+                $response['messages'][] = 'Something went wrong.';
+            }
+        }
 
         return response()->json($response);
     }
