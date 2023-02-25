@@ -22,7 +22,7 @@ class FailedJobsController extends Controller
 
             return response()->json($response);
         }
-        
+
         try {
             $data = [];
 
