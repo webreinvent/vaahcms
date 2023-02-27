@@ -448,12 +448,6 @@ export const useModuleStore = defineStore({
                 this.getItemMenu();
                 this.resetActivateBtnLoader(this.form.action,data.item);
             }
-            this.is_installing = -1;
-        },
-        //---------------------------------------------------------------------
-        async resetActivateBtnLoader(action,item) {
-            let index = this.active_action.indexOf(action+'_'+item.id);
-            this.active_action.splice(index,1);
         },
         //---------------------------------------------------------------------
         async resetActivateBtnLoader(action,item) {
@@ -488,10 +482,8 @@ export const useModuleStore = defineStore({
             }
         },
         //---------------------------------------------------------------------
-        async toggleIsActive(item,index)
+        async toggleIsActive(item)
         {
-            this.is_installing = index;
-
             if(item.is_active)
             {
                 this.active_action.push('deactivate_'+item.id);

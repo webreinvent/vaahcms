@@ -47,7 +47,7 @@ const importSampleDataModal = (item) => {
                                         label="Deactivate"
                                         :loading="store.active_action.includes('deactivate_'+item.id)"
                                         v-tooltip.top="'Deactivate Module'"
-                                        @click="store.toggleIsActive(item,index)"
+                                        @click="store.toggleIsActive(item)"
                                 />
 
                                 <Button v-if="!item.is_active && store.hasPermission('can-activate-module')"

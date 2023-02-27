@@ -476,8 +476,6 @@ export const useThemeStore = defineStore({
         //---------------------------------------------------------------------
         async toggleIsActive(item,index)
         {
-            this.is_installing = index;
-
             if(item.is_active) {
                 this.active_action.push('deactivate_'+item.id);
                 await this.itemAction('deactivate', item);
