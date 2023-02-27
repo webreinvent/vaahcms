@@ -13,15 +13,17 @@ class CreateVhThemeBlocksTable extends Migration
      */
     public function up()
     {
-        Schema::create('vh_theme_blocks', function (Blueprint $table) {
-            $table->bigIncrements('id')->unsigned();
-            $table->integer('vh_theme_id')->nullable()->index();
-            $table->string('name',150)->nullable();
-            $table->string('slug',150)->nullable()->index();
-            $table->timestamps();
+        if (!Schema::hasTable('vh_theme_blocks')) {
+            Schema::create('vh_theme_blocks', function (Blueprint $table) {
+                $table->bigIncrements('id')->unsigned();
+                $table->integer('vh_theme_id')->nullable()->index();
+                $table->string('name', 150)->nullable();
+                $table->string('slug', 150)->nullable()->index();
+                $table->timestamps();
 
-            $table->index(['created_at', 'updated_at']);
-        });
+                $table->index(['created_at', 'updated_at']);
+            });
+        }
     }
 
     /**
