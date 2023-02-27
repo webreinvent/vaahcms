@@ -325,32 +325,14 @@ class Role extends RoleBase
     }
 
     //-------------------------------------------------
-    public static function getItemPermission($request, $id)
+    public static function getItemPermission($request, $id): array
     {
-        if(!\Auth::user()->hasPermission('can-read-roles'))
-        {
-            $response['status'] = 'failed';
-            $response['errors'][] = trans("vaahcms::messages.permission_denied");
-
-            return response()->json($response);
-        }
-
-        $response = self::getRolePermission($request, $id);
-        return response()->json($response);
+        return self::getRolePermission($request, $id);
     }
     //-------------------------------------------------
-    public static function getItemUser($request, $id)
+    public static function getItemUser($request, $id): array
     {
-        if(!\Auth::user()->hasPermission('can-read-roles'))
-        {
-            $response['status'] = 'failed';
-            $response['errors'][] = trans("vaahcms::messages.permission_denied");
-
-            return response()->json($response);
-        }
-
-        $response = self::getRoleUser($request, $id);
-        return response()->json($response);
+        return self::getRoleUser($request, $id);
     }
     //-------------------------------------------------
     public static function postActions($request, $action)

@@ -3,10 +3,12 @@
 namespace WebReinvent\VaahCms\Http\Controllers\Backend\Settings;
 
 
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 use WebReinvent\VaahCms\Entities\Language;
@@ -17,133 +19,169 @@ use WebReinvent\VaahCms\Libraries\VaahSetup;
 use WebReinvent\VaahCms\Models\Role;
 use WebReinvent\VaahCms\Models\User;
 
-
 class UserSettingController extends Controller
 {
-
     //----------------------------------------------------------
     public function __construct()
     {
-
     }
-
     //----------------------------------------------------------
-    public function getAssets(Request $request)
+    public function getAssets(Request $request): JsonResponse
     {
-
-        if(!\Auth::user()->hasPermission('has-access-of-setting-section'))
-        {
+        if (!Auth::user()->hasPermission('has-access-of-setting-section')) {
             $response['success'] = false;
             $response['errors'][] = trans("vaahcms::messages.permission_denied");
 
             return response()->json($response);
         }
 
-        $data['timezones'] = vh_get_timezones();
-        $data['country_calling_codes'] = vh_get_countries_calling_codes();
+        try {
+            $data['timezones'] = vh_get_timezones();
+            $data['country_calling_codes'] = vh_get_countries_calling_codes();
 
-        $response['success'] = true;
-        $response['data'] = $data;
+            $response['success'] = true;
+            $response['data'] = $data;
+        } catch (\Exception $e) {
+            $response = [];
+            $response['success'] = false;
+
+            if (env('APP_DEBUG')) {
+                $response['errors'][] = $e->getMessage();
+                $response['hint'][] = $e->getTrace();
+            } else {
+                $response['messages'][] = 'Something went wrong.';
+            }
+        }
 
         return response()->json($response);
     }
     //----------------------------------------------------------
-    public function getList(Request $request)
+    public function getList(Request $request): JsonResponse
     {
 
-        if(!\Auth::user()->hasPermission('has-access-of-setting-section'))
-        {
+        if (!Auth::user()->hasPermission('has-access-of-setting-section')) {
             $response['success'] = false;
             $response['errors'][] = trans("vaahcms::messages.permission_denied");
 
             return response()->json($response);
         }
 
-        $fields = Setting::where('category','user_setting')
-            ->where('label','field')
-            ->select('id','key','label','type','value')->get();
+        try {
+            $fields = Setting::query()
+                ->where('category','user_setting')
+                ->where('label','field')
+                ->select('id','key','label','type','value')
+                ->get();
 
-        $custom_fields = Setting::where('category','user_setting')
-            ->where('label','custom_fields')
-            ->select('id','key','label','type','value')
-            ->first();
+            $custom_fields = Setting::query()
+                ->where('category','user_setting')
+                ->where('label','custom_fields')
+                ->select('id','key','label','type','value')
+                ->first();
 
-        $response['success'] = true;
-        $response['data']['list']['fields'] = $fields;
-        $response['data']['list']['custom_fields'] = $custom_fields;
+            $response['success'] = true;
+            $response['data']['list']['fields'] = $fields;
+            $response['data']['list']['custom_fields'] = $custom_fields;
+        } catch (\Exception $e) {
+            $response = [];
+            $response['success'] = false;
+
+            if (env('APP_DEBUG')) {
+                $response['errors'][] = $e->getMessage();
+                $response['hint'][] = $e->getTrace();
+            } else {
+                $response['messages'][] = 'Something went wrong.';
+            }
+        }
 
         return response()->json($response);
-
     }
-
     //----------------------------------------------------------
-    public function storeCustomField(Request $request)
+    public function storeCustomField(Request $request): JsonResponse
     {
-
-        if(!\Auth::user()->hasPermission('has-access-of-setting-section'))
-        {
+        if (!Auth::user()->hasPermission('has-access-of-setting-section')) {
             $response['success'] = false;
             $response['errors'][] = trans("vaahcms::messages.permission_denied");
 
             return response()->json($response);
         }
 
-        $inputs = $request->item;
+        try {
+            $inputs = $request->item;
 
+            $rules = array(
+                'value.*.name' => 'required',
+            );
 
-        $rules = array(
-            'value.*.name' => 'required',
-        );
-        $validator = \Validator::make( $inputs, $rules);
-        if ( $validator->fails() ) {
+            $validator = \Validator::make( $inputs, $rules);
 
-            $errors             = errorsToArray($validator->errors());
+            if ($validator->fails()) {
+
+                $errors             = errorsToArray($validator->errors());
+                $response['success'] = false;
+                $response['errors'] = $errors;
+                return response()->json($response);
+            }
+
+            $input = $request->item;
+
+            if ($input['id']){
+                Setting::query()
+                    ->where('id', $input['id'])
+                    ->update($input);
+            } else {
+                $item = new Setting();
+                $item->fill($input);
+                $item->save();
+            }
+
+            $response['success'] = true;
+            $response['messages'][] = 'Updated';
+        } catch (\Exception $e) {
+            $response = [];
             $response['success'] = false;
-            $response['errors'] = $errors;
-            return $response;
+
+            if (env('APP_DEBUG')) {
+                $response['errors'][] = $e->getMessage();
+                $response['hint'][] = $e->getTrace();
+            } else {
+                $response['messages'][] = 'Something went wrong.';
+            }
         }
-
-        $input = $request->item;
-
-        if($input['id']){
-            Setting::where('id',$input['id'])->update($input);
-        }else{
-            $item = new Setting();
-            $item->fill($input);
-            $item->save();
-        }
-
-        $response['success'] = true;
-        $response['messages'][] = 'Updated';
 
         return response()->json($response);
-
     }
-
     //----------------------------------------------------------
-    public function storeField(Request $request)
+    public function storeField(Request $request): JsonResponse
     {
 
-        if(!\Auth::user()->hasPermission('has-access-of-setting-section'))
-        {
+        if (!Auth::user()->hasPermission('has-access-of-setting-section')) {
             $response['success'] = false;
             $response['errors'][] = trans("vaahcms::messages.permission_denied");
 
             return response()->json($response);
         }
 
-        $input = $request->item;
+        try {
+            $input = $request->item;
 
-        Setting::where('id',$input['id'])->update($input);
+            Setting::query()->where('id', $input['id'])->update($input);
 
-        $response['success'] = true;
-        $response['data']['item'] = $input;
+            $response['success'] = true;
+            $response['data']['item'] = $input;
+        } catch (\Exception $e) {
+            $response = [];
+            $response['success'] = false;
+
+            if (env('APP_DEBUG')) {
+                $response['errors'][] = $e->getMessage();
+                $response['hint'][] = $e->getTrace();
+            } else {
+                $response['messages'][] = 'Something went wrong.';
+            }
+        }
 
         return response()->json($response);
-
     }
     //----------------------------------------------------------
-    //----------------------------------------------------------
-
-
 }

@@ -346,6 +346,8 @@ class User extends UserBase
             $response['messages'][] = 'Record does not exist.';
             return $response;
         }
+
+        $item->roles()->detach();
         $item->forceDelete();
 
         $response['success'] = true;
