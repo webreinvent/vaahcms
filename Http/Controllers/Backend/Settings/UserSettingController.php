@@ -56,7 +56,7 @@ class UserSettingController extends Controller
         return response()->json($response);
     }
     //----------------------------------------------------------
-    public function getList(Request $request)
+    public function getList(Request $request): JsonResponse
     {
 
         if (!Auth::user()->hasPermission('has-access-of-setting-section')) {
@@ -97,7 +97,7 @@ class UserSettingController extends Controller
         return response()->json($response);
     }
     //----------------------------------------------------------
-    public function storeCustomField(Request $request)
+    public function storeCustomField(Request $request): JsonResponse
     {
         if (!Auth::user()->hasPermission('has-access-of-setting-section')) {
             $response['success'] = false;
@@ -115,12 +115,12 @@ class UserSettingController extends Controller
 
             $validator = \Validator::make( $inputs, $rules);
 
-            if ( $validator->fails() ) {
+            if ($validator->fails()) {
 
                 $errors             = errorsToArray($validator->errors());
                 $response['success'] = false;
                 $response['errors'] = $errors;
-                return $response;
+                return response()->json($response);
             }
 
             $input = $request->item;

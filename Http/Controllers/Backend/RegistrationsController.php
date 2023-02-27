@@ -172,7 +172,7 @@ class RegistrationsController extends Controller
     //----------------------------------------------------------
     public function deleteList(Request $request): JsonResponse
     {
-        if(!Auth::user()->hasPermission('can-update-registrations') ||
+        if (!Auth::user()->hasPermission('can-update-registrations') ||
             !Auth::user()->hasPermission('can-delete-registrations'))
         {
             $response['success'] = false;
@@ -277,11 +277,11 @@ class RegistrationsController extends Controller
         return response()->json($response);
     }
     //----------------------------------------------------------
-    public function deleteItem(Request $request,$id): JsonResponse
+    public function deleteItem(Request $request, $id): JsonResponse
     {
         if (!Auth::user()->hasPermission('can-update-registrations') ||
-            !Auth::user()->hasPermission('can-delete-registrations'))
-        {
+            !Auth::user()->hasPermission('can-delete-registrations')
+        ) {
             $response['success'] = false;
             $response['errors'][] = trans("vaahcms::messages.permission_denied");
 
@@ -378,5 +378,4 @@ class RegistrationsController extends Controller
         return response()->json($response);
     }
     //----------------------------------------------------------
-
 }

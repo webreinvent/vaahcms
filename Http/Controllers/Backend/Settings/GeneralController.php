@@ -66,7 +66,6 @@ class GeneralController extends Controller
     //----------------------------------------------------------
     public function getList(Request $request): JsonResponse
     {
-
         if (!Auth::user()->hasPermission('has-access-of-setting-section')) {
             $response['success'] = false;
             $response['errors'][] = trans("vaahcms::messages.permission_denied");
@@ -149,7 +148,6 @@ class GeneralController extends Controller
     //----------------------------------------------------------
     public function storeLinks(Request $request): JsonResponse
     {
-
         if (!Auth::user()->hasPermission('has-access-of-setting-section')) {
             $response['success'] = false;
             $response['errors'][] = trans("vaahcms::messages.permission_denied");
@@ -228,7 +226,6 @@ class GeneralController extends Controller
     //----------------------------------------------------------
     public function storeMetaTags(Request $request): JsonResponse
     {
-
         if (!Auth::user()->hasPermission('has-access-of-setting-section')) {
             $response['success'] = false;
             $response['errors'][] = trans("vaahcms::messages.permission_denied");

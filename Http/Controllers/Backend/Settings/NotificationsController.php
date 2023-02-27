@@ -140,7 +140,6 @@ class NotificationsController extends Controller
         return response()->json($response);
     }
     //----------------------------------------------------------
-
     public function store(Request $request): JsonResponse
     {
         if (!Auth::user()->hasPermission('has-access-of-setting-section')) {
@@ -227,7 +226,6 @@ class NotificationsController extends Controller
     //----------------------------------------------------------
     public function markAsRead(Request $request): JsonResponse
     {
-
         if (!Auth::user()->hasPermission('has-access-of-setting-section')) {
             $response['success'] = false;
             $response['errors'][] = trans("vaahcms::messages.permission_denied");

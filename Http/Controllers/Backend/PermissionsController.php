@@ -171,32 +171,6 @@ class PermissionsController extends Controller
         return response()->json($response);
     }
     //----------------------------------------------------------
-    public function createItem(Request $request): JsonResponse
-    {
-        if (!Auth::user()->hasPermission('can-update-permissions')) {
-            $response['success'] = false;
-            $response['errors'][] = trans("vaahcms::messages.permission_denied");
-
-            return response()->json($response);
-        }
-
-        try {
-            $response = Permission::createItem($request);
-        } catch (\Exception $e) {
-            $response = [];
-            $response['success'] = false;
-
-            if (env('APP_DEBUG')) {
-                $response['errors'][] = $e->getMessage();
-                $response['hint'][] = $e->getTrace();
-            } else {
-                $response['messages'][] = 'Something went wrong.';
-            }
-        }
-
-        return response()->json($response);
-    }
-    //----------------------------------------------------------
     public function getItem(Request $request, $id): JsonResponse
     {
         if (!Auth::user()->hasPermission('can-update-permissions')) {

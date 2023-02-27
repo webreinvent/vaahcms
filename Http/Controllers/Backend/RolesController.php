@@ -13,7 +13,6 @@ class RolesController extends Controller
     //----------------------------------------------------------
     public function __construct()
     {
-
     }
     //----------------------------------------------------------
     public function getAssets(Request $request): JsonResponse
@@ -44,8 +43,7 @@ class RolesController extends Controller
                 $fillable, $data['fillable']['except']
             );
 
-            foreach ($fillable as $column)
-            {
+            foreach ($fillable as $column) {
                 $data['empty_item'][$column] = null;
             }
 
@@ -399,6 +397,4 @@ class RolesController extends Controller
         return response()->json($response);
     }
     //----------------------------------------------------------
-
-
 }

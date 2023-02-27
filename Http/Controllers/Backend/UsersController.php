@@ -273,9 +273,9 @@ class UsersController extends Controller
     //----------------------------------------------------------
     public function deleteItem(Request $request,$id): JsonResponse
     {
-        if(!Auth::user()->hasPermission('can-update-users') ||
-            !Auth::user()->hasPermission('can-delete-users'))
-        {
+        if (!Auth::user()->hasPermission('can-update-users') ||
+            !Auth::user()->hasPermission('can-delete-users')
+        ) {
             $response['success'] = false;
             $response['errors'][] = trans("vaahcms::messages.permission_denied");
 
@@ -302,8 +302,8 @@ class UsersController extends Controller
     public function itemAction(Request $request,$id,$action): JsonResponse
     {
         if(!Auth::user()->hasPermission('can-manage-users') &&
-            !Auth::user()->hasPermission('can-update-users'))
-        {
+            !Auth::user()->hasPermission('can-update-users')
+        ) {
             $response['success'] = false;
             $response['errors'][] = trans("vaahcms::messages.permission_denied");
 
@@ -411,8 +411,8 @@ class UsersController extends Controller
                 case 'bulk-change-status':
 
                     if (!Auth::user()->hasPermission('can-manage-users') &&
-                        !Auth::user()->hasPermission('can-update-users'))
-                    {
+                        !Auth::user()->hasPermission('can-update-users')
+                    ) {
                         $response['success'] = false;
                         $response['errors'][] = trans("vaahcms::messages.permission_denied");
 
@@ -438,8 +438,7 @@ class UsersController extends Controller
                 //------------------------------------
                 case 'bulk-restore':
 
-                    if (!Auth::user()->hasPermission('can-update-users'))
-                    {
+                    if (!Auth::user()->hasPermission('can-update-users')) {
                         $response['success'] = false;
                         $response['errors'][] = trans("vaahcms::messages.permission_denied");
 
@@ -453,8 +452,8 @@ class UsersController extends Controller
                 case 'bulk-delete':
 
                     if (!Auth::user()->hasPermission('can-update-users') ||
-                        !Auth::user()->hasPermission('can-delete-users'))
-                    {
+                        !Auth::user()->hasPermission('can-delete-users')
+                    ) {
                         $response['success'] = false;
                         $response['errors'][] = trans("vaahcms::messages.permission_denied");
 
@@ -468,8 +467,8 @@ class UsersController extends Controller
                 case 'toggle-role-active-status':
 
                     if (!Auth::user()->hasPermission('can-manage-users') &&
-                        !Auth::user()->hasPermission('can-update-users'))
-                    {
+                        !Auth::user()->hasPermission('can-update-users')
+                    ) {
                         $response['success'] = false;
                         $response['errors'][] = trans("vaahcms::messages.permission_denied");
 
@@ -560,7 +559,7 @@ class UsersController extends Controller
     public function removeAvatar(Request $request)
     {
 
-        if (!\Auth::user()->hasPermission('can-update-users')) {
+        if (!Auth::user()->hasPermission('can-update-users')) {
             $response['success'] = false;
             $response['errors'][] = trans("vaahcms::messages.permission_denied");
 
@@ -621,7 +620,7 @@ class UsersController extends Controller
             $response = User::storePassword($request);
 
             if ($response['success'] === true) {
-                \Auth::logout();
+                Auth::logout();
 
                 $response['data']['redirect_url'] = route('vh.backend');
             }
@@ -677,4 +676,5 @@ class UsersController extends Controller
 
         return response()->json($response);
     }
+    //----------------------------------------------------------
 }

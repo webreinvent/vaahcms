@@ -128,7 +128,20 @@ class LocalizationController extends Controller
             return response()->json($response);
         }
 
-        $response = LanguageString::storeList($request);
+        try {
+            $response = LanguageString::storeList($request);
+        } catch (\Exception $e) {
+            $response = [];
+            $response['success'] = false;
+
+            if (env('APP_DEBUG')) {
+                $response['errors'][] = $e->getMessage();
+                $response['hint'][] = $e->getTrace();
+            } else {
+                $response['messages'][] = 'Something went wrong.';
+            }
+        }
+
         return response()->json($response);
     }
     //----------------------------------------------------------

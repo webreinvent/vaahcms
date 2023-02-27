@@ -58,14 +58,13 @@ class UpdateController extends Controller
                 ],
             ];
 
-            foreach ($settings as $setting)
-            {
-                $stored_settings = Setting::where('category', $setting['category'])
+            foreach ($settings as $setting) {
+                $stored_settings = Setting::query()
+                    ->where('category', $setting['category'])
                     ->where('key', $setting['key'])
                     ->first();
 
-                if(!$stored_settings)
-                {
+                if (!$stored_settings) {
                     $stored_settings = new Setting();
                 }
 
@@ -73,7 +72,7 @@ class UpdateController extends Controller
                 $stored_settings->save();
             }
 
-            if($request->has('update_available') && $request->update_available){
+            if ($request->has('update_available') && $request->update_available) {
                 self::createBackendNotificationForUpdate($request);
             }
 
@@ -96,14 +95,14 @@ class UpdateController extends Controller
     //----------------------------------------------------------
     public function upgrade(): JsonResponse
     {
-        if(!Auth::user()->hasPermission('has-access-of-setting-section')) {
+        if (!Auth::user()->hasPermission('has-access-of-setting-section')) {
             $response['success'] = false;
             $response['errors'][] = trans("vaahcms::messages.permission_denied");
 
             return response()->json($response);
         }
 
-        try{
+        try {
             $response = $this->runCommand("composer", "update");
         } catch(\Exception $e) {
             $response['success'] = false;
@@ -123,7 +122,7 @@ class UpdateController extends Controller
             return response()->json($response);
         }
 
-        try{
+        try {
             //publish assets
             VaahSetup::publishAssets();
 
@@ -145,7 +144,7 @@ class UpdateController extends Controller
             }
 
             $response['success'] = true;
-        } catch(\Exception $e) {
+        } catch (\Exception $e) {
             $response['success'] = false;
             $response['errors'][] = $e->getMessage();
         }
@@ -153,7 +152,7 @@ class UpdateController extends Controller
         return response()->json($response);
     }
     //----------------------------------------------------------
-    public function runMigrations()
+    public function runMigrations(): JsonResponse
     {
 
         if (!Auth::user()->hasPermission('has-access-of-setting-section')) {
@@ -176,7 +175,7 @@ class UpdateController extends Controller
             $seed_class = "WebReinvent\VaahCms\Database\Seeders\VaahCmsTableSeeder";
             $response = VaahArtisan::seed('db:seed', $seed_class);
             if (isset($response['success']) && !$response['success']) {
-                return $response;
+                return response()->json($response);
             }
 
             $response['success'] = true;
@@ -272,6 +271,8 @@ class UpdateController extends Controller
             } else {
                 $response['messages'][] = 'Something went wrong.';
             }
+
+            return response()->json($response);
         }
     }
     //----------------------------------------------------------

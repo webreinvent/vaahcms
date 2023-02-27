@@ -170,7 +170,7 @@ class ModulesController extends Controller
             );
 
             $validator = \Validator::make( $request->toArray(), $rules);
-            if ( $validator->fails() ) {
+            if ($validator->fails()) {
 
                 $errors             = errorsToArray($validator->errors());
                 $response['success'] = false;
@@ -271,15 +271,12 @@ class ModulesController extends Controller
             $method_name = lcfirst(str_replace(" ", "", $method_name));
 
             $response = vh_module_action($module->name, 'SetupController@'.$method_name);
-            if(isset($response['success']) && !$response['success'])
-            {
+            if (isset($response['success']) && !$response['success']) {
                 return response()->json($response);
             }
 
-
             switch($request->action)
             {
-
                 //---------------------------------------
                 case 'activate':
                     if (!Auth::user()->hasPermission('can-activate-module')) {
@@ -339,17 +336,15 @@ class ModulesController extends Controller
         return response()->json($response);
     }
     //----------------------------------------------------------
-    public function callModuleControllerMethod($module, $controller, $method)
+    public function callModuleControllerMethod($module, $controller, $method): JsonResponse
     {
-
+        $response = [];
         try {
             if (isset($method) && method_exists($controller, $method)
                 && is_callable(array($controller, $method)))
             {
                 $response = call_user_func($controller."::".$method, $module);
                 $response['data']['controller_method'] = $controller;
-
-                return $response;
             }
         }  catch (\Exception $e) {
             $response = [];
@@ -362,6 +357,8 @@ class ModulesController extends Controller
                 $response['messages'][] = 'Something went wrong.';
             }
         }
+
+        return response()->json($response);
     }
     //----------------------------------------------------------
     public function getModulesSlugs(Request $request): JsonResponse
@@ -487,12 +484,12 @@ class ModulesController extends Controller
 
             $response['status'] = "danger";
             $response['messages'][] = "Something went wrong.";
-            return response()->json($response);
         } catch(\Exception $e) {
             $response['success'] = false;
             $response['errors'][] = $e->getMessage();
-            return response()->json($response);
         }
+
+        return response()->json($response);
     }
     //----------------------------------------------------------
 }

@@ -332,9 +332,8 @@ class TaxonomiesController extends Controller
                 return response()->json($response);
             }
 
-            $item = TaxonomyType::query()
+            $item = TaxonomyType::withTrashed()
                 ->where('name',$request->name)
-                ->withTrashed()
                 ->first();
 
             if ($item) {

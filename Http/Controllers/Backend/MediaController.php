@@ -207,7 +207,7 @@ class MediaController extends Controller
         return response()->json($response);
     }
     //----------------------------------------------------------
-    public function updateItem(Request $request,$id): JsonResponse
+    public function updateItem(Request $request, $id): JsonResponse
     {
         if (!Auth::user()->hasPermission('can-update-media')) {
             $response['success'] = false;
@@ -287,7 +287,7 @@ class MediaController extends Controller
         return response()->json($response);
     }
     //----------------------------------------------------------
-    public function itemDownload(Request $request,$slug): BinaryFileResponse | JsonResponse
+    public function itemDownload(Request $request, $slug): BinaryFileResponse | JsonResponse
     {
         try {
             $media_data = Media::where('download_url', $slug)->first();
@@ -328,7 +328,7 @@ class MediaController extends Controller
 
         $validator = \Validator::make( $request->all(), $rules);
 
-        if ( $validator->fails() ) {
+        if ( $validator->fails()) {
             $errors = errorsToArray($validator->errors());
             $response['success'] = false;
             $response['errors'] = $errors;
@@ -348,9 +348,9 @@ class MediaController extends Controller
             $data['type'] = $type[0];
             $data['size'] = $request->file($input_file_name)->getSize();
 
-            if($request->file_name && !is_null($request->file_name)
-                && $request->file_name != 'null')
-            {
+            if ($request->file_name && !is_null($request->file_name)
+                && $request->file_name != 'null'
+            ) {
                 $upload_file_name = Str::slug($request->file_name).'.'.$data['extension'];
 
                 $upload_file_path = 'storage/app/'.$request->folder_path.'/'.$upload_file_name;
@@ -419,7 +419,7 @@ class MediaController extends Controller
     //----------------------------------------------------------
     public function postCreate(Request $request): JsonResponse
     {
-        if(!Auth::user()->hasPermission('can-create-media')) {
+        if (!Auth::user()->hasPermission('can-create-media')) {
             $response['success'] = false;
             $response['errors'][] = trans("vaahcms::messages.permission_denied");
 
