@@ -14,7 +14,7 @@ class CreateVhUserAuthorizationsTable extends Migration
     public function up()
     {
         if (!Schema::hasTable('vh_user_authorizations')) {
-            Schema::create('vh_user_authorizations  ', function (Blueprint $table) {
+            Schema::create('vh_user_authorizations', function (Blueprint $table) {
                 $table->bigIncrements('id')->unsigned();
 
                 $table->bigInteger('vh_user_id')->unsigned()->nullable();

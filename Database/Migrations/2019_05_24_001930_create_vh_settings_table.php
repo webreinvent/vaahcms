@@ -29,8 +29,6 @@ class CreateVhSettingsTable extends Migration
                 $table->text('value')->nullable();
                 $table->json('meta')->nullable();
                 $table->bigInteger('vh_user_id')->unsigned()->nullable()->index();
-                $table->bigInteger('vh_user_id')->unsigned()
-                    ->nullable()->index();
                 $table->foreign('vh_user_id')
                     ->references('id')->on('vh_users');
                 $table->bigInteger('created_by')
@@ -48,7 +46,6 @@ class CreateVhSettingsTable extends Migration
                 $table->foreign('deleted_by')
                     ->references('id')->on('vh_users');
 
-                $table->softDeletes();
                 $table->index(['deleted_at']);
 
 
