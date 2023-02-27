@@ -88,7 +88,6 @@ export const useThemeStore = defineStore({
             query: null
         },
         active_action: [],
-        index: -1
     }),
     getters: {
 

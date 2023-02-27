@@ -456,6 +456,11 @@ export const useModuleStore = defineStore({
             this.active_action.splice(index,1);
         },
         //---------------------------------------------------------------------
+        async resetActivateBtnLoader(action,item) {
+            let index = this.active_action.indexOf(action+'_'+item.id);
+            this.active_action.splice(index,1);
+        },
+        //---------------------------------------------------------------------
         async formActionAfter ()
         {
 
