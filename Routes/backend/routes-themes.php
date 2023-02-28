@@ -29,7 +29,11 @@ function () {
      */
     Route::delete('/', 'ThemesController@deleteList')
         ->name('vh.backend.vaah.themes.list.delete');
-
+    /**
+     * Get Item
+     */
+    Route::get('/{id}', 'ThemesController@getItem')
+        ->name('vh.backend.vaah.modules.read');
     /**
      * Delete Item
      */
@@ -63,4 +67,9 @@ function () {
     //------------------------------------------------
     Route::post( '/install/updates', 'ThemesController@installUpdates' )
         ->name( 'vh.backend.themes.install.updates' );
+    //------------------------------------------------
+    Route::any( '/publish/assets', 'ThemesController@publishAssets' )
+        ->name( 'vh.setup.publish.assets' );
+    //------------------------------------------------
+
 });

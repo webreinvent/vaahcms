@@ -333,6 +333,7 @@ class ModulesController extends Controller
             }
         }
 
+        $response['data']['item'] = $module;
         return response()->json($response);
     }
     //----------------------------------------------------------
@@ -473,7 +474,7 @@ class ModulesController extends Controller
             $module = Module::slug($request->slug)->first();
 
             $message = Module::copyAssets($module);
-
+            $response['data']['item'] = $module;
             if ($message) {
                 $module->is_assets_published = 1;
                 $module->save();

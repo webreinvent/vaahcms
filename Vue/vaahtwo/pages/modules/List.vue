@@ -84,6 +84,7 @@ onMounted(async () => {
                                     :loading="store.is_btn_loading"
                                     data-testid="modules-list-action-refresh"
                                     icon="pi pi-refresh"
+                                    v-tooltip.top="'Reload'"
                             />
 
                         </div>

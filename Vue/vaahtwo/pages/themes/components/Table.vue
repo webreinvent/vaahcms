@@ -21,6 +21,7 @@ const importSampleDataModal = (item) => {
         header: 'Importing Sample Data',
         icon: 'pi pi-exclamation-triangle',
         accept: () => {
+            store.active_action.push('import_sample_data_'+item.id);
             store.itemAction('import_sample_data', item);
         },
     });
@@ -30,7 +31,7 @@ const importSampleDataModal = (item) => {
 <template>
 
     <div v-if="store.list">
-        <div class="col-12" v-for="item in store.list">
+        <div class="col-12" v-for="(item, index) in store.list">
             <div class="grid">
                 <div class="col-12 md:col-5">
                     <h5 class="font-semibold text-xl inline">{{ item.name }}</h5>
@@ -54,16 +55,20 @@ const importSampleDataModal = (item) => {
 
                     <div class="flex justify-content-end">
                         <Button v-if="item.is_active && store.hasPermission('can-deactivate-theme')"
-                                class="mr-2 p-button-sm"
+                                class="mr-2 p-button-sm bg-yellow-400 text-color"
+                                :loading="store.active_action.includes('deactivate_'+item.id)"
                                 @click="store.toggleIsActive(item)"
                                 data-testid="themes-table-action-deactivate"
+                                v-tooltip.top="'Deactivate Module'"
                                 label="Deactivate"
                         />
 
                         <Button v-if="!item.is_active && store.hasPermission('can-activate-theme')"
                                 class="mr-2 p-button-sm"
+                                :loading="store.active_action.includes('activate_'+item.id)"
                                 @click="store.toggleIsActive(item)"
                                 data-testid="themes-table-action-activate"
+                                v-tooltip.top="'Activate Module'"
                                 label="Activate"
                         />
 
@@ -76,14 +81,26 @@ const importSampleDataModal = (item) => {
 
                         <Button v-if="store.hasPermission('can-activate-theme') && item.is_active && !item.is_default"
                                 class="mr-2 p-button-sm"
+                                :loading="store.active_action.includes('make_default_'+item.id)"
                                 v-tooltip.top="'Mark this theme as Default'"
                                 data-testid="themes-table-action-mark_default"
-                                @click="store.action('make_default', item)"
+                                @click="store.makeDefault(item)"
                                 label="Make Default"
                         />
 
+                        <Button class="mr-2 p-button-info p-button-sm"
+                                data-testid="modules-table-action-install-update"
+                                :loading="store.active_action.includes('publish_assets_'+item.id)"
+                                @click="store.publishAssets(item)"
+                                icon="pi pi-arrow-up"
+                                v-tooltip.top="'Publish Assets'"
+                                v-if="item.is_active"
+                        />
+
                         <Button v-if="item.is_active && store.hasPermission('can-import-sample-data-in-theme')"
+                                v-tooltip.top="'Import Sample Data'"
                                 class="mr-2 p-button-sm"
+                                :loading="store.active_action.includes('import_sample_data_'+item.id)"
                                 icon="pi pi-database"
                                 data-testid="themes-table-action-import_sample_data"
                                 @click="importSampleDataModal(item)"
@@ -95,6 +112,12 @@ const importSampleDataModal = (item) => {
                                 data-testid="themes-table-action-delete"
                                 v-tooltip.top="'Trash'"
                                 icon="pi pi-trash" />
+
+                        <Button class="p-button-sm ml-2"
+                                icon="pi pi-eye"
+                                v-tooltip.top=" 'View' "
+                                @click="store.toView(item)"
+                        />
                     </div>
                 </div>
             </div>

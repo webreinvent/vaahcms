@@ -298,14 +298,10 @@ class ThemesController extends Controller
             $response = [];
             $response['success'] = false;
 
-            if (env('APP_DEBUG')) {
-                $response['errors'][] = $e->getMessage();
-                $response['hint'][] = $e->getTrace();
-            } else {
-                $response['messages'][] = 'Something went wrong.';
-            }
+            return response()->json($response);
         }
 
+        $response['data']['item'] = $theme;
         return response()->json($response);
     }
     //----------------------------------------------------------
@@ -361,6 +357,59 @@ class ThemesController extends Controller
         try {
             $theme = Theme::where('id',$id)->first();
             $response = Theme::deleteItem($theme->slug);
+        } catch (\Exception $e) {
+            $response = [];
+            $response['success'] = false;
+
+            if (env('APP_DEBUG')) {
+                $response['errors'][] = $e->getMessage();
+                $response['hint'][] = $e->getTrace();
+            } else {
+                $response['messages'][] = 'Something went wrong.';
+            }
+        }
+
+        return response()->json($response);
+    }
+    //----------------------------------------------------------
+    public function publishAssets(Request $request)
+    {
+        try {
+            $theme = Theme::slug($request->slug)->first();
+
+            $message = Theme::copyAssets($theme);
+            $response['data']['item'] = $theme;
+
+            if ($message) {
+                $theme->is_assets_published = 1;
+                $theme->save();
+                $response['status'] = "success";
+                $response['messages'][] = "Assets published.";
+
+                return $response;
+            }
+
+            $response['status'] = "danger";
+            $response['messages'][] = "Something went wrong.";
+            return $response;
+        } catch(\Exception $e) {
+            $response['success'] = false;
+            $response['errors'][] = $e->getMessage();
+            return $response;
+        }
+    }
+    //----------------------------------------------------------
+    public function getItem(Request $request, $id): JsonResponse
+    {
+        if (!Auth::user()->hasPermission('can-read-module')) {
+            $response['success'] = false;
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+            return response()->json($response);
+        }
+
+        try {
+            $response = Theme::getItem($id);
         } catch (\Exception $e) {
             $response = [];
             $response['success'] = false;
