@@ -44,6 +44,11 @@ class RolesController extends Controller
             );
 
             foreach ($fillable as $column) {
+                if ($column === 'is_active') {
+                    $data['empty_item'][$column] = 0;
+                    continue;
+                }
+
                 $data['empty_item'][$column] = null;
             }
 
