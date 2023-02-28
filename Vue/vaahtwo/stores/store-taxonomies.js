@@ -75,6 +75,7 @@ export const useTaxonomyStore = defineStore({
             parent_id: null,
         },
         first_element: null,
+        selectedParentID: null
     }),
     getters: {
 
@@ -154,6 +155,17 @@ export const useTaxonomyStore = defineStore({
             watch(this.query.filter, (newVal,oldVal) =>
                 {
                     this.delayedSearch();
+                },{deep: true}
+            )
+        },
+        //---------------------------------------------------------------------
+        watchItem()
+        {
+            watch(this.item, (newVal,oldVal) =>
+                {
+                    if(newVal.name){
+                        this.item.slug = this.strToSlug(newVal.name);
+                    }
                 },{deep: true}
             )
         },
@@ -406,6 +418,7 @@ export const useTaxonomyStore = defineStore({
             if(data)
             {
                 this.item = data;
+                this.selectedParentID = null;
                 await this.getList();
                 await this.formActionAfter();
                 this.getItemMenu();
@@ -413,6 +426,7 @@ export const useTaxonomyStore = defineStore({
                 if (this.route.params && this.route.params.id) {
                     await this.getItem(this.route.params.id);
                 }
+                this.watchItem();
             }
         },
         //---------------------------------------------------------------------
