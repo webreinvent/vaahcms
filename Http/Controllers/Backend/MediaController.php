@@ -46,6 +46,10 @@ class MediaController extends Controller
             );
 
             foreach ($fillable as $column) {
+                if ($column === 'is_downloadable') {
+                    $data['empty_item'][$column] = 0;
+                    continue;
+                }
                 $data['empty_item'][$column] = null;
             }
 

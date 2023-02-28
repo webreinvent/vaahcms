@@ -18,7 +18,7 @@ onMounted(async () => {
     {
         await store.getItem(route.params.id);
     }
-
+    await store.watchItem();
     /**
      * Fetch the permissions from the database
      */
@@ -29,14 +29,9 @@ onMounted(async () => {
      */
     await root.getIsActiveStatusOptions();
 
+
     await store.getFormMenu();
 });
-
-watch(store.item, async (newVal, oldVal) => {
-    if(newVal.name){
-        store.item.slug = store.strToSlug(newVal.name);
-    }
-})
 
 //--------form_menu
 const form_menu = ref();
@@ -45,7 +40,7 @@ const toggleFormMenu = (event) => {
 };
 //--------/form_menu
 
-const selectedParentID = ref();
+
 
 //--------toggle dynamic modal--------//
 const dialog = useDialog();
@@ -145,7 +140,7 @@ const openTaxonomyTypeModal = () => {
                 <VhField label="Type">
                     <div class="p-inputgroup">
                         <TreeSelect class="w-full"
-                                    v-model="selectedParentID"
+                                    v-model="store.selectedParentID"
                                     :options="store.assets.types"
                                     placeholder="Select a Parent"
                                     @node-select="store.selectedParent($event)"

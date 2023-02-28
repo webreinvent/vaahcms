@@ -17,15 +17,12 @@ onMounted(async () => {
     {
         await store.getItem(route.params.id);
     }
+    store.watchItem();
+
     store.getFormMenu();
 
     await root.getIsActiveStatusOptions();
 });
-
-watch(store.item, async (newVal, oldVal) => {
-    store.item.slug = store.strToSlug(newVal.name);
-})
-
 
 //--------form_menu
 const form_menu = ref();
