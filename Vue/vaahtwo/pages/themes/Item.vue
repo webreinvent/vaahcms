@@ -5,8 +5,10 @@ import {useRoute} from 'vue-router';
 import { useThemeStore } from '../../stores/store-themes'
 
 import VhViewRow from '../../vaahvue/vue-three/primeflex/VhViewRow.vue';
+import {vaah} from "../../vaahvue/pinia/vaah";
 const store = useThemeStore();
 const route = useRoute();
+const useVaah = vaah();
 
 onMounted(async () => {
 
@@ -106,10 +108,22 @@ const toggleItemMenu = (event) => {
                     <tbody class="p-datatable-tbody">
                     <template v-for="(value, column) in store.item ">
 
-                        <template v-if="column === 'created_by' || column === 'updated_by'">
+                        <template v-if="column === 'created_by' || column === 'updated_by'"></template>
+
+                        <template v-else-if="column === 'author_website'">
+                            <tr>
+                                <td><b>{{ vaah().toLabel(column) }}</b></td>
+                                <td style="word-break: break-all;">{{ value }}</td>
+                                <td>
+                                    <Button icon="pi pi-external-link"
+                                        @click="store.openWebsite(value)"
+                                        class="p-button-text p-button-sm"
+                                    />
+                                </td>
+                            </tr>
                         </template>
 
-                        <template v-else-if="column === 'id' || column === 'uuid'">
+                        <template v-else-if="column === 'id' || column === 'uuid' || column === 'slug'">
                             <VhViewRow :label="column"
                                        :value="value"
                                        :can_copy="true"

@@ -59,12 +59,21 @@ const importSampleDataModal = (item) => {
                                         @click="store.toggleIsActive(item)"
                                 />
 
+                                <Button class="mr-2 p-button-info p-button-sm"
+                                        data-testid="modules-table-action-install-update"
+                                        :loading="store.active_action.includes('publish_assets_'+item.id)"
+                                        @click="store.publishAssets(item)"
+                                        icon="pi pi-arrow-up"
+                                        v-tooltip.top="'Publish Assets'"
+                                        v-if="item.is_active"
+                                />
+
                                 <Button v-if="item.is_active && store.hasPermission('can-import-sample-data-in-module')"
                                         data-testid="modules-table-action-sample-data"
                                         size="is-small"
-                                        label="Import Data"
+                                        icon="pi pi-database"
                                         class="mr-2 p-button-sm"
-                                        v-tooltip.top="'Import Data'"
+                                        v-tooltip.top="'Import Sample Data'"
                                         :loading="store.active_action.includes('import_sample_data_'+item.id)"
                                         @click="importSampleDataModal(item)"
                                 />
@@ -76,15 +85,6 @@ const importSampleDataModal = (item) => {
                                         @click="store.confirmUpdate(item)"
                                         v-tooltip.top="'Update Module'"
                                         v-if="item.is_update_available && store.hasPermission('can-update-module')"
-                                />
-
-                                <Button class="mr-2 p-button-info p-button-sm"
-                                        label="Publish Assets"
-                                        data-testid="modules-table-action-install-update"
-                                        :loading="store.active_action.includes('publish_assets_'+item.id)"
-                                        @click="store.publishAssets(item)"
-                                        v-tooltip.top="'Publish Assets'"
-                                        v-if="!item.is_assets_published && store.hasPermission('can-install-module')"
                                 />
 
                                 <Button class="p-button-danger p-button-sm"

@@ -1119,7 +1119,10 @@ export const useModuleStore = defineStore({
             this.resetActivateBtnLoader(this.form.action,data.item);
         },
         //---------------------------------------------------------------------
-
+        openWebsite(url) {
+            window.open(url,'_target');
+        },
+        //---------------------------------------------------------------------
     }
 });
 

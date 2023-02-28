@@ -59,6 +59,7 @@ const importSampleDataModal = (item) => {
                                 :loading="store.active_action.includes('deactivate_'+item.id)"
                                 @click="store.toggleIsActive(item)"
                                 data-testid="themes-table-action-deactivate"
+                                v-tooltip.top="'Deactivate Module'"
                                 label="Deactivate"
                         />
 
@@ -67,6 +68,7 @@ const importSampleDataModal = (item) => {
                                 :loading="store.active_action.includes('activate_'+item.id)"
                                 @click="store.toggleIsActive(item)"
                                 data-testid="themes-table-action-activate"
+                                v-tooltip.top="'Activate Module'"
                                 label="Activate"
                         />
 
@@ -87,15 +89,16 @@ const importSampleDataModal = (item) => {
                         />
 
                         <Button class="mr-2 p-button-info p-button-sm"
-                                label="Publish Assets"
                                 data-testid="modules-table-action-install-update"
                                 :loading="store.active_action.includes('publish_assets_'+item.id)"
                                 @click="store.publishAssets(item)"
+                                icon="pi pi-arrow-up"
                                 v-tooltip.top="'Publish Assets'"
-                                v-if="!item.is_assets_published && store.hasPermission('can-install-theme')"
+                                v-if="item.is_active"
                         />
 
                         <Button v-if="item.is_active && store.hasPermission('can-import-sample-data-in-theme')"
+                                v-tooltip.top="'Import Sample Data'"
                                 class="mr-2 p-button-sm"
                                 :loading="store.active_action.includes('import_sample_data_'+item.id)"
                                 icon="pi pi-database"
@@ -109,6 +112,12 @@ const importSampleDataModal = (item) => {
                                 data-testid="themes-table-action-delete"
                                 v-tooltip.top="'Trash'"
                                 icon="pi pi-trash" />
+
+                        <Button class="p-button-sm ml-2"
+                                icon="pi pi-eye"
+                                v-tooltip.top=" 'View' "
+                                @click="store.toView(item)"
+                        />
                     </div>
                 </div>
             </div>

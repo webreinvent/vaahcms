@@ -79,6 +79,7 @@ onMounted(async () => {
                                     class="p-button-sm"
                                     data-testid="themes-list-refresh"
                                     icon="pi pi-refresh"
+                                    v-tooltip.top="'Reload'"
                             />
 
                         </div>

@@ -1060,7 +1060,12 @@ export const useThemeStore = defineStore({
         makeDefault(item) {
             this.active_action.push('make_default_'+item.id);
             this.itemAction('make_default',item);
-        }
+        },
+        //---------------------------------------------------------------------
+        openWebsite(url) {
+            window.open(url,'_target');
+        },
+        //---------------------------------------------------------------------
     }
 });
 

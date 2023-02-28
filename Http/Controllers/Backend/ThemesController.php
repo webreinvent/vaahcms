@@ -399,4 +399,30 @@ class ThemesController extends Controller
         }
     }
     //----------------------------------------------------------
+    public function getItem(Request $request, $id): JsonResponse
+    {
+        if (!Auth::user()->hasPermission('can-read-module')) {
+            $response['success'] = false;
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+
+            return response()->json($response);
+        }
+
+        try {
+            $response = Theme::getItem($id);
+        } catch (\Exception $e) {
+            $response = [];
+            $response['success'] = false;
+
+            if (env('APP_DEBUG')) {
+                $response['errors'][] = $e->getMessage();
+                $response['hint'][] = $e->getTrace();
+            } else {
+                $response['messages'][] = 'Something went wrong.';
+            }
+        }
+
+        return response()->json($response);
+    }
+    //----------------------------------------------------------
 }
