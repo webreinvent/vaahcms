@@ -449,7 +449,6 @@ export const useTaxonomyStore = defineStore({
                     break;
                 case 'trash':
                     this.item = null;
-                    console.log(this.item);
                     break;
                 case 'delete':
                     this.item = null;

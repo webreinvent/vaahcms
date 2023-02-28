@@ -33,14 +33,6 @@ onMounted(async () => {
     await store.getFormMenu();
 });
 
-// watch(store.item, async (newVal, oldVal) => {
-//     if(newVal.name){
-//         store.item.slug = store.strToSlug(newVal.name);
-//         console.log(1);
-//     }
-//
-// },{ deep: true })
-
 //--------form_menu
 const form_menu = ref();
 const toggleFormMenu = (event) => {
