@@ -29,7 +29,7 @@ class TaxonomyTypesController extends Controller
 
             if(!$parent){
                 $response['success'] = false;
-                $response['errors'][] = "Parent slug not found.";
+                $response['messages'][] = "Parent slug not found.";
                 return $response;
             }
 
@@ -71,7 +71,7 @@ class TaxonomyTypesController extends Controller
 
         if(!$item){
             $response['status']     = 'failed';
-            $response['errors']     = 'Taxonomy\'s Type not found.';
+            $response['messages']     = 'Taxonomy\'s Type not found.';
             return $response;
         }
 
@@ -87,7 +87,7 @@ class TaxonomyTypesController extends Controller
 
         if(!$item){
             $response['status']     = 'failed';
-            $response['errors']     = 'Taxonomy\'s Type not found.';
+            $response['messages']     = 'Taxonomy\'s Type not found.';
             return $response;
         }
 
@@ -96,7 +96,7 @@ class TaxonomyTypesController extends Controller
 
             if(!$parent){
                 $response['success'] = false;
-                $response['errors'][] = "Parent slug not found.";
+                $response['messages'][] = "Parent slug not found.";
                 return $response;
             }
 
@@ -120,7 +120,7 @@ class TaxonomyTypesController extends Controller
 
         if(!$item){
             $response['status']     = 'failed';
-            $response['errors']     = 'Taxonomy\'s Type not found.';
+            $response['messages']     = 'Taxonomy\'s Type not found.';
             return $response;
         }
 

@@ -9,6 +9,7 @@ import { TreeView } from "@grapoza/vue-tree";
 const store = useTaxonomyStore();
 const useVaah = vaah();
 const selectedNode = ref();
+const tree_data = ref([]);
 const editLabel = ref(false);
 
 const openEditNode = () => {
@@ -23,6 +24,7 @@ const modelDefaults = {
     state: {
         expanded: false
     },
+    addChildCallback: store.addChildCallback,
 
     customizations: {
         classes: {
@@ -55,21 +57,21 @@ const modelDefaults = {
 
             <Button class="p-button-sm"
                     label="Add"
-                    @click="store.createTaxonomyType()"
+                    @click="store.createTaxonomyType"
             />
         </div>
 
         <Divider />
 
         <div class="draggable-tree-list" v-if="store && store.assets && store.assets.types">
-            <TreeView :initial-model="store.assets.types"
+            <TreeView ref="tree_data" :initialModel="store.assets.types"
                       :model-defaults="modelDefaults"
             >
                 <template v-slot:text="{ model, customClasses }">
                     <div class="list-item">
                         <span>
                             <p class="inline cursor-pointer"
-                               v-if="!editLabel"
+                               v-if="!store.edit_tree_label_array.includes(model.id)"
                                @click="useVaah.copy(model.data)"
                                v-tooltip.top=" 'Copy Slug' "
                             >
@@ -78,7 +80,7 @@ const modelDefaults = {
 
                             <InputText @input="store.setTaxonomyTypeNewName(model.label)"
                                        v-model="model.label"
-                                       v-if="editLabel"
+                                       v-if="store.edit_tree_label_array.includes(model.id)"
                             />
 
                             <span v-if="model.children.length > 0" class="font-semibold">
@@ -88,16 +90,16 @@ const modelDefaults = {
 
                         <span>
                             <a href="javascript:void(0)"
-                               v-if="!editLabel"
-                               @click="store.setTaxonomyTypeNewName(model.label); openEditNode()"
+                               v-if="!store.edit_tree_label_array.includes(model.id)"
+                               @click="store.setTaxonomyTypeNewName(model)"
                                class="cursor-pointer"
                             >
                                 <i class="pi pi-pencil ml-4 mr-2"></i>
                             </a>
 
                             <a href="javascript:void(0)"
-                               v-if="editLabel"
-                               @click="store.updateTaxonomyType(model.id)"
+                               v-if="store.edit_tree_label_array.includes(model.id)"
+                               @click="store.updateTaxonomyType(model)"
                                class="cursor-pointer"
                             >
                                 <i class="pi pi-check ml-4 mr-2"></i>
@@ -113,6 +115,7 @@ const modelDefaults = {
                     </div>
                 </template>
             </TreeView>
+
         </div>
     </div>
 </template>

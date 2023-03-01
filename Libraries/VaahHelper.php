@@ -31,7 +31,7 @@ class VaahHelper{
 
             $errors             = errorsToArray($validator->errors());
             $response['success'] = false;
-            $response['errors'] = $errors;
+            $response['messages'] = $errors;
             return $response;
         }
 
@@ -53,7 +53,7 @@ class VaahHelper{
         }catch(\Exception $e)
         {
             $response['success'] = false;
-            $response['errors'][] = $e->getMessage();
+            $response['messages'][] = $e->getMessage();
         }
 
 
@@ -83,7 +83,7 @@ class VaahHelper{
 
             $errors             = errorsToArray($validator->errors());
             $response['success'] = false;
-            $response['errors'] = $errors;
+            $response['messages'] = $errors;
             return $response;
         }
 
@@ -122,7 +122,7 @@ class VaahHelper{
         }catch(\Exception $e)
         {
             $response['success'] = false;
-            $response['errors'][] = $e->getMessage();
+            $response['messages'][] = $e->getMessage();
 
         }
 
@@ -145,7 +145,7 @@ class VaahHelper{
         }catch(\Exception $e)
         {
             $response['success'] = false;
-            $response['errors'][] = $e->getMessage();
+            $response['messages'][] = $e->getMessage();
 
         }
 
@@ -166,7 +166,7 @@ class VaahHelper{
         }catch(\Exception $e)
         {
             $response['success'] = false;
-            $response['errors'][] = $e->getMessage();
+            $response['messages'][] = $e->getMessage();
 
         }
 
@@ -187,12 +187,12 @@ class VaahHelper{
                 return $response;
             } else{
                 $response['success'] = false;
-                $response['errors'][] = 'vaahcms.json configuration file is missing';
+                $response['messages'][] = 'vaahcms.json configuration file is missing';
             }
         }catch(\Exception $e)
         {
             $response['success'] = false;
-            $response['errors'][] = $e->getMessage();
+            $response['messages'][] = $e->getMessage();
         }
     }
     //----------------------------------------------------------

@@ -186,7 +186,7 @@ class Job extends JobBase
 
             $errors = errorsToArray($validator->errors());
             $response['success'] = false;
-            $response['errors'] = $errors;
+            $response['messages'] = $errors;
             return $response;
         }
 
@@ -332,7 +332,7 @@ class Job extends JobBase
         if(!$item)
         {
             $response['success'] = false;
-            $response['errors'][] = 'Record not found with ID: '.$id;
+            $response['messages'][] = 'Record not found with ID: '.$id;
             return $response;
         }
         $response['success'] = true;
