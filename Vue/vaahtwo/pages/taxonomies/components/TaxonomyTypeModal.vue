@@ -34,6 +34,10 @@ const modelDefaults = {
         }
     }
 }
+
+const cloneAction = () => {
+    console.log('draggable clone method');
+}
 </script>
 
 <template>
@@ -93,59 +97,71 @@ const modelDefaults = {
             </ul>
         </div>
 
-        <div class="draggable-tree-list" v-if="store && store.assets && store.assets.types && store.is_loading === false">
-            <TreeView ref="tree_data" :initialModel="store.assets.types"
-                      :model-defaults="modelDefaults"
+        <div v-if="store && store.assets && store.assets.types && store.is_loading === false">
+            <draggable class="draggable-tree-list"
+                       :clone="cloneAction"
+                       :list="store.assets.types"
             >
-                <template v-slot:text="{ model, customClasses }">
-                    <div class="list-item">
-                        <span>
-                            <p class="inline cursor-pointer"
-                               v-if="!store.edit_tree_label_array.includes(model.id)"
-                               @click="useVaah.copy(model.data)"
-                               v-tooltip.top=" 'Copy Slug' "
-                            >
-                                <span><i class="pi pi-folder mr-1"></i> {{ model.label }} </span>
-                            </p>
-
-                            <InputText @input="store.setTaxonomyTypeNewName(model.label)"
-                                       v-model="model.label"
-                                       v-if="store.edit_tree_label_array.includes(model.id)"
-                            />
-
-                            <span v-if="model.children.length > 0" class="font-semibold">
-                                 ({{ model.children.length }})
-                            </span>
-                        </span>
-
-                        <span>
-                            <a href="javascript:void(0)"
-                               v-if="!store.edit_tree_label_array.includes(model.id)"
-                               @click="store.setTaxonomyTypeNewName(model)"
-                               class="cursor-pointer"
-                            >
-                                <i class="pi pi-pencil ml-4 mr-2"></i>
-                            </a>
-
-                            <a href="javascript:void(0)"
-                               v-if="store.edit_tree_label_array.includes(model.id)"
-                               @click="store.updateTaxonomyType(model)"
-                               class="cursor-pointer"
-                            >
-                                <i class="pi pi-check ml-4 mr-2"></i>
-                            </a>
-
-                            <a href="javascript:void(0)"
-                               @click="store.deleteTaxonomyType(model)"
-                               class="cursor-pointer"
-                            >
-                                <i class="pi pi-trash ml-4 mr-2"></i>
-                            </a>
-                        </span>
+                <div v-for="(type, i) in store.assets.types" :key="i">
+                    <div class="bg-white mt-3 p-2 shadow border rounded">
+                        <p>{{ type }}</p>
                     </div>
-                </template>
-            </TreeView>
+                </div>
+            </draggable>
+        </div>
 
+        <div v-if="store && store.assets && store.assets.types && store.is_loading === false">
+                <TreeView ref="tree_data" :initialModel="store.assets.types"
+                          :model-defaults="modelDefaults"
+                >
+                    <template v-slot:text="{ model, customClasses }">
+                        <div class="list-item">
+                            <span>
+                                <p class="inline cursor-pointer"
+                                   v-if="!store.edit_tree_label_array.includes(model.id)"
+                                   @click="useVaah.copy(model.data)"
+                                   v-tooltip.top=" 'Copy Slug' "
+                                >
+                                    <span><i class="pi pi-folder mr-1"></i> {{ model.label }} </span>
+                                </p>
+
+                                <InputText @input="store.setTaxonomyTypeNewName(model.label)"
+                                           v-model="model.label"
+                                           v-if="store.edit_tree_label_array.includes(model.id)"
+                                />
+
+                                <span v-if="model.children.length > 0" class="font-semibold">
+                                     ({{ model.children.length }})
+                                </span>
+                            </span>
+
+                            <span>
+                                <a href="javascript:void(0)"
+                                   v-if="!store.edit_tree_label_array.includes(model.id)"
+                                   @click="store.setTaxonomyTypeNewName(model)"
+                                   class="cursor-pointer"
+                                >
+                                    <i class="pi pi-pencil ml-4 mr-2"></i>
+                                </a>
+
+                                <a href="javascript:void(0)"
+                                   v-if="store.edit_tree_label_array.includes(model.id)"
+                                   @click="store.updateTaxonomyType(model)"
+                                   class="cursor-pointer"
+                                >
+                                    <i class="pi pi-check ml-4 mr-2"></i>
+                                </a>
+
+                                <a href="javascript:void(0)"
+                                   @click="store.deleteTaxonomyType(model)"
+                                   class="cursor-pointer"
+                                >
+                                    <i class="pi pi-trash ml-4 mr-2"></i>
+                                </a>
+                            </span>
+                        </div>
+                    </template>
+                </TreeView>
         </div>
     </div>
 </template>
