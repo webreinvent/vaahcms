@@ -13,21 +13,20 @@ class CreateVhUsersTable extends Migration
      */
     public function up()
     {
+
         if (!Schema::hasTable('vh_users')) {
             Schema::create('vh_users', function (Blueprint $table) {
                 $table->bigIncrements('id')->unsigned();
-                $table->bigInteger('foreign_user_id')->nullable()->index()->comment("Column can be used to map users from foreign database.");
                 $table->uuid('uuid')->nullable()->index();
-                $table->string('email', 150)->nullable()->index();
-                $table->string('username', 150)->nullable()->index();
+                $table->string('email',150)->nullable()->index();
+                $table->string('username',150)->nullable()->index();
                 $table->string('password')->nullable()->index();
-                $table->string('login_otp')->nullable()->index();
-                $table->string('display_name', 50)->nullable()->comment("If filled this will be visible as user's name.");
-                $table->string('title', 200)->nullable();
-                $table->string('designation', 200)->nullable()->index();
-                $table->string('first_name', 150)->nullable()->index();
+                $table->string('display_name',50)->nullable()->comment("If filled this will be visible as user's name.");
+                $table->string('title',200)->nullable();
+                $table->string('designation',200)->nullable()->index();
+                $table->string('first_name',150)->nullable()->index();
                 $table->string('middle_name')->nullable()->index();
-                $table->string('last_name', 150)->nullable()->index();
+                $table->string('last_name',150)->nullable()->index();
                 $table->string('gender', 15)->nullable();
                 $table->integer('country_calling_code')->nullable();
                 $table->bigInteger('phone')->nullable()->index();
@@ -40,6 +39,7 @@ class CreateVhUsersTable extends Migration
                 $table->string('country')->nullable();
                 $table->string('country_code')->nullable()->comment("Country short code");
                 $table->text('mfa_methods')->nullable();
+                $table->string('login_otp')->nullable()->index();
                 $table->dateTime('last_login_at')->nullable();
                 $table->ipAddress('last_login_ip')->nullable();
                 $table->string('remember_token')->nullable();
@@ -49,7 +49,7 @@ class CreateVhUsersTable extends Migration
                 $table->boolean('is_active')->nullable()->index();
                 $table->dateTime('activated_at')->nullable();
                 $table->string('status')->nullable()->index();
-                $table->string('mfa_code')->nullable();
+                $table->string('mfa_code',50)->nullable();
                 $table->dateTime('mfa_code_expired_at')->nullable();
                 $table->string('affiliate_code')->nullable();
                 $table->dateTime('affiliate_code_used_at')->nullable();
@@ -59,6 +59,8 @@ class CreateVhUsersTable extends Migration
                 $table->dateTime('reset_password_code_used_at')->nullable();
 
                 $table->bigInteger('registration_id')->unsigned()->nullable()->index();
+                $table->bigInteger('foreign_user_id')->nullable()
+                    ->index()->comment("Column can be used to map users from foreign database.");
                 $table->text('meta')->nullable();
 
                 $table->ipAddress('created_ip')->nullable();
@@ -70,14 +72,15 @@ class CreateVhUsersTable extends Migration
                 $table->softDeletes();
                 $table->index(['created_at', 'updated_at', 'deleted_at']);
             });
-
-
-            Schema::table('vh_users', function (Blueprint $table) {
-                $table->foreign('created_by')->references('id')->on('vh_users');
-                $table->foreign('updated_by')->references('id')->on('vh_users');
-                $table->foreign('deleted_by')->references('id')->on('vh_users');
-            });
         }
+
+
+        Schema::table('vh_users',function (Blueprint $table){
+            $table->foreign('created_by')->references('id')->on('vh_users');
+            $table->foreign('updated_by')->references('id')->on('vh_users');
+            $table->foreign('deleted_by')->references('id')->on('vh_users');
+        });
+
     }
 
     /**

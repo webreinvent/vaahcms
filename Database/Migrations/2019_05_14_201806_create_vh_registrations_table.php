@@ -17,15 +17,15 @@ class CreateVhRegistrationsTable extends Migration
             Schema::create('vh_registrations', function (Blueprint $table) {
                 $table->bigIncrements('id')->unsigned();
                 $table->uuid('uuid')->nullable()->index();
-                $table->string('email', 150)->nullable()->index();
-                $table->string('username', 150)->nullable()->index();
+                $table->string('email',150)->nullable()->index();
+                $table->string('username',150)->nullable()->index();
                 $table->string('password')->nullable();
-                $table->string('display_name', 50)->nullable()->index();
-                $table->string('title', 200)->nullable();
-                $table->string('designation', 200)->nullable()->index();
-                $table->string('first_name', 150)->nullable()->index();
+                $table->string('display_name',50)->nullable()->index();
+                $table->string('title',200)->nullable();
+                $table->string('designation',200)->nullable()->index();
+                $table->string('first_name',150)->nullable()->index();
                 $table->string('middle_name')->nullable()->index();
-                $table->string('last_name', 150)->nullable()->index();
+                $table->string('last_name',150)->nullable()->index();
                 $table->string('gender', 15)->nullable();
                 $table->integer('country_calling_code')->nullable();
                 $table->bigInteger('phone')->nullable()->index();
@@ -72,12 +72,14 @@ class CreateVhRegistrationsTable extends Migration
                 $table->index(['created_at', 'updated_at', 'deleted_at']);
 
             });
-
-
-            Schema::table('vh_users', function (Blueprint $table) {
-                $table->foreign('registration_id')->references('id')->on('vh_registrations');
-            });
         }
+
+
+
+        Schema::table('vh_users',function (Blueprint $table){
+            $table->foreign('registration_id')->references('id')->on('vh_registrations');
+        });
+
     }
 
     /**

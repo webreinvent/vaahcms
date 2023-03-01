@@ -16,6 +16,7 @@ class CreateVhSettingsTable extends Migration
         if (!Schema::hasTable('vh_settings')) {
             Schema::create('vh_settings', function (Blueprint $table) {
                 $table->bigIncrements('id')->unsigned();
+                $table->uuid('uuid')->nullable()->index();
 
                 $table->integer('settingable_id')->nullable()->index();
                 $table->string('settingable_type')->nullable()->index();
@@ -27,10 +28,14 @@ class CreateVhSettingsTable extends Migration
                 $table->string('type')->nullable()->index();
                 $table->string('key')->nullable()->index();
                 $table->text('value')->nullable();
-                $table->json('meta')->nullable();
-                $table->bigInteger('vh_user_id')->unsigned()->nullable()->index();
+
+                $table->bigInteger('vh_user_id')
+                    ->unsigned()->nullable()->index();
                 $table->foreign('vh_user_id')
                     ->references('id')->on('vh_users');
+
+                $table->json('meta')->nullable();
+
                 $table->bigInteger('created_by')
                     ->unsigned()->nullable()->index();
                 $table->foreign('created_by')
@@ -46,13 +51,12 @@ class CreateVhSettingsTable extends Migration
                 $table->foreign('deleted_by')
                     ->references('id')->on('vh_users');
 
-                $table->index(['deleted_at']);
-
-
                 $table->timestamps();
 
-                $table->index(['created_at', 'updated_at']);
                 $table->softDeletes();
+                $table->index(['deleted_at']);
+
+                $table->index(['created_at', 'updated_at']);
 
             });
         }

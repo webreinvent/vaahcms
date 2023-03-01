@@ -23,8 +23,8 @@ class CreateVhLangStringsTable extends Migration
                 $table->bigInteger('vh_lang_category_id')->unsigned()->nullable()->index();
                 $table->foreign('vh_lang_category_id')->references('id')->on('vh_lang_categories');
 
-                $table->string('name', 150)->nullable();
-                $table->string('slug', 150)->nullable()->index();
+                $table->string('name',150)->nullable();
+                $table->string('slug',150)->nullable()->index();
                 $table->mediumText('content')->nullable();
 
 

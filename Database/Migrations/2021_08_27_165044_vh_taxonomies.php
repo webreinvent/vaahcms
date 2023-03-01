@@ -48,11 +48,11 @@ class VhTaxonomies extends Migration
                 //----/common fields
 
             });
-
-            Schema::table('vh_taxonomies', function (Blueprint $table) {
-                $table->foreign('parent_id')->references('id')->on('vh_taxonomies');
-            });
         }
+
+        Schema::table('vh_taxonomies',function (Blueprint $table){
+            $table->foreign('parent_id')->references('id')->on('vh_taxonomies');
+        });
     }
 
     /**

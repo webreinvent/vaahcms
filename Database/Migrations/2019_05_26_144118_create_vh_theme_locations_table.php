@@ -20,8 +20,8 @@ class CreateVhThemeLocationsTable extends Migration
                 $table->integer('vh_theme_id')->nullable()->index();
 
                 $table->string('type')->nullable()->index();
-                $table->string('name', 150)->nullable();
-                $table->string('slug', 150)->nullable()->index();
+                $table->string('name',150)->nullable();
+                $table->string('slug',150)->nullable()->index();
                 $table->string('excerpt')->nullable();
                 $table->timestamps();
 

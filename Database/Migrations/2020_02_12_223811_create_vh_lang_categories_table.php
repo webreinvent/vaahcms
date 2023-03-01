@@ -17,8 +17,8 @@ class CreateVhLangCategoriesTable extends Migration
             Schema::create('vh_lang_categories', function (Blueprint $table) {
                 $table->bigIncrements('id')->unsigned();
 
-                $table->string('name', 150)->nullable();
-                $table->string('slug', 150)->nullable()->index();
+                $table->string('name',150)->nullable();
+                $table->string('slug',150)->nullable()->index();
                 $table->integer('count_strings')->nullable()->default(0);
                 $table->integer('count_strings_filled')->nullable()->default(0);
 

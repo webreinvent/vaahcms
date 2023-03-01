@@ -17,9 +17,9 @@ class CreateVhRolesTable extends Migration
             Schema::create('vh_roles', function (Blueprint $table) {
                 $table->bigIncrements('id')->unsigned();
                 $table->uuid('uuid')->nullable();
-                $table->string('name', 150)->nullable();
-                $table->string('slug', 150)->nullable()->index();
-                $table->string('details', 255)->nullable();
+                $table->string('name',150)->nullable();
+                $table->string('slug',150)->nullable()->index();
+                $table->string('details',255)->nullable();
                 $table->integer('count_users')->nullable();
                 $table->integer('count_permissions')->nullable();
                 $table->boolean('is_active')->nullable();
@@ -38,6 +38,7 @@ class CreateVhRolesTable extends Migration
                 $table->index(['created_at', 'updated_at', 'deleted_at']);
             });
         }
+
     }
 
     /**
