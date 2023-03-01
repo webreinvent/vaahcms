@@ -24,7 +24,6 @@ const modelDefaults = {
     state: {
         expanded: false
     },
-    addChildCallback: store.addChildCallback,
 
     customizations: {
         classes: {
@@ -63,7 +62,38 @@ const modelDefaults = {
 
         <Divider />
 
-        <div class="draggable-tree-list" v-if="store && store.assets && store.assets.types">
+        <div class="field col-12 md:col-6 custom-skeleton" v-if="store.is_loading === true">
+            <ul class="m-0 p-0">
+                <li class="mb-3">
+                    <div class="flex">
+                        <div style="flex: 1">
+                            <Skeleton width="100%" class="mb-2"></Skeleton>
+                            <Skeleton width="75%" class="ml-2"></Skeleton>
+                        </div>
+                    </div>
+                </li>
+
+                <li class="mb-3">
+                    <div class="flex">
+                        <div style="flex: 1">
+                            <Skeleton width="100%" class="mb-2"></Skeleton>
+                            <Skeleton width="75%" class="ml-2"></Skeleton>
+                        </div>
+                    </div>
+                </li>
+
+                <li class="mb-3">
+                    <div class="flex">
+                        <div style="flex: 1">
+                            <Skeleton width="100%" class="mb-2"></Skeleton>
+                            <Skeleton width="75%" class="ml-2"></Skeleton>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+        <div class="draggable-tree-list" v-if="store && store.assets && store.assets.types && store.is_loading === false">
             <TreeView ref="tree_data" :initialModel="store.assets.types"
                       :model-defaults="modelDefaults"
             >
@@ -189,6 +219,12 @@ const modelDefaults = {
     i {
         font-size: 10px;
         font-weight: 700;
+    }
+}
+
+.custom-skeleton {
+    ul {
+        list-style: none;
     }
 }
 </style>
