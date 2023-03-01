@@ -9,11 +9,6 @@ import { TreeView } from "@grapoza/vue-tree";
 const store = useTaxonomyStore();
 const useVaah = vaah();
 const selectedNode = ref();
-const editLabel = ref(false);
-
-const openEditNode = () => {
-    editLabel.value = true ?? false
-}
 
 const modelDefaults = {
     expanderTitle: 'Expand this node',
@@ -69,7 +64,7 @@ const modelDefaults = {
                     <div class="list-item">
                         <span>
                             <p class="inline cursor-pointer"
-                               v-if="!editLabel"
+                               v-if="!store.edit_node"
                                @click="useVaah.copy(model.data)"
                                v-tooltip.top=" 'Copy Slug' "
                             >
@@ -78,7 +73,7 @@ const modelDefaults = {
 
                             <InputText @input="store.setTaxonomyTypeNewName(model.label)"
                                        v-model="model.label"
-                                       v-if="editLabel"
+                                       v-if="store.edit_node"
                             />
 
                             <span v-if="model.children.length > 0" class="font-semibold">
@@ -88,15 +83,15 @@ const modelDefaults = {
 
                         <span>
                             <a href="javascript:void(0)"
-                               v-if="!editLabel"
-                               @click="store.setTaxonomyTypeNewName(model.label); openEditNode()"
+                               v-if="!store.edit_node"
+                               @click="store.setTaxonomyTypeNewName(model.label)"
                                class="cursor-pointer"
                             >
                                 <i class="pi pi-pencil ml-4 mr-2"></i>
                             </a>
 
                             <a href="javascript:void(0)"
-                               v-if="editLabel"
+                               v-if="store.edit_node"
                                @click="store.updateTaxonomyType(model.id)"
                                class="cursor-pointer"
                             >

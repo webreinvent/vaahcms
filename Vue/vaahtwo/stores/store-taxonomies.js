@@ -75,6 +75,7 @@ export const useTaxonomyStore = defineStore({
             parent_id: null,
         },
         first_element: null,
+        edit_node: false,
     }),
     getters: {
 
@@ -968,12 +969,11 @@ export const useTaxonomyStore = defineStore({
         },
         //---------------------------------------------------------------------
         async deleteTaxonomyTypeAfter(data, res) {
-            if (data) {
-                this.reload();
-            }
+            await this.reload();
         },
         //---------------------------------------------------------------------
         setTaxonomyTypeNewName(name) {
+            this.edit_node = true;
             this.taxonomy_type_new_name = name;
         },
         //---------------------------------------------------------------------
@@ -997,12 +997,9 @@ export const useTaxonomyStore = defineStore({
         },
         //---------------------------------------------------------------------
         async updateTaxonomyTypeAfter(data, res) {
-            if (data) {
-                this.reload();
-            }
+            this.edit_node = false;
+            await this.reload();
         },
-        //---------------------------------------------------------------------
-
         //---------------------------------------------------------------------
     }
 });
