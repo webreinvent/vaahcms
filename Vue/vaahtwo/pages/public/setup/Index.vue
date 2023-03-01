@@ -168,6 +168,7 @@ onMounted(async () => {
                 <Button class="p-button-danger"
                         label="Confirm"
                         icon="pi pi-check"
+                        :loading="store.reset_confirm"
                         @click="store.confirmReset()"
                         autofocus />
             </template>

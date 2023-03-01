@@ -113,6 +113,7 @@ export const useSetupStore = defineStore({
             delete_dependencies: null,
             delete_media: null,
         },
+        reset_confirm: null
     }),
     getters: {},
     actions: {
@@ -208,7 +209,7 @@ export const useSetupStore = defineStore({
         },
         //---------------------------------------------------------------------
         confirmReset: function () {
-
+            this.reset_confirm = true;
             this.showProgress();
 
             let params = {
@@ -220,11 +221,17 @@ export const useSetupStore = defineStore({
                 this.ajax_url+'/reset/confirm',
                 this.afterConfirmReset,
                 params
-            )
+            );
         },
         //---------------------------------------------------------------------
-        afterConfirmReset: function () {
+        async afterConfirmReset () {
+            await this.getAssets();
+            await this.getStatus();
+
             this.hideProgress();
+
+            this.reset_confirm = false;
+            this.show_reset_modal = false;
         },
         //---------------------------------------------------------------------
         loadConfigurations: function () {
@@ -545,7 +552,7 @@ export const useSetupStore = defineStore({
             };
         },
         //---------------------------------------------------------------------
-        searchCountryCode: function (event){
+        searchCountryCode: function (event) {
 
             this.country_calling_code_object = null;
             this.country_calling_code = null;
