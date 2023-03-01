@@ -194,17 +194,6 @@ export const useRoleStore = defineStore({
             });
         },
         //---------------------------------------------------------------------
-        watchItem()
-        {
-            watch(this.item, (newVal,oldVal) =>
-                {
-                    if(newVal.name){
-                        this.item.slug = this.strToSlug(newVal.name);
-                    }
-                },{deep: true}
-            );
-        },
-        //---------------------------------------------------------------------
         async getAssets() {
 
             if(this.assets_is_fetching === true){
@@ -470,7 +459,6 @@ export const useRoleStore = defineStore({
                 if (this.route.params && this.route.params.id) {
                     await this.getItem(this.route.params.id);
                 }
-                this.watchItem();
             }
         },
         //---------------------------------------------------------------------

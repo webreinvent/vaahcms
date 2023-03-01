@@ -156,18 +156,7 @@ export const useTaxonomyStore = defineStore({
                 {
                     this.delayedSearch();
                 },{deep: true}
-            )
-        },
-        //---------------------------------------------------------------------
-        watchItem()
-        {
-            watch(this.item, (newVal,oldVal) =>
-                {
-                    if(newVal.name){
-                        this.item.slug = this.strToSlug(newVal.name);
-                    }
-                },{deep: true}
-            )
+            );
         },
         //---------------------------------------------------------------------
         async getAssets() {
@@ -426,7 +415,6 @@ export const useTaxonomyStore = defineStore({
                 if (this.route.params && this.route.params.id) {
                     await this.getItem(this.route.params.id);
                 }
-                this.watchItem();
             }
         },
         //---------------------------------------------------------------------
@@ -660,7 +648,7 @@ export const useTaxonomyStore = defineStore({
         toEdit(item)
         {
             this.item = item;
-            this.$router.push({name: 'taxonomies.form', params:{id:item.id}})
+            this.$router.push({name: 'taxonomies.form', params:{id:item.id}});
         },
         //---------------------------------------------------------------------
         isViewLarge()
@@ -964,9 +952,6 @@ export const useTaxonomyStore = defineStore({
         },
         //---------------------------------------------------------------------
         async deleteTaxonomyType(item) {
-
-            console.log(item)
-
             const url = this.ajax_url + '/delete-taxonomy-type';
             let options = {
                 params: item,

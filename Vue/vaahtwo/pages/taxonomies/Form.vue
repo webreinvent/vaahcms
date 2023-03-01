@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted, ref, watch } from "vue";
+import { onMounted, ref, watchEffect } from "vue";
 import { useTaxonomyStore } from '../../stores/store-taxonomies'
 import { useRootStore } from "../../stores/root";
 import { useRoute } from 'vue-router';
@@ -18,7 +18,6 @@ onMounted(async () => {
     {
         await store.getItem(route.params.id);
     }
-    await store.watchItem();
     /**
      * Fetch the permissions from the database
      */
@@ -32,6 +31,14 @@ onMounted(async () => {
 
     await store.getFormMenu();
 });
+
+//----item watcher
+watchEffect(async () => {
+    if (store.item && store.item.name) {
+        store.item.slug = store.strToSlug(store.item.name);
+    }
+});
+
 
 //--------form_menu
 const form_menu = ref();
