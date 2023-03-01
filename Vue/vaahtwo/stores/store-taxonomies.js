@@ -79,7 +79,8 @@ export const useTaxonomyStore = defineStore({
             parent_id: null,
         },
         first_element: null,
-        selectedParentID: null
+        selectedParentID: null,
+        is_loading: false,
     }),
     getters: {
 
@@ -472,6 +473,8 @@ export const useTaxonomyStore = defineStore({
         {
             await this.getAssets();
             await this.getList();
+
+            this.is_loading = false;
         },
         //---------------------------------------------------------------------
         async getFaker () {
@@ -507,6 +510,7 @@ export const useTaxonomyStore = defineStore({
         //---------------------------------------------------------------------
         async createTaxonomyType() {
             this.showProgress();
+            this.is_loading = true;
 
             let options = {
                 params: this.taxonomy_type_items,
@@ -523,12 +527,9 @@ export const useTaxonomyStore = defineStore({
         async createTaxonomyTypeAfter (data,res) {
             this.hideProgress();
 
+            this.taxonomy_type_items.name = null;
             this.assets_is_fetching = true;
-
             this.assets.types = null;
-
-
-
             await this.reload();
         },
         //---------------------------------------------------------------------
@@ -965,6 +966,7 @@ export const useTaxonomyStore = defineStore({
         },
         //---------------------------------------------------------------------
         async deleteTaxonomyType(item) {
+            this.is_loading = true;
             const url = this.ajax_url + '/delete-taxonomy-type';
             let options = {
                 params: item,
@@ -979,18 +981,18 @@ export const useTaxonomyStore = defineStore({
         },
         //---------------------------------------------------------------------
         async deleteTaxonomyTypeAfter(data, res) {
-            if (data) {
-                this.reload();
-            }
+            this.assets_is_fetching = true;
+            this.assets.types = null;
+            await this.reload();
         },
         //---------------------------------------------------------------------
         setTaxonomyTypeNewName(item) {
             this.taxonomy_type_new_name = item.name;
             this.edit_tree_label_array.push(item.id);
-
         },
         //---------------------------------------------------------------------
         async updateTaxonomyType(item) {
+            this.is_loading = true;
             const url = this.ajax_url + '/update-taxonomy-type';
 
             const params = {
@@ -1017,25 +1019,13 @@ export const useTaxonomyStore = defineStore({
                     this.edit_tree_label_array.splice(index, 1);
                 }
 
-                this.reload();
+                await this.reload();
             }
         },
         //---------------------------------------------------------------------
         syncTreeData() {
             return this.assets.types;
         },
-        //---------------------------------------------------------------------
-        addChildCallback(item) {
-            console.log('adddd',item);
-
-            return Promise.resolve({
-                id: `child- node 1`,
-                label: `Added Child 1 from parent 1`,
-                treeNodeSpec: { deletable: true, state: { expanded: true } }
-            });
-        },
-        //---------------------------------------------------------------------
-
         //---------------------------------------------------------------------
     }
 });
