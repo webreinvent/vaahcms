@@ -1,4 +1,4 @@
-import {watch} from 'vue'
+import {watch,ref} from 'vue'
 import {acceptHMRUpdate, defineStore} from 'pinia'
 import qs from 'qs'
 import {vaah} from '../vaahvue/pinia/vaah'
@@ -38,6 +38,9 @@ export const useTaxonomyStore = defineStore({
         model: model_namespace,
         assets_is_fetching: true,
         app: null,
+        dummy_tree: {
+
+        },
         assets: null,
         rows_per_page: [10,20,30,50,100,500],
         list: null,
@@ -69,12 +72,14 @@ export const useTaxonomyStore = defineStore({
         item_menu_list: [],
         item_menu_state: null,
         form_menu_list: [],
+        edit_tree_label_array: [],
         is_btn_loading: false,
         taxonomy_type_items: {
             name: null,
             parent_id: null,
         },
         first_element: null,
+        selectedParentID: null
     }),
     getters: {
 
@@ -155,7 +160,7 @@ export const useTaxonomyStore = defineStore({
                 {
                     this.delayedSearch();
                 },{deep: true}
-            )
+            );
         },
         //---------------------------------------------------------------------
         async getAssets() {
@@ -187,6 +192,8 @@ export const useTaxonomyStore = defineStore({
                 if(this.route.params && !this.route.params.id){
                     this.item = vaah().clone(data.empty_item);
                 }
+
+                // this.syncTreeData();
 
             }
         },
@@ -406,6 +413,7 @@ export const useTaxonomyStore = defineStore({
             if(data)
             {
                 this.item = data;
+                this.selectedParentID = null;
                 await this.getList();
                 await this.formActionAfter();
                 this.getItemMenu();
@@ -435,7 +443,6 @@ export const useTaxonomyStore = defineStore({
                     break;
                 case 'trash':
                     this.item = null;
-                    console.log(this.item);
                     break;
                 case 'delete':
                     this.item = null;
@@ -513,8 +520,15 @@ export const useTaxonomyStore = defineStore({
             );
         },
         //---------------------------------------------------------------------
-        async createTaxonomyTypeAfter () {
+        async createTaxonomyTypeAfter (data,res) {
             this.hideProgress();
+
+            this.assets_is_fetching = true;
+
+            this.assets.types = null;
+
+
+
             await this.reload();
         },
         //---------------------------------------------------------------------
@@ -647,7 +661,7 @@ export const useTaxonomyStore = defineStore({
         toEdit(item)
         {
             this.item = item;
-            this.$router.push({name: 'taxonomies.form', params:{id:item.id}})
+            this.$router.push({name: 'taxonomies.form', params:{id:item.id}});
         },
         //---------------------------------------------------------------------
         isViewLarge()
@@ -951,9 +965,6 @@ export const useTaxonomyStore = defineStore({
         },
         //---------------------------------------------------------------------
         async deleteTaxonomyType(item) {
-
-            console.log(item)
-
             const url = this.ajax_url + '/delete-taxonomy-type';
             let options = {
                 params: item,
@@ -973,16 +984,18 @@ export const useTaxonomyStore = defineStore({
             }
         },
         //---------------------------------------------------------------------
-        setTaxonomyTypeNewName(name) {
-            this.taxonomy_type_new_name = name;
+        setTaxonomyTypeNewName(item) {
+            this.taxonomy_type_new_name = item.name;
+            this.edit_tree_label_array.push(item.id);
+
         },
         //---------------------------------------------------------------------
-        async updateTaxonomyType(id) {
+        async updateTaxonomyType(item) {
             const url = this.ajax_url + '/update-taxonomy-type';
 
             const params = {
-                id: id,
-                newName: this.taxonomy_type_new_name
+                id: item.id,
+                newName: item.label
             }
             let options = {
                 params: params,
@@ -998,8 +1011,28 @@ export const useTaxonomyStore = defineStore({
         //---------------------------------------------------------------------
         async updateTaxonomyTypeAfter(data, res) {
             if (data) {
+
+                const index = this.edit_tree_label_array.indexOf(data.id);
+                if (index > -1) {
+                    this.edit_tree_label_array.splice(index, 1);
+                }
+
                 this.reload();
             }
+        },
+        //---------------------------------------------------------------------
+        syncTreeData() {
+            return this.assets.types;
+        },
+        //---------------------------------------------------------------------
+        addChildCallback(item) {
+            console.log('adddd',item);
+
+            return Promise.resolve({
+                id: `child- node 1`,
+                label: `Added Child 1 from parent 1`,
+                treeNodeSpec: { deletable: true, state: { expanded: true } }
+            });
         },
         //---------------------------------------------------------------------
 

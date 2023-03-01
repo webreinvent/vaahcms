@@ -74,7 +74,7 @@ class JsonController extends Controller
         //-----Vue Errors----------------------
         /*
          * To Set Errors:
-         * session(['vue_errors'=>$response['errors']]);
+         * session(['vue_errors'=>$response['messages']]);
          */
         $data['vue_errors'] = null;
         $vue_errors = session()->get('vue_errors');
@@ -192,7 +192,7 @@ class JsonController extends Controller
         if(!\Auth::check())
         {
             $response['success'] = false;
-            $response['errors'] = [];
+            $response['messages'] = [];
             return response()->json($response);
         }
 

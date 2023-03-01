@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted, ref, watch } from "vue";
+import {onMounted, ref, watchEffect} from "vue";
 import { useRoleStore } from '../../stores/store-roles';
 import { useRootStore } from "../../stores/root";
 import { vaah } from '../../vaahvue/pinia/vaah';
@@ -17,16 +17,17 @@ onMounted(async () => {
     {
         await store.getItem(route.params.id);
     }
+
     store.getFormMenu();
 
     await root.getIsActiveStatusOptions();
 });
-
-watch(store.item, async (newVal, oldVal) => {
-    store.item.slug = store.strToSlug(newVal.name);
-})
-
-
+//----item watcher
+watchEffect(async () => {
+    if (store.item && store.item.name) {
+        store.item.slug = store.strToSlug(store.item.name);
+    }
+});
 //--------form_menu
 const form_menu = ref();
 const toggleFormMenu = (event) => {

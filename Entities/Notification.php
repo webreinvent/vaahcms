@@ -187,7 +187,7 @@ class Notification extends Model {
 
             $errors             = errorsToArray($validator->errors());
             $response['success'] = false;
-            $response['errors'] = $errors;
+            $response['messages'] = $errors;
             return response()->json($response);
         }
 

@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted, ref, watch } from "vue";
+import { onMounted, ref, watchEffect } from "vue";
 import { useTaxonomyStore } from '../../stores/store-taxonomies'
 import { useRootStore } from "../../stores/root";
 import { useRoute } from 'vue-router';
@@ -18,7 +18,6 @@ onMounted(async () => {
     {
         await store.getItem(route.params.id);
     }
-
     /**
      * Fetch the permissions from the database
      */
@@ -29,14 +28,17 @@ onMounted(async () => {
      */
     await root.getIsActiveStatusOptions();
 
+
     await store.getFormMenu();
 });
 
-watch(store.item, async (newVal, oldVal) => {
-    if(newVal.name){
-        store.item.slug = store.strToSlug(newVal.name);
+//----item watcher
+watchEffect(async () => {
+    if (store.item && store.item.name) {
+        store.item.slug = store.strToSlug(store.item.name);
     }
-})
+});
+
 
 //--------form_menu
 const form_menu = ref();
@@ -45,7 +47,7 @@ const toggleFormMenu = (event) => {
 };
 //--------/form_menu
 
-const selectedParentID = ref();
+
 
 //--------toggle dynamic modal--------//
 const dialog = useDialog();
@@ -145,7 +147,7 @@ const openTaxonomyTypeModal = () => {
                 <VhField label="Type">
                     <div class="p-inputgroup">
                         <TreeSelect class="w-full"
-                                    v-model="selectedParentID"
+                                    v-model="store.selectedParentID"
                                     :options="store.assets.types"
                                     placeholder="Select a Parent"
                                     @node-select="store.selectedParent($event)"

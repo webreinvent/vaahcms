@@ -29,7 +29,7 @@ class TaxonomiesController extends Controller
 
             if(!$type){
                 $response['success'] = false;
-                $response['errors'][] = "Type not found.";
+                $response['messages'][] = "Type not found.";
                 return $response;
             }
 
@@ -41,7 +41,7 @@ class TaxonomiesController extends Controller
 
                 if(!$parent){
                     $response['success'] = false;
-                    $response['errors'][] = "Parent not found.";
+                    $response['messages'][] = "Parent not found.";
                     return $response;
                 }
 
@@ -77,7 +77,7 @@ class TaxonomiesController extends Controller
 
         if(!$item){
             $response['status']     = 'failed';
-            $response['errors']     = 'Taxonomy not found.';
+            $response['messages']     = 'Taxonomy not found.';
             return $response;
         }
 
@@ -93,7 +93,7 @@ class TaxonomiesController extends Controller
 
         if(!$item){
             $response['status']     = 'failed';
-            $response['errors']     = 'Registration not found.';
+            $response['messages']     = 'Registration not found.';
             return $response;
         }
 
@@ -104,7 +104,7 @@ class TaxonomiesController extends Controller
 
             if(!$type){
                 $response['success'] = false;
-                $response['errors'][] = "Type slug not found.";
+                $response['messages'][] = "Type slug not found.";
                 return $response;
             }
 
@@ -116,7 +116,7 @@ class TaxonomiesController extends Controller
 
                 if(!$parent){
                     $response['success'] = false;
-                    $response['errors'][] = "Parent slug not found.";
+                    $response['messages'][] = "Parent slug not found.";
                     return $response;
                 }
 
@@ -141,7 +141,7 @@ class TaxonomiesController extends Controller
 
         if(!$item){
             $response['status']     = 'failed';
-            $response['errors']     = 'Role not found.';
+            $response['messages']     = 'Role not found.';
             return $response;
         }
 
