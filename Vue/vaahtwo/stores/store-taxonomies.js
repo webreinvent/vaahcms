@@ -79,7 +79,7 @@ export const useTaxonomyStore = defineStore({
             parent_id: null,
         },
         first_element: null,
-        selectedParentID: null,
+        selected_parent_id: null
         is_loading: false,
     }),
     getters: {
@@ -414,7 +414,7 @@ export const useTaxonomyStore = defineStore({
             if(data)
             {
                 this.item = data;
-                this.selectedParentID = null;
+                this.selected_parent_id = null;
                 await this.getList();
                 await this.formActionAfter();
                 this.getItemMenu();
