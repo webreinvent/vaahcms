@@ -67,6 +67,7 @@ class ModulesController extends Controller
         }
 
         try {
+            Module::syncAllModules();
             $list = Module::orderBy('created_at', 'DESC');
 
             if($request->has('filter'))
