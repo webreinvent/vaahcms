@@ -66,7 +66,6 @@ const openTaxonomyTypeModal = () => {
             </Column>
 
             <Column field="slug" header="Slug"
-                    class="flex align-items-center"
                     :sortable="true"
             >
                 <template #body="prop">
@@ -83,6 +82,7 @@ const openTaxonomyTypeModal = () => {
 
             <Column field="type" header="Type"
                     :sortable="false"
+                    class="flex align-items-center"
             >
                 <template #body="prop">
                     <p v-if="prop.data.type"> {{ prop.data.type.name }} </p>
