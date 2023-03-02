@@ -6,6 +6,7 @@ use DateTimeInterface;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
+use WebReinvent\VaahCms\Entities\Setting;
 use WebReinvent\VaahCms\Models\Role;
 use WebReinvent\VaahCms\Traits\CrudWithUuidObservantTrait;
 
@@ -68,6 +69,36 @@ class User extends UserBase
     public function scopeExclude($query, $columns)
     {
         return $query->select(array_diff($this->getTableColumns(), $columns));
+    }
+    //-------------------------------------------------
+    public function getMetaAttribute($value)
+    {
+        if($value && $value!='null'){
+            $meta_data = json_decode($value);
+        }else{
+            $meta_data = json_decode('{}');
+        }
+
+        if(is_array($meta_data) && !isset($meta_data['custom_fields'])){
+            $meta_data['custom_fields'] = [];
+        }
+
+        $custom_fields = Setting::query()->where('category','user_setting')
+            ->where('label','custom_fields')->first();
+
+
+        if ($custom_fields) {
+            foreach ($custom_fields['value'] as $custom_field) {
+
+                if(!isset($meta_data->custom_fields->{$custom_field->slug})){
+                    $meta_data->custom_fields->{$custom_field->slug} = null;
+                }
+
+            }
+        }
+
+        return $meta_data;
+
     }
     //-------------------------------------------------
     public static function updateList($request)
