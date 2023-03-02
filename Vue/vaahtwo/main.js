@@ -228,7 +228,7 @@ app.component('VirtualScroller', VirtualScroller);
 //-------------/PrimeVue Use
 
 
-app.mount('#themeVaahTwo')
+app.mount('#themeVaahTwo');
 
 
 export { app }
