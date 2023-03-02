@@ -4,6 +4,7 @@ import { useTaxonomyStore } from "../../../stores/store-taxonomies";
 import { ref } from "vue";
 import { vaah } from "../../../vaahvue/pinia/vaah";
 import { TreeView } from "@grapoza/vue-tree";
+import TabularLoadingAnimation from "../../../vaahvue/vue-three/primeflex/TabularLoadingAnimation.vue"
 
 const store = useTaxonomyStore();
 const useVaah = vaah();
@@ -66,31 +67,7 @@ const cloneAction = () => {
         <Divider />
 
         <div class="field col-12 md:col-6 custom-skeleton" v-if="store.is_loading === true">
-            <ul class="m-0 p-0">
-                <li class="mb-3">
-                    <div class="flex">
-                        <div style="flex: 1">
-                            <Skeleton width="100%" class="mb-2"></Skeleton>
-                        </div>
-                    </div>
-                </li>
-
-                <li class="mb-3">
-                    <div class="flex">
-                        <div style="flex: 1">
-                            <Skeleton width="100%" class="mb-2"></Skeleton>
-                        </div>
-                    </div>
-                </li>
-
-                <li class="mb-3">
-                    <div class="flex">
-                        <div style="flex: 1">
-                            <Skeleton width="100%" class="mb-2"></Skeleton>
-                        </div>
-                    </div>
-                </li>
-            </ul>
+            <TabularLoadingAnimation />
         </div>
 
         <div class="draggable-tree-list" v-if="store && store.assets && store.assets.types && store.is_loading === false">
