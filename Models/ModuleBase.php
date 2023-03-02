@@ -237,7 +237,7 @@ class ModuleBase extends Model
 
         $installed_module_names = [];
 
-        if(count($list) > 0)
+        if (count($list) > 0)
         {
             foreach ($list as $module_path)
             {
@@ -258,14 +258,18 @@ class ModuleBase extends Model
             }
 
         }
-
-
+        $models = [];
 
         foreach($list as $module_path)
         {
-            $res = Module::syncModule($module_path);
-        }
+            $models = static::where('name', basename($module_path))->get();
+            foreach ($models as $model) {
+                $model->forceDelete();
+            }
 
+            $res = Module::syncModule($module_path);
+
+        }
     }
     //-------------------------------------------------
     public static function getInstalledModules()
