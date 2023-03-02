@@ -113,7 +113,8 @@ export const useSetupStore = defineStore({
             delete_dependencies: null,
             delete_media: null,
         },
-        reset_confirm: null
+        reset_confirm: null,
+        autocomplete_on_focus: true
     }),
     getters: {},
     actions: {
@@ -553,7 +554,7 @@ export const useSetupStore = defineStore({
         },
         //---------------------------------------------------------------------
         searchCountryCode: function (event) {
-
+            this.autocomplete_on_focus = true;
             this.country_calling_code_object = null;
             this.country_calling_code = null;
 
@@ -666,19 +667,31 @@ export const useSetupStore = defineStore({
         {
             this.$router.push({name: name})
         },
+        //---------------------------------------------------------------------
         async to(path)
         {
             this.$router.push({path: path})
         },
+        //---------------------------------------------------------------------
         showProgress()
         {
             this.show_progress_bar = true;
         },
+        //---------------------------------------------------------------------
         hideProgress()
         {
             this.show_progress_bar = false;
+        },
+        //--------display country code on focus event-------------------------------------------------------------
+        showCallingCodes(event)
+        {
+            this.autocomplete_on_focus = true;
+        },
+        //---------------------------------------------------------------------
+        setFocusDropDownToTrue()
+        {
+            this.autocomplete_on_focus = true;
         }
-
     }
 })
 
