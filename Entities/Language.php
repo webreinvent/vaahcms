@@ -173,7 +173,7 @@ class Language extends Model {
 
             $errors             = errorsToArray($validator->errors());
             $response['success'] = false;
-            $response['errors'] = $errors;
+            $response['messages'] = $errors;
             return $response;
         }
 
@@ -192,7 +192,7 @@ class Language extends Model {
             if($item)
             {
                 $response['success'] = false;
-                $response['errors'][] = trans('vaahcms-localization.locale_code_already_exist');
+                $response['messages'][] = trans('vaahcms-localization.locale_code_already_exist');
                 return $response;
             }
 

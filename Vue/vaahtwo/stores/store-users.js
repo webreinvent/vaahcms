@@ -1077,6 +1077,14 @@ export const useUserStore = defineStore({
                 }
             });
 
+            item_menu.push({
+                label: 'Generate new API Token',
+                icon: 'pi pi-key',
+                command: () => {
+                    this.itemAction('generate-new-token');
+                }
+            });
+
             this.item_menu_list = item_menu;
         },
         //---------------------------------------------------------------------

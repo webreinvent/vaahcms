@@ -379,6 +379,15 @@ class User extends UserBase
                     ->withTrashed()
                     ->restore();
                 break;
+            case 'generate-new-token':
+
+                $token = Str::random(60);
+
+
+                self::where('id', $id)
+                    ->withTrashed()
+                    ->update(['api_token' => hash('sha256', $token)]);
+                break;
         }
 
         return self::getItem($id);
