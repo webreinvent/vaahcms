@@ -269,7 +269,7 @@ class MediaController extends Controller
             !Auth::user()->hasPermission('can-manage-media')
         ) {
             $response['success'] = false;
-            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+            $response['messages'][] = trans("vaahcms::messages.permission_denied");
 
             return response()->json($response);
         }
@@ -281,7 +281,7 @@ class MediaController extends Controller
             $response['success'] = false;
 
             if (env('APP_DEBUG')) {
-                $response['errors'][] = $e->getMessage();
+                $response['messages'][] = $e->getMessage();
                 $response['hint'][] = $e->getTrace();
             } else {
                 $response['messages'][] = 'Something went wrong.';
@@ -300,7 +300,7 @@ class MediaController extends Controller
             $response['success'] = false;
 
             if (env('APP_DEBUG')) {
-                $response['errors'][] = $e->getMessage();
+                $response['messages'][] = $e->getMessage();
                 $response['hint'][] = $e->getTrace();
             } else {
                 $response['messages'][] = 'Something went wrong.';
@@ -335,7 +335,7 @@ class MediaController extends Controller
         if ( $validator->fails()) {
             $errors = errorsToArray($validator->errors());
             $response['success'] = false;
-            $response['errors'] = $errors;
+            $response['messages'][] = $errors;
             return response()->json($response);
         }
 
@@ -415,7 +415,7 @@ class MediaController extends Controller
 
         } catch(\Exception $e) {
             $response['success'] = false;
-            $response['errors'][] = $e->getMessage();
+            $response['messages'][] = $e->getMessage();
         }
 
         return response()->json($response);
@@ -425,7 +425,7 @@ class MediaController extends Controller
     {
         if (!Auth::user()->hasPermission('can-create-media')) {
             $response['success'] = false;
-            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+            $response['messages'][] = trans("vaahcms::messages.permission_denied");
 
             return response()->json($response);
         }
@@ -437,7 +437,7 @@ class MediaController extends Controller
             $response['success'] = false;
 
             if (env('APP_DEBUG')) {
-                $response['errors'][] = $e->getMessage();
+                $response['messages'][] = $e->getMessage();
                 $response['hint'][] = $e->getTrace();
             } else {
                 $response['messages'][] = 'Something went wrong.';
@@ -459,7 +459,7 @@ class MediaController extends Controller
 
                 $errors = errorsToArray($validator->errors());
                 $response['success'] = false;
-                $response['errors'] = $errors;
+                $response['messages'][] = $errors;
                 return response()->json($response);
             }
 
@@ -475,14 +475,14 @@ class MediaController extends Controller
                 $response['data'] = true;
             } else {
                 $response['success'] = false;
-                $response['errors'][] = 'Url is taken';
+                $response['messages'][] = 'Url is taken';
             }
         } catch (\Exception $e) {
             $response = [];
             $response['success'] = false;
 
             if (env('APP_DEBUG')) {
-                $response['errors'][] = $e->getMessage();
+                $response['messages'][] = $e->getMessage();
                 $response['hint'][] = $e->getTrace();
             } else {
                 $response['messages'][] = 'Something went wrong.';
