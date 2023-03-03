@@ -321,7 +321,8 @@ const toggleFormMenu = (event) => {
                     />
                 </VhField>
 
-                <template v-if="store.assets && store.assets.custom_fields"
+                <template v-if="store.assets && store.assets.custom_fields
+                && store.item.meta && store.item.meta['custom_fields']"
                           v-for="(custom_field,key) in store.assets.custom_fields.value"
                           :key="key"
                 >

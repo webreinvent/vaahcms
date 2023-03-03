@@ -793,7 +793,13 @@ class RegistrationBase extends Model
         // For Ignore Password Mutator
         $user->prevent_password_hashing = true;
 
-        $user->fill($reg->toArray());
+        $req_array = $reg->toArray();
+
+        if(!$req_array['country_calling_code']){
+            $req_array['country_calling_code'] = null;
+        }
+
+        $user->fill($req_array);
         $user->password = $reg->password;
         $user->registration_id = $reg->id;
         $user->status = 'active';
