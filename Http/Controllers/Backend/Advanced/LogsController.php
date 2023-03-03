@@ -69,7 +69,7 @@ class LogsController extends Controller
     //----------------------------------------------------------
     public function getList(Request $request): JsonResponse
     {
-        if (!Auth::user()->hasPermission('has-access-of-advanced-section')) {
+        if (!Auth::user()->hasPermission('has-access-of-logs-section')) {
             $response['success'] = false;
             $response['messages'][] = trans("vaahcms::messages.permission_denied");
 

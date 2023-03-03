@@ -67,6 +67,13 @@ class JobsController extends Controller
     //----------------------------------------------------------
     public function getList(Request $request): JsonResponse
     {
+        if (!Auth::user()->hasPermission('has-access-of-jobs-section')) {
+            $response['success'] = false;
+            $response['messages'][] = trans("vaahcms::messages.permission_denied");
+
+            return response()->json($response);
+        }
+
         try {
             $response = Job::getList($request);
         } catch (\Exception $e) {

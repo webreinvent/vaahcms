@@ -2,6 +2,7 @@ import {watch} from 'vue'
 import {acceptHMRUpdate, defineStore} from 'pinia'
 import qs from 'qs'
 import {vaah} from '../../vaahvue/pinia/vaah'
+import {useRootStore} from "../root";
 
 let model_namespace = 'WebReinvent\\VaahCms\\Models\\Log';
 
@@ -774,6 +775,11 @@ export const useLogStore = defineStore({
             ]
         },
         //---------------------------------------------------------------------
+        hasPermission(slug) {
+            const root = useRootStore();
+            return vaah().hasPermission(root.permissions, slug);
+        },
+        //----------------------------------------------------------------------
     }
 });
 

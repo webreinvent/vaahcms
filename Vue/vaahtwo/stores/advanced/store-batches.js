@@ -2,9 +2,9 @@ import {watch} from 'vue'
 import {acceptHMRUpdate, defineStore} from 'pinia'
 import qs, {stringify} from 'qs'
 import {vaah} from '../../vaahvue/pinia/vaah'
+import { useRootStore } from "../root";
 
 let model_namespace = 'WebReinvent\\VaahCms\\Models\\Batch';
-
 
 let base_url = document.getElementsByTagName('base')[0].getAttribute("href");
 let ajax_url = base_url + "/vaah/batches";
@@ -612,8 +612,13 @@ export const useBatchStore = defineStore({
         async sync() {
             this.is_btn_loading = true;
             await this.getList();
-        }
+        },
         //---------------------------------------------------------------------
+        hasPermission(slug) {
+            const root = useRootStore();
+            return vaah().hasPermission(root.permissions, slug);
+        },
+        //----------------------------------------------------------------------
     }
 });
 

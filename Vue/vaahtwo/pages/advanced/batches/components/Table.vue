@@ -50,7 +50,8 @@ const useVaah = vaah();
                      header="Detail"
              >
                  <template #body="prop">
-                     <Button class="p-button-rounded p-button-sm p-button-outlined"
+                     <Button v-if="store.hasPermission('can-read-batch-details')"
+                             class="p-button-rounded p-button-sm p-button-outlined"
                              data-testid="batches-table-options"
                              @click="store.displayBatchDetails(prop.data.options)"
                      >
@@ -65,7 +66,8 @@ const useVaah = vaah();
                      style="width:150px;"
              >
                  <template #body="prop">
-                     <Button class="p-button-sm p-button-outlined p-button-rounded"
+                     <Button v-if="store.hasPermission('can-read-batch-failed-ids')"
+                             class="p-button-sm p-button-outlined p-button-rounded"
                              data-testid="batches-table-failed-ids"
                              @click="store.displayFailedIdDetails(prop.data.failed_job_ids)"
                      >
@@ -110,7 +112,8 @@ const useVaah = vaah();
                      style="width:150px;"
              >
                  <template #body="prop">
-                     <Button class="p-button-rounded p-button-text"
+                     <Button v-if="store.hasPermission('can-delete-batch')"
+                             class="p-button-rounded p-button-text"
                              @click="store.deleteItem(prop.data)"
                              data-testid="batches-table-to-trash"
                      >
