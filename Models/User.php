@@ -78,10 +78,22 @@ class User extends UserBase
         }else{
             $meta_data = json_decode('{}');
         }
+        
+        return $this->setCustomFieldsInMeta($meta_data);
 
-        if(is_array($meta_data) && !isset($meta_data['custom_fields'])){
+    }
+    //-------------------------------------------------
+    public function setCustomFieldsInMeta($meta_data)
+    {
+        if(!is_array($meta_data)){
+            $meta_data = (array) $meta_data;
+        }
+
+        if(!isset($meta_data['custom_fields'])){
             $meta_data['custom_fields'] = [];
         }
+
+        $meta_data['custom_fields'] = (array) $meta_data['custom_fields'];
 
         $custom_fields = Setting::query()->where('category','user_setting')
             ->where('label','custom_fields')->first();
@@ -90,8 +102,8 @@ class User extends UserBase
         if ($custom_fields) {
             foreach ($custom_fields['value'] as $custom_field) {
 
-                if(!isset($meta_data->custom_fields->{$custom_field->slug})){
-                    $meta_data->custom_fields->{$custom_field->slug} = null;
+                if(!isset($meta_data['custom_fields'][$custom_field->slug])){
+                    $meta_data['custom_fields'][$custom_field->slug] = null;
                 }
 
             }
