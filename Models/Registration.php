@@ -6,6 +6,7 @@ use http\Env\Request;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
+use WebReinvent\VaahCms\Entities\Setting;
 use WebReinvent\VaahCms\Traits\CrudWithUuidObservantTrait;
 use WebReinvent\VaahCms\Models\User;
 
@@ -66,7 +67,47 @@ class Registration extends RegistrationBase
 
         $query->whereBetween('updated_at', [$from, $to]);
     }
+    //-------------------------------------------------
+    public function getMetaAttribute($value)
+    {
+        if($value && $value!='null'){
+            $meta_data = json_decode($value);
+        }else{
+            $meta_data = json_decode('{}');
+        }
 
+        return $this->setCustomFieldsInMeta($meta_data);
+
+    }
+    //-------------------------------------------------
+    public function setCustomFieldsInMeta($meta_data)
+    {
+        if(!is_array($meta_data)){
+            $meta_data = (array) $meta_data;
+        }
+
+        if(!isset($meta_data['custom_fields'])){
+            $meta_data['custom_fields'] = [];
+        }
+
+        $meta_data['custom_fields'] = (array) $meta_data['custom_fields'];
+
+        $custom_fields = Setting::query()->where('category','user_setting')
+            ->where('label','custom_fields')->first();
+
+
+        if ($custom_fields) {
+            foreach ($custom_fields['value'] as $custom_field) {
+
+                if (!isset($meta_data['custom_fields'][$custom_field->slug])) {
+                    $meta_data['custom_fields'][$custom_field->slug] = null;
+                }
+
+            }
+        }
+
+        return $meta_data;
+    }
     //-------------------------------------------------
     public static function createItem($request)
     {

@@ -55,9 +55,11 @@ class RegistrationsController extends Controller
             $custom_fields = Setting::query()->where('category','user_setting')
                 ->where('label','custom_fields')->first();
 
+            $data['empty_item']['meta']['custom_fields'] = [];
+
             if (isset($custom_fields)) {
                 foreach ($custom_fields['value'] as $custom_field) {
-                    $data['empty_item']['meta'][$custom_field->slug] = null;
+                    $data['empty_item']['meta']['custom_fields'][$custom_field->slug] = null;
                 }
             }
 

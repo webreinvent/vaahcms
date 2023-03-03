@@ -338,7 +338,7 @@ const toggleFormMenu = (event) => {
                                  :max="custom_field.max"
                                  :minlength="custom_field.minlength"
                                  :maxlength="custom_field.maxlength"
-                                 v-model="store.item.meta[custom_field.slug]"
+                                 v-model="store.item.meta['custom_fields'][custom_field.slug]"
                        />
 
                         <Password v-else-if="custom_field.type === 'password'"
@@ -349,7 +349,7 @@ const toggleFormMenu = (event) => {
                                   :max="custom_field.max"
                                   :minlength="custom_field.minlength"
                                   :maxlength="custom_field.maxlength"
-                                  v-model="store.item.meta[custom_field.slug]"
+                                  v-model="store.item.meta['custom_fields'][custom_field.slug]"
                                   toggleMask
                                   inputClass="w-full"
                         />
@@ -363,7 +363,7 @@ const toggleFormMenu = (event) => {
                                    :max="custom_field.max"
                                    :minlength="custom_field.minlength"
                                    :maxlength="custom_field.maxlength"
-                                   v-model="store.item.meta[custom_field.slug]"
+                                   v-model="store.item.meta['custom_fields'][custom_field.slug]"
                         />
                     </VhField>
                 </template>
