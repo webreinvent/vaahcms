@@ -79,7 +79,7 @@ export const useTaxonomyStore = defineStore({
             parent_id: null,
         },
         first_element: null,
-        selected_parent_id: null
+        selected_parent_id: null,
         is_loading: false,
     }),
     getters: {
