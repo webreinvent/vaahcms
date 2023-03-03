@@ -61,6 +61,7 @@ const toggleBulkMenuState = (event) => {
                         data-testid="taxonomies-actions-bulk-menu"
                         aria-haspopup="true"
                         aria-controls="bulk_menu_state"
+                        v-if="store.hasPermission('can-update-taxonomies') || store.hasPermission('can-manage-taxonomies')"
                 />
 
                 <Menu ref="bulk_menu_state"

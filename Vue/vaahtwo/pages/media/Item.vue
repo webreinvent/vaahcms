@@ -92,6 +92,7 @@ const toggleItemMenu = (event) => {
                             @click="store.toEdit(store.item)"
                             data-testid="media-item-to-edit"
                             icon="pi pi-pencil"
+                            v-if="store.hasPermission('can-update-media')"
                     />
 
                     <!--item_menu-->
@@ -100,6 +101,7 @@ const toggleItemMenu = (event) => {
                             data-testid="media-item-menu"
                             icon="pi pi-angle-down"
                             aria-haspopup="true"
+                            v-if="store.hasPermission('can-update-media') || store.hasPermission('can-manage-media')"
                     />
 
                     <Menu ref="item_menu_state"

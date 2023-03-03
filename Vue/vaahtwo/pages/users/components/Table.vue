@@ -19,7 +19,7 @@ const useVaah = vaah();
                    responsiveLayout="scroll"
         >
             <Column selectionMode="multiple"
-                    v-if="store.isViewLarge()"
+                    v-if="store.isViewLarge() || (store.hasPermission('can-update-users') || store.hasPermission('can-manage-users'))"
                     headerStyle="width: 3em"
             />
 
@@ -56,6 +56,7 @@ const useVaah = vaah();
 
             <Column field="roles"
                     header="Roles"
+                    v-if="store.hasPermission('can-read-users')"
             >
                 <template #body="prop">
                     <Button class="p-button-sm p-button-rounded white-space-nowrap"
@@ -66,7 +67,7 @@ const useVaah = vaah();
                 </template>
             </Column>
 
-            <Column v-if="store.isViewLarge()"
+            <Column v-if="store.isViewLarge() || ( store.hasPermission('can-manage-users') && store.hasPermission('can-update-users'))"
                     field="is_active"
                     header="Is Active"
                     :sortable="false"
@@ -85,23 +86,25 @@ const useVaah = vaah();
                     :style="{ width: store.getActionWidth() }"
                     :header="store.getActionLabel()"
             >
-                <template #body="prop">
+                <template #body="prop" >
                     <div class="p-inputgroup">
 
                         <Button class="p-button-tiny p-button-text"
                                 v-tooltip.top="'View'"
                                 @click="store.toView(prop.data)"
                                 icon="pi pi-eye"
+                                v-if="store.hasPermission('can-read-users')"
                         />
 
                         <Button class="p-button-tiny p-button-text"
                                 v-tooltip.top="'Update'"
                                 @click="store.toEdit(prop.data)"
                                 icon="pi pi-pencil"
+                                v-if="store.hasPermission('can-update-users')"
                         />
 
                         <Button class="p-button-tiny p-button-danger p-button-text"
-                                v-if="store.isViewLarge() && !prop.data.deleted_at"
+                                v-if="(store.isViewLarge() && !prop.data.deleted_at) || store.hasPermission('can-update-users')"
                                 @click="store.itemAction('trash', prop.data)"
                                 v-tooltip.top="'Trash'"
                                 icon="pi pi-trash"

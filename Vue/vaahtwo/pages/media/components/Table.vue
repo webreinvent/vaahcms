@@ -19,7 +19,7 @@ const useVaah = vaah();
                    responsiveLayout="scroll"
          >
             <Column selectionMode="multiple"
-                    v-if="store.isViewLarge()"
+                    v-if="store.isViewLarge() || store.hasPermission('can-update-media')"
                     headerStyle="width: 3em"
             />
 
@@ -78,6 +78,7 @@ const useVaah = vaah();
                                 url="prop.data.url"
                                 @click="store.openImage(prop.data.url)"
                                 target="_blank"
+                                v-if="store.hasPermission('can-read-media')"
                         />
 
                         <Button class="p-button-tiny p-button-text"
@@ -85,6 +86,7 @@ const useVaah = vaah();
                                 v-tooltip.top="'View'"
                                 @click="store.toView(prop.data)"
                                 icon="pi pi-eye"
+                                v-if="store.hasPermission('can-read-media')"
                         />
 
                         <Button class="p-button-tiny p-button-text"
@@ -92,11 +94,12 @@ const useVaah = vaah();
                                 v-tooltip.top="'Update'"
                                 @click="store.toEdit(prop.data)"
                                 icon="pi pi-pencil"
+                                v-if="store.hasPermission('can-update-media')"
                         />
 
                         <Button class="p-button-tiny p-button-danger p-button-text"
                                 data-testid="media-table-action-trash"
-                                v-if="store.isViewLarge() && !prop.data.deleted_at"
+                                v-if="(store.isViewLarge() && !prop.data.deleted_at) || store.hasPermission('can-update-media')"
                                 @click="store.itemAction('trash', prop.data)"
                                 v-tooltip.top="'Trash'"
                                 icon="pi pi-trash"
