@@ -67,7 +67,7 @@ onMounted(async () => {
                                     icon="pi pi-plus"
                                     label="Install"
                                     data-testid="modules-list-action-install"
-                                    v-if="store.hasPermission('can-install-theme')"
+                                    v-if="store.hasPermission('can-install-module')"
                             />
 
                             <Button class="p-button-sm"
@@ -76,7 +76,7 @@ onMounted(async () => {
                                     icon="pi pi-download"
                                     label="Check Updates"
                                     data-testid="modules-list-action-check_updates"
-                                    v-if="store.hasPermission('can-update-theme')"
+                                    v-if="store.hasPermission('can-update-module')"
                             />
 
                             <Button class="p-button-sm"
