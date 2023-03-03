@@ -3,8 +3,8 @@
 import { useTaxonomyStore } from "../../../stores/store-taxonomies";
 import { ref } from "vue";
 import { vaah } from "../../../vaahvue/pinia/vaah";
-import draggable from 'vuedraggable'
 import { TreeView } from "@grapoza/vue-tree";
+import Loader from "../../../vaahvue/vue-three/primeflex/Loader.vue"
 
 const store = useTaxonomyStore();
 const useVaah = vaah();
@@ -24,7 +24,6 @@ const modelDefaults = {
     state: {
         expanded: false
     },
-    addChildCallback: store.addChildCallback,
 
     customizations: {
         classes: {
@@ -34,6 +33,10 @@ const modelDefaults = {
             treeViewNodeSelfAddChildIcon: 'pi pi-plus',
         }
     }
+}
+
+const cloneAction = () => {
+    console.log('draggable clone method');
 }
 </script>
 
@@ -63,7 +66,11 @@ const modelDefaults = {
 
         <Divider />
 
-        <div class="draggable-tree-list" v-if="store && store.assets && store.assets.types">
+        <div class="field col-12 md:col-6 custom-skeleton" v-if="store.is_loading === true">
+            <Loader />
+        </div>
+
+        <div class="draggable-tree-list" v-if="store && store.assets && store.assets.types && store.is_loading === false">
             <TreeView ref="tree_data" :initialModel="store.assets.types"
                       :model-defaults="modelDefaults"
             >
@@ -115,7 +122,6 @@ const modelDefaults = {
                     </div>
                 </template>
             </TreeView>
-
         </div>
     </div>
 </template>
@@ -189,6 +195,12 @@ const modelDefaults = {
     i {
         font-size: 10px;
         font-weight: 700;
+    }
+}
+
+.custom-skeleton {
+    ul {
+        list-style: none;
     }
 }
 </style>

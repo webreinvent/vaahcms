@@ -24,7 +24,7 @@ class ThemesController extends Controller
 
         if (!Auth::user()->hasPermission('has-access-of-theme-section')) {
             $response['success'] = false;
-            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+            $response['messages'][] = trans("vaahcms::messages.permission_denied");
 
             return response()->json($response);
         }
@@ -44,7 +44,7 @@ class ThemesController extends Controller
             $response['success'] = false;
 
             if (env('APP_DEBUG')) {
-                $response['errors'][] = $e->getMessage();
+                $response['messages'][] = $e->getMessage();
                 $response['hint'][] = $e->getTrace();
             } else {
                 $response['messages'][] = 'Something went wrong.';
@@ -58,7 +58,7 @@ class ThemesController extends Controller
     {
         if (!Auth::user()->hasPermission('can-read-theme')) {
             $response['success'] = false;
-            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+            $response['messages'][] = trans("vaahcms::messages.permission_denied");
 
             return response()->json($response);
         }
@@ -110,7 +110,7 @@ class ThemesController extends Controller
             $response['success'] = false;
 
             if (env('APP_DEBUG')) {
-                $response['errors'][] = $e->getMessage();
+                $response['messages'][] = $e->getMessage();
                 $response['hint'][] = $e->getTrace();
             } else {
                 $response['messages'][] = 'Something went wrong.';
@@ -124,7 +124,7 @@ class ThemesController extends Controller
     {
         if (!Auth::user()->hasPermission('can-install-theme')) {
             $response['success'] = false;
-            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+            $response['messages'][] = trans("vaahcms::messages.permission_denied");
 
             return response()->json($response);
         }
@@ -140,7 +140,7 @@ class ThemesController extends Controller
 
                 $errors             = errorsToArray($validator->errors());
                 $response['success'] = false;
-                $response['errors'] = $errors;
+                $response['messages'] = $errors;
                 return response()->json($response);
             }
 
@@ -150,7 +150,7 @@ class ThemesController extends Controller
             $response['success'] = false;
 
             if (env('APP_DEBUG')) {
-                $response['errors'][] = $e->getMessage();
+                $response['messages'][] = $e->getMessage();
                 $response['hint'][] = $e->getTrace();
             } else {
                 $response['messages'][] = 'Something went wrong.';
@@ -164,7 +164,7 @@ class ThemesController extends Controller
     {
         if (!Auth::user()->hasPermission('can-update-theme')) {
             $response['success'] = false;
-            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+            $response['messages'][] = trans("vaahcms::messages.permission_denied");
 
             return response()->json($response);
         }
@@ -180,7 +180,7 @@ class ThemesController extends Controller
 
                 $errors             = errorsToArray($validator->errors());
                 $response['success'] = false;
-                $response['errors'] = $errors;
+                $response['messages'] = $errors;
                 return response()->json($response);
             }
 
@@ -190,7 +190,7 @@ class ThemesController extends Controller
             $response['success'] = false;
 
             if (env('APP_DEBUG')) {
-                $response['errors'][] = $e->getMessage();
+                $response['messages'][] = $e->getMessage();
                 $response['hint'][] = $e->getTrace();
             } else {
                 $response['messages'][] = 'Something went wrong.';
@@ -219,7 +219,7 @@ class ThemesController extends Controller
 
                 $errors             = errorsToArray($validator->errors());
                 $response['success'] = false;
-                $response['errors'] = $errors;
+                $response['messages'] = $errors;
                 return response()->json($response);
             }
 
@@ -246,7 +246,7 @@ class ThemesController extends Controller
                 case 'activate':
                     if (!Auth::user()->hasPermission('can-activate-theme')) {
                         $response['success'] = false;
-                        $response['errors'][] = trans("vaahcms::messages.permission_denied");
+                        $response['messages'][] = trans("vaahcms::messages.permission_denied");
 
                         return response()->json($response);
                     }
@@ -256,7 +256,7 @@ class ThemesController extends Controller
                 case 'make_default':
                     if (!Auth::user()->hasPermission('can-activate-theme')) {
                         $response['success'] = false;
-                        $response['errors'][] = trans("vaahcms::messages.permission_denied");
+                        $response['messages'][] = trans("vaahcms::messages.permission_denied");
 
                         return response()->json($response);
                     }
@@ -266,7 +266,7 @@ class ThemesController extends Controller
                 case 'deactivate':
                     if (!Auth::user()->hasPermission('can-deactivate-theme')) {
                         $response['success'] = false;
-                        $response['errors'][] = trans("vaahcms::messages.permission_denied");
+                        $response['messages'][] = trans("vaahcms::messages.permission_denied");
 
                         return response()->json($response);
                     }
@@ -276,7 +276,7 @@ class ThemesController extends Controller
                 case 'import_sample_data':
                     if (!Auth::user()->hasPermission('can-import-sample-data-in-theme')) {
                         $response['success'] = false;
-                        $response['errors'][] = trans("vaahcms::messages.permission_denied");
+                        $response['messages'][] = trans("vaahcms::messages.permission_denied");
 
                         return response()->json($response);
                     }
@@ -286,7 +286,7 @@ class ThemesController extends Controller
                 case 'delete':
                     if (!Auth::user()->hasPermission('can-delete-theme')) {
                         $response['success'] = false;
-                        $response['errors'][] = trans("vaahcms::messages.permission_denied");
+                        $response['messages'][] = trans("vaahcms::messages.permission_denied");
 
                         return response()->json($response);
                     }
@@ -309,7 +309,7 @@ class ThemesController extends Controller
     {
         if (!Auth::user()->hasPermission('can-update-theme')) {
             $response['success'] = false;
-            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+            $response['messages'][] = trans("vaahcms::messages.permission_denied");
 
             return response()->json($response);
         }
@@ -325,7 +325,7 @@ class ThemesController extends Controller
 
                 $errors             = errorsToArray($validator->errors());
                 $response['success'] = false;
-                $response['errors'] = $errors;
+                $response['messages'] = $errors;
                 return response()->json($response);
             }
 
@@ -335,7 +335,7 @@ class ThemesController extends Controller
             $response['success'] = false;
 
             if (env('APP_DEBUG')) {
-                $response['errors'][] = $e->getMessage();
+                $response['messages'][] = $e->getMessage();
                 $response['hint'][] = $e->getTrace();
             } else {
                 $response['messages'][] = 'Something went wrong.';
@@ -349,7 +349,7 @@ class ThemesController extends Controller
     {
         if (!Auth::user()->hasPermission('can-delete-theme')) {
             $response['success'] = false;
-            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+            $response['messages'][] = trans("vaahcms::messages.permission_denied");
 
             return response()->json($response);
         }
@@ -362,7 +362,7 @@ class ThemesController extends Controller
             $response['success'] = false;
 
             if (env('APP_DEBUG')) {
-                $response['errors'][] = $e->getMessage();
+                $response['messages'][] = $e->getMessage();
                 $response['hint'][] = $e->getTrace();
             } else {
                 $response['messages'][] = 'Something went wrong.';
@@ -394,7 +394,7 @@ class ThemesController extends Controller
             return $response;
         } catch(\Exception $e) {
             $response['success'] = false;
-            $response['errors'][] = $e->getMessage();
+            $response['messages'][] = $e->getMessage();
             return $response;
         }
     }
@@ -403,7 +403,7 @@ class ThemesController extends Controller
     {
         if (!Auth::user()->hasPermission('can-read-module')) {
             $response['success'] = false;
-            $response['errors'][] = trans("vaahcms::messages.permission_denied");
+            $response['messages'][] = trans("vaahcms::messages.permission_denied");
 
             return response()->json($response);
         }
@@ -415,7 +415,7 @@ class ThemesController extends Controller
             $response['success'] = false;
 
             if (env('APP_DEBUG')) {
-                $response['errors'][] = $e->getMessage();
+                $response['messages'][] = $e->getMessage();
                 $response['hint'][] = $e->getTrace();
             } else {
                 $response['messages'][] = 'Something went wrong.';
