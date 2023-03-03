@@ -258,17 +258,10 @@ class ModuleBase extends Model
             }
 
         }
-        $models = [];
 
         foreach($list as $module_path)
         {
-            $models = static::where('name', basename($module_path))->get();
-            foreach ($models as $model) {
-                $model->forceDelete();
-            }
-
             $res = Module::syncModule($module_path);
-
         }
     }
     //-------------------------------------------------
