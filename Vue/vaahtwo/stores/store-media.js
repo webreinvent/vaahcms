@@ -461,6 +461,11 @@ export const useMediaStore = defineStore({
             }
         },
         //---------------------------------------------------------------------
+        hasPermission(slug) {
+            const root = useRootStore();
+            return vaah().hasPermission(root.permissions, slug);
+        },
+        //---------------------------------------------------------------------
         async toggleIsActive(item)
         {
             if(item.is_active)

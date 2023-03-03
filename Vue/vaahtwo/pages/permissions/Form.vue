@@ -65,6 +65,8 @@ const toggleFormMenu = (event) => {
                             aria-haspopup="true"
                             type="button"
                             @click="toggleFormMenu"
+                            v-if="store.hasPermission('can-update-permissions') || store.hasPermission('can-manage-permissions')"
+
                     />
 
                     <Menu ref="form_menu"
@@ -77,6 +79,7 @@ const toggleFormMenu = (event) => {
                             icon="pi pi-eye"
                             v-tooltip.top="'View'"
                             @click="store.toView(store.item)"
+                            v-if="store.hasPermission('can-read-permissions')"
                     />
 
                     <Button class="p-button-sm"

@@ -80,6 +80,8 @@ const toggleFormMenu = (event) => {
                             type="button"
                             aria-haspopup="true"
                             @click="toggleFormMenu"
+                            v-if="store.hasPermission('can-update-roles')
+                                    || store.hasPermission('can-manage-roles')"
                     />
 
                     <Menu ref="form_menu"
@@ -88,7 +90,7 @@ const toggleFormMenu = (event) => {
                     />
                     <!--/form_menu-->
 
-                    <Button v-if="store.item && store.item.id"
+                    <Button v-if="(store.item && store.item.id) || store.hasPermission('can-read-roles')"
                             class="p-button-sm"
                             icon="pi pi-eye"
                             v-tooltip.top="'View'"

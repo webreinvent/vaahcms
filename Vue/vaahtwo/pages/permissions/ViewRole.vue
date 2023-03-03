@@ -158,6 +158,7 @@ const openViewModal = () => {
             >
                 <Column field="role"
                         header="Role"
+                        class="flex align-items-center"
                 >
 
                     <template #body="prop" >

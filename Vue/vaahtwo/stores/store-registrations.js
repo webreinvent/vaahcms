@@ -971,33 +971,6 @@ export const useRegistrationStore = defineStore({
 
         },
         //---------------------------------------------------------------------
-        sendVerificationEmail(item=null){
-            if(!item)
-            {
-                item = this.item;
-            }
-            let ajax_url = this.ajax_url+'/'+item.id+'/'+'send-verification-mail';
-            let options = {
-                method:'PATCH',
-            };
-            options.params=[item.id];
-
-            vaah().ajax(
-                ajax_url,
-                this.sendVerificationEmailAfter,
-                options
-            );
-        },
-        //---------------------------------------------------------------------
-        async sendVerificationEmailAfter(data, res){
-            if(data)
-            {
-                this.item = data.item;
-                await this.getList()
-                this.getItemMenu();
-            }
-        },
-        //---------------------------------------------------------------------
         hasPermission(slug) {
             const root = useRootStore();
             return vaah().hasPermission(root.permissions, slug);

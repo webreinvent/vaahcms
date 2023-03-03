@@ -116,6 +116,7 @@ const useVaah = vaah();
                 <template #body="prop">
                     <div class="p-inputgroup">
                         <Button class="p-button-tiny p-button-text"
+                                v-if="store.hasPermission('can-read-registrations')"
                                 v-tooltip.top="'View'"
                                 @click="store.toView(prop.data)"
                                 icon="pi pi-eye"
@@ -127,10 +128,11 @@ const useVaah = vaah();
                                 @click="store.toEdit(prop.data)"
                                 icon="pi pi-pencil"
                                 data-testid="register-table_to_edit"
+                                v-if="store.hasPermission('can-update-registrations')"
                         />
 
                         <Button class="p-button-tiny p-button-danger p-button-text"
-                                v-if="store.isViewLarge() && !prop.data.deleted_at"
+                                v-if="(store.isViewLarge() && !prop.data.deleted_at) || store.hasPermission('can-update-registrations')"
                                 @click="store.itemAction('trash', prop.data)"
                                 v-tooltip.top="'Trash'"
                                 icon="pi pi-trash"
