@@ -338,7 +338,7 @@ class RegistrationsController extends Controller
     public function sendVerificationEmail(Request $request,$id): JsonResponse
     {
         try {
-            $response = Registration::sendVerificationEmail($request, $id);
+            $response = Registration::sendVerificationEmail($request);
         } catch (\Exception $e) {
             $response = [];
             $response['success'] = false;

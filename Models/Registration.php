@@ -2,9 +2,9 @@
 
 use Carbon\Carbon;
 use DateTimeInterface;
-use http\Env\Request;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use WebReinvent\VaahCms\Entities\Notification;
 use WebReinvent\VaahCms\Entities\Setting;
@@ -172,7 +172,9 @@ class Registration extends RegistrationBase
         $item->fill($inputs);
         $item->save();
 
+        $request_item = new Request([$item->id]);
 
+        static::sendVerificationEmail($request_item);
 
         $response['success'] = true;
         $response['data']['item'] = $item;
