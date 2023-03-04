@@ -63,7 +63,7 @@ const toggleStatusMenu = (event) => {
 </script>
 
 <template>
-    <div class="col-5">
+    <div class="col-6">
         <Panel v-if="store && store.item" >
             <template class="p-1" #header>
                 <div class="flex flex-row">
@@ -226,16 +226,17 @@ const toggleStatusMenu = (event) => {
                             <template v-else-if="column === 'status'" >
                                 <tr>
                                     <td><b>Status</b></td>
-                                    <td v-if="value">
+                                    <td v-if="value" colspan="2">
                                         <div class="p-inputgroup">
                                             <Button :label="value"
                                                     v-if="value"
-                                                    class="p-button-outlined p-button-secondary p-button-sm"
+                                                    class="p-button-outlined p-button-secondary p-button-xs"
                                                     disabled="disabled"
                                             />
 
                                             <Button v-if="store.assets && store.assets.registration_statuses"
-                                                    class="p-button-outlined p-button-secondary p-button-sm"
+                                                    class="p-button-outlined wd-2rem
+                                                     p-button-secondary p-button-xs"
                                                     @click="toggleStatusMenu"
                                                     icon="pi pi-angle-down"
                                                     aria-haspopup="true"
@@ -249,14 +250,14 @@ const toggleStatusMenu = (event) => {
 
                                             <Button v-if="value == 'email-verification-pending'"
                                                     label="Resend Verification Email"
-                                                    class="p-button-info p-button-sm"
+                                                    class="p-button-info p-button-xs"
                                                     @click="store.sendVerificationEmail()"
                                                     data-testid="register-view_send_verification_email"
                                             />
 
                                             <Button v-if="value == 'email-verified'"
                                                     label="Create User"
-                                                    class="p-button-success p-button-sm"
+                                                    class="p-button-success p-button-xs"
                                                      @click="store.confirmCreateUser()"
                                                     data-testid="register-view_confirm_create_user"
                                             />
@@ -266,7 +267,7 @@ const toggleStatusMenu = (event) => {
                                                     @click=""
                                                     icon="pi pi-angle-down"
                                                     aria-haspopup="true"
-                                                    class="p-button-success p-button-sm"
+                                                    class="p-button-success p-button-xs"
                                                     data-testid="register-view_email_verified"
                                             />
                                         </div>

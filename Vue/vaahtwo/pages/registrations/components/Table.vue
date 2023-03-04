@@ -56,19 +56,19 @@ const useVaah = vaah();
              >
                 <template #body="prop">
                     <Tag v-if="prop.data.status === 'email-verified' "
-                         class="mr-2"
+                         class="mr-2 p-tag-xs"
                          severity="success"
                          :value="useVaah.toLabel(prop.data.status)"
                     />
 
                     <Tag v-else-if="prop.data.status === 'email-verification-pending' "
-                         class="mr-2"
+                         class="mr-2 p-tag-xs"
                          severity="danger"
                          :value="useVaah.toLabel(prop.data.status)"
                     />
 
                     <Tag v-else
-                         class="mr-2"
+                         class="mr-2 p-tag-xs"
                          severity="info"
                          :value="useVaah.toLabel(prop.data.status)"
                     />
@@ -92,18 +92,19 @@ const useVaah = vaah();
              >
                 <template #body="prop">
                     <Tag severity="primary"
-                         class="mr-2"
+                         class="mr-2 p-tag-xs"
                          v-if="prop.data.gender && prop.data.gender=='m'"
                          value="Male"
                     />
 
                     <Tag severity="primary"
-                         class="mr-2"
+                         class="mr-2 p-tag-xs"
                          v-if="prop.data.gender && prop.data.gender=='f'"
                          value="Female"
                     />
                     <Tag severity="primary"
-                         class="mr-2" v-if="prop.data.gender && prop.data.gender=='o'"
+                         class="mr-2 p-tag-xs"
+                         v-if="prop.data.gender && prop.data.gender=='o'"
                          value="others"
                     />
                 </template>

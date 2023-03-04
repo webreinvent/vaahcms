@@ -82,6 +82,16 @@ body{
                 margin-left: 5px;
             }
         }
+        .p-panelmenu-header{
+            &.p-highlight{
+                .p-panelmenu-header-content{
+                    .p-submenu-icon.pi.pi-chevron-right{
+                        transform: rotate(90deg);
+                    }
+                }
+            }
+        }
+
         .p-panelmenu-content{
             .p-menuitem-link{
                 position: relative;
@@ -95,6 +105,27 @@ body{
             }
         }
     }
+}
+
+//button
+.p-button{
+   &.p-button-xs{
+       font-size: 0.65rem;
+       padding: 0.5rem 0.5rem;
+   }
+}
+
+//tag
+
+.p-tag-xs{
+    width: max-content;
+    font-size: .6rem;
+}
+
+//width
+
+.wd-2rem{
+    width: 2rem !important;
 }
 
 //level

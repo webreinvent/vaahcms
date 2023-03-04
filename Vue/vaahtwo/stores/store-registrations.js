@@ -117,7 +117,7 @@ export const useRegistrationStore = defineStore({
                     break;
                 default:
                     this.view = 'small';
-                    this.list_view_width = 7;
+                    this.list_view_width = 6;
                     break
             }
         },
