@@ -631,16 +631,21 @@ class Registration extends RegistrationBase
         {
             $reg = self::where('id', $id)->withTrashed()->first();
 
+            $activation_code = Str::uuid();
+
             $inputs = [
                 "name" => $reg->name,
                 "notification_id" => $notification->id,
+                "route" => [
+                    "activation_code" => $activation_code
+                ]
             ];
 
             $reg->notify(new Notice($notification, $inputs));
 
             if($reg)
             {
-                $reg->activation_code = Str::uuid();
+                $reg->activation_code = $activation_code;
                 $reg->activation_code_sent_at = Carbon::now();
                 $reg->save();
             }

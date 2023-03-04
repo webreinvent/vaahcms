@@ -24,7 +24,6 @@ class VaahStr{
             $string = static::translateDynamicStringsOfUser($string, $user);
         }
 
-
         $string = static::translateDynamicStringsOfParams($string, $params);
         $string = static::translateDynamicStringsOfEnv($string);
         $string = static::translateDynamicStringsOfRoutes($string, $params, $user);
@@ -93,6 +92,8 @@ class VaahStr{
 
         $map = [];
 
+
+
         if(count($matches[1]) > 0)
         {
             foreach ($matches[1] as $item)
@@ -128,15 +129,16 @@ class VaahStr{
                         );
                         break;
                     default:
-                        $route = route($route_name,$param);
+                        $route = route($route_name,$params
+                        && isset($params['route']) ? $params['route'] : $params );
                         break;
                 }
 
                 $map['#!ROUTE:'.$item.'!#'] = $route;
 
-
             }
         }
+
 
         $string = strtr($string, $map);
 

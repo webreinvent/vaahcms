@@ -5,11 +5,14 @@ import Footer from '../../components/organisms/Footer.vue'
 import {vaah} from "../../vaahvue/pinia/vaah";
 import Logo from "../../components/molecules/Logo.vue";
 import { useAuthStore } from "../../stores/auth";
+import {useRoute} from "vue-router";
 
 const root = useRootStore();
 const auth = useAuthStore();
+const route = useRoute();
 
 onMounted(async () => {
+    root.showResponse(route.query);
     auth.verifyInstallStatus();
     await root.getAssets();
 

@@ -63,3 +63,17 @@ Route::group(
     });
 
 
+Route::group(
+    [
+        'middleware' => ['web'],
+        'namespace'  => 'WebReinvent\VaahCms\Http\Controllers'
+    ],
+    function () {
+        //------------------------------------------------
+        Route::get('/verify-email/{activation_code}', 'PublicController@verifyEmail')
+            ->name('vh.verification');
+        //------------------------------------------------
+    });
+
+
+

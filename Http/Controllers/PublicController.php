@@ -8,12 +8,14 @@ use Illuminate\Filesystem\Filesystem;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Str;
 use WebReinvent\VaahCms\Entities\Migration;
 use WebReinvent\VaahCms\Models\Module;
 use WebReinvent\VaahCms\Models\ModuleMigration;
+use WebReinvent\VaahCms\Models\Registration;
 use WebReinvent\VaahCms\Models\Role;
 use WebReinvent\VaahCms\Entities\Setting;
 use WebReinvent\VaahCms\Models\Theme;
@@ -52,6 +54,57 @@ class PublicController extends Controller
         }
 
         return redirect()->route('vh.backend');
+    }
+
+
+    //----------------------------------------------------------
+    public function verifyEmail(Request $request,$activation_code)
+    {
+
+        $reg = Registration::where('activation_code',$activation_code)->first();
+
+        $verify_response = [];
+
+        if(!$reg){
+
+            $verify_response['status'] = 'failed';
+            $verify_response['error'] = 'Registration not found.';
+            return redirect()->to(
+                $this->setUrlQuery(url('/backend#/'),$verify_response)
+            );
+
+        }
+
+        $response = Registration::createUser($reg->id);
+
+        if(isset($response['success']) && !$response['success']){
+            $verify_response['status'] = 'failed';
+            $verify_response['error'] = $response['messages'][0];
+
+            return redirect()->to(
+                $this->setUrlQuery(url('/backend#/'),$verify_response)
+            );
+
+        }
+
+        $reg->activation_code = null;
+        $reg->status = 'user-created';
+        $reg->save();
+
+        $verify_response['status'] = 'success';
+        $verify_response['message'] = 'Successfully verified and You can login now.';
+        return redirect()->to(
+            $this->setUrlQuery(url('/backend#/'),$verify_response)
+        );
+
+
+
+    }
+
+    //----------------------------------------------------------
+    public function setUrlQuery(String $url,Array $response)
+    {
+        return  Str::finish($url, '?') . Arr::query($response);
     }
 
     //----------------------------------------------------------
@@ -197,7 +250,6 @@ class PublicController extends Controller
         $response = User::sendResetPasswordEmail($request, 'can-login-in-backend');
 
         return response()->json($response);
-
     }
     //----------------------------------------------------------
     public function postResetPassword(Request $request)

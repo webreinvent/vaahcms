@@ -299,7 +299,7 @@ class RegistrationBase extends Model
 
             $errors             = errorsToArray($validator->errors());
             $response['success'] = false;
-            $response['errors'] = $errors;
+            $response['messages'] = $errors;
             return $response;
         }
 
@@ -309,7 +309,7 @@ class RegistrationBase extends Model
         if($user)
         {
             $response['success'] = false;
-            $response['errors'][] = trans('vaahcms-user.email_already_registered');
+            $response['messages'][] = trans('vaahcms-user.email_already_registered');
             return $response;
         }
 
@@ -319,7 +319,7 @@ class RegistrationBase extends Model
         if($user)
         {
             $response['success'] = false;
-            $response['errors'][] = trans('vaahcms-user.username_already_registered');
+            $response['messages'][] = trans('vaahcms-user.username_already_registered');
             return $response;
         }
 
@@ -329,7 +329,7 @@ class RegistrationBase extends Model
         if($user)
         {
             $response['success'] = false;
-            $response['errors'][] = 'User already exist';
+            $response['messages'][] = 'User already exist';
             if(env('APP_DEBUG'))
             {
                 $response['hint'][] = trans('vaahcms-user.registration_created_when_user_not_exist');
@@ -459,7 +459,7 @@ class RegistrationBase extends Model
 
             $errors             = errorsToArray($validator->errors());
             $response['success'] = false;
-            $response['errors'] = $errors;
+            $response['messages'] = $errors;
             return $response;
         }
 
@@ -469,7 +469,7 @@ class RegistrationBase extends Model
         if($user)
         {
             $response['success'] = false;
-            $response['errors'][] = 'This email is already registered.';
+            $response['messages'][] = 'This email is already registered.';
             return $response;
         }
 
@@ -480,7 +480,7 @@ class RegistrationBase extends Model
         if($user)
         {
             $response['success'] = false;
-            $response['errors'][] = trans('vaahcms-user.username_already_registered');
+            $response['messages'][] = trans('vaahcms-user.username_already_registered');
             return $response;
         }
 
@@ -541,7 +541,7 @@ class RegistrationBase extends Model
         if($user)
         {
             $response['success'] = false;
-            $response['errors'][] = 'Email is already registered.';
+            $response['messages'][] = 'Email is already registered.';
             return $response;
         }
 
@@ -555,7 +555,7 @@ class RegistrationBase extends Model
             if($user)
             {
                 $response['success'] = false;
-                $response['errors'][] = 'Phone number is already registered.';
+                $response['messages'][] = 'Phone number is already registered.';
                 return $response;
             }
         }
@@ -564,7 +564,7 @@ class RegistrationBase extends Model
         if($request->has('status') && $request->status == 'registered' && !$request->has('user_id'))
         {
             $response['success'] = false;
-            $response['errors'][] = 'The registration status is "registered", hence user id is required';
+            $response['messages'][] = 'The registration status is "registered", hence user id is required';
             return $response;
         }
 
@@ -623,14 +623,14 @@ class RegistrationBase extends Model
         if(!$request->has('inputs'))
         {
             $response['success'] = false;
-            $response['errors'][] = 'Select IDs';
+            $response['messages'][] = 'Select IDs';
             return $response;
         }
 
         if(!$request->has('data'))
         {
             $response['success'] = false;
-            $response['errors'][] = 'Select Status';
+            $response['messages'][] = 'Select Status';
             return $response;
         }
 
@@ -656,7 +656,7 @@ class RegistrationBase extends Model
         if(!$request->has('inputs'))
         {
             $response['success'] = false;
-            $response['errors'][] = 'Select IDs';
+            $response['messages'][] = 'Select IDs';
             return $response;
         }
 
@@ -685,7 +685,7 @@ class RegistrationBase extends Model
         if(!$request->has('inputs'))
         {
             $response['success'] = false;
-            $response['errors'][] = 'Select IDs';
+            $response['messages'][] = 'Select IDs';
             return $response;
         }
 
@@ -713,7 +713,7 @@ class RegistrationBase extends Model
         if(!$request->has('inputs'))
         {
             $response['success'] = false;
-            $response['errors'][] = 'Select IDs';
+            $response['messages'][] = 'Select IDs';
             return $response;
         }
 
@@ -742,7 +742,7 @@ class RegistrationBase extends Model
         if(!$request->has('inputs'))
         {
             $response['success'] = false;
-            $response['errors'][] = 'Select IDs';
+            $response['messages'][] = 'Select IDs';
             return $response;
         }
 
@@ -772,7 +772,7 @@ class RegistrationBase extends Model
 
         if(!$reg){
             $response['success'] = false;
-            $response['errors'][] = 'Registration does not exist exist.';
+            $response['messages'][] = 'Registration does not exist exist.';
             return $response;
         }
 
@@ -784,7 +784,7 @@ class RegistrationBase extends Model
         if($user_exist)
         {
             $response['success'] = false;
-            $response['errors'][] = "User of this Email Id is already exist.";
+            $response['messages'][] = "User of this Email Id is already exist.";
             return $response;
         }
 
