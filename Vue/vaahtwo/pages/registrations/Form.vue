@@ -31,7 +31,7 @@ const toggleFormMenu = (event) => {
 
 </script>
 <template>
-    <div class="col-5" >
+    <div class="col-6" >
         <Panel>
             <Message severity="error"
                          class="p-container-message"
@@ -321,7 +321,8 @@ const toggleFormMenu = (event) => {
                     />
                 </VhField>
 
-                <template v-if="store.assets && store.assets.custom_fields"
+                <template v-if="store.assets && store.assets.custom_fields
+                && store.item.meta && store.item.meta['custom_fields']"
                           v-for="(custom_field,key) in store.assets.custom_fields.value"
                           :key="key"
                 >
@@ -338,7 +339,7 @@ const toggleFormMenu = (event) => {
                                  :max="custom_field.max"
                                  :minlength="custom_field.minlength"
                                  :maxlength="custom_field.maxlength"
-                                 v-model="store.item.meta[custom_field.slug]"
+                                 v-model="store.item.meta['custom_fields'][custom_field.slug]"
                        />
 
                         <Password v-else-if="custom_field.type === 'password'"
@@ -349,7 +350,7 @@ const toggleFormMenu = (event) => {
                                   :max="custom_field.max"
                                   :minlength="custom_field.minlength"
                                   :maxlength="custom_field.maxlength"
-                                  v-model="store.item.meta[custom_field.slug]"
+                                  v-model="store.item.meta['custom_fields'][custom_field.slug]"
                                   toggleMask
                                   inputClass="w-full"
                         />
@@ -363,7 +364,7 @@ const toggleFormMenu = (event) => {
                                    :max="custom_field.max"
                                    :minlength="custom_field.minlength"
                                    :maxlength="custom_field.maxlength"
-                                   v-model="store.item.meta[custom_field.slug]"
+                                   v-model="store.item.meta['custom_fields'][custom_field.slug]"
                         />
                     </VhField>
                 </template>

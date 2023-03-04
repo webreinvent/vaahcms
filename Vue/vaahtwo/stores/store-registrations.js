@@ -117,7 +117,7 @@ export const useRegistrationStore = defineStore({
                     break;
                 default:
                     this.view = 'small';
-                    this.list_view_width = 7;
+                    this.list_view_width = 6;
                     break
             }
         },
@@ -971,33 +971,6 @@ export const useRegistrationStore = defineStore({
 
         },
         //---------------------------------------------------------------------
-        sendVerificationEmail(item=null){
-            if(!item)
-            {
-                item = this.item;
-            }
-            let ajax_url = this.ajax_url+'/'+item.id+'/'+'send-verification-mail';
-            let options = {
-                method:'PATCH',
-            };
-            options.params=[item.id];
-
-            vaah().ajax(
-                ajax_url,
-                this.sendVerificationEmailAfter,
-                options
-            );
-        },
-        //---------------------------------------------------------------------
-        async sendVerificationEmailAfter(data, res){
-            if(data)
-            {
-                this.item = data.item;
-                await this.getList()
-                this.getItemMenu();
-            }
-        },
-        //---------------------------------------------------------------------
         hasPermission(slug) {
             const root = useRootStore();
             return vaah().hasPermission(root.permissions, slug);
@@ -1067,7 +1040,21 @@ export const useRegistrationStore = defineStore({
             });
 
             return [{
-                label: 'registration_statuses',
+                items: itemList
+            }];
+        },
+        //---------------------------------------------------------------------
+        userCreatedOption() {
+            if (!this.assets) return;
+            const store = this;
+            let itemList = [{
+                label: 'Create User & Send Welcome Email',
+                command: () => {
+                    store.confirmCreateUser(null,true);
+                }
+            }];
+
+            return [{
                 items: itemList
             }];
         },
@@ -1077,7 +1064,7 @@ export const useRegistrationStore = defineStore({
             this.itemAction('save');
         },
         //---------------------------------------------------------------------
-        confirmCreateUser(item=null){
+        confirmCreateUser(item=null,can_send_mail = false){
             if(!item)
             {
                 item = this.item;
@@ -1086,7 +1073,10 @@ export const useRegistrationStore = defineStore({
             let options = {
                 method:'post',
             };
-            options.params=[item.id];
+            options.params= {
+                'ids': [item.id],
+                'can_send_mail': can_send_mail,
+            };
 
             vaah().ajax(
                 ajax_url,

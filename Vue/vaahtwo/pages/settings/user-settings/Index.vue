@@ -156,14 +156,14 @@ onMounted(async () => {
                                                 />
                                             </div>
 
-                                            <div>
+                                            <div class="inactive">
                                                 <div class="">
                                                     <table class="p-datatable-table">
                                                         <tbody class="p-datatable-tbody">
                                                             <tr>
-                                                                <td>Is hidden</td>\
+                                                                <td>Is hidden</td>
 
-                                                                <td>
+                                                                <td class="text-right">
                                                                     <InputSwitch v-model="element.is_hidden"
                                                                                  data-testid="setting-customfield_is_hidden"
                                                                                  v-bind:false-value="0"
@@ -175,7 +175,7 @@ onMounted(async () => {
                                                             <tr>
                                                                 <td>Apply to Registration</td>
 
-                                                                <td>
+                                                                <td class="text-right">
                                                                     <InputSwitch v-model="element.to_registration"
                                                                                  data-testid="setting-customfield_to_registration"
                                                                                  v-bind:false-value="0"

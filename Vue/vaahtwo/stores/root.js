@@ -243,6 +243,17 @@ export const useRootStore = defineStore({
             {
                 window.location.href = item.meta.action.link;
             }
+        },
+        //-----------------------------------------------------------------------
+        showResponse(data){
+
+            if(data.status != 'success'){
+                vaah().toastErrors([data.error]);
+            }else{
+                vaah().toastSuccess([data.message]);
+            }
+
+            this.$router.replace({query: null})
         }
     }
 })

@@ -30,10 +30,27 @@ const expandNode = (item) => {
 
 <template>
     <div class="sidebar"
-         v-if="root && root.assets && root.assets.extended_views && root.assets.extended_views.sidebar_menu"
+         v-if="root && root.assets && root.assets.extended_views
+          && root.assets.extended_views.sidebar_menu"
     >
         <div v-for="items in root.assets.extended_views.sidebar_menu.success">
-            <PanelMenu :model="items"></PanelMenu>
+            <PanelMenu :model="items">
+                <template #item="{item}">
+
+                    <div class="p-panelmenu-header-content">
+                        <a :href="item.url" class="p-panelmenu-header-action p-menuitem-link" tabindex="-1">
+                            <span v-if="item.items" class="p-submenu-icon pi pi-chevron-right">
+
+                            </span>
+                            <span class="p-menuitem-icon" :class="item.icon">
+
+                            </span>
+                            <span class="p-menuitem-text">{{item.label}}</span>
+                        </a>
+                    </div>
+
+                </template>
+            </PanelMenu>
         </div>
     </div>
 </template>

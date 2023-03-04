@@ -55,9 +55,11 @@ class RegistrationsController extends Controller
             $custom_fields = Setting::query()->where('category','user_setting')
                 ->where('label','custom_fields')->first();
 
+            $data['empty_item']['meta']['custom_fields'] = [];
+
             if (isset($custom_fields)) {
                 foreach ($custom_fields['value'] as $custom_field) {
-                    $data['empty_item']['meta'][$custom_field->slug] = null;
+                    $data['empty_item']['meta']['custom_fields'][$custom_field->slug] = null;
                 }
             }
 
@@ -336,7 +338,7 @@ class RegistrationsController extends Controller
     public function sendVerificationEmail(Request $request,$id): JsonResponse
     {
         try {
-            $response = Registration::sendVerificationEmail($request, $id);
+            $response = Registration::sendVerificationEmail($request);
         } catch (\Exception $e) {
             $response = [];
             $response['success'] = false;
@@ -362,7 +364,7 @@ class RegistrationsController extends Controller
         }
 
         try {
-            $response = Registration::createUser($id);
+            $response = Registration::createUser($request,$id);
         }  catch (\Exception $e) {
             $response = [];
             $response['success'] = false;
