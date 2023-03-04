@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Str;
+use WebReinvent\VaahCms\Entities\Notification;
+use WebReinvent\VaahCms\Notifications\Notice;
 use WebReinvent\VaahCms\Traits\CrudWithUuidObservantTrait;
 use DateTimeInterface;
 
@@ -765,7 +767,7 @@ class RegistrationBase extends Model
 
     }
     //-------------------------------------------------
-    public static function createUser($id)
+    public static function createUser($request,$id)
     {
 
         $reg = static::where('id',$id)->withTrashed()->first();
@@ -809,6 +811,16 @@ class RegistrationBase extends Model
         $reg->vh_user_id = $user->id;
         $reg->status = 'user-created';
         $reg->save();
+
+        if($request->has('can_send_mail') && $request->can_send_mail){
+            $notification = Notification::where('slug', "send-welcome-email")->first();
+            $inputs = [
+                "user_id" => $user->id,
+                "notification_id" => $notification->id,
+            ];
+
+            $user->notify(new Notice($notification, $inputs));
+        }
 
         $response['success'] = true;
         $response['data']['user'] = $user;

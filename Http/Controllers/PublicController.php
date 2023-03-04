@@ -75,7 +75,9 @@ class PublicController extends Controller
 
         }
 
-        $response = Registration::createUser($reg->id);
+        $request_item = new Request(['can_send_mail' => true]);
+
+        $response = Registration::createUser($request_item,$reg->id);
 
         if(isset($response['success']) && !$response['success']){
             $verify_response['status'] = 'failed';

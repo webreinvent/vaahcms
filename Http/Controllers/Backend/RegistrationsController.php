@@ -364,7 +364,7 @@ class RegistrationsController extends Controller
         }
 
         try {
-            $response = Registration::createUser($id);
+            $response = Registration::createUser($request,$id);
         }  catch (\Exception $e) {
             $response = [];
             $response['success'] = false;

@@ -1044,12 +1044,27 @@ export const useRegistrationStore = defineStore({
             }];
         },
         //---------------------------------------------------------------------
+        userCreatedOption() {
+            if (!this.assets) return;
+            const store = this;
+            let itemList = [{
+                label: 'Create User & Send Welcome Email',
+                command: () => {
+                    store.confirmCreateUser(null,true);
+                }
+            }];
+
+            return [{
+                items: itemList
+            }];
+        },
+        //---------------------------------------------------------------------
         changeStatus(status) {
             this.item.status=status;
             this.itemAction('save');
         },
         //---------------------------------------------------------------------
-        confirmCreateUser(item=null){
+        confirmCreateUser(item=null,can_send_mail = false){
             if(!item)
             {
                 item = this.item;
@@ -1058,7 +1073,10 @@ export const useRegistrationStore = defineStore({
             let options = {
                 method:'post',
             };
-            options.params=[item.id];
+            options.params= {
+                'ids': [item.id],
+                'can_send_mail': can_send_mail,
+            };
 
             vaah().ajax(
                 ajax_url,

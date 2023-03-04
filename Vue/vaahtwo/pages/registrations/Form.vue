@@ -31,7 +31,7 @@ const toggleFormMenu = (event) => {
 
 </script>
 <template>
-    <div class="col-5" >
+    <div class="col-6" >
         <Panel>
             <Message severity="error"
                          class="p-container-message"

@@ -130,7 +130,7 @@ class VaahStr{
                         break;
                     default:
                         $route = route($route_name,$params
-                        && isset($params['route']) ? $params['route'] : $params );
+                        && isset($params['route']) ? $params['route'] : [] );
                         break;
                 }
 

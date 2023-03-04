@@ -55,9 +55,14 @@ const toggleItemMenu = (event) => {
 };
 
 const item_status = ref();
+const user_status = ref();
 
 const toggleStatusMenu = (event) => {
     item_status.value[0].toggle(event);
+};
+
+const toggleUserStatusMenu = (event) => {
+    user_status.value[0].toggle(event);
 };
 //---------------------------------------------------------------------
 </script>
@@ -248,6 +253,13 @@ const toggleStatusMenu = (event) => {
                                                   :popup="true"
                                             />
 
+
+
+                                            <Menu ref="user_status"
+                                                  :model="store.userCreatedOption()"
+                                                  :popup="true"
+                                            />
+
                                             <Button v-if="value == 'email-verification-pending'"
                                                     label="Resend Verification Email"
                                                     class="p-button-info p-button-xs"
@@ -262,14 +274,17 @@ const toggleStatusMenu = (event) => {
                                                     data-testid="register-view_confirm_create_user"
                                             />
 
+
                                             <Button v-if="value == 'email-verified'"
                                                     type="button"
-                                                    @click=""
+                                                    @click="toggleUserStatusMenu"
                                                     icon="pi pi-angle-down"
                                                     aria-haspopup="true"
                                                     class="p-button-success p-button-xs"
                                                     data-testid="register-view_email_verified"
                                             />
+
+
                                         </div>
                                     </td>
                                 </tr>
