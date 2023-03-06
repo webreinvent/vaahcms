@@ -32,7 +32,7 @@ const useVaah = vaah();
 
             <Column field="payload" header="Payload">
                 <template #body="prop">
-                    <Button v-if="store.hasPermission('can-rad-jobs-payload')"
+                    <Button v-if="store.hasPermission('can-read-jobs-payload')"
                             class="p-button-tiny p-button-text"
                             v-tooltip.top="'View'"
                             @click="store.viewPayloads(prop.data.payload)"
