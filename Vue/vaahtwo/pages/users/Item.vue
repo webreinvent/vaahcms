@@ -77,6 +77,7 @@ const toggleItemMenu = (event) => {
                             @click="store.toEdit(store.item)"
                             icon="pi pi-pencil"
                             class="p-button-sm"
+                            v-if="store.hasPermission('can-update-users') || store.hasPermission('can-manage-users')"
                     />
 
                     <!--item_menu-->
@@ -84,6 +85,7 @@ const toggleItemMenu = (event) => {
                             @click="toggleItemMenu"
                             icon="pi pi-angle-down"
                             aria-haspopup="true"
+                            v-if="store.hasPermission('can-update-users') || store.hasPermission('can-manage-users')"
                     />
 
                     <Menu ref="item_menu_state"

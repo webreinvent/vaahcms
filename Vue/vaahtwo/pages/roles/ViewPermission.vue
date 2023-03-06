@@ -216,6 +216,7 @@ const confirmChangeStatus = (event, id) => {
             >
                 <Column field="name"
                         header="Name"
+                        class="flex align-items-center"
                 >
 
                     <template #body="prop">

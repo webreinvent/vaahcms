@@ -36,7 +36,8 @@ const toggleBulkMenuState = (event) => {
             <div v-if="store.view === 'large'">
 
                 <!--selected_menu-->
-                <Button class="p-button-sm"
+                <Button v-if="store.hasPermission('can-manage-media') || store.hasPermission('can-update-media')"
+                        class="p-button-sm"
                         icon="pi pi-angle-down"
                         data-testid="media-actions-menu"
                         type="button"
@@ -62,6 +63,7 @@ const toggleBulkMenuState = (event) => {
                         aria-haspopup="true"
                         aria-controls="bulk_menu_state"
                         @click="toggleBulkMenuState"
+                        v-if="store.hasPermission('can-update-media') || store.hasPermission('can-manage-media')"
                 />
                 <Menu ref="bulk_menu_state"
                       :model="store.list_bulk_menu"

@@ -25,7 +25,7 @@ const store = useGeneralStore();
             </div>
 
             <div class="col-12 md:col-6 pl-3">
-                <h5 class="p-1 text-xs mb-1">After head tag close (&lt;/head&gt;)</h5>
+                <h5 class="p-1 text-xs mb-1">Before head tag close (&lt;/head&gt;)</h5>
 
                 <div class="p-inputgroup">
                     <Textarea v-model="store.script_tag.script_before_head_close"
@@ -58,7 +58,7 @@ const store = useGeneralStore();
             </div>
 
             <div class="col-12 md:col-6 pl-3">
-                <h5 class="p-1 text-xs mb-1">After body tag close (&lt;/body&gt;)</h5>
+                <h5 class="p-1 text-xs mb-1">Before body tag close (&lt;/body&gt;)</h5>
 
                 <div class="p-inputgroup">
                     <Textarea v-model="store.script_tag.script_before_body_close"

@@ -77,6 +77,7 @@ const toggleItemMenu = (event) => {
                             label="Edit"
                             icon="pi pi-pencil"
                             @click="store.toEdit(store.item)"
+                            v-if="store.hasPermission('can-update-roles')"
                     />
 
                     <!--item_menu-->
@@ -85,6 +86,8 @@ const toggleItemMenu = (event) => {
                             type="button"
                             aria-haspopup="true"
                             @click="toggleItemMenu"
+                            v-if="store.hasPermission('can-update-roles')
+                                    || store.hasPermission('can-manage-roles')"
                     />
 
                     <Menu ref="item_menu_state"

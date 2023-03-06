@@ -63,6 +63,7 @@ const useVaah = vaah();
                      <Button class="p-button-sm p-button-rounded white-space-nowrap"
                              v-tooltip.top="'View Permissions'"
                              @click="store.toPermission(props.data)"
+                             v-if="store.hasPermission('can-read-roles')"
                      >
                          {{ props.data.count_permissions }} / {{ store.total_permissions }}
                      </Button>
@@ -76,6 +77,7 @@ const useVaah = vaah();
                      <Button class="p-button-sm p-button-rounded white-space-nowrap"
                              v-tooltip.top="'View Users'"
                              @click="store.toUser(props.data)"
+                             v-if="store.hasPermission('can-read-roles')"
                      >
                          {{ props.data.count_users }} / {{ store.total_users }}
                      </Button>
@@ -118,16 +120,18 @@ const useVaah = vaah();
                                 v-tooltip.top="'View'"
                                 @click="store.toView(prop.data)"
                                 icon="pi pi-eye"
+                                v-if="store.hasPermission('can-read-roles')"
                         />
 
                         <Button class="p-button-tiny p-button-text"
                                 v-tooltip.top="'Update'"
                                 @click="store.toEdit(prop.data)"
+                                v-if="store.hasPermission('can-update-roles')"
                                 icon="pi pi-pencil"
                         />
 
                         <Button class="p-button-tiny p-button-danger p-button-text"
-                                v-if="store.isViewLarge() && !prop.data.deleted_at"
+                                v-if="(store.isViewLarge() && !prop.data.deleted_at) || store.hasPermission('can-update-roles')"
                                 @click="store.itemAction('trash', prop.data)"
                                 v-tooltip.top="'Trash'"
                                 icon="pi pi-trash"

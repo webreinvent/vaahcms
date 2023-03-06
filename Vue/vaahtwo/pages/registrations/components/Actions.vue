@@ -42,6 +42,7 @@ const toggleBulkMenuState = (event) => {
                         aria-haspopup="true"
                         aria-controls="overlay_menu"
                         data-testid="register-toggle_list_selected_menu"
+                        v-if="store.hasPermission('can-update-registrations') || store.hasPermission('can-manage-registrations')"
                 >
                     <Badge v-if="store.action.items.length > 0"
                            :value="store.action.items.length"
@@ -61,6 +62,7 @@ const toggleBulkMenuState = (event) => {
                         aria-haspopup="true"
                         aria-controls="bulk_menu_state"
                         data-testid="register-toggle_list_bulk_menu"
+                        v-if="store.hasPermission('can-update-registrations') || store.hasPermission('can-manage-registrations')"
                 >
                 </Button>
 

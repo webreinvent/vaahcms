@@ -86,6 +86,7 @@ const toggleItemMenu = (event) => {
                             label="Edit"
                             icon="pi pi-pencil"
                             @click="store.toEdit(store.item)"
+                            v-if="store.hasPermission('can-update-taxonomies')"
                     />
 
                     <!--item_menu-->
@@ -95,6 +96,7 @@ const toggleItemMenu = (event) => {
                             data-testid="taxonomies-item-menu"
                             icon="pi pi-angle-down"
                             aria-haspopup="true"
+                            v-if="store.hasPermission('can-update-taxonomies') || store.hasPermission('can-manage-taxonomies')"
                     />
 
                     <Menu ref="item_menu_state"

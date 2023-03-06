@@ -188,7 +188,8 @@ export const useEnvStore = defineStore({
         //---------------------------------------------------------------------
         getCopy(value)
         {
-            navigator.clipboard.writeText(value);
+            let copyText = 'env("'+value.key+'")';
+            navigator.clipboard.writeText(copyText);
             vaah().toastSuccess(['Copied']);
         },
         //---------------------------------------------------------------------

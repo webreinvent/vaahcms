@@ -63,11 +63,13 @@ const useVaah = vaah();
 
              <Column field="total_roles"
                      header="Roles"
+
              >
                  <template #body="prop">
                      <Button class="p-button p-button-rounded p-button-sm white-space-nowrap"
                              v-tooltip.top="'View Role'"
                              @click="store.toRole(prop.data)"
+                             v-if="store.hasPermission('can-read-permissions')"
                      >
                         {{ prop.data.count_roles }} / {{store.total_roles }}
                      </Button>
@@ -123,17 +125,19 @@ const useVaah = vaah();
                         <Button class="p-button-tiny p-button-text"
                                 v-tooltip.top="'View'"
                                 @click="store.toView(prop.data)"
+                                v-if="store.hasPermission('can-read-permissions')"
                                 icon="pi pi-eye"
                         />
 
                         <Button class="p-button-tiny p-button-text"
                                 v-tooltip.top="'Update'"
                                 @click="store.toEdit(prop.data)"
+                                v-if="store.hasPermission('can-update-permissions')"
                                 icon="pi pi-pencil"
                         />
 
                         <Button class="p-button-tiny p-button-danger p-button-text"
-                                v-if="store.isViewLarge() && !prop.data.deleted_at"
+                                v-if="(store.isViewLarge() && !prop.data.deleted_at) || store.hasPermission('can-update-permissions')"
                                 @click="store.itemAction('trash', prop.data)"
                                 v-tooltip.top="'Trash'"
                                 icon="pi pi-trash"

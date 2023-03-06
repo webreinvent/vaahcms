@@ -90,6 +90,7 @@ const toggleUserStatusMenu = (event) => {
                             @click="store.toEdit(store.item)"
                             icon="pi pi-pencil"
                             data-testid="register-view_to_edit"
+                            v-if="store.hasPermission('can-update-registrations')"
                     />
 
                     <!--item_menu-->
@@ -98,6 +99,7 @@ const toggleUserStatusMenu = (event) => {
                             icon="pi pi-angle-down"
                             aria-haspopup="true"
                             data-testid="register-view_toggle_item_menu_list"
+                            v-if="store.hasPermission('can-update-registrations') || store.hasPermission('can-manage-registrations')"
                     />
 
                     <Menu ref="item_menu_state"

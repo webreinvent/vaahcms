@@ -73,6 +73,7 @@ const toggleItemMenu = (event) => {
                             icon="pi pi-angle-down"
                             aria-haspopup="true"
                             @click="toggleItemMenu"
+                            v-if="store.hasPermission('can-update-users') || store.hasPermission('can-manage-users')"
                     />
 
                     <Menu ref="user_roles_menu_state"
@@ -124,6 +125,7 @@ const toggleItemMenu = (event) => {
                         >
                             <Column field="role"
                                     header="Roles"
+                                    class="flex align-items-center"
                             >
                                 <template #body="prop">
                                     {{ prop.data.name }}

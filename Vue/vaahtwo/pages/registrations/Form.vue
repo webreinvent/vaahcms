@@ -98,6 +98,7 @@ const toggleFormMenu = (event) => {
                             aria-haspopup="true"
                             data-testid="register-form_toggle_form_menu_list"
                             class="p-button-sm"
+                            v-if="store.hasPermission('can-update-registrations') || store.hasPermission('can-manage-registrations')"
                     />
 
                     <Menu ref="form_menu"
@@ -106,7 +107,7 @@ const toggleFormMenu = (event) => {
                     />
                     <!--/form_menu-->
 
-                    <Button v-if="store.item && store.item.id"
+                    <Button v-if="(store.item && store.item.id) || store.hasPermission('can-read-registrations')"
                             class="p-button-sm"
                             icon="pi pi-eye"
                             v-tooltip.top="'View'"

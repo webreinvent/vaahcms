@@ -104,15 +104,31 @@ onMounted(async () => {
             <div class="grid" v-else>
                 <div class="col-12 mb-3">
                     <div class="flex align-items-center justify-content-between">
-                        <h4 class="font-semibold text-xl">{{store.active_notification.name}}</h4>
+                        <div class="flex">
+                            <Button v-if="store.assets && store.assets.help_urls"
+                                    icon="pi pi-question-circle"
+                                    @click="store.getNotificationDcoument(store.assets.help_urls.send_notification)"
+                                    data-testis="setting-notification_tooltip"
+                                    class="p-button-sm"
+                            />
+                            <Button icon="pi pi-copy"
+                                    :data-testid="'setting-notification_'+store.active_notification.slug+'_copy'"
+                                    @click="store.getCopy(store.active_notification.slug)"
+                                    class="p-button-sm ml-2"
+                            />
 
-                        <Button class="p-button-outlined p-button-sm"
-                                label="Go back"
-                                icon="pi pi-arrow-left"
-                                icon-class="text-xs"
-                                data-testid="setting-notification_back"
-                                @click="store.hideNotificationSettings"
-                        />
+                            <h4 class="font-semibold text-xl m-2">{{store.active_notification.name}}</h4>
+                        </div>
+                        <div class="col-2">
+                            <Button class="p-button-outlined p-button-sm"
+                                    label="Go back"
+                                    icon="pi pi-arrow-left"
+                                    icon-class="text-xs"
+                                    data-testid="setting-notification_back"
+                                    @click="store.hideNotificationSettings"
+                            />
+                        </div>
+
                     </div>
                 </div>
                 <div class="col-3 pr-3">
@@ -263,7 +279,7 @@ onMounted(async () => {
                                                 <h5 class="p-1 text-xs mb-1 mt-3">{{vaah().toLabel(line.key)}}</h5>
 
                                                 <div class="p-inputgroup">
-                                                    <InputText v-model="line.value"
+                                                    <Textarea v-model="line.value"
                                                                v-if="line.key == 'line'"
                                                                :data-testid="'setting-notification_'+line.key"
                                                                placeholder="Content with variables"

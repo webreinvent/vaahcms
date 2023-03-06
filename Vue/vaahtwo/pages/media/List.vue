@@ -68,6 +68,7 @@ onMounted(async () => {
                                 icon="pi pi-plus"
                                 label="Create"
                                 class="p-button-sm"
+                                v-if="store.hasPermission('can-create-media')"
                         />
 
                         <Button data-testid="media-list-reload"

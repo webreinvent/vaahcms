@@ -423,12 +423,8 @@ export const useLocalizationStore = defineStore({
             };
 
             let ajax_url = this.ajax_url+'/generateLanguage';
-            vaah().ajax(ajax_url, this.generateLanguageAfter, options);
+            vaah().ajax(ajax_url, null, options);
 
-        },
-        //---------------------------------------------------------------------
-        generateLanguageAfter(data) {
-            vaah().toastSuccess(['Generated']);
         },
         //---------------------------------------------------------------------
         async paginate(event) {
