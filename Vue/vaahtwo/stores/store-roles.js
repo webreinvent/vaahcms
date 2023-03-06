@@ -652,8 +652,6 @@ export const useRoleStore = defineStore({
                 this.query.filter[key] = null;
             }
 
-            this.query = this.empty_query;
-
             await this.updateUrlQueryString(this.query);
         },
         //---------------------------------------------------------------------
