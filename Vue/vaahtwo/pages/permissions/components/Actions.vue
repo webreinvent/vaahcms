@@ -42,6 +42,7 @@ const toggleBulkMenuState = (event) => {
                         aria-haspopup="true"
                         aria-controls="overlay_menu"
                         @click="toggleSelectedMenuState"
+                        v-if="store.hasPermission('can-manage-permissions') || store.hasPermission('can-update-permissions')"
                 >
                     <Badge v-if="store.action.items.length > 0"
                            :value="store.action.items.length"
@@ -61,6 +62,7 @@ const toggleBulkMenuState = (event) => {
                         @click="toggleBulkMenuState"
                         aria-haspopup="true"
                         aria-controls="bulk_menu_state"
+                        v-if="store.hasPermission('can-manage-permissions') || store.hasPermission('can-update-permissions')"
                 />
 
                 <Menu ref="bulk_menu_state"

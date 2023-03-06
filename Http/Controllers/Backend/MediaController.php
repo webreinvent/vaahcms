@@ -81,7 +81,7 @@ class MediaController extends Controller
     //----------------------------------------------------------
     public function getList(Request $request): JsonResponse
     {
-        if (!Auth::user()->hasPermission('can-read-media')) {
+        if (!Auth::user()->hasPermission('has-access-of-media-section')) {
             $response['success'] = false;
             $response['messages'][] = trans("vaahcms::messages.permission_denied");
 

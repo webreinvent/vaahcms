@@ -78,7 +78,6 @@ const useVaah = vaah();
                                 url="prop.data.url"
                                 @click="store.openImage(prop.data.url)"
                                 target="_blank"
-                                v-if="store.hasPermission('can-read-media')"
                         />
 
                         <Button class="p-button-tiny p-button-text"
@@ -99,7 +98,7 @@ const useVaah = vaah();
 
                         <Button class="p-button-tiny p-button-danger p-button-text"
                                 data-testid="media-table-action-trash"
-                                v-if="(store.isViewLarge() && !prop.data.deleted_at) || store.hasPermission('can-update-media')"
+                                v-if="(store.isViewLarge() && !prop.data.deleted_at) || store.hasPermission('can-delete-media')"
                                 @click="store.itemAction('trash', prop.data)"
                                 v-tooltip.top="'Trash'"
                                 icon="pi pi-trash"

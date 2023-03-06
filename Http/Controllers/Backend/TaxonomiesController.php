@@ -83,7 +83,7 @@ class TaxonomiesController extends Controller
     //----------------------------------------------------------
     public function getList(Request $request): JsonResponse
     {
-        if (!Auth::user()->hasPermission('can-read-taxonomies')) {
+        if (!Auth::user()->hasPermission('has-access-of-taxonomies-section')) {
             $response['success'] = false;
             $response['messages'][] = trans("vaahcms::messages.permission_denied");
 
@@ -191,7 +191,7 @@ class TaxonomiesController extends Controller
     //----------------------------------------------------------
     public function createItem(Request $request): JsonResponse
     {
-        if (!Auth::user()->hasPermission('can-read-taxonomies')) {
+        if (!Auth::user()->hasPermission('can-create-taxonomies')) {
             $response['success'] = false;
             $response['messages'][] = trans("vaahcms::messages.permission_denied");
 

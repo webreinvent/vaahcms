@@ -78,7 +78,7 @@ onMounted(async () => {
 
                             <Button icon="pi pi-copy"
                                     class="p-button-sm"
-                                    @click="store.getCopy(item.value)"
+                                    @click="store.getCopy(item)"
                             />
 
                             <Button icon="pi pi-trash"

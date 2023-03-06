@@ -36,14 +36,14 @@ const toggleBulkMenuState = (event) => {
             <div v-if="store.view === 'large'">
 
                 <!--selected_menu-->
-                <Button class="p-button-sm"
+                <Button v-if="store.hasPermission('can-manage-media') || store.hasPermission('can-update-media')"
+                        class="p-button-sm"
                         icon="pi pi-angle-down"
                         data-testid="media-actions-menu"
                         type="button"
                         aria-haspopup="true"
                         aria-controls="overlay_menu"
                         @click="toggleSelectedMenuState"
-                        v-if="store.hasPermission('can-update-media') || store.hasPermission('can-manage-media')"
                 >
                     <Badge v-if="store.action.items.length > 0"
                            :value="store.action.items.length"

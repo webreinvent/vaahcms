@@ -52,21 +52,22 @@ const openTaxonomyTypeModal = () => {
                     :style="{ width: store.getIdWidth() }"
                     :sortable="true"
             />
+             <Column field="name" header="Name"
+                     :sortable="true"
+             >
+                 <template #body="prop">
+                     <Badge v-if="prop.data.deleted_at"
+                            value="Trashed"
+                            severity="danger"
+                     />
+                     {{ prop.data.name }}
+                 </template>
+             </Column>
 
-            <Column field="name" header="Name"
-                    :sortable="true"
-            >
-                <template #body="prop">
-                    <Badge v-if="prop.data.deleted_at"
-                           value="Trashed"
-                           severity="danger"
-                    />
-                        {{ prop.data.name }}
-                </template>
-            </Column>
+
 
             <Column field="slug" header="Slug"
-                    :sortable="true"
+                    :sortable="false"
                     class="flex align-items-center"
             >
                 <template #body="prop">
@@ -80,24 +81,24 @@ const openTaxonomyTypeModal = () => {
                     />
                 </template>
             </Column>
+             <column></column>
+             <Column field="type" header="Type"
+                     :sortable="false"
+                     class="flex align-items-center"
+             >
+                 <template #body="prop">
+                     <p v-if="prop.data.type"> {{ prop.data.type.name }} </p>
 
-            <Column field="type" header="Type"
-                    :sortable="false"
-                    class="flex align-items-center"
-            >
-                <template #body="prop">
-                    <p v-if="prop.data.type"> {{ prop.data.type.name }} </p>
-
-                    <template v-if="store.hasPermission('can-manage-taxonomy-types')">
-                        <Button class="p-button-tiny p-button-text"
-                                data-testid="taxonomies-table-to-manage-taxonomy-type-modal"
-                                v-tooltip.top="'Manage Taxonomy Type'"
-                                icon="pi pi-pencil"
-                                @click="openTaxonomyTypeModal"
-                        />
-                    </template>
-                </template>
-            </Column>
+                     <template v-if="store.hasPermission('can-manage-taxonomy-types')">
+                         <Button class="p-button-tiny p-button-text"
+                                 data-testid="taxonomies-table-to-manage-taxonomy-type-modal"
+                                 v-tooltip.top="'Manage Taxonomy Type'"
+                                 icon="pi pi-pencil"
+                                 @click="openTaxonomyTypeModal"
+                         />
+                     </template>
+                 </template>
+             </Column>
 
             <Column field="updated_at" header="Updated"
                     v-if="store.isViewLarge()"
@@ -136,6 +137,7 @@ const openTaxonomyTypeModal = () => {
                                 data-testid="taxonomies-table-to-view"
                                 v-tooltip.top="'View'"
                                 @click="store.toView(prop.data)"
+                                v-if="store.hasPermission('can-read-taxonomies')"
                                 icon="pi pi-eye"
                         />
 
@@ -144,11 +146,12 @@ const openTaxonomyTypeModal = () => {
                                 v-tooltip.top="'Update'"
                                 @click="store.toEdit(prop.data)"
                                 icon="pi pi-pencil"
+                                v-if="store.hasPermission('can-update-taxonomies')"
                         />
 
                         <Button class="p-button-tiny p-button-danger p-button-text"
                                 data-testid="taxonomies-table-action-trash"
-                                v-if="store.isViewLarge() && !prop.data.deleted_at"
+                                v-if="(store.isViewLarge() && !prop.data.deleted_at) || store.hasPermission('can-delete-taxonomies')"
                                 @click="store.itemAction('trash', prop.data)"
                                 v-tooltip.top="'Trash'"
                                 icon="pi pi-trash"

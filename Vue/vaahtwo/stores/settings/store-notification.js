@@ -392,11 +392,7 @@ export const useNotificationStore = defineStore({
             };
 
             let ajax_url = this.ajax_url+'/store';
-            await vaah().ajax(ajax_url, this.storeNotificationAfter, options);
-        },
-        //---------------------------------------------------------------------
-        storeNotificationAfter(data, res){
-            vaah().toastSuccess(['Saved']);
+            await vaah().ajax(ajax_url, null, options);
         },
         //---------------------------------------------------------------------
         async sendNotification() {
@@ -474,6 +470,10 @@ export const useNotificationStore = defineStore({
             this.active_notification = null;
             await this.getAssets();
         },
+        //---------------------------------------------------------------------
+        getNotificationDcoument(url){
+            window.open(url,'_blank');
+        }
         //---------------------------------------------------------------------
 
     }
