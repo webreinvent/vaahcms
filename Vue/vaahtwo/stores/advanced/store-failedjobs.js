@@ -2,12 +2,14 @@ import {watch} from 'vue'
 import {acceptHMRUpdate, defineStore} from 'pinia'
 import qs from 'qs'
 import {vaah} from '../../vaahvue/pinia/vaah'
+import {useRootStore} from "../root";
 
 let model_namespace = 'WebReinvent\\VaahCms\\Models\\FailedJob';
 
 
 let base_url = document.getElementsByTagName('base')[0].getAttribute("href");
 let ajax_url = base_url + "/vaah/failedjobs";
+
 
 let empty_states = {
     query: {
@@ -538,8 +540,13 @@ export const useFailedJobStore = defineStore({
         async sync() {
             this.is_btn_loading = true;
             await this.getList();
-        }
+        },
         //-------------------------------------------------------
+        hasPermission(slug) {
+            const root = useRootStore();
+            return vaah().hasPermission(root.permissions, slug);
+        },
+        //----------------------------------------------------------------------
     }
 });
 

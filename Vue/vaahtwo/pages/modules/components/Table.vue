@@ -59,13 +59,13 @@ const importSampleDataModal = (item) => {
                                         @click="store.toggleIsActive(item)"
                                 />
 
-                                <Button class="mr-2 p-button-info p-button-sm"
+                                <Button v-if="item.is_active && store.hasPermission('can-publish-assets-of-module')"
+                                        class="mr-2 p-button-info p-button-sm"
                                         data-testid="modules-table-action-install-update"
                                         :loading="store.active_action.includes('publish_assets_'+item.id)"
                                         @click="store.publishAssets(item)"
                                         icon="pi pi-arrow-up"
                                         v-tooltip.top="'Publish Assets'"
-                                        v-if="item.is_active"
                                 />
 
                                 <Button v-if="item.is_active && store.hasPermission('can-import-sample-data-in-module')"
@@ -99,6 +99,7 @@ const importSampleDataModal = (item) => {
                                         icon="pi pi-eye"
                                         v-tooltip.top=" 'View' "
                                         @click="store.toView(item)"
+                                        v-if="item.is_active && store.hasPermission('can-read-module')"
                                 />
                             </div>
                         </div>

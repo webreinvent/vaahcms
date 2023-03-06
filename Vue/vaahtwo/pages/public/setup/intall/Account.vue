@@ -95,13 +95,16 @@ onMounted(async () => {
                 <AutoComplete
                     v-model="store.config.account.country_calling_code_object"
                     :suggestions="store.filtered_country_codes"
+                    :completeOnFocus="store.autocomplete_on_focus"
                     @complete="store.searchCountryCode"
+                    @blur="store.setFocusDropDownToTrue"
                     @item-select="store.onSelectCountryCode"
                     placeholder="Enter Your Country"
                     optionLabel="name"
                     name="account-country_calling_code"
                     data-testid="account-country_calling_code"
-                    input-class="p-inputtext-sm"/>
+                    input-class="p-inputtext-sm"
+                />
             </div>
             <div class="col-12 md:col-3">
                 <h5 class="text-left p-1 title is-6">Phone</h5>

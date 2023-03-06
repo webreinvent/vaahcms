@@ -234,6 +234,12 @@
         "details": "This will allow user to install a module."
     },
     {
+        "name": "Can Publish Assets Of Module",
+        "module": "vaahcms",
+        "section": "module",
+        "details": "This will allow user to publish assets of a module."
+    },
+    {
         "name": "Can Delete Module",
         "module": "vaahcms",
         "section": "module",
@@ -319,12 +325,101 @@
         "details": "This will allow user to read a theme."
     },
     {
+        "name": "Can Publish Assets Of Theme",
+        "module": "vaahcms",
+        "section": "theme",
+        "details": "This will allow user to publish assets of a theme."
+    },
+    {
         "name": "Has Access Of Advanced Section",
         "module": "vaahcms",
         "section": "advanced",
         "details": "This will allow user see the link of advanced section."
     },
-
+    {
+        "name": "Has Access Of Logs Section",
+        "module": "vaahcms",
+        "section": "logs",
+        "details": "This will allow user see the link of logs section."
+    },
+    {
+        "name": "Can Read Log",
+        "module": "vaahcms",
+        "section": "logs",
+        "details": "This will allow user to see logs details."
+    },
+    {
+        "name": "Can Delete Log",
+        "module": "vaahcms",
+        "section": "logs",
+        "details": "This will allow user to Logs."
+    },
+    {
+        "name": "Has Access Of Batches Section",
+        "module": "vaahcms",
+        "section": "batches",
+        "details": "This will allow user see the link of logs section."
+    },
+    {
+        "name": "Can Read Batch Failed Ids",
+        "module": "vaahcms",
+        "section": "batches",
+        "details": "This will allow user to view failed ids of batch."
+    },
+    {
+        "name": "Can Delete Batch",
+        "module": "vaahcms",
+        "section": "batches",
+        "details": "This will allow user to delete batches."
+    },
+    {
+        "name": "Can Read Batch Details",
+        "module": "vaahcms",
+        "section": "batches",
+        "details": "This will allow user to view batches related details."
+    },
+    {
+        "name": "Has Access Of Failed Jobs Section",
+        "module": "vaahcms",
+        "section": "failedjobs",
+        "details": "This will allow user see the link of failed jobs section."
+    },
+    {
+        "name": "Can Read Payload Failed Jobs",
+        "module": "vaahcms",
+        "section": "failedjobs",
+        "details": "This will allow user to view failed jobs payload."
+    },
+    {
+        "name": "Can Delete Failed Jobs",
+        "module": "vaahcms",
+        "section": "failedjobs",
+        "details": "This will allow user to delete failed jobs."
+    },
+    {
+        "name": "Can Read Failed Jobs Exception",
+        "module": "vaahcms",
+        "section": "failedjobs",
+        "details": "This will allow user to view failed jobs exception."
+    },
+    {
+        "name": "Has Access Of Jobs Section",
+        "module": "vaahcms",
+        "section": "jobs",
+        "details": "This will allow user see the link of jobs section."
+    },
+    {
+        "name": "Can Read Jobs Payload",
+        "module": "vaahcms",
+        "section": "jobs",
+        "details": "This will allow user to view jobs payload."
+    },
+    {
+        "name": "Can Delete Jobs",
+        "module": "vaahcms",
+        "section": "jobs",
+        "details": "This will allow user to delete jobs."
+    },
     {
         "name": "Has Access Of Taxonomies Section",
         "module": "vaahcms",

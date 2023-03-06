@@ -8,16 +8,17 @@ const root = useRootStore();
 const store = useDashboardStore();
 
 onMounted(async () => {
+    await store.getItem();
     root.verifyInstallStatus();
     await root.reloadAssets();
-    await store.getItem();
+
 });
 
 const key = ref();
 </script>
 
 <template>
-    <div v-if="root.assets && store.dashboard_items" class="grid dashboard">
+    <div v-if="root.assets && store.hasPermission('has-access-of-dashboard')" class="grid dashboard">
         <div class="col-12 md:col-8">
             <Card>
                 <template #content>
@@ -29,7 +30,10 @@ const key = ref();
                             <Button @click="store.goToLink(root.base_url + '#/vaah/themes/')"
                                     class="p-button-sm is-light"
                             >
-                                <span v-if="store.dashboard_items && store.dashboard_items.success && store.dashboard_items.success.vaahcms && store.dashboard_items.success.vaahcms.has_activated_theme">
+                                <span v-if="store.dashboard_items
+                                            && store.dashboard_items.success
+                                            && store.dashboard_items.success.vaahcms
+                                            && store.dashboard_items.success.vaahcms.has_activated_theme">
                                      Go To Theme
                                 </span>
                                 <span v-else>
@@ -178,7 +182,7 @@ const key = ref();
 
                             <template v-if=" item.type === 'list' ">
                                 <template v-for="(log, index) in item.list"
-                                          v-if="index < item.list_limit"
+                                          v-if="item.list.length && index < item.list_limit"
                                 >
                                     <div class="flex justify-content-between">
                                         <a href="javascript:void(0)"

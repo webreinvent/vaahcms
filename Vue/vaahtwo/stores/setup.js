@@ -113,6 +113,8 @@ export const useSetupStore = defineStore({
             delete_dependencies: null,
             delete_media: null,
         },
+        reset_confirm: null,
+        autocomplete_on_focus: true
     }),
     getters: {},
     actions: {
@@ -208,7 +210,7 @@ export const useSetupStore = defineStore({
         },
         //---------------------------------------------------------------------
         confirmReset: function () {
-
+            this.reset_confirm = true;
             this.showProgress();
 
             let params = {
@@ -220,11 +222,17 @@ export const useSetupStore = defineStore({
                 this.ajax_url+'/reset/confirm',
                 this.afterConfirmReset,
                 params
-            )
+            );
         },
         //---------------------------------------------------------------------
-        afterConfirmReset: function () {
+        async afterConfirmReset () {
+            await this.getAssets();
+            await this.getStatus();
+
             this.hideProgress();
+
+            this.reset_confirm = false;
+            this.show_reset_modal = false;
         },
         //---------------------------------------------------------------------
         loadConfigurations: function () {
@@ -545,8 +553,8 @@ export const useSetupStore = defineStore({
             };
         },
         //---------------------------------------------------------------------
-        searchCountryCode: function (event){
-
+        searchCountryCode: function (event) {
+            this.autocomplete_on_focus = true;
             this.country_calling_code_object = null;
             this.country_calling_code = null;
 
@@ -659,19 +667,31 @@ export const useSetupStore = defineStore({
         {
             this.$router.push({name: name})
         },
+        //---------------------------------------------------------------------
         async to(path)
         {
             this.$router.push({path: path})
         },
+        //---------------------------------------------------------------------
         showProgress()
         {
             this.show_progress_bar = true;
         },
+        //---------------------------------------------------------------------
         hideProgress()
         {
             this.show_progress_bar = false;
+        },
+        //--------display country code on focus event-------------------------------------------------------------
+        showCallingCodes(event)
+        {
+            this.autocomplete_on_focus = true;
+        },
+        //---------------------------------------------------------------------
+        setFocusDropDownToTrue()
+        {
+            this.autocomplete_on_focus = true;
         }
-
     }
 })
 

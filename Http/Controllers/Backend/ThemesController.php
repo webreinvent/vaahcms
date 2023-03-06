@@ -56,7 +56,7 @@ class ThemesController extends Controller
     //----------------------------------------------------------
     public function getList(Request $request): JsonResponse
     {
-        if (!Auth::user()->hasPermission('can-read-theme')) {
+        if (!Auth::user()->hasPermission('has-access-of-theme-section')) {
             $response['success'] = false;
             $response['messages'][] = trans("vaahcms::messages.permission_denied");
 

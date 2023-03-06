@@ -68,6 +68,12 @@ class FailedJobsController extends Controller
     //----------------------------------------------------------
     public function getList(Request $request): JsonResponse
     {
+        if (!Auth::user()->hasPermission('has-access-of-failed-jobs-section')) {
+            $response['success'] = false;
+            $response['messages'][] = trans("vaahcms::messages.permission_denied");
+
+            return response()->json($response);
+        }
         try {
             $response = FailedJob::getList($request);
         } catch (\Exception $e) {

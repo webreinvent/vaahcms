@@ -94,7 +94,7 @@ const importSampleDataModal = (item) => {
                                 @click="store.publishAssets(item)"
                                 icon="pi pi-arrow-up"
                                 v-tooltip.top="'Publish Assets'"
-                                v-if="item.is_active"
+                                v-if="item.is_active && store.hasPermission('can-publish-assets-of-theme')"
                         />
 
                         <Button v-if="item.is_active && store.hasPermission('can-import-sample-data-in-theme')"
@@ -117,6 +117,7 @@ const importSampleDataModal = (item) => {
                                 icon="pi pi-eye"
                                 v-tooltip.top=" 'View' "
                                 @click="store.toView(item)"
+                                v-if="item.is_active && store.hasPermission('can-read-theme')"
                         />
                     </div>
                 </div>

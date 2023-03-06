@@ -33,14 +33,16 @@ const route = useRoute();
                 <template #body="prop">
                     <div class="p-inputgroup ">
 
-                        <Button class="p-button-tiny p-button-text"
+                        <Button v-if="store.hasPermission('can-read-log')"
+                                class="p-button-tiny p-button-text"
                                 v-tooltip.top="'View'"
                                 :disabled="route.params.name === prop.data.name"
                                 @click="store.toView(prop.data)"
                                 icon="pi pi-eye"
                         ></Button>
 
-                        <Button class="p-button-tiny p-button-danger p-button-text"
+                        <Button v-if="store.hasPermission('can-delete-log')"
+                                class="p-button-tiny p-button-danger p-button-text"
                                 @click="store.confirmDelete(prop.data)"
                                 v-tooltip.top="'Delete'"
                                 icon="pi pi-trash" >

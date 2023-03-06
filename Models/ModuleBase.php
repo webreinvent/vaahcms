@@ -237,7 +237,7 @@ class ModuleBase extends Model
 
         $installed_module_names = [];
 
-        if(count($list) > 0)
+        if (count($list) > 0)
         {
             foreach ($list as $module_path)
             {
@@ -259,13 +259,10 @@ class ModuleBase extends Model
 
         }
 
-
-
         foreach($list as $module_path)
         {
             $res = Module::syncModule($module_path);
         }
-
     }
     //-------------------------------------------------
     public static function getInstalledModules()
@@ -607,8 +604,8 @@ class ModuleBase extends Model
         copy($download_link, $zip_file);
 
         try{
-            (new Zip)->check($zip_file);
-            $zip = (new Zip)->open($zip_file);
+            Zip::check($zip_file);
+            $zip = Zip::open($zip_file);
             $zip_content_list = $zip->listFiles();
             $zip->extract($vaahcms_path);
             $zip->close();
@@ -653,8 +650,8 @@ class ModuleBase extends Model
         copy($download_link, $zip_file);
 
         try{
-            (new Zip)->check($zip_file);
-            $zip = (new Zip)->open($zip_file);
+            Zip::check($zip_file);
+            $zip = Zip::open($zip_file);
             $zip_content_list = $zip->listFiles();
             $zip->extract($vaahcms_path);
             $zip->close();

@@ -72,7 +72,7 @@ class ExtendController extends Controller
     //----------------------------------------------------------
     public static function sidebarMenu()
     {
-
+        $list = [];
 
         if(\Auth::user()->hasPermission('has-access-of-dashboard'))
         {
@@ -206,16 +206,35 @@ class ExtendController extends Controller
             ];
         }
 
-        if(\Auth::user()->hasPermission('has-access-of-advanced-section'))
+        if (\Auth::user()->hasPermission('has-access-of-logs-section'))
         {
             $list[4] = [
                 'url' => self::$link."/advanced/logs",
                 'icon'=> 'pi pi-database',
                 'label'=> 'Advanced'
             ];
+        } else if (\Auth::user()->hasPermission('has-access-of-jobs-section'))
+        {
+            $list[4] = [
+                'url' => self::$link."/advanced/jobs",
+                'icon'=> 'pi pi-database',
+                'label'=> 'Advanced'
+            ];
+        } else if (\Auth::user()->hasPermission('has-access-of-failedjobs-section'))
+        {
+            $list[4] = [
+                'url' => self::$link."/advanced/failedjobs",
+                'icon'=> 'pi pi-database',
+                'label'=> 'Advanced'
+            ];
+        } else if (\Auth::user()->hasPermission('has-access-of-batches-section'))
+        {
+            $list[4] = [
+                'url' => self::$link."/advanced/batches",
+                'icon'=> 'pi pi-database',
+                'label'=> 'Advanced'
+            ];
         }
-
-
 
 
         if(\Auth::user()->hasPermission('has-access-of-media-section'))
@@ -237,7 +256,6 @@ class ExtendController extends Controller
                 ]
             ];
         }
-
 
 
         $response['success'] = true;

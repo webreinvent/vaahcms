@@ -147,7 +147,7 @@ const openTaxonomyTypeModal = () => {
                 <VhField label="Type">
                     <div class="p-inputgroup">
                         <TreeSelect class="w-full"
-                                    v-model="store.selectedParentID"
+                                    v-model="store.selected_parent_id"
                                     :options="store.assets.types"
                                     placeholder="Select a Parent"
                                     @node-select="store.selectedParent($event)"

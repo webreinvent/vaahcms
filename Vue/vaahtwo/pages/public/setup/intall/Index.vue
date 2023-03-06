@@ -19,7 +19,7 @@ onMounted(async () => {
 <template>
     <div v-if="store.assets" class="">
         <div class="text-center mb-4">
-            <img src="http://irisrishu.com/vaahcms/backend/vaahone/images/vaahcms-logo.svg" alt="" class="w-1 mb-2 mx-auto">
+            <img :src="root.assets.backend_logo_url" alt="" class="mb-2 mx-auto h-3rem">
             <h4 class="text-xl font-semibold">Install VaahCMS</h4>
         </div>
         <div class="container">

@@ -141,7 +141,7 @@ class SetupController extends Controller
 
             $errors             = errorsToArray($validator->errors());
             $response['success'] = false;
-            $response['messages'] = $errors;
+            $response['errors'] = $errors;
             return response()->json($response);
         }
 
@@ -155,21 +155,21 @@ class SetupController extends Controller
         if(!\Auth::check())
         {
             $response['success'] = false;
-            $response['messages'][] = 'You are not logged in.';
+            $response['errors'][] = 'You are not logged in.';
             return response()->json($response);
         }
 
         if(!\Auth::user()->hasRole('super-administrator'))
         {
             $response['success'] = false;
-            $response['messages'][] = 'Permission denied. You must be logged in from Administrator account.';
+            $response['errors'][] = 'Permission denied. You must be logged in from Administrator account.';
             return response()->json($response);
         }
 
         if($request->confirm != 'RESET')
         {
             $response['success'] = false;
-            $response['messages'][] = 'Type RESET to confirm.';
+            $response['errors'][] = 'Type RESET to confirm.';
             return response()->json($response);
         }
 

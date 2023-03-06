@@ -41,7 +41,8 @@ const useVaah = vaah();
 
              <Column field="payload" header="Payload">
                  <template #body="prop">
-                     <Button class="p-button-tiny p-button-text"
+                     <Button v-if="store.hasPermission('can-read-payload-failed-jobs')"
+                             class="p-button-tiny p-button-text"
                              v-tooltip.top="'View'"
                              @click="store.viewFailedJobsContent(prop.data.payload,'Payload')"
                              icon="pi pi-eye"
@@ -51,7 +52,8 @@ const useVaah = vaah();
 
              <Column field="exception" header="Exception">
                  <template #body="prop">
-                     <Button class="p-button-tiny p-button-text"
+                     <Button v-if="store.hasPermission('can-read-failed-jobs-exception')"
+                             class="p-button-tiny p-button-text"
                              v-tooltip.top="'View'"
                              @click="store.viewFailedJobsContent(prop.data.exception,'Exception')"
                              icon="pi pi-eye"
@@ -75,8 +77,8 @@ const useVaah = vaah();
              >
                  <template #body="prop">
                      <div class="p-inputgroup ">
-                         <Button class="p-button-tiny p-button-danger p-button-text"
-                                 v-if="store.isViewLarge() && !prop.data.deleted_at"
+                         <Button v-if="store.isViewLarge() && !prop.data.deleted_at && store.hasPermission('can-delete-failed-jobs')"
+                                 class="p-button-tiny p-button-danger p-button-text"
                                  @click="store.itemAction('delete', prop.data)"
                                  v-tooltip.top="'Delete'"
                                  icon="pi pi-trash"

@@ -68,6 +68,13 @@ class BatchesController extends Controller
     //----------------------------------------------------------
     public function getList(Request $request): JsonResponse
     {
+        if (!Auth::user()->hasPermission('has-access-of-batches-section')) {
+            $response['success'] = false;
+            $response['messages'][] = trans("vaahcms::messages.permission_denied");
+
+            return response()->json($response);
+        }
+
         try {
             $response = Batch::getList($request);
         } catch (\Exception $e) {
