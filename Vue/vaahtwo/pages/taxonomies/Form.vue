@@ -120,7 +120,7 @@ const openTaxonomyTypeModal = () => {
                     />
 
                     <!--form_menu-->
-                    <template v-if="store.hasPermission('can-create-taxonomies') || store.hasPermission('can-update-taxonomies')">
+                    <template v-if="store.hasPermission('can-manage-taxonomies') || store.hasPermission('can-update-taxonomies')">
                         <Button type="button"
                                 @click="toggleFormMenu"
                                 data-testid="taxonomies-form-menu"

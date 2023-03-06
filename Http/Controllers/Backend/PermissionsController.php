@@ -69,7 +69,7 @@ class PermissionsController extends Controller
     //----------------------------------------------------------
     public function getList(Request $request): JsonResponse
     {
-        if (!Auth::user()->hasPermission('can-read-permissions')) {
+        if (!Auth::user()->hasPermission('has-access-of-permissions-section')) {
             $response['success'] = false;
             $response['messages'][] = trans("vaahcms::messages.permission_denied");
 

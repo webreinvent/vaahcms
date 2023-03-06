@@ -70,14 +70,13 @@ onMounted(async () => {
 
                 <template #icons>
                     <div class="p-inputgroup">
-                        <template v-if="store.hasPermission('can-create-taxonomies')">
-                            <Button class="p-button-sm"
-                                    label="Create"
-                                    data-testid="taxonomies-list-create"
-                                    icon="pi pi-plus"
-                                    @click="store.toForm()"
-                            />
-                        </template>
+                        <Button v-if="store.hasPermission('can-create-taxonomies')"
+                                class="p-button-sm"
+                                label="Create"
+                                data-testid="taxonomies-list-create"
+                                icon="pi pi-plus"
+                                @click="store.toForm()"
+                        />
 
                         <Button class="p-button-sm"
                                 icon="pi pi-refresh"

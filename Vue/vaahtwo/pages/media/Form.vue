@@ -65,7 +65,8 @@ const toggleFormMenu = (event) => {
                     />
 
                     <!--form_menu-->
-                    <Button class="p-button-sm"
+                    <Button v-if="store.hasPermission('can-manage-media') || store.hasPermission('can-update-media')"
+                            class="p-button-sm"
                             icon="pi pi-angle-down"
                             type="button"
                             data="media-form-menu"

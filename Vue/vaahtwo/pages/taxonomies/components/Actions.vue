@@ -36,7 +36,8 @@ const toggleBulkMenuState = (event) => {
             <div v-if="store.view === 'large'">
 
                 <!--selected_menu-->
-                <Button class="p-button-sm"
+                <Button v-if="store.hasPermission('can-update-taxonomies') || store.hasPermission('can-manage-taxonomies')"
+                        class="p-button-sm"
                         icon="pi pi-angle-down"
                         type="button"
                         @click="toggleSelectedMenuState"

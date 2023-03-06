@@ -76,7 +76,7 @@ class RolesController extends Controller
     //----------------------------------------------------------
     public function getList(Request $request): JsonResponse
     {
-        if (!Auth::user()->hasPermission('can-read-roles')) {
+        if (!Auth::user()->hasPermission('has-access-of-roles-section')) {
             $response['success'] = false;
             $response['messages'][] = trans("vaahcms::messages.permission_denied");
 
