@@ -28,12 +28,18 @@ const toggleDropDownMenu= (event) => {
         </template>
         <template #item="{item}">
             <router-link :to="item.to" custom v-slot="{href, route, navigate, isActive, isExactActive}">
-                <a :href="href" @click="navigate" class="mx-2"><i class="pi" :class="item.icon"></i></a>
+                <a :href="href"
+                   :data-testid="'Topnav-'+item.icon.split('-')[1]"
+                   @click="navigate"
+                   class="mx-2">
+                    <i class="pi" :class="item.icon"></i></a>
             </router-link>
         </template>
         <template #end>
            <div v-if="rootStore.assets.auth_user" class="flex align-items-center">
-               <a @click="toggleDropDownMenu" class="cursor-pointer flex align-items-center">
+               <a @click="toggleDropDownMenu"
+                  data-testid="Topnav-Avatar"
+                  class="cursor-pointer flex align-items-center">
                    <Avatar :image="rootStore.assets.auth_user.avatar"
                            class="mr-2" shape="circle" />
                    <span>{{rootStore.assets.auth_user.name}}</span>
@@ -46,7 +52,9 @@ const toggleDropDownMenu= (event) => {
                          :popup="true"
             >
                 <template #item="{item}">
-                    <a :href="item.url">
+                    <a :href="item.url"
+                       :data-testid="'Topnav-'+item.label"
+                       class="w-full">
                         <span><i :class="item.icon + ' mx-2 my-2 py-1'" /></span>
                         {{item.label}}
                     </a>
