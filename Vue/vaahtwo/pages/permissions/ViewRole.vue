@@ -97,6 +97,7 @@ const openViewModal = () => {
 
                     <Button class="p-button-sm"
                             :label=" '#' + store.item.id"
+                            data-testid="permission-role_id"
                             @click="useVaah.copy(store.item.id)"
                     />
 
@@ -109,6 +110,7 @@ const openViewModal = () => {
                                 icon="pi pi-angle-down"
                                 type="button"
                                 aria-haspopup="true"
+                                data-testid="permission-role_menu"
                                 @click="toggleItemMenu"
                         />
 
@@ -121,6 +123,7 @@ const openViewModal = () => {
 
                     <Button class="p-button-sm"
                             icon="pi pi-times"
+                            data-testid="permission-role_list"
                             @click="store.toList()"
                     />
                 </div>
@@ -133,6 +136,7 @@ const openViewModal = () => {
                             <i class="pi pi-search" />
                             <InputText  class="w-full p-inputtext-sm"
                                         placeholder="Search"
+                                        data-testid="permission-role_search"
                                         v-model="store.permission_roles_query.q"
                                         @keyup.enter="store.delayedItemUsersSearch()"
                                         @keyup.enter.native="store.delayedItemUsersSearch()"
@@ -141,6 +145,7 @@ const openViewModal = () => {
                         </span>
 
                         <Button class="p-button-sm" label="Reset"
+                                data-testid="permission-role_reset"
                                 @click="store.resetPermissionRolesQuery()"
                         />
                     </div>
@@ -166,7 +171,7 @@ const openViewModal = () => {
                         {{ prop.data.name }}
 
                         <Button class="p-button-tiny p-button-text"
-                                data-testid="taxonomies-table-to-edit"
+                                data-testid="permissions-role_id"
                                 v-tooltip.top="'Copy Slug'"
                                 @click="useVaah.copy(prop.data.slug)"
                                 icon="pi pi-copy"
@@ -185,6 +190,7 @@ const openViewModal = () => {
                         <Button label="Yes"
                                 class="p-button-sm p-button-success p-button-rounded"
                                 v-if="prop.data.pivot.is_active === 1"
+                                data-testid="permission-role_status_yes"
                                 @click="store.changePermission(prop.data)"
                         />
 
@@ -192,6 +198,7 @@ const openViewModal = () => {
                                 class="p-button-sm p-button-danger p-button-rounded"
                                 v-else
                                 @click="store.changePermission(prop.data)"
+                                data-testid="permission-role_status_no"
                         />
                     </template>
 
@@ -218,6 +225,7 @@ const openViewModal = () => {
                         <Button class="p-button-sm p-button-rounded"
                                 @click="openViewModal(), store.active_permission_role = prop.data"
                                 icon="pi pi-eye"
+                                data-testid="permission-role_view_details"
                                 label="View"
                         />
                     </template>

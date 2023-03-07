@@ -71,12 +71,14 @@ const toggleItemMenu = (event) => {
                     <Button class="p-button-sm"
                             :label=" '#' + store.item.id "
                             @click="useVaah.copy(store.item.id)"
+                            data-testid="user-item_id"
                     />
 
                     <Button label="Edit"
                             @click="store.toEdit(store.item)"
                             icon="pi pi-pencil"
                             class="p-button-sm"
+                            data-testid="user-item_edit"
                             v-if="store.hasPermission('can-update-users') || store.hasPermission('can-manage-users')"
                     />
 
@@ -85,6 +87,7 @@ const toggleItemMenu = (event) => {
                             @click="toggleItemMenu"
                             icon="pi pi-angle-down"
                             aria-haspopup="true"
+                            data-testid="user-item_menu"
                             v-if="store.hasPermission('can-update-users') || store.hasPermission('can-manage-users')"
                     />
 
@@ -96,6 +99,7 @@ const toggleItemMenu = (event) => {
 
                     <Button class="p-button-sm"
                             icon="pi pi-times"
+                            data-testid="user-list_view"
                             @click="store.toList()"
                     />
                 </div>
@@ -117,6 +121,7 @@ const toggleItemMenu = (event) => {
                         <div class="ml-3">
                             <Button label="Restore"
                                     class="p-button-sm"
+                                    data-testid="user-item_restore"
                                     @click="store.itemAction('restore')"
                             />
                         </div>
@@ -145,6 +150,7 @@ const toggleItemMenu = (event) => {
                                                      column === 'registration_id'">
                                     <VhViewRow :label="column"
                                                :value="value"
+                                               :data-testid="'user-item_copy_'+column"
                                                :can_copy="true"
                                     />
                                 </template>
@@ -170,6 +176,7 @@ const toggleItemMenu = (event) => {
                                             <Button class="p-button-secondary p-button-outlined p-button-rounded p-button-sm"
                                                     label="View"
                                                     icon="pi pi-eye"
+                                                    data-testid="user-item_bio_modal"
                                                     @click="store.displayBioModal(value)"
                                                     v-if="value"
                                             />

@@ -68,7 +68,7 @@ onMounted(async () => {
                 <template #icons>
                     <div class="p-inputgroup">
                         <Button class="p-button-sm"
-                                data-testid="jobs-content-refresh"
+                                data-testid="failedjobs-content-refresh"
                                 icon="pi pi-refresh"
                                 :loading="store.is_btn_loading"
                                 @click="store.sync"

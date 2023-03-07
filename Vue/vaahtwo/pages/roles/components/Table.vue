@@ -47,7 +47,7 @@ const useVaah = vaah();
                      {{ prop.data.slug }}
 
                      <Button class="p-button-tiny p-button-text"
-                             data-testid="taxonomies-table-to-edit"
+                             data-testid="role-list_slug_copy"
                              v-tooltip.top="'Copy Slug'"
                              @click="useVaah.copy(prop.data.slug)"
                              icon="pi pi-copy"
@@ -63,6 +63,7 @@ const useVaah = vaah();
                      <Button class="p-button-sm p-button-rounded white-space-nowrap"
                              v-tooltip.top="'View Permissions'"
                              @click="store.toPermission(props.data)"
+                             data-testid="role-list_permission_view"
                              v-if="store.hasPermission('can-read-roles')"
                      >
                          {{ props.data.count_permissions }} / {{ store.total_permissions }}
@@ -78,6 +79,7 @@ const useVaah = vaah();
                              v-tooltip.top="'View Users'"
                              @click="store.toUser(props.data)"
                              v-if="store.hasPermission('can-read-roles')"
+                             data-testid="role-list_user_view"
                      >
                          {{ props.data.count_users }} / {{ store.total_users }}
                      </Button>
@@ -103,6 +105,7 @@ const useVaah = vaah();
                     <InputSwitch v-model.bool="prop.data.is_active"
                                  v-bind:false-value="0"  v-bind:true-value="1"
                                  class="p-inputswitch-sm"
+                                 data-testid="role-list_status"
                                  @input="store.toggleIsActive(prop.data)"
                     />
                 </template>
@@ -120,6 +123,7 @@ const useVaah = vaah();
                                 v-tooltip.top="'View'"
                                 @click="store.toView(prop.data)"
                                 icon="pi pi-eye"
+                                data-testid="role-item_view"
                                 v-if="store.hasPermission('can-read-roles')"
                         />
 
@@ -128,6 +132,7 @@ const useVaah = vaah();
                                 @click="store.toEdit(prop.data)"
                                 v-if="store.hasPermission('can-update-roles')"
                                 icon="pi pi-pencil"
+                                data-testid="role-item_edit"
                         />
 
                         <Button class="p-button-tiny p-button-danger p-button-text"
@@ -135,6 +140,7 @@ const useVaah = vaah();
                                 @click="store.itemAction('trash', prop.data)"
                                 v-tooltip.top="'Trash'"
                                 icon="pi pi-trash"
+                                data-testid="role-item_trash"
                         />
 
                         <Button class="p-button-tiny p-button-success p-button-text"
@@ -142,6 +148,7 @@ const useVaah = vaah();
                                 @click="store.itemAction('restore', prop.data)"
                                 v-tooltip.top="'Restore'"
                                 icon="pi pi-replay"
+                                data-testid="role-item_restore"
                         />
                     </div>
                 </template>

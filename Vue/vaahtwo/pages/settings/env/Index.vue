@@ -43,11 +43,13 @@ onMounted(async () => {
                 <div>
                     <Button icon="pi pi-download"
                             class="mr-2 p-button-sm"
+                            data-testid="env-download_file"
                             @click="store.downloadFile(store.env_file)"
                     />
 
                     <Button icon="pi pi-refresh"
                             class="p-button-sm"
+                            data-testid="-env-refresh"
                             @click="store.sync"
                             :loading="store.is_btn_loading"
                     />
@@ -78,11 +80,13 @@ onMounted(async () => {
 
                             <Button icon="pi pi-copy"
                                     class="p-button-sm"
+                                    :data-testid="'env-copy_+item.key'"
                                     @click="store.getCopy(item)"
                             />
 
                             <Button icon="pi pi-trash"
                                     class="p-button-danger p-button-sm"
+                                    :data-testid="'env-remove_+item.key'"
                                     @click="store.removeVariable(item)"
                             />
                         </div>
@@ -96,10 +100,11 @@ onMounted(async () => {
                         <InputText :autoResize="true"
                                    v-model="store.new_variable"
                                    class="p-inputtext-sm"
-                                   :data-testid="'env-add_variable'"
+                                   :data-testid="'env-add_variable_field'"
                         />
 
                         <Button label="Add Env Variable"
+                                :data-testid="'env-add_variable'"
                                 icon="pi pi-plus"
                                 @click="store.addVariable"
                                 :disabled="!store.new_variable"
@@ -113,6 +118,7 @@ onMounted(async () => {
                         <Button label="Save"
                                 icon="pi pi-save"
                                 @click="store.confirmChanges"
+                                :data-testid="'env-save_variable'"
                                 class="p-button-sm"
                         />
                     </div>

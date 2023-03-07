@@ -66,6 +66,7 @@ const toggleItemMenu = (event) => {
                     <Button class="p-button-sm"
                             :label=" '#' + store.item.id "
                             @click="useVaah.copy(store.item.id)"
+                            data-testid="user-role_id"
                     />
 
                     <!--item_menu-->
@@ -73,6 +74,7 @@ const toggleItemMenu = (event) => {
                             icon="pi pi-angle-down"
                             aria-haspopup="true"
                             @click="toggleItemMenu"
+                            data-testid="user-role_menu"
                             v-if="store.hasPermission('can-update-users') || store.hasPermission('can-manage-users')"
                     />
 
@@ -84,6 +86,7 @@ const toggleItemMenu = (event) => {
 
                     <Button class="p-button-sm"
                             icon="pi pi-times"
+                            data-testid="user-role_view"
                             @click="store.toList()"
                     />
                 </div>
@@ -106,6 +109,7 @@ const toggleItemMenu = (event) => {
 
                         <Button class="p-button-sm"
                                 label="Reset"
+                                data-testid="user-role_reset"
                                 @click="store.resetUserRolesFilters()"
                         />
                     </div>
@@ -146,12 +150,14 @@ const toggleItemMenu = (event) => {
                                     <Button  v-if="prop.data.pivot.is_active === 1"
                                              class="p-button-success p-button-sm p-button-rounded"
                                             label="Yes"
+                                             data-testid="user-role_status_yes"
                                             @click="store.changeUserRole(prop.data,route.params.id)"
                                     />
 
                                     <Button v-else
                                             class="p-button-danger p-button-sm p-button-rounded"
                                             label="No"
+                                            data-testid="user-role_status_no"
                                             @click="store.changeUserRole(prop.data,route.params.id)"
                                     />
                                 </template>
@@ -178,6 +184,7 @@ const toggleItemMenu = (event) => {
                                     <Button class="p-button-sm p-button-rounded p-button-outlined"
                                             v-tooltip.top="'View'"
                                             @click="store.showModal(prop.data)"
+                                            data-testid="user-role_details_view"
                                             icon="pi pi-eye"
                                             label="View"
                                     />

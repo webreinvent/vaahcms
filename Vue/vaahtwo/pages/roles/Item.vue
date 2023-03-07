@@ -71,12 +71,14 @@ const toggleItemMenu = (event) => {
                     <Button class="p-button-sm"
                             :label=" '#' + store.item.id "
                             @click="useVaah.copy(store.item.id)"
+                            data-testid="role-item_id"
                     />
 
                     <Button class="p-button-sm"
                             label="Edit"
                             icon="pi pi-pencil"
                             @click="store.toEdit(store.item)"
+                            data-testid="role-item_edit"
                             v-if="store.hasPermission('can-update-roles')"
                     />
 
@@ -85,6 +87,7 @@ const toggleItemMenu = (event) => {
                             icon="pi pi-angle-down"
                             type="button"
                             aria-haspopup="true"
+                            data-testid="role-item_menu"
                             @click="toggleItemMenu"
                             v-if="store.hasPermission('can-update-roles')
                                     || store.hasPermission('can-manage-roles')"
@@ -99,6 +102,7 @@ const toggleItemMenu = (event) => {
                     <Button class="p-button-sm"
                             icon="pi pi-times"
                             @click="store.toList()"
+                            data-testid="role-item_list"
                     />
                 </div>
             </template>
@@ -120,6 +124,7 @@ const toggleItemMenu = (event) => {
                             <Button label="Restore"
                                     class="p-button-sm"
                                     @click="store.itemAction('restore')"
+                                    data-testid="role-item_restore"
                             />
                         </div>
                     </div>

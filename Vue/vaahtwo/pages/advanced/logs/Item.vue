@@ -66,24 +66,28 @@ const toggleItemMenu = (event) => {
             <template #icons>
                 <Button icon="pi pi-trash"
                         @click="store.confirmClearFile(store.item)"
+                        data-testid="logs-item_clear_file"
                         class="p-button-sm p-button-rounded p-button-text"
                         v-tooltip.top=" 'Clear File' "
                 />
 
                 <Button icon="pi pi-download"
                         @click="store.downloadFile(store.item)"
+                        data-testid="logs-item_download_file"
                         class="p-button-sm p-button-rounded p-button-text"
                         v-tooltip.top=" 'Download File' "
                 />
 
                 <Button icon="pi pi-refresh"
                         @click="store.getItem(store.item.name)"
+                        data-testid="logs-item_refresh"
                         class="p-button-sm p-button-rounded p-button-text"
                         v-tooltip.top=" 'Reload' "
                 />
 
                 <Button icon="pi pi-times"
                         @click="store.toList()"
+                        data-testid="logs-item_close"
                         class="p-button-sm p-button-rounded p-button-text"
                         v-tooltip.top=" 'Close' "
                 />

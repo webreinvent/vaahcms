@@ -91,6 +91,7 @@ const openDetailsViewModal = () => {
                     <Button class="p-button-sm"
                             :label=" '#' + store.item.id"
                             @click="useVaah.copy(store.item.id)"
+                            data-testid="role-user_id"
                     />
 
                     <!--/item_menu-->
@@ -102,6 +103,7 @@ const openDetailsViewModal = () => {
                                 icon="pi pi-angle-down"
                                 type="button"
                                 aria-haspopup="true"
+                                data-testid="role-user_menu"
                                 @click="toggleItemMenu"
                         />
 
@@ -114,6 +116,7 @@ const openDetailsViewModal = () => {
 
                     <Button class="p-button-sm"
                             icon="pi pi-times"
+                            data-testid="role-user_list"
                             @click="store.toList()"
                     />
                 </div>
@@ -130,13 +133,16 @@ const openDetailsViewModal = () => {
                                        @keyup.13="store.delayedRoleUsersSearch()"
                                        placeholder="Search"
                                        type="text"
+                                       data-testid="role-user_search"
                                        class="w-full p-inputtext-sm"
                             />
                          </span>
 
                         <Button class="p-button-sm"
+                                data-testid="role-user_search_reset"
                                 label="Reset"
                                 @click="store.resetRoleUserFilters()"
+
                         />
                     </div>
                 </div>
@@ -178,10 +184,12 @@ const openDetailsViewModal = () => {
                                 class="p-button-sm p-button-success p-button-rounded"
                                 v-if="prop.data.pivot.is_active === 1"
                                 @click="store.changeUserRole(prop.data)"
+                                data-testid="role-user_status_yes"
                         />
 
                         <Button label="No"
                                 class="p-button-sm p-button-danger p-button-rounded"
+                                data-testid="role-user_status_no"
                                 v-else
                                 @click="store.changeUserRole(prop.data)"
                         />
@@ -210,6 +218,7 @@ const openDetailsViewModal = () => {
                                 @click="openDetailsViewModal(), store.active_role_user = prop.data"
                                 icon="pi pi-eye"
                                 label="View"
+                                data-testid="role-user_view_details"
                         />
                     </template>
                 </Column>

@@ -72,11 +72,13 @@ const toggleItemMenu = (event) => {
                     <Button class="p-button-sm"
                             :label=" '#' + store.item.id"
                             @click="useVaah.copy(store.item.id)"
+                            data-testid="permission-item_id"
                     />
 
                     <Button class="p-button-sm"
                             label="Edit"
                             icon="pi pi-pencil"
+                            data-testid="permission-item_edit"
                             @click="store.toEdit(store.item)"
                             v-if="store.hasPermission('can-update-permissions')"
                     />
@@ -86,6 +88,7 @@ const toggleItemMenu = (event) => {
                             icon="pi pi-angle-down"
                             type="button"
                             aria-haspopup="true"
+                            data-testid="permission-item_menu"
                             @click="toggleItemMenu"
                             v-if="store.hasPermission('can-update-permissions') || store.hasPermission('can-manage-permissions')"
                     />
@@ -97,6 +100,7 @@ const toggleItemMenu = (event) => {
 
                     <Button class="p-button-sm"
                             icon="pi pi-times"
+                            data-testid="permission-item_list"
                             @click="store.toList()"
                     />
                 </div>

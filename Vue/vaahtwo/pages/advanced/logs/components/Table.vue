@@ -38,6 +38,7 @@ const route = useRoute();
                                 v-tooltip.top="'View'"
                                 :disabled="route.params.name === prop.data.name"
                                 @click="store.toView(prop.data)"
+                                data-testid="logs-item_view"
                                 icon="pi pi-eye"
                         ></Button>
 
@@ -45,6 +46,7 @@ const route = useRoute();
                                 class="p-button-tiny p-button-danger p-button-text"
                                 @click="store.confirmDelete(prop.data)"
                                 v-tooltip.top="'Delete'"
+                                data-testid="logs-item_trash"
                                 icon="pi pi-trash" >
                         </Button>
                     </div>

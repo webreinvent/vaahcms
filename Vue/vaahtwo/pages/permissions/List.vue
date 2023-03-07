@@ -67,6 +67,7 @@ onMounted(async () => {
                                 icon="pi pi-refresh"
                                 :loading="store.is_btn_loading"
                                 @click="store.sync()"
+                                data-testid="permission-list_refresh"
                         />
                     </div>
                 </template>

@@ -73,12 +73,14 @@ onMounted(async () => {
                                 label="Create"
                                 icon="pi pi-plus"
                                 @click="store.toForm()"
+                                data-testid="registration-create"
                                 v-if="store.hasPermission('can-create-registrations')"
                         />
 
                         <Button class="p-button-sm"
                                 icon="pi pi-refresh"
                                 :loading="store.is_btn_loading"
+                                data-testid="registration-refresh"
                                 @click="store.sync()"
                         />
                     </div>

@@ -60,6 +60,7 @@ const useVaah = vaah();
             >
                 <template #body="prop">
                     <Button class="p-button-sm p-button-rounded white-space-nowrap"
+                            data-testid="user-list_data_role"
                             @click="store.toRole(prop.data)"
                     >
                         {{ prop.data.active_roles_count }} / {{ store.assets.totalRole }}
@@ -77,6 +78,7 @@ const useVaah = vaah();
                     <InputSwitch v-model.bool="prop.data.is_active"
                                  v-bind:false-value="0"  v-bind:true-value="1"
                                  class="p-inputswitch-sm"
+                                 data-testid="user-list_data_active"
                                  @input="store.toggleIsActive(prop.data)"
                     />
                 </template>
@@ -93,6 +95,7 @@ const useVaah = vaah();
                                 v-tooltip.top="'View'"
                                 @click="store.toView(prop.data)"
                                 icon="pi pi-eye"
+                                data-testid="user-list_data_view"
                                 v-if="store.hasPermission('can-read-users')"
                         />
 
@@ -100,6 +103,7 @@ const useVaah = vaah();
                                 v-tooltip.top="'Update'"
                                 @click="store.toEdit(prop.data)"
                                 icon="pi pi-pencil"
+                                data-testid="user-list_data_edit"
                                 v-if="store.hasPermission('can-update-users')"
                         />
 
@@ -108,6 +112,7 @@ const useVaah = vaah();
                                 @click="store.itemAction('trash', prop.data)"
                                 v-tooltip.top="'Trash'"
                                 icon="pi pi-trash"
+                                data-testid="user-list_data_trash"
                         />
 
                         <Button class="p-button-tiny p-button-success p-button-text"
@@ -115,6 +120,7 @@ const useVaah = vaah();
                                 @click="store.itemAction('restore', prop.data)"
                                 v-tooltip.top="'Restore'"
                                 icon="pi pi-replay"
+                                data-testid="user-list_data_restore"
                         />
                     </div>
                 </template>

@@ -40,6 +40,7 @@ const toggleBulkMenuState = (event) => {
                         icon="pi pi-angle-down"
                         aria-haspopup="true"
                         aria-controls="overlay_menu"
+                        data-testid="user-action_menu"
                         @click="toggleSelectedMenuState"
                         v-if="store.hasPermission('can-update-users') || store.hasPermission('can-manage-users')"
                 >
@@ -59,6 +60,7 @@ const toggleBulkMenuState = (event) => {
                         icon="pi pi-ellipsis-h"
                         aria-haspopup="true"
                         aria-controls="bulk_menu_state"
+                        data-testid="user-action_bulk_menu"
                         @click="toggleBulkMenuState"
                         v-if="store.hasPermission('can-update-users') || store.hasPermission('can-manage-users')"
                 />
@@ -83,15 +85,18 @@ const toggleBulkMenuState = (event) => {
                                        @keyup.enter.native="store.delayedSearch()"
                                        @keyup.13="store.delayedSearch()"
                                        placeholder="Search"
+                                       data-testid="user-action_search_input"
                             />
 
                             <Button class="p-button-sm"
                                     icon="pi pi-search"
+                                    data-testid="user-action_search"
                                     @click="store.delayedSearch()"
                             />
 
                             <Button class="p-button-sm"
                                     label="Filters"
+                                    data-testid="user-action_filter"
                                     @click="store.show_filters = true"
                             >
 
@@ -103,6 +108,7 @@ const toggleBulkMenuState = (event) => {
                             <Button class="p-button-sm"
                                     label="Reset"
                                     icon="pi pi-filter-slash"
+                                    data-testid="user-action_reset"
                                     @click="store.resetQuery()"
                             />
                         </div>

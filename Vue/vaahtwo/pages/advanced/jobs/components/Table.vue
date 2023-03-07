@@ -35,6 +35,7 @@ const useVaah = vaah();
                     <Button v-if="store.hasPermission('can-read-jobs-payload')"
                             class="p-button-tiny p-button-text"
                             v-tooltip.top="'View'"
+                            data-testid="jobs-view_payload"
                             @click="store.viewPayloads(prop.data.payload)"
                             icon="pi pi-eye"
                     />
@@ -89,6 +90,7 @@ const useVaah = vaah();
                                 class="p-button-tiny p-button-danger p-button-text"
                                 @click="store.itemAction('delete', prop.data)"
                                 v-tooltip.top="'Delete'"
+                                data-testid="jobs-trash"
                                 icon="pi pi-trash"
                         />
                     </div>
