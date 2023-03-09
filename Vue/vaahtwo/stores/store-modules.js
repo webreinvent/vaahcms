@@ -438,12 +438,13 @@ export const useModuleStore = defineStore({
         {
             if(data)
             {
+                const root = useRootStore();
                 this.item = data;
                 this.assets_is_fetching = true;
 
                 await this.getList();
                 await this.getAssets();
-
+                await root.reloadAssets();
                 await this.formActionAfter();
                 this.getItemMenu();
                 this.resetActivateBtnLoader(this.form.action,data.item);
