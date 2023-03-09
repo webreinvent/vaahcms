@@ -39,10 +39,12 @@ const toggleBulkMenuState = (event) => {
                        @keyup.enter.native="store.delayedSearch()"
                        @keyup.13="store.delayedSearch()"
                        placeholder="Search"
+                       data-testid="logs-action_search_input"
             />
 
             <Button label="Reset"
                     class="p-button-sm"
+                    data-testid="logs-action_search"
                     @click="store.resetSearch"
             />
         </div>
@@ -53,6 +55,7 @@ const toggleBulkMenuState = (event) => {
                      display="chip"
                      class="w-full mt-2"
                      optionValue="value"
+                     data-testid="logs-action_filter"
                      @change="store.getList()"
         />
         <!--/actions-->

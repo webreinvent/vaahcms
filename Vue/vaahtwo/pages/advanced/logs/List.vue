@@ -76,6 +76,7 @@ const toggleItemMenu = (event) => {
                         <Button icon="pi pi-refresh"
                                 @click="store.reload()"
                                 class="p-button-sm"
+                                data-testid="logs-list_refresh"
                                 :loading="store.is_btn_loading"
                         />
 

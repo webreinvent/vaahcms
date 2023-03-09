@@ -44,6 +44,7 @@ const useVaah = vaah();
                      <Button v-if="store.hasPermission('can-read-payload-failed-jobs')"
                              class="p-button-tiny p-button-text"
                              v-tooltip.top="'View'"
+                             data-testid="failedjobs-view_payload"
                              @click="store.viewFailedJobsContent(prop.data.payload,'Payload')"
                              icon="pi pi-eye"
                      />
@@ -55,6 +56,7 @@ const useVaah = vaah();
                      <Button v-if="store.hasPermission('can-read-failed-jobs-exception')"
                              class="p-button-tiny p-button-text"
                              v-tooltip.top="'View'"
+                             data-testid="failedjobs-view_exception"
                              @click="store.viewFailedJobsContent(prop.data.exception,'Exception')"
                              icon="pi pi-eye"
                      />
@@ -82,6 +84,7 @@ const useVaah = vaah();
                                  @click="store.itemAction('delete', prop.data)"
                                  v-tooltip.top="'Delete'"
                                  icon="pi pi-trash"
+                                 data-testid="failedjobs-trash"
                          />
                      </div>
                  </template>

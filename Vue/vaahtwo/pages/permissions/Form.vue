@@ -51,11 +51,13 @@ const toggleFormMenu = (event) => {
                     <Button class="p-button-sm"
                             :label=" '#' + store.item.id"
                             @click="useVaah.copy(store.item.id)"
+                            data-testid="permission-form_id"
                     />
 
                     <Button class="p-button-sm"
                             label="Save"
                             icon="pi pi-save"
+                            data-testid="permission-form_save"
                             @click="store.itemAction('save')"
                     />
 
@@ -64,6 +66,7 @@ const toggleFormMenu = (event) => {
                             icon="pi pi-angle-down"
                             aria-haspopup="true"
                             type="button"
+                            data-testid="permission-form_menu"
                             @click="toggleFormMenu"
                             v-if="store.hasPermission('can-update-permissions') || store.hasPermission('can-manage-permissions')"
 
@@ -78,12 +81,14 @@ const toggleFormMenu = (event) => {
                     <Button class="p-button-sm"
                             icon="pi pi-eye"
                             v-tooltip.top="'View'"
+                            data-testid="permission-item_view"
                             @click="store.toView(store.item)"
                             v-if="store.hasPermission('can-read-permissions')"
                     />
 
                     <Button class="p-button-sm"
                             icon="pi pi-times"
+                            data-testid="permission-list_view"
                             @click="store.toList()"
                     />
                 </div>
@@ -92,15 +97,15 @@ const toggleFormMenu = (event) => {
             <div v-if="store.item">
 
                 <VhField label="Name">
-                    <InputText class="w-full" v-model="store.item.name" />
+                    <InputText class="w-full" v-model="store.item.name" data-testid="permission-item_name" />
                 </VhField>
 
                 <VhField label="Slug">
-                    <InputText class="w-full" v-model="store.item.slug" />
+                    <InputText class="w-full" v-model="store.item.slug" data-testid="permission-item_slug"/>
                 </VhField>
 
                 <VhField label="Details">
-                    <Textarea class="w-full" v-model="store.item.details" />
+                    <Textarea class="w-full" v-model="store.item.details" data-testid="permission-item_details"/>
                 </VhField>
 
                 <VhField label="Is Active">
@@ -109,6 +114,7 @@ const toggleFormMenu = (event) => {
                                   :options="root.is_active_status_options"
                                   option-label="label"
                                   option-value="value"
+                                  data-testid="permission-item_status"
                     />
                 </VhField>
             </div>

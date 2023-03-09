@@ -83,6 +83,7 @@ const toggleUserStatusMenu = (event) => {
                     <Button class="p-button-sm"
                             :label=" '#' + store.item.id "
                             @click="useVaah.copy(store.item.id)"
+                            data-testid="registration-item_id"
                     />
 
                     <Button label="Edit"

@@ -437,10 +437,12 @@ export const useThemeStore = defineStore({
         {
             if (data)
             {
+                const root = useRootStore();
                 this.assets_is_fetching = true;
                 await this.getAssets();
                 await this.getList();
                 this.item = data;
+                await root.reloadAssets();
                 await this.formActionAfter();
                 this.resetActivateBtnLoader(this.form.action,data.item)
             }

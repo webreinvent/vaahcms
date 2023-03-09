@@ -67,6 +67,7 @@ onMounted(async () => {
                                 label="Create"
                                 icon="pi pi-plus"
                                 @click="store.toForm()"
+                                data-testid="role-create"
                                 v-if="store.hasPermission('can-create-roles')"
                         />
 
@@ -74,6 +75,7 @@ onMounted(async () => {
                                 icon="pi pi-refresh"
                                 :loading="store.is_btn_loading"
                                 @click="store.sync()"
+                                data-testid="role-list_refresh"
                         />
                     </div>
                 </template>

@@ -124,6 +124,7 @@ const confirmChangeStatus = (event, id) => {
                     <Button class="p-button-sm"
                             :label=" '#' + store.item.id"
                             @click="useVaah.copy(store.item.id)"
+                            data-testid="role-permission_id"
                     />
 
                     <!--/item_menu-->
@@ -136,6 +137,7 @@ const confirmChangeStatus = (event, id) => {
                                 type="button"
                                 aria-haspopup="true"
                                 @click="toggleItemMenu"
+                                data-testid="role-permission_menu"
                         />
 
                         <Menu ref="permission_menu"
@@ -148,6 +150,7 @@ const confirmChangeStatus = (event, id) => {
                     <Button class="p-button-sm"
                             icon="pi pi-times"
                             @click="store.toList()"
+                            data-testid="role-permission_list"
                     />
                 </div>
             </template>
@@ -158,6 +161,7 @@ const confirmChangeStatus = (event, id) => {
                     <Dropdown v-model="store.role_permissions_query.module"
                               :options="store.assets.modules"
                               placeholder="Select a Module"
+                              data-testid="role-permission_module"
                               @change="store.getModuleSection()"
                     >
                         <template #option="slotProps">
@@ -175,6 +179,7 @@ const confirmChangeStatus = (event, id) => {
                               :options="store.module_section_list"
                               placeholder="Select a Section"
                               @click="store.getItemPermissions()"
+                              data-testid="role-permission_section"
                     >
                         <template #option="slotProps">
                             <div>
@@ -196,11 +201,13 @@ const confirmChangeStatus = (event, id) => {
                                            placeholder="Search"
                                            type="text"
                                            class="w-full"
+                                           data-testid="role-permission_search"
                                 />
                             </span>
 
                             <Button label="Reset"
                                     @click="store.resetRolePermissionFilters()"
+                                    data-testid="role-permission_search_reset"
                             />
                         </div>
                     </div>
@@ -224,7 +231,7 @@ const confirmChangeStatus = (event, id) => {
                         {{ prop.data.name }}
 
                         <Button class="p-button-tiny p-button-text"
-                                data-testid="taxonomies-table-to-edit"
+                                data-testid="role-permission_name_copy"
                                 v-tooltip.top="'Copy Slug'"
                                 @click="useVaah.copy(prop.data.slug)"
                                 icon="pi pi-copy"
@@ -243,10 +250,12 @@ const confirmChangeStatus = (event, id) => {
                                 class="p-button-sm p-button-success p-button-rounded"
                                 v-if="prop.data.pivot.is_active === 1"
                                 @click="store.changeRolePermission(prop.data)"
+                                data-testid="role-permission_status_yes"
                         />
 
                         <Button label="No"
                                 class="p-button-sm p-button-danger p-button-rounded"
+                                data-testid="role-permission_status_no"
                                 v-else
                                 @click="store.changeRolePermission(prop.data)"
                         />
@@ -281,9 +290,11 @@ const confirmChangeStatus = (event, id) => {
                                 class="p-button-sm p-button-rounded p-button-success"
                                 v-if="prop.data.is_active === 1"
                                 @click="confirmChangeStatus(event, prop.data.id)"
+                                data-testid="role-permission_status_active"
                         />
 
                         <Button label="Inactive"
+                                data-testid="role-permission_status_inactive"
                                 class="p-button-sm p-button-danger p-button-rounded"
                                 v-else
                                 @click="confirmChangeStatus(event, prop.data.id)"
@@ -313,6 +324,7 @@ const confirmChangeStatus = (event, id) => {
                                 @click="openViewModal(), store.active_role_permission = prop.data"
                                 icon="pi pi-eye"
                                 label="View"
+                                data-testid="role-permission_view_modal"
                         />
                     </template>
                 </Column>

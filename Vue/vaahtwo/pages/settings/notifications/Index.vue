@@ -108,7 +108,7 @@ onMounted(async () => {
                             <Button v-if="store.assets && store.assets.help_urls"
                                     icon="pi pi-question-circle"
                                     @click="store.getNotificationDcoument(store.assets.help_urls.send_notification)"
-                                    data-testis="setting-notification_tooltip"
+                                    data-testid="setting-notification_tooltip"
                                     class="p-button-sm"
                             />
                             <Button icon="pi pi-copy"
@@ -139,7 +139,7 @@ onMounted(async () => {
                                       :suggestions="store.searched_notification_variables"
                                       @complete="store.searchNotificationVarialbles($event)"
                                       optionLabel="name"
-                                      data-testis="setting-notification_search"
+                                      data-testid="setting-notification_search"
                                       optionValue="id"
                                       inputClass="p-inputtext-sm"
                         />
@@ -160,7 +160,7 @@ onMounted(async () => {
                             />
 
                             <Button icon="pi pi-question-circle"
-                                    data-testis="setting-notification_tooltip"
+                                    data-testid="setting-notification_tooltip"
                                     v-tooltip.top="item.details"
                                     class="p-button-secondary p-button-sm"
                             />

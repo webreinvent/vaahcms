@@ -74,6 +74,7 @@ const toggleFormMenu = (event) => {
                             class="p-button-sm"
                             :label=" '#' + store.item.id "
                             @click="useVaah.copy(store.item.id)"
+                            data-testid="registration-form_id"
                     />
 
                     <Button label="Save"

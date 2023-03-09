@@ -86,16 +86,19 @@ const toggleBulkMenuState = (event) => {
                                        @keyup.enter.native="store.delayedSearch()"
                                        @keyup.13="store.delayedSearch()"
                                        placeholder="Search"
+                                       data-testid="role-action_search_input"
                             />
 
                             <Button class="p-button-sm"
                                     icon="pi pi-search"
+                                    data-testid="role-action_search"
                                     @click="store.delayedSearch()"
                             />
 
                             <Button class="p-button-sm"
                                     type="button"
                                     @click="store.show_filters = true"
+                                    data-testid="role-action_filter"
                             >
                                 Filters
                                 <Badge v-if="store.count_filters > 0"
@@ -108,6 +111,7 @@ const toggleBulkMenuState = (event) => {
                                     icon="pi pi-filter-slash"
                                     type="button"
                                     @click="store.resetQuery()"
+                                    data-testid="role-action_filter_reset"
                             />
                         </div>
                     </div>

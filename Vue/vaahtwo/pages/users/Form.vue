@@ -26,13 +26,13 @@ onMounted(async () => {
 });
 
 
-if (store && store.item && store.item.email) {
-    watchEffect(store.item.email, (currentValue, oldValue) => {
-        alert(currentValue);
-        store.item.email = currentValue;
-        store.validateEmail(currentValue);
-    });
-}
+// if (store && store.item && store.item.email) {
+//     watchEffect(store.item.email, (currentValue, oldValue) => {
+//         alert(currentValue);
+//         store.item.email = currentValue;
+//         store.validateEmail(currentValue);
+//     });
+// }
 
 const myUploader = ref();
 
@@ -66,6 +66,7 @@ const toggleFormMenu = (event) => {
                     <Button v-if="store.item && store.item.id"
                             class="p-button-sm"
                             :label=" '#' + store.item.id "
+                            data-testid="user-form_id"
                             @click="useVaah.copy(store.item.id)"
                     />
 
@@ -73,6 +74,7 @@ const toggleFormMenu = (event) => {
                             class="p-button-sm"
                             v-if="store.item && store.item.id && store.hasPermission('can-update-users')"
                             @click="store.itemAction('save')"
+                            data-testid="user-edit_save"
                             icon="pi pi-save"
                     />
 
@@ -80,6 +82,7 @@ const toggleFormMenu = (event) => {
                             class="p-button-sm"
                             v-else
                             @click="store.itemAction('create-and-new')"
+                            data-testid="user-new_save"
                             icon="pi pi-save"
                             v-if="store.hasPermission('can-create-users')"
                     />
@@ -90,6 +93,7 @@ const toggleFormMenu = (event) => {
                             @click="toggleFormMenu"
                             icon="pi pi-angle-down"
                             aria-haspopup="true"
+                            data-testid="user-form_menu"
                             v-if="store.hasPermission('can-update-users') || store.hasPermission('can-manage-users')"
                     />
 
@@ -103,11 +107,13 @@ const toggleFormMenu = (event) => {
                             class="p-button-sm"
                             icon="pi pi-eye"
                             v-tooltip.top="'View'"
+                            data-testid="user-form_view"
                             @click="store.toView(store.item)"
                     />
 
                     <Button class="p-button-sm"
                             icon="pi pi-times"
+                            data-testid="user-list_view"
                             @click="store.toList()"
                     />
                 </div>
@@ -139,6 +145,7 @@ const toggleFormMenu = (event) => {
                     <div class="w-max">
                         <FileUploader placeholder="Upload Avatar"
                                       :is_basic="true"
+                                      data-testid="user-form_upload_avatar"
                                       :auto_upload="true"
                                       :uploadUrl="root.assets.urls.upload" >
                         </FileUploader>

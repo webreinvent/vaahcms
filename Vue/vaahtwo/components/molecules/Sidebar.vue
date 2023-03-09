@@ -38,7 +38,10 @@ const expandNode = (item) => {
                 <template #item="{item}">
 
                     <div class="p-panelmenu-header-content">
-                        <a :href="item.url" class="p-panelmenu-header-action p-menuitem-link" tabindex="-1">
+                        <a :href="item.url"
+                           class="p-panelmenu-header-action p-menuitem-link"
+                           :data-testid="'sidebar-'+item.label"
+                           tabindex="-1">
                             <span v-if="item.items" class="p-submenu-icon pi pi-chevron-right">
 
                             </span>

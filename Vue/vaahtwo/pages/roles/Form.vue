@@ -56,12 +56,14 @@ const toggleFormMenu = (event) => {
                             class="p-button-sm"
                             :label=" '#' + store.item.id "
                             @click="useVaah.copy(store.item.id)"
+                            data-testid="role-form_id"
                     />
 
                     <Button v-if="store.item && store.item.id"
                             class="p-button-sm"
                             label="Save"
                             icon="pi pi-save"
+                            data-testid="role-edit_save"
                             @click="store.itemAction('save')"
                     />
 
@@ -69,6 +71,7 @@ const toggleFormMenu = (event) => {
                             class="p-button-sm"
                             label="Create & New"
                             icon="pi pi-save"
+                            data-testid="role-new_save"
                             @click="store.itemAction('create-and-new')"
                     />
 
@@ -78,6 +81,7 @@ const toggleFormMenu = (event) => {
                             type="button"
                             aria-haspopup="true"
                             @click="toggleFormMenu"
+                            data-testid="role-form_menu"
                             v-if="store.hasPermission('can-update-roles')
                                     || store.hasPermission('can-manage-roles')"
                     />
@@ -92,11 +96,13 @@ const toggleFormMenu = (event) => {
                             class="p-button-sm"
                             icon="pi pi-eye"
                             v-tooltip.top="'View'"
+                            data-testid="role-item_view"
                             @click="store.toView(store.item)"
                     />
 
                     <Button class="p-button-sm"
                             icon="pi pi-times"
+                            data-testid="role-list_view"
                             @click="store.toList()"
                     />
                 </div>
@@ -104,20 +110,21 @@ const toggleFormMenu = (event) => {
 
             <div v-if="store.item">
                 <VhField label="Name">
-                    <InputText class="w-full" v-model="store.item.name" />
+                    <InputText class="w-full" v-model="store.item.name" data-testid="role-item_name" />
                 </VhField>
 
                 <VhField label="Slug">
-                    <InputText class="w-full" v-model="store.item.slug" />
+                    <InputText class="w-full" v-model="store.item.slug" data-testid="role-item_slug" />
                 </VhField>
 
                 <VhField label="Details">
-                    <Textarea class="w-full" v-model="store.item.details" />
+                    <Textarea class="w-full" v-model="store.item.details" data-testid="role-item_details" />
                 </VhField>
 
                 <VhField label="Is Active">
                     <SelectButton v-if="root && root.is_active_status_options"
                                   v-model="store.item.is_active"
+                                  data-testid="role-item_status"
                                   :options="root.is_active_status_options"
                                   option-label="label"
                                   option-value="value"
