@@ -160,6 +160,7 @@ class VaahSeeder{
 
             $record = DB::table($table)
                 ->where('slug', $item['slug'])
+                ->where('vh_taxonomy_type_id', $item['vh_taxonomy_type_id'])
                 ->first();
 
             if(isset($item['meta']))
