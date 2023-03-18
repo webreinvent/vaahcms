@@ -47,7 +47,7 @@ const useVaah = vaah();
                             <th width="80">Details</th>
                             <td>
                                 <Tag class="mr-2">{{ (prop.data.size / 1024).toFixed(2) }} kb</Tag>
-                                <Tag>{{ prop.data.mime_type }}</Tag>
+                                <Tag class="mt-1">{{ prop.data.mime_type }}</Tag>
                             </td>
                         </tr>
                     </table>
