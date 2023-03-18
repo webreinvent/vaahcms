@@ -163,7 +163,8 @@ export const useAuthStore = defineStore({
         },
         //---------------------------------------------------------------------
         generateOTPAfter: function (data, res) {
-            this.is_btn_loading = false;
+            this.is_otp_btn_loading = false;
+
             if (data) {
 
             }
