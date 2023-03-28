@@ -470,8 +470,6 @@ export const useThemeStore = defineStore({
                     this.item = null;
                     break;
                 case 'delete':
-                case 'activate':
-                case 'deactivate':
                     this.item = null;
                     this.toList();
                     break;
@@ -683,7 +681,12 @@ export const useThemeStore = defineStore({
         //---------------------------------------------------------------------
         toList()
         {
-            // this.$router.go();
+
+            if (this.assets.empty_item !== undefined && this.assets.empty_item !== '') {
+                this.item = vaah().clone(this.assets.empty_item);
+            }
+
+            this.$router.push({name: 'themes.index'})
         },
         //---------------------------------------------------------------------
         toForm()
