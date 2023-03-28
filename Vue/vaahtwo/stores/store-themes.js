@@ -444,7 +444,9 @@ export const useThemeStore = defineStore({
                 this.item = data;
                 await root.reloadAssets();
                 await this.formActionAfter();
-                this.resetActivateBtnLoader(this.form.action,data.item)
+                if (data.item) {
+                    this.resetActivateBtnLoader(this.form.action,data.item);
+                }
             }
        },
         //---------------------------------------------------------------------
