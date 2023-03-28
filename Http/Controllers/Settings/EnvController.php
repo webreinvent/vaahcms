@@ -32,7 +32,7 @@ class EnvController extends Controller
 
         try{
 
-            if(!\Auth::user()->hasPermission('has-access-of-setting-section'))
+            if(!\Auth::user()->isSuperAdmin())
             {
                 $response['status'] = 'failed';
                 $response['errors'][] = trans("vaahcms::messages.permission_denied");
@@ -71,7 +71,7 @@ class EnvController extends Controller
     {
         try{
 
-            if(!\Auth::user()->hasPermission('has-access-of-setting-section'))
+            if(!\Auth::user()->isSuperAdmin())
             {
                 $response['status'] = 'failed';
                 $response['errors'][] = trans("vaahcms::messages.permission_denied");
@@ -107,7 +107,7 @@ class EnvController extends Controller
     public function downloadFile(Request $request,$file_name)
     {
 
-        if(!\Auth::user()->hasPermission('has-access-of-setting-section'))
+        if(!\Auth::user()->isSuperAdmin())
         {
             $response['status'] = 'failed';
             $response['errors'][] = trans("vaahcms::messages.permission_denied");
@@ -131,7 +131,7 @@ class EnvController extends Controller
 
         try{
 
-            if(!\Auth::user()->hasPermission('has-access-of-setting-section'))
+            if(!\Auth::user()->isSuperAdmin())
             {
                 $response['status'] = 'failed';
                 $response['errors'][] = trans("vaahcms::messages.permission_denied");

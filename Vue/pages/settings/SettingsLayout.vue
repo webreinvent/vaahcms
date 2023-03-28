@@ -1,7 +1,7 @@
 <template>
     <div class="columns">
         <div class="column is-2">
-            <AsideMenu/>
+            <AsideMenu :store="store"/>
         </div>
 
         <div class="column is-10">
@@ -22,7 +22,8 @@
 
         props: [],
         computed:{
-
+            root() {return this.$store.getters['root/state']},
+            assets() {return this.$store.getters['root/state'].assets},
         },
         components:{
 

@@ -233,6 +233,12 @@ class ExtendController extends Controller
                         ],
                     ]
                 ];
+
+                if(!\Auth::user()->isSuperAdmin()){
+                    unset($list[3]['child'][2]);
+                    unset($list[3]['child'][5]);
+                    unset($list[3]['child'][6]);
+                }
             }
 
             if(\Auth::user()->hasPermission('has-access-of-advanced-section'))

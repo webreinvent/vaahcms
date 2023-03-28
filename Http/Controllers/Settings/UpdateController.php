@@ -38,7 +38,7 @@ class UpdateController extends Controller
 
         try{
 
-            if(!\Auth::user()->hasPermission('has-access-of-setting-section'))
+            if(!\Auth::user()->isSuperAdmin())
             {
                 $response['status'] = 'failed';
                 $response['errors'][] = trans("vaahcms::messages.permission_denied");
@@ -105,7 +105,7 @@ class UpdateController extends Controller
     public function upgrade()
     {
 
-        if(!\Auth::user()->hasPermission('has-access-of-setting-section'))
+        if(!\Auth::user()->isSuperAdmin())
         {
             $response['status'] = 'failed';
             $response['errors'][] = trans("vaahcms::messages.permission_denied");
@@ -132,7 +132,7 @@ class UpdateController extends Controller
     public function publish()
     {
 
-        if(!\Auth::user()->hasPermission('has-access-of-setting-section'))
+        if(!\Auth::user()->isSuperAdmin())
         {
             $response['status'] = 'failed';
             $response['errors'][] = trans("vaahcms::messages.permission_denied");
@@ -184,7 +184,7 @@ class UpdateController extends Controller
     public function runMigrations()
     {
 
-        if(!\Auth::user()->hasPermission('has-access-of-setting-section'))
+        if(!\Auth::user()->isSuperAdmin())
         {
             $response['status'] = 'failed';
             $response['errors'][] = trans("vaahcms::messages.permission_denied");
@@ -231,7 +231,7 @@ class UpdateController extends Controller
     public function clearCache()
     {
 
-        if(!\Auth::user()->hasPermission('has-access-of-setting-section'))
+        if(!\Auth::user()->isSuperAdmin())
         {
             $response['status'] = 'failed';
             $response['errors'][] = trans("vaahcms::messages.permission_denied");
