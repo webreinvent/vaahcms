@@ -179,14 +179,12 @@ onMounted(async () => {
                     <h5 class="p-1 text-xs mb-1">{{item.slug}}</h5>
 
                     <div class="p-inputgroup">
-                        <inputText v-model="item.content"
-                                   :data-testid="'localization-'+item.slug"
-                                   :autoResize="true"
-                                   class="p-inputtext-sm"
+                        <Textarea v-model="item.content"
+                                  :data-testid="'localization-'+item.slug"
+                                  :auto-resize="true"
                         />
 
                         <Button icon="pi pi-copy"
-                                class="p-button-sm"
                                 :disabled="!item.id"
                                 data-testid="localization-copyString"
                                 @click="store.getCopy(item)"

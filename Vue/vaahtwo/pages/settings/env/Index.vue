@@ -71,15 +71,14 @@ onMounted(async () => {
                                       :data-testid="'env-'+item.key"
                             />
 
-                            <InputText v-else
-                                       v-model="item.value"
-                                       :disabled="store.isDisable(item)"
-                                       class="p-inputtext-sm"
-                                       :data-testid="'env-'+item.key"
+                            <Textarea v-else
+                                      v-model="item.value"
+                                      :disabled="store.isDisable(item)"
+                                      :auto-resize="true"
+                                      :data-testid="'env-'+item.key"
                             />
 
                             <Button icon="pi pi-copy"
-                                    class="p-button-sm"
                                     :data-testid="'env-copy_+item.key'"
                                     @click="store.getCopy(item)"
                             />

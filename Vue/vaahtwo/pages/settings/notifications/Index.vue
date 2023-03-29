@@ -288,7 +288,7 @@ onMounted(async () => {
 
                                                     <Textarea v-else
                                                               v-model="line.value"
-                                                              :autoResize="true"
+                                                              :auto-resize="true"
                                                               :data-testid="'setting-notification_'+line.key"
                                                               class="w-full"
                                                               placeholder="Content with variables"
@@ -297,7 +297,6 @@ onMounted(async () => {
                                                     <Button icon="pi pi-trash"
                                                             :data-testid="'setting-notification_remove_'+line.key"
                                                             @click="store.removeContent(line,'mail')"
-                                                            class="has-max-height p-button-sm"
                                                     />
                                                 </div>
                                             </div>
