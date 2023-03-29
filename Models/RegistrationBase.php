@@ -1,17 +1,14 @@
 <?php namespace WebReinvent\VaahCms\Models;
 
-use Carbon\Traits\Timestamp;
+use DateTimeInterface;
 use Hash;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Notifications\Notifiable;
-use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Str;
-use WebReinvent\VaahCms\Entities\Notification;
 use WebReinvent\VaahCms\Notifications\Notice;
 use WebReinvent\VaahCms\Traits\CrudWithUuidObservantTrait;
-use DateTimeInterface;
 
 
 class RegistrationBase extends Model

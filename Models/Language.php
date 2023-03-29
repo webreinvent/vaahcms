@@ -1,19 +1,19 @@
-<?php namespace WebReinvent\VaahCms\Entities;
+<?php namespace WebReinvent\VaahCms\Models;
 
-use Carbon\Carbon;
 use DateTimeInterface;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
+use WebReinvent\VaahCms\Models\User;
 use WebReinvent\VaahCms\Traits\CrudObservantTrait;
 
-class LanguageCategory extends Model {
+class Language extends Model {
 
     use SoftDeletes;
     use CrudObservantTrait;
 
     //-------------------------------------------------
-    protected $table = 'vh_lang_categories';
+    protected $table = 'vh_lang_languages';
     //-------------------------------------------------
     protected $dates = [
         'created_at',
@@ -25,7 +25,9 @@ class LanguageCategory extends Model {
     //-------------------------------------------------
     protected $fillable = [
         'name',
-        'slug',
+        'locale_code_iso_639',
+        'right_to_left',
+        'default',
         'count_strings',
         'count_strings_filled',
         'created_by',
@@ -38,7 +40,6 @@ class LanguageCategory extends Model {
     ];
 
     //-------------------------------------------------
-
     //-------------------------------------------------
 
 
@@ -51,16 +52,14 @@ class LanguageCategory extends Model {
 
     }
     //-------------------------------------------------
-    public function setSlugAttribute( $value ) {
-        $this->attributes['slug'] = Str::slug( $value );
-    }
+
     //-------------------------------------------------
     public function getNameAttribute($value) {
         return ucwords($value);
     }
     //-------------------------------------------------
-    public function scopeSlug( $query, $slug ) {
-        return $query->where( 'slug', $slug );
+    public function scopeLocaleCode( $query, $code ) {
+        return $query->where( 'locale_code_iso_639', $code );
     }
     //-------------------------------------------------
     public function scopeCreatedBy( $query, $user_id ) {
@@ -109,10 +108,11 @@ class LanguageCategory extends Model {
             'deleted_by', 'id'
         );
     }
+
     //-------------------------------------------------
     public function strings() {
         return $this->hasMany( LanguageString::class,
-            'vh_lang_category_id', 'id'
+            'vh_lang_language_id', 'id'
         );
     }
     //-------------------------------------------------
@@ -165,6 +165,7 @@ class LanguageCategory extends Model {
     {
         $rules = array(
             'name' => 'required',
+            'locale_code_iso_639' => 'required',
         );
 
         $validator = \Validator::make( $request->all(), $rules);
@@ -186,19 +187,17 @@ class LanguageCategory extends Model {
         } else
         {
 
-            $item = static::where('slug', Str::slug( $inputs['name'] ))->first();
+            $item = static::where('locale_code_iso_639', Str::slug( $inputs['locale_code_iso_639'] ))->first();
 
             if($item)
             {
                 $response['success'] = false;
-                $response['messages'][] = trans('vaahcms-localization.record_already_exist');
+                $response['messages'][] = trans('vaahcms-localization.locale_code_already_exist');
                 return $response;
             }
 
             $item = new static();
         }
-
-        $inputs['slug'] = Str::slug( $inputs['name'] );
 
         $item->fill($inputs);
         $item->save();
@@ -210,6 +209,22 @@ class LanguageCategory extends Model {
         return $response;
 
 
+    }
+    //-------------------------------------------------
+    public static function getLangList()
+    {
+        $lang_list =  Language::orderBy('default','desc')->get();
+
+        foreach ($lang_list as $item){
+            $total = LanguageString::where('vh_lang_language_id',$item->id)->count();
+            $not_empty = LanguageString::where('vh_lang_language_id',$item->id)->whereNOtNull('content')->count();
+
+            $item['option_label'] = $item->name.' ('.$not_empty.'/'.$total.')';
+            $item['total'] = $total;
+            $item['not_empty'] = $not_empty;
+
+        }
+        return $lang_list;
     }
     //-------------------------------------------------
     //-------------------------------------------------

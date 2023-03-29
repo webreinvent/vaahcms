@@ -6,11 +6,10 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
-
-use WebReinvent\VaahCms\Entities\Setting;
+use WebReinvent\VaahCms\Models\Registration;
+use WebReinvent\VaahCms\Models\Setting;
 use WebReinvent\VaahCms\Models\TaxonomyBase;
 use WebReinvent\VaahCms\Models\User;
-use WebReinvent\VaahCms\Models\Registration;
 
 class RegistrationsController extends Controller
 {

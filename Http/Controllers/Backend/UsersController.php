@@ -6,9 +6,8 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
-
-use WebReinvent\VaahCms\Entities\Setting;
 use WebReinvent\VaahCms\Models\Role;
+use WebReinvent\VaahCms\Models\Setting;
 use WebReinvent\VaahCms\Models\Taxonomy;
 use WebReinvent\VaahCms\Models\User;
 

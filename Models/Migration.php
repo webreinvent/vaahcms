@@ -1,8 +1,8 @@
-<?php namespace WebReinvent\VaahCms\Entities;
+<?php namespace WebReinvent\VaahCms\Models;
 
 use DateTimeInterface;
 use Illuminate\Database\Eloquent\Model;
-use WebReinvent\VaahCms\Models\Module;
+use WebReinvent\VaahCms\Models\Theme;
 
 class Migration extends Model {
 

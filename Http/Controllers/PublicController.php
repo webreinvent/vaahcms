@@ -4,26 +4,14 @@ namespace WebReinvent\VaahCms\Http\Controllers;
 
 
 
-use Illuminate\Filesystem\Filesystem;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Str;
-use WebReinvent\VaahCms\Entities\Migration;
-use WebReinvent\VaahCms\Models\Module;
 use WebReinvent\VaahCms\Models\ModuleMigration;
 use WebReinvent\VaahCms\Models\Registration;
-use WebReinvent\VaahCms\Models\Role;
-use WebReinvent\VaahCms\Entities\Setting;
-use WebReinvent\VaahCms\Models\Theme;
-use WebReinvent\VaahCms\Libraries\VaahHelper;
-use WebReinvent\VaahCms\Libraries\VaahSetup;
-use WebReinvent\VaahCms\Models\Permission;
 use WebReinvent\VaahCms\Models\User;
-use WebReinvent\VaahCms\Notifications\TestSmtp;
 
 
 class PublicController extends Controller

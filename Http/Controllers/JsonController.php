@@ -2,16 +2,11 @@
 
 namespace WebReinvent\VaahCms\Http\Controllers;
 
-use Carbon\Carbon;
 use Illuminate\Foundation\Application;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
-use VaahCms\Modules\Cms\Entities\MenuItem;
 use VaahCms\Modules\Cms\Entities\Page;
-use WebReinvent\VaahCms\Models\Module;
-use WebReinvent\VaahCms\Entities\Notified;
-use WebReinvent\VaahCms\Models\Theme;
+use WebReinvent\VaahCms\Models\Notified;
 use WebReinvent\VaahCms\Models\User;
 
 class JsonController extends Controller

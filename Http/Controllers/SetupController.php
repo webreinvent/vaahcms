@@ -35,6 +35,16 @@ class SetupController extends Controller
     //----------------------------------------------------------
     public function index()
     {
+        $vaahcms_config = config('vaahcms');
+
+        if(phpversion() < $vaahcms_config['php_version_required'])
+        {
+            $response['success'] = false;
+            $response['errors'][] = 'PHP 8.1 version is required. Current PHP version is '.phpversion();
+            return $response;
+        }
+
+
         \Session::flush();
 
         //publish assets

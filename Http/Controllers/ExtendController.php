@@ -4,18 +4,16 @@ namespace WebReinvent\VaahCms\Http\Controllers;
 
 
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
-use WebReinvent\VaahCms\Entities\Setting;
-use WebReinvent\VaahCms\Models\Theme;
 use WebReinvent\VaahCms\Http\Controllers\Backend\Advanced\LogsController;
 use WebReinvent\VaahCms\Libraries\VaahStr;
 use WebReinvent\VaahCms\Models\FailedJob;
 use WebReinvent\VaahCms\Models\Job;
-use WebReinvent\VaahCms\Models\Module;
 use WebReinvent\VaahCms\Models\Permission;
 use WebReinvent\VaahCms\Models\Role;
+use WebReinvent\VaahCms\Models\Setting;
+use WebReinvent\VaahCms\Models\Theme;
 use WebReinvent\VaahCms\Models\User;
 
 class ExtendController extends Controller

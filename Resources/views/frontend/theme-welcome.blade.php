@@ -4,7 +4,8 @@
 @extends("vaahcms::frontend.layouts.simple")
 
 @section('content')
-    <div class="grid mt-5">
+    <div class="primevue">
+        <div class="grid mt-5">
         <div class="col-6 col-offset-3 text-center ">
 
             <p>
@@ -36,6 +37,7 @@
             </p>
 
         </div>
+    </div>
     </div>
 @endsection
 

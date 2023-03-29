@@ -7,9 +7,8 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
-
-use WebReinvent\VaahCms\Entities\Notification;
-use WebReinvent\VaahCms\Entities\Notified;
+use WebReinvent\VaahCms\Models\Notification;
+use WebReinvent\VaahCms\Models\Notified;
 use WebReinvent\VaahCms\Models\User;
 
 class NotificationsController extends Controller

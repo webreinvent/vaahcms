@@ -1,18 +1,15 @@
-<?php namespace WebReinvent\VaahCms\Entities;
+<?php namespace WebReinvent\VaahCms\Models;
 
 use DateTimeInterface;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Support\Str;
-use WebReinvent\VaahCms\Traits\CrudWithUuidObservantTrait;
 
-
-class Mediable extends Model {
+class NotificationContent extends Model {
 
     use SoftDeletes;
-    use CrudWithUuidObservantTrait;
+
     //-------------------------------------------------
-    protected $table = 'vh_mediable';
+    protected $table = 'vh_notification_contents';
     //-------------------------------------------------
     protected $dates = [
         'created_at',
@@ -22,27 +19,24 @@ class Mediable extends Model {
     //-------------------------------------------------
     protected $dateFormat = 'Y-m-d H:i:s';
     //-------------------------------------------------
-    //-------------------------------------------------
-
     protected $fillable = [
-        'vh_media_id',
-        'mediable_id',
-        'mediable_type',
+        'vh_notification_id',
+        'via',
+        'sort',
+        'key',
+        'value',
+        'meta',
         'created_by',
         'updated_by',
         'deleted_by'
     ];
-    //-------------------------------------------------
-    protected $hidden = [
-    ];
 
     //-------------------------------------------------
-
     protected $appends  = [
     ];
 
-
     //-------------------------------------------------
+
 
 
     //-------------------------------------------------
@@ -54,7 +48,25 @@ class Mediable extends Model {
 
     }
     //-------------------------------------------------
-
+    public function scopeKey( $query, $key ) {
+        return $query->where( 'key', $key );
+    }
+    //-------------------------------------------------
+    public function setMetaAttribute($value) {
+        if($value){
+            $this->attributes['meta'] = json_encode($value);
+        }else{
+            $this->attributes['meta'] = null;
+        }
+    }
+    //-------------------------------------------------
+    public function getMetaAttribute($value) {
+        if($value)
+        {
+            return json_decode($value);
+        }
+        return null;
+    }
     //-------------------------------------------------
     public function getTableColumns() {
         return $this->getConnection()->getSchemaBuilder()
@@ -72,7 +84,6 @@ class Mediable extends Model {
             'created_by', 'id'
         )->select('id', 'uuid', 'first_name', 'last_name', 'email');
     }
-
     //-------------------------------------------------
     public function updatedByUser()
     {
@@ -80,7 +91,6 @@ class Mediable extends Model {
             'updated_by', 'id'
         )->select('id', 'uuid', 'first_name', 'last_name', 'email');
     }
-
     //-------------------------------------------------
     public function deletedByUser()
     {
@@ -89,6 +99,13 @@ class Mediable extends Model {
         )->select('id', 'uuid', 'first_name', 'last_name', 'email');
     }
     //-------------------------------------------------
-
+    public static function deleteItem($id)
+    {
+        static::where('id',$id)->forceDelete();
+    }
     //-------------------------------------------------
+    //-------------------------------------------------
+    //-------------------------------------------------
+
+
 }

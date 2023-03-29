@@ -1,17 +1,17 @@
-<?php namespace WebReinvent\VaahCms\Entities;
+<?php namespace WebReinvent\VaahCms\Models;
 
-use Carbon\Carbon;
 use DateTimeInterface;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Support\Str;
+use WebReinvent\VaahCms\Traits\CrudWithUuidObservantTrait;
 
-class NotificationContent extends Model {
+
+class Mediable extends Model {
 
     use SoftDeletes;
-
+    use CrudWithUuidObservantTrait;
     //-------------------------------------------------
-    protected $table = 'vh_notification_contents';
+    protected $table = 'vh_mediable';
     //-------------------------------------------------
     protected $dates = [
         'created_at',
@@ -21,24 +21,27 @@ class NotificationContent extends Model {
     //-------------------------------------------------
     protected $dateFormat = 'Y-m-d H:i:s';
     //-------------------------------------------------
+    //-------------------------------------------------
+
     protected $fillable = [
-        'vh_notification_id',
-        'via',
-        'sort',
-        'key',
-        'value',
-        'meta',
+        'vh_media_id',
+        'mediable_id',
+        'mediable_type',
         'created_by',
         'updated_by',
         'deleted_by'
     ];
-
     //-------------------------------------------------
-    protected $appends  = [
+    protected $hidden = [
     ];
 
     //-------------------------------------------------
 
+    protected $appends  = [
+    ];
+
+
+    //-------------------------------------------------
 
 
     //-------------------------------------------------
@@ -50,25 +53,7 @@ class NotificationContent extends Model {
 
     }
     //-------------------------------------------------
-    public function scopeKey( $query, $key ) {
-        return $query->where( 'key', $key );
-    }
-    //-------------------------------------------------
-    public function setMetaAttribute($value) {
-        if($value){
-            $this->attributes['meta'] = json_encode($value);
-        }else{
-            $this->attributes['meta'] = null;
-        }
-    }
-    //-------------------------------------------------
-    public function getMetaAttribute($value) {
-        if($value)
-        {
-            return json_decode($value);
-        }
-        return null;
-    }
+
     //-------------------------------------------------
     public function getTableColumns() {
         return $this->getConnection()->getSchemaBuilder()
@@ -86,6 +71,7 @@ class NotificationContent extends Model {
             'created_by', 'id'
         )->select('id', 'uuid', 'first_name', 'last_name', 'email');
     }
+
     //-------------------------------------------------
     public function updatedByUser()
     {
@@ -93,6 +79,7 @@ class NotificationContent extends Model {
             'updated_by', 'id'
         )->select('id', 'uuid', 'first_name', 'last_name', 'email');
     }
+
     //-------------------------------------------------
     public function deletedByUser()
     {
@@ -101,13 +88,6 @@ class NotificationContent extends Model {
         )->select('id', 'uuid', 'first_name', 'last_name', 'email');
     }
     //-------------------------------------------------
-    public static function deleteItem($id)
-    {
-        static::where('id',$id)->forceDelete();
-    }
-    //-------------------------------------------------
-    //-------------------------------------------------
-    //-------------------------------------------------
 
-
+    //-------------------------------------------------
 }

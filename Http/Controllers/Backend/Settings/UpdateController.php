@@ -4,22 +4,14 @@ namespace WebReinvent\VaahCms\Http\Controllers\Backend\Settings;
 
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
-use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\File;
-use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Process\Process;
-
-use WebReinvent\VaahCms\Entities\Notification;
-use WebReinvent\VaahCms\Entities\NotificationContent;
-use WebReinvent\VaahCms\Entities\Notified;
-use WebReinvent\VaahCms\Entities\Setting;
-use WebReinvent\VaahCms\Libraries\VaahBackup;
 use WebReinvent\VaahCms\Libraries\VaahSetup;
+use WebReinvent\VaahCms\Models\Notification;
+use WebReinvent\VaahCms\Models\Notified;
+use WebReinvent\VaahCms\Models\Setting;
 use WebReinvent\VaahExtend\Libraries\VaahArtisan;
-use WebReinvent\VaahCms\Models\Role;
 
 class UpdateController extends Controller
 {

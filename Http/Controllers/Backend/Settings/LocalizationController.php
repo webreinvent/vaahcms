@@ -4,14 +4,11 @@ namespace WebReinvent\VaahCms\Http\Controllers\Backend\Settings;
 
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
-use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\File;
-use WebReinvent\VaahCms\Entities\Language;
-use WebReinvent\VaahCms\Entities\LanguageCategory;
-use WebReinvent\VaahCms\Entities\LanguageString;
+use WebReinvent\VaahCms\Models\Language;
+use WebReinvent\VaahCms\Models\LanguageCategory;
+use WebReinvent\VaahCms\Models\LanguageString;
 
 class LocalizationController extends Controller
 {

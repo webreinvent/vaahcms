@@ -1,14 +1,7 @@
 <?php
 namespace WebReinvent\VaahCms\Models;
 
-use Carbon\Carbon;
-use DateTimeInterface;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
-use WebReinvent\VaahCms\Entities\Setting;
-use WebReinvent\VaahCms\Models\Role;
-use WebReinvent\VaahCms\Traits\CrudWithUuidObservantTrait;
 
 class User extends UserBase
 {
@@ -78,7 +71,7 @@ class User extends UserBase
         }else{
             $meta_data = json_decode('{}');
         }
-        
+
         return $this->setCustomFieldsInMeta($meta_data);
 
     }

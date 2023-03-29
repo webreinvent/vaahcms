@@ -4,17 +4,12 @@ namespace WebReinvent\VaahCms\Http\Controllers\Backend\Settings;
 
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
-use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
-
-use WebReinvent\VaahCms\Entities\Language;
-use WebReinvent\VaahCms\Entities\Setting;
-use WebReinvent\VaahCms\Libraries\VaahBackup;
+use WebReinvent\VaahCms\Models\Language;
 use WebReinvent\VaahCms\Models\Role;
+use WebReinvent\VaahCms\Models\Setting;
 
 class GeneralController extends Controller
 {

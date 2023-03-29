@@ -1,27 +1,16 @@
 <?php
 namespace WebReinvent\VaahCms\Models;
 
-use App\Mail\OrderShipped;
 use DateTimeInterface;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Http\Response;
-use Illuminate\Notifications\Notifiable;
-use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Http\Request;
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Support\Facades\Bus;
-use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Str;
-use WebReinvent\VaahCms\Entities\Notification;
-use WebReinvent\VaahCms\Entities\Setting;
-use WebReinvent\VaahCms\Jobs\ProcessMails;
-use WebReinvent\VaahCms\Jobs\ProcessNotifications;
 use WebReinvent\VaahCms\Libraries\VaahMail;
-use WebReinvent\VaahCms\Mail\TestMail;
 use WebReinvent\VaahCms\Notifications\MultiFactorCode;
 use WebReinvent\VaahCms\Traits\CrudWithUuidObservantTrait;
 

@@ -5,13 +5,9 @@ namespace WebReinvent\VaahCms\Http\Controllers\Backend;
 use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
-
-use WebReinvent\VaahCms\Entities\Migration;
 use WebReinvent\VaahCms\Models\Module;
-use WebReinvent\VaahExtend\Libraries\VaahArtisan;
 
 class ModulesController extends Controller
 {

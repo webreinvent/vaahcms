@@ -5,10 +5,6 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
-use WebReinvent\VaahCms\Entities\Migration;
-use WebReinvent\VaahCms\Models\Module;
-use WebReinvent\VaahCms\Entities\Setting;
-
 use ZanySoft\Zip\Zip;
 
 
@@ -98,12 +94,12 @@ class ThemeBase extends Model {
     //-------------------------------------------------
     public function migrations()
     {
-        return $this->morphMany('WebReinvent\VaahCms\Entities\Migration', 'migrationable');
+        return $this->morphMany('WebReinvent\VaahCms\Models\Migration', 'migrationable');
     }
     //-------------------------------------------------
     public function settings()
     {
-        return $this->morphMany('WebReinvent\VaahCms\Entities\Setting', 'settingable');
+        return $this->morphMany('WebReinvent\VaahCms\Models\Setting', 'settingable');
     }
     //-------------------------------------------------
     public function templates()
