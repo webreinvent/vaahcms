@@ -11,8 +11,11 @@
         "build:stats": "ng build --stats-json"
     },
     "devDependencies": {
+        "@babel/core": "^7.21.3",
+        "@babel/preset-env": "^7.20.2",
         "babel-eslint": "^10.0.1",
-        "cross-env": "^7.0.0",
+        "babel-loader": "^9.1.2",
+        "cross-env": "^7.0.3",
         "crypto-browserify": "^3.12.0",
         "crypto-js": "^4.1.1",
         "fs": "0.0.1-security",
@@ -30,6 +33,7 @@
         "unplugin-element-plus": "^0.4.0",
         "vue-loader": "^15.9.8",
         "vue-template-compiler": "^2.6.14",
+        "webpack": "^5.76.3",
         "webpack-visualizer-plugin": "^0.1.11"
     },
     "dependencies": {
@@ -41,7 +45,6 @@
         "@fortawesome/vue-fontawesome": "^0.1.6",
         "@riophae/vue-treeselect": "^0.4.0",
         "axios": "^0.21.0",
-        "babel-loader": "^8.2.2",
         "buefy": "0.9.8",
         "bulma-helpers": "^0.3.12",
         "compass-mixins": "^0.12.10",

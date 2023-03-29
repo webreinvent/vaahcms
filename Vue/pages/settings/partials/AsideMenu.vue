@@ -15,6 +15,7 @@
                      :to="{name: 'user-setting.index'}">
         </b-menu-item>
         <b-menu-item label="Env Variables"
+                     v-if="root && root.assets && root.assets.auth_user && root.assets.auth_user.role"
                      icon="code"
                      tag="router-link"
                      :active="!!($route.path == '/vaah/settings/env-variables')"
@@ -37,6 +38,7 @@
 
         <b-menu-item label="Update"
                      icon="download"
+                     v-if="root && root.assets && root.assets.auth_user && root.assets.auth_user.role"
                      tag="router-link"
                      :active="!!($route.path == '/vaah/settings/update')"
                      :to="{name: 'update.index'}">
@@ -45,6 +47,7 @@
         <b-menu-item label="Reset"
                      icon="retweet"
                      tag="router-link"
+                     v-if="root && root.assets && root.assets.auth_user && root.assets.auth_user.role"
                      :to="{name: 'setup.index'}">
         </b-menu-item>
 
@@ -68,6 +71,10 @@
 <script>
     export default {
         name: "AsideMenu",
+        props:['root'],
+        mounted() {
+            // console.log('abinash',this.root.assets.auth_user.role);
+        },
     }
 </script>
 
