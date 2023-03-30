@@ -21,7 +21,7 @@ class EnvController extends Controller
     //----------------------------------------------------------
     public function getAssets(Request $request): JsonResponse
     {
-        if (!\Auth::user()->hasPermission('has-access-of-setting-section')) {
+        if (!\Auth::user()->isSuperAdmin()) {
             $response['success'] = false;
             $response['messages'][] = trans("vaahcms::messages.permission_denied");
 
@@ -58,7 +58,7 @@ class EnvController extends Controller
     public function getList(Request $request): JsonResponse
     {
 
-        if (!Auth::user()->hasPermission('has-access-of-setting-section')) {
+        if (!Auth::user()->isSuperAdmin()) {
             $response['success'] = false;
             $response['messages'][] = trans("vaahcms::messages.permission_denied");
 
@@ -91,7 +91,7 @@ class EnvController extends Controller
     public function downloadFile(Request $request, $file_name): BinaryFileResponse | string
     {
 
-        if (!Auth::user()->hasPermission('has-access-of-setting-section')) {
+        if (!Auth::user()->isSuperAdmin()) {
             $response['success'] = false;
             $response['messages'][] = trans("vaahcms::messages.permission_denied");
 
@@ -121,7 +121,7 @@ class EnvController extends Controller
     //----------------------------------------------------------
     public function store(Request $request): JsonResponse
     {
-        if (!Auth::user()->hasPermission('has-access-of-setting-section')) {
+        if (!Auth::user()->isSuperAdmin()) {
             $response['success'] = false;
             $response['messages'][] = trans("vaahcms::messages.permission_denied");
 

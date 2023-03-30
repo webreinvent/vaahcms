@@ -101,6 +101,7 @@ class JsonController extends Controller
                 'name' => \Auth::user()->name,
                 'email' => \Auth::user()->email,
                 'avatar' => \Auth::user()->avatar,
+                'role' => \Auth::user()->isSuperAdmin(),
             ];
 
             //-----Vue Backend Notices----------------------
