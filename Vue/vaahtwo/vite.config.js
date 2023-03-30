@@ -28,6 +28,10 @@ export default defineConfig({
         },*/
         outDir: './../../Resources/assets/backend/vaahtwo/build/',
         rollupOptions: {
+            input: {
+                main: fileURLToPath(new URL('./index.html', import.meta.url)),
+                mainExtended: fileURLToPath(new URL('./index-extended.html', import.meta.url)),
+            },
             output: {
                 entryFileNames: `[name].js`,
                 chunkFileNames: `[name].js`,
