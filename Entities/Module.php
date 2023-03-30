@@ -470,6 +470,70 @@ class Module extends Model {
         return $response;
     }
     //-------------------------------------------------
+    public static function runModuleMigration($slug)
+    {
+
+        $module = Module::slug($slug)->first();
+
+        /*
+         * get module dependencies
+         */
+        $response = vh_module_action($module->name, 'SetupController@dependencies');
+
+        if($response['status'] == 'failed')
+        {
+            return $response;
+        }
+
+        /*
+         * check module dependencies are installed
+         */
+        $response = Module::validateDependencies($response['data']);
+
+
+        if(isset($response['status']) && $response['status'] == 'failed')
+        {
+            return $response;
+        }
+
+        if(!isset($module->is_migratable) || (isset($module->is_migratable) && $module->is_migratable == true))
+        {
+            $module_path = config('vaahcms.modules_path').$module->name;
+            $path = vh_module_migrations_path($module->name);
+
+            $max_batch = \DB::table('migrations')
+                ->max('batch');
+
+            Migration::runMigrations($path);
+
+            $current_max_batch = \DB::table('migrations')
+                ->max('batch');
+
+            if($current_max_batch > $max_batch){
+                Migration::syncModuleMigrations($module->id,$current_max_batch);
+            }
+
+            $seeds_namespace = vh_module_database_seeder($module->name);
+            Migration::runSeeds($seeds_namespace);
+
+            //copy assets to public folder
+            Module::copyAssets($module);
+
+        }
+
+
+        $response['status'] = 'success';
+        $response['data']['item'] = $module;
+        $response['messages'][] = 'Migration is successful';
+
+        if(env('APP_DEBUG'))
+        {
+            $response['hint'][] = '';
+        }
+        return $response;
+
+    }
+    //-------------------------------------------------
     public static function deleteItem($slug)
     {
 

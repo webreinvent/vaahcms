@@ -331,6 +331,17 @@ class ModulesController extends Controller
                     $response = Module::publishAssets($module->slug);
                     break;
                 //---------------------------------------
+                case 'run_migration':
+                    if(!\Auth::user()->hasPermission('can-publish-assets-of-module'))
+                    {
+                        $response['success'] = false;
+                        $response['messages'][] = trans("vaahcms::messages.permission_denied");
+
+                        return response()->json($response);
+                    }
+                    $response = Module::runModuleMigration($module->slug);
+                    break;
+                //---------------------------------------
                 case 'import_sample_data':
                     if(!\Auth::user()->hasPermission('can-import-sample-data-in-module'))
                     {
