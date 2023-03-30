@@ -10,6 +10,7 @@
     <meta name="current-url" id="current_url" content="{{ url()->current() }}">
     <meta name="debug" id="debug" content="{{config('vaahcms.debug')}}">
     <meta name="timezone" id="app_timezone" content="{{env('APP_TIMEZONE')??'UTC'}}">
+    <meta name="vaahcms-version" id="vaahcms_verison" content="{{config('vaahcms.version')}}">
 
     @if(env('SENTRY_DSN'))
         <meta name="sentry-dns" id="sentry_dns" content="{{env('SENTRY_DSN')}}">

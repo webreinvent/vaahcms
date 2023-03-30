@@ -1,91 +1,54 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
-    <title>
-        <?php
-        if(isset($data->title)) { echo $data->title; }
-        elseif(env('VAAHCMS_VERSION')) {
-            echo config('vaahcms.app_name')." v".env('VAAHCMS_VERSION');
-        }else{
-            echo config('vaahcms.app_name')." v".config('vaahcms.version');
-        }
-        ?>
-    </title>
-
-    <meta charset="UTF-8">
-
-    <meta name=description content="">
-
-    <meta name=viewport content="width=device-width, initial-scale=1">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="csrf-token" id="_token" content="{{ csrf_token() }}">
-
-    <meta name="current-url" id="current_url" content="{{ url()->current() }}">
-    <meta name="debug" id="debug" content="{{config('vaahcms.debug')}}">
-    <meta name="timezone" id="app_timezone" content="{{env('APP_TIMEZONE')??'UTC'}}">
-
-
-    @if(env('SENTRY_DSN'))
-    <meta name="sentry-dns" id="sentry_dns" content="{{env('SENTRY_DSN')}}">
-    @endif
-
-    <base href="{{\URL::to('/')}}">
-
-    <link href="https:/./fonts.googleapis.com/css?family=IBM+Plex+Sans:300,400,500,600,700&display=swap" rel="stylesheet">
+    <title><?php
+           if(isset($data->title)) { echo $data->title; }
+           elseif(env('VAAHCMS_VERSION')) {
+               echo config('vaahcms.app_name')." v".env('VAAHCMS_VERSION');
+           }else{
+               echo config('vaahcms.app_name')." v".config('vaahcms.version');
+           }
+           ?></title>
+    @include("vaahcms::backend.vaahtwo.components.head")
 
     {!! vh_config_css() !!}
 
     @yield('vaahcms_extend_backend_css')
 
-
 </head>
-<body class="@if(isset($data->body_class)){{$data->body_class}}@endif bulma has-background-white-bis">
+<body class="@if(isset($data->body_class)){{$data->body_class}}@endif">
 
-<div class="">
-    @include("vaahcms::backend.vaahone.components.errors")
-    @include("vaahcms::backend.vaahone.components.flash")
+<div class="vaahtwo">
 
-    <div id="buefy-snackbar">
+    <div class="primevue">
 
+        @include("vaahcms::backend.vaahtwo.components.errors")
+        @include("vaahcms::backend.vaahtwo.components.flash")
+
+        <div id="themeVaahTwoExtend"></div>
+
+
+    </div>
+
+    <div style="margin-top: 65px; margin-left: 226px;">
+        @yield('content')
     </div>
 
 </div>
 
-<div class="container-backend ">
 
-    <div id="appExtended" class="bulma" >
 
-        <sidebar :root="root"></sidebar>
-        <div v-bind:style="{ paddingLeft: root.has_padding_left }">
-            <top-menu :root="root" @sidebar-action="sidebarAction"></top-menu>
-        </div>
-
-    </div>
-
-    <!--sections-->
-    <div id="container-main" style="padding-left: 55px;">
-
-        <div id="container-apps">
-            @yield('content')
-        </div>
-
-    </div>
-    <!--sections-->
-
-</div>
 
 {!! vh_config_js() !!}
 
 @yield('vaahcms_extend_backend_js')
 
-@if(env('APP_VAAHCMS_ENV') == 'develop')
-    <script src="http://localhost:8080/vaahone/builds/app-extended.js" defer></script>
+@if(env('VAAHCMS_VUE_APP') == 'develop')
+    <script type="module" src="http://localhost:4000/main-extend.js" defer></script>
 @else
-    <script src="{{vh_get_backend_assets("builds/app-extended.js")}}" defer></script>
+    <script type="module" src="{{vh_get_backend_assets("build/index-extend.js", "vaahtwo")}}" defer></script>
 @endif
-
-
 
 </body>
 </html>
+

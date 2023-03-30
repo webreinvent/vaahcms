@@ -45,6 +45,11 @@ class DashboardController extends Controller
 
     }
     //----------------------------------------------------------
+    public function getVaahExtendUi()
+    {
+        return view($this->theme.'.pages.vaahextend');
+    }
+    //----------------------------------------------------------
 
 
 }

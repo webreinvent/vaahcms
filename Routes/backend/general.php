@@ -89,6 +89,9 @@ Route::group(
     ],
     function () {
         //------------------------------------------------
+        Route::get( '/vaahextend/ui', 'DashboardController@getVaahExtendUi' )
+            ->name( 'vh.backend.vaahextend.ui' );
+        //------------------------------------------------
         Route::post( '/notices/mark-as-read', 'Backend\Settings\NotificationsController@markAsRead' )
             ->name( 'vh.backend.notices.mark_as_read' );
         //------------------------------------------------

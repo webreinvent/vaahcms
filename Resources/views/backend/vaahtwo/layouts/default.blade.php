@@ -12,6 +12,7 @@
     @include("vaahcms::backend.vaahtwo.components.head")
 
     {!! vh_config_css() !!}
+
     @yield('vaahcms_extend_backend_css')
 
 </head>
@@ -21,11 +22,14 @@
 @include("vaahcms::backend.vaahtwo.components.errors")
 @include("vaahcms::backend.vaahtwo.components.flash")
 
-    <div id="themeVaahTwo">
+    <!--vaahtwo app-->
+    <div id="themeVaahTwo"></div>
+    <!--/vaahtwo app-->
 
-    </div>
 @yield('content')
+
 {!! vh_config_js() !!}
+
 @yield('vaahcms_extend_backend_js')
 
 @if(env('VAAHCMS_VUE_APP') == 'develop')
