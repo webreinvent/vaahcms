@@ -230,16 +230,16 @@ class ThemesController extends Controller
              * Call method from module setup controller
              */
             $theme = Theme::find($inputs['id']);
+            if($request->action != 'run_migrations') {
+                $method_name = str_replace("_", " ", $action);
+                $method_name = ucwords($method_name);
+                $method_name = lcfirst(str_replace(" ", "", $method_name));
 
-            $method_name = str_replace("_", " ", $action);
-            $method_name = ucwords($method_name);
-            $method_name = lcfirst(str_replace(" ", "", $method_name));
-
-            $response = vh_theme_action($theme->name, 'SetupController@'.$method_name);
-            if (isset($response['success']) && !$response['success']) {
-                return response()->json($response);
+                $response = vh_theme_action($theme->name, 'SetupController@' . $method_name);
+                if (isset($response['success']) && !$response['success']) {
+                    return response()->json($response);
+                }
             }
-
             switch($action)
             {
                 //---------------------------------------
@@ -261,6 +261,16 @@ class ThemesController extends Controller
                         return response()->json($response);
                     }
                     $response = Theme::makeItemAsDefault($theme->slug);
+                    break;
+                //---------------------------------------
+                case 'run_migrations':
+                    if (!Auth::user()->hasPermission('can-activate-theme')) {
+                        $response['success'] = false;
+                        $response['messages'][] = trans("vaahcms::messages.permission_denied");
+
+                        return response()->json($response);
+                    }
+                    $response = Theme::runThemeMigrations($theme->slug);
                     break;
                 //---------------------------------------
                 case 'deactivate':

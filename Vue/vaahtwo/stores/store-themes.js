@@ -488,6 +488,11 @@ export const useThemeStore = defineStore({
             }
         },
         //---------------------------------------------------------------------
+        async runMigrations(item) {
+            this.active_action.push('run_migrations_' + item.id);
+            await this.itemAction('run_migrations', item);
+        },
+        //---------------------------------------------------------------------
         async resetActivateBtnLoader(action,item) {
             let index = this.active_action.indexOf(action+'_'+item.id);
             this.active_action.splice(index,1);
