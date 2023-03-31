@@ -116,13 +116,21 @@ class ThemeBase extends Model {
     //-------------------------------------------------
     public static function getItem($id)
     {
+        try {
+            $item = static::where('id', $id)
+                ->withTrashed()
+                ->first();
 
-        $item = static::where('id', $id)
-            ->withTrashed()
-            ->first();
+            $response['success'] = true;
+            $response['data'] = $item;
+        }catch(\Exception $e)
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = $e->getMessage();
 
-        $response['success'] = true;
-        $response['data'] = $item;
+        }
+
+
 
         return $response;
 
@@ -360,253 +368,289 @@ class ThemeBase extends Model {
     //-------------------------------------------------
     public static function validateDependencies($dependencies)
     {
+        try{
+            $response['success'] = true;
 
-        $response['success'] = true;
 
+            foreach ($dependencies as $key => $dependency_list)
+            {
+                switch($key){
 
-        foreach ($dependencies as $key => $dependency_list)
-        {
-            switch($key){
+                    case 'modules':
 
-                case 'modules':
-
-                    if(is_array($dependency_list))
-                    {
-                        foreach ($dependency_list as $dependency_slug)
+                        if(is_array($dependency_list))
                         {
-                            $module = Module::slug($dependency_slug)->first();
-
-                            if(!$module)
+                            foreach ($dependency_list as $dependency_slug)
                             {
-                                $response['success'] = false;
-                                $response['errors'][] = "Please install and activate '".$dependency_slug."' module.";
+                                $module = Module::slug($dependency_slug)->first();
+
+                                if(!$module)
+                                {
+                                    $response['success'] = false;
+                                    $response['errors'][] = "Please install and activate '".$dependency_slug."' module.";
+                                }
+
+                                if($module && $module->is_active != 1)
+                                {
+                                    $response['success'] = false;
+                                    $response['errors'][] = $dependency_slug.' module is not active';
+                                }
                             }
 
-                            if($module && $module->is_active != 1)
-                            {
-                                $response['success'] = false;
-                                $response['errors'][] = $dependency_slug.' module is not active';
-                            }
                         }
 
-                    }
+                        break;
+                    //------------------------
+                    case 'themes':
 
-                    break;
-                //------------------------
-                case 'themes':
-
-                    if(is_array($dependency_list))
-                    {
-                        foreach ($dependency_list as $dependency_slug)
+                        if(is_array($dependency_list))
                         {
-                            $theme = Theme::slug($dependency_slug)->first();
-
-                            if(!$theme)
+                            foreach ($dependency_list as $dependency_slug)
                             {
-                                $response['success'] = false;
-                                $response['errors'][] = "Please install and activate '".$dependency_slug."' theme.";
+                                $theme = Theme::slug($dependency_slug)->first();
+
+                                if(!$theme)
+                                {
+                                    $response['success'] = false;
+                                    $response['errors'][] = "Please install and activate '".$dependency_slug."' theme.";
+                                }
+
+                                if($theme && $theme->is_active != 1)
+                                {
+                                    $response['success'] = false;
+                                    $response['errors'][] = $dependency_slug.' theme is not active';
+                                }
                             }
 
-                            if($theme && $theme->is_active != 1)
-                            {
-                                $response['success'] = false;
-                                $response['errors'][] = $dependency_slug.' theme is not active';
-                            }
                         }
 
-                    }
+                        break;
+                    //------------------------
+                    //------------------------
+                    //------------------------
+                    //------------------------
+                }
 
-                    break;
-                //------------------------
-                //------------------------
-                //------------------------
-                //------------------------
+
+
             }
-
-
+        }catch(\Exception $e)
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = $e->getMessage();
 
         }
+
 
         return $response;
     }
     //-------------------------------------------------
     public static function activateItem($slug, $is_default=false)
     {
+        try {
+            $item = static::slug($slug)->first();
 
-        $item = static::slug($slug)->first();
+            /*
+             * get theme dependencies
+             */
+            $response = vh_theme_action($item->name, 'SetupController@dependencies');
 
-        /*
-         * get theme dependencies
-         */
-        $response = vh_theme_action($item->name, 'SetupController@dependencies');
+            if(isset($response['success']) && !$response['success'])
+            {
+                return $response;
+            }
 
-        if(isset($response['success']) && !$response['success'])
-        {
-            return $response;
-        }
-
-        /*
-         * check theme dependencies are installed
-         */
-        $response = static::validateDependencies($response['data']);
-
-
-        if(isset($response['success']) && !$response['success'])
-        {
-            return $response;
-        }
+            /*
+             * check theme dependencies are installed
+             */
+            $response = static::validateDependencies($response['data']);
 
 
-        if(!isset($item->is_migratable) || (isset($item->is_migratable) && $item->is_migratable == true))
-        {
-
-            $path = vh_theme_migrations_path($item->name);
-
-            $max_batch = \DB::table('migrations')
-                ->max('batch');
-
-            Migration::runMigrations($path);
-
-            $current_max_batch = \DB::table('migrations')
-                ->max('batch');
-
-            if($current_max_batch > $max_batch){
-                Migration::syncThemeMigrations($item->id,$current_max_batch);
+            if(isset($response['success']) && !$response['success'])
+            {
+                return $response;
             }
 
 
+            if(!isset($item->is_migratable) || (isset($item->is_migratable) && $item->is_migratable == true))
+            {
 
-            $seeds_namespace = vh_theme_database_seeder($item->name);
-            Migration::runSeeds($seeds_namespace);
+                $path = vh_theme_migrations_path($item->name);
 
-            //copy assets to public folder
-            static::copyAssets($item);
+                $max_batch = \DB::table('migrations')
+                    ->max('batch');
 
-        }
+                Migration::runMigrations($path);
+
+                $current_max_batch = \DB::table('migrations')
+                    ->max('batch');
+
+                if($current_max_batch > $max_batch){
+                    Migration::syncThemeMigrations($item->id,$current_max_batch);
+                }
 
 
-        // check if any theme is marked as default
-        $is_default_exist = self::where('is_default', 1)->exists();
 
-        if($is_default || !$is_default_exist)
+                $seeds_namespace = vh_theme_database_seeder($item->name);
+                Migration::runSeeds($seeds_namespace);
+
+                //copy assets to public folder
+                static::copyAssets($item);
+
+            }
+
+
+            // check if any theme is marked as default
+            $is_default_exist = self::where('is_default', 1)->exists();
+
+            if($is_default || !$is_default_exist)
+            {
+                $item->is_default = 1;
+
+                //mark all other themes no none default
+                Theme::where('is_default', 1)->update(['is_default'=>null]);
+            }
+
+            $item->is_active = 1;
+            $item->is_assets_published = 1;
+
+            $item->save();
+
+            $response['success'] = true;
+            $response['data'][] = '';
+            $response['messages'][] = 'Theme is activated';
+
+            if(env('APP_DEBUG'))
+            {
+                $response['hint'][] = '';
+            }
+        }catch(\Exception $e)
         {
-            $item->is_default = 1;
+            $response['status'] = 'failed';
+            $response['errors'][] = $e->getMessage();
 
-            //mark all other themes no none default
-            Theme::where('is_default', 1)->update(['is_default'=>null]);
         }
 
-        $item->is_active = 1;
-        $item->is_assets_published = 1;
-
-        $item->save();
-
-        $response['success'] = true;
-        $response['data'][] = '';
-        $response['messages'][] = 'Theme is activated';
-
-        if(env('APP_DEBUG'))
-        {
-            $response['hint'][] = '';
-        }
         return $response;
 
     }
     //-------------------------------------------------
     public static function deactivateItem($slug)
     {
-        $item = static::slug($slug)->first();
-        $item->is_active = null;
-        $item->save();
-        $response['success'] = true;
-        $response['data'][] = '';
-        $response['messages'][] = trans('vaahcms-general.action_successful');
-        if(env('APP_DEBUG'))
+        try {
+            $item = static::slug($slug)->first();
+            $item->is_active = null;
+            $item->save();
+            $response['success'] = true;
+            $response['data'][] = '';
+            $response['messages'][] = trans('vaahcms-general.action_successful');
+            if(env('APP_DEBUG'))
+            {
+                $response['hint'][] = '';
+            }
+        }catch(\Exception $e)
         {
-            $response['hint'][] = '';
+            $response['status'] = 'failed';
+            $response['errors'][] = $e->getMessage();
+
         }
+
         return $response;
     }
     //-------------------------------------------------
     public static function runThemeMigrations($slug, $is_default=false)
     {
+        try {
+            $item = static::slug($slug)->first();
 
-        $item = static::slug($slug)->first();
+            if(!isset($item->is_migratable) || (isset($item->is_migratable) && $item->is_migratable == true))
+            {
 
-        if(!isset($item->is_migratable) || (isset($item->is_migratable) && $item->is_migratable == true))
-        {
+                $path = vh_theme_migrations_path($item->name);
 
-            $path = vh_theme_migrations_path($item->name);
+                $max_batch = \DB::table('migrations')
+                    ->max('batch');
 
-            $max_batch = \DB::table('migrations')
-                ->max('batch');
+                Migration::runMigrations($path);
 
-            Migration::runMigrations($path);
+                $current_max_batch = \DB::table('migrations')
+                    ->max('batch');
 
-            $current_max_batch = \DB::table('migrations')
-                ->max('batch');
+                if($current_max_batch > $max_batch){
+                    Migration::syncThemeMigrations($item->id,$current_max_batch);
+                }
 
-            if($current_max_batch > $max_batch){
-                Migration::syncThemeMigrations($item->id,$current_max_batch);
+
+
+                $seeds_namespace = vh_theme_database_seeder($item->name);
+                Migration::runSeeds($seeds_namespace);
+
+                //copy assets to public folder
+                static::copyAssets($item);
+
+                LanguageString::generateLangFiles();
+
             }
 
 
+            // check if any theme is marked as default
+            $is_default_exist = self::where('is_default', 1)->exists();
 
-            $seeds_namespace = vh_theme_database_seeder($item->name);
-            Migration::runSeeds($seeds_namespace);
+            if($is_default || !$is_default_exist)
+            {
+                $item->is_default = 1;
 
-            //copy assets to public folder
-            static::copyAssets($item);
+                //mark all other themes no none default
+                Theme::where('is_default', 1)->update(['is_default'=>null]);
+            }
 
-            LanguageString::generateLangFiles();
+            $item->is_active = 1;
+            $item->is_assets_published = 1;
 
-        }
+            $item->save();
 
+            $response['success'] = true;
+            $response['data'][] = '';
+            $response['messages'][] = 'Migration is successful';
 
-        // check if any theme is marked as default
-        $is_default_exist = self::where('is_default', 1)->exists();
-
-        if($is_default || !$is_default_exist)
+            if(env('APP_DEBUG'))
+            {
+                $response['hint'][] = '';
+            }
+        }catch(\Exception $e)
         {
-            $item->is_default = 1;
+            $response['status'] = 'failed';
+            $response['errors'][] = $e->getMessage();
 
-            //mark all other themes no none default
-            Theme::where('is_default', 1)->update(['is_default'=>null]);
         }
 
-        $item->is_active = 1;
-        $item->is_assets_published = 1;
-
-        $item->save();
-
-        $response['success'] = true;
-        $response['data'][] = '';
-        $response['messages'][] = 'Migration is successful';
-
-        if(env('APP_DEBUG'))
-        {
-            $response['hint'][] = '';
-        }
         return $response;
 
     }
     //-------------------------------------------------
     public static function makeItemAsDefault($slug)
     {
+        try {
+            //make all themes as not default
+            static::whereNotNull('is_default')->update(['is_default' => null]);
 
-        //make all themes as not default
-        static::whereNotNull('is_default')->update(['is_default' => null]);
-
-        $item = static::slug($slug)->first();
-        $item->is_default = 1;
-        $item->save();
-        $response['success'] = true;
-        $response['data'][] = '';
-        $response['messages'][] = trans('vaahcms-general.action_successful');
-        if(env('APP_DEBUG'))
+            $item = static::slug($slug)->first();
+            $item->is_default = 1;
+            $item->save();
+            $response['success'] = true;
+            $response['data'][] = '';
+            $response['messages'][] = trans('vaahcms-general.action_successful');
+            if(env('APP_DEBUG'))
+            {
+                $response['hint'][] = '';
+            }
+        }catch(\Exception $e)
         {
-            $response['hint'][] = '';
+            $response['status'] = 'failed';
+            $response['errors'][] = $e->getMessage();
+
         }
+
         return $response;
     }
     //-------------------------------------------------
@@ -872,72 +916,85 @@ class ThemeBase extends Model {
     //-------------------------------------------------
     public static function storeUpdates($request)
     {
-        $updates = 0;
-        if(count($request->themes) > 0 )
-        {
-            foreach ($request->themes as $theme)
+        try {
+            $updates = 0;
+            if(count($request->themes) > 0 )
             {
-                $store = static::where('slug', $theme['slug'])->first();
-
-                if($store->version_number < $theme['version_number'])
+                foreach ($request->themes as $theme)
                 {
-                    $store->is_update_available = 1;
-                    $store->save();
-                    $updates++;
+                    $store = static::where('slug', $theme['slug'])->first();
+
+                    if($store->version_number < $theme['version_number'])
+                    {
+                        $store->is_update_available = 1;
+                        $store->save();
+                        $updates++;
+                    }
+
                 }
-
             }
+
+            $response['success'] = true;
+            $response['data'][] = '';
+            if($updates > 0)
+            {
+                $response['messages'][] = 'New updates are available for '.$updates.' theme(s).';
+            } else{
+                $response['messages'][] = 'No new update available.';
+            }
+            if(env('APP_DEBUG'))
+            {
+                $response['hint'][] = '';
+            }
+        }catch(\Exception $e)
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = $e->getMessage();
+
         }
 
-        $response['success'] = true;
-        $response['data'][] = '';
-        if($updates > 0)
-        {
-            $response['messages'][] = 'New updates are available for '.$updates.' theme(s).';
-        } else{
-            $response['messages'][] = 'No new update available.';
-        }
-        if(env('APP_DEBUG'))
-        {
-            $response['hint'][] = '';
-        }
         return $response;
 
     }
     //-------------------------------------------------
     public static function bulkStatusChange($request)
     {
-
-
-        if(!$request->has('inputs'))
-        {
-            $response['success'] = false;
-            $response['errors'][] = 'Select IDs';
-            return $response;
-        }
-
-        if(!$request->has('data'))
-        {
-            $response['success'] = false;
-            $response['errors'][] = 'Select Status';
-            return $response;
-        }
-
-        foreach($request->inputs as $id)
-        {
-            $item = static::find($id);
-            if($request->data['status'] == 1)
+        try {
+            if(!$request->has('inputs'))
             {
-                static::activateItem($item->slug);
+                $response['success'] = false;
+                $response['errors'][] = 'Select IDs';
+                return $response;
             }
 
-            $item->status = $request->data['status'];
-            $item->save();
-        }
+            if(!$request->has('data'))
+            {
+                $response['success'] = false;
+                $response['errors'][] = 'Select Status';
+                return $response;
+            }
 
-        $response['success'] = true;
-        $response['data'] = [];
-        $response['messages'][] = trans('vaahcms-general.action_successful');
+            foreach($request->inputs as $id)
+            {
+                $item = static::find($id);
+                if($request->data['status'] == 1)
+                {
+                    static::activateItem($item->slug);
+                }
+
+                $item->status = $request->data['status'];
+                $item->save();
+            }
+
+            $response['success'] = true;
+            $response['data'] = [];
+            $response['messages'][] = trans('vaahcms-general.action_successful');
+        }catch(\Exception $e)
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = $e->getMessage();
+
+        }
 
         return $response;
 
