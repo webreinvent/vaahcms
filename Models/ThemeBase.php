@@ -535,7 +535,7 @@ class ThemeBase extends Model {
 
     }
     //-------------------------------------------------
-    public static function deactivateItem($slug)
+    public static function runThemeSeeds($slug, $is_default=false)
     {
         try {
             $item = static::slug($slug)->first();
@@ -556,6 +556,7 @@ class ThemeBase extends Model {
         }
 
         return $response;
+
     }
     //-------------------------------------------------
     public static function runThemeMigrations($slug, $is_default=false)
@@ -579,6 +580,11 @@ class ThemeBase extends Model {
                 if($current_max_batch > $max_batch){
                     Migration::syncThemeMigrations($item->id,$current_max_batch);
                 }
+
+
+
+                $seeds_namespace = vh_theme_database_seeder($item->name);
+                Migration::runSeeds($seeds_namespace);
 
                 //copy assets to public folder
                 static::copyAssets($item);
@@ -619,123 +625,6 @@ class ThemeBase extends Model {
 
         }
 
-        return $response;
-
-    }
-    //-------------------------------------------------
-    public static function runThemeSeeds($slug, $is_default=false)
-    {
-        try {
-            $item = static::slug($slug)->first();
-
-            if(!isset($item->is_migratable) || (isset($item->is_migratable) && $item->is_migratable == true))
-            {
-
-                $seeds_namespace = vh_theme_database_seeder($item->name);
-                Migration::runSeeds($seeds_namespace);
-
-                //copy assets to public folder
-                static::copyAssets($item);
-
-                LanguageString::generateLangFiles();
-
-            }
-
-
-            // check if any theme is marked as default
-            $is_default_exist = self::where('is_default', 1)->exists();
-
-            if($is_default || !$is_default_exist)
-            {
-                $item->is_default = 1;
-
-                //mark all other themes no none default
-                Theme::where('is_default', 1)->update(['is_default'=>null]);
-            }
-
-            $item->is_active = 1;
-            $item->is_assets_published = 1;
-
-            $item->save();
-
-            $response['success'] = true;
-            $response['data'][] = '';
-            $response['messages'][] = 'Seeds are successful';
-
-            if(env('APP_DEBUG'))
-            {
-                $response['hint'][] = '';
-            }
-        }catch(\Exception $e)
-        {
-            $response['status'] = 'failed';
-            $response['errors'][] = $e->getMessage();
-
-        }
-
-        return $response;
-
-    }
-    //-------------------------------------------------
-    public static function runThemeMigrations($slug, $is_default=false)
-    {
-
-        $item = static::slug($slug)->first();
-
-        if(!isset($item->is_migratable) || (isset($item->is_migratable) && $item->is_migratable == true))
-        {
-
-            $path = vh_theme_migrations_path($item->name);
-
-            $max_batch = \DB::table('migrations')
-                ->max('batch');
-
-            Migration::runMigrations($path);
-
-            $current_max_batch = \DB::table('migrations')
-                ->max('batch');
-
-            if($current_max_batch > $max_batch){
-                Migration::syncThemeMigrations($item->id,$current_max_batch);
-            }
-
-
-
-            $seeds_namespace = vh_theme_database_seeder($item->name);
-            Migration::runSeeds($seeds_namespace);
-
-            //copy assets to public folder
-            static::copyAssets($item);
-
-            LanguageString::generateLangFiles();
-
-        }
-
-
-        // check if any theme is marked as default
-        $is_default_exist = self::where('is_default', 1)->exists();
-
-        if($is_default || !$is_default_exist)
-        {
-            $item->is_default = 1;
-
-            //mark all other themes no none default
-            Theme::where('is_default', 1)->update(['is_default'=>null]);
-        }
-
-        $item->is_active = 1;
-        $item->is_assets_published = 1;
-
-        $item->save();
-
-        $response['success'] = true;
-        $response['data'][] = '';
-        $response['messages'][] = 'Migration is successful';
-
-        if(env('APP_DEBUG'))
-        {
-            $response['hint'][] = '';
-        }
         return $response;
 
     }

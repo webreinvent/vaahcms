@@ -440,7 +440,7 @@ class ModuleBase extends Model
 
     }
     //-------------------------------------------------
-    public static function deactivateItem($slug)
+    public static function runModuleSeeds($slug)
     {
         try {
             $item = static::slug($slug)->first();
@@ -461,6 +461,7 @@ class ModuleBase extends Model
         }
 
         return $response;
+
     }
     //-------------------------------------------------
     public static function runModuleMigrations($slug)
@@ -485,40 +486,6 @@ class ModuleBase extends Model
                     Migration::syncModuleMigrations($module->id,$current_max_batch);
                 }
 
-                //copy assets to public folder
-                Module::copyAssets($module);
-
-                LanguageString::generateLangFiles();
-
-            }
-
-            $response['success'] = true;
-            $response['data'][] = '';
-            $response['messages'][] = 'Migrations successful';
-
-            if(env('APP_DEBUG'))
-            {
-                $response['hint'][] = '';
-            }
-        }catch(\Exception $e)
-        {
-            $response['status'] = 'failed';
-            $response['errors'][] = $e->getMessage();
-
-        }
-
-        return $response;
-
-    }
-    //-------------------------------------------------
-    public static function runModuleSeeds($slug)
-    {
-        try {
-            $module = self::slug($slug)->first();
-
-            if(!isset($module->is_migratable) || (isset($module->is_migratable) && $module->is_migratable == true))
-            {
-
                 $seeds_namespace = vh_module_database_seeder($module->name);
                 Migration::runSeeds($seeds_namespace);
 
@@ -531,7 +498,7 @@ class ModuleBase extends Model
 
             $response['success'] = true;
             $response['data'][] = '';
-            $response['messages'][] = 'Seeds successful';
+            $response['messages'][] = 'Migration successful';
 
             if(env('APP_DEBUG'))
             {
@@ -544,50 +511,6 @@ class ModuleBase extends Model
 
         }
 
-        return $response;
-
-    }
-    //-------------------------------------------------
-    public static function runModuleMigrations($slug)
-    {
-
-        $module = self::slug($slug)->first();
-
-        if(!isset($module->is_migratable) || (isset($module->is_migratable) && $module->is_migratable == true))
-        {
-            $module_path = config('vaahcms.modules_path').$module->name;
-            $path = vh_module_migrations_path($module->name);
-
-            $max_batch = \DB::table('migrations')
-                ->max('batch');
-
-            Migration::runMigrations($path);
-
-            $current_max_batch = \DB::table('migrations')
-                ->max('batch');
-
-            if($current_max_batch > $max_batch){
-                Migration::syncModuleMigrations($module->id,$current_max_batch);
-            }
-
-            $seeds_namespace = vh_module_database_seeder($module->name);
-            Migration::runSeeds($seeds_namespace);
-
-            //copy assets to public folder
-            Module::copyAssets($module);
-
-            LanguageString::generateLangFiles();
-
-        }
-
-        $response['success'] = true;
-        $response['data'][] = '';
-        $response['messages'][] = 'Migration successful';
-
-        if(env('APP_DEBUG'))
-        {
-            $response['hint'][] = '';
-        }
         return $response;
 
     }
