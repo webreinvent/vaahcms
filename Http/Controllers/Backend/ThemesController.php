@@ -230,7 +230,7 @@ class ThemesController extends Controller
              * Call method from module setup controller
              */
             $theme = Theme::find($inputs['id']);
-            if(!in_array($request->action,['run_migrations','run_seeds','reset'],TRUE)){
+            if($request->action != 'run_migrations') {
                 $method_name = str_replace("_", " ", $action);
                 $method_name = ucwords($method_name);
                 $method_name = lcfirst(str_replace(" ", "", $method_name));
@@ -263,16 +263,6 @@ class ThemesController extends Controller
                     $response = Theme::makeItemAsDefault($theme->slug);
                     break;
                 //---------------------------------------
-                case 'reset':
-                    if (!Auth::user()->hasPermission('can-activate-theme')) {
-                        $response['success'] = false;
-                        $response['messages'][] = trans("vaahcms::messages.permission_denied");
-
-                        return response()->json($response);
-                    }
-                    $response = Theme::resetThemeMigrations($theme->slug);
-                    break;
-                //---------------------------------------
                 case 'run_migrations':
                     if (!Auth::user()->hasPermission('can-activate-theme')) {
                         $response['success'] = false;
@@ -281,16 +271,6 @@ class ThemesController extends Controller
                         return response()->json($response);
                     }
                     $response = Theme::runThemeMigrations($theme->slug);
-                    break;
-                //---------------------------------------
-                case 'run_seeds':
-                    if (!Auth::user()->hasPermission('can-activate-theme')) {
-                        $response['success'] = false;
-                        $response['messages'][] = trans("vaahcms::messages.permission_denied");
-
-                        return response()->json($response);
-                    }
-                    $response = Theme::runThemeSeeds($theme->slug);
                     break;
                 //---------------------------------------
                 case 'deactivate':
