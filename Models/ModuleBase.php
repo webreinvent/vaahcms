@@ -577,6 +577,8 @@ class ModuleBase extends Model
             //copy assets to public folder
             Module::copyAssets($module);
 
+            LanguageString::generateLangFiles();
+
         }
 
         $response['success'] = true;
