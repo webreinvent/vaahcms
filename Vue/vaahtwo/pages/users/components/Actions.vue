@@ -37,13 +37,13 @@ const toggleBulkMenuState = (event) => {
 
                 <!--selected_menu-->
                 <Button class="p-button-sm"
-                        icon="pi pi-angle-down"
                         aria-haspopup="true"
                         aria-controls="overlay_menu"
                         data-testid="user-action_menu"
                         @click="toggleSelectedMenuState"
                         v-if="store.hasPermission('can-update-users') || store.hasPermission('can-manage-users')"
                 >
+                    <i class="pi pi-angle-down"></i>
                     <Badge v-if="store.action.items.length > 0"
                            :value="store.action.items.length"
                     />
