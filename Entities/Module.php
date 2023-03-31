@@ -475,27 +475,6 @@ class Module extends Model {
 
         $module = Module::slug($slug)->first();
 
-        /*
-         * get module dependencies
-         */
-        $response = vh_module_action($module->name, 'SetupController@dependencies');
-
-        if($response['status'] == 'failed')
-        {
-            return $response;
-        }
-
-        /*
-         * check module dependencies are installed
-         */
-        $response = Module::validateDependencies($response['data']);
-
-
-        if(isset($response['status']) && $response['status'] == 'failed')
-        {
-            return $response;
-        }
-
         if(!isset($module->is_migratable) || (isset($module->is_migratable) && $module->is_migratable == true))
         {
             $module_path = config('vaahcms.modules_path').$module->name;
@@ -519,6 +498,7 @@ class Module extends Model {
             //copy assets to public folder
             Module::copyAssets($module);
 
+            LanguageString::generateLangFiles();
         }
 
 

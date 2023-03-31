@@ -577,28 +577,6 @@ class Theme extends Model {
 
         $item = static::slug($slug)->first();
 
-        /*
-         * get theme dependencies
-         */
-        $response = vh_theme_action($item->name, 'SetupController@dependencies');
-
-        if($response['status'] == 'failed')
-        {
-            return $response;
-        }
-
-        /*
-         * check theme dependencies are installed
-         */
-        $response = static::validateDependencies($response['data']);
-
-
-        if(isset($response['status']) && $response['status'] == 'failed')
-        {
-            return $response;
-        }
-
-
         if(!isset($item->is_migratable) || (isset($item->is_migratable) && $item->is_migratable == true))
         {
 
@@ -624,6 +602,7 @@ class Theme extends Model {
             //copy assets to public folder
             static::copyAssets($item);
 
+            LanguageString::generateLangFiles();
         }
 
         $response['status'] = 'success';
