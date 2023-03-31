@@ -679,63 +679,70 @@ class ThemeBase extends Model {
     //-------------------------------------------------
     public static function runThemeMigrations($slug, $is_default=false)
     {
+        try {
+            $item = static::slug($slug)->first();
 
-        $item = static::slug($slug)->first();
+            if(!isset($item->is_migratable) || (isset($item->is_migratable) && $item->is_migratable == true))
+            {
 
-        if(!isset($item->is_migratable) || (isset($item->is_migratable) && $item->is_migratable == true))
-        {
+                $path = vh_theme_migrations_path($item->name);
 
-            $path = vh_theme_migrations_path($item->name);
+                $max_batch = \DB::table('migrations')
+                    ->max('batch');
 
-            $max_batch = \DB::table('migrations')
-                ->max('batch');
+                Migration::runMigrations($path);
 
-            Migration::runMigrations($path);
+                $current_max_batch = \DB::table('migrations')
+                    ->max('batch');
 
-            $current_max_batch = \DB::table('migrations')
-                ->max('batch');
+                if($current_max_batch > $max_batch){
+                    Migration::syncThemeMigrations($item->id,$current_max_batch);
+                }
 
-            if($current_max_batch > $max_batch){
-                Migration::syncThemeMigrations($item->id,$current_max_batch);
+
+
+                $seeds_namespace = vh_theme_database_seeder($item->name);
+                Migration::runSeeds($seeds_namespace);
+
+                //copy assets to public folder
+                static::copyAssets($item);
+
+                LanguageString::generateLangFiles();
+
             }
 
 
+            // check if any theme is marked as default
+            $is_default_exist = self::where('is_default', 1)->exists();
 
-            $seeds_namespace = vh_theme_database_seeder($item->name);
-            Migration::runSeeds($seeds_namespace);
+            if($is_default || !$is_default_exist)
+            {
+                $item->is_default = 1;
 
-            //copy assets to public folder
-            static::copyAssets($item);
+                //mark all other themes no none default
+                Theme::where('is_default', 1)->update(['is_default'=>null]);
+            }
 
-            LanguageString::generateLangFiles();
+            $item->is_active = 1;
+            $item->is_assets_published = 1;
 
-        }
+            $item->save();
 
+            $response['success'] = true;
+            $response['data'][] = '';
+            $response['messages'][] = 'Migration is successful';
 
-        // check if any theme is marked as default
-        $is_default_exist = self::where('is_default', 1)->exists();
-
-        if($is_default || !$is_default_exist)
+            if(env('APP_DEBUG'))
+            {
+                $response['hint'][] = '';
+            }
+        }catch(\Exception $e)
         {
-            $item->is_default = 1;
+            $response['status'] = 'failed';
+            $response['errors'][] = $e->getMessage();
 
-            //mark all other themes no none default
-            Theme::where('is_default', 1)->update(['is_default'=>null]);
         }
 
-        $item->is_active = 1;
-        $item->is_assets_published = 1;
-
-        $item->save();
-
-        $response['success'] = true;
-        $response['data'][] = '';
-        $response['messages'][] = 'Migration is successful';
-
-        if(env('APP_DEBUG'))
-        {
-            $response['hint'][] = '';
-        }
         return $response;
 
     }
