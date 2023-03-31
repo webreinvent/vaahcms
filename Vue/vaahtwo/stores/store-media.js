@@ -949,7 +949,7 @@ export const useMediaStore = defineStore({
         //---------------------------------------------------------------------
         openUploader($event)
         {
-            let removeButton = $event.target.className.includes('p-fileupload-file-remove') || $event.target.className.includes('pi-times'); //document.querySelector('.p-times');
+            let removeButton = $event.target.className.includes('p-fileupload-file-remove') || $event.target.className.includes('pi-times');
 
             if (removeButton !== null || removeButton !== "") {
                 let ele = document.querySelector('.p-fileupload > input[type=file]');
@@ -990,4 +990,4 @@ export const useMediaStore = defineStore({
 if (import.meta.hot) {
     import.meta.hot.accept(acceptHMRUpdate(useMediaStore, import.meta.hot))
 }
-;
+

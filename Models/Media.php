@@ -7,14 +7,58 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use WebReinvent\VaahCms\Traits\CrudWithUuidObservantTrait;
-use WebReinvent\VaahCms\Models\MediaBase;
 use WebReinvent\VaahCms\Models\User;
 
-class Media extends MediaBase
+class Media extends Model
 {
+    use SoftDeletes;
+    use CrudWithUuidObservantTrait;
+    //-------------------------------------------------
+    protected $table = 'vh_medias';
+    //-------------------------------------------------
+    protected $dates = [
+        'created_at',
+        'updated_at',
+        'deleted_at'
+    ];
+    //-------------------------------------------------
+    protected $dateFormat = 'Y-m-d H:i:s';
+    //-------------------------------------------------
+
+    protected $fillable = [
+        'name',
+        'original_name',
+        'uuid',
+        'mime_type',
+        'extension',
+        'path',
+        'url',
+        'url_thumbnail',
+        'size',
+        'title',
+        'caption',
+        'alt_text',
+        'is_hidden',
+        'is_downloadable',
+        'download_url',
+        'download_requires_login',
+        'meta',
+        'created_by',
+        'updated_by',
+        'deleted_by'
+    ];
+    //-------------------------------------------------
+    protected $hidden = [
+        'is_hidden',
+    ];
+
+    //-------------------------------------------------
+
     protected $appends  = [
         'type', 'size_for_humans', 'download_url_full'
     ];
+
+    //-------------------------------------------------
 
     public function createdByUser()
     {
@@ -429,7 +473,220 @@ class Media extends MediaBase
     }
 
     //-------------------------------------------------
+
+    public function mediables()
+    {
+        return $this->hasMany(Mediable::class, 'vh_media_id', 'id');
+    }
+    //-------------------------------------------------
+    public static function createItem($request)
+    {
+        $rules = array(
+            'name' => 'required',
+            'mime_type' => 'required',
+            'url' => 'required',
+            'path' => 'required',
+        );
+
+        $validator = \Validator::make( $request->all(), $rules);
+        if ( $validator->fails() ) {
+
+            $errors             = errorsToArray($validator->errors());
+            $response['success'] = false;
+            $response['errors'] = $errors;
+            return $response;
+        }
+
+        //check download url is set and not taken
+        if($request->has('download_url') && !empty($request->download_url))
+        {
+            $download_url_exist = static::where('download_url', $request->download_url)
+                ->first();
+
+            if($download_url_exist)
+            {
+                $response['success'] = false;
+                $response['errors'][] = trans('vaahcms-media.download_url_associate');
+                return $response;
+            }
+        }
+
+
+        $item = new Media();
+        $item->fill($request->all());
+        $item->save();
+
+        $response['success'] = true;
+        $response['data'] = $item;
+        $response['messages'][] = trans('vaahcms-general.saved_successfully');
+
+        return $response;
+    }
+    //-------------------------------------------------
+    public static function getList($request)
+    {
+        $list = self::orderBy('id', 'desc');
+
+        if(isset($request->filter['trashed']) && ($request->filter['trashed'] == 'true'))
+        {
+            $list->withTrashed();
+        }
+
+        if(isset($request->filter['from']) && isset($request->filter['to']))
+        {
+            $list->whereBetween('created_at',[$request->filter['from'],$request->filter['to']]);
+        }
+
+        if(isset($request->filter['month']))
+        {
+            $date = date_parse($request->filter['month']);
+            $month = $date['month'];
+
+            $list->whereMonth('created_at', $month);
+
+            //$list->whereIn(\DB::raw('MONTH(column)'), [1,2,3]);
+        }
+
+        if(isset($request->filter['year']))
+        {
+            $list->whereYear('created_at', $request->filter['year']);
+        }
+
+        if(isset($request->filter['q']))
+        {
+            $filter = $request->filter['q'];
+            $list->where(function ($q) use ($filter){
+                $q->where('name', 'LIKE', '%'.$filter.'%')
+                    ->orWhere('title', 'LIKE', '%'.$filter.'%');
+            });
+        }
+
+        $list->whereNull('is_hidden');
+
+        $data['list'] = $list->skip(($request->rows * $request->page))
+            ->take($request->rows)->paginate($request->rows);
+
+        $response['success'] = true;
+        $response['data'] = $data;
+
+        return $response;
+    }
+
+    //-------------------------------------------------
+    public static function getDateList()
+    {
+        $list['month'] = static::select(\DB::raw('MONTHNAME(created_at) month'))
+            ->groupby('month')
+            ->get();
+
+
+        $list['year'] = static::select(\DB::raw('YEAR(created_at) year'))
+            ->groupby('year')
+            ->get();
+
+
+        return $list;
+
+    }
+    //-------------------------------------------------
+    public function getTypeAttribute() {
+        $explode = explode('/', $this->mime_type);
+        return $explode[0];
+    }
+    //-------------------------------------------------
+    public function getUrlThumbnailAttribute($value) {
+
+        if(!$value)
+        {
+            return null;
+        }
+
+        return asset($value);
+    }
+    //-------------------------------------------------
+    public function getSizeForHumansAttribute() {
+
+        $size = $this->size;
+        $precision = 2;
+
+        if ($size > 0) {
+            $size = (int) $size;
+            $base = log($size) / log(1024);
+            $suffixes = array(' bytes', ' KB', ' MB', ' GB', ' TB');
+
+            return round(pow(1024, $base - floor($base)), $precision) . $suffixes[floor($base)];
+        } else {
+            return $size;
+        }
+    }
+    //-------------------------------------------------
+    public function getDownloadUrlFullAttribute() {
+
+        if(!$this->download_url)
+        {
+            return '';
+        }
+
+        return route('vh.frontend.media.download',[$this->download_url]);
+    }
+    //-------------------------------------------------
+    public function getUrlAttribute($value) {
+
+        if(!$value)
+        {
+            return $value;
+        }
+
+        return asset($value);
+    }
     //-------------------------------------------------
 
+    public static function postStore($request)
+    {
 
+        $rules = array(
+            'name' => 'required',
+            'mime_type' => 'required',
+            'url' => 'required',
+            'path' => 'required',
+        );
+
+        $validator = \Validator::make( $request->all(), $rules);
+        if ( $validator->fails() ) {
+
+            $errors             = errorsToArray($validator->errors());
+            $response['success'] = false;
+            $response['errors'] = $errors;
+            return $response;
+        }
+
+        //check download url is set and not taken
+        if($request->has('download_url') && !empty($request->download_url))
+        {
+            $download_url_exist = static::where('download_url', $request->download_url)
+                ->where('id', '!=', $request->id)
+                ->first();
+
+            if($download_url_exist)
+            {
+                $response['success'] = false;
+                $response['errors'][] = trans('vaahcms-media.download_url_associate');
+                return $response;
+            }
+        }
+
+
+        $item = static::where('id', $request->id)->withTrashed()->first();
+        $item->fill($request->all());
+        $item->save();
+
+        $response['success'] = true;
+        $response['data'] = $item;
+        $response['messages'][] = 'Save';
+
+        return $response;
+
+    }
+
+    //-------------------------------------------------
 }
