@@ -17,7 +17,7 @@ class BatchesController extends Controller
     {
         if (!Auth::user()->hasPermission('has-access-of-advanced-section')) {
             $response['success'] = false;
-            $response['messages'][] = trans("vaahcms::messages.permission_denied");
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
 
             return response()->json($response);
         }

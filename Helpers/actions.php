@@ -11,7 +11,7 @@ function vh_action_response($class_namespace, $method, $params=null) {
         return $response;
     } catch (\Exception $e) {
         $response['success'] = false;
-        $response['messages'][] = $e->getMessage();
+        $response['errors'][] = $e->getMessage();
         return $response;
     }
 }

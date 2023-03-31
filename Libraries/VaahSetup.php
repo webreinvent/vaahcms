@@ -518,7 +518,7 @@ class VaahSetup{
                 if( $environment->app_url === url("/") && $environment->env_file != '.env.'.$request->app_env)
                 {
                     $response['success'] = false;
-                    $response['messages'][] = 'APP_URL ('.$environment->app_url.') already exist in vaahcms.json for '.$environment->env_file.' file.';
+                    $response['errors'][] = 'APP_URL ('.$environment->app_url.') already exist in vaahcms.json for '.$environment->env_file.' file.';
                     if(env('APP_DEBUG'))
                     {
                         $response['hint'][] = 'APP URL already exist in vaahcms.json';
