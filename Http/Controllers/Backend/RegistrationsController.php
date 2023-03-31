@@ -22,7 +22,7 @@ class RegistrationsController extends Controller
     {
         if (!Auth::user()->hasPermission('has-access-of-registrations-section')) {
             $response['success'] = false;
-            $response['messages'][] = trans("vaahcms::messages.permission_denied");
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
 
             return response()->json($response);
         }
@@ -81,10 +81,10 @@ class RegistrationsController extends Controller
             $response['success'] = false;
 
             if (env('APP_DEBUG')) {
-                $response['messages'][] = $e->getMessage();
+                $response['errors'][] = $e->getMessage();
                 $response['hint'][] = $e->getTrace();
             } else {
-                $response['messages'][] = 'Something went wrong.';
+                $response['errors'][] = 'Something went wrong.';
             }
         }
 
@@ -95,7 +95,7 @@ class RegistrationsController extends Controller
     {
         if (!Auth::user()->hasPermission('has-access-of-registrations-section')) {
             $response['success'] = false;
-            $response['messages'][] = trans("vaahcms::messages.permission_denied");
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
 
             return response()->json($response);
         }
@@ -107,10 +107,10 @@ class RegistrationsController extends Controller
             $response['success'] = false;
 
             if (env('APP_DEBUG')) {
-                $response['messages'][] = $e->getMessage();
+                $response['errors'][] = $e->getMessage();
                 $response['hint'][] = $e->getTrace();
             } else {
-                $response['messages'][] = 'Something went wrong.';
+                $response['errors'][] = 'Something went wrong.';
             }
         }
 
@@ -121,7 +121,7 @@ class RegistrationsController extends Controller
     {
         if (!Auth::user()->hasPermission('can-update-registrations')) {
             $response['success'] = false;
-            $response['messages'][] = trans("vaahcms::messages.permission_denied");
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
 
             return response()->json($response);
         }
@@ -133,10 +133,10 @@ class RegistrationsController extends Controller
             $response['success'] = false;
 
             if (env('APP_DEBUG')) {
-                $response['messages'][] = $e->getMessage();
+                $response['errors'][] = $e->getMessage();
                 $response['hint'][] = $e->getTrace();
             } else {
-                $response['messages'][] = 'Something went wrong.';
+                $response['errors'][] = 'Something went wrong.';
             }
         }
 
@@ -149,7 +149,7 @@ class RegistrationsController extends Controller
             !Auth::user()->hasPermission('can-manage-registrations')
         ) {
             $response['success'] = false;
-            $response['messages'][] = trans("vaahcms::messages.permission_denied");
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
 
             return response()->json($response);
         }
@@ -161,10 +161,10 @@ class RegistrationsController extends Controller
             $response['success'] = false;
 
             if (env('APP_DEBUG')) {
-                $response['messages'][] = $e->getMessage();
+                $response['errors'][] = $e->getMessage();
                 $response['hint'][] = $e->getTrace();
             } else {
-                $response['messages'][] = 'Something went wrong.';
+                $response['errors'][] = 'Something went wrong.';
             }
         }
 
@@ -177,7 +177,7 @@ class RegistrationsController extends Controller
             !Auth::user()->hasPermission('can-delete-registrations'))
         {
             $response['success'] = false;
-            $response['messages'][] = trans("vaahcms::messages.permission_denied");
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
 
             return response()->json($response);
         }
@@ -189,10 +189,10 @@ class RegistrationsController extends Controller
             $response['success'] = false;
 
             if (env('APP_DEBUG')) {
-                $response['messages'][] = $e->getMessage();
+                $response['errors'][] = $e->getMessage();
                 $response['hint'][] = $e->getTrace();
             } else {
-                $response['messages'][] = 'Something went wrong.';
+                $response['errors'][] = 'Something went wrong.';
             }
         }
 
@@ -203,7 +203,7 @@ class RegistrationsController extends Controller
     {
          if (!Auth::user()->hasPermission('can-create-registrations')) {
              $response['success'] = false;
-             $response['messages'][] = trans("vaahcms::messages.permission_denied");
+             $response['errors'][] = trans("vaahcms::messages.permission_denied");
 
              return response()->json($response);
          }
@@ -215,10 +215,10 @@ class RegistrationsController extends Controller
             $response['success'] = false;
 
             if (env('APP_DEBUG')) {
-                $response['messages'][] = $e->getMessage();
+                $response['errors'][] = $e->getMessage();
                 $response['hint'][] = $e->getTrace();
             } else {
-                $response['messages'][] = 'Something went wrong.';
+                $response['errors'][] = 'Something went wrong.';
             }
         }
 
@@ -229,7 +229,7 @@ class RegistrationsController extends Controller
     {
          if (!Auth::user()->hasPermission('can-read-registrations')) {
              $response['success'] = false;
-             $response['messages'][] = trans("vaahcms::messages.permission_denied");
+             $response['errors'][] = trans("vaahcms::messages.permission_denied");
 
              return response()->json($response);
          }
@@ -241,10 +241,10 @@ class RegistrationsController extends Controller
             $response['success'] = false;
 
             if (env('APP_DEBUG')) {
-                $response['messages'][] = $e->getMessage();
+                $response['errors'][] = $e->getMessage();
                 $response['hint'][] = $e->getTrace();
             } else {
-                $response['messages'][] = 'Something went wrong.';
+                $response['errors'][] = 'Something went wrong.';
             }
         }
 
@@ -256,7 +256,7 @@ class RegistrationsController extends Controller
         if (!Auth::user()->hasPermission('can-update-registrations'))
         {
             $response['success'] = false;
-            $response['messages'][] = trans("vaahcms::messages.permission_denied");
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
 
             return response()->json($response);
         }
@@ -268,10 +268,10 @@ class RegistrationsController extends Controller
             $response['success'] = false;
 
             if (env('APP_DEBUG')) {
-                $response['messages'][] = $e->getMessage();
+                $response['errors'][] = $e->getMessage();
                 $response['hint'][] = $e->getTrace();
             } else {
-                $response['messages'][] = 'Something went wrong.';
+                $response['errors'][] = 'Something went wrong.';
             }
         }
 
@@ -284,7 +284,7 @@ class RegistrationsController extends Controller
             !Auth::user()->hasPermission('can-delete-registrations')
         ) {
             $response['success'] = false;
-            $response['messages'][] = trans("vaahcms::messages.permission_denied");
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
 
             return response()->json($response);
         }
@@ -296,10 +296,10 @@ class RegistrationsController extends Controller
             $response['success'] = false;
 
             if (env('APP_DEBUG')) {
-                $response['messages'][] = $e->getMessage();
+                $response['errors'][] = $e->getMessage();
                 $response['hint'][] = $e->getTrace();
             } else {
-                $response['messages'][] = 'Something went wrong.';
+                $response['errors'][] = 'Something went wrong.';
             }
         }
 
@@ -312,7 +312,7 @@ class RegistrationsController extends Controller
             !Auth::user()->hasPermission('can-manage-registrations')
         ) {
             $response['success'] = false;
-            $response['messages'][] = trans("vaahcms::messages.permission_denied");
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
 
             return response()->json($response);
         }
@@ -324,10 +324,10 @@ class RegistrationsController extends Controller
             $response['success'] = false;
 
             if (env('APP_DEBUG')) {
-                $response['messages'][] = $e->getMessage();
+                $response['errors'][] = $e->getMessage();
                 $response['hint'][] = $e->getTrace();
             } else {
-                $response['messages'][] = 'Something went wrong.';
+                $response['errors'][] = 'Something went wrong.';
             }
         }
 
@@ -343,10 +343,10 @@ class RegistrationsController extends Controller
             $response['success'] = false;
 
             if (env('APP_DEBUG')) {
-                $response['messages'][] = $e->getMessage();
+                $response['errors'][] = $e->getMessage();
                 $response['hint'][] = $e->getTrace();
             } else {
-                $response['messages'][] = 'Something went wrong.';
+                $response['errors'][] = 'Something went wrong.';
             }
         }
 
@@ -357,7 +357,7 @@ class RegistrationsController extends Controller
     {
         if (!Auth::user()->hasPermission('can-create-users-from-registrations')) {
             $response['success'] = false;
-            $response['messages'][] = trans("vaahcms::messages.permission_denied");
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
 
             return response()->json($response);
         }
@@ -369,10 +369,10 @@ class RegistrationsController extends Controller
             $response['success'] = false;
 
             if (env('APP_DEBUG')) {
-                $response['messages'][] = $e->getMessage();
+                $response['errors'][] = $e->getMessage();
                 $response['hint'][] = $e->getTrace();
             } else {
-                $response['messages'][] = 'Something went wrong.';
+                $response['errors'][] = 'Something went wrong.';
             }
         }
 

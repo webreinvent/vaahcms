@@ -19,7 +19,7 @@ class RolesController extends Controller
     {
         if (!Auth::user()->hasPermission('has-access-of-roles-section')) {
             $response['success'] = false;
-            $response['messages'][] = trans("vaahcms::messages.permission_denied");
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
 
             return response()->json($response);
         }
@@ -64,10 +64,10 @@ class RolesController extends Controller
             $response['success'] = false;
 
             if (env('APP_DEBUG')) {
-                $response['messages'][] = $e->getMessage();
+                $response['errors'][] = $e->getMessage();
                 $response['hint'][] = $e->getTrace();
             } else {
-                $response['messages'][] = 'Something went wrong.';
+                $response['errors'][] = 'Something went wrong.';
             }
         }
 
@@ -78,7 +78,7 @@ class RolesController extends Controller
     {
         if (!Auth::user()->hasPermission('has-access-of-roles-section')) {
             $response['success'] = false;
-            $response['messages'][] = trans("vaahcms::messages.permission_denied");
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
 
             return response()->json($response);
         }
@@ -90,10 +90,10 @@ class RolesController extends Controller
             $response['success'] = false;
 
             if (env('APP_DEBUG')) {
-                $response['messages'][] = $e->getMessage();
+                $response['errors'][] = $e->getMessage();
                 $response['hint'][] = $e->getTrace();
             } else {
-                $response['messages'][] = 'Something went wrong.';
+                $response['errors'][] = 'Something went wrong.';
             }
         }
 
@@ -104,7 +104,7 @@ class RolesController extends Controller
     {
         if (!Auth::user()->hasPermission('can-update-roles')) {
             $response['success'] = false;
-            $response['messages'][] = trans("vaahcms::messages.permission_denied");
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
 
             return response()->json($response);
         }
@@ -116,10 +116,10 @@ class RolesController extends Controller
             $response['success'] = false;
 
             if (env('APP_DEBUG')) {
-                $response['messages'][] = $e->getMessage();
+                $response['errors'][] = $e->getMessage();
                 $response['hint'][] = $e->getTrace();
             } else {
-                $response['messages'][] = 'Something went wrong.';
+                $response['errors'][] = 'Something went wrong.';
             }
         }
 
@@ -132,7 +132,7 @@ class RolesController extends Controller
             !Auth::user()->hasPermission('can-manage-roles')
         ) {
             $response['success'] = false;
-            $response['messages'][] = trans("vaahcms::messages.permission_denied");
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
 
             return response()->json($response);
         }
@@ -144,10 +144,10 @@ class RolesController extends Controller
             $response['success'] = false;
 
             if (env('APP_DEBUG')) {
-                $response['messages'][] = $e->getMessage();
+                $response['errors'][] = $e->getMessage();
                 $response['hint'][] = $e->getTrace();
             } else {
-                $response['messages'][] = 'Something went wrong.';
+                $response['errors'][] = 'Something went wrong.';
             }
         }
 
@@ -158,7 +158,7 @@ class RolesController extends Controller
     {
         if (!Auth::user()->hasPermission('can-delete-roles')) {
             $response['success'] = false;
-            $response['messages'][] = trans("vaahcms::messages.permission_denied");
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
 
             return response()->json($response);
         }
@@ -170,10 +170,10 @@ class RolesController extends Controller
             $response['success'] = false;
 
             if (env('APP_DEBUG')) {
-                $response['messages'][] = $e->getMessage();
+                $response['errors'][] = $e->getMessage();
                 $response['hint'][] = $e->getTrace();
             } else {
-                $response['messages'][] = 'Something went wrong.';
+                $response['errors'][] = 'Something went wrong.';
             }
         }
 
@@ -184,7 +184,7 @@ class RolesController extends Controller
     {
         if (!Auth::user()->hasPermission('can-create-roles')) {
             $response['success'] = false;
-            $response['messages'][] = trans("vaahcms::messages.permission_denied");
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
 
             return response()->json($response);
         }
@@ -196,10 +196,10 @@ class RolesController extends Controller
             $response['success'] = false;
 
             if (env('APP_DEBUG')) {
-                $response['messages'][] = $e->getMessage();
+                $response['errors'][] = $e->getMessage();
                 $response['hint'][] = $e->getTrace();
             } else {
-                $response['messages'][] = 'Something went wrong.';
+                $response['errors'][] = 'Something went wrong.';
             }
         }
 
@@ -210,7 +210,7 @@ class RolesController extends Controller
     {
         if (!Auth::user()->hasPermission('can-read-roles')) {
             $response['success'] = false;
-            $response['messages'][] = trans("vaahcms::messages.permission_denied");
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
 
             return response()->json($response);
         }
@@ -222,10 +222,10 @@ class RolesController extends Controller
             $response['success'] = false;
 
             if (env('APP_DEBUG')) {
-                $response['messages'][] = $e->getMessage();
+                $response['errors'][] = $e->getMessage();
                 $response['hint'][] = $e->getTrace();
             } else {
-                $response['messages'][] = 'Something went wrong.';
+                $response['errors'][] = 'Something went wrong.';
             }
         }
 
@@ -236,7 +236,7 @@ class RolesController extends Controller
     {
         if (!Auth::user()->hasPermission('can-update-roles')) {
             $response['success'] = false;
-            $response['messages'][] = trans("vaahcms::messages.permission_denied");
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
 
             return response()->json($response);
         }
@@ -248,10 +248,10 @@ class RolesController extends Controller
             $response['success'] = false;
 
             if (env('APP_DEBUG')) {
-                $response['messages'][] = $e->getMessage();
+                $response['errors'][] = $e->getMessage();
                 $response['hint'][] = $e->getTrace();
             } else {
-                $response['messages'][] = 'Something went wrong.';
+                $response['errors'][] = 'Something went wrong.';
             }
         }
 
@@ -262,7 +262,7 @@ class RolesController extends Controller
     {
         if (!Auth::user()->hasPermission('can-delete-roles')) {
             $response['success'] = false;
-            $response['messages'][] = trans("vaahcms::messages.permission_denied");
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
 
             return response()->json($response);
         }
@@ -274,10 +274,10 @@ class RolesController extends Controller
             $response['success'] = false;
 
             if (env('APP_DEBUG')) {
-                $response['messages'][] = $e->getMessage();
+                $response['errors'][] = $e->getMessage();
                 $response['hint'][] = $e->getTrace();
             } else {
-                $response['messages'][] = 'Something went wrong.';
+                $response['errors'][] = 'Something went wrong.';
             }
         }
 
@@ -290,7 +290,7 @@ class RolesController extends Controller
             !Auth::user()->hasPermission('can-update-roles')
         ) {
             $response['success'] = false;
-            $response['messages'][] = trans("vaahcms::messages.permission_denied");
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
 
             return response()->json($response);
         }
@@ -302,10 +302,10 @@ class RolesController extends Controller
             $response['success'] = false;
 
             if (env('APP_DEBUG')) {
-                $response['messages'][] = $e->getMessage();
+                $response['errors'][] = $e->getMessage();
                 $response['hint'][] = $e->getTrace();
             } else {
-                $response['messages'][] = 'Something went wrong.';
+                $response['errors'][] = 'Something went wrong.';
             }
         }
 
@@ -316,7 +316,7 @@ class RolesController extends Controller
     {
         if (!Auth::user()->hasPermission('can-read-roles')) {
             $response['success'] = false;
-            $response['messages'][] = trans("vaahcms::messages.permission_denied");
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
 
             return response()->json($response);
         }
@@ -328,10 +328,10 @@ class RolesController extends Controller
             $response['success'] = false;
 
             if (env('APP_DEBUG')) {
-                $response['messages'][] = $e->getMessage();
+                $response['errors'][] = $e->getMessage();
                 $response['hint'][] = $e->getTrace();
             } else {
-                $response['messages'][] = 'Something went wrong.';
+                $response['errors'][] = 'Something went wrong.';
             }
         }
 
@@ -342,7 +342,7 @@ class RolesController extends Controller
     {
         if (!Auth::user()->hasPermission('can-read-roles')) {
             $response['success'] = false;
-            $response['messages'][] = trans("vaahcms::messages.permission_denied");
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
 
             return response()->json($response);
         }
@@ -354,10 +354,10 @@ class RolesController extends Controller
             $response['success'] = false;
 
             if (env('APP_DEBUG')) {
-                $response['messages'][] = $e->getMessage();
+                $response['errors'][] = $e->getMessage();
                 $response['hint'][] = $e->getTrace();
             } else {
-                $response['messages'][] = 'Something went wrong.';
+                $response['errors'][] = 'Something went wrong.';
             }
         }
 
@@ -373,10 +373,10 @@ class RolesController extends Controller
             $response['success'] = false;
 
             if (env('APP_DEBUG')) {
-                $response['messages'][] = $e->getMessage();
+                $response['errors'][] = $e->getMessage();
                 $response['hint'][] = $e->getTrace();
             } else {
-                $response['messages'][] = 'Something went wrong.';
+                $response['errors'][] = 'Something went wrong.';
             }
         }
 
@@ -392,10 +392,10 @@ class RolesController extends Controller
             $response['success'] = false;
 
             if (env('APP_DEBUG')) {
-                $response['messages'][] = $e->getMessage();
+                $response['errors'][] = $e->getMessage();
                 $response['hint'][] = $e->getTrace();
             } else {
-                $response['messages'][] = 'Something went wrong.';
+                $response['errors'][] = 'Something went wrong.';
             }
         }
 

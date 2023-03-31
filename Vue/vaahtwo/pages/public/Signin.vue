@@ -69,6 +69,7 @@ onMounted(async () => {
                                     data-testid="signin-password"
                                     v-model="auth.sign_in_items.password"
                                     class="w-full" inputClass="w-full"
+                                    :feedback="false"
                                     toggleMask
                                     id="password"></Password>
                                 <label for="password">Enter Password</label>

@@ -23,7 +23,7 @@ class ModulesController extends Controller
     {
         if (!Auth::user()->hasPermission('has-access-of-module-section')) {
             $response['success'] = false;
-            $response['messages'][] = trans("vaahcms::messages.permission_denied");
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
 
             return response()->json($response);
         }
@@ -43,10 +43,10 @@ class ModulesController extends Controller
             $response['success'] = false;
 
             if (env('APP_DEBUG')) {
-                $response['messages'][] = $e->getMessage();
+                $response['errors'][] = $e->getMessage();
                 $response['hint'][] = $e->getTrace();
             } else {
-                $response['messages'][] = 'Something went wrong.';
+                $response['errors'][] = 'Something went wrong.';
             }
         }
 
@@ -57,7 +57,7 @@ class ModulesController extends Controller
     {
         if (!Auth::user()->hasPermission('has-access-of-module-section')) {
             $response['success'] = false;
-            $response['messages'][] = trans("vaahcms::messages.permission_denied");
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
 
             return response()->json($response);
         }
@@ -115,10 +115,10 @@ class ModulesController extends Controller
             $response['success'] = false;
 
             if (env('APP_DEBUG')) {
-                $response['messages'][] = $e->getMessage();
+                $response['errors'][] = $e->getMessage();
                 $response['hint'][] = $e->getTrace();
             } else {
-                $response['messages'][] = 'Something went wrong.';
+                $response['errors'][] = 'Something went wrong.';
             }
         }
 
@@ -129,7 +129,7 @@ class ModulesController extends Controller
     {
         if (!Auth::user()->hasPermission('can-read-module')) {
             $response['success'] = false;
-            $response['messages'][] = trans("vaahcms::messages.permission_denied");
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
 
             return response()->json($response);
         }
@@ -141,10 +141,10 @@ class ModulesController extends Controller
             $response['success'] = false;
 
             if (env('APP_DEBUG')) {
-                $response['messages'][] = $e->getMessage();
+                $response['errors'][] = $e->getMessage();
                 $response['hint'][] = $e->getTrace();
             } else {
-                $response['messages'][] = 'Something went wrong.';
+                $response['errors'][] = 'Something went wrong.';
             }
         }
 
@@ -155,7 +155,7 @@ class ModulesController extends Controller
     {
         if (!Auth::user()->hasPermission('can-install-module')) {
             $response['success'] = false;
-            $response['messages'][] = trans("vaahcms::messages.permission_denied");
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
 
             return response()->json($response);
         }
@@ -171,7 +171,7 @@ class ModulesController extends Controller
 
                 $errors             = errorsToArray($validator->errors());
                 $response['success'] = false;
-                $response['messages'][] = $errors;
+                $response['errors'][] = $errors;
                 return response()->json($response);
             }
 
@@ -181,10 +181,10 @@ class ModulesController extends Controller
             $response['success'] = false;
 
             if (env('APP_DEBUG')) {
-                $response['messages'][] = $e->getMessage();
+                $response['errors'][] = $e->getMessage();
                 $response['hint'][] = $e->getTrace();
             } else {
-                $response['messages'][] = 'Something went wrong.';
+                $response['errors'][] = 'Something went wrong.';
             }
         }
 
@@ -195,7 +195,7 @@ class ModulesController extends Controller
     {
         if (!Auth::user()->hasPermission('can-update-module')) {
             $response['success'] = false;
-            $response['messages'][] = trans("vaahcms::messages.permission_denied");
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
 
             return response()->json($response);
         }
@@ -211,7 +211,7 @@ class ModulesController extends Controller
 
                 $errors             = errorsToArray($validator->errors());
                 $response['success'] = false;
-                $response['messages'][] = $errors;
+                $response['errors'][] = $errors;
                 return response()->json($response);
             }
 
@@ -221,10 +221,10 @@ class ModulesController extends Controller
             $response['success'] = false;
 
             if (env('APP_DEBUG')) {
-                $response['messages'][] = $e->getMessage();
+                $response['errors'][] = $e->getMessage();
                 $response['hint'][] = $e->getTrace();
             } else {
-                $response['messages'][] = 'Something went wrong.';
+                $response['errors'][] = 'Something went wrong.';
             }
         }
 
@@ -250,7 +250,7 @@ class ModulesController extends Controller
 
                 $errors             = errorsToArray($validator->errors());
                 $response['success'] = false;
-                $response['messages'][] = $errors;
+                $response['errors'][] = $errors;
                 return response()->json($response);
             }
 
@@ -278,7 +278,7 @@ class ModulesController extends Controller
                 case 'activate':
                     if (!Auth::user()->hasPermission('can-activate-module')) {
                         $response['success'] = false;
-                        $response['messages'][] = trans("vaahcms::messages.permission_denied");
+                        $response['errors'][] = trans("vaahcms::messages.permission_denied");
 
                         return response()->json($response);
                     }
@@ -288,7 +288,7 @@ class ModulesController extends Controller
                 case 'deactivate':
                     if (!\Auth::user()->hasPermission('can-deactivate-module')) {
                         $response['success'] = false;
-                        $response['messages'][] = trans("vaahcms::messages.permission_denied");
+                        $response['errors'][] = trans("vaahcms::messages.permission_denied");
 
                         return response()->json($response);
                     }
@@ -299,7 +299,7 @@ class ModulesController extends Controller
                 case 'import_sample_data':
                     if (!\Auth::user()->hasPermission('can-import-sample-data-in-module')) {
                         $response['success'] = false;
-                        $response['messages'][] = trans("vaahcms::messages.permission_denied");
+                        $response['errors'][] = trans("vaahcms::messages.permission_denied");
 
                         return response()->json($response);
                     }
@@ -310,7 +310,7 @@ class ModulesController extends Controller
                 case 'delete':
                     if (!Auth::user()->hasPermission('can-delete-module')) {
                         $response['success'] = false;
-                        $response['messages'][] = trans("vaahcms::messages.permission_denied");
+                        $response['errors'][] = trans("vaahcms::messages.permission_denied");
 
                         return response()->json($response);
                     }
@@ -323,10 +323,10 @@ class ModulesController extends Controller
             $response['success'] = false;
 
             if (env('APP_DEBUG')) {
-                $response['messages'][] = $e->getMessage();
+                $response['errors'][] = $e->getMessage();
                 $response['hint'][] = $e->getTrace();
             } else {
-                $response['messages'][] = 'Something went wrong.';
+                $response['errors'][] = 'Something went wrong.';
             }
         }
 
@@ -349,10 +349,10 @@ class ModulesController extends Controller
             $response['success'] = false;
 
             if (env('APP_DEBUG')) {
-                $response['messages'][] = $e->getMessage();
+                $response['errors'][] = $e->getMessage();
                 $response['hint'][] = $e->getTrace();
             } else {
-                $response['messages'][] = 'Something went wrong.';
+                $response['errors'][] = 'Something went wrong.';
             }
         }
 
@@ -364,7 +364,7 @@ class ModulesController extends Controller
         try {
             $module_slugs = Module::all()->pluck('slug')->toArray();
 
-            $module_slugs = implode($module_slugs,",");
+            $module_slugs = implode(",", $module_slugs);
 
             $response['success'] = true;
             $response['data'] = $module_slugs;
@@ -374,10 +374,10 @@ class ModulesController extends Controller
             $response['success'] = false;
 
             if (env('APP_DEBUG')) {
-                $response['messages'][] = $e->getMessage();
+                $response['errors'][] = $e->getMessage();
                 $response['hint'][] = $e->getTrace();
             } else {
-                $response['messages'][] = 'Something went wrong.';
+                $response['errors'][] = 'Something went wrong.';
             }
         }
 
@@ -388,7 +388,7 @@ class ModulesController extends Controller
     {
         if (!Auth::user()->hasPermission('can-update-module')) {
             $response['success'] = false;
-            $response['messages'][] = trans("vaahcms::messages.permission_denied");
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
 
             return response()->json($response);
         }
@@ -415,10 +415,10 @@ class ModulesController extends Controller
             $response['success'] = false;
 
             if (env('APP_DEBUG')) {
-                $response['messages'][] = $e->getMessage();
+                $response['errors'][] = $e->getMessage();
                 $response['hint'][] = $e->getTrace();
             } else {
-                $response['messages'][] = 'Something went wrong.';
+                $response['errors'][] = 'Something went wrong.';
             }
         }
 
@@ -429,7 +429,7 @@ class ModulesController extends Controller
     {
         if (!Auth::user()->hasPermission('can-update-module')) {
             $response['success'] = false;
-            $response['messages'][] = trans("vaahcms::messages.permission_denied");
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
 
             return response()->json($response);
         }
@@ -445,7 +445,7 @@ class ModulesController extends Controller
 
                 $errors             = errorsToArray($validator->errors());
                 $response['success'] = false;
-                $response['messages'] = $errors;
+                $response['errors'] = $errors;
                 return response()->json($response);
             }
 
@@ -455,10 +455,10 @@ class ModulesController extends Controller
             $response['success'] = false;
 
             if (env('APP_DEBUG')) {
-                $response['messages'][] = $e->getMessage();
+                $response['errors'][] = $e->getMessage();
                 $response['hint'][] = $e->getTrace();
             } else {
-                $response['messages'][] = 'Something went wrong.';
+                $response['errors'][] = 'Something went wrong.';
             }
         }
 
@@ -480,11 +480,11 @@ class ModulesController extends Controller
                 return response()->json($response);
             }
 
-            $response['status'] = "danger";
-            $response['messages'][] = "Something went wrong.";
+            $response['success'] = false;
+            $response['errors'][] = "Something went wrong.";
         } catch(\Exception $e) {
             $response['success'] = false;
-            $response['messages'][] = $e->getMessage();
+            $response['errors'][] = $e->getMessage();
         }
 
         return response()->json($response);

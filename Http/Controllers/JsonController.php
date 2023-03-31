@@ -187,7 +187,7 @@ class JsonController extends Controller
         if(!\Auth::check())
         {
             $response['success'] = false;
-            $response['messages'] = [];
+            $response['errors'] = ["You're not logged in."];
             return response()->json($response);
         }
 

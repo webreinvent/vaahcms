@@ -29,7 +29,7 @@ class TaxonomiesController extends Controller
 
             if(!$type){
                 $response['success'] = false;
-                $response['messages'][] = "Type not found.";
+                $response['errors'][] = "Type not found.";
                 return $response;
             }
 
@@ -41,7 +41,7 @@ class TaxonomiesController extends Controller
 
                 if(!$parent){
                     $response['success'] = false;
-                    $response['messages'][] = "Parent not found.";
+                    $response['errors'][] = "Parent not found.";
                     return $response;
                 }
 
@@ -104,7 +104,7 @@ class TaxonomiesController extends Controller
 
             if(!$type){
                 $response['success'] = false;
-                $response['messages'][] = "Type slug not found.";
+                $response['errors'][] = "Type slug not found.";
                 return $response;
             }
 
@@ -116,7 +116,7 @@ class TaxonomiesController extends Controller
 
                 if(!$parent){
                     $response['success'] = false;
-                    $response['messages'][] = "Parent slug not found.";
+                    $response['errors'][] = "Parent slug not found.";
                     return $response;
                 }
 

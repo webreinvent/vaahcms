@@ -158,7 +158,7 @@ class SetupController extends Controller
         if(!VaahSetup::isInstalled())
         {
             $response['success'] = false;
-            $response['messages'][] = 'Application is installed.';
+            $response['errors'][] = 'Application is installed.';
             return response()->json($response);
         }
 
@@ -218,7 +218,7 @@ class SetupController extends Controller
         }catch(\Exception $e)
         {
             $response['success'] = false;
-            $response['messages'][] = $e->getMessage();
+            $response['errors'][] = $e->getMessage();
 
         }
 
@@ -232,7 +232,7 @@ class SetupController extends Controller
         if(VaahSetup::isInstalled())
         {
             $response['success'] = false;
-            $response['messages'][] = 'Application is already installed.';
+            $response['errors'][] = 'Application is already installed.';
             return response()->json($response);
         }
 
@@ -266,7 +266,7 @@ class SetupController extends Controller
 
             $errors             = errorsToArray($validator->errors());
             $response['success'] = false;
-            $response['messages'] = $errors;
+            $response['errors'] = $errors;
             return response()->json($response);
         }
 
@@ -279,7 +279,7 @@ class SetupController extends Controller
         if(!file_exists($file_path))
         {
             $response['success'] = false;
-            $response['messages'] = [];
+            $response['errors'] = [];
             return response()->json($response);
         }
 
@@ -306,7 +306,7 @@ class SetupController extends Controller
         if ( $validator->fails() ) {
             $errors             = errorsToArray($validator->errors());
             $response['success'] = false;
-            $response['messages'] = $errors;
+            $response['errors'] = $errors;
             return $response;
         }
 
@@ -314,7 +314,7 @@ class SetupController extends Controller
         if(!$request->has('db_is_valid') || $request->db_is_valid != true)
         {
             $response['success'] = false;
-            $response['messages'][] = 'Test the database configuration';
+            $response['errors'][] = 'Test the database configuration';
             return response()->json($response);
         }
 
@@ -325,7 +325,7 @@ class SetupController extends Controller
             if($request->has('mail_provider') && !empty($request->mail_provider))
             {
                 $response['success'] = false;
-                $response['messages'][] = 'Test the mail configuration';
+                $response['errors'][] = 'Test the mail configuration';
                 return response()->json($response);
             }
         }*/
@@ -468,7 +468,7 @@ class SetupController extends Controller
         catch(\Exception $e) {
 
             $response['success'] = false;
-            $response['messages'][] = $e->getMessage();
+            $response['errors'][] = $e->getMessage();
             return response()->json($response);
         }
 
@@ -498,7 +498,7 @@ class SetupController extends Controller
 
             $errors             = errorsToArray($validator->errors());
             $response['success'] = false;
-            $response['messages'] = $errors;
+            $response['errors'] = $errors;
             return response()->json($response);
         }
 
@@ -640,7 +640,7 @@ class SetupController extends Controller
 
             $errors             = errorsToArray($validator->errors());
             $response['success'] = false;
-            $response['messages'] = $errors;
+            $response['errors'] = $errors;
             return response()->json($response);
         }
 
@@ -649,7 +649,7 @@ class SetupController extends Controller
         if($any_super_admin_exist > 0)
         {
             $response['success'] = false;
-            $response['messages'][] = trans("vaahcms::messages.permission_denied");
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
             return response()->json($response);
         }
 
@@ -667,7 +667,7 @@ class SetupController extends Controller
         if(!$role)
         {
             $response['success'] = false;
-            $response['messages'][] = \Lang::get('vaahcms::messages.not_exist', ['key' => 'role slug', 'value' => 'super-administrator']);;
+            $response['errors'][] = \Lang::get('vaahcms::messages.not_exist', ['key' => 'role slug', 'value' => 'super-administrator']);;
             return response()->json($response);
         }
 
@@ -721,7 +721,7 @@ class SetupController extends Controller
         }catch(\Exception $e)
         {
             $response['success'] = false;
-            $response['messages'][] = $e->getMessage();
+            $response['errors'][] = $e->getMessage();
             return $response;
         }
     }
@@ -739,7 +739,7 @@ class SetupController extends Controller
         }catch(\Exception $e)
         {
             $response['success'] = false;
-            $response['messages'][] = $e->getMessage();
+            $response['errors'][] = $e->getMessage();
             return $response;
         }
     }
