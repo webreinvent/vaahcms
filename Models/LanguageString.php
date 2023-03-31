@@ -326,7 +326,6 @@ class LanguageString extends Model {
     //-------------------------------------------------
     public static function generateLangFiles()
     {
-
         $languages = Language::all();
         $categories = LanguageCategory::all();
 
