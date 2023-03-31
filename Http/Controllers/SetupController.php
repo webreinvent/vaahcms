@@ -716,7 +716,7 @@ class SetupController extends Controller
         try{
             VaahArtisan::clearCache();
 
-            $response['status'] = "success";
+            $response['success'] = true;
             return $response;
         }catch(\Exception $e)
         {
@@ -733,13 +733,19 @@ class SetupController extends Controller
             //publish assets
             VaahSetup::publishAssets();
 
-            $response['status'] = "success";
+            $response['success'] = true;
             $response['messages'][] = "Assets published.";
             return $response;
         }catch(\Exception $e)
         {
             $response['success'] = false;
-            $response['errors'][] = $e->getMessage();
+            if (env('APP_DEBUG')) {
+                $response['errors'][] = $e->getMessage();
+                $response['hint'][] = $e->getTrace();
+            } else {
+                $response['errors'][] = 'Something went wrong.';
+            }
+
             return $response;
         }
     }

@@ -20,7 +20,7 @@ class TaxonomiesController extends Controller
     {
         if (!Auth::user()->hasPermission('has-access-of-taxonomies-section')) {
             $response['success'] = false;
-            $response['messages'][] = trans("vaahcms::messages.permission_denied");
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
 
             return response()->json($response);
         }
@@ -71,10 +71,10 @@ class TaxonomiesController extends Controller
             $response['success'] = false;
 
             if (env('APP_DEBUG')) {
-                $response['messages'][] = $e->getMessage();
+                $response['errors'][] = $e->getMessage();
                 $response['hint'][] = $e->getTrace();
             } else {
-                $response['messages'][] = 'Something went wrong.';
+                $response['errors'][] = 'Something went wrong.';
             }
         }
 
@@ -85,7 +85,7 @@ class TaxonomiesController extends Controller
     {
         if (!Auth::user()->hasPermission('has-access-of-taxonomies-section')) {
             $response['success'] = false;
-            $response['messages'][] = trans("vaahcms::messages.permission_denied");
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
 
             return response()->json($response);
         }
@@ -97,10 +97,10 @@ class TaxonomiesController extends Controller
             $response['success'] = false;
 
             if (env('APP_DEBUG')) {
-                $response['messages'][] = $e->getMessage();
+                $response['errors'][] = $e->getMessage();
                 $response['hint'][] = $e->getTrace();
             } else {
-                $response['messages'][] = 'Something went wrong.';
+                $response['errors'][] = 'Something went wrong.';
             }
         }
 
@@ -113,7 +113,7 @@ class TaxonomiesController extends Controller
             !Auth::user()->hasPermission('can-manage-taxonomies')
         ) {
             $response['success'] = false;
-            $response['messages'][] = trans("vaahcms::messages.permission_denied");
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
 
             return response()->json($response);
         }
@@ -125,10 +125,10 @@ class TaxonomiesController extends Controller
             $response['success'] = false;
 
             if (env('APP_DEBUG')) {
-                $response['messages'][] = $e->getMessage();
+                $response['errors'][] = $e->getMessage();
                 $response['hint'][] = $e->getTrace();
             } else {
-                $response['messages'][] = 'Something went wrong.';
+                $response['errors'][] = 'Something went wrong.';
             }
         }
 
@@ -141,7 +141,7 @@ class TaxonomiesController extends Controller
             !Auth::user()->hasPermission('can-manage-taxonomies')
         ) {
             $response['success'] = false;
-            $response['messages'][] = trans("vaahcms::messages.permission_denied");
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
 
             return response()->json($response);
         }
@@ -153,10 +153,10 @@ class TaxonomiesController extends Controller
             $response['success'] = false;
 
             if (env('APP_DEBUG')) {
-                $response['messages'][] = $e->getMessage();
+                $response['errors'][] = $e->getMessage();
                 $response['hint'][] = $e->getTrace();
             } else {
-                $response['messages'][] = 'Something went wrong.';
+                $response['errors'][] = 'Something went wrong.';
             }
         }
 
@@ -167,7 +167,7 @@ class TaxonomiesController extends Controller
     {
         if (!Auth::user()->hasPermission('can-delete-taxonomies')) {
             $response['success'] = false;
-            $response['messages'][] = trans("vaahcms::messages.permission_denied");
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
 
             return response()->json($response);
         }
@@ -179,10 +179,10 @@ class TaxonomiesController extends Controller
             $response['success'] = false;
 
             if (env('APP_DEBUG')) {
-                $response['messages'][] = $e->getMessage();
+                $response['errors'][] = $e->getMessage();
                 $response['hint'][] = $e->getTrace();
             } else {
-                $response['messages'][] = 'Something went wrong.';
+                $response['errors'][] = 'Something went wrong.';
             }
         }
 
@@ -193,7 +193,7 @@ class TaxonomiesController extends Controller
     {
         if (!Auth::user()->hasPermission('can-create-taxonomies')) {
             $response['success'] = false;
-            $response['messages'][] = trans("vaahcms::messages.permission_denied");
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
 
             return response()->json($response);
         }
@@ -205,10 +205,10 @@ class TaxonomiesController extends Controller
             $response['success'] = false;
 
             if (env('APP_DEBUG')) {
-                $response['messages'][] = $e->getMessage();
+                $response['errors'][] = $e->getMessage();
                 $response['hint'][] = $e->getTrace();
             } else {
-                $response['messages'][] = 'Something went wrong.';
+                $response['errors'][] = 'Something went wrong.';
             }
         }
 
@@ -219,7 +219,7 @@ class TaxonomiesController extends Controller
     {
         if (!Auth::user()->hasPermission('can-read-taxonomies')) {
             $response['success'] = false;
-            $response['messages'][] = trans("vaahcms::messages.permission_denied");
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
 
             return response()->json($response);
         }
@@ -231,10 +231,10 @@ class TaxonomiesController extends Controller
             $response['success'] = false;
 
             if (env('APP_DEBUG')) {
-                $response['messages'][] = $e->getMessage();
+                $response['errors'][] = $e->getMessage();
                 $response['hint'][] = $e->getTrace();
             } else {
-                $response['messages'][] = 'Something went wrong.';
+                $response['errors'][] = 'Something went wrong.';
             }
         }
 
@@ -245,7 +245,7 @@ class TaxonomiesController extends Controller
     {
         if (!Auth::user()->hasPermission('can-update-taxonomies')) {
             $response['success'] = false;
-            $response['messages'][] = trans("vaahcms::messages.permission_denied");
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
 
             return response()->json($response);
         }
@@ -257,10 +257,10 @@ class TaxonomiesController extends Controller
             $response['success'] = false;
 
             if (env('APP_DEBUG')) {
-                $response['messages'][] = $e->getMessage();
+                $response['errors'][] = $e->getMessage();
                 $response['hint'][] = $e->getTrace();
             } else {
-                $response['messages'][] = 'Something went wrong.';
+                $response['errors'][] = 'Something went wrong.';
             }
         }
 
@@ -271,7 +271,7 @@ class TaxonomiesController extends Controller
     {
         if (!Auth::user()->hasPermission('can-delete-taxonomies')) {
             $response['success'] = false;
-            $response['messages'][] = trans("vaahcms::messages.permission_denied");
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
 
             return response()->json($response);
         }
@@ -283,10 +283,10 @@ class TaxonomiesController extends Controller
             $response['success'] = false;
 
             if (env('APP_DEBUG')) {
-                $response['messages'][] = $e->getMessage();
+                $response['errors'][] = $e->getMessage();
                 $response['hint'][] = $e->getTrace();
             } else {
-                $response['messages'][] = 'Something went wrong.';
+                $response['errors'][] = 'Something went wrong.';
             }
         }
 
@@ -299,7 +299,7 @@ class TaxonomiesController extends Controller
             !Auth::user()->hasPermission('can-manage-taxonomies')
         ) {
             $response['success'] = false;
-            $response['messages'][] = trans("vaahcms::messages.permission_denied");
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
 
             return response()->json($response);
         }
@@ -311,10 +311,10 @@ class TaxonomiesController extends Controller
             $response['success'] = false;
 
             if (env('APP_DEBUG')) {
-                $response['messages'][] = $e->getMessage();
+                $response['errors'][] = $e->getMessage();
                 $response['hint'][] = $e->getTrace();
             } else {
-                $response['messages'][] = 'Something went wrong.';
+                $response['errors'][] = 'Something went wrong.';
             }
         }
 
@@ -325,7 +325,7 @@ class TaxonomiesController extends Controller
     {
         if (!Auth::user()->hasPermission('can-manage-taxonomy-type')) {
             $response['success'] = false;
-            $response['messages'][] = trans("vaahcms::messages.permission_denied");
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
 
             return response()->json($response);
         }
@@ -333,7 +333,7 @@ class TaxonomiesController extends Controller
         try {
             if (!$request->has('name') || !$request->name) {
                 $response['success'] = false;
-                $response['messages'][] = 'The name field is required.';
+                $response['errors'][] = 'The name field is required.';
                 return response()->json($response);
             }
 
@@ -343,7 +343,7 @@ class TaxonomiesController extends Controller
 
             if ($item) {
                 $response['success'] = false;
-                $response['messages'][] = "This name is already exist.";
+                $response['errors'][] = "This name is already exist.";
                 return response()->json($response);
             }
 
@@ -360,10 +360,10 @@ class TaxonomiesController extends Controller
             $response['success'] = false;
 
             if (env('APP_DEBUG')) {
-                $response['messages'][] = $e->getMessage();
+                $response['errors'][] = $e->getMessage();
                 $response['hint'][] = $e->getTrace();
             } else {
-                $response['messages'][] = 'Something went wrong.';
+                $response['errors'][] = 'Something went wrong.';
             }
         }
 
@@ -374,7 +374,7 @@ class TaxonomiesController extends Controller
     {
         if (!Auth::user()->hasPermission('can-manage-taxonomy-type')) {
             $response['success'] = false;
-            $response['messages'][] = trans("vaahcms::messages.permission_denied");
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
 
             return response()->json($response);
         }
@@ -399,10 +399,10 @@ class TaxonomiesController extends Controller
             $response['success'] = false;
 
             if (env('APP_DEBUG')) {
-                $response['messages'][] = $e->getMessage();
+                $response['errors'][] = $e->getMessage();
                 $response['hint'][] = $e->getTrace();
             } else {
-                $response['messages'][] = 'Something went wrong.';
+                $response['errors'][] = 'Something went wrong.';
             }
         }
 
@@ -424,25 +424,25 @@ class TaxonomiesController extends Controller
     {
         if (!Auth::user()->hasPermission('can-manage-taxonomy-type')) {
             $response['success'] = false;
-            $response['messages'][] = trans("vaahcms::messages.permission_denied");
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
 
             return response()->json($response);
         }
 
         try {
             if (!$request->newName) {
-                $response['status']       = 'failed';
-                $response['messages'][]     = 'Name is required.';
-                return $response;
+                $response['success']  = false;
+                $response['errors'][] = 'Name is required.';
+                return response()->json($response);
             }
 
             $name_exist = TaxonomyType::query()
                 ->where('id','!=',$request->id)
                 ->where('name',$request->newName)->first();
 
-            if($name_exist){
-                $response['status']       = 'failed';
-                $response['messages'][]     = 'Name already exist.';
+            if ($name_exist) {
+                $response['success']  = false;
+                $response['errors'][] = 'Name already exist.';
                 return response()->json($response);
             }
 
@@ -453,8 +453,8 @@ class TaxonomiesController extends Controller
                 ->first();
 
             if ($slug_exist){
-                $response['status']       = 'failed';
-                $response['messages'][]     = 'Slug already exist.';
+                $response['success']  = false;
+                $response['errors'][] = 'Slug already exist.';
                 return response()->json($response);
             }
 
@@ -464,17 +464,17 @@ class TaxonomiesController extends Controller
             $list->slug = Str::slug($request->newName);
             $list->save();
 
-            $response['status'] = 'success';
+            $response['success'] = true;
             $response['messages'][] = 'Updated Successfully.';
         } catch (\Exception $e) {
             $response = [];
             $response['success'] = false;
 
             if (env('APP_DEBUG')) {
-                $response['messages'][] = $e->getMessage();
+                $response['errors'][] = $e->getMessage();
                 $response['hint'][] = $e->getTrace();
             } else {
-                $response['messages'][] = 'Something went wrong.';
+                $response['errors'][] = 'Something went wrong.';
             }
         }
 
@@ -488,7 +488,7 @@ class TaxonomiesController extends Controller
     {
         if (!Auth::user()->hasPermission('can-manage-taxonomy-type')) {
             $response['success'] = false;
-            $response['messages'][] = trans("vaahcms::messages.permission_denied");
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
 
             return response()->json($response);
         }
@@ -515,10 +515,10 @@ class TaxonomiesController extends Controller
             $response['success'] = false;
 
             if (env('APP_DEBUG')) {
-                $response['messages'][] = $e->getMessage();
+                $response['errors'][] = $e->getMessage();
                 $response['hint'][] = $e->getTrace();
             } else {
-                $response['messages'][] = 'Something went wrong.';
+                $response['errors'][] = 'Something went wrong.';
             }
         }
 
@@ -553,10 +553,10 @@ class TaxonomiesController extends Controller
             $response['success'] = false;
 
             if (env('APP_DEBUG')) {
-                $response['messages'][] = $e->getMessage();
+                $response['errors'][] = $e->getMessage();
                 $response['hint'][] = $e->getTrace();
             } else {
-                $response['messages'][] = 'Something went wrong.';
+                $response['errors'][] = 'Something went wrong.';
             }
         }
 

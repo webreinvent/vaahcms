@@ -70,8 +70,8 @@ class TaxonomyTypesController extends Controller
         $item = $item->first();
 
         if(!$item){
-            $response['status']     = 'failed';
-            $response['messages']     = 'Taxonomy\'s Type not found.';
+            $response['success'] = false;
+            $response['errors']  = 'Taxonomy\'s Type not found.';
             return $response;
         }
 
@@ -85,9 +85,9 @@ class TaxonomyTypesController extends Controller
 
         $item = TaxonomyType::where($column, $value)->first();
 
-        if(!$item){
-            $response['status']     = 'failed';
-            $response['messages']     = 'Taxonomy\'s Type not found.';
+        if (!$item) {
+            $response['success'] = false;
+            $response['errors'] = 'Taxonomy\'s Type not found.';
             return $response;
         }
 
@@ -118,9 +118,9 @@ class TaxonomyTypesController extends Controller
 
         $item = TaxonomyType::where($column, $value)->first();
 
-        if(!$item){
-            $response['status']     = 'failed';
-            $response['messages']     = 'Taxonomy\'s Type not found.';
+        if (!$item) {
+            $response['success'] = false;
+            $response['errors']  = 'Taxonomy\'s Type not found.';
             return $response;
         }
 

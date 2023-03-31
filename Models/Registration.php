@@ -119,7 +119,7 @@ class Registration extends RegistrationBase
         if ( $validator->fails() ) {
 
             $errors             = errorsToArray($validator->errors());
-            $response['status'] = 'failed';
+            $response['success']  = false;
             $response['errors'] = $errors;
             return $response;
         }
@@ -613,9 +613,9 @@ class Registration extends RegistrationBase
     public static function sendVerificationEmail($request)
     {
         $inputs=$request->all();
-        if(!$inputs)
-        {
-            $response['status'] = 'failed';
+
+        if (!$inputs) {
+            $response['success']  = false;
             $response['errors'][] = 'Select IDs';
             return $response;
         }
@@ -648,7 +648,7 @@ class Registration extends RegistrationBase
             $response['data']['item'] = $item['data'];
         }
 
-        $response['status'] = 'success';
+        $response['success'] = true;
         $response['messages'][] = trans('vaahcms-general.action_successful');
 
         return $response;

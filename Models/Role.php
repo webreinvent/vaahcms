@@ -245,7 +245,7 @@ class Role extends RoleBase
 
         $response = self::getItem($id);
 
-        $response['status'] = true;
+        $response['success'] = true;
         $response['messages'][] = 'Updated Successfully.';
         return $response;
     }
@@ -345,9 +345,9 @@ class Role extends RoleBase
         $validator = \Validator::make( $request->all(), $rules);
         if ( $validator->fails() ) {
 
-            $errors             = errorsToArray($validator->errors());
-            $response['status'] = 'failed';
-            $response['messages'] = $errors;
+            $errors               = errorsToArray($validator->errors());
+            $response['success']  = false;
+            $response['errors'][] = $errors;
             return response()->json($response);
         }
 
@@ -362,8 +362,8 @@ class Role extends RoleBase
                 if(!\Auth::user()->hasPermission('can-manage-roles') &&
                     !\Auth::user()->hasPermission('can-update-roles'))
                 {
-                    $response['status'] = 'failed';
-                    $response['messages'][] = trans("vaahcms::messages.permission_denied");
+                    $response['success']  = false;
+                    $response['errors'][] = trans("vaahcms::messages.permission_denied");
 
                     return $response;
                 }
@@ -376,8 +376,8 @@ class Role extends RoleBase
 
                 if(!\Auth::user()->hasPermission('can-update-roles'))
                 {
-                    $response['status'] = 'failed';
-                    $response['messages'][] = trans("vaahcms::messages.permission_denied");
+                    $response['success']  = false;
+                    $response['errors'][] = trans("vaahcms::messages.permission_denied");
 
                     return $response;
                 }
@@ -391,8 +391,8 @@ class Role extends RoleBase
 
                 if(!\Auth::user()->hasPermission('can-update-roles'))
                 {
-                    $response['status'] = 'failed';
-                    $response['messages'][] = trans("vaahcms::messages.permission_denied");
+                    $response['success']  = false;
+                    $response['errors'][] = trans("vaahcms::messages.permission_denied");
 
                     return $response;
                 }
@@ -407,8 +407,8 @@ class Role extends RoleBase
                 if(!\Auth::user()->hasPermission('can-update-roles') ||
                     !\Auth::user()->hasPermission('can-delete-roles'))
                 {
-                    $response['status'] = 'failed';
-                    $response['messages'][] = trans("vaahcms::messages.permission_denied");
+                    $response['success']  = false;
+                    $response['errors'][] = trans("vaahcms::messages.permission_denied");
 
                     return $response;
                 }
@@ -422,8 +422,8 @@ class Role extends RoleBase
                 if(!\Auth::user()->hasPermission('can-manage-roles') &&
                     !\Auth::user()->hasPermission('can-update-roles'))
                 {
-                    $response['status'] = 'failed';
-                    $response['messages'][] = trans("vaahcms::messages.permission_denied");
+                    $response['success']  = false;
+                    $response['errors'][] = trans("vaahcms::messages.permission_denied");
 
                     return $response;
                 }
@@ -437,8 +437,8 @@ class Role extends RoleBase
                 if(!\Auth::user()->hasPermission('can-manage-roles') &&
                     !\Auth::user()->hasPermission('can-update-roles'))
                 {
-                    $response['status'] = 'failed';
-                    $response['messages'][] = trans("vaahcms::messages.permission_denied");
+                    $response['success']  = false;
+                    $response['errors'][] = trans("vaahcms::messages.permission_denied");
 
                     return $response;
                 }
@@ -452,8 +452,8 @@ class Role extends RoleBase
                 if(!\Auth::user()->hasPermission('can-manage-roles') &&
                     !\Auth::user()->hasPermission('can-update-roles'))
                 {
-                    $response['status'] = 'failed';
-                    $response['messages'][] = trans("vaahcms::messages.permission_denied");
+                    $response['success']  = false;
+                    $response['errors'][] = trans("vaahcms::messages.permission_denied");
 
                     return $response;
                 }

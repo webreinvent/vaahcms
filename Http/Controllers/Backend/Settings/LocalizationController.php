@@ -24,7 +24,7 @@ class LocalizationController extends Controller
     {
         if (!Auth::user()->hasPermission('has-access-of-setting-section')) {
             $response['success'] = false;
-            $response['messages'][] = trans("vaahcms::messages.permission_denied");
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
 
             return response()->json($response);
         }
@@ -50,10 +50,10 @@ class LocalizationController extends Controller
             $response['success'] = false;
 
             if (env('APP_DEBUG')) {
-                $response['messages'][] = $e->getMessage();
+                $response['errors'][] = $e->getMessage();
                 $response['hint'][] = $e->getTrace();
             } else {
-                $response['messages'][] = 'Something went wrong.';
+                $response['errors'][] = 'Something went wrong.';
             }
         }
 
@@ -65,7 +65,7 @@ class LocalizationController extends Controller
 
         if (!Auth::user()->hasPermission('has-access-of-setting-section')) {
             $response['success'] = false;
-            $response['messages'][] = trans("vaahcms::messages.permission_denied");
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
 
             return response()->json($response);
         }
@@ -77,10 +77,10 @@ class LocalizationController extends Controller
             $response['success'] = false;
 
             if (env('APP_DEBUG')) {
-                $response['messages'][] = $e->getMessage();
+                $response['errors'][] = $e->getMessage();
                 $response['hint'][] = $e->getTrace();
             } else {
-                $response['messages'][] = 'Something went wrong.';
+                $response['errors'][] = 'Something went wrong.';
             }
         }
 
@@ -91,7 +91,7 @@ class LocalizationController extends Controller
     {
         if (!Auth::user()->hasPermission('has-access-of-setting-section')) {
             $response['success'] = false;
-            $response['messages'][] = trans("vaahcms::messages.permission_denied");
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
 
             return response()->json($response);
         }
@@ -106,10 +106,10 @@ class LocalizationController extends Controller
             $response['success'] = false;
 
             if (env('APP_DEBUG')) {
-                $response['messages'][] = $e->getMessage();
+                $response['errors'][] = $e->getMessage();
                 $response['hint'][] = $e->getTrace();
             } else {
-                $response['messages'][] = 'Something went wrong.';
+                $response['errors'][] = 'Something went wrong.';
             }
         }
 
@@ -120,7 +120,7 @@ class LocalizationController extends Controller
     {
         if (!Auth::user()->hasPermission('has-access-of-setting-section')) {
             $response['success'] = false;
-            $response['messages'][] = trans("vaahcms::messages.permission_denied");
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
 
             return response()->json($response);
         }
@@ -132,10 +132,10 @@ class LocalizationController extends Controller
             $response['success'] = false;
 
             if (env('APP_DEBUG')) {
-                $response['messages'][] = $e->getMessage();
+                $response['errors'][] = $e->getMessage();
                 $response['hint'][] = $e->getTrace();
             } else {
-                $response['messages'][] = 'Something went wrong.';
+                $response['errors'][] = 'Something went wrong.';
             }
         }
 
@@ -146,7 +146,7 @@ class LocalizationController extends Controller
     {
         if (!Auth::user()->hasPermission('has-access-of-setting-section')) {
             $response['success'] = false;
-            $response['messages'][] = trans("vaahcms::messages.permission_denied");
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
 
             return response()->json($response);
         }
@@ -159,10 +159,10 @@ class LocalizationController extends Controller
             $response['success'] = false;
 
             if (env('APP_DEBUG')) {
-                $response['messages'][] = $e->getMessage();
+                $response['errors'][] = $e->getMessage();
                 $response['hint'][] = $e->getTrace();
             } else {
-                $response['messages'][] = 'Something went wrong.';
+                $response['errors'][] = 'Something went wrong.';
             }
         }
 
@@ -173,7 +173,7 @@ class LocalizationController extends Controller
     {
         if (!Auth::user()->hasPermission('has-access-of-setting-section')) {
             $response['success'] = false;
-            $response['messages'][] = trans("vaahcms::messages.permission_denied");
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
 
             return response()->json($response);
         }
@@ -186,10 +186,10 @@ class LocalizationController extends Controller
             $response['success'] = false;
 
             if (env('APP_DEBUG')) {
-                $response['messages'][] = $e->getMessage();
+                $response['errors'][] = $e->getMessage();
                 $response['hint'][] = $e->getTrace();
             } else {
-                $response['messages'][] = 'Something went wrong.';
+                $response['errors'][] = 'Something went wrong.';
             }
         }
 
@@ -200,7 +200,7 @@ class LocalizationController extends Controller
     {
         if (!Auth::user()->hasPermission('has-access-of-setting-section')) {
             $response['success'] = false;
-            $response['messages'][] = trans("vaahcms::messages.permission_denied");
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
 
             return response()->json($response);
         }
@@ -220,10 +220,10 @@ class LocalizationController extends Controller
             $response['success'] = false;
 
             if (env('APP_DEBUG')) {
-                $response['messages'][] = $e->getMessage();
+                $response['errors'][] = $e->getMessage();
                 $response['hint'][] = $e->getTrace();
             } else {
-                $response['messages'][] = 'Something went wrong.';
+                $response['errors'][] = 'Something went wrong.';
             }
         }
 

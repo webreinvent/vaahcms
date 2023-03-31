@@ -51,12 +51,16 @@ class WelcomeController extends Controller
         }catch(\Exception $e)
         {
             $response['success'] = false;
-            $response['errors'][] = $e->getMessage();
 
+            if (env('APP_DEBUG')) {
+                $response['errors'][] = $e->getMessage();
+                $response['hint'][] = $e->getTrace();
+            } else {
+                $response['errors'][] = 'Something went wrong.';
+            }
         }
 
         return $response;
-
     }
     //----------------------------------------------------------
     public function index(Request $request)

@@ -20,7 +20,7 @@ class LogsController extends Controller
     {
         if (!Auth::user()->hasPermission('has-access-of-advanced-section')) {
             $response['success'] = false;
-            $response['messages'][] = trans("vaahcms::messages.permission_denied");
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
 
             return response()->json($response);
         }
@@ -56,10 +56,10 @@ class LogsController extends Controller
             $response['success'] = false;
 
             if (env('APP_DEBUG')) {
-                $response['messages'][] = $e->getMessage();
+                $response['errors'][] = $e->getMessage();
                 $response['hint'][] = $e->getTrace();
             } else {
-                $response['messages'][] = 'Something went wrong.';
+                $response['errors'][] = 'Something went wrong.';
             }
         }
 
@@ -71,7 +71,7 @@ class LogsController extends Controller
     {
         if (!Auth::user()->hasPermission('has-access-of-logs-section')) {
             $response['success'] = false;
-            $response['messages'][] = trans("vaahcms::messages.permission_denied");
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
 
             return response()->json($response);
         }
@@ -152,10 +152,10 @@ class LogsController extends Controller
             $response['success'] = false;
 
             if (env('APP_DEBUG')) {
-                $response['messages'][] = $e->getMessage();
+                $response['errors'][] = $e->getMessage();
                 $response['hint'][] = $e->getTrace();
             } else {
-                $response['messages'][] = 'Something went wrong.';
+                $response['errors'][] = 'Something went wrong.';
             }
         }
 
@@ -166,7 +166,7 @@ class LogsController extends Controller
     {
         if (!Auth::user()->hasPermission('has-access-of-advanced-section')) {
             $response['success'] = false;
-            $response['messages'][] = trans("vaahcms::messages.permission_denied");
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
 
             return response()->json($response);
         }
@@ -188,7 +188,7 @@ class LogsController extends Controller
 
             if (!File::exists($path)) {
                 $response['success'] = false;
-                $response['messages'] = [];
+                $response['errors'] = [];
                 return response()->json($response);
             }
 
@@ -218,10 +218,10 @@ class LogsController extends Controller
             $response['success'] = false;
 
             if (env('APP_DEBUG')) {
-                $response['messages'][] = $e->getMessage();
+                $response['errors'][] = $e->getMessage();
                 $response['hint'][] = $e->getTrace();
             } else {
-                $response['messages'][] = 'Something went wrong.';
+                $response['errors'][] = 'Something went wrong.';
             }
         }
 
@@ -232,7 +232,7 @@ class LogsController extends Controller
     {
         if (!Auth::user()->hasPermission('has-access-of-advanced-section')) {
             $response['success'] = false;
-            $response['messages'][] = trans("vaahcms::messages.permission_denied");
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
 
             return response()->json($response);
         }
@@ -248,10 +248,10 @@ class LogsController extends Controller
             $response['success'] = false;
 
             if (env('APP_DEBUG')) {
-                $response['messages'][] = $e->getMessage();
+                $response['errors'][] = $e->getMessage();
                 $response['hint'][] = $e->getTrace();
             } else {
-                $response['messages'][] = 'Something went wrong.';
+                $response['errors'][] = 'Something went wrong.';
             }
 
             return response()->json($response);
@@ -265,7 +265,7 @@ class LogsController extends Controller
 
         if (!Auth::user()->hasPermission('has-access-of-advanced-section')) {
             $response['success'] = false;
-            $response['messages'][] = trans("vaahcms::messages.permission_denied");
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
 
             return response()->json($response);
         }
@@ -313,10 +313,10 @@ class LogsController extends Controller
             $response['success'] = false;
 
             if (env('APP_DEBUG')) {
-                $response['messages'][] = $e->getMessage();
+                $response['errors'][] = $e->getMessage();
                 $response['hint'][] = $e->getTrace();
             } else {
-                $response['messages'][] = 'Something went wrong.';
+                $response['errors'][] = 'Something went wrong.';
             }
         }
 

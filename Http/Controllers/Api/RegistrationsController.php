@@ -47,8 +47,8 @@ class RegistrationsController extends Controller
         $item = $item->first();
 
         if(!$item){
-            $response['status']     = 'failed';
-            $response['errors']     = 'Registration not found.';
+            $response['success'] = false;
+            $response['errors']  = 'Registration not found.';
             return $response;
         }
 
@@ -64,8 +64,8 @@ class RegistrationsController extends Controller
             ->withTrashed()->first();
 
         if(!$item){
-            $response['status']     = 'failed';
-            $response['errors']     = 'Registration not found.';
+            $response['success'] = false;
+            $response['errors']  = 'Registration not found.';
             return $response;
         }
 
@@ -81,8 +81,8 @@ class RegistrationsController extends Controller
         $item = Registration::where($column, $value)->first();
 
         if(!$item){
-            $response['status']     = 'failed';
-            $response['errors']     = 'Registration not found.';
+            $response['success'] = false;
+            $response['errors']  = 'Registration not found.';
             return $response;
         }
 
@@ -94,19 +94,15 @@ class RegistrationsController extends Controller
     //----------------------------------------------------------
     public function createUser(Request $request, $column, $value)
     {
-
         $item = Registration::withTrashed()->where($column, $value)->first();
 
-        if(!$item){
-            $response['status']     = 'failed';
-            $response['errors']     = 'Registration not found.';
+        if (!$item) {
+            $response['success'] = false;
+            $response['errors']  = 'Registration not found.';
             return $response;
         }
 
         $response = Registration::createUser($item->id);
         return response()->json($response);
-
     }
-
-
 }
