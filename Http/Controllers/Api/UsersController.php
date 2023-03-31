@@ -45,9 +45,9 @@ class UsersController extends Controller
 
         $item = $item->first();
 
-        if(!$item){
-            $response['status']     = 'failed';
-            $response['errors']     = 'User not found.';
+        if (!$item) {
+            $response['success'] = false;
+            $response['errors']  = 'User not found.';
             return $response;
         }
 
@@ -61,9 +61,9 @@ class UsersController extends Controller
 
         $item = User::where($column, $value)->first();
 
-        if(!$item){
-            $response['status']     = 'failed';
-            $response['errors']     = 'Registration not found.';
+        if (!$item) {
+            $response['success'] = false;
+            $response['errors']  = 'Registration not found.';
             return $response;
         }
 
@@ -78,9 +78,9 @@ class UsersController extends Controller
 
         $item = User::where($column, $value)->first();
 
-        if(!$item){
-            $response['status']     = 'failed';
-            $response['errors']     = 'User not found.';
+        if (!$item) {
+            $response['success'] = false;
+            $response['errors']  = 'User not found.';
             return $response;
         }
 
@@ -96,14 +96,13 @@ class UsersController extends Controller
 
         $item = User::withTrashed()->where($column, $value)->first();
 
-        if(!$item){
-            $response['status']     = 'failed';
-            $response['errors']     = 'User not found.';
+        if (!$item) {
+            $response['success'] = false;
+            $response['errors']  = 'User not found.';
             return $response;
         }
 
-        if($role_slug){
-
+        if ($role_slug) {
             $response['success'] = true;
             $response['data'] = false;
 
@@ -160,9 +159,9 @@ class UsersController extends Controller
 
         $item = User::withTrashed()->where($column, $value)->first();
 
-        if(!$item){
-            $response['status']     = 'failed';
-            $response['errors']     = 'User not found.';
+        if (!$item) {
+            $response['success'] = false;
+            $response['errors']  = 'User not found.';
             return $response;
         }
 

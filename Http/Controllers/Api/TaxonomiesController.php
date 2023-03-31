@@ -2,7 +2,6 @@
 
 namespace WebReinvent\VaahCms\Http\Controllers\Api;
 
-use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
@@ -75,9 +74,9 @@ class TaxonomiesController extends Controller
 
         $item = $item->first();
 
-        if(!$item){
-            $response['status']     = 'failed';
-            $response['messages']     = 'Taxonomy not found.';
+        if (!$item) {
+            $response['success'] = false;
+            $response['errors'] = 'Taxonomy not found.';
             return $response;
         }
 
@@ -91,9 +90,9 @@ class TaxonomiesController extends Controller
 
         $item = Taxonomy::where($column, $value)->first();
 
-        if(!$item){
-            $response['status']     = 'failed';
-            $response['messages']     = 'Registration not found.';
+        if (!$item) {
+            $response['success'] = false;
+            $response['errors']  = 'Registration not found.';
             return $response;
         }
 
@@ -139,9 +138,9 @@ class TaxonomiesController extends Controller
 
         $item = Taxonomy::where($column, $value)->first();
 
-        if(!$item){
-            $response['status']     = 'failed';
-            $response['messages']     = 'Role not found.';
+        if (!$item) {
+            $response['success'] = false;
+            $response['errors']  = 'Role not found.';
             return $response;
         }
 

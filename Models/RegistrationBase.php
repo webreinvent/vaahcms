@@ -569,8 +569,8 @@ class RegistrationBase extends Model
 
         //check if registration record exist
         $reg_by_email = Registration::findByEmail($request->email);
-        if($reg_by_email)
-        {
+
+        if($reg_by_email) {
             $response['status'] = 'registration-exist';
             $response['data'] = $reg_by_email;
             return $response;
@@ -579,8 +579,7 @@ class RegistrationBase extends Model
         $reg_by_phone = Registration::where('country_calling_code', $request->country_calling_code)
             ->where('phone', $request->phone)
             ->first();
-        if($reg_by_phone)
-        {
+        if ($reg_by_phone) {
             $response['status'] = 'registration-exist';
             $response['data'] = $reg_by_phone;
             return $response;

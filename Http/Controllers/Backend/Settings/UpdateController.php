@@ -26,7 +26,7 @@ class UpdateController extends Controller
     {
         if (!Auth::user()->hasPermission('has-access-of-setting-section')) {
             $response['success'] = false;
-            $response['messages'][] = trans("vaahcms::messages.permission_denied");
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
 
             return response()->json($response);
         }
@@ -75,10 +75,10 @@ class UpdateController extends Controller
             $response['success'] = false;
 
             if (env('APP_DEBUG')) {
-                $response['messages'][] = $e->getMessage();
+                $response['errors'][] = $e->getMessage();
                 $response['hint'][] = $e->getTrace();
             } else {
-                $response['messages'][] = 'Something went wrong.';
+                $response['errors'][] = 'Something went wrong.';
             }
         }
 
@@ -89,7 +89,7 @@ class UpdateController extends Controller
     {
         if (!Auth::user()->hasPermission('has-access-of-setting-section')) {
             $response['success'] = false;
-            $response['messages'][] = trans("vaahcms::messages.permission_denied");
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
 
             return response()->json($response);
         }
@@ -98,7 +98,13 @@ class UpdateController extends Controller
             $response = $this->runCommand("composer", "update");
         } catch(\Exception $e) {
             $response['success'] = false;
-            $response['messages'][] = $e->getMessage();
+
+            if (env('APP_DEBUG')) {
+                $response['errors'][] = $e->getMessage();
+                $response['hint'][] = $e->getTrace();
+            } else {
+                $response['errors'][] = 'Something went wrong.';
+            }
         }
 
         return response()->json($response);
@@ -109,7 +115,7 @@ class UpdateController extends Controller
 
         if(!Auth::user()->hasPermission('has-access-of-setting-section')) {
             $response['success'] = false;
-            $response['messages'][] = trans("vaahcms::messages.permission_denied");
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
 
             return response()->json($response);
         }
@@ -138,7 +144,13 @@ class UpdateController extends Controller
             $response['success'] = true;
         } catch (\Exception $e) {
             $response['success'] = false;
-            $response['messages'][] = $e->getMessage();
+
+            if (env('APP_DEBUG')) {
+                $response['errors'][] = $e->getMessage();
+                $response['hint'][] = $e->getTrace();
+            } else {
+                $response['errors'][] = 'Something went wrong.';
+            }
         }
 
         return response()->json($response);
@@ -149,7 +161,7 @@ class UpdateController extends Controller
 
         if (!Auth::user()->hasPermission('has-access-of-setting-section')) {
             $response['success'] = false;
-            $response['messages'][] = trans("vaahcms::messages.permission_denied");
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
 
             return response()->json($response);
         }
@@ -172,8 +184,12 @@ class UpdateController extends Controller
 
             $response['success'] = true;
         } catch (\Exception $e) {
-            $response['success'] = false;
-            $response['messages'][] = $e->getMessage();
+            if (env('APP_DEBUG')) {
+                $response['errors'][] = $e->getMessage();
+                $response['hint'][] = $e->getTrace();
+            } else {
+                $response['errors'][] = 'Something went wrong.';
+            }
         }
 
         return response()->json($response);
@@ -184,7 +200,7 @@ class UpdateController extends Controller
 
         if (!Auth::user()->hasPermission('has-access-of-setting-section')) {
             $response['success'] = false;
-            $response['messages'][] = trans("vaahcms::messages.permission_denied");
+            $response['errors'][] = trans("vaahcms::messages.permission_denied");
 
             return response()->json($response);
         }
@@ -197,10 +213,16 @@ class UpdateController extends Controller
             Notified::query()->where('vh_notification_id',$notification->id)->forceDelete();
 
             $response['success'] = true;
-        } catch (\Exception $e)
-        {
+        } catch (\Exception $e) {
+
             $response['success'] = false;
-            $response['messages'][] = $e->getMessage();
+
+            if (env('APP_DEBUG')) {
+                $response['errors'][] = $e->getMessage();
+                $response['hint'][] = $e->getTrace();
+            } else {
+                $response['errors'][] = 'Something went wrong.';
+            }
         }
 
         return response()->json($response);
@@ -258,10 +280,10 @@ class UpdateController extends Controller
             $response['success'] = false;
 
             if (env('APP_DEBUG')) {
-                $response['messages'][] = $e->getMessage();
+                $response['errors'][] = $e->getMessage();
                 $response['hint'][] = $e->getTrace();
             } else {
-                $response['messages'][] = 'Something went wrong.';
+                $response['errors'][] = 'Something went wrong.';
             }
 
             return response()->json($response);
@@ -307,10 +329,10 @@ class UpdateController extends Controller
             $response['success'] = false;
 
             if (env('APP_DEBUG')) {
-                $response['messages'][] = $e->getMessage();
+                $response['errors'][] = $e->getMessage();
                 $response['hint'][] = $e->getTrace();
             } else {
-                $response['messages'][] = 'Something went wrong.';
+                $response['errors'][] = 'Something went wrong.';
             }
 
             return response()->json($response);
@@ -338,10 +360,10 @@ class UpdateController extends Controller
             $this->process->run();
 
             if (!$this->process->isSuccessful()) {
-                $response['status'] = "failed";
+                $response['success']  = false;
                 $output .= $this->process->getErrorOutput();
             } else{
-                $response['status'] = "success";
+                $response['success']  = true;
                 $output .= $this->process->getOutput();
             }
 
@@ -353,10 +375,10 @@ class UpdateController extends Controller
             $response['success'] = false;
 
             if (env('APP_DEBUG')) {
-                $response['messages'][] = $e->getMessage();
+                $response['errors'][] = $e->getMessage();
                 $response['hint'][] = $e->getTrace();
             } else {
-                $response['messages'][] = 'Something went wrong.';
+                $response['errors'][] = 'Something went wrong.';
             }
         }
 

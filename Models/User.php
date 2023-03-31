@@ -288,7 +288,7 @@ class User extends UserBase
             if ( $validator->fails() ) {
 
                 $errors             = errorsToArray($validator->errors());
-                $response['status'] = 'failed';
+                $response['success']  = false;
                 $response['errors'] = $errors;
                 return $response;
             }
@@ -309,19 +309,19 @@ class User extends UserBase
             $user = self::where('id', '!=', $inputs['id'])
                 ->where('email',$inputs['email'])->first();
 
-            if($user)
-            {
-                $response['status'] = 'failed';
+            if ($user) {
+                $response['success']  = false;
                 $response['errors'][] = trans('vaahcms-user.email_already_registered');
                 return $response;
             }
+
             // check if already exist
             $user = self::where('id', '!=', $inputs['id'])
                 ->where('username',$inputs['username'])->first();
 
             if($user)
             {
-                $response['status'] = 'failed';
+                $response['success']  = false;
                 $response['errors'][] = trans('vaahcms-user.username_already_registered');
                 return $response;
             }
@@ -367,7 +367,7 @@ class User extends UserBase
         }
 
 
-        $response['status'] = 'success';
+        $response['success'] = true;
         $response['messages'][] = 'Saved';
         $response['data'] = $item;
 
@@ -452,7 +452,7 @@ class User extends UserBase
         if ( $validator->fails() ) {
 
             $errors             = errorsToArray($validator->errors());
-            $response['status'] = 'failed';
+            $response['success']  = false;
             $response['errors'] = $errors;
             return $response;
         }

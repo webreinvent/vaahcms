@@ -1105,7 +1105,7 @@ class UserBase extends Authenticatable
         if ( $validator->fails() ) {
 
             $errors             = errorsToArray($validator->errors());
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'] = $errors;
             return $response;
         }
@@ -1114,7 +1114,7 @@ class UserBase extends Authenticatable
         $user = self::withTrashed()->where('email',$inputs['email'])->first();
 
         if ($user) {
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'][] = trans('vaahcms-user.email_already_registered');
             return $response;
         }
@@ -1123,7 +1123,7 @@ class UserBase extends Authenticatable
         $user = self::withTrashed()->where('username',$inputs['username'])->first();
 
         if ($user) {
-            $response['status'] = 'failed';
+            $response['success'] = false;
             $response['errors'][] = trans('vaahcms-user.username_already_registered');
             return $response;
         }
@@ -1146,7 +1146,7 @@ class UserBase extends Authenticatable
 
         Role::syncRolesWithUsers();
 
-        $response['status'] = 'success';
+        $response['success'] = true;
         $response['data']['item'] = $reg;
         $response['messages'][] = trans('vaahcms-general.saved_successfully');
         return $response;

@@ -2,12 +2,10 @@
 
 namespace WebReinvent\VaahCms\Http\Controllers\Api;
 
-use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
-use Illuminate\Support\Facades\Hash;
-use WebReinvent\VaahCms\Models\Registration;
+
+use WebReinvent\VaahCms\Models\Role;
 use WebReinvent\VaahCms\Models\User;
 use WebReinvent\VaahCms\Models\Permission;
 
@@ -39,8 +37,8 @@ class RolesController extends Controller
         $item = Role::where($column, $value)->first();
 
         if(!$item){
-            $response['status']     = 'failed';
-            $response['errors']     = 'Role not found.';
+            $response['success'] = false;
+            $response['errors']  = 'Role not found.';
             return $response;
         }
 
@@ -59,8 +57,8 @@ class RolesController extends Controller
         $item = Role::where($column, $value)->first();
 
         if(!$item){
-            $response['status']     = 'failed';
-            $response['errors']     = 'Role not found.';
+            $response['success'] = false;
+            $response['errors']  = 'Role not found.';
             return $response;
         }
 
@@ -83,8 +81,8 @@ class RolesController extends Controller
         $item = $item->first();
 
         if(!$item){
-            $response['status']     = 'failed';
-            $response['errors']     = 'Role not found.';
+            $response['success'] = false;
+            $response['errors']  = 'Role not found.';
             return $response;
         }
 
@@ -99,8 +97,8 @@ class RolesController extends Controller
         $item = Role::withTrashed()->where($column, $value)->first();
 
         if(!$item){
-            $response['status']     = 'failed';
-            $response['errors']     = 'Role not found.';
+            $response['success'] = false;
+            $response['errors']  = 'Role not found.';
             return $response;
         }
 
@@ -139,9 +137,9 @@ class RolesController extends Controller
 
         $item = Role::withTrashed()->where($column, $value)->first();
 
-        if(!$item){
-            $response['status']     = 'failed';
-            $response['errors']     = 'Role not found.';
+        if (!$item) {
+            $response['success'] = false;
+            $response['errors']  = 'Role not found.';
             return $response;
         }
 

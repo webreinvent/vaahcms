@@ -39,8 +39,8 @@ class PermissionsController extends Controller
         $item = $item->first();
 
         if(!$item){
-            $response['status']     = 'failed';
-            $response['errors']     = 'Permission not found.';
+            $response['success'] = false;
+            $response['errors']  = 'Permission not found.';
             return $response;
         }
 
@@ -55,8 +55,8 @@ class PermissionsController extends Controller
         $item = Permission::withTrashed()->where($column, $value)->first();
 
         if(!$item){
-            $response['status']     = 'failed';
-            $response['errors']     = 'Permission not found.';
+            $response['success'] = false;
+            $response['errors']  = 'Permission not found.';
             return $response;
         }
 
@@ -97,8 +97,8 @@ class PermissionsController extends Controller
         $item = Permission::withTrashed()->where($column, $value)->first();
 
         if(!$item){
-            $response['status']     = 'failed';
-            $response['errors']     = 'Permission not found.';
+            $response['success'] = false;
+            $response['errors']  = 'Permission not found.';
             return $response;
         }
 
