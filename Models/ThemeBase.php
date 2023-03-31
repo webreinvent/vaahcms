@@ -558,6 +558,8 @@ class ThemeBase extends Model {
             //copy assets to public folder
             static::copyAssets($item);
 
+            LanguageString::generateLangFiles();
+
         }
 
 
