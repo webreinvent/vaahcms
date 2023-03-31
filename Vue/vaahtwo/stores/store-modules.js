@@ -495,6 +495,11 @@ export const useModuleStore = defineStore({
             }
         },
         //---------------------------------------------------------------------
+        async runMigrations(item) {
+            this.active_action.push('run_migrations_' + item.id);
+            await this.itemAction('run_migrations', item);
+        },
+        //---------------------------------------------------------------------
         async paginate(event) {
             this.query.page = event.page+1;
             this.query.rows = event.rows;
