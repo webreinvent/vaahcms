@@ -69,6 +69,19 @@
                             </p>
                         </b-tooltip>
 
+                        <b-tooltip label="Run Migrations" type="is-dark">
+                            <p v-if="hasPermission('can-publish-assets-of-theme')"
+                               class="control">
+                                <b-button v-if="props.row.is_active"
+                                          :loading="page.active_actions.includes('run_migrations-'+props.row.id)"
+                                          size="is-small"
+                                          type="is-info"
+                                          icon-left="database"
+                                          @click="actions('run_migrations', props.row)">
+                                </b-button>
+                            </p>
+                        </b-tooltip>
+
                         <b-tooltip label="This theme is marked as Default"
                                    v-if="props.row.is_default"
                                    type="is-dark">

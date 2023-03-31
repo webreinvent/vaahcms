@@ -572,6 +572,72 @@ class Theme extends Model {
         return $response;
     }
     //-------------------------------------------------
+    public static function runThemeMigrations($slug, $is_default=false)
+    {
+
+        $item = static::slug($slug)->first();
+
+        /*
+         * get theme dependencies
+         */
+        $response = vh_theme_action($item->name, 'SetupController@dependencies');
+
+        if($response['status'] == 'failed')
+        {
+            return $response;
+        }
+
+        /*
+         * check theme dependencies are installed
+         */
+        $response = static::validateDependencies($response['data']);
+
+
+        if(isset($response['status']) && $response['status'] == 'failed')
+        {
+            return $response;
+        }
+
+
+        if(!isset($item->is_migratable) || (isset($item->is_migratable) && $item->is_migratable == true))
+        {
+
+            $path = vh_theme_migrations_path($item->name);
+
+            $max_batch = \DB::table('migrations')
+                ->max('batch');
+
+            Migration::runMigrations($path);
+
+            $current_max_batch = \DB::table('migrations')
+                ->max('batch');
+
+            if($current_max_batch > $max_batch){
+                Migration::syncThemeMigrations($item->id,$current_max_batch);
+            }
+
+
+
+            $seeds_namespace = vh_theme_database_seeder($item->name);
+            Migration::runSeeds($seeds_namespace);
+
+            //copy assets to public folder
+            static::copyAssets($item);
+
+        }
+
+        $response['status'] = 'success';
+        $response['data']['item'] = $item;
+        $response['messages'][] = 'Migration is successful';
+
+        if(env('APP_DEBUG'))
+        {
+            $response['hint'][] = '';
+        }
+        return $response;
+
+    }
+    //-------------------------------------------------
     public static function deleteItem($slug)
     {
 

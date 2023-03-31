@@ -470,7 +470,7 @@ class Module extends Model {
         return $response;
     }
     //-------------------------------------------------
-    public static function runModuleMigration($slug)
+    public static function runModuleMigrations($slug)
     {
 
         $module = Module::slug($slug)->first();

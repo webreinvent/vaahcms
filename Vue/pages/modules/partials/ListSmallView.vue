@@ -61,15 +61,15 @@
                             </p>
                         </b-tooltip>
 
-                        <b-tooltip label="Run Migration" type="is-dark">
+                        <b-tooltip label="Run Migrations" type="is-dark">
                             <p v-if="hasPermission('can-publish-assets-of-module')"
                                class="control">
                                 <b-button v-if="props.row.is_active"
-                                          :loading="page.active_actions.includes('run_migration-'+props.row.id)"
+                                          :loading="page.active_actions.includes('run_migrations-'+props.row.id)"
                                           size="is-small"
                                           type="is-info"
                                           icon-left="database"
-                                          @click="actions('run_migration', props.row)">
+                                          @click="actions('run_migrations', props.row)">
                                 </b-button>
                             </p>
                         </b-tooltip>
