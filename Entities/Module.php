@@ -109,13 +109,20 @@ class Module extends Model {
     //-------------------------------------------------
     public static function getItem($id)
     {
+        try {
+            $item = static::where('id', $id)
+                ->withTrashed()
+                ->first();
 
-        $item = static::where('id', $id)
-            ->withTrashed()
-            ->first();
+            $response['status'] = 'success';
+            $response['data'] = $item;
+        }catch(\Exception $e)
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = $e->getMessage();
 
-        $response['status'] = 'success';
-        $response['data'] = $item;
+        }
+
 
         return $response;
 
@@ -288,70 +295,76 @@ class Module extends Model {
     //-------------------------------------------------
     public static function validateDependencies($dependencies)
     {
+        try {
+            $response['status'] = 'success';
 
-        $response['status'] = 'success';
 
+            foreach ($dependencies as $key => $dependency_list)
+            {
+                switch($key){
 
-        foreach ($dependencies as $key => $dependency_list)
-        {
-            switch($key){
+                    case 'modules':
 
-                case 'modules':
-
-                    if(is_array($dependency_list))
-                    {
-                        foreach ($dependency_list as $dependency_slug)
+                        if(is_array($dependency_list))
                         {
-                            $module = Module::slug($dependency_slug)->first();
-
-                            if(!$module)
+                            foreach ($dependency_list as $dependency_slug)
                             {
-                                $response['status'] = 'failed';
-                                $response['errors'][] = "Please install and activate '".$dependency_slug."' module.";
+                                $module = Module::slug($dependency_slug)->first();
+
+                                if(!$module)
+                                {
+                                    $response['status'] = 'failed';
+                                    $response['errors'][] = "Please install and activate '".$dependency_slug."' module.";
+                                }
+
+                                if($module && $module->is_active != 1)
+                                {
+                                    $response['status'] = 'failed';
+                                    $response['errors'][] = $dependency_slug.' module is not active';
+                                }
                             }
 
-                            if($module && $module->is_active != 1)
-                            {
-                                $response['status'] = 'failed';
-                                $response['errors'][] = $dependency_slug.' module is not active';
-                            }
                         }
 
-                    }
+                        break;
+                    //------------------------
+                    case 'themes':
 
-                    break;
-                //------------------------
-                case 'themes':
-
-                    if(is_array($dependency_list))
-                    {
-                        foreach ($dependency_list as $dependency_slug)
+                        if(is_array($dependency_list))
                         {
-                            $theme = Theme::slug($dependency_slug)->first();
-
-                            if(!$theme)
+                            foreach ($dependency_list as $dependency_slug)
                             {
-                                $response['status'] = 'failed';
-                                $response['errors'][] = "Please install and activate '".$dependency_slug."' theme.";
+                                $theme = Theme::slug($dependency_slug)->first();
+
+                                if(!$theme)
+                                {
+                                    $response['status'] = 'failed';
+                                    $response['errors'][] = "Please install and activate '".$dependency_slug."' theme.";
+                                }
+
+                                if($theme && $theme->is_active != 1)
+                                {
+                                    $response['status'] = 'failed';
+                                    $response['errors'][] = $dependency_slug.' theme is not active';
+                                }
                             }
 
-                            if($theme && $theme->is_active != 1)
-                            {
-                                $response['status'] = 'failed';
-                                $response['errors'][] = $dependency_slug.' theme is not active';
-                            }
                         }
 
-                    }
+                        break;
+                    //------------------------
+                    //------------------------
+                    //------------------------
+                    //------------------------
+                }
 
-                    break;
-                //------------------------
-                //------------------------
-                //------------------------
-                //------------------------
+
+
             }
-
-
+        }catch(\Exception $e)
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = $e->getMessage();
 
         }
 
@@ -362,23 +375,30 @@ class Module extends Model {
     //-------------------------------------------------
     public static function publishAssets($slug)
     {
+        try {
+            $module = Module::slug($slug)->first();
 
-        $module = Module::slug($slug)->first();
+            //copy assets to public folder
+            Module::copyAssets($module);
 
-        //copy assets to public folder
-        Module::copyAssets($module);
+            $module->is_assets_published = 1;
+            $module->save();
 
-        $module->is_assets_published = 1;
-        $module->save();
+            $response['status'] = 'success';
+            $response['data']['item'] = $module;
+            $response['messages'][] = 'Assets is published';
 
-        $response['status'] = 'success';
-        $response['data']['item'] = $module;
-        $response['messages'][] = 'Assets is published';
-
-        if(env('APP_DEBUG'))
+            if(env('APP_DEBUG'))
+            {
+                $response['hint'][] = '';
+            }
+        }catch(\Exception $e)
         {
-            $response['hint'][] = '';
+            $response['status'] = 'failed';
+            $response['errors'][] = $e->getMessage();
+
         }
+
         return $response;
 
     }
@@ -387,87 +407,150 @@ class Module extends Model {
     //-------------------------------------------------
     public static function activateItem($slug)
     {
+        try {
+            $module = Module::slug($slug)->first();
 
-        $module = Module::slug($slug)->first();
-
-        /*
-         * get module dependencies
-         */
-        $response = vh_module_action($module->name, 'SetupController@dependencies');
-
-
-        if($response['status'] == 'failed')
-        {
-            return $response;
-        }
-
-        /*
-         * check module dependencies are installed
-         */
-        $response = Module::validateDependencies($response['data']);
+            /*
+             * get module dependencies
+             */
+            $response = vh_module_action($module->name, 'SetupController@dependencies');
 
 
-        if(isset($response['status']) && $response['status'] == 'failed')
-        {
-            return $response;
-        }
-
-
-
-        if(!isset($module->is_migratable) || (isset($module->is_migratable) && $module->is_migratable == true))
-        {
-            $module_path = config('vaahcms.modules_path').$module->name;
-            $path = vh_module_migrations_path($module->name);
-
-            $max_batch = \DB::table('migrations')
-                ->max('batch');
-
-            Migration::runMigrations($path);
-
-            $current_max_batch = \DB::table('migrations')
-                ->max('batch');
-
-            if($current_max_batch > $max_batch){
-                Migration::syncModuleMigrations($module->id,$current_max_batch);
+            if($response['status'] == 'failed')
+            {
+                return $response;
             }
 
-            $seeds_namespace = vh_module_database_seeder($module->name);
-            Migration::runSeeds($seeds_namespace);
+            /*
+             * check module dependencies are installed
+             */
+            $response = Module::validateDependencies($response['data']);
 
-            //copy assets to public folder
-            Module::copyAssets($module);
 
-        }
+            if(isset($response['status']) && $response['status'] == 'failed')
+            {
+                return $response;
+            }
 
-        $module->is_active = 1;
-        $module->is_assets_published = 1;
-        $module->save();
 
-        $response['status'] = 'success';
-        $response['data']['item'] = $module;
-        $response['messages'][] = 'Module is activated';
 
-        if(env('APP_DEBUG'))
+            if(!isset($module->is_migratable) || (isset($module->is_migratable) && $module->is_migratable == true))
+            {
+                $module_path = config('vaahcms.modules_path').$module->name;
+                $path = vh_module_migrations_path($module->name);
+
+                $max_batch = \DB::table('migrations')
+                    ->max('batch');
+
+                Migration::runMigrations($path);
+
+                $current_max_batch = \DB::table('migrations')
+                    ->max('batch');
+
+                if($current_max_batch > $max_batch){
+                    Migration::syncModuleMigrations($module->id,$current_max_batch);
+                }
+
+                $seeds_namespace = vh_module_database_seeder($module->name);
+                Migration::runSeeds($seeds_namespace);
+
+                //copy assets to public folder
+                Module::copyAssets($module);
+
+            }
+
+            $module->is_active = 1;
+            $module->is_assets_published = 1;
+            $module->save();
+
+            $response['status'] = 'success';
+            $response['data']['item'] = $module;
+            $response['messages'][] = 'Module is activated';
+
+            if(env('APP_DEBUG'))
+            {
+                $response['hint'][] = '';
+            }
+        } catch(\Exception $e)
         {
-            $response['hint'][] = '';
+            $response['status'] = 'failed';
+            $response['errors'][] = $e->getMessage();
+
         }
+
         return $response;
 
     }
     //-------------------------------------------------
     public static function deactivateItem($slug)
     {
-        $item = static::slug($slug)->first();
-        $item->is_active = null;
-        $item->save();
-        $response['status'] = 'success';
-        $response['data']['item'] = $item;
-        $response['messages'][] = trans('vaahcms-general.action_successful');
-        if(env('APP_DEBUG'))
+        try {
+            $item = static::slug($slug)->first();
+            $item->is_active = null;
+            $item->save();
+            $response['status'] = 'success';
+            $response['data']['item'] = $item;
+            $response['messages'][] = trans('vaahcms-general.action_successful');
+            if(env('APP_DEBUG'))
+            {
+                $response['hint'][] = '';
+            }
+        }catch(\Exception $e)
         {
-            $response['hint'][] = '';
+            $response['status'] = 'failed';
+            $response['errors'][] = $e->getMessage();
+
         }
         return $response;
+    }
+    //-------------------------------------------------
+    public static function runModuleMigrations($slug)
+    {
+        try{
+            $module = Module::slug($slug)->first();
+
+            if(!isset($module->is_migratable) || (isset($module->is_migratable) && $module->is_migratable == true))
+            {
+                $module_path = config('vaahcms.modules_path').$module->name;
+                $path = vh_module_migrations_path($module->name);
+
+                $max_batch = \DB::table('migrations')
+                    ->max('batch');
+
+                Migration::runMigrations($path);
+
+                $current_max_batch = \DB::table('migrations')
+                    ->max('batch');
+
+                if($current_max_batch > $max_batch){
+                    Migration::syncModuleMigrations($module->id,$current_max_batch);
+                }
+
+                $seeds_namespace = vh_module_database_seeder($module->name);
+                Migration::runSeeds($seeds_namespace);
+
+                //copy assets to public folder
+                Module::copyAssets($module);
+
+            }
+
+
+            $response['status'] = 'success';
+            $response['data']['item'] = $module;
+            $response['messages'][] = 'Migration is successful';
+
+            if(env('APP_DEBUG'))
+            {
+                $response['hint'][] = '';
+            }
+        }catch(\Exception $e)
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = $e->getMessage();
+
+        }
+        return $response;
+
     }
     //-------------------------------------------------
     public static function deleteItem($slug)
@@ -748,35 +831,43 @@ class Module extends Model {
     //-------------------------------------------------
     public static function storeUpdates($request)
     {
-        $updates = 0;
-        if(count($request->modules) > 0 )
-        {
-            foreach ($request->modules as $module)
+        try {
+            $updates = 0;
+            if(count($request->modules) > 0 )
             {
-                $store_modules = static::where('slug', $module['slug'])->first();
-
-                if($store_modules->version_number < $module['version_number'])
+                foreach ($request->modules as $module)
                 {
-                    $store_modules->is_update_available = 1;
-                    $store_modules->save();
-                    $updates++;
+                    $store_modules = static::where('slug', $module['slug'])->first();
+
+                    if($store_modules->version_number < $module['version_number'])
+                    {
+                        $store_modules->is_update_available = 1;
+                        $store_modules->save();
+                        $updates++;
+                    }
+
                 }
-
             }
+
+            $response['status'] = 'success';
+            $response['data'][] = '';
+            if($updates > 0)
+            {
+                $response['messages'][] = 'New updates are available for '.$updates.' modules.';
+            } else{
+                $response['messages'][] = 'No new update available.';
+            }
+            if(env('APP_DEBUG'))
+            {
+                $response['hint'][] = '';
+            }
+        }catch(\Exception $e)
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = $e->getMessage();
+
         }
 
-        $response['status'] = 'success';
-        $response['data'][] = '';
-        if($updates > 0)
-        {
-            $response['messages'][] = 'New updates are available for '.$updates.' modules.';
-        } else{
-            $response['messages'][] = 'No new update available.';
-        }
-        if(env('APP_DEBUG'))
-        {
-            $response['hint'][] = '';
-        }
         return $response;
 
     }
@@ -785,36 +876,42 @@ class Module extends Model {
     public static function bulkStatusChange($request)
     {
 
-
-        if(!$request->has('inputs'))
-        {
-            $response['status'] = 'failed';
-            $response['errors'][] = 'Select IDs';
-            return $response;
-        }
-
-        if(!$request->has('data'))
-        {
-            $response['status'] = 'failed';
-            $response['errors'][] = 'Select Status';
-            return $response;
-        }
-
-        foreach($request->inputs as $id)
-        {
-            $item = static::find($id);
-            if($request->data['status'] == 1)
+        try {
+            if(!$request->has('inputs'))
             {
-                Module::activateItem($item->slug);
+                $response['status'] = 'failed';
+                $response['errors'][] = 'Select IDs';
+                return $response;
             }
 
-            $item->status = $request->data['status'];
-            $item->save();
-        }
+            if(!$request->has('data'))
+            {
+                $response['status'] = 'failed';
+                $response['errors'][] = 'Select Status';
+                return $response;
+            }
 
-        $response['status'] = 'success';
-        $response['data'] = [];
-        $response['messages'][] = trans('vaahcms-general.action_successful');
+            foreach($request->inputs as $id)
+            {
+                $item = static::find($id);
+                if($request->data['status'] == 1)
+                {
+                    Module::activateItem($item->slug);
+                }
+
+                $item->status = $request->data['status'];
+                $item->save();
+            }
+
+            $response['status'] = 'success';
+            $response['data'] = [];
+            $response['messages'][] = trans('vaahcms-general.action_successful');
+        }catch(\Exception $e)
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = $e->getMessage();
+
+        }
 
         return $response;
 

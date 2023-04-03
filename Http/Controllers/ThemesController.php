@@ -280,7 +280,7 @@ class ThemesController extends Controller
             $theme = Theme::find($inputs['id']);
 
 
-            if($request->action != 'publish_assets'){
+            if(!in_array($request->action ,['publish_assets','run_migrations'],TRUE)){
                 $method_name = str_replace("_", " ", $request->action);
                 $method_name = ucwords($method_name);
                 $method_name = lcfirst(str_replace(" ", "", $method_name));
@@ -340,7 +340,16 @@ class ThemesController extends Controller
                     $response = Theme::publishAssets($theme->slug);
                     break;
                 //---------------------------------------
+                case 'run_migrations':
+                    if(!\Auth::user()->hasPermission('can-publish-assets-of-theme'))
+                    {
+                        $response['success'] = false;
+                        $response['messages'][] = trans("vaahcms::messages.permission_denied");
 
+                        return response()->json($response);
+                    }
+                    $response = Theme::runThemeMigrations($theme->slug);
+                    break;
                 //---------------------------------------
                 case 'import_sample_data':
                     if(!\Auth::user()->hasPermission('can-import-sample-data-in-theme'))
