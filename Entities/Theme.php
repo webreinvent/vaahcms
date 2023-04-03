@@ -691,6 +691,56 @@ class Theme extends Model {
 
     }
     //-------------------------------------------------
+    public static function runThemeSeeds($slug, $is_default=false)
+    {
+        try {
+            $item = static::slug($slug)->first();
+
+            if(!isset($item->is_migratable) || (isset($item->is_migratable) && $item->is_migratable == true))
+            {
+
+                $path = vh_theme_migrations_path($item->name);
+
+                $max_batch = \DB::table('migrations')
+                    ->max('batch');
+
+                Migration::runMigrations($path);
+
+                $current_max_batch = \DB::table('migrations')
+                    ->max('batch');
+
+                if($current_max_batch > $max_batch){
+                    Migration::syncThemeMigrations($item->id,$current_max_batch);
+                }
+
+
+
+                $seeds_namespace = vh_theme_database_seeder($item->name);
+                Migration::runSeeds($seeds_namespace);
+
+                //copy assets to public folder
+                static::copyAssets($item);
+
+            }
+
+            $response['status'] = 'success';
+            $response['data']['item'] = $item;
+            $response['messages'][] = 'Migration is successful';
+
+            if(env('APP_DEBUG'))
+            {
+                $response['hint'][] = '';
+            }
+        }catch(\Exception $e)
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = $e->getMessage();
+
+        }
+        return $response;
+
+    }
+    //-------------------------------------------------
     public static function deleteItem($slug)
     {
 
