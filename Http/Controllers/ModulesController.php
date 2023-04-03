@@ -279,7 +279,7 @@ class ModulesController extends Controller
              */
             $module = Module::find($inputs['id']);
 
-            if(!in_array($request->action ,['publish_assets','run_migrations'],TRUE)){
+            if(!in_array($request->action ,['publish_assets','run_migrations','run_seeds'],TRUE)){
                 $method_name = str_replace("_", " ", $request->action);
                 $method_name = ucwords($method_name);
                 $method_name = lcfirst(str_replace(" ", "", $method_name));
@@ -340,6 +340,17 @@ class ModulesController extends Controller
                         return response()->json($response);
                     }
                     $response = Module::runModuleMigrations($module->slug);
+                    break;
+                //---------------------------------------
+                case 'run_seeds':
+                    if(!\Auth::user()->hasPermission('can-publish-assets-of-module'))
+                    {
+                        $response['success'] = false;
+                        $response['messages'][] = trans("vaahcms::messages.permission_denied");
+
+                        return response()->json($response);
+                    }
+                    $response = Module::runModuleSeeds($module->slug);
                     break;
                 //---------------------------------------
                 case 'import_sample_data':
