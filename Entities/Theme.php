@@ -698,23 +698,6 @@ class Theme extends Model {
 
             if(!isset($item->is_migratable) || (isset($item->is_migratable) && $item->is_migratable == true))
             {
-
-                $path = vh_theme_migrations_path($item->name);
-
-                $max_batch = \DB::table('migrations')
-                    ->max('batch');
-
-                Migration::runMigrations($path);
-
-                $current_max_batch = \DB::table('migrations')
-                    ->max('batch');
-
-                if($current_max_batch > $max_batch){
-                    Migration::syncThemeMigrations($item->id,$current_max_batch);
-                }
-
-
-
                 $seeds_namespace = vh_theme_database_seeder($item->name);
                 Migration::runSeeds($seeds_namespace);
 
@@ -725,7 +708,7 @@ class Theme extends Model {
 
             $response['status'] = 'success';
             $response['data']['item'] = $item;
-            $response['messages'][] = 'Migration is successful';
+            $response['messages'][] = 'Seeds are successful';
 
             if(env('APP_DEBUG'))
             {

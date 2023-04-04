@@ -592,20 +592,6 @@ class Module extends Model {
 
             if(!isset($module->is_migratable) || (isset($module->is_migratable) && $module->is_migratable == true))
             {
-                $module_path = config('vaahcms.modules_path').$module->name;
-                $path = vh_module_migrations_path($module->name);
-
-                $max_batch = \DB::table('migrations')
-                    ->max('batch');
-
-                Migration::runMigrations($path);
-
-                $current_max_batch = \DB::table('migrations')
-                    ->max('batch');
-
-                if($current_max_batch > $max_batch){
-                    Migration::syncModuleMigrations($module->id,$current_max_batch);
-                }
 
                 $seeds_namespace = vh_module_database_seeder($module->name);
                 Migration::runSeeds($seeds_namespace);
@@ -618,7 +604,7 @@ class Module extends Model {
 
             $response['status'] = 'success';
             $response['data']['item'] = $module;
-            $response['messages'][] = 'Migration is successful';
+            $response['messages'][] = 'Seeds are successful';
 
             if(env('APP_DEBUG'))
             {
