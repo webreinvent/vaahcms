@@ -501,6 +501,16 @@ export const useModuleStore = defineStore({
             await this.itemAction('run_migrations', item);
         },
         //---------------------------------------------------------------------
+        async runSeeds(item) {
+            this.active_action.push('run_seeds_' + item.id);
+            await this.itemAction('run_seeds', item);
+        },
+        //---------------------------------------------------------------------
+        async resetModule(item) {
+            this.active_action.push('reset_' + item.id);
+            await this.itemAction('reset', item);
+        },
+        //---------------------------------------------------------------------
         async paginate(event) {
             this.query.page = event.page+1;
             this.query.rows = event.rows;
