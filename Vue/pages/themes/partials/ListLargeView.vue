@@ -69,6 +69,19 @@
                             </p>
                         </b-tooltip>
 
+                        <b-tooltip label="Reset" type="is-dark">
+                            <p v-if="hasPermission('can-publish-assets-of-theme')"
+                               class="control">
+                                <b-button v-if="props.row.is_active"
+                                          :loading="page.active_actions.includes('reset-'+props.row.id)"
+                                          size="is-small"
+                                          type="is-info"
+                                          @click="actions('reset', props.row)">
+                                    Reset
+                                </b-button>
+                            </p>
+                        </b-tooltip>
+
                         <b-tooltip label="Run Migrations" type="is-dark">
                             <p v-if="hasPermission('can-publish-assets-of-theme')"
                                class="control">
@@ -78,6 +91,19 @@
                                           type="is-info"
                                           icon-left="database"
                                           @click="actions('run_migrations', props.row)">
+                                </b-button>
+                            </p>
+                        </b-tooltip>
+
+                        <b-tooltip label="Run Seeds" type="is-dark">
+                            <p v-if="hasPermission('can-publish-assets-of-theme')"
+                               class="control">
+                                <b-button v-if="props.row.is_active"
+                                          :loading="page.active_actions.includes('run_seeds-'+props.row.id)"
+                                          size="is-small"
+                                          type="is-info"
+                                          icon-left="database"
+                                          @click="actions('run_seeds', props.row)">
                                 </b-button>
                             </p>
                         </b-tooltip>

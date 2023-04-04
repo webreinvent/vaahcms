@@ -635,11 +635,6 @@ class Theme extends Model {
                     Migration::syncThemeMigrations($item->id,$current_max_batch);
                 }
 
-
-
-                $seeds_namespace = vh_theme_database_seeder($item->name);
-                Migration::runSeeds($seeds_namespace);
-
                 //copy assets to public folder
                 static::copyAssets($item);
 
@@ -670,23 +665,6 @@ class Theme extends Model {
 
             if(!isset($item->is_migratable) || (isset($item->is_migratable) && $item->is_migratable == true))
             {
-
-                $path = vh_theme_migrations_path($item->name);
-
-                $max_batch = \DB::table('migrations')
-                    ->max('batch');
-
-                Migration::runMigrations($path);
-
-                $current_max_batch = \DB::table('migrations')
-                    ->max('batch');
-
-                if($current_max_batch > $max_batch){
-                    Migration::syncThemeMigrations($item->id,$current_max_batch);
-                }
-
-
-
                 $seeds_namespace = vh_theme_database_seeder($item->name);
                 Migration::runSeeds($seeds_namespace);
 
@@ -697,7 +675,7 @@ class Theme extends Model {
 
             $response['status'] = 'success';
             $response['data']['item'] = $item;
-            $response['messages'][] = 'Migration is successful';
+            $response['messages'][] = 'Seeds are successful';
 
             if(env('APP_DEBUG'))
             {
@@ -768,6 +746,38 @@ class Theme extends Model {
             $response['status'] = 'success';
             $response['data']['item'] = $item;
             $response['messages'][] = trans('vaahcms-general.action_successful');
+            if(env('APP_DEBUG'))
+            {
+                $response['hint'][] = '';
+            }
+            return $response;
+
+        }catch(\Exception $e)
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = $e->getMessage();
+
+        }
+
+
+        return $response;
+
+    }
+    //-------------------------------------------------
+    public static function resetTheme($slug)
+    {
+
+        try{
+
+            $item = static::where('slug', $slug)->first();
+
+
+            //Delete theme entry
+            static::where('slug', $item->slug)->forceDelete();
+
+            $response['status'] = 'success';
+            $response['data']['item'] = $item;
+            $response['messages'][] = 'Theme reset successful';
             if(env('APP_DEBUG'))
             {
                 $response['hint'][] = '';
