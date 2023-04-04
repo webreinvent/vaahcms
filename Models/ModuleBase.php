@@ -485,6 +485,40 @@ class ModuleBase extends Model
                     Migration::syncModuleMigrations($module->id,$current_max_batch);
                 }
 
+                //copy assets to public folder
+                Module::copyAssets($module);
+
+                LanguageString::generateLangFiles();
+
+            }
+
+            $response['success'] = true;
+            $response['data'][] = '';
+            $response['messages'][] = 'Migrations successful';
+
+            if(env('APP_DEBUG'))
+            {
+                $response['hint'][] = '';
+            }
+        }catch(\Exception $e)
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = $e->getMessage();
+
+        }
+
+        return $response;
+
+    }
+    //-------------------------------------------------
+    public static function runModuleSeeds($slug)
+    {
+        try {
+            $module = self::slug($slug)->first();
+
+            if(!isset($module->is_migratable) || (isset($module->is_migratable) && $module->is_migratable == true))
+            {
+
                 $seeds_namespace = vh_module_database_seeder($module->name);
                 Migration::runSeeds($seeds_namespace);
 
@@ -497,7 +531,7 @@ class ModuleBase extends Model
 
             $response['success'] = true;
             $response['data'][] = '';
-            $response['messages'][] = 'Migration successful';
+            $response['messages'][] = 'Seeds successful';
 
             if(env('APP_DEBUG'))
             {
@@ -569,6 +603,38 @@ class ModuleBase extends Model
             $response['success'] = true;
             $response['data'][] = '';
             $response['messages'][] = trans('vaahcms-general.action_successful');
+            if(env('APP_DEBUG'))
+            {
+                $response['hint'][] = '';
+            }
+            return $response;
+
+        }catch(\Exception $e)
+        {
+            $response['success'] = false;
+            $response['errors'][] = $e->getMessage();
+
+        }
+
+
+        return $response;
+
+    }
+    //-------------------------------------------------
+    public static function resetModule($slug)
+    {
+
+        try{
+
+            $item = static::where('slug', $slug)->first();
+
+
+            //Delete module entry
+            static::where('slug', $item->slug)->forceDelete();
+
+            $response['success'] = true;
+            $response['data'][] = '';
+            $response['messages'][] = 'Module reset successful';
             if(env('APP_DEBUG'))
             {
                 $response['hint'][] = '';
