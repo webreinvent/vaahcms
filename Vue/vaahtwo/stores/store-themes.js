@@ -493,6 +493,16 @@ export const useThemeStore = defineStore({
             await this.itemAction('run_migrations', item);
         },
         //---------------------------------------------------------------------
+        async runSeeds(item) {
+            this.active_action.push('run_seeds_' + item.id);
+            await this.itemAction('run_seeds', item);
+        },
+        //---------------------------------------------------------------------
+        async resetTheme(item) {
+            this.active_action.push('reset_' + item.id);
+            await this.itemAction('reset', item);
+        },
+        //---------------------------------------------------------------------
         async resetActivateBtnLoader(action,item) {
             let index = this.active_action.indexOf(action+'_'+item.id);
             this.active_action.splice(index,1);
