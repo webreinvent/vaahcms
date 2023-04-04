@@ -280,7 +280,7 @@ class ThemesController extends Controller
             $theme = Theme::find($inputs['id']);
 
 
-            if(!in_array($request->action ,['publish_assets','run_migrations','run_seeds'],TRUE)){
+            if(!in_array($request->action ,['publish_assets','run_migrations','run_seeds','reset'],TRUE)){
                 $method_name = str_replace("_", " ", $request->action);
                 $method_name = ucwords($method_name);
                 $method_name = lcfirst(str_replace(" ", "", $method_name));
@@ -360,6 +360,17 @@ class ThemesController extends Controller
                         return response()->json($response);
                     }
                     $response = Theme::runThemeSeeds($theme->slug);
+                    break;
+                //---------------------------------------
+                case 'reset':
+                    if(!\Auth::user()->hasPermission('can-publish-assets-of-theme'))
+                    {
+                        $response['success'] = false;
+                        $response['messages'][] = trans("vaahcms::messages.permission_denied");
+
+                        return response()->json($response);
+                    }
+                    $response = Theme::resetTheme($theme->slug);
                     break;
                 //---------------------------------------
                 case 'import_sample_data':
