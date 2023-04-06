@@ -1698,6 +1698,7 @@ class UserBase extends Authenticatable
         if ( $validator->fails() ) {
 
             $errors             = errorsToArray($validator->errors());
+            $response['status'] = 'failed';
             $response['success'] = false;
             $response['errors'] = $errors;
             return $response;
