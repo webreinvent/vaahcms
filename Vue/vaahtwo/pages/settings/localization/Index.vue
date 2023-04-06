@@ -15,11 +15,11 @@ onMounted(async () => {
      * fetch assets required for the crud
      * operation
      */
+    await store.setPageTitle();
     await store.getAssets();
     /**
      * Change to upper case
      */
-    document.title = 'Localization';
 });
 </script>
 

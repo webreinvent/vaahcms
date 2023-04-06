@@ -33,6 +33,7 @@ let empty_states = {
 export const useFailedJobStore = defineStore({
     id: 'failedjobs',
     state: () => ({
+        title: 'Advanced - FailedJobs',
         page: 1,
         rows: 20,
         base_url: base_url,
@@ -546,7 +547,12 @@ export const useFailedJobStore = defineStore({
             const root = useRootStore();
             return vaah().hasPermission(root.permissions, slug);
         },
-        //----------------------------------------------------------------------
+        //---------------------------------------------------------------------
+        setPageTitle() {
+            if (this.title) {
+                document.title = this.title;
+            }
+        }
     }
 });
 

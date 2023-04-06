@@ -19,6 +19,7 @@ let empty_states = {
 export const useGeneralStore = defineStore({
     id: 'general',
     state: () => ({
+        title: 'Settings - General',
         base_url: base_url,
         ajax_url: ajax_url,
         model: model_namespace,
@@ -463,8 +464,11 @@ export const useGeneralStore = defineStore({
             }
         },
         //---------------------------------------------------------------------
-        //---------------------------------------------------------------------
-
+        setPageTitle() {
+            if (this.title) {
+                document.title = this.title;
+            }
+        }
     }
 });
 

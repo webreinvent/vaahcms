@@ -46,6 +46,7 @@ let empty_states = {
 export const useRoleStore = defineStore({
     id: 'roles',
     state: () => ({
+        title: 'Roles',
         base_url: base_url,
         ajax_url: ajax_url,
         model: model_namespace,
@@ -1247,8 +1248,13 @@ export const useRoleStore = defineStore({
         strToSlug(name)
         {
             return vaah().strToSlug(name);
-        }
+        },
         //---------------------------------------------------------------------
+        setPageTitle() {
+            if (this.title) {
+                document.title = this.title;
+            }
+        }
     }
 });
 

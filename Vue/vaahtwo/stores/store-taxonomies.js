@@ -31,6 +31,7 @@ let empty_states = {
 export const useTaxonomyStore = defineStore({
     id: 'taxonomies',
     state: () => ({
+        title: 'Manage - Taxonomies',
         page: 1,
         rows: 20,
         base_url: base_url,
@@ -1027,6 +1028,11 @@ export const useTaxonomyStore = defineStore({
             return this.assets.types;
         },
         //---------------------------------------------------------------------
+        setPageTitle() {
+            if (this.title) {
+                document.title = this.title;
+            }
+        }
     }
 });
 

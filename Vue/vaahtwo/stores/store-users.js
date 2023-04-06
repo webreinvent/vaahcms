@@ -38,6 +38,7 @@ let empty_states = {
 export const useUserStore = defineStore({
     id: 'users',
     state: () => ({
+        title: 'Users',
         base_url: base_url,
         ajax_url: ajax_url,
         model: model_namespace,
@@ -1282,8 +1283,13 @@ export const useUserStore = defineStore({
             } else {
                 this.email_error = { class: 'p-invalid',msg:'Please enter a valid email address'};
             }
-        }
+        },
         //---------------------------------------------------------------------
+        setPageTitle() {
+            if (this.title) {
+                document.title = this.title;
+            }
+        }
     }
 });
 

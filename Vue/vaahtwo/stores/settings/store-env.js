@@ -20,6 +20,7 @@ let empty_states = {
 export const useEnvStore = defineStore({
     id: 'env',
     state: () => ({
+        title: 'Settings - Env',
         base_url: base_url,
         ajax_url: ajax_url,
         model: model_namespace,
@@ -311,7 +312,11 @@ export const useEnvStore = defineStore({
             await this.getList();
         },
         //---------------------------------------------------------------------
-
+        setPageTitle() {
+            if (this.title) {
+                document.title = this.title;
+            }
+        }
     }
 });
 

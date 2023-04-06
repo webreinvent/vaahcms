@@ -24,6 +24,7 @@ onMounted(async () => {
      * watch routes to update view, column width
      * and get new item when routes get changed
      */
+    await store.setPageTitle();
     await store.watchRoutes(route);
 
     /**

@@ -34,6 +34,7 @@ let empty_states = {
 export const useMediaStore = defineStore({
     id: 'media',
     state: () => ({
+        title: 'Manage - Media',
         page: 1,
         rows: 20,
         base_url: base_url,
@@ -981,6 +982,11 @@ export const useMediaStore = defineStore({
             vaah().copy(text);
         },
         //---------------------------------------------------------------------
+        setPageTitle() {
+            if (this.title) {
+                document.title = this.title;
+            }
+        }
     }
 });
 

@@ -55,6 +55,7 @@ let empty_states = {
 export const useSettingStore = defineStore({
     id: 'settings',
     state: () => ({
+        title: 'Settings',
         base_url: base_url,
         ajax_url: ajax_url,
         model: model_namespace,
@@ -1219,8 +1220,13 @@ export const useSettingStore = defineStore({
         strToSlug(name)
         {
             return vaah().strToSlug(name);
-        }
+        },
         //---------------------------------------------------------------------
+        setPageTitle() {
+            if (this.title) {
+                document.title = this.title;
+            }
+        }
     }
 });
 

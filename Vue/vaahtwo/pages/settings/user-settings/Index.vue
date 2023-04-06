@@ -17,15 +17,13 @@ onMounted(async () => {
      * fetch assets required for the crud
      * operation
      */
+    await store.setPageTitle();
     await store.getAssets();
 
     /**
      * fetch list of records
      */
     await store.getList();
-
-
-    document.title = 'User Settings';
 });
 </script>
 
