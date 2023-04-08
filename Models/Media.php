@@ -12,9 +12,6 @@ use WebReinvent\VaahCms\Models\User;
 
 class Media extends MediaBase
 {
-    protected $appends  = [
-        'type', 'size_for_humans', 'download_url_full'
-    ];
 
     public function createdByUser()
     {

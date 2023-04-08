@@ -406,6 +406,7 @@ class MediaController extends Controller
 
                 if (substr($thumbnail_path, 0, 6) =='public') {
                     $data['url_thumbnail'] = 'storage'.substr($thumbnail_path, 6);
+                    $data['thumbnail_size'] = \Storage::size($thumbnail_path);
                 }
 
             }

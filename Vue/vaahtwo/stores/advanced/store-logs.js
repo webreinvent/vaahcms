@@ -30,7 +30,7 @@ let empty_states = {
 export const useLogStore = defineStore({
     id: 'logs',
     state: () => ({
-        title: 'Advanced - Logs',
+        title: 'Logs - Advanced',
         page: 1,
         rows: 20,
         base_url: base_url,

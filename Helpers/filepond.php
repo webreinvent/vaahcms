@@ -6,11 +6,8 @@ function vh_file_pond_allowed_file_type()
 {
     $file_types = config('settings.global.upload_allowed_files');
 
-    $file_types = collect($file_types)->pluck('name')->toArray();
+    return implode(',', $file_types);
 
-    $file_types = implode(',', $file_types);
-
-    return $file_types;
 }
 //-----------------------------------------------------------------------------------
 //-----------------------------------------------------------------------------------

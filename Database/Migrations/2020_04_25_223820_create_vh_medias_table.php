@@ -27,6 +27,7 @@ class CreateVhMediasTable extends Migration
                 $table->string('url')->nullable();
                 $table->string('url_thumbnail')->nullable();
                 $table->integer('size')->nullable();
+                $table->integer('thumbnail_size')->nullable();
                 $table->string('title',200)->nullable()->index();
                 $table->string('caption')->nullable()->index();
                 $table->string('alt_text')->nullable();

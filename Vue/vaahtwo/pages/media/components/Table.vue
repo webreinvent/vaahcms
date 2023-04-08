@@ -27,7 +27,17 @@ const useVaah = vaah();
 
              <Column field="thumbnail" header="Thumbnail">
                  <template #body="prop" >
-                     <Image v-if="prop.data.url_thumbnail" :src="prop.data.url_thumbnail" />
+
+                     <Image v-if="prop.data.type === 'image' && prop.data.url_thumbnail"
+                            :src="prop.data.url_thumbnail" />
+
+                     <img v-else-if="prop.data.type !== 'image'"
+                          :src="store.file_image_url"
+                          :alt="store.item.name"
+                          width="100"
+                          style="border-radius: 50%;"
+                     />
+
                      <i v-else class="pi pi-file"></i>
                  </template>
              </Column>

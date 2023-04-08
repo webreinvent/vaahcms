@@ -30,7 +30,7 @@ let empty_states = {
 export const useJobStore = defineStore({
     id: 'jobs',
     state: () => ({
-        title: 'Advanced - Jobs',
+        title: 'Jobs - Advanced',
         page: 1,
         rows: 20,
         base_url: base_url,

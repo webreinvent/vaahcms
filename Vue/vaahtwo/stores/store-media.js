@@ -34,15 +34,19 @@ let empty_states = {
 export const useMediaStore = defineStore({
     id: 'media',
     state: () => ({
-        title: 'Manage - Media',
+        title: 'Medias - Manage',
         page: 1,
         rows: 20,
         base_url: base_url,
         ajax_url: ajax_url,
         model: model_namespace,
         assets_is_fetching: true,
+        has_error_on_upload: false,
         app: null,
+        file_image_url: 'https://findicons.com/files/icons/1579/devine/256/file.png',
         assets: null,
+        total_file_size: 0,
+        trashed_file_size: 0,
         rows_per_page: [10,20,30,50,100,500],
         list: null,
         item: null,
@@ -222,6 +226,9 @@ export const useMediaStore = defineStore({
             if(data)
             {
                 this.list = data.list;
+                this.total_file_size = data.total_file_size;
+                this.trashed_file_size = data.trashed_file_size;
+
                 this.first_element = this.query.rows * (this.query.page - 1);
             }
         },
@@ -532,8 +539,6 @@ export const useMediaStore = defineStore({
         setActiveItemAsEmpty()
         {
             this.item = vaah().clone(this.assets.empty_item);
-            let element = document.querySelector('.p-fileupload-file-remove');
-            element.click();
         },
         //---------------------------------------------------------------------
         confirmDelete()
@@ -950,7 +955,8 @@ export const useMediaStore = defineStore({
         //---------------------------------------------------------------------
         openUploader($event)
         {
-            let removeButton = $event.target.className.includes('p-fileupload-file-remove') || $event.target.className.includes('pi-times'); //document.querySelector('.p-times');
+            let removeButton = $event.target.className.includes('p-fileupload-file-remove')
+                || $event.target.className.includes('pi-times');
 
             if (removeButton !== null || removeButton !== "") {
                 let ele = document.querySelector('.p-fileupload > input[type=file]');

@@ -32,7 +32,7 @@ let empty_states = {
 export const useBatchStore = defineStore({
     id: 'batches',
     state: () => ({
-        title: 'Advanced - Batches',
+        title: 'Batches - Advanced',
         page: 1,
         rows: 20,
         dialog_content: null,
