@@ -8,6 +8,7 @@ const root = useRootStore();
 const store = useDashboardStore();
 
 onMounted(async () => {
+    await store.setTitle();
     await store.getItem();
     root.verifyInstallStatus();
     await root.reloadAssets();

@@ -185,7 +185,7 @@ class Notification extends Model {
 
             $errors             = errorsToArray($validator->errors());
             $response['success'] = false;
-            $response['messages'] = $errors;
+            $response['errors'] = $errors;
             return response()->json($response);
         }
 
@@ -307,7 +307,7 @@ class Notification extends Model {
 
             $errors             = errorsToArray($validator->errors());
             $response['success'] = false;
-            $response['messages'] = $errors;
+            $response['errors'] = $errors;
             return $response;
         }
 
@@ -336,7 +336,7 @@ class Notification extends Model {
         }catch(\Exception $e)
         {
             $response['success'] = false;
-            $response['messages'][] = $e->getMessage();
+            $response['errors'][] = $e->getMessage();
         }
 
         return $response;
@@ -427,7 +427,7 @@ class Notification extends Model {
 
             $errors             = errorsToArray($validator->errors());
             $response['success'] = false;
-            $response['messages'] = $errors;
+            $response['errors'] = $errors;
             return $response;
         }
 

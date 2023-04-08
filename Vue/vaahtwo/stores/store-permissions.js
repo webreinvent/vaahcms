@@ -36,6 +36,7 @@ let empty_states = {
 export const usePermissionStore = defineStore({
     id: 'permissions',
     state: () => ({
+        title: 'Permissions',
         page: 1,
         rows: 20,
         base_url: base_url,
@@ -1053,8 +1054,13 @@ export const usePermissionStore = defineStore({
         //---------------------------------------------------------------------
         urlContains(param) {
             return this.route.path.includes(param);
-        }
+        },
         //---------------------------------------------------------------------
+        setPageTitle() {
+            if (this.title) {
+                document.title = this.title;
+            }
+        }
     }
 });
 

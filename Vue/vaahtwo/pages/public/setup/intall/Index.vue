@@ -17,7 +17,7 @@ onMounted(async () => {
 </script>
 
 <template>
-    <div v-if="store.assets" class="">
+    <div v-if="store && store.assets && root && root.assets" class="">
         <div class="text-center mb-4">
             <img :src="root.assets.backend_logo_url" alt="" class="mb-2 mx-auto h-3rem">
             <h4 class="text-xl font-semibold">Install VaahCMS</h4>

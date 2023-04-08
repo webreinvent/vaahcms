@@ -24,6 +24,7 @@ onMounted(async () => {
      * watch routes to update view, column width
      * and get new item when routes get changed
      */
+    await store.setPageTitle();
     await store.watchRoutes(route);
 
     /**
@@ -48,6 +49,67 @@ onMounted(async () => {
 </script>
 <template>
     <div class="grid" v-if="store.assets">
+
+        <div class="col-12">
+            <div class="grid m-0">
+
+                <div class="col">
+                    <div class="p-fieldset card p-3">
+                        <div class="flex align-items-center">
+                            <div class="mr-2">
+                                <span class="p-3 border-circle bg-blue-50">
+                                     <i class="text-blue-400 pi pi-file"></i>
+                                </span>
+                            </div>
+
+                            <div class="flex flex-column align-items-start">
+                                <p class="text-sm font-semibold">Total Medias</p>
+                                <h6 v-if="store.list" class="text-xl font-semibold">
+                                    {{ store.list.total}}
+                                </h6>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col">
+                    <div class="p-fieldset card p-3">
+                        <div class="flex align-items-center">
+                            <div class="mr-2"><span class="p-3 border-circle bg-blue-50">
+                                 <i class="text-blue-400 pi pi-upload"></i>
+                            </span></div>
+
+                            <div class="flex flex-column align-items-start">
+                                <p class="text-sm font-semibold">Total File Size</p>
+                                <h6 v-if="store.list" class="text-xl font-semibold">
+                                    {{ store.total_file_size }} MB
+                                </h6>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col">
+                    <div class="p-fieldset card p-3">
+                        <div class="flex align-items-center">
+                            <div class="mr-2">
+                                <span class="p-3 border-circle bg-blue-50">
+                                     <i class="text-blue-400 pi pi-trash"></i>
+                                </span>
+                            </div>
+
+                            <div class="flex flex-column align-items-start">
+                                <p class="text-sm font-semibold">Trashed File Size</p>
+                                <h6 v-if="store.list" class="text-xl font-semibold">
+                                    {{ store.trashed_file_size}} MB
+                                </h6>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div :class="'col-'+store.list_view_width">
             <Panel>
                 <template class="p-1" #header>

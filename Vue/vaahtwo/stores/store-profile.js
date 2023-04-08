@@ -8,6 +8,7 @@ let ajax_url = base_url + "/vaah/profile";
 export const useProfileStore = defineStore({
     id: 'profile',
     state: () => ({
+        title: 'Profile',
         assets: null,
         list: null,
         profile: null,
@@ -196,10 +197,13 @@ export const useProfileStore = defineStore({
                 this.profile.avatar = data.avatar;
                 this.profile.avatar_url = data.avatar_url;
             }
-
         },
         //---------------------------------------------------------------------
-
+        setPageTitle() {
+            if (this.title) {
+                document.title = this.title;
+            }
+        }
     }
 })
 

@@ -10,6 +10,7 @@ let json_url = ajax_url + "/json";
 export const useDashboardStore = defineStore({
     id: 'dashboard',
     state: () => ({
+        title: 'Dashboard',
         active_index: [0,1],
         ajax_url: ajax_url,
         assets_is_fetching: true,
@@ -72,6 +73,12 @@ export const useDashboardStore = defineStore({
             const root = useRootStore();
             return vaah().hasPermission(root.permissions, slug);
         },
+        //---------------------------------------------------------------------
+        setTitle() {
+            if (this.title) {
+                document.title = this.title;
+            }
+        }
         //---------------------------------------------------------------------
     }
 })

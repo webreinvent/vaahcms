@@ -186,7 +186,7 @@ class Job extends JobBase
 
             $errors = errorsToArray($validator->errors());
             $response['success'] = false;
-            $response['messages'] = $errors;
+            $response['errors'] = $errors;
             return $response;
         }
 
@@ -243,7 +243,7 @@ class Job extends JobBase
 
             $errors = errorsToArray($validator->errors());
             $response['failed'] = true;
-            $response['messages'] = $errors;
+            $response['errors'] = $errors;
             return $response;
         }
 

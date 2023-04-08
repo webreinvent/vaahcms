@@ -30,6 +30,7 @@ let empty_states = {
 export const useRegistrationStore = defineStore({
     id: 'registrations',
     state: () => ({
+        title: 'Registrations',
         page: 1,
         rows: 20,
         base_url: base_url,
@@ -1121,6 +1122,12 @@ export const useRegistrationStore = defineStore({
             }
         },
         //---------------------------------------------------------------------
+        setPageTitle() {
+            if (this.title) {
+                document.title = this.title;
+            }
+        }
+
     }
 });
 

@@ -58,7 +58,7 @@ class VaahSetup{
         }catch(\Exception $e)
         {
             $response['success'] = false;
-            $response['messages'][] = $e->getMessage();
+            $response['errors'][] = $e->getMessage();
             return $response;
         }
 
@@ -177,8 +177,8 @@ class VaahSetup{
 
         }catch(\Exception $e)
         {
-            $response['success'] = 'false';
-            $response['messages'][] = $e->getMessage();
+            $response['success'] = false;
+            $response['errors'][] = $e->getMessage();
 
         }
 
@@ -429,7 +429,7 @@ class VaahSetup{
         }catch(\Exception $e)
         {
             $response['success'] = false;
-            $response['messages'][] = $e->getMessage();
+            $response['errors'][] = $e->getMessage();
         }
 
 

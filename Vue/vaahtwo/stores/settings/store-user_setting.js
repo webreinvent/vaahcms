@@ -19,6 +19,7 @@ let empty_states = {
 export const useUserSettingStore = defineStore({
     id: 'user-settings',
     state: () => ({
+        title: 'User Settings - Settings',
         base_url: base_url,
         ajax_url: ajax_url,
         model: model_namespace,
@@ -230,7 +231,11 @@ export const useUserSettingStore = defineStore({
             this.active_index = [];
         },
         //---------------------------------------------------------------------
-        //---------------------------------------------------------------------
+        setPageTitle() {
+            if (this.title) {
+                document.title = this.title;
+            }
+        }
 
     }
 });

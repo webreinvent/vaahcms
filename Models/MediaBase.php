@@ -36,6 +36,7 @@ class MediaBase extends Model {
         'url',
         'url_thumbnail',
         'size',
+        'thumbnail_size',
         'title',
         'caption',
         'alt_text',
@@ -56,7 +57,8 @@ class MediaBase extends Model {
     //-------------------------------------------------
 
     protected $appends  = [
-        'type', 'size_for_humans', 'download_url_full'
+        'type', 'size_for_humans',
+        'thumbnail_size_for_humans', 'download_url_full'
     ];
 
     //-------------------------------------------------
@@ -112,6 +114,22 @@ class MediaBase extends Model {
     public function getSizeForHumansAttribute() {
 
         $size = $this->size;
+        $precision = 2;
+
+        if ($size > 0) {
+            $size = (int) $size;
+            $base = log($size) / log(1024);
+            $suffixes = array(' bytes', ' KB', ' MB', ' GB', ' TB');
+
+            return round(pow(1024, $base - floor($base)), $precision) . $suffixes[floor($base)];
+        } else {
+            return $size;
+        }
+    }
+    //-------------------------------------------------
+    public function getThumbnailSizeForHumansAttribute() {
+
+        $size = $this->thumbnail_size;
         $precision = 2;
 
         if ($size > 0) {
@@ -249,6 +267,19 @@ class MediaBase extends Model {
 
         $data['list'] = $list->skip(($request->rows * $request->page))
             ->take($request->rows)->paginate($request->rows);
+
+
+        $temp_list = self::query();
+        $trashed_list = self::onlyTrashed();
+
+        $total_file_size = (int)$temp_list->sum('size')
+            + (int)$temp_list->sum('thumbnail_size');
+
+        $trashed_file_size = (int)$trashed_list->sum('size')
+            + (int)$trashed_list->sum('thumbnail_size');
+
+        $data['total_file_size'] = number_format((int)$total_file_size/1048576,2);
+        $data['trashed_file_size'] = number_format((int)$trashed_file_size/1048576,2);
 
         $response['success'] = true;
         $response['data'] = $data;

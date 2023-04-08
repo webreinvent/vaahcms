@@ -12,6 +12,7 @@ const root = useRootStore();
 
 
 onMounted(async () => {
+    document.title = 'Setup';
     await store.getAssets();
     await store.getStatus();
     await store.getAdvancedOptionMenu();

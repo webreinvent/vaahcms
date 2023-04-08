@@ -386,7 +386,7 @@ class Registration extends RegistrationBase
 
             $errors = errorsToArray($validator->errors());
             $response['failed'] = true;
-            $response['messages'] = $errors;
+            $response['errors'] = $errors;
             return $response;
         }
 

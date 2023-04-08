@@ -9,7 +9,7 @@ const root = useRootStore();
 
 
 onMounted(async () => {
-
+    document.title = 'Account - Setup';
 });
 
 </script>

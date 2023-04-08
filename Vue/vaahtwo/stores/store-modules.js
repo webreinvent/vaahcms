@@ -29,6 +29,7 @@ let empty_states = {
 export const useModuleStore = defineStore({
     id: 'modules',
     state: () => ({
+        title: 'Modules - Extend',
         page: 1,
         rows: 20,
         base_url: base_url,
@@ -1124,6 +1125,11 @@ export const useModuleStore = defineStore({
             window.open(url,'_target');
         },
         //---------------------------------------------------------------------
+        setPageTitle() {
+            if (this.title) {
+                document.title = this.title;
+            }
+        }
     }
 });
 

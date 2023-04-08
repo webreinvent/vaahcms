@@ -30,6 +30,7 @@ let empty_states = {
 export const useJobStore = defineStore({
     id: 'jobs',
     state: () => ({
+        title: 'Jobs - Advanced',
         page: 1,
         rows: 20,
         base_url: base_url,
@@ -507,7 +508,12 @@ export const useJobStore = defineStore({
             const root = useRootStore();
             return vaah().hasPermission(root.permissions, slug);
         },
-        //----------------------------------------------------------------------
+        //---------------------------------------------------------------------
+        setPageTitle() {
+            if (this.title) {
+                document.title = this.title;
+            }
+        }
     }
 });
 

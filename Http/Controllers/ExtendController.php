@@ -98,7 +98,7 @@ class ExtendController extends Controller
             $list[1]['items'][] =  [
                 'url' => self::$link."/registrations/",
                 'icon' => 'pi pi-user-plus',
-                'label'=> 'Registration',
+                'label'=> 'Registrations',
             ];
         }
 
@@ -183,7 +183,7 @@ class ExtendController extends Controller
                     [
                         'url' => self::$link."/settings/localization",
                         'icon' => 'pi pi-book',
-                        'label'=> 'Localization',
+                        'label'=> 'Localizations',
                     ],
                     [
                         'url' => self::$link."/settings/notifications",

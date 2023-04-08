@@ -232,7 +232,7 @@ class Batch extends BatchBase
 
             $errors = errorsToArray($validator->errors());
             $response['failed'] = true;
-            $response['messages'] = $errors;
+            $response['errors'] = $errors;
             return $response;
         }
 

@@ -32,6 +32,7 @@ let empty_states = {
 export const useBatchStore = defineStore({
     id: 'batches',
     state: () => ({
+        title: 'Batches - Advanced',
         page: 1,
         rows: 20,
         dialog_content: null,
@@ -618,7 +619,12 @@ export const useBatchStore = defineStore({
             const root = useRootStore();
             return vaah().hasPermission(root.permissions, slug);
         },
-        //----------------------------------------------------------------------
+        //---------------------------------------------------------------------
+        setPageTitle() {
+            if (this.title) {
+                document.title = this.title;
+            }
+        }
     }
 });
 

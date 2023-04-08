@@ -30,6 +30,7 @@ let empty_states = {
 export const useLogStore = defineStore({
     id: 'logs',
     state: () => ({
+        title: 'Logs - Advanced',
         page: 1,
         rows: 20,
         base_url: base_url,
@@ -779,7 +780,12 @@ export const useLogStore = defineStore({
             const root = useRootStore();
             return vaah().hasPermission(root.permissions, slug);
         },
-        //----------------------------------------------------------------------
+        //---------------------------------------------------------------------
+        setPageTitle() {
+            if (this.title) {
+                document.title = this.title;
+            }
+        }
     }
 });
 
