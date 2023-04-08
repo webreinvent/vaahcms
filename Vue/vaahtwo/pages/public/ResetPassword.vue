@@ -8,6 +8,10 @@ import Logo from "../../components/molecules/Logo.vue";
 import { useAuthStore } from '../../stores/auth';
 const auth = useAuthStore();
 
+onMounted(async () => {
+    document.title = 'Reset Password';
+});
+
 </script>
 <template>
     <Card style="width: 28rem;max-width: 100vw; margin-bottom: 2em" class="m-auto">

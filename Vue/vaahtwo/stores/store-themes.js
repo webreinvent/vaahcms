@@ -32,7 +32,7 @@ let empty_states = {
 export const useThemeStore = defineStore({
     id: 'themes',
     state: () => ({
-        title: 'Extends - Themes',
+        title: 'Themes - Extend',
         page: 1,
         rows: 20,
         base_url: base_url,

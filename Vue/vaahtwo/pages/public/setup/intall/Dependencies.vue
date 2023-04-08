@@ -9,6 +9,7 @@ const root = useRootStore();
 
 
 onMounted(async () => {
+    document.title = 'Dependencies - Setup';
     await store.getAssets();
     store.getDependencies();
 });

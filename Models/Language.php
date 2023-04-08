@@ -173,7 +173,7 @@ class Language extends Model {
 
             $errors             = errorsToArray($validator->errors());
             $response['success'] = false;
-            $response['messages'] = $errors;
+            $response['errors'] = $errors;
             return $response;
         }
 

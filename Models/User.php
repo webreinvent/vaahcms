@@ -182,7 +182,7 @@ class User extends UserBase
 
             $errors = errorsToArray($validator->errors());
             $response['failed'] = true;
-            $response['messages'] = $errors;
+            $response['errors'] = $errors;
             return $response;
         }
 
@@ -275,7 +275,7 @@ class User extends UserBase
 
         $validate = self::validation($inputs);
 
-        if(isset($validate['status']) && $validate['status'] == 'failed')
+        if(isset($validate['success']) && !$validate['success'])
         {
             return $validate;
         }

@@ -11,7 +11,7 @@ let ajax_url = base_url + "/vaah/settings/localization";
 export const useLocalizationStore = defineStore({
     id: 'localization',
     state: () => ({
-        title: 'Settings - Localization',
+        title: 'Localizations - Settings',
         base_url: base_url,
         ajax_url: ajax_url,
         model: model_namespace,

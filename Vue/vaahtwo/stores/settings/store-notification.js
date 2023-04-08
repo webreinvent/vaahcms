@@ -12,7 +12,7 @@ let ajax_url = base_url + "/vaah/settings/notifications";
 export const useNotificationStore = defineStore({
     id: 'notifications',
     state: () => ({
-        title: 'Settings - Notification',
+        title: 'Notifications - Settings - ',
         base_url: base_url,
         ajax_url: ajax_url,
         model: model_namespace,

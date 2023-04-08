@@ -19,7 +19,7 @@ let empty_states = {
 export const useUserSettingStore = defineStore({
     id: 'user-settings',
     state: () => ({
-        title: 'Settings - User Settings',
+        title: 'User Settings - Settings',
         base_url: base_url,
         ajax_url: ajax_url,
         model: model_namespace,

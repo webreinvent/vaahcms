@@ -21,7 +21,7 @@
                      :to="{name: 'env.index'}">
         </b-menu-item>
 
-        <b-menu-item label="Localization"
+        <b-menu-item label="Localizations"
                      icon="language"
                      tag="router-link"
                      :active="!!($route.path == '/vaah/settings/localization')"

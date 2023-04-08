@@ -21,7 +21,7 @@ let ajax_url = base_url + "/vaah/settings/update";
 export const useUpdateStore = defineStore({
     id: 'update',
     state: () => ({
-        title: 'Settings - Update',
+        title: 'Update - Settings',
         base_url: base_url,
         ajax_url: ajax_url,
         model: model_namespace,

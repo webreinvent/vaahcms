@@ -12,6 +12,7 @@ const auth = useAuthStore();
 const route = useRoute();
 
 onMounted(async () => {
+    document.title = 'Sign In';
     root.showResponse(route.query);
     auth.verifyInstallStatus();
     await root.getAssets();

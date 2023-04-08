@@ -25,17 +25,17 @@ const sidebar_menu_items = ref([
                 to:{ path: '/vaah/settings/user-settings' }
             },
             {
-                label: 'ENV Variables',
+                label: 'Env Variables',
                 icon: 'pi pi-cog',
                 to:{ path: '/vaah/settings/env-variables' }
             },
             {
-                label: 'Localization',
+                label: 'Localizations',
                 icon: 'pi pi-code',
                 to:{ path: '/vaah/settings/localization' }
             },
             {
-                label: 'Notification',
+                label: 'Notifications',
                 icon: 'pi pi-bell',
                 to:{ path: '/vaah/settings/notifications' }
             },

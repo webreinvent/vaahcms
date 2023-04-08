@@ -13,6 +13,7 @@ const root = useRootStore();
 
 
 onMounted(async () => {
+    document.title = 'Migrate - Setup';
     await store.getAssets();
 });
 

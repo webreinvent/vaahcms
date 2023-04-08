@@ -1092,7 +1092,7 @@ class UserBase extends Authenticatable
 
         $validate = self::validation($inputs);
 
-        if (isset($validate['status']) && $validate['status'] == 'failed') {
+        if (isset($validate['success']) && !$validate['success']) {
             return $validate;
         }
 
@@ -1698,7 +1698,6 @@ class UserBase extends Authenticatable
         if ( $validator->fails() ) {
 
             $errors             = errorsToArray($validator->errors());
-            $response['status'] = 'failed';
             $response['success'] = false;
             $response['errors'] = $errors;
             return $response;

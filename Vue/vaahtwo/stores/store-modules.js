@@ -29,7 +29,7 @@ let empty_states = {
 export const useModuleStore = defineStore({
     id: 'modules',
     state: () => ({
-        title: 'Extends - Modules',
+        title: 'Modules - Extend',
         page: 1,
         rows: 20,
         base_url: base_url,

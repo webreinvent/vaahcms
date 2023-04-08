@@ -20,7 +20,7 @@ let empty_states = {
 export const useEnvStore = defineStore({
     id: 'env',
     state: () => ({
-        title: 'Settings - Env',
+        title: 'Env Variables - Settings',
         base_url: base_url,
         ajax_url: ajax_url,
         model: model_namespace,
