@@ -428,6 +428,9 @@ class UsersController extends Controller
         $data['mfa_methods'] = config('settings.global.mfa_methods');
         $data['mfa_status'] = config('settings.global.mfa_status');
 
+        $data['mfa_methods'] = config('settings.global.mfa_methods');
+        $data['mfa_status'] = config('settings.global.mfa_status');
+
         $response['status'] = 'success';
         $response['data'] = $data;
         if(env('APP_DEBUG'))
