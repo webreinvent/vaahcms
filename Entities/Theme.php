@@ -635,14 +635,11 @@ class Theme extends Model {
                     Migration::syncThemeMigrations($item->id,$current_max_batch);
                 }
 
-                //copy assets to public folder
-                static::copyAssets($item);
-
             }
 
             $response['status'] = 'success';
             $response['data']['item'] = $item;
-            $response['messages'][] = 'Migration is successful';
+            $response['messages'][] = 'Migration run is successful';
 
             if(env('APP_DEBUG'))
             {
@@ -668,14 +665,11 @@ class Theme extends Model {
                 $seeds_namespace = vh_theme_database_seeder($item->name);
                 Migration::runSeeds($seeds_namespace);
 
-                //copy assets to public folder
-                static::copyAssets($item);
-
             }
 
             $response['status'] = 'success';
             $response['data']['item'] = $item;
-            $response['messages'][] = 'Seeds are successful';
+            $response['messages'][] = 'Seeds run is successful';
 
             if(env('APP_DEBUG'))
             {
@@ -764,25 +758,23 @@ class Theme extends Model {
 
     }
     //-------------------------------------------------
-    public static function resetTheme($slug)
+    public static function resetThemeMigrations($slug)
     {
 
         try{
 
-            $item = static::where('slug', $slug)->first();
+            $item = static::slug($slug)->first();
 
+            if(!isset($item->is_migratable) || (isset($item->is_migratable) && $item->is_migratable == true))
+            {
+                $path = vh_theme_migrations_path($item->name);
+                Migration::resetMigrations($path);
 
-            //Delete theme entry
-            static::where('slug', $item->slug)->forceDelete();
+            }
 
             $response['status'] = 'success';
             $response['data']['item'] = $item;
-            $response['messages'][] = 'Theme reset successful';
-            if(env('APP_DEBUG'))
-            {
-                $response['hint'][] = '';
-            }
-            return $response;
+            $response['messages'][] = 'Migration reset is successful';
 
         }catch(\Exception $e)
         {
