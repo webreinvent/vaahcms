@@ -581,33 +581,14 @@ class ThemeBase extends Model {
                     Migration::syncThemeMigrations($item->id,$current_max_batch);
                 }
 
-                //copy assets to public folder
-                static::copyAssets($item);
-
                 LanguageString::generateLangFiles();
 
             }
 
 
-            // check if any theme is marked as default
-            $is_default_exist = self::where('is_default', 1)->exists();
-
-            if($is_default || !$is_default_exist)
-            {
-                $item->is_default = 1;
-
-                //mark all other themes no none default
-                Theme::where('is_default', 1)->update(['is_default'=>null]);
-            }
-
-            $item->is_active = 1;
-            $item->is_assets_published = 1;
-
-            $item->save();
-
             $response['success'] = true;
             $response['data'][] = '';
-            $response['messages'][] = 'Migration is successful';
+            $response['messages'][] = 'Migration run is successful';
 
             if(env('APP_DEBUG'))
             {
@@ -635,33 +616,13 @@ class ThemeBase extends Model {
                 $seeds_namespace = vh_theme_database_seeder($item->name);
                 Migration::runSeeds($seeds_namespace);
 
-                //copy assets to public folder
-                static::copyAssets($item);
-
                 LanguageString::generateLangFiles();
 
             }
 
-
-            // check if any theme is marked as default
-            $is_default_exist = self::where('is_default', 1)->exists();
-
-            if($is_default || !$is_default_exist)
-            {
-                $item->is_default = 1;
-
-                //mark all other themes no none default
-                Theme::where('is_default', 1)->update(['is_default'=>null]);
-            }
-
-            $item->is_active = 1;
-            $item->is_assets_published = 1;
-
-            $item->save();
-
             $response['success'] = true;
             $response['data'][] = '';
-            $response['messages'][] = 'Seeds are successful';
+            $response['messages'][] = 'Seeds run is successful';
 
             if(env('APP_DEBUG'))
             {
@@ -777,24 +738,26 @@ class ThemeBase extends Model {
 
     }
     //-------------------------------------------------
-    public static function resetTheme($slug)
+    public static function resetThemeMigrations($slug)
     {
 
         try{
 
-            $item = static::where('slug', $slug)->first();
+            $item = static::slug($slug)->first();
 
-            //Delete theme entry
-            static::where('slug', $item->slug)->forceDelete();
+            if(!isset($item->is_migratable) || (isset($item->is_migratable) && $item->is_migratable == true))
+            {
+
+                $path = vh_theme_migrations_path($item->name);
+                Migration::resetMigrations($path);
+
+                LanguageString::generateLangFiles();
+
+            }
 
             $response['success'] = true;
             $response['data'][] = '';
-            $response['messages'][] = 'Reset theme successful';
-            if(env('APP_DEBUG'))
-            {
-                $response['hint'][] = '';
-            }
-            return $response;
+            $response['messages'][] = 'Migration reset is successful';
 
         }catch(\Exception $e)
         {
