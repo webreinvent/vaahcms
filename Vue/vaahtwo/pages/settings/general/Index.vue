@@ -5,6 +5,7 @@ import { useGeneralStore } from "../../../stores/settings/store-general_setting"
 import draggable from 'vuedraggable';
 import { vaah } from '../../../vaahvue/pinia/vaah';
 import SiteSettings from './components/SiteSettings.vue';
+import Securities from './components/Securities.vue';
 import DateTime from './components/DateTime.vue';
 import SocialMediaLink from './components/SocialMediaLink.vue';
 import Script from './components/Scripts.vue';
@@ -59,6 +60,17 @@ onMounted(async () => {
                         </template>
 
                         <SiteSettings />
+                    </AccordionTab>
+
+                    <AccordionTab>
+                        <template #header>
+                            <div class="w-full">
+                                <h5 class="font-semibold text-sm">Securities</h5>
+                                <p class="text-color-secondary text-xs">Enable and choose multiple methods of authentication</p>
+                            </div>
+                        </template>
+
+                        <Securities />
                     </AccordionTab>
 
                     <AccordionTab>

@@ -500,6 +500,8 @@ class UsersController extends Controller
     {
         try {
             $data['profile'] = User::query()->find(Auth::user()->id);
+            $data['mfa_methods'] = config('settings.global.mfa_methods');
+            $data['mfa_status'] = config('settings.global.mfa_status');
 
             $response['success'] = true;
             $response['data'] = $data;

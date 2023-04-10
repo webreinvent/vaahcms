@@ -41,7 +41,7 @@ class UserBase extends Authenticatable
         "gender","country_calling_code","phone", "bio",
         "website","timezone",
         "alternate_email","avatar_url","birth",
-        "country","country_code","last_login_at","last_login_ip",
+        "country","country_code","is_mfa_enabled","last_login_at","last_login_ip",
         "remember_token", "login_otp", "api_token","api_token_used_at",
         "api_token_used_ip","is_active","activated_at","status",
         "affiliate_code","affiliate_code_used_at","mfa_code_expired_at",

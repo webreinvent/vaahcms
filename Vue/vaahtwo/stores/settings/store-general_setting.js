@@ -205,6 +205,18 @@ export const useGeneralStore = defineStore({
             this.getList();
         },
         //---------------------------------------------------------------------
+        async storeSecuritySettings () {
+            let options = {
+                method: 'post',
+            };
+
+            options.params = { list: this.list };
+
+            let ajax_url = this.ajax_url+'/store/site/settings';
+            await vaah().ajax(ajax_url, null, options);
+
+        },
+        //---------------------------------------------------------------------
         expandAll() {
             let accordionTabs = document.getElementById('accordionTabContainer').children.length;
             for (let i = 0; i <= accordionTabs; i++) {
