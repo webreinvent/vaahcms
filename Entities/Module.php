@@ -526,15 +526,12 @@ class Module extends Model {
                     Migration::syncModuleMigrations($module->id,$current_max_batch);
                 }
 
-                //copy assets to public folder
-                Module::copyAssets($module);
-
             }
 
 
             $response['status'] = 'success';
             $response['data']['item'] = $module;
-            $response['messages'][] = 'Migration is successful';
+            $response['messages'][] = 'Migration run is successful';
 
             if(env('APP_DEBUG'))
             {
@@ -561,15 +558,12 @@ class Module extends Model {
                 $seeds_namespace = vh_module_database_seeder($module->name);
                 Migration::runSeeds($seeds_namespace);
 
-                //copy assets to public folder
-                Module::copyAssets($module);
-
             }
 
 
             $response['status'] = 'success';
             $response['data']['item'] = $module;
-            $response['messages'][] = 'Seeds are successful';
+            $response['messages'][] = 'Seeds run is successful';
 
             if(env('APP_DEBUG'))
             {
@@ -693,26 +687,25 @@ class Module extends Model {
 
     }
     //-------------------------------------------------
-    public static function resetModule($slug)
+    public static function resetModuleMigrations($slug)
     {
 
         try{
 
-            $item = static::where('slug', $slug)->first();
+            $module = Module::slug($slug)->first();
 
+            if(!isset($module->is_migratable) || (isset($module->is_migratable) && $module->is_migratable == true))
+            {
 
-            //Delete module entry
-            static::where('slug', $item->slug)->forceDelete();
+                $module_path = config('vaahcms.modules_path').$module->name;
+                $path = vh_module_migrations_path($module->name);
+                Migration::resetMigrations($path);
+
+            }
 
             $response['status'] = 'success';
-            $response['data']['item'] = $item;
-            $response['messages'][] = 'Module reset successful';
-            if(env('APP_DEBUG'))
-            {
-                $response['hint'][] = '';
-            }
-            return $response;
-
+            $response['data']['item'] = $module;
+            $response['messages'][] = 'Migration reset is successful';
         }catch(\Exception $e)
         {
             $response['status'] = 'failed';
