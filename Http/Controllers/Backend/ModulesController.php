@@ -304,7 +304,7 @@ class ModulesController extends Controller
 
                         return response()->json($response);
                     }
-                    $response = Module::resetModule($module->slug);
+                    $response = Module::resetModuleMigrations($module->slug);
                     break;
                 //---------------------------------------
                 case 'run_migrations':
