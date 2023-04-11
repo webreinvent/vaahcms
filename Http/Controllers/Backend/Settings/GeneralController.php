@@ -10,6 +10,7 @@ use Illuminate\Support\Str;
 use WebReinvent\VaahCms\Models\Language;
 use WebReinvent\VaahCms\Models\Role;
 use WebReinvent\VaahCms\Models\Setting;
+use WebReinvent\VaahCms\Libraries\VaahHelper;
 
 class GeneralController extends Controller
 {

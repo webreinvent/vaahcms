@@ -1,5 +1,6 @@
 import {defineStore, acceptHMRUpdate} from 'pinia';
 import {vaah} from '../vaahvue/pinia/vaah'
+import {watch} from "vue";
 
 let base_url = document.getElementsByTagName('base')[0].getAttribute("href");
 let ajax_url = base_url;
@@ -13,17 +14,25 @@ export const useAuthStore = defineStore({
         json_url: json_url,
         gutter: 20,
         show_progress_bar: false,
+        is_resend_otp_btn_loading: false,
         is_installation_verified: false,
         is_forgot_password_btn_loading: false,
         forgot_password_items: {
             email: null,
         },
+        title: {
+            heading: 'Welcome Back',
+            description: 'Please Sign in to continue',
+        },
+        is_mfa_visible: false,
         is_reset_password_btn_loading: false,
+        verification_otp: null,
         reset_password_items: {
             reset_password_code: null,
             password: null,
             password_confirmation: null,
         },
+        security_timer: 0,
         is_btn_loading: false,
         no_of_login_attempt: null,
         max_attempts_of_login: 5,
@@ -40,6 +49,7 @@ export const useAuthStore = defineStore({
     }),
     getters: {},
     actions: {
+
         sendCode()
         {
             this.is_forgot_password_btn_loading = true;
@@ -110,7 +120,11 @@ export const useAuthStore = defineStore({
             if(data) {
                 if(data.verification_response && data.verification_response.status
                     && data.verification_response.status === 'success') {
-                    this.is_verification_form_visible = true;
+                    this.is_mfa_visible = true;
+                    this.security_timer = 10;
+                    this.title.heading = 'Multi-Factor Authentication';
+                    this.title.description = 'You have received an email which contains two factor code.';
+                    this.resendCountdown();
                 } else {
                     window.location = data.redirect_url+'#/vaah';
                 }
@@ -166,6 +180,74 @@ export const useAuthStore = defineStore({
             this.is_otp_btn_loading = false;
             if (data) {
 
+            }
+        },
+        //---------------------------------------------------------------------
+        verifyPost () {
+
+            let options = {
+                params: {
+                    'verification_otp':this.verification_otp
+                },
+                method: 'post'
+            };
+
+            vaah().ajax(
+                this.ajax_url+'/verify/post',
+                this.verifyPostAfter,
+                options
+            );
+
+
+        },
+        //---------------------------------------------------------------------
+        verifyPostAfter (data, res) {
+            if(data && data.redirect_url)
+            {
+                window.location = data.redirect_url;
+            }
+        },
+        //-----------------------------------------------------------------------
+        //---------------------------------------------------------------------
+        resendSecurityOtp (e) {
+            e.preventDefault();
+            this.is_resend_otp_btn_loading = true;
+            let options = {
+                params: {},
+                method: 'post'
+            };
+
+            vaah().ajax(
+                this.ajax_url+'/resendSecurityOtp/post',
+                this.resendSecurityOtpAfter,
+                options
+            );
+        },
+        //---------------------------------------------------------------------
+        resendSecurityOtpAfter: function (data) {
+
+            this.security_timer = 30;
+
+            if(data)
+            {
+                this.is_resend_otp_btn_loading = false;
+            }
+
+        },
+        //-----------------------------------------------------------------------
+        resendCountdown () {
+
+            if (this.security_timer > 0) {
+                watch(() => this.security_timer, (newVal,oldVal) =>
+                    {
+                        if(newVal && newVal !== "")
+                        {
+                            setTimeout(() => {
+                                this.security_timer--;
+                            }, this.security_timer*1000);
+                        }
+                    },{deep: true}
+                )
             }
         },
         //-----------------------------------------------------------------------

@@ -13,6 +13,9 @@ use Illuminate\Support\Str;
 use WebReinvent\VaahCms\Libraries\VaahMail;
 use WebReinvent\VaahCms\Notifications\MultiFactorCode;
 use WebReinvent\VaahCms\Traits\CrudWithUuidObservantTrait;
+use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Cookie;
+use WebReinvent\VaahCms\Jobs\SecurityOtpJob;
 
 class UserBase extends Authenticatable
 {
@@ -27,7 +30,8 @@ class UserBase extends Authenticatable
     //-------------------------------------------------
     protected $dates = [
         "last_login_at", "api_token_used_at",
-        "affiliate_code_used_at","mfa_code_expired_at", "reset_password_code_sent_at",
+        "affiliate_code_used_at","security_code_expired_at",
+        "reset_password_code_sent_at",
         "reset_password_code_used_at",
         "birth", "activated_at",
         "created_at","updated_at","deleted_at"
@@ -244,8 +248,8 @@ class UserBase extends Authenticatable
             'alternate_email', 'avatar_url', 'birth', 'country',
             'last_login_at', 'last_login_ip', 'api_token', 'api_token_used_at',
             'api_token_used_ip', 'is_active', 'activated_at', 'status',
-            'affiliate_code', 'affiliate_code_used_at','mfa_code_expired_at',
-            'mfa_code','created_by', 'updated_by',
+            'affiliate_code', 'affiliate_code_used_at','security_code_expired_at',
+            'security_code','created_by', 'updated_by',
             'deleted_by', 'created_at', 'updated_at',
             'deleted_at'
         ];
@@ -686,8 +690,7 @@ class UserBase extends Authenticatable
 
             $user->save();
 
-
-            $response['success'] = true;
+            $response['status'] = 'success';
         }elseif(Auth::attempt(['username' => $inputs['email'],
             'password' => trim($request->get('password'))
         ], $remember)){
@@ -695,7 +698,7 @@ class UserBase extends Authenticatable
             $user->last_login_at = Carbon::now();
             $user->save();
 
-            $response['success'] = true;
+            $response['status'] = 'success';
         } else {
             $response['success'] = false;
             $response['errors'][] = trans('vaahcms::messages.invalid_credentials');
@@ -1963,17 +1966,20 @@ class UserBase extends Authenticatable
     public function verifySecurityAuthentication()
     {
 
-        $this->mfa_code = null;
-        $this->mfa_code_expired_at = null;
+        $this->security_code = null;
+        $this->security_code_expired_at = null;
         $this->save();
 
         $has_security = true;
 
-        $response['success'] = false;
+        $response['status'] = 'failed';
         $response['data'] = null;
 
         if(!config('settings.global.mfa_status')
-            || config('settings.global.mfa_status') === 'disable'){
+            || config('settings.global.mfa_status') === 'disable'
+            || !is_array(config('settings.global.mfa_methods'))
+            || (is_array(config('settings.global.mfa_methods'))
+                && count(config('settings.global.mfa_methods')) == 0)){
             $has_security = false;
         }
 
@@ -1984,41 +1990,47 @@ class UserBase extends Authenticatable
             $has_security = false;
         }
 
-//        /*$response = new Response('Set Cookie');
-//        $response->withCookie(cookie('app_name', env('APP_NAME'), 500000));*/
-//
-//        dd(get_browser());
-//
-////        Cookie::queue('app_name', env('APP_NAME'), 500000);
-//
-//        dd(Cookie::get('app_name'));
-//
-//        if(config('settings.global.is_new_device_verification_enabled') == 1){
-//
-//            if(Cookie::get('app_name')
-//                && Cookie::get('app_name') == env('APP_NAME')){
-//
-//                $has_security = false;
-//            }
-//
-//        }
-
         if(!$has_security){
             return $response;
         }
 
-        $this->mfa_code = rand(100000, 999999);
-        $this->mfa_code_expired_at = now()->addMinutes(10);
+        $this->security_code = rand(100000, 999999);
+        $this->security_code_expired_at = now()->addMinutes(10);
         $this->save();
 
-        $this->notify(new MultiFactorCode());
+        dispatch(new SecurityOtpJob($this->toArray()));
 
-        $response['success'] = true;
+        $response['status'] = 'success';
 
         return $response;
 
     }
     //-------------------------------------------------
+    public function verifyMfa()
+    {
+
+        $this->mfa_code = null;
+        $this->mfa_code_expired_at = null;
+
+        if(config('settings.global.mfa_status') != 'disable'){
+
+            if(config('settings.global.mfa_status') == 'user-will-have-option'
+                && (!is_array($this->mfa_methods)
+                    || (is_array($this->mfa_methods) && count($this->mfa_methods) == 0))){
+
+                return false;
+            }
+
+            $this->mfa_code = rand(100000, 999999);
+            $this->mfa_code_expired_at = now()->addMinutes(10);
+            $this->save();
+
+            $this->notify(new MultiFactorCode());
+
+            return route('vh.backend').'#/verify';
+        }
+
+    }
 
     //-------------------------------------------------
     //-------------------------------------------------

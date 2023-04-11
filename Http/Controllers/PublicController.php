@@ -120,7 +120,7 @@ class PublicController extends Controller
         if ( $validator->fails() ) {
 
             $errors             = errorsToArray($validator->errors());
-            $response['success'] = false;
+            $response['status'] = 'failed';
             $response['errors'] = $errors;
             return response()->json($response);
         }
@@ -135,7 +135,7 @@ class PublicController extends Controller
             $response = User::login($request, $permission_to_check);
         }
 
-        if(isset($response['success']) && !$response['success'])
+        if(isset($response['status']) && $response['status'] == 'failed')
         {
             return response()->json($response);
         }
@@ -148,12 +148,16 @@ class PublicController extends Controller
             $redirect_url = \URL::route('vh.backend');
         }
 
-
+        $check_mfa = Auth::user()->verifySecurityAuthentication();
+        $message = 'Login Successful';
+        if($check_mfa['status'] == 'success'){
+            $message = 'Otp sent';
+        }
 
         $response = [];
 
-        $response['success'] = true;
-        $response['messages'][] = 'Login Successful';
+        $response['status'] = 'success';
+        $response['messages'][] = $message;
         $response['data']['redirect_url'] = $redirect_url;
         $response['data']['verification_response'] = Auth::user()->verifySecurityAuthentication();
 
@@ -163,15 +167,14 @@ class PublicController extends Controller
     //----------------------------------------------------------
     public function postVerify(Request $request)
     {
-
         $inputs = [
             'otp_code' => null
         ];
 
-        if(is_array($request->verify_otp))
+        if($request->verification_otp)
         {
             $inputs = [
-                'otp_code' => implode("", $request->verify_otp)
+                'otp_code' => $request->verification_otp
             ];
 
         }
@@ -184,7 +187,7 @@ class PublicController extends Controller
         if ( $validator->fails() ) {
 
             $errors             = errorsToArray($validator->errors());
-            $response['success'] = false;
+            $response['status'] = 'failed';
             $response['errors'] = $errors;
             return response()->json($response);
         }
@@ -192,21 +195,21 @@ class PublicController extends Controller
 
         $user = auth()->user();
 
-        if($user && !$user->mfa_code && !$user->mfa_code_expired_at){
-            $response['success'] = true;
+        if($user && !$user->security_code && !$user->security_code_expired_at){
+            $response['status'] = 'success';
             $response['messages'][] = 'Login Successful';
             $response['data']['redirect_url'] = route('vh.backend').'#/vaah';
             return $response;
         }
 
-        if($user && $user->mfa_code_expired_at && $user->mfa_code_expired_at->lt(now()))
+        if($user && $user->security_code_expired_at && $user->security_code_expired_at->lt(now()))
         {
-            $user->mfa_code = null;
-            $user->mfa_code_expired_at = null;
+            $user->security_code = null;
+            $user->security_code_expired_at = null;
             $user->save();
             auth()->logout();
 
-            $response['success'] = false;
+            $response['status'] = 'failed';
             $response['errors'][] = 'The code has expired. Please login again.';
             $response['data']['redirect_url'] = route('vh.backend');
 
@@ -214,18 +217,18 @@ class PublicController extends Controller
         }
 
 
-        if($user && $inputs['otp_code'] == $user->mfa_code)
+        if($user && $inputs['otp_code'] == $user->security_code)
         {
-            $user->mfa_code = null;
-            $user->mfa_code_expired_at = null;
+            $user->security_code = null;
+            $user->security_code_expired_at = null;
             $user->save();
 
-            $response['success'] = true;
+            $response['status'] = 'success';
             $response['messages'][] = 'Login Successful';
             $response['data']['redirect_url'] = route('vh.backend').'#/vaah';
 
         }else{
-            $response['success'] = false;
+            $response['status'] = 'failed';
             $response['errors'][] = 'Code is not correct.';
         }
 
@@ -233,6 +236,19 @@ class PublicController extends Controller
 
         return response()->json($response);
 
+    }
+    //----------------------------------------------------------
+    public function signinResendSecurityOtp(Request $request)
+    {
+
+        Auth::user()->verifySecurityAuthentication();
+
+        $response = [];
+
+        $response['status'] = 'success';
+        $response['data'] = '{}';
+
+        return response()->json($response);
     }
     //----------------------------------------------------------
     public function postSendResetCode(Request $request)
