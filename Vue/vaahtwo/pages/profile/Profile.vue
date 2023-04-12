@@ -220,21 +220,20 @@ onMounted(async () => {
                 </template>
             </Card>
         </div>
-        <div class="col-4" v-if="store.list && store.list.mfa_status === 'user-will-have-option'">
+        <div class="col-4" v-if="store.mfa_methods.length != 0">
             <h5 class="mb-2">Multi-Factor Authentication</h5>
             <p class="text-sm">Multi-factor Authentication (MFA) is an authentication method that
                 requires the user to provide two or more verification factors to gain access to a resource.</p>
         </div>
-        <div class="col-5 p-fluid mt-3" v-if="store.list && store.list.mfa_status === 'user-will-have-option'">
+        <div class="col-5 p-fluid mt-3" v-if="store.mfa_methods.length != 0">
             <Card class="form">
                 <template #content>
                     <div class="p-float-label"
-                         v-if=" store.mfa_methods"
                          v-for="method in store.mfa_methods">
                         <Checkbox class="flex"
                                   :data-testid="'profile-'+method"
                                   inputId="mfa-method"
-                                  v-model="store.list.mfa_methods"
+                                  v-model="store.profile.mfa_methods"
                                   :value="method" />
                         <label class="ml-2" for="mfa-method">{{ useVaah.toLabel(method) }}</label>
                     </div>

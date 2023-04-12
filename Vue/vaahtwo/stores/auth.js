@@ -14,7 +14,7 @@ export const useAuthStore = defineStore({
         json_url: json_url,
         gutter: 20,
         show_progress_bar: false,
-        is_resend_otp_btn_loading: false,
+        is_resend_disabled: false,
         is_installation_verified: false,
         is_forgot_password_btn_loading: false,
         forgot_password_items: {
@@ -209,9 +209,7 @@ export const useAuthStore = defineStore({
         },
         //-----------------------------------------------------------------------
         //---------------------------------------------------------------------
-        resendSecurityOtp (e) {
-            e.preventDefault();
-            this.is_resend_otp_btn_loading = true;
+        resendSecurityOtp () {
             let options = {
                 params: {},
                 method: 'post'
@@ -219,35 +217,23 @@ export const useAuthStore = defineStore({
 
             vaah().ajax(
                 this.ajax_url+'/resendSecurityOtp/post',
-                this.resendSecurityOtpAfter,
+                null,
                 options
             );
-        },
-        //---------------------------------------------------------------------
-        resendSecurityOtpAfter: function (data) {
-
+            this.is_resend_disabled = true;
             this.security_timer = 30;
-
-            if(data)
-            {
-                this.is_resend_otp_btn_loading = false;
-            }
-
+            this.resendCountdown();
         },
         //-----------------------------------------------------------------------
         resendCountdown () {
-
             if (this.security_timer > 0) {
-                watch(() => this.security_timer, (newVal,oldVal) =>
-                    {
-                        if(newVal && newVal !== "")
-                        {
-                            setTimeout(() => {
-                                this.security_timer--;
-                            }, this.security_timer*1000);
-                        }
-                    },{deep: true}
-                )
+                this.is_resend_disabled = true;
+                setTimeout(() => {
+                    this.security_timer--;
+                    this.resendCountdown();
+                }, 1000);
+            } else {
+                this.is_resend_disabled = false   ;
             }
         },
         //-----------------------------------------------------------------------

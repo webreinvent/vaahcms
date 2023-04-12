@@ -47,9 +47,14 @@ onMounted(async () => {
                                         <Button label="Submit OTP" class="p-button-sm"
                                                 @click="auth.verifyPost"
                                                 data-testid="signin-check_verification" />
-                                        <Button :label="'Resend OTP in '+auth.security_timer+' secs..'"
+                                        <Button v-if="auth.is_resend_disabled"
+                                                :label="'Resend OTP in '+auth.security_timer+' secs..'"
+                                                disabled
+                                                class="p-button-sm"/>
+                                        <Button v-else
+                                                label="Resend OTP"
                                                 data-testid="signin-resend_verification"
-                                                @click="auth.resendSecurityOtp(e)"
+                                                @click="auth.resendSecurityOtp"
                                                 class="p-button-sm"/>
 
 

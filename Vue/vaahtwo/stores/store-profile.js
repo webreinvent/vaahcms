@@ -85,7 +85,6 @@ export const useProfileStore = defineStore({
                 this.list = data;
                 this.mfa_methods=data.mfa_methods;
                 this.profile = data.profile;
-
             }
         },
         //---------------------------------------------------------------------
