@@ -51,8 +51,6 @@ class CreateVhUsersTable extends Migration
                 $table->string('status')->nullable()->index();
                 $table->string('security_code',50)->nullable();
                 $table->dateTime('security_code_expired_at')->nullable();
-                $table->string('mfa_code',50)->nullable();
-                $table->dateTime('mfa_code_expired_at')->nullable();
                 $table->string('affiliate_code')->nullable();
                 $table->dateTime('affiliate_code_used_at')->nullable();
 
