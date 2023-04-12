@@ -131,6 +131,9 @@ class GeneralController extends Controller
                         ->update(['value' => $value]);
                 }
             }
+            //clear cache
+            VaahHelper::clearCache();
+
             $response['status'] = 'success';
             $response['data'][] = '';
             $response['messages'][] = 'Settings successful saved';
@@ -147,13 +150,6 @@ class GeneralController extends Controller
                 $response['errors'][] = 'Something went wrong.';
             }
         }
-
-        //clear cache
-        VaahHelper::clearCache();
-
-        $response['status'] = 'success';
-        $response['data'][] = '';
-        $response['messages'][] = 'Settings successful saved';
 
         return $response;
 

@@ -39,20 +39,18 @@ class JsonController extends Controller
                 $v_version = env('VAAHCMS_VERSION');
             }
 
-        $data['vaahcms'] = [
-            'name' => config('vaahcms.app_name'),
-            'slug' => config('vaahcms.app_slug'),
-            'version' => $v_version,
-            'website' => config('vaahcms.website'),
-            'docs' => config('vaahcms.documentation'),
-        ];
-
             $data['vaahcms'] = [
                 'name' => config('vaahcms.app_name'),
                 'slug' => config('vaahcms.app_slug'),
                 'version' => $v_version,
                 'website' => config('vaahcms.website'),
                 'docs' => config('vaahcms.documentation'),
+            ];
+
+            $data['versions'] = [
+                'laravel_version' => Application::VERSION,
+                'php_version' => PHP_VERSION,
+                'vaahcms_version' => $v_version
             ];
 
             $data['settings'] = [
