@@ -35,7 +35,7 @@ onMounted(async () => {
 
                         <template #content>
                             <div v-if="auth.is_mfa_visible">
-                                <div class="mb-5">
+                                <div class="mt-5">
                                     <div class="p-float-label mb-5">
                                         <InputText id="code"
                                                    v-model="auth.verification_otp"

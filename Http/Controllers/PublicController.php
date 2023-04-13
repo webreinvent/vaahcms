@@ -148,9 +148,9 @@ class PublicController extends Controller
             $redirect_url = \URL::route('vh.backend');
         }
 
-        $check_mfa = Auth::user()->verifySecurityAuthentication();
+        $mfa_data = Auth::user()->verifySecurityAuthentication();
         $message = 'Login Successful';
-        if($check_mfa['status'] == 'success'){
+        if($mfa_data['status'] == 'success'){
             $message = 'Otp sent';
         }
 
@@ -159,7 +159,7 @@ class PublicController extends Controller
         $response['status'] = 'success';
         $response['messages'][] = $message;
         $response['data']['redirect_url'] = $redirect_url;
-        $response['data']['verification_response'] = Auth::user()->verifySecurityAuthentication();
+        $response['data']['verification_response'] = $mfa_data;
 
         return response()->json($response);
 
