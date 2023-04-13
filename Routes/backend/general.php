@@ -12,7 +12,7 @@ Route::group(
         //------------------------------------------------
         //------------------------------------------------
         Route::get( '/', 'PublicController@login' )
-            ->name( 'vh.backend' )->middleware('verify.auth');
+            ->name( 'vh.backend' );
         //------------------------------------------------
         Route::get( '/login', 'PublicController@redirectToLogin' )
             ->name( 'vh.backend.login' );
