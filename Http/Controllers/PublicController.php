@@ -118,7 +118,7 @@ class PublicController extends Controller
 
     }
     //----------------------------------------------------------
-    public function postVerify(Request $request)
+    public function verifySecurityOtp(Request $request)
     {
 
         $inputs = [
@@ -192,7 +192,7 @@ class PublicController extends Controller
 
     }
     //----------------------------------------------------------
-    public function signinResendSecurityOtp(Request $request)
+    public function resendSecurityOtp(Request $request)
     {
 
         Auth::user()->verifySecurityAuthentication();

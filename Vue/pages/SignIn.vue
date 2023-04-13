@@ -30,7 +30,7 @@
 
                                 <!--form-->
                                 <form v-if="is_verification_form_visible" class="is-full-width"
-                                      @submit.prevent="verifyPost()">
+                                      @submit.prevent="verifySecurityOtp()">
                                     <hr class="has-margin-bottom-10"/>
 
                                     <b-field label="Enter OTP" grouped>

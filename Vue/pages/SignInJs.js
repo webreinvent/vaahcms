@@ -104,17 +104,17 @@ export default {
             }
         },
         //---------------------------------------------------------------------
-        verifyPost: function () {
+        verifySecurityOtp: function () {
             this.is_verification_btn_otp_loading = true;
             let params = {
                 'verify_otp': this.verification
             };
-            let url = this.ajax_url+'/verify/post';
-            this.$vaah.ajax(url, params, this.verifyPostAfter);
+            let url = this.ajax_url+'/verify/security/otp';
+            this.$vaah.ajax(url, params, this.verifySecurityOtpAfter);
 
         },
         //---------------------------------------------------------------------
-        verifyPostAfter: function (data, res) {
+        verifySecurityOtpAfter: function (data, res) {
             this.is_verification_btn_otp_loading = false;
             if(data && data.redirect_url)
             {
@@ -144,7 +144,7 @@ export default {
         resendSecurityOtp: function (e) {
             e.preventDefault();
             this.is_resend_otp_btn_loading = true;
-            var url = this.ajax_url+'/resendSecurityOtp/post';
+            var url = this.ajax_url+'/resend/security/otp';
             var params = {};
             this.$vaah.ajax(url, params, this.resendSecurityOtpAfter);
         },
