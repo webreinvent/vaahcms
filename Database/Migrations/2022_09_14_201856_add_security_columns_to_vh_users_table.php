@@ -6,6 +6,33 @@ use Illuminate\Support\Facades\Schema;
 
 class AddSecurityColumnsToVhUsersTable extends Migration
 {
+    public function table()
+    {
+        return 'vh_users';
+    }
+
+    public function columns()
+    {
+        return [
+            [
+                "type"=>"text",
+                "column"=>"mfa_methods",
+                "after"=>"country_code",
+            ],
+            [
+                "type"=>"string",
+                "column"=>"security_code",
+                "length"=>50,
+                "after"=>"status",
+            ],
+            [
+                "type"=>"dateTime",
+                "column"=>"security_code_expired_at",
+                "after"=>"security_code",
+            ]
+        ];
+    }
+
     /**
      * Run the migrations.
      *
@@ -13,14 +40,30 @@ class AddSecurityColumnsToVhUsersTable extends Migration
      */
     public function up()
     {
-        Schema::table('vh_users', function (Blueprint $table) {
-            $table->text('mfa_methods')->after('country_code')
-                ->nullable();
-            $table->string('security_code',50)->after('status')
-                ->nullable();
-            $table->dateTime('security_code_expired_at')->after('security_code')
-                ->nullable();
-        });
+
+        $table = $this->table();
+        $list = $this->columns();
+
+        foreach ($list as $item)
+        {
+            if(!Schema::hasColumn($table, $item['column'])){
+                Schema::table($table, function (Blueprint $table) use ($item)
+                {
+                    $type = $item['type'];
+                    $column = $item['column'];
+                    if(isset($item['after']))
+                    {
+                        $table->$type($column,isset($item['length']) ? $item['length'] : null)
+                            ->nullable()->after($item['after']);
+                    }  else
+                    {
+                        $table->$type($column,isset($item['length']) ? $item['length'] : null)
+                            ->nullable();
+                    }
+                });
+            }
+        }
+
     }
 
     /**
@@ -30,10 +73,17 @@ class AddSecurityColumnsToVhUsersTable extends Migration
      */
     public function down()
     {
-        Schema::table('vh_users', function (Blueprint $table) {
-            $table->dropColumn('mfa_methods');
-            $table->dropColumn('security_code');
-            $table->dropColumn('security_code_expired_at');
-        });
+        $table = $this->table();
+        $list = $this->columns();
+        foreach ($list as $item)
+        {
+            if(Schema::hasColumn($table, $item['column'])){
+                Schema::table($table, function (Blueprint $table) use ($item)
+                {
+                    $column = $item['column'];
+                    $table->dropColumn($column);
+                });
+            }
+        }
     }
 }
