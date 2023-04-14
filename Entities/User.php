@@ -19,8 +19,8 @@ use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Str;
 use WebReinvent\VaahCms\Jobs\ProcessMails;
 use WebReinvent\VaahCms\Jobs\ProcessNotifications;
-use WebReinvent\VaahCms\Jobs\SecurityOtpJob;
 use WebReinvent\VaahCms\Libraries\VaahMail;
+use WebReinvent\VaahCms\Mail\SecurityOtpMail;
 use WebReinvent\VaahCms\Mail\TestMail;
 use WebReinvent\VaahCms\Notifications\MultiFactorCode;
 use WebReinvent\VaahCms\Traits\CrudWithUuidObservantTrait;
@@ -1983,7 +1983,7 @@ class User extends Authenticatable
         $this->security_code_expired_at = now()->addMinutes(10);
         $this->save();
 
-        dispatch(new SecurityOtpJob($this->toArray()));
+        VaahMail::dispatch(new SecurityOtpMail($this->toArray()),[$this->email]);
 
         $response['status'] = 'success';
 
