@@ -15,7 +15,7 @@ use WebReinvent\VaahCms\Notifications\MultiFactorCode;
 use WebReinvent\VaahCms\Traits\CrudWithUuidObservantTrait;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Cookie;
-use WebReinvent\VaahCms\Jobs\SecurityOtpJob;
+use WebReinvent\VaahCms\Mail\SecurityOtpMail;
 
 class UserBase extends Authenticatable
 {
@@ -1998,7 +1998,7 @@ class UserBase extends Authenticatable
         $this->security_code_expired_at = now()->addMinutes(10);
         $this->save();
 
-        dispatch(new SecurityOtpJob($this->toArray()));
+        VaahMail::dispatch(new SecurityOtpMail($this->toArray()),[$this->email]);
 
         $response['status'] = 'success';
 
