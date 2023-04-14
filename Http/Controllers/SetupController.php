@@ -8,6 +8,7 @@ use Illuminate\Filesystem\Filesystem;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
+use WebReinvent\VaahCms\Entities\LanguageString;
 use WebReinvent\VaahCms\Entities\Module;
 use WebReinvent\VaahCms\Entities\Permission;
 use WebReinvent\VaahCms\Entities\Role;
@@ -522,6 +523,8 @@ class SetupController extends Controller
             //publish laravel mail and notifications
             VaahArtisan::publish(null, 'laravel-mail');
             VaahArtisan::publish(null, 'laravel-notifications');
+
+            LanguageString::generateLangFiles();
 
             $response =[];
             $response['status'] = 'success';

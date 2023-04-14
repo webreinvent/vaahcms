@@ -208,13 +208,12 @@ class VaahCmsTableSeeder extends Seeder
                 ->where( 'key', $item['key'] )
                 ->first();
 
+            if(isset($item['type']) && $item['type']=='json')
+            {
+                $item['value']=json_encode($item['value']);
+            }
+
             if (!$exist){
-
-                if(isset($item['type']) && $item['type']=='json')
-                {
-                    $item['value']=json_encode($item['value']);
-                }
-
                 \DB::table( 'vh_settings' )->insert( $item );
             } else{
                 \DB::table( 'vh_settings' )

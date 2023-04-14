@@ -31,6 +31,12 @@ Route::group(
         Route::get( '/logout', 'PublicController@logout' )
             ->name( 'vh.backend.logout' );
         //-----------------------------------------------
+        Route::post( '/verify/security/otp', 'PublicController@verifySecurityOtp' )
+            ->name( 'vh.backend.verify.security.otp' );
+        //------------------------------------------------
+        Route::post( '/resend/security/otp', 'PublicController@resendSecurityOtp' )
+            ->name( 'vh.backend.resend.security.otp' );
+        //------------------------------------------------
 
         Route::group(
             [
