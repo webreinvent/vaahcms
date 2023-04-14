@@ -183,7 +183,7 @@ export const useAuthStore = defineStore({
             }
         },
         //---------------------------------------------------------------------
-        verifyPost () {
+        verifySecurityOtp () {
 
             let options = {
                 params: {
@@ -193,15 +193,15 @@ export const useAuthStore = defineStore({
             };
 
             vaah().ajax(
-                this.ajax_url+'/verify/post',
-                this.verifyPostAfter,
+                this.ajax_url+'/verify/security/otp',
+                this.verifySecurityOtpAfter,
                 options
             );
 
 
         },
         //---------------------------------------------------------------------
-        verifyPostAfter (data, res) {
+        verifySecurityOtpAfter (data, res) {
             if(data && data.redirect_url)
             {
                 window.location = data.redirect_url;
@@ -216,7 +216,7 @@ export const useAuthStore = defineStore({
             };
 
             vaah().ajax(
-                this.ajax_url+'/resendSecurityOtp/post',
+                this.ajax_url+'/resend/security/otp',
                 null,
                 options
             );

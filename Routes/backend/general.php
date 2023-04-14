@@ -12,7 +12,7 @@ Route::group(
         //------------------------------------------------
         //------------------------------------------------
         Route::get( '/', 'PublicController@login' )
-            ->name( 'vh.backend' )->middleware('verify.auth');
+            ->name( 'vh.backend' );
         //------------------------------------------------
         Route::get( '/login', 'PublicController@redirectToLogin' )
             ->name( 'vh.backend.login' );
@@ -28,15 +28,17 @@ Route::group(
         //------------------------------------------------
         Route::post( '/signin/generate/otp', 'PublicController@postGenerateOTP' );
         //------------------------------------------------
-        Route::post( '/resendSecurityOtp/post', 'PublicController@signinResendSecurityOtp' )
-            ->name( 'vh.backend.resendSecurityOtp.post' );
-        //------------------------------------------------
         Route::get( '/logout', 'PublicController@logout' )
             ->name( 'vh.backend.logout' );
         //-----------------------------------------------
         Route::post( '/verify/post', 'PublicController@postVerify' )
             ->name( 'vh.backend.verify.post' );
         //------------------------------------------------
+        Route::post( '/verify/security/otp', 'PublicController@verifySecurityOtp' )
+            ->name( 'vh.backend.verify.security.otp' );
+        //------------------------------------------------
+        Route::post( '/resend/security/otp', 'PublicController@resendSecurityOtp' )
+            ->name( 'vh.backend.resend.security.otp' );
 
         Route::any( '/faker', 'Frontend\WelcomeController@getFaker' )
             ->name( 'vh.faker' );

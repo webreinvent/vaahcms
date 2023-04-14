@@ -45,7 +45,7 @@ onMounted(async () => {
                                     </div>
                                     <div class="field flex justify-content-between align-items-center">
                                         <Button label="Submit OTP" class="p-button-sm"
-                                                @click="auth.verifyPost"
+                                                @click="auth.verifySecurityOtp"
                                                 data-testid="signin-check_verification" />
                                         <Button v-if="auth.is_resend_disabled"
                                                 :label="'Resend OTP in '+auth.security_timer+' secs..'"
