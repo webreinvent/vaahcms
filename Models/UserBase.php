@@ -690,7 +690,7 @@ class UserBase extends Authenticatable
 
             $user->save();
 
-            $response['status'] = 'success';
+            $response['success'] = true;
         }elseif(Auth::attempt(['username' => $inputs['email'],
             'password' => trim($request->get('password'))
         ], $remember)){
@@ -698,7 +698,7 @@ class UserBase extends Authenticatable
             $user->last_login_at = Carbon::now();
             $user->save();
 
-            $response['status'] = 'success';
+            $response['success'] = true;
         } else {
             $response['success'] = false;
             $response['errors'][] = trans('vaahcms::messages.invalid_credentials');
@@ -1972,7 +1972,7 @@ class UserBase extends Authenticatable
 
         $has_security = true;
 
-        $response['status'] = 'failed';
+        $response['success'] = false;
         $response['data'] = null;
 
         if(!config('settings.global.mfa_status')
@@ -2000,7 +2000,7 @@ class UserBase extends Authenticatable
 
         VaahMail::dispatch(new SecurityOtpMail($this->toArray()),[$this->email]);
 
-        $response['status'] = 'success';
+        $response['success'] = true;
 
         return $response;
 
