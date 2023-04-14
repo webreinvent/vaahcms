@@ -91,7 +91,7 @@
                                         <tr>
                                             <td class="col px-sm-16">
                                                 <p style="font-weight: 400;color: #6F737E;font-size: 18px">
-                                                    Enter the code below to log in to {{config('app.name')}}:</p>
+                                                    Enter the OTP below to log in to {{config('app.name')}}:</p>
                                             </td>
                                         </tr>
                                         <tr>
@@ -106,7 +106,7 @@
                                         <tr >
                                             <td>
                                                 <p style="font-weight: 400;color: #6F737E;font-size: 18px">
-                                                    The code will expire in 10 minutes
+                                                    The OTP will expire in 10 minutes
                                                 </p>
                                             </td>
                                         </tr>
