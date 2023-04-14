@@ -134,8 +134,7 @@ class PublicController extends Controller
         {
             $response = User::login($request, $permission_to_check);
         }
-
-        if(isset($response['status']) && $response['status'] == 'failed')
+        if(!$response['success'])
         {
             return response()->json($response);
         }
@@ -150,13 +149,13 @@ class PublicController extends Controller
 
         $mfa_data = Auth::user()->verifySecurityAuthentication();
         $message = 'Login Successful';
-        if($mfa_data['status'] == 'success'){
+        if($mfa_data['success']){
             $message = 'Otp sent';
         }
 
         $response = [];
 
-        $response['status'] = 'success';
+        $response['success'] = true;
         $response['messages'][] = $message;
         $response['data']['redirect_url'] = $redirect_url;
         $response['data']['verification_response'] = $mfa_data;

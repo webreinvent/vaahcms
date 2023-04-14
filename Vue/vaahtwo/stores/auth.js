@@ -118,8 +118,7 @@ export const useAuthStore = defineStore({
             console.log(data.redirect_url);
 
             if(data) {
-                if(data.verification_response && data.verification_response.status
-                    && data.verification_response.status === 'success') {
+                if(data.verification_response && data.verification_response.success) {
                     this.is_mfa_visible = true;
                     this.security_timer = 10;
                     this.title.heading = 'Multi-Factor Authentication';
