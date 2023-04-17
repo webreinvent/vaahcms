@@ -202,9 +202,7 @@ class PublicController extends Controller
             $response['data']['redirect_url'] = route('vh.backend').'#/vaah';
             return $response;
         }
-
-        dd($user);
-
+        
         if($user && $user->security_code_expired_at
             && $user->security_code_expired_at->lt(now()))
         {
