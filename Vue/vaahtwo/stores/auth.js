@@ -120,7 +120,7 @@ export const useAuthStore = defineStore({
             if(data) {
                 if(data.verification_response && data.verification_response.success) {
                     this.is_mfa_visible = true;
-                    this.security_timer = 10;
+                    this.security_timer = 30;
                     this.title.heading = 'Multi-Factor Authentication';
                     this.title.description = 'You have received an email which contains two factor code.';
                     this.resendCountdown();
