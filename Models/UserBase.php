@@ -25,15 +25,18 @@ class UserBase extends Authenticatable
 
     //-------------------------------------------------
     protected $table = 'vh_users';
-    public $prevent_password_hashing = false;
+    public bool $prevent_password_hashing = false;
     //-------------------------------------------------
-    protected $dates = [
-        "last_login_at", "api_token_used_at",
-        "affiliate_code_used_at","security_code_expired_at",
-        "reset_password_code_sent_at",
-        "reset_password_code_used_at",
-        "birth", "activated_at",
-        "created_at","updated_at","deleted_at"
+    //-------------------------------------------------
+    protected $casts = [
+        'security_code_expired_at' => 'datetime',
+        'last_login_at' => 'datetime',
+        'api_token_used_at' => 'datetime',
+        'affiliate_code_used_at' => 'datetime',
+        'reset_password_code_sent_at' => 'datetime',
+        'reset_password_code_used_at' => 'datetime',
+        'birth' => 'datetime',
+        'activated_at' => 'datetime'
     ];
     //-------------------------------------------------
     protected $dateFormat = 'Y-m-d H:i:s';
