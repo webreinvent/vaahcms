@@ -12,13 +12,13 @@ class Notified extends Model {
     protected $table = 'vh_notified';
     //-------------------------------------------------
     protected $dates = [
-        'last_attempt_at',
-        'sent_at',
-        'read_at',
-        'marked_delivered',
-        'created_at',
-        'updated_at',
-        'deleted_at'
+        'last_attempt_at' => 'datetime',
+        'sent_at' => 'datetime',
+        'read_at' => 'datetime',
+        'marked_delivered' => 'datetime',
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime',
+        'deleted_at' => 'datetime'
     ];
     //-------------------------------------------------
     protected $dateFormat = 'Y-m-d H:i:s';

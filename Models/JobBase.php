@@ -12,10 +12,10 @@ class JobBase extends Model
     //-------------------------------------------------
     protected $table = 'jobs';
     //-------------------------------------------------
-    protected $dates = [
-        'reserved_at',
-        'available_at',
-        'created_at'
+    protected $casts = [
+        'reserved_at' => 'datetime',
+        'available_at' => 'datetime',
+        'created_at' => 'datetime',
     ];
     //-------------------------------------------------
     protected $dateFormat = 'Y-m-d H:i:s';

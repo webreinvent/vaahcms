@@ -13,8 +13,8 @@ class FailedJobBase extends Model {
     //-------------------------------------------------
     protected $table = 'failed_jobs';
     //-------------------------------------------------
-    protected $dates = [
-        'failed_at',
+    protected $casts = [
+        'failed_at'  => 'datetime',
     ];
     //-------------------------------------------------
     protected $dateFormat = 'Y-m-d H:i:s';

@@ -15,11 +15,11 @@ class ThemeBase extends Model {
     protected $table = 'vh_themes';
 
     //-------------------------------------------------
-    protected $dates = [
-        'update_checked_at',
-        'created_at',
-        'updated_at',
-        'deleted_at'
+    protected $casts = [
+        'update_checked_at' => 'datetime',
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime',
+        'deleted_at' => 'datetime',
     ];
     //-------------------------------------------------
     protected $dateFormat = 'Y-m-d H:i:s';
