@@ -11,7 +11,6 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use WebReinvent\VaahCms\Libraries\VaahMail;
-use WebReinvent\VaahCms\Notifications\MultiFactorCode;
 use WebReinvent\VaahCms\Traits\CrudWithUuidObservantTrait;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Cookie;
@@ -1998,37 +1997,15 @@ class UserBase extends Authenticatable
         $this->security_code_expired_at = now()->addMinutes(10);
         $this->save();
 
-        VaahMail::dispatch(new SecurityOtpMail($this->toArray()),[$this->email]);
+        $vaah_mail_response = VaahMail::dispatch(new SecurityOtpMail($this->toArray()),[$this->email]);
+
+        if(isset($vaah_mail_response['success']) && !$vaah_mail_response['success']){
+            return $vaah_mail_response;
+        }
 
         $response['success'] = true;
 
         return $response;
-
-    }
-    //-------------------------------------------------
-    public function verifyMfa()
-    {
-
-        $this->mfa_code = null;
-        $this->mfa_code_expired_at = null;
-
-        if(config('settings.global.mfa_status') != 'disable'){
-
-            if(config('settings.global.mfa_status') == 'user-will-have-option'
-                && (!is_array($this->mfa_methods)
-                    || (is_array($this->mfa_methods) && count($this->mfa_methods) == 0))){
-
-                return false;
-            }
-
-            $this->mfa_code = rand(100000, 999999);
-            $this->mfa_code_expired_at = now()->addMinutes(10);
-            $this->save();
-
-            $this->notify(new MultiFactorCode());
-
-            return route('vh.backend').'#/verify';
-        }
 
     }
 

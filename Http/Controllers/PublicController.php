@@ -147,18 +147,20 @@ class PublicController extends Controller
             $redirect_url = \URL::route('vh.backend');
         }
 
-        $mfa_data = Auth::user()->verifySecurityAuthentication();
-        $message = 'Login Successful';
-        if(isset($mfa_data['success']) && $mfa_data['success']){
-            $message = 'Otp sent';
+        $verify_response = Auth::user()->verifySecurityAuthentication();
+
+        if(isset($verify_response['success']) && !$verify_response['success']){
+            return $verify_response;
         }
+
+        $message = 'Login Successful';
 
         $response = [];
 
         $response['success'] = true;
         $response['messages'][] = $message;
         $response['data']['redirect_url'] = $redirect_url;
-        $response['data']['verification_response'] = $mfa_data;
+        $response['data']['verification_response'] = $verify_response;
 
         return response()->json($response);
 
@@ -201,7 +203,10 @@ class PublicController extends Controller
             return $response;
         }
 
-        if($user && $user->security_code_expired_at && $user->security_code_expired_at->lt(now()))
+        dd($user);
+
+        if($user && $user->security_code_expired_at
+            && $user->security_code_expired_at->lt(now()))
         {
             $user->security_code = null;
             $user->security_code_expired_at = null;
@@ -240,7 +245,11 @@ class PublicController extends Controller
     public function resendSecurityOtp(Request $request)
     {
 
-        Auth::user()->verifySecurityAuthentication();
+        $verify_response = Auth::user()->verifySecurityAuthentication();
+
+        if(isset($verify_response['success']) && !$verify_response['success']){
+            return $verify_response;
+        }
 
         $response = [];
 
