@@ -183,7 +183,7 @@ export const useAuthStore = defineStore({
         },
         //---------------------------------------------------------------------
         verifySecurityOtp () {
-
+            this.is_btn_loading = true;
             let options = {
                 params: {
                     'verification_otp':this.verification_otp
@@ -201,6 +201,7 @@ export const useAuthStore = defineStore({
         },
         //---------------------------------------------------------------------
         verifySecurityOtpAfter (data, res) {
+            this.is_btn_loading = false
             if(data && data.redirect_url)
             {
                 window.location = data.redirect_url;
