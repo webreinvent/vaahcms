@@ -149,7 +149,12 @@ class PublicController extends Controller
 
         $verify_response = Auth::user()->verifySecurityAuthentication();
 
-        if(isset($verify_response['success']) && !$verify_response['success']){
+        if(isset($verify_response['success'])
+            && !$verify_response['success']
+            && $verify_response['data'] != null){
+
+            dd($verify_response['data'],isset($verify_response['data']));
+
             return $verify_response;
         }
 
@@ -202,7 +207,7 @@ class PublicController extends Controller
             $response['data']['redirect_url'] = route('vh.backend').'#/vaah';
             return $response;
         }
-        
+
         if($user && $user->security_code_expired_at
             && $user->security_code_expired_at->lt(now()))
         {
