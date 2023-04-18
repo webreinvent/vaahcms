@@ -20,7 +20,7 @@ class RegistrationBase extends Model
     //-------------------------------------------------
     protected $table = 'vh_registrations';
     //-------------------------------------------------
-    protected $dates = [
+    protected $casts = [
         "activation_code_sent_at"  => 'datetime',
         "activated_at"  => 'datetime',
         "invited_at"  => 'datetime',

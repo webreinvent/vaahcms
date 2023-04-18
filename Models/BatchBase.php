@@ -12,7 +12,7 @@ class BatchBase extends Model
     //-------------------------------------------------
     protected $table = 'job_batches';
     //-------------------------------------------------
-    protected $dates = [
+    protected $casts = [
         'cancelled_at' => 'datetime',
         'created_at' => 'datetime',
         'finished_at' => 'datetime'
