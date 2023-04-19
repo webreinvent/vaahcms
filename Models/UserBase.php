@@ -11,8 +11,10 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use WebReinvent\VaahCms\Libraries\VaahMail;
-use WebReinvent\VaahCms\Notifications\MultiFactorCode;
 use WebReinvent\VaahCms\Traits\CrudWithUuidObservantTrait;
+use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Cookie;
+use WebReinvent\VaahCms\Mail\SecurityOtpMail;
 
 class UserBase extends Authenticatable
 {
@@ -23,14 +25,18 @@ class UserBase extends Authenticatable
 
     //-------------------------------------------------
     protected $table = 'vh_users';
-    public $prevent_password_hashing = false;
+    public bool $prevent_password_hashing = false;
     //-------------------------------------------------
-    protected $dates = [
-        "last_login_at", "api_token_used_at",
-        "affiliate_code_used_at","mfa_code_expired_at", "reset_password_code_sent_at",
-        "reset_password_code_used_at",
-        "birth", "activated_at",
-        "created_at","updated_at","deleted_at"
+    //-------------------------------------------------
+    protected $casts = [
+        'security_code_expired_at' => 'datetime',
+        'last_login_at' => 'datetime',
+        'api_token_used_at' => 'datetime',
+        'affiliate_code_used_at' => 'datetime',
+        'reset_password_code_sent_at' => 'datetime',
+        'reset_password_code_used_at' => 'datetime',
+        'birth' => 'datetime',
+        'activated_at' => 'datetime'
     ];
     //-------------------------------------------------
     protected $dateFormat = 'Y-m-d H:i:s';
@@ -41,7 +47,7 @@ class UserBase extends Authenticatable
         "gender","country_calling_code","phone", "bio",
         "website","timezone",
         "alternate_email","avatar_url","birth",
-        "country","country_code","last_login_at","last_login_ip",
+        "country","country_code","is_mfa_enabled","last_login_at","last_login_ip",
         "remember_token", "login_otp", "api_token","api_token_used_at",
         "api_token_used_ip","is_active","activated_at","status",
         "affiliate_code","affiliate_code_used_at","mfa_code_expired_at",
@@ -244,8 +250,8 @@ class UserBase extends Authenticatable
             'alternate_email', 'avatar_url', 'birth', 'country',
             'last_login_at', 'last_login_ip', 'api_token', 'api_token_used_at',
             'api_token_used_ip', 'is_active', 'activated_at', 'status',
-            'affiliate_code', 'affiliate_code_used_at','mfa_code_expired_at',
-            'mfa_code','created_by', 'updated_by',
+            'affiliate_code', 'affiliate_code_used_at','security_code_expired_at',
+            'security_code','created_by', 'updated_by',
             'deleted_by', 'created_at', 'updated_at',
             'deleted_at'
         ];
@@ -685,7 +691,6 @@ class UserBase extends Authenticatable
             $user->last_login_at = Carbon::now();
 
             $user->save();
-
 
             $response['success'] = true;
         }elseif(Auth::attempt(['username' => $inputs['email'],
@@ -1963,8 +1968,8 @@ class UserBase extends Authenticatable
     public function verifySecurityAuthentication()
     {
 
-        $this->mfa_code = null;
-        $this->mfa_code_expired_at = null;
+        $this->security_code = null;
+        $this->security_code_expired_at = null;
         $this->save();
 
         $has_security = true;
@@ -1973,7 +1978,10 @@ class UserBase extends Authenticatable
         $response['data'] = null;
 
         if(!config('settings.global.mfa_status')
-            || config('settings.global.mfa_status') === 'disable'){
+            || config('settings.global.mfa_status') === 'disable'
+            || !is_array(config('settings.global.mfa_methods'))
+            || (is_array(config('settings.global.mfa_methods'))
+                && count(config('settings.global.mfa_methods')) == 0)){
             $has_security = false;
         }
 
@@ -1984,41 +1992,25 @@ class UserBase extends Authenticatable
             $has_security = false;
         }
 
-//        /*$response = new Response('Set Cookie');
-//        $response->withCookie(cookie('app_name', env('APP_NAME'), 500000));*/
-//
-//        dd(get_browser());
-//
-////        Cookie::queue('app_name', env('APP_NAME'), 500000);
-//
-//        dd(Cookie::get('app_name'));
-//
-//        if(config('settings.global.is_new_device_verification_enabled') == 1){
-//
-//            if(Cookie::get('app_name')
-//                && Cookie::get('app_name') == env('APP_NAME')){
-//
-//                $has_security = false;
-//            }
-//
-//        }
-
         if(!$has_security){
             return $response;
         }
 
-        $this->mfa_code = rand(100000, 999999);
-        $this->mfa_code_expired_at = now()->addMinutes(10);
+        $this->security_code = rand(100000, 999999);
+        $this->security_code_expired_at = now()->addMinutes(10);
         $this->save();
 
-        $this->notify(new MultiFactorCode());
+        $vaah_mail_response = VaahMail::dispatch(new SecurityOtpMail($this->toArray()),[$this->email]);
+
+        if(isset($vaah_mail_response['success']) && !$vaah_mail_response['success']){
+            return $vaah_mail_response;
+        }
 
         $response['success'] = true;
 
         return $response;
 
     }
-    //-------------------------------------------------
 
     //-------------------------------------------------
     //-------------------------------------------------

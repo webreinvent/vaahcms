@@ -20,9 +20,14 @@ class RegistrationBase extends Model
     //-------------------------------------------------
     protected $table = 'vh_registrations';
     //-------------------------------------------------
-    protected $dates = [
-        "activation_code_sent_at", "activated_at",  "invited_at", "user_created_at",
-        "created_at","updated_at","deleted_at"
+    protected $casts = [
+        "activation_code_sent_at"  => 'datetime',
+        "activated_at"  => 'datetime',
+        "invited_at"  => 'datetime',
+        "user_created_at"  => 'datetime',
+        "created_at"  => 'datetime',
+        "updated_at"  => 'datetime',
+        "deleted_at"  => 'datetime'
     ];
     //-------------------------------------------------
     protected $dateFormat = 'Y-m-d H:i:s';

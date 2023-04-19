@@ -6,7 +6,7 @@ use Closure;
 use Illuminate\Http\Request;
 use Session;
 use Illuminate\Support\Facades\Auth;
-use WebReinvent\VaahCms\Models\Theme;
+use WebReinvent\VaahCms\Entities\Theme;
 
 class VerifyAuth
 {

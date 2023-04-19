@@ -12,6 +12,7 @@ export const useProfileStore = defineStore({
         assets: null,
         list: null,
         profile: null,
+        mfa_methods: null,
         active_item:null,
         assets_is_fetching: true,
         base_url: base_url,
@@ -82,8 +83,8 @@ export const useProfileStore = defineStore({
             if(data)
             {
                 this.list = data;
+                this.mfa_methods=data.mfa_methods;
                 this.profile = data.profile;
-
             }
         },
         //---------------------------------------------------------------------

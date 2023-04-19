@@ -68,7 +68,7 @@ onMounted(async () => {
 
                             <SplitButton label="Advanced Options"
                                          :model="store.advanced_option_menu_list"
-                                         class="mb-2 p-button-sm">
+                                         class="p-button-sm">
 
                             </SplitButton>
                         </div>

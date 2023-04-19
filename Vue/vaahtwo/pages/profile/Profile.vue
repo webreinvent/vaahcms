@@ -1,5 +1,7 @@
 <script setup>
 import {onMounted, reactive, ref} from "vue";
+
+import { vaah } from '../../vaahvue/pinia/vaah'
 import {useRoute} from 'vue-router';
 
 import {useProfileStore} from '../../stores/store-profile'
@@ -9,6 +11,7 @@ import FileUploader from "./components/FileUploader.vue";
 const store = useProfileStore();
 const route = useRoute();
 const root = useRootStore();
+const useVaah = vaah();
 
 import { useConfirm } from "primevue/useconfirm";
 const confirm = useConfirm();
@@ -214,6 +217,32 @@ onMounted(async () => {
                             data-testid="profile-save"
                             @click="store.storeProfile"
                             label="Save Profile"></Button>
+                </template>
+            </Card>
+        </div>
+        <div class="col-4" v-if="store.mfa_methods.length != 0">
+            <h5 class="mb-2">Multi-Factor Authentication</h5>
+            <p class="text-sm">Multi-factor Authentication (MFA) is an authentication method that
+                requires the user to provide two or more verification factors to gain access to a resource.</p>
+        </div>
+        <div class="col-5 p-fluid mt-3" v-if="store.mfa_methods.length != 0">
+            <Card class="form">
+                <template #content>
+                    <div class="p-float-label"
+                         v-for="method in store.mfa_methods">
+                        <Checkbox class="flex"
+                                  :data-testid="'profile-'+method"
+                                  inputId="mfa-method"
+                                  v-model="store.profile.mfa_methods"
+                                  :value="method" />
+                        <label class="ml-2" for="mfa-method">{{ useVaah.toLabel(method) }}</label>
+                    </div>
+                </template>
+                <template #footer>
+                    <Button label="Save MFA"
+                            data-testid="profile-save_mfa"
+                            @click="store.storeProfile()"
+                            class="w-max p-button-sm"/>
                 </template>
             </Card>
         </div>
