@@ -604,7 +604,7 @@ class ThemeBase extends Model {
             {
 
                 $path = vh_theme_migrations_path($item->name);
-                Migration::resetMigrations($path);
+                Migration::refreshMigrations($path);
 
                 LanguageString::generateLangFiles();
 
@@ -612,7 +612,7 @@ class ThemeBase extends Model {
 
             $response['success'] = true;
             $response['data'][] = '';
-            $response['messages'][] = 'Migration reset is successful';
+            $response['messages'][] = 'Migration refresh is successful';
 
         }catch(\Exception $e)
         {

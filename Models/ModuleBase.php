@@ -510,7 +510,7 @@ class ModuleBase extends Model
 
                 $module_path = config('vaahcms.modules_path').$module->name;
                 $path = vh_module_migrations_path($module->name);
-                Migration::resetMigrations($path);
+                Migration::refreshMigrations($path);
 
                 LanguageString::generateLangFiles();
 
@@ -518,7 +518,7 @@ class ModuleBase extends Model
 
             $response['success'] = true;
             $response['data'][] = '';
-            $response['messages'][] = 'Migration reset is successful';
+            $response['messages'][] = 'Migration refresh is successful';
 
         }catch(\Exception $e)
         {

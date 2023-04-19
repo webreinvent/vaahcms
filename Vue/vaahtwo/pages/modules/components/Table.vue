@@ -19,29 +19,32 @@ const importSampleDataModal = (item) => {
     });
 }
 
-const action_items =[
-    {
-        label: 'Run Migrations',
-        icon: 'pi pi-database',
-        command: () => {
-            store.runMigrations();
-        }
-    },
-    {
-        label: 'Run Seeds',
-        icon: 'pi pi-server',
-        command: () => {
-            store.runSeeds();
-        }
-    },
-    {
-        label: 'Refresh Migrations',
-        icon: 'pi pi-refresh',
-        command: () => {
-            store.resetModule();
-        }
-    },
-];
+function actionItems(item){
+    let list =[
+        {
+            label: 'Run Migrations',
+            icon: 'pi pi-database',
+            command: () => {
+                store.runMigrations(item);
+            }
+        },
+        {
+            label: 'Run Seeds',
+            icon: 'pi pi-server',
+            command: () => {
+                store.runSeeds(item);
+            }
+        },
+        {
+            label: 'Refresh Migrations',
+            icon: 'pi pi-refresh',
+            command: () => {
+                store.resetModule(item);
+            }
+        },
+    ];
+    return list;
+}
 
 </script>
 
@@ -94,10 +97,11 @@ const action_items =[
                                 />
 
                                 <SplitButton label="Actions"
+                                             v-if="item.is_active && store.hasPermission('can-deactivate-module')"
                                              v-tooltip.top="'Actions'"
                                              class="mr-1"
                                              data-testid="modules-table_action"
-                                             :model="action_items" />
+                                             :model="actionItems(item)" />
 
                                 <Button v-if="item.is_active && store.hasPermission('can-import-sample-data-in-module')"
                                         data-testid="modules-table-action-sample-data"
