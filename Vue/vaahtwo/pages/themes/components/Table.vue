@@ -26,6 +26,31 @@ const importSampleDataModal = (item) => {
         },
     });
 }
+
+const action_items =[
+    {
+        label: 'Run Migrations',
+        icon: 'pi pi-database',
+        command: () => {
+            store.runMigrations();
+        }
+    },
+    {
+        label: 'Run Seeds',
+        icon: 'pi pi-server',
+        command: () => {
+            store.runSeeds();
+        }
+    },
+    {
+        label: 'Refresh Migrations',
+        icon: 'pi pi-refresh',
+        command: () => {
+            store.resetTheme();
+        }
+    },
+];
+
 </script>
 
 <template>
@@ -97,32 +122,11 @@ const importSampleDataModal = (item) => {
                                 v-if="item.is_active && store.hasPermission('can-publish-assets-of-theme')"
                         />
 
-                        <Button v-if="item.is_active && store.hasPermission('can-activate-module')"
-                                class="mr-2 p-button-info p-button-sm"
-                                data-testid="themes-table-action-reset_button"
-                                :loading="store.active_action.includes('reset_'+item.id)"
-                                @click="store.resetTheme(item)"
-                                label="Reset"
-                                v-tooltip.top="'Reset Theme'"
-                        />
-
-                        <Button v-if="item.is_active && store.hasPermission('can-activate-module')"
-                                class="mr-2 p-button-info p-button-sm"
-                                data-testid="themes-table-action-migration_button"
-                                :loading="store.active_action.includes('run_migrations_'+item.id)"
-                                @click="store.runMigrations(item)"
-                                icon="pi pi-server"
-                                v-tooltip.top="'Run Migrations'"
-                        />
-
-                        <Button v-if="item.is_active && store.hasPermission('can-activate-module')"
-                                class="mr-2 p-button-info p-button-sm"
-                                data-testid="themes-table-action-seed_button"
-                                :loading="store.active_action.includes('run_seeds_'+item.id)"
-                                @click="store.runSeeds(item)"
-                                icon="pi pi-server"
-                                v-tooltip.top="'Run Seeds'"
-                        />
+                        <SplitButton label="Actions"
+                                     v-tooltip.top="'Actions'"
+                                     class="mr-1"
+                                     data-testid="themes-table_action"
+                                     :model="action_items" />
 
                         <Button v-if="item.is_active && store.hasPermission('can-import-sample-data-in-theme')"
                                 v-tooltip.top="'Import Sample Data'"

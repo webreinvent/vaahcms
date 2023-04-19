@@ -93,35 +93,10 @@ const action_items =[
                                         v-tooltip.top="'Publish Assets'"
                                 />
 
-                                <Button v-if="item.is_active && store.hasPermission('can-activate-module')"
-                                        class="mr-2 p-button-info p-button-sm"
-                                        data-testid="modules-table-action-reset_button"
-                                        :loading="store.active_action.includes('reset_'+item.id)"
-                                        @click="store.resetModule(item)"
-                                        label="Reset"
-                                        v-tooltip.top="'Reset Module'"
-                                />
-
-                                <Button v-if="item.is_active && store.hasPermission('can-activate-module')"
-                                        class="mr-2 p-button-info p-button-sm"
-                                        data-testid="modules-table-action-migration_button"
-                                        :loading="store.active_action.includes('run_migrations_'+item.id)"
-                                        @click="store.runMigrations(item)"
-                                        icon="pi pi-server"
-                                        v-tooltip.top="'Run Migrations'"
-                                />
-
-                                <Button v-if="item.is_active && store.hasPermission('can-activate-module')"
-                                        class="mr-2 p-button-info p-button-sm"
-                                        data-testid="modules-table-action-seed_button"
-                                        :loading="store.active_action.includes('run_seeds_'+item.id)"
-                                        @click="store.runSeeds(item)"
-                                        icon="pi pi-server"
-                                        v-tooltip.top="'Run Seeds'"
-                                />
-
                                 <SplitButton label="Actions"
                                              v-tooltip.top="'Actions'"
+                                             class="mr-1"
+                                             data-testid="modules-table_action"
                                              :model="action_items" />
 
                                 <Button v-if="item.is_active && store.hasPermission('can-import-sample-data-in-module')"
