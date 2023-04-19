@@ -535,7 +535,7 @@ class ThemeBase extends Model {
 
     }
     //-------------------------------------------------
-    public static function runThemeSeeds($slug, $is_default=false)
+    public static function deactivateItem($slug)
     {
         try {
             $item = static::slug($slug)->first();
@@ -556,7 +556,6 @@ class ThemeBase extends Model {
         }
 
         return $response;
-
     }
     //-------------------------------------------------
     public static function runThemeMigrations($slug, $is_default=false)
@@ -589,6 +588,40 @@ class ThemeBase extends Model {
             $response['success'] = true;
             $response['data'][] = '';
             $response['messages'][] = 'Migration run is successful';
+
+            if(env('APP_DEBUG'))
+            {
+                $response['hint'][] = '';
+            }
+        }catch(\Exception $e)
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = $e->getMessage();
+
+        }
+
+        return $response;
+
+    }
+    //-------------------------------------------------
+    public static function runThemeSeeds($slug, $is_default=false)
+    {
+        try {
+            $item = static::slug($slug)->first();
+
+            if(!isset($item->is_migratable) || (isset($item->is_migratable) && $item->is_migratable == true))
+            {
+
+                $seeds_namespace = vh_theme_database_seeder($item->name);
+                Migration::runSeeds($seeds_namespace);
+
+                LanguageString::generateLangFiles();
+
+            }
+
+            $response['success'] = true;
+            $response['data'][] = '';
+            $response['messages'][] = 'Seeds run is successful';
 
             if(env('APP_DEBUG'))
             {

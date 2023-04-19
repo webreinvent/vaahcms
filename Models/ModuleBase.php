@@ -440,7 +440,7 @@ class ModuleBase extends Model
 
     }
     //-------------------------------------------------
-    public static function runModuleSeeds($slug)
+    public static function deactivateItem($slug)
     {
         try {
             $item = static::slug($slug)->first();
@@ -461,7 +461,6 @@ class ModuleBase extends Model
         }
 
         return $response;
-
     }
     //-------------------------------------------------
     public static function runModuleMigrations($slug)
@@ -493,6 +492,40 @@ class ModuleBase extends Model
             $response['success'] = true;
             $response['data'][] = '';
             $response['messages'][] = 'Migration run is successful';
+
+            if(env('APP_DEBUG'))
+            {
+                $response['hint'][] = '';
+            }
+        }catch(\Exception $e)
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = $e->getMessage();
+
+        }
+
+        return $response;
+
+    }
+    //-------------------------------------------------
+    public static function runModuleSeeds($slug)
+    {
+        try {
+            $module = self::slug($slug)->first();
+
+            if(!isset($module->is_migratable) || (isset($module->is_migratable) && $module->is_migratable == true))
+            {
+
+                $seeds_namespace = vh_module_database_seeder($module->name);
+                Migration::runSeeds($seeds_namespace);
+
+                LanguageString::generateLangFiles();
+
+            }
+
+            $response['success'] = true;
+            $response['data'][] = '';
+            $response['messages'][] = 'Seeds run is successful';
 
             if(env('APP_DEBUG'))
             {
