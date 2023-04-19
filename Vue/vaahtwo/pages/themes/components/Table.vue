@@ -97,6 +97,33 @@ const importSampleDataModal = (item) => {
                                 v-if="item.is_active && store.hasPermission('can-publish-assets-of-theme')"
                         />
 
+                        <Button v-if="item.is_active && store.hasPermission('can-activate-module')"
+                                class="mr-2 p-button-info p-button-sm"
+                                data-testid="themes-table-action-reset_button"
+                                :loading="store.active_action.includes('reset_'+item.id)"
+                                @click="store.resetTheme(item)"
+                                label="Reset"
+                                v-tooltip.top="'Reset Theme'"
+                        />
+
+                        <Button v-if="item.is_active && store.hasPermission('can-activate-module')"
+                                class="mr-2 p-button-info p-button-sm"
+                                data-testid="themes-table-action-migration_button"
+                                :loading="store.active_action.includes('run_migrations_'+item.id)"
+                                @click="store.runMigrations(item)"
+                                icon="pi pi-server"
+                                v-tooltip.top="'Run Migrations'"
+                        />
+
+                        <Button v-if="item.is_active && store.hasPermission('can-activate-module')"
+                                class="mr-2 p-button-info p-button-sm"
+                                data-testid="themes-table-action-seed_button"
+                                :loading="store.active_action.includes('run_seeds_'+item.id)"
+                                @click="store.runSeeds(item)"
+                                icon="pi pi-server"
+                                v-tooltip.top="'Run Seeds'"
+                        />
+
                         <Button v-if="item.is_active && store.hasPermission('can-import-sample-data-in-theme')"
                                 v-tooltip.top="'Import Sample Data'"
                                 class="mr-2 p-button-sm"

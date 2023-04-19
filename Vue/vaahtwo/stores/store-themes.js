@@ -493,6 +493,21 @@ export const useThemeStore = defineStore({
             this.active_action.splice(index,1);
         },
         //---------------------------------------------------------------------
+        async runMigrations(item) {
+            this.active_action.push('run_migrations_' + item.id);
+            await this.itemAction('run_migrations', item);
+        },
+        //---------------------------------------------------------------------
+        async runSeeds(item) {
+            this.active_action.push('run_seeds_' + item.id);
+            await this.itemAction('run_seeds', item);
+        },
+        //---------------------------------------------------------------------
+        async resetTheme(item) {
+            this.active_action.push('reset_' + item.id);
+            await this.itemAction('reset', item);
+        },
+        //---------------------------------------------------------------------
         async paginate(event) {
             this.query.page = event.page+1;
             this.query.rows = event.rows;

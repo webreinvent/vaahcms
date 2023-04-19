@@ -257,19 +257,20 @@ class ModulesController extends Controller
             $data = [];
             $inputs = $request->inputs;
 
-
+            $module = Module::find($inputs['id']);
             /*
              * Call method from module setup controller
              */
-            $module = Module::find($inputs['id']);
+            if(!in_array($request->action,['run_migrations','run_seeds','reset'],TRUE)){
 
-            $method_name = str_replace("_", " ", $request->action);
-            $method_name = ucwords($method_name);
-            $method_name = lcfirst(str_replace(" ", "", $method_name));
+                $method_name = str_replace("_", " ", $request->action);
+                $method_name = ucwords($method_name);
+                $method_name = lcfirst(str_replace(" ", "", $method_name));
 
-            $response = vh_module_action($module->name, 'SetupController@'.$method_name);
-            if (isset($response['success']) && !$response['success']) {
-                return response()->json($response);
+                $response = vh_module_action($module->name, 'SetupController@'.$method_name);
+                if (isset($response['success']) && !$response['success']) {
+                    return response()->json($response);
+                }
             }
 
             switch($request->action)
@@ -294,6 +295,36 @@ class ModulesController extends Controller
                     }
 
                     $response = Module::deactivateItem($module->slug);
+                    break;
+                //---------------------------------------
+                case 'reset':
+                    if (!Auth::user()->hasPermission('can-activate-module')) {
+                        $response['success'] = false;
+                        $response['messages'][] = trans("vaahcms::messages.permission_denied");
+
+                        return response()->json($response);
+                    }
+                    $response = Module::resetModuleMigrations($module->slug);
+                    break;
+                //---------------------------------------
+                case 'run_migrations':
+                    if (!Auth::user()->hasPermission('can-activate-module')) {
+                        $response['success'] = false;
+                        $response['messages'][] = trans("vaahcms::messages.permission_denied");
+
+                        return response()->json($response);
+                    }
+                    $response = Module::runModuleMigrations($module->slug);
+                    break;
+                //---------------------------------------
+                case 'run_seeds':
+                    if (!Auth::user()->hasPermission('can-activate-module')) {
+                        $response['success'] = false;
+                        $response['messages'][] = trans("vaahcms::messages.permission_denied");
+
+                        return response()->json($response);
+                    }
+                    $response = Module::runModuleSeeds($module->slug);
                     break;
                 //---------------------------------------
                 case 'import_sample_data':

@@ -513,6 +513,119 @@ class ThemeBase extends Model {
 
     }
     //-------------------------------------------------
+    public static function runThemeMigrations($slug, $is_default=false)
+    {
+        try {
+            $item = static::slug($slug)->first();
+
+            if(!isset($item->is_migratable) || (isset($item->is_migratable) && $item->is_migratable == true))
+            {
+
+                $path = vh_theme_migrations_path($item->name);
+
+                $max_batch = \DB::table('migrations')
+                    ->max('batch');
+
+                Migration::runMigrations($path);
+
+                $current_max_batch = \DB::table('migrations')
+                    ->max('batch');
+
+                if($current_max_batch > $max_batch){
+                    Migration::syncThemeMigrations($item->id,$current_max_batch);
+                }
+
+                LanguageString::generateLangFiles();
+
+            }
+
+
+            $response['success'] = true;
+            $response['data'][] = '';
+            $response['messages'][] = 'Migration run is successful';
+
+            if(env('APP_DEBUG'))
+            {
+                $response['hint'][] = '';
+            }
+        }catch(\Exception $e)
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = $e->getMessage();
+
+        }
+
+        return $response;
+
+    }
+    //-------------------------------------------------
+    public static function runThemeSeeds($slug, $is_default=false)
+    {
+        try {
+            $item = static::slug($slug)->first();
+
+            if(!isset($item->is_migratable) || (isset($item->is_migratable) && $item->is_migratable == true))
+            {
+
+                $seeds_namespace = vh_theme_database_seeder($item->name);
+                Migration::runSeeds($seeds_namespace);
+
+                LanguageString::generateLangFiles();
+
+            }
+
+            $response['success'] = true;
+            $response['data'][] = '';
+            $response['messages'][] = 'Seeds run is successful';
+
+            if(env('APP_DEBUG'))
+            {
+                $response['hint'][] = '';
+            }
+        }catch(\Exception $e)
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = $e->getMessage();
+
+        }
+
+        return $response;
+
+    }
+    //-------------------------------------------------
+    public static function resetThemeMigrations($slug)
+    {
+
+        try{
+
+            $item = static::slug($slug)->first();
+
+            if(!isset($item->is_migratable) || (isset($item->is_migratable) && $item->is_migratable == true))
+            {
+
+                $path = vh_theme_migrations_path($item->name);
+                Migration::resetMigrations($path);
+
+                LanguageString::generateLangFiles();
+
+            }
+
+            $response['success'] = true;
+            $response['data'][] = '';
+            $response['messages'][] = 'Migration reset is successful';
+
+        }catch(\Exception $e)
+        {
+            $response['success'] = false;
+            $response['errors'][] = $e->getMessage();
+
+        }
+
+
+        return $response;
+
+    }
+    //-------------------------------------------------
     public static function deactivateItem($slug)
     {
         $item = static::slug($slug)->first();
