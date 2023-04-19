@@ -18,6 +18,31 @@ const importSampleDataModal = (item) => {
         },
     });
 }
+
+const action_items =[
+    {
+        label: 'Run Migrations',
+        icon: 'pi pi-database',
+        command: () => {
+            store.runMigrations();
+        }
+    },
+    {
+        label: 'Run Seeds',
+        icon: 'pi pi-server',
+        command: () => {
+            store.runSeeds();
+        }
+    },
+    {
+        label: 'Refresh Migrations',
+        icon: 'pi pi-refresh',
+        command: () => {
+            store.resetModule();
+        }
+    },
+];
+
 </script>
 
 <template>
@@ -94,6 +119,10 @@ const importSampleDataModal = (item) => {
                                         icon="pi pi-server"
                                         v-tooltip.top="'Run Seeds'"
                                 />
+
+                                <SplitButton label="Actions"
+                                             v-tooltip.top="'Actions'"
+                                             :model="action_items" />
 
                                 <Button v-if="item.is_active && store.hasPermission('can-import-sample-data-in-module')"
                                         data-testid="modules-table-action-sample-data"
