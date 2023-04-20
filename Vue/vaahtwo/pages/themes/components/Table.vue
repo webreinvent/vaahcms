@@ -27,6 +27,17 @@ const importSampleDataModal = (item) => {
     });
 }
 
+const confirmRefresh = (item) => {
+    confirm.require({
+        header: 'Refresh Migrations',
+        message: 'Are you sure you want to <b>Refresh</b> Migrations? This action will remove data of this theme.',
+        icon: 'pi pi-info-circle',
+        acceptClass: 'p-button-danger',
+        accept: () => {
+            store.resetTheme(item);
+        },
+    });
+}
 
 function actionItems(item){
     let list =[
@@ -48,7 +59,7 @@ function actionItems(item){
             label: 'Refresh Migrations',
             icon: 'pi pi-refresh',
             command: () => {
-                store.resetTheme(item);
+                confirmRefresh(item);
             }
         },
     ];

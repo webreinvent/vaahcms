@@ -18,7 +18,18 @@ const importSampleDataModal = (item) => {
         },
     });
 }
-
+const confirmRefresh = (item) =>
+{
+    confirm.require({
+        header: 'Refresh Migrations',
+        message: 'Are you sure you want to <b>Refresh</b> Migrations? This action will remove data of this module.',
+        icon: 'pi pi-info-circle',
+        acceptClass: 'p-button-danger',
+        accept: () => {
+            store.resetModule(item);
+        },
+    });
+}
 function actionItems(item){
     let list =[
         {
@@ -39,7 +50,7 @@ function actionItems(item){
             label: 'Refresh Migrations',
             icon: 'pi pi-refresh',
             command: () => {
-                store.resetModule(item);
+                confirmRefresh(item);
             }
         },
     ];
@@ -154,7 +165,6 @@ function actionItems(item){
                    :rows-per-page-options="store.rows_per_page"
         />
         <!--/paginator-->
-
         <ConfirmDialog group="templating" class="is-small"
                        :style="{width: '400px'}"
                        :breakpoints="{'600px': '100vw'}"
