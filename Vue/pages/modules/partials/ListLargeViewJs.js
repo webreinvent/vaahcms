@@ -18,8 +18,8 @@ export default {
     {
         let obj = {
 
-            namespace: namespace
-
+            namespace: namespace,
+            show_refresh_modal: false,
         };
 
         return obj;
@@ -221,6 +221,17 @@ export default {
                 onConfirm: function () {
                     self.getModuleDetails(module);
                 }
+            })
+        },
+        //---------------------------------------------------------------------
+        confirmRefresh(item) {
+            this.$buefy.dialog.confirm({
+                title: 'Refresh Migrations',
+                message: 'Are you sure you want to <b>Refresh</b> Migrations? This action will remove data of this module.',
+                confirmText: 'Refresh',
+                type: 'is-danger',
+                hasIcon: true,
+                onConfirm: () =>  this.actions('reset', item)
             })
         },
         //---------------------------------------------------------------------
