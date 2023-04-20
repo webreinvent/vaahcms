@@ -2007,7 +2007,7 @@ class UserBase extends Authenticatable
         }
 
         $response['success'] = true;
-
+        auth()->logout();
         return $response;
 
     }

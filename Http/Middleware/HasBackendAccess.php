@@ -46,6 +46,26 @@ class HasBackendAccess
 		    return redirect()->guest(route('vh.backend'))
 		                     ->withErrors([trans("vaahcms::messages.permission_denied")]);
 	    }
+//
+//        if(config('settings.global.mfa_status') !== 'disable'){
+//
+//            if(config('settings.global.mfa_status') == 'all-users'){
+//
+//                auth()->logout();
+//
+//                return redirect()->route('vh.backend');
+//            }
+//
+//            if(config('settings.global.mfa_status') == 'user-will-have-option'
+//                && is_array(Auth::user()->mfa_methods) && count(Auth::user()->mfa_methods) >= 0){
+//
+//                auth()->logout();
+//
+//                return redirect()->route('vh.backend');
+//
+//            }
+//
+//        }
 
 
         return $next($request);

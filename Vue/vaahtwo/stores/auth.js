@@ -186,7 +186,8 @@ export const useAuthStore = defineStore({
             this.is_btn_loading = true;
             let options = {
                 params: {
-                    'verification_otp':this.verification_otp
+                    'verification_otp':this.verification_otp,
+                    'email':this.sign_in_items.email
                 },
                 method: 'post'
             };
@@ -211,7 +212,9 @@ export const useAuthStore = defineStore({
         //---------------------------------------------------------------------
         resendSecurityOtp () {
             let options = {
-                params: {},
+                params: {
+                    'email':this.sign_in_items.email
+                },
                 method: 'post'
             };
 

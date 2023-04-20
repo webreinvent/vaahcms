@@ -199,7 +199,8 @@ class PublicController extends Controller
         }
 
 
-        $user = auth()->user();
+        $user = User::where('email', $request->email)
+            ->first();
 
         if($user && !$user->security_code && !$user->security_code_expired_at){
             $response['status'] = 'success';
@@ -230,6 +231,8 @@ class PublicController extends Controller
             $user->security_code_expired_at = null;
             $user->save();
 
+            Auth::login($user);
+
             $response['status'] = 'success';
             $response['messages'][] = 'Login Successful';
             $response['data']['redirect_url'] = route('vh.backend').'#/vaah';
@@ -247,8 +250,9 @@ class PublicController extends Controller
     //----------------------------------------------------------
     public function resendSecurityOtp(Request $request)
     {
-
-        $verify_response = Auth::user()->verifySecurityAuthentication();
+        $user = User::where('email', $request->email)
+            ->first();
+        $verify_response = $user->verifySecurityAuthentication();
 
         if(isset($verify_response['success']) && !$verify_response['success']){
             return $verify_response;
