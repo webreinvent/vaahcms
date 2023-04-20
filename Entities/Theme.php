@@ -807,7 +807,7 @@ class Theme extends Model {
 
             $response['status'] = 'success';
             $response['data']['item'] = $item;
-            $response['messages'][] = 'Migration reset is successful';
+            $response['messages'][] = 'Migration refresh is successful';
 
         }catch(\Exception $e)
         {
