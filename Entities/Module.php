@@ -664,7 +664,7 @@ class Module extends Model {
 
                 $module_path = config('vaahcms.modules_path').$module->name;
                 $path = vh_module_migrations_path($module->name);
-                Migration::resetMigrations($path);
+                Migration::refreshtMigrations($path);
 
             }
 

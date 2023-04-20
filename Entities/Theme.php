@@ -768,7 +768,7 @@ class Theme extends Model {
             if(!isset($item->is_migratable) || (isset($item->is_migratable) && $item->is_migratable == true))
             {
                 $path = vh_theme_migrations_path($item->name);
-                Migration::resetMigrations($path);
+                Migration::refreshtMigrations($path);
 
             }
 
