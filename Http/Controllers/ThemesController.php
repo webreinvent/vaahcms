@@ -370,7 +370,7 @@ class ThemesController extends Controller
 
                         return response()->json($response);
                     }
-                    $response = Theme::resetTheme($theme->slug);
+                    $response = Theme::resetThemeMigrations($theme->slug);
                     break;
                 //---------------------------------------
                 case 'import_sample_data':

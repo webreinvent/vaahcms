@@ -17,16 +17,12 @@
 
                         <Tags :item="props.row"/>
 
-
                     </div>
 
                 </b-table-column>
 
 
                 <b-table-column v-slot="props"  width="100" field="actions" label="" numeric>
-
-
-
 
                     <b-field class="float-right" style="float: right;">
 
@@ -61,42 +57,18 @@
                             </p>
                         </b-tooltip>
 
-                        <b-tooltip label="Run Migrations" type="is-dark">
+                        <b-tooltip label="Action" type="is-dark">
                             <p v-if="hasPermission('can-publish-assets-of-module')"
                                class="control">
-                                <b-button v-if="props.row.is_active"
-                                          :loading="page.active_actions.includes('run_migrations-'+props.row.id)"
-                                          size="is-small"
-                                          type="is-info"
-                                          icon-left="database"
-                                          @click="actions('run_migrations', props.row)">
-                                </b-button>
-                            </p>
-                        </b-tooltip>
+                                <b-dropdown class="action-items" v-if="props.row.is_active" label="Action">
+                                    <template #trigger>
+                                        <b-button class="action-button" type="is-info" icon-right="caret-down" label="Action" />
+                                    </template>
 
-                        <b-tooltip label="Refresh" type="is-dark">
-                            <p v-if="hasPermission('can-publish-assets-of-module')"
-                               class="control">
-                                <b-button v-if="props.row.is_active"
-                                          :loading="page.active_actions.includes('reset-'+props.row.id)"
-                                          size="is-small"
-                                          type="is-info"
-                                          @click="actions('reset', props.row)">
-                                    Refresh
-                                </b-button>
-                            </p>
-                        </b-tooltip>
-
-                        <b-tooltip label="Run Seeds" type="is-dark">
-                            <p v-if="hasPermission('can-publish-assets-of-module')"
-                               class="control">
-                                <b-button v-if="props.row.is_active"
-                                          :loading="page.active_actions.includes('run_seeds-'+props.row.id)"
-                                          size="is-small"
-                                          type="is-info"
-                                          icon-left="database"
-                                          @click="actions('run_seeds', props.row)">
-                                </b-button>
+                                    <b-dropdown-item @click="actions('run_migrations', props.row)">Run Migrations</b-dropdown-item>
+                                    <b-dropdown-item @click="actions('run_seeds', props.row)">Run Seeds</b-dropdown-item>
+                                    <b-dropdown-item @click="confirmRefresh(props.row)">Refresh Migrations</b-dropdown-item>
+                                </b-dropdown>
                             </p>
                         </b-tooltip>
 
@@ -133,9 +105,6 @@
                             </p>
                         </b-tooltip>
 
-
-
-
                         <b-tooltip label="View" type="is-dark">
                             <p v-if="hasPermission('can-read-module')" class="control">
                                 <b-button size="is-small"
@@ -146,11 +115,7 @@
                             </p>
                         </b-tooltip>
 
-
-
-
                     </b-field>
-
 
                 </b-table-column>
 
@@ -167,3 +132,12 @@
         </b-table>
     </div>
 </template>
+
+<style scoped>
+.action-items {
+    text-align: left!important;
+}
+.action-button {
+    height: 1.7rem;
+}
+</style>
