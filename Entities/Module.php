@@ -670,7 +670,7 @@ class Module extends Model {
 
             $response['status'] = 'success';
             $response['data']['item'] = $module;
-            $response['messages'][] = 'Migration reset is successful';
+            $response['messages'][] = 'Migration refresh is successful';
         }catch(\Exception $e)
         {
             $response['status'] = 'failed';
