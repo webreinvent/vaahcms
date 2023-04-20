@@ -69,7 +69,7 @@
                             </p>
                         </b-tooltip>
 
-                        <b-tooltip label="Reset" type="is-dark">
+                        <b-tooltip label="Refresh" type="is-dark">
                             <p v-if="hasPermission('can-publish-assets-of-theme')"
                                class="control">
                                 <b-button v-if="props.row.is_active"
@@ -77,7 +77,7 @@
                                           size="is-small"
                                           type="is-info"
                                           @click="actions('reset', props.row)">
-                                    Reset
+                                    Refresh
                                 </b-button>
                             </p>
                         </b-tooltip>
