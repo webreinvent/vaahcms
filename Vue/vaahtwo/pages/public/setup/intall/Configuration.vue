@@ -11,6 +11,7 @@ const root = useRootStore();
 onMounted(async () => {
     document.title = 'Configuration - Setup';
     await store.getAssets();
+    await store.getRequiredConfigurations();
 });
 </script>
 

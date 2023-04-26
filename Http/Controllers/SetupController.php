@@ -320,6 +320,7 @@ class SetupController extends Controller
         }
 
 
+
         //verify mail configuration if set
         /*if($request->has('mail_is_valid') && $request->mail_is_valid == false)
         {
@@ -330,7 +331,6 @@ class SetupController extends Controller
                 return response()->json($response);
             }
         }*/
-
 
 
         $response = VaahSetup::verifyAppUrl($request);

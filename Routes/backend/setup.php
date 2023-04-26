@@ -68,8 +68,8 @@ Route::group(
         Route::post( '/get/configurations', 'SetupController@getConfigurations' )
             ->name( 'vh.setup.get.configurations' );
         //------------------------------------------------
-        Route::post( '/get/required/configurations', 'SetupController@getRequiredConfigurations' )
-            ->name( 'vh.setup.get.get.required.configurations' );
+        Route::post( '/required/configurations', 'SetupController@getRequiredConfigurations' )
+            ->name( 'vh.setup.get.required.configurations' );
         //------------------------------------------------
         Route::get( '/get/dependencies', 'SetupController@getDependencies' )
             ->name( 'vh.setup.get.dependencies' );

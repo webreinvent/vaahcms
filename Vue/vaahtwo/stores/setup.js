@@ -22,6 +22,7 @@ export const useSetupStore = defineStore({
         is_btn_loading_dependency: false,
         btn_is_migration: false,
         status: null,
+        route: null,
         gutter: 20,
         active_dependency: null,
         debug_option: [
@@ -118,7 +119,11 @@ export const useSetupStore = defineStore({
     }),
     getters: {},
     actions: {
-        async getAssets() {
+        async getAssets(route = null) {
+
+            if(route){
+                this.route = route;
+            }
 
             if(this.assets_is_fetching === true){
                 this.assets_is_fetching = false;
@@ -141,6 +146,14 @@ export const useSetupStore = defineStore({
             if(data)
             {
                 this.assets = data;
+
+                if(this.route.name === 'setup.install.migrate' && !this.assets.env_file ){
+
+                    this.assets_is_fetching = true;
+                    this.getAssets();
+                }
+
+                console.log(this.route.name);
 
                 this.config.env.app_url = this.assets.app_url;
 
@@ -166,6 +179,31 @@ export const useSetupStore = defineStore({
             if(data)
             {
                 this.status = data;
+
+            }
+        },
+        async getRequiredConfigurations() {
+
+            let params = {
+                method: 'post'
+            };
+
+            vaah().ajax(
+                this.ajax_url+'/required/configurations',
+                this.getRequiredConfigurationsAfter,
+                params
+            );
+
+        },
+
+
+        //---------------------------------------------------------------------
+        getRequiredConfigurationsAfter(data, res)
+        {
+            if(data)
+            {
+                this.config.env.app_key = data.app_key;
+                this.config.env.app_vaahcms_env = data.app_vaahcms_env;
 
             }
         },

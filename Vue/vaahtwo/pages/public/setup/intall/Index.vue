@@ -1,6 +1,7 @@
 <script setup>
 
 import {onMounted, reactive} from "vue";
+import {useRoute} from 'vue-router';
 
 import { useSetupStore } from '../../../../stores/setup'
 const store = useSetupStore();
@@ -8,11 +9,13 @@ import { useRootStore } from '../../../../stores/root'
 import Footer from "../../../../components/organisms/Footer.vue"
 
 const root = useRootStore();
+const route = useRoute();
 
 
 onMounted(async () => {
-    await store.getAssets();
+    await store.getAssets(route);
     await store.getStatus();
+
 });
 </script>
 
@@ -32,8 +35,11 @@ onMounted(async () => {
 
                 </template>
             </Steps>
-            <div class="w-auto text-center my-4"><Tag class="bg-black-alpha-90 m-auto is-small">
-                ACTIVE ENV FILE: <b class="ml-1">{{ store.assets.env_file }}</b></Tag></div>
+            <div v-if="store.assets.env_file" class="w-auto text-center my-4">
+                <Tag class="bg-black-alpha-90 m-auto is-small">
+                ACTIVE ENV FILE: <b class="ml-1">{{ store.assets.env_file }}</b>
+                </Tag>
+            </div>
             <router-view />
 
             <Footer />
