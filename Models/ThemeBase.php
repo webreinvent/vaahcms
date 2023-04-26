@@ -513,7 +513,7 @@ class ThemeBase extends Model {
 
     }
     //-------------------------------------------------
-    public static function runThemeMigrations($slug, $is_default=false)
+    public static function runMigrations($slug, $is_default=false)
     {
         try {
             $item = static::slug($slug)->first();
@@ -534,8 +534,6 @@ class ThemeBase extends Model {
                 if($current_max_batch > $max_batch){
                     Migration::syncThemeMigrations($item->id,$current_max_batch);
                 }
-
-                LanguageString::generateLangFiles();
 
             }
 
@@ -559,7 +557,7 @@ class ThemeBase extends Model {
 
     }
     //-------------------------------------------------
-    public static function runThemeSeeds($slug, $is_default=false)
+    public static function runSeeds($slug, $is_default=false)
     {
         try {
             $item = static::slug($slug)->first();
@@ -570,7 +568,21 @@ class ThemeBase extends Model {
                 $seeds_namespace = vh_theme_database_seeder($item->name);
                 Migration::runSeeds($seeds_namespace);
 
-                LanguageString::generateLangFiles();
+
+                //delete all database migrations
+                $theme_migrations = $item->migrations()->get()
+                    ->pluck('migration_id')->toArray();
+
+                if($theme_migrations)
+                {
+                    \DB::table('migrations')->whereIn('id', $theme_migrations)->delete();
+                    Migration::whereIn('migration_id', $theme_migrations)->delete();
+                }
+
+                $max_batch = \DB::table('migrations')
+                    ->max('batch');
+
+                Migration::syncThemeMigrations($item->id,$max_batch);
 
             }
 
@@ -593,7 +605,7 @@ class ThemeBase extends Model {
 
     }
     //-------------------------------------------------
-    public static function resetThemeMigrations($slug)
+    public static function refreshMigrations($slug)
     {
 
         try{
@@ -602,12 +614,8 @@ class ThemeBase extends Model {
 
             if(!isset($item->is_migratable) || (isset($item->is_migratable) && $item->is_migratable == true))
             {
-
                 $path = vh_theme_migrations_path($item->name);
                 Migration::refreshMigrations($path);
-
-                LanguageString::generateLangFiles();
-
             }
 
             $response['success'] = true;

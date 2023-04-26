@@ -38,7 +38,7 @@ const confirmRefresh = (item) => {
         icon: 'pi pi-info-circle',
         acceptClass: 'p-button-danger',
         accept: () => {
-            store.resetTheme(item);
+            store.refreshMigration(item);
         },
     });
 }
@@ -141,13 +141,6 @@ function actionItems(item){
                                 v-if="item.is_active && store.hasPermission('can-publish-assets-of-theme')"
                         />
 
-                        <SplitButton label="Actions"
-                                     v-if="item.is_active && store.hasPermission('can-deactivate-theme')"
-                                     v-tooltip.top="'Actions'"
-                                     class="mr-1"
-                                     data-testid="themes-table_action"
-                                     :model="actionItems(item)" />
-
                         <Button v-if="item.is_active && store.hasPermission('can-import-sample-data-in-theme')"
                                 v-tooltip.top="'Import Sample Data'"
                                 class="mr-2 p-button-sm"
@@ -157,19 +150,30 @@ function actionItems(item){
                                 @click="importSampleDataModal(item)"
                         />
 
-                        <Button class="mr-2 p-button-danger p-button-sm"
+                        <SplitButton label="Actions"
+                                     v-if="item.is_active
+                                     && item.is_migratable
+                                     && store.hasPermission('can-import-sample-data-in-theme')"
+                                     v-tooltip.top="'Actions'"
+                                     class="mr-2"
+                                     data-testid="themes-table_action"
+                                     :model="actionItems(item)" />
+
+                        <Button class="p-button-sm mr-2"
+                                icon="pi pi-eye"
+                                v-tooltip.top=" 'View' "
+                                @click="store.toView(item)"
+                                v-if="store.hasPermission('can-read-theme')"
+                        />
+
+                        <Button class="p-button-danger p-button-sm"
                                 v-if="!item.deleted_at && store.hasPermission('can-update-theme')"
                                 @click="store.confirmDeleteItem(item)"
                                 data-testid="themes-table-action-delete"
                                 v-tooltip.top="'Trash'"
                                 icon="pi pi-trash" />
 
-                        <Button class="p-button-sm ml-2"
-                                icon="pi pi-eye"
-                                v-tooltip.top=" 'View' "
-                                @click="store.toView(item)"
-                                v-if="item.is_active && store.hasPermission('can-read-theme')"
-                        />
+
                     </div>
                 </div>
             </div>

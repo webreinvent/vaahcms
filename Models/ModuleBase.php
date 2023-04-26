@@ -426,7 +426,7 @@ class ModuleBase extends Model
 
             if(!isset($module->is_migratable) || (isset($module->is_migratable) && $module->is_migratable == true))
             {
-                
+
                 $path = vh_module_migrations_path($module->name);
 
                 $max_batch = \DB::table('migrations')
