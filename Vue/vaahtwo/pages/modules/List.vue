@@ -51,44 +51,44 @@ onMounted(async () => {
     <div class="grid" v-if="store.assets">
         <div :class="'col-'+store.list_view_width">
             <Panel>
-                <template #header>
-                    <div class="flex justify-content-between align-items-center w-full">
-                        <h5 class="font-semibold text-lg">
-                            Modules
-                            <Badge v-if="store.list && store.list.total > 0"
-                                   :value="store.list.total"
+                <template class="p-1" #header>
+                    <div class="flex flex-row">
+                        <div >
+                            <b class="mr-1">Modules</b>
+                            <Badge v-if="store.list && store.list.length > 0"
+                                   :value="store.list.length"
                             />
-
-                        </h5>
-
-                        <div class="p-inputgroup justify-content-end">
-                            <Button class="p-button-sm"
-                                    tag="router-link"
-                                    @click="store.setSixColumns()"
-                                    icon="pi pi-plus"
-                                    label="Install"
-                                    data-testid="modules-list-action-install"
-                                    v-if="store.hasPermission('can-install-module')"
-                            />
-
-                            <Button class="p-button-sm"
-                                    :loading="store.is_fetching_updates"
-                                    @click="store.checkUpdate()"
-                                    icon="pi pi-download"
-                                    label="Check Updates"
-                                    data-testid="modules-list-action-check_updates"
-                                    v-if="store.hasPermission('can-update-module')"
-                            />
-
-                            <Button class="p-button-sm"
-                                    @click="store.sync()"
-                                    :loading="store.is_btn_loading"
-                                    data-testid="modules-list-action-refresh"
-                                    icon="pi pi-refresh"
-                                    v-tooltip.top="'Reload'"
-                            />
-
                         </div>
+                    </div>
+                </template>
+
+                <template #icons>
+                    <div class="p-inputgroup">
+                        <Button class="p-button-sm"
+                                tag="router-link"
+                                @click="store.setSixColumns()"
+                                icon="pi pi-plus"
+                                label="Install"
+                                data-testid="modules-list-action-install"
+                                v-if="store.hasPermission('can-install-module')"
+                        />
+
+                        <Button class="p-button-sm"
+                                :loading="store.is_fetching_updates"
+                                @click="store.checkUpdate()"
+                                icon="pi pi-download"
+                                label="Check Updates"
+                                data-testid="modules-list-action-check_updates"
+                                v-if="store.hasPermission('can-update-module')"
+                        />
+
+                        <Button class="p-button-sm"
+                                @click="store.sync()"
+                                :loading="store.is_btn_loading"
+                                data-testid="modules-list-action-refresh"
+                                icon="pi pi-refresh"
+                                v-tooltip.top="'Reload'"
+                        />
                     </div>
                 </template>
 

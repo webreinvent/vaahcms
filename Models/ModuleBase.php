@@ -419,6 +419,126 @@ class ModuleBase extends Model
 
     }
     //-------------------------------------------------
+    public static function runMigrations($slug)
+    {
+        try {
+            $module = self::slug($slug)->first();
+
+            if(!isset($module->is_migratable) || (isset($module->is_migratable) && $module->is_migratable == true))
+            {
+
+                $path = vh_module_migrations_path($module->name);
+
+                $max_batch = \DB::table('migrations')
+                    ->max('batch');
+
+                Migration::runMigrations($path);
+
+                $current_max_batch = \DB::table('migrations')
+                    ->max('batch');
+
+                if($current_max_batch > $max_batch){
+                    Migration::syncModuleMigrations($module->id,$current_max_batch);
+                }
+
+            }
+
+            $response['success'] = true;
+            $response['data'][] = '';
+            $response['messages'][] = 'Migration run is successful';
+
+            if(env('APP_DEBUG'))
+            {
+                $response['hint'][] = '';
+            }
+        }catch(\Exception $e)
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = $e->getMessage();
+
+        }
+
+        return $response;
+
+    }
+    //-------------------------------------------------
+    public static function runSeeds($slug)
+    {
+        try {
+            $module = self::slug($slug)->first();
+
+            if(!isset($module->is_migratable) || (isset($module->is_migratable) && $module->is_migratable == true))
+            {
+
+                $seeds_namespace = vh_module_database_seeder($module->name);
+                Migration::runSeeds($seeds_namespace);
+
+            }
+
+            $response['success'] = true;
+            $response['data'][] = '';
+            $response['messages'][] = 'Seeds run is successful';
+
+            if(env('APP_DEBUG'))
+            {
+                $response['hint'][] = '';
+            }
+        }catch(\Exception $e)
+        {
+            $response['status'] = 'failed';
+            $response['errors'][] = $e->getMessage();
+
+        }
+
+        return $response;
+
+    }
+    //-------------------------------------------------
+    public static function refreshMigrations($slug)
+    {
+
+        try{
+            $module = static::where('slug', $slug)->first();
+
+            if(!isset($module->is_migratable) ||
+                (isset($module->is_migratable) && $module->is_migratable == true))
+            {
+
+                $path = vh_module_migrations_path($module->name);
+                Migration::refreshMigrations($path);
+
+                //delete all database migrations
+                $module_migrations = $module->migrations()->get()->pluck('migration_id')->toArray();
+
+                if($module_migrations)
+                {
+                    \DB::table('migrations')->whereIn('id', $module_migrations)->delete();
+                    Migration::whereIn('migration_id', $module_migrations)->delete();
+                }
+
+                $max_batch = \DB::table('migrations')
+                    ->max('batch');
+
+                Migration::syncModuleMigrations($module->id,$max_batch);
+
+            }
+
+            $response['success'] = true;
+            $response['data'][] = '';
+            $response['messages'][] = 'Migration refresh is successful';
+
+        }catch(\Exception $e)
+        {
+            $response['success'] = false;
+            $response['errors'][] = $e->getMessage();
+
+        }
+
+
+        return $response;
+
+    }
+    //-------------------------------------------------
     public static function deactivateItem($slug)
     {
         $item = static::slug($slug)->first();
@@ -463,6 +583,7 @@ class ModuleBase extends Model
                     }
                 }
             }
+
 
             //Delete module settings
             $item->settings()->delete();
@@ -602,8 +723,9 @@ class ModuleBase extends Model
         copy($download_link, $zip_file);
 
         try{
-            Zip::check($zip_file);
-            $zip = Zip::open($zip_file);
+            $zip = new Zip();
+            $zip->check($zip_file);
+            $zip->open($zip_file);
             $zip_content_list = $zip->listFiles();
             $zip->extract($vaahcms_path);
             $zip->close();

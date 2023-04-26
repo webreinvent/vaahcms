@@ -9,7 +9,9 @@ const confirm = useConfirm();
 
 const importSampleDataModal = (item) => {
     confirm.require({
-        message: 'This will import sample/dummy data of the module <b>' + item.name + '</b>. This action cannot be undone.',
+        message: 'This will import sample/dummy data of the ' +
+            'module <b>' + item.name + '</b>. ' +
+            'This action cannot be undone.',
         header: 'Importing Sample Data',
         icon: 'pi pi-exclamation-triangle',
         accept: () => {
@@ -18,6 +20,47 @@ const importSampleDataModal = (item) => {
         },
     });
 }
+const confirmRefresh = (item) =>
+{
+    confirm.require({
+        header: 'Refresh Migrations',
+        message: 'Are you sure you want to <b>Refresh</b> Migrations? ' +
+            'This action will <b>rollback</b> all the migrations and ' +
+            'then <b>re-run</b> the migrations of this module.',
+        icon: 'pi pi-info-circle',
+        acceptClass: 'p-button-danger',
+        accept: () => {
+            store.refreshModule(item);
+        },
+    });
+}
+function actionItems(item){
+    let list =[
+        {
+            label: 'Run Migrations',
+            icon: 'pi pi-database',
+            command: () => {
+                store.runMigrations(item);
+            }
+        },
+        {
+            label: 'Run Seeds',
+            icon: 'pi pi-server',
+            command: () => {
+                store.runSeeds(item);
+            }
+        },
+        {
+            label: 'Refresh Migrations',
+            icon: 'pi pi-refresh',
+            command: () => {
+                confirmRefresh(item);
+            }
+        },
+    ];
+    return list;
+}
+
 </script>
 
 <template>
@@ -72,13 +115,22 @@ const importSampleDataModal = (item) => {
                                         data-testid="modules-table-action-sample-data"
                                         size="is-small"
                                         icon="pi pi-database"
-                                        class="mr-2 p-button-sm"
+                                        class="p-button-sm"
                                         v-tooltip.top="'Import Sample Data'"
                                         :loading="store.active_action.includes('import_sample_data_'+item.id)"
                                         @click="importSampleDataModal(item)"
                                 />
 
-                                <Button class="mr-2 p-button-info p-button-sm"
+                                <SplitButton v-if="item.is_active
+                                             && item.is_migratable
+                                             && store.hasPermission('can-import-sample-data-in-module')"
+                                             label="Actions"
+                                             :loading="store.active_action.includes('import_sample_data_'+item.id)"
+                                             class="ml-2 mr-2"
+                                             data-testid="modules-table_action"
+                                             :model="actionItems(item)" />
+
+                                <Button class="p-button-info p-button-sm mr-2"
                                         label="Update"
                                         data-testid="modules-table-action-install-update"
                                         icon="cloud-download-alt"
@@ -87,7 +139,14 @@ const importSampleDataModal = (item) => {
                                         v-if="item.is_update_available && store.hasPermission('can-update-module')"
                                 />
 
-                                <Button class="p-button-danger p-button-sm"
+                                <Button class="p-button-sm"
+                                        icon="pi pi-eye"
+                                        v-tooltip.top=" 'View' "
+                                        @click="store.toView(item)"
+                                        v-if="store.hasPermission('can-read-module')"
+                                />
+
+                                <Button class="p-button-danger p-button-sm ml-2"
                                         data-testid="modules-table-action-trash"
                                         v-if="!item.deleted_at && store.hasPermission('can-delete-module')"
                                         @click="store.confirmDeleteItem(item)"
@@ -95,12 +154,6 @@ const importSampleDataModal = (item) => {
                                         icon="pi pi-trash"
                                 />
 
-                                <Button class="p-button-sm ml-2"
-                                        icon="pi pi-eye"
-                                        v-tooltip.top=" 'View' "
-                                        @click="store.toView(item)"
-                                        v-if="item.is_active && store.hasPermission('can-read-module')"
-                                />
                             </div>
                         </div>
 
@@ -119,7 +172,6 @@ const importSampleDataModal = (item) => {
                    :rows-per-page-options="store.rows_per_page"
         />
         <!--/paginator-->
-
         <ConfirmDialog group="templating" class="is-small"
                        :style="{width: '400px'}"
                        :breakpoints="{'600px': '100vw'}"

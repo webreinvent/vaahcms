@@ -17,7 +17,9 @@ const confirm = useConfirm();
 
 const importSampleDataModal = (item) => {
     confirm.require({
-        message: 'This will import sample/dummy data of the theme <b>' + item.name + '</b>. This action cannot be undone.',
+        message: 'This will import sample/dummy data of ' +
+            'the theme <b>' + item.name + '</b>.' +
+            ' This action cannot be undone.',
         header: 'Importing Sample Data',
         icon: 'pi pi-exclamation-triangle',
         accept: () => {
@@ -26,6 +28,48 @@ const importSampleDataModal = (item) => {
         },
     });
 }
+
+const confirmRefresh = (item) => {
+    confirm.require({
+        header: 'Refresh Migrations',
+        message: 'Are you sure you want to <b>Refresh</b> Migrations? ' +
+            'This action will <b>rollback</b> all the migrations ' +
+            'and then <b>re-run</b> the migrations of this theme.',
+        icon: 'pi pi-info-circle',
+        acceptClass: 'p-button-danger',
+        accept: () => {
+            store.refreshMigration(item);
+        },
+    });
+}
+
+function actionItems(item){
+    let list =[
+        {
+            label: 'Run Migrations',
+            icon: 'pi pi-database',
+            command: () => {
+                store.runMigrations(item);
+            }
+        },
+        {
+            label: 'Run Seeds',
+            icon: 'pi pi-server',
+            command: () => {
+                store.runSeeds(item);
+            }
+        },
+        {
+            label: 'Refresh Migrations',
+            icon: 'pi pi-refresh',
+            command: () => {
+                confirmRefresh(item);
+            }
+        },
+    ];
+    return list;
+}
+
 </script>
 
 <template>
@@ -106,19 +150,30 @@ const importSampleDataModal = (item) => {
                                 @click="importSampleDataModal(item)"
                         />
 
-                        <Button class="mr-2 p-button-danger p-button-sm"
+                        <SplitButton label="Actions"
+                                     v-if="item.is_active
+                                     && item.is_migratable
+                                     && store.hasPermission('can-import-sample-data-in-theme')"
+                                     v-tooltip.top="'Actions'"
+                                     class="mr-2"
+                                     data-testid="themes-table_action"
+                                     :model="actionItems(item)" />
+
+                        <Button class="p-button-sm mr-2"
+                                icon="pi pi-eye"
+                                v-tooltip.top=" 'View' "
+                                @click="store.toView(item)"
+                                v-if="store.hasPermission('can-read-theme')"
+                        />
+
+                        <Button class="p-button-danger p-button-sm"
                                 v-if="!item.deleted_at && store.hasPermission('can-update-theme')"
                                 @click="store.confirmDeleteItem(item)"
                                 data-testid="themes-table-action-delete"
                                 v-tooltip.top="'Trash'"
                                 icon="pi pi-trash" />
 
-                        <Button class="p-button-sm ml-2"
-                                icon="pi pi-eye"
-                                v-tooltip.top=" 'View' "
-                                @click="store.toView(item)"
-                                v-if="item.is_active && store.hasPermission('can-read-theme')"
-                        />
+
                     </div>
                 </div>
             </div>

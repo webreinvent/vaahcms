@@ -148,13 +148,31 @@ class Migration extends Model {
         \Artisan::call($command, $params);
     }
     //-------------------------------------------------
-    public static function resetMigrations()
+    public static function resetMigrations($path=null, $force=false)
     {
         $command = 'migrate:reset';
         $params = [
             '--force' => true,
             '--quiet' => true,
         ];
+        if($path)
+        {
+            $params['--path'] = $path;
+        }
+        \Artisan::call($command, $params);
+    }
+    //-------------------------------------------------
+    public static function refreshMigrations($path=null, $force=false)
+    {
+        $command = 'migrate:refresh';
+        $params = [
+            '--force' => true,
+            '--quiet' => true,
+        ];
+        if($path)
+        {
+            $params['--path'] = $path;
+        }
         \Artisan::call($command, $params);
     }
     //-------------------------------------------------
