@@ -52,38 +52,45 @@ onMounted(async () => {
 
         <div :class="'col-'+store.list_view_width">
             <Panel>
-                <template #header>
-                    <div class="flex justify-content-between align-items-center w-full">
-                        <h5 class="font-semibold text-lg">Themes</h5>
-                        <div class="p-inputgroup justify-content-end">
-                            <Button tag="router-link"
-                                    v-if="store.hasPermission('can-install-theme')"
-                                    @click="store.setSixColumns()"
-                                    icon="pi pi-plus"
-                                    class="p-button-sm"
-                                    data-testid="themes-list-install"
-                                    label="Install"
+                <template class="p-1" #header>
+                    <div class="flex flex-row">
+                        <div >
+                            <b class="mr-1">Themes</b>
+                            <Badge v-if="store.list && store.list.length > 0"
+                                   :value="store.list.length"
                             />
-
-                            <Button :loading="store.is_fetching_updates"
-                                    v-if="store.hasPermission('can-update-theme')"
-                                    @click="store.checkUpdate()"
-                                    icon="pi pi-download"
-                                    class="p-button-sm"
-                                    data-testid="themes-list-check_updated"
-                                    label="Check Updates"
-                            />
-
-                            <Button type="is-light"
-                                    @click="store.sync()"
-                                    :loading="store.is_btn_loading"
-                                    class="p-button-sm"
-                                    data-testid="themes-list-refresh"
-                                    icon="pi pi-refresh"
-                                    v-tooltip.top="'Reload'"
-                            />
-
                         </div>
+                    </div>
+                </template>
+
+                <template #icons>
+                    <div class="p-inputgroup">
+                        <Button tag="router-link"
+                                v-if="store.hasPermission('can-install-theme')"
+                                @click="store.setSixColumns()"
+                                icon="pi pi-plus"
+                                class="p-button-sm"
+                                data-testid="themes-list-install"
+                                label="Install"
+                        />
+
+                        <Button :loading="store.is_fetching_updates"
+                                v-if="store.hasPermission('can-update-theme')"
+                                @click="store.checkUpdate()"
+                                icon="pi pi-download"
+                                class="p-button-sm"
+                                data-testid="themes-list-check_updated"
+                                label="Check Updates"
+                        />
+
+                        <Button type="is-light"
+                                @click="store.sync()"
+                                :loading="store.is_btn_loading"
+                                class="p-button-sm"
+                                data-testid="themes-list-refresh"
+                                icon="pi pi-refresh"
+                                v-tooltip.top="'Reload'"
+                        />
                     </div>
                 </template>
 

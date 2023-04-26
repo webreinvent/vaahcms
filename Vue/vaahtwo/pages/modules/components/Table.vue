@@ -115,13 +115,22 @@ function actionItems(item){
                                         data-testid="modules-table-action-sample-data"
                                         size="is-small"
                                         icon="pi pi-database"
-                                        class="mr-2 p-button-sm"
+                                        class="p-button-sm"
                                         v-tooltip.top="'Import Sample Data'"
                                         :loading="store.active_action.includes('import_sample_data_'+item.id)"
                                         @click="importSampleDataModal(item)"
                                 />
 
-                                <Button class="mr-2 p-button-info p-button-sm"
+                                <SplitButton v-if="item.is_active
+                                             && item.is_migratable
+                                             && store.hasPermission('can-import-sample-data-in-module')"
+                                             label="Actions"
+                                             :loading="store.active_action.includes('import_sample_data_'+item.id)"
+                                             class="ml-2 mr-2"
+                                             data-testid="modules-table_action"
+                                             :model="actionItems(item)" />
+
+                                <Button class="p-button-info p-button-sm mr-2"
                                         label="Update"
                                         data-testid="modules-table-action-install-update"
                                         icon="cloud-download-alt"
@@ -130,27 +139,20 @@ function actionItems(item){
                                         v-if="item.is_update_available && store.hasPermission('can-update-module')"
                                 />
 
-                                <Button class="p-button-danger p-button-sm"
+                                <Button class="p-button-sm"
+                                        icon="pi pi-eye"
+                                        v-tooltip.top=" 'View' "
+                                        @click="store.toView(item)"
+                                        v-if="store.hasPermission('can-read-module')"
+                                />
+
+                                <Button class="p-button-danger p-button-sm ml-2"
                                         data-testid="modules-table-action-trash"
                                         v-if="!item.deleted_at && store.hasPermission('can-delete-module')"
                                         @click="store.confirmDeleteItem(item)"
                                         v-tooltip.top="'Trash'"
                                         icon="pi pi-trash"
                                 />
-
-                                <Button class="p-button-sm ml-2"
-                                        icon="pi pi-eye"
-                                        v-tooltip.top=" 'View' "
-                                        @click="store.toView(item)"
-                                        v-if="item.is_active && store.hasPermission('can-read-module')"
-                                />
-
-                                <SplitButton label="Migration" v-if="item.is_active
-                                && store.hasPermission('can-deactivate-module')"
-                                             v-tooltip.top="'Actions'"
-                                             class="ml-2"
-                                             data-testid="modules-table_action"
-                                             :model="actionItems(item)" />
 
                             </div>
                         </div>

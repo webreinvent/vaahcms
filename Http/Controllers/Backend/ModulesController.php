@@ -314,7 +314,7 @@ class ModulesController extends Controller
 
                         return response()->json($response);
                     }
-                    $response = Module::runModuleMigrations($module->slug);
+                    $response = Module::runMigrations($module->slug);
                     break;
                 //---------------------------------------
                 case 'run_seeds':
@@ -324,7 +324,7 @@ class ModulesController extends Controller
 
                         return response()->json($response);
                     }
-                    $response = Module::runModuleSeeds($module->slug);
+                    $response = Module::runSeeds($module->slug);
                     break;
                 //---------------------------------------
                 case 'import_sample_data':

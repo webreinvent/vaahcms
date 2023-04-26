@@ -419,14 +419,14 @@ class ModuleBase extends Model
 
     }
     //-------------------------------------------------
-    public static function runModuleMigrations($slug)
+    public static function runMigrations($slug)
     {
         try {
             $module = self::slug($slug)->first();
 
             if(!isset($module->is_migratable) || (isset($module->is_migratable) && $module->is_migratable == true))
             {
-                $module_path = config('vaahcms.modules_path').$module->name;
+                
                 $path = vh_module_migrations_path($module->name);
 
                 $max_batch = \DB::table('migrations')
@@ -440,8 +440,6 @@ class ModuleBase extends Model
                 if($current_max_batch > $max_batch){
                     Migration::syncModuleMigrations($module->id,$current_max_batch);
                 }
-
-                LanguageString::generateLangFiles();
 
             }
 
@@ -464,7 +462,7 @@ class ModuleBase extends Model
 
     }
     //-------------------------------------------------
-    public static function runModuleSeeds($slug)
+    public static function runSeeds($slug)
     {
         try {
             $module = self::slug($slug)->first();
@@ -474,8 +472,6 @@ class ModuleBase extends Model
 
                 $seeds_namespace = vh_module_database_seeder($module->name);
                 Migration::runSeeds($seeds_namespace);
-
-                LanguageString::generateLangFiles();
 
             }
 
@@ -508,6 +504,9 @@ class ModuleBase extends Model
                 (isset($module->is_migratable) && $module->is_migratable == true))
             {
 
+                $path = vh_module_migrations_path($module->name);
+                Migration::refreshMigrations($path);
+
                 //delete all database migrations
                 $module_migrations = $module->migrations()->get()->pluck('migration_id')->toArray();
 
@@ -516,9 +515,6 @@ class ModuleBase extends Model
                     \DB::table('migrations')->whereIn('id', $module_migrations)->delete();
                     Migration::whereIn('migration_id', $module_migrations)->delete();
                 }
-                
-                $path = vh_module_migrations_path($module->name);
-                Migration::refreshMigrations($path);
 
                 $max_batch = \DB::table('migrations')
                     ->max('batch');
