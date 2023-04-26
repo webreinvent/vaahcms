@@ -498,21 +498,32 @@ class ModuleBase extends Model
 
     }
     //-------------------------------------------------
-    public static function resetModuleMigrations($slug)
+    public static function refreshMigrations($slug)
     {
 
         try{
+            $module = static::where('slug', $slug)->first();
 
-            $module = self::slug($slug)->first();
-
-            if(!isset($module->is_migratable) || (isset($module->is_migratable) && $module->is_migratable == true))
+            if(!isset($module->is_migratable) ||
+                (isset($module->is_migratable) && $module->is_migratable == true))
             {
 
-                $module_path = config('vaahcms.modules_path').$module->name;
+                //delete all database migrations
+                $module_migrations = $module->migrations()->get()->pluck('migration_id')->toArray();
+
+                if($module_migrations)
+                {
+                    \DB::table('migrations')->whereIn('id', $module_migrations)->delete();
+                    Migration::whereIn('migration_id', $module_migrations)->delete();
+                }
+                
                 $path = vh_module_migrations_path($module->name);
                 Migration::refreshMigrations($path);
 
-                LanguageString::generateLangFiles();
+                $max_batch = \DB::table('migrations')
+                    ->max('batch');
+
+                Migration::syncModuleMigrations($module->id,$max_batch);
 
             }
 
@@ -576,6 +587,7 @@ class ModuleBase extends Model
                     }
                 }
             }
+
 
             //Delete module settings
             $item->settings()->delete();
@@ -715,8 +727,9 @@ class ModuleBase extends Model
         copy($download_link, $zip_file);
 
         try{
-            Zip::check($zip_file);
-            $zip = Zip::open($zip_file);
+            $zip = new Zip();
+            $zip->check($zip_file);
+            $zip->open($zip_file);
             $zip_content_list = $zip->listFiles();
             $zip->extract($vaahcms_path);
             $zip->close();

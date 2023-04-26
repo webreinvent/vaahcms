@@ -261,7 +261,7 @@ class ModulesController extends Controller
             /*
              * Call method from module setup controller
              */
-            if(!in_array($request->action,['run_migrations','run_seeds','reset'],TRUE)){
+            if(!in_array($request->action,['run_migrations','run_seeds','refresh_migrations'],TRUE)){
 
                 $method_name = str_replace("_", " ", $request->action);
                 $method_name = ucwords($method_name);
@@ -297,14 +297,14 @@ class ModulesController extends Controller
                     $response = Module::deactivateItem($module->slug);
                     break;
                 //---------------------------------------
-                case 'reset':
+                case 'refresh_migrations':
                     if (!Auth::user()->hasPermission('can-activate-module')) {
                         $response['success'] = false;
                         $response['messages'][] = trans("vaahcms::messages.permission_denied");
 
                         return response()->json($response);
                     }
-                    $response = Module::resetModuleMigrations($module->slug);
+                    $response = Module::refreshMigrations($module->slug);
                     break;
                 //---------------------------------------
                 case 'run_migrations':

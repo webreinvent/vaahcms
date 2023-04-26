@@ -17,7 +17,9 @@ const confirm = useConfirm();
 
 const importSampleDataModal = (item) => {
     confirm.require({
-        message: 'This will import sample/dummy data of the theme <b>' + item.name + '</b>. This action cannot be undone.',
+        message: 'This will import sample/dummy data of ' +
+            'the theme <b>' + item.name + '</b>.' +
+            ' This action cannot be undone.',
         header: 'Importing Sample Data',
         icon: 'pi pi-exclamation-triangle',
         accept: () => {
@@ -30,7 +32,9 @@ const importSampleDataModal = (item) => {
 const confirmRefresh = (item) => {
     confirm.require({
         header: 'Refresh Migrations',
-        message: 'Are you sure you want to <b>Refresh</b> Migrations? This action will remove data of this theme.',
+        message: 'Are you sure you want to <b>Refresh</b> Migrations? ' +
+            'This action will <b>rollback</b> all the migrations ' +
+            'and then <b>re-run</b> the migrations of this theme.',
         icon: 'pi pi-info-circle',
         acceptClass: 'p-button-danger',
         accept: () => {

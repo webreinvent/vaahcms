@@ -9,7 +9,9 @@ const confirm = useConfirm();
 
 const importSampleDataModal = (item) => {
     confirm.require({
-        message: 'This will import sample/dummy data of the module <b>' + item.name + '</b>. This action cannot be undone.',
+        message: 'This will import sample/dummy data of the ' +
+            'module <b>' + item.name + '</b>. ' +
+            'This action cannot be undone.',
         header: 'Importing Sample Data',
         icon: 'pi pi-exclamation-triangle',
         accept: () => {
@@ -22,11 +24,13 @@ const confirmRefresh = (item) =>
 {
     confirm.require({
         header: 'Refresh Migrations',
-        message: 'Are you sure you want to <b>Refresh</b> Migrations? This action will remove data of this module.',
+        message: 'Are you sure you want to <b>Refresh</b> Migrations? ' +
+            'This action will <b>rollback</b> all the migrations and ' +
+            'then <b>re-run</b> the migrations of this module.',
         icon: 'pi pi-info-circle',
         acceptClass: 'p-button-danger',
         accept: () => {
-            store.resetModule(item);
+            store.refreshModule(item);
         },
     });
 }
@@ -107,13 +111,6 @@ function actionItems(item){
                                         v-tooltip.top="'Publish Assets'"
                                 />
 
-                                <SplitButton label="Actions"
-                                             v-if="item.is_active && store.hasPermission('can-deactivate-module')"
-                                             v-tooltip.top="'Actions'"
-                                             class="mr-1"
-                                             data-testid="modules-table_action"
-                                             :model="actionItems(item)" />
-
                                 <Button v-if="item.is_active && store.hasPermission('can-import-sample-data-in-module')"
                                         data-testid="modules-table-action-sample-data"
                                         size="is-small"
@@ -147,6 +144,14 @@ function actionItems(item){
                                         @click="store.toView(item)"
                                         v-if="item.is_active && store.hasPermission('can-read-module')"
                                 />
+
+                                <SplitButton label="Migration" v-if="item.is_active
+                                && store.hasPermission('can-deactivate-module')"
+                                             v-tooltip.top="'Actions'"
+                                             class="ml-2"
+                                             data-testid="modules-table_action"
+                                             :model="actionItems(item)" />
+
                             </div>
                         </div>
 
