@@ -280,7 +280,7 @@ class ThemesController extends Controller
             $theme = Theme::find($inputs['id']);
 
 
-            if(!in_array($request->action ,['publish_assets','run_migrations','run_seeds','reset'],TRUE)){
+            if(!in_array($request->action ,['publish_assets','run_migrations','run_seeds','refresh_migrations'],TRUE)){
                 $method_name = str_replace("_", " ", $request->action);
                 $method_name = ucwords($method_name);
                 $method_name = lcfirst(str_replace(" ", "", $method_name));
@@ -341,36 +341,36 @@ class ThemesController extends Controller
                     break;
                 //---------------------------------------
                 case 'run_migrations':
-                    if(!\Auth::user()->hasPermission('can-publish-assets-of-theme'))
+                    if(!\Auth::user()->hasPermission('can-activate-theme'))
                     {
                         $response['success'] = false;
                         $response['messages'][] = trans("vaahcms::messages.permission_denied");
 
                         return response()->json($response);
                     }
-                    $response = Theme::runThemeMigrations($theme->slug);
+                    $response = Theme::runMigrations($theme->slug);
                     break;
                 //---------------------------------------
                 case 'run_seeds':
-                    if(!\Auth::user()->hasPermission('can-publish-assets-of-theme'))
+                    if(!\Auth::user()->hasPermission('can-activate-theme'))
                     {
                         $response['success'] = false;
                         $response['messages'][] = trans("vaahcms::messages.permission_denied");
 
                         return response()->json($response);
                     }
-                    $response = Theme::runThemeSeeds($theme->slug);
+                    $response = Theme::runSeeds($theme->slug);
                     break;
                 //---------------------------------------
-                case 'reset':
-                    if(!\Auth::user()->hasPermission('can-publish-assets-of-theme'))
+                case 'refresh_migrations':
+                    if(!\Auth::user()->hasPermission('can-activate-theme'))
                     {
                         $response['success'] = false;
                         $response['messages'][] = trans("vaahcms::messages.permission_denied");
 
                         return response()->json($response);
                     }
-                    $response = Theme::resetThemeMigrations($theme->slug);
+                    $response = Theme::refreshMigrations($theme->slug);
                     break;
                 //---------------------------------------
                 case 'import_sample_data':

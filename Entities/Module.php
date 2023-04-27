@@ -504,7 +504,7 @@ class Module extends Model {
         return $response;
     }
     //-------------------------------------------------
-    public static function runModuleMigrations($slug)
+    public static function runMigrations($slug)
     {
         try{
             $module = Module::slug($slug)->first();
@@ -547,7 +547,7 @@ class Module extends Model {
 
     }
     //-------------------------------------------------
-    public static function runModuleSeeds($slug)
+    public static function runSeeds($slug)
     {
         try{
             $module = Module::slug($slug)->first();
@@ -687,7 +687,7 @@ class Module extends Model {
 
     }
     //-------------------------------------------------
-    public static function resetModuleMigrations($slug)
+    public static function refreshMigrations($slug)
     {
 
         try{
@@ -696,10 +696,22 @@ class Module extends Model {
 
             if(!isset($module->is_migratable) || (isset($module->is_migratable) && $module->is_migratable == true))
             {
-
-                $module_path = config('vaahcms.modules_path').$module->name;
                 $path = vh_module_migrations_path($module->name);
                 Migration::refreshtMigrations($path);
+
+                //delete all database migrations
+                $module_migrations = $module->migrations()->get()->pluck('migration_id')->toArray();
+
+                if($module_migrations)
+                {
+                    \DB::table('migrations')->whereIn('id', $module_migrations)->delete();
+                    Migration::whereIn('migration_id', $module_migrations)->delete();
+                }
+
+                $max_batch = \DB::table('migrations')
+                    ->max('batch');
+
+                Migration::syncModuleMigrations($module->id,$max_batch);
 
             }
 
