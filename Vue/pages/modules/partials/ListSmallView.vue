@@ -48,6 +48,7 @@
                             <p v-if="hasPermission('can-publish-assets-of-module')"
                                class="control">
                                 <b-button v-if="props.row.is_active"
+                                          style="border-radius: 0px"
                                           :loading="page.active_actions.includes('publish_assets-'+props.row.id)"
                                           size="is-small"
                                           type="is-info"
@@ -138,6 +139,7 @@
     text-align: left!important;
 }
 .action-button {
-    height: 1.7rem;
+    height: 1.6rem;
+    border-radius: 0px;
 }
 </style>
