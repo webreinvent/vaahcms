@@ -137,6 +137,7 @@
 <style scoped>
 .action-items {
     text-align: left!important;
+    color:#000;
 }
 .action-button {
     height: 1.6rem;

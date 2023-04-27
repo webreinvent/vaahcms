@@ -73,7 +73,7 @@
                         <b-tooltip label="Action" type="is-dark">
                             <p v-if="hasPermission('can-activate-theme')"
                                class="control">
-                                <b-dropdown class="action-items"  label="Action">
+                                <b-dropdown class="action-items" v-if="props.row.is_active"  label="Action">
                                     <template #trigger>
                                         <b-button class="action-button" type="is-info" icon-right="caret-down" label="Action" />
                                     </template>
