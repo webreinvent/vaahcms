@@ -104,7 +104,7 @@ export default {
                 confirmText: 'Refresh',
                 type: 'is-danger',
                 hasIcon: true,
-                onConfirm: () =>  this.actions('reset', item)
+                onConfirm: () =>  this.actions('refresh_migrations', item)
             })
         },
         //---------------------------------------------------------------------

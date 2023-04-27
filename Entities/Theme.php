@@ -613,7 +613,7 @@ class Theme extends Model {
         return $response;
     }
     //-------------------------------------------------
-    public static function runThemeMigrations($slug, $is_default=false)
+    public static function runMigrations($slug, $is_default=false)
     {
         try {
             $item = static::slug($slug)->first();
@@ -655,7 +655,7 @@ class Theme extends Model {
 
     }
     //-------------------------------------------------
-    public static function runThemeSeeds($slug, $is_default=false)
+    public static function runSeeds($slug, $is_default=false)
     {
         try {
             $item = static::slug($slug)->first();
@@ -758,7 +758,7 @@ class Theme extends Model {
 
     }
     //-------------------------------------------------
-    public static function resetThemeMigrations($slug)
+    public static function refreshMigrations($slug)
     {
 
         try{
@@ -769,6 +769,20 @@ class Theme extends Model {
             {
                 $path = vh_theme_migrations_path($item->name);
                 Migration::refreshtMigrations($path);
+
+                //delete all database migrations
+                $theme_migrations = $item->migrations()->get()->pluck('migration_id')->toArray();
+
+                if($theme_migrations)
+                {
+                    \DB::table('migrations')->whereIn('id', $theme_migrations)->delete();
+                    Migration::whereIn('migration_id', $theme_migrations)->delete();
+                }
+
+                $max_batch = \DB::table('migrations')
+                    ->max('batch');
+
+                Migration::syncThemeMigrations($item->id,$max_batch);
 
             }
 
