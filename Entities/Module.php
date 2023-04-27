@@ -113,7 +113,6 @@ class Module extends Model {
             $item = static::where('id', $id)
                 ->withTrashed()
                 ->first();
-
             $response['status'] = 'success';
             $response['data'] = $item;
         }catch(\Exception $e)
