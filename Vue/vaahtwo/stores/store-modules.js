@@ -497,17 +497,14 @@ export const useModuleStore = defineStore({
         },
         //---------------------------------------------------------------------
         async runMigrations(item) {
-            this.active_action.push('run_migrations_' + item.id);
             await this.itemAction('run_migrations', item);
         },
         //---------------------------------------------------------------------
         async runSeeds(item) {
-            this.active_action.push('run_seeds_' + item.id);
             await this.itemAction('run_seeds', item);
         },
         //---------------------------------------------------------------------
-        async refreshModule(item) {
-            this.active_action.push('refresh_' + item.id);
+        async refreshMigrations(item) {
             await this.itemAction('refresh_migrations', item);
         },
         //---------------------------------------------------------------------

@@ -30,7 +30,7 @@ const confirmRefresh = (item) =>
         icon: 'pi pi-info-circle',
         acceptClass: 'p-button-danger',
         accept: () => {
-            store.refreshModule(item);
+            store.refreshMigrations(item);
         },
     });
 }
@@ -123,9 +123,8 @@ function actionItems(item){
 
                                 <SplitButton v-if="item.is_active
                                              && item.is_migratable
-                                             && store.hasPermission('can-import-sample-data-in-module')"
+                                             && store.hasPermission('can-activate-module')"
                                              label="Actions"
-                                             :loading="store.active_action.includes('import_sample_data_'+item.id)"
                                              class="ml-2 mr-2"
                                              data-testid="modules-table_action"
                                              :model="actionItems(item)" />
