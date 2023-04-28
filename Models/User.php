@@ -468,6 +468,73 @@ class User extends UserBase
     }
 
     //-------------------------------------------------
+    public static function create($request)
+    {
+        $inputs = $request->all();
+
+        $validate = self::validation($inputs);
+
+        if (isset($validate['success']) && !$validate['success']) {
+            return $validate;
+        }
+
+        $rules = array(
+            'password' => 'required',
+        );
+
+        $validator = \Validator::make( $inputs, $rules);
+
+        if ( $validator->fails() ) {
+
+            $errors             = errorsToArray($validator->errors());
+            $response['success'] = false;
+            $response['errors'] = $errors;
+            return $response;
+        }
+
+        // check if already exist
+        $user = self::withTrashed()->where('email',$inputs['email'])->first();
+
+        if ($user) {
+            $response['success'] = false;
+            $response['errors'][] = trans('vaahcms-user.email_already_registered');
+            return $response;
+        }
+
+        // check if username already exist
+        $user = self::withTrashed()->where('username',$inputs['username'])->first();
+
+        if ($user) {
+            $response['success'] = false;
+            $response['errors'][] = trans('vaahcms-user.username_already_registered');
+            return $response;
+        }
+
+        if (!isset($inputs['username'])) {
+            $inputs['username'] = Str::slug($inputs['email']);
+        }
+
+        if ($inputs['is_active'] === '1' || $inputs['is_active'] === 1 ) {
+            $inputs['is_active'] = 1;
+        } else {
+            $inputs['is_active'] = 0;
+        }
+
+        $inputs['created_ip'] = request()->ip();
+
+        $reg = new static();
+        $reg->fill($inputs);
+        $reg->save();
+
+        Role::syncRolesWithUsers();
+
+        $response['success'] = true;
+        $response['data']['item'] = $reg;
+        $response['messages'][] = trans('vaahcms-general.saved_successfully');
+        return $response;
+
+    }
+    //-------------------------------------------------
     //-------------------------------------------------
     //-------------------------------------------------
 
