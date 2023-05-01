@@ -9,8 +9,9 @@ use Illuminate\Routing\Controller;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
-use WebReinvent\VaahCms\Models\ModuleMigration;
+use WebReinvent\VaahCms\Libraries\VaahHelper;
 use WebReinvent\VaahCms\Models\Registration;
+use WebReinvent\VaahCms\Models\Setting;
 use WebReinvent\VaahCms\Models\User;
 
 
@@ -154,8 +155,6 @@ class PublicController extends Controller
             if(isset($verify_response['success'])
                 && !$verify_response['success']
                 && $verify_response['data'] != null){
-
-                dd($verify_response['data'],isset($verify_response['data']));
 
                 return $verify_response;
             }
@@ -325,6 +324,68 @@ class PublicController extends Controller
         return redirect($redirect_value_url);
     }
     //----------------------------------------------------------
+    public function disableMfa(Request $request,$token)
+    {
+
+        $user = User::first();
+
+        if($user){
+            if($user->api_token && $user->api_token ==  $token){
+
+                $mfa_status_setting = Setting::where('key','mfa_status')->first();
+                if($mfa_status_setting){
+                    $mfa_status_setting->value = 'disable';
+                    $mfa_status_setting->save();
+                }
+
+                $mfa_methods_setting = Setting::where('key','mfa_methods')->first();
+                if($mfa_methods_setting){
+                    $mfa_methods_setting->value = ["email-otp-verification"];
+                    $mfa_methods_setting->type = 'json';
+                    $mfa_methods_setting->save();
+                }
+
+                //clear cache
+                VaahHelper::clearCache();
+
+                $response = [];
+                $response['status'] = 'success';
+                $response['message'][] = 'MFA disabled successfully.';
+                return $response;
+
+            }
+
+            $response['status'] = 'failed';
+            $response['errors'][] = 'Api Token not matched.';
+            return $response;
+
+        }
+
+        $response['status'] = 'failed';
+        $response['errors'][] = 'User not found.';
+        return $response;
+
+    }
+
+    public function getAdminToken(Request $request)
+    {
+
+        $user = User::first();
+
+        if($user){
+            if($user->api_token){
+                return $user->api_token;
+            }
+
+            $token = \Str::random(30);
+
+            $user->api_token = $token;
+            $user->save();
+
+            return $token;
+        }
+
+    }
     //----------------------------------------------------------
 
 }
