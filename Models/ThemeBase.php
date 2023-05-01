@@ -610,12 +610,27 @@ class ThemeBase extends Model {
 
         try{
 
-            $item = static::slug($slug)->first();
+            $item = static::where('slug',$slug)->first();
 
             if(!isset($item->is_migratable) || (isset($item->is_migratable) && $item->is_migratable == true))
             {
                 $path = vh_theme_migrations_path($item->name);
                 Migration::refreshMigrations($path);
+
+                //delete all database migrations
+                $theme_migrations = $item->migrations()->get()->pluck('migration_id')->toArray();
+
+                if($theme_migrations)
+                {
+                    \DB::table('migrations')->whereIn('id', $theme_migrations)->delete();
+                    Migration::whereIn('migration_id', $theme_migrations)->delete();
+                }
+
+                $max_batch = \DB::table('migrations')
+                    ->max('batch');
+
+                Migration::syncThemeMigrations($item->id,$max_batch);
+
             }
 
             $response['success'] = true;

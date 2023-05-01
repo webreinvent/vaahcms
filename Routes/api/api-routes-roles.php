@@ -5,7 +5,7 @@
  */
 Route::group(
     [
-        'prefix' => 'role/roles',
+        'prefix' => 'vaah/roles',
         'namespace' => 'Backend',
     ],
 function () {

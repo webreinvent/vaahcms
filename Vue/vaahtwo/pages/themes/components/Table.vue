@@ -38,7 +38,7 @@ const confirmRefresh = (item) => {
         icon: 'pi pi-info-circle',
         acceptClass: 'p-button-danger',
         accept: () => {
-            store.refreshMigration(item);
+            store.refreshMigrations(item);
         },
     });
 }
@@ -153,7 +153,7 @@ function actionItems(item){
                         <SplitButton label="Actions"
                                      v-if="item.is_active
                                      && item.is_migratable
-                                     && store.hasPermission('can-import-sample-data-in-theme')"
+                                     && store.hasPermission('can-activate-theme')"
                                      v-tooltip.top="'Actions'"
                                      class="mr-2"
                                      data-testid="themes-table_action"
