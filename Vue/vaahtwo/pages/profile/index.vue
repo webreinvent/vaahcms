@@ -232,7 +232,6 @@ onMounted(async () => {
                          v-for="method in store.mfa_methods">
                         <Checkbox class="flex"
                                   :data-testid="'profile-'+method"
-                                  :id="'mfa-method_'+method"
                                   :inputId="'mfa-method_'+method"
                                   v-model="store.profile.mfa_methods"
                                   :value="method" />

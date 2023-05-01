@@ -121,7 +121,7 @@ class UserBase extends Authenticatable
         if($value && $value!='null'){
             return json_decode($value);
         }else{
-            return json_decode('{}');
+            return [];
         }
 
     }
